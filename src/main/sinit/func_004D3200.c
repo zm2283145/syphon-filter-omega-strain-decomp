@@ -1,10 +1,10 @@
 #include "types.h"
-extern void FreeList_Push(void*);
+extern void AbstractWidgetClassRep_AddClassRep(void*);
 extern char D_004DDAD0;
 extern void* D_00506590;
 extern void* D_00506598;
-void StaticInit_GuiNetJoinMissionFactory(void) {
+void StaticInit_GuiNetJoinMission(void) {
     D_00506598 = &D_004DDAD0;
     D_00506590 = "GuiNetJoinMission";
-    FreeList_Push(&D_00506590);
+    AbstractWidgetClassRep_AddClassRep(&D_00506590);
 }

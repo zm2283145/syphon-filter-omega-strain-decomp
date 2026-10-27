@@ -3,7 +3,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 /*fc*/
-int ScalarCollection_Init();                       
+int std_list_deleter_voidPtr_ctor_void();                       
 int __construct_array();                
 int __register_global_object();          
 int std_tree_pair_tNPCInfoPtr_value_compare_ctor();                     
@@ -29,15 +29,15 @@ void StaticInit_NPCInfoObject(void) {
     int sp18;
 
     __construct_array(&D_00582820, &cNPCInfoObject_tBoolStruct_ctor, 0, 4, 145);
-    ScalarCollection_Init(&D_00582AB0);
+    std_list_deleter_voidPtr_ctor_void(&D_00582AB0);
     __register_global_object(&D_00582AB0, &cLList_tNPCInfoPtr_dtor, &D_00582AA0);
-    ScalarCollection_Init(&D_00582AD0);
+    std_list_deleter_voidPtr_ctor_void(&D_00582AD0);
     __register_global_object(&D_00582AD0, &cLList_tNPCInfoPtr_dtor, &D_00582AC0);
-    ScalarCollection_Init(&D_00582AF0);
+    std_list_deleter_voidPtr_ctor_void(&D_00582AF0);
     __register_global_object(&D_00582AF0, &cLList_tNPCInfoPtr_dtor, &D_00582AE0);
-    ScalarCollection_Init(&D_00582B10);
+    std_list_deleter_voidPtr_ctor_void(&D_00582B10);
     __register_global_object(&D_00582B10, &cLList_tNPCInfoPtr_dtor, &D_00582B00);
-    ScalarCollection_Init(&D_00582B30);
+    std_list_deleter_voidPtr_ctor_void(&D_00582B30);
     __register_global_object(&D_00582B30, &cLList_tNPCInfoPtr_dtor, &D_00582B20);
     std_tree_pair_tNPCInfoPtr_value_compare_ctor(&D_00582B50, &sp1C, &sp18);
     __register_global_object(&D_00582B50, &cAssocArray_tNPCInfoPtr_bool_dtor, &D_00582B40);

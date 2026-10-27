@@ -9,12 +9,12 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
-extern "C" { extern char D_004BFD10[]; void Mem_Free(int pool, void* p, char* file, int line); }
+extern "C" { extern char D_004BFD10[]; void cMemMan_Deallocate(int pool, void* p, char* file, int line); }
 extern "C" void cAllocator_node_deallocate_nodeP_uint_17(void* tree, void* node)
 {
     if (node) {
         AllocGuard guard;
-        Mem_Free(0, node, D_004BFD10, 0x64);
+        cMemMan_Deallocate(0, node, D_004BFD10, 0x64);
     }
 }
 #pragma pop /* merge_units */
@@ -143,7 +143,7 @@ extern void* D_00583870;
 extern void NetGetObject(Entry4** out, void* key);
 
 /* Looks up the global key and returns the entry's value, or -1 if not found. */
-int Net_GetTalkerName(void)
+int HeadsetSemaphore_GetOwner(void)
 {
     Entry4* entry;
     NetGetObject(&entry, D_00583870);

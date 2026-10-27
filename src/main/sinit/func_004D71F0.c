@@ -12,7 +12,7 @@ extern char *D_00572120;
 extern char **D_00572124;
 extern char *D_00572128;
 
-void StaticInit_GuiWidgetFactory(void) {
+void StaticInit_guiWidget(void) {
     D_004BF3C0 = 0x3F800000;
     D_00572128 = &D_004E0BE0;
     D_00572120 = "GuiWidget";

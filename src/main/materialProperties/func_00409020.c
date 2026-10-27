@@ -2,7 +2,7 @@
 #include "types.h"
 #include "alloc_guard.h"
 
-/* MaterialProps_Init: build the material table once (a vector of materials and a name -> index
+/* cMaterialPropertiesTable_Init_void: build the material table once (a vector of materials and a name -> index
  * map) and register the default material. */
 
 struct MVec { int a; int b; int c; unsigned char owned; };
@@ -13,17 +13,17 @@ struct It { int p; };
 extern "C" {
 extern char D_004BEB80[];
 extern char D_004BEB98[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void details_compressed_pair_imp_cAllocator_cMaterialProperties_int_1_ctor(MVec* v, int n);
 void std_tree_pair_cString_value_compare_ctor_valuecompareR_cAllocatorR_3(void* m, void* cmp, void* alloc);
 void cAllocator_char_ctor(Material* m);
 int* details_compressed_pair_imp_rep_s_2_first_void_2(Material* m);
-void MaterialProp_SetDefaults(void);
+void cMaterialProperties_MatPropInfo_ctor_void(void);
 void cMaterialProperties_MatPropInfo_dtor(void);
 void __construct_array(void* arr, void* ctor, void* dtor, int size, int count);
 void __destroy_array(void* arr, void* dtor, int size, int count);
-void String_CtorCStr_13B480(char* s, char* c);
-void String_AssignString(void* d, char* s);
+void std_basic_string_char_char_traits_char_ctor_charP(char* s, char* c);
+void std_basic_string_char_char_traits_char_assign_basicstringR(void* d, char* s);
 void String_Dtor(void* s, int flag);
 void cAssocArray_cString_char_Find(It* out, void* map, Material* key);
 void cAssocArray_cString_char_End(It* out, void* map);
@@ -32,10 +32,10 @@ unsigned char* cAssocArray_cString_char_Iterator_opMul(It* it);
 Material* cArray_cMaterialProperties_opIndex(MVec* v, int i);
 void func_004093E0(Material* d, Material* s);
 int cArray_cMaterialProperties_Size(MVec* v);
-void MaterialVec_PushBack(MVec* v, Material* m);
-Material* MaterialVec_Back(MVec* v);
+void cArray_cMaterialProperties_PushBackActual(MVec* v, Material* m);
+Material* cArray_cMaterialProperties_Back(MVec* v);
 void cAssocArray_cString_char_Add(void* map, Material* m, signed char* idx);
-void MaterialProps_Init(MProps* s);
+void cMaterialPropertiesTable_Init_void(MProps* s);
 }
 
 static inline void Add(MProps* s, Material* m)
@@ -43,19 +43,19 @@ static inline void Add(MProps* s, Material* m)
     It it;
     It end;
     signed char idx;
-    if (!s->inited) MaterialProps_Init(s);
+    if (!s->inited) cMaterialPropertiesTable_Init_void(s);
     cAssocArray_cString_char_Find(&it, s->map, m);
     cAssocArray_cString_char_End(&end, s->map);
     if (cAssocArray_cString_char_Iterator_opNe(&it, &end)) {
         func_004093E0(cArray_cMaterialProperties_opIndex(s->vec, *cAssocArray_cString_char_Iterator_opMul(&it)), m);
     } else if (cArray_cMaterialProperties_Size(s->vec) < 0x80) {
-        MaterialVec_PushBack(s->vec, m);
+        cArray_cMaterialProperties_PushBackActual(s->vec, m);
         idx = cArray_cMaterialProperties_Size(s->vec) - 1;
-        cAssocArray_cString_char_Add(s->map, MaterialVec_Back(s->vec), &idx);
+        cAssocArray_cString_char_Add(s->map, cArray_cMaterialProperties_Back(s->vec), &idx);
     }
 }
 
-void MaterialProps_Init(MProps* s)
+void cMaterialPropertiesTable_Init_void(MProps* s)
 {
     if (s->inited) return;
     s->inited = 1;
@@ -63,7 +63,7 @@ void MaterialProps_Init(MProps* s)
         MVec* v;
         {
             AllocGuard g;
-            v = (MVec*)Mem_Alloc(0, 0x10, D_004BEB80, 0x64);
+            v = (MVec*)cMemMan_Allocate(0, 0x10, D_004BEB80, 0x64);
         }
         if (v) {
             details_compressed_pair_imp_cAllocator_cMaterialProperties_int_1_ctor(v, 0);
@@ -77,7 +77,7 @@ void MaterialProps_Init(MProps* s)
         void* m;
         {
             AllocGuard g;
-            m = Mem_Alloc(0, 0x10, D_004BEB80, 0x65);
+            m = cMemMan_Allocate(0, 0x10, D_004BEB80, 0x65);
         }
         if (m) {
             char cmp[4];   /* empty comparator / allocator temporaries */
@@ -96,11 +96,11 @@ void MaterialProps_Init(MProps* s)
         z[0] = 0;
         z[1] = 0;
         z[2] = 0;
-        __construct_array(pm->props, MaterialProp_SetDefaults, cMaterialProperties_MatPropInfo_dtor, 0x38, 5);
+        __construct_array(pm->props, cMaterialProperties_MatPropInfo_ctor_void, cMaterialProperties_MatPropInfo_dtor, 0x38, 5);
         {
             char t[0xC];
-            String_CtorCStr_13B480(t, D_004BEB98);
-            String_AssignString(pm, t);
+            std_basic_string_char_char_traits_char_ctor_charP(t, D_004BEB98);
+            std_basic_string_char_char_traits_char_assign_basicstringR(pm, t);
             String_Dtor(t, 0);
         }
         Add(s, &mat);

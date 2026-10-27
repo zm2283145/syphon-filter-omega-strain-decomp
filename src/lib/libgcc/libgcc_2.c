@@ -520,7 +520,7 @@ float Math_AcosKernel(float x)
 /* merge_units: end func_0011CFD8 */
 
 /* merge_units: begin func_0011D400 */
-extern float Math_Fabsf(float x);
+extern float Libc_Fabsf(float x);
 float Math_AsinfImpl(float x)
 {
 	const float
@@ -558,7 +558,7 @@ float Math_AsinfImpl(float x)
 		return x+x*w;
 	    }
 	}
-	w = one-Math_Fabsf(x);
+	w = one-Libc_Fabsf(x);
 	t = w*(float)0.5;
 	p = t*(pS0+t*(pS1+t*(pS2+t*(pS3+t*(pS4+t*pS5)))));
 	q = one+t*(qS1+t*(qS2+t*(qS3+t*qS4)));
@@ -582,7 +582,7 @@ float Math_AsinfImpl(float x)
 /* merge_units: end func_0011D400 */
 
 /* merge_units: begin func_0011D7A0 */
-extern float Math_Atan(float x);
+extern float Libc_Atanf(float x);
 float Math_Atan2Kernel(float y, float x)
 {
 	const float
@@ -597,7 +597,7 @@ float Math_Atan2Kernel(float y, float x)
 	ix = hx&0x7fffffff;
 	GET_FLOAT_WORD(hy,y);
 	iy = hy&0x7fffffff;
-	if(hx==0x3f800000) return Math_Atan(y);
+	if(hx==0x3f800000) return Libc_Atanf(y);
 	m = ((hy>>31)&1)|((hx>>30)&2);
 
 	if(iy < 0x00800000L) {
@@ -613,7 +613,7 @@ float Math_Atan2Kernel(float y, float x)
 	k = (iy-ix)>>23;
 	if(k > 60) z=pi_o_2+(float)0.5*pi_lo;
 	else if(hx<0&&k<-60) z=0.0;
-	else z=Math_Atan(Math_Fabsf(y/x));
+	else z=Libc_Atanf(Libc_Fabsf(y/x));
 	switch (m) {
 	    case 0: return       z  ;
 	    case 1: {

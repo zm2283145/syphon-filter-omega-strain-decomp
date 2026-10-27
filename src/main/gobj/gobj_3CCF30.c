@@ -9,17 +9,17 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
-extern "C" { void Mem_Free(int pool, void* p, char* file, int line); extern char D_004BD228[]; }
+extern "C" { void cMemMan_Deallocate(int pool, void* p, char* file, int line); extern char D_004BD228[]; }
 class C3CCF30 { public: virtual void Destroy(int flags); };
 struct O3CCF30 { char pad[0x58]; C3CCF30* m; };
-extern "C" void Node_ReleaseComponent58(O3CCF30* self)
+extern "C" void cGOBJ_DeleteController(O3CCF30* self)
 {
     C3CCF30* m = self->m;
     if (m) {
         {
             AllocGuard g;
             m->Destroy(-1);
-            Mem_Free(0, m, D_004BD228, 0x291);
+            cMemMan_Deallocate(0, m, D_004BD228, 0x291);
         }
         self->m = 0;
     }
@@ -32,7 +32,7 @@ extern "C" void Node_ReleaseComponent58(O3CCF30* self)
 #pragma cplusplus on
 #include "node_world_q4.h"
 extern "C" MtxQ4 g_IdentityMatrix;
-extern "C" MtxQ4 GObj_GetWorldMatrix(OwnerQ4* o)
+extern "C" MtxQ4 cGOBJ_GetTransform_ForFloorTravel(OwnerQ4* o)
 {
     NODE_WORLD_Q4_BODY(o, g_IdentityMatrix)
 }
@@ -55,7 +55,7 @@ struct N_3CD420 {
 struct X_3CD420 { char pad[0x50]; N_3CD420* n; };
 #pragma push
 #pragma opt_common_subs off
-extern "C" void cNode_v3A(V4* out, X_3CD420* x) {
+extern "C" void cGOBJ_GetCameraCollisionReferencePoint(V4* out, X_3CD420* x) {
     N_3CD420* n = x->n;
     if (n) {
         if (n->dirty) n->Update();
@@ -74,7 +74,7 @@ extern "C" void cNode_v3A(V4* out, X_3CD420* x) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-extern "C" MtxQ4 cGOBJ_v39(OwnerQ4* o, int* flag)
+extern "C" MtxQ4 cGOBJ_GetTransform_ForCameraTracking(OwnerQ4* o, int* flag)
 {
     *flag = 0;
     NODE_WORLD_Q4_BODY(o, g_IdentityMatrix)
@@ -86,7 +86,7 @@ extern "C" MtxQ4 cGOBJ_v39(OwnerQ4* o, int* flag)
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-extern "C" MtxQ4 Node_GetComponentMatrix(OwnerQ4* o)
+extern "C" MtxQ4 cGOBJ_GetTransform_ForTeleporting(OwnerQ4* o)
 {
     NODE_WORLD_Q4_BODY(o, g_IdentityMatrix)
 }

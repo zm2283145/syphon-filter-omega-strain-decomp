@@ -4,8 +4,8 @@
 
 #include "gobj_types.h"
 
-extern int Lift_CreateInfoObject(cElevatorGOBJ* lift);
+extern int cElevatorGOBJ_CreateElevatorInfo(cElevatorGOBJ* lift);
 
-int cElevatorGOBJ_v3D(cElevatorGOBJ* lift) {
-    return Lift_CreateInfoObject(lift);
+int cElevatorGOBJ_InitNetwork(cElevatorGOBJ* lift) {
+    return cElevatorGOBJ_CreateElevatorInfo(lift);
 }

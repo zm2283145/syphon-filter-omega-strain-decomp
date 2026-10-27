@@ -11,24 +11,24 @@ struct It_40E0 {
 static inline int NotEq(int* a, int* b) { return !(a == b); }
 extern "C" {
 
-void PtrVec_Reserve(void* list, int n);
-int Object_LookupById(int* id);
-void PtrVec_PushBack_171C70(void* list, int* obj);
-void Actor_VirtualLeaf175230(IdVec_40E0* v);
+void std_vector_pod_int_reserve(void* list, int n);
+int nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+void std_vector_cGOBJPtr_push_back(void* list, int* obj);
+void std_vector_deleter_cObjectId_clear(IdVec_40E0* v);
 }
 typedef struct { char pad[0x1F4]; int list[4]; IdVec_40E0 ids; char pad2[0x250 - 0x210]; unsigned char resolved; } T_40E0;
-extern "C" void Terrain_ResolveIdList(T_40E0* self)
+extern "C" void cTerrain_FinalizeActivation(T_40E0* self)
 {
     int* it = self->ids.begin();
     int* end = self->ids.end();
-    PtrVec_Reserve(self->list, self->ids.size());
+    std_vector_pod_int_reserve(self->list, self->ids.size());
     while (NotEq(it, end)) {
         int id = *it;
         int obj;
         it++;
-        obj = Object_LookupById(&id);
-        PtrVec_PushBack_171C70(self->list, &obj);
+        obj = nGobjManager_LookupGOBJ_cObjectIdR(&id);
+        std_vector_cGOBJPtr_push_back(self->list, &obj);
     }
-    Actor_VirtualLeaf175230(&self->ids);
+    std_vector_deleter_cObjectId_clear(&self->ids);
     self->resolved = 1;
 }

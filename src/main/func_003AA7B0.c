@@ -4,18 +4,18 @@
 struct SkelNode { int w[0x1D0 / 4]; };
 struct SkelVec { unsigned int cap; unsigned int count; SkelNode* data; };
 extern "C" {
-void SkelNode_Assign(SkelNode* d, const SkelNode* s);
-void SkelNode_CopyConstruct(SkelNode* d, const SkelNode* s);
+void cBone_ctor_cBoneR(SkelNode* d, const SkelNode* s);
+void cBone_opAssign(SkelNode* d, const SkelNode* s);
 extern char D_004BCD10[];
 extern char D_004BC510[];
 extern char D_004BC4F0[];
 void std_swap_vectordeleterR_vectordeleterR_38(SkelVec* a, SkelVec* b);
 void std_vector_deleter_cBone_clear(SkelVec* v);
 }
-static inline void SkelNode_Construct(SkelNode* p, const SkelNode* src)
+static inline void cBone_ctor_void(SkelNode* p, const SkelNode* src)
 {
     if (p)
-        SkelNode_Assign(p, src);
+        cBone_ctor_cBoneR(p, src);
 }
 extern "C" void std_vector_imp_cBone_insert(SkelVec* v, SkelNode* pos, unsigned int n, const SkelNode* value)
 {
@@ -32,19 +32,19 @@ extern "C" void std_vector_imp_cBone_insert(SkelVec* v, SkelNode* pos, unsigned 
         if (after < n) {
             p = end;
             for (; after < n; n--) {
-                SkelNode_Construct(p, value);
+                cBone_ctor_void(p, value);
                 p++;
                 v->count++;
             }
             for (q = pos; q < end; q++, p++) {
-                SkelNode_Construct(p, q);
+                cBone_ctor_void(p, q);
                 v->count++;
             }
         } else {
             src = end - n;
             dst = end;
             for (; src < end; src++, dst++) {
-                SkelNode_Construct(dst, src);
+                cBone_ctor_void(dst, src);
                 v->count++;
             }
             if (end - (after - n) <= value && value < end)
@@ -54,11 +54,11 @@ extern "C" void std_vector_imp_cBone_insert(SkelVec* v, SkelNode* pos, unsigned 
             while (pos < last) {
                 --d;
                 --last;
-                SkelNode_CopyConstruct(d, last);
+                cBone_opAssign(d, last);
             }
         }
         if (n) do {
-            SkelNode_CopyConstruct(pos, value);
+            cBone_opAssign(pos, value);
             --n;
             ++pos;
         } while (n);
@@ -90,15 +90,15 @@ extern "C" void std_vector_imp_cBone_insert(SkelVec* v, SkelNode* pos, unsigned 
         srcEnd = src + v->count;
         dst = *tdata;
         for (; src < pos; src++, dst++) {
-            SkelNode_Construct(dst, src);
+            cBone_ctor_void(dst, src);
             (*tcount)++;
         }
         for (; n; n--, dst++) {
-            SkelNode_Construct(dst, value);
+            cBone_ctor_void(dst, value);
             (*tcount)++;
         }
         for (; src < srcEnd; src++, dst++) {
-            SkelNode_Construct(dst, src);
+            cBone_ctor_void(dst, src);
             (*tcount)++;
         }
         std_swap_vectordeleterR_vectordeleterR_38(&tmp, v);

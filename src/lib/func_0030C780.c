@@ -119,7 +119,7 @@ int func_00310C30(void* h);
 void rt_comm_destroy(void* p);
 int UPnP_SendSoapAction(void* c, char* a, char* b);
 void rt_time_get_time_stamp(void* p);
-int String_CompareN(const char* a, const char* b, int n);
+int Libc_Strncmp(const char* a, const char* b, int n);
 char* strncpy(char* d, const char* s, unsigned int n);
 long strtol(const char* s, char** e, int base);
 int sprintf(char* d, const char* f, ...);
@@ -155,7 +155,7 @@ int func_0030C780(Conn_30C780* c)
                 if (e == 0) {
                     unsigned int i;
                     for (i = 0; i < l->count; i++) {
-                        if (String_CompareN("NewConnectionStatus", l->keys[i], 256) == 0)
+                        if (Libc_Strncmp("NewConnectionStatus", l->keys[i], 256) == 0)
                             strncpy(D_00529880, l->vals[i], 256);
                     }
                 }
@@ -163,7 +163,7 @@ int func_0030C780(Conn_30C780* c)
         }
         if (e == 0) {
             unsigned int i;
-            for (i = 0; D_00491360[i] && String_CompareN(D_00529880, D_00491360[i], 256); i++)
+            for (i = 0; D_00491360[i] && Libc_Strncmp(D_00529880, D_00491360[i], 256); i++)
                 ;
             switch (i) {
             case 0: st = 0; break;
@@ -233,7 +233,7 @@ int func_0030CA90(Conn_30CA90* c)
                 if (e == 0) {
                     unsigned int i;
                     for (i = 0; i < l->count; i++) {
-                        if (String_CompareN("NewExternalIPAddress", l->keys[i], 256) == 0)
+                        if (Libc_Strncmp("NewExternalIPAddress", l->keys[i], 256) == 0)
                             strncpy(c->name, l->vals[i], 16);
                     }
                 }
@@ -314,14 +314,14 @@ int func_0030CD00(Conn_30CD00* c)
             pmatch = 0;
             port = 0;
             for (i = 0; i < l->count; i++) {
-                if (String_CompareN(l->keys[i], "NewInternalClient", 256) == 0 && String_CompareN(l->vals[i], c->host, 256) == 0) {
+                if (Libc_Strncmp(l->keys[i], "NewInternalClient", 256) == 0 && Libc_Strncmp(l->vals[i], c->host, 256) == 0) {
                     hit = 1;
-                } else if (String_CompareN(l->keys[i], "NewInternalPort", 256) == 0) {
+                } else if (Libc_Strncmp(l->keys[i], "NewInternalPort", 256) == 0) {
                     if (c->port == (unsigned short)strtol(l->vals[i], 0, 10))
                         pmatch = 1;
-                } else if (String_CompareN(l->keys[i], "NewProtocol", 256) == 0 && String_CompareN(l->vals[i], "UDP", 256) == 0) {
+                } else if (Libc_Strncmp(l->keys[i], "NewProtocol", 256) == 0 && Libc_Strncmp(l->vals[i], "UDP", 256) == 0) {
                     proto = 1;
-                } else if (String_CompareN(l->keys[i], "NewExternalPort", 256) == 0) {
+                } else if (Libc_Strncmp(l->keys[i], "NewExternalPort", 256) == 0) {
                     port = strtol(l->vals[i], 0, 10);
                 }
             }

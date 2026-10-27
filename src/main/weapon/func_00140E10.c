@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-extern int Math_Cos(float);
-extern int Math_Sin(float);
+extern int Libc_Cosf(float);
+extern int Libc_Sinf(float);
 
 int cGobjController_IsNPC(void) {
     return 0;
 }
 
-Mtx44* Mtx44_SetRotation(Mtx44* m, float a, float b, float c, float d, float e, float f,
+Mtx44* cMatrix_Set_ColumnMajorForm(Mtx44* m, float a, float b, float c, float d, float e, float f,
                      float g, float h, float i) {
     m->m[0][0] = a;
     m->m[0][1] = d;
@@ -34,12 +34,12 @@ Mtx44* Mtx44_SetRotation(Mtx44* m, float a, float b, float c, float d, float e, 
     return m;
 }
 
-int Math_SinThunk(float f12) {
-    return Math_Sin(f12);
+int SIN(float f12) {
+    return Libc_Sinf(f12);
 }
 
-int Math_CosThunk(float f12) {
-    return Math_Cos(f12);
+int COS(float f12) {
+    return Libc_Cosf(f12);
 }
 
 int func_00140E90(void) {

@@ -9,7 +9,7 @@ extern int IsNullRSAKey(char *);
 extern int GetKeyMaster(int);
 extern char *GetKeyChain(int, int);
 extern int IsNullRCKey(int);
-extern void Sha1_Digest(int, int, int *, int);
+extern void KM_SHA1(int, int, int *, int);
 extern void RSAEncrypt(char *, int, int *, int);
 int KM_DigiVerify(int a, int b, char *c, int d)
 {
@@ -28,7 +28,7 @@ int KM_DigiVerify(int a, int b, char *c, int d)
 fail:
         return -1;
     }
-    Sha1_Digest(*(int *)(s + 0x18), 4, buf, 0x40);
+    KM_SHA1(*(int *)(s + 0x18), 4, buf, 0x40);
     RSAEncrypt(c, d, buf2, 0x40);
     i = 0;
     do {

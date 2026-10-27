@@ -16,20 +16,20 @@ int cInterfaceManager_RemoveInterface();
 int GuiDecorator_dtor();                         
 int std_vector_deleter_GuiAnimationTrack_dtor();                         
 int operator_delete();                          
-extern void GuiWidget_OnActivate();
-extern void GuiWidget_OnDeactivate();
-extern void GuiWidget_OnGainFocus();
-extern void GuiWidget_OnLoseFocus();
-extern void GuiWidget_OnSleep();
-extern void GuiWidget_OnWake();
+extern void GuiInterfaceDecorator_onActivate();
+extern void GuiInterfaceDecorator_onDeactivate();
+extern void GuiInterfaceDecorator_onGainFocus();
+extern void GuiInterfaceDecorator_onLoseFocus();
+extern void GuiInterfaceDecorator_onSleep();
+extern void GuiInterfaceDecorator_onWake();
 extern void GuiInterfaceDecorator_Load();
-extern void GuiInterfaceDecorator_Draw();
-extern void GuiInterfaceDecorator_OnEvent();
-extern void GuiInterfaceDecorator_Update();
+extern void GuiInterfaceDecorator_onRender();
+extern void GuiInterfaceDecorator_onMessage();
+extern void GuiInterfaceDecorator_onAdvanceTime();
 extern void GuiInterfaceDecorator_onRemove();
-extern void GuiInterfaceDecorator_Init();
-extern void func_00416930();
-extern void func_00416970();
+extern void GuiInterfaceDecorator_onAdd();
+extern void GuiDecorator_onInput();
+extern void GuiDecorator_onAction();
 extern void * const D_004E09F0[];
 extern char D_00571DC0;
 
@@ -64,7 +64,7 @@ char * GuiInterfaceDecorator_dtor(char * arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004E09F0[20] = { (void*)0x0, (void*)0x0, (void*)GuiInterfaceDecorator_dtor, (void*)GuiInterfaceDecorator_Init, (void*)GuiInterfaceDecorator_onRemove, (void*)GuiWidget_OnActivate, (void*)GuiWidget_OnDeactivate, (void*)GuiWidget_OnWake, (void*)GuiWidget_OnSleep, (void*)GuiWidget_OnGainFocus, (void*)GuiWidget_OnLoseFocus, (void*)func_00416930, (void*)GuiInterfaceDecorator_Draw, (void*)func_00416970, (void*)GuiInterfaceDecorator_Update, (void*)GuiInterfaceDecorator_OnEvent, (void*)GuiInterfaceDecorator_Load, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004E09F0[20] = { (void*)0x0, (void*)0x0, (void*)GuiInterfaceDecorator_dtor, (void*)GuiInterfaceDecorator_onAdd, (void*)GuiInterfaceDecorator_onRemove, (void*)GuiInterfaceDecorator_onActivate, (void*)GuiInterfaceDecorator_onDeactivate, (void*)GuiInterfaceDecorator_onWake, (void*)GuiInterfaceDecorator_onSleep, (void*)GuiInterfaceDecorator_onGainFocus, (void*)GuiInterfaceDecorator_onLoseFocus, (void*)GuiDecorator_onInput, (void*)GuiInterfaceDecorator_onRender, (void*)GuiDecorator_onAction, (void*)GuiInterfaceDecorator_onAdvanceTime, (void*)GuiInterfaceDecorator_onMessage, (void*)GuiInterfaceDecorator_Load, (void*)0x0, (void*)0x0, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_00417AE0 */
 

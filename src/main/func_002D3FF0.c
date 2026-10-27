@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose02_types.h"
 
-extern int NpcPath_GetNode(int id);
+extern int cAIPathData_GetNode(int id);
 
 /* True when both the target and the link exist and the link is ready. */
 int cNetNPC_IsTargetVisible(Controller2D* self) {
@@ -22,5 +22,5 @@ int cNetNPC_TargetPositionValid(Controller2D* self) {
 /* Stores the id and caches its lookup. */
 void cNetNPC_NodeReachedByLocalNpc(Controller2D* self, int id) {
     self->unk208 = id;
-    self->unk1E8 = NpcPath_GetNode(id);
+    self->unk1E8 = cAIPathData_GetNode(id);
 }

@@ -1,6 +1,6 @@
 #include "types.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int Medius_CloseReportLib();                                
+int MGCLClose();                                
 extern unsigned char D_00584518;
 
 int SFOMGCL_Close_API(void) {
@@ -9,7 +9,7 @@ int SFOMGCL_Close_API(void) {
     if (D_00584518 == 0) {
         return 0;
     }
-    temp_v0 = Medius_CloseReportLib();
+    temp_v0 = MGCLClose();
     if (temp_v0 == 0) {
         D_00584518 = 0;
     }

@@ -1,4 +1,4 @@
-int LargeInt_IsOne(int *a)
+int IsOne(int *a)
 {
     int i;
     if (a[0] != 1) return 0;

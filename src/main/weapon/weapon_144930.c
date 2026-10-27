@@ -20,7 +20,7 @@ DEFINE_TRIVIAL_DTOR(cSubclassId_dtor)
 #include "types.h"
 typedef struct { char pad[0x1C]; unsigned char flag; } F44980;
 extern unsigned char g_LevelLightsDirty;
-void Light_Disable(F44980* p)
+void cLightSrc_Deactivate(F44980* p)
 {
     if (p->flag) {
         p->flag = 0;
@@ -90,8 +90,8 @@ extern void* D_004D9280[];
 #define D_004D9280 ((void **)&D_004D9280) /* merge_units */
 
 extern int g_LightMgr;
-extern void LightMgr_RemoveFromTable(void* pool, void* p);
-E7Light* Light_Destruct(E7Light* p, short flag) {
+extern void cLightMan_RemoveLight(void* pool, void* p);
+E7Light* cPointLight_dtor(E7Light* p, short flag) {
     if (p) {
         p->vt = D_004D9200;
         if (p) {
@@ -104,7 +104,7 @@ E7Light* Light_Destruct(E7Light* p, short flag) {
             }
         }
         if (flag > 0) {
-            LightMgr_RemoveFromTable(&g_LightMgr, p);
+            cLightMan_RemoveLight(&g_LightMgr, p);
         }
     }
     return p;
@@ -149,7 +149,7 @@ static inline unsigned char eq4_(V4* a, V4* b) {
 
 
 
-void Light_SetPosition(C44_O* o, V4* v) {
+void cLightSrc_SetPosition(C44_O* o, V4* v) {
     if ((eq4_(&o->v30, v) != 0) ^ 1) {
         { V4* d = &o->v30; VCopyF(d, v); }
         g_LevelLightsDirty = 1;

@@ -6,19 +6,19 @@
 
 #include "types.h"
 
-extern int Insck_Socket(int, int);
-extern int Insck_Close(int);
+extern int sceInsockSocket(int, int);
+extern int sceInsockShutdown(int);
 
 int sceNetGlueShutdown(int a0) {
     int tmp0;
 
-    tmp0 = Insck_Close(a0);
+    tmp0 = sceInsockShutdown(a0);
     return tmp0;
 }
 
 int sceNetGlueSocket(int a0, int a1) {
     int tmp0;
 
-    tmp0 = Insck_Socket(a0, a1);
+    tmp0 = sceInsockSocket(a0, a1);
     return tmp0;
 }

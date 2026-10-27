@@ -9,6 +9,6 @@
 extern int D_0052AF18;
 
 /* Message type id. */
-int cEnableSuperJumpMsg_v05(void) {
+int cEnableSuperJumpMsg_GetMsgId(void) {
     return D_0052AF18;
 }

@@ -19,7 +19,7 @@ struct Npc_DEA0 { VPAD32(a) VPAD8(b) virtual int CanLeave(signed char mode); cha
 
 
 
-extern "C" void cNPC_v49(Npc_DEA0* self, Act_DEA0* a, int prio, float f)
+extern "C" void cNPC_RequestFacial(Npc_DEA0* self, Act_DEA0* a, int prio, float f)
 {
     if (prio >= self->prio AND prio >= self->modes[self->mode].prio) {
         if (self->CanLeave(*(signed char*)&self->mode)) {
@@ -54,7 +54,7 @@ struct Rec_DFB0 { Act_DFB0* target; int serial; float f; int prio; unsigned char
 
 
 #define R(s) ((Rec_DFB0*)((char*)(s) + 0x16C))
-extern "C" void cNPC_v48(Npc_DFB0* self, Act_DFB0* a, int prio, float f)
+extern "C" void cNPC_RequestLookAt_cGOBJP_float_int(Npc_DFB0* self, Act_DFB0* a, int prio, float f)
 {
     if (prio >= self->modes[0].prio) {
         if (prio >= self->modes[self->mode].prio) {

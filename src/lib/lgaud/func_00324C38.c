@@ -6,7 +6,7 @@ int lgAudPrepareForReboot(void)
     lgAudRpcPkt *pkt;
     if (lgAud_sema == -1)
         return LGAUD_ERR_NOT_INITIALIZED;
-    if (lgAudSync(1, 0)) {
+    if (lgAudASync(1, 0)) {
         printf("lgAudPrepareForReboot: error: an async call is in progress...\n");
         return LGAUD_ERR_BUSY;
     }

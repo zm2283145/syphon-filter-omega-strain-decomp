@@ -39,7 +39,7 @@ DEFINE_TRIVIAL_DTOR(cCollisionModel_FaceProperties_dtor)
 typedef struct { __int128 q[4]; } M31C10_;
 typedef struct { char pad[0x10]; M31C10_ m; } S31C10_;
 #pragma peephole off
-void TransformNode_SetMatrix(S31C10_* dst, M31C10_* src)
+void cXform_SetMatrix(S31C10_* dst, M31C10_* src)
 {
     M31C10_* d = &dst->m;
     __int128 qa, qb;
@@ -57,7 +57,7 @@ void TransformNode_SetMatrix(S31C10_* dst, M31C10_* src)
 #pragma push /* merge_units */
 #include "vu0_ops.h"
 typedef struct { float m[4][4]; } __attribute__((aligned(16))) Mtx;
-Mtx* Mtx_SetIdentity(Mtx* m) {
+Mtx* cMatrix_SetUnit(Mtx* m) {
     VU0_UnitMatrix(m);
     return m;
 }
@@ -86,9 +86,9 @@ struct V {
 } __attribute__((aligned(16)));
 static inline V Cross(const V& a, const V& b) { V c; Crs_(&c, &a, &b); return c; }
 struct M;
-extern "C" void Mtx_SetBasis(M* m, V* a, V* b, V* c);
-extern "C" void Mtx_SetTranslation(M* m, V* t);
-struct M { V r[3]; V t; void Set(const V& a, const V& b, const V& c, const V& d) { Mtx_SetBasis(this, (V*)&a, (V*)&b, (V*)&c); Mtx_SetTranslation(this, (V*)&d); } };
+extern "C" void cMatrix_SetAxes(M* m, V* a, V* b, V* c);
+extern "C" void cMatrix_SetTranslation(M* m, V* t);
+struct M { V r[3]; V t; void Set(const V& a, const V& b, const V& c, const V& d) { cMatrix_SetAxes(this, (V*)&a, (V*)&b, (V*)&c); cMatrix_SetTranslation(this, (V*)&d); } };
 static inline V Normalized(V v) { v.Normalize(); return v; }
 static inline V NormalizedL(const V& v) { V t(v); V* p = &t; p->Normalize(); return *p; }
 static inline void CrossTo(V* c, const V* a, const V* b) { __asm__ volatile("lqc2 vf1, 0x0(%1); lqc2 vf2, 0x0(%2); vopmula.xyz ACC, vf1, vf2; vopmsub.xyz vf3, vf2, vf1; vsubw.w vf3, vf0, vf0w; sqc2 vf3, 0x0(%0)" : : "r"(c), "r"(a), "r"(b) : "memory"); }
@@ -97,8 +97,8 @@ extern signed char D_004E1DA0;
 extern signed char D_004E1DA8;
 extern V D_00497F20;
 extern V D_00497F30;
-void Mtx_SetBasis(M* m, V* a, V* b, V* c);
-void Mtx_SetTranslation(M* m, V* t);
+void cMatrix_SetAxes(M* m, V* a, V* b, V* c);
+void cMatrix_SetTranslation(M* m, V* t);
 }
 static inline V& XAxis()
 {
@@ -116,7 +116,7 @@ static inline V& ZAxis()
     }
     return D_00497F30;
 }
-extern "C" M* Mtx_FrameFromAxis(M* m, V* axis)
+extern "C" M* cMatrix_MakeLookAtMatrix_cVectorR(M* m, V* axis)
 {
     XAxis();
     ZAxis();

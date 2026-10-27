@@ -58,13 +58,13 @@ int rt_comm_is_connected(int a, unsigned char *out)
 /* merge_units: end func_002F6628 */
 
 /* merge_units: begin func_002F66B8 */
-extern int Net_AllocZeroed(char **, int);
+extern int rt_memory_allocate_init_zero(char **, int);
 int rt_comm_get_new_channel_id(char **out)
 {
     char *p = 0;
     if (out == 0) return 2;
     *out = 0;
-    if (Net_AllocZeroed(&p, 0x18)) return 9;
+    if (rt_memory_allocate_init_zero(&p, 0x18)) return 9;
     if (p == 0) return 0xA;
     *p = 1;
     *out = p;

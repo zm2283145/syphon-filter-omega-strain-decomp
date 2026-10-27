@@ -12,10 +12,10 @@
 #include "hog_types.h"
 extern "C" {
 extern char D_004BBF88[];                           /* "hog.cc" */
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void FileHal_Close(FileHalFile* f);                 /* FileHal_Close */
-int FileHal_Reopen(FileHalFile* f, char* name, int mode); /* FileHal_Reopen */
-int FileHal_Read(FileHalFile* f, void* buf, int size, int off); /* FileHal_Read */
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cFileIO_Close(FileHalFile* f);                 /* cFileIO_Close */
+int cFileIO_Open(FileHalFile* f, char* name, int mode); /* cFileIO_Open */
+int cFileIO_Read_charP_int_int(FileHalFile* f, void* buf, int size, int off); /* cFileIO_Read_charP_int_int */
 }
 static inline int Hog_EntrySize(Hog* s, int i)
 {
@@ -25,14 +25,14 @@ static inline int Hog_EntrySize(Hog* s, int i)
 static inline void* Hog_Alloc(int pool, int size)
 {
     AllocGuard g;
-    return Mem_Alloc(pool, size, D_004BBF88, 0x16C);
+    return cMemMan_Allocate(pool, size, D_004BBF88, 0x16C);
 }
 /*
  * Streamed hogs: read entry idx into the shared entry buffer (allocated on
  * first use at the largest entry size). Returns 0 on success, 4 when the hog
  * is not streamed, 3 when the buffer cannot be allocated.
  */
-extern "C" int Hog_ReadEntry(Hog* s, int idx, int direct)
+extern "C" int cHogFile_Stream_int_bool(Hog* s, int idx, int direct)
 {
     if (*(volatile unsigned char*)&s->mode != HOG_STREAMED) return 4;
     if (!s->buf) {
@@ -44,17 +44,17 @@ extern "C" int Hog_ReadEntry(Hog* s, int idx, int direct)
         }
         s->buf = Hog_Alloc(s->pool, max);
         if (!s->buf) {
-            FileHal_Close(&s->file);
+            cFileIO_Close(&s->file);
             return 3;
         }
     }
     if (direct)
-        FileHal_Reopen(&s->file, s->name, FILEHAL_MODE_DIRECT);
+        cFileIO_Open(&s->file, s->name, FILEHAL_MODE_DIRECT);
     else
-        FileHal_Reopen(&s->file, s->name, 1);
+        cFileIO_Open(&s->file, s->name, 1);
     {
         int off = s->offsets[idx];
-        FileHal_Read(&s->file, s->buf, s->mode ? s->offsets[idx + 1] - off : 0, s->hdr->headerSize + off);
+        cFileIO_Read_charP_int_int(&s->file, s->buf, s->mode ? s->offsets[idx + 1] - off : 0, s->hdr->headerSize + off);
     }
     return 0;
 }
@@ -65,19 +65,19 @@ extern "C" int Hog_ReadEntry(Hog* s, int idx, int direct)
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 }
 static inline void Hog_Free(void* p, int pool, int line)
 {
     AllocGuard g;
-    Mem_Free(pool, p, D_004BBF88, line);
+    cMemMan_Deallocate(pool, p, D_004BBF88, line);
 }
 /* Close the file and free the buffers; the hog returns to the unloaded state. */
-extern "C" int Hog_Unload(Hog* s)
+extern "C" int cHogFile_CloseHog(Hog* s)
 {
     if (!s->mode)
         return 0;
-    FileHal_Close(&s->file);
+    cFileIO_Close(&s->file);
     if (s->buf) {
         Hog_Free(s->buf, s->pool, 0x122);
         s->buf = 0;
@@ -101,55 +101,55 @@ extern "C" int Hog_Unload(Hog* s)
 
 extern "C" {
 #if 0 /* merge_units */
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 #endif /* merge_units */
-#define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (int)(a1), (a2), (a3))) /* merge_units */
+#define cMemMan_Allocate(a0, a1, a2, a3) (cMemMan_Allocate((a0), (int)(a1), (a2), (a3))) /* merge_units */
 
 
-void String_Copy(char* d, char* s);
+void Libc_Strcpy(char* d, char* s);
 #if 0 /* merge_units */
-int FileHal_Read(FileHalFile* f, void* buf, int size, int pos); /* FileHal_Read */
+int cFileIO_Read_charP_int_int(FileHalFile* f, void* buf, int size, int pos); /* cFileIO_Read_charP_int_int */
 #endif /* merge_units */
-#define FileHal_Read(a0, a1, a2, a3) (FileHal_Read((a0), (a1), (a2), (a3))) /* merge_units */
+#define cFileIO_Read_charP_int_int(a0, a1, a2, a3) (cFileIO_Read_charP_int_int((a0), (a1), (a2), (a3))) /* merge_units */
 
 
 }
-static inline void* Hog_Alloc_0036CEF0(int pool, unsigned int n, int line) { AllocGuard g; return Mem_Alloc(pool, n, D_004BBF88, line); }
+static inline void* Hog_Alloc_0036CEF0(int pool, unsigned int n, int line) { AllocGuard g; return cMemMan_Allocate(pool, n, D_004BBF88, line); }
 
 /*
  * Open the archive name. Resident (stream == 0): load the whole file.
  * Streamed: load only the header. Returns 0 on success, 1 when the file is
  * missing, 2 on a read error, 3 when out of memory (0 too if already open).
  */
-extern "C" int Hog_Load(Hog* self, char* name, int stream, int pool)
+extern "C" int cHogFile_OpenHog(Hog* self, char* name, int stream, int pool)
 {
     int n;
     if (self->file.handle >= 0) return 0;
-    if (!FileHal_Reopen(&self->file, name, 1)) return 1;
-    String_Copy(self->name, name);
+    if (!cFileIO_Open(&self->file, name, 1)) return 1;
+    Libc_Strcpy(self->name, name);
     n = (self->file.size / CD_SECTOR_SIZE) * CD_SECTOR_SIZE + CD_SECTOR_SIZE;
     if (!stream) {
         self->mode = HOG_RESIDENT;
         self->buf = Hog_Alloc_0036CEF0(pool, n, 0xE2);
         if (!self->buf) {
-            FileHal_Close(&self->file);
+            cFileIO_Close(&self->file);
             return 3;
         }
-        if (!FileHal_Read(&self->file, self->buf, n, 0)) {
-            { void* b = self->buf; AllocGuard g; Mem_Free(pool, b, D_004BBF88, 0xF2); }
-            FileHal_Close(&self->file);
+        if (!cFileIO_Read_charP_int_int(&self->file, self->buf, n, 0)) {
+            { void* b = self->buf; AllocGuard g; cMemMan_Deallocate(pool, b, D_004BBF88, 0xF2); }
+            cFileIO_Close(&self->file);
             return 2;
         }
         self->hdr = (HogHeader*)self->buf;
         self->names = (char*)self->buf + self->hdr->namesOff;
         self->offsets = (int*)((char*)self->buf + self->hdr->offsetsOff);
-        FileHal_Close(&self->file);
+        cFileIO_Close(&self->file);
     } else {
         HogHeader h;
         self->mode = HOG_STREAMED;
-        FileHal_Read(&self->file, &h, sizeof(HogHeader), 0);
+        cFileIO_Read_charP_int_int(&self->file, &h, sizeof(HogHeader), 0);
         self->hdr = (HogHeader*)Hog_Alloc_0036CEF0(pool, h.headerSize, 0x104);
-        FileHal_Read(&self->file, self->hdr, h.headerSize, 0);
+        cFileIO_Read_charP_int_int(&self->file, self->hdr, h.headerSize, 0);
         self->names = (char*)self->hdr + self->hdr->namesOff;
         self->offsets = (int*)((char*)self->hdr + self->hdr->offsetsOff);
     }
@@ -158,8 +158,8 @@ extern "C" int Hog_Load(Hog* self, char* name, int stream, int pool)
     self->pool = pool;
     return 0;
 }
-#undef Mem_Alloc /* merge_units */
-#undef FileHal_Read /* merge_units */
+#undef cMemMan_Allocate /* merge_units */
+#undef cFileIO_Read_charP_int_int /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0036CEF0 */
 
@@ -167,7 +167,7 @@ extern "C" int Hog_Load(Hog* self, char* name, int stream, int pool)
 #pragma push /* merge_units */
 typedef struct { char pad[0x14C]; unsigned char on; char p1[3]; unsigned int idx; char* cur; char p2[4]; char* base; } SL36D2;
 #pragma opt_rotateloops off
-char* Archive_GetMemberName(SL36D2* p, int n) {
+char* cHogFile_GetBlockName(SL36D2* p, int n) {
     int i;
     char* s;
     char* r;
@@ -191,7 +191,7 @@ char* Archive_GetMemberName(SL36D2* p, int n) {
 typedef struct { int pad0; int count; } H36D2A0;
 typedef struct { char pad[0x148]; H36D2A0* hdr; unsigned char loaded; char pad14D[0xF]; char* names; } S36D2A0;
 extern int String_CompareNoCase(char* a, char* b);
-int Hog_FindFileNoCase(S36D2A0* o, char* name)
+int cHogFile_GetBlockIndex(S36D2A0* o, char* name)
 {
     int i;
     char* s;
@@ -211,7 +211,7 @@ int Hog_FindFileNoCase(S36D2A0* o, char* name)
 /* merge_units: begin func_0036D380 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x14C]; unsigned char a14C; char pad2[0x13]; int* a160; } S36D380;
-int Hog_GetEntrySize(S36D380* o, int k)
+int cHogFile_GetBlockSize(S36D380* o, int k)
 {
     if (!o->a14C) return 0;
     return o->a160[k + 1] - o->a160[k];

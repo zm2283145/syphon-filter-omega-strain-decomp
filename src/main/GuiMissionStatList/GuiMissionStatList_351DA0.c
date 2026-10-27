@@ -27,7 +27,7 @@ E351 *std_copy_backward_MissionStats_copy_backward(E351 *first, E351 *last, E351
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int String_CopyCtor();                                  
+int std_basic_string_char_char_traits_char_ctor_basicstringR();                                  
 int std_vector_StatsRequirement_ctor(char * , char * );                    
 
 char * MissionStats_ctor(char * arg0, char * arg1) {
@@ -35,7 +35,7 @@ char * MissionStats_ctor(char * arg0, char * arg1) {
     char * var_v1;
     char * temp_s2;
 
-    String_CopyCtor();
+    std_basic_string_char_char_traits_char_ctor_basicstringR();
     var_a0 = arg0 + 0x10;
     var_v1 = arg1 + 0x10;
     F_(arg0, 0xC, unsigned char) = F_(arg1, 0xC, unsigned char);

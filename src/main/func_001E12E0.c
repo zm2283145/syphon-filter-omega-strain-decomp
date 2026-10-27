@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int value);
 
 /* push_back(value). */
 int std_vector_cCollisionEdgePtr_push_back(PtrVec* v, int value) {
@@ -16,7 +16,7 @@ int std_vector_cCollisionEdgePtr_push_back(PtrVec* v, int value) {
 
     count = v->count;
     data = v->data;
-    return PtrVec_Insert(v, data + count, 1, value);
+    return std_vector_pod_int_insert(v, data + count, 1, value);
 }
 
 Rel* std_vector_cCollisionEdgePtr_ctor(Rel* r) {
@@ -42,7 +42,7 @@ int cArray_cCollisionEdgePtr_PushBackActual(PtrVec* v, int value) {
 
     count = v->count;
     data = v->data;
-    return PtrVec_Insert(v, data + count, 1, value);
+    return std_vector_pod_int_insert(v, data + count, 1, value);
 }
 
 /* clear(): count = 0. */

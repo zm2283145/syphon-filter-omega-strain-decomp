@@ -21,8 +21,8 @@ extern unsigned char g_IsMultiplayer;
 extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
 extern char D_004E0140[];
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, void* target, int immediate);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 void cPlayerControls_NetSetManualTarget(void* s, void* actor, V* v);
 }
@@ -31,12 +31,12 @@ struct MsgB {
     void* vt; char base[0x1C]; unsigned char b20; char p21[3]; int type; unsigned char kind; char p29[3];
     MsgB() {}
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MsgB() { vt = D_004E0840; cMessage_dtor(this, 0); }
-    void Send(void* to) { b20 = 1; Event_Send(this, to, 1); }
-    void Init(int t, unsigned char k) { Event_Construct(this, g_ActorActionMsgClass); vt = D_004E0840; type = t; kind = k; }
+    void Send(void* to) { b20 = 1; QueueMessage_cMessageR_cSystemP_int(this, to, 1); }
+    void Init(int t, unsigned char k) { cMessage_ctor_cMessageNameR(this, g_ActorActionMsgClass); vt = D_004E0840; type = t; kind = k; }
 };
 struct MsgPt : MsgB { char p2C[4]; V pt; MsgPt(const V& v) { MsgPt* p = this; p->Init(0x39, 4); p->vt = D_004E0140; p->pt = v; } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MsgPt() {} };
 
-extern "C" void PlayerInput_AimViewPointAction(void* s, Cam* cam, void* actor)
+extern "C" void cPlayerControls_SetManualAimWeaponTargetInHuman(void* s, Cam* cam, void* actor)
 {
     CamView* cv = &cam->view;
     V pos = cv->pos;

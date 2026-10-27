@@ -6,7 +6,7 @@ static inline void VCp(V_910* pd, const V_910* ps) { asm volatile { lq ps, 0(ps)
 struct Node_910 { VPAD16(a) VPAD4(b) virtual void Update(); int pad4[3]; V_910 m[4]; unsigned char dirty; char pad51[0x1D0 - 0x51]; };
 struct Mdl_910 { char pad[0x14]; unsigned char hasSkel; char pad15[0xB]; Node_910* nodes; char pad24[4]; Node_910* root; };
 
-extern "C" V_910 Model_GetSkeletonNodePos(Mdl_910* self, int idx)
+extern "C" V_910 cSkeleton_GetBoneToWorldTranslation(Mdl_910* self, int idx)
 {
     if (self->hasSkel) {
         Node_910* r = self->root;

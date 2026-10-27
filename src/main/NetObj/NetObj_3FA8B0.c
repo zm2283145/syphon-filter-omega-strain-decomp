@@ -25,14 +25,14 @@ void std_tree_pair_int_value_compare_begin_void_2(Iter* out, Tree* t) {
 typedef struct { char pad[8]; int a; unsigned char flag; char pad2[3]; int b; } MapEntry;
 
 extern char D_0055C7A0[];
-extern MapEntry* NetRecvMap_Insert(void* map, int* key);
+extern MapEntry* std_tree_pair_int_value_compare_find_or_insert(void* map, int* key);
 
 /* Looks up key in the global map and stores a, b and flag in the entry. */
 void cNetObj_AddHumanToQueue(int a, int key, int b, unsigned char flag)
 {
-    NetRecvMap_Insert(D_0055C7A0, &key)->a = a;
-    NetRecvMap_Insert(D_0055C7A0, &key)->b = b;
-    NetRecvMap_Insert(D_0055C7A0, &key)->flag = flag;
+    std_tree_pair_int_value_compare_find_or_insert(D_0055C7A0, &key)->a = a;
+    std_tree_pair_int_value_compare_find_or_insert(D_0055C7A0, &key)->b = b;
+    std_tree_pair_int_value_compare_find_or_insert(D_0055C7A0, &key)->flag = flag;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003FA8C0 */
@@ -55,12 +55,12 @@ struct IterW_A940 { Iter_A940 i; };
 extern "C" {
 extern char D_0055C780[];
 extern unsigned char D_00572400;
-extern void DME_SendPlayGameMsg(void);
-extern Peer_A940* Player_GetCached(void);
+extern void cDME_SendPlayGame(void);
+extern Peer_A940* nGobjManager_GetPlayer(void);
 extern void std_map_int_netSystemField_begin(Iter_A940* out, void* map);
 extern void std_map_int_netSystemField_end(Iter_A940* out, void* map);
 extern void cAssocArray_int_netSystemField_Iterator_ctor(Iter_A940* out, Iter_A940* in);
-extern void Tree_Successor(Iter_A940* it);
+extern void std_red_black_tree_1_increment(Iter_A940* it);
 extern void cNetObj_Update(int a);
 void cNetObj_SendLocalSystems(int id);
 }
@@ -77,9 +77,9 @@ void cNetObj_SendLocalSystems(int id)
     Iter_A940 e1;
     D_0055C780[id] = 2;
     if (D_00572400) {
-        DME_SendPlayGameMsg();
+        cDME_SendPlayGame();
     }
-    self = Player_GetCached();
+    self = nGobjManager_GetPlayer();
     self->Notify(id);
     std_map_int_netSystemField_begin(&b1, D_0055C7A0);
     cAssocArray_int_netSystemField_Iterator_ctor(&b2, &b1);
@@ -90,7 +90,7 @@ void cNetObj_SendLocalSystems(int id)
             p->Notify(id);
         }
         cNetObj_Update(0);
-        Tree_Successor(&it);
+        std_red_black_tree_1_increment(&it);
     }
 }
 #pragma pop

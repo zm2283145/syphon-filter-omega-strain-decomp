@@ -27,12 +27,12 @@ DEFINE_RANGE_COPY_BACKWARD_ASSIGN(func_0035EE30, Elem60, cSplinedMotion_Scalar0T
 
 #include "GuiScoresEquip_types.h"
 
-extern AnimChannel* AnimChannelBase_CopyCtor(AnimChannel* self, AnimChannel* src);
+extern AnimChannel* cSplinedMotion_float_ctor_cSplinedMotionR(AnimChannel* self, AnimChannel* src);
 extern char D_004DA840[];   /* AnimChannel vtable */
 
 /* AnimChannel copy constructor (inline copy emitted in this unit). */
 AnimChannel* AnimChannel_CopyCtor_35EEA0(AnimChannel* self, AnimChannel* src) {
-    AnimChannelBase_CopyCtor(self, src);
+    cSplinedMotion_float_ctor_cSplinedMotionR(self, src);
     self->base.vtable = D_004DA840;
     self->wrap = src->wrap;
     return self;

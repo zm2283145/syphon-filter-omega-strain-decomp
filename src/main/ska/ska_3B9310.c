@@ -20,7 +20,7 @@ typedef union Str {
 typedef struct Alloc { char unused; } Alloc;
 
 extern "C" {
-Str* String_Replace(Str* s, unsigned int pos, unsigned int n, const char* first, const char* last, Alloc a);
+Str* std_basic_string_char_char_traits_char_do_replace(Str* s, unsigned int pos, unsigned int n, const char* first, const char* last, Alloc a);
 void Libc_Fprintf(int, const char*);
 void Libc_Abort(void);
 extern char* D_00489738;
@@ -47,7 +47,7 @@ extern "C" Str* std_basic_string_char_char_traits_char_replace_uint_uint_basicst
     }
     data += pos2;
     rem = len - pos2; n2 = Min(n2, rem);
-    return String_Replace(self, pos, n1, data, data + n2, a);
+    return std_basic_string_char_char_traits_char_do_replace(self, pos, n1, data, data + n2, a);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B9310(void) {}
@@ -97,8 +97,8 @@ static inline void merge_flush_func_003B9410(void) {}
 typedef struct LCNode_c7 { struct LCNode_c7* prev; struct LCNode_c7* next; int data; } LCNode_c7;
 typedef struct { LCNode_c7* node; } LCIter_c7;
 extern void std_list_deleter_voidPtr_end_void(LCIter_c7* out, void* list);
-extern LCIter_c7* List_InsertBefore(LCIter_c7* out, void* list, LCIter_c7* pos, int* value);
-void List_CopyRange(void* list, LCIter_c7 first, LCIter_c7 last) { LCNode_c7* n; for (n = first.node; n != last.node; n = n->next) { LCIter_c7 res; LCIter_c7 pos; std_list_deleter_voidPtr_end_void(&pos, list); List_InsertBefore(&res, list, &pos, &n->data); } }
+extern LCIter_c7* std_list_deleter_voidPtr_insert(LCIter_c7* out, void* list, LCIter_c7* pos, int* value);
+void List_CopyRange(void* list, LCIter_c7 first, LCIter_c7 last) { LCNode_c7* n; for (n = first.node; n != last.node; n = n->next) { LCIter_c7 res; LCIter_c7 pos; std_list_deleter_voidPtr_end_void(&pos, list); std_list_deleter_voidPtr_insert(&res, list, &pos, &n->data); } }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B94D0(void) {}
 #pragma pop /* merge_units */

@@ -8,14 +8,14 @@
 extern unsigned int D_004908FC;
 extern int D_004908F8;
 extern void rt_memory_free(int *);
-extern int Net_AllocZeroed(int *, unsigned long);
+extern int rt_memory_allocate_init_zero(int *, unsigned long);
 
 int rt_msg_client_set_scratch_buf_min_size(unsigned int n)
 {
     if (n == 0) return 2;
     if (D_004908FC < n) {
         if (D_004908F8 != 0) rt_memory_free(&D_004908F8);
-        if (Net_AllocZeroed(&D_004908F8, n)) return 8;
+        if (rt_memory_allocate_init_zero(&D_004908F8, n)) return 8;
         D_004908FC = n;
     }
     return 0;
@@ -35,10 +35,10 @@ extern int rt_msg_set_u2byte(unsigned char *, unsigned int);
 extern void *memcpy(void *, const void *, unsigned int);
 extern void *memset(void *, int, unsigned int);
 extern unsigned int KM_Encrypt(unsigned short, int, unsigned char *, unsigned int);
-extern int NetPacket_WritePrefix(unsigned char *, H *, volatile int *);
+extern int rt_msg_client_set_header(unsigned char *, H *, volatile int *);
 extern void rt_msg_set_u4byte(unsigned char *, unsigned int);
-extern int NetRing_Commit(void *, int);
-int NetConn_Flush(C *c)
+extern int rt_circ_buf_use(void *, int);
+int rt_msg_client_transfer_last_msg(C *c)
 {
     H hdr;
     volatile int x;
@@ -104,10 +104,10 @@ int NetConn_Flush(C *c)
     hdr.type = type;
     if (enc) hdr.type = type | 0x80;
     hdr.size = total;
-    r = NetPacket_WritePrefix(buf, &hdr, &x);
+    r = rt_msg_client_set_header(buf, &hdr, &x);
     if (r != 0) return r;
     if (enc == 1 && len != 0) rt_msg_set_u4byte(buf + 3, key);
-    if (NetRing_Commit(q, p - buf) != 0) return 0x15;
+    if (rt_circ_buf_use(q, p - buf) != 0) return 0x15;
     if ((unsigned int)(p - buf) > 0x248) return 2;
     m->len = 0;
     m->pending = 0;

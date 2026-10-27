@@ -42,19 +42,19 @@ static inline void merge_flush_func_001C7180(void) {}
  */
 
 
-extern int GObj_IdentityB(int handle);
-extern int Global_PlayMusic(int music, int object);
+extern int cGOBJ_SOBJ_convert(int handle);
+extern int nGameSound_PlayMusic(int music, int object);
 extern int Global_PlaySnd(int group, int sound);
 extern int Global_PlaySnd_2(int group, int sound, int object);
-extern int Global_StopMusic(int music, int object);
-extern int Global_StopSnd(int group, int sound);
-extern int Sound_StopForObject(int group, int sound, int object);
+extern int nGameSound_StopMusic(int music, int object);
+extern int nGameSound_StopSnd_eSndBank_charP(int group, int sound);
+extern int nGameSound_StopSnd_eSndBank_charP_cGOBJP(int group, int sound, int object);
 
 /* StopMusic(music, object) */
 int Script_StopMusic(SoundScriptArg* args) {
     volatile int arg = args[0].i; /* original stack temporary */
     int music = arg;
-    Global_StopMusic(music, GObj_IdentityB(args[1].i));
+    nGameSound_StopMusic(music, cGOBJ_SOBJ_convert(args[1].i));
     return 0;
 }
 
@@ -62,7 +62,7 @@ int Script_StopMusic(SoundScriptArg* args) {
 int Script_PlayMusic(SoundScriptArg* args) {
     volatile int arg = args[0].i; /* original stack temporary */
     int music = arg;
-    Global_PlayMusic(music, GObj_IdentityB(args[1].i));
+    nGameSound_PlayMusic(music, cGOBJ_SOBJ_convert(args[1].i));
     return 0;
 }
 
@@ -71,7 +71,7 @@ int Script_StopSnd(SoundScriptArg* args) {
     volatile int arg = args[1].i; /* original stack temporary */
     int group = args[0].s8;
     int sound = arg;
-    Sound_StopForObject(group, sound, GObj_IdentityB(args[2].i));
+    nGameSound_StopSnd_eSndBank_charP_cGOBJP(group, sound, cGOBJ_SOBJ_convert(args[2].i));
     return 0;
 }
 
@@ -80,14 +80,14 @@ int Script_PlaySnd(SoundScriptArg* args) {
     volatile int arg = args[1].i; /* original stack temporary */
     int group = args[0].s8;
     int sound = arg;
-    Global_PlaySnd_2(group, sound, GObj_IdentityB(args[2].i));
+    Global_PlaySnd_2(group, sound, cGOBJ_SOBJ_convert(args[2].i));
     return 0;
 }
 
 /* StopSnd(group, sound) without an object */
 int Script_StopSnd_2(SoundScriptArg* args) {
     volatile int sound = args[1].i; /* original stack temporary */
-    Global_StopSnd(args[0].s8, sound);
+    nGameSound_StopSnd_eSndBank_charP(args[0].s8, sound);
     return 0;
 }
 

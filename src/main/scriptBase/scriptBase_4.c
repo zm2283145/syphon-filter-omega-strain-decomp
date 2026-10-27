@@ -23,7 +23,7 @@ extern int strlen(const char* s); /* strlen */
 extern void ScriptFileBuff_put(Writer* w, int value);
 extern int ScriptFileBuff_charsToInts(Writer* w, int size);
 extern void ScriptFileBuff_expand(Writer* w, int words);
-extern void String_Copy(char* dst, const char* src);
+extern void Libc_Strcpy(char* dst, const char* src);
 
 /* Serializes the node name (length, padded string) and its kind byte. */
 void ClassDef_exportNames(NamedNode* node, Writer* w) {
@@ -34,7 +34,7 @@ void ClassDef_exportNames(NamedNode* node, Writer* w) {
     ScriptFileBuff_put(w, n);
     n = ScriptFileBuff_charsToInts(w, n);
     ScriptFileBuff_expand(w, n);
-    String_Copy((char*)w->cursor, name);
+    Libc_Strcpy((char*)w->cursor, name);
     w->cursor += n;
     ScriptFileBuff_put(w, node->kind);
 }

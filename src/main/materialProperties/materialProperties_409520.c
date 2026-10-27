@@ -46,10 +46,10 @@ Unk409580* cMaterialPropertiesTable_ctor(Unk409580* self) {
 typedef struct { int a[4]; } S409;
 typedef struct { int f0, f4, f8, fc, f10, f14, f18, f1c, f20, f24, f28, f2c; float f30; unsigned char b34; } O409;
 extern int String_CompareNoCase(char*, char*);
-extern void String_CtorCStr_13B480(S409*, char*);
-extern void String_AssignString(void*, S409*);
+extern void std_basic_string_char_char_traits_char_ctor_charP(S409*, char*);
+extern void std_basic_string_char_char_traits_char_assign_basicstringR(void*, S409*);
 extern void String_Dtor(S409*, int);
-O409* MaterialProp_Build(O409* o, char* a, int b, char* c, char* d, float f, unsigned char g) {
+O409* cMaterialProperties_MatPropInfo_ctor_charP_int_charP_charP_etc(O409* o, char* a, int b, char* c, char* d, float f, unsigned char g) {
     S409 s1;
     S409 s2;
     S409 s3;
@@ -67,8 +67,8 @@ O409* MaterialProp_Build(O409* o, char* a, int b, char* c, char* d, float f, uns
     if (a && !String_CompareNoCase(a, "none")) {
         o->fc = -2;
     } else {
-        String_CtorCStr_13B480(&s1, a);
-        String_AssignString(o, &s1);
+        std_basic_string_char_char_traits_char_ctor_charP(&s1, a);
+        std_basic_string_char_char_traits_char_assign_basicstringR(o, &s1);
         String_Dtor(&s1, 0);
         o->fc = -1;
     }
@@ -78,15 +78,15 @@ O409* MaterialProp_Build(O409* o, char* a, int b, char* c, char* d, float f, uns
         o->f10 = -1;
     } else {
         o->f10 = b;
-        String_CtorCStr_13B480(&s2, c);
-        String_AssignString(&o->f14, &s2);
+        std_basic_string_char_char_traits_char_ctor_charP(&s2, c);
+        std_basic_string_char_char_traits_char_assign_basicstringR(&o->f14, &s2);
         String_Dtor(&s2, 0);
     }
     if (d && !String_CompareNoCase(d, "none")) {
         o->f2c = -2;
     } else {
-        String_CtorCStr_13B480(&s3, d);
-        String_AssignString(&o->f20, &s3);
+        std_basic_string_char_char_traits_char_ctor_charP(&s3, d);
+        std_basic_string_char_char_traits_char_assign_basicstringR(&o->f20, &s3);
         String_Dtor(&s3, 0);
         o->f2c = -1;
     }
@@ -97,7 +97,7 @@ O409* MaterialProp_Build(O409* o, char* a, int b, char* c, char* d, float f, uns
 
 /* merge_units: begin func_00409750 */
 #pragma push /* merge_units */
-Unk409750* MaterialProp_SetDefaults(Unk409750* self) {
+Unk409750* cMaterialProperties_MatPropInfo_ctor_void(Unk409750* self) {
     self->unk00 = 0;
     self->unk04 = 0;
     self->unk08 = 0;
@@ -142,6 +142,6 @@ DEFINE_TREE_FIND(std_tree_pair_cString_value_compare_find_cStringR_4, std_basic_
 #include "vector_insert_fill_obj.h"
 
 extern "C" { char D_004BEBB0[] = "vector::insert length error\n"; }
-DEFINE_VECTOR_INSERT_FILL_OBJ(std_vector_imp_cMaterialProperties_insert, 0x124, 0x542A1, 0x2A150, D_004BEBB0, D_004BEC98, 0x5C, Mem_PlacementNew, cMaterialProperties_ctor, std_copy_backward_cMaterialProperties_copy_backward, std_fill_n_cMaterialProperties_int_fill_n, std_swap_vectordeleterR_vectordeleterR_47, std_vector_deleter_cMaterialProperties_dtor)
+DEFINE_VECTOR_INSERT_FILL_OBJ(std_vector_imp_cMaterialProperties_insert, 0x124, 0x542A1, 0x2A150, D_004BEBB0, D_004BEC98, 0x5C, opNew_uint_voidP, cMaterialProperties_ctor, std_copy_backward_cMaterialProperties_copy_backward, std_fill_n_cMaterialProperties_int_fill_n, std_swap_vectordeleterR_vectordeleterR_47, std_vector_deleter_cMaterialProperties_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00409940 */

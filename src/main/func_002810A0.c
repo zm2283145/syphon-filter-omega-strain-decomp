@@ -15,8 +15,8 @@ struct Flag { int v; };
 extern "C" {
 void Camera_ConstructFov(void*, int*, int, float);
 Flag* cBitArray_9_ctor(Flag*, int);
-V* Vec4_GetZero(void);
-void Vec4_Assign(V*, V*);
+V* cVector_GetZero(void);
+void cVector_ctor_cVectorR(V*, V*);
 extern char D_004DCDE0[];
 extern float D_004A9328;
 extern M g_IdentityMatrix;
@@ -53,7 +53,7 @@ struct PlayerCamera {
     V vD90;
     M mDA0;
 };
-extern "C" PlayerCamera* PlayerCamera_Construct(PlayerCamera* self, int* k, float fov)
+extern "C" PlayerCamera* cPlayerCamera_ctor(PlayerCamera* self, int* k, float fov)
 {
     Camera_ConstructFov(self, k, 0, fov);
     self->vtbl = D_004DCDE0;
@@ -64,9 +64,9 @@ extern "C" PlayerCamera* PlayerCamera_Construct(PlayerCamera* self, int* k, floa
     self->fD18 = 0;
     self->fD1C = 0;
     self->fD20 = 0;
-    Vec4_Assign(&self->vD40, Vec4_GetZero());
-    Vec4_Assign(&self->vD50, Vec4_GetZero());
-    Vec4_Assign(&self->vD60, Vec4_GetZero());
+    cVector_ctor_cVectorR(&self->vD40, cVector_GetZero());
+    cVector_ctor_cVectorR(&self->vD50, cVector_GetZero());
+    cVector_ctor_cVectorR(&self->vD60, cVector_GetZero());
     self->fD70 = D_004A9328;
     self->fD74 = 0;
     self->fD78 = 0;

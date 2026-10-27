@@ -91,7 +91,7 @@ int rt_comm_destroy(int a)
 extern int rt_comm_is_connected(int, unsigned char *);
 extern int rt_comm_platform_send(int, int, unsigned short, unsigned short *);
 extern int rt_comm_metric_add_data(unsigned short, int, int);
-int Socket_WriteConnected(int a, int b, unsigned short c, unsigned short *out)
+int rt_comm_send(int a, int b, unsigned short c, unsigned short *out)
 {
     unsigned char ok;
     char *p = 0;
@@ -122,7 +122,7 @@ int Socket_WriteConnected(int a, int b, unsigned short c, unsigned short *out)
 
 /* merge_units: begin func_002F5F20 */
 extern int rt_comm_platform_send_to(int, int, unsigned short, int, unsigned short, unsigned short *);
-int Socket_WriteAddressed(int a, int b, unsigned short c, int d, unsigned short e, unsigned short *out)
+int rt_comm_send_to(int a, int b, unsigned short c, int d, unsigned short e, unsigned short *out)
 {
     char *p = 0;
     int r;

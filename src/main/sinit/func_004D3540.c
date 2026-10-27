@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0051EE68;
 
-void StaticInit_NetCreateBlastMsgName(void) {
+void StaticInit_NetCopyMsg(void) {
     D_0051EE68 = "NetCreateBlastMsg";
 }

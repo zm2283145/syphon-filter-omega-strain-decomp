@@ -11,7 +11,7 @@ static inline void Tick_279630(Item_279630* it, float dt) {
     }
     { Ctl_279630* c = it->ctl; if (c && !c->Active()) it->t = -2.0f; }
 }
-extern "C" void DecalMgr_Update(Mgr_279630* m, float dt) {
+extern "C" void cDecalMan_NextFrame(Mgr_279630* m, float dt) {
     { int i; for (i = 0; i < m->na; i++) Tick_279630(m->a[i], dt); }
     { int i; for (i = 0; i < m->nb; i++) Tick_279630(m->b[i], dt); }
 }

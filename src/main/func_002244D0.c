@@ -2,7 +2,7 @@
 
 extern int cNIEventBase_GetVUMInTree(int);
 
-int ZoneMgr_GetMemberModel(int a0) {
+int IsVUM(int a0) {
     int a1, v0, v1;
     int cond;
 

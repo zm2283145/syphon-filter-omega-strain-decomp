@@ -15,12 +15,12 @@
 extern char D_00559F20[];
 extern char* strrchr(const char* s, int c);
 extern char* strchr(const char* s, int c);
-char* Path_GetBaseName(const char* path)
+char* stripPathAndExt(const char* path)
 {
     const char* s = strrchr(path, '\\');
     char* d;
     path = s ? s + 1 : path;
-    String_Copy(D_00559F20, path);
+    Libc_Strcpy(D_00559F20, path);
     d = strchr(D_00559F20, '.');
     if (d)
         *d = 0;
@@ -37,20 +37,20 @@ static inline void merge_flush_func_003E1540(void) {}
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int ScriptMgr_LoadScript(int, int, int);                
-char * ScriptMgr_FindResource();                        
+int cScriptInterpreter_LoadScript(int, int, int);                
+char * cScriptInterpreter_findScriptObj();                        
 unsigned int D_004938D0[2] = { 0x1, 0x0 };
 
-int ScriptMgr_LookupResource(int arg0, int arg1, int *arg2, int *arg3) {
+int cScriptInterpreter_FindScriptObj(int arg0, int arg1, int *arg2, int *arg3) {
     char * var_s0;
 
     if ((*(unsigned char*)D_004938D0) != 0) {
-        var_s0 = ScriptMgr_FindResource();
+        var_s0 = cScriptInterpreter_findScriptObj();
         if (var_s0 != NULL) {
             *arg2 = F_(var_s0, 0x38, int);
             *arg3 = F_(var_s0, 0x48, int);
-        } else if (ScriptMgr_LoadScript(arg0, arg1, 0) != 0) {
-            var_s0 = ScriptMgr_FindResource(arg0, arg1);
+        } else if (cScriptInterpreter_LoadScript(arg0, arg1, 0) != 0) {
+            var_s0 = cScriptInterpreter_findScriptObj(arg0, arg1);
             if (var_s0 != NULL) {
                 *arg2 = F_(var_s0, 0x38, int);
                 *arg3 = F_(var_s0, 0x48, int);

@@ -95,15 +95,15 @@ struct Path {
     Pt*& P() { return p; }
 };
 extern "C" {
-V* Vec4_Set(V* v, float x, float y, float z, float w);
-void Vec4_NormalizeXYZ_132060(V* out, V* v);
-void Vec4_Cross(V* out, V* a, V* b);
-V* Vec4_NormalizeXYZInPlace(V* v);
-V* Vec4_Assign(V* d, V* s);
-int Vec4_IsZeroXYZ(V* v);
-void Mtx_FromRowsAndTranslation(M* m, V* a, V* b, V* c, V* t);
-void Mtx_FrameFromAxis(M* m, V* axis);
-void Mtx_SetIdentity(M* m);
+V* cVector_ctor_float_float_float_float(V* v, float x, float y, float z, float w);
+void cVector_GetNormalized_void(V* out, V* v);
+void cVector_Cross(V* out, V* a, V* b);
+V* cVector_Normalize_void(V* v);
+V* cVector_ctor_cVectorR(V* d, V* s);
+int cVector_IsZeroXYZ(V* v);
+void cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(M* m, V* a, V* b, V* c, V* t);
+void cMatrix_MakeLookAtMatrix_cVectorR(M* m, V* axis);
+void cMatrix_SetUnit(M* m);
 }
 extern "C" void cAirTaser_PointsToWorld(Path* s, V* org)
 {
@@ -118,20 +118,20 @@ extern "C" void cAirTaser_PointsToWorld(Path* s, V* org)
     up.Set(0.0f, 0.0f, 1.0f, 1.0f);
     {
         V c;
-    Vec4_Cross(&c, &axis, &up);
-    if (!Vec4_IsZeroXYZ(&c)) {
+    cVector_Cross(&c, &axis, &up);
+    if (!cVector_IsZeroXYZ(&c)) {
         V f;
         V r;
         V u;
         V w;
-        Vec4_NormalizeXYZ_132060(&f, &axis);
-        Vec4_Assign(&r, Vec4_NormalizeXYZInPlace(&c));
-        Vec4_Cross(&u, &r, &f);
-        Mtx_FromRowsAndTranslation(&s->m, &r, &f, &u, Vec4_Set(&w, 0.0f, 0.0f, 0.0f, 1.0f));
-    } else if (!Vec4_IsZeroXYZ(&axis)) {
-        Mtx_FrameFromAxis(&s->m, &axis);
+        cVector_GetNormalized_void(&f, &axis);
+        cVector_ctor_cVectorR(&r, cVector_Normalize_void(&c));
+        cVector_Cross(&u, &r, &f);
+        cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(&s->m, &r, &f, &u, cVector_ctor_float_float_float_float(&w, 0.0f, 0.0f, 0.0f, 1.0f));
+    } else if (!cVector_IsZeroXYZ(&axis)) {
+        cMatrix_MakeLookAtMatrix_cVectorR(&s->m, &axis);
     } else {
-        Mtx_SetIdentity(&s->m);
+        cMatrix_SetUnit(&s->m);
     }
     }
     V* t = &s->m.t; *t = s->P()[0].pos;

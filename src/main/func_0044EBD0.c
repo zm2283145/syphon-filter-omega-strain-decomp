@@ -23,9 +23,9 @@ typedef struct Lobby44 {
     char pad120[0x2418 - 0x120];
     char name[1];
 } Lobby44;
-void String_Copy(char *, char *);
-int Lobby_GetTime(void);
-Ent44 *LobbyArray_At(List44 *, int);
+void Libc_Strcpy(char *, char *);
+int SFOLobby_GetMillisecs(void);
+Ent44 *SFOLobbyList_GetSlot(List44 *, int);
 Obj44 *SFOLobby_FindAgentData(Lobby44 *, int);
 void MediusGetGameInfo(char *, void *);
 extern int D_00497860;
@@ -45,7 +45,7 @@ inline Ent44 *Find44(Lobby44 *l, int id) {
     int j;
     Ent44 *e;
     for (j = 0; j < n; j++) {
-        e = LobbyArray_At(&l->list, j);
+        e = SFOLobbyList_GetSlot(&l->list, j);
         if (id == e->id) {
             return e;
         }
@@ -70,13 +70,13 @@ void SFOLobby_CollectGameInfo(Lobby44 *arg0, List44 *arg1) {
     if (arg1 == NULL || arg1->count == 0) {
         return;
     }
-    now = Lobby_GetTime();
+    now = SFOLobby_GetMillisecs();
     if (now - D_00585E50 < D_00497860) {
         return;
     }
     D_00585E50 = now;
     for (i = 0; i < arg1->count; i++) {
-        e = LobbyArray_At(arg1, i);
+        e = SFOLobbyList_GetSlot(arg1, i);
         st = e->state;
         eid = e->id;
         if (st == 3) {
@@ -102,8 +102,8 @@ void SFOLobby_CollectGameInfo(Lobby44 *arg0, List44 *arg1) {
         if (found == NULL || D_00497878 < age) {
             id = obj->key;
             if (id != 0) {
-                String_Copy(msg.a, &D_004C0EF0);
-                String_Copy(msg.b, arg0->name);
+                Libc_Strcpy(msg.a, &D_004C0EF0);
+                Libc_Strcpy(msg.b, arg0->name);
                 msg.id = id;
                 MediusGetGameInfo(msg.a, SFOLobby_Callback_RefreshGameInfo);
             }

@@ -6,7 +6,7 @@
 #include "types.h"
 #include "playerControls_types.h"
 
-extern int Vector_Insert_1BE090(Pair8Vec* v, Pair8* pos, int n, Pair8* value);
+extern int std_vector_imp_cTargetZRotationStackSlot_insert(Pair8Vec* v, Pair8* pos, int n, Pair8* value);
 
 int cHumanMotionParams_GetTargetZRotation_TopOfStackId(ControlsUnk5C* self) {
     return self->unk5C + -1;
@@ -14,7 +14,7 @@ int cHumanMotionParams_GetTargetZRotation_TopOfStackId(ControlsUnk5C* self) {
 
 /* push_back on a vector of 8-byte elements. */
 int cArray_cTargetZRotationStackSlot_PushBackActual(Pair8Vec* v, Pair8* value) {
-    return Vector_Insert_1BE090(v, v->data + v->count, 1, value);
+    return std_vector_imp_cTargetZRotationStackSlot_insert(v, v->data + v->count, 1, value);
 }
 
 OptFloat* cHumanMotionParams_cTargetZRotationStackSlot_ctor(OptFloat* self, float value) {

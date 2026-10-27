@@ -32,7 +32,7 @@ struct Scene_3C1 {
 // VU0 macro-mode: load triangle corners + scale into a fixed vf register group
 #define LOADTRI(t, S) { int tmp; __asm__ volatile(S : "=&r"(tmp) : "r"(&t->p0), "r"(&t->p1), "r"(&t->p2), "f"(t->n.w) : "memory"); }
 
-extern "C" void ColGather_ComputeNormals(Gath* self, Scene_3C1* scene)
+extern "C" void cCollisionModelList_CalculateFaceNormals(Gath* self, Scene_3C1* scene)
 {
     It_3C1 it = scene->Begin();
     It_3C1 end = scene->End();

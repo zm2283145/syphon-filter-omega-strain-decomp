@@ -1,5 +1,5 @@
 #pragma cplusplus on
-/* WaterFx_PointSplash: claim a free splash record slot, construct it, and initialise it at pos. */
+/* cWaterFx_AddBody_cVectorR_float_float: claim a free splash record slot, construct it, and initialise it at pos. */
 typedef int u128_t __attribute__((mode(TI)));
 struct Vec4_2B2B70 {
     float x, y, z, w;
@@ -32,14 +32,14 @@ struct WaterFx {
 extern "C" {
 extern char D_004ABFF0[];
 void *opNew_uint_int_charP_int(int size, int pool, char *file, int line);
-WaterFxRecord *WaterFxRecord_Construct(void *p);
+WaterFxRecord *cWaterFx_tBody_ctor(void *p);
 void WaterFx_InitSplash(void *a, Vec4_2B2B70 *pos, float f, float g);
-void WaterFx_PointSplash(WaterFx *fx, Vec4_2B2B70 *pos, float a, float b);
+void cWaterFx_AddBody_cVectorR_float_float(WaterFx *fx, Vec4_2B2B70 *pos, float a, float b);
 }
 
 static inline void SetOwner_2B2B70(WaterFxRecord *r, Owner_2B2B70 *o) { r->f0 = o; int t; const int& v = o ? o->id : (t = -1); r->f4 = v; }
 
-void WaterFx_PointSplash(WaterFx *fx, Vec4_2B2B70 *pos, float a, float b)
+void cWaterFx_AddBody_cVectorR_float_float(WaterFx *fx, Vec4_2B2B70 *pos, float a, float b)
 {
     WaterFxRecord *rec;
     int slot;
@@ -55,7 +55,7 @@ void WaterFx_PointSplash(WaterFx *fx, Vec4_2B2B70 *pos, float a, float b)
             void *p;
             slot = i;
             p = opNew_uint_int_charP_int(0xA0, 0, D_004ABFF0, 0x1AA);
-            if (p) p = WaterFxRecord_Construct(p);
+            if (p) p = cWaterFx_tBody_ctor(p);
             fx->recs[slot] = (WaterFxRecord *)p;
             fx->count++;
             break;

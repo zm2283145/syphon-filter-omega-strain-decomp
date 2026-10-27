@@ -10,30 +10,30 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int Event_Construct(char **, char *);                       
-int ObjMarkerMgr_Remove(int, char * , int);              
-int Transport_Send(int, char **, int, int);                    
+int cMessage_ctor_cMessageNameR(char **, char *);                       
+int cHudTargetManager_Remove(int, char * , int);              
+int cNetObj_SendMessage_int_cMessageR_int_int(int, char **, int, int);                    
 int cMessage_dtor(char **, int);                           
 extern char D_004DE650;
 extern int g_Hud;
 extern char D_0052ACF8;
 extern unsigned char g_IsMultiplayer;
 
-void cNetRemoveHudObjectiveMsg_Send(char * arg0, int arg1) {
+void nHudTargets_RemoveHudObjective(char * arg0, int arg1) {
     struct { char * f30[8]; signed char f50[4]; int f54[3]; } sl;
     int temp_s0;
 
     if ((arg1 == 0) && (g_IsMultiplayer != 0)) {
         temp_s0 = F_(arg0, 0xC, int);
-        Event_Construct(sl.f30, &D_0052ACF8);
+        cMessage_ctor_cMessageNameR(sl.f30, &D_0052ACF8);
         sl.f30[0] = &D_004DE650;
         sl.f50[0] = 4;
         sl.f54[0] = temp_s0;
-        Transport_Send(0, sl.f30, -1, -1);
+        cNetObj_SendMessage_int_cMessageR_int_int(0, sl.f30, -1, -1);
         sl.f30[0] = &D_004DE650;
         cMessage_dtor(sl.f30, 0);
     }
-    ObjMarkerMgr_Remove(g_Hud + 0x90, arg0 + 0xC, 1);
+    cHudTargetManager_Remove(g_Hud + 0x90, arg0 + 0xC, 1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00275030 */
@@ -53,9 +53,9 @@ extern char* g_Hud;
 #define g_Hud (*(char **)&g_Hud) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Event_Construct(HudObjMsg_2750E0* m, void* type);
+extern void cMessage_ctor_cMessageNameR(HudObjMsg_2750E0* m, void* type);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) ((void)Event_Construct((char * *)(a0), (char *)(a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) ((void)cMessage_ctor_cMessageNameR((char * *)(a0), (char *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(HudObjMsg_2750E0* m, int f);
@@ -63,19 +63,19 @@ extern void cMessage_dtor(HudObjMsg_2750E0* m, int f);
 #define cMessage_dtor(a0, a1) ((void)cMessage_dtor((char * *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Transport_Send(int, HudObjMsg_2750E0*, int, int);
+extern void cNetObj_SendMessage_int_cMessageR_int_int(int, HudObjMsg_2750E0*, int, int);
 #endif /* merge_units */
-#define Transport_Send(a0, a1, a2, a3) ((void)Transport_Send((a0), (char * *)(a1), (a2), (a3))) /* merge_units */
+#define cNetObj_SendMessage_int_cMessageR_int_int(a0, a1, a2, a3) ((void)cNetObj_SendMessage_int_cMessageR_int_int((a0), (char * *)(a1), (a2), (a3))) /* merge_units */
 
-extern char* Loc_LookupText(char*);
-extern int Loc_FindKeyThunk(char*);
+extern char* nGlobalization_GetString_charP(char*);
+extern int nGlobalization_GetStringIndex(char*);
 extern void printf(char*);
-extern void ObjMarkerMgr_Insert(void*, int*, char*, char*);
+extern void cHudTargetManager_AddObjective_cObjectIdR_charP_charP(void*, int*, char*, char*);
 }
 
-extern "C" void Hud_AddObjective(HudObjGObj_2750E0* obj, char* a, char* b, int quiet)
+extern "C" void nHudTargets_AddHudObjective(HudObjGObj_2750E0* obj, char* a, char* b, int quiet)
 {
-    char* text = Loc_LookupText(a);
+    char* text = nGlobalization_GetString_charP(a);
     if (!text || !*text) {
         printf(D_004A8F80);
         return;
@@ -84,23 +84,23 @@ extern "C" void Hud_AddObjective(HudObjGObj_2750E0* obj, char* a, char* b, int q
         int marker = obj->marker;
         HudObjMsg_2750E0 m;
         HudObjMsg_2750E0* p = &m;
-        Event_Construct(p, D_0051F098);
+        cMessage_ctor_cMessageNameR(p, D_0051F098);
         p->vt = D_004DE280;
         p->w24 = marker;
         p->b28 = 1;
-        p->key0 = a ? Loc_FindKeyThunk(a) : -1;
-        p->key1 = b ? Loc_FindKeyThunk(b) : -1;
+        p->key0 = a ? nGlobalization_GetStringIndex(a) : -1;
+        p->key1 = b ? nGlobalization_GetStringIndex(b) : -1;
         m.kind = 4;
-        Transport_Send(0, &m, -1, -1);
+        cNetObj_SendMessage_int_cMessageR_int_int(0, &m, -1, -1);
         m.vt = D_004DE280;
         cMessage_dtor(&m, 0);
     }
-    ObjMarkerMgr_Insert(g_Hud + 0x90, &obj->marker, text, b);
+    cHudTargetManager_AddObjective_cObjectIdR_charP_charP(g_Hud + 0x90, &obj->marker, text, b);
 }
 #undef g_Hud /* merge_units */
-#undef Event_Construct /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
 #undef cMessage_dtor /* merge_units */
-#undef Transport_Send /* merge_units */
+#undef cNetObj_SendMessage_int_cMessageR_int_int /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002750E0 */
 

@@ -27,11 +27,11 @@ int lgAudResumePlayback(int device)
 
 /* merge_units: begin func_00325D48 */
 /*
- * lgAudSetLevel0D/0E: RPC 0xD/0xE with two byte parameters; the game sends
+ * lgAudSetPlaybackVolume/0E: RPC 0xD/0xE with two byte parameters; the game sends
  * (dev, 0, 0x58) and (dev, 0, 0x15) right after lgAudOpen. Real names unknown.
  */
 extern char D_004B8318[]; /* "lgAudStopPlayback: rpc call failed\n" (library bug) */
-int lgAudSetLevel0D(int device, unsigned char a, unsigned char b)
+int lgAudSetPlaybackVolume(int device, unsigned char a, unsigned char b)
 {
     int ret;
     if (lgAud_sema == -1)
@@ -55,7 +55,7 @@ int lgAudSetLevel0D(int device, unsigned char a, unsigned char b)
 /* merge_units: end func_00325D48 */
 
 /* merge_units: begin func_00325E40 */
-int lgAudSetLevel0E(int device, unsigned char a, unsigned char b)
+int lgAudSetRecordingVolume(int device, unsigned char a, unsigned char b)
 {
     int ret;
     if (lgAud_sema == -1)
@@ -83,7 +83,7 @@ int lgAudSetLevel0E(int device, unsigned char a, unsigned char b)
  * Waits for (poll == 0) or polls (poll != 0) the pending async call.
  * Returns nonzero while it is still busy; *result gets the async return code.
  */
-int lgAudSync(int poll, int *result)
+int lgAudASync(int poll, int *result)
 {
     int r;
     if (lgAud_sema == -1)

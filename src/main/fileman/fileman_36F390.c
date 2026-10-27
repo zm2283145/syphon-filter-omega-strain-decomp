@@ -18,15 +18,15 @@ int cArray_cXformNodePtr_ConstIterator_opNe(It* a, It* b);
 void** cArray_cXformNodePtr_ConstIterator_opMul(It* it);
 void cXformNode_SetNeedsUpdate(void* p);
 void cArray_cXformNodePtr_ConstIterator_opInc(It* it);
-void PtrVector_Resize(void* v, int n, int* fill);
+void std_vector_pod_int_resize(void* v, int n, int* fill);
 void std_vector_cXformNodePtr_push_back(void* v, struct Xform** p);
-M* Mtx_Transpose3x3(M* m);
-int Mtx_IsTranslationZero(M* m);
+M* cMatrix_InvertRot(M* m);
+int cMatrix_IsZeroTranslation(M* m);
 V* func_00133EC0(M* m);
-void Vec4_Assign(V* d, V* s);
-V* Vec3_Negate(V* a);
-V* Mtx_TransformByTranspose(V* a, M* b);
-void Mtx_SetTranslation(M* m, V* v);
+void cVector_ctor_cVectorR(V* d, V* s);
+V* cVector_NegateXYZ(V* a);
+V* cVector_Rotate_cMatrixR(V* a, M* b);
+void cMatrix_SetTranslation(M* m, V* v);
 }
 struct XVec { int cap; int size; struct Xform** data; };
 struct Xform {
@@ -55,7 +55,7 @@ struct Xform {
         }
     }
 };
-extern "C" void Xform_Attach(Xform* x, Xform* parent, int keep)
+extern "C" void cXformNode_SetParent(Xform* x, Xform* parent, int keep)
 {
     Xform* p;
     Xform* self;

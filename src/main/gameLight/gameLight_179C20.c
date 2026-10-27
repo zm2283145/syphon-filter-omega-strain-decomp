@@ -52,8 +52,8 @@ extern LightFn_e1 D_004D9240[];
 extern LightFn_e1 D_004D9280[];
 extern char g_LevelLightsDirty;
 extern char g_LightMgr[];
-extern "C" void LightMgr_RemoveFromTable(void*, Light_e1*);
-extern "C" Light_e1* DirLight_Destruct(Light_e1* self, short reg)
+extern "C" void cLightMan_RemoveLight(void*, Light_e1*);
+extern "C" Light_e1* cParallelLight_dtor(Light_e1* self, short reg)
 {
     if (self != 0) {
         self->vt = D_004DA070;
@@ -67,7 +67,7 @@ extern "C" Light_e1* DirLight_Destruct(Light_e1* self, short reg)
             }
         }
         if (reg > 0) {
-            LightMgr_RemoveFromTable(g_LightMgr, self);
+            cLightMan_RemoveLight(g_LightMgr, self);
         }
     }
     return self;

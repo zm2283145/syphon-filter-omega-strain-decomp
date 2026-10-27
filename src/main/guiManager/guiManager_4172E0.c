@@ -22,15 +22,15 @@ DEFINE_BASE_DTOR_CHAIN(GuiAnimationTrack_dtor, String_Dtor)
 #include "vslot_classes.h"
 
 typedef struct { char pad[4]; VSlots67* ctl; char p1[0x1C]; void* res; } Obj_417340;
-extern "C" void IeElement_SetShown(void*, int);
+extern "C" void cInterfaceElement_Activate(void*, int);
 extern "C" void cInterfaceElement_Render(void*, int);
 
-extern "C" void GuiInterfaceDecorator_Draw(Obj_417340* o)
+extern "C" void GuiInterfaceDecorator_onRender(Obj_417340* o)
 {
     if (o->res) {
-        IeElement_SetShown(o->res, 1);
+        cInterfaceElement_Activate(o->res, 1);
         cInterfaceElement_Render(o->res, 0);
-        IeElement_SetShown(o->res, 0);
+        cInterfaceElement_Activate(o->res, 0);
     }
     o->ctl->slot10();
 }
@@ -74,12 +74,12 @@ struct Self_4173B0 {
 
 extern "C" {
 E_4173B0* GuiInterfaceDecorator_FindEvent(Self_4173B0* o, char* name);
-int GuiInterfaceDecorator_FireEvent(Self_4173B0* o, char* name);
-void IeElement_UpdateAnimation(Inst_4173B0* i, float t);
-void IeElement_EvaluateAt(Inst_4173B0* i, float t);
-void IeElement_Fade(Inst_4173B0* i, float t);
-void IeElement_PlayRange(Inst_4173B0* i, float a, float b, int f);
-void IeElement_SetMatrix(Inst_4173B0* i, V4_4173B0* v);
+int GuiInterfaceDecorator_StartAnimation(Self_4173B0* o, char* name);
+void cAnimator_NextFrame(Inst_4173B0* i, float t);
+void viBufGetTs(Inst_4173B0* i, float t);
+void cAnimator_AnimateTo(Inst_4173B0* i, float t);
+void cAnimator_StartAnimation(Inst_4173B0* i, float a, float b, int f);
+void cInterfaceElement_SetView(Inst_4173B0* i, V4_4173B0* v);
 }
 
 /* GCC-style volatile asm quad copies (lq/sq only): MW does not CSE across them, so the
@@ -89,7 +89,7 @@ static inline void GC1(void* d, const void* s) { __int128 q; __asm__ volatile("l
 static inline void GC1L(void* d, const void* s) { const void* ss = s; void* dd = d; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(dd), "r"(ss) : "memory"); }
 static inline float Yv(E_4173B0* e) { return e->y; }
 static inline float Tm(Inst_4173B0* i) { return i->t; }
-extern "C" bool GuiInterfaceDecorator_OnEvent(Self_4173B0* self, int a1, unsigned short msg, int p1, int p2)
+extern "C" bool GuiInterfaceDecorator_onMessage(Self_4173B0* self, int a1, unsigned short msg, int p1, int p2)
 {
     switch (msg - 4) {
     case 11: {
@@ -101,14 +101,14 @@ extern "C" bool GuiInterfaceDecorator_OnEvent(Self_4173B0* self, int a1, unsigne
 
     }
     case 2:
-        GuiInterfaceDecorator_FireEvent(self, (char*)p1);
+        GuiInterfaceDecorator_StartAnimation(self, (char*)p1);
         return 0;
     case 1:
         if (p1) *(Inst_4173B0**)p1 = self->inst;
         return 1;
     case 3:
         if (p1 == 0 || 0.0f == *(float*)p1) return 1;
-        if (self->inst) IeElement_UpdateAnimation(self->inst, *(float*)p1);
+        if (self->inst) cAnimator_NextFrame(self->inst, *(float*)p1);
         return 0;
     case 5:
         if (p1 && self->inst) *(float*)p1 = self->inst->t;
@@ -132,21 +132,21 @@ extern "C" bool GuiInterfaceDecorator_OnEvent(Self_4173B0* self, int a1, unsigne
         if (self->inst == 0) break;
         switch (msg) {
         case 10:
-            IeElement_EvaluateAt(self->inst, p1);
+            viBufGetTs(self->inst, p1);
         case 11:
-            IeElement_Fade(self->inst, p1);
+            cAnimator_AnimateTo(self->inst, p1);
             break;
         case 12:
-            IeElement_EvaluateAt(self->inst, p1);
-            IeElement_Fade(self->inst, p2);
+            viBufGetTs(self->inst, p1);
+            cAnimator_AnimateTo(self->inst, p2);
             break;
         case 13:
-            if (self->inst->t < p1 || self->inst->t > p2) { Inst_4173B0* volatile* pv = &self->inst; IeElement_EvaluateAt(*pv, p1); }
-            IeElement_PlayRange(self->inst, p1, p2, 0);
+            if (self->inst->t < p1 || self->inst->t > p2) { Inst_4173B0* volatile* pv = &self->inst; viBufGetTs(*pv, p1); }
+            cAnimator_StartAnimation(self->inst, p1, p2, 0);
             break;
         case 14:
-            if (self->inst->t < p1 || self->inst->t > p2) { Inst_4173B0* volatile* pv = &self->inst; IeElement_EvaluateAt(*pv, p1); }
-            IeElement_PlayRange(self->inst, p1, p2, 1);
+            if (self->inst->t < p1 || self->inst->t > p2) { Inst_4173B0* volatile* pv = &self->inst; viBufGetTs(*pv, p1); }
+            cAnimator_StartAnimation(self->inst, p1, p2, 1);
             break;
         }
         self->cur = 0;
@@ -159,7 +159,7 @@ extern "C" bool GuiInterfaceDecorator_OnEvent(Self_4173B0* self, int a1, unsigne
         v.x = (float)p1 + self->base->W() / 2.0f;
         v.z = (float)p2 - self->base->H() / 2.0f;
         GC1(&self->v60, &v);
-        if (self->inst) IeElement_SetMatrix(self->inst, &self->v30);
+        if (self->inst) cInterfaceElement_SetView(self->inst, &self->v30);
         return 1;
     }
     }

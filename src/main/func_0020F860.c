@@ -17,7 +17,7 @@ typedef struct {
 extern "C" {
 extern char g_PlaySndMsgClass[];
 extern char D_004DAE30[];
-extern Voice_F190* ActorRef_Copy(void* ref);
+extern Voice_F190* cSafePtr_cGOBJ_opCast_cGOBJPtr(void* ref);
 }
 static inline void Req_Init(SoundRequest* p, int type, __int128 name, Voice_F190* voice, int x180) {
     int tmp; int* r;
@@ -43,15 +43,15 @@ static inline void Req_InitPos(SoundRequest* p, int type, __int128 name, Voice_F
 }
 static inline unsigned char GetX186(Src_F2A0* s) { return s->x186; }
 static inline void SetX186(SoundRequest* p, unsigned char v) { p->x186 = v; }
-extern "C" SoundEventP* SoundPosRequest_Ctor(SoundEventP* ev, Src_F2A0* src, Vec_F2A0* pos) {
+extern "C" SoundEventP* cPlaySoundMsg_ctor_cSndFxR_cGOBJP(SoundEventP* ev, Src_F2A0* src, Vec_F2A0* pos) {
     SoundRequest* p;
-    Event_Construct(ev, g_PlaySndMsgClass);
+    cMessage_ctor_cMessageNameR(ev, g_PlaySndMsgClass);
     ev->vtable = D_004DAE30;
     p = &ev->req;
     p->voiceId = -2;
     p->voice = 0;
-    Resource_Construct(&p->a);
-    Resource_Construct(&p->b);
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
     Req_InitPos(&ev->req, src->type, src->name, 0, *pos, src->x180);

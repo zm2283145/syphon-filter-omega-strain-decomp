@@ -15,8 +15,8 @@
 #include "types.h"
 #include "loose04_types.h"
 
-/* Records the registry an object belongs to (called by Object_Register). */
-void Object_SetRegistry(L4RegObj* obj, int registry) {
+/* Records the registry an object belongs to (called by nGobjManager_AddGOBJ). */
+void cSystem_SetOwningList(L4RegObj* obj, int registry) {
     obj->registry = registry;
 }
 #pragma pop /* merge_units */
@@ -27,13 +27,13 @@ void Object_SetRegistry(L4RegObj* obj, int registry) {
 #include "GobjMan_types.h"
 
 extern GobjScope* g_GobjWorldScope;
-extern void ActorWorld_RequestRemove(GobjScope* registry, GobjEntry* object);
+extern void cBaseObjList_Remove(GobjScope* registry, GobjEntry* object);
 
 /* Submit a nonnull object's ID to the secondary registry. */
-void Object_Unregister(GobjEntry* object)
+void nGobjManager_RemoveGOBJ(GobjEntry* object)
 {
     if (object)
-        ActorWorld_RequestRemove(g_GobjWorldScope, object);
+        cBaseObjList_Remove(g_GobjWorldScope, object);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0040C9A0 */
@@ -48,27 +48,27 @@ void Object_Unregister(GobjEntry* object)
 
 extern int g_GobjRootScope;
 /* Object registry (actor array). Declared as bytes: an int declaration changes
- * the register choice in Object_Register. */
+ * the register choice in nGobjManager_AddGOBJ. */
 #if 0 /* merge_units */
 extern char g_GobjWorldScope[];
 #endif /* merge_units */
 #define g_GobjWorldScope ((char*)&g_GobjWorldScope) /* merge_units */
 
-extern int ObjRegistry_AppendRecursive(int registry, int obj);
+extern int cBaseObjList_Add(int registry, int obj);
 #if 0 /* merge_units */
-extern void Object_SetRegistry(int obj, int registry);
+extern void cSystem_SetOwningList(int obj, int registry);
 #endif /* merge_units */
-#define Object_SetRegistry(a0, a1) (Object_SetRegistry((L4RegObj *)(a0), (a1))) /* merge_units */
+#define cSystem_SetOwningList(a0, a1) (cSystem_SetOwningList((L4RegObj *)(a0), (a1))) /* merge_units */
 
 
 /* Registers obj with the global registry (and its children, recursively). */
-int Object_Register(int obj) {
+int nGobjManager_AddGOBJ(int obj) {
     int registry;
     int ret;
 
     registry = *(int*)g_GobjWorldScope;
-    Object_SetRegistry(obj, registry);
-    ret = ObjRegistry_AppendRecursive(registry, obj);
+    cSystem_SetOwningList(obj, registry);
+    ret = cBaseObjList_Add(registry, obj);
     return ret;
 }
 
@@ -76,18 +76,18 @@ int nGobjManager_GetGOBJAndNodeList(void) {
     return g_GobjRootScope;
 }
 
-int World_GetActorArray(void) {
+int nGobjManager_GetGOBJList(void) {
     return *(int*)g_GobjWorldScope;
 }
 #undef g_GobjWorldScope /* merge_units */
-#undef Object_SetRegistry /* merge_units */
+#undef cSystem_SetOwningList /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0040C9D0 */
 
 /* merge_units: begin func_0040CA40 */
 #pragma push /* merge_units */
 /* Find an exact unsigned ID key, returning the map sentinel on failure. */
-void ObjMap_Find(GobjMapNode** result, GobjMap* map, const GobjId* id)
+void std_tree_pair_cObjectId_value_compare_find(GobjMapNode** result, GobjMap* map, const GobjId* id)
 {
     GobjMapNode* node = map->root;
     GobjMapNode* candidate = (GobjMapNode*)&map->root;

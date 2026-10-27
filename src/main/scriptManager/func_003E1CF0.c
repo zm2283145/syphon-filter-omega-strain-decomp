@@ -8,7 +8,7 @@ struct Func { char* name; char pad[0x30]; unsigned char defined; char pad35[3]; 
 struct It { Item** p; };
 struct Ft { Func** p; };
 extern "C" {
-void Script_PrintWarning(char*,char*);
+void cScriptBase_sm_printf(char*,char*);
 It std_vector_VarDefPtr_begin(void*);
 It std_vector_VarDefPtr_end(void*);
 void cArray_VarDefPtr_Iterator_ctor(It*,const It*);
@@ -32,13 +32,13 @@ extern "C" int cScriptInterpreter_CheckAllReferences() {
     It i=beginI();
     while(neqI(i,endI())) {
         Item* p=*i.p;
-        if(p->refs>0 && !p->defined) { Script_PrintWarning("var %s not defined",p->name); bad=1; }
+        if(p->refs>0 && !p->defined) { cScriptBase_sm_printf("var %s not defined",p->name); bad=1; }
         i.p++;
     }
     Ft f=beginF0();
     while(neqF(f,endF())) {
         Func* p=*f.p;
-        if(p->refs>0 && !p->defined) { Script_PrintWarning("func %s not defined",p->name); bad=1; }
+        if(p->refs>0 && !p->defined) { cScriptBase_sm_printf("func %s not defined",p->name); bad=1; }
         f.p++;
     }
     return !bad;

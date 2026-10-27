@@ -52,14 +52,14 @@ extern long long D_005381F8;
 extern int D_00538C64;
 extern char D_00538C68;
 extern long long D_004BC1B0[];
-void Renderer_BindTexture(void* m, int idx);
+void cTexMan_SetActive(void* m, int idx);
 void XLib_NewStrip(void* s);
 void XLib_NextBatchVert(void* s);
-void Renderer_FlushBatch(void* s);
-void Vec4_Copy(V* d, const V* s);
-void GuiBatch_AddVertexColor(V* d, const V* s);
-float GuiBatch_AddVertexUV(void);
-V* Vec4_Set(V* o, float x, float y, float z, float w);
+void XLib_DrawStrip(void* s);
+void cVector_opAssign(V* d, const V* s);
+void tIRGBA_opAssign_tRGBAR(V* d, const V* s);
+float tVifFloatToInt_short_4_Bias(void);
+V* cVector_ctor_float_float_float_float(V* o, float x, float y, float z, float w);
 }
 #define D_00539220 (D_00539210.f20)
 #define D_00539224 (D_00539210.f24)
@@ -105,10 +105,10 @@ static inline void Emit(const V& pos, const V& col, const V& uv)
     float u;
     XLib_NextBatchVert(g_Video);
     e = &RS->ents[D_00539210.f10];
-    Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
-    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], &col);
-    u = uv.x + GuiBatch_AddVertexUV();
-    Vec4_Copy(&e->c34[D_00539224 - 1], Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
+    cVector_opAssign(&e->pos[D_00539224 - 1], &pos);
+    tIRGBA_opAssign_tRGBAR(&e->c30[D_00539224 - 1], &col);
+    u = uv.x + tVifFloatToInt_short_4_Bias();
+    cVector_opAssign(&e->c34[D_00539224 - 1], cVector_ctor_float_float_float_float(&tmp, u, uv.y + tVifFloatToInt_short_4_Bias(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 static inline bool EndStrip(void)
@@ -131,7 +131,7 @@ static inline bool EndStrip(void)
     return true;
 }
 
-extern "C" void DecalMgr_Draw(Arg* a)
+extern "C" void cDecalMan_Render(Arg* a)
 {
     int saved;
     int tex;
@@ -176,11 +176,11 @@ extern "C" void DecalMgr_Draw(Arg* a)
             if (!c1 && b == blend) c2 = 0;
             if (!c2 && it->obj == obj) c3 = 0;
             if (c3 != false) {
-                Renderer_FlushBatch(g_Video);
+                XLib_DrawStrip(g_Video);
                 Begin();
                 if (tex != it->tex) {
                     tex = it->tex;
-                    Renderer_BindTexture(g_TextureMgr, tex);
+                    cTexMan_SetActive(g_TextureMgr, tex);
                 }
                 if (b != blend) {
                     blend = b;
@@ -218,7 +218,7 @@ extern "C" void DecalMgr_Draw(Arg* a)
         }
         first = !EndStrip();
     }
-    Renderer_FlushBatch(g_Video);
+    XLib_DrawStrip(g_Video);
     if (obj) {
         D_00538C64--;
         D_00538C68 = 1;

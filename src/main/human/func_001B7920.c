@@ -7,10 +7,10 @@
 #include "types.h"
 #include "human_types.h"
 
-void VecCurve_SetDamping(char* self, float value) {
+void cSplinedMotion_cVector_SetDamp(char* self, float value) {
     *(float*)(self + 80) = value;
 }
 
-void AngleCurve_SetDamping(CurveChannel* self, float value) {
+void cSplinedMotion_float_SetDamp(CurveChannel* self, float value) {
     self->damping = value;
 }

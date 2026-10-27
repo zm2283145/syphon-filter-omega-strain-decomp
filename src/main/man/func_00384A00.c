@@ -7,7 +7,7 @@
 #include "man_types.h"
 
 /* Each swap uses its own pair of locals (keeps the original scheduling). */
-ManMatrix* Matrix_TransposeInPlace(ManMatrix* mat) {
+ManMatrix* cMatrix_Transpose(ManMatrix* mat) {
     float a01, a10, a02, a20, a12, a21, a03, a30, a13, a31, a23, a32;
 
     a01 = mat->m[0][1];

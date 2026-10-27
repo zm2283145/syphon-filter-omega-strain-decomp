@@ -16,7 +16,7 @@ typedef struct {
     unsigned char* bufs[0x20];
     unsigned short numGroups;
 } Model_B8D0;
-void ManModel_SaturateGore(Model_B8D0* m)
+void cMan_Bloodlost(Model_B8D0* m)
 {
     unsigned int i;
     unsigned int n;
@@ -69,7 +69,7 @@ typedef struct {
     unsigned int age;
 } HitGore;
 
-void HitGore_Age(HitGore* self)
+void cMan_BloodUpdate(HitGore* self)
 {
     unsigned int i;
     unsigned int cnt;

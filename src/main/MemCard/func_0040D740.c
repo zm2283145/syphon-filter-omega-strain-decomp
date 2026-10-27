@@ -20,21 +20,21 @@ extern char* D_00494008;
 extern char* D_00494010;
 extern int D_00493C40[];
 extern int MemCard_MemCardMain(MCP* p);
-extern void Resource_Construct(Res* r);
-extern void String_Copy(char* d, const char* s);
+extern void cFileMan_ctor_void(Res* r);
+extern void Libc_Strcpy(char* d, const char* s);
 extern void Libc_Strcat(char* d, const char* s);
 extern void cFileMan_EncodeFilename_charP_cFileIOP_bool(Res* r, char* name, int a, int b);
-extern int FileMan_FindMember(Res* r);
-extern int FileMan_GetSize(Res* r);
+extern int cFileMan_Open(Res* r);
+extern int cFileMan_GetSize(Res* r);
 extern void Alloc_Lock(int id);
-extern void Alloc_Unlock(int id);
-extern void* Mem_Alloc(int heap, int size, const char* file, int line);
-extern void Mem_Free(int heap, void* p, const char* file, int line);
-extern void FileMan_LoadMemberSync(Res* r, void** out, int z);
+extern void EnableIntc(int id);
+extern void* cMemMan_Allocate(int heap, int size, const char* file, int line);
+extern void cMemMan_Deallocate(int heap, void* p, const char* file, int line);
+extern void cFileMan_Read_charPP_int(Res* r, void** out, int z);
 extern void cFileMan_Close(Res* r);
-extern int MemCardWrap_Write(MC* c, const char* name, void* data, int size, int flag);
+extern int cMemCard_SaveFile(MC* c, const char* name, void* data, int size, int flag);
 extern int sprintf(char* buf, const char* fmt, ...);
-extern void FileMan_Release(Res* r, int flags);
+extern void cFileMan_dtor(Res* r, int flags);
 
 /* the original clears the buffer with this hand-written asm loop (quadwords when both the
  * address and the size are 16-byte aligned, else bytes) */
@@ -79,7 +79,7 @@ static inline void ClearMem(void* dd, int nn)
 #pragma opt_propagation off
 /* Creates the save directory: waits for the card command, then writes the directory
  * file (loaded from GAMEDATA\\COMMON), icon.sys and a timestamp id. */
-int MemCardWrap_MakeDirectory(MC* c)
+int cMemCard_MakeGameDir(MC* c)
 {
     Res r;
     char path[0x80];
@@ -102,40 +102,40 @@ int MemCardWrap_MakeDirectory(MC* c)
             c->cb();
     } while (!((c->busy != 0) ^ 1) || !c->p->done);
     if (!c->p->failed) {
-        Resource_Construct(&r);
-        String_Copy(path, D_004BED20);
+        cFileMan_ctor_void(&r);
+        Libc_Strcpy(path, D_004BED20);
         Libc_Strcat(path, D_00494008);
         cFileMan_EncodeFilename_charP_cFileIOP_bool(&r, path, 0, 0);
-        if (!(unsigned char)FileMan_FindMember(&r)) {
-            size = FileMan_GetSize(&r);
+        if (!(unsigned char)cFileMan_Open(&r)) {
+            size = cFileMan_GetSize(&r);
             if (g_ProfileLockEnabled) Alloc_Lock(9);
             g_ProfileLockDepth++;
-            m = Mem_Alloc(0, size, D_004BED38, 990);
-            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            m = cMemMan_Allocate(0, size, D_004BED38, 990);
+            if (g_ProfileLockEnabled) EnableIntc(9);
             g_ProfileLockDepth--;
             buf = m;
             ClearMem(buf, size);
-            FileMan_LoadMemberSync(&r, &buf, 0);
+            cFileMan_Read_charPP_int(&r, &buf, 0);
             cFileMan_Close(&r);
-            ok = MemCardWrap_Write(c, D_00494008, buf, size, 1) != 0;
+            ok = cMemCard_SaveFile(c, D_00494008, buf, size, 1) != 0;
             {
                 void* q = buf;
                 if (g_ProfileLockEnabled) Alloc_Lock(9);
                 g_ProfileLockDepth++;
-                Mem_Free(0, q, D_004BED38, 996);
-                if (g_ProfileLockEnabled) Alloc_Unlock(9);
+                cMemMan_Deallocate(0, q, D_004BED38, 996);
+                if (g_ProfileLockEnabled) EnableIntc(9);
                 g_ProfileLockDepth--;
             }
-            if (ok && (unsigned char)(MemCardWrap_Write(c, D_00494010, icon, 32, 1) != 0)
-                   && (unsigned char)(MemCardWrap_Write(c, D_004BED48, D_00493C40, 964, 1) != 0)) {
+            if (ok && (unsigned char)(cMemCard_SaveFile(c, D_00494010, icon, 32, 1) != 0)
+                   && (unsigned char)(cMemCard_SaveFile(c, D_004BED48, D_00493C40, 964, 1) != 0)) {
                 sprintf(id, D_004BED58, (g_TickCounter64 + (unsigned int)(int)((float)(unsigned int)(*(volatile int*)0x10000800 + g_TimerAccum) / 5.76f)) & 0xFFFFFFFF);
                 id[32] = 0;
-                ok = MemCardWrap_Write(c, id, sys, 32, 1);
-                FileMan_Release(&r, -1);
+                ok = cMemCard_SaveFile(c, id, sys, 32, 1);
+                cFileMan_dtor(&r, -1);
                 return ok;
             }
         }
-        FileMan_Release(&r, -1);
+        cFileMan_dtor(&r, -1);
     }
     return 0;
 }

@@ -18,12 +18,12 @@ struct Vec { int unk0; int count; Obj** data; };
 extern "C" {
 extern Batch D_00542DC0;
 Item** std_vector_cVUM_GOBJPtr_opIndex_uint_2(Vec* v, int i);
-void Cull_BatchAdd(Batch* b);
-void Cull_BatchFlush(Batch* b);
+void cBBoxMan_StartVisibilityTest(Batch* b);
+void cBBoxMan_EndVisibilityTest(Batch* b);
 }
 
 #pragma opt_strength_reduction off
-extern "C" void HudMap_Cull(Vec* v) {
+extern "C" void ProcessVisibility(Vec* v) {
     int first;
     int last;
     int i;
@@ -45,8 +45,8 @@ extern "C" void HudMap_Cull(Vec* v) {
             D_00542DC0.count++;
             D_00542DC0.size += 2;
             if (D_00542DC0.size > 0xF9) {
-                Cull_BatchAdd(&D_00542DC0);
-                Cull_BatchFlush(&D_00542DC0);
+                cBBoxMan_StartVisibilityTest(&D_00542DC0);
+                cBBoxMan_EndVisibilityTest(&D_00542DC0);
                 for (k = 0; first < last; first++, k++) {
                     int o = D_00542DC0.out[k];
                 (*std_vector_cVUM_GOBJPtr_opIndex_uint_2(v, first))->a = o;
@@ -63,8 +63,8 @@ extern "C" void HudMap_Cull(Vec* v) {
         if (i < v->count) goto body;
     post:
         if (first <= last) {
-            Cull_BatchAdd(&D_00542DC0);
-            Cull_BatchFlush(&D_00542DC0);
+            cBBoxMan_StartVisibilityTest(&D_00542DC0);
+            cBBoxMan_EndVisibilityTest(&D_00542DC0);
             for (k = 0; last >= first; first++, k++) {
                 int o = D_00542DC0.out[k];
                 (*std_vector_cVUM_GOBJPtr_opIndex_uint_2(v, first))->a = o;

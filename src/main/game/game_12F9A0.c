@@ -19,7 +19,7 @@
 
 extern char g_Game[]; /* world object */
 extern int Global_RequestLevelEnd(void);
-extern int Game_EndLevel(char* world, int);
+extern int cGameSystem_Restart(char* world, int);
 
 int Script_RequestLevelEnd(void) {
     Global_RequestLevelEnd();
@@ -27,7 +27,7 @@ int Script_RequestLevelEnd(void) {
 }
 
 int Global_RequestLevelEnd(void) {
-    return Game_EndLevel(g_Game, 0);
+    return cGameSystem_Restart(g_Game, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0012F9A0(void) {}

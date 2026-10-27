@@ -1,5 +1,5 @@
 #include "types.h"
-int String_CompareN(char*, char*, int);
+int Libc_Strncmp(char*, char*, int);
 char* strchr(char*, int);
 int strlen(char*);
 
@@ -29,7 +29,7 @@ unsigned char ParseSystemMessage(char* str, int len) {
     sep = D_004978F8;
     if (sep > 0 && sep < 0x100) {
         for (i = 0; i < 8; i++) {
-            if (String_CompareN(str, D_004976E0[i].name, strlen(D_004976E0[i].name)) == 0) {
+            if (Libc_Strncmp(str, D_004976E0[i].name, strlen(D_004976E0[i].name)) == 0) {
                 n = strlen(D_004976E0[i].name);
                 rem = len - n;
                 p = str + n;

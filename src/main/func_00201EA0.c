@@ -2,16 +2,16 @@
 
 typedef struct { void* vtable; char kind; char pad[11]; Vec4 rot; } MotionNode;
 extern char D_004DFC50[];
-extern void Quat_ComposeOffset(Vec4* out, Vec4* a, Vec4* b);
+extern void cQuaternion_GetRotated(Vec4* out, Vec4* a, Vec4* b);
 extern void cQuaternion_ctor_cQuaternionR(Vec4* dst, Vec4* src);
 
 /* Base copy-constructor: sets the vtable, copies the kind byte and the composed rotation. */
-MotionNode* MotionNode_BaseCopy(MotionNode* self, MotionNode* src, Vec4* offset)
+MotionNode* cSkaNode_ctor_cSkaNodeR_cQuaternionR(MotionNode* self, MotionNode* src, Vec4* offset)
 {
     Vec4 q;
     self->vtable = D_004DFC50;
     self->kind = src->kind;
-    Quat_ComposeOffset(&q, &src->rot, offset);
+    cQuaternion_GetRotated(&q, &src->rot, offset);
     cQuaternion_ctor_cQuaternionR(&self->rot, &q);
     return self;
 }

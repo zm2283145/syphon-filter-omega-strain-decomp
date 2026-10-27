@@ -1,6 +1,6 @@
 typedef struct { float x, y, z; int pad; int st; int p14[3]; int *list; int p24; int n; } S7BE0b;
 typedef struct { char p0[0x2C]; int last; int first; char bool34; char p35[3]; float x, y, z; } S7BE0a;
-extern void Transport_Send(int, S7BE0a *, int, int);
+extern void cNetObj_SendMessage_int_cMessageR_int_int(int, S7BE0a *, int, int);
 void cNetPathMsg_SendPath(S7BE0a *m, int t, S7BE0b *s)
 {
     if (s->n) {
@@ -14,5 +14,5 @@ void cNetPathMsg_SendPath(S7BE0a *m, int t, S7BE0b *s)
     m->y = s->y;
     m->z = s->z;
     m->bool34 = !(s->st >= 0);
-    Transport_Send(t, m, -1, -1);
+    cNetObj_SendMessage_int_cMessageR_int_int(t, m, -1, -1);
 }

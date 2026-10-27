@@ -1,10 +1,10 @@
 #include "types.h"
-extern void FreeList_Push(void*);
+extern void AbstractWidgetClassRep_AddClassRep(void*);
 extern char D_004DDB60;
 extern void* D_005065A0;
 extern void* D_005065A8;
-void StaticInit_GuiOnlineOptionsFactory(void) {
+void StaticInit_GuiMissionList(void) {
     D_005065A8 = &D_004DDB60;
     D_005065A0 = "GuiOnlineOptions";
-    FreeList_Push(&D_005065A0);
+    AbstractWidgetClassRep_AddClassRep(&D_005065A0);
 }

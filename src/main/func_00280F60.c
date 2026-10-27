@@ -9,8 +9,8 @@ typedef struct Cam {
     char padD0C[4];
     float d10;
 } Cam;
-extern int Camera_IsBoomActive(void);
-extern void cGameCamera_v10(Cam *c, float dt);
+extern int cSplinedMotion_cQuaternion_IsTransitionInProgress(void);
+extern void cGameCamera_NextFrame(Cam *c, float dt);
 #pragma opt_propagation off
 #pragma opt_common_subs off
 void PlayerCamera_PreUpdate(Cam *c, float dt)
@@ -20,7 +20,7 @@ void PlayerCamera_PreUpdate(Cam *c, float dt)
     float z;
     c->cf0 = c->cf4;
     c->cf4 = c->cf8;
-    k = Camera_IsBoomActive() ? 0.125f : -1.0f;
+    k = cSplinedMotion_cQuaternion_IsTransitionInProgress() ? 0.125f : -1.0f;
     if (k < 0.0f) {
         c->d10 -= dt;
     } else {
@@ -37,7 +37,7 @@ void PlayerCamera_PreUpdate(Cam *c, float dt)
         c->d08 = *pt;
         c->d10 = z;
     }
-    cGameCamera_v10(c, dt);
+    cGameCamera_NextFrame(c, dt);
 }
 
 

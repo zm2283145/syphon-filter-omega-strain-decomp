@@ -229,26 +229,26 @@ extern int D_00494178;
 extern char D_00582760[];
 extern char D_004E0F00[];
 
-int Actor_IsArmed(Actor *a);
-void Event_Construct(Msg *m, void *type);
-void LookSlot_Clear(LookSlot *s);
-void NpcAi_AddToDeadList(void *list, Npc **npc);
-int NpcPath_GetNode(int n);
-void NpcPath_Start(int p);
-void NpcPerception_ResetView(int v);
-void NpcThinkList_Add(Actor *a);
-int Random_Next(void);
-void Transport_Send(int id, Msg *m, int a, int b);
-int WeaponInv_GetClipSize(int inv, int w);
-int WeaponInv_IsFullAuto(int inv);
-void cAI_v10(Npc *npc);
+int cHuman_IsHoldingGun(Actor *a);
+void cMessage_ctor_cMessageNameR(Msg *m, void *type);
+void cNPC_cActiveSlot_Init(LookSlot *s);
+void std_list_cNPCPtr_push_back(void *list, Npc **npc);
+int cAIPathData_GetNode(int n);
+void cPathNavigator_Activate(int p);
+void cAITarget_Activate(int v);
+void cNPC_AddToActiveList(Actor *a);
+int Libc_Rand(void);
+void cNetObj_SendMessage_int_cMessageR_int_int(int id, Msg *m, int a, int b);
+int cWeapon_GetClipSize(int inv, int w);
+int cWeapon_IsFullyAutomatic(int inv);
+void cAI_Activate(Npc *npc);
 void cMessage_dtor(Msg *m, int f);
-int NetGame_InitLocalSlot(int *id, int session);
+int NetGetMyClientIndex(int *id, int session);
 }
 
-#define LOCALID(X) { int ld_a = D_005721A8; if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID(X) { int ld_a = D_005721A8; if (g_IsMultiplayer) { if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 
-extern "C" void cNPC_v10(Npc *self)
+extern "C" void cNPC_Activate_void(Npc *self)
 {
 bool ok;
     int i;
@@ -264,9 +264,9 @@ bool ok;
             }
         } else {
             if (self->s15())
-                NpcThinkList_Add(self->actor);
+                cNPC_AddToActiveList(self->actor);
             else
-                NpcAi_AddToDeadList(g_NpcDeadList, &self);
+                std_list_cNPCPtr_push_back(g_NpcDeadList, &self);
             self->slot = D_004EA1D0;
             for (i = 0; i < 16; i++) {
                 if (!D_004EA1D0[i].used) {
@@ -275,28 +275,28 @@ bool ok;
                     break;
                 }
             }
-            LookSlot_Clear(self->slot);
+            cNPC_cActiveSlot_Init(self->slot);
             self->u166 = 0;
             if (self->uE8 < 0)
                 self->uE8 = 0;
-            cAI_v10(self);
-            NpcPerception_ResetView(self->view);
-            NpcPath_Start(self->path);
+            cAI_Activate(self);
+            cAITarget_Activate(self->view);
+            cPathNavigator_Activate(self->path);
             if (self->node >= 0) {
-                self->s62(NpcPath_GetNode(self->node));
+                self->s62(cAIPathData_GetNode(self->node));
                 self->node = -1;
             }
             {
                 Actor *a2 = self->actor;
-                if (Actor_IsArmed(a2)) {
+                if (cHuman_IsHoldingGun(a2)) {
                     int inv = a2->inv;
                     int n;
                     self->burst = (self->actor->id & 7) + 3;
-                    if (Random_Next() & 1)
+                    if (Libc_Rand() & 1)
                         self->burst++;
                     n = self->burst;
-                    if (WeaponInv_GetClipSize(inv, 6) < n) {
-                        v = WeaponInv_GetClipSize(inv, 6) / 2;
+                    if (cWeapon_GetClipSize(inv, 6) < n) {
+                        v = cWeapon_GetClipSize(inv, 6) / 2;
                         self->burst = v <= 0 ? 1 : v;
                     }
                 } else {
@@ -312,7 +312,7 @@ bool ok;
             self->u1C0 = 999999.0f;
             self->u1C4 = 0;
             self->u1D0 = 0;
-            if (!WeaponInv_IsFullAuto(self->actor->inv))
+            if (!cWeapon_IsFullyAutomatic(self->actor->inv))
                 self->u8C = 0.2f + 0.01f * (float)(unsigned int)(self->actor->id & 0xF);
             else
                 self->u8C = 0.0f;
@@ -336,11 +336,11 @@ bool ok;
                                 int id;
                                 Msg m;
                                 LOCALID(id);
-                                Event_Construct(&m, D_00582760);
+                                cMessage_ctor_cMessageNameR(&m, D_00582760);
                                 m.vt = D_004E0F00;
                                 m.id = id;
                                 m.b28 = 0;
-                                Transport_Send(self->actor->id, &m, -1, j);
+                                cNetObj_SendMessage_int_cMessageR_int_int(self->actor->id, &m, -1, j);
                                 m.vt = D_004E0F00;
                                 cMessage_dtor(&m, 0);
                             }
@@ -361,18 +361,18 @@ static inline void merge_flush_func_00157DF0(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern char D_0049B670[];
 extern char D_0051EE58[];
-extern "C" void Message_GetScriptTypeKey();
+extern "C" void cMessage_getSOBJClassId();
 extern "C" void cNetCopyMsg_dtor();
 extern "C" void cNetCopyMsg_Clone();
-extern "C" void cNetCopyMsg_Serialize();
-void * const D_004DE110[8] = { (void*)0x0, (void*)0x0, (void*)cNetCopyMsg_dtor, (void*)cNetCopyMsg_Clone, (void*)cNetCopyMsg_Serialize, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+extern "C" void cNetCopyMsg_Pack();
+void * const D_004DE110[8] = { (void*)0x0, (void*)0x0, (void*)cNetCopyMsg_dtor, (void*)cNetCopyMsg_Clone, (void*)cNetCopyMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
 #if 0 /* merge_units */
-void Event_Construct(void* p, char* name);
+void cMessage_ctor_cMessageNameR(void* p, char* name);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((Msg *)(a0), (void *)(a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((Msg *)(a0), (void *)(a1))) /* merge_units */
 
 void cNetworkTransferNpc_ctor_void(void* p);
 int cSystem_GetObjectID_void(void* p);
@@ -387,12 +387,12 @@ typedef struct { void* vt; char pad[0x20]; int x24; } Ev_8350;
 #pragma opt_common_subs off
 static inline void Ev_Init(Ev_8350* p, Ctl_8350* c)
 {
-    Event_Construct(p, D_0051EE58);
+    cMessage_ctor_cMessageNameR(p, D_0051EE58);
     p->vt = ((char*)D_004DE110);
     cNetworkTransferNpc_ctor_void((char*)p + 0x30);
     p->x24 = cObjectId_GetEncodedValue(cSystem_GetObjectID_void(c));
 }
-extern "C" Ev_8350* cNPC_v22(NPC_8350* self)
+extern "C" Ev_8350* cNPC_GetCopyMsg(NPC_8350* self)
 {
     Snd_8350* s = self->ctl->snd;
     if (s)
@@ -401,7 +401,7 @@ extern "C" Ev_8350* cNPC_v22(NPC_8350* self)
         Ev_8350* p;
         {
             AllocGuard g;
-            p = (Ev_8350*)Mem_Alloc(0, 0x310, D_0049B670, 0x80C);
+            p = (Ev_8350*)cMemMan_Allocate(0, 0x310, D_0049B670, 0x80C);
         }
         if (p) {
             Ev_Init(p, self->ctl);
@@ -413,7 +413,7 @@ extern "C" Ev_8350* cNPC_v22(NPC_8350* self)
     return 0;
 }
 #pragma opt_common_subs reset
-#undef Event_Construct /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00158350(void) {}
 #pragma pop /* merge_units */

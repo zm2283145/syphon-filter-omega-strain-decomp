@@ -2,7 +2,7 @@
 #include "vt4_dtor.h"
 
 extern "C" {
-extern "C" void HudRadar_Update();
+extern "C" void cHudRadar_Update();
 extern "C" void cHudTargetsObserver_dtor();
 extern "C" void cHudTargetsObserver_Update();
 extern "C" void cHudTargetsObserver_TargetAdded();
@@ -19,4 +19,4 @@ extern "C" Vt4Object* cHudRadar_dtor(Vt4Object* self, short deleteFlag) {
     return self;
 }
 void * const D_004DC930[8] = { (void*)0x0, (void*)0x0, (void*)cHudTargetsObserver_Update, (void*)cHudTargetsObserver_TargetAdded, (void*)cHudTargetsObserver_TargetRemoved, (void*)cHudTargetsObserver_dtor, (void*)0x0, (void*)0x0 };
-void * const D_004DC950[8] = { (void*)0x0, (void*)0x0, (void*)HudRadar_Update, (void*)cHudTargetsObserver_TargetAdded, (void*)cHudTargetsObserver_TargetRemoved, (void*)cHudRadar_dtor, (void*)0x0, (void*)0x0 };
+void * const D_004DC950[8] = { (void*)0x0, (void*)0x0, (void*)cHudRadar_Update, (void*)cHudTargetsObserver_TargetAdded, (void*)cHudTargetsObserver_TargetRemoved, (void*)cHudRadar_dtor, (void*)0x0, (void*)0x0 };

@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0052ACF8;
 
-void StaticInit_NetRemoveHudObjectiveMsgName(void) {
+void StaticInit_NetRemoveHudObjectiveMsg(void) {
     D_0052ACF8 = "NetRemoveHudObjectiveMsg";
 }

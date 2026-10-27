@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-char* Array16_At(char* base, int i) {
+char* cCollisionFace_Vertex(char* base, int i) {
     return base + i * 16;
 }

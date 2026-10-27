@@ -4,13 +4,13 @@ extern RpcCd D_00504080;
 extern McArg D_005040C0;
 extern int sceNetcnfifInit(void);
 extern int sce_call_rpc(RpcCd *, McArg *, int);
-extern void String_Copy(char *, const char *);
+extern void Libc_Strcpy(char *, const char *);
 int sceNetcnfifGetCount(const char *name, int x)
 {
     McArg *p;
     sceNetcnfifInit();
     p = &D_005040C0;
-    String_Copy(p->name, name);
+    Libc_Strcpy(p->name, name);
     p->x8 = x;
     return sce_call_rpc(&D_00504080, p, 0);
 }

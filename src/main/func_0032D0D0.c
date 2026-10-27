@@ -34,7 +34,7 @@ typedef struct {
 extern KbTable D_0052AF60[];
 extern int D_004926C0;
 extern char D_004B8CF0[];
-extern void PtrVector_Resize(void *v, int n, int *fill);
+extern void std_vector_pod_int_resize(void *v, int n, int *fill);
 extern void GuiTextWidget_SetText(void *w, char *s, int a, int b);
 extern void GuiKeyboard_Relabel(KbSelf *self, unsigned int flags);
 
@@ -46,7 +46,7 @@ void GuiKeyboard_ApplyLayout(KbSelf *self, unsigned char mode)
     self->f98 = 0;
     self->mode = mode;
     self->tab = &D_0052AF60[mode];
-    PtrVector_Resize(self->vec80, *(volatile int *)&self->count, &D_004926C0);
+    std_vector_pod_int_resize(self->vec80, *(volatile int *)&self->count, &D_004926C0);
     for (i = 0; i < *(volatile int *)&self->count; i++)
         self->index[i] = -1;
     if (self->count == self->count74) {

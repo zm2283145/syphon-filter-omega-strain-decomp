@@ -12,7 +12,7 @@ extern ObjVec* std_vector_cSkaBlendSequenceItem_ctor_void(ObjVec*);
 extern ObjVec* std_vector_imp_cSkaBlendSequenceItem_ctor_void(ObjVec*);
 extern ObjVec* std_vector_deleter_cSkaBlendSequenceItem_ctor_void(ObjVec*);
 
-MotionEntry24* MotionEntry_Ctor(MotionEntry24* self, int a1, int a2, float f) {
+MotionEntry24* cSkaTransBLEND_ctor_float_bool_bool(MotionEntry24* self, int a1, int a2, float f) {
     cArray_cSkaBlendSequenceItem_ctor_void(&self->list);
     self->unk10 = f;
     self->unk14 = f;

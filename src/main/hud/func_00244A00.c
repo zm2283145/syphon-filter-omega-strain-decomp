@@ -7,8 +7,8 @@
 #include "types.h"
 #include "hud_types.h"
 
-extern void Hud_ClearTargetLock(void* self);
+extern void cHud_ClearTarget(void* self);
 
-void Hud_CrosshairRelease(void* self) {
-    Hud_ClearTargetLock(self);
+void cHud_DeactivateAimCursor(void* self) {
+    cHud_ClearTarget(self);
 }

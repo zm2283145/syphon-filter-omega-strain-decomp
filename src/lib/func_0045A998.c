@@ -16,9 +16,9 @@ extern int sceInsockInetNetof(void);
 extern int sceInsockInetNetwork(int);
 extern int sceInsockInetNtoa(int);
 extern int sceInsockTerminate(int);
-extern int Insck_Bind(int, int, int);
-extern int Insck_Connect(int, int, int);
-extern int Insck_Accept(int, int, int);
+extern int sceInsockBind(int, int, int);
+extern int sceInsockConnect(int, int, int);
+extern int sceInsockAccept(int, int, int);
 extern int sceInsockGethostbyname(int);
 extern int sceInsockGethostbyaddr(int, int, int);
 
@@ -127,20 +127,20 @@ int sceNetGlueNtohs(int a0) {
 int sceNetGlueAccept(int a0, int a1, int a2) {
     int tmp0;
 
-    tmp0 = Insck_Accept(a0, a1, a2);
+    tmp0 = sceInsockAccept(a0, a1, a2);
     return tmp0;
 }
 
 int sceNetGlueBind(int a0, int a1, int a2) {
     int tmp0;
 
-    tmp0 = Insck_Bind(a0, a1, a2);
+    tmp0 = sceInsockBind(a0, a1, a2);
     return tmp0;
 }
 
 int sceNetGlueConnect(int a0, int a1, int a2) {
     int tmp0;
 
-    tmp0 = Insck_Connect(a0, a1, a2);
+    tmp0 = sceInsockConnect(a0, a1, a2);
     return tmp0;
 }

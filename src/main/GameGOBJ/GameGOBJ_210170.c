@@ -18,11 +18,11 @@
 extern void* D_004DAE50;
 extern void* D_004DCF10;
 extern char D_004F5410[];
-extern ByteEvent* Event_Construct(ByteEvent*, char*);
+extern ByteEvent* cMessage_ctor_cMessageNameR(ByteEvent*, char*);
 
 /* Base vtable D_004DCF10 is set first, then the derived one. */
 ByteEvent* cAtmosphericEffectMsg_ctor(ByteEvent* self, int value) {
-    Event_Construct(self, D_004F5410);
+    cMessage_ctor_cMessageNameR(self, D_004F5410);
     self->vtable = &D_004DCF10;
     self->vtable = &D_004DAE50;
     self->value = value;
@@ -47,24 +47,24 @@ extern char D_004DCF10[];
 #define D_004DCF10 ((char*)&D_004DCF10) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Event_Construct(M_002101D0* m, void* type);
+extern void cMessage_ctor_cMessageNameR(M_002101D0* m, void* type);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) ((void)Event_Construct((ByteEvent *)(a0), (char *)(a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) ((void)cMessage_ctor_cMessageNameR((ByteEvent *)(a0), (char *)(a1))) /* merge_units */
 
-extern void Event_Send(M_002101D0* m, void* target, int flags);
+extern void QueueMessage_cMessageR_cSystemP_int(M_002101D0* m, void* target, int flags);
 extern void cMessage_dtor(M_002101D0* m, int flags);
 void cMaxActiveNpcCountMsg_NetReceive(void* target) {
     M_002101D0 m;
-    Event_Construct(&m, D_004F53F8);
+    cMessage_ctor_cMessageNameR(&m, D_004F53F8);
     m.vtable = D_004DAE70;
     m.f = R32_002101D0();
     m.one = 1;
-    if (target) Event_Send(&m, target, 0);
+    if (target) QueueMessage_cMessageR_cSystemP_int(&m, target, 0);
     m.vtable = D_004DCF10;
     cMessage_dtor(&m, 0);
 }
 #undef D_004DCF10 /* merge_units */
-#undef Event_Construct /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002101D0 */
 
@@ -73,7 +73,7 @@ void cMaxActiveNpcCountMsg_NetReceive(void* target) {
 #include "net_write_one_word.h"
 
 /* Serialize the 32-bit message field. */
-DEFINE_NET_WRITE_ONE_WORD(cMaxActiveNpcCountMsg_v04)
+DEFINE_NET_WRITE_ONE_WORD(cMaxActiveNpcCountMsg_Pack)
 #pragma pop /* merge_units */
 /* merge_units: end func_002102E0 */
 
@@ -81,7 +81,7 @@ DEFINE_NET_WRITE_ONE_WORD(cMaxActiveNpcCountMsg_v04)
 #pragma push /* merge_units */
 extern int D_004F5400;
 
-int cMaxActiveNpcCountMsg_v05(void) {
+int cMaxActiveNpcCountMsg_GetMsgId(void) {
     return D_004F5400;
 }
 #pragma pop /* merge_units */

@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern int PtrVec_Reserve(int, int);
-extern int Vector_Reserve_25DBD0(int, int);
+extern int std_vector_pod_int_reserve(int, int);
+extern int std_vector_imp_cVector_reserve(int, int);
 
 int PtrVec_Reserve_Thunk_25DB90(int a0, int a1) {
-    return PtrVec_Reserve(a0, a1);
+    return std_vector_pod_int_reserve(a0, a1);
 }
 
 Rel* func_0025DBA0(Rel* r) {
@@ -20,6 +20,6 @@ Rel* func_0025DBA0(Rel* r) {
     return r;
 }
 
-int Vector_Reserve_25DBD0_Thunk(int a0, int a1) {
-    return Vector_Reserve_25DBD0(a0, a1);
+int std_vector_cVector_reserve(int a0, int a1) {
+    return std_vector_imp_cVector_reserve(a0, a1);
 }

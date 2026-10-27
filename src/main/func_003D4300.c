@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { int f; char p[0x7C]; } C1E_3D43;
 typedef struct { char pad[0x534]; C1E_3D43 e[511]; char pad2[0x24]; int count; } C1S_3D43;
-void Shadow_ResetReceivers(C1S_3D43* s)
+void cShadowMan_ClearReceivers(C1S_3D43* s)
 {
     int i;
     for (i = 0; i < s->count; i++)

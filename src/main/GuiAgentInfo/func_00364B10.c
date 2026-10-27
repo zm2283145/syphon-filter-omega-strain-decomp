@@ -19,9 +19,9 @@ typedef struct {
     unsigned char b38;
 } A364B10;
 
-extern float Math_FMod(float, float);
+extern float Libc_Fmodf(float, float);
 extern void func_0017CA90(float* p, int a);
-extern void* Mem_PlacementNew(int type, float* p);
+extern void* opNew_uint_voidP(int type, float* p);
 extern void cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(void* r, float* a, float* b, float* c, void* d, float e);
 extern char D_00492EE0[];
 
@@ -33,7 +33,7 @@ static inline float Wrap01(A364B10* p, float t)
     if (!p->b38) {
         r = clamp01(t, 0.0f, 1.0f);
     } else {
-        r = Math_FMod(t, 1.0f);
+        r = Libc_Fmodf(t, 1.0f);
         if (r < 0.0f) r += 1.0f;
     }
     return r;
@@ -46,7 +46,7 @@ static inline float WrapDelta(A364B10* p, float d)
     if (!p->b38) {
         return d;
     }
-    r = Math_FMod(d, 1.0f);
+    r = Libc_Fmodf(d, 1.0f);
     h = 0.5f;
     if (r < h) {
         r += 1.0f;
@@ -71,7 +71,7 @@ void func_00364B10(A364B10* p, float* dt)
     p->f10 = p->f8 + d;
     func_0017CA90(&p->f18, -1);
     {
-        void* r = Mem_PlacementNew(0x18, &p->f18);
+        void* r = opNew_uint_voidP(0x18, &p->f18);
         if (r) cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(r, &p->f8, &p->fC, &p->f10, D_00492EE0, p->f28);
     }
 }

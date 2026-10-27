@@ -22,7 +22,7 @@ extern void DIntr(void);
 extern void EIntr(void);
 
 /* Initializes a double-buffered DMA packet chain when all four parameters are set. */
-void MovieSubtitles_SetBuffers(DblBuf* db, int a, int b, int c, int d) {
+void cMovieSubtitles_GraftDma(DblBuf* db, int a, int b, int c, int d) {
     if (a && b && c && d) {
         db->a = a;
         db->b = b;

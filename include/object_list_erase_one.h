@@ -19,7 +19,7 @@
         n->next->prev = n->prev;                                              \
         if (n) {                                                              \
             AllocGuard guard;                                                 \
-            Mem_Free(0, n, D_0049AE80, 0x64);                                 \
+            cMemMan_Deallocate(0, n, D_0049AE80, 0x64);                                 \
         }                                                                     \
         list->count--;                                                        \
         *result = *pos;                                                       \

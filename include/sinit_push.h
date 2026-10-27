@@ -3,7 +3,7 @@
 
 /*
  * Static-initialiser bodies at the end of .text: store addresses into
- * global objects and register an object with pushFn (FreeList_Push).
+ * global objects and register an object with pushFn (AbstractWidgetClassRep_AddClassRep).
  * Plain C.
  *   DEFINE_SINIT_STORE1(name, slot, val)            slot = val
  *   DEFINE_SINIT_PUSH1(name, slotA, valA, slotB, valB, pushFn)

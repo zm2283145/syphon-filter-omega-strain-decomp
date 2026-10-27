@@ -21,7 +21,7 @@ typedef union BackpackScriptArg {
  */
 #define STACK_COPY(arr) (*(int*)(arr))
 
-/* Object registered with Hotbox_CreateRuntime by Backpack_TurnOn. */
+/* Object registered with cHotboxMan_CreateInteractBox by cBackpack_MakeInteractBox. */
 typedef struct BackpackLink {
     char pad00[0x94];
     int owner;                       /* 0x94: copied from cBackpack.unk0C */
@@ -33,9 +33,9 @@ typedef struct cBackpack {
     char pad10[0x2F0 - 0x10];
     unsigned char autoPickup;        /* 0x2F0: Script_cBackpack_SetAutoPickup */
     char pad2F1[0x2FC - 0x2F1];
-    BackpackLink* link;              /* 0x2FC: created on demand by Backpack_TurnOn */
+    BackpackLink* link;              /* 0x2FC: created on demand by cBackpack_MakeInteractBox */
     char pad300[0x30C - 0x300];
-    int unk30C;                      /* 0x30C: set to 1 by Backpack_MarkChanged */
+    int unk30C;                      /* 0x30C: set to 1 by cBackpack_SetHasTakenPlayerItems */
 } cBackpack;
 
 /* Base layout shared by the inventory and crate script messages. */
@@ -52,7 +52,7 @@ typedef struct BackpackWorld {
     char* unkB8;                     /* 0xB8 */
 } BackpackWorld;
 
-/* Two-word element vector (8-byte entries) used by HandleVec_PushBack. */
+/* Two-word element vector (8-byte entries) used by cArray_cSafePtr_cGOBJ_PushBackActual. */
 typedef struct Pair {
     int a, b;
 } Pair;

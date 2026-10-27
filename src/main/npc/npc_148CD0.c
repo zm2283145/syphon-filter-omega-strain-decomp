@@ -1129,13 +1129,13 @@ struct cNPC_00149270 {
     virtual unsigned char InViewCone(void* target); /* +0x188 */
 };
 
-extern "C" void* GObj_IdentityB(void* object);
+extern "C" void* cGOBJ_SOBJ_convert(void* object);
 
 /* Script native: whether the object args[1] is inside the NPC view cone. */
 extern "C" int Script_cNPC_InViewCone(ScriptArg* args)
 {
     cNPC_00149270* npc = (cNPC_00149270*)args[0].p;
-    return npc->InViewCone(GObj_IdentityB(args[1].p));
+    return npc->InViewCone(cGOBJ_SOBJ_convert(args[1].p));
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00149270(void) {}
@@ -1352,13 +1352,13 @@ struct cNPC_001493F0 {
     virtual void* GetClosestPlayer(); /* +0xF0 */
 };
 
-extern "C" int GObj_IdentityA(void* object);
+extern "C" int cGOBJ_SOBJ_toInt(void* object);
 
 /* Script native: script id of the closest player to the NPC. */
 extern "C" int Script_cNPC_GetClosestPlayer(ScriptArg* args)
 {
     cNPC_001493F0* npc = (cNPC_001493F0*)args[0].p;
-    return GObj_IdentityA(npc->GetClosestPlayer());
+    return cGOBJ_SOBJ_toInt(npc->GetClosestPlayer());
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001493F0(void) {}
@@ -1449,13 +1449,13 @@ struct cNPC_00149480 {
     virtual void RemoveGroupFromPathRegion(void* target); /* +0x1FC */
 };
 
-extern "C" void* ScriptNode_Identity(void* handle);
+extern "C" void* cNode_SOBJ_convert(void* handle);
 
-/* Script native: cNPC::RemoveGroupFromPathRegion(ScriptNode_Identity(args[1])); returns 0. */
+/* Script native: cNPC::RemoveGroupFromPathRegion(cNode_SOBJ_convert(args[1])); returns 0. */
 extern "C" int Script_cNPC_RemoveGroupFromPathRegion(ScriptArg_00149480* args)
 {
     cNPC_00149480* npc = (cNPC_00149480*)args[0].p;
-    npc->RemoveGroupFromPathRegion(ScriptNode_Identity(args[1].p));
+    npc->RemoveGroupFromPathRegion(cNode_SOBJ_convert(args[1].p));
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -1495,19 +1495,19 @@ struct cNPC_001494C0 {
 };
 
 #if 0 /* merge_units */
-extern "C" void* ScriptNode_Identity(void* id);
+extern "C" void* cNode_SOBJ_convert(void* id);
 #endif /* merge_units */
-#define ScriptNode_Identity(a0) (ScriptNode_Identity((a0))) /* merge_units */
+#define cNode_SOBJ_convert(a0) (cNode_SOBJ_convert((a0))) /* merge_units */
 
 
 /* Script native: adds node group args[1] to the NPC path region. */
 extern "C" int Script_cNPC_AddGroupToPathRegion(ScriptArg* args)
 {
     cNPC_001494C0* npc = (cNPC_001494C0*)args[0].p;
-    npc->AddGroupToPathRegion(ScriptNode_Identity(args[1].p));
+    npc->AddGroupToPathRegion(cNode_SOBJ_convert(args[1].p));
     return 0;
 }
-#undef ScriptNode_Identity /* merge_units */
+#undef cNode_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001494C0(void) {}
 #pragma pop /* merge_units */
@@ -1546,11 +1546,11 @@ struct cNPC_00149500 {
     virtual void RestrictMovementToNodeGroup(void* target); /* +0x1F4 */
 };
 
-/* Script native: cNPC::RestrictMovementToNodeGroup(ScriptNode_Identity(args[1])); returns 0. */
+/* Script native: cNPC::RestrictMovementToNodeGroup(cNode_SOBJ_convert(args[1])); returns 0. */
 extern "C" int Script_cNPC_RestrictMovementToNodeGroup(ScriptArg_00149500* args)
 {
     cNPC_00149500* npc = (cNPC_00149500*)args[0].p;
-    npc->RestrictMovementToNodeGroup(ScriptNode_Identity(args[1].p));
+    npc->RestrictMovementToNodeGroup(cNode_SOBJ_convert(args[1].p));
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -1614,7 +1614,7 @@ typedef struct cNPC_5C {
 } cNPC_5C;
 
 /* cNPC virtual slot 0x5C: stores the value at +0x1B4 and clears flag bit 3. */
-void cNPC_v5C(cNPC_5C* self, int value) {
+void cNPC_CheckHotbox(cNPC_5C* self, int value) {
     self->unk1B4 = value;
     self->flag3 = 0;
 }

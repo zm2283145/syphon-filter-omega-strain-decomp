@@ -11,14 +11,14 @@
 #pragma push /* merge_units */
 extern char D_005721F0;   /* already-initialized flag / instance */
 extern char D_005721E0[];
-extern void* Loc_LookupText(void* storage);
+extern void* nGlobalization_GetString_charP(void* storage);
 
 /* Lazy singleton: returns the instance if set up, else initializes it. */
-void* Game_GetQuitDialogName(void) {
+void* cDME_GetQuitMessage(void) {
     if (D_005721F0) {
         return &D_005721F0;
     }
-    return Loc_LookupText(D_005721E0);
+    return nGlobalization_GetString_charP(D_005721E0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001692F0(void) {}
@@ -38,21 +38,21 @@ extern int D_005721E0;
 #define D_005721E0 (*(int*)&D_005721E0) /* merge_units */
 
 #if 0 /* merge_units */
-extern int Loc_LookupText(void*);
+extern int nGlobalization_GetString_charP(void*);
 #endif /* merge_units */
-#define Loc_LookupText(a0) ((int)Loc_LookupText((a0))) /* merge_units */
+#define nGlobalization_GetString_charP(a0) ((int)nGlobalization_GetString_charP((a0))) /* merge_units */
 
 
-/* Returns Loc_LookupText(&D_005721E0) when the D_005721F0 flag is set, else 0. */
-int Game_GetQuitDialogTitle(void) {
+/* Returns nGlobalization_GetString_charP(&D_005721E0) when the D_005721F0 flag is set, else 0. */
+int cDME_GetQuitTitle(void) {
     int r = D_005721F0;
-    if (r != 0) r = Loc_LookupText(&D_005721E0);
+    if (r != 0) r = nGlobalization_GetString_charP(&D_005721E0);
     else r = 0;
     return r;
 }
 #undef D_005721F0 /* merge_units */
 #undef D_005721E0 /* merge_units */
-#undef Loc_LookupText /* merge_units */
+#undef nGlobalization_GetString_charP /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00169330(void) {}
 #pragma pop /* merge_units */

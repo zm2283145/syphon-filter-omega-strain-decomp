@@ -1,4 +1,4 @@
-/* NpcRoute_BuildRegionBoxes: once per level, build the axis-aligned bounding
+/* cAIPathData_InitSystem: once per level, build the axis-aligned bounding
  * box of every route region's nodes (grown by 2 units on each side). */
 #pragma cplusplus on
 #pragma inline_depth(10)
@@ -40,13 +40,13 @@ extern BoxVec* D_004EE118;
 extern int D_004FFBE4;
 extern RegionVec* D_004FFBE8;
 extern char D_0049C1B8[];
-void* Mem_Alloc(int, int, char*, int);
+void* cMemMan_Allocate(int, int, char*, int);
 void std_vector_cBox_ctor(BoxVec* v);
 void std_vector_imp_cBox_resize(BoxVec* v, int n, Box* fill);
 int* std_vector_int_opIndex_uint(Region* r, int i);
-void* NpcPath_GetNode(int id);
-void Node_GetTranslation(V4* out, void* node);
-void NpcRoute_BuildRegionBoxes(void);
+void* cAIPathData_GetNode(int id);
+void cNode_GetLoc(V4* out, void* node);
+void cAIPathData_InitSystem(void);
 }
 
 inline void BoxVec::Resize(int n, Box* f) { std_vector_imp_cBox_resize(this, n, f); }
@@ -57,11 +57,11 @@ static inline void Grow(Box* b, float d)
     AddXYZ(&b->lo, &n);
     { const V4* pv = &v; AddXYZ(&b->hi, pv); }
 }
-void NpcRoute_BuildRegionBoxes(void)
+void cAIPathData_InitSystem(void)
 {
     if (!D_004EE118 && D_004FFBE4 > 0) {
         BoxVec* v;
-        { AllocGuard g; v = (BoxVec*)Mem_Alloc(0, 0x10, D_0049C1B8, 0xB1A); }
+        { AllocGuard g; v = (BoxVec*)cMemMan_Allocate(0, 0x10, D_0049C1B8, 0xB1A); }
         if (v) {
             std_vector_cBox_ctor(v);
             v->owned = 1;
@@ -76,7 +76,7 @@ void NpcRoute_BuildRegionBoxes(void)
             D_004EE118->data[i].Reset();
             for (int j = 0; j < r->n; j++) {
                 V4 p;
-                Node_GetTranslation(&p, NpcPath_GetNode(*std_vector_int_opIndex_uint(r, j)));
+                cNode_GetLoc(&p, cAIPathData_GetNode(*std_vector_int_opIndex_uint(r, j)));
                 D_004EE118->At(i).Extend(&p);
             }
             Grow(&D_004EE118->At(i), 2.0f);

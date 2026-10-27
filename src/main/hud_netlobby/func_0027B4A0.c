@@ -7,7 +7,7 @@
 #include "types.h"
 #include "hud_netlobby_types.h"
 
-extern ListPos* List_InsertBefore(ListPos* result, void* list, ListPos* pos, int value);
+extern ListPos* std_list_deleter_voidPtr_insert(ListPos* result, void* list, ListPos* pos, int value);
 
 void std_list_GameInfoPtr_generic_iterator_opCast(int* dst, int* src) {
     *dst = *src;
@@ -19,5 +19,5 @@ ListPos* std_list_GameInfoPtr_push_back(void* list, int value) {
     ListPos result;
 
     end.node = (char*)list + 4;
-    return List_InsertBefore(&result, list, &end, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &end, value);
 }

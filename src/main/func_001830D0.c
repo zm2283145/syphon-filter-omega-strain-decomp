@@ -8,7 +8,7 @@
 #include "loose00_types.h"
 
 /* Byte +0x2D and byte +0x2C set and byte +0x2E clear. */
-int GameObject_IsCollisionEnabled(Unk001830D0* self) {
+int cGOBJ_IsActive(Unk001830D0* self) {
     int v0;
 
     v0 = self->unk2D != 0;

@@ -19,11 +19,11 @@ extern char D_0055A120[];
 void cGroup_SOBJ_init(void) {
 }
 
-void* Group_FromHandle(void* self) {
+void* cGroup_SOBJ_convert(void* self) {
     return self;
 }
 
-int cGroup_GetScriptTypeKeyPtr(void) {
+int cGroup_SOBJ_getClassId(void) {
     return (int)D_0055A120;
 }
 #pragma pop /* merge_units */
@@ -32,21 +32,21 @@ int cGroup_GetScriptTypeKeyPtr(void) {
 /* merge_units: begin func_003D9990 */
 #pragma push /* merge_units */
 typedef struct { int a; int count; int* items; } G399;
-extern void Script_PrintWarning(char*);
-extern int Script_LookupObjectById(int);
-int Group_GetAt(G399* g, int i) {
+extern void cScriptBase_sm_printf(char*);
+extern int cScriptInterpreter_getObjPtr(int);
+int cGroup_Get(G399* g, int i) {
     if (i < 0 || !(i < g->count)) {
-        Script_PrintWarning("group index out of range");
+        cScriptBase_sm_printf("group index out of range");
         return 0;
     }
-    return Script_LookupObjectById(g->items[i]);
+    return cScriptInterpreter_getObjPtr(g->items[i]);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003D9990 */
 
 /* merge_units: begin func_003D99F0 */
 #pragma push /* merge_units */
-void Group_Print(void) {
+void cGroup_Print(void) {
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003D99F0 */
@@ -55,9 +55,9 @@ void Group_Print(void) {
 #pragma push /* merge_units */
 #pragma opt_strength_reduction off
 typedef struct Group {int capacity,count;int*items;} Group;
-int Random_Next(void);
-static inline float RandF(){return (float)Random_Next()/2147483648.0f;}
-void Group_Shuffle(Group*g0){
+int Libc_Rand(void);
+static inline float RandF(){return (float)Libc_Rand()/2147483648.0f;}
+void cGroup_Randomize(Group*g0){
  int count;Group*g=g0;int i=0;
  if(0<g->count)do{
  int n,value;count=*(volatile int*)&g->count;
@@ -73,24 +73,24 @@ void Group_Shuffle(Group*g0){
 #pragma push /* merge_units */
 #include "loose04_types.h"
 
-extern void Actor_VirtualLeaf175230(void*);
+extern void std_vector_deleter_cObjectId_clear(void*);
 
 void Group_RemoveAll(void* self) {
-    Actor_VirtualLeaf175230(self);
+    std_vector_deleter_cObjectId_clear(self);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003D9AC0 */
 
 /* merge_units: begin func_003D9AD0 */
 #pragma push /* merge_units */
-/* Group_RemoveObject */
+/* cGroup_Remove */
 typedef struct { int pad0; int count; int* ids; } Pt2_Group;
-extern int Script_ObjectToId(void*);
+extern int cScriptInterpreter_PackPtr(void*);
 extern void std_vector_imp_cObjectId_resize(Pt2_Group*, int, int*);
 
 #pragma opt_strength_reduction off
-void Group_RemoveObject(Pt2_Group* g, void* obj) {
-    int id = Script_ObjectToId(obj);
+void cGroup_Remove(Pt2_Group* g, void* obj) {
+    int id = cScriptInterpreter_PackPtr(obj);
     int n = g->count;
     int i;
     for (i = 0; i < n; i++) {
@@ -106,7 +106,7 @@ void Group_RemoveObject(Pt2_Group* g, void* obj) {
             return;
         }
     }
-    Script_PrintWarning("warning: obj to remove is not in group");
+    cScriptBase_sm_printf("warning: obj to remove is not in group");
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003D9AD0 */
@@ -115,44 +115,44 @@ void Group_RemoveObject(Pt2_Group* g, void* obj) {
 #pragma push /* merge_units */
 typedef struct { int unk0; int count; void** data; } PtrVector;
 #if 0 /* merge_units */
-extern void* Script_ObjectToId(void* object);
+extern void* cScriptInterpreter_PackPtr(void* object);
 #endif /* merge_units */
-#define Script_ObjectToId(a0) ((void *)Script_ObjectToId((a0))) /* merge_units */
+#define cScriptInterpreter_PackPtr(a0) ((void *)cScriptInterpreter_PackPtr((a0))) /* merge_units */
 
-extern void KeyVector_PushBack(PtrVector* vec, void** pos, int n, void** value);
+extern void std_vector_imp_cObjectId_insert(PtrVector* vec, void** pos, int n, void** value);
 
 /* Appends a duplicate handle of object to the group's pointer vector. */
-void Group_AddObjectDup(PtrVector* group, void* object)
+void cGroup_AddDup(PtrVector* group, void* object)
 {
-    void* dup = Script_ObjectToId(object);
-    KeyVector_PushBack(group, group->data + group->count, 1, &dup);
+    void* dup = cScriptInterpreter_PackPtr(object);
+    std_vector_imp_cObjectId_insert(group, group->data + group->count, 1, &dup);
 }
-#undef Script_ObjectToId /* merge_units */
+#undef cScriptInterpreter_PackPtr /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003D9BA0 */
 
 /* merge_units: begin func_003D9BF0 */
 #pragma push /* merge_units */
-extern int Script_IsGroupMember(void* g, void* o);
+extern int cGroup_Contains(void* g, void* o);
 #if 0 /* merge_units */
-extern void Script_PrintWarning(char* msg);
+extern void cScriptBase_sm_printf(char* msg);
 #endif /* merge_units */
-#define Script_PrintWarning(a0) (Script_PrintWarning((a0))) /* merge_units */
+#define cScriptBase_sm_printf(a0) (cScriptBase_sm_printf((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Group_AddObjectDup(void* g, void* o);
+extern void cGroup_AddDup(void* g, void* o);
 #endif /* merge_units */
-#define Group_AddObjectDup(a0, a1) (Group_AddObjectDup((PtrVector *)(a0), (a1))) /* merge_units */
+#define cGroup_AddDup(a0, a1) (cGroup_AddDup((PtrVector *)(a0), (a1))) /* merge_units */
 
-void Group_AddObject(void* g, void* o)
+void cGroup_Add(void* g, void* o)
 {
-    if (Script_IsGroupMember(g, o)) {
-        Script_PrintWarning("warning: obj already part of group (not added).");
+    if (cGroup_Contains(g, o)) {
+        cScriptBase_sm_printf("warning: obj already part of group (not added).");
     } else {
-        Group_AddObjectDup(g, o);
+        cGroup_AddDup(g, o);
     }
 }
-#undef Script_PrintWarning /* merge_units */
-#undef Group_AddObjectDup /* merge_units */
+#undef cScriptBase_sm_printf /* merge_units */
+#undef cGroup_AddDup /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003D9BF0 */

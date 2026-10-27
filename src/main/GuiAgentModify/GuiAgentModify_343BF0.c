@@ -16,7 +16,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00343BF0 */
 #pragma push /* merge_units */
@@ -29,10 +29,10 @@ extern char g_AgentPartCache[];
 extern char D_004DE920[];
 extern char D_004E1220[];
 extern int D_00506500;
-void AgentPartCache_Unlock(void* p);
-void World_ClearPendingIfLoaded(void);
-void GuiEquipmentModify_RingRelease(void* p);
-void GuiWidget_Destroy(void* p, int f);
+void Monster_RestoreLockedPartsTex(void* p);
+void cMotionManager_FlushUpdateList(void);
+void GuiEquipmentModify_EmptyQue(void* p);
+void GuiWidget_dtor(void* p, int f);
 #if 0 /* merge_units */
 void operator_delete(void* p);
 #endif /* merge_units */
@@ -43,7 +43,7 @@ static inline void Del00343BF0(V00343BF0* o, int line)
 {
     AllocGuard g;
     o->v0(-1);
-    Mem_Free(0, o, "GuiAgentModify.cc", line);
+    cMemMan_Deallocate(0, o, "GuiAgentModify.cc", line);
 }
 extern "C" O00343BF0* GuiAgentModify_dtor(O00343BF0* self, short del)
 {
@@ -53,11 +53,11 @@ extern "C" O00343BF0* GuiAgentModify_dtor(O00343BF0* self, short del)
         Del00343BF0(self->p90, 0x176);
         self->p8C->v22(1);
         Del00343BF0(self->p8C, 0x178);
-        AgentPartCache_Unlock(g_AgentPartCache);
-        World_ClearPendingIfLoaded();
+        Monster_RestoreLockedPartsTex(g_AgentPartCache);
+        cMotionManager_FlushUpdateList();
         if (self) {
             self->vt = D_004E1220;
-            GuiWidget_Destroy(self, 0);
+            GuiWidget_dtor(self, 0);
         }
         if (del > 0)
             operator_delete(self);

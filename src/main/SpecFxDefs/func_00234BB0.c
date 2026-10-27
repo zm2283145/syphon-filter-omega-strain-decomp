@@ -4,7 +4,7 @@ typedef struct { int pad; LNode00234BB0* head; } LHdr00234BB0;
 typedef struct { LNode00234BB0* node; } LIt00234BB0;
 extern LHdr00234BB0* std_list_deleter_voidPtr_tail(void* self);
 extern void std_list_deleter_voidPtr_generic_iterator_ctor_nodeP(LIt00234BB0* it, LNode00234BB0* n);
-void* ParticleDefs_SlotForId(void* self, int n)
+void* cLList_cParticleDefinitionPtr_opIndex(void* self, int n)
 {
     LIt00234BB0 it;
     LNode00234BB0* p;

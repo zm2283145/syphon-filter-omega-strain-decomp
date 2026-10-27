@@ -8,13 +8,13 @@ extern char g_UnlockRows[];
 E_32FFD0* std_vector_imp_Record_begin(void* t);
 E_32FFD0* std_vector_imp_Record_end(void* t);
 void std_vector_Record_pointer2iterator(E_32FFD0** out, void* t, E_32FFD0** raw);
-int Loc_FindKeyThunk(const char* key);
-int Loc_LookupText(int id);
+int nGlobalization_GetStringIndex(const char* key);
+int nGlobalization_GetString_charP(int id);
 }
 static inline bool Neq_32FFD0(E_32FFD0* a, E_32FFD0* b) { return !(a == b); }
 static inline int Find_32FFD0(const char* key)
 {
-    int k = Loc_FindKeyThunk(key);
+    int k = nGlobalization_GetStringIndex(key);
     if (k > -1) {
         E_32FFD0* b;
         E_32FFD0* e;
@@ -32,11 +32,11 @@ static inline int Find_32FFD0(const char* key)
     }
     return -1;
 }
-extern "C" O_32FFD0* AwardRow_Construct(O_32FFD0* self, const char* name, int x, const char* name2, int c, const char* key)
+extern "C" O_32FFD0* cAgentData_Record_ctor_charP_int_charP_int_etc_2(O_32FFD0* self, const char* name, int x, const char* name2, int c, const char* key)
 {
-    self->key = Loc_FindKeyThunk(name);
+    self->key = nGlobalization_GetStringIndex(name);
     self->x = x;
-    self->key2 = Loc_FindKeyThunk(name2);
+    self->key2 = nGlobalization_GetStringIndex(name2);
     self->c = c;
     self->val = key ? Find_32FFD0(key) : -1;
     return self;

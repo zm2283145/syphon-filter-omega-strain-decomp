@@ -18,8 +18,8 @@ extern int rt_time_start(void *t);
 extern int GetUDPSecurityMode(void);
 extern int KM_GetSymmetricKey(int a, int b, unsigned char *buf);
 extern int rt_udp_send_peerkey(RtUdp *r, RtPeer *p, unsigned char *buf);
-extern int RtUdp_BuildHeader(RtUdp *r, RtPeer *p, int kind, unsigned char *hdr);
-extern int RtUdp_CopyPacket(RtPeer *p, unsigned char *hdr, void *body, int n);
+extern int rt_udp_setup_packet_header(RtUdp *r, RtPeer *p, int kind, unsigned char *hdr);
+extern int rt_udp_buffer_data_for_send(RtPeer *p, unsigned char *hdr, void *body, int n);
 int rt_udp_connect(RtUdp *r, RtAddr *a, int *out)
 {
     RtAddr self;
@@ -67,12 +67,12 @@ int rt_udp_connect(RtUdp *r, RtAddr *a, int *out)
         KM_GetSymmetricKey(-1, p->f8C, buf);
         ret = rt_udp_send_peerkey(r, p, buf);
     } else {
-        if (RtUdp_BuildHeader(r, p, 4, hdr) != 0) {
+        if (rt_udp_setup_packet_header(r, p, 4, hdr) != 0) {
             p->state = 6;
             return 7;
         }
         hdr[0] |= 0x40;
-        ret = RtUdp_CopyPacket(p, hdr, 0, 0);
+        ret = rt_udp_buffer_data_for_send(p, hdr, 0, 0);
     }
     if (ret != 0) {
         p->state = 6;

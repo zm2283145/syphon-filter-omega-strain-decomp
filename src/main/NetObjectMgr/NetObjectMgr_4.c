@@ -15,15 +15,15 @@ extern "C" {
 extern RbTree D_005826A0;
 extern RbTree D_00582700;
 extern char D_004BFB00[];
-void ObjMap_Find_42EDF0(TransferObjectIterator* result, RbTree* tree, const GobjId* id);
+void std_tree_pair_int_value_compare_find_intR_3(TransferObjectIterator* result, RbTree* tree, const GobjId* id);
 TransferObjectIterator std_map_int_tNetObjectPtr_end(RbTree* tree);
 void cAssocArray_int_tNetObjectPtr_Iterator_ctor(TransferObjectIterator* result, const TransferObjectIterator& source);
 void std_tree_pair_int_value_compare_erase_tree_3(RbTree* tree, TransferObjectIterator* position);
-void ObjMap_Find_42EEF0(TransferReferenceIterator* result, RbTree* tree, const GobjId* id);
+void std_tree_pair_int_value_compare_find_uintR_2(TransferReferenceIterator* result, RbTree* tree, const GobjId* id);
 TransferReferenceIterator std_map_int_tNetActivateTerrainObjectPtr_end(RbTree* tree);
 void cAssocArray_int_tNetActivateTerrainObjectPtr_Iterator_ctor(TransferReferenceIterator* result, const TransferReferenceIterator& source);
 void std_tree_pair_int_value_compare_erase_tree_4(RbTree* tree, TransferReferenceIterator* position);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 }
 
 static inline void erase_object(TransferObjectNode* node)
@@ -61,7 +61,7 @@ static inline void erase_reference(TransferReferenceNode* node)
 }
 
 /* Remove the owned entry, then release its separately registered reference. */
-extern "C" void NetObjectMgr_Erase(const GobjId* id)
+extern "C" void cNetObjectMgr_Delete(const GobjId* id)
 {
     GobjId key;
     TransferObjectIterator end;
@@ -69,7 +69,7 @@ extern "C" void NetObjectMgr_Erase(const GobjId* id)
     TransferReferenceIterator referenceEnd;
     TransferObjectIterator found;
     key.word = id->word;
-    ObjMap_Find_42EDF0(&found, &D_005826A0, &key);
+    std_tree_pair_int_value_compare_find_intR_3(&found, &D_005826A0, &key);
     TransferObjectNode* node = found.node;
     object_end(&end);
     if ((node == end.node) ^ 1) {
@@ -78,22 +78,22 @@ extern "C" void NetObjectMgr_Erase(const GobjId* id)
         TransferReference* reference = entry->reference;
         {
             AllocGuard guard;
-            Mem_Free(0, reference, D_004BFB00, 0x119);
+            cMemMan_Deallocate(0, reference, D_004BFB00, 0x119);
         }
         {
             AllocGuard guard;
-            Mem_Free(0, entry, D_004BFB00, 0x11A);
+            cMemMan_Deallocate(0, entry, D_004BFB00, 0x11A);
         }
         TransferReferenceIterator referenceFound;
         referenceKey.word = id->word;
-        ObjMap_Find_42EEF0(&referenceFound, &D_00582700, &referenceKey);
+        std_tree_pair_int_value_compare_find_uintR_2(&referenceFound, &D_00582700, &referenceKey);
         TransferReferenceNode* referenceNode = referenceFound.node;
         reference_end(&referenceEnd);
         if ((referenceNode == referenceEnd.node) ^ 1) {
             TransferReference* registered = referenceNode->reference;
             {
                 AllocGuard guard;
-                Mem_Free(0, registered, D_004BFB00, 0x121);
+                cMemMan_Deallocate(0, registered, D_004BFB00, 0x121);
             }
             erase_reference(referenceNode);
         }
@@ -163,19 +163,19 @@ extern char D_00582730[];
 extern char D_004D9300[];
 extern char D_004E0EA0[];
 extern void * const D_004E0F20[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 void std_tree_pair_int_value_compare_insert_one_pairR_2(TransferReferenceInsertResult* result, RbTree* tree, const TransferReferenceValue* value);
 void cNPCInfoObject_ctor(int* shared);
 void cNPCInfoObject_dtor(int* shared, short flags);
 int cNPCInfoObject_GetOwner_cObjectIdR(int* shared, const GobjId* id);
 int cNPCInfoObject_GetPrevOwner(int* shared, const GobjId* id);
 void cNetObj_SetOwner(int id, int peer);
-int NetGame_InitLocalSlot(int* id, int session);
-int Player_GetIndex(unsigned int id);
-void Event_Construct(void* notice, const void* descriptor);
-void Event_Send(void* notice, cGOBJ* object, int flags);
+int NetGetMyClientIndex(int* id, int session);
+int cNetObj_GetOwner(unsigned int id);
+void cMessage_ctor_cMessageNameR(void* notice, const void* descriptor);
+void QueueMessage_cMessageR_cSystemP_int(void* notice, cGOBJ* object, int flags);
 void cMessage_dtor(void* notice, int flags);
-int Transport_Send(unsigned int id, const void* notice, int flags, int peer);
+int cNetObj_SendMessage_int_cMessageR_int_int(unsigned int id, const void* notice, int flags, int peer);
 void NetObjectMgr_AddTransferTimer(const GobjId* id);
 void cNetObjectMgr_TransferRequest(const GobjId* id, int peer);
 }
@@ -190,7 +190,7 @@ static inline int current_peer(void)
     int session = D_005721A8;
     if (g_IsMultiplayer) {
         if (D_00494178 == -1)
-            NetGame_InitLocalSlot(&D_00494178, session);
+            NetGetMyClientIndex(&D_00494178, session);
         return D_00494178;
     }
     return 0;
@@ -209,12 +209,12 @@ static inline bool is_alive(cGOBJ* a) { return a->unk2D && a->unk2C && !a->unk2E
 static inline void request_transfer(cGOBJ* object, int peer, int owner)
 {
     TransferRequestNotice notice;
-    Event_Construct(&notice, D_00582770);
+    cMessage_ctor_cMessageNameR(&notice, D_00582770);
     notice.vtable = ((char*)D_004E0F20);
     notice.id.word = object_id(object)->word;
     notice.peer = peer;
     notice.flags = 0x40;
-    Transport_Send(object_id(object)->word, &notice, 0, owner);
+    cNetObj_SendMessage_int_cMessageR_int_int(object_id(object)->word, &notice, 0, owner);
     NetObjectMgr_AddTransferTimer(&((GobjEntry*)object)->id);
     notice.vtable = ((char*)D_004E0F20);
     cMessage_dtor(&notice, 0);
@@ -223,7 +223,7 @@ static inline void request_transfer(cGOBJ* object, int peer, int owner)
 static inline void request_activate(cGOBJ* object, int target, int peer)
 {
     ActivateNotice notice;
-    Event_Construct(&notice, D_00582680);
+    cMessage_ctor_cMessageNameR(&notice, D_00582680);
     notice.vtable = D_004E0EA0;
     notice.flags = 0x40;
     notice.target = target;
@@ -231,7 +231,7 @@ static inline void request_activate(cGOBJ* object, int target, int peer)
         notice.state = 8;
     else
         notice.state = 1;
-    Event_Send(&notice, object, 1);
+    QueueMessage_cMessageR_cSystemP_int(&notice, object, 1);
     notice.vtable = D_004E0EA0;
     cMessage_dtor(&notice, 0);
 }
@@ -239,11 +239,11 @@ static inline void request_activate(cGOBJ* object, int target, int peer)
 static inline void send_release(cGOBJ* object)
 {
     TransferNotice notice;
-    Event_Construct(&notice, D_00582730);
+    cMessage_ctor_cMessageNameR(&notice, D_00582730);
     notice.vtable = D_004D9300;
     notice.action = 2;
     notice.enabled = 1;
-    Event_Send(&notice, object, 0);
+    QueueMessage_cMessageR_cSystemP_int(&notice, object, 0);
     notice.vtable = D_004D9300;
     cMessage_dtor(&notice, 0);
 }
@@ -259,7 +259,7 @@ extern "C" void cNetObjectMgr_AddActivate(cGOBJ* object, int peer)
     if (!controller || !controller->can_create_message())
         return;
     key.word = object_id(object)->word;
-    ObjMap_Find_42EDF0(&found, &D_005826A0, &key);
+    std_tree_pair_int_value_compare_find_intR_3(&found, &D_005826A0, &key);
     TransferObjectNode* node = found.node;
     cNPCInfoObject_ctor(&shared);
     cAssocArray_int_tNetObjectPtr_Iterator_ctor(&end, std_map_int_tNetObjectPtr_end(&D_005826A0));
@@ -267,14 +267,14 @@ extern "C" void cNetObjectMgr_AddActivate(cGOBJ* object, int peer)
         TransferObjectEntry* entry;
         {
             AllocGuard guard;
-            entry = (TransferObjectEntry*)Mem_Alloc(0, sizeof(TransferObjectEntry), D_004BFB00, 0xA6);
+            entry = (TransferObjectEntry*)cMemMan_Allocate(0, sizeof(TransferObjectEntry), D_004BFB00, 0xA6);
         }
         if (entry)
             entry->reference = 0;
         TransferReference* reference;
         {
             AllocGuard guard;
-            reference = (TransferReference*)Mem_Alloc(0, sizeof(TransferReference), D_004BFB00, 0xA8);
+            reference = (TransferReference*)cMemMan_Allocate(0, sizeof(TransferReference), D_004BFB00, 0xA8);
         }
         GobjId invalid;
         if (reference) {
@@ -305,7 +305,7 @@ extern "C" void cNetObjectMgr_AddActivate(cGOBJ* object, int peer)
         }
         if (peer != current_peer()) {
             unsigned int id = object_id(object)->word;
-            if (Player_GetIndex(id) != current_peer()) {
+            if (cNetObj_GetOwner(id) != current_peer()) {
                 if (!is_alive(object)) {
                     ActivateController* c2 = (ActivateController*)object->attached;
                     if (!c2 || c2->mode() != 2)
@@ -332,7 +332,7 @@ PendingTransferIterator std_map_int_cMessagePtr_begin(RbTree* tree);
 PendingTransferIterator std_map_int_cMessagePtr_end(RbTree* tree);
 void cAssocArray_int_cMessagePtr_Iterator_ctor(PendingTransferIterator* result, const PendingTransferIterator& source);
 void std_tree_pair_int_value_compare_begin_void_3(TransferReferenceIterator* result, RbTree* tree);
-void Tree_Successor(void* iterator);
+void std_red_black_tree_1_increment(void* iterator);
 void std_tree_pair_int_value_compare_clear_void_2(RbTree* tree);
 void std_tree_pair_short_value_compare_clear(RbTree* tree);
 void std_tree_pair_int_value_compare_clear_void_3(RbTree* tree);
@@ -359,13 +359,13 @@ extern "C" void cNetObjectMgr_Reset(void)
         TransferReference* owned = entry->reference;
         {
             AllocGuard guard;
-            Mem_Free(0, owned, D_004BFB00, 0x61);
+            cMemMan_Deallocate(0, owned, D_004BFB00, 0x61);
         }
         {
             AllocGuard guard;
-            Mem_Free(0, entry, D_004BFB00, 0x62);
+            cMemMan_Deallocate(0, entry, D_004BFB00, 0x62);
         }
-        Tree_Successor(&object);
+        std_red_black_tree_1_increment(&object);
     }
     std_tree_pair_int_value_compare_clear_void_2(&D_005826A0);
     std_tree_pair_short_value_compare_clear(&D_005826C0);
@@ -377,9 +377,9 @@ extern "C" void cNetObjectMgr_Reset(void)
         {
             AllocGuard guard;
             message->~TransferMessage();
-            Mem_Free(0, message, D_004BFB00, 0x6B);
+            cMemMan_Deallocate(0, message, D_004BFB00, 0x6B);
         }
-        Tree_Successor(&pending);
+        std_red_black_tree_1_increment(&pending);
     }
     std_tree_pair_int_value_compare_clear_void_3(&D_005826E0);
     TransferReferenceIterator referenceBegin;
@@ -390,9 +390,9 @@ extern "C" void cNetObjectMgr_Reset(void)
         TransferReference* registered = reference.node->reference;
         {
             AllocGuard guard;
-            Mem_Free(0, registered, D_004BFB00, 0x75);
+            cMemMan_Deallocate(0, registered, D_004BFB00, 0x75);
         }
-        Tree_Successor(&reference);
+        std_red_black_tree_1_increment(&reference);
     }
     func_0042F4D0(&D_00582700);
     std_tree_pair_int_value_compare_clear_void_5(&D_00582720);

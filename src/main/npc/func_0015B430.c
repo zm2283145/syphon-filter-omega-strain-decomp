@@ -5,11 +5,11 @@
 
 #include "npc_types.h"
 
-extern int GObj_IdentityB(int handle);
+extern int cGOBJ_SOBJ_convert(int handle);
 
 /* Script: LosCam(a, b); resolves both handles, result unused. */
 int Script_LosCam(NpcScriptArgs* args) {
-    GObj_IdentityB(args->arg1);
-    GObj_IdentityB((int)args->npc);
+    cGOBJ_SOBJ_convert(args->arg1);
+    cGOBJ_SOBJ_convert((int)args->npc);
     return 0;
 }

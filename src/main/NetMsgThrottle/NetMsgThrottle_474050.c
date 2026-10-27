@@ -65,46 +65,46 @@ extern char D_004C3570[]; extern char D_004C3590[];
 extern float g_DefaultMotionTransition;
 void* cObjectId_ctor_uint(int* p, int v);
 unsigned char opNe_cObjectIdR_cObjectIdR(int* a, int* b);
-void* Object_LookupById(int* id);
-void* Camera_GetNode(void* o);
-void* Transform_GetUpdated(void* p);
-Plc_L* Mtx_ToPlacement(Plc_L* d, void* m);
-void* Mtx_GetIdentity(void);
-void Placement_ApplyParent(Plc_L* d, Plc_L* s, Plc_L* p);
-void VecPair_Copy(Plc_L* d, Plc_L* s);
-void Root_SetWorldPlacement(Root_L* r, Plc_L* p);
+void* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+void* cGOBJ_GetXform_void(void* o);
+void* cXform_GetMatrix(void* p);
+Plc_L* cQuatVec_ctor_cMatrixR(Plc_L* d, void* m);
+void* cMatrix_GetUnit(void);
+void cQuatVec_Copy_Transform(Plc_L* d, Plc_L* s, Plc_L* p);
+void cQuatVec_ctor_cQuatVecR(Plc_L* d, Plc_L* s);
+void cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(Root_L* r, Plc_L* p);
 void** cArray_FixedSize_cGOBJPtr_3_opIndex(void* p, int i);
 void* cArray_FixedSize_cQuatVec_3_opIndex(void* p, int i);
 unsigned char* func_00195DB0(void* p, int i);
-void Transform_SetOrientation(void* t, Plc_L* p);
-void MotionTokens_Init(void* p);
+void cQuatVec_opAssign(void* t, Plc_L* p);
+void cArray_FixedSize_cSkaAnimEvent_7_ctor_void(void* p);
 void cArray_cTimedEvent_ctor_void(void* p);
 void cString16N_3_ctor_void(void* p);
 void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(void* d, void* s);
 void cSkaPlaybackGroupId_ctor_int(void* p, int v);
-void Actor_ResolveMotionSelection(Sel_L* sel, int* out, Y_L* y, void* model);
-float Model_GetFirstFloat(void* m);
-V4_L* AnimRate_Init(V4_L* p, float f);
-V4_L* Vec4_Copy_18A350(V4_L* d, V4_L* s);
-void AnimEvent_Construct(Ev_L* e);
-signed char MotionRequest_GetMode(Sel_L* s);
+void cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(Sel_L* sel, int* out, Y_L* y, void* model);
+float cSkaAnimationSet_DefaultCrossFadeDuration(void* m);
+V4_L* cSkaCrossFadeDuration_ctor_float(V4_L* p, float f);
+V4_L* cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(V4_L* d, V4_L* s);
+void cSkaAnimEndedMessage_ctor_void(Ev_L* e);
+signed char cSkaRequestStream_AnimationPacket_GetInstruction(Sel_L* s);
 void* cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(Sel_L* s);
 float cSkaRequestStream_AnimationPacket_GetDuration(Sel_L* s);
 float func_0018A2C0(Sel_L* s);
-void AnimCtl_InstallMotion(void* ctl, int id, signed char mode, void* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
-void AnimEvent_dtor(void* p, int f);
+void cSkaRequestStream_AddRequest(void* ctl, int id, signed char mode, void* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
+void cSkaAnimEndedMessage_dtor(void* p, int f);
 void func_001BE5A0(void* p, int f);
 void __destroy_array(void* p, void* dtor, int size, int n);
 void func_0018A210(void* p, int f);
-float AnimChannel_GetCurrent(void* p, int i);
-int Ladder_HandParity(Act_L* a, int f);
-void Event_Construct(void* m, void* t);
-void Event_Send(void* m, void* t, int f);
+float cSkaParams_GetSliderValue(void* p, int i);
+int cHuman_ShouldLeftHandBeGraspingTheHigherRung(Act_L* a, int f);
+void cMessage_ctor_cMessageNameR(void* m, void* t);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* t, int f);
 void cMessage_dtor(void* m, int f);
-void ModelCtx_FindNodeById(It_L* out, int* tree, Name_L* key);
-void NodeMap_End(It_L* out, int* tree);
-int NodeMapIter_NotEqual(It_L* a, It_L* b);
-int* NodeMapIter_Value(It_L* a);
+void cAssocArray_cString16N_3_int_Find(It_L* out, int* tree, Name_L* key);
+void cAssocArray_cString16N_3_int_End(It_L* out, int* tree);
+int cAssocArray_cString16N_3_int_ConstIterator_opNe(It_L* a, It_L* b);
+int* cAssocArray_cString16N_3_int_ConstIterator_opMul(It_L* a);
 }
 
 static inline int IdNe_L(int* a, int* b) { return *a != *b; }
@@ -145,7 +145,7 @@ static inline void NameAssignT_L(Name_L* dst, Name_L* tmp, char* src) {
 static inline void NameAssign_L(Name_L* dst, char* src) { Name_L tmp; NAME_COPY(tmp.c, src) if (dst->c[0] || tmp.c[0]) QCopyA_L(dst, &tmp); }
 
 static inline float Recip_L(float v) { return v != 0.0f ? 1.0f / v : 3.4028235e38f; }
-static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; MotionTokens_Init(px->pairs); cArray_cTimedEvent_ctor_void(px->tail); return px; }
+static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; cArray_FixedSize_cSkaAnimEvent_7_ctor_void(px->pairs); cArray_cTimedEvent_ctor_void(px->tail); return px; }
 static inline X_L* XSetR_L(X_L* x, int i, int id, void* a, unsigned char k) { Pair_L* p = &x->pairs[i]; p->id = id; p->a = a; x->kind = k; return x; }
 static inline void XDtor_L(X_L* x) { func_001BE5A0(x->tail, 0); __destroy_array(x->pairs, (void*)func_0018A210, 8, 7); }
 static inline void XDtorN_L(X_L* p) {
@@ -186,20 +186,20 @@ static inline void Install_L(Act_L* a, Sel_L* sel, Rate_L* r)
     a->sys.anim.v.w = r->w;
     a->sys.anim.b5 = 1;
     cSkaPlaybackGroupId_ctor_int(&y, -1);
-    Actor_ResolveMotionSelection(sel, &out, &y, an->model);
+    cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(sel, &out, &y, an->model);
     if (out) {
         V4_L* p;
         if (an->b5)
             p = &an->v;
         else
-            p = AnimRate_Init(&rate, Model_GetFirstFloat(an->model));
-        Vec4_Copy_18A350(&vec, p);
+            p = cSkaCrossFadeDuration_ctor_float(&rate, cSkaAnimationSet_DefaultCrossFadeDuration(an->model));
+        cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(&vec, p);
         an->b5 = 0;
-        AnimEvent_Construct(&e1);
-        AnimEvent_Construct(&e2);
-        AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(sel), cSkaRequestStream_AnimationPacket_GetDuration(sel), func_0018A2C0(sel));
-        AnimEvent_dtor(&e2, -1);
-        AnimEvent_dtor(&e1, -1);
+        cSkaAnimEndedMessage_ctor_void(&e1);
+        cSkaAnimEndedMessage_ctor_void(&e2);
+        cSkaRequestStream_AddRequest(an, out, cSkaRequestStream_AnimationPacket_GetInstruction(sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(sel), cSkaRequestStream_AnimationPacket_GetDuration(sel), func_0018A2C0(sel));
+        cSkaAnimEndedMessage_dtor(&e2, -1);
+        cSkaAnimEndedMessage_dtor(&e1, -1);
     }
 }
 static inline void Inst2_L(Act_L* a, Sel_L* sel, Rate_L* r) { Install_L(a, sel, r); }
@@ -218,10 +218,10 @@ static inline void Bind_L(Act_L* a, void* o, Msg_L* msg, int idx)
         void* m;
         Plc_L* pp = &msg->plc;
         *cArray_FixedSize_cGOBJPtr_3_opIndex(s + 0x1F0, idx) = o;
-        Transform_SetOrientation(cArray_FixedSize_cQuatVec_3_opIndex(s + 0x200, idx), pp);
-        p = o ? Camera_GetNode(o) : 0;
-        if (p) m = Transform_GetUpdated(p); else m = Mtx_GetIdentity();
-        Transform_SetOrientation(cArray_FixedSize_cQuatVec_3_opIndex(s + 0x260, idx), Mtx_ToPlacement(&t, m));
+        cQuatVec_opAssign(cArray_FixedSize_cQuatVec_3_opIndex(s + 0x200, idx), pp);
+        p = o ? cGOBJ_GetXform_void(o) : 0;
+        if (p) m = cXform_GetMatrix(p); else m = cMatrix_GetUnit();
+        cQuatVec_opAssign(cArray_FixedSize_cQuatVec_3_opIndex(s + 0x260, idx), cQuatVec_ctor_cMatrixR(&t, m));
         *func_00195DB0(s + 0x2C0, idx) = 1;
     }
 }
@@ -233,15 +233,15 @@ static inline void GetPlc_L(Plc_L* pplc, Msg_L* msg, int* pt)
         Plc_L* src;
         Plc_L t7B0;
         Plc_L t790;
-        obj = opNe_cObjectIdR_cObjectIdR(&msg->id, (int*)cObjectId_ctor_uint(pt, -1)) != 0 ? Object_LookupById(&msg->id) : 0;
-        parent = obj ? Camera_GetNode(obj) : 0;
+        obj = opNe_cObjectIdR_cObjectIdR(&msg->id, (int*)cObjectId_ctor_uint(pt, -1)) != 0 ? nGobjManager_LookupGOBJ_cObjectIdR(&msg->id) : 0;
+        parent = obj ? cGOBJ_GetXform_void(obj) : 0;
         if (parent) {
-            Placement_ApplyParent(&t790, &msg->plc, Mtx_ToPlacement(&t7B0, Transform_GetUpdated(parent)));
+            cQuatVec_Copy_Transform(&t790, &msg->plc, cQuatVec_ctor_cMatrixR(&t7B0, cXform_GetMatrix(parent)));
             src = &t790;
         } else {
             src = &msg->plc;
         }
-        VecPair_Copy(pplc, src);
+        cQuatVec_ctor_cQuatVecR(pplc, src);
 }
 static inline void GetPlcW_L(Plc_L* pplc, Msg_L* msg, int* pt) { GetPlc_L(pplc, msg, pt); }
 static inline int FindAnchor_L(Act_L* actor, Name_L* key)
@@ -249,9 +249,9 @@ static inline int FindAnchor_L(Act_L* actor, Name_L* key)
     It_L it;
     It_L end;
     Lib_L* lib = (Lib_L*)actor->sys.lib;
-    ModelCtx_FindNodeById(&it, &lib->tree, key);
-    NodeMap_End(&end, &lib->tree);
-    return NodeMapIter_NotEqual(&it, &end) ? *NodeMapIter_Value(&it) : 0;
+    cAssocArray_cString16N_3_int_Find(&it, &lib->tree, key);
+    cAssocArray_cString16N_3_int_End(&end, &lib->tree);
+    return cAssocArray_cString16N_3_int_ConstIterator_opNe(&it, &end) ? *cAssocArray_cString16N_3_int_ConstIterator_opMul(&it) : 0;
 }
 static inline int FindAnchorW_L(Act_L* actor, Name_L* key) { return FindAnchor_L(actor, key); }
 static inline int FindAnchorW2_L(Act_L* actor, Name_L* key) { return FindAnchorW_L(actor, key); }
@@ -304,11 +304,11 @@ static inline void BlkC_L(Act_L* actor)
 static inline void Send24_L(Act_L* actor) {
     Ev2_L m;
     Ev2_L* p = &m;
-    Event_Construct(p, g_ActorActionMsgClass);
+    cMessage_ctor_cMessageNameR(p, g_ActorActionMsgClass);
     p->vtable = D_004E0840;
     p->f24 = 0x24;
     p->f28 = 0;
-    Event_Send(p, actor, 1);
+    QueueMessage_cMessageR_cSystemP_int(p, actor, 1);
     m.vtable = D_004E0840;
     cMessage_dtor(p, 0);
 }
@@ -320,25 +320,25 @@ extern "C" {
 extern float D_004A0410; extern float D_004A0418;
 extern char D_004C35B0[]; extern char D_004C35D0[]; extern char D_004C35F0[]; extern char D_004C3610[]; extern char D_004C3630[];
 extern char D_004C3650[]; extern char D_004C3670[];
-void Actor_PrepareNeutralChannels(Act_L* a, int b, int c, int d, int e);
-void Ladder_Intent(Act_L* a, unsigned char* s, unsigned char* u, unsigned char* d, unsigned char* x, unsigned char* y, unsigned char* z);
-void* Root_GetWorldPlacement(void* r);
-float* Placement_GetPosition(void* p);
-float Math_FMod(float x, float y);
-unsigned char Ladder_ChannelArrived(void* a, int ch, float thr);
-void Actor_SendSoundImmediate(Act_L* a);
-void AnimChannel_SetDirect(void* a, int ch, float v);
+void cHuman_ClearMotionSettings(Act_L* a, int b, int c, int d, int e);
+void cHuman_GetLadderMotionRequests(Act_L* a, unsigned char* s, unsigned char* u, unsigned char* d, unsigned char* x, unsigned char* y, unsigned char* z);
+void* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void* r);
+float* cQuatVec_Translation(void* p);
+float Libc_Fmodf(float x, float y);
+unsigned char cSkaParams_HasJustArrivedAtTarget(void* a, int ch, float thr);
+void cHuman_HandleLadderStepEvent(Act_L* a);
+void cSkaParams_SetSliderValue_int_float(void* a, int ch, float v);
 unsigned char AnimPriority_Helper3(void* p, int i);
 void AnimPriority_Helper2(void* p, int i, int f);
 void AnimPriority_Helper1(void* p);
 void AnimPriority_Helper0(void* p, int i, unsigned char t);
-void MotionRequest_Construct(void* p, void* name);
-void NamedRootMap_Find(It_L* out, void* map, Name2_L* key);
+void cString16N_3_ctor_cString16NR(void* p, void* name);
+void std_tree_pair_cString16N_value_compare_cAllocator_pair_find_cString16NR_2(It_L* out, void* map, Name2_L* key);
 X_L* cSkaAnimCheckpoints_ScheduleEvent(X_L* x, Pr_L* p, unsigned char id, Act_L* a);
-void Ladder_ReleaseAlignment(Act_L* a);
-void Ladder_AlignTopBottom(Act_L* a, bool top);
-void Ladder_BlendToTarget(Act_L* a, float t);
-void Ladder_Dismount(Act_L* a);
+void cHuman_LadderClearOneRungOff(Act_L* a);
+void cHuman_LadderSetOneRungOff(Act_L* a, bool top);
+void cHuman_InterpolateLadderAnchorPositionTowardNearestRung_And_TriggerGettingOffIfNecessary(Act_L* a, float t);
+void cHuman_DismountFromLadder(Act_L* a);
 }
 
 static inline float Min_L(float a, float b) { asm { min.s b, a, b } return b; }
@@ -423,20 +423,20 @@ static inline void InstallS_L(Sys_L* sys, Sel_L* sel, Rate_L* r)
     sys->anim.v.w = r->w;
     sys->anim.b5 = 1;
     cSkaPlaybackGroupId_ctor_int(&y, -1);
-    Actor_ResolveMotionSelection(sel, &out, &y, an->model);
+    cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(sel, &out, &y, an->model);
     if (out) {
         V4_L* p;
         if (an->b5)
             p = &an->v;
         else
-            p = AnimRate_Init(&rate, Model_GetFirstFloat(an->model));
-        Vec4_Copy_18A350(&vec, p);
+            p = cSkaCrossFadeDuration_ctor_float(&rate, cSkaAnimationSet_DefaultCrossFadeDuration(an->model));
+        cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(&vec, p);
         an->b5 = 0;
-        AnimEvent_Construct(&e1);
-        AnimEvent_Construct(&e2);
-        AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(sel), cSkaRequestStream_AnimationPacket_GetDuration(sel), func_0018A2C0(sel));
-        AnimEvent_dtor(&e2, -1);
-        AnimEvent_dtor(&e1, -1);
+        cSkaAnimEndedMessage_ctor_void(&e1);
+        cSkaAnimEndedMessage_ctor_void(&e2);
+        cSkaRequestStream_AddRequest(an, out, cSkaRequestStream_AnimationPacket_GetInstruction(sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(sel), cSkaRequestStream_AnimationPacket_GetDuration(sel), func_0018A2C0(sel));
+        cSkaAnimEndedMessage_dtor(&e2, -1);
+        cSkaAnimEndedMessage_dtor(&e1, -1);
     }
 }
 struct ItC_L { int n; ItC_L() {} ItC_L(const ItC_L& o) : n(o.n) {} };
@@ -455,7 +455,7 @@ static inline void PrInit_L(Pr_L* p, float v) { p->f = 0; p->a = p->b = Clamp01_
 
 
 
-extern "C" void Ladder_Update(Act_L* actor, float dt)
+extern "C" void cHuman_LadderMotion_NextFrame(Act_L* actor, float dt)
 {
     Sys_L* sys = &actor->sys;
     unsigned char slide, up, down, k3, k4, k5;
@@ -466,35 +466,35 @@ extern "C" void Ladder_Update(Act_L* actor, float dt)
     Name_L tname;
     bool none, act;
     bool nearTop, nearBot;
-    Actor_PrepareNeutralChannels(actor, 0, 0, 0, 0);
-    if (((actor->f3248 >> 27) & 1) && !(AnimChannel_GetCurrent(sys->f10, 0x15) < 0.6f)) {
-        if (Ladder_HandParity(actor, 0))
+    cHuman_ClearMotionSettings(actor, 0, 0, 0, 0);
+    if (((actor->f3248 >> 27) & 1) && !(cSkaParams_GetSliderValue(sys->f10, 0x15) < 0.6f)) {
+        if (cHuman_ShouldLeftHandBeGraspingTheHigherRung(actor, 0))
             actor->f3248 |= 0x800000;
         else
             actor->f3248 |= 0x1000000;
         actor->f3248 &= ~0x8000000;
     }
     if (!((actor->pri.bits >> 12) & 1) && !((actor->pri.bits >> 15) & 1)) {
-    Ladder_Intent(actor, &slide, &up, &down, &k3, &k4, &k5);
+    cHuman_GetLadderMotionRequests(actor, &slide, &up, &down, &k3, &k4, &k5);
     none = !slide && !up && !down;
     act = (up && !NB_L(actor->f3248, 18)) || (down && !NB_L(actor->f3248, 19)) || (slide && !NB_L(actor->f3248, 20));
     nearTop = false;
     nearBot = false;
     if (actor->s3310 && Valid_L(actor->s3310)) {
-        float y = Placement_GetPosition(Root_GetWorldPlacement(actor->r3298))[2];
+        float y = cQuatVec_Translation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(actor->r3298))[2];
         Rung_L* r = actor->s3310;
         float bot = r->f998 + D_004A0410;
         float top = r->f990;
         float dd = D_004A0418;
         float lim = 1.5f * dd;
         if (top - y < lim) {
-            if (InRange_L(Math_FMod(Div_L(Abs_L(top - r->f988), dd), 2.0f))) nearTop = true;
+            if (InRange_L(Libc_Fmodf(Div_L(Abs_L(top - r->f988), dd), 2.0f))) nearTop = true;
         }
         if (y - bot < lim) {
-            { float h = actor->s3310->f988; if (InRange_L(Math_FMod(Div_L(Abs_L(bot - h), D_004A0418), 2.0f))) nearBot = true; }
+            { float h = actor->s3310->f988; if (InRange_L(Libc_Fmodf(Div_L(Abs_L(bot - h), D_004A0418), 2.0f))) nearBot = true; }
         }
     }
-    if (Ladder_ChannelArrived(sys->f10, 0x15, 0.2f)) Actor_SendSoundImmediate(actor);
+    if (cSkaParams_HasJustArrivedAtTarget(sys->f10, 0x15, 0.2f)) cHuman_HandleLadderStepEvent(actor);
     if ((actor->f3248 >> 20) & 1) {
         if (actor->b31B5)
             actor->f31D8 = Min_L(1.0f, actor->f31D8 + dt);
@@ -503,7 +503,7 @@ extern "C" void Ladder_Update(Act_L* actor, float dt)
     } else {
         actor->f31D8 = 0.0f;
     }
-    AnimChannel_SetDirect(sys->f10, 0x12, actor->f31D8);
+    cSkaParams_SetSliderValue_int_float(sys->f10, 0x12, actor->f31D8);
     if (!((actor->pri.bits >> 13) & 1)) {
         if ((up && !nearTop && ((actor->f3248 >> 18) & 1)) || (down && !nearBot && ((actor->f3248 >> 19) & 1)) || (slide && ((actor->f3248 >> 20) & 1))) {
             actor->f3248 &= ~0x800000;
@@ -512,7 +512,7 @@ extern "C" void Ladder_Update(Act_L* actor, float dt)
         }
     }
     if ((((up && !nearTop) || (down && !nearBot)) && ((actor->pri.bits >> 13) & 1) && (!((actor->f3248 >> 22) & 1) || ((actor->f3248 >> 21) & 1)) &&
-         !((actor->f3248 >> 25) & 1) && !((actor->f3248 >> 26) & 1) && !(AnimChannel_GetCurrent(sys->f10, 0x15) <= 0.4f)) || slide) {
+         !((actor->f3248 >> 25) & 1) && !((actor->f3248 >> 26) & 1) && !(cSkaParams_GetSliderValue(sys->f10, 0x15) <= 0.4f)) || slide) {
         signed char i0, i1, i2, i3, i4;
         signed char l, rr;
         PriReset_L(actor);
@@ -529,7 +529,7 @@ extern "C" void Ladder_Update(Act_L* actor, float dt)
                     Sel_L sel;
                     Sel_L* ps = &sel;
                     ps->mode = 0;
-                    MotionRequest_Construct(ps->sub, &tmp);
+                    cString16N_3_ctor_cString16NR(ps->sub, &tmp);
                     ps->f48 = 1;
                     cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&ps->x, px);
                     ps->f98 = -1.0f;
@@ -543,17 +543,17 @@ extern "C" void Ladder_Update(Act_L* actor, float dt)
             actor->f3248 |= 0x100000;
             actor->f3248 &= ~0x80000;
             actor->f3248 &= ~0x40000;
-            Ladder_ReleaseAlignment(actor);
+            cHuman_LadderClearOneRungOff(actor);
         } else {
             {
                 Name2_L t0, t1, t2, t3;
                 QZero2_L(&name);
                 if (up) {
-                    if (Ladder_HandParity(actor, 0)) { Name2AssignT_L(&name, &t0, D_004C35D0); l = 0x5B; rr = 0x5A; }
+                    if (cHuman_ShouldLeftHandBeGraspingTheHigherRung(actor, 0)) { Name2AssignT_L(&name, &t0, D_004C35D0); l = 0x5B; rr = 0x5A; }
                     else { Name2AssignT_L(&name, &t1, D_004C35F0); l = 0x5A; rr = 0x5B; }
                     i0 = 0x50; i1 = 0x51; i2 = 0x52; i3 = 0x53; i4 = 0x54;
                 } else {
-                    if (Ladder_HandParity(actor, 0)) { Name2AssignT_L(&name, &t2, D_004C3610); l = 0x5B; rr = 0x5A; }
+                    if (cHuman_ShouldLeftHandBeGraspingTheHigherRung(actor, 0)) { Name2AssignT_L(&name, &t2, D_004C3610); l = 0x5B; rr = 0x5A; }
                     else { Name2AssignT_L(&name, &t3, D_004C3630); l = 0x5A; rr = 0x5B; }
                     i0 = 0x50; i1 = 0x51; i2 = 0x52; i3 = 0x53; i4 = 0x54;
                 }
@@ -564,7 +564,7 @@ extern "C" void Ladder_Update(Act_L* actor, float dt)
                     int anim;
                     X_L* q;
                     XInit_L(&x);
-                    NamedRootMap_Find((It_L*)&it, (char*)sys->lib + 0x44, &name);
+                    std_tree_pair_cString16N_value_compare_cAllocator_pair_find_cString16NR_2((It_L*)&it, (char*)sys->lib + 0x44, &name);
                     {
                         j2 = it;
                         j3 = j2;
@@ -600,7 +600,7 @@ extern "C" void Ladder_Update(Act_L* actor, float dt)
         }
         actor->f3248 &= ~0x800000;
         actor->f3248 &= ~0x1000000;
-        Ladder_BlendToTarget(actor, dt);
+        cHuman_InterpolateLadderAnchorPositionTowardNearestRung_And_TriggerGettingOffIfNecessary(actor, dt);
         return;
     }
     if (((actor->pri.bits >> 14) & 1) && (((actor->f3248 >> 23) & 1) || ((actor->f3248 >> 24) & 1) || ((actor->f3248 >> 20) & 1)) &&
@@ -611,7 +611,7 @@ extern "C" void Ladder_Update(Act_L* actor, float dt)
         {
             Name_L u0, u1;
             QZero_L(&tname);
-            if (Ladder_HandParity(actor, 0)) {
+            if (cHuman_ShouldLeftHandBeGraspingTheHigherRung(actor, 0)) {
                 actor->f3248 |= 0x10000;
                 actor->f3248 &= ~0x20000;
                 NameAssignT_L(&tname, &u0, D_004C3650);
@@ -630,7 +630,7 @@ extern "C" void Ladder_Update(Act_L* actor, float dt)
                     Sel_L sel;
                     Sel_L* ps = &sel;
                     ps->mode = 0;
-                    MotionRequest_Construct(ps->sub, &tname);
+                    cString16N_3_ctor_cString16NR(ps->sub, &tname);
                     ps->f48 = 1;
                     cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&ps->x, px);
                     ps->f98 = -1.0f;
@@ -642,36 +642,36 @@ extern "C" void Ladder_Update(Act_L* actor, float dt)
                 XDtor_L(&x);
             }
         }
-        if ((up && nearTop) || (down && nearBot)) Ladder_AlignTopBottom(actor, nearBot);
-        Ladder_BlendToTarget(actor, dt);
+        if ((up && nearTop) || (down && nearBot)) cHuman_LadderSetOneRungOff(actor, nearBot);
+        cHuman_InterpolateLadderAnchorPositionTowardNearestRung_And_TriggerGettingOffIfNecessary(actor, dt);
         return;
     }
     if (actor->b31B6) {
         actor->f3208 |= 1;
-        Ladder_Dismount(actor);
+        cHuman_DismountFromLadder(actor);
         actor->b31B6 = 0;
-        Ladder_BlendToTarget(actor, dt);
+        cHuman_InterpolateLadderAnchorPositionTowardNearestRung_And_TriggerGettingOffIfNecessary(actor, dt);
         return;
     }
     if ((up && ((actor->f3248 >> 25) & 1)) || (down && ((actor->f3248 >> 26) & 1))) {
         actor->f3208 |= 1;
         actor->f3248 |= 0x8000000;
-        Ladder_ReleaseAlignment(actor);
-        Ladder_BlendToTarget(actor, dt);
+        cHuman_LadderClearOneRungOff(actor);
+        cHuman_InterpolateLadderAnchorPositionTowardNearestRung_And_TriggerGettingOffIfNecessary(actor, dt);
         return;
     }
     if (((down && nearBot && !((actor->f3248 >> 25) & 1)) || (up && nearTop && !((actor->f3248 >> 26) & 1))) && !((actor->f3248 >> 21) & 1) && ((actor->pri.bits >> 13) & 1)) {
         actor->f3208 |= 1;
-        Ladder_AlignTopBottom(actor, nearBot);
-        Ladder_BlendToTarget(actor, dt);
+        cHuman_LadderSetOneRungOff(actor, nearBot);
+        cHuman_InterpolateLadderAnchorPositionTowardNearestRung_And_TriggerGettingOffIfNecessary(actor, dt);
         return;
     }
     if (!((actor->pri.bits >> 14) & 1)) {
         actor->f3208 |= 1;
-        Ladder_BlendToTarget(actor, dt);
+        cHuman_InterpolateLadderAnchorPositionTowardNearestRung_And_TriggerGettingOffIfNecessary(actor, dt);
     }
     } else {
-        if (!((actor->pri.bits >> 12) & 1) && !((actor->f3248 >> 21) & 1)) Ladder_BlendToTarget(actor, dt);
+        if (!((actor->pri.bits >> 12) & 1) && !((actor->f3248 >> 21) & 1)) cHuman_InterpolateLadderAnchorPositionTowardNearestRung_And_TriggerGettingOffIfNecessary(actor, dt);
     }
 }
 #pragma pop

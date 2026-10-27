@@ -1,7 +1,7 @@
 #include "types.h"
 
-extern void Newlib_SysExit(int);
+extern void Exit_2(int);
 
 void Newlib_SysExit_Thunk(int a0) {
-    Newlib_SysExit(a0);
+    Exit_2(a0);
 }

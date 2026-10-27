@@ -46,10 +46,10 @@ int nciSetMemcpyFunction(Hook_003224B8 fn)
 /* merge_units: begin func_003224D8 */
 typedef void (*Hook_003224D8)(void);
 extern Hook_003224D8 D_004E1D44;
-extern void Math_Cos(void);
+extern void Libc_Cosf(void);
 int nciSetCosFunction(Hook_003224D8 fn)
 {
-    if (!fn) fn = (Hook_003224D8)Math_Cos;
+    if (!fn) fn = (Hook_003224D8)Libc_Cosf;
     D_004E1D44 = fn;
     return 0;
 }
@@ -58,10 +58,10 @@ int nciSetCosFunction(Hook_003224D8 fn)
 /* merge_units: begin func_003224F8 */
 typedef void (*Hook_003224F8)(void);
 extern Hook_003224F8 D_004E1D48;
-extern void Math_Sin(void);
+extern void Libc_Sinf(void);
 int nciSetSinFunction(Hook_003224F8 fn)
 {
-    if (!fn) fn = (Hook_003224F8)Math_Sin;
+    if (!fn) fn = (Hook_003224F8)Libc_Sinf;
     D_004E1D48 = fn;
     return 0;
 }

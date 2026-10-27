@@ -58,18 +58,18 @@ typedef struct LoadStream {
     char data[0xA0];
 } LoadStream;
 
-extern void Resource_Construct(LoadStream* s);
-extern void Hog_Register(LoadStream* s, int name, int flags, int mode);
-extern void Skel_ReadFile(int skel, int arg, int name, LoadStream* s);
-extern void FileMan_Release(LoadStream* s, int flags);
+extern void cFileMan_ctor_void(LoadStream* s);
+extern void cFileMan_EncodeFilename_charP_cHogFileR_bool(LoadStream* s, int name, int flags, int mode);
+extern void cSkeletonDataBank_AddSkeletonData_charP_cFileManR(int skel, int arg, int name, LoadStream* s);
+extern void cFileMan_dtor(LoadStream* s, int flags);
 
 /* Loads a skeleton through a temporary stream opened on `name`; returns 0. */
-int Skel_Load(int skel, int arg, int name, int flags) {
+int cSkeletonDataBank_AddSkeletonData_charP_cHogFileR(int skel, int arg, int name, int flags) {
     LoadStream stream;
-    Resource_Construct(&stream);
-    Hog_Register(&stream, name, flags, 0);
-    Skel_ReadFile(skel, arg, name, &stream);
-    FileMan_Release(&stream, -1);
+    cFileMan_ctor_void(&stream);
+    cFileMan_EncodeFilename_charP_cHogFileR_bool(&stream, name, flags, 0);
+    cSkeletonDataBank_AddSkeletonData_charP_cFileManR(skel, arg, name, &stream);
+    cFileMan_dtor(&stream, -1);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -84,7 +84,7 @@ static inline void merge_flush_func_003AA290(void) {}
 extern "C" {
 extern char D_004BCCF8[];
 extern char D_004BCD50[];
-extern void Mem_Free(int pool, void* p, char* file, int line);
+extern void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 }
 struct SkEnt {
     char* name; int count; int a, b;
@@ -92,7 +92,7 @@ struct SkEnt {
         char* p = name;
         if (p) {
             AllocGuard g2;
-            Mem_Free(0, p, D_004BCD50, 0x66);
+            cMemMan_Deallocate(0, p, D_004BCD50, 0x66);
         }
     }
 };
@@ -103,8 +103,8 @@ extern "C" {
 extern void std_list_cSkeletonDataBankEntryPtr_begin(SkIt* out, SkList* l);
 extern SkIt* cLListIterator_cSkeletonDataBankEntryPtr_ctor(SkIt* dst, SkIt* src);
 extern void std_list_cSkeletonDataBankEntryPtr_end_void_2(SkIt* out, SkList* l);
-extern void ObjectList_EraseRange(SkIt* out, SkList* l, SkIt* first, SkIt* last);
-void Skel_FreeAll(SkList* l);
+extern void std_list_deleter_voidPtr_erase_listdeleter_listdeleter(SkIt* out, SkList* l, SkIt* first, SkIt* last);
+void cSkeletonDataBank_Clear(SkList* l);
 }
 
 static inline void SkBegin(SkIt* out, SkList* l) { SkIt b; std_list_cSkeletonDataBankEntryPtr_begin(&b, l); cLListIterator_cSkeletonDataBankEntryPtr_ctor(out, &b); }
@@ -113,7 +113,7 @@ static inline void SkEnd(SkIt* out, SkList* l) { SkIt t; std_list_cSkeletonDataB
 static inline void SkBegin2(SkIt* out, SkList* l) { SkBegin(out, l); }
 static inline void SkEnd2(SkIt* out, SkList* l) { SkEnd(out, l); }
 
-void Skel_FreeAll(SkList* l)
+void cSkeletonDataBank_Clear(SkList* l)
 {
     SkIt it;
     SkIt end;
@@ -127,14 +127,14 @@ void Skel_FreeAll(SkList* l)
         if (e) {
             e->Destroy();
         }
-        Mem_Free(0, e, D_004BCCF8, 0x20);
+        cMemMan_Deallocate(0, e, D_004BCCF8, 0x20);
     }
     SkIt r;
     SkIt first;
     SkIt last;
     last.n = &l->header;
     first.n = l->header.next;
-    ObjectList_EraseRange(&r, l, &first, &last);
+    std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&r, l, &first, &last);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003AA320 */

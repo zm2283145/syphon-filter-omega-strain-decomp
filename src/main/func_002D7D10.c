@@ -32,7 +32,7 @@ extern "C" void cNetPlayer_WeaponShoot(Obj* o)
         int val[1]; val[0] = in->dead ? -1 : in->val;
         Msg2 msg;
         m = &msg;
-        Event_Construct(m, g_ActorActionMsgClass);
+        cMessage_ctor_cMessageNameR(m, g_ActorActionMsgClass);
         m->vtable = D_004E0840;
         m->a24 = 0x3B;
         m->a28 = 0xB;
@@ -45,7 +45,7 @@ extern "C" void cNetPlayer_WeaponShoot(Obj* o)
             V4_Copy(&m->v, z);
             m->f50 = 0.0f;
         }
-        Event_Send(&msg, o->target, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, o->target, 0);
         msg.vtable = D_004E0840;
         cMessage_dtor(&msg, 0);
     }

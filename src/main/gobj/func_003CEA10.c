@@ -39,7 +39,7 @@ static inline void MulRot(M44* d, M44* s, M44* r)
 {
     __asm__ volatile("lqc2 vf8, 0x0(%2); lqc2 vf9, 0x10(%2); lqc2 vf10, 0x20(%2); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddz.xyzw vf12, vf6, vf8z; vmulax.xyzw ACC, vf4, vf9x; vmadday.xyzw ACC, vf5, vf9y; vmaddz.xyzw vf13, vf6, vf9z; vmulax.xyzw ACC, vf4, vf10x; vmadday.xyzw ACC, vf5, vf10y; vmaddz.xyzw vf14, vf6, vf10z; vmove.xyzw vf15, vf7; sqc2 vf12, 0x0(%0); sqc2 vf13, 0x10(%0); sqc2 vf14, 0x20(%0); sqc2 vf15, 0x30(%0)" : : "r"(d), "r"(s), "r"(r) : "memory");
 }
-extern "C" void Mtx44_FromMtx34(M44* d, const M34* s);
+extern "C" void cMatrix_GetRotation(M44* d, const M34* s);
 struct Xf {
     virtual void v0();
     virtual void Set34(M34* m);
@@ -60,7 +60,7 @@ struct MoverH {
 struct NodeH { unsigned char flag; char pad[15]; M44 m; M44 xf; __int128 v90; __int128 vA0; };
 struct Msg { char pad[0x24]; char kind; char pad25[0xB]; M34 m; };
 struct MsgClass { int id; };
-extern "C" MsgClass* Event_GetType(Msg* m);
+extern "C" MsgClass* cMessage_Name(Msg* m);
 extern "C" signed char D_004E1D88;
 extern "C" V D_004E1D90;
 extern "C" MsgClass D_0055D4D8;
@@ -68,7 +68,7 @@ extern "C" MsgClass g_TeleportMsgClass;
 extern "C" MsgClass g_cEnableMsgClass;
 extern "C" MsgClass g_cDisableMsgClass;
 struct Obj;
-extern "C" int Object_BroadcastToChildren(Obj* o, Msg* m);
+extern "C" int cSystemContainer_HandleMessage(Obj* o, Msg* m);
 struct Obj {
     VPAD16(a) VPAD4(b) VPAD1(c)
     virtual void OnEnable(int f);
@@ -91,17 +91,17 @@ struct Obj {
 static inline void Case4_3CEA10(Obj* obj, Msg* msg) {
             M44 b;
             M44 a;
-            Mtx44_FromMtx34(&a, &msg->m);
+            cMatrix_GetRotation(&a, &msg->m);
             Xf* x = obj->xf;
             x->Sync();
-            Mtx44_FromMtx34(&b, &x->m);
+            cMatrix_GetRotation(&b, &x->m);
             obj->xf->SetMtx(b.RotR(&a));
 }
-extern "C" int Object_HandleMessage(Obj* obj, Msg* msg)
+extern "C" int cGOBJ_HandleMessage(Obj* obj, Msg* msg)
 {
     int t;
-    t = Event_GetType(msg)->id;
-    if (t == D_0055D4D8.id || (t = Event_GetType(msg)->id, t == g_TeleportMsgClass.id)) {
+    t = cMessage_Name(msg)->id;
+    if (t == D_0055D4D8.id || (t = cMessage_Name(msg)->id, t == g_TeleportMsgClass.id)) {
         if (obj->xf) {
         if (!D_004E1D88) {
             D_004E1D90.x = 0;
@@ -121,7 +121,7 @@ extern "C" int Object_HandleMessage(Obj* obj, Msg* msg)
             break;
         case 1: {
             M44 a;
-            Mtx44_FromMtx34(&a, &msg->m);
+            cMatrix_GetRotation(&a, &msg->m);
             obj->xf->SetMtx(&a);
             break;
         }
@@ -140,7 +140,7 @@ extern "C" int Object_HandleMessage(Obj* obj, Msg* msg)
             Case4_3CEA10(obj, msg);
             break;
         }
-        t = Event_GetType(msg)->id;
+        t = cMessage_Name(msg)->id;
         if (t == g_TeleportMsgClass.id) {
             if (obj->NodeH) {
                 Xf* x = obj->xf;
@@ -155,17 +155,17 @@ extern "C" int Object_HandleMessage(Obj* obj, Msg* msg)
         }
         return 0;
     }
-    t = Event_GetType(msg)->id;
+    t = cMessage_Name(msg)->id;
     if (t == g_cEnableMsgClass.id) {
         if (!obj->Live()) obj->OnEnable(1);
         obj->b2C = 1;
         return 1;
     }
-    t = Event_GetType(msg)->id;
+    t = cMessage_Name(msg)->id;
     if (t == g_cDisableMsgClass.id) {
         if (obj->Live()) obj->OnDisable(1);
         obj->b2C = 0;
         return 1;
     }
-    return Object_BroadcastToChildren(obj, msg);
+    return cSystemContainer_HandleMessage(obj, msg);
 }

@@ -20,34 +20,34 @@ extern char D_004DE200[];
 extern int g_WeaponDatabase;
 extern char g_Video[];
 void cInterfaceManager_Refresh(void* p);
-W_002C9510* App_GetInstance(void);
+W_002C9510* GetMachine(void);
 void cUSBKeybd_SetKeyMode(void* p);
-G_002C9510* DME_GetLobby(void);
-void DME_StartThread(void);
-int Gui_GetScreenStack(void);
-void GuiWidget_SendEvent(int a, int b, int c, int d, int e);
+G_002C9510* cDME_GetLobby(void);
+void cDME_StartUpdateThread(void);
+int Gui_Canvas(void);
+void GuiWidget_SendMessage(int a, int b, int c, int d, int e);
 char* strncpy(char* d, const char* s, int n);
-void* Service_Lookup(void* a, void* b);
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, void* target, int immediate);
+void* cSystemContainer_GetSystem(void* a, void* b);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
-void FrontEnd_SetMusic(Self_002C9510* self, int v);
-void DME_StopThread(void);
-void Boot_LoadFonts(W_002C9510* w);
-void FrontEnd_LoadZeusHog(Self_002C9510* self);
-void WeaponDb_LoadWpnHog(int a);
-void App_Broadcast(int a, int b, int c);
-void Video_BeginFrame(void* p);
-void FrontEnd_ResumeGui(Self_002C9510* self)
+void cGameFrontEnd_PlayMusic(Self_002C9510* self, int v);
+void cDME_StopUpdateThread(void);
+void cMachine_InitFonts(W_002C9510* w);
+void cGameFrontEnd_OpenZeusHog(Self_002C9510* self);
+void cWeaponDB_OpenWeaponsHog(int a);
+void cGameFrontEnd_LobbySendShutdownMessage(int a, int b, int c);
+void XLib_NextFrame(void* p);
+void cGameFrontEnd_Restore(Self_002C9510* self)
 {
     if (self->b37) {
         cInterfaceManager_Refresh(D_00571DC0);
-        App_GetInstance()->b278 = 0;
+        GetMachine()->b278 = 0;
         cUSBKeybd_SetKeyMode(D_0055A700);
         switch (self->b38) {
         case 0: {
             unsigned char had = 0;
-            G_002C9510* g = DME_GetLobby();
+            G_002C9510* g = cDME_GetLobby();
             void* svc;
             int a;
             PStr_002C9510 buf;
@@ -55,13 +55,13 @@ void FrontEnd_ResumeGui(Self_002C9510* self)
             Msg_002C9510 m2;
             if (g) {
                 had = 1;
-                DME_StartThread();
+                cDME_StartUpdateThread();
                 if (D_0051EF68)
                     g->b2409 = 0;
             }
             D_0051EF68 = 0;
-            a = Gui_GetScreenStack();
-            GuiWidget_SendEvent(a, Gui_GetScreenStack(), 0x10, 5, 0);
+            a = Gui_Canvas();
+            GuiWidget_SendMessage(a, Gui_Canvas(), 0x10, 5, 0);
             {
                 char* d = buf.s;
                 const char* s = g_LevelDirName;
@@ -77,36 +77,36 @@ void FrontEnd_ResumeGui(Self_002C9510* self)
                 buf.len = n;
             }
             strncpy(g_LevelDirName, "FRONTEND", 0x80);
-            svc = Service_Lookup(g_Game, D_004F2CC0);
-            Event_Construct(&m1, D_004F5370);
+            svc = cSystemContainer_GetSystem(g_Game, D_004F2CC0);
+            cMessage_ctor_cMessageNameR(&m1, D_004F5370);
             m1.vt = D_004DE220;
-            Event_Send(&m1, svc, 1);
+            QueueMessage_cMessageR_cSystemP_int(&m1, svc, 1);
             m1.vt = D_004DE220;
             cMessage_dtor(&m1, 0);
-            Event_Construct(&m2, D_004F5378);
+            cMessage_ctor_cMessageNameR(&m2, D_004F5378);
             m2.vt = D_004DE200;
-            Event_Send(&m2, svc, 1);
+            QueueMessage_cMessageR_cSystemP_int(&m2, svc, 1);
             m2.vt = D_004DE200;
             cMessage_dtor(&m2, 0);
             strncpy(g_LevelDirName, buf.s, 0x80);
             {
                 unsigned char o = *(unsigned char*)&self->f30C;
                 self->f30C = 0xFF;
-                FrontEnd_SetMusic(self, o);
+                cGameFrontEnd_PlayMusic(self, o);
             }
             if (had)
-                DME_StopThread();
+                cDME_StopUpdateThread();
             break;
         }
         case 1:
-            Boot_LoadFonts(App_GetInstance());
+            cMachine_InitFonts(GetMachine());
             break;
         }
-        FrontEnd_LoadZeusHog(self);
-        WeaponDb_LoadWpnHog(g_WeaponDatabase);
-        App_Broadcast(0x2003, 0, 0);
+        cGameFrontEnd_OpenZeusHog(self);
+        cWeaponDB_OpenWeaponsHog(g_WeaponDatabase);
+        cGameFrontEnd_LobbySendShutdownMessage(0x2003, 0, 0);
         self->b37 = 0;
         self->b28 = 1;
-        Video_BeginFrame(g_Video);
+        XLib_NextFrame(g_Video);
     }
 }

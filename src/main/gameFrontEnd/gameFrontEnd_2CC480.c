@@ -18,8 +18,8 @@ ListC520* std_list_MessageBoxEntry_dtor(ListC520* self, short deleteFlag); /* gs
 #pragma cplusplus on
 extern "C" {
 extern "C" void Event_PackHeader();
-extern "C" void Message_GetScriptTypeKey();
-extern "C" void GObj_GetID();
+extern "C" void cMessage_getSOBJClassId();
+extern "C" void cSystem_ScriptGetObjectId();
 extern "C" void cSystem_ScriptGetRealObj();
 extern "C" void cSystem_SendCreated();
 extern "C" void cSystem_NetActivate();
@@ -30,19 +30,19 @@ extern "C" void cSystem_IsDeliverable();
 extern "C" void cNextFrameMsg_dtor();
 extern "C" void cSystem_IsNetworked();
 extern "C" void cNextFrameMsg_Clone();
-extern "C" void SoundPauseMsg_dtor();
-extern "C" void SoundPauseMsg_Clone();
-extern "C" void FrontEnd_v01();
-extern "C" void Receiver_GetScriptTypeKey();
-extern "C" void Receiver_ScriptDispatch();
+extern "C" void cPauseMusicMsg_dtor();
+extern "C" void cPauseMusicMsg_Clone();
+extern "C" void cGameFrontEnd_HandleMessage();
+extern "C" void cSystem_getSOBJClassId();
+extern "C" void cSystem_ScriptHandleMessage();
 extern void * const D_004DE180[];
-void FrontEnd_TeardownGui(void* self);
+void cGameFrontEnd_DestroyGui(void* self);
 #if 0 /* merge_units */
 void std_list_MessageBoxEntry_dtor(void* m, int flags);
 #endif /* merge_units */
 #define std_list_MessageBoxEntry_dtor(a0, a1) ((void)std_list_MessageBoxEntry_dtor((ListC520 *)(a0), (short)(a1))) /* merge_units */
 
-void Receiver_Destruct(void* self, int flags);
+void cSystem_dtor(void* self, int flags);
 #if 0 /* merge_units */
 void operator_delete(void* p);
 #endif /* merge_units */
@@ -50,23 +50,23 @@ void operator_delete(void* p);
 
 }
 struct ObjC480 { void* vtable; char pad[0x24]; unsigned char active; char pad2[0x2FC - 0x29]; char member[4]; };
-extern "C" ObjC480* FrontEnd_dtor(ObjC480* self, short deleteFlag)
+extern "C" ObjC480* cGameFrontEnd_dtor(ObjC480* self, short deleteFlag)
 {
     if (self) {
         void* m;
         self->vtable = ((char*)D_004DE180);
         if (self->active)
-            FrontEnd_TeardownGui(self);
+            cGameFrontEnd_DestroyGui(self);
         m = self->member;
         if (m)
             std_list_MessageBoxEntry_dtor(m, 0);
-        Receiver_Destruct(self, 0);
+        cSystem_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004DE180[32] = { (void*)0x0, (void*)0x0, (void*)FrontEnd_dtor, (void*)FrontEnd_v01, (void*)GObj_GetID, (void*)cSystem_ScriptGetRealObj, (void*)cSystem_IsNetworked, (void*)cSystem_SendCreated, (void*)cSystem_NetActivate, (void*)cSystem_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0, (void*)0x0, (void*)0x0, (void*)cNextFrameMsg_dtor, (void*)cNextFrameMsg_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)SoundPauseMsg_dtor, (void*)SoundPauseMsg_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+void * const D_004DE180[32] = { (void*)0x0, (void*)0x0, (void*)cGameFrontEnd_dtor, (void*)cGameFrontEnd_HandleMessage, (void*)cSystem_ScriptGetObjectId, (void*)cSystem_ScriptGetRealObj, (void*)cSystem_IsNetworked, (void*)cSystem_SendCreated, (void*)cSystem_NetActivate, (void*)cSystem_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cSystem_getSOBJClassId, (void*)cSystem_ScriptHandleMessage, (void*)0x0, (void*)0x0, (void*)0x0, (void*)cNextFrameMsg_dtor, (void*)cNextFrameMsg_Clone, (void*)Event_PackHeader, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)cPauseMusicMsg_dtor, (void*)cPauseMusicMsg_Clone, (void*)Event_PackHeader, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
 #undef std_list_MessageBoxEntry_dtor /* merge_units */
 #undef operator_delete /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -149,13 +149,13 @@ extern char D_004DE180[];
 #endif /* merge_units */
 #define D_004DE180 ((char*)&D_004DE180) /* merge_units */
 
-extern void Receiver_Construct(void* self, void* id);
+extern void cSystem_ctor(void* self, void* id);
 extern void std_list_deleter_MessageBoxEntry_ctor(void* list);
-extern void DME_CreateLobby(void);
-extern void DME_SetLobbyActive(int a);
-ObjC5A0* FrontEnd_ctor(ObjC5A0* o)
+extern void cDME_CreateLobby(void);
+extern void cDME_ActivateLobby(int a);
+ObjC5A0* cGameFrontEnd_ctor(ObjC5A0* o)
 {
-    Receiver_Construct(o, D_0051EE98);
+    cSystem_ctor(o, D_0051EE98);
     o->vtable = D_004DE180;
     o->i180 = 4;
     o->b184 = 0;
@@ -205,8 +205,8 @@ ObjC5A0* FrontEnd_ctor(ObjC5A0* o)
     o->names[6][0] = 0;
     o->names[7][0] = 0;
     o->count13C = 0;
-    DME_CreateLobby();
-    DME_SetLobbyActive(0);
+    cDME_CreateLobby();
+    cDME_ActivateLobby(0);
     o->name2AC[0] = 0;
     o->name26C[0] = 0;
     o->i254 = 4;

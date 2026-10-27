@@ -13,7 +13,7 @@
 #pragma push /* merge_units */
 typedef struct { int a; int b; char c; char pad[7]; __int128 q; float f; } XFC30;
 #pragma opt_propagation off
-XFC30* PlayerInput_BuildFirePayload(XFC30* d, int* pa, int b, char c, __int128* q, float f) {
+XFC30* cTargetInfo_ctor_cObjectIdR_int_bool_cVectorR_etc(XFC30* d, int* pa, int b, char c, __int128* q, float f) {
     d->a = *pa;
     d->b = b;
     d->c = c;
@@ -31,7 +31,7 @@ static inline void merge_flush_func_0024FC30(void) {}
 /* merge_units: begin func_0024FC60 */
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-void Mtx_TransformVec4(V4* a, V4* b, V4* c) {
+void cVector_VU0PostMultiply(V4* a, V4* b, V4* c) {
     asm {
         lqc2 vf8, 0x0(c)
         lqc2 vf4, 0x0(b)
@@ -52,7 +52,7 @@ static inline void merge_flush_func_0024FC60(void) {}
 
 /* merge_units: begin func_0024FC90 */
 #pragma push /* merge_units */
-void WeakHandle_Assign(int a0, int a1) {
+void cSafePtr_cGOBJ_Set(int a0, int a1) {
     int loc[1];
     int v1;
     int cond;
@@ -85,7 +85,7 @@ static inline void merge_flush_func_0024FC90(void) {}
 #pragma mpwc_relax on
 extern char SecondaryStateTable;
 
-int Secondary_StatesAllowFire(char * arg0) {
+int cHumanIkRoutine_IsWeaponAimed(char * arg0) {
     int var_v0;
 
     var_v0 = F_((&SecondaryStateTable + (F_(arg0, 0x310, unsigned char) * 0x50)), 0x4C, unsigned char) != 0;

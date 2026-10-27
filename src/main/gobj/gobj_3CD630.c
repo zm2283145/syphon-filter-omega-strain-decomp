@@ -28,11 +28,11 @@ static inline void VZero_630(void* v) {
 typedef struct Node_3CD630 { unsigned char flag; char pad[15]; M44 m; M44 xf; __int128 v90; __int128 vA0; } Node_3CD630;
 struct Obj_3CD630 { char pad[0x54]; Node_3CD630* node; };
 extern "C" {
-void* Mem_Alloc(int, int, char*, int);
-void Mtx_Copy(void*, void*);
-void* Mtx_GetIdentity(void);
-void* Vec4_GetZero(void);
-void Vec4_Assign(void*, void*);
+void* cMemMan_Allocate(int, int, char*, int);
+void cMatrix_ctor_cMatrixR(void*, void*);
+void* cMatrix_GetUnit(void);
+void* cVector_GetZero(void);
+void cVector_ctor_cVectorR(void*, void*);
 extern char D_004BD228[];
 }
 
@@ -44,14 +44,14 @@ extern "C" void cGOBJ_CreateMovementInfo_cMatrixR(Obj_3CD630* o_, M44* m_)
         Node_3CD630* p;
         {
             AllocGuard g;
-            p = (Node_3CD630*)Mem_Alloc(0, 0xB0, D_004BD228, 0x1F7);
+            p = (Node_3CD630*)cMemMan_Allocate(0, 0xB0, D_004BD228, 0x1F7);
         }
         if (p) {
             p->flag = 0;
-            Mtx_Copy(&p->m, m);
-            Mtx_Copy(&p->xf, Mtx_GetIdentity());
-            Vec4_Assign(&p->v90, Vec4_GetZero());
-            Vec4_Assign(&p->vA0, Vec4_GetZero());
+            cMatrix_ctor_cMatrixR(&p->m, m);
+            cMatrix_ctor_cMatrixR(&p->xf, cMatrix_GetUnit());
+            cVector_ctor_cVectorR(&p->v90, cVector_GetZero());
+            cVector_ctor_cVectorR(&p->vA0, cVector_GetZero());
         }
         o->node = p;
     } else {
@@ -129,7 +129,7 @@ typedef struct Node_3CD7A0 { unsigned char flag; char pad[15]; M44 m; M44 xf; __
 struct Obj_3CD7A0 { char pad[0x50]; Xf_7A0* xf; Node_3CD7A0* node; Mover_7A0* mover; };
 
 static inline void Copy_7A0(M44* d, M44* s) { PP_COPY4(d, s) }
-extern "C" void cNode_v2B(Obj_3CD7A0* o, V4_7A0* pos)
+extern "C" void cGOBJ_SetTranslation_ResetPhysics(Obj_3CD7A0* o, V4_7A0* pos)
 {
     Xf_7A0* xf = o->xf;
     if (xf) {

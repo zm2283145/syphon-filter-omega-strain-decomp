@@ -12,15 +12,15 @@
 
 /* Deleting destructor: own cleanup, then the base destructor. */
 extern "C" void operator_delete(void* allocation);
-extern "C" void Skel_FreeAll(void* self);
-extern "C" void* ReceiverList_Dtor_3A62A0(void* self, short deleteFlag);
+extern "C" void cSkeletonDataBank_Clear(void* self);
+extern "C" void* std_list_cSkeletonDataBankEntryPtr_dtor(void* self, short deleteFlag);
 
 extern "C" void* cSkeletonDataBank_dtor(void* self, short deleteFlag)
 {
     if (self) {
-        Skel_FreeAll(self);
+        cSkeletonDataBank_Clear(self);
         if (self)
-            ReceiverList_Dtor_3A62A0(self, 0);
+            std_list_cSkeletonDataBankEntryPtr_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }

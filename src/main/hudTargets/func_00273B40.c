@@ -13,43 +13,43 @@ struct Mgr { L obs; L recs; L l18; L l24; float range; int p34; int p38; char* s
 class OObj { public: int x; virtual void Update(int a); };
 
 extern "C" {
-int Mem_Free(...);
+int cMemMan_Deallocate(...);
 int String_Dtor(...);
 int cLListIterator_cHudTargetsObserverPtr_ctor(...);
 int std_list_cHudTargetsObserverPtr_end(...);
 int std_list_cHudTargetsObserverPtr_generic_iterator_ctor(...);
 int std_list_cHudTargetInfoPtr_end_void_2(...);
 int cLListIterator_cHudTargetInfoPtr_ctor_listR(...);
-int List_Begin(...);
+int std_list_deleter_voidPtr_begin_void(...);
 int std_list_cHudTargetInfoPtr_generic_iterator_ctor(...);
 int std_list_cHudTargetInfoPtr_generic_iterator_opCast(...);
 int std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(...);
-int List_Erase(...);
-int HudRadar_SetMeter(float, char*, int);
-int HudTracker_Kill(...);
-int Player_ClearRecentTargets(...);
-int ObjectList_EraseRange(...);
-int HudTargets_RemoveMarker(float, char*, char*, char*, float*);
+int std_list_deleter_voidPtr_erase_listdeleter(...);
+int cHudRadar_SetDanger(float, char*, int);
+int cIE_GOBJ_AnimateOff(...);
+int std_list_deleter_cSafePtr_cGOBJ_erase_listdeleter_listdeleter(...);
+int std_list_deleter_voidPtr_erase_listdeleter_listdeleter(...);
+int cHudTargetInfo_Update(float, char*, char*, char*, float*);
 extern unsigned char D_0048B308;
 extern char D_004A8F60;
 extern char* g_Hud;
-void HudTargets_Update(Mgr* mgr, int arg);
+void cHudTargetManager_Update(Mgr* mgr, int arg);
 }
 
-static inline void beg0(It* o, char* l) { It r; List_Begin(&r, l); std_list_cHudTargetInfoPtr_generic_iterator_ctor(o, &r); }
+static inline void beg0(It* o, char* l) { It r; std_list_deleter_voidPtr_begin_void(&r, l); std_list_cHudTargetInfoPtr_generic_iterator_ctor(o, &r); }
 static inline void end0(It* o, char* l) { It r; std_list_cHudTargetInfoPtr_end_void_2(&r, l); cLListIterator_cHudTargetInfoPtr_ctor_listR(o, &r); }
-static inline void beg2(It* o, char* l) { It r; List_Begin(&r, l); std_list_cHudTargetsObserverPtr_generic_iterator_ctor(o, &r); }
+static inline void beg2(It* o, char* l) { It r; std_list_deleter_voidPtr_begin_void(&r, l); std_list_cHudTargetsObserverPtr_generic_iterator_ctor(o, &r); }
 static inline void end1(It* o, char* l) { It r; std_list_cHudTargetsObserverPtr_end(&r, l); cLListIterator_cHudTargetsObserverPtr_ctor(o, &r); }
-static inline void clr18(char* a) { int r; char* f; char* l; l = a + 0x1C; f = F_(a, 0x20, char*); Player_ClearRecentTargets(&r, a + 0x18, &f, &l); }
-static inline void clr24(char* a) { int r; char* f; char* l; l = a + 0x28; f = F_(a, 0x2C, char*); ObjectList_EraseRange(&r, a + 0x24, &f, &l); }
-static inline void er2(char* l, It* a, It* o) { It c; It b; std_list_cHudTargetInfoPtr_generic_iterator_opCast(&b, a); List_Erase(&c, l, &b); std_list_cHudTargetInfoPtr_generic_iterator_ctor(o, &c); }
+static inline void clr18(char* a) { int r; char* f; char* l; l = a + 0x1C; f = F_(a, 0x20, char*); std_list_deleter_cSafePtr_cGOBJ_erase_listdeleter_listdeleter(&r, a + 0x18, &f, &l); }
+static inline void clr24(char* a) { int r; char* f; char* l; l = a + 0x28; f = F_(a, 0x2C, char*); std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&r, a + 0x24, &f, &l); }
+static inline void er2(char* l, It* a, It* o) { It c; It b; std_list_cHudTargetInfoPtr_generic_iterator_opCast(&b, a); std_list_deleter_voidPtr_erase_listdeleter(&c, l, &b); std_list_cHudTargetInfoPtr_generic_iterator_ctor(o, &c); }
 static inline void er(char* l, It* it, It* out) { It o; It a; std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&a, it); er2(l, &a, &o); out->p = o.p; }
 static inline void Beg0(It* o, char* l) { beg0(o, l); }
 static inline void End0(It* o, char* l) { end0(o, l); }
 static inline void Beg2(It* o, char* l) { beg2(o, l); }
 static inline void End1(It* o, char* l) { end1(o, l); }
 
-void HudTargets_Update(Mgr* mgr, int arg)
+void cHudTargetManager_Update(Mgr* mgr, int arg)
 {
     It it;
     float dist;
@@ -65,14 +65,14 @@ void HudTargets_Update(Mgr* mgr, int arg)
     it.p = b1.p;
     while ((End0(&e, (char*)&mgr->recs), it.p != e.p)) {
         char* rec = F_(it.p, 8, char*);
-        if (HudTargets_RemoveMarker(mgr->range, rec, (char*)&mgr->l24, (char*)&mgr->l18, &dist) == 0) {
+        if (cHudTargetInfo_Update(mgr->range, rec, (char*)&mgr->l24, (char*)&mgr->l18, &dist) == 0) {
             if (rec == mgr->sel) mgr->sel = 0;
             {
                 AllocGuard g;
                 if (rec != NULL) {
                     if (D_0048B308 != 0) {
-                        HudTracker_Kill(F_(rec, 8, int));
-                        HudTracker_Kill(F_(rec, 4, int));
+                        cIE_GOBJ_AnimateOff(F_(rec, 8, int));
+                        cIE_GOBJ_AnimateOff(F_(rec, 4, int));
                     }
                     char* s;
                     s = rec + 0x28;
@@ -80,7 +80,7 @@ void HudTargets_Update(Mgr* mgr, int arg)
                     s = rec + 0x1C;
                     if (s != NULL) String_Dtor(s, 0);
                 }
-                Mem_Free(0, rec, &D_004A8F60, 0x193);
+                cMemMan_Deallocate(0, rec, &D_004A8F60, 0x193);
             }
             {
                 It r;
@@ -102,7 +102,7 @@ void HudTargets_Update(Mgr* mgr, int arg)
         }
         if (!found) mgr->sel = 0;
     }
-    HudRadar_SetMeter(dist, g_Hud + 0xD0, 0);
+    cHudRadar_SetDanger(dist, g_Hud + 0xD0, 0);
     {
         It b3;
         Beg2(&b3, (char*)mgr);

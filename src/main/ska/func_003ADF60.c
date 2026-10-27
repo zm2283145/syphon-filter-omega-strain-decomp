@@ -5,7 +5,7 @@
 
 #include "types.h"
 
-float FloatStack_Top(FStack* s) {
+float cSkaParams_TimeStep(FStack* s) {
     float* p = &s->vals[s->count - 1];
     return *p;
 }

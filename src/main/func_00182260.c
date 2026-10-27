@@ -17,6 +17,6 @@ int cCollisionModelMaster_GetData(IntPair* self) {
 }
 
 /* Store the gather source word at +0x04 (research COL_GATHER_NATIVE.md). */
-void ColGather_SetSource(IntPair* self, int value) {
+void cCollisionFaceCollector_ResetModelInstance(IntPair* self, int value) {
     self->b = value;
 }

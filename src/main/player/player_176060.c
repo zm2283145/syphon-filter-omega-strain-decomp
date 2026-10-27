@@ -11,13 +11,13 @@
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-char * WeaponDb_Get(int);
-int WeaponInv_RemoveSlot(char * , int, int, int, int);
-int WeaponInv_SlotOfItem(int);
+char * cWeaponDB_GetEntry(int);
+int cWeapon_RemoveWeapon(char * , int, int, int, int);
+int cWeapon_GetWeaponSlot(int);
 extern int g_HumanActorClassKey;
 extern int g_WeaponDatabase;
 
-void Player_RemoveWeapon(char * arg0, int arg1) {
+void cPlayer_RemoveWeapon(char * arg0, int arg1) {
     int temp_a2;
     int temp_v0;
     int var_a1;
@@ -25,8 +25,8 @@ void Player_RemoveWeapon(char * arg0, int arg1) {
     char * temp_s1;
 
     temp_s1 = (char *)(F_(arg0, 0x30, int));
-    if ((temp_s1 != NULL) && (F_(temp_s1, 0x4C, int) == g_HumanActorClassKey) && (F_(WeaponDb_Get(g_WeaponDatabase), 0x13C, int) != 0)) {
-        temp_v0 = WeaponInv_SlotOfItem(arg1);
+    if ((temp_s1 != NULL) && (F_(temp_s1, 0x4C, int) == g_HumanActorClassKey) && (F_(cWeaponDB_GetEntry(g_WeaponDatabase), 0x13C, int) != 0)) {
+        temp_v0 = cWeapon_GetWeaponSlot(arg1);
         temp_a0 = (char *)(F_(temp_s1, 0x3524, int));
         temp_a2 = temp_v0 & 0xFF;
         var_a1 = temp_v0;
@@ -34,7 +34,7 @@ void Player_RemoveWeapon(char * arg0, int arg1) {
             if ((temp_a2 == 0) && (arg1 == F_(temp_a0, 0x18, int))) {
                 var_a1 = 1;
             }
-            WeaponInv_RemoveSlot(temp_a0, var_a1, 1, 0, 0);
+            cWeapon_RemoveWeapon(temp_a0, var_a1, 1, 0, 0);
         }
     }
 }
@@ -54,7 +54,7 @@ typedef struct { char pad[0x6A4]; Plr_P* player; } Game_P;
 extern Game_P* g_Hud;
 static inline Plr_P* AsPlayer(GObj_P* o) { Plr_P* p = o->ctl; if (p && p->kind == g_HumanActorClassKey) return p; return 0; }
 static inline int ActiveId(Inv_P* inv) { unsigned char c = inv->cur; if (c != 6) return inv->s[c].id; return -1; }
-int Player_GetHeldItem(GObj_P* o)
+int cPlayer_GetActiveWeapon(GObj_P* o)
 {
     int r = -1;
     Plr_P* p = o->ctl;
@@ -103,12 +103,12 @@ extern Game_P_001761A0* g_Hud;
 #endif /* merge_units */
 #define g_Hud (*(Game_P_001761A0 **)&g_Hud) /* merge_units */
 
-extern void cPlayer_AddMenuChoice(void* p, int v);
+extern void GuiGameScreen_AddMenuChoice(void* p, int v);
 void cPlayer_AddMenuChoice_2(int unused, int v)
 {
     void* p = g_Hud->player;
     if (p)
-        cPlayer_AddMenuChoice(p, v);
+        GuiGameScreen_AddMenuChoice(p, v);
 }
 #undef g_Hud /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -123,7 +123,7 @@ extern char g_Hud[];
 #endif /* merge_units */
 #define g_Hud ((char*)&g_Hud) /* merge_units */
 
-extern void GuiGameScreen_SelectMenuRow(int, int);
+extern void GuiGameScreen_SetChooseMenuDefault(int, int);
 
 void cPlayer_SetMenuDefault(void) {
     int a0, a1, v1;
@@ -133,7 +133,7 @@ void cPlayer_SetMenuDefault(void) {
     a0 = *(int*)((char*)v1 + 1700);
     cond = a0 == 0;
     if (cond) goto L00176208;
-    GuiGameScreen_SelectMenuRow(a0, a1);
+    GuiGameScreen_SetChooseMenuDefault(a0, a1);
 L00176208:;
     goto ret;
 ret:;
@@ -152,12 +152,12 @@ extern Game_P_00176220* g_Hud;
 #endif /* merge_units */
 #define g_Hud (*(Game_P_00176220 **)&g_Hud) /* merge_units */
 
-extern void cPlayer_SetMenuTitle(void* p, int v);
+extern void GuiGameScreen_SetMenuTitle(void* p, int v);
 void cPlayer_SetMenuTitle_2(int unused, int v)
 {
     void* p = g_Hud->player;
     if (p)
-        cPlayer_SetMenuTitle(p, v);
+        GuiGameScreen_SetMenuTitle(p, v);
 }
 #undef g_Hud /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -170,12 +170,12 @@ static inline void merge_flush_func_00176220(void) {}
 #pragma global_optimizer off
 
 static inline Plr_P* AsPlayer_00176260(GObj_P* o) { Plr_P* p = o->ctl; return (p && p->kind == g_HumanActorClassKey) ? p : 0; }
-extern void cPlayer_LaunchChooseMenu(Plr_P* pl, Plr_P* who);
+extern void GuiGameScreen_BeginChooseMenu(Plr_P* pl, Plr_P* who);
 void cPlayer_LaunchChooseMenu_2(GObj_P* o)
 {
     Plr_P* pl = g_Hud->player;
     if (pl)
-        cPlayer_LaunchChooseMenu(pl, AsPlayer_00176260(o));
+        GuiGameScreen_BeginChooseMenu(pl, AsPlayer_00176260(o));
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00176260(void) {}
@@ -187,9 +187,9 @@ static inline void merge_flush_func_00176260(void) {}
 #pragma cplusplus on
 #include "alloc_guard.h"
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void Pickup_PerformAction(void* o, void* c);
-void* PickupMenu_Build(void* p, void* s, void* o, void* c, int a, int b);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cBackpack_AutoPickup(void* o, void* c);
+void* cPickupMenu_ctor(void* p, void* s, void* o, void* c, int a, int b);
 }
 typedef struct { void* first; } L_62C0;
 typedef struct { char pad[0x54]; L_62C0* list; } Game_62C0;
@@ -205,12 +205,12 @@ typedef struct {
     char pad3[0x184 - 0x17D]; int x184;
     char pad4[0x1BC - 0x188]; unsigned char reset;
 } S_62C0;
-extern "C" void Player_HandlePickupTrigger(S_62C0* self, Obj_62C0* o)
+extern "C" void cPlayer_BeginPickup(S_62C0* self, Obj_62C0* o)
 {
     void* c = self->ctl;
     if (self->reset) {
         self->reset = 0;
-        Pickup_PerformAction(o, c);
+        cBackpack_AutoPickup(o, c);
     }
     if (self->on && !self->fx) {
         void* p;
@@ -220,10 +220,10 @@ extern "C" void Player_HandlePickupTrigger(S_62C0* self, Obj_62C0* o)
         s = g_Hud->list->first;
         {
             AllocGuard g;
-            p = Mem_Alloc(0, 0xB8, "player.cc", 0x27A);
+            p = cMemMan_Allocate(0, 0xB8, "player.cc", 0x27A);
         }
         if (p)
-            p = PickupMenu_Build(p, s, o, c, self->x184 <= 0, 0);
+            p = cPickupMenu_ctor(p, s, o, c, self->x184 <= 0, 0);
         self->fx = p;
     }
 }

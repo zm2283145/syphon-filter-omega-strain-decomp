@@ -13,7 +13,7 @@ extern unsigned short D_0048C800[];
 
 extern void setNewSeed(unsigned int seed);
 extern unsigned int randomMT(void);
-extern void LargeInt_AddInt(Blk2F34A0* b, int sum);
+extern void lintIncrement(Blk2F34A0* b, int sum);
 
 Blk2F34A0 lintPoolPrime(void)
 {
@@ -31,7 +31,7 @@ Blk2F34A0 lintPoolPrime(void)
         sum += D_0048C800[n];
         n--;
     }
-    LargeInt_AddInt(&t, sum);
+    lintIncrement(&t, sum);
     return t;
 }
 /* merge_units: end func_002F34A0 */
@@ -150,11 +150,11 @@ void RCDecrypt(Rc2F38B8* st, unsigned char* data, unsigned int len)
 /* merge_units: end func_002F38B8 */
 
 /* merge_units: begin func_002F3960 */
-extern void Net_AllocZeroed(void *, int);
+extern void rt_memory_allocate_init_zero(void *, int);
 int *CreateResourceManager(int a, int b)
 {
     int *p = 0;
-    Net_AllocZeroed(&p, 0x30);
+    rt_memory_allocate_init_zero(&p, 0x30);
     if (p) {
         p[0] = a;
         p[1] = b;

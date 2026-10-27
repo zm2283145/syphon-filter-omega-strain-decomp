@@ -74,7 +74,7 @@ int cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress(Tab_3947A0* t
 
 static inline unsigned char Valid_3947A0(Ref_3947A0* r) { return r->valid != 0; }
 
-extern "C" int cVUM_GOBJ_v20(Obj_3947A0* o)
+extern "C" int cVUM_GOBJ_GetBBox(Obj_3947A0* o)
 {
     int r = 0;
     Ref_3947A0* ref = o->ref;
@@ -104,17 +104,17 @@ static inline void merge_flush_func_003947A0(void) {}
 
 /* merge_units: begin func_00394850 */
 #pragma push /* merge_units */
-extern void Object_AttachTransform(void* self, float* m, int a, int b);
-extern void Node_ClearLocalMatrix(void* self);
+extern void cGOBJ_CreateXform(void* self, float* m, int a, int b);
+extern void cGOBJ_DestroyXform(void* self);
 
-void ModelAsset_SetLocalMatrix(void* self, float* m, int a, int b)
+void cVUM_GOBJ_CreateXform(void* self, float* m, int a, int b)
 {
     int r = m[0] == 1.0f && m[1] == 0.0f && m[2] == 0.0f && m[3] == 0.0f &&
             m[4] == 0.0f && m[5] == 1.0f && m[6] == 0.0f && m[7] == 0.0f &&
             m[8] == 0.0f && m[9] == 0.0f && m[10] == 1.0f && m[11] == 0.0f &&
             m[12] == 0.0f && m[13] == 0.0f && m[14] == 0.0f && m[15] == 1.0f;
-    if (!r) Object_AttachTransform(self, m, a, b);
-    else Node_ClearLocalMatrix(self);
+    if (!r) cGOBJ_CreateXform(self, m, a, b);
+    else cGOBJ_DestroyXform(self);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00394850(void) {}

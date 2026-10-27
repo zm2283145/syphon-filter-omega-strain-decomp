@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int* PtrArray_End(PtrVec* v) {
+int* std_vector_imp_cGOBJPtr_1_end_void(PtrVec* v) {
     return v->data + v->count;
 }
 
@@ -14,6 +14,6 @@ void std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR(Iter* out, void* self, Iter* 
     out->p = src->p;
 }
 
-int* PtrArray_Begin(PtrVec* v) {
+int* std_vector_imp_cGOBJPtr_1_begin(PtrVec* v) {
     return v->data;
 }

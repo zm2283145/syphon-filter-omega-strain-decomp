@@ -30,12 +30,12 @@ DEFINE_GUARDED_RELEASE(opDelete_nodeP_int_bool_charP_etc_10)
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "alloc_guard.h"
-extern "C" { extern char D_004BECF0[]; void Mem_Free(int pool, void* p, char* file, int line); }
+extern "C" { extern char D_004BECF0[]; void cMemMan_Deallocate(int pool, void* p, char* file, int line); }
 extern "C" void cAllocator_node_deallocate_nodeP_uint_11(void* tree, void* node)
 {
     if (node) {
         AllocGuard guard;
-        Mem_Free(0, node, D_004BECF0, 0x64);
+        cMemMan_Deallocate(0, node, D_004BECF0, 0x64);
     }
 }
 #pragma pop /* merge_units */
@@ -148,7 +148,7 @@ static inline void Wait(Pump_D3C0* s)
     }
 }
 
-extern "C" void MemCard_Refresh(Pump_D3C0* s)
+extern "C" void cMemCard_FullCheck(Pump_D3C0* s)
 {
     Wait(s);
     s->ctx->f5A0 = 0;
@@ -166,7 +166,7 @@ extern "C" void MemCard_Refresh(Pump_D3C0* s)
 typedef struct { char pad[0x59F]; unsigned char flag; } CD580;
 typedef struct { CD580* cfg; } OD580;
 /* Number of 1 KB blocks needed for a payload, plus overhead. */
-int MemCard_GetSpaceNeeded(OD580* o, int bytes) {
+int cMemCard_GetClustersNeeded(OD580* o, int bytes) {
     int n = (bytes + 0x3FF) / 1024 + 1;
     if (!o->cfg->flag)
         n += 0x2E;

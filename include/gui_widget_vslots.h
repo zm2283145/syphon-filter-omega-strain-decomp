@@ -17,10 +17,10 @@
  * Not the same as the 'GuiWidget' structs in loose02/04/05_types.h (data
  * views) or the WidgetChild helper (Activate +0x14 .. LoseFocus +0x28).
  *
- * GuiWidget_FindChildByName(self, name) finds a child widget by name; GuiFindAs() is the
+ * GuiWidget_FindChild_charP(self, name) finds a child widget by name; GuiFindAs() is the
  * common "find child then IsA-check" inline (matches FindAs_* in callers).
  * #define GUI_WIDGET_NO_PROTOS to keep a typed local declaration of
- * GuiWidget_FindChildByName (then GuiFindAs is not provided).
+ * GuiWidget_FindChild_charP (then GuiFindAs is not provided).
  */
 #ifndef __cplusplus
 #error "gui_widget_vslots.h needs #pragma cplusplus on"
@@ -46,11 +46,11 @@ struct GuiWidgetV {
 };
 
 #ifndef GUI_WIDGET_NO_PROTOS
-extern "C" void* GuiWidget_FindChildByName(void* self, char* name); /* find child widget by name */
+extern "C" void* GuiWidget_FindChild_charP(void* self, char* name); /* find child widget by name */
 
 static inline GuiWidgetV* GuiFindAs(void* self, char* name, const void* type)
 {
-    GuiWidgetV* w = (GuiWidgetV*)GuiWidget_FindChildByName(self, name);
+    GuiWidgetV* w = (GuiWidgetV*)GuiWidget_FindChild_charP(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
 #endif

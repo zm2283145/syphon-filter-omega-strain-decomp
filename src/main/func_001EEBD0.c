@@ -19,9 +19,9 @@ struct T {
 extern "C" {
 extern signed char D_004E1D88;
 extern V4 D_004E1D90;
-V* Vec4_GetZero(void);
-void Vec4_Assign(V* d, const void* s);
-void Vec4_SetOrigin(V* v);
+V* cVector_GetZero(void);
+void cVector_ctor_cVectorR(V* d, const void* s);
+void cVector_Get0001(V* v);
 void cCollisionModel_FaceLocator_ctor(V* v);
 T* cCollisionProbe_Ray_defctor(T* o);
 }
@@ -57,12 +57,12 @@ T* cCollisionProbe_Ray_defctor(T* o_)
     z = Vec4_Zero();
     o_->b0 = 0;
     o = o_;
-    Vec4_Assign(&o->v10, Vec4_GetZero());
-    Vec4_SetOrigin(&p);
-    Vec4_Assign(&o->v20, &p);
+    cVector_ctor_cVectorR(&o->v10, cVector_GetZero());
+    cVector_Get0001(&p);
+    cVector_ctor_cVectorR(&o->v20, &p);
     cCollisionModel_FaceLocator_ctor(&o->v30);
-    Vec4_Assign(&o->v40, z);
-    Vec4_Assign(&o->v50, &t);
+    cVector_ctor_cVectorR(&o->v40, z);
+    cVector_ctor_cVectorR(&o->v50, &t);
     o->b60 = 0;
     o->b61 = 0;
     o->b62 = 0;

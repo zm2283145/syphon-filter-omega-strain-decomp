@@ -8,5 +8,5 @@ void cNetNPC_ResumeAIAiming(Npc39D0* o)
         o->b13D = 1;
         o->i11C = -1;
     }
-    NetEvent_Send(o->net, 0xB, 8, 0, 0, 0, 0);
+    cNetNPCMsgs_SendMessage(o->net, 0xB, 8, 0, 0, 0, 0);
 }

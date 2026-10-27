@@ -5,7 +5,7 @@
  */
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 char *strncpy(void *, const void *, int);
 
 /* merge_units: begin func_002CA0E0 */
@@ -63,22 +63,22 @@ static inline void merge_flush_func_002CA140(void) {}
 struct S2CA160 { char pad[0x2EC]; unsigned char b2EC; char pad2ED[3]; void* p2F0; void* p2F4; void* p2F8; };
 extern "C" {
 extern char D_004ACF10[];
-void* DME_GetLobby(void);
+void* cDME_GetLobby(void);
 void SFOLobby_AccountScreenExit(void* p);
-void LobbyArray_dtor(void* p, int f);
+void SFOLobbyList_dtor(void* p, int f);
 }
 static inline void Del2CA160(void* p, int line)
 {
     AllocGuard g;
-    LobbyArray_dtor(p, -1);
-    Mem_Free(0, p, D_004ACF10, line);
+    SFOLobbyList_dtor(p, -1);
+    cMemMan_Deallocate(0, p, D_004ACF10, line);
 }
-extern "C" int FrontEnd_FreePolicyLists(S2CA160* s)
+extern "C" int cGameFrontEnd_LobbyStopAccountScreen(S2CA160* s)
 {
     if (!s->b2EC)
         return 0;
-    if (DME_GetLobby())
-        SFOLobby_AccountScreenExit(DME_GetLobby());
+    if (cDME_GetLobby())
+        SFOLobby_AccountScreenExit(cDME_GetLobby());
     Del2CA160(s->p2F0, 0x5F5);
     Del2CA160(s->p2F4, 0x5F6);
     Del2CA160(s->p2F8, 0x5F7);
@@ -98,15 +98,15 @@ static inline void merge_flush_func_002CA160(void) {}
 #pragma cplusplus on
 
 extern "C" {
-extern void* Mem_Alloc(int pool, int size, char* file, int line);
+extern void* cMemMan_Allocate(int pool, int size, char* file, int line);
 #if 0 /* merge_units */
-extern int DME_GetLobby(void);
+extern int cDME_GetLobby(void);
 #endif /* merge_units */
-#define DME_GetLobby() ((int)DME_GetLobby()) /* merge_units */
+#define cDME_GetLobby() ((int)cDME_GetLobby()) /* merge_units */
 
-extern void* LobbyArray_ctor(void* p);
+extern void* SFOLobbyList_ctor(void* p);
 extern int SFOLobby_AccountScreenStart(int a, void* fn, void* b, void* c, void* d);
-extern void App_CardWaitPoll(void);
+extern void cGameFrontEnd_LobbyCallback(void);
 }
 
 struct ObjCA350 {
@@ -118,37 +118,37 @@ struct ObjCA350 {
     void* c;
 };
 
-extern "C" int FrontEnd_DownloadPolicies(ObjCA350* self)
+extern "C" int cGameFrontEnd_LobbyStartAccountScreen(ObjCA350* self)
 {
     void* p;
 
-    if (self->inited || !DME_GetLobby())
+    if (self->inited || !cDME_GetLobby())
         return 0;
     {
         AllocGuard guard;
-        p = Mem_Alloc(0, 0x1C, D_004ACF10, 0x5E1);
+        p = cMemMan_Allocate(0, 0x1C, D_004ACF10, 0x5E1);
     }
     if (p)
-        p = LobbyArray_ctor(p);
+        p = SFOLobbyList_ctor(p);
     self->a = p;
     {
         AllocGuard guard;
-        p = Mem_Alloc(0, 0x1C, D_004ACF10, 0x5E2);
+        p = cMemMan_Allocate(0, 0x1C, D_004ACF10, 0x5E2);
     }
     if (p)
-        p = LobbyArray_ctor(p);
+        p = SFOLobbyList_ctor(p);
     self->b = p;
     {
         AllocGuard guard;
-        p = Mem_Alloc(0, 0x1C, D_004ACF10, 0x5E3);
+        p = cMemMan_Allocate(0, 0x1C, D_004ACF10, 0x5E3);
     }
     if (p)
-        p = LobbyArray_ctor(p);
+        p = SFOLobbyList_ctor(p);
     self->c = p;
     self->inited = 1;
-    return SFOLobby_AccountScreenStart(DME_GetLobby(), (void*)App_CardWaitPoll, self->a, self->b, self->c);
+    return SFOLobby_AccountScreenStart(cDME_GetLobby(), (void*)cGameFrontEnd_LobbyCallback, self->a, self->b, self->c);
 }
-#undef DME_GetLobby /* merge_units */
+#undef cDME_GetLobby /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002CA350(void) {}
 #pragma pop /* merge_units */
@@ -157,24 +157,24 @@ static inline void merge_flush_func_002CA350(void) {}
 /* merge_units: begin func_002CA580 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x264]; unsigned char b264; } S2CA640;
-int FrontEnd_LeaveOnline(S2CA640* s, int a); /* gsynth: defined below */
+int cGameFrontEnd_LobbyDestroy(S2CA640* s, int a); /* gsynth: defined below */
 typedef struct { char p0[0x255C]; int state; } L2CA580;
 extern unsigned char g_DebugTriangle;
 extern unsigned char D_005723B8;
 #if 0 /* merge_units */
-extern L2CA580* DME_GetLobby(void);
+extern L2CA580* cDME_GetLobby(void);
 #endif /* merge_units */
-#define DME_GetLobby() ((L2CA580 *)DME_GetLobby()) /* merge_units */
+#define cDME_GetLobby() ((L2CA580 *)cDME_GetLobby()) /* merge_units */
 
-extern void SFOLobby_Update(L2CA580* l);
+extern void SFOLobby_Intel(L2CA580* l);
 extern int SFOLobby_IsFatalError(L2CA580* l);
-extern int Gui_GetScreenList(void);
-extern void GuiManager_Update(int mgr, float t);
+extern int Gui_Manager(void);
+extern void GuiManager_NextFrame(int mgr, float t);
 extern void func_002CA6F0(void* s);
 #if 0 /* merge_units */
-extern int FrontEnd_LeaveOnline(void* s, int v);
+extern int cGameFrontEnd_LobbyDestroy(void* s, int v);
 #endif /* merge_units */
-#define FrontEnd_LeaveOnline(a0, a1) (FrontEnd_LeaveOnline((void *)(a0), (a1))) /* merge_units */
+#define cGameFrontEnd_LobbyDestroy(a0, a1) (cGameFrontEnd_LobbyDestroy((void *)(a0), (a1))) /* merge_units */
 
 extern void SFOLobby_Reset(L2CA580* l, int v);
 /* Lobby tick: when the session is ready either flags the pending state or starts the game screen. */
@@ -182,21 +182,21 @@ void cGameFrontEnd_LobbyUpdate(void* s)
 {
     L2CA580* l;
     if (g_DebugTriangle) return;
-    l = DME_GetLobby();
+    l = cDME_GetLobby();
     if (!l) return;
-    SFOLobby_Update(l);
+    SFOLobby_Intel(l);
     if (!SFOLobby_IsFatalError(l)) return;
     if (l->state == 10) {
         D_005723B8 = 1;
         return;
     }
-    GuiManager_Update(Gui_GetScreenList(), 0.0f);
+    GuiManager_NextFrame(Gui_Manager(), 0.0f);
     func_002CA6F0(s);
-    FrontEnd_LeaveOnline(s, 1);
+    cGameFrontEnd_LobbyDestroy(s, 1);
     SFOLobby_Reset(l, 1);
 }
-#undef DME_GetLobby /* merge_units */
-#undef FrontEnd_LeaveOnline /* merge_units */
+#undef cDME_GetLobby /* merge_units */
+#undef cGameFrontEnd_LobbyDestroy /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002CA580(void) {}
 #pragma pop /* merge_units */
@@ -207,14 +207,14 @@ static inline void merge_flush_func_002CA580(void) {}
 typedef struct { char pad[0x255C]; int mode; } G2CA640;
 
 #if 0 /* merge_units */
-extern int FrontEnd_FreePolicyLists(S2CA640* s);
+extern int cGameFrontEnd_LobbyStopAccountScreen(S2CA640* s);
 #endif /* merge_units */
-#define FrontEnd_FreePolicyLists(a0) (FrontEnd_FreePolicyLists((void *)(a0))) /* merge_units */
+#define cGameFrontEnd_LobbyStopAccountScreen(a0) (cGameFrontEnd_LobbyStopAccountScreen((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern G2CA640* DME_GetLobby(void);
+extern G2CA640* cDME_GetLobby(void);
 #endif /* merge_units */
-#define DME_GetLobby() ((G2CA640 *)DME_GetLobby()) /* merge_units */
+#define cDME_GetLobby() ((G2CA640 *)cDME_GetLobby()) /* merge_units */
 
 extern void SFOLobby_AccountLogOut(G2CA640* g);
 extern void FrontEnd_FlushMessages(S2CA640* s);
@@ -223,23 +223,23 @@ extern void SFOLobby_Reset(G2CA640* g, int a);
 #endif /* merge_units */
 #define SFOLobby_Reset(a0, a1) (SFOLobby_Reset((void *)(a0), (a1))) /* merge_units */
 
-extern void DME_SetLobbyActive(int a);
-int FrontEnd_LeaveOnline(S2CA640* s, int a)
+extern void cDME_ActivateLobby(int a);
+int cGameFrontEnd_LobbyDestroy(S2CA640* s, int a)
 {
-    FrontEnd_FreePolicyLists(s);
-    if (DME_GetLobby()) {
-        if (s->b264 && DME_GetLobby()->mode != 10)
-            SFOLobby_AccountLogOut(DME_GetLobby());
+    cGameFrontEnd_LobbyStopAccountScreen(s);
+    if (cDME_GetLobby()) {
+        if (s->b264 && cDME_GetLobby()->mode != 10)
+            SFOLobby_AccountLogOut(cDME_GetLobby());
         s->b264 = 0;
         FrontEnd_FlushMessages(s);
-        SFOLobby_Reset(DME_GetLobby(), a);
-        DME_SetLobbyActive(0);
+        SFOLobby_Reset(cDME_GetLobby(), a);
+        cDME_ActivateLobby(0);
         return 1;
     }
     return 0;
 }
-#undef FrontEnd_FreePolicyLists /* merge_units */
-#undef DME_GetLobby /* merge_units */
+#undef cGameFrontEnd_LobbyStopAccountScreen /* merge_units */
+#undef cDME_GetLobby /* merge_units */
 #undef SFOLobby_Reset /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002CA640(void) {}

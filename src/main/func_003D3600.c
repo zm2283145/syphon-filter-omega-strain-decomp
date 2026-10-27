@@ -12,7 +12,7 @@ char* cLList_int_Back(char** self) {
     return self[1] + 8;
 }
 
-void Renderer_SetAspect(Unk3D3670* self, float value) {
+void XLib_SetAspectRatio(Unk3D3670* self, float value) {
     self->unkF94 = value;
 }
 
@@ -35,12 +35,12 @@ Vec4* tRECT_ctor(Vec4* v, float x, float y, float z, float w) {
 }
 
 /* Returns the current entry. */
-L4Entry110* Renderer_GetCurrentCamera(Unk3D3670* self) {
+L4Entry110* XLib_EditViewport(Unk3D3670* self) {
     return &self->entries[self->cur];
 }
 
 /* Advances to the next entry and marks it in use. */
-void Renderer_PushCameraState(int a0) {
+void XLib_PushViewport(int a0) {
     int tmp0;
     int tmp1;
 

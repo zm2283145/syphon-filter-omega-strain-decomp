@@ -15,7 +15,7 @@
 #include "types.h"
 #include "loose04_types.h"
 
-extern L4Iter* List_InsertBefore(L4Iter* out, void* list, L4Iter* pos, int value);
+extern L4Iter* std_list_deleter_voidPtr_insert(L4Iter* out, void* list, L4Iter* pos, int value);
 
 /* Address of the value in the node referenced by the word at +8. */
 int* func_00415B20(L4Node** self) {
@@ -27,7 +27,7 @@ L4Iter* std_list_GuiWidgetPtr_push_back_GuiWidgetPR_2(void* list, int value) {
     L4Iter it[2];
 
     it[0].node = (L4Node*)((char*)list + 4);
-    return List_InsertBefore(&it[1], list, &it[0], value);
+    return std_list_deleter_voidPtr_insert(&it[1], list, &it[0], value);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00415B20 */
@@ -35,12 +35,12 @@ L4Iter* std_list_GuiWidgetPtr_push_back_GuiWidgetPR_2(void* list, int value) {
 /* merge_units: begin func_00415B60 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x14]; unsigned short flags; } Ent415B60;
-extern void GuiWidget_BroadcastEvent(Ent415B60* e, int kind, int v, int z);
-void GuiCanvas_NestedUpdate(Ent415B60* e, float v)
+extern void GuiWidget_SendChildrenMessage(Ent415B60* e, int kind, int v, int z);
+void GuiCanvas_AdvanceAnimations(Ent415B60* e, float v)
 {
     if (e->flags & 4) {
         v = v * 30.0f;
-        GuiWidget_BroadcastEvent(e, 7, (int)&v, 0);
+        GuiWidget_SendChildrenMessage(e, 7, (int)&v, 0);
     }
 }
 #pragma pop /* merge_units */
@@ -78,7 +78,7 @@ extern int D_00538C60;
 extern int D_00538C64;
 extern char D_00538C68;
 extern int g_DrawMode;
-void List_Begin(LIt* out, void* list);
+void std_list_deleter_voidPtr_begin_void(LIt* out, void* list);
 void std_list_GuiWidgetPtr_generic_iterator_ctor(LIt* out, LIt* in);
 void std_list_GuiWidgetPtr_end(LIt* out, void* list);
 void cLListIterator_GuiWidgetPtr_ctor_listR(LIt* out, LIt* in);
@@ -94,7 +94,7 @@ static inline void MM(void* d, void* a, void* b)
     __asm__ volatile("lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); lqc2 vf8, 0x0(%2); lqc2 vf9, 0x10(%2); lqc2 vf10, 0x20(%2); lqc2 vf11, 0x30(%2); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; vmulax.xyzw ACC, vf4, vf9x; vmadday.xyzw ACC, vf5, vf9y; vmaddaz.xyzw ACC, vf6, vf9z; vmaddw.xyzw vf13, vf7, vf9w; vmulax.xyzw ACC, vf4, vf10x; vmadday.xyzw ACC, vf5, vf10y; vmaddaz.xyzw ACC, vf6, vf10z; vmaddw.xyzw vf14, vf7, vf10w; vmulax.xyzw ACC, vf4, vf11x; vmadday.xyzw ACC, vf5, vf11y; vmaddaz.xyzw ACC, vf6, vf11z; vmaddw.xyzw vf15, vf7, vf11w; sqc2 vf12, 0x0(%0); sqc2 vf13, 0x10(%0); sqc2 vf14, 0x20(%0); sqc2 vf15, 0x30(%0)" : : "r"(d), "r"(a), "r"(b) : "memory");
 }
 
-extern "C" void GuiFrontendCanvas_Draw(Self* self)
+extern "C" void GuiCanvas_Render(Self* self)
 {
     if (self->flags & 4) {
         M4 m;
@@ -124,7 +124,7 @@ extern "C" void GuiFrontendCanvas_Draw(Self* self)
         { Mtx* c = MtxAt(D_00538C64); MM(c, c, &m); }
         D_00538C68 = 1;
         g_DrawMode = save | 4;
-        List_Begin(&beginTmp, self->children);
+        std_list_deleter_voidPtr_begin_void(&beginTmp, self->children);
         std_list_GuiWidgetPtr_generic_iterator_ctor(&first, &beginTmp);
         for (it = first; std_list_GuiWidgetPtr_end(&endTmp, self->children), cLListIterator_GuiWidgetPtr_ctor_listR(&last, &endTmp), it.node != last.node; it.node = it.node->next) {
             if (it.node->value->flags & 2) {

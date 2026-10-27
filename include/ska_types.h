@@ -15,19 +15,19 @@ typedef struct SkaVec {
     char* data;       /* 0x08 */
 } SkaVec;             /* size 0x0C */
 
-/* Fixed stack of up to four time values (AnimContext_PushTime). */
+/* Fixed stack of up to four time values (cSkaParams_PushTimeStep). */
 typedef struct SkaTimeStack {
     int count;        /* 0x00 */
     float times[4];   /* 0x04 */
 } SkaTimeStack;       /* size 0x14 */
 
-/* Transition request record built by TransitionReq_Construct / TransitionReq_Reset. */
+/* Transition request record built by TransitionReq_Construct / cSkaSystem_Transition_ctor_void. */
 typedef struct SkaTransitionReq {
     int unk00;        /* 0x00 */
     int unk04;        /* 0x04 */
     float unk08;      /* 0x08, initialised to FLT_MAX */
     float unk0C;      /* 0x0C, initialised to FLT_MAX / transition time */
-    int key;          /* 0x10, compared by TransitionReq_SameKey */
+    int key;          /* 0x10, compared by cDequeue_cSkaSystem_Request_ReverseIterator_opEq */
 } SkaTransitionReq;   /* size 0x14 */
 
 /* Five-float record copied by cSkaSystem_Transition_ctor_cSkaSystemTransitionR. */
@@ -67,7 +67,7 @@ typedef struct SkaBlockArray {
     int first;        /* 0x10, index of the first live entry */
 } SkaBlockArray;
 
-/* Pose source used by SkelBone_GetLocalOffset (XYZ at +8/+0xC/+0x10). */
+/* Pose source used by cBoneData_PositionOffset (XYZ at +8/+0xC/+0x10). */
 typedef struct SkaPoseSrc {
     char pad00[8];
     float x;          /* 0x08 */

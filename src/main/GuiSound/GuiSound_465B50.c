@@ -12,21 +12,21 @@ typedef struct {
 } SoundEvent;
 extern char g_Game[];
 extern char D_004DADF0[];
-extern void SoundEvent_Ctor(SoundEvent* ev, int id, int flags);
-extern void Event_Send(SoundEvent* ev, void* target, int flags);
-extern void FileMan_Release(SoundPart* p, int flags);
+extern void cStopSoundMsg_ctor_cSndFxR_bool(SoundEvent* ev, int id, int flags);
+extern void QueueMessage_cMessageR_cSystemP_int(SoundEvent* ev, void* target, int flags);
+extern void cFileMan_dtor(SoundPart* p, int flags);
 extern void cMessage_dtor(SoundEvent* ev, int flags);
 
 /* Builds a local sound event for id and sends it to the sound system; returns 1. */
-int GuiSound_Stop(void* self, int id)
+int StopGuiSound(void* self, int id)
 {
     SoundEvent ev;
-    SoundEvent_Ctor(&ev, id, 0);
+    cStopSoundMsg_ctor_cSndFxR_bool(&ev, id, 0);
     ev.local = 1;
-    Event_Send(&ev, g_Game, 1);
+    QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 1);
     ev.vtable = D_004DADF0;
-    FileMan_Release(&ev.b, -1);
-    FileMan_Release(&ev.a, -1);
+    cFileMan_dtor(&ev.b, -1);
+    cFileMan_dtor(&ev.a, -1);
     cMessage_dtor(&ev, 0);
     return 1;
 }

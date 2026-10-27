@@ -24,9 +24,9 @@ extern char Game_AddHudObjective2[];
 extern char Game_AddHudObjective3[];
 extern char Game_RemoveHudObjective[];
 extern char Game_RemoveHudObjectiveInt[];
-extern int Script_RegisterVariable();
-extern int Script_RegisterNative_2();
-extern char* cGOBJ_GetScriptTypeKeyPtr();
+extern int cScriptBase_registerGlobalVar();
+extern int cScriptBase_registerFunc_intPintPint_intP_charP_int_etc();
+extern char* cGOBJ_SOBJ_getClassId();
 extern int D_004FFD88;
 extern int D_004FFE00;
 extern int D_004FFE08;
@@ -75,9 +75,9 @@ extern float D_004A8F54;
 extern float D_004A8F58;
 extern float D_004A8F5C;
 
-void StaticInit_RegisterRadarColours(void)
+void StaticInit_hudTargets(void)
 {
-    D_004FFD88 = Script_RegisterVariable(D_004A8FC0, (int)&D_0048B310, D_00493890);
+    D_004FFD88 = cScriptBase_registerGlobalVar(D_004A8FC0, (int)&D_0048B310, D_00493890);
     D_004FFD90 = 0.694f;
     D_004FFD94 = 0.345f;
     D_004FFD98 = 0.103f;
@@ -106,12 +106,12 @@ void StaticInit_RegisterRadarColours(void)
     D_004FFDF4 = 0.0f;
     D_004FFDF8 = 0.0f;
     D_004FFDFC = 1.0f;
-    D_004FFE00 = Script_RegisterNative_2(Script_SetRadarObjCol, D_00493880, D_004A8FD0, 4, D_00493888, D_00493888, D_00493888, D_00493890);
-    D_004FFE08 = Script_RegisterNative_2(Script_SetRadarTeamCol, D_00493880, D_004A8FE0, 4, D_00493888, D_00493888, D_00493888, D_00493890);
-    D_004FFE10 = Script_RegisterNative_2(Script_SetRadarFriendCol, D_00493880, D_004A8FF0, 4, D_00493888, D_00493888, D_00493888, D_00493890);
-    D_004FFE18 = Script_RegisterNative_2(Script_SetRadarEnemyCol, D_00493880, D_004A9010, 4, D_00493888, D_00493888, D_00493888, D_00493890);
-    D_004FFE20 = Script_RegisterNative_2(Script_SetRadarNoLosEnemyCol, D_00493880, D_004A9030, 4, D_00493888, D_00493888, D_00493888, D_00493890);
-    D_004FFE28 = Script_RegisterNative_2(Script_SetRadarThreatCol, D_00493880, D_004A9050, 4, D_00493888, D_00493888, D_00493888, D_00493890);
+    D_004FFE00 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_SetRadarObjCol, D_00493880, D_004A8FD0, 4, D_00493888, D_00493888, D_00493888, D_00493890);
+    D_004FFE08 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_SetRadarTeamCol, D_00493880, D_004A8FE0, 4, D_00493888, D_00493888, D_00493888, D_00493890);
+    D_004FFE10 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_SetRadarFriendCol, D_00493880, D_004A8FF0, 4, D_00493888, D_00493888, D_00493888, D_00493890);
+    D_004FFE18 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_SetRadarEnemyCol, D_00493880, D_004A9010, 4, D_00493888, D_00493888, D_00493888, D_00493890);
+    D_004FFE20 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_SetRadarNoLosEnemyCol, D_00493880, D_004A9030, 4, D_00493888, D_00493888, D_00493888, D_00493890);
+    D_004FFE28 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_SetRadarThreatCol, D_00493880, D_004A9050, 4, D_00493888, D_00493888, D_00493888, D_00493890);
     D_004A8F40 = 0.3f;
     D_004A8F44 = 0.3f;
     D_004A8F48 = 1.0f;
@@ -120,8 +120,8 @@ void StaticInit_RegisterRadarColours(void)
     D_004A8F54 = 0.3f;
     D_004A8F58 = 0.3f;
     D_004A8F5C = 1.0f;
-    D_004FFE30 = Script_RegisterNative_2(Game_AddHudObjective2, D_00493880, D_004A9070, 2, cGOBJ_GetScriptTypeKeyPtr(), D_00493898);
-    D_004FFE38 = Script_RegisterNative_2(Game_AddHudObjective3, D_00493880, D_004A9070, 3, cGOBJ_GetScriptTypeKeyPtr(), D_00493898, D_00493898);
-    D_004FFE40 = Script_RegisterNative_2(Game_RemoveHudObjective, D_00493880, D_004A9080, 1, cGOBJ_GetScriptTypeKeyPtr());
-    D_004FFE48 = Script_RegisterNative_2(Game_RemoveHudObjectiveInt, D_00493880, D_004A9080, 2, cGOBJ_GetScriptTypeKeyPtr(), D_00493878);
+    D_004FFE30 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Game_AddHudObjective2, D_00493880, D_004A9070, 2, cGOBJ_SOBJ_getClassId(), D_00493898);
+    D_004FFE38 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Game_AddHudObjective3, D_00493880, D_004A9070, 3, cGOBJ_SOBJ_getClassId(), D_00493898, D_00493898);
+    D_004FFE40 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Game_RemoveHudObjective, D_00493880, D_004A9080, 1, cGOBJ_SOBJ_getClassId());
+    D_004FFE48 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Game_RemoveHudObjectiveInt, D_00493880, D_004A9080, 2, cGOBJ_SOBJ_getClassId(), D_00493878);
 }

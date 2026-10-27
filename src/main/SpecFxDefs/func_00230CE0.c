@@ -7,18 +7,18 @@
 #include "SpecFxDefs_types.h"
 
 extern signed char* D_005061D0;   /* network message byte cursor */
-extern void* GObj_IdentityB(void* obj);
+extern void* cGOBJ_SOBJ_convert(void* obj);
 extern int Global_Shatter(void* a, void* b, int c);
 extern int Global_SpawnParticle(int particle, int target, int c);
 extern void cNetMsg_PutGOBJ(int handle);    /* writes an object handle to the stream */
-extern int NetStream_ReadObject(int* handle);    /* reads an object handle from the stream */
+extern int cNetMsg_GetGOBJ(int* handle);    /* reads an object handle from the stream */
 
 /* Reads the message from the network stream and spawns the particle. */
-int cNetSpawnParticleMsg_Receive(cNetSpawnParticleMsg* msg) {
+int cNetSpawnParticleMsg_UnpackAndProcess(cNetSpawnParticleMsg* msg) {
     signed char* cursor;
     signed char particle;
 
-    NetStream_ReadObject(&msg->target);
+    cNetMsg_GetGOBJ(&msg->target);
     cursor = D_005061D0;
     particle = *cursor;
     D_005061D0 = cursor + 1;
@@ -27,7 +27,7 @@ int cNetSpawnParticleMsg_Receive(cNetSpawnParticleMsg* msg) {
 }
 
 /* Writes the message to the network stream. */
-void cNetSpawnParticleMsg_v04(cNetSpawnParticleMsg* msg) {
+void cNetSpawnParticleMsg_Pack(cNetSpawnParticleMsg* msg) {
     cNetMsg_PutGOBJ(msg->target);
     *D_005061D0 = msg->particle;
     D_005061D0++;
@@ -35,8 +35,8 @@ void cNetSpawnParticleMsg_v04(cNetSpawnParticleMsg* msg) {
 
 /* Script native: Shatter(obj0, obj1). */
 int Script_Shatter(ScriptArg* args) {
-    void* a = GObj_IdentityB(args[0].p);
+    void* a = cGOBJ_SOBJ_convert(args[0].p);
 
-    Global_Shatter(a, GObj_IdentityB(args[1].p), 0);
+    Global_Shatter(a, cGOBJ_SOBJ_convert(args[1].p), 0);
     return 0;
 }

@@ -10,17 +10,17 @@
 #include "types.h"
 #include "alloc_guard.h"
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern char D_004DFD80[];
 extern char D_004E1140[];
 }
 struct M1EEDC0 { void* vtable; int w4, w8, wC, w10, w14, w18, w1C; char b20; int w24; };
-extern "C" M1EEDC0* cWeaponVisChangeMsg_v01(M1EEDC0* self)
+extern "C" M1EEDC0* cWeaponVisChangeMsg_Clone(M1EEDC0* self)
 {
     M1EEDC0* p;
     {
         AllocGuard guard;
-        p = (M1EEDC0*)Mem_Alloc(0, 0x28, "WeaponVisChangeMsg.hh", 0xA);
+        p = (M1EEDC0*)cMemMan_Allocate(0, 0x28, "WeaponVisChangeMsg.hh", 0xA);
     }
     if (p) {
         p->vtable = D_004DFD80;
@@ -52,8 +52,8 @@ extern "C" M1EEDC0* cWeaponVisChangeMsg_v01(M1EEDC0* self)
 
 extern int D_00583970; /* cWeaponVisChangeMsg key */
 extern int D_00583978; /* cWeaponVisChangeMsg type id */
-extern int* Message_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int type, int parent);
+extern int* cMessage_SOBJ_getClassId(void);
+extern void cScriptBase_declareParent(int type, int parent);
 
 /* Script native: returns the message's visibility word. */
 int Script_cWeaponVisChangeMsg_Visibility(ScriptMsg24** args) {
@@ -63,9 +63,9 @@ int Script_cWeaponVisChangeMsg_Visibility(ScriptMsg24** args) {
 }
 
 /* cWeaponVisChangeMsg derives from the message base type. */
-void ScriptType_cWeaponVisChangeMsg_Init(void) {
-    int* parent = Message_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_00583978, *parent);
+void cWeaponVisChangeMsg_SOBJ_init(void) {
+    int* parent = cMessage_SOBJ_getClassId();
+    cScriptBase_declareParent(D_00583978, *parent);
 }
 
 int* cWeaponVisChangeMsg_GetScriptTypeKeyPtr(void) {
@@ -91,10 +91,10 @@ typedef struct { char pad[0xC4]; char* text; char padC8[8]; } File_FBB0;
 
 extern char D_004C02A0[];
 extern unsigned int strlen(const char*);
-void FileHal_CtorDefault(File_FBB0* f);
-void FileHal_Reopen(File_FBB0* f, const char* path, int mode);
-unsigned int FileHal_ReadAll(File_FBB0* f);
-void FileHal_Dtor(File_FBB0* f, int a);
+void cFileIO_ctor_void(File_FBB0* f);
+void cFileIO_Open(File_FBB0* f, const char* path, int mode);
+unsigned int cFileIO_Read_void(File_FBB0* f);
+void cFileIO_dtor(File_FBB0* f, int a);
 int CharMap_Parse(Map_FBB0* m, char* text);
 
 int CharMap_Load(Map_FBB0* m, const char* path)
@@ -104,15 +104,15 @@ int CharMap_Load(Map_FBB0* m, const char* path)
     int i;
     int n;
     int j;
-    FileHal_CtorDefault(&f);
-    FileHal_Reopen(&f, path, 1);
-    size = FileHal_ReadAll(&f);
+    cFileIO_ctor_void(&f);
+    cFileIO_Open(&f, path, 1);
+    size = cFileIO_Read_void(&f);
     if (size <= strlen(D_004C02A0) + 2) {
-        FileHal_Dtor(&f, -1);
+        cFileIO_dtor(&f, -1);
         return 0;
     }
     if (!CharMap_Parse(m, f.text)) {
-        FileHal_Dtor(&f, -1);
+        cFileIO_dtor(&f, -1);
         return 0;
     }
     for (i = 0; i < 256; i++) m->pages[i] = 0;
@@ -123,7 +123,7 @@ int CharMap_Load(Map_FBB0* m, const char* path)
         unsigned short c = m->chars[j];
         if (!m->pages[c >> 8]) {
             if (n == 4) {
-                FileHal_Dtor(&f, -1);
+                cFileIO_dtor(&f, -1);
                 return 0;
             }
             m->pages[c >> 8] = m->buf[n];
@@ -131,7 +131,7 @@ int CharMap_Load(Map_FBB0* m, const char* path)
         }
         m->pages[c >> 8][c & 0xFF] = j;
     }
-    FileHal_Dtor(&f, -1);
+    cFileIO_dtor(&f, -1);
     return 1;
 }
 #pragma pop /* merge_units */

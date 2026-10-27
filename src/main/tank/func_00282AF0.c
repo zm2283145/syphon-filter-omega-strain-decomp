@@ -9,8 +9,8 @@ extern unsigned char D_005721C0;
 extern char D_00506260[];
 extern char D_004DCF50[];
 extern char D_004DCF10[];
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, void* target, int immediate);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 }
 static inline int IsAuth282AF0(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
@@ -19,14 +19,14 @@ extern "C" int Script_cTank_StopFiring(Tank282AF0** args) {
     if (self->sub) self->sub->b54 = 1;
     if (g_IsMultiplayer && IsAuth282AF0()) {
         Msg282AF0 m;
-        Event_Construct(&m, D_00506260);
+        cMessage_ctor_cMessageNameR(&m, D_00506260);
         m.vtable = D_004DCF50;
         m.b24 = 4;
 m.b20 = 4;
 m.f1C = 0x40;
 m.f2C = 0;
 m.f28 = 0;
-        Event_Send(&m, self, 0);
+        QueueMessage_cMessageR_cSystemP_int(&m, self, 0);
         m.vtable = D_004DCF10;
         cMessage_dtor(&m, 0);
     }

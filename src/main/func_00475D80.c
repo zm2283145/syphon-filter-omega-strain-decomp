@@ -18,18 +18,18 @@ struct P4 : V {
 struct Rung { char pad[0x990]; float f990; float f994; float f998; };
 struct Ladder { char pad[0x3298]; void* root; char pad2[0x3310 - 0x329C]; Rung* rung; };
 extern float D_004A0410;
-extern "C" V Ladder_RungTarget(Ladder* l, int i);
-extern "C" void* Root_GetWorldPlacement(void*);
-extern "C" V* Placement_GetPosition(void*);
-extern "C" void Root_SetBasePosition(void*, V*);
-extern "C" void Ladder_BlendToTarget(Ladder* l, float t);
+extern "C" V cHuman_CalculateClosestLadderRungToStopAt(Ladder* l, int i);
+extern "C" void* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void*);
+extern "C" V* cQuatVec_Translation(void*);
+extern "C" void cSkaAnimAnchor_TreeNode_SetTransformPosition_WorldSpace(void*, V*);
+extern "C" void cHuman_InterpolateLadderAnchorPositionTowardNearestRung_And_TriggerGettingOffIfNecessary(Ladder* l, float t);
 static inline bool Rung_Valid(Rung* r) { return r->f990 > -3.4028235e38f && r->f998 < 3.4028235e38f; }
-void Ladder_BlendToTarget(Ladder* l, float t)
+void cHuman_InterpolateLadderAnchorPositionTowardNearestRung_And_TriggerGettingOffIfNecessary(Ladder* l, float t)
 {
     void* root = l->root;
-    V tgt = Ladder_RungTarget(l, 0);
+    V tgt = cHuman_CalculateClosestLadderRungToStopAt(l, 0);
     float k = 9.0f * t;
-    V* pos = Placement_GetPosition(Root_GetWorldPlacement(root));
+    V* pos = cQuatVec_Translation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(root));
     /* declaration order fixes the stack slots: tgt 0x70, p 0x60, tp 0x50, l0 0x40 */
     V p;
     P4 tp;
@@ -49,5 +49,5 @@ void Ladder_BlendToTarget(Ladder* l, float t)
         asm { max.s v, y, lo; min.s v, v, hi }
         p.z = v;
     }
-    Root_SetBasePosition(root, &p);
+    cSkaAnimAnchor_TreeNode_SetTransformPosition_WorldSpace(root, &p);
 }

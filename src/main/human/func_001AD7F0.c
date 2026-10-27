@@ -10,10 +10,10 @@
 extern char D_004DCD70[];   /* cAIGOBJMsg vtable */
 extern char D_004DFD80[];   /* Message base vtable */
 extern char D_004E0840[];   /* ArgMsg vtable */
-extern Message* Event_Construct(Message*, void*);
+extern Message* cMessage_ctor_cMessageNameR(Message*, void*);
 
 /* Copy constructor for a message with an int and a byte argument. */
-ArgMsg* cMessage_ctor3(ArgMsg* self, ArgMsg* src) {
+ArgMsg* cCharActionMsg_ctor_cCharActionMsgR(ArgMsg* self, ArgMsg* src) {
     self->base.vtable = D_004DFD80;
     self->base.unk04 = src->base.unk04;
     self->base.unk08 = src->base.unk08;
@@ -30,7 +30,7 @@ ArgMsg* cMessage_ctor3(ArgMsg* self, ArgMsg* src) {
 }
 
 ArgMsg* cAIGOBJMsg_ctor(ArgMsg* self, void* type, int arg) {
-    Event_Construct(&self->base, type);
+    cMessage_ctor_cMessageNameR(&self->base, type);
     self->base.vtable = D_004DCD70;
     self->arg0 = arg;
     self->base.unk20 = 2;

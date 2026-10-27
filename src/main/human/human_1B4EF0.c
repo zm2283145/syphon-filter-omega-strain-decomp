@@ -55,18 +55,18 @@ extern char g_TargetVisMgr;
 extern int D_005721A8;
 extern unsigned char g_IsMultiplayer;
 void Alloc_Lock(int);
-void Alloc_Unlock(int);
-void* Mem_Alloc(int, int, char*, int);
+void EnableIntc(int);
+void* cMemMan_Allocate(int, int, char*, int);
 void* cNetNPC_ctor(void*, void*, Act*);
-void Npc_CreatePhysical(Act*);
-void Actor_InitComponents(Act*, int, int, void*);
-void Actor_v06(Act*);
-void Human_ApplyBoundSpheres(Act*);
-void Human_ApplyCentroidWeights(Act*);
-void TargetVis_Register(char*, Act*);
-int Player_GetIndex(int);
-void NetGame_InitLocalSlot(int*, int);
-void NetMap_BindReceiver(int, int, Act*);
+void cHuman_InitializationToDoUponActivation(Act*);
+void cHuman_CreateGobjController(Act*, int, int, void*);
+void cSKM_GOBJ_NetActivate(Act*);
+void cHuman_SetupSkelBBoxInfo(Act*);
+void cHuman_SetupCenterOfMassInfo(Act*);
+void cTargetManager_AddGobj(char*, Act*);
+int cNetObj_GetOwner(int);
+void NetGetMyClientIndex(int*, int);
+void cNetObj_AddSystem(int, int, Act*);
 void cNPCInfoObject_ctor(int*);
 void cNPCInfoObject_SetActive(int*, int*);
 void cNPCInfoObject_dtor(int*, int);
@@ -80,7 +80,7 @@ static inline int LocalId()
     int a = D_005721A8;
     if (g_IsMultiplayer) {
         if (D_00494178 == -1)
-            NetGame_InitLocalSlot(&D_00494178, a);
+            NetGetMyClientIndex(&D_00494178, a);
         return D_00494178;
     }
     return 0;
@@ -90,12 +90,12 @@ static inline int Fix(int i)
     if (i == -1) return LocalId();
     return i;
 }
-extern "C" void Npc_Enable(Act* a)
+extern "C" void cHuman_NetActivate(Act* a)
 {
     int loc;
     int idx;
     if (Ready(a)) return;
-    Npc_CreatePhysical(a);
+    cHuman_InitializationToDoUponActivation(a);
     {
         bool on = 0;
         if (a->p58 && a->p58->IsOn()) on = 1;
@@ -105,24 +105,24 @@ extern "C" void Npc_Enable(Act* a)
                 void* m;
                 if (g_ProfileLockEnabled) Alloc_Lock(9);
                 g_ProfileLockDepth++;
-                m = Mem_Alloc(0, 0x220, D_0049D8D0, 0x4BA);
-                if (g_ProfileLockEnabled) Alloc_Unlock(9);
+                m = cMemMan_Allocate(0, 0x220, D_0049D8D0, 0x4BA);
+                if (g_ProfileLockEnabled) EnableIntc(9);
                 g_ProfileLockDepth--;
                 if (m) m = cNetNPC_ctor(m, a->p3584 ? a->p3584 : 0, a);
-                Actor_InitComponents(a, 4, 0, m);
+                cHuman_CreateGobjController(a, 4, 0, m);
             }
         }
     }
-    Actor_v06(a);
-    Human_ApplyBoundSpheres(a);
-    Human_ApplyCentroidWeights(a);
-    TargetVis_Register(&g_TargetVisMgr, a);
+    cSKM_GOBJ_NetActivate(a);
+    cHuman_SetupSkelBBoxInfo(a);
+    cHuman_SetupCenterOfMassInfo(a);
+    cTargetManager_AddGobj(&g_TargetVisMgr, a);
     {
         int w;
-        idx = Player_GetIndex(a->wC);
+        idx = cNetObj_GetOwner(a->wC);
         w = a->w10;
         idx = Fix(idx);
-        NetMap_BindReceiver(w, idx, a);
+        cNetObj_AddSystem(w, idx, a);
     }
     a->b3268 = 1;
     cNPCInfoObject_ctor(&loc);

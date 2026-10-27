@@ -7,11 +7,11 @@
 
 extern char D_0048B2F8[];   /* game data root directory name */
 extern int g_VisionFxMan;
-extern int EffectTable_Load(char* root, int a1);
-extern int VisionFx_LoadFlareTextures(int a0);
+extern int nSfxLoader_LoadEffects(char* root, int a1);
+extern int cVisionFxMan_UpdateTxtrIds(int a0);
 
-/* Call EffectTable_Load with the game data root and a2, then VisionFx_LoadFlareTextures on g_VisionFxMan. */
-int Loader_LoadEffects(int a0, int a1, int a2) {
-    EffectTable_Load(D_0048B2F8, a2);
-    return VisionFx_LoadFlareTextures(g_VisionFxMan);
+/* Call nSfxLoader_LoadEffects with the game data root and a2, then cVisionFxMan_UpdateTxtrIds on g_VisionFxMan. */
+int cLoader_LoadEffects(int a0, int a1, int a2) {
+    nSfxLoader_LoadEffects(D_0048B2F8, a2);
+    return cVisionFxMan_UpdateTxtrIds(g_VisionFxMan);
 }

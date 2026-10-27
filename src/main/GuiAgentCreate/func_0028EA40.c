@@ -14,15 +14,15 @@ typedef struct {
     int locked;
 } Obj;
 
-void GuiWidget_Update(Obj *o, float dt);
+void GuiWidget_onAdvanceTime(Obj *o, float dt);
 
 #pragma push
 #pragma opt_propagation off
-void GuiAgentCreate_Update(Obj *o, float dt)
+void GuiAgentCreate_onAdvanceTime(Obj *o, float dt)
 {
     int flags;
     float step;
-    GuiWidget_Update(o, dt);
+    GuiWidget_onAdvanceTime(o, dt);
     flags = g_Pad0HeldMask;
     step = 3.1415927f * (dt / 30.0f);
     if (o->locked == 0) {

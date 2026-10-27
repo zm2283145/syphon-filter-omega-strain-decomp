@@ -25,15 +25,15 @@ static inline void merge_flush_func_0019D4E0(void) {}
 
 /* merge_units: begin func_0019D500 */
 #pragma push /* merge_units */
-extern int Root_GetParent(void* self);
-extern void Root_RefreshWorldCache(void* self);
-extern char* Root_Identity(void* self);
-void* Root_GetWorldQuat(void* self) {
-    if (Root_GetParent(self)) {
-        Root_RefreshWorldCache(self);
-        return Root_Identity(self);
+extern int cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(void* self);
+extern void cSkaAnimAnchor_TreeNode_UpdateTransform(void* self);
+extern char* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(void* self);
+void* cSkaAnimAnchor_GetRotation(void* self) {
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(self)) {
+        cSkaAnimAnchor_TreeNode_UpdateTransform(self);
+        return cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(self);
     }
-    return Root_Identity(self) + 0x50;
+    return cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(self) + 0x50;
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0019D500(void) {}

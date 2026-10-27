@@ -8,7 +8,7 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { float a; float b; } A5_00373BA0;
-int LightMgr_CompareOrder(A5_00373BA0* x, A5_00373BA0* y) {
+int CompareSources(A5_00373BA0* x, A5_00373BA0* y) {
     float b = y->b, a = x->b;
     if (a < b) return -1;
     else if (a > b) return (unsigned char)(a > b);
@@ -19,7 +19,7 @@ int LightMgr_CompareOrder(A5_00373BA0* x, A5_00373BA0* y) {
 
 /* merge_units: begin func_00373BE0 */
 #pragma push /* merge_units */
-int LightMgr_FindFirstAmbient(int a0) {
+int cLightMan_GetAmbientLight(int a0) {
     int v0, v1;
     int cond;
 
@@ -43,7 +43,7 @@ typedef struct { char pad0[8]; int id; char padC[0x44]; } LtB;
 typedef struct { char pad0[8]; int id; char padC[0xD4]; } LtD;
 typedef struct { LtA* amb; LtB* pt; LtA* dir; LtD* spot; int nAmb; int nPt; int nDir; int nSpot; } LtMgr;
 
-void* LightMgr_FindByTypeAndId(LtMgr* m, int type, int id) {
+void* cLightMan_GetLightSource(LtMgr* m, int type, int id) {
     switch (type) {
     case 1: {
         int i;
@@ -99,7 +99,7 @@ static inline void Pt2_QMove(void* d, void* s, int n) {
 #pragma push
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
-void LightMgr_RemoveFromTable(Pt2_LMgr* m, Pt2_Light* l) {
+void cLightMan_RemoveLight(Pt2_LMgr* m, Pt2_Light* l) {
     int i;
     switch (l->type) {
     case 1:
@@ -143,7 +143,7 @@ typedef struct {
     int nc;
     int nd;
 } LightMgr;
-LmAny* LightMgr_AllocPoint(LightMgr* m, unsigned char kind)
+LmAny* cLightMan_AddLight(LightMgr* m, unsigned char kind)
 {
     LmAny* l = 0;
     int i;
@@ -186,14 +186,14 @@ LmAny* LightMgr_AllocPoint(LightMgr* m, unsigned char kind)
 #include "alloc_guard.h"
 struct S374020 { void* p[4]; int n[4]; };
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 }
 static inline void Rel374020(void* p, int line)
 {
     AllocGuard g;
-    Mem_Free(0, p, "lights.cc", line);
+    cMemMan_Deallocate(0, p, "lights.cc", line);
 }
-extern "C" void LightMgr_FreePools(S374020* s)
+extern "C" void cLightMan_DeallocateLightSources(S374020* s)
 {
     if (s->p[0]) {
         Rel374020(s->p[0], 0x94);
@@ -224,7 +224,7 @@ extern "C" void LightMgr_FreePools(S374020* s)
 #pragma cplusplus on
 
 extern "C" {
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 extern char D_004BC150[];
 }
 
@@ -282,7 +282,7 @@ struct LightPools_4270 {
 #pragma opt_propagation off
 #pragma opt_strength_reduction off
 #pragma opt_rotateloops off
-extern "C" void LightMgr_AllocPool(LightPools_4270* m, unsigned char type, unsigned int n)
+extern "C" void cLightMan_AllocateLightSources(LightPools_4270* m, unsigned char type, unsigned int n)
 {
     switch (type) {
     case 1: {
@@ -290,7 +290,7 @@ extern "C" void LightMgr_AllocPool(LightPools_4270* m, unsigned char type, unsig
         void* p;
         {
             AllocGuard g;
-            p = Mem_Alloc(0, size, D_004BC150, 0x5E);
+            p = cMemMan_Allocate(0, size, D_004BC150, 0x5E);
         }
         m->a = (LightA_4270*)p;
         MemClear_4270(m->a, size);
@@ -313,7 +313,7 @@ extern "C" void LightMgr_AllocPool(LightPools_4270* m, unsigned char type, unsig
         void* p;
         {
             AllocGuard g;
-            p = Mem_Alloc(0, size, D_004BC150, 0x6A);
+            p = cMemMan_Allocate(0, size, D_004BC150, 0x6A);
         }
         m->b = (LightB_4270*)p;
         MemClear_4270(m->b, size);
@@ -338,7 +338,7 @@ extern "C" void LightMgr_AllocPool(LightPools_4270* m, unsigned char type, unsig
         void* p;
         {
             AllocGuard g;
-            p = Mem_Alloc(0, size, D_004BC150, 0x76);
+            p = cMemMan_Allocate(0, size, D_004BC150, 0x76);
         }
         m->c = (LightC_4270*)p;
         MemClear_4270(m->c, size);
@@ -361,7 +361,7 @@ extern "C" void LightMgr_AllocPool(LightPools_4270* m, unsigned char type, unsig
         void* p;
         {
             AllocGuard g;
-            p = Mem_Alloc(0, size, D_004BC150, 0x82);
+            p = cMemMan_Allocate(0, size, D_004BC150, 0x82);
         }
         m->d = (LightD_4270*)p;
         MemClear_4270(m->d, size);

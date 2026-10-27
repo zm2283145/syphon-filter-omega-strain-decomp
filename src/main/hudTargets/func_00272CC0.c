@@ -9,6 +9,6 @@
 
 const float D_0048B310[2] = { 1.25f, 0.0f };
 
-float Game_GetDangerMag(void) {
+float cHudTargetManager_GetDangerMag(void) {
     return (*(float*)D_0048B310);
 }

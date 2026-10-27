@@ -12,7 +12,7 @@
 
 /* Factory: allocate a 0x960-byte object and construct it. */
 extern "C" { char D_004AC6D8[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(GuiEquipmentModify_Create, 0x960, D_004AC6D8, GuiEquipmentModify_ctor)
+DEFINE_GUARDED_NEW_CTOR(ConcreteWidgetClassRep_GuiEquipmentModify_Create, 0x960, D_004AC6D8, GuiEquipmentModify_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002C4400 */
 
@@ -21,8 +21,8 @@ DEFINE_GUARDED_NEW_CTOR(GuiEquipmentModify_Create, 0x960, D_004AC6D8, GuiEquipme
 typedef struct { int words[3]; } SsoString;
 typedef struct { char unused; } Allocator; /* empty allocator object passed by value */
 extern int strlen(const char* s); /* strlen */
-extern void String_Reserve(SsoString* s, int capacity);
-extern void* String_Replace(SsoString* s, int pos, int count, const char* first, const char* last, Allocator alloc);
+extern void std_basic_string_char_char_traits_char_reserve(SsoString* s, int capacity);
+extern void* std_basic_string_char_char_traits_char_do_replace(SsoString* s, int pos, int count, const char* first, const char* last, Allocator alloc);
 
 /* String constructor from a C string. */
 SsoString* func_002C44B0(SsoString* self, const char* text)
@@ -33,8 +33,8 @@ SsoString* func_002C44B0(SsoString* self, const char* text)
     self->words[1] = 0;
     self->words[2] = 0;
     len = strlen(text);
-    String_Reserve(self, len);
-    String_Replace(self, 0, 0, text, text + len, alloc);
+    std_basic_string_char_char_traits_char_reserve(self, len);
+    std_basic_string_char_char_traits_char_do_replace(self, 0, 0, text, text + len, alloc);
     return self;
 }
 #pragma pop /* merge_units */

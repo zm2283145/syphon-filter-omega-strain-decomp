@@ -52,7 +52,7 @@ static inline void merge_flush_func_0039B110(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-int Mem_Alloc(int, int, char *, int);
+int cMemMan_Allocate(int, int, char *, int);
 extern char D_004BC5D0;
 }
 typedef struct { int p; int a; int b; int n; } E39B;
@@ -74,7 +74,7 @@ m = n;
     do {
         {
             AllocGuard g;
-            p = Mem_Alloc(0, sz, &D_004BC5D0, 0xD70);
+            p = cMemMan_Allocate(0, sz, &D_004BC5D0, 0xD70);
         }
         
         e->p = p;
@@ -96,7 +96,7 @@ static inline void merge_flush_func_0039B210(void) {}
 #pragma mpwc_relax on
 int operator_delete(char **);                            
 extern char D_004DFAD8;
-extern void WeatherEmitter_Draw();
+extern void cParticleBox_Render();
 extern void WeatherEmitter_Update();
 extern void cParticleBase_GetRenderMatrix();
 extern void cParticleBox_Done();
@@ -140,7 +140,7 @@ loop_2:
     }
     return arg0;
 }
-void * const D_004DFAF0[8] = { (void*)0x0, (void*)0x0, (void*)WeatherEmitter_dtor, (void*)WeatherEmitter_Draw, (void*)WeatherEmitter_Update, (void*)cParticleBox_Definition, (void*)cParticleBox_Done, (void*)cParticleBase_GetRenderMatrix };
+void * const D_004DFAF0[8] = { (void*)0x0, (void*)0x0, (void*)WeatherEmitter_dtor, (void*)cParticleBox_Render, (void*)WeatherEmitter_Update, (void*)cParticleBox_Definition, (void*)cParticleBox_Done, (void*)cParticleBase_GetRenderMatrix };
 #undef D_0053B560 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0039B2F0(void) {}

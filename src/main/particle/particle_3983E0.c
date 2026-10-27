@@ -36,7 +36,7 @@ static inline void merge_flush_func_003983E0(void) {}
  */
 
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int value);
 
 /* Zeroes the three words. */
 Rel* std_vector_imp_intPtr_1_ctor(Rel* r) {
@@ -48,7 +48,7 @@ Rel* std_vector_imp_intPtr_1_ctor(Rel* r) {
 
 /* push_back on a pointer vector. */
 int std_vector_intPtr_push_back(PtrVec* v, int value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 
 /* Zeroes the three words. */

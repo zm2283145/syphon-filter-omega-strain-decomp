@@ -4,7 +4,7 @@ typedef struct RNode RNode;
 typedef struct { RNode** data; int count; } RVec;
 typedef struct { RNode** p; } RIt;
 struct RNode { int f0; RNode* parent; RVec children; };
-extern int RelNode_HasChildren(RNode* n);
+extern int cTreeNode_cSkaSystemPtr_HasChildren(RNode* n);
 extern int cArray_cTreeNode_cSkaSystemPtrPtr_ConstIterator_opNe(RIt* a, RIt* b);
 extern RIt* func_001E9010(RIt* it);
 extern RNode** func_001E9030(RIt* w);
@@ -13,18 +13,18 @@ extern void func_001E9060(RIt* out, RVec* v);
 extern RNode** func_001E9250(RVec* v);
 extern void func_001E9270(RIt* out, RVec* self, RIt* src);
 extern RNode** func_001E9280(RVec* v);
-unsigned char Relation_FindDescendant(RNode* n, RNode* t);
+unsigned char cTreeNode_cSkaSystemPtr_IsAttached_SearchDown(RNode* n, RNode* t);
 }
 
 static inline bool Check(RNode* n, RNode* t) {
     if (n == t) return 1;
-    if (RelNode_HasChildren(n)) {
+    if (cTreeNode_cSkaSystemPtr_HasChildren(n)) {
         bool found = 0;
         RIt it, end;
         func_001E9060(&it, &n->children);
         cArray_cTreeNode_cSkaSystemPtrPtr_End_void_2(&end, &n->children);
         while (cArray_cTreeNode_cSkaSystemPtrPtr_ConstIterator_opNe(&it, &end)) {
-            if (Relation_FindDescendant(*func_001E9030(&it), t)) { found = 1; break; }
+            if (cTreeNode_cSkaSystemPtr_IsAttached_SearchDown(*func_001E9030(&it), t)) { found = 1; break; }
             func_001E9010(&it);
         }
         return found;
@@ -40,7 +40,7 @@ static inline bool Ne(RIt* a, RIt* b) { return !(a->p == b->p); }
 
 #pragma push
 #pragma opt_common_subs off
-extern "C" unsigned char Relation_FindDescendant(RNode* n, RNode* t) {
+extern "C" unsigned char cTreeNode_cSkaSystemPtr_IsAttached_SearchDown(RNode* n, RNode* t) {
     if (n == t) return 1;
     if (HasKids(&n->children)) {
         bool found = 0;

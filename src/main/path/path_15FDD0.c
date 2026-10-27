@@ -32,14 +32,14 @@ struct E8Nav {
     char pad60[0x70 - 0x60];
     E8Obj* obj;         /* 0x70 */
 };
-extern "C" void NpcPath_HoldNode(E8Nav* self, int n);
-extern "C" int NpcRoute_NearestGroupNode(int n, float* pos, int flags, int ex);
-extern "C" void NpcPath_GetDestination(E8Nav* self, int n)
+extern "C" void cPathNavigator_SetNodeIndex(E8Nav* self, int n);
+extern "C" int cAIPathData_GetClosestNodeIndex(int n, float* pos, int flags, int ex);
+extern "C" void cPathNavigator_UpdateGobjBeingTransported(E8Nav* self, int n)
 {
-    NpcPath_HoldNode(self, -1);
+    cPathNavigator_SetNodeIndex(self, -1);
     if (n >= 0 && n != self->target) {
         self->target = n;
-        int r = NpcRoute_NearestGroupNode(n, self->obj->GetMatrix().Pos(), 0x80, -1);
+        int r = cAIPathData_GetClosestNodeIndex(n, self->obj->GetMatrix().Pos(), 0x80, -1);
         if (r >= 0) self->node = r;
     }
     float z = self->obj->GetMatrix().Z();
@@ -63,17 +63,17 @@ struct SnMsg { void* vt; char pad[0x20]; unsigned char kind; char pad25[3]; int 
 extern "C" {
 extern char D_004ED9B8[];
 extern char D_004D9760[];
-void* NpcPath_GetNode(int id);
-void Node_GetTranslation(SnV4* out, void* node);
-void Event_Construct(SnMsg* m, void* type);
-void Event_Send(SnMsg* m, SnActor* to, int flags);
+void* cAIPathData_GetNode(int id);
+void cNode_GetLoc(SnV4* out, void* node);
+void cMessage_ctor_cMessageNameR(SnMsg* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(SnMsg* m, SnActor* to, int flags);
 void cMessage_dtor(SnMsg* m, int flags);
 }
 static inline void Push(SnRoute* r, int v) { r->nodes[r->count] = v; r->count++; }
-static inline void Construct(SnMsg* m) { Event_Construct(m, D_004ED9B8); m->vt = D_004D9760; m->kind = 2; m->id = -1; }
+static inline void Construct(SnMsg* m) { cMessage_ctor_cMessageNameR(m, D_004ED9B8); m->vt = D_004D9760; m->kind = 2; m->id = -1; }
 static inline void Destroy(SnMsg* loc) { loc->vt = D_004D9760; cMessage_dtor(loc, 0); }
 #pragma opt_propagation off
-extern "C" bool NpcRoute_StartToLinkNode(SnPath* self, int node)
+extern "C" bool cPathNavigator_FallToNode(SnPath* self, int node)
 {
     bool r = false;
     SnRoute* rt = self->route;
@@ -82,7 +82,7 @@ extern "C" bool NpcRoute_StartToLinkNode(SnPath* self, int node)
     Push(self->route, node);
     {
         SnV4 t;
-        Node_GetTranslation(&t, NpcPath_GetNode(node));
+        cNode_GetLoc(&t, cAIPathData_GetNode(node));
         VCopyF(&self->route->dest, &t);
         self->route->target = node;
     }
@@ -91,7 +91,7 @@ extern "C" bool NpcRoute_StartToLinkNode(SnPath* self, int node)
         SnMsg* m = &msg;
         Construct(m);
         SnActor* a = self->actor;
-        SnActor* o = a->owner; SnActor* to = a; if (!o) { asm { .set reorder } /* scheduling barrier: keeps retail's empty then-arm (b + nop) */ } else to = o; Event_Send(&msg, to, 1);
+        SnActor* o = a->owner; SnActor* to = a; if (!o) { asm { .set reorder } /* scheduling barrier: keeps retail's empty then-arm (b + nop) */ } else to = o; QueueMessage_cMessageR_cSystemP_int(&msg, to, 1);
         Destroy(&msg);
     }
     r = true;

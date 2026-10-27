@@ -46,7 +46,7 @@ typedef struct Turret {
     int x68;
 } Turret;
 
-Turret* cTank_SetTurret(Turret* t, int a, int b, int c, int d, int e)
+Turret* cTurret_ctor(Turret* t, int a, int b, int c, int d, int e)
 {
     int tmp;
     int* pt;
@@ -95,11 +95,11 @@ struct EntA20 { TgtA20* p; float x; float y; };
 struct OwnA20 { char pad[0x144]; float t; };
 struct SelfA20 { void* obj; OwnA20* own; EntA20 e[2]; int n; float last; unsigned char on; };
 extern float D_0048B3D0;
-extern "C" unsigned char cTankTread_Init(SelfA20*);
-extern "C" void cTankTread_Update(SelfA20* s)
+extern "C" unsigned char cTread_ctor(SelfA20*);
+extern "C" void cTread_NextFrame(SelfA20* s)
 {
     int i;
-    if (cTankTread_Init(s)) {
+    if (cTread_ctor(s)) {
         float d;
         float t;
         t = s->own->t;

@@ -9,7 +9,7 @@
 extern int SoftFloat_UnpackAndCompare(int a, int b);
 
 /* a >= b */
-int SoftFloat_DoubleGreaterEqual(int a, int b) {
+int _dpfge(int a, int b) {
     int cmp;
 
     cmp = SoftFloat_UnpackAndCompare(a, b);
@@ -17,7 +17,7 @@ int SoftFloat_DoubleGreaterEqual(int a, int b) {
 }
 
 /* a > b */
-int SoftFloat_DoubleGreater(int a, int b) {
+int _dpfgt(int a, int b) {
     int cmp;
 
     cmp = SoftFloat_UnpackAndCompare(a, b);
@@ -25,7 +25,7 @@ int SoftFloat_DoubleGreater(int a, int b) {
 }
 
 /* a <= b */
-int SoftFloat_DoubleLessEqual(int a, int b) {
+int _dpfle(int a, int b) {
     int cmp;
 
     cmp = SoftFloat_UnpackAndCompare(a, b);
@@ -33,7 +33,7 @@ int SoftFloat_DoubleLessEqual(int a, int b) {
 }
 
 /* a != b */
-int SoftFloat_DoubleNotEqual(int a, int b) {
+int _dpfne(int a, int b) {
     int cmp;
 
     cmp = SoftFloat_UnpackAndCompare(a, b);

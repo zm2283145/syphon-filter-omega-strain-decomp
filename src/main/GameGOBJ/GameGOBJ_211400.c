@@ -21,22 +21,22 @@ extern int D_004F54F0;   /* cPathedGOBJ script-type value */
 extern int D_004F54F8;   /* cPathedGOBJ script-type key */
 extern int D_004F5638;   /* cPathedNotice script-type value */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
-extern int ScriptType_AddAccepted(int type, int iface);
-extern void ScriptType_SetParent(int type, int base);
+extern int cScriptInterpreter_CallEvent(void* filter, int a0, int a1);
+extern int cScriptBase_declareMsgUse(int type, int iface);
+extern void cScriptBase_declareParent(int type, int base);
 
 /* Registers the cPathedGOBJ script type under cGameGOBJ; accepts cPathedNotice. */
-int ScriptType_cPathedGOBJ_Init(void) {
-    ScriptType_SetParent(D_004F54F8, D_004F54D0);
-    return ScriptType_AddAccepted(D_004F54F8, D_004F5638);
+int cPathedGOBJ_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004F54F8, D_004F54D0);
+    return cScriptBase_declareMsgUse(D_004F54F8, D_004F5638);
 }
 
-int cPathedGOBJ_v0B(void) {
+int cPathedGOBJ_getSOBJClassId(void) {
     return D_004F54F0;
 }
 
-int PathObj_ScriptFilter(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cPathedGOBJ_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00211400(void) {}
@@ -108,23 +108,23 @@ static inline void merge_flush_func_002114A0(void) {}
 
 extern int D_004F54D8;   /* cGameGOBJ script-type key */
 extern int D_004F55D8;   /* cGOBJTriggerEventMsg script-type value */
-extern int* cGOBJ_GetScriptTypeKeyPtr(void);
+extern int* cGOBJ_SOBJ_getClassId(void);
 
 /* Registers the cGameGOBJ script type under cGOBJ; accepts cGOBJTriggerEventMsg. */
-int ScriptType_cGameGOBJ_Init(void) {
+int cGameGOBJ_SOBJ_init(void) {
     int* base;
 
-    base = cGOBJ_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F54D8, *base);
-    return ScriptType_AddAccepted(D_004F54D8, D_004F55D8);
+    base = cGOBJ_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F54D8, *base);
+    return cScriptBase_declareMsgUse(D_004F54D8, D_004F55D8);
 }
 
-int cGameGOBJ_v0B(void) {
+int cGameGOBJ_getSOBJClassId(void) {
     return D_004F54D0;
 }
 
-int cGameGOBJ_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cGameGOBJ_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002114D0(void) {}

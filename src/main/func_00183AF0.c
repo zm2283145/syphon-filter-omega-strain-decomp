@@ -15,7 +15,7 @@ int cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_3(void* self,
 }
 
 /* Surface index of a collision triangle (research COL_GATHER_NATIVE.md). */
-unsigned char Triangle_GetSurface(Tri* t) {
+unsigned char cCollisionModel_Face_GetPropertiesIndex(Tri* t) {
     return t->b10 >> 1;
 }
 

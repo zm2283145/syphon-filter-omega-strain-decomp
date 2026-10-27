@@ -10,8 +10,8 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int Agent_GetSelected(char *, int, int, signed char);               
-int AgentData_AddLevelProgress(int, int, int, int);                    
+int cGameSystem_GetAgentData(char *, int, int, signed char);               
+int cAgentData_UnlockZeus(int, int, int, int);                    
 const unsigned int g_OnlineMissionTable[12] = { 0x0, 0x1, 0x2, 0x4, 0x5, 0x8, 0xC, 0xD, 0x10, 0x0, 0x0, 0x0 };
 extern char g_Game;
 extern signed char g_GameState;
@@ -21,7 +21,7 @@ extern signed char D_005064A8;
 extern int D_005064B0;
 extern int D_005064B8;
 
-void GuiMissionSetup_OnGameCreated(void) {
+void GuiMissionSetup_SuccessLobbyConnect(void) {
     int temp_s0;
     signed char temp_a3;
 
@@ -32,7 +32,7 @@ void GuiMissionSetup_OnGameCreated(void) {
     F_(D_004FFC04, 0x33, signed char) = 1;
     temp_s0 = F_(D_004FFC04, 0x248, int);
     if (temp_s0 != -1) {
-        AgentData_AddLevelProgress(Agent_GetSelected(&g_Game, -1, 3, temp_a3), F_(&(*(char*)g_OnlineMissionTable), (temp_s0 * 4), int) + 1, 6, 1);
+        cAgentData_UnlockZeus(cGameSystem_GetAgentData(&g_Game, -1, 3, temp_a3), F_(&(*(char*)g_OnlineMissionTable), (temp_s0 * 4), int) + 1, 6, 1);
     }
     D_005064A8 = 0;
     D_005064B0 = 0;
@@ -59,22 +59,22 @@ extern unsigned char D_005064A8;
 #endif /* merge_units */
 #define D_005064A8 (*(unsigned char*)&D_005064A8) /* merge_units */
 
-extern char* GuiScreen_GetLobbyString(void* self, int id, int a, int b, int c, int d);
-extern char* Loc_LookupText(char* key);
-extern void FrontEnd_OpenPopup(void* gui, int kind, char* title, char* text, int a, int b);
+extern char* GuiLobbyScreen_GetLobbyString(void* self, int id, int a, int b, int c, int d);
+extern char* nGlobalization_GetString_charP(char* key);
+extern void cGameFrontEnd_PushMessageBox(void* gui, int kind, char* title, char* text, int a, int b);
 extern void Net_CleanupGame(void);
 
 static inline unsigned char Nz2A0E80(int v) { return v != 0; }
 /* Shows the pending message box (built-in text or a looked-up key) and clears the request. */
-void GuiMissionSetup_OnGameCreateFailed(void* self, int builtin)
+void GuiMissionSetup_FailedLobbyConnect(void* self, int builtin)
 {
     void* g;
     if (builtin) {
         g = D_004FFC04;
-        FrontEnd_OpenPopup(g, 2, D_004AAFF0, GuiScreen_GetLobbyString(self, 0x59, 0, 0, 0, 0), 0, 0);
+        cGameFrontEnd_PushMessageBox(g, 2, D_004AAFF0, GuiLobbyScreen_GetLobbyString(self, 0x59, 0, 0, 0, 0), 0, 0);
     } else {
         g = D_004FFC04;
-        FrontEnd_OpenPopup(g, 2, D_004AAFF0, Loc_LookupText(D_005064B8), 0, 0);
+        cGameFrontEnd_PushMessageBox(g, 2, D_004AAFF0, nGlobalization_GetString_charP(D_005064B8), 0, 0);
     }
     if (Nz2A0E80(D_005064B0) == 1) Net_CleanupGame();
     D_005064A8 = 0;

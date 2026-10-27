@@ -127,24 +127,24 @@ extern int D_004F7CF8; /* cNIEventLight script type key */
 extern int D_004F7D00; /* cNIEventLight script type id */
 extern int D_004F7D20; /* cNINotice script type key */
 extern char D_00555070[]; /* global script filter */
-extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
-extern int* cGOBJ_GetScriptTypeKeyPtr(void); /* address of the cGObj type key */
-extern int ScriptType_AddAccepted(int type, int acceptedType);
-extern void ScriptType_SetParent(int type, int parentType);
+extern int cScriptInterpreter_CallEvent(void* filter, int a1, int a2);
+extern int* cGOBJ_SOBJ_getClassId(void); /* address of the cGObj type key */
+extern int cScriptBase_declareMsgUse(int type, int acceptedType);
+extern void cScriptBase_declareParent(int type, int parentType);
 
 /* cNIEventLight derives from cGObj and accepts cNINotice messages. */
-int ScriptType_cNIEventLight_Init(void) {
-    int* parent = cGOBJ_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F7D00, *parent);
-    return ScriptType_AddAccepted(D_004F7D00, D_004F7D20);
+int cNIEventLight_SOBJ_init(void) {
+    int* parent = cGOBJ_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F7D00, *parent);
+    return cScriptBase_declareMsgUse(D_004F7D00, D_004F7D20);
 }
 
-int cNIEventLight_v0B(void) {
+int cNIEventLight_getSOBJClassId(void) {
     return D_004F7CF8;
 }
 
-int cNIEventLight_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cNIEventLight_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002375E0(void) {}

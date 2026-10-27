@@ -15,7 +15,7 @@
 #include "sfo_common_types.h"
 
 
-/* AI modes (mode table 0049B6A0, NpcAi_DispatchMode). */
+/* AI modes (mode table 0049B6A0, cNPC_Update). */
 #define SF_AIMODE_PATROL 0
 #define SF_AIMODE_ALERT 1
 #define SF_AIMODE_ATTACK 4
@@ -37,13 +37,13 @@
 #define SF_AIVT_UPDATE 0x40          /* 00159590 */
 #define SF_AIVT_ACTIVATE 0x48        /* 00157DF0 */
 #define SF_AIVT_DEACTIVATE 0x4C      /* 00157AD0 */
-#define SF_AIVT_AIM_UPDATE 0x60      /* 0022F5B0 Controller_ToHit */
+#define SF_AIVT_AIM_UPDATE 0x60      /* 0022F5B0 cGameGobjController_UpdateToHitProbability */
 #define SF_AIVT_WEAPON_DRAW 0xBC     /* 0014FC20 */
 #define SF_AIVT_SET_MODE 0xDC        /* 0014BCF0 */
 #define SF_AIVT_MOVE_TO_NODE 0x100   /* 0014BE50 */
 #define SF_AIVT_KILL 0x168           /* 0014B370 */
 
-/* Mode request block at component +0x44 (setter NpcAi_RequestMode 0016E170). */
+/* Mode request block at component +0x44 (setter cStateMachine_ChangeState 0016E170). */
 typedef struct SfAiModeBlock {
     int mode; /* +0x0 */
     int requested; /* +0x4 */
@@ -51,7 +51,7 @@ typedef struct SfAiModeBlock {
     int pending; /* +0xC ? width */
 } SfAiModeBlock; /* size 0x10 */
 
-/* AI component (cNPC). Constructed by 001588D0 -> cAI_ctor 0016F5B0 -> NpcAi_Construct 00158BC0. */
+/* AI component (cNPC). Constructed by 001588D0 -> cAI_ctor 0016F5B0 -> cNPC_Init 00158BC0. */
 typedef struct SfAiComponent {
     void* vtable; /* +0x0 004D9380 */
     char pad0004[0x10];
@@ -138,7 +138,7 @@ typedef struct SfAiComponent {
     unsigned char activateLatch; /* +0x1D5 */
 } SfAiComponent; /* size unknown (>= 0x1D6); prefix only */
 
-/* Perception object at component +0x1AC (NpcPerception_Construct 0016E0A0). */
+/* Perception object at component +0x1AC (cAITarget_ctor 0016E0A0). */
 typedef struct SfAiPerception {
     SfVec4 lastKnown; /* +0x0 */
     float viewRadius; /* +0x10 SetViewConeRadius; reset to the far distance 0053834C */
@@ -151,11 +151,11 @@ typedef struct SfAiPerception {
     SfPtrVec records; /* +0x30 ? list of SfAwarenessRecord (ai.cc nodes, new at front) */
     void* component; /* +0x3C */
     SfWeakHandle target; /* +0x40 */
-    SfWeakHandle nextCandidate; /* +0x48 round robin of NpcPerception_NextCandidate */
+    SfWeakHandle nextCandidate; /* +0x48 round robin of cAITarget_GetNextNpcToTest */
     int resetFrame; /* +0x50 frame counter + 20 */
 } SfAiPerception; /* size unknown (>= 0x54); prefix only */
 
-/* Awareness record (NpcPerception_AddAwareness creates, NpcPerception_UpdateRecords ages). */
+/* Awareness record (cAITarget_AddAwareness creates, cAITarget_UpdateAwareness ages). */
 typedef struct SfAwarenessRecord {
     void* object; /* +0x0 */
     int id; /* +0x4 */
@@ -176,7 +176,7 @@ typedef struct SfAwarenessRecord {
     char pad003D[0x3];
 } SfAwarenessRecord; /* size 0x40 */
 
-/* Route buffer at path follower +0x74 (NpcPath_Start / NpcRoute_ReleaseBuffer). */
+/* Route buffer at path follower +0x74 (cPathNavigator_Activate / cPathNavigator_Deactivate). */
 typedef struct SfRouteBuffer {
     SfVec4 destPoint; /* +0x0 */
     int destNode; /* +0x10 */
@@ -187,7 +187,7 @@ typedef struct SfRouteBuffer {
     char pad002C[0x4];
 } SfRouteBuffer; /* size 0x30 */
 
-/* Path follower at component +0x1B0 (NpcPath_Construct 00161840). */
+/* Path follower at component +0x1B0 (cPathNavigator_ctor 00161840). */
 typedef struct SfPathFollower {
     SfVec4 target; /* +0x0 */
     SfVec4 direction; /* +0x10 unit segment direction */

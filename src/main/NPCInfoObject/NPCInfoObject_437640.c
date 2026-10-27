@@ -24,7 +24,7 @@ int NetGetObject(P_437640** out, void* s);
 void NetReleaseObjectPrivateOwnership(void* s);
 int lgAudStartRecording(void* p);
 int lgAudStopRecording(void* p);
-int Net_GetClock(int v);
+int cDME_GetTime(int v);
 
 static inline int Owner_437640(void)
 {
@@ -42,7 +42,7 @@ static inline void Release_437640(void)
     }
     if (D_00582B88) {
         if (lgAudStopRecording(D_00497548) == 0x80000006) D_00582B88 = 0;
-        D_00582D08 = Net_GetClock(1) + 2000;
+        D_00582D08 = cDME_GetTime(1) + 2000;
     }
     D_00583860 = 0;
 }
@@ -119,7 +119,7 @@ extern void HeadsetSemaphore_NetHeadsetSemaphoreCreationCallback();
 extern void func_00437640();
 extern void HeadsetSemaphore_NetHumanDeleteCallback();
 
-unsigned char Voice_RegisterHeadsetSemaphore(void)
+unsigned char HeadsetSemaphore_InitNet(void)
 {
     int db;
     Prm78A0 prm;
@@ -168,7 +168,7 @@ static inline void Release_437950(void)
     }
     if (D_00582B88) {
         if (lgAudStopRecording(D_00497548) == 0x80000006) D_00582B88 = 0;
-        D_00582D08 = Net_GetClock(1) + 2000;
+        D_00582D08 = cDME_GetTime(1) + 2000;
     }
     D_00583860 = 0;
 }
@@ -179,7 +179,7 @@ void func_00437950(int on)
         if (!on) {
             Release_437950();
         } else if (on) {
-            if (D_00582D08 < Net_GetClock(1)) {
+            if (D_00582D08 < cDME_GetTime(1)) {
                 int o = OwnerW_437950();
                 if (o != NetLocalId()) {
                     D_00583860 = 1;

@@ -40,15 +40,15 @@ static inline void merge_flush_func_00191040(void) {}
 /* merge_units: begin func_001910A0 */
 #pragma push /* merge_units */
 typedef struct RootObj RootObj;
-extern void* Root_GetParent(RootObj* r);
-extern void Root_RefreshWorldCache(RootObj* r);
-extern char* Root_Identity(RootObj* r);
-char* Root_ResolveWorldPlacement(RootObj* r) {
-    if (Root_GetParent(r)) {
-        Root_RefreshWorldCache(r);
-        return Root_Identity(r);
+extern void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(RootObj* r);
+extern void cSkaAnimAnchor_TreeNode_UpdateTransform(RootObj* r);
+extern char* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(RootObj* r);
+char* cSkaAnimAnchor_GetTransform(RootObj* r) {
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(r)) {
+        cSkaAnimAnchor_TreeNode_UpdateTransform(r);
+        return cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r);
     }
-    return Root_Identity(r) + 0x50;
+    return cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r) + 0x50;
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001910A0(void) {}
@@ -95,15 +95,15 @@ static inline void QC(void* d, const void* s) { __int128 t; __asm__ volatile("lq
 struct Nd { char pad[0x50]; Plc p; char pad70[0x30]; unsigned char bA0; char padA1[0xF]; int bB0; };
 extern "C" {
 #if 0 /* merge_units */
-void* Root_GetParent(Nd* n);
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(Nd* n);
 #endif /* merge_units */
-#define Root_GetParent(a0) (Root_GetParent((RootObj *)(a0))) /* merge_units */
+#define cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(a0) (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void((RootObj *)(a0))) /* merge_units */
 
-Plc* Root_GetWorldPlacement(void* r);
-void Transform_SetOrientation(Plc* d, Plc* s);
-void Placement_Invert(Plc* p);
+Plc* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void* r);
+void cQuatVec_opAssign(Plc* d, Plc* s);
+void cQuatVec_InvertAssumingUnitQuat(Plc* p);
 void cQuaternion_ctor_void(V4* q);
-void Quat_Multiply(V4* a, V4* b, V4* c);
+void cQuaternion_VU0Multiply(V4* a, V4* b, V4* c);
 void cQuaternion_ctor_cQuaternionR(V4* d, V4* s);
 int cTreeNode_cSkaAnimAnchor_TreeNodeData_HasChildren(Nd* n);
 void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(Nd* n);
@@ -115,7 +115,7 @@ void cSkaAnimAnchor_TreeNode_TellNeedToUpdate(Nd* n);
 void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc(It* it);
 }
 static inline void Cp(Plc* d, Plc* s) { QC(&d->rot, &s->rot); QC(&d->pos, &s->pos); }
-extern "C" void Root_SetWorldPlacement(Nd* self, Plc* src)
+extern "C" void cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(Nd* self, Plc* src)
 {
     { Plc* d = &self->p; QC(&d->rot, &src->rot); QC(&d->pos, &src->pos); }
     if (self->bB0) {
@@ -124,12 +124,12 @@ extern "C" void Root_SetWorldPlacement(Nd* self, Plc* src)
         V4 m;
         Plc* p;
         Plc* ip;
-        Transform_SetOrientation(&inv, Root_GetWorldPlacement(Root_GetParent(self)));
-        Placement_Invert(&inv);
+        cQuatVec_opAssign(&inv, cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(self)));
+        cQuatVec_InvertAssumingUnitQuat(&inv);
         ip = &inv;
         p = &self->p;
         cQuaternion_ctor_void(&m);
-        Quat_Multiply(&m, &ip->rot, &p->rot);
+        cQuaternion_VU0Multiply(&m, &ip->rot, &p->rot);
         cQuaternion_ctor_cQuaternionR(&r, &m);
         { void* xx = &r; /* dead on purpose: retail keeps this addiu */ }
         QC(&p->rot, &r);
@@ -146,7 +146,7 @@ extern "C" void Root_SetWorldPlacement(Nd* self, Plc* src)
             cSkaAnimAnchor_TreeNode_TellNeedToUpdate(*cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opMul(&it));
     }
 }
-#undef Root_GetParent /* merge_units */
+#undef cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00191100(void) {}
 #pragma pop /* merge_units */

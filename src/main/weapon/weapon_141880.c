@@ -79,15 +79,15 @@ extern int g_HumanActorClassKey[];
 }
 static inline int Team() { int* p = g_HumanActorClassKey; return *p; }
 extern "C" {
-char* WeaponDb_Get(void* db, int id);
-void* Service_Lookup(void* a, void* b);
-int LosMgr_TraceBullet(void* mgr, Hit* a, Query* b, V* c, const V& d, void* e1, void* e2, int g, unsigned char h, unsigned char i, int j, unsigned char k);
-int Actor_IsInvulnerable(Actor* a);
-void* Agent_GetSelected(void* a, int b);
-void Stats_Add(void* a, int b, int c);
-void Global_ShockToDeath(Actor* a, int b, int c, float d, float e);
+char* cWeaponDB_GetEntry(void* db, int id);
+void* cSystemContainer_GetSystem(void* a, void* b);
+int cLosManager_cCollisionModelList_Game_PerformImmediateRayIntersectionTest(void* mgr, Hit* a, Query* b, V* c, const V& d, void* e1, void* e2, int g, unsigned char h, unsigned char i, int j, unsigned char k);
+int cHuman_IsInvulnerable(Actor* a);
+void* cGameSystem_GetAgentData(void* a, int b);
+void cAgentData_AddScore(void* a, int b, int c);
+void cHuman_Shock(Actor* a, int b, int c, float d, float e);
 void Actor_Ignite(Actor* a, int b, Actor* c, int d, int e, float f);
-void Actor_GetHitVolumes(Actor* a, V* b, V* c, int d, HV* e);
+void cHuman_BulletBlood(Actor* a, V* b, V* c, int d, HV* e);
 }
 static inline bool CtrlBusy(Actor* a) { bool r = false; if (a->ctrl && a->ctrl->Test()) r = true; return r; }
 static inline bool Downed(Actor* a) { bool r; unsigned char s = a->State(); r = true; if (s != 3 && s != 2) r = false; return r; }
@@ -95,26 +95,26 @@ extern "C" void Melee_ApplyHit(Self* self, Actor* target, int heavy)
 {
     int extra;
     if (self->cur != 5) return;
-    unsigned char* w = (unsigned char*)WeaponDb_Get(g_WeaponDatabase, ((Slot*)((char*)self + (self->cur << 4)))->id);
+    unsigned char* w = (unsigned char*)cWeaponDB_GetEntry(g_WeaponDatabase, ((Slot*)((char*)self + (self->cur << 4)))->id);
     unsigned char t = w[0xF0];
     if (t != 3 && t != 4 && t != 0xA) return;
     if (!g_DoKnifeDmg) return;
     if (CtrlBusy(target)) return;
     V from(self->actor->GetPos());
     V d(Sub(target->GetPos(), from));
-    void* mgr = Service_Lookup(g_Game, g_LosCheckService);
+    void* mgr = cSystemContainer_GetSystem(g_Game, g_LosCheckService);
     Hit hit;
     Query q;
-    if ((unsigned char)LosMgr_TraceBullet(mgr, &hit, &q, &from, d, 0, 0, 0, 0x58, 0, 0, 0)) return;
+    if ((unsigned char)cLosManager_cCollisionModelList_Game_PerformImmediateRayIntersectionTest(mgr, &hit, &q, &from, d, 0, 0, 0, 0x58, 0, 0, 0)) return;
     int type = w[0xF0] == 4 ? 7 : 9;
     extra = *(int*)(w + 0xF8);
     if (w[0xF0] == 4) {
         if (Downed(target)) return;
         if (target->w4C != Team()) return;
         if (((unsigned char*)target)[0x346A]) return;
-        if (CtrlBusy(self->actor) && ((unsigned char*)self->actor)[0x14] && !Actor_IsInvulnerable(target))
-            Stats_Add(Agent_GetSelected(g_Game, -1), 6, 1);
-        Global_ShockToDeath(target, 0, 1, 0.5f, 10000.0f);
+        if (CtrlBusy(self->actor) && ((unsigned char*)self->actor)[0x14] && !cHuman_IsInvulnerable(target))
+            cAgentData_AddScore(cGameSystem_GetAgentData(g_Game, -1), 6, 1);
+        cHuman_Shock(target, 0, 1, 0.5f, 10000.0f);
         return;
     }
     if (w[0xF0] == 0xA) {
@@ -133,7 +133,7 @@ extern "C" void Melee_ApplyHit(Self* self, Actor* target, int heavy)
         Normalize(&d);
         d.w = 1.0f;
         hv.f4C = 1.0f;
-        Actor_GetHitVolumes(target, &from, &d, 2, &hv);
+        cHuman_BulletBlood(target, &from, &d, 2, &hv);
     }
     target->Hurt(dmg, self->actor, kind, type, &extra, 0, 0);
 }
@@ -160,17 +160,17 @@ extern unsigned char g_IsMultiplayer;
 extern char g_OutOfAmmoMsgClass[];
 extern char D_004D91E0[];
 #if 0 /* merge_units */
-W_1CD0* WeaponDb_Get(void* db, int id);
+W_1CD0* cWeaponDB_GetEntry(void* db, int id);
 #endif /* merge_units */
-#define WeaponDb_Get(a0, a1) ((W_1CD0 *)WeaponDb_Get((a0), (a1))) /* merge_units */
+#define cWeaponDB_GetEntry(a0, a1) ((W_1CD0 *)cWeaponDB_GetEntry((a0), (a1))) /* merge_units */
 
-void Equip_SetSlot(void* eq, int a, int slot);
-void Event_Construct(Ev_1CD0* e, void* type);
-void Event_Send(Ev_1CD0* e, void* target, int a);
+void cMan_AddGun(void* eq, int a, int slot);
+void cMessage_ctor_cMessageNameR(Ev_1CD0* e, void* type);
+void QueueMessage_cMessageR_cSystemP_int(Ev_1CD0* e, void* target, int a);
 void cMessage_dtor(Ev_1CD0* e, int f);
-void WeaponInv_Cycle(S_1CD0* self, int a);
+void cWeapon_SelectNext(S_1CD0* self, int a);
 }
-extern "C" void Inventory_ReleaseItem(S_1CD0* self)
+extern "C" void cWeapon_ReloadThrow(S_1CD0* self)
 {
     self->busy = 0;
     if (self->cur == 4 || self->cur == 5) {
@@ -178,7 +178,7 @@ extern "C" void Inventory_ReleaseItem(S_1CD0* self)
         unsigned char local;
         R_1CD0* r;
         if (s->count > 0) {
-            Equip_SetSlot(self->own->equip, 0, WeaponDb_Get(g_WeaponDatabase, s->id)->slot);
+            cMan_AddGun(self->own->equip, 0, cWeaponDB_GetEntry(g_WeaponDatabase, s->id)->slot);
             return;
         }
         local = 0;
@@ -188,18 +188,18 @@ extern "C" void Inventory_ReleaseItem(S_1CD0* self)
         if (local && !g_IsMultiplayer) {
             int id = s->id;
             Ev_1CD0 e;
-            Event_Construct(&e, g_OutOfAmmoMsgClass);
+            cMessage_ctor_cMessageNameR(&e, g_OutOfAmmoMsgClass);
             e.id = id;
             e.vt = D_004D91E0;
-            Event_Send(&e, self->own->recv, 0);
+            QueueMessage_cMessageR_cSystemP_int(&e, self->own->recv, 0);
             e.vt = D_004D91E0;
             cMessage_dtor(&e, 0);
         }
         s->id = -1;
-        WeaponInv_Cycle(self, 1);
+        cWeapon_SelectNext(self, 1);
     }
 }
-#undef WeaponDb_Get /* merge_units */
+#undef cWeaponDB_GetEntry /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00141CD0(void) {}
 #pragma pop /* merge_units */

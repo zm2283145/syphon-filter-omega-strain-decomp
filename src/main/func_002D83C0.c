@@ -30,8 +30,8 @@ struct HuSelf {
     HuOwner* owner;
 };
 extern "C" {
-HuTarget* Object_LookupById(int* id);
-void WeaponInv_EquipItem(HuInv* inv, int id);
+HuTarget* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+void cWeapon_Select(HuInv* inv, int id);
 void cNetPlayer_AimWeapon(HuSelf* s, HuTarget* t);
 }
 extern "C" void cNetPlayer_NextFrame(HuSelf* s)
@@ -52,12 +52,12 @@ extern "C" void cNetPlayer_NextFrame(HuSelf* s)
         short id = s->item->Id();
         int cur = inv->CurId();
         if (cur != id)
-            WeaponInv_EquipItem(inv, id);
+            cWeapon_Select(inv, id);
     }
     if (s->ref) {
         int id = ((HuRef*)s->ref)->id;
         HuTarget* p;
-        if ((p = Object_LookupById(&id)) != 0) {
+        if ((p = nGobjManager_LookupGOBJ_cObjectIdR(&id)) != 0) {
             t = p;
             if (t->State() != 3 && t->IsActive())
                 s->Select(t, s->owner->inv->CurId(), -1);

@@ -33,7 +33,7 @@ extern int scePrintf(const char *, ...);
 extern int sceUsbKbGetInfo(KbInfo *);
 extern int sceUsbKbSync(int, int *);
 extern int AddIntcHandler(int, int (*)(int), int);
-extern int Alloc_Unlock(int);
+extern int EnableIntc(int);
 extern int vblank_e_handler(int);
 
 int sceUsbKbInit(int *max_connect)
@@ -110,7 +110,7 @@ int sceUsbKbInit(int *max_connect)
         D_0048AB18 = -1;
         return -1;
     }
-    Alloc_Unlock(3);
+    EnableIntc(3);
     return 0;
 }
 /* merge_units: end func_00222B78 */

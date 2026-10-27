@@ -1,5 +1,5 @@
 typedef struct { char *ctx; int type; char pad8[0x208]; void *data; char pad214[0]; } P310988;
-extern int Net_AllocZeroed(void **pp, unsigned long size);
+extern int rt_memory_allocate_init_zero(void **pp, unsigned long size);
 extern int RtXml_CreateParser(char **out, int flags, unsigned int size);
 extern int func_00311018(char *ctx, int v);
 extern int func_00311070(char *ctx, int v);
@@ -31,7 +31,7 @@ body:
     func_00311018(p->ctx, (int)p);
     switch (type) {
     case 0:
-        if (Net_AllocZeroed(&p->data, 4868)) {
+        if (rt_memory_allocate_init_zero(&p->data, 4868)) {
             r = 3;
             break;
         }
@@ -40,7 +40,7 @@ body:
         func_00311120(p->ctx, 0, (int)func_0030F310);
         break;
     case 8:
-        if (Net_AllocZeroed(&p->data, 4)) {
+        if (rt_memory_allocate_init_zero(&p->data, 4)) {
             r = 3;
             break;
         }
@@ -49,7 +49,7 @@ body:
         func_00311120(p->ctx, 0, (int)func_0030FD80);
         break;
     case 7:
-        if (Net_AllocZeroed(&p->data, 4)) {
+        if (rt_memory_allocate_init_zero(&p->data, 4)) {
             r = 3;
             break;
         }
@@ -58,7 +58,7 @@ body:
         func_00311120(p->ctx, 0, (int)func_0030FD80);
         break;
     case 10:
-        if (Net_AllocZeroed(&p->data, 256)) {
+        if (rt_memory_allocate_init_zero(&p->data, 256)) {
             r = 3;
             break;
         }
@@ -67,7 +67,7 @@ body:
         func_00311120(p->ctx, 0, (int)func_003104F8);
         break;
     case 11:
-        if (Net_AllocZeroed(&p->data, 6148)) {
+        if (rt_memory_allocate_init_zero(&p->data, 6148)) {
             r = 3;
             break;
         }
@@ -84,7 +84,7 @@ body:
     *out = p;
     return 0;
 init:
-    if (!Net_AllocZeroed((void **)&p, 532)) {
+    if (!rt_memory_allocate_init_zero((void **)&p, 532)) {
         e = RtXml_CreateParser(&p->ctx, 0, size);
         if (!p->ctx) {
             r = 3;

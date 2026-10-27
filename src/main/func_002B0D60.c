@@ -4,4 +4,4 @@
 
 /* Factory: allocate, run the base constructor, set the vtable. */
 extern "C" { char D_004ABE88[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_VT(GuiZeusShell_Create, 0x48, D_004ABE88, GuiWidget_ctor, D_004DDDE0)
+DEFINE_GUARDED_NEW_VT(ConcreteWidgetClassRep_GuiZeusShell_Create, 0x48, D_004ABE88, GuiWidget_ctor, D_004DDDE0)

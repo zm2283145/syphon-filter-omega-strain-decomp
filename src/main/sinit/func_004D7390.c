@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_00572188;
 
-void StaticInit_NetActivateMsgName(void) {
+void StaticInit_ActivateMsg(void) {
     D_00572188 = "MSGLIB_NET_ACTIVATE_REQUEST";
 }

@@ -27,7 +27,7 @@ struct Obj0021B830 {
     void* vtable;
 };
 
-extern "C" Obj0021B830* BlastEvent_Destruct(Obj0021B830* self, short deleteFlag)
+extern "C" Obj0021B830* cDamageCallback_dtor(Obj0021B830* self, short deleteFlag)
 {
     if (self) {
         self->vtable = D_004DAEB0;
@@ -46,7 +46,7 @@ static inline void merge_flush_func_0021B830(void) {}
 /* merge_units: begin func_0021B890 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-/* Blast_DamageCall: deliver blast damage to the target through its damage vcall */
+/* cDamageCallback_Call: deliver blast damage to the target through its damage vcall */
 struct Pt1BdTarget {
     VPAD32(a) VPAD16(b) VPAD8(c) VPAD4(d) VPAD2(e)
     virtual void TakeDamage(float amount, Pt1BdTarget* source, int kind, int type, int a, int b, void* pos);
@@ -79,7 +79,7 @@ struct Pt1BdEvent {
     char pad21[0xF];
     char pos[0x10];
 };
-extern "C" void Blast_DamageCall(Pt1BdEvent* e)
+extern "C" void cDamageCallback_Call(Pt1BdEvent* e)
 {
     if (Pt1Bd_Get(&e->target)) {
         Pt1BdTarget* src = Pt1Bd_Get2(&e->source);
@@ -107,7 +107,7 @@ struct Msg_0021B970 : ClonedMessageBase {
 extern "C" {
 char D_004A4A58[] = "gamegobj.hh";
 }
-DEFINE_MESSAGE_CLONE(cElevatorNotice_v01, Msg_0021B970, 44, D_004A4A58, 49, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cElevatorNotice_Clone, Msg_0021B970, 44, D_004A4A58, 49, CLONE_BODY)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0021B970(void) {}
 #pragma pop /* merge_units */

@@ -43,7 +43,7 @@ extern E_1A07F0** std_vector_imp_cTreeNode_cSkaSystemPtrPtr_1_begin_void(int* v)
 extern E_1A07F0** std_vector_imp_cTreeNode_cSkaSystemPtrPtr_1_end_void(int* v);
 extern void std_vector_cTreeNode_cSkaSystemPtrPtr_pointer2iterator_cTreeNodePPR(It_1A07F0* out, int* v, E_1A07F0*** p);
 static inline int Eq_1A07F0(E_1A07F0** a, E_1A07F0** b) { return a == b; }
-void ActorRelation_Clear(O_1A07F0* self)
+void cTreeNode_cSkaSystemPtr_DetachChildren(O_1A07F0* self)
 {
     It_1A07F0 b;
     It_1A07F0 e;

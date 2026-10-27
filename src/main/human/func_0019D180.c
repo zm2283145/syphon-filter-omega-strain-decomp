@@ -1,5 +1,5 @@
 #include "types.h"
-extern float Math_Atan2f(float y, float x);
-float Vec_HeadingFromYX(float* v) {
-    return Math_Atan2f(v[1], v[0]);
+extern float Libc_Atan2f(float y, float x);
+float nSFOMath_GetZRotationFromXAxis(float* v) {
+    return Libc_Atan2f(v[1], v[0]);
 }

@@ -15,11 +15,11 @@
 #include "types.h"
 #include "scriptBase_types.h"
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int value);
 
 /* push_back: inserts one value at the end. */
 int std_vector_VarDefPtr_push_back(PtrVec* v, int value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003D8C30 */
@@ -31,8 +31,8 @@ int std_vector_VarDefPtr_push_back(PtrVec* v, int value) {
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
 int Alloc_Lock(int);                                    
-int Alloc_Unlock(int);                                  
-char * Mem_Alloc(int, int, char *, int);                      
+int EnableIntc(int);                                  
+char * cMemMan_Allocate(int, int, char *, int);                      
 int cArrayCapacity_ctor(char *, int);                          
 int cScriptBase_checkInitTypes();                                  
 int std_vector_ClassDefPtr_push_back(char * , void **);                   
@@ -48,7 +48,7 @@ extern char * D_00554F28;
 
 #pragma push
 #pragma opt_common_subs off
-int Script_RegisterType(char * arg0, int arg1, signed char arg2, signed char arg3) {
+int cScriptBase_addClass(char * arg0, int arg1, signed char arg2, signed char arg3) {
     struct { int f60; int f64[2]; char * f6C; } sl;
     int temp_v0;
     char * temp_s0;
@@ -67,9 +67,9 @@ int Script_RegisterType(char * arg0, int arg1, signed char arg2, signed char arg
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    temp_s0 = Mem_Alloc(0, 0x50, &D_004BD3B0, 0x79);
+    temp_s0 = cMemMan_Allocate(0, 0x50, &D_004BD3B0, 0x79);
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     g_ProfileLockDepth -= 1;
     if (temp_s0 != NULL) {

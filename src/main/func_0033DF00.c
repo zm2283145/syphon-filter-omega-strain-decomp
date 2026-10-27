@@ -92,17 +92,17 @@ void GuiMissionList_SetSelectMode(void* list, int mode);
 int GuiMissionLobbyScreen_ButtonAction(MenuScreen* o, void* w, int v);
 void* GuiMissionList_GetAgentElemFromIndex(void* list, char* data);
 int GuiMissionList_CanSelectAgent(void* list, void* item);
-int DME_GetLobby(void);
+int cDME_GetLobby(void);
 int SFOLobby_SendChat(int lobby, char* data, int id);
-char* GuiScreen_GetLobbyString(MenuScreen* o, int a, char* b, char* c, int d, int e);
-int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
-int GuiScreen_HandleEvent(MenuScreen* o, void* w, unsigned short kind, int code, char* data);
+char* GuiLobbyScreen_GetLobbyString(MenuScreen* o, int a, char* b, char* c, int d, int e);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, char* c, void* d, int e);
+int GuiLobbyScreen_onMessage(MenuScreen* o, void* w, unsigned short kind, int code, char* data);
 }
 
 /* Menu screen event handler: tab buttons select the list mode, a list pick goes to the
  * per-mode virtual (mode 1 takes a flag, retail passes 1 in a2), lobby join / name-entry
- * events, deferred event 30; everything else goes to GuiScreen_HandleEvent. */
-extern "C" int GuiMenuScreen_HandleEvent(MenuScreen* o, void* w, unsigned short kind, int code, char* data)
+ * events, deferred event 30; everything else goes to GuiLobbyScreen_onMessage. */
+extern "C" int GuiMissionLobbyScreen_onMessage(MenuScreen* o, void* w, unsigned short kind, int code, char* data)
 {
     if (kind == 0 && o->list) {
         if (w == o->bt9C) {
@@ -141,9 +141,9 @@ extern "C" int GuiMenuScreen_HandleEvent(MenuScreen* o, void* w, unsigned short 
     if (kind == 26 || kind == 27) {
         if (code == 29) {
             if (o->lobbyId != -1 && data && *data) {
-                if (!DME_GetLobby() || !SFOLobby_SendChat(DME_GetLobby(), data, o->lobbyId)) {
+                if (!cDME_GetLobby() || !SFOLobby_SendChat(cDME_GetLobby(), data, o->lobbyId)) {
                     FrontEnd* dlg = D_004FFC04;
-                    FrontEnd_OpenPopup(dlg, 2, D_004B9C60, GuiScreen_GetLobbyString(o, 101, 0, 0, 0, 0), 0, 0);
+                    cGameFrontEnd_PushMessageBox(dlg, 2, D_004B9C60, GuiLobbyScreen_GetLobbyString(o, 101, 0, 0, 0, 0), 0, 0);
                 }
             }
             return 1;
@@ -160,5 +160,5 @@ extern "C" int GuiMenuScreen_HandleEvent(MenuScreen* o, void* w, unsigned short 
         D_00532FF0 = 1;
         return 1;
     }
-    return GuiScreen_HandleEvent(o, w, kind, code, data);
+    return GuiLobbyScreen_onMessage(o, w, kind, code, data);
 }

@@ -1,10 +1,10 @@
 #include "types.h"
 
 typedef struct { char pad[0x10]; float value; } AnimTarget;
-extern AnimTarget* Model_GetChannelData(void* curve);
+extern AnimTarget* std_vector_cSkaSliderValue_opIndex(void* curve);
 
 /* Returns the target value (+0x10) of the channel's curve at +0x88. */
-float AnimChannel_GetTarget(char* self)
+float cSkaSystem_GetSliderValue(char* self)
 {
-    return Model_GetChannelData(self + 0x88)->value;
+    return std_vector_cSkaSliderValue_opIndex(self + 0x88)->value;
 }

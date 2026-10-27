@@ -6,7 +6,7 @@ extern int isCorrFname(char *);
 extern int isCorrNameSize(char *);
 extern char *strchr(const char *, int);
 extern char *strrchr(const char *, int);
-extern char *String_Copy(char *, const char *);
+extern char *Libc_Strcpy(char *, const char *);
 extern int _sceMcFatSearchFile(int, char *, unsigned short *, int *, int *);
 extern int _SetEntryByPos(int, unsigned short *, int, int);
 extern int func_002BAD48(int);
@@ -21,8 +21,8 @@ int _sceMcFatRename(int idx, char *path, char *newname)
     if (D_00513514[idx].x == 0) return 0x8101006F;
     if (!_make_path(idx, path, name)) return 0x81010016;
     if (strchr(newname, '/')) return 0x81010016;
-    String_Copy(buf, name);
-    String_Copy(strrchr(buf, '/') + 1, newname);
+    Libc_Strcpy(buf, name);
+    Libc_Strcpy(strrchr(buf, '/') + 1, newname);
     if (!isCorrFname(path)) return 0x81010016;
     if (!isCorrFname(newname)) return 0x81010016;
     if (!isCorrNameSize(path)) return 0x8101005B;
@@ -31,7 +31,7 @@ int _sceMcFatRename(int idx, char *path, char *newname)
     if (r != 0x81010002) return r;
     r = _sceMcFatSearchFile(idx, name, st, &x, &y);
     if (r != 0x81010011) return r;
-    String_Copy((char *)st + 0x40, newname);
+    Libc_Strcpy((char *)st + 0x40, newname);
     r = _SetEntryByPos(idx, st, x, y);
     if (r) return r;
     return func_002BAD48(idx) ? 0 : 0x8101006F;

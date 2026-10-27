@@ -14,15 +14,15 @@ typedef struct H1Actor {
     char pad329C[0x3310 - 0x329C];
     H1Phys* phys;
 } H1Actor;
-extern void* Root_GetWorldPlacement(void* root);
-extern Vec4* Placement_GetPosition(void* placement);
+extern void* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void* root);
+extern Vec4* cQuatVec_Translation(void* placement);
 static inline void h1_cp(Vec4* d, const Vec4* s) { *d = *s; }
 #pragma peephole off
 #pragma opt_propagation off
 float cHuman_GetDistanceAlongLadderFromEntryPointInTermsOfNumberOfGraspableRungs(H1Actor* self) {
     H1Actor* s = self;
     if (self->phys != 0) {
-        float z = Placement_GetPosition(Root_GetWorldPlacement(s->laddRoot))->z;
+        float z = cQuatVec_Translation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(s->laddRoot))->z;
         Vec4 ref;
         h1_cp(&ref, &s->phys->ladderRef);
         return z - ref.z;
@@ -59,7 +59,7 @@ typedef struct H1Actor62A0 {
 static inline float h1_fabs(float x) { asm { abs.s x, x } return x; }
 
 /* Climb intent: slide / up / down, plus the three requested values. */
-void Ladder_Intent(H1Actor62A0* self, unsigned char* outSlide, unsigned char* outUp, unsigned char* outDown,
+void cHuman_GetLadderMotionRequests(H1Actor62A0* self, unsigned char* outSlide, unsigned char* outUp, unsigned char* outDown,
                    unsigned char* slide, unsigned char* up, unsigned char* down) {
     H1LadPhys* p = self->phys;
     unsigned char centered;
@@ -95,12 +95,12 @@ typedef struct {
 } NavDirMsg_h5;
 extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
-extern void Event_Construct(NavDirMsg_h5* msg, void* name);
-extern void Event_Send(NavDirMsg_h5* msg, void* target, int flags);
+extern void cMessage_ctor_cMessageNameR(NavDirMsg_h5* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(NavDirMsg_h5* msg, void* target, int flags);
 extern void cMessage_dtor(NavDirMsg_h5* msg, int flags);
 
 static inline float h5_fabs(float x) { float r; asm { abs.s r, x } return r; }
-int Ladder_AiNavRequest(void* actor, float* dir)
+int cHuman_TriggerGetOffLadderRequest(void* actor, float* dir)
 {
     float x = dir[0];
     signed char action = -1;
@@ -117,12 +117,12 @@ int Ladder_AiNavRequest(void* actor, float* dir)
     }
     if (action != -1) {
         NavDirMsg_h5 msg;
-        Event_Construct(&msg, g_ActorActionMsgClass);
+        cMessage_ctor_cMessageNameR(&msg, g_ActorActionMsgClass);
         msg.vtable = D_004E0840;
         msg.action = action;
         msg.b20 = 1;
         msg.b28 = 0;
-        Event_Send(&msg, actor, 1);
+        QueueMessage_cMessageR_cSystemP_int(&msg, actor, 1);
         msg.vtable = D_004E0840;
         cMessage_dtor(&msg, 0);
         return 1;

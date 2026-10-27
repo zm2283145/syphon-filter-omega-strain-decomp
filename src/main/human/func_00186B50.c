@@ -1,5 +1,5 @@
 #include "types.h"
-/* ActorHeading_RetargetLast: retarget to the last key and rescale the blend rates for a new duration */
+/* cHumanMotionParams_UpdateTargetZRotation_AfterChangeInStack_AndSetNewTransitionDuration: retarget to the last key and rescale the blend rates for a new duration */
 typedef struct Pt1HkKey { float t; float value; } Pt1HkKey;
 typedef struct Pt1HkSrc { char pad[0x10]; float value; } Pt1HkSrc;
 typedef struct Pt1HkHeading {
@@ -17,7 +17,7 @@ typedef struct Pt1HkHeading {
     int count;
     Pt1HkKey* keys;
 } Pt1HkHeading;
-void ActorHeading_RetargetLast(Pt1HkHeading* h, float duration)
+void cHumanMotionParams_UpdateTargetZRotation_AfterChangeInStack_AndSetNewTransitionDuration(Pt1HkHeading* h, float duration)
 {
     float k;
     float inv;

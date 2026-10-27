@@ -19,15 +19,15 @@
 extern int D_00506278;   /* cTank class type id */
 extern int D_00506280;   /* cTank script type */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
-extern int* cGOBJ_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int type, int parentType);
+extern int cScriptInterpreter_CallEvent(void* filter, int a0, int a1);
+extern int* cGOBJ_SOBJ_getClassId(void);
+extern void cScriptBase_declareParent(int type, int parentType);
 
 /* Registers the cTank script type under its parent type. */
-void ScriptType_cTank_Init(void) {
-    int* parent = cGOBJ_GetScriptTypeKeyPtr();
+void cTank_SOBJ_init(void) {
+    int* parent = cGOBJ_SOBJ_getClassId();
 
-    ScriptType_SetParent(D_00506280, *parent);
+    cScriptBase_declareParent(D_00506280, *parent);
 }
 
 /* Identity casts; volatile mirrors the original stack temporary. */
@@ -57,12 +57,12 @@ int* cTank_SOBJ_getClassId(void) {
     return &D_00506278;
 }
 
-int cTank_v0B(void) {
+int cTank_getSOBJClassId(void) {
     return D_00506278;
 }
 
-int cTank_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cTank_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00283740(void) {}
@@ -93,15 +93,15 @@ typedef struct NotifyMsg {
 extern int g_NetCreateTankMsgKey;
 extern int cNetCreateTankMsg_vtable;
 extern int D_004DCF10;
-extern void Event_Construct(NotifyMsg*, void*);
-extern void Event_Send(NotifyMsg*, void*, int);
+extern void cMessage_ctor_cMessageNameR(NotifyMsg*, void*);
+extern void QueueMessage_cMessageR_cSystemP_int(NotifyMsg*, void*, int);
 extern void cMessage_dtor(NotifyMsg*, int);
 
 /* Sends a notification message (kind 4) about this object to its target. */
-void cNetCreateTankMsg_Send(Obj60* o) {
+void cTank_NetCreate(Obj60* o) {
     NotifyMsg msg;
     int* idField;
-    Event_Construct(&msg, &g_NetCreateTankMsgKey);
+    cMessage_ctor_cMessageNameR(&msg, &g_NetCreateTankMsgKey);
     idField = &msg.id;
     msg.vtable = &cNetCreateTankMsg_vtable;
     *idField = -1;
@@ -109,7 +109,7 @@ void cNetCreateTankMsg_Send(Obj60* o) {
     *idField = o->id;
     msg.kind = 4;
     msg.size = 0x40;
-    Event_Send(&msg, o->target, 0);
+    QueueMessage_cMessageR_cSystemP_int(&msg, o->target, 0);
     msg.vtable = &D_004DCF10;
     cMessage_dtor(&msg, 0);
 }
@@ -129,11 +129,11 @@ extern char D_004DCF10[];
 #define D_004DCF10 ((char*)&D_004DCF10) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Event_Construct(Msg* m, void* type);
+extern void cMessage_ctor_cMessageNameR(Msg* m, void* type);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
 
-extern void cNetUpdateTankMsg_Apply(Msg* m, void* target);
+extern void cNetUpdateTankMsg_UnpackAndProcess(Msg* m, void* target);
 #if 0 /* merge_units */
 extern void cMessage_dtor(Msg* m, int flags);
 #endif /* merge_units */
@@ -143,14 +143,14 @@ extern void cMessage_dtor(Msg* m, int flags);
 void cNetUpdateTankMsg_NetReceive(void* target)
 {
     Msg msg;
-    Event_Construct(&msg, D_00506260);
+    cMessage_ctor_cMessageNameR(&msg, D_00506260);
     msg.vtable = D_004DCF50;
-    cNetUpdateTankMsg_Apply(&msg, target);
+    cNetUpdateTankMsg_UnpackAndProcess(&msg, target);
     msg.vtable = D_004DCF10;
     cMessage_dtor(&msg, 0);
 }
 #undef D_004DCF10 /* merge_units */
-#undef Event_Construct /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002838B0(void) {}

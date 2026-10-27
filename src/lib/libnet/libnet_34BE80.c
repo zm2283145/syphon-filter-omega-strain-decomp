@@ -7,7 +7,7 @@
 /* merge_units: begin func_0034BE80 */
 typedef struct { int type; int f4; int id; int mode; } NetIf_E80;
 typedef struct { int f0; int f4; int f8[6]; int f20; } NetCfg_E80;
-extern int Net_AllocZeroed(NetIf_E80 **pp, int size);
+extern int rt_memory_allocate_init_zero(NetIf_E80 **pp, int size);
 extern int libnetb_alloc_bufs(NetIf_E80 *o);
 extern int rt_memory_free(NetIf_E80 **pp);
 extern int sceInetCreate(void *cd, int *buf, void *src);
@@ -19,7 +19,7 @@ int sceBInetCreate(void *cd, int *buf, NetIf_E80 **out, NetCfg_E80 *cfg)
     if (out == 0 || cfg == 0) return -0x200;
     *out = 0;
     o = 0;
-    if (Net_AllocZeroed(&o, 0x28) != 0 || o == 0) return -0x1F5;
+    if (rt_memory_allocate_init_zero(&o, 0x28) != 0 || o == 0) return -0x1F5;
     o->type = cfg->f8[0];
     o->f4 = cfg->f20;
     if (o->type == 0) o->mode = cfg->f0;

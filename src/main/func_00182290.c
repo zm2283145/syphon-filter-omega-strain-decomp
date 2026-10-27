@@ -17,7 +17,7 @@ static inline void BoxExt2_(void* box, void* q, int off) {
 }
 #pragma push
 #pragma opt_common_subs off
-Box* Box_Union(Box* a, Box* b) {
+Box* cBox_opAddAssign(Box* a, Box* b) {
     if (b->lo.x <= b->hi.x) {
         VU0_BoxExtend(a, &b->lo);
         BoxExt2_(a, b, 0x10);

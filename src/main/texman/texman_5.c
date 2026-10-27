@@ -59,7 +59,7 @@ extern char D_00537F80[];
 extern DmaBuf* D_00537F88;
 extern int D_00539330;
 extern int D_00539340[][1024];
-long* DmaPacket_Reserve(void* q, int i, int id, int qwc, int addr, int flag);
+long* cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(void* q, int i, int id, int qwc, int addr, int flag);
 void cTexture_UploadBoth(TexEntry* e, unsigned int lo, unsigned int hi);
 }
 
@@ -115,12 +115,12 @@ extern "C" void cTexMan_EndLockedBatch(TexCache* self)
                 cTexture_UploadBoth(e, self->size, self->size + (e->info->hE + e->info->h1A) - 4);
             }
         }
-        p = DmaPacket_Reserve(D_00537F80, 2, 7, 2, 0, 0);
+        p = cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(D_00537F80, 2, 7, 2, 0, 0);
         *p++ = 0x1000000000008001;
         *p++ = 0xE;
         *p++ = 0;
         *p++ = 0x3F;
-        p = DmaPacket_Reserve(D_00537F80, 1, 1, 1, 0, 1);
+        p = cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(D_00537F80, 1, 1, 1, 0, 1);
         p[0] = 0;
         if (self->u488 || !self->u480) {
             p[1] = 0x93000000;
@@ -199,12 +199,12 @@ extern "C" void TexMan_UploadSlots(TexCache* self)
                 self->u48C += e->info->hE + e->info->h1A;
             }
         }
-        p = DmaPacket_Reserve(D_00537F80, 2, 7, 2, 0, 0);
+        p = cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(D_00537F80, 2, 7, 2, 0, 0);
         *p++ = 0x1000000000008001;
         *p++ = 0xE;
         *p++ = 0;
         *p++ = 0x3F;
-        p = DmaPacket_Reserve(D_00537F80, 1, 1, 1, 0, 1);
+        p = cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(D_00537F80, 1, 1, 1, 0, 1);
         p[0] = 0;
         if (self->u488 || !self->u480) {
             p[1] = 0x93000000;
@@ -289,12 +289,12 @@ extern "C" void cTexMan_EndBatch(TexCache* self)
                 n2--;
             }
         }
-        p = DmaPacket_Reserve(D_00537F80, 2, 7, 2, 0, 0);
+        p = cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(D_00537F80, 2, 7, 2, 0, 0);
         *p++ = 0x1000000000008001;
         *p++ = 0xE;
         *p++ = 0;
         *p++ = 0x3F;
-        p = DmaPacket_Reserve(D_00537F80, 1, 1, 1, 0, 1);
+        p = cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(D_00537F80, 1, 1, 1, 0, 1);
         p[0] = 0;
         if (self->u488 || !self->u480) {
             p[1] = 0x93000000;
@@ -327,10 +327,10 @@ typedef struct { char p0[4]; int state; E382C30** items; char pC[0x410]; int cou
 extern void std_list_deleter_int_generic_iterator_ctor_nodebaseP(N382C30** out, int it);
 extern int std_list_deleter_int_tail(void* list);
 extern N382C30* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_10(void* list, int off);
-extern void List_Erase_383560(int* out, void* list, N382C30** it);
+extern void std_list_deleter_int_erase_listdeleter(int* out, void* list, N382C30** it);
 #pragma push
 #pragma opt_common_subs off
-void TexMan_ReleaseSlot(M382C30* m, int idx)
+void cTexMan_UnlockVram(M382C30* m, int idx)
 {
     int r[1];
     N382C30* it[1];
@@ -351,7 +351,7 @@ void TexMan_ReleaseSlot(M382C30* m, int idx)
 loop:
             if (idx == n->key) {
                 it[0] = n;
-                List_Erase_383560(r, &m->count, it);
+                std_list_deleter_int_erase_listdeleter(r, &m->count, it);
             } else {
                 n = n->next;
                 std_list_deleter_int_generic_iterator_ctor_nodebaseP(end, std_list_deleter_int_tail(&m->count));
@@ -414,7 +414,7 @@ ListIter* cLListIterator_int_ctor(ListIter* dst, ListIter* src);
 ListIter* std_list_deleter_int_insert(ListIter* result, IntList* list, ListIter* pos, int* value);
 }
 
-static inline void List_End(IntList* list, ListIter* out)
+static inline void std_list_cCBDataPtr_push_back(IntList* list, ListIter* out)
 {
     ListIter tmp;
     std_list_deleter_int_end(&tmp, list);
@@ -429,14 +429,14 @@ static inline bool List_Contains(IntList* list, int value)
 
     std_list_deleter_int_generic_iterator_ctor_nodeP(&it, std_list_deleter_int_tail(list)->next);
     n = it.node;
-    while (List_End(list, &end), n != end.node) {
+    while (std_list_cCBDataPtr_push_back(list, &end), n != end.node) {
         if (value == n->value) return true;
         n = n->next;
     }
     return false;
 }
 
-static inline void List_PushFront(IntList* list, int* v)
+static inline void std_list_cCAMERA_GOBJPtr_push_front(IntList* list, int* v)
 {
     ListIter result;
     ListIter pos;
@@ -457,7 +457,7 @@ extern "C" void cTexMan_LockVram(TexCache_00382D30* self, int idx)
             self->entries[idx]->u61 = 0;
         }
         self->entries[idx]->u62 = 1;
-        List_PushFront(&self->list, &idx);
+        std_list_cCAMERA_GOBJPtr_push_front(&self->list, &idx);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

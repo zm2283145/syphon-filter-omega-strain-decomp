@@ -5,7 +5,7 @@
  */
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 int sprintf(void *, const void *, ...);
 
 /* merge_units: begin func_003488E0 */
@@ -13,14 +13,14 @@ int sprintf(void *, const void *, ...);
 #include "types.h"
 extern char D_004BA3B8[];
 extern char D_004BA338[];
-extern char* Loc_LookupText(char* key);
+extern char* nGlobalization_GetString_charP(char* key);
 char* GuiNetMessageArray_GetMessageDescription(void* self, int n)
 {
     char buf[16];
     char* t;
     if (n < 0 || (unsigned int)n >= 12) return 0;
     sprintf(buf, D_004BA3B8, n);
-    t = Loc_LookupText(buf);
+    t = nGlobalization_GetString_charP(buf);
     if (t) return t;
     return D_004BA338;
 }
@@ -83,11 +83,11 @@ public:
     char pad[0x48]; unsigned int a4C; int pad50; int a54; char pad2[0x4C]; C348A00* aA4;
 };
 extern "C" {
-extern void GuiWidget_Update(S348A00*);
+extern void GuiWidget_onAdvanceTime(S348A00*);
 extern void GuiArrayWidget_GetSelected(S348A00*, int*, unsigned int*);
-extern void GuiArrayWidget_Select(S348A00*, int, unsigned int);
-extern void LobbyArray_SetDirty(C348A00*, int);
-void GuiNetMessageArray_Update(S348A00* o);
+extern void GuiArrayWidget_SetSelected(S348A00*, int, unsigned int);
+extern void SFOLobbyList_SetUpdateFlag(C348A00*, int);
+void GuiNetMessageArray_onAdvanceTime(S348A00* o);
 }
 static inline void inl_348A00(S348A00* o)
 {
@@ -98,14 +98,14 @@ static inline void inl_348A00(S348A00* o)
     if (b >= o->a4C && o->a4C != 0) b = o->a4C - 1;
     else if (b >= o->a4C) b = 0;
     o->a54 = 100000;
-    GuiArrayWidget_Select(o, a, b);
+    GuiArrayWidget_SetSelected(o, a, b);
 }
-void GuiNetMessageArray_Update(S348A00* o)
+void GuiNetMessageArray_onAdvanceTime(S348A00* o)
 {
-    GuiWidget_Update(o);
+    GuiWidget_onAdvanceTime(o);
     if (o->aA4 && o->aA4->a18) {
         inl_348A00(o);
-        LobbyArray_SetDirty(o->aA4, 0);
+        SFOLobbyList_SetUpdateFlag(o->aA4, 0);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -121,13 +121,13 @@ static inline void merge_flush_func_00348A00(void) {}
 /* Release the owned record at +0xA0 (string member at +0x14) under the allocator guard, clear +0xA0/+0xA4. */
 extern "C" {
 void* String_Dtor(void* self, short flags);
-void GuiArrayWidget_Sleep(void* self);
+void GuiArrayWidget_onSleep(void* self);
 }
 struct O348AD0 { char pad[0xA0]; char* aA0; int aA4; };
-extern "C" void GuiNetMessageArray_Sleep(O348AD0* o)
+extern "C" void GuiNetMessageArray_onSleep(O348AD0* o)
 {
     char* p;
-    GuiArrayWidget_Sleep(o);
+    GuiArrayWidget_onSleep(o);
     p = o->aA0;
     {
         AllocGuard guard;
@@ -136,7 +136,7 @@ extern "C" void GuiNetMessageArray_Sleep(O348AD0* o)
             if (s)
                 String_Dtor(s, 0);
         }
-        Mem_Free(0, p, "GuiNetMessages.cc", 0xC1);
+        cMemMan_Deallocate(0, p, "GuiNetMessages.cc", 0xC1);
     }
     o->aA0 = 0;
     o->aA4 = 0;
@@ -160,42 +160,42 @@ public:
     B48B90* f90; char p94[0xC]; C48B90* fa0; L48B90* fa4;
 };
 extern "C" {
-extern void GuiArrayWidget_OnWake(W48B90*);
-extern void* Mem_Alloc(int, int, char*, int);
+extern void GuiArrayWidget_onWake(W48B90*);
+extern void* cMemMan_Allocate(int, int, char*, int);
 extern char D_004BA3D0[];
 extern char D_00587C20[];
-extern int Gui_GetScreenList(void);
-extern int GuiFont_Find(int, char*);
-extern C48B90* TextObj_Construct(void*, int, int, int, int, int, char*);
-extern char* DME_GetLobby(void);
+extern int Gui_Manager(void);
+extern int GuiManager_GetFont(int, char*);
+extern C48B90* cTextArea_ctor(void*, int, int, int, int, int, char*);
+extern char* cDME_GetLobby(void);
 #if 0 /* merge_units */
 extern void GuiArrayWidget_GetSelected(W48B90*, int*, unsigned int*);
 #endif /* merge_units */
 #define GuiArrayWidget_GetSelected(a0, a1, a2) (GuiArrayWidget_GetSelected((S348A00 *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void GuiArrayWidget_Select(W48B90*, int, unsigned int);
+extern void GuiArrayWidget_SetSelected(W48B90*, int, unsigned int);
 #endif /* merge_units */
-#define GuiArrayWidget_Select(a0, a1, a2) (GuiArrayWidget_Select((S348A00 *)(a0), (a1), (a2))) /* merge_units */
+#define GuiArrayWidget_SetSelected(a0, a1, a2) (GuiArrayWidget_SetSelected((S348A00 *)(a0), (a1), (a2))) /* merge_units */
 
 }
 /* List screen init: creates the callout, binds the lobby list and clamps the restored selection. */
-extern "C" void GuiNetMessageArray_Wake(W48B90* w) {
+extern "C" void GuiNetMessageArray_onWake(W48B90* w) {
     C48B90* c;
-    GuiArrayWidget_OnWake(w);
+    GuiArrayWidget_onWake(w);
     {
         AllocGuard g;
-        c = (C48B90*)Mem_Alloc(0, 0x60, D_004BA3D0, 0x89);
+        c = (C48B90*)cMemMan_Allocate(0, 0x60, D_004BA3D0, 0x89);
     }
     if (c) {
         int x = (int)w->f3c;
         int y = (int)w->f40;
-        c = TextObj_Construct(c, 0, 0, x, y, GuiFont_Find(Gui_GetScreenList(), "callout"), D_00587C20);
+        c = cTextArea_ctor(c, 0, 0, x, y, GuiManager_GetFont(Gui_Manager(), "callout"), D_00587C20);
     }
     w->fa0 = c;
     w->fa0->b12 = 1;
     w->fa0->b10 = 2;
-    if (DME_GetLobby()) w->fa4 = (L48B90*)(DME_GetLobby() + 0x1C);
+    if (cDME_GetLobby()) w->fa4 = (L48B90*)(cDME_GetLobby() + 0x1C);
     w->f54 = 0;
     if (w->fa4) w->SetCount(4, w->fa4->f4);
     {
@@ -205,7 +205,7 @@ unsigned int sel[1];
         if (sel[0] >= w->f4C && w->f4C != 0) sel[0] = w->f4C - 1;
         else if (sel[0] >= w->f4C) sel[0] = 0;
         w->f54 = 100000;
-        GuiArrayWidget_Select(w, top[0], sel[0]);
+        GuiArrayWidget_SetSelected(w, top[0], sel[0]);
     }
     if (w->f90 && w->f90->f90) {
         C48B90* x = w->f90->f90;
@@ -214,7 +214,7 @@ unsigned int sel[1];
     }
 }
 #undef GuiArrayWidget_GetSelected /* merge_units */
-#undef GuiArrayWidget_Select /* merge_units */
+#undef GuiArrayWidget_SetSelected /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00348B90(void) {}
 #pragma pop /* merge_units */

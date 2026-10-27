@@ -9,10 +9,10 @@
 
 extern void* D_004D97F0;
 extern char D_004F53E8[];
-extern ByteEvent* Event_Construct(ByteEvent*, char*);
+extern ByteEvent* cMessage_ctor_cMessageNameR(ByteEvent*, char*);
 
-ByteEvent* SoundPauseMsg_Ctor(ByteEvent* self, int value) {
-    Event_Construct(self, D_004F53E8);
+ByteEvent* cPauseMusicMsg_ctor(ByteEvent* self, int value) {
+    cMessage_ctor_cMessageNameR(self, D_004F53E8);
     self->vtable = &D_004D97F0;
     self->value = value;
     return self;

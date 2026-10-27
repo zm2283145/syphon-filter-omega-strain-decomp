@@ -45,7 +45,7 @@ typedef struct OmegaReq {
 } OmegaReq;
 
 extern int D_00532BB0;
-extern void* OmegaReqRow_Construct(OmegaReq*, int, int, int, int, int, int);
+extern void* cAgentData_tRequirementInfo_ctor(OmegaReq*, int, int, int, int, int, int);
 extern void cArray_tRequirementInfo_PushBackActual(void*, void*);
 
 /* Script: cAgentData::RegisterOmegaReq(a, b, c, d). */
@@ -59,7 +59,7 @@ int Script_cAgentData__RegisterOmegaReq(ScriptArg* args) {
     c[0] = args[2].i;
     b[0] = args[1].i;
     a[0] = args[0].i;
-    cArray_tRequirementInfo_PushBackActual(&D_00532BB0, OmegaReqRow_Construct(&req, *(int*)a, 0, 0, *(int*)b, *(int*)c, *(int*)d));
+    cArray_tRequirementInfo_PushBackActual(&D_00532BB0, cAgentData_tRequirementInfo_ctor(&req, *(int*)a, 0, 0, *(int*)b, *(int*)c, *(int*)d));
     return 0;
 }
 #pragma pop /* merge_units */

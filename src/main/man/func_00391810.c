@@ -45,7 +45,7 @@ static inline int DivTime(long n)
     return q;
 }
 
-void Lpd_Init(Lpd* s, int* data)
+void cMan_LipSyncPlay(Lpd* s, int* data)
 {
     int* p;
     int i;

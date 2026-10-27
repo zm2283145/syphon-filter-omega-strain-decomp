@@ -21,9 +21,9 @@
 
 /* Two-level destructor: restore vtables, run base destructor, optionally delete. */
 extern "C" {
-extern "C" void cAIWeaponFiredMsg_v01();
-extern "C" void cAIWeaponFiredMsg_v03();
-extern "C" void cAIGOBJMsg_v02();
+extern "C" void cAIWeaponFiredMsg_Clone();
+extern "C" void cAIWeaponFiredMsg_getSOBJClassId();
+extern "C" void cAIGOBJMsg_Pack();
 extern void * const D_004DCBF0[];
 extern char D_004DCD70[];
 void* cMessage_dtor(void* self, short deleteFlag);
@@ -41,7 +41,7 @@ extern "C" Vtable2Object* cAIWeaponFiredMsg_dtor(Vtable2Object* self, short dele
     }
     return self;
 }
-void * const D_004DCBF0[8] = { (void*)0x0, (void*)0x0, (void*)cAIWeaponFiredMsg_dtor, (void*)cAIWeaponFiredMsg_v01, (void*)cAIGOBJMsg_v02, (void*)cAIWeaponFiredMsg_v03, (void*)0x0, (void*)0x0 };
+void * const D_004DCBF0[8] = { (void*)0x0, (void*)0x0, (void*)cAIWeaponFiredMsg_dtor, (void*)cAIWeaponFiredMsg_Clone, (void*)cAIGOBJMsg_Pack, (void*)cAIWeaponFiredMsg_getSOBJClassId, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014F610(void) {}
 #pragma pop /* merge_units */
@@ -205,37 +205,37 @@ extern char g_ScriptAIDeadMsgKey[];
 extern char D_004DCCF0[];
 extern char g_NpcDeadList[];
 extern WTab_14F680 SecondaryStateTable[];
-extern void* Service_Lookup(void* a, void* b);
-extern void NpcRoute_Release(void* mgr, Actor_14F680* a);
-extern void Event_Construct(Msg_14F680* m, void* key);
-extern void Event_Send(Msg_14F680* m, void* target, int flags);
+extern void* cSystemContainer_GetSystem(void* a, void* b);
+extern void cPathSystem_ClearRequests(void* mgr, Actor_14F680* a);
+extern void cMessage_ctor_cMessageNameR(Msg_14F680* m, void* key);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg_14F680* m, void* target, int flags);
 #if 0 /* merge_units */
 extern void cMessage_dtor(Msg_14F680* m, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) ((void)cMessage_dtor((void *)(a0), (short)(a1))) /* merge_units */
 
-extern void Actor_RecordDeathStats(Actor_14F680* a, int killer, char how, int x);
-extern int WeaponInv_IsFullAuto(int inv);
-extern void WeaponInv_RandomizeDroppedAmmo(int inv);
-extern void NpcPerception_Clear(Perc_14F680* p);
-extern void NpcThinkList_RemoveActor(Actor_14F680* a);
-extern void NpcAi_AddToDeadList(void* list, Npc_14F680** npc);
+extern void cHuman_UpdateStats(Actor_14F680* a, int killer, char how, int x);
+extern int cWeapon_IsFullyAutomatic(int inv);
+extern void cWeapon_SetAmmoNpcDeath(int inv);
+extern void cAITarget_dtor(Perc_14F680* p);
+extern void cNPC_RemoveFromActiveList(Actor_14F680* a);
+extern void std_list_cNPCPtr_push_back(void* list, Npc_14F680** npc);
 
 }
 
 static inline WTab_14F680* WT_14F680(int i) { return &SecondaryStateTable[i]; }
 static inline bool Can_14F680(Wpn_14F680* w) { if (!w) return false; return WT_14F680(w->a)->ok && WT_14F680(w->b)->ok; }
-extern "C" void cNPC_v1D(Npc_14F680* self, int unused, int killer, int x, char how)
+extern "C" void cNPC_NoticeDeath(Npc_14F680* self, int unused, int killer, int x, char how)
 {
     Actor_14F680* a = self->actor;
     if (a) {
         Msg_14F680 msg;
         bool ok;
         {
-            void* mgr = Service_Lookup(g_Game, g_NpcRouteMgr);
-            NpcRoute_Release(mgr, self->actor);
+            void* mgr = cSystemContainer_GetSystem(g_Game, g_NpcRouteMgr);
+            cPathSystem_ClearRequests(mgr, self->actor);
         }
-        Event_Construct(&msg, g_ScriptAIDeadMsgKey);
+        cMessage_ctor_cMessageNameR(&msg, g_ScriptAIDeadMsgKey);
         msg.vtable = D_004DCCF0;
         msg.killer = killer;
         msg.how = how;
@@ -244,25 +244,25 @@ extern "C" void cNPC_v1D(Npc_14F680* self, int unused, int killer, int x, char h
             *k = 2;
             *k = 2;
         }
-        Event_Send(&msg, self->actor, 0);
-        Actor_RecordDeathStats(a, killer, how, x);
+        QueueMessage_cMessageR_cSystemP_int(&msg, self->actor, 0);
+        cHuman_UpdateStats(a, killer, how, x);
         if (self->hp > 0 && self->t84 <= 0.0f) {
             Bits_14F680* b = &self->perc->bits;
             ok = b->b0 && b->b2;
-            if (ok && WeaponInv_IsFullAuto(a->inv)) {
+            if (ok && cWeapon_IsFullyAutomatic(a->inv)) {
                 ok = Can_14F680(a->weapon);
                 if (ok) ((VNpc_14F680*)self)->s100(self->hp, -1, 0.0f);
             }
         }
-        WeaponInv_RandomizeDroppedAmmo(a->inv);
-        NpcPerception_Clear(self->perc);
+        cWeapon_SetAmmoNpcDeath(a->inv);
+        cAITarget_dtor(self->perc);
         ok = a->f2D && a->f2C && !a->f2E && a->f3468;
         if (!ok) {
             Actor_14F680* b;
-            NpcThinkList_RemoveActor(self->actor);
+            cNPC_RemoveFromActiveList(self->actor);
             b = self->actor;
             ok = b->f2D && b->f2C && !b->f2E;
-            if (ok) NpcAi_AddToDeadList(g_NpcDeadList, &self);
+            if (ok) std_list_cNPCPtr_push_back(g_NpcDeadList, &self);
         }
         msg.vtable = D_004DCCF0;
         cMessage_dtor(&msg, 0);

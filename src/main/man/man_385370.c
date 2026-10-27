@@ -29,7 +29,7 @@ typedef struct {
     char pad[0x2C04 - 0x2460 - 0x10 * 0x50];
     Skel_385420* skel;
 } Actor_385420;
-void ActorRender_GetAttachPoint(Actor_385420* a, Mtx_385420* out, int i); /* gsynth: defined below */
+void cMan_GetGunMatrix_WithoutFlippingAxes(Actor_385420* a, Mtx_385420* out, int i); /* gsynth: defined below */
 #pragma cplusplus on
 #pragma inline_depth(8)
 static inline void Q5370(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
@@ -47,18 +47,18 @@ struct M {
 struct Muzzle { char pad[0x130]; V off; };
 struct Weapon { char pad[0x2410]; Muzzle* muzzle[4]; };
 #if 0 /* merge_units */
-extern "C" void ActorRender_GetAttachPoint(Weapon* a, M* out, int i);
+extern "C" void cMan_GetGunMatrix_WithoutFlippingAxes(Weapon* a, M* out, int i);
 #endif /* merge_units */
-#define ActorRender_GetAttachPoint(a0, a1, a2) (ActorRender_GetAttachPoint((Actor_385420 *)(a0), (Mtx_385420 *)(a1), (a2))) /* merge_units */
+#define cMan_GetGunMatrix_WithoutFlippingAxes(a0, a1, a2) (cMan_GetGunMatrix_WithoutFlippingAxes((Actor_385420 *)(a0), (Mtx_385420 *)(a1), (a2))) /* merge_units */
 
-extern "C" void Weapon_AddMuzzleOffset(Weapon* w, M* m, int i)
+extern "C" void cMan_GetGunBarrelMatrix_WithoutFlippingAxes(Weapon* w, M* m, int i)
 {
-    ActorRender_GetAttachPoint(w, m, i);
+    cMan_GetGunMatrix_WithoutFlippingAxes(w, m, i);
     if (w->muzzle[i]) {
         m->Translate(m->Rotated(w->muzzle[i]->off));
     }
 }
-#undef ActorRender_GetAttachPoint /* merge_units */
+#undef cMan_GetGunMatrix_WithoutFlippingAxes /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00385370(void) {}
 #pragma pop /* merge_units */
@@ -66,16 +66,16 @@ static inline void merge_flush_func_00385370(void) {}
 
 /* merge_units: begin func_00385420 */
 #pragma push /* merge_units */
-extern void* Skeleton_NodeAt(void*, int);
+extern void* cArray_cBone_opIndex_int(void*, int);
 extern void* cBone_Xform(void*);
-extern Mtx_385420* Transform_GetUpdated(void*);
-extern void Actor_ShotFrameNodeWorld(Mtx_385420*, Mtx_385420*, Mtx_385420*);
-extern void Mtx_Copy(Mtx_385420*, Mtx_385420*);
+extern Mtx_385420* cXform_GetMatrix(void*);
+extern void cMatrix_GetTransformed(Mtx_385420*, Mtx_385420*, Mtx_385420*);
+extern void cMatrix_ctor_cMatrixR(Mtx_385420*, Mtx_385420*);
 
 /* Indexing through an unsized-array view emits idx*0x50 + base (retail addu order). */
 #define ATT(a, i) (*(Attach_385420(*)[])(a)->attach)[i]
 
-void ActorRender_GetAttachPoint(Actor_385420* a, Mtx_385420* out, int i)
+void cMan_GetGunMatrix_WithoutFlippingAxes(Actor_385420* a, Mtx_385420* out, int i)
 {
     Mtx_385420 node;
     Mtx_385420 m;
@@ -88,10 +88,10 @@ void ActorRender_GetAttachPoint(Actor_385420* a, Mtx_385420* out, int i)
     Mtx_385420* pn;
 
     if (s->flag14) {
-        Mtx_385420* t = Transform_GetUpdated(cBone_Xform(Skeleton_NodeAt(s->nodes, n)));
-        Actor_ShotFrameNodeWorld(&node, t, Transform_GetUpdated(s->xform));
+        Mtx_385420* t = cXform_GetMatrix(cBone_Xform(cArray_cBone_opIndex_int(s->nodes, n)));
+        cMatrix_GetTransformed(&node, t, cXform_GetMatrix(s->xform));
     } else {
-        Mtx_Copy(&node, Transform_GetUpdated(s->xform));
+        cMatrix_ctor_cMatrixR(&node, cXform_GetMatrix(s->xform));
     }
     d = &m.r[3];
     pm = &m;

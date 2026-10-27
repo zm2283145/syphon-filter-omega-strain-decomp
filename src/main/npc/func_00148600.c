@@ -4,7 +4,7 @@
 #include "vslot_pad.h"
 
 /* Global_ResetNpc: rebuild the global's NPC in place (unless it refuses): save its name, label,
- * health, weapon pair, id, team tag and world matrix, destroy it, then run Actor_Construct2 on
+ * health, weapon pair, id, team tag and world matrix, destroy it, then run cHuman_ctor_cMatrix_int_charP_int_etc_2 on
  * the same storage with the saved values. */
 
 struct M4u {
@@ -16,7 +16,7 @@ struct M4u {
         __int128 a;
         __int128 b;
         const M4u* ps = &s;
-        /* 128-bit two-register lq/sq copy idiom (Coop_CreatePartnerActor.c) */
+        /* 128-bit two-register lq/sq copy idiom (netCreatePlayer_HandleNetPlayerCreate.c) */
         __asm__ volatile("lq %0, 0x0(%2); lq %1, 0x10(%2); sq %0, 0x0(%3); lq %0, 0x20(%2); sq %1, 0x10(%3); lq %1, 0x30(%2); sq %0, 0x20(%3); sq %1, 0x30(%3)" : "=&r"(a), "=&r"(b) : "r"(ps), "r"(pd) : "memory");
     }
 };
@@ -61,11 +61,11 @@ public:
 
 extern "C" {
 extern char D_0049B670[];
-void String_Copy(char* d, const char* s);
+void Libc_Strcpy(char* d, const char* s);
 int strlen(const char* s);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void Mem_Free(int pool, void* p, char* file, int line);
-void* Actor_Construct2(void* self, M4u m, int x, char* name, int health, WPair* weap, unsigned char type, char* label, int* idp, int flag, int tag, void* src);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+void* cHuman_ctor_cMatrix_int_charP_int_etc_2(void* self, M4u m, int x, char* name, int health, WPair* weap, unsigned char type, char* label, int* idp, int flag, int tag, void* src);
 void Global_ResetNpc(GlobalObj* g);
 }
 
@@ -83,7 +83,7 @@ void Global_ResetNpc(GlobalObj* g)
     if (g->npc->IsLocked()) return;
     n = g->npc;
     label = 0;
-    String_Copy(name, n->name);
+    Libc_Strcpy(name, n->name);
     health = n->health;
     id = g->npc->id;
     weap = n->weap;
@@ -92,9 +92,9 @@ void Global_ResetNpc(GlobalObj* g)
     if (len) {
         {
             AllocGuard ag;
-            label = (char*)Mem_Alloc(0, len + 1, D_0049B670, 0x1F02);
+            label = (char*)cMemMan_Allocate(0, len + 1, D_0049B670, 0x1F02);
         }
-        String_Copy(label, n->label);
+        Libc_Strcpy(label, n->label);
     }
     {
         XformObj* xo = &n->xform;
@@ -102,10 +102,10 @@ void Global_ResetNpc(GlobalObj* g)
         g->Reset();
         tag = n->tag;
         n->Destroy(-1);
-        if (n) Actor_Construct2(n, m, x, name, health, &weap, 2, label, &id, 0, tag, 0);
+        if (n) cHuman_ctor_cMatrix_int_charP_int_etc_2(n, m, x, name, health, &weap, 2, label, &id, 0, tag, 0);
     }
     if (label) {
         AllocGuard ag;
-        Mem_Free(0, label, D_0049B670, 0x1F13);
+        cMemMan_Deallocate(0, label, D_0049B670, 0x1F13);
     }
 }

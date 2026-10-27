@@ -38,7 +38,7 @@ int SegmentIntersectsSphere(V4 *, V4 *, V4 *, float);
 static inline Iter Begin() { return std_list_cAreaEffectPtr_generic_iterator_ctor(D_004F8040, func_002596D0(D_004F8040)); }
 static inline Iter End() { return std_list_cAreaEffectPtr_generic_iterator_ctor(D_004F8040, func_002596A0(D_004F8040)); }
 #pragma opt_rotateloops off
-extern "C" Smoke *SmokeVolumes_BlockSight(V4 *a, V4 *b)
+extern "C" Smoke *cAreaEffect_LOS_Obscured(V4 *a, V4 *b)
 {
     Iter it, end;
     it = Begin();

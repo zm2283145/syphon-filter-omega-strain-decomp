@@ -24,7 +24,7 @@
 
 
 extern "C" {
-char * Mem_Alloc(int, int, char *, int);                      
+char * cMemMan_Allocate(int, int, char *, int);                      
 int cArrayCapacity_Int(int *);                           
 int std_vector_VarDefPtr_reserve(char * , int);                       
 int std_vector_VarDefPtr_ctor(char * );                            
@@ -56,7 +56,7 @@ extern "C" void cScriptBase_checkInitTypes(void) {
         D_00554F10 = 1;
         {
             AllocGuard g;
-        temp_s0 = Mem_Alloc(0, 0x10, &D_004BD3B0, 0xDE);
+        temp_s0 = cMemMan_Allocate(0, 0x10, &D_004BD3B0, 0xDE);
         }
         if (temp_s0 != NULL) {
             sp3C = 0x100;
@@ -67,7 +67,7 @@ extern "C" void cScriptBase_checkInitTypes(void) {
         D_00554F28 = temp_s0;
         {
             AllocGuard g;
-        temp_s0_2 = Mem_Alloc(0, 0x10, &D_004BD3B0, 0xDF);
+        temp_s0_2 = cMemMan_Allocate(0, 0x10, &D_004BD3B0, 0xDF);
         }
         if (temp_s0_2 != NULL) {
             sp38 = 0x80;
@@ -78,7 +78,7 @@ extern "C" void cScriptBase_checkInitTypes(void) {
         D_00554F30 = temp_s0_2;
         {
             AllocGuard g;
-        temp_s0_3 = Mem_Alloc(0, 0x10, &D_004BD3B0, 0xE0);
+        temp_s0_3 = cMemMan_Allocate(0, 0x10, &D_004BD3B0, 0xE0);
         }
         if (temp_s0_3 != NULL) {
             sp34 = 0x800;
@@ -89,7 +89,7 @@ extern "C" void cScriptBase_checkInitTypes(void) {
         D_00554F20 = temp_s0_3;
         {
             AllocGuard g;
-        temp_s0_4 = Mem_Alloc(0, 0x10, &D_004BD3B0, 0xE1);
+        temp_s0_4 = cMemMan_Allocate(0, 0x10, &D_004BD3B0, 0xE1);
         }
         if (temp_s0_4 != NULL) {
             sp30 = 0x400;

@@ -43,12 +43,12 @@ extern int D_005721A8;
 extern int D_00494178;
 extern char D_00582770[];
 extern char D_00572198[];
-extern "C" void Message_GetScriptTypeKey();
-extern "C" void cNetTransferMsg_v01();
-extern "C" void cNetTransferMsg_v02();
+extern "C" void cMessage_getSOBJClassId();
+extern "C" void cNetTransferMsg_Clone();
+extern "C" void cNetTransferMsg_Pack();
 extern void * const D_004E0F20[];
 extern char D_004E0E80[];
-void ObjMap_Find_42EDF0(TransferObjectIterator* result, RbTree* tree, const GobjId* id);
+void std_tree_pair_int_value_compare_find_intR_3(TransferObjectIterator* result, RbTree* tree, const GobjId* id);
 void std_map_int_tNetObjectPtr_end(TransferObjectIterator* result, RbTree* tree);
 TransferObjectIterator* cAssocArray_int_tNetObjectPtr_Iterator_ctor(TransferObjectIterator* result,
                                     const TransferObjectIterator* source);
@@ -57,15 +57,15 @@ void cNPCInfoObject_dtor(int* shared, short flags);
 int cNPCInfoObject_GetOwner_cObjectIdR(int* shared, const GobjId* id);
 int cNPCInfoObject_GetPrevOwner(int* shared, const GobjId* id);
 void cNPCInfoObject_SetOwner_cObjectIdR_int(int* shared, const GobjId* id, int peer);
-int NetGame_InitLocalSlot(int* id, int session);
-int PlayerSlots_Get(int peer);
-void Event_Construct(void* notice, const void* descriptor);
+int NetGetMyClientIndex(int* id, int session);
+int cNetObj_GetPlayer(int peer);
+void cMessage_ctor_cMessageNameR(void* notice, const void* descriptor);
 void cMessage_dtor(void* notice, int flags);
-int Transport_Send(unsigned int id, const void* notice, int flags, int peer);
+int cNetObj_SendMessage_int_cMessageR_int_int(unsigned int id, const void* notice, int flags, int peer);
 void NetObjectMgr_AddTransferTimer(const GobjId* id);
 void cNetObjectMgr_TransferRequest(const GobjId* id, int peer);
 void cDeactivateMsg_SendDeactivated(TransferReleaseNotice* notice, unsigned int id, int peer);
-void NetObjectMgr_Remove(cGOBJ* object);
+void cNetObjectMgr_RemoveFromTerrainActivation(cGOBJ* object);
 void operator_delete(void* allocation);
 }
 
@@ -79,7 +79,7 @@ static inline int current_peer(void)
     int session = D_005721A8;
     if (g_IsMultiplayer) {
         if (D_00494178 == -1)
-            NetGame_InitLocalSlot(&D_00494178, session);
+            NetGetMyClientIndex(&D_00494178, session);
         return D_00494178;
     }
     return 0;
@@ -93,12 +93,12 @@ static inline int is_host(void)
 static inline void request_transfer(cGOBJ* object, int peer, int owner)
 {
     TransferRequestNotice notice;
-    Event_Construct(&notice, D_00582770);
+    cMessage_ctor_cMessageNameR(&notice, D_00582770);
     notice.vtable = ((char*)D_004E0F20);
     notice.id.word = object_id(object)->word;
     notice.peer = peer;
     notice.flags = 0x40;
-    Transport_Send(object_id(object)->word, &notice, 0, owner);
+    cNetObj_SendMessage_int_cMessageR_int_int(object_id(object)->word, &notice, 0, owner);
     NetObjectMgr_AddTransferTimer(object_id(object));
     notice.vtable = ((char*)D_004E0F20);
     cMessage_dtor(&notice, 0);
@@ -107,7 +107,7 @@ static inline void request_transfer(cGOBJ* object, int peer, int owner)
 static inline void request_release(cGOBJ* object, int peer)
 {
     TransferReleaseNotice notice;
-    Event_Construct(&notice, D_00572198);
+    cMessage_ctor_cMessageNameR(&notice, D_00572198);
     notice.vtable = D_004E0E80;
     cDeactivateMsg_SendDeactivated(&notice, object_id(object)->word, peer);
     notice.vtable = D_004E0E80;
@@ -123,7 +123,7 @@ extern "C" void cNetObjectMgr_AddDeactivate(cGOBJ* object, int previousPeer, int
     TransferObjectIterator found;
     TransferObjectIterator rawEnd;
     key.word = object_id(object)->word;
-    ObjMap_Find_42EDF0(&found, &D_005826A0, &key);
+    std_tree_pair_int_value_compare_find_intR_3(&found, &D_005826A0, &key);
     TransferObjectNode* node = found.node;
     cNPCInfoObject_ctor(&shared);
     std_map_int_tNetObjectPtr_end(&rawEnd, &D_005826A0);
@@ -147,10 +147,10 @@ extern "C" void cNetObjectMgr_AddDeactivate(cGOBJ* object, int previousPeer, int
                     else
                         ((TransferOwnerControllerMethods*)object->attached)->release_transfer();
                 }
-                NetObjectMgr_Remove(object);
+                cNetObjectMgr_RemoveFromTerrainActivation(object);
             }
         } else if (owner < 0) {
-            if (previousOwner >= 0 && PlayerSlots_Get(previousOwner)) {
+            if (previousOwner >= 0 && cNetObj_GetPlayer(previousOwner)) {
                 cNPCInfoObject_SetOwner_cObjectIdR_int(&shared, object_id(object), nextPeer);
                 if (previousOwner != current_peer())
                     request_transfer(object, nextPeer, previousOwner);
@@ -182,6 +182,6 @@ extern "C" TransferRequestNotice* cNetTransferMsg_dtor(TransferRequestNotice* no
     }
     return notice;
 }
-void * const D_004E0F20[8] = { (void*)0x0, (void*)0x0, (void*)cNetTransferMsg_dtor, (void*)cNetTransferMsg_v01, (void*)cNetTransferMsg_v02, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+void * const D_004E0F20[8] = { (void*)0x0, (void*)0x0, (void*)cNetTransferMsg_dtor, (void*)cNetTransferMsg_Clone, (void*)cNetTransferMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_0042DA30 */

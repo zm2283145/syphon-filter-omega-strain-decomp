@@ -40,8 +40,8 @@ DEFINE_TRIVIAL_DTOR(cStatesWithHistory_1_dtor)
 #pragma cplusplus on
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-extern "C" void AngleCurve_PreUpdate();
-extern "C" void AngleCurve_UpdateRate();
+extern "C" void cSplinedMotion_Angle_UpdateSplinePoints();
+extern "C" void cSplinedMotion_Angle_UpdateVelocity();
 extern "C" void cSplinedMotion_Angle_TeleportByDelta();
 extern "C" void cSplinedMotion_Angle_InitPos();
 extern "C" void cSplinedMotion_Angle_ZeroVel();
@@ -60,7 +60,7 @@ extern "C" VtableChainObject* cSplinedMotion_Angle_dtor(VtableChainObject* self,
     }
     return self;
 }
-void * const D_004DA7D0[12] = { (void*)0x0, (void*)0x0, (void*)cSplinedMotion_Angle_dtor, (void*)cSplinedMotion_Angle_TeleportByDelta, (void*)cSplinedMotion_Angle_InitPos, (void*)cSplinedMotion_Angle_ZeroVel, (void*)AngleCurve_PreUpdate, (void*)cSplinedMotion_Angle_FixUpResultOfSplineEvaluation, (void*)AngleCurve_UpdateRate, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004DA7D0[12] = { (void*)0x0, (void*)0x0, (void*)cSplinedMotion_Angle_dtor, (void*)cSplinedMotion_Angle_TeleportByDelta, (void*)cSplinedMotion_Angle_InitPos, (void*)cSplinedMotion_Angle_ZeroVel, (void*)cSplinedMotion_Angle_UpdateSplinePoints, (void*)cSplinedMotion_Angle_FixUpResultOfSplineEvaluation, (void*)cSplinedMotion_Angle_UpdateVelocity, (void*)0x0, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001B5E70(void) {}
 #pragma pop /* merge_units */
@@ -114,7 +114,7 @@ DEFINE_TRIVIAL_DTOR(cAimComponentList_dtor)
 
 /* merge_units: begin func_001B5FE0 */
 #pragma push /* merge_units */
-/* Npc_Initialize (0x001B5FE0), mw38 MATCH.
+/* cHuman_InitHuman (0x001B5FE0), mw38 MATCH.
  * Keys: AllocGuard (alloc_guard.h) in the Alloc inline supplies the 3 extra 4-byte stack slots;
  * the Mtx copy is an explicit lq/sq asm block (asm in the function also keeps the null-handle
  * Clear() unfolded = retail b + dead 'li 0xC'); LocalId as 'r = 0; if (net) {...; return id;} return r;';
@@ -234,42 +234,42 @@ void Alloc_Lock(int);
 #define Alloc_Lock(a0) (Alloc_Lock((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void Alloc_Unlock(int);
+void EnableIntc(int);
 #endif /* merge_units */
-#define Alloc_Unlock(a0) (Alloc_Unlock((a0))) /* merge_units */
+#define EnableIntc(a0) (EnableIntc((a0))) /* merge_units */
 
-void* Mem_Alloc(int, int, char*, int);
-void ItemList_Init(void*);
-void* Flashlight_Construct(void*, Act*);
-void Resource_Construct(Hog*);
-void FileMan_Release(Hog*, int);
-void Actor_SetHealth(Act*, int, int);
-void NetGame_InitLocalSlot(int*, int);
-Skl* SklRegistry_Find(char*, char*);
-int Archive_Open(char*, char*, int, int);
-void Hog_Register(Hog*, char*, int, int);
-int FileMan_FindMember(Hog*);
-int FileMan_GetSize(Hog*);
-void Skeleton_BuildInFrame(Skl*, Hog*, int);
-void WeaponInv_Add(void*, int, int, int, int, int);
-void WeaponInv_EquipFirst(void*);
-void Actor_InitComponents(Act*, unsigned char, int, void*);
+void* cMemMan_Allocate(int, int, char*, int);
+void cArray_tItem_ctor(void*);
+void* cFlashlight_ctor(void*, Act*);
+void cFileMan_ctor_void(Hog*);
+void cFileMan_dtor(Hog*, int);
+void cGOBJ_SetHitpoints(Act*, int, int);
+void NetGetMyClientIndex(int*, int);
+Skl* SKLHog_FindSKL(char*, char*);
+int cHogList_Open(char*, char*, int, int);
+void cFileMan_EncodeFilename_charP_cHogFileR_bool(Hog*, char*, int, int);
+int cFileMan_Open(Hog*);
+int cFileMan_GetSize(Hog*);
+void SKL_ReadSKL(Skl*, Hog*, int);
+void cWeapon_Add(void*, int, int, int, int, int);
+void cWeapon_DrawWeapon_void(void*);
+void cHuman_CreateGobjController(Act*, unsigned char, int, void*);
 void cNPCInfoObject_ctor(int*);
 void cNPCInfoObject_Add(int*, int*, int);
 void cNPCInfoObject_SetOwner_cObjectIdR_int(int*, int*, int);
 void cNPCInfoObject_dtor(int*, int);
-int Agent_GetSelected(char*, int);
-int AgentData_HasUnlock(int, int);
+int cGameSystem_GetAgentData(char*, int);
+int cAgentData_HasSpecialBonus(int, int);
 }
 struct HogH {
     Hog h;
-    HogH() { Resource_Construct(&h); }
-    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~HogH() { FileMan_Release(&h, -1); }
+    HogH() { cFileMan_ctor_void(&h); }
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~HogH() { cFileMan_dtor(&h, -1); }
 };
 static inline void* Alloc(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_0049D8D0, line);
+    return cMemMan_Allocate(0, size, D_0049D8D0, line);
 }
 static inline int LocalId()
 {
@@ -277,7 +277,7 @@ static inline int LocalId()
     int r = 0;
     if (g_IsMultiplayer) {
         if (D_00494178 == -1)
-            NetGame_InitLocalSlot(&D_00494178, a);
+            NetGetMyClientIndex(&D_00494178, a);
         return D_00494178;
     }
     return r;
@@ -288,7 +288,7 @@ static inline int LocalId2()
     int r = 0;
     if (g_IsMultiplayer) {
         if (D_00494178 == -1)
-            NetGame_InitLocalSlot(&D_00494178, a);
+            NetGetMyClientIndex(&D_00494178, a);
         r = D_00494178;
     }
     return r;
@@ -299,7 +299,7 @@ static inline bool On(Act* a)
     if (a->p58 && a->p58->IsOn()) on = 1;
     return on;
 }
-extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int maxh, int* weap, int s2, unsigned char type, char* label)
+extern "C" bool cHuman_InitHuman(Act* a, Mtx* mtx, char* name, int health, int maxh, int* weap, int s2, unsigned char type, char* label)
 {
     Desc* desc = D_004FFBD8;
     char path[0x80];
@@ -311,7 +311,7 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
     {
         ItemList* l = (ItemList*)Alloc(0x14, 0x31A);
         if (l) {
-            ItemList_Init(l);
+            cArray_tItem_ctor(l);
             l->owner = a;
         }
         a->x3528 = l;
@@ -319,7 +319,7 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
     a->b326B = 0;
     if (type == 1 || type == 3) {
         void* f = Alloc(0x1C, 0x31E);
-        if (f) f = Flashlight_Construct(f, a);
+        if (f) f = cFlashlight_ctor(f, a);
         a->x33EC = f;
     } else {
         a->x33EC = 0;
@@ -351,14 +351,14 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
     }
     sprintf(path, D_0049E8F0, D_0048B2F8, 1);
     a->x3398 = health;
-    Actor_SetHealth(a, health, 0);
+    cGOBJ_SetHitpoints(a, health, 0);
     a->x339C = maxh;
     a->x33A0 = maxh;
     {
         int len = label ? strlen(label) : 0;
         if (len) {
             a->x3264 = (char*)Alloc(len + 1, 0x33F);
-            String_Copy(a->x3264, label);
+            Libc_Strcpy(a->x3264, label);
         } else {
             a->x3264 = 0;
         }
@@ -375,28 +375,28 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
             } else {
                 strncpy(a->x3318, name, 0x80);
             }
-            sk = SklRegistry_Find(&D_0055D4F8, a->x3318);
+            sk = SKLHog_FindSKL(&D_0055D4F8, a->x3318);
             if (!sk) {
-                Hog_Register(&hog.h, a->x3318, Archive_Open(&D_004FFB8C, path, 0, 0), 0);
-                if ((unsigned char)FileMan_FindMember(&hog.h)) {
+                cFileMan_EncodeFilename_charP_cHogFileR_bool(&hog.h, a->x3318, cHogList_Open(&D_004FFB8C, path, 0, 0), 0);
+                if ((unsigned char)cFileMan_Open(&hog.h)) {
                     char err[0x40];
                     sprintf(err, D_0049E940, name);
                     return 0;
                 }
-                Skeleton_BuildInFrame(&skl, &hog.h, FileMan_GetSize(&hog.h));
+                SKL_ReadSKL(&skl, &hog.h, cFileMan_GetSize(&hog.h));
                 sk = &skl;
             }
         } else {
             strncpy(a->x3318, name, 0x80);
-            sk = SklRegistry_Find(&D_0055D4F8, name);
+            sk = SKLHog_FindSKL(&D_0055D4F8, name);
             if (!sk) {
-                Hog_Register(&hog.h, name, Archive_Open(&D_004FFB8C, path, 0, 0), 0);
-                if ((unsigned char)FileMan_FindMember(&hog.h)) {
+                cFileMan_EncodeFilename_charP_cHogFileR_bool(&hog.h, name, cHogList_Open(&D_004FFB8C, path, 0, 0), 0);
+                if ((unsigned char)cFileMan_Open(&hog.h)) {
                     char err[0x40];
                     sprintf(err, D_0049E940, name);
                     return 0;
                 }
-                Skeleton_BuildInFrame(&skl, &hog.h, FileMan_GetSize(&hog.h));
+                SKL_ReadSKL(&skl, &hog.h, cFileMan_GetSize(&hog.h));
                 sk = &skl;
             }
         }
@@ -416,20 +416,20 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
             if (weap[i] != -1) {
                 if (g_IsMultiplayer) {
                     if (!s2)
-                        WeaponInv_Add(a->x3524, weap[i], 1, 0, 0, 0);
+                        cWeapon_Add(a->x3524, weap[i], 1, 0, 0, 0);
                     else
-                        WeaponInv_Add(a->x3524, weap[i], 1, 0, 0, 1);
+                        cWeapon_Add(a->x3524, weap[i], 1, 0, 0, 1);
                 } else {
-                    WeaponInv_Add(a->x3524, weap[i], 1, 0, 0, 0);
+                    cWeapon_Add(a->x3524, weap[i], 1, 0, 0, 0);
                 }
             }
         }
     }
-    WeaponInv_EquipFirst(a->x3524);
+    cWeapon_DrawWeapon_void(a->x3524);
     if (!g_IsMultiplayer) {
-        Actor_InitComponents(a, type, s2, 0);
+        cHuman_CreateGobjController(a, type, s2, 0);
     } else {
-        if (type != 4) Actor_InitComponents(a, type, s2, 0);
+        if (type != 4) cHuman_CreateGobjController(a, type, s2, 0);
         if (type != 4 && type != 3 && !s2) {
             int loc;
             cNPCInfoObject_ctor(&loc);
@@ -454,18 +454,18 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
             int x = p != 0;
             if (x) x = (unsigned char)p->IsOn();
             x = (unsigned char)x;
-            ag = x ? Agent_GetSelected(&g_Game, idx) : 0;
+            ag = x ? cGameSystem_GetAgentData(&g_Game, idx) : 0;
         }
         if (ag) {
-            if (AgentData_HasUnlock(ag, 3)) {
+            if (cAgentData_HasSpecialBonus(ag, 3)) {
                 int v = (int)((float)a->x33A0 * D_0048A1C8);
                 a->x339C = v;
                 a->x33A0 = v;
             }
-            if (AgentData_HasUnlock(ag, 4)) {
+            if (cAgentData_HasSpecialBonus(ag, 4)) {
                 int h = (int)(a->x40 * D_0048A1D0);
                 a->x3398 = h;
-                Actor_SetHealth(a, h, 0);
+                cGOBJ_SetHitpoints(a, h, 0);
             }
         }
     }
@@ -475,7 +475,7 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
     return 1;
 }
 #undef Alloc_Lock /* merge_units */
-#undef Alloc_Unlock /* merge_units */
+#undef EnableIntc /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001B5FE0(void) {}
 #pragma pop /* merge_units */

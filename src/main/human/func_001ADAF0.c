@@ -12,7 +12,7 @@ typedef struct WeakRef {
 } WeakRef;
 
 /* Returns the referenced object, or 0 if it was replaced (serial mismatch). */
-Target* WeakRef_Get(WeakRef* ref) {
+Target* cSafePtr_cHuman_GetPtr(WeakRef* ref) {
     Target* obj = ref->obj;
     unsigned char valid = 1;
     if (!((obj != 0) ^ 1)) {

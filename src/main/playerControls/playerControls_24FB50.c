@@ -23,7 +23,7 @@ DEFINE_VTABLE2_BASE_DTOR(cCharActionMsg_ObjectId_Int_dtor, D_004E0120, D_004E084
 #pragma push /* merge_units */
 typedef struct { unsigned char active; unsigned char passive; char pad[0x9E]; } D6EdgeReq;
 typedef struct { char pad[0x3E0]; D6EdgeReq req[1]; } D6EdgeOwner;
-void EdgeRequest_Latch(D6EdgeOwner* o, signed char idx, unsigned char passive)
+void cHumanCollisionRoutine_RequestSearchForLedge(D6EdgeOwner* o, signed char idx, unsigned char passive)
 {
     D6EdgeReq* e = (D6EdgeReq*)((char*)o + 0x3E0) + idx;
     if (e->active) {

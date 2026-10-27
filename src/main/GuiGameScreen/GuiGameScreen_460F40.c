@@ -10,8 +10,8 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int FileMan_Release(char * , int);                         
-int GuiWidget_Destroy(char **, int);                           
+int cFileMan_dtor(char * , int);                         
+int GuiWidget_dtor(char **, int);                           
 int func_00461DC0(char * , int);                         
 int operator_delete(char **);                            
 extern char D_004E1730;
@@ -25,8 +25,8 @@ char **GuiEndGameAwards_dtor(char **arg0, short arg1) {
         *arg0 = &D_004E1730;
         if (((char *)arg0 + 0x350) != 0) {
             if (((char *)arg0 + 0x370) != NULL) {
-                FileMan_Release((char *)arg0 + 0x454, -1);
-                FileMan_Release((char *)arg0 + 0x3B8, -1);
+                cFileMan_dtor((char *)arg0 + 0x454, -1);
+                cFileMan_dtor((char *)arg0 + 0x3B8, -1);
             }
             temp_a0 = (char *)arg0 + 0x350;
             if ((temp_a0 != NULL) && (temp_a0 != NULL) && (temp_a0 != NULL)) {
@@ -34,10 +34,10 @@ char **GuiEndGameAwards_dtor(char **arg0, short arg1) {
             }
         }
         if (((char *)arg0 + 0x1C0) != NULL) {
-            FileMan_Release((char *)arg0 + 0x2A4, -1);
-            FileMan_Release((char *)arg0 + 0x208, -1);
+            cFileMan_dtor((char *)arg0 + 0x2A4, -1);
+            cFileMan_dtor((char *)arg0 + 0x208, -1);
         }
-        GuiWidget_Destroy(arg0, 0);
+        GuiWidget_dtor(arg0, 0);
         if (arg1 > 0) {
             operator_delete(arg0);
         }
@@ -51,7 +51,7 @@ char **GuiEndGameAwards_dtor(char **arg0, short arg1) {
 /* merge_units: begin func_00461020 */
 #pragma push /* merge_units */
 #include "fam5_timed_retry.h"
-extern void GuiWidget_Update(char*, float);
-DEFINE_TIMED_RETRY(GuiEndGameAwards_Update, 0x500, 0x350, GuiWidget_Update)
+extern void GuiWidget_onAdvanceTime(char*, float);
+DEFINE_TIMED_RETRY(GuiEndGameAwards_onAdvanceTime, 0x500, 0x350, GuiWidget_onAdvanceTime)
 #pragma pop /* merge_units */
 /* merge_units: end func_00461020 */

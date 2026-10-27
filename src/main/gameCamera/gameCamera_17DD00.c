@@ -16,7 +16,7 @@
  */
 
 
-float VecCurve_Retime(float f12) {
+float nGameUnits_Sec(float f12) {
     return f12;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -29,7 +29,7 @@ static inline void merge_flush_func_0017DD00(void) {}
 #pragma peephole off
 typedef struct { char pad[0x40]; Vec4 v; } S;
 /* Sets the curve's target vector (+0x40). */
-void VecCurve_SetTarget(S* dst, Vec4* src) { dst->v = *src; }
+void cSplinedMotion_cVector_SetTargetVal(S* dst, Vec4* src) { dst->v = *src; }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0017DD10(void) {}
 #pragma pop /* merge_units */

@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int GuiWidget_BaseWake(void* self);
+extern int GuiWidget_onWake(void* self);
 
-int GuiEquipmentModify_Wake(void* self) {
-    return GuiWidget_BaseWake(self);
+int GuiEquipmentModify_onWake(void* self) {
+    return GuiWidget_onWake(self);
 }

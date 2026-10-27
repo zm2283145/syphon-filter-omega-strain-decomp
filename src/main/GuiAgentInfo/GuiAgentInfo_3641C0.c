@@ -16,7 +16,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003641C0 */
 #pragma push /* merge_units */
@@ -25,18 +25,18 @@ struct V3641C0 { virtual void v0(int f); virtual int v1(); virtual int v2(); vir
 struct O3641C0 { char pad[0x48]; V3641C0* p48; char pad4C[0x44]; V3641C0* p90; };
 extern "C" {
 extern void* D_004FFC04;
-void GuiWidget_Deinit(void* p);
+void GuiWidget_onRemove(void* p);
 void cGameFrontEnd_CloseCharacter(void* p, int f);
 }
 static inline void Del3641C0(V3641C0* o, int line)
 {
     AllocGuard g;
     o->v0(-1);
-    Mem_Free(0, o, "GuiAgentInfo.cc", line);
+    cMemMan_Deallocate(0, o, "GuiAgentInfo.cc", line);
 }
-extern "C" void GuiAgentDisplay_Deinit(O3641C0* s)
+extern "C" void GuiAgentDisplay_onRemove(O3641C0* s)
 {
-    GuiWidget_Deinit(s);
+    GuiWidget_onRemove(s);
     cGameFrontEnd_CloseCharacter(D_004FFC04, 0);
     if (s->p48) {
         s->p48->v22(1);

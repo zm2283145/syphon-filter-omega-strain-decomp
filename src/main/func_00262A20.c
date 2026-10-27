@@ -46,14 +46,14 @@ extern int D_00538C64;
 extern char D_00538C68;
 extern V4_2A20 D_00539170;
 extern long long D_004BC1B0;
-void Renderer_BindTexture(void* m, int idx);
+void cTexMan_SetActive(void* m, int idx);
 void XLib_NewStrip(void* s);
 void XLib_NextBatchVert(void* s);
-void Vec4_Copy(V4_2A20* d, V4_2A20* s);
-void GuiBatch_AddVertexColor(V4_2A20* d, V4_2A20* s);
-float GuiBatch_AddVertexUV(void);
-V4_2A20* Vec4_Set(V4_2A20* o, float x, float y, float z, float w);
-void Renderer_FlushPrimitives(void* s);
+void cVector_opAssign(V4_2A20* d, V4_2A20* s);
+void tIRGBA_opAssign_tRGBAR(V4_2A20* d, V4_2A20* s);
+float tVifFloatToInt_short_4_Bias(void);
+V4_2A20* cVector_ctor_float_float_float_float(V4_2A20* o, float x, float y, float z, float w);
+void XLib_DrawSprites2(void* s);
 }
 #define D_00539224 (D_00539210.f24)
 #define D_00539228 (D_00539210.f28)
@@ -91,7 +91,7 @@ extern "C" {
 Head_2A20* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_6(Head_2A20* h);
 Node_2A20* std_list_deleter_TaserPulse_tail(int* l);
 void std_list_deleter_TaserPulse_generic_iterator_ctor(Iter_2A20* it, Node_2A20* n);
-void ParticleInst_Draw(void* inst, int key, Mtx_2A20* m);
+void cParticle_Render(void* inst, int key, Mtx_2A20* m);
 void XLib_DrawLines(void* s);
 void cAirTaser_Render(Held_2A20* self);
 }
@@ -102,8 +102,8 @@ static inline void Emit_2A20(V4_2A20* pos, V4_2A20* col)
     Ent_2A20* e;
     XLib_NextBatchVert(g_Video);
     e = &RS_2A20->ents[D_00539210.f10];
-    Vec4_Copy(&e->pos[D_00539224 - 1], pos);
-    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], col);
+    cVector_opAssign(&e->pos[D_00539224 - 1], pos);
+    tIRGBA_opAssign_tRGBAR(&e->c30[D_00539224 - 1], col);
     D_005381F8 = 2LL << 32;
 }
 static inline Iter_2A20 Begin0_2A20(Head_2A20* h) { Iter_2A20 t; t.n = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_6(h)->next; return t; }
@@ -113,8 +113,8 @@ static inline Iter_2A20 End_2A20(int* l) { Iter_2A20 e; std_list_deleter_TaserPu
 /* cAirTaser_Render: draws the taser wire: a line strip through the held item's
  * points, then the spark particles (on each list entry's matrix while
  * attached, or once at the last point while flying). Render state as in
- * VisionFx_DrawScanBand (VisionFx_DrawScanBand.c); item layout as in
- * HeldItem_Release (taser/HeldItem_Release.c). */
+ * cSyncBar_Render (cSyncBar_Render.c); item layout as in
+ * cAirTaser_Release (taser/cAirTaser_Release.c). */
 extern "C" void cAirTaser_Render(Held_2A20* self)
 {
     int n;
@@ -152,13 +152,13 @@ extern "C" void cAirTaser_Render(Held_2A20* self)
         Iter_2A20 it = Begin_2A20(&self->head);
         while (it != End_2A20(&self->list)) {
             Part_2A20* pp = &it.n->part;
-            ParticleInst_Draw(pp->inst, 2, &pp->m);
+            cParticle_Render(pp->inst, 2, &pp->m);
             it.n = it.n->next;
         }
     } else if (self->state == 1) {
         Mtx_2A20 m;
         UM_2A20(&m);
         { __int128* d = &m.q[3]; Pt_2A20** pp = &self->pts; *d = *(__int128*)&(*pp)[n - 1].pos; }
-        ParticleInst_Draw(self->inst, 2, &m);
+        cParticle_Render(self->inst, 2, &m);
     }
 }

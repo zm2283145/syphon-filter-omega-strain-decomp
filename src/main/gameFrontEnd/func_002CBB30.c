@@ -14,17 +14,17 @@ public:
 typedef struct { void* vtable; char pad[0x2C]; } Msg;
 
 extern "C" {
-unsigned long long Time_GetMilliseconds(void);
-float SoftFloat_U64ToFloat(unsigned long long);
+unsigned long long cTimer_GetMillisecondTime(void);
+float _f_ulltof(unsigned long long);
 void cMemCard_NextFrame(void* p);
-Mgr* Gui_GetScreenStack(void);
-int Gui_GetScreenList(void);
-void GuiCanvas_NestedUpdate(Mgr* m, float dt);
-void GuiManager_Update(int a, float dt);
-void GuiCanvas_UpdatePads(Mgr* m);
-int Service_Lookup(void* a, void* b);
-void Event_Construct(Msg* m, void* type);
-void Event_Send(Msg* m, int target, int immediate);
+Mgr* Gui_Canvas(void);
+int Gui_Manager(void);
+void GuiCanvas_AdvanceAnimations(Mgr* m, float dt);
+void GuiManager_NextFrame(int a, float dt);
+void GuiCanvas_ProcessInput_void(Mgr* m);
+int cSystemContainer_GetSystem(void* a, void* b);
+void cMessage_ctor_cMessageNameR(Msg* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(Msg* m, int target, int immediate);
 void cMessage_dtor(Msg* m, int flags);
 extern char g_MemCard[];
 extern unsigned char g_DebugTriangle;
@@ -46,32 +46,32 @@ struct ObjCBB30 {
     unsigned char b2D;
 };
 
-extern "C" void FrontEnd_UpdateGui(ObjCBB30* o)
+extern "C" void cGameFrontEnd_NextFrame(ObjCBB30* o)
 {
     if (o->b28 || o->b2D) {
-        unsigned long long now = Time_GetMilliseconds();
+        unsigned long long now = cTimer_GetMillisecondTime();
         float dt;
         if (!o->last)
             o->last = 0;
         if (now - o->last > 100)
             o->last = now - 100;
-        dt = SoftFloat_U64ToFloat(now - o->last) / 1000.0f;
+        dt = _f_ulltof(now - o->last) / 1000.0f;
         if (o->b2A && o->b28)
             cMemCard_NextFrame(g_MemCard);
         if (g_DebugTriangle) {
-            GuiCanvas_NestedUpdate(Gui_GetScreenStack(), dt);
+            GuiCanvas_AdvanceAnimations(Gui_Canvas(), dt);
         } else {
-            GuiManager_Update(Gui_GetScreenList(), dt);
-            GuiCanvas_UpdatePads(Gui_GetScreenStack());
-            Gui_GetScreenStack()->Update(dt);
+            GuiManager_NextFrame(Gui_Manager(), dt);
+            GuiCanvas_ProcessInput_void(Gui_Canvas());
+            Gui_Canvas()->Update(dt);
         }
         o->last = now;
         if (!D_0051EE90) {
-            int target = Service_Lookup(g_Game, D_004F2CC0);
+            int target = cSystemContainer_GetSystem(g_Game, D_004F2CC0);
             Msg msg;
-            Event_Construct(&msg, D_005436B0);
+            cMessage_ctor_cMessageNameR(&msg, D_005436B0);
             msg.vtable = D_004D9160;
-            Event_Send(&msg, target, 1);
+            QueueMessage_cMessageR_cSystemP_int(&msg, target, 1);
             msg.vtable = D_004D9160;
             cMessage_dtor(&msg, 0);
         }

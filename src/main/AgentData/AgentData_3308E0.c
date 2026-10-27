@@ -20,10 +20,10 @@ extern char g_UnlockRows[];
 int std_vector_imp_Record_begin(void* t);
 int std_vector_imp_Record_end(void* t);
 void std_vector_Record_pointer2iterator(E308E0** out, void* t, int* raw);
-int Loc_FindKeyThunk(__int128* key);
+int nGlobalization_GetStringIndex(__int128* key);
 }
 static inline bool Neq308E0(E308E0* a, E308E0* b) { return !(a == b); }
-extern "C" int UnlockTable_FindBitByName(__int128 key)
+extern "C" int GetWeaponBitIndex__10cAgentDataF1(__int128 key)
 {
     E308E0* b;
     E308E0* e;
@@ -39,7 +39,7 @@ extern "C" int UnlockTable_FindBitByName(__int128 key)
     t2 = std_vector_imp_Record_end(g_UnlockRows);
     std_vector_Record_pointer2iterator(&e, g_UnlockRows, &t2);
     last = e;
-    k = Loc_FindKeyThunk(&key);
+    k = nGlobalization_GetStringIndex(&key);
     for (; Neq308E0(first, last); first++) {
         if (k == first->id) {
             r = first->val;
@@ -70,7 +70,7 @@ void std_vector_Record_pointer2iterator(E309C0** out, void* t, int* raw);
 
 }
 static inline bool Neq309C0(E309C0* a, E309C0* b) { return !(a == b); }
-extern "C" int Awards_FindLevelRow(__int128 key)
+extern "C" int GetLevelBitIndex__10cAgentDataF1(__int128 key)
 {
     E309C0* b;
     E309C0* e;
@@ -86,7 +86,7 @@ extern "C" int Awards_FindLevelRow(__int128 key)
     t2 = std_vector_imp_Record_end(D_00532AF0);
     std_vector_Record_pointer2iterator(&e, D_00532AF0, &t2);
     last = e;
-    k = Loc_FindKeyThunk(&key);
+    k = nGlobalization_GetStringIndex(&key);
     for (; Neq309C0(first, last); first++) {
         if (k == first->id) {
             r = first->val;
@@ -126,9 +126,9 @@ extern void std_vector_Record_pointer2iterator(It330* out, void* self, It330* sr
 #define std_vector_Record_pointer2iterator(a0, a1, a2) (std_vector_Record_pointer2iterator((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int Loc_FindKeyThunk(__int128* name);
+extern int nGlobalization_GetStringIndex(__int128* name);
 #endif /* merge_units */
-#define Loc_FindKeyThunk(a0) (Loc_FindKeyThunk((a0))) /* merge_units */
+#define nGlobalization_GetStringIndex(a0) (nGlobalization_GetStringIndex((a0))) /* merge_units */
 
 #pragma bool off
 static inline int Ne330(Row330* a, Row330* b) { return (a == b) ^ 1; }
@@ -147,13 +147,13 @@ static inline int Find330(__int128* name)
     e.p = std_vector_imp_Record_end(D_005329F0);
     std_vector_Record_pointer2iterator(&itE, D_005329F0, &e);
     end = itE.p;
-    key = Loc_FindKeyThunk(name);
+    key = nGlobalization_GetStringIndex(name);
     for (; Ne330(p, end); p++) {
         if (key == p->key) return p->value;
     }
     return -1;
 }
-int Objective_Find(__int128 name)
+int GetObjectiveBitIndex__10cAgentDataF1(__int128 name)
 {
     int r = Find330(&name);
     if (r < 0) r = 0;
@@ -162,7 +162,7 @@ int Objective_Find(__int128 name)
 #undef std_vector_imp_Record_begin /* merge_units */
 #undef std_vector_imp_Record_end /* merge_units */
 #undef std_vector_Record_pointer2iterator /* merge_units */
-#undef Loc_FindKeyThunk /* merge_units */
+#undef nGlobalization_GetStringIndex /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00330AA0(void) {}
 #pragma pop /* merge_units */
@@ -180,18 +180,18 @@ typedef struct LookupE6 {
 
 extern int g_LevelRowCount;
 extern LookupE6* D_00532AF8;
-extern void* Loc_GetStoredKey(void* name);
+extern void* nGlobalization_GetStringTag(void* name);
 extern int String_CompareNoCase(void* a, void* b);
 
 static inline LookupE6* EntryE6(int i) { return &D_00532AF8[i]; }
 
 /* Finds the table entry whose name matches, returning its value (default 0x16). */
-int Objective_GetLevelMissionNumber(void* name)
+int cAgentData_GetCommander(void* name)
 {
     int count = g_LevelRowCount;
     int i;
     for (i = 0; i < count; i++) {
-        if (String_CompareNoCase(Loc_GetStoredKey(EntryE6(i)->name), name) == 0) {
+        if (String_CompareNoCase(nGlobalization_GetStringTag(EntryE6(i)->name), name) == 0) {
             return EntryE6(i)->value;
         }
     }
@@ -218,12 +218,12 @@ extern Pair30C30* D_00532B98;
 static inline Lookup30C30* Entry30C30(int i) { return &D_00532AF8[i]; }
 
 /* Finds the table entry whose name matches and returns one of its two paired values. */
-int Awards_GetParTime(void* name, int second)
+int cAgentData_GetParTime(void* name, int second)
 {
     int count = g_LevelRowCount;
     int i;
     for (i = 0; i < count; i++) {
-        if (String_CompareNoCase(Loc_GetStoredKey(Entry30C30(i)->name), name) == 0) {
+        if (String_CompareNoCase(nGlobalization_GetStringTag(Entry30C30(i)->name), name) == 0) {
             return second ? ((int*)D_00532B98)[i * 2 + 1] : ((int*)D_00532B98)[i * 2];
         }
     }
@@ -272,14 +272,14 @@ extern DosDefVec g_RankRows;
 extern DosEntryVec D_00532B70;
 extern char D_004B99A8[];
 #if 0 /* merge_units */
-extern int Loc_FindKeyThunk(const char* key);
+extern int nGlobalization_GetStringIndex(const char* key);
 #endif /* merge_units */
-#define Loc_FindKeyThunk(a0) (Loc_FindKeyThunk((void *)(a0))) /* merge_units */
+#define nGlobalization_GetStringIndex(a0) (nGlobalization_GetStringIndex((void *)(a0))) /* merge_units */
 
 extern int std_vector_imp_tRankInfo_insert(DosEntryVec* v, DosEntry* pos, int count, DosEntry* value);
 
 static inline DosDef* At(DosDefVec* v, int i) { return &v->data[i]; }
-void Global_cAgentData__RegisterDossier(int agent, const char* name)
+void cAgentData_RegisterDossier(int agent, const char* name)
 {
     int found = 0;
     int i;
@@ -297,10 +297,10 @@ void Global_cAgentData__RegisterDossier(int agent, const char* name)
     e.num = 0;
     e.flag = 0;
     sprintf(buf, D_004B99A8, e.num + 1);
-    e.key = Loc_FindKeyThunk(buf);
+    e.key = nGlobalization_GetStringIndex(buf);
     std_vector_imp_tRankInfo_insert(&D_00532B70, &D_00532B70.data[D_00532B70.count], 1, &e);
 }
-#undef Loc_FindKeyThunk /* merge_units */
+#undef nGlobalization_GetStringIndex /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00330D10(void) {}
 #pragma pop /* merge_units */
@@ -340,11 +340,11 @@ static inline void merge_flush_func_00330F00(void) {}
 
 /* merge_units: begin func_003314F0 */
 #pragma push /* merge_units */
-extern void AgentData_Reset(void);
+extern void cAgentData_Reset(void);
 extern int cBitArray_224_NumChunks(void);
 extern void cNetMsg_GetString(char* s, int n);
-extern void awards_SetAwardsAndBonuses(void* p, int a, int b);
-extern void AgentData_StartLevel(void* p, int a);
+extern void cAgentData_SetBonusBits(void* p, int a, int b);
+extern void cAgentData_StartLevel(void* p, int a);
 static inline short R16_003314F0(void) { unsigned char lo = *D_005061D0++; unsigned char hi = *D_005061D0++; return lo + (hi << 8); }
 static inline int R32_003314F0(void) { unsigned short lo = R16_003314F0(); return lo + ((unsigned short)R16_003314F0() << 16); }
 static inline float RF_003314F0(void) { int i = R32_003314F0(); return *(float*)&i; }
@@ -359,7 +359,7 @@ typedef struct {
 #pragma opt_strength_reduction off
 void cAgentData_NetUnpack(S_003314F0* p, int awards) {
     int i; int j; int k; int n; S_003314F0* q; S_003314F0* r;
-    AgentData_Reset();
+    cAgentData_Reset();
     p->s0[0] = 0;
     p->s1[0] = 0;
     p->s2[0] = 0;
@@ -373,8 +373,8 @@ void cAgentData_NetUnpack(S_003314F0* p, int awards) {
         char c = *D_005061D0++;
         p->flag = c != 0;
     }
-    if (awards) awards_SetAwardsAndBonuses(p, 0, 0);
-    else AgentData_StartLevel(p, 0);
+    if (awards) cAgentData_SetBonusBits(p, 0, 0);
+    else cAgentData_StartLevel(p, 0);
     p->done = 1;
 }
 #pragma pop

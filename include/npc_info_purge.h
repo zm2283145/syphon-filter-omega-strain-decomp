@@ -10,13 +10,13 @@ typedef struct NpcPurgeNode { struct NpcPurgeNode* prev; struct NpcPurgeNode* ne
 struct NpcPurgeIt { NpcPurgeNode* node; NpcPurgeIt() {} };
 extern "C" {
 extern char D_004BFCA0[];
-void Mem_Free(int pool, void* p, char* file, int line);
-NpcPurgeIt List_Begin(void* list);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+NpcPurgeIt std_list_deleter_voidPtr_begin_void(void* list);
 void std_list_tNPCInfoPtr_generic_iterator_ctor(NpcPurgeIt* r, const NpcPurgeIt& s);
 NpcPurgeIt std_list_tNPCInfoPtr_end(void* list);
 void cLListIterator_tNPCInfoPtr_ctor(NpcPurgeIt* r, const NpcPurgeIt& s);
 void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(NpcPurgeIt* r, NpcPurgeNode** n);
-void List_Erase(NpcPurgeIt* r, void* list, NpcPurgeIt* pos);
+void std_list_deleter_voidPtr_erase_listdeleter(NpcPurgeIt* r, void* list, NpcPurgeIt* pos);
 }
 #define DEFINE_NPC_INFO_PURGE(name, list, flagval, line)                        \
     extern "C" { extern char list[]; }                                          \
@@ -24,7 +24,7 @@ void List_Erase(NpcPurgeIt* r, void* list, NpcPurgeIt* pos);
     {                                                                           \
         NpcPurgeIt end; NpcPurgeIt it; NpcPurgeEnt* e; NpcInfoRec* found;       \
         NpcPurgeNode* n; NpcPurgeNode* cur;                                     \
-        std_list_tNPCInfoPtr_generic_iterator_ctor(&it, List_Begin(list));                                \
+        std_list_tNPCInfoPtr_generic_iterator_ctor(&it, std_list_deleter_voidPtr_begin_void(list));                                \
         n = it.node;                                                            \
         while (cLListIterator_tNPCInfoPtr_ctor(&end, std_list_tNPCInfoPtr_end(list)), n != end.node) {       \
             cur = n; e = cur->data; n = n->next;                                \
@@ -37,12 +37,12 @@ void List_Erase(NpcPurgeIt* r, void* list, NpcPurgeIt* pos);
                 if (found) found->a6[NetLocalId()] = (flagval);                 \
                 {                                                               \
                     AllocGuard g;                                               \
-                    Mem_Free(0, e, D_004BFCA0, (line));                         \
+                    cMemMan_Deallocate(0, e, D_004BFCA0, (line));                         \
                 }                                                               \
                 {                                                               \
                     NpcPurgeNode* c = cur; NpcPurgeIt b; NpcPurgeIt a;          \
                     std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&a, &c);                                      \
-                    List_Erase(&b, list, &a);                                \
+                    std_list_deleter_voidPtr_erase_listdeleter(&b, list, &a);                                \
                 }                                                               \
             }                                                                   \
         }                                                                       \

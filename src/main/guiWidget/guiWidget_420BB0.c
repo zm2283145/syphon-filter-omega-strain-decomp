@@ -11,7 +11,7 @@
 extern int strcmp(void*);
 
 /* Returns whether strcmp(((int*)"GuiButtonWidget")) returned 0. */
-int GuiButtonWidget_IsType(void) {
+int GuiButtonWidget_IsClass(void) {
     return strcmp(((int*)"GuiButtonWidget")) == 0;
 }
 #pragma pop /* merge_units */
@@ -22,12 +22,12 @@ int GuiButtonWidget_IsType(void) {
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int GuiTextWidget_OnWake();                                  
+int GuiTextWidget_onWake();                                  
 
-void GuiButtonWidget_OnWake(int arg0) {
+void GuiButtonWidget_onWake(int arg0) {
     int temp_a0;
 
-    GuiTextWidget_OnWake();
+    GuiTextWidget_onWake();
     temp_a0 = F_(arg0, 0x78, int);
     if (temp_a0 != NULL) {
         F_(temp_a0, 0x58, signed char) = 1;
@@ -50,18 +50,18 @@ struct Handler {
 
 typedef struct Widget { char pad[0x44]; Handler* handler; /* +0x44 */ } Widget;
 
-extern "C" void GuiWidget_SendEventUp(Widget* self, int a, int b, int c);
-extern "C" int GuiWidget_OnEvent(Widget* self, Widget* sender, unsigned short code);
+extern "C" void GuiWidget_SendParentsMessage(Widget* self, int a, int b, int c);
+extern "C" int GuiWidget_onMessage(Widget* self, Widget* sender, unsigned short code);
 
-/* Event handler: on event 0x16 from itself runs GuiWidget_SendEventUp and the handler's virtual +0x34; else defers to GuiWidget_OnEvent. */
-extern "C" int GuiButtonWidget_OnEvent(Widget* self, Widget* sender, unsigned short code)
+/* Event handler: on event 0x16 from itself runs GuiWidget_SendParentsMessage and the handler's virtual +0x34; else defers to GuiWidget_onMessage. */
+extern "C" int GuiButtonWidget_onMessage(Widget* self, Widget* sender, unsigned short code)
 {
     if (code == 0x16 && sender == self) {
-        GuiWidget_SendEventUp(self, 0x10, 1, 0);
+        GuiWidget_SendParentsMessage(self, 0x10, 1, 0);
         self->handler->Method34();
         return 1;
     }
-    return GuiWidget_OnEvent(self, sender, code);
+    return GuiWidget_onMessage(self, sender, code);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00420C20 */
@@ -70,13 +70,13 @@ extern "C" int GuiButtonWidget_OnEvent(Widget* self, Widget* sender, unsigned sh
 #pragma push /* merge_units */
 #pragma cplusplus on
 typedef struct { unsigned short type; unsigned short f2; short p4; unsigned short f6; unsigned short f8; } Ev420C90;
-extern "C" void GuiWidget_SendEvent(void* w, void* src, int kind, int a, int b);
-extern "C" int GuiButtonWidget_OnInput(void* w, Ev420C90* e)
+extern "C" void GuiWidget_SendMessage(void* w, void* src, int kind, int a, int b);
+extern "C" int GuiButtonWidget_onInput(void* w, Ev420C90* e)
 {
     bool ok = e->type == 1 && e->f2 == 0 && e->f8 == 0x40 && e->f6 == 0;
     if (ok) {
-        if (e->f6 == 0) GuiWidget_SendEvent(w, w, 0x16, 0, 0);
-        else GuiWidget_SendEvent(w, w, 0x17, 0, 0);
+        if (e->f6 == 0) GuiWidget_SendMessage(w, w, 0x16, 0, 0);
+        else GuiWidget_SendMessage(w, w, 0x17, 0, 0);
         return 1;
     }
     return 0;

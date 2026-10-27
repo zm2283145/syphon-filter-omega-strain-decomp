@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #pragma inline_depth(8)
 #include "types.h"
-/* ActorPhys_GatherBounds: world-space box swept by the actor's collision
+/* cHumanCollisionRoutine_ConstructTestObjectForFirstPassCull: world-space box swept by the actor's collision
  * cylinder this frame: radius (2, or 3 while carrying), height (8, larger
  * when crouched/prone per the posture flags, 14 for type 9) and floor depth,
  * grown by 1 unit, unioned with its copy moved by the frame's motion, then
@@ -28,18 +28,18 @@ extern float D_004A0358;
 extern float D_004A0400;
 extern float D_004A0408;
 void* RootCollection_FindByKey(void* coll, void* key);
-void* Root_GetWorldPlacement(void* r);
-V* Placement_GetPosition(void* p);
+void* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void* r);
+V* cQuatVec_Translation(void* p);
 void cBox_ctor_cBoxR(Box* d, Box* s);
-void Box_Union(Box* a, Box* b);
-void ActorPhys_GatherBounds(Phys* self, Box* out);
+void cBox_opAddAssign(Box* a, Box* b);
+void cHumanCollisionRoutine_ConstructTestObjectForFirstPassCull(Phys* self, Box* out);
 }
 static inline void AddXYZ(V* a, const V* b) { __asm__ volatile("lqc2 $vf1, 0x0(%0); lqc2 $vf2, 0x0(%1); vadd.xyz $vf1, $vf1, $vf2; sqc2 $vf1, 0x0(%0)" : : "r"(a), "r"(b) : "memory"); }
 static inline void SubV(V* r, const V* a, const V* b) { __asm__ volatile("lqc2 $vf1, 0x0(%1); lqc2 $vf2, 0x0(%2); vsub.xyzw $vf1, $vf1, $vf2; sqc2 $vf1, 0x0(%0)" : : "r"(r), "r"(a), "r"(b) : "memory"); }
-static inline void UnionInto(Box* o, Box* a, Box* b) { Box r; cBox_ctor_cBoxR(&r, a); Box_Union(&r, b); cBox_ctor_cBoxR(o, &r); }
+static inline void UnionInto(Box* o, Box* a, Box* b) { Box r; cBox_ctor_cBoxR(&r, a); cBox_opAddAssign(&r, b); cBox_ctor_cBoxR(o, &r); }
 static inline V operator-(const V& a, const V& b) { V r; SubV(&r, &a, &b); return r; }
 
-void ActorPhys_GatherBounds(Phys* self, Box* out)
+void cHumanCollisionRoutine_ConstructTestObjectForFirstPassCull(Phys* self, Box* out)
 {
     float pad = 1.0f; float height = 8.0f; float floor = -3.5f; float radius = 2.0f;
     int i;
@@ -62,7 +62,7 @@ void ActorPhys_GatherBounds(Phys* self, Box* out)
         }
     }
     {
-        V pos = *Placement_GetPosition(Root_GetWorldPlacement(RootCollection_FindByKey(self->owner->coll, D_004A03C8)));
+        V pos = *cQuatVec_Translation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(RootCollection_FindByKey(self->owner->coll, D_004A03C8)));
         V d = self->pos - self->prev;
         V lo, hi;
         lo.x = -radius - pad; lo.y = -radius - pad; lo.z = floor - pad; lo.w = 1.0f;

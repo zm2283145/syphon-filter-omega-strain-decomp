@@ -5,7 +5,7 @@
 
 #include "npc_types.h"
 
-extern int NpcAi_RequestMode(void* obj, int a1, int a2);
+extern int cStateMachine_ChangeState(void* obj, int a1, int a2);
 
 typedef struct NpcMoveGobj {
     char pad00[0xC];
@@ -21,13 +21,13 @@ typedef struct NpcMoveNode {
 int cNPC_MoveToGobj(cNPC* self, NpcMoveGobj* gobj) {
     self->moveTargetGobj = gobj->id;
     self->moveTargetNode = -1;
-    NpcAi_RequestMode(self->unk044, 7, 100);
+    cStateMachine_ChangeState(self->unk044, 7, 100);
     return 1;
 }
 
 /* vtable slot 0x3E: MoveToNode. */
 int cNPC_MoveToNode(cNPC* self, NpcMoveNode* node) {
-    NpcAi_RequestMode(self->unk044, 7, 100);
+    cStateMachine_ChangeState(self->unk044, 7, 100);
     self->moveTargetNode = node->id;
     self->moveTargetGobj = -1;
     return 1;

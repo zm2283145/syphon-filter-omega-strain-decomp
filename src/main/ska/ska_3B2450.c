@@ -51,7 +51,7 @@ static inline void merge_flush_func_003B2480(void) {}
 
 /* merge_units: begin func_003B24A0 */
 #pragma push /* merge_units */
-void Quat_LerpWeighted(V4* a, V4* b, V4* c, V4* d, V4* e) {
+void cSkaAnim_Lerp(V4* a, V4* b, V4* c, V4* d, V4* e) {
     asm {
         lqc2 vf1, 0x0(c)
         lqc2 vf2, 0x0(d)

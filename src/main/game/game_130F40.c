@@ -25,7 +25,7 @@ typedef struct Table {
     Entry** entries;
 } Table;
 
-int Game_FindNamedResource(Table* t, const char* name, int* out)
+int cGameSystem_FindVUMGOBJ_charP_cVUMGOBJPP(Table* t, const char* name, int* out)
 {
     int i;
     for (i = 0; i < t->count; i++) {
@@ -87,8 +87,8 @@ struct AlPred_r { AlEq_r op; AlObj_r** ref; AlPred_r(const AlEq_r& e, AlObj_r** 
 extern "C" {
 extern AlObj_r* D_00583878;
 extern int D_0058387C;
-extern void ActiveList_EraseMatching(int* list, AlPred_r pred);
-void ActiveList_RemoveObject(AlList_r* l, AlObj_r* o);
+extern void std_list_imp_voidPtr_remove_if(int* list, AlPred_r pred);
+void cGameSystem_RemoveCamera(AlList_r* l, AlObj_r* o);
 }
 static inline void AlSetCurrent_r(AlObj_r* o)
 {
@@ -103,12 +103,12 @@ static inline void AlSetCurrent_r(AlObj_r* o)
     }
     D_0058387C = *p;
 }
-void ActiveList_RemoveObject(AlList_r* l, AlObj_r* o)
+void cGameSystem_RemoveCamera(AlList_r* l, AlObj_r* o)
 {
     if (o) {
         AlEq_r eq;
         AlObj_r* next;
-        ActiveList_EraseMatching(&l->list, AlPred_r(eq, &o));
+        std_list_imp_voidPtr_remove_if(&l->list, AlPred_r(eq, &o));
         if (o->IsActive())
             o->Deactivate(1);
         next = l->head->obj;
@@ -148,8 +148,8 @@ extern AlObj_f3* D_00583878;
 #endif /* merge_units */
 #define D_00583878 (*(AlObj_f3 **)&D_00583878) /* merge_units */
 
-extern void List_Erase(AlNode_f3** out, int* list, AlNode_f3** it);
-AlObj_f3* ActiveList_RemoveFirst(AlList_f3* l);
+extern void std_list_deleter_voidPtr_erase_listdeleter(AlNode_f3** out, int* list, AlNode_f3** it);
+AlObj_f3* cGameSystem_PopCamera(AlList_f3* l);
 }
 static inline void AlSetCurrent_f3(AlObj_f3* o)
 {
@@ -164,7 +164,7 @@ static inline void AlSetCurrent_f3(AlObj_f3* o)
     }
     D_0058387C = *p;
 }
-AlObj_f3* ActiveList_RemoveFirst(AlList_f3* l)
+AlObj_f3* cGameSystem_PopCamera(AlList_f3* l)
 {
     AlNode_f3* ret[1];
     AlNode_f3* it[1];
@@ -176,7 +176,7 @@ AlObj_f3* ActiveList_RemoveFirst(AlList_f3* l)
     n = *hp;
     obj = n->obj;
     it[0] = n;
-    List_Erase(ret, &l->list, it);
+    std_list_deleter_voidPtr_erase_listdeleter(ret, &l->list, it);
     obj->Deactivate(1);
     next = (*hp)->obj;
     if (next) {
@@ -212,9 +212,9 @@ extern Obj_1320* D_00583878;
 #endif /* merge_units */
 #define D_00583878 (*(Obj_1320 **)&D_00583878) /* merge_units */
 
-void List_PushFront(void* list, Obj_1320** o);
+void std_list_cCAMERA_GOBJPtr_push_front(void* list, Obj_1320** o);
 }
-extern "C" void World_PushObjectFromAction(S_1320* self, Obj_1320* o)
+extern "C" void cGameSystem_PushCamera(S_1320* self, Obj_1320* o)
 {
     int m1;
     int* p;
@@ -232,7 +232,7 @@ extern "C" void World_PushObjectFromAction(S_1320* self, Obj_1320* o)
         p = &m1;
     }
     D_0058387C = *p;
-    List_PushFront(&self->list, &o);
+    std_list_cCAMERA_GOBJPtr_push_front(&self->list, &o);
 }
 #undef D_00583878 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

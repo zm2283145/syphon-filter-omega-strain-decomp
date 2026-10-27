@@ -4,7 +4,7 @@ extern "C" {
 extern char* D_005061D0;
 extern unsigned char g_IsMultiplayer;
 extern char g_Game[];
-void Game_SetPlayerLocation(char* a, int b, int c);
+void cGameSystem_SetClientPlayerLocation(char* a, int b, int c);
 void func_002B1190(int a, int b, int c);
 }
 struct C_00323AD0 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual bool v19(); };
@@ -26,7 +26,7 @@ extern "C" void cNetQuickChatMsg_UnpackAndProcess(M_00323AD0* m, O_00323AD0* o) 
     m->b = R32_00323AD0();
     if (o) {
         if (m->a == -1) {
-            Game_SetPlayerLocation(g_Game, Idx_00323AD0(o), m->b);
+            cGameSystem_SetClientPlayerLocation(g_Game, Idx_00323AD0(o), m->b);
             return;
         }
         func_002B1190(m->a, Idx_00323AD0(o) + 1, m->b);

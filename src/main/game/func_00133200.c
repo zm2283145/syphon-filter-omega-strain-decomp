@@ -1,4 +1,4 @@
-/* Mtx_InvertRigid: in-place inverse of a rigid transform (transpose the 3x3, translation = -(R^T t)). */
+/* cMatrix_InvertRotTrans: in-place inverse of a rigid transform (transpose the 3x3, translation = -(R^T t)). */
 #pragma opt_lifetimes off
 #pragma cplusplus on
 #include "types.h"
@@ -23,7 +23,7 @@ static inline void V4_MulRot(V4* d, const V4* s, const Mtx* b) {
     __asm__ volatile("lqc2 vf8, 0x0(%1); lqc2 vf4, 0x0(%2); lqc2 vf5, 0x10(%2); lqc2 vf6, 0x20(%2); vmulax.xyz ACC, vf4, vf8x; vmadday.xyz ACC, vf5, vf8y; vmaddz.xyz vf8, vf6, vf8z; sqc2 vf8, 0x0(%0)" : : "r"(d), "r"(s), "r"(b) : "memory");
 }
 
-extern "C" Mtx* Mtx_InvertRigid(Mtx* m) {
+extern "C" Mtx* cMatrix_InvertRotTrans(Mtx* m) {
     float t;
     t = m->m[0][1]; m->m[0][1] = m->m[1][0]; m->m[1][0] = t;
     t = m->m[0][2]; m->m[0][2] = m->m[2][0]; m->m[2][0] = t;

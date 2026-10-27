@@ -1,5 +1,5 @@
 typedef int C4q __attribute__((mode(TI)));
-C4q* Mtx_Copy_23E150(C4q* d, C4q* s) {
+C4q* cMatrix_opAssign(C4q* d, C4q* s) {
     C4q a, b;
     a = s[0];
     b = s[1];

@@ -1,9 +1,9 @@
 typedef struct { int w[32]; } B2F12A8;
 extern void __assert(const char *, int, const char *);
-extern void LargeInt_SetInt(B2F12A8 *, int);
-extern int LargeInt_IsOne(B2F12A8 *);
+extern void lintSetSmallValue(B2F12A8 *, int);
+extern int IsOne(B2F12A8 *);
 extern void lintSetBit(B2F12A8 *, int);
-extern void LargeInt_AddInt(B2F12A8 *, int);
+extern void lintIncrement(B2F12A8 *, int);
 extern void MOD(B2F12A8 *, B2F12A8 *, B2F12A8 *);
 extern void GCD(B2F12A8 *, B2F12A8 *, B2F12A8 *);
 extern int lintIsbSPRP(B2F12A8 *, B2F12A8 *);
@@ -28,29 +28,29 @@ void lintPrime(B2F12A8 *p, int bits)
         if (bits != func_002F1C38(p)) __assert(D_004AE090, 0x360, D_004AE0C8);
         n++;
         lintSetBit(p, k);
-        LargeInt_SetInt(&t, 0xD2);
+        lintSetSmallValue(&t, 0xD2);
         MOD(&t, p, &t);
-        LargeInt_AddInt(p, 0xD2 - t.w[0]);
+        lintIncrement(p, 0xD2 - t.w[0]);
         for (i = 0; n & 0x7F; ) {
             i++;
-            LargeInt_AddInt(p, D_0048C5F0[i - 1]);
+            lintIncrement(p, D_0048C5F0[i - 1]);
             ok = 0;
             GCD(&t, p, &D_0048C4F0);
-            if (LargeInt_IsOne(&t)) {
+            if (IsOne(&t)) {
                 GCD(&t, p, &D_0048C570);
-                ok = LargeInt_IsOne(&t) != 0;
+                ok = IsOne(&t) != 0;
             }
             if (ok) {
-                LargeInt_SetInt(&t, 2);
+                lintSetSmallValue(&t, 2);
                 ok = lintIsbSPRP(p, &t);
                 if (ok) {
-                    LargeInt_SetInt(&t, 3);
+                    lintSetSmallValue(&t, 3);
                     ok = LucasTest(p, &t);
                     if (ok) return;
                 }
             }
             if (D_0048C5F0[i] & 1) {
-                LargeInt_AddInt(p, D_0048C5F0[i]);
+                lintIncrement(p, D_0048C5F0[i]);
                 i = 0;
             }
             n++;

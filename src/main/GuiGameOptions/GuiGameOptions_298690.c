@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-Rel* String_CtorEmpty(Rel* r) {
+Rel* cString_ctor_void(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
@@ -44,8 +44,8 @@ typedef struct StrObj {
 } StrObj;
 
 extern int strlen(const char* s); /* strlen */
-extern void String_Reserve(StrObj* str, int capacity);
-extern void String_Replace(StrObj* str, int pos, int count, const char* first, const char* last, char alloc);
+extern void std_basic_string_char_char_traits_char_reserve(StrObj* str, int capacity);
+extern void std_basic_string_char_char_traits_char_do_replace(StrObj* str, int pos, int count, const char* first, const char* last, char alloc);
 
 /* String constructor from a C string. */
 StrObj* func_00298720(StrObj* self, const char* cstr) {
@@ -55,8 +55,8 @@ StrObj* func_00298720(StrObj* self, const char* cstr) {
     self->w1 = 0;
     self->w2 = 0;
     len = strlen(cstr);
-    String_Reserve(self, len);
-    String_Replace(self, 0, 0, cstr, cstr + len, alloc[0]);
+    std_basic_string_char_char_traits_char_reserve(self, len);
+    std_basic_string_char_char_traits_char_do_replace(self, 0, 0, cstr, cstr + len, alloc[0]);
     return self;
 }
 #pragma pop /* merge_units */
@@ -66,11 +66,11 @@ StrObj* func_00298720(StrObj* self, const char* cstr) {
 #pragma push /* merge_units */
 typedef struct { unsigned long long isLong : 1; unsigned long long size : 7; } Short002987A0;
 typedef union { unsigned int flags; Short002987A0 s; struct { int f0; int length; char* data; } l; } Str002987A0;
-extern void String_Compare(Str002987A0* str, int pos, int count, const char* s, int n);
+extern void std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(Str002987A0* str, int pos, int count, const char* s, int n);
 /* Replace the whole string with the C string s. */
 void func_002987A0(Str002987A0* str, const char* s)
 {
-    String_Compare(str, 0, (str->flags & 1) ? str->l.length : (unsigned char)str->s.size, s, strlen(s));
+    std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(str, 0, (str->flags & 1) ? str->l.length : (unsigned char)str->s.size, s, strlen(s));
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002987A0 */

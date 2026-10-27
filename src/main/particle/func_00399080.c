@@ -193,17 +193,17 @@ extern signed char D_0053BB50;
 extern V4 D_004BC5A0;
 extern V4 D_004BC5B0;
 extern V4 D_004BC5C0;
-void Renderer_BindTexture(void* m, int idx);
+void cTexMan_SetActive(void* m, int idx);
 void XLib_NewStrip(void* s);
 void XLib_NextBatchVert(void* s);
 void XLib_DrawSprites(void* s);
-void Renderer_FlushBatch(void* s);
-void Vec4_Copy(V4* d, const V4* s);
-void GuiBatch_AddVertexColor(V4* d, const V4* s);
-float GuiBatch_AddVertexUV(void);
-V4* Vec4_Set(V4* o, float x, float y, float z, float w);
-int ParticleDefs_FindByName(void* mgr, void* key);
-void* ParticleDefs_SlotForId(void* self, int n);
+void XLib_DrawStrip(void* s);
+void cVector_opAssign(V4* d, const V4* s);
+void tIRGBA_opAssign_tRGBAR(V4* d, const V4* s);
+float tVifFloatToInt_short_4_Bias(void);
+V4* cVector_ctor_float_float_float_float(V4* o, float x, float y, float z, float w);
+int GetEffectID__15cParticleSystemCFRC1(void* mgr, void* key);
+void* cLList_cParticleDefinitionPtr_opIndex(void* self, int n);
 }
 #define D_00539220 (D_00539210.f20)
 #define D_00539224 (D_00539210.f24)
@@ -248,15 +248,15 @@ static inline void EmitC(const V4& pos, const V4& col)
     Ent_00399080* e;
     XLib_NextBatchVert(g_Video);
     e = &RS->ents[D_00539210.f10];
-    Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
-    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], &col);
+    cVector_opAssign(&e->pos[D_00539224 - 1], &pos);
+    tIRGBA_opAssign_tRGBAR(&e->c30[D_00539224 - 1], &col);
     D_005381F8 = 2LL << 32;
 }
 static inline V4* UV(const V4& uv)
 {
     V4 tmp;
-    float u = uv.x + GuiBatch_AddVertexUV();
-    return Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w);
+    float u = uv.x + tVifFloatToInt_short_4_Bias();
+    return cVector_ctor_float_float_float_float(&tmp, u, uv.y + tVifFloatToInt_short_4_Bias(), uv.z, uv.w);
 }
 static inline V4* UVW0(const V4& uv) { return UV(uv); }
 static inline V4* UVW1(const V4& uv) { return UVW0(uv); }
@@ -265,9 +265,9 @@ static inline void Emit(V4 pos, const V4& col, const V4& uv)
     Ent_00399080* e;
     XLib_NextBatchVert(g_Video);
     e = &RS->ents[D_00539210.f10];
-    Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
-    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], &col);
-    Vec4_Copy(&e->c34[D_00539224 - 1], UVW1(uv));
+    cVector_opAssign(&e->pos[D_00539224 - 1], &pos);
+    tIRGBA_opAssign_tRGBAR(&e->c30[D_00539224 - 1], &col);
+    cVector_opAssign(&e->c34[D_00539224 - 1], UVW1(uv));
     D_005381F8 = 6LL << 32;
 }
 static inline void Restart(void)
@@ -297,7 +297,7 @@ static inline Elem* At(Self* s, int i)
     return e;
 }
 
-extern "C" void WeatherEmitter_Draw(Self* self)
+extern "C" void cParticleBox_Render(Self* self)
 {
     V4 col;
     V4 c2;
@@ -319,14 +319,14 @@ extern "C" void WeatherEmitter_Draw(Self* self)
         int k;
         found = 0;
         for (k = 0; k < self->info->f180; k++) {
-            found = *(Found**)ParticleDefs_SlotForId(D_0053B544, ParticleDefs_FindByName(D_0053B540, &self->info->sub[k]));
+            found = *(Found**)cLList_cParticleDefinitionPtr_opIndex(D_0053B544, GetEffectID__15cParticleSystemCFRC1(D_0053B540, &self->info->sub[k]));
             if (found->fC == 0) break;
             found = 0;
         }
     if (found) {
         int j;
         c2.Set(0.0f, 0.0f, 0.0f, self->info->f14);
-        Renderer_BindTexture(g_TextureMgr, found->f74);
+        cTexMan_SetActive(g_TextureMgr, found->f74);
         start = self->f6C / 12;
         for (j = 0; j < start; j++) {
             Elem* e = At(self, j);
@@ -345,7 +345,7 @@ extern "C" void WeatherEmitter_Draw(Self* self)
         if (n > 0) Flush(n);
     }
     }
-    Renderer_BindTexture(g_TextureMgr, self->info->f74);
+    cTexMan_SetActive(g_TextureMgr, self->info->f74);
     if (self->f130 == 1) {
         c3.Set(0.0f, 0.0f, 0.0f, self->info->f14);
         for (i = start; i < self->f6C; i++) {
@@ -400,7 +400,7 @@ extern "C" void WeatherEmitter_Draw(Self* self)
                 }
             }
         }
-        if (n > 0) Renderer_FlushBatch(g_Video);
+        if (n > 0) XLib_DrawStrip(g_Video);
     }
 }
 

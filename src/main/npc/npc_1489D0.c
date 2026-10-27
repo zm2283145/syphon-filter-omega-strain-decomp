@@ -56,11 +56,11 @@ static inline void QCopy_89D0(void* dst, void* src, int n0)
 typedef struct { char pad[0x74]; void* obj; int arg; } Sub_89D0;
 typedef struct { char pad[0x1AC]; int id; Sub_89D0* sub; } Src_89D0;
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void cAiTransfer_Put(void* dst, Src_89D0* obj);
 void cAiTargetTransfer_Put(void* a, int id, void* b, void* c);
 void cPathNavigatorTransfer_Put(void* dst, Sub_89D0* s);
-void* NpcFollowerBuf_Init(void* p, int arg);
+void* cPath_ctor(void* p, int arg);
 void cPathTransfer_Put(void* dst, void* obj);
 }
 extern "C" void func_001489D0(char* self, Src_89D0* obj)
@@ -78,10 +78,10 @@ extern "C" void func_001489D0(char* self, Src_89D0* obj)
         void* p;
         {
             AllocGuard g;
-            p = Mem_Alloc(0, 0x30, "path.hh", 0x1CC);
+            p = cMemMan_Allocate(0, 0x30, "path.hh", 0x1CC);
         }
         if (p)
-            p = NpcFollowerBuf_Init(p, s->arg);
+            p = cPath_ctor(p, s->arg);
         s->obj = p;
     }
     cPathTransfer_Put(self + 0x1B0, s->obj);
@@ -157,10 +157,10 @@ extern "C" void func_00148B50(char* self, Src_8B50* obj)
         void* p;
         {
             AllocGuard g;
-            p = Mem_Alloc(0, 0x30, D_0049C080, 0x1CC);
+            p = cMemMan_Allocate(0, 0x30, D_0049C080, 0x1CC);
         }
         if (p)
-            p = NpcFollowerBuf_Init(p, s->arg);
+            p = cPath_ctor(p, s->arg);
         s->obj = p;
     }
     cPathTransfer_Get(self + 0x1B0, s->obj);

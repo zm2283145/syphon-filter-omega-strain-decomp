@@ -12,7 +12,7 @@
 
 extern "C" {
 extern char D_0049AE90[];
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
 }
 
@@ -26,7 +26,7 @@ static inline void StreamString_FreeLong(char* allocation)
 {
     if (allocation) {
         AllocGuard guard;
-        Mem_Free(0, allocation, D_0049AE90, 0x64);
+        cMemMan_Deallocate(0, allocation, D_0049AE90, 0x64);
     }
 }
 

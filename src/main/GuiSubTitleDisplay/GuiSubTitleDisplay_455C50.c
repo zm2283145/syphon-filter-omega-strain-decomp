@@ -19,29 +19,29 @@ DEFINE_GRID16_FLAG_TEST(TeamEnemy_int_int_3, D_004EE620)
 struct V455 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(char*); };
 typedef struct { char pad[0x48]; void* f48; } W455;
 extern "C" {
-extern void GuiWidget_BaseWake(W455*);
-extern char* Loc_LookupText(char*);
-extern void MLTextWidget_Clear(void*);
-extern void MLTextWidget_AddText(void*, char*);
-extern V455* GuiWidget_FindChildByName(W455*, char*);
+extern void GuiWidget_onWake(W455*);
+extern char* nGlobalization_GetString_charP(char*);
+extern void GuiMLTextWidget_Clear(void*);
+extern void GuiMLTextWidget_AddText(void*, char*);
+extern V455* GuiWidget_FindChild_charP(W455*, char*);
 extern char D_004A7520[];
 extern char D_004C1A38[];
 extern char g_LevelDirName[];
 extern void GuiTextWidget_SetText(V455*, char*, int);
 }
-extern "C" void GuiBriefingPane_Wake(W455* w) {
+extern "C" void GuiBriefingPane_onWake(W455* w) {
     V455* p;
-    GuiWidget_BaseWake(w);
+    GuiWidget_onWake(w);
     if (w->f48) {
-        char* t = Loc_LookupText("level_briefing");
+        char* t = nGlobalization_GetString_charP("level_briefing");
         void* x = w->f48;
-        MLTextWidget_Clear(x);
-        MLTextWidget_AddText(x, t ? t : D_004C1A38);
+        GuiMLTextWidget_Clear(x);
+        GuiMLTextWidget_AddText(x, t ? t : D_004C1A38);
     }
-    p = GuiWidget_FindChildByName(w, "label_briefingheader");
+    p = GuiWidget_FindChild_charP(w, "label_briefingheader");
     p = (p && p->v20(D_004A7520)) ? p : 0;
     if (p) {
-        char* t = Loc_LookupText(g_LevelDirName);
+        char* t = nGlobalization_GetString_charP(g_LevelDirName);
         GuiTextWidget_SetText(p, t ? t : g_LevelDirName, 0);
     }
 }
@@ -53,12 +53,12 @@ extern "C" void GuiBriefingPane_Wake(W455* w) {
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int GuiWidget_Draw(char * );                            
-int MLTextWidget_SetColor(int, char *);                          
+int GuiWidget_onRender(char * );                            
+int GuiMLTextWidget_SetTextColor(int, char *);                          
 extern char D_00587D20;
 extern char D_00587D30;
 
-void GuiBriefingPane_Draw(char * arg0) {
+void GuiBriefingPane_onRender(char * arg0) {
     char *var_a1;
     int temp_a0;
 
@@ -69,9 +69,9 @@ void GuiBriefingPane_Draw(char * arg0) {
         } else {
             var_a1 = &D_00587D30;
         }
-        MLTextWidget_SetColor(temp_a0, var_a1);
+        GuiMLTextWidget_SetTextColor(temp_a0, var_a1);
     }
-    GuiWidget_Draw(arg0);
+    GuiWidget_onRender(arg0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00455DB0 */
@@ -90,13 +90,13 @@ typedef struct { char pad[0x48]; void* f48; } O_455E10;
 extern "C" {
 extern void* g_Hud;
 extern char g_Game[];
-void GuiMultiLineText_ScrollUp(void* p, int v);
-void GuiMultiLineText_ScrollDown(void* p, int v);
-M_455E10* Gui_GetScreenStack(void);
+void GuiMLTextWidget_ScrollUp(void* p, int v);
+void GuiMLTextWidget_ScrollDown(void* p, int v);
+M_455E10* Gui_Canvas(void);
 void GuiStartMenu_ReturnToMenu(O_455E10* o);
-void Hud_ClosePauseMenu(void* p);
-void Game_SetPaused(void* p, int v);
-int GuiBriefingPane_HandleInput(O_455E10* o, Ev_455E10* ev);
+void cHud_DeactivateObjectiveMenu(void* p);
+void cGameSystem_PauseGame(void* p, int v);
+int GuiBriefingPane_onInput(O_455E10* o, Ev_455E10* ev);
 }
 static inline unsigned char Down_455E10(Ev_455E10* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Btn_455E10(Ev_455E10* e, int b) { unsigned char r = 0; if (Down_455E10(e) && e->btn == b) r = 1; return r; }
@@ -105,14 +105,14 @@ static inline bool Down2_455E10(Ev_455E10* e) { return e->type == 1 && e->b2 == 
 static inline bool Btn2_455E10(Ev_455E10* e, int b) { return Down2_455E10(e) && e->btn == b; }
 static inline bool Plain2_455E10(Ev_455E10* e, int b) { return Btn2_455E10(e, b) && e->b6 == 0; }
 
-int GuiBriefingPane_HandleInput(O_455E10* o, Ev_455E10* ev)
+int GuiBriefingPane_onInput(O_455E10* o, Ev_455E10* ev)
 {
     if (Plain_455E10(ev, 0x1000) && o->f48) {
-        GuiMultiLineText_ScrollUp(o->f48, 0);
+        GuiMLTextWidget_ScrollUp(o->f48, 0);
         return 1;
     }
     if (Plain2_455E10(ev, 0x4000) && o->f48) {
-        GuiMultiLineText_ScrollDown(o->f48, 0);
+        GuiMLTextWidget_ScrollDown(o->f48, 0);
         return 1;
     }
     if (Plain2_455E10(ev, 0x10)) {
@@ -120,9 +120,9 @@ int GuiBriefingPane_HandleInput(O_455E10* o, Ev_455E10* ev)
         return 1;
     }
     if (Plain2_455E10(ev, 0x800)) {
-        Gui_GetScreenStack()->v24(o);
-        Hud_ClosePauseMenu(g_Hud);
-        Game_SetPaused(g_Game, 0);
+        Gui_Canvas()->v24(o);
+        cHud_DeactivateObjectiveMenu(g_Hud);
+        cGameSystem_PauseGame(g_Game, 0);
         return 1;
     }
     return 0;

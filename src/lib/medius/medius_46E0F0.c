@@ -27,7 +27,7 @@ extern char* D_005984A8;
 extern Cb_46E0F0 D_005984A4;
 extern int D_005984DC;
 extern void* memcpy(void*, const void*, unsigned int);
-extern int Net_SendLocked(int, int, int, int, int, int, void*);
+extern int NetSendMessage(int, int, int, int, int, int, void*);
 int MediusUniqueCallbackFileUploadResponseHandler(int a, int b, int c, In_46E0F0* in)
 {
     Pkt_46E0F0 pkt;
@@ -47,7 +47,7 @@ int MediusUniqueCallbackFileUploadResponseHandler(int a, int b, int c, In_46E0F0
     if (D_00497CC0 != 1) pkt.f10 = -0x3C6;
     if (D_00497CC4 < 0) pkt.f10 = -0x3C6;
     if (D_005984A4) D_005984A4(a, b, c, &pkt);
-    Net_SendLocked(0x40, D_00497CC4, 0xFFFF, 1, D_005984DC, 0x1FC, &pkt);
+    NetSendMessage(0x40, D_00497CC4, 0xFFFF, 1, D_005984DC, 0x1FC, &pkt);
     return 0x28;
 }
 

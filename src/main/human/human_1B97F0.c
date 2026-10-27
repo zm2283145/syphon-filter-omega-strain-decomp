@@ -28,7 +28,7 @@ struct Msg_0020FEC0 : ClonedMessageBase {
 extern "C" {
 char D_0049EDA8[] = "human.cc";
 }
-DEFINE_MESSAGE_CLONE(cEquipGogglesMsg_v01, Msg_0020FEC0, 0x28, D_0049EDA8, 0x2F89, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cEquipGogglesMsg_Clone, Msg_0020FEC0, 0x28, D_0049EDA8, 0x2F89, CLONE_BODY)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001B97F0(void) {}
 #pragma pop /* merge_units */
@@ -38,7 +38,7 @@ static inline void merge_flush_func_001B97F0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x24]; int a; char pad28[8]; float x, y, z; } TS_1B9900;
 extern void cNetMsg_PutFloat(float f);
-void cNetThrowStarMsg_v04(TS_1B9900* self)
+void cNetThrowStarMsg_Pack(TS_1B9900* self)
 {
     NetW2_write32(self->a);
     cNetMsg_PutFloat(self->x);

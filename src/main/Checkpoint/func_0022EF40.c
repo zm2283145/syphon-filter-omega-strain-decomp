@@ -6,12 +6,12 @@
 
 #include "types.h"
 
-void cCheckpoint_v0E(void) {
+void cCheckpoint_Init(void) {
 }
 
-void cCheckpoint_v0F(void) {
+void cCheckpoint_Load(void) {
 }
 
-int cCheckpoint_v01(void) {
+int cCheckpoint_HandleMessage(void) {
     return 0;
 }

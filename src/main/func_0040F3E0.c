@@ -22,7 +22,7 @@ extern "C" {
 extern void* g_MotionManager;
 void Tree_Begin(WIt* out, void* tree);
 void Tree_End(WIt* out, void* tree);
-void Tree_Successor(WIt* it);
+void std_red_black_tree_1_increment(WIt* it);
 void World_ClearPending(void* tree);
 }
 static inline WObj* WHandle_Get(WHandle* h)
@@ -40,7 +40,7 @@ static inline void WStep(WHandle* h, float dt)
             o->v50(dt);
     }
 }
-extern "C" void World_PhysicsTraversal(float dt)
+extern "C" void cMotionManager_NextFrame(float dt)
 {
     WIt it;
     WIt end;
@@ -54,7 +54,7 @@ extern "C" void World_PhysicsTraversal(float dt)
         Tree_End(&te, g_MotionManager);
         end = te;
     }
-    for (; (it.n == end.n) ^ 1; Tree_Successor(&it))
+    for (; (it.n == end.n) ^ 1; std_red_black_tree_1_increment(&it))
         WStep(&it.n->h, dt);
     World_ClearPending(g_MotionManager);
 }

@@ -35,19 +35,19 @@ static void * const dat_00497980[1] = { (void*)D_004C19A0 };
 static void * const dat_00497988[3] = { (void*)D_004C19B0, (void*)0x0, (void*)D_004C19C0 };
 extern "C" char D_004AAE20[];
 extern "C" char D_004AAE00[];
-extern "C" void GuiWidget_Init(Screen_456020* self);
-extern "C" Widget_456020* GuiWidget_FindChildByName(Screen_456020* self, int id);
+extern "C" void GuiWidget_onAdd(Screen_456020* self);
+extern "C" Widget_456020* GuiWidget_FindChild_charP(Screen_456020* self, int id);
 
-extern "C" void GuiBriefingPane_Init(Screen_456020* self)
+extern "C" void GuiBriefingPane_onAdd(Screen_456020* self)
 {
     Widget_456020* child;
-    GuiWidget_Init(self);
-    child = GuiWidget_FindChildByName(self, (*(int*)dat_00497980));
+    GuiWidget_onAdd(self);
+    child = GuiWidget_FindChild_charP(self, (*(int*)dat_00497980));
     child = (child && child->IsA(D_004AAE20)) ? child : 0;
     self->panel = (Panel_456020*)child;
     if (self->panel) {
         self->panel->m60 = 0;
-        child = GuiWidget_FindChildByName(self, (*(int*)dat_00497988));
+        child = GuiWidget_FindChild_charP(self, (*(int*)dat_00497988));
         child = (child && child->IsA(D_004AAE00)) ? child : 0;
         self->panel->m7C = child;
         self->panel->flags |= 0x80;
@@ -71,16 +71,16 @@ struct Manager {
 
 extern void* g_Hud;
 extern char g_Game[];
-extern "C" Manager* Gui_GetScreenStack(void);
-extern "C" void Hud_ClosePauseMenu(void* p);
-extern "C" void Game_SetPaused(void* p, int n);
+extern "C" Manager* Gui_Canvas(void);
+extern "C" void cHud_DeactivateObjectiveMenu(void* p);
+extern "C" void cGameSystem_PauseGame(void* p, int n);
 
-/* Hands self to the manager (virtual +0x68), then Hud_ClosePauseMenu(g_Hud) and Game_SetPaused(g_Game, 0). */
-extern "C" void GuiStartMenu_CloseAll(void* self)
+/* Hands self to the manager (virtual +0x68), then cHud_DeactivateObjectiveMenu(g_Hud) and cGameSystem_PauseGame(g_Game, 0). */
+extern "C" void GuiStartMenu_PopStartMenu(void* self)
 {
-    Gui_GetScreenStack()->Method68(self);
-    Hud_ClosePauseMenu(g_Hud);
-    Game_SetPaused(g_Game, 0);
+    Gui_Canvas()->Method68(self);
+    cHud_DeactivateObjectiveMenu(g_Hud);
+    cGameSystem_PauseGame(g_Game, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00456100 */

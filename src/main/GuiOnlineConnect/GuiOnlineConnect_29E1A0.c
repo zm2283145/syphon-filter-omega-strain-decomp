@@ -14,30 +14,30 @@ extern "C" {
 extern void* D_004FFC04;
 extern unsigned char g_DebugTriangle;
 extern char D_004AABF0[];
-void GuiScreen_Update(S_0029E1A0* self);
+void GuiLobbyScreen_onAdvanceTime(S_0029E1A0* self);
 void FrontEnd_StartSplashThread(void* ui);
 void FrontEnd_StopMusic(void* ui);
-void* DME_GetLobby(void);
-int FrontEnd_StartOnline(void* ui);
-char* GuiScreen_GetLobbyString(S_0029E1A0* self, int a, int b, int c, int d, int e);
-void String_CtorCStr_13B480(Str_0029E1A0* s, const char* c);
-char* String_CStr(Str_0029E1A0* s);
-int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_0029E1A0* d, int e);
-void FrontEnd_SetMusic(void* ui, int a);
-void FrontEnd_ClosePopup(void* ui, int id);
+void* cDME_GetLobby(void);
+int cGameFrontEnd_LobbyCreate(void* ui);
+char* GuiLobbyScreen_GetLobbyString(S_0029E1A0* self, int a, int b, int c, int d, int e);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_0029E1A0* s, const char* c);
+char* std_basic_string_char_char_traits_char_c_str(Str_0029E1A0* s);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, char* c, S_0029E1A0* d, int e);
+void cGameFrontEnd_PlayMusic(void* ui, int a);
+void cGameFrontEnd_PopMessageBox(void* ui, int id);
 void FrontEnd_StopSplashThread(void* ui);
 void String_Dtor(Str_0029E1A0* s, int flags);
 void GuiOnlineConnect_ListConfigs(S_0029E1A0* self);
 void GuiOnlineConnect_Back(S_0029E1A0* self, int a);
-void FrontEnd_DownloadPolicies(void* ui);
-void SFOLobby_RequestSettings(void* g);
+void cGameFrontEnd_LobbyStartAccountScreen(void* ui);
+void SFOLobby_GetAnnouncements(void* g);
 int SFOLobby_GetUsagePolicy(void* g);
 void SFOLobby_GetPrivacyPolicy(void* g);
 void GuiOnlineConnect_Advance(S_0029E1A0* self);
 }
 extern "C" void GuiOnlineConnect_Update(S_0029E1A0* self)
 {
-    GuiScreen_Update(self);
+    GuiLobbyScreen_onAdvanceTime(self);
     if (g_DebugTriangle)
         return;
     if (!self->f88) {
@@ -46,18 +46,18 @@ extern "C" void GuiOnlineConnect_Update(S_0029E1A0* self)
     }
     if (self->f88 == 2) {
         FrontEnd_StopMusic(D_004FFC04);
-        if (!DME_GetLobby() && !FrontEnd_StartOnline(D_004FFC04)) {
+        if (!cDME_GetLobby() && !cGameFrontEnd_LobbyCreate(D_004FFC04)) {
             Str_0029E1A0 a;
             Str_0029E1A0 b;
             self->f88 = 4;
-            String_CtorCStr_13B480(&a, GuiScreen_GetLobbyString(self, 1, 0, 0, 0, 0));
-            String_CtorCStr_13B480(&b, GuiScreen_GetLobbyString(self, 4, 0, 0, 0, 0));
+            std_basic_string_char_char_traits_char_ctor_charP(&a, GuiLobbyScreen_GetLobbyString(self, 1, 0, 0, 0, 0));
+            std_basic_string_char_char_traits_char_ctor_charP(&b, GuiLobbyScreen_GetLobbyString(self, 4, 0, 0, 0, 0));
             {
-                char* tb = String_CStr(&b);
-                FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, self, 0);
+                char* tb = std_basic_string_char_char_traits_char_c_str(&b);
+                cGameFrontEnd_PushMessageBox(D_004FFC04, 2, std_basic_string_char_char_traits_char_c_str(&a), tb, self, 0);
             }
-            FrontEnd_SetMusic(D_004FFC04, 0);
-            FrontEnd_ClosePopup(D_004FFC04, self->f48);
+            cGameFrontEnd_PlayMusic(D_004FFC04, 0);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, self->f48);
             FrontEnd_StopSplashThread(D_004FFC04);
             String_Dtor(&b, 0);
             String_Dtor(&a, 0);
@@ -65,25 +65,25 @@ extern "C" void GuiOnlineConnect_Update(S_0029E1A0* self)
         }
         GuiOnlineConnect_ListConfigs(self);
         FrontEnd_StopSplashThread(D_004FFC04);
-        FrontEnd_ClosePopup(D_004FFC04, self->f48);
-        FrontEnd_SetMusic(D_004FFC04, 0);
+        cGameFrontEnd_PopMessageBox(D_004FFC04, self->f48);
+        cGameFrontEnd_PlayMusic(D_004FFC04, 0);
     }
     if (self->f88 == 7) {
         unsigned char done;
-        void* g = DME_GetLobby();
+        void* g = cDME_GetLobby();
         if (!g) {
             GuiOnlineConnect_Back(self, 1);
             done = 0;
         } else {
             void* ui = D_004FFC04;
-            int h = FrontEnd_OpenPopup(ui, 0, D_004AABF0, GuiScreen_GetLobbyString(self, 0xD, 0, 0, 0, 0), 0, 0);
+            int h = cGameFrontEnd_PushMessageBox(ui, 0, D_004AABF0, GuiLobbyScreen_GetLobbyString(self, 0xD, 0, 0, 0, 0), 0, 0);
             if (self->f120 != -1)
-                FrontEnd_ClosePopup(D_004FFC04, self->f120);
-            FrontEnd_DownloadPolicies(D_004FFC04);
-            SFOLobby_RequestSettings(g);
+                cGameFrontEnd_PopMessageBox(D_004FFC04, self->f120);
+            cGameFrontEnd_LobbyStartAccountScreen(D_004FFC04);
+            SFOLobby_GetAnnouncements(g);
             if (SFOLobby_GetUsagePolicy(g))
                 SFOLobby_GetPrivacyPolicy(g);
-            FrontEnd_ClosePopup(D_004FFC04, h);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, h);
             done = 1;
         }
         if (done)
@@ -122,29 +122,29 @@ extern int* g_MemCard;
 extern char D_004FFBA4[];
 extern "C" char D_004AABC8[];
 static void * const dat_0048B988[2] = { (void*)D_004AABC8, (void*)0x0 };
-int SFOLobby_GetDnasResult(void* g);
+int SFOLobby_GetDNASError(void* g);
 void GuiOnlineConnect_ShowGroup(S_0029E440* self, int a);
 void GuiOnlineConnect_Connect(S_0029E440* self, char* t);
-Ui_0029E440* Gui_GetScreenStack(void);
-Fl_0029E440* GuiWidget_FindChildByName(void* p, char* name);
+Ui_0029E440* Gui_Canvas(void);
+Fl_0029E440* GuiWidget_FindChild_charP(void* p, char* name);
 #if 0 /* merge_units */
-int GuiScreen_GetLobbyString(S_0029E440* self, int a, int b, int c, int d, int e);
+int GuiLobbyScreen_GetLobbyString(S_0029E440* self, int a, int b, int c, int d, int e);
 #endif /* merge_units */
-#define GuiScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) ((int)GuiScreen_GetLobbyString((S_0029E1A0 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define GuiLobbyScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) ((int)GuiLobbyScreen_GetLobbyString((S_0029E1A0 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
-int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_0029E440* d, int e);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, int c, S_0029E440* d, int e);
 #endif /* merge_units */
-#define FrontEnd_OpenPopup(a0, a1, a2, a3, a4, a5) (FrontEnd_OpenPopup((a0), (a1), (a2), (char *)(a3), (S_0029E1A0 *)(a4), (a5))) /* merge_units */
+#define cGameFrontEnd_PushMessageBox(a0, a1, a2, a3, a4, a5) (cGameFrontEnd_PushMessageBox((a0), (a1), (a2), (char *)(a3), (S_0029E1A0 *)(a4), (a5))) /* merge_units */
 
 void GuiOnlineConnect_DnasRetry(S_0029E440* self);
 void Renderer_Teardown(void* p);
-void* Service_Lookup(void* a, void* b);
-void SoundMgr_UnloadLevel(void* svc);
+void* cSystemContainer_GetSystem(void* a, void* b);
+void cGameSound_Unload(void* svc);
 void sceMc2DeleteSocket(int id);
 void sceMc2End(void);
-void* String_CStr_189540(void* p);
-void SFOLobby_LaunchNetGui(void* a, char* b);
+void* cString_CStr(void* p);
+void SFOLobby_ConfigLaunchNetGui(void* a, char* b);
 #if 0 /* merge_units */
 void GuiOnlineConnect_Back(S_0029E440* self, int a);
 #endif /* merge_units */
@@ -155,15 +155,15 @@ void GuiOnlineConnect_Advance(S_0029E440* self);
 #endif /* merge_units */
 #define GuiOnlineConnect_Advance(a0) (GuiOnlineConnect_Advance((S_0029E1A0 *)(a0))) /* merge_units */
 
-int GuiScreen_HandleEvent(S_0029E440* self, void* w, int msg, int sub);
+int GuiLobbyScreen_onMessage(S_0029E440* self, void* w, int msg, int sub);
 }
 extern "C" int GuiOnlineConnect_HandleEvent(S_0029E440* self, void* w, int msg, int sub, char* text)
 {
     unsigned short m = msg;
     if (m == 0x2002) {
         unsigned char ok = 0;
-        if (DME_GetLobby()) {
-            int st = SFOLobby_GetDnasResult(DME_GetLobby());
+        if (cDME_GetLobby()) {
+            int st = SFOLobby_GetDNASError(cDME_GetLobby());
             bool ne = st != -0x2BD && st != -0x2BF;
             if (!ne)
                 ok = 1;
@@ -186,18 +186,18 @@ extern "C" int GuiOnlineConnect_HandleEvent(S_0029E440* self, void* w, int msg, 
             Fl_0029E440* b;
             int old;
             void* ui;
-            Gui_GetScreenStack()->Show(p, 0x7D0);
-            a = GuiWidget_FindChildByName(self->p108, D_004AAC18);
+            Gui_Canvas()->Show(p, 0x7D0);
+            a = GuiWidget_FindChild_charP(self->p108, D_004AAC18);
             if (a)
                 a->flags &= ~2;
-            b = GuiWidget_FindChildByName(self->p108, D_004AAC28);
+            b = GuiWidget_FindChild_charP(self->p108, D_004AAC28);
             if (b)
                 b->flags |= 2;
             old = self->f11C;
             ui = D_004FFC04;
-            self->f11C = FrontEnd_OpenPopup(ui, 0, D_004AABF0, GuiScreen_GetLobbyString(self, 0x82, 0, 0, 0, 0), 0, 0);
+            self->f11C = cGameFrontEnd_PushMessageBox(ui, 0, D_004AABF0, GuiLobbyScreen_GetLobbyString(self, 0x82, 0, 0, 0, 0), 0, 0);
             if (old != -1)
-                FrontEnd_ClosePopup(D_004FFC04, old);
+                cGameFrontEnd_PopMessageBox(D_004FFC04, old);
         }
         return 1;
     }
@@ -211,14 +211,14 @@ extern "C" int GuiOnlineConnect_HandleEvent(S_0029E440* self, void* w, int msg, 
                 void* svc;
                 int id;
                 Renderer_Teardown(g_Video);
-                svc = Service_Lookup(g_Game, D_004F2CC0);
+                svc = cSystemContainer_GetSystem(g_Game, D_004F2CC0);
                 if (svc)
-                    SoundMgr_UnloadLevel(svc);
+                    cGameSound_Unload(svc);
                 id = g_MemCard ? *g_MemCard : -1;
                 if (id != -1)
                     sceMc2DeleteSocket(id);
                 sceMc2End();
-                SFOLobby_LaunchNetGui(String_CStr_189540(D_004FFBA4), (*(char**)dat_0048B988));
+                SFOLobby_ConfigLaunchNetGui(cString_CStr(D_004FFBA4), (*(char**)dat_0048B988));
             } else if (sub == 0x1F) {
                 self->f88 = 5;
             } else {
@@ -239,13 +239,13 @@ extern "C" int GuiOnlineConnect_HandleEvent(S_0029E440* self, void* w, int msg, 
                     GuiOnlineConnect_Connect(self, self->f90);
                 } else {
                     void* ui = D_004FFC04;
-                    FrontEnd_OpenPopup(ui, 5, D_004AABF0, GuiScreen_GetLobbyString(self, 0xE, 0, 0, 0, 0), self, 0x1E);
+                    cGameFrontEnd_PushMessageBox(ui, 5, D_004AABF0, GuiLobbyScreen_GetLobbyString(self, 0xE, 0, 0, 0, 0), self, 0x1E);
                 }
             } else if (w == self->fF8) {
                 GuiOnlineConnect_Advance(self);
             } else {
                 void* ui = D_004FFC04;
-                FrontEnd_OpenPopup(ui, 5, D_004AABF0, GuiScreen_GetLobbyString(self, 0xE, 0, 0, 0, 0), self, 0x1E);
+                cGameFrontEnd_PushMessageBox(ui, 5, D_004AABF0, GuiLobbyScreen_GetLobbyString(self, 0xE, 0, 0, 0, 0), self, 0x1E);
             }
             return 1;
         }
@@ -254,10 +254,10 @@ extern "C" int GuiOnlineConnect_HandleEvent(S_0029E440* self, void* w, int msg, 
             return 1;
         }
     }
-    return GuiScreen_HandleEvent(self, w, msg, sub);
+    return GuiLobbyScreen_onMessage(self, w, msg, sub);
 }
-#undef GuiScreen_GetLobbyString /* merge_units */
-#undef FrontEnd_OpenPopup /* merge_units */
+#undef GuiLobbyScreen_GetLobbyString /* merge_units */
+#undef cGameFrontEnd_PushMessageBox /* merge_units */
 #undef GuiOnlineConnect_Back /* merge_units */
 #undef GuiOnlineConnect_Advance /* merge_units */
 #pragma pop /* merge_units */
@@ -279,33 +279,33 @@ void GuiOnlineConnect_Back(S_0029E8C0* self, int a);
 #define GuiOnlineConnect_Back(a0, a1) (GuiOnlineConnect_Back((S_0029E1A0 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-char* GuiScreen_GetLobbyString(S_0029E8C0* self, int a, int b, int c, int d, int e);
+char* GuiLobbyScreen_GetLobbyString(S_0029E8C0* self, int a, int b, int c, int d, int e);
 #endif /* merge_units */
-#define GuiScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) (GuiScreen_GetLobbyString((S_0029E1A0 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define GuiLobbyScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) (GuiLobbyScreen_GetLobbyString((S_0029E1A0 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
-int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_0029E8C0* d, int e);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, char* c, S_0029E8C0* d, int e);
 #endif /* merge_units */
-#define FrontEnd_OpenPopup(a0, a1, a2, a3, a4, a5) (FrontEnd_OpenPopup((a0), (a1), (a2), (a3), (S_0029E1A0 *)(a4), (a5))) /* merge_units */
+#define cGameFrontEnd_PushMessageBox(a0, a1, a2, a3, a4, a5) (cGameFrontEnd_PushMessageBox((a0), (a1), (a2), (a3), (S_0029E1A0 *)(a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
-void String_CtorCStr_13B480(Str_0029E8C0* s, const char* c);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_0029E8C0* s, const char* c);
 #endif /* merge_units */
-#define String_CtorCStr_13B480(a0, a1) (String_CtorCStr_13B480((Str_0029E1A0 *)(a0), (a1))) /* merge_units */
+#define std_basic_string_char_char_traits_char_ctor_charP(a0, a1) (std_basic_string_char_char_traits_char_ctor_charP((Str_0029E1A0 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-char* String_CStr(Str_0029E8C0* s);
+char* std_basic_string_char_char_traits_char_c_str(Str_0029E8C0* s);
 #endif /* merge_units */
-#define String_CStr(a0) (String_CStr((Str_0029E1A0 *)(a0))) /* merge_units */
+#define std_basic_string_char_char_traits_char_c_str(a0) (std_basic_string_char_char_traits_char_c_str((Str_0029E1A0 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 void String_Dtor(Str_0029E8C0* s, int flags);
 #endif /* merge_units */
 #define String_Dtor(a0, a1) (String_Dtor((Str_0029E1A0 *)(a0), (a1))) /* merge_units */
 
-void GuiMultiLineText_ScrollUp(void* p, int a);
-void GuiMultiLineText_ScrollDown(void* p, int a);
-int GuiScreen_HandleInput(S_0029E8C0* self, Ev_0029E8C0* ev);
+void GuiMLTextWidget_ScrollUp(void* p, int a);
+void GuiMLTextWidget_ScrollDown(void* p, int a);
+int GuiLobbyScreen_onInput(S_0029E8C0* self, Ev_0029E8C0* ev);
 }
 static inline unsigned char Down_0029E8C0(Ev_0029E8C0* e)
 {
@@ -328,14 +328,14 @@ static inline unsigned char Press_0029E8C0(Ev_0029E8C0* e, unsigned int b)
         r = 1;
     return r;
 }
-extern "C" int GuiOnlineConnect_HandleInput(S_0029E8C0* self, Ev_0029E8C0* ev)
+extern "C" int GuiOnlineConnect_onInput(S_0029E8C0* self, Ev_0029E8C0* ev)
 {
     if (Press_0029E8C0(ev, 0x10)) {
         if (self->f88 == 5 || self->f88 == 1) {
             GuiOnlineConnect_Back(self, 0);
         } else {
             void* ui = D_004FFC04;
-            FrontEnd_OpenPopup(ui, 5, D_004AABF0, GuiScreen_GetLobbyString(self, 0xE, 0, 0, 0, 0), self, 0x1E);
+            cGameFrontEnd_PushMessageBox(ui, 5, D_004AABF0, GuiLobbyScreen_GetLobbyString(self, 0xE, 0, 0, 0, 0), self, 0x1E);
         }
         return 1;
     } else {
@@ -345,11 +345,11 @@ extern "C" int GuiOnlineConnect_HandleInput(S_0029E8C0* self, Ev_0029E8C0* ev)
                 Str_0029E8C0 a;
                 Str_0029E8C0 c;
                 self->f88 = 3;
-                String_CtorCStr_13B480(&a, GuiScreen_GetLobbyString(self, 7, 0, 0, 0, 0));
-                String_CtorCStr_13B480(&c, GuiScreen_GetLobbyString(self, 8, 0, 0, 0, 0));
+                std_basic_string_char_char_traits_char_ctor_charP(&a, GuiLobbyScreen_GetLobbyString(self, 7, 0, 0, 0, 0));
+                std_basic_string_char_char_traits_char_ctor_charP(&c, GuiLobbyScreen_GetLobbyString(self, 8, 0, 0, 0, 0));
                 {
-                    char* tc = String_CStr(&c);
-                    FrontEnd_OpenPopup(D_004FFC04, 5, String_CStr(&a), tc, self, 0x1F);
+                    char* tc = std_basic_string_char_char_traits_char_c_str(&c);
+                    cGameFrontEnd_PushMessageBox(D_004FFC04, 5, std_basic_string_char_char_traits_char_c_str(&a), tc, self, 0x1F);
                 }
                 String_Dtor(&c, 0);
                 String_Dtor(&a, 0);
@@ -359,29 +359,29 @@ extern "C" int GuiOnlineConnect_HandleInput(S_0029E8C0* self, Ev_0029E8C0* ev)
             bool d = ev->type == 1 && ev->f2 == 0 && ev->btn == 8 && ev->f6 == 0;
             if (d) {
                 if (self->p110 && (self->p110->flags & 2))
-                    GuiMultiLineText_ScrollUp(self->pF4, 0);
+                    GuiMLTextWidget_ScrollUp(self->pF4, 0);
                 else if (self->p114 && (self->p114->flags & 2))
-                    GuiMultiLineText_ScrollUp(self->p100, 0);
+                    GuiMLTextWidget_ScrollUp(self->p100, 0);
                 return 1;
             } else {
                 bool e = ev->type == 1 && ev->f2 == 0 && ev->btn == 4 && ev->f6 == 0;
                 if (e) {
                     if (self->p110 && (self->p110->flags & 2))
-                        GuiMultiLineText_ScrollDown(self->pF4, 0);
+                        GuiMLTextWidget_ScrollDown(self->pF4, 0);
                     else if (self->p114 && (self->p114->flags & 2))
-                        GuiMultiLineText_ScrollDown(self->p100, 0);
+                        GuiMLTextWidget_ScrollDown(self->p100, 0);
                     return 1;
                 }
             }
         }
     }
-    return GuiScreen_HandleInput(self, ev);
+    return GuiLobbyScreen_onInput(self, ev);
 }
 #undef GuiOnlineConnect_Back /* merge_units */
-#undef GuiScreen_GetLobbyString /* merge_units */
-#undef FrontEnd_OpenPopup /* merge_units */
-#undef String_CtorCStr_13B480 /* merge_units */
-#undef String_CStr /* merge_units */
+#undef GuiLobbyScreen_GetLobbyString /* merge_units */
+#undef cGameFrontEnd_PushMessageBox /* merge_units */
+#undef std_basic_string_char_char_traits_char_ctor_charP /* merge_units */
+#undef std_basic_string_char_char_traits_char_c_str /* merge_units */
 #undef String_Dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0029E8C0 */

@@ -15,11 +15,11 @@ typedef struct ReceiverBuf {
     void* data;                 /* 0x00 */
 } ReceiverBuf;
 
-/* Base event receiver (Receiver_Construct, 0x003CB4B0). */
+/* Base event receiver (cSystem_ctor, 0x003CB4B0). */
 typedef struct Receiver {
     void* vtable;               /* 0x00 */
     unsigned int magic;         /* 0x04: RECEIVER_MAGIC, 0 once destroyed */
-    void* owner;                /* 0x08: returned by Receiver_GetOwner */
+    void* owner;                /* 0x08: returned by cSystem_GetName */
     int id;                     /* 0x0C: -1 when unset */
     int unk10;                  /* 0x10: -1 when unset */
     unsigned char enabled;      /* 0x14: 1 after construction */
@@ -36,7 +36,7 @@ typedef struct ListReceiver {
 
 /*
  * Queued timed event that deletes its target when it fires
- * (vtable D_004DFE20, built by Object_DeleteLater).
+ * (vtable D_004DFE20, built by cSystem_ActualScheduleDelete).
  */
 typedef struct DeleteLaterEvent {
     int timeMs;                 /* 0x00: delay in milliseconds */

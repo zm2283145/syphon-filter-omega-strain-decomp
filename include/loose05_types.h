@@ -58,7 +58,7 @@ typedef struct GuiWidget43CB20 {
     float unk70;                    /* 0x70 defaults to 1.0 */
 } GuiWidget43CB20;
 
-/* Widget built by MLTextWidget_ctor (vtable D_004E1040; its methods sit in guiMLTextWidget.cc). */
+/* Widget built by GuiMLTextWidget_ctor (vtable D_004E1040; its methods sit in guiMLTextWidget.cc). */
 typedef struct GuiWidget43E5D0 {
     GuiWidget base;                 /* 0x00 */
     int unk48;                      /* 0x48 */
@@ -71,7 +71,7 @@ typedef struct GuiWidget43E5D0 {
     List lines;                     /* 0x70 collection header */
 } GuiWidget43E5D0;
 
-/* Widget built by GuiSliderWidget_Create (vtable D_004E10C0). */
+/* Widget built by GuiSliderWidget_ctor_2 (vtable D_004E10C0). */
 typedef struct GuiWidget43F910 {
     GuiWidget base;                 /* 0x00 */
     int unk48;                      /* 0x48 defaults to 1 */
@@ -105,10 +105,10 @@ typedef struct GuiWidget456D90 {
     int unkA8;                      /* 0xA8 */
 } GuiWidget456D90;
 
-/* Game screen sub-widget used by GuiMapScreen_Wake/GuiMapScreen_Init. */
+/* Game screen sub-widget used by GuiMapScreen_onWake/GuiMapScreen_onAdd. */
 typedef struct GuiWidget464B30 {
     GuiWidget base;                 /* 0x00 */
-    int child;                      /* 0x48 child found by GuiWidget_FindChildByName */
+    int child;                      /* 0x48 child found by GuiWidget_FindChild_charP */
     int unk4C;                      /* 0x4C copied from (*g_Hud)->unk6A0 */
 } GuiWidget464B30;
 
@@ -150,10 +150,10 @@ typedef struct Vec12 {
     char* data;                     /* 0x08 */
 } Vec12;
 
-/* Character object (only the fields touched by Ladder_ReleaseAlignment). */
+/* Character object (only the fields touched by cHuman_LadderClearOneRungOff). */
 typedef struct Char475BB0 {
     char pad0000[0x2ED0];
-    char animChannel[1];            /* 0x2ED0 animation channel passed to AnimChannel_SetTarget */
+    char animChannel[1];            /* 0x2ED0 animation channel passed to cSkaParams_SetSliderValue_UsingSplineForInterpolation */
     char pad2ED1[0x3248 - 0x2ED1];
     unsigned int flags;             /* 0x3248 */
 } Char475BB0;
@@ -176,7 +176,7 @@ typedef struct FlaggedRel {
     char enabled;                   /* 0x0C */
 } FlaggedRel;
 
-/* Object with a float at +0x40 (FlashGlare_GetCoronaSize). */
+/* Object with a float at +0x40 (cDazzleLight_GetDazzlePct). */
 typedef struct Float40 {
     char pad00[0x40];
     float unk40;                    /* 0x40 */

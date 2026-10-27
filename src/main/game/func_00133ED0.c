@@ -8,7 +8,7 @@ typedef MtxQ4 M_ED0;
 struct Node_ED0 { VPAD16(a) VPAD4(b) virtual void Update(); int pad4[3]; M_ED0 m; unsigned char dirty; char pad51[0x1D0 - 0x51]; };
 struct Mdl_ED0 { char pad[0x14]; unsigned char hasSkel; char pad15[0xB]; Node_ED0* nodes; char pad24[4]; Node_ED0* root; };
 #include "pp_quad_copy.h"
-extern "C" M_ED0 Model_GetComponentTransform(Mdl_ED0* self, int idx)
+extern "C" M_ED0 cSkeleton_GetBoneToWorldMatrix(Mdl_ED0* self, int idx)
 {
     if (self->hasSkel) {
         Node_ED0* r = self->root;

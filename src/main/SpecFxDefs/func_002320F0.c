@@ -6,7 +6,7 @@
 #include "types.h"
 #include "SpecFxDefs_types.h"
 
-extern SpecListPos* List_InsertBefore(SpecListPos* result, void* list, SpecListPos* pos, int* value);
+extern SpecListPos* std_list_deleter_voidPtr_insert(SpecListPos* result, void* list, SpecListPos* pos, int* value);
 
 /* push_back on a list whose sentinel node is at +4. */
 SpecListPos* std_list_tItemPtr_push_back(void* list, int* value) {
@@ -14,5 +14,5 @@ SpecListPos* std_list_tItemPtr_push_back(void* list, int* value) {
     SpecListPos result;
 
     end.node = (char*)list + 4;
-    return List_InsertBefore(&result, list, &end, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &end, value);
 }

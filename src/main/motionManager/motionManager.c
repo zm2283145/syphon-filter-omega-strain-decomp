@@ -9,7 +9,7 @@
 #include "types.h"
 #define NULL 0
 #pragma mpwc_relax on
-int Mem_Free(int, int, char *, int);
+int cMemMan_Deallocate(int, int, char *, int);
 int cTimerDisable_dtor(char *, int);                     /* scope object dtor */
 int cTimerDisable_ctor(char *);                          /* scope object ctor */
 #include "motionManager_types.h"
@@ -17,7 +17,7 @@ MotionManager* MotionManager_Dtor(MotionManager*, short); /* MotionManager dtor 
 extern int g_MotionManager;                              /* MotionManager* */
 
 /* Destroy and free the motion manager. */
-void MotionManager_Shutdown(void) {
+void cMotionManager_UnInitStatics(void) {
     int scope;
     int mgr;
 
@@ -25,7 +25,7 @@ void MotionManager_Shutdown(void) {
     if (mgr != 0) {
         cTimerDisable_ctor((char *)&scope);
         MotionManager_Dtor((MotionManager *)mgr, -1);
-        Mem_Free(0, mgr, "motionManager.cc", 0x2B);
+        cMemMan_Deallocate(0, mgr, "motionManager.cc", 0x2B);
         cTimerDisable_dtor((char *)&scope, -1);
         g_MotionManager = 0;
     }
@@ -60,15 +60,15 @@ MotionManager* MotionManager_Dtor(MotionManager* t, short del)
 #pragma push /* merge_units */
 #pragma mpwc_relax on
 int Alloc_Lock(int);
-int Alloc_Unlock(int);
-int Mem_Alloc(int, int, char *, int);
+int EnableIntc(int);
+int cMemMan_Allocate(int, int, char *, int);
 int MotionManager_Ctor(int, char *, char *);             /* MotionManager ctor (compare, allocator) */
 extern char D_004BEDD0;                             /* "motionManager.cc" */
 extern unsigned char g_ProfileLockEnabled;                    /* allocator locking enabled */
 extern int g_ProfileLockDepth;                              /* allocation guard depth */
 
 /* Create the motion manager once (an inlined AllocGuard wraps the allocation). */
-void MotionManager_Init(void) {
+void cMotionManager_InitStatics(void) {
     struct { char pad20[4]; int alloc; int less[2]; } sl; /* empty functor/allocator temporaries */
     int mgr;
 
@@ -77,9 +77,9 @@ void MotionManager_Init(void) {
             Alloc_Lock(9);
         }
         g_ProfileLockDepth += 1;
-        mgr = Mem_Alloc(0, sizeof(MotionManager), &D_004BEDD0, 0x20);
+        mgr = cMemMan_Allocate(0, sizeof(MotionManager), &D_004BEDD0, 0x20);
         if (g_ProfileLockEnabled != 0) {
-            Alloc_Unlock(9);
+            EnableIntc(9);
         }
         g_ProfileLockDepth -= 1;
         if (mgr != 0) {

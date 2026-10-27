@@ -34,7 +34,7 @@ void std_swap_vectordeleterR_vectordeleterR_18(PtrVec* a, PtrVec* b) {
 
 /* merge_units: begin func_0022A7B0 */
 #pragma push /* merge_units */
-extern void GObj_GetID();
+extern void cSystem_ScriptGetObjectId();
 extern void cSystem_ScriptGetRealObj();
 extern void cSystem_SendCreated();
 extern void cSystem_NetActivate();
@@ -43,16 +43,16 @@ extern void cSystem_NetEnable();
 extern void cSystem_NetDisable();
 extern void cSystem_IsDeliverable();
 extern void cSystem_IsNetworked();
-extern void TargetVis_HandleResult();
-extern void Receiver_GetScriptTypeKey();
-extern void Receiver_ScriptDispatch();
+extern void cTargetManager_HandleMessage();
+extern void cSystem_getSOBJClassId();
+extern void cSystem_ScriptHandleMessage();
 extern void * const D_004DB850[];
 extern void std_list_cSafePtr_cGOBJ_dtor(void* p, int flag);
 extern void std_list_LosReqElem_dtor(void* p, int flag);
-extern void Receiver_Destruct(void* self, int flag);
+extern void cSystem_dtor(void* self, int flag);
 extern void operator_delete(void* p);
 typedef struct { void* vt; } S_D170;
-S_D170* TargetVisMgr_dtor(S_D170* self, short flag)
+S_D170* cTargetManager_dtor(S_D170* self, short flag)
 {
     if (self) {
         void* m;
@@ -63,12 +63,12 @@ S_D170* TargetVisMgr_dtor(S_D170* self, short flag)
         m = (char*)self + 0x110;
         if (m)
             std_list_LosReqElem_dtor(m, 0);
-        Receiver_Destruct(self, 0);
+        cSystem_dtor(self, 0);
         if (flag > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004DB850[16] = { (void*)0x0, (void*)0x0, (void*)TargetVisMgr_dtor, (void*)TargetVis_HandleResult, (void*)GObj_GetID, (void*)cSystem_ScriptGetRealObj, (void*)cSystem_IsNetworked, (void*)cSystem_SendCreated, (void*)cSystem_NetActivate, (void*)cSystem_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };
+void * const D_004DB850[16] = { (void*)0x0, (void*)0x0, (void*)cTargetManager_dtor, (void*)cTargetManager_HandleMessage, (void*)cSystem_ScriptGetObjectId, (void*)cSystem_ScriptGetRealObj, (void*)cSystem_IsNetworked, (void*)cSystem_SendCreated, (void*)cSystem_NetActivate, (void*)cSystem_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cSystem_getSOBJClassId, (void*)cSystem_ScriptHandleMessage, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_0022A7B0 */

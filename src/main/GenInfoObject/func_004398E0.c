@@ -10,7 +10,7 @@ struct LIt_98E0 { LNode_98E0* node; LIt_98E0() {} };
 extern "C" {
 extern char D_005838B8[];
 extern unsigned char D_005721D0;
-LIt_98E0 List_Begin(void* list);
+LIt_98E0 std_list_deleter_voidPtr_begin_void(void* list);
 void std_list_tGenInfoPtr_generic_iterator_ctor(LIt_98E0* r, const LIt_98E0& s);
 LIt_98E0 std_list_tGenInfoPtr_end(void* list);
 void cLListIterator_tGenInfoPtr_ctor(LIt_98E0* r, const LIt_98E0& s);
@@ -39,7 +39,7 @@ extern "C" void cGenInfoObject_Add(void* self, int* key, int owner)
             NetOwnEnt* p;
             LIt_98E0 it;
 LNode_98E0* n;
-            std_list_tGenInfoPtr_generic_iterator_ctor(&it, List_Begin(D_005838B8));
+            std_list_tGenInfoPtr_generic_iterator_ctor(&it, std_list_deleter_voidPtr_begin_void(D_005838B8));
             n = it.node;
             while (cLListIterator_tGenInfoPtr_ctor(&end, std_list_tGenInfoPtr_end(D_005838B8)), n != end.node) {
                 if (n->data->key == *key) break;
@@ -50,7 +50,7 @@ LNode_98E0* n;
                 NetOwnEnt* nw;
                 {
                     AllocGuard g;
-                    nw = (NetOwnEnt*)Mem_Alloc(0, 8, D_004BFD60, 0x1EC);
+                    nw = (NetOwnEnt*)cMemMan_Allocate(0, 8, D_004BFD60, 0x1EC);
                 }
                 if (nw) { nw->key = *key; nw->lo = o; nw->hi = 0; }
                 NetOwnHdl* h;

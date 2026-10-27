@@ -3,9 +3,9 @@
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int SFOLobby_ParseSettings();                   
-int LobbyArray_Clear();                               
-int LobbyArray_Init();                      
+int SFOLobby_ParseConfigFile();                   
+int SFOLobbyList_ClearList();                               
+int SFOLobbyList_AllocList();                      
 int SFOLobby_ResetConnectionFlags(char * );                            
 int SFOLobby_Reset(char * , int);                         
 int memcpy(char * , int, int);                           
@@ -16,23 +16,23 @@ extern char D_00585E70;
 extern char D_00585E90;
 
 void SFOLobby_Init(char * arg0, int arg1, int arg2, int arg3, char * arg4, char * arg5) {
-    LobbyArray_Init(arg0 + 0x70, 0x20, 0x20, 0x114);
-    LobbyArray_Init(arg0 + 0xFC, 0x200, 0, 0x140);
-    LobbyArray_Init(arg0 + 0x118, 0x400, 0x200, 0x2C);
-    LobbyArray_Init(arg0 + 0xC4, 0x40, 0x20, 0x50);
-    LobbyArray_Init(arg0 + 0xE0, 0x40, 0x20, 0x50);
-    LobbyArray_Init(arg0 + 0x134, 0x40, 0x20, 0x50);
-    LobbyArray_Init(arg0 + 0x150, 0x40, 0x20, 0x50);
-    LobbyArray_Clear(arg0 + 0x1C);
-    LobbyArray_Clear(arg0 + 0x38);
-    LobbyArray_Clear(arg0 + 0x54);
+    SFOLobbyList_AllocList(arg0 + 0x70, 0x20, 0x20, 0x114);
+    SFOLobbyList_AllocList(arg0 + 0xFC, 0x200, 0, 0x140);
+    SFOLobbyList_AllocList(arg0 + 0x118, 0x400, 0x200, 0x2C);
+    SFOLobbyList_AllocList(arg0 + 0xC4, 0x40, 0x20, 0x50);
+    SFOLobbyList_AllocList(arg0 + 0xE0, 0x40, 0x20, 0x50);
+    SFOLobbyList_AllocList(arg0 + 0x134, 0x40, 0x20, 0x50);
+    SFOLobbyList_AllocList(arg0 + 0x150, 0x40, 0x20, 0x50);
+    SFOLobbyList_ClearList(arg0 + 0x1C);
+    SFOLobbyList_ClearList(arg0 + 0x38);
+    SFOLobbyList_ClearList(arg0 + 0x54);
     SFOLobby_ResetConnectionFlags(arg0);
     F_(arg0, 0x240C, int) = 0;
     F_(arg0, 0x26A8, int) = 0;
     F_(arg0, 0x1EB0, int) = -1;
     F_(arg0, 0x2564, signed char) = 0;
     F_(arg0, 0x2660, int) = 0;
-    SFOLobby_ParseSettings(arg0, arg3, arg4, 0);
+    SFOLobby_ParseConfigFile(arg0, arg3, arg4, 0);
     D_00585E60 = arg0;
     if (arg2 != 0) {
         memcpy(arg0 + 0x2488, arg2, 0xC4);

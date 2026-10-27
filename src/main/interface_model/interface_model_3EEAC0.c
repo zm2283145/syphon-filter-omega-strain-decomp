@@ -8,11 +8,11 @@
 #pragma push /* merge_units */
 #include "types.h"
 
-extern void* String_AssignCStr_1C43A0(void* obj);
+extern void* std_basic_string_char_char_traits_char_compare_charP(void* obj);
 
-/* Returns whether String_AssignCStr_1C43A0 yields null. */
+/* Returns whether std_basic_string_char_char_traits_char_compare_charP yields null. */
 int cString_opEq(void* obj) {
-    return String_AssignCStr_1C43A0(obj) == 0;
+    return std_basic_string_char_char_traits_char_compare_charP(obj) == 0;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003EEAC0 */
@@ -20,17 +20,17 @@ int cString_opEq(void* obj) {
 /* merge_units: begin func_003EEAF0 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern int String_AssignCStr_1C43A0(void* self);
+extern int std_basic_string_char_char_traits_char_compare_charP(void* self);
 #endif /* merge_units */
-#define String_AssignCStr_1C43A0(a0) ((int)String_AssignCStr_1C43A0((a0))) /* merge_units */
+#define std_basic_string_char_char_traits_char_compare_charP(a0) ((int)std_basic_string_char_char_traits_char_compare_charP((a0))) /* merge_units */
 
 
-/* Returns 1 if String_AssignCStr_1C43A0 returns 0. */
+/* Returns 1 if std_basic_string_char_char_traits_char_compare_charP returns 0. */
 int std_opEq_basicstringR_charP(void* self)
 {
-    return String_AssignCStr_1C43A0(self) == 0;
+    return std_basic_string_char_char_traits_char_compare_charP(self) == 0;
 }
-#undef String_AssignCStr_1C43A0 /* merge_units */
+#undef std_basic_string_char_char_traits_char_compare_charP /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003EEAF0 */
 

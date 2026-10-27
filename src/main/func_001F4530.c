@@ -5,16 +5,16 @@ typedef struct { char d[0x10]; } B10;
 typedef struct { char d[0x30]; } B30;
 typedef struct { char d[0x38]; } B38;
 typedef struct { char d[0x50]; } B50;
-extern void* CanonicalKey_Construct(void*, void*);
-extern float VecCurve_Retime(float);
+extern void* cString16N_3_ctor_charP(void*, void*);
+extern float nGameUnits_Sec(float);
 extern void* cSkaAnimPlaybackRange_ctor(void*, float, float);
-extern void* Camera_ShakeMatrix(void*, float, float, float);
+extern void* cEulerAngle_T_1_2_ctor_float_float_float(void*, float, float, float);
 extern void cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(void*, void*, void*, int, int, void*, void*, int, float, int, int);
-extern void MotionSlider_RegisterNode(void*, void*, void*, void*);
+extern void cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(void*, void*, void*, void*);
 extern void cSkaAnim_dtor(void*, int);
 /* Builds and registers one block of motion-graph nodes. */
 #pragma optimization_level 1
-void MotionGraph_InstallBuddyClimb(void* p0)
+void BuildAnimations_BuddyClimb(void* p0)
 {
     B4 v52C;
     B4 v528;
@@ -55,26 +55,26 @@ void MotionGraph_InstallBuddyClimb(void* p0)
     float f0;
     float f1;
     void* t1;
-    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(&v420, CanonicalKey_Construct(&v480, "buddyclimb_secondguyup"), p0, 0, 0, cSkaAnimPlaybackRange_ctor(&v510, VecCurve_Retime(0.5f), 3.4028235e+38f), Camera_ShakeMatrix(&v470, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
-    MotionSlider_RegisterNode(&v52C, p0, CanonicalKey_Construct(&v4B0, "animBuddyClimbFollower_NoRunningStart"), &v420);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(&v420, cString16N_3_ctor_charP(&v480, "buddyclimb_secondguyup"), p0, 0, 0, cSkaAnimPlaybackRange_ctor(&v510, nGameUnits_Sec(0.5f), 3.4028235e+38f), cEulerAngle_T_1_2_ctor_float_float_float(&v470, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v52C, p0, cString16N_3_ctor_charP(&v4B0, "animBuddyClimbFollower_NoRunningStart"), &v420);
     cSkaAnim_dtor(&v420, -1);
-    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(&v360, CanonicalKey_Construct(&v3C0, "buddyclimb_firstguyup"), p0, 0, 0, cSkaAnimPlaybackRange_ctor(&v508, VecCurve_Retime(0.5f), 3.4028235e+38f), Camera_ShakeMatrix(&v3B0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
-    MotionSlider_RegisterNode(&v528, p0, CanonicalKey_Construct(&v3F0, "animBuddyClimbLeader_NoRunningStart"), &v360);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(&v360, cString16N_3_ctor_charP(&v3C0, "buddyclimb_firstguyup"), p0, 0, 0, cSkaAnimPlaybackRange_ctor(&v508, nGameUnits_Sec(0.5f), 3.4028235e+38f), cEulerAngle_T_1_2_ctor_float_float_float(&v3B0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v528, p0, cString16N_3_ctor_charP(&v3F0, "animBuddyClimbLeader_NoRunningStart"), &v360);
     cSkaAnim_dtor(&v360, -1);
-    t1 = CanonicalKey_Construct(&v300, "buddyclimb_secondguyup");
-    f0 = VecCurve_Retime(0.0f);
-    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(&v2A0, t1, p0, 0, 0, cSkaAnimPlaybackRange_ctor(&v500, f0, VecCurve_Retime(0.0f)), Camera_ShakeMatrix(&v2F0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 1);
-    MotionSlider_RegisterNode(&v524, p0, CanonicalKey_Construct(&v330, "animBuddyClimbIdle"), &v2A0);
+    t1 = cString16N_3_ctor_charP(&v300, "buddyclimb_secondguyup");
+    f0 = nGameUnits_Sec(0.0f);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(&v2A0, t1, p0, 0, 0, cSkaAnimPlaybackRange_ctor(&v500, f0, nGameUnits_Sec(0.0f)), cEulerAngle_T_1_2_ctor_float_float_float(&v2F0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 1);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v524, p0, cString16N_3_ctor_charP(&v330, "animBuddyClimbIdle"), &v2A0);
     cSkaAnim_dtor(&v2A0, -1);
-    f1 = VecCurve_Retime(6.5f);
-    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(&v1E0, CanonicalKey_Construct(&v240, "buddyclimb_firstguyup"), p0, 0, 0, cSkaAnimPlaybackRange_ctor(&v4F8, f1, f1), Camera_ShakeMatrix(&v230, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 1);
-    MotionSlider_RegisterNode(&v520, p0, CanonicalKey_Construct(&v270, "animBuddyClimbIdle_SecondHalf"), &v1E0);
+    f1 = nGameUnits_Sec(6.5f);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(&v1E0, cString16N_3_ctor_charP(&v240, "buddyclimb_firstguyup"), p0, 0, 0, cSkaAnimPlaybackRange_ctor(&v4F8, f1, f1), cEulerAngle_T_1_2_ctor_float_float_float(&v230, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 1);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v520, p0, cString16N_3_ctor_charP(&v270, "animBuddyClimbIdle_SecondHalf"), &v1E0);
     cSkaAnim_dtor(&v1E0, -1);
-    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(&v120, CanonicalKey_Construct(&v180, "buddyclimb_secondguyup"), p0, 0, 0, cSkaAnimPlaybackRange_ctor(&v4F0, f1, 3.4028235e+38f), Camera_ShakeMatrix(&v170, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
-    MotionSlider_RegisterNode(&v51C, p0, CanonicalKey_Construct(&v1B0, "animBuddyClimbFollower_SecondHalf"), &v120);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(&v120, cString16N_3_ctor_charP(&v180, "buddyclimb_secondguyup"), p0, 0, 0, cSkaAnimPlaybackRange_ctor(&v4F0, f1, 3.4028235e+38f), cEulerAngle_T_1_2_ctor_float_float_float(&v170, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v51C, p0, cString16N_3_ctor_charP(&v1B0, "animBuddyClimbFollower_SecondHalf"), &v120);
     cSkaAnim_dtor(&v120, -1);
-    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(&v60, CanonicalKey_Construct(&vC0, "buddyclimb_firstguyup"), p0, 0, 0, cSkaAnimPlaybackRange_ctor(&v4E8, f1, 3.4028235e+38f), Camera_ShakeMatrix(&vB0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
-    MotionSlider_RegisterNode(&v518, p0, CanonicalKey_Construct(&vF0, "animBuddyClimbLeader_SecondHalf"), &v60);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(&v60, cString16N_3_ctor_charP(&vC0, "buddyclimb_firstguyup"), p0, 0, 0, cSkaAnimPlaybackRange_ctor(&v4E8, f1, 3.4028235e+38f), cEulerAngle_T_1_2_ctor_float_float_float(&vB0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v518, p0, cString16N_3_ctor_charP(&vF0, "animBuddyClimbLeader_SecondHalf"), &v60);
     cSkaAnim_dtor(&v60, -1);
 }
 #pragma optimization_level reset

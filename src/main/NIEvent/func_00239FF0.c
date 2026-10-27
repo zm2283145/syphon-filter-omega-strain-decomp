@@ -35,7 +35,7 @@ static inline const Mtx& SubMtx(Sub* o) { if (o->f50) o->Sync(); return o->m; }
 static inline float Fabs(float x) { float r = 0.0f; asm { abs.s r, x } return r; }
 static inline void MulM(V* v, Mtx* m) { __asm__ volatile("lqc2 vf8, 0x0(%0); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; sqc2 vf12, 0x0(%0)" : : "r"(v), "r"(m) : "memory"); }
 
-extern "C" int NiEventKind6_Update(Obj* o, V* mn, V* mx)
+extern "C" int cNIEventOBJ_GetBeamExtents(Obj* o, V* mn, V* mx)
 {
     V c;
     V e;

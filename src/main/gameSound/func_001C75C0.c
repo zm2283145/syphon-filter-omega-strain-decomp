@@ -1,4 +1,4 @@
-/* SoundMgr_AllocSlot: find a free voice slot (stopping finished streamed
+/* cGameSound_AddToPlaylist: find a free voice slot (stopping finished streamed
  * voices on the way), initialise it from the request and mark it in use. */
 #pragma cplusplus on
 #pragma always_inline on
@@ -24,10 +24,10 @@ struct Req {
 struct Slot { int f0; int f4; char p8[0xC]; unsigned char b14; char p15[0xB]; Inst in; };
 struct SoundMgr { char p0[0x30]; Slot slots[50]; };
 extern "C" {
-void* Fstream_GetLoader(void);
-void Fstream_ReleaseNoCallback(void* ld, void* s, int f);
-Obj* ActorRef_Copy(Ref* r);
-Inst* SoundMgr_AllocSlot(SoundMgr* self, Req* req, unsigned char flag);
+void* GetFileStreamMan(void);
+void cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(void* ld, void* s, int f);
+Obj* cSafePtr_cGOBJ_opCast_cGOBJPtr(Ref* r);
+Inst* cGameSound_AddToPlaylist(SoundMgr* self, Req* req, unsigned char flag);
 }
 static inline bool Eq(int a, int b) { return a == b; }
 /* weak reference: object if its serial still matches, else 0 */
@@ -40,7 +40,7 @@ static inline Obj* Get(Ref* r)
 static inline void SetHdr(Inst* d, Req* r) { int k; __int128 t = r->v10.q; k = r->kind; d->kind = k; d->v10.q = t; }
 static inline const int& IdOf(Obj* p) { if (p) return p->serial; int m = -1; return m; }
 
-Inst* SoundMgr_AllocSlot(SoundMgr* self, Req* req, unsigned char flag)
+Inst* cGameSound_AddToPlaylist(SoundMgr* self, Req* req, unsigned char flag)
 {
     int found = -1;
     Inst* s = 0;
@@ -51,7 +51,7 @@ Inst* SoundMgr_AllocSlot(SoundMgr* self, Req* req, unsigned char flag)
             Obj* o = Get(&p->ref);
             if (o && o->b49 == 2)
                 o->x2DC8 = 0;
-            { void* st = p->stream; Fstream_ReleaseNoCallback(Fstream_GetLoader(), st, 1); }
+            { void* st = p->stream; cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(GetFileStreamMan(), st, 1); }
         }
         if (!p->busy && !p->used) {
             found = i;
@@ -62,7 +62,7 @@ Inst* SoundMgr_AllocSlot(SoundMgr* self, Req* req, unsigned char flag)
         s = &self->slots[found].in;
         if (Get(&req->ref)) {
             int x = req->x180;
-            Obj* o = ActorRef_Copy(&req->ref);
+            Obj* o = cSafePtr_cGOBJ_opCast_cGOBJPtr(&req->ref);
             SetHdr(s, req);
             s->ref.obj = o;
             s->ref.serial = IdOf(o);

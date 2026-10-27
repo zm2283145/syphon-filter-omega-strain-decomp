@@ -57,10 +57,10 @@ extern char D_004DA070[];
 extern char g_LightMgr[];
 extern void* D_004EE890;
 void cGOBJ_ctor(GLight* obj, int* id, int kind, void* type);
-GLt* LightMgr_AllocPoint(void* pool, int n);
-V4* Vec4_SetFromVec3W(V4* out, V3* in, float w);
-void LevelLight_CreateDirectional(GLt* l, int a, V4* c);
-void Vec4_Assign(void* d, V4* s);
+GLt* cLightMan_AddLight(void* pool, int n);
+V4* tRGBA_ctor_tRGBR_float(V4* out, V3* in, float w);
+void cLightSrc_ctor_eLightSrcTypes_tRGBAR(GLt* l, int a, V4* c);
+void cVector_ctor_cVectorR(void* d, V4* s);
 GLight* cGameDirectionalLight_ctor(GLight* obj, LReader* r);
 }
 static inline int Read(LReader* r) { int v = *(int*)r->cur; r->cur += 4; return v; }
@@ -79,9 +79,9 @@ static inline GLt* MakeDir(GLt* p0, LRec& rec, V3& col, V4& dir, V4& tmp)
     z = rec.col.z; y = rec.col.y; x = rec.col.x;
     c = rec.dir.z; b = rec.dir.y; a = rec.dir.x;
     col.z = z; col.y = y; col.x = x; dir.z = c; dir.y = b; dir.x = a; dir.w = 0.0f;
-    LevelLight_CreateDirectional(p, 2, Vec4_SetFromVec3W(&tmp, &col, 0.0f));
+    cLightSrc_ctor_eLightSrcTypes_tRGBAR(p, 2, tRGBA_ctor_tRGBR_float(&tmp, &col, 0.0f));
     *(void**)((char*)p + 4) = D_004DA070;
-    Vec4_Assign((char*)p + 0x40, &dir);
+    cVector_ctor_cVectorR((char*)p + 0x40, &dir);
     return p;
 }
 #pragma push
@@ -112,7 +112,7 @@ GLight* cGameDirectionalLight_ctor(GLight* obj, LReader* r)
     Align(r);
     ReadFloat(r, &k);
     {
-        GLt* l = LightMgr_AllocPoint(g_LightMgr, 2);
+        GLt* l = cLightMan_AddLight(g_LightMgr, 2);
         if (l) l = MakeDir(l, rec, col, dir, tmp);
         obj->light = l;
     }

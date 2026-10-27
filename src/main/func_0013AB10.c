@@ -7,7 +7,7 @@ typedef struct LosProvider {
 } LosProvider;
 
 /* Adds a non-null object to the (max 2) LOS exclusion list. */
-void LosProvider_AddExclusion(LosProvider* los, int obj) {
+void cCollisionModelList_PushBack_ExclusionList(LosProvider* los, int obj) {
     if (obj && los->exclusionCount < 2) {
         los->exclusions[los->exclusionCount] = obj;
         los->exclusionCount++;

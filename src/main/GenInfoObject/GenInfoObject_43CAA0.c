@@ -15,24 +15,24 @@
 
 extern char D_004E0FC0[]; /* vtable */
 extern int g_TextureMgr;    /* resource registry */
-extern int Tex_Release(int registry, int handle, int arg);
-extern int GuiWidget_BaseSleep(void* self);
-extern int GuiWidget_BaseWake(void* self);
+extern int cTexMan_RemoveTexture(int registry, int handle, int arg);
+extern int GuiWidget_onSleep(void* self);
+extern int GuiWidget_onWake(void* self);
 extern void GuiWidget_ctor(void* self);
-extern int GuiBitmapWidget_Load(GuiWidget43CB20* self);
+extern int GuiBitmapWidget_LoadBitmap(GuiWidget43CB20* self);
 
 /* Shutdown: base shutdown, then releases the held registry handle. */
-void GuiBitmapWidget_Sleep(GuiWidget43CB20* self) {
-    GuiWidget_BaseSleep(self);
+void GuiBitmapWidget_onSleep(GuiWidget43CB20* self) {
+    GuiWidget_onSleep(self);
     if (self->handle != -1) {
-        Tex_Release(g_TextureMgr, self->handle, 0);
+        cTexMan_RemoveTexture(g_TextureMgr, self->handle, 0);
         self->handle = -1;
     }
 }
 
-int GuiBitmapWidget_Wake(GuiWidget43CB20* self) {
-    GuiWidget_BaseWake(self);
-    return GuiBitmapWidget_Load(self);
+int GuiBitmapWidget_onWake(GuiWidget43CB20* self) {
+    GuiWidget_onWake(self);
+    return GuiBitmapWidget_LoadBitmap(self);
 }
 
 /* Constructor: no handle, white color. */
@@ -60,8 +60,8 @@ GuiWidget43CB20* GuiBitmapWidget_ctor(GuiWidget43CB20* self) {
 typedef struct { char unused; } Alloc0043CB90; /* empty allocator object passed by value */
 typedef struct { int w0, w4, w8; } Str0043CB90;
 extern int strlen(const char* s);
-extern void String_Reserve(Str0043CB90* str, int n);
-extern void String_Replace(Str0043CB90* str, int pos, int count, const char* first, const char* last, Alloc0043CB90 alloc);
+extern void std_basic_string_char_char_traits_char_reserve(Str0043CB90* str, int n);
+extern void std_basic_string_char_char_traits_char_do_replace(Str0043CB90* str, int pos, int count, const char* first, const char* last, Alloc0043CB90 alloc);
 /* Construct a string from a C string. */
 Str0043CB90* String_CtorCStr_43CB90(Str0043CB90* str, const char* s)
 {
@@ -71,8 +71,8 @@ Str0043CB90* String_CtorCStr_43CB90(Str0043CB90* str, const char* s)
     str->w4 = 0;
     str->w8 = 0;
     n = strlen(s);
-    String_Reserve(str, n);
-    String_Replace(str, 0, 0, s, s + n, alloc);
+    std_basic_string_char_char_traits_char_reserve(str, n);
+    std_basic_string_char_char_traits_char_do_replace(str, 0, 0, s, s + n, alloc);
     return str;
 }
 #pragma pop /* merge_units */
@@ -84,7 +84,7 @@ Str0043CB90* String_CtorCStr_43CB90(Str0043CB90* str, const char* s)
 #include "string_replace_range.h"
 
 extern "C" { char D_004C0020[] = "basic_string: out_of_range"; char D_004C0040[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_0043CC10, D_004C0020, D_004C0040, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_004976A8, D_004976B0, Libc_Memmove, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_0043CC10, D_004C0020, D_004C0040, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_004976A8, D_004976B0, Libc_Memmove, std_basic_string_char_char_traits_char_assign_charP_charP_intP)
 #pragma pop /* merge_units */
 /* merge_units: end func_0043CC10 */
 

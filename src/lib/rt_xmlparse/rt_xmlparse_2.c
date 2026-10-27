@@ -10,7 +10,7 @@ extern char D_004B0E18[];
 extern char D_004B0EC0[];
 extern char D_004B0F50[];
 extern int printf(const char *, ...);
-extern int Net_AllocZeroed(void **pp, unsigned long size);
+extern int rt_memory_allocate_init_zero(void **pp, unsigned long size);
 typedef struct { void *ptr; unsigned int size; } Slot3111E0;
 typedef struct { Slot3111E0 slot[0x1000]; unsigned int limit; unsigned int used; } Ctx3111E0;
 int RtXml_Alloc(Ctx3111E0 *c, void **pp, unsigned int size)
@@ -20,7 +20,7 @@ int RtXml_Alloc(Ctx3111E0 *c, void **pp, unsigned int size)
     if (c->used + size <= c->limit) {
         for (i = 0; i < 0x1000; i++) {
             if (c->slot[i].ptr == 0) {
-                r = Net_AllocZeroed(pp, size);
+                r = rt_memory_allocate_init_zero(pp, size);
                 if (r != 0) {
                     printf(D_004B0DE0, D_004B0E18, 0x19A, D_004B0EC0);
                     return 2;
@@ -68,7 +68,7 @@ int RtXml_Free(Ctx311320 *c, void **pp)
 
 /* merge_units: begin func_00311418 */
 extern char D_004B0F38[];
-extern int String_CompareN(const char *, const char *, unsigned int);
+extern int Libc_Strncmp(const char *, const char *, unsigned int);
 typedef struct { int type; char *str; unsigned int len; } Node311418;
 typedef struct {
     char pad0[0x8008];
@@ -183,7 +183,7 @@ int func_00311418(Ctx311418 *c, char *buf, unsigned int len)
             if (c->len) {
                 CHK(RtXml_NodeStackPop(c, &node), 0x283);
                 if (node) {
-                    if (String_CompareN(c->buf, node->str, node->len) == 0 && node->len == c->len) {
+                    if (Libc_Strncmp(c->buf, node->str, node->len) == 0 && node->len == c->len) {
                         c->buf[c->len] = 0;
                         c->len = 0;
                         if (c->x840C == 0) c->state = 0x1A;

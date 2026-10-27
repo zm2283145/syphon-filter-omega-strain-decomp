@@ -34,25 +34,25 @@ extern float D_004E9FF8;
 extern char D_004EA000;
 extern int g_TimerAccum;
 extern unsigned long long g_TickCounter64;
-void MsgQueue_ClearPending(void);
-Stack_134110* Gui_GetScreenStack(void);
-void* Gui_GetScreenList(void);
-int FrontEnd_ClosePopup(void* ui, int id);
-int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
-void ActorFader_Start(Fader_134110* f, int mode, float t);
-void ActorFader_Update(Fader_134110* f, float dt);
-void ActorFader_GetAlpha(Fader_134110* f);
-void Video_BeginFrame(void* p);
-char* Loc_LookupText(char* key);
-void* GuiManager_FindOrLoad(void* a, char* b, char* c);
-float SoftFloat_U64ToFloat(unsigned long long t);
-void Pad_Reset(void* p);
-void GuiManager_Update(void* l, float dt);
-void World_PhysicsTraversal(float dt);
-void GuiCanvas_UpdatePads(Stack_134110* s);
-void* App_GetInstance(void);
+void ClearMessages(void);
+Stack_134110* Gui_Canvas(void);
+void* Gui_Manager(void);
+int cGameFrontEnd_PopMessageBox(void* ui, int id);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, char* c, void* d, int e);
+void cScreenFader_StartFade(Fader_134110* f, int mode, float t);
+void cScreenFader_NextFrame(Fader_134110* f, float dt);
+void cScreenFader_Render(Fader_134110* f);
+void XLib_NextFrame(void* p);
+char* nGlobalization_GetString_charP(char* key);
+void* GuiManager_OpenGui(void* a, char* b, char* c);
+float _f_ulltof(unsigned long long t);
+void cJoystick_Poll(void* p);
+void GuiManager_NextFrame(void* l, float dt);
+void cMotionManager_NextFrame(float dt);
+void GuiCanvas_ProcessInput_void(Stack_134110* s);
+void* GetMachine(void);
 void cMachine_NetUpdate(void* p);
-void* Service_Lookup(void* a, void* b);
+void* cSystemContainer_GetSystem(void* a, void* b);
 }
 
 static inline unsigned long long Now_134110(void)
@@ -62,72 +62,72 @@ static inline unsigned long long Now_134110(void)
 
 static inline void Fade_134110(int mode)
 {
-    ActorFader_Start(g_Fader, mode, 1.0f);
+    cScreenFader_StartFade(g_Fader, mode, 1.0f);
     while (g_Fader->b != 0.0f) {
-        ActorFader_Update(g_Fader, 0.05f);
-        ActorFader_GetAlpha(g_Fader);
-        Video_BeginFrame(g_Video);
+        cScreenFader_NextFrame(g_Fader, 0.05f);
+        cScreenFader_Render(g_Fader);
+        XLib_NextFrame(g_Video);
     }
 }
 
 static inline char* Title_134110(void)
 {
-    return D_005721F0[0] ? Loc_LookupText(D_005721E0) : 0;
+    return D_005721F0[0] ? nGlobalization_GetString_charP(D_005721E0) : 0;
 }
 
 static inline char* Text_134110(void)
 {
-    return D_005721F0[0] ? D_005721F0 : Loc_LookupText(D_005721E0);
+    return D_005721F0[0] ? D_005721F0 : nGlobalization_GetString_charP(D_005721E0);
 }
 
-extern "C" void LevelEnd_RunDebrief(void* svc, unsigned char mode)
+extern "C" void cGameSystem_ShowEndMissionScreens(void* svc, unsigned char mode)
 {
-    MsgQueue_ClearPending();
-    while (Gui_GetScreenStack()->count) {
-        Stack_134110* s = Gui_GetScreenStack();
-        Gui_GetScreenStack()->Hide(s->top->w);
+    ClearMessages();
+    while (Gui_Canvas()->count) {
+        Stack_134110* s = Gui_Canvas();
+        Gui_Canvas()->Hide(s->top->w);
     }
-    while (FrontEnd_ClosePopup(D_004FFC04, -1)) {
+    while (cGameFrontEnd_PopMessageBox(D_004FFC04, -1)) {
     }
     Fade_134110(1);
     if (mode == 1) {
-        char* t = Title_134110() ? Title_134110() : Loc_LookupText(D_0049AA18);
-        FrontEnd_OpenPopup(D_004FFC04, 2, t, Text_134110(), 0, 0);
+        char* t = Title_134110() ? Title_134110() : nGlobalization_GetString_charP(D_0049AA18);
+        cGameFrontEnd_PushMessageBox(D_004FFC04, 2, t, Text_134110(), 0, 0);
     } else if (mode == 2) {
-        char* t = Loc_LookupText(D_0049AA18);
+        char* t = nGlobalization_GetString_charP(D_0049AA18);
         void* ui = D_004FFC04;
-        FrontEnd_OpenPopup(ui, 2, t, Loc_LookupText(D_0049AA28), 0, 0);
+        cGameFrontEnd_PushMessageBox(ui, 2, t, nGlobalization_GetString_charP(D_0049AA28), 0, 0);
     }
     {
-        void* scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_0049AA40, D_0049AA58);
-        Gui_GetScreenStack()->Show(scr, 0);
+        void* scr = GuiManager_OpenGui(Gui_Manager(), D_0049AA40, D_0049AA58);
+        Gui_Canvas()->Show(scr, 0);
     }
     if (!D_004EA000) {
-        D_004E9FF8 = SoftFloat_U64ToFloat(Now_134110());
+        D_004E9FF8 = _f_ulltof(Now_134110());
         D_004EA000 = 1;
     }
-    while (Gui_GetScreenStack()->count) {
+    while (Gui_Canvas()->count) {
         unsigned long long now;
         float dt;
-        Pad_Reset(D_0055A300);
+        cJoystick_Poll(D_0055A300);
         now = Now_134110();
-        dt = (SoftFloat_U64ToFloat(now) - D_004E9FF8) / 100000.0f;
-        GuiManager_Update(Gui_GetScreenList(), dt);
-        World_PhysicsTraversal(dt);
-        GuiCanvas_UpdatePads(Gui_GetScreenStack());
-        Gui_GetScreenStack()->Update(dt);
-        Gui_GetScreenStack()->Draw();
-        cMachine_NetUpdate(App_GetInstance());
-        Video_BeginFrame(g_Video);
+        dt = (_f_ulltof(now) - D_004E9FF8) / 100000.0f;
+        GuiManager_NextFrame(Gui_Manager(), dt);
+        cMotionManager_NextFrame(dt);
+        GuiCanvas_ProcessInput_void(Gui_Canvas());
+        Gui_Canvas()->Update(dt);
+        Gui_Canvas()->Draw();
+        cMachine_NetUpdate(GetMachine());
+        XLib_NextFrame(g_Video);
         {
             CMsg m;
-            Event_Construct(&m, D_005436B0);
+            cMessage_ctor_cMessageNameR(&m, D_005436B0);
             m.vtable = D_004D9160;
-            Event_Send(&m, Service_Lookup(svc, D_004F2CC0), 1);
+            QueueMessage_cMessageR_cSystemP_int(&m, cSystemContainer_GetSystem(svc, D_004F2CC0), 1);
             m.vtable = D_004D9160;
             cMessage_dtor(&m, 0);
         }
-        D_004E9FF8 = SoftFloat_U64ToFloat(now);
+        D_004E9FF8 = _f_ulltof(now);
     }
     Fade_134110(2);
 }

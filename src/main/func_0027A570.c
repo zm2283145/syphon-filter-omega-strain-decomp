@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 #pragma inline_depth(8)
-/* DecalMgr_SetRecord: fill a decal record; with a parent object the matrix is stored in the parent's local frame */
+/* cDecal_ctor: fill a decal record; with a parent object the matrix is stored in the parent's local frame */
 struct V { float x, y, z, w; } __attribute__((aligned(16)));
 struct M {
     V r0, r1, r2, r3;
@@ -29,19 +29,19 @@ struct Node_7A570 {
 struct Obj_7A570 { char pad[0x50]; Node_7A570* node; };
 struct Rec_7A570 { int flags; char pad4[0xC]; M m; float f50; int x54; Obj_7A570* parent; float f5C; };
 extern "C" {
-M* Mtx_Copy(M* d, M* s);
-M* Mtx_InvertRigid(M* m);
-Rec_7A570* DecalMgr_SetRecord(Rec_7A570* r, int flags, M* m, Obj_7A570* parent, float f, float g);
+M* cMatrix_ctor_cMatrixR(M* d, M* s);
+M* cMatrix_InvertRotTrans(M* m);
+Rec_7A570* cDecal_ctor(Rec_7A570* r, int flags, M* m, Obj_7A570* parent, float f, float g);
 }
 static inline M* GetXform(Node_7A570* s) {
     if (s->dirty) s->Refresh();
     return &s->xform;
 }
-static inline M* InvOf(M* out, Node_7A570* n) { M t; return Mtx_Copy(out, Mtx_InvertRigid(Mtx_Copy(&t, GetXform(n)))); }
+static inline M* InvOf(M* out, Node_7A570* n) { M t; return cMatrix_ctor_cMatrixR(out, cMatrix_InvertRotTrans(cMatrix_ctor_cMatrixR(&t, GetXform(n)))); }
 /* pass-through layers: deeper inlines get lower stack slots (t below the product) */
 static inline M* InvOf2(M* out, Node_7A570* n) { return InvOf(out, n); }
 static inline M* InvOf3(M* out, Node_7A570* n) { return InvOf2(out, n); }
-Rec_7A570* DecalMgr_SetRecord(Rec_7A570* r, int flags, M* m, Obj_7A570* parent, float f, float g)
+Rec_7A570* cDecal_ctor(Rec_7A570* r, int flags, M* m, Obj_7A570* parent, float f, float g)
 {
     r->flags = flags;
     r->f50 = f;

@@ -18,11 +18,11 @@ typedef struct {
 extern char D_004BDF30[];
 extern char D_004BDF50[];
 extern void __construct_array(void* arr, void (*ctor)(void*), void (*dtor)(void*), int size, int count);
-extern void String_CtorEmpty(void*);
+extern void cString_ctor_void(void*);
 extern void String_Dtor_138350(void*);
-extern void String_Reserve(Str_E7D60* s, int n);
-extern void String_CtorCStr_13B480(Str_E7D60* s, char* c);
-extern void String_AssignString(Str_E7D60* d, Str_E7D60* s);
+extern void std_basic_string_char_char_traits_char_reserve(Str_E7D60* s, int n);
+extern void std_basic_string_char_char_traits_char_ctor_charP(Str_E7D60* s, char* c);
+extern void std_basic_string_char_char_traits_char_assign_basicstringR(Str_E7D60* d, Str_E7D60* s);
 extern void std_basic_string_char_char_traits_char_append_basicstringR(Str_E7D60* d, Str_E7D60* s);
 extern void String_Dtor(Str_E7D60* s, int f);
 
@@ -34,28 +34,28 @@ Con_E7D60* cConsole_ctor(Con_E7D60* self, char* name, int x)
     self->b1 = 0;
     self->b2 = 0;
     self->w8 = 0;
-    __construct_array(self->lines, String_CtorEmpty, String_Dtor_138350, 0xC, 0x16);
-    __construct_array(self->more, String_CtorEmpty, String_Dtor_138350, 0xC, 0x14);
+    __construct_array(self->lines, cString_ctor_void, String_Dtor_138350, 0xC, 0x16);
+    __construct_array(self->more, cString_ctor_void, String_Dtor_138350, 0xC, 0x14);
     self->w21C = 0;
     self->w220 = x;
     for (i = 0, off = 0; i < 0x16; i++, off += 0xC)
-        String_Reserve(((Con_E7D60*)((unsigned)self + off))->lines, 100);
+        std_basic_string_char_char_traits_char_reserve(((Con_E7D60*)((unsigned)self + off))->lines, 100);
     {
         Str_E7D60 t;
-        String_CtorCStr_13B480(&t, D_004BDF30);
-        String_AssignString(&self->lines[0], &t);
+        std_basic_string_char_char_traits_char_ctor_charP(&t, D_004BDF30);
+        std_basic_string_char_char_traits_char_assign_basicstringR(&self->lines[0], &t);
         String_Dtor(&t, 0);
     }
     {
         Str_E7D60 t;
-        String_CtorCStr_13B480(&t, name);
+        std_basic_string_char_char_traits_char_ctor_charP(&t, name);
         std_basic_string_char_char_traits_char_append_basicstringR(&self->lines[0], &t);
         String_Dtor(&t, 0);
     }
     {
         Str_E7D60 t;
-        String_CtorCStr_13B480(&t, D_004BDF50);
-        String_AssignString(&self->lines[1], &t);
+        std_basic_string_char_char_traits_char_ctor_charP(&t, D_004BDF50);
+        std_basic_string_char_char_traits_char_assign_basicstringR(&self->lines[1], &t);
         String_Dtor(&t, 0);
     }
     self->wC = 2;

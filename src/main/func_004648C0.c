@@ -4,16 +4,16 @@ struct Ev48C0 { unsigned short type; unsigned short sub; unsigned short x4; unsi
 struct W48C0 { char pad[0x4C]; int m4C; };
 extern int g_Hud;
 extern "C" {
-void Hud_ToggleMap(int a);
-void HudMap_Reset(int a);
-int HudMap_PrevMarker(int a);
-int HudMap_NextMarker(int a);
-void HudMap_Release(int a);
-void HudMap_Hold(int a);
-int Gui_GetScreenStack(void);
-void GuiWidget_SendEvent(W48C0* self, int a, int b, int c, int d);
+void cHud_ToggleMap(int a);
+void cMap_ResetCamera(int a);
+int cMap_PreviousObjective(int a);
+int cMap_NextObjective(int a);
+void cMap_StopSeekCountdown(int a);
+void cMap_StartSeekCountdown(int a);
+int Gui_Canvas(void);
+void GuiWidget_SendMessage(W48C0* self, int a, int b, int c, int d);
 }
-extern "C" int GuiMapScreen_HandleInput(W48C0* self, Ev48C0* e)
+extern "C" int GuiMapScreen_onInput(W48C0* self, Ev48C0* e)
 {
     bool press = false;
     bool down = false;
@@ -24,20 +24,20 @@ extern "C" int GuiMapScreen_HandleInput(W48C0* self, Ev48C0* e)
     if (press) {
         switch (e->key) {
         case 0x10:
-            Hud_ToggleMap(g_Hud);
+            cHud_ToggleMap(g_Hud);
             break;
         case 0x100:
-            HudMap_Reset(self->m4C);
+            cMap_ResetCamera(self->m4C);
             break;
         case 8:
-            HudMap_Hold(self->m4C);
-            if (HudMap_NextMarker(self->m4C))
-                GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 0, 0);
+            cMap_StartSeekCountdown(self->m4C);
+            if (cMap_NextObjective(self->m4C))
+                GuiWidget_SendMessage(self, Gui_Canvas(), 0x10, 0, 0);
             break;
         case 4:
-            HudMap_Hold(self->m4C);
-            if (HudMap_PrevMarker(self->m4C))
-                GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 0, 0);
+            cMap_StartSeekCountdown(self->m4C);
+            if (cMap_PreviousObjective(self->m4C))
+                GuiWidget_SendMessage(self, Gui_Canvas(), 0x10, 0, 0);
             break;
         default:
             return 0;
@@ -50,7 +50,7 @@ extern "C" int GuiMapScreen_HandleInput(W48C0* self, Ev48C0* e)
             switch (e->key) {
             case 8:
             case 4:
-                HudMap_Release(self->m4C);
+                cMap_StopSeekCountdown(self->m4C);
                 return 1;
             }
         }

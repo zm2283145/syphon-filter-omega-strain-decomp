@@ -17,13 +17,13 @@
 
 extern char g_DmeConnectRetries[];
 extern char g_DmeConnectMaxRetries[];
-extern int Net_StartSession(int);
+extern int cDME_ConnectToGame(int);
 
-/* Net_StartSession without retries. */
+/* cDME_ConnectToGame without retries. */
 int Net_StartSessionSingleTry(int join) {
     *(int*)g_DmeConnectRetries = 0;
     *(int*)g_DmeConnectMaxRetries = 1;
-    return Net_StartSession(join);
+    return cDME_ConnectToGame(join);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0042A960 */
@@ -48,12 +48,12 @@ extern unsigned char D_005721C0;
 extern unsigned char D_005724B0;
 extern void DME_OnConnectResult(void);
 extern void DME_OnClientConnect(void);
-extern void DME_OnClientDisconnect(void);
+extern void cDME_RemoteClientDisconnectCallback(void);
 extern void cHeadSet_AudioRecordCallback(void);
 extern void cHeadSet_AudioPlayCallback(void);
 extern void NetSetSendAggregationInterval(int a, int b, int c);
 extern int NetSetDefaultHostPeerToPeerParams(NetHostGameCfg* cfg);
-extern int NetGame_Create(NetHostGameCfg* cfg, DmeGameOut* out);
+extern int NetHostPeerToPeer(NetHostGameCfg* cfg, DmeGameOut* out);
 static inline void MemClear_h5(void* d0, int n0) { int n = n0; void* dst = d0;
     asm {
         .set noreorder
@@ -100,7 +100,7 @@ void Net_CreateGame(void)
     cfg.onConnectResult = DME_OnConnectResult;
     cfg.port = (*(int*)D_00494180);
     cfg.onClientConnect = DME_OnClientConnect;
-    cfg.onClientDisconnect = DME_OnClientDisconnect;
+    cfg.onClientDisconnect = cDME_RemoteClientDisconnectCallback;
     MemClear_h5(&cfg.sess, 0x54);
     cfg.sess.cb34 = cHeadSet_AudioPlayCallback;
     cfg.sess.unk10 = 1;
@@ -115,7 +115,7 @@ void Net_CreateGame(void)
     cfg.sess.unk1C = 0x1F40;
     cfg.sess.unk28 = 0x1F40;
     if (err == 0) {
-        if (NetGame_Create(&cfg, &out) == 0) {
+        if (NetHostPeerToPeer(&cfg, &out) == 0) {
             D_005721C0 = 1;
         } else {
             D_005721A8 = out.handle;
@@ -146,12 +146,12 @@ typedef struct NetJoinCfg {
     int tail[4];
 } NetJoinCfg;
 extern char D_004BF9B8[]; /* "F_TO_CONNECT" */
-extern void DME_OnHostDisconnect(void);
+extern void cDME_HostChangeCallback(void);
 extern int NetSetDefaultConnectParams(NetJoinCfg* cfg);
 extern int NetConnect(NetJoinCfg* cfg, DmeGameOut* out);
 extern void* memcpy(void* d, const void* s, unsigned int n);
-extern int Gui_GetScreenStack(void);
-extern void GuiWidget_SendEvent(int a, int b, int c, int d, int e);
+extern int Gui_Canvas(void);
+extern void GuiWidget_SendMessage(int a, int b, int c, int d, int e);
 static inline void MemClear_n1(void* d0, int n0) { int n = n0; void* dst = d0;
     asm {
         .set noreorder
@@ -199,8 +199,8 @@ int Net_ConnectGame(void* addr)
     memcpy(cfg.addr, addr, 0x9C);
     cfg.onConnectResult = DME_OnConnectResult;
     cfg.onClientConnect = DME_OnClientConnect;
-    cfg.onClientDisconnect = DME_OnClientDisconnect;
-    cfg.onHostDisconnect = DME_OnHostDisconnect;
+    cfg.onClientDisconnect = cDME_RemoteClientDisconnectCallback;
+    cfg.onHostDisconnect = cDME_HostChangeCallback;
     MemClear_n1(&cfg.sess, 0x54);
     cfg.sess.cb34 = cHeadSet_AudioPlayCallback;
     cfg.sess.unk10 = 1;
@@ -218,8 +218,8 @@ int Net_ConnectGame(void* addr)
     if (err) {
         D_005721A8 = out.handle;
         D_005724B0 = DME_STATE_DISCONNECTED;
-        if (Gui_GetScreenStack()) {
-            GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, (int)D_004BF9B8);
+        if (Gui_Canvas()) {
+            GuiWidget_SendMessage(Gui_Canvas(), Gui_Canvas(), 0x1E, 0, (int)D_004BF9B8);
         }
     }
     return err;
@@ -294,7 +294,7 @@ static inline void MemClear_n1_0042ACD0(void* d0, int n0) { int n = n0; void* ds
         .set reorder
     }
 }
-/* Joins the game named by `host` (see DME_NextGameAddress). Returns nonzero on failure. */
+/* Joins the game named by `host` (see cDME_GetServerFromList). Returns nonzero on failure. */
 int Net_ConnectGameByName(DmeGameAddress* host)
 {
     DmeGameOut out;
@@ -313,8 +313,8 @@ int Net_ConnectGameByName(DmeGameAddress* host)
     cfg.unk20 = host->value;
     cfg.onConnectResult = DME_OnConnectResult;
     cfg.onClientConnect = DME_OnClientConnect;
-    cfg.onClientDisconnect = DME_OnClientDisconnect;
-    cfg.onHostDisconnect = DME_OnHostDisconnect;
+    cfg.onClientDisconnect = cDME_RemoteClientDisconnectCallback;
+    cfg.onHostDisconnect = cDME_HostChangeCallback;
     MemClear_n1_0042ACD0(&cfg.sess, 0x54);
     cfg.sess.cb34 = cHeadSet_AudioPlayCallback;
     cfg.sess.unk10 = 1;
@@ -332,8 +332,8 @@ int Net_ConnectGameByName(DmeGameAddress* host)
     if (err) {
         D_005721A8 = out.handle;
         D_005724B0 = DME_STATE_DISCONNECTED;
-        if (Gui_GetScreenStack()) {
-            GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, (int)D_004BF9B8);
+        if (Gui_Canvas()) {
+            GuiWidget_SendMessage(Gui_Canvas(), Gui_Canvas(), 0x1E, 0, (int)D_004BF9B8);
         }
     }
     return err;

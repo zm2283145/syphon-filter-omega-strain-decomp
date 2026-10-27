@@ -13,8 +13,8 @@ extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 extern char D_004BFA40[]; /* "nellymoser_wrapper.c" */
 void Alloc_Lock(int id);
-void Alloc_Unlock(int id);
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void EnableIntc(int id);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 void* memset(void* d, int c, unsigned int n);
 
 extern int D_00582660;
@@ -58,8 +58,8 @@ extern char* D_00582628;
 extern char* D_00582638;
 extern char* D_00582648;
 
-extern void* sfo_malloc_42C960();
-extern void* sfo_malloc_2CA9B0();
+extern void* sfo_calloc();
+extern void* sfo_free();
 void nciSetCallocFunction(void* fn);
 void nciSetFreeFunction(void* fn);
 void nciEnableVu0Optimizations(int n);
@@ -77,22 +77,22 @@ static inline void* nm_alloc(unsigned int size, int line)
     if (g_ProfileLockEnabled)
         Alloc_Lock(9);
     g_ProfileLockDepth++;
-    p = Mem_Alloc(0, size, D_004BFA40, line);
+    p = cMemMan_Allocate(0, size, D_004BFA40, line);
     if (g_ProfileLockEnabled)
-        Alloc_Unlock(9);
+        EnableIntc(9);
     g_ProfileLockDepth--;
     return p;
 }
 
 /* Initialise the Nellymoser codec wrapper once: hooks, buffers and streams. */
-void NellyWrap_Init(void)
+void cNellyMoser_nmsCreate(void)
 {
     NellyInfo info;
     int n;
     if (D_00582660)
         return;
-    nciSetCallocFunction(sfo_malloc_42C960);
-    nciSetFreeFunction(sfo_malloc_2CA9B0);
+    nciSetCallocFunction(sfo_calloc);
+    nciSetFreeFunction(sfo_free);
     nciEnableVu0Optimizations(1);
     memset(&D_005825B0, 0, 0x18);
     memset(&D_005825D0, 0, 0x18);

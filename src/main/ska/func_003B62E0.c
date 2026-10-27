@@ -22,7 +22,7 @@ struct SkSet {
 
 extern "C" {
 extern char D_004BCD70[];
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 void operator_delete(void* p);
 void* std_vector_imp_cSkaNodePtr_1_begin(void* v);
 void std_vector_cSkaNodePtr_pointer2iterator(It* out, void* v, void* const& r);
@@ -30,7 +30,7 @@ Raw std_vector_cSkaNodePtr_end(void* v);
 void cArray_cSkaNodePtr_Iterator_ctor(It* out, const Raw& r);
 void std_tree_pair_cString16N_value_compare_cAllocator_pair_begin(It* out, void* m);
 void std_tree_pair_cString16N_value_compare_cAllocator_pair_end(It* out, void* m);
-void Tree_Successor(It* it);
+void std_red_black_tree_1_increment(It* it);
 void* std_vector_imp_charPtr_1_begin(void* v);
 void* std_vector_imp_charPtr_1_end(void* v);
 void std_vector_charPtr_pointer2iterator(It* out, void* v, void* const& r);
@@ -62,7 +62,7 @@ SkSet* cSkaAnimationSet_dtor(SkSet* s, short flag)
                 {
                     AllocGuard g;
                     o->Destroy(-1);
-                    Mem_Free(0, o, D_004BCD70, 0x35);
+                    cMemMan_Deallocate(0, o, D_004BCD70, 0x35);
                 }
                 it++;
             }
@@ -79,9 +79,9 @@ SkSet* cSkaAnimationSet_dtor(SkSet* s, short flag)
                 void* v = ((MapNode*)itB.p)->value;
                 {
                     AllocGuard g;
-                    Mem_Free(0, v, D_004BCD70, 0x42);
+                    cMemMan_Deallocate(0, v, D_004BCD70, 0x42);
                 }
-                Tree_Successor(&itB);
+                std_red_black_tree_1_increment(&itB);
             }
         }
         {
@@ -99,7 +99,7 @@ SkSet* cSkaAnimationSet_dtor(SkSet* s, short flag)
                     void* v = *it;
                     {
                         AllocGuard g;
-                        Mem_Free(0, v, D_004BCD70, 0x4F);
+                        cMemMan_Deallocate(0, v, D_004BCD70, 0x4F);
                     }
                     it++;
                 } while (Eq(it, end) ^ 1);

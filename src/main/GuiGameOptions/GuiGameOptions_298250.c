@@ -16,26 +16,26 @@ unsigned char D_0048B7E8[32] __attribute__((aligned(8))) = { 0 };
 unsigned char D_0048B808[32] __attribute__((aligned(8))) = { 0 };
 unsigned char D_0048B828[32] __attribute__((aligned(8))) = { 0 };
 unsigned char D_0048B848[32] __attribute__((aligned(8))) = { 0 };
-extern int GuiCommandCenter_OpenPanel(GuiCommandCenter* self, int arg);
-extern void GuiCommandCenter_Reset(GuiCommandCenter* self);
-extern int GuiCommandCenter_Select(GuiCommandCenter* self, int selection, int arg);
-extern int GuiCommandCenter_GetDefaultSlot(GuiCommandCenter* self);
+extern int GuiCommandCenter_ActivateGroup(GuiCommandCenter* self, int arg);
+extern void GuiCommandCenter_ResetGroups(GuiCommandCenter* self);
+extern int GuiCommandCenter_ActivateButton(GuiCommandCenter* self, int selection, int arg);
+extern int GuiCommandCenter_GetDefaultButton(GuiCommandCenter* self);
 extern void GuiCommandCenter_ClearStaticGuiState(void);
-extern void GuiCommandCenter_RestoreSelection(GuiCommandCenter* self);
+extern void GuiCommandCenter_RestoreStaticGuiState(GuiCommandCenter* self);
 
 /* Refreshes the screen, picking a default selection when none is set. */
-int GuiCommandCenter_RestoreState(GuiCommandCenter* self) {
-    GuiCommandCenter_RestoreSelection(self);
+int GuiCommandCenter_RestoreGuiState(GuiCommandCenter* self) {
+    GuiCommandCenter_RestoreStaticGuiState(self);
     if (self->selection == -1) {
-        GuiCommandCenter_Reset(self);
-        self->selection = GuiCommandCenter_GetDefaultSlot(self);
+        GuiCommandCenter_ResetGroups(self);
+        self->selection = GuiCommandCenter_GetDefaultButton(self);
     }
-    GuiCommandCenter_Select(self, self->selection, 0);
-    return GuiCommandCenter_OpenPanel(self, self->unk1D4);
+    GuiCommandCenter_ActivateButton(self, self->selection, 0);
+    return GuiCommandCenter_ActivateGroup(self, self->unk1D4);
 }
 
 /* Resets the selection state and the shared globals. */
-void GuiCommandCenter_ClearState(GuiCommandCenter* self) {
+void GuiCommandCenter_ResetGuiState(GuiCommandCenter* self) {
     GuiCommandCenter_ClearStaticGuiState();
     self->selection = -1;
     self->unk2D0 = 0;

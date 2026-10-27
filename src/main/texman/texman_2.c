@@ -13,11 +13,11 @@
 
 #include "types.h"
 
-int TexHeader_PaletteOffset(TexHdr* t) {
+int tTDXHeader_OffToMapData(TexHdr* t) {
     return t->h36 + t->h34;
 }
 
-int TexHeader_PixelOffset(TexHdr* t) {
+int tTDXHeader_OffToImageData(TexHdr* t) {
     return t->h34 + (t->pal ? 0x400 : 0);
 }
 #pragma pop /* merge_units */
@@ -28,16 +28,16 @@ int TexHeader_PixelOffset(TexHdr* t) {
 /* Relocate the texture's image data and build its GS registers. */
 typedef struct { int data; int pad; int altData; } Tex_3809E0;
 extern void* g_TextureMgr;
-extern int Tdx_Relocate(void* tdx, int data, int* extra);
-extern void Tex_BuildGsRegisters(void* out, void* out2, int data, int extra);
+extern int cTexMan_PatchupTDX_charP_intR(void* tdx, int data, int* extra);
+extern void cTexture_Init_charP_tTDXHeaderP_uint(void* out, void* out2, int data, int extra);
 
 void StreamedTextureCallback(Tex_3809E0* t, void* out)
 {
     int extra = 0;
     int d = t->altData ? t->altData : t->data;
     {
-        int r = Tdx_Relocate(g_TextureMgr, d, &extra);
-        Tex_BuildGsRegisters(out, out, r, extra);
+        int r = cTexMan_PatchupTDX_charP_intR(g_TextureMgr, d, &extra);
+        cTexture_Init_charP_tTDXHeaderP_uint(out, out, r, extra);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -78,7 +78,7 @@ typedef struct A40File {
 
 extern char D_004BC2C8[];
 extern int String_CompareNoCase(const char*, const char*);
-extern int TexMan_LoadNewTexture(A40Mgr* o, A40File* f, char* name);
+extern int cTexMan_AddTextureTDX(A40Mgr* o, A40File* f, char* name);
 extern int opNe_cLListIteratorR_cLListIteratorR_7(A40It* a, A40It* b);
 extern void cLList_int_End(A40It* out, void* list);
 extern void cLListIterator_int_opInc(A40It* out, A40It* it, int n);
@@ -86,7 +86,7 @@ extern void cLList_int_Erase(A40It* out, void* list, A40It* it);
 extern int* func_00380D20(A40It* it);
 extern void func_00380D30(A40It* out, void* list);
 
-int TexMan_FindOrLoad(A40Mgr* o, A40File* f) {
+int cTexMan_AddTextureFromFile_cFileManR(A40Mgr* o, A40File* f) {
     char* s;
     char* end;
     char* p;
@@ -132,7 +132,7 @@ int TexMan_FindOrLoad(A40Mgr* o, A40File* f) {
         o->tex[idx]->refCount++;
         return idx;
     }
-    return TexMan_LoadNewTexture(o, f, buf);
+    return cTexMan_AddTextureTDX(o, f, buf);
     }
     return -1;
 }

@@ -26,12 +26,12 @@ char* Loc_GetLanguageSuffix(void) {
 }
 
 /* Name of language `id`. */
-char* Loc_GetLanguageName(int id) {
+char* nGlobalization_GetLanguageName_eLanguage(int id) {
     return ((char**)dat_00493A20)[id & 255];
 }
 
 /* Name of the current language. */
-char* Loc_GetCurrentLanguageName(void) {
+char* nGlobalization_GetLanguageName_void(void) {
     return ((char**)dat_00493A20)[(unsigned char)D_0055D470];
 }
 

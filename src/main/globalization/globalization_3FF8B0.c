@@ -14,7 +14,7 @@ struct Obj003FF8B0 { VPAD8(a) virtual void Set(int v); };
 typedef struct { int kind; int id; int val; } Pk003FF8B0;
 extern "C" {
 extern unsigned char D_005721D0;
-Obj003FF8B0** NetMap_Lookup(int);
+Obj003FF8B0** cNetObj_GetNetSystem(int);
 }
 #pragma push
 #pragma opt_propagation off
@@ -22,7 +22,7 @@ extern "C" int cEnableMsg_EnableCallback(int a0, int a1, int a2, Pk003FF8B0* arg
     NetRecvGuard g;
     if (D_005721D0) {
         Pk003FF8B0* p = arg;
-        Obj003FF8B0** obj = NetMap_Lookup(p->id);
+        Obj003FF8B0** obj = cNetObj_GetNetSystem(p->id);
         if (obj) (*obj)->Set(p->val);
     }
     return 0xC;
@@ -34,18 +34,18 @@ extern "C" int cEnableMsg_EnableCallback(int a0, int a1, int a2, Pk003FF8B0* arg
 /* merge_units: begin func_003FF930 */
 #pragma push /* merge_units */
 extern unsigned char g_IsMultiplayer;
-extern void Transport_Send(int a, int b, int c, int d);
+extern void cNetObj_SendMessage_int_cMessageR_int_int(int a, int b, int c, int d);
 void cEnableMsg_SendEnabled(int a, int b)
 {
     if (g_IsMultiplayer)
-        Transport_Send(b, a, -1, -1);
+        cNetObj_SendMessage_int_cMessageR_int_int(b, a, -1, -1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003FF930 */
 
 /* merge_units: begin func_003FF970 */
 #pragma push /* merge_units */
-float Math_StepAngleEighth(float target, float cur, float* maxStep) {
+float BlendRot(float target, float cur, float* maxStep) {
     float d = target - cur;
     float step;
     if (d > 3.1415927f) cur += 6.2831855f;
@@ -61,7 +61,7 @@ float Math_StepAngleEighth(float target, float cur, float* maxStep) {
 
 /* merge_units: begin func_003FFA20 */
 #pragma push /* merge_units */
-float Math_StepEighth(float* p, float a, float b) {
+float BlendFloat(float* p, float a, float b) {
     float d = (a - b) / 8.0f;
     float r = b + d;
     if (d < 0.0f) {
@@ -81,7 +81,7 @@ typedef struct { char name[16]; } MorphShape;
 extern MorphShape* D_005712F8[];
 extern int D_005712F0[];
 extern int strcmp(const char*, const char*);
-int Morph_FindShapeIndex(const char* name, int set)
+int FindFace(const char* name, int set)
 {
     MorphShape* s = D_005712F8[set];
     int n = D_005712F0[set];
@@ -101,7 +101,7 @@ typedef union { __int128 q; char c[16]; } SkmName;
 typedef struct { char* data; short free; char flag; char type; char* base; } SkmPkt;
 extern SkmName D_005609B0[];
 extern unsigned char D_005639B6[];
-extern int String_CompareN(const char*, const char*, int);
+extern int Libc_Strncmp(const char*, const char*, int);
 extern char D_004BE618[], D_004BE620[], D_004BE628[], D_004BE630[], D_004BE638[], D_004BE640[],
     D_004BE648[], D_004BE650[], D_004BE658[], D_004BE660[], D_004BE668[], D_004BE670[],
     D_004BE678[], D_004BE680[], D_004BE688[], D_004BE690[], D_004BE698[], D_004BE6A0[],
@@ -109,42 +109,42 @@ extern char D_004BE618[], D_004BE620[], D_004BE628[], D_004BE630[], D_004BE638[]
     D_004BE6E0[], D_004BE6F0[], D_004BE700[], D_004BE710[], D_004BE720[], D_004BE730[],
     D_004BE740[], D_004BE750[];
 
-void Skm_ClassifyParts(SkmPkt* b, int a, int c)
+void Parts_SetTypeFlag(SkmPkt* b, int a, int c)
 {
     int kind = 8;
     __int128 n = D_005609B0[a].q;
     char* p = (char*)&n;
     int flag = 0;
-    if (String_CompareN(D_004BE618, p + 1, 3) == 0) kind = 8;
-    if (String_CompareN(D_004BE620, p + 1, 3) == 0) kind = 8;
-    if (String_CompareN(D_004BE628, p + 1, 3) == 0) kind = 8;
-    if (String_CompareN(D_004BE630, p + 1, 3) == 0) kind = 8;
-    if (String_CompareN(D_004BE638, p + 1, 3) == 0) kind = 8;
-    if (String_CompareN(D_004BE640, p + 1, 3) == 0) kind = 8;
-    if (String_CompareN(D_004BE648, p + 1, 3) == 0) kind = 4;
-    if (String_CompareN(D_004BE650, p + 1, 3) == 0) kind = 4;
-    if (String_CompareN(D_004BE658, p + 1, 3) == 0) kind = 4;
-    if (String_CompareN(D_004BE660, p + 1, 3) == 0) kind = 4;
-    if (String_CompareN(D_004BE668, p + 1, 3) == 0) kind = 0x1C;
-    if (String_CompareN(D_004BE670, p + 1, 3) == 0) kind = 4;
-    if (String_CompareN(D_004BE678, p + 1, 3) == 0) kind = 4;
-    if (String_CompareN(D_004BE680, p + 1, 3) == 0) kind = 0x1C;
-    if (String_CompareN(D_004BE688, p + 1, 3) == 0) kind = 0x1C;
-    if (String_CompareN(D_004BE690, p + 1, 3) == 0) kind = 4;
-    if (String_CompareN(D_004BE698, p + 1, 3) == 0) kind = 4;
-    if (String_CompareN(D_004BE6A0, p + 1, 3) == 0) kind = kind;
-    if (String_CompareN(D_004BE6A8, p + 1, 3) == 0) kind = 0x1C;
-    if (String_CompareN(D_004BE6B0, p + 1, 3) == 0) kind = 0x1C;
-    if (String_CompareN(D_004BE6B8, p + 1, 3) == 0) kind = 0x1C;
-    if (String_CompareN(D_004BE6C0, p + 1, 3) == 0) kind = 0xC;
-    if (String_CompareN(D_004BE6C8, p + 1, 3) == 0) kind = 8;
-    if (String_CompareN(D_004BE6D0, p + 1, 8) == 0) kind = 0x10;
-    if (String_CompareN(D_004BE6E0, p + 1, 8) == 0) { kind = 0xC; flag = 0x80; }
-    if (String_CompareN(D_004BE6F0, p + 1, 8) == 0) { kind = 0x14; flag = 0x80; }
-    if (String_CompareN(D_004BE700, p + 1, 9) == 0) { kind = 0x14; flag = 0x80; }
-    if (String_CompareN(D_004BE710, p + 1, 9) == 0) { kind = 0x14; flag = 0x80; }
-    if (String_CompareN(D_004BE720, p + 1, 9) == 0 || String_CompareN(D_004BE730, p + 1, 9) == 0 ||
-        String_CompareN(D_004BE740, p + 1, 9) == 0 || String_CompareN(D_004BE750, p + 1, 9) == 0)
+    if (Libc_Strncmp(D_004BE618, p + 1, 3) == 0) kind = 8;
+    if (Libc_Strncmp(D_004BE620, p + 1, 3) == 0) kind = 8;
+    if (Libc_Strncmp(D_004BE628, p + 1, 3) == 0) kind = 8;
+    if (Libc_Strncmp(D_004BE630, p + 1, 3) == 0) kind = 8;
+    if (Libc_Strncmp(D_004BE638, p + 1, 3) == 0) kind = 8;
+    if (Libc_Strncmp(D_004BE640, p + 1, 3) == 0) kind = 8;
+    if (Libc_Strncmp(D_004BE648, p + 1, 3) == 0) kind = 4;
+    if (Libc_Strncmp(D_004BE650, p + 1, 3) == 0) kind = 4;
+    if (Libc_Strncmp(D_004BE658, p + 1, 3) == 0) kind = 4;
+    if (Libc_Strncmp(D_004BE660, p + 1, 3) == 0) kind = 4;
+    if (Libc_Strncmp(D_004BE668, p + 1, 3) == 0) kind = 0x1C;
+    if (Libc_Strncmp(D_004BE670, p + 1, 3) == 0) kind = 4;
+    if (Libc_Strncmp(D_004BE678, p + 1, 3) == 0) kind = 4;
+    if (Libc_Strncmp(D_004BE680, p + 1, 3) == 0) kind = 0x1C;
+    if (Libc_Strncmp(D_004BE688, p + 1, 3) == 0) kind = 0x1C;
+    if (Libc_Strncmp(D_004BE690, p + 1, 3) == 0) kind = 4;
+    if (Libc_Strncmp(D_004BE698, p + 1, 3) == 0) kind = 4;
+    if (Libc_Strncmp(D_004BE6A0, p + 1, 3) == 0) kind = kind;
+    if (Libc_Strncmp(D_004BE6A8, p + 1, 3) == 0) kind = 0x1C;
+    if (Libc_Strncmp(D_004BE6B0, p + 1, 3) == 0) kind = 0x1C;
+    if (Libc_Strncmp(D_004BE6B8, p + 1, 3) == 0) kind = 0x1C;
+    if (Libc_Strncmp(D_004BE6C0, p + 1, 3) == 0) kind = 0xC;
+    if (Libc_Strncmp(D_004BE6C8, p + 1, 3) == 0) kind = 8;
+    if (Libc_Strncmp(D_004BE6D0, p + 1, 8) == 0) kind = 0x10;
+    if (Libc_Strncmp(D_004BE6E0, p + 1, 8) == 0) { kind = 0xC; flag = 0x80; }
+    if (Libc_Strncmp(D_004BE6F0, p + 1, 8) == 0) { kind = 0x14; flag = 0x80; }
+    if (Libc_Strncmp(D_004BE700, p + 1, 9) == 0) { kind = 0x14; flag = 0x80; }
+    if (Libc_Strncmp(D_004BE710, p + 1, 9) == 0) { kind = 0x14; flag = 0x80; }
+    if (Libc_Strncmp(D_004BE720, p + 1, 9) == 0 || Libc_Strncmp(D_004BE730, p + 1, 9) == 0 ||
+        Libc_Strncmp(D_004BE740, p + 1, 9) == 0 || Libc_Strncmp(D_004BE750, p + 1, 9) == 0)
         kind = 0xC;
     D_005639B6[a * 32 + c * 16] |= (unsigned char)(kind | flag);
 }
@@ -153,7 +153,7 @@ void Skm_ClassifyParts(SkmPkt* b, int a, int c)
 
 /* merge_units: begin func_003FFFC0 */
 #pragma push /* merge_units */
-extern void Skm_ClassifyParts(SkmPkt* b, int a, int c);
+extern void Parts_SetTypeFlag(SkmPkt* b, int a, int c);
 static inline __int128 skmzero(int* pc) {
     __int128 z;
     int t;
@@ -173,7 +173,7 @@ static inline int skmeq(__int128 a, __int128 b) {
     }
     return r == -1;
 }
-void Skm_LoadPacket(SkmPkt* b, char* buf, int size, long a, long c, char flag) {
+void Parts_SetManData(SkmPkt* b, char* buf, int size, long a, long c, char flag) {
     int pad;
     __int128 z = skmzero(&pad);
     char* p = buf + size;
@@ -192,7 +192,7 @@ void Skm_LoadPacket(SkmPkt* b, char* buf, int size, long a, long c, char flag) {
         b->type = 0;
     }
     b->flag = flag;
-    Skm_ClassifyParts(b, a, c);
+    Parts_SetTypeFlag(b, a, c);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003FFFC0 */
@@ -219,7 +219,7 @@ static inline int b090eq(__int128 a, __int128 b) {
     return r == -1;
 }
 /* Initialises a block reader over buf, skipping zero padding at its end. */
-void Skm_ParseRecord(B090* b, char* buf, int size) {
+void Parts_SetGunData(B090* b, char* buf, int size) {
     __int128 z = b090zero();
     int pad = 0;
     char* p = buf + size;

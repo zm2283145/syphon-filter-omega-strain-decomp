@@ -1,4 +1,4 @@
-/* GameFlow_EnterMpLobby (machine): lobby loading-screen tick. The quad copy and identity-matrix store are GCC-style __asm__ volatile: MW does no CSE across them, so the base address and constant are rematerialised as in retail. */
+/* cMachine_ChooseNetworkServer (machine): lobby loading-screen tick. The quad copy and identity-matrix store are GCC-style __asm__ volatile: MW does no CSE across them, so the base address and constant are rematerialised as in retail. */
 #pragma opt_rotateloops off
 #pragma cplusplus on
 #include "types.h"
@@ -61,23 +61,23 @@ extern char D_0055A300[];
 extern unsigned char D_005724B0;
 int sprintf(char* d, const char* f, ...);
 void cFileMan_ctor_charP_cFileIOP_bool(void* a, char* p, int b, int c);
-int FileMan_FindMember(void* a);
-void FileMan_Release(void* a, int b);
-int Archive_Open(void* a, char* p, int b, int c);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void Mem_Free(int pool, void* p, char* file, int line);
+int cFileMan_Open(void* a);
+void cFileMan_dtor(void* a, int b);
+int cHogList_Open(void* a, char* p, int b, int c);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 Obj_00167630* cHudNetLobby_ctor(void* p, int ar, char* name);
 void func_0027B680(Obj_00167630* o);
 void cHudNetLobby_dtor(Obj_00167630* o, int flags);
-void App_InitSystemsOnce(void);
-void Video_BeginFrame(void* p);
+void cMachine_InitDME(void);
+void XLib_NextFrame(void* p);
 void cHudNetLobby_HandleInput(Obj_00167630* o, void* pad);
-float SoftFloat_U64ToFloat(unsigned long long t);
+float _f_ulltof(unsigned long long t);
 void cHudNetLobby_NextFrame(Obj_00167630* o, float dt);
 void cHudNetLobby_Render(Obj_00167630* o);
-int TextManager_Get(void);
-void TextManager_DrawImmediate(int a);
-void Net_StartSession(int a);
+int GetTextSystem(void);
+void cTextSystem_Render(int a);
+void cDME_ConnectToGame(int a);
 void Net_RetryConnect(Sess_00167630* s);
 void cMachine_NetUpdate(void* p);
 }
@@ -106,14 +106,14 @@ static inline void SetCol_00167630(const V4c_00167630& c)
     D_0055A28C = c.w;
 }
 
-extern "C" void GameFlow_EnterMpLobby(void* arg)
+extern "C" void cMachine_ChooseNetworkServer(void* arg)
 {
     if (!D_004EE4B0) {
         D_004EE4A8 = Now_00167630();
         D_004EE4B0 = 1;
     }
     if (!D_004EE4A0) {
-        App_InitSystemsOnce();
+        cMachine_InitDME();
         D_004EE4A0 = 1;
     }
     if (D_004EE498 == 0) {
@@ -121,19 +121,19 @@ extern "C" void GameFlow_EnterMpLobby(void* arg)
         char ar[0xA0];
         sprintf(path, D_0049C430, D_0048B2F8);
         cFileMan_ctor_charP_cFileIOP_bool(ar, path, 0, 0);
-        if (!(FileMan_FindMember(ar) & 0xFF)) {
-            int h = Archive_Open(D_004FFB8C, path, 0, 0);
+        if (!(cFileMan_Open(ar) & 0xFF)) {
+            int h = cHogList_Open(D_004FFB8C, path, 0, 0);
             void* p;
             if (g_ProfileLockEnabled) Alloc_Lock(9);
             g_ProfileLockDepth++;
-            p = Mem_Alloc(0, 0x58, D_0049C390, 0x567);
-            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            p = cMemMan_Allocate(0, 0x58, D_0049C390, 0x567);
+            if (g_ProfileLockEnabled) EnableIntc(9);
             g_ProfileLockDepth--;
             if (p) p = cHudNetLobby_ctor(p, h, D_0049C448);
             D_004EE498 = (Obj_00167630*)p;
             func_0027B680(D_004EE498);
         }
-        FileMan_Release(ar, -1);
+        cFileMan_dtor(ar, -1);
         return;
     }
     {
@@ -159,7 +159,7 @@ extern "C" void GameFlow_EnterMpLobby(void* arg)
     UM_00167630(&RS_00167630->mtx[D_00538C64]);
     D_00538C68 = 1;
     D_005392D8 = D_004BC1B0;
-    Video_BeginFrame(g_Video);
+    XLib_NextFrame(g_Video);
     {
         V4c_00167630 c(1.0f, 1.0f, 0.0f, 1.0f);
         SetCol_00167630(c);
@@ -167,12 +167,12 @@ extern "C" void GameFlow_EnterMpLobby(void* arg)
     cHudNetLobby_HandleInput(D_004EE498, D_0055A300);
     {
         unsigned long long now = Now_00167630();
-        cHudNetLobby_NextFrame(D_004EE498, SoftFloat_U64ToFloat(now - D_004EE4A8) / 100000.0f);
+        cHudNetLobby_NextFrame(D_004EE498, _f_ulltof(now - D_004EE4A8) / 100000.0f);
         D_004EE4A8 = now;
     }
     cHudNetLobby_Render(D_004EE498);
     D_005392D8 = D_004BC1B0;
-    TextManager_DrawImmediate(TextManager_Get());
+    cTextSystem_Render(GetTextSystem());
     D_00538C68 = 1;
     D_00538C64--;
     {
@@ -184,7 +184,7 @@ extern "C" void GameFlow_EnterMpLobby(void* arg)
         Obj_00167630* q = D_004EE498;
         if (q->f54) {
         if (q->f55) {
-            Net_StartSession(0);
+            cDME_ConnectToGame(0);
         } else {
             Sess_00167630 ss;
             ss.name = q->name;
@@ -200,8 +200,8 @@ extern "C" void GameFlow_EnterMpLobby(void* arg)
             if (g_ProfileLockEnabled) Alloc_Lock(9);
             g_ProfileLockDepth++;
             cHudNetLobby_dtor(o, -1);
-            Mem_Free(0, o, D_0049C390, 0x5A2);
-            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            cMemMan_Deallocate(0, o, D_0049C390, 0x5A2);
+            if (g_ProfileLockEnabled) EnableIntc(9);
             D_004EE498 = 0;
             g_ProfileLockDepth--;
         }

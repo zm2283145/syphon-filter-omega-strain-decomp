@@ -9,15 +9,15 @@ struct V {
 } __attribute__((aligned(16)));
 struct M { float m[4][4]; } __attribute__((aligned(16)));
 extern "C" {
-M* Mtx_Copy(M* d, const M* s);
-M* Mtx_InvertRigid(M* m);
+M* cMatrix_ctor_cMatrixR(M* d, const M* s);
+M* cMatrix_InvertRotTrans(M* m);
 }
 static inline V MulV(const M& m, V v) {
     const M* pm = &m; V* pv = &v;
     __asm__ volatile("lqc2 vf8, 0x0(%0); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; sqc2 vf12, 0x0(%0)" : : "r"(pv), "r"(pm) : "memory");
     return *pv;
 }
-static inline void Inverse(M* out, const M* m) { M a; Mtx_Copy(out, Mtx_InvertRigid(Mtx_Copy(&a, m))); }
+static inline void Inverse(M* out, const M* m) { M a; cMatrix_ctor_cMatrixR(out, cMatrix_InvertRotTrans(cMatrix_ctor_cMatrixR(&a, m))); }
 struct Src {
     int f0;
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual float Radius();
@@ -39,7 +39,7 @@ struct Sys {
 static inline void Inverse2(M* out, const M* m) { Inverse(out, m); }
 static inline V XP2(const M* m, const V& p) { M inv; Inverse2(&inv, m); return MulV(inv, p); }
 static inline void CopyTo(const V* s, V* d) { void* xx = d; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(d), "r"(s) : "memory"); }
-extern "C" void LightMgr_WriteLightVectors(Sys* s, const M* m)
+extern "C" void cLightMan_VU1PreparePoint(Sys* s, const M* m)
 {
     int i;
     for (i = 0; i < s->count; i++) {

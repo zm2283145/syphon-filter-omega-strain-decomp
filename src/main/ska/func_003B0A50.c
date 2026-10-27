@@ -22,15 +22,15 @@ struct Sel { char pad0[0x10]; V rot; char pad20[0x1C]; float wgt; int id; char p
 struct AnimContribution { char pad[0x20]; };
 extern "C" {
 extern float D_004BCD68;
-float Math_Cos(float);
-float Math_Sin(float);
+float Libc_Cosf(float);
+float Libc_Sinf(float);
 char* cArray_cSkaSliderValue_opIndex(void* v, int i);
 float cSkaSliderValue_opCast_float(char* c);
 int AnimContext_GetCount(void* s);
 void** PtrStack_Top(void* s);
 void* AnimBlend_GetGroupCollection(void* b);
-void AnimContribution_Init(AnimContribution* c, Sel* clip, const V* q, float w);
-void AnimGroup_AddContribution(void* g, AnimContribution* c, int id, float w);
+void cSkaPlaybackItem_ctor(AnimContribution* c, Sel* clip, const V* q, float w);
+void cSkaPlaybackList_Add(void* g, AnimContribution* c, int id, float w);
 void cSkaPlaybackItem_dtor(AnimContribution* c, int f);
 }
 static inline void Submit(Sel* self, const V* r, char* ctx, float w)
@@ -41,8 +41,8 @@ static inline void Submit(Sel* self, const V* r, char* ctx, float w)
         void* blend = *PtrStack_Top(ctx + 0x14);
         if (blend) {
             AnimContribution c;
-            AnimContribution_Init(&c, self, r, w);
-            AnimGroup_AddContribution(AnimBlend_GetGroupCollection(blend), &c, id, wt);
+            cSkaPlaybackItem_ctor(&c, self, r, w);
+            cSkaPlaybackList_Add(AnimBlend_GetGroupCollection(blend), &c, id, wt);
             cSkaPlaybackItem_dtor(&c, -1);
         }
     }
@@ -60,8 +60,8 @@ extern "C" void cSkaRotatableAnim_UpdateNodes(Sel* self, const V* q, char* ctx, 
     aa.z = self->az;
     aa.w = ang;
     float h = 0.5f * aa.w;
-    float c = Math_Cos(h);
-    float s = Math_Sin(h);
+    float c = Libc_Cosf(h);
+    float s = Libc_Sinf(h);
     quat.x = s * aa.x;
     quat.y = s * aa.y;
     quat.z = s * aa.z;

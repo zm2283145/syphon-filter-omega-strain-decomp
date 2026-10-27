@@ -11,21 +11,21 @@ extern "C" {
 extern unsigned char D_005721D0;
 extern char D_004A4550[];
 extern int D_004F5480;
-void* Mem_Alloc(int heap, int size, char* file, int line);
-void Mem_Free(int heap, void* p, char* file, int line);
+void* cMemMan_Allocate(int heap, int size, char* file, int line);
+void cMemMan_Deallocate(int heap, void* p, char* file, int line);
 int NetCreateObject(int* h, int a, int b, int c, int d, int e, int f, void* buf, char* name, int size);
 int NetGetObject(Seg_00212220** o, int h);
 int func_00211DA0(void);
 void NetFreeObject(int a);
 int cNetObj_GetNetID(void);
-void NetMap_BindReceiver(int a, int b, void* c);
+void cNetObj_AddSystem(int a, int b, void* c);
 }
 static inline void* New_00212220(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004A4550, line);
+    return cMemMan_Allocate(0, size, D_004A4550, line);
 }
-extern "C" void PathObj_CreateInfoObject(Self_00212220* self)
+extern "C" void cPathedGOBJ_CreatePathedGobjInfo(Self_00212220* self)
 {
     int ok;
     if (g_IsMultiplayer)
@@ -54,7 +54,7 @@ extern "C" void PathObj_CreateInfoObject(Self_00212220* self)
                 NetFreeObject(func_00211DA0());
             } else {
                 AllocGuard g;
-                Mem_Free(0, p, D_004A4550, 0xB83);
+                cMemMan_Deallocate(0, p, D_004A4550, 0xB83);
             }
             self->pD0 = 0;
         }
@@ -73,7 +73,7 @@ extern "C" void PathObj_CreateInfoObject(Self_00212220* self)
         self->pD0->f18 = cNetObj_GetNetID();
         {
             int r = self->f10;
-            NetMap_BindReceiver(r, NetLocalId(), self);
+            cNetObj_AddSystem(r, NetLocalId(), self);
         }
     }
 }

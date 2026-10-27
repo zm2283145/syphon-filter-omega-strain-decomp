@@ -57,12 +57,12 @@ DEFINE_TRIVIAL_DTOR(func_0018A210)
 
 extern "C" {
 extern "C" void Event_PackHeader();
-extern "C" void Message_GetScriptTypeKey();
-extern "C" void AnimEvent_Clone();
+extern "C" void cMessage_getSOBJClassId();
+extern "C" void cSkaAnimEndedMessage_Clone();
 extern void * const D_004DA930[];
 void* cMessage_dtor(void* self, short deleteFlag);
 }
-extern "C" VtableObject* AnimEvent_dtor(VtableObject* self, short deleteFlag)
+extern "C" VtableObject* cSkaAnimEndedMessage_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DA930);
@@ -72,7 +72,7 @@ extern "C" VtableObject* AnimEvent_dtor(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DA930[8] = { (void*)0x0, (void*)0x0, (void*)AnimEvent_dtor, (void*)AnimEvent_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+void * const D_004DA930[8] = { (void*)0x0, (void*)0x0, (void*)cSkaAnimEndedMessage_dtor, (void*)cSkaAnimEndedMessage_Clone, (void*)Event_PackHeader, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0018A260(void) {}
 #pragma pop /* merge_units */

@@ -12,7 +12,7 @@
 
 /* merge_units: begin func_0038DD40 */
 #pragma push /* merge_units */
-extern void TexCache_LoadPartTexture(void* cache, __int128 name, int arg, short* slot, short* out);
+extern void Monster_FindAddTexture(void* cache, __int128 name, int arg, short* slot, short* out);
 extern char g_AgentPartCache[];
 char D_00493410[16] = "_THER_BLA_----0";
 char D_00493420[16] = "_THER_COO_----0";
@@ -25,18 +25,18 @@ extern short D_0053B364;
 extern short D_0053B366;
 extern short D_0053B368;
 #pragma opt_propagation off
-void TexCache_AddThermalTextures(int arg)
+void cMan_LoadIRTextures(int arg)
 {
     short tmp;
     __int128* p;
     p = (__int128*)D_00493410;
-    TexCache_LoadPartTexture(g_AgentPartCache, *p, arg, &D_0053B360, &tmp);
+    Monster_FindAddTexture(g_AgentPartCache, *p, arg, &D_0053B360, &tmp);
     p = (__int128*)D_00493420;
-    TexCache_LoadPartTexture(g_AgentPartCache, *p, arg, &D_0053B362, &tmp);
+    Monster_FindAddTexture(g_AgentPartCache, *p, arg, &D_0053B362, &tmp);
     p = (__int128*)D_00493430;
-    TexCache_LoadPartTexture(g_AgentPartCache, *p, arg, &D_0053B364, &tmp);
-    TexCache_LoadPartTexture(g_AgentPartCache, *(__int128*)D_00493440, arg, &D_0053B366, &tmp);
-    TexCache_LoadPartTexture(g_AgentPartCache, *(__int128*)D_00493450, arg, &D_0053B368, &tmp);
+    Monster_FindAddTexture(g_AgentPartCache, *p, arg, &D_0053B364, &tmp);
+    Monster_FindAddTexture(g_AgentPartCache, *(__int128*)D_00493440, arg, &D_0053B366, &tmp);
+    Monster_FindAddTexture(g_AgentPartCache, *(__int128*)D_00493450, arg, &D_0053B368, &tmp);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0038DD40(void) {}
@@ -78,14 +78,14 @@ static inline int ks0038DE20meq(__int128 m, __int128 a, __int128 b) {
     }
     return r == -1;
 }
-int ActorModel_GetMorphCount(int idx)
+int cMan_CountFaceShapes(int idx)
 {
     __int128 mask = ks0038DE20from(0xFFFFFFFFFFFFLL);
     __int128 key;
     __int128* e;
     unsigned int i;
     int n;
-    String_Copy(&key, D_004BC3B0);
+    Libc_Strcpy(&key, D_004BC3B0);
     e = D_005712F8[idx];
     n = 0;
     for (i = 0; i < D_005712F0[idx]; i++) {

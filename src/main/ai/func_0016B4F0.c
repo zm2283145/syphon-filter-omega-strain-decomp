@@ -9,10 +9,10 @@
 extern char D_004D92A0[];
 extern char D_004D92C0[];
 extern char D_004EE5C8[];
-extern int Event_Construct(cActionMsg*, int);
+extern int cMessage_ctor_cMessageNameR(cActionMsg*, int);
 
-cActionMsg* AiSound_SendFireNoise(cActionMsg* msg, int* sender, int action, float amplitude, float f2C) {
-    Event_Construct(msg, (int)D_004EE5C8);
+cActionMsg* cAISoundSystemGOBJMessage_ctor_cObjectIdR_eCauseForAwareness_float_float(cActionMsg* msg, int* sender, int action, float amplitude, float f2C) {
+    cMessage_ctor_cMessageNameR(msg, (int)D_004EE5C8);
     msg->base.vtable = D_004D92A0;
     msg->event = 0;
     msg->action = action;

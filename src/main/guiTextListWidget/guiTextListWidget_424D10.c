@@ -91,10 +91,10 @@ extern int D_0053923C;
 extern int g_DrawMode;
 void XLib_NewStrip(char* r);
 void XLib_NextBatchVert(char* r);
-void Vec4_Copy(void* d, V4* s);
-int* GuiBatch_AddVertexColor(void* out, V4* in);
+void cVector_opAssign(void* d, V4* s);
+int* tIRGBA_opAssign_tRGBAR(void* out, V4* in);
 void XLib_DrawLines(char* r);
-void Renderer_FlushBatch(char* r);
+void XLib_DrawStrip(char* r);
 }
 
 #define SlotAt(i) ((Slot*)(g_Video + 0x1F0 + (i) * 0x110))
@@ -109,8 +109,8 @@ static inline void Vertex(V4* p, V4* c) {
     Ent* e;
     XLib_NextBatchVert(g_Video);
     e = EntAt(D_00539210);
-    Vec4_Copy(e->pos + (D_00539224 - 1) * 16, p);
-    GuiBatch_AddVertexColor(e->c30 + (D_00539224 - 1) * 16, c);
+    cVector_opAssign(e->pos + (D_00539224 - 1) * 16, p);
+    tIRGBA_opAssign_tRGBAR(e->c30 + (D_00539224 - 1) * 16, c);
     D_005381F8 = 0x200000000LL;
 }
 
@@ -167,7 +167,7 @@ extern "C" void RenderOutline(Rect* rect, V4* colorp, int alt)
         Vertex(&p[2], colorp);
         Vertex(&p[3], colorp);
         Vertex(&p[0], colorp);
-        if (alt) Renderer_FlushBatch(g_Video);
+        if (alt) XLib_DrawStrip(g_Video);
         else XLib_DrawLines(g_Video);
     }
     g_DrawMode = save;

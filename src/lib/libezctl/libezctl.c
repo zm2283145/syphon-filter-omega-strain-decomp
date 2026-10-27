@@ -16,7 +16,7 @@ extern int sceSifDmaStat(int);
 
 #define EZNETCTL_LOG_HEADER() scePrintf("%s> ", "libezctl.c")
 
-int ezNetCtl_SifDmaSend(int src, int dst, int size, int async);
+int dmaIOP(int src, int dst, int size, int async);
 
 /* Finds eznetctl_inet.irx and binds its RPC server (retries until bound). */
 int ezNetCtlInit(void)
@@ -80,7 +80,7 @@ int ezNetCtlSetProperties(int props)
         *res = -2;
         return -2;
     }
-    ezNetCtl_SifDmaSend(props, *res, EZNET_RPC_BUF_SIZE, 0);
+    dmaIOP(props, *res, EZNET_RPC_BUF_SIZE, 0);
     sceSifCallRpc(&ezNetCtl_cd, EZNETCTL_FNO_SET_PROPERTIES, 0, res, 4, res, 4, 0, 0);
     r = *res;
     EZNETCTL_LOG_HEADER();
@@ -98,8 +98,8 @@ int ezNetCtlSetCombination(char *fname, char *usrName)
         scePrintf("RPC service not running\n");
         return -1;
     }
-    String_Copy(res + 0x10, fname);
-    String_Copy(res + 0x110, usrName);
+    Libc_Strcpy(res + 0x10, fname);
+    Libc_Strcpy(res + 0x110, usrName);
     sceSifCallRpc(&ezNetCtl_cd, EZNETCTL_FNO_SET_COMBINATION, 0, res, EZNET_RPC_NAMES_SIZE, res, EZNET_RPC_NAMES_SIZE, 0, 0);
     r = *(int *)res;
     EZNETCTL_LOG_HEADER();
@@ -115,7 +115,7 @@ int ezNetCtlPreloadModemCnf(char *name)
         scePrintf("RPC service not running\n");
         return -1;
     }
-    String_Copy(res + 0x10, name);
+    Libc_Strcpy(res + 0x10, name);
     sceSifCallRpc(&ezNetCtl_cd, EZNETCTL_FNO_PRELOAD_MODEM_CNF, 0, res, EZNET_RPC_NAMES_SIZE, res, EZNET_RPC_NAMES_SIZE, 0, 0);
     EZNETCTL_LOG_HEADER();
     scePrintf("ezNetCtlPreloadModemCnf returned %d\n", *(int *)res);
@@ -167,7 +167,7 @@ int ezNetCtlGetStatus(int *buf)
 
 /* Copies `size` bytes from EE `src` to IOP `dst` with one SIF DMA transfer
  * (size rounded up to 16); waits for completion unless `async`. */
-int ezNetCtl_SifDmaSend(int src, int dst, int size, int async)
+int dmaIOP(int src, int dst, int size, int async)
 {
     struct { int data, addr, size, mode; } p; /* sceSifDmaData */
     int r;

@@ -69,38 +69,38 @@ void FrontEnd_FlushMessages(Ui_2958B0* ui);
 void FrontEnd_StopSplashThread(Ui_2958B0* ui);
 void FrontEnd_StartSplashThread(Ui_2958B0* ui);
 void GuiCommandCenter_Exit(S_2958B0* self);
-void GuiCommandCenter_OpenPanel(S_2958B0* self, int a);
-void GuiCommandCenter_BonusFlags(S_2958B0* self);
-void FrontEnd_ClosePopup(Ui_2958B0* ui, int id);
-int FrontEnd_OpenPopup(Ui_2958B0* ui, int kind, char* title, char* text, S_2958B0* owner, int cb);
-void* Gui_GetScreenList(void);
-void* Gui_GetScreenStack(void);
-void* GuiManager_FindOrLoad(void* list, char* a, char* b);
-void GuiStack_SwapScreens(void* stack, S_2958B0* from, void* to);
-char* GuiScreen_GetLobbyString(S_2958B0* self, int id, int a, char* s, int b, int c);
-void GuiKeyboard_Open(void* scr, char* text, char* title, S_2958B0* owner, int a, int b, int c);
-int DME_GetLobby(void);
+void GuiCommandCenter_ActivateGroup(S_2958B0* self, int a);
+void GuiCommandCenter_RefreshSeenLevelZeus(S_2958B0* self);
+void cGameFrontEnd_PopMessageBox(Ui_2958B0* ui, int id);
+int cGameFrontEnd_PushMessageBox(Ui_2958B0* ui, int kind, char* title, char* text, S_2958B0* owner, int cb);
+void* Gui_Manager(void);
+void* Gui_Canvas(void);
+void* GuiManager_OpenGui(void* list, char* a, char* b);
+void GuiCanvas_Transition(void* stack, S_2958B0* from, void* to);
+char* GuiLobbyScreen_GetLobbyString(S_2958B0* self, int id, int a, char* s, int b, int c);
+void GuiKeyboard_Display(void* scr, char* text, char* title, S_2958B0* owner, int a, int b, int c);
+int cDME_GetLobby(void);
 int SFOLobby_CellCreate(int lobby, char* s);
-int SFOLobby_FormatError(int lobby, int a);
-int GuiScreen_Navigate(S_2958B0* self, int a);
-void String_CtorCStr_13B480(Str_2958B0* s, char* c);
-char* String_CStr(Str_2958B0* s);
+int SFOLobby_GetErrorDetails(int lobby, int a);
+int GuiLobbyScreen_PushLobbyScreen(S_2958B0* self, int a);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_2958B0* s, char* c);
+char* std_basic_string_char_char_traits_char_c_str(Str_2958B0* s);
 void String_Dtor(Str_2958B0* s, int f);
-void String_Copy(char* d, char* s);
-int String_AssignCStr_1C43A0(Str_2958B0* s, char* c);
-void LevelSelect_SetLevel(Lvl_2958B0* l, int lvl);
+void Libc_Strcpy(char* d, char* s);
+int std_basic_string_char_char_traits_char_compare_charP(Str_2958B0* s, char* c);
+void MissionSelectData_SelectMission(Lvl_2958B0* l, int lvl);
 char* strncpy(char* d, const char* s, unsigned int n);
-int Agent_GetSelected(void* a, int b);
-void AgentData_SetLevelFlag(int agent, int a, int b, int c, int d);
-void* GuiPersonnel_OpenAchievement(int a);
-void GuiSlideShow_SetReturn(void* scr, int id, char* s, int a);
-void GuiSlideShow_Load(void* scr, int a, int b, int c, int d);
+int cGameSystem_GetAgentData(void* a, int b);
+void cAgentData_SetZeusItemSeen(int agent, int a, int b, int c, int d);
+void* GuiAchievementScreen_Construct(int a);
+void GuiSlideShow_SetInfo(void* scr, int id, char* s, int a);
+void GuiSlideShow_BuildZeusSlideShow(void* scr, int a, int b, int c, int d);
 int sprintf(char* d, const char* f, ...);
-char* Loc_LookupText(char* s);
-int GuiScreen_HandleEvent(S_2958B0* self, Msg_2958B0* msg, unsigned short type, int sub, char* str);
+char* nGlobalization_GetString_charP(char* s);
+int GuiLobbyScreen_onMessage(S_2958B0* self, Msg_2958B0* msg, unsigned short type, int sub, char* str);
 }
 
-extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, unsigned short type, int sub, char* str)
+extern "C" int GuiCommandCenter_onMessage(S_2958B0* self, Msg_2958B0* msg, unsigned short type, int sub, char* str)
 {
     Str_2958B0 title;
     Str_2958B0 text;
@@ -116,46 +116,46 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
         if (sub == 0x19 && type == 0x1A) {
             FrontEnd_FlushMessages(D_004FFC04);
             GuiCommandCenter_Exit(self);
-            FrontEnd_ClosePopup(D_004FFC04, self->f2F8);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, self->f2F8);
             return 1;
         }
         if (sub == 0x1A && type == 0x1A) {
-            void* scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA368, D_004AA378);
+            void* scr = GuiManager_OpenGui(Gui_Manager(), D_004AA368, D_004AA378);
             if (scr)
-                GuiKeyboard_Open(scr, GuiScreen_GetLobbyString(self, 0x5D, 0, 0, 0, 0), D_004AA288, self, 0xF, 0x1B, 0);
+                GuiKeyboard_Display(scr, GuiLobbyScreen_GetLobbyString(self, 0x5D, 0, 0, 0, 0), D_004AA288, self, 0xF, 0x1B, 0);
             return 1;
         }
         if (sub == 0x1B && type == 0x1A) {
-            int lobby = DME_GetLobby();
+            int lobby = cDME_GetLobby();
             if (lobby && str && *str) {
                 Ui_2958B0* ui = D_004FFC04;
-                int popup = FrontEnd_OpenPopup(ui, 0, D_004AA288, GuiScreen_GetLobbyString(self, 0x7E, 0, str, 0, 0), 0, 0);
+                int popup = cGameFrontEnd_PushMessageBox(ui, 0, D_004AA288, GuiLobbyScreen_GetLobbyString(self, 0x7E, 0, str, 0, 0), 0, 0);
                 if (SFOLobby_CellCreate(lobby, str)) {
-                    GuiScreen_Navigate(self, 3);
+                    GuiLobbyScreen_PushLobbyScreen(self, 3);
                 } else {
                     int id;
-                    switch ((unsigned char)SFOLobby_FormatError(lobby, 0)) {
+                    switch ((unsigned char)SFOLobby_GetErrorDetails(lobby, 0)) {
                     case 0x1B: id = 0x5F; break;
                     case 0x1A: id = 0x60; break;
                     case 3: id = 0x61; break;
                     case 0x1C: id = 0x62; break;
                     default: id = 0x63; break;
                     }
-                    String_CtorCStr_13B480(&title, GuiScreen_GetLobbyString(self, 0x5E, 0, 0, 0, 0));
-                    String_CtorCStr_13B480(&text, GuiScreen_GetLobbyString(self, (unsigned char)id, 0, str, 0, 0));
-                    char* t = String_CStr(&text);
-                    FrontEnd_OpenPopup(D_004FFC04, 5, String_CStr(&title), t, self, 0x1C);
+                    std_basic_string_char_char_traits_char_ctor_charP(&title, GuiLobbyScreen_GetLobbyString(self, 0x5E, 0, 0, 0, 0));
+                    std_basic_string_char_char_traits_char_ctor_charP(&text, GuiLobbyScreen_GetLobbyString(self, (unsigned char)id, 0, str, 0, 0));
+                    char* t = std_basic_string_char_char_traits_char_c_str(&text);
+                    cGameFrontEnd_PushMessageBox(D_004FFC04, 5, std_basic_string_char_char_traits_char_c_str(&title), t, self, 0x1C);
                     String_Dtor(&text, 0);
                     String_Dtor(&title, 0);
                 }
-                FrontEnd_ClosePopup(D_004FFC04, popup);
+                cGameFrontEnd_PopMessageBox(D_004FFC04, popup);
             }
             return 1;
         }
         if (sub == 0x1C && type == 0x1A) {
-            void* scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA368, D_004AA378);
+            void* scr = GuiManager_OpenGui(Gui_Manager(), D_004AA368, D_004AA378);
             if (scr)
-                GuiKeyboard_Open(scr, GuiScreen_GetLobbyString(self, 0x5D, 0, 0, 0, 0), D_004AA288, self, 0xF, 0x1B, 0);
+                GuiKeyboard_Display(scr, GuiLobbyScreen_GetLobbyString(self, 0x5D, 0, 0, 0, 0), D_004AA288, self, 0xF, 0x1B, 0);
             return 1;
         }
     }
@@ -166,8 +166,8 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
             int v;
             void* scr;
             Lvl_2958B0* ls;
-            if (!String_AssignCStr_1C43A0(&msg->name, D_0048B700)) {
-                GuiCommandCenter_OpenPanel(self, 4);
+            if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B700)) {
+                GuiCommandCenter_ActivateGroup(self, 4);
                 return 1;
             }
             v = self->f1CC;
@@ -177,20 +177,20 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
             else if (v == 0x17)
                 lvl = 0x11;
             ls = &D_004FFC04->lvl;
-            LevelSelect_SetLevel(ls, lvl);
+            MissionSelectData_SelectMission(ls, lvl);
             if (lvl == -1)
                 return 1;
             strncpy(g_LevelDirName, D_0048C160[lvl], 0x80);
             scr = 0;
-            if (!String_AssignCStr_1C43A0(&msg->name, D_0048B6F8)) {
+            if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B6F8)) {
                 Ui_2958B0* ui = D_004FFC04;
                 if (ui->b30) {
                     if (ui->b32) {
-                        scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA390, D_004AA3A0);
+                        scr = GuiManager_OpenGui(Gui_Manager(), D_004AA390, D_004AA3A0);
                     } else {
-                        if (!GuiScreen_Navigate(self, 6)) {
+                        if (!GuiLobbyScreen_PushLobbyScreen(self, 6)) {
                             Ui_2958B0* ui2 = D_004FFC04;
-                            FrontEnd_OpenPopup(ui2, 2, D_004AA288, GuiScreen_GetLobbyString(self, 0x5B, 0, 0, 0, 0), self, 0x18);
+                            cGameFrontEnd_PushMessageBox(ui2, 2, D_004AA288, GuiLobbyScreen_GetLobbyString(self, 0x5B, 0, 0, 0, 0), self, 0x18);
                         }
                         return 1;
                     }
@@ -200,92 +200,92 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
                     D_004FFC04->b34 = self->f1CC == 0x17;
                     g_PrevGameState = g_GameState;
                     g_GameState = 3;
-                    AgentData_SetLevelFlag(Agent_GetSelected(g_Game, -1), self->f1CC + 1, 5, 0, 1);
+                    cAgentData_SetZeusItemSeen(cGameSystem_GetAgentData(g_Game, -1), self->f1CC + 1, 5, 0, 1);
                     return 1;
                 }
-            } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B708)) {
+            } else if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B708)) {
                 if (D_004FFC04->b32)
                     return 1;
                 if (self->f1CC >= 0 && self->f1CC < 0x11 && ls->fC0 >= 0) {
-                    if (!GuiScreen_Navigate(self, 2)) {
+                    if (!GuiLobbyScreen_PushLobbyScreen(self, 2)) {
                         Ui_2958B0* ui2 = D_004FFC04;
-                        FrontEnd_OpenPopup(ui2, 2, D_004AA288, GuiScreen_GetLobbyString(self, 0x5B, 0, 0, 0, 0), self, 0x18);
+                        cGameFrontEnd_PushMessageBox(ui2, 2, D_004AA288, GuiLobbyScreen_GetLobbyString(self, 0x5B, 0, 0, 0, 0), self, 0x18);
                     }
                     return 1;
                 }
             }
             if (scr)
-                GuiStack_SwapScreens(Gui_GetScreenStack(), self, scr);
+                GuiCanvas_Transition(Gui_Canvas(), self, scr);
         } else if (id == self->f1E4) {
             void* scr = 0;
-            if (!String_AssignCStr_1C43A0(&msg->name, D_0048B728)) {
+            if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B728)) {
                 unsigned char noLobby = !D_004FFC04->f260;
                 int popup = -2;
                 if (noLobby) {
                     FrontEnd_StartSplashThread(D_004FFC04);
                     Ui_2958B0* ui = D_004FFC04;
-                    popup = FrontEnd_OpenPopup(ui, 0, D_004AA288, Loc_LookupText(D_004AA3B0), 0, 0);
+                    popup = cGameFrontEnd_PushMessageBox(ui, 0, D_004AA288, nGlobalization_GetString_charP(D_004AA3B0), 0, 0);
                 }
-                scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA3C0, D_004AA3D0);
+                scr = GuiManager_OpenGui(Gui_Manager(), D_004AA3C0, D_004AA3D0);
                 if (noLobby) {
-                    FrontEnd_ClosePopup(D_004FFC04, popup);
+                    cGameFrontEnd_PopMessageBox(D_004FFC04, popup);
                     FrontEnd_StopSplashThread(D_004FFC04);
                 }
-            } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B730)) {
-                scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA3E0, D_004AA3F0);
-            } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B738)) {
-                scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA400, D_004AA410);
-            } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B740)) {
-                scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA418, D_004AA428);
-            } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B748)) {
-                scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA430, D_004AA448);
-            } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B750)) {
-                scr = GuiPersonnel_OpenAchievement(0);
-            } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B758)) {
-                scr = GuiPersonnel_OpenAchievement(1);
-            } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B760)) {
-                scr = GuiPersonnel_OpenAchievement(2);
-            } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B768)) {
-                scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA450, D_004AA460);
+            } else if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B730)) {
+                scr = GuiManager_OpenGui(Gui_Manager(), D_004AA3E0, D_004AA3F0);
+            } else if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B738)) {
+                scr = GuiManager_OpenGui(Gui_Manager(), D_004AA400, D_004AA410);
+            } else if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B740)) {
+                scr = GuiManager_OpenGui(Gui_Manager(), D_004AA418, D_004AA428);
+            } else if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B748)) {
+                scr = GuiManager_OpenGui(Gui_Manager(), D_004AA430, D_004AA448);
+            } else if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B750)) {
+                scr = GuiAchievementScreen_Construct(0);
+            } else if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B758)) {
+                scr = GuiAchievementScreen_Construct(1);
+            } else if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B760)) {
+                scr = GuiAchievementScreen_Construct(2);
+            } else if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B768)) {
+                scr = GuiManager_OpenGui(Gui_Manager(), D_004AA450, D_004AA460);
             }
             if (scr)
-                GuiStack_SwapScreens(Gui_GetScreenStack(), self, scr);
+                GuiCanvas_Transition(Gui_Canvas(), self, scr);
         } else if (id == self->f1E0) {
-            LevelSelect_SetLevel(&D_004FFC04->lvl, -1);
-            if (!String_AssignCStr_1C43A0(&msg->name, D_0048B710)) {
-                if (!GuiScreen_Navigate(self, 3)) {
+            MissionSelectData_SelectMission(&D_004FFC04->lvl, -1);
+            if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B710)) {
+                if (!GuiLobbyScreen_PushLobbyScreen(self, 3)) {
                     Ui_2958B0* ui = D_004FFC04;
-                    FrontEnd_OpenPopup(ui, 5, D_004AA288, GuiScreen_GetLobbyString(self, 0x5C, 0, 0, 0, 0), self, 0x1A);
+                    cGameFrontEnd_PushMessageBox(ui, 5, D_004AA288, GuiLobbyScreen_GetLobbyString(self, 0x5C, 0, 0, 0, 0), self, 0x1A);
                 }
                 return 1;
             }
-            if (!String_AssignCStr_1C43A0(&msg->name, D_0048B718)) {
-                GuiScreen_Navigate(self, 4);
+            if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B718)) {
+                GuiLobbyScreen_PushLobbyScreen(self, 4);
                 return 1;
             }
-            if (!String_AssignCStr_1C43A0(&msg->name, D_0048B720)) {
+            if (!std_basic_string_char_char_traits_char_compare_charP(&msg->name, D_0048B720)) {
                 D_004FFC04->f268 = 1;
-                GuiScreen_Navigate(self, 5);
+                GuiLobbyScreen_PushLobbyScreen(self, 5);
                 return 1;
             }
-            GuiCommandCenter_OpenPanel(self, 0);
+            GuiCommandCenter_ActivateGroup(self, 0);
         } else if (id == self->f1E8) {
             void* scr;
             int v = msg->f10;
             if (v == 5) {
-                GuiCommandCenter_OpenPanel(self, 5);
+                GuiCommandCenter_ActivateGroup(self, 5);
                 return 1;
             }
             if (v != -1) {
-                scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA468, D_004AA478);
+                scr = GuiManager_OpenGui(Gui_Manager(), D_004AA468, D_004AA478);
                 if (scr) {
-                    char* s = String_CStr(&self->name);
-                    GuiSlideShow_SetReturn(scr, self->GetId(), s, 0);
+                    char* s = std_basic_string_char_char_traits_char_c_str(&self->name);
+                    GuiSlideShow_SetInfo(scr, self->GetId(), s, 0);
                     if (self->f1CC == 0x14)
-                        GuiSlideShow_Load(scr, 0x12, v, -1, 1);
+                        GuiSlideShow_BuildZeusSlideShow(scr, 0x12, v, -1, 1);
                     else
-                        GuiSlideShow_Load(scr, self->f1CC + 1, v, -1, 0);
-                    GuiStack_SwapScreens(Gui_GetScreenStack(), self, scr);
+                        GuiSlideShow_BuildZeusSlideShow(scr, self->f1CC + 1, v, -1, 0);
+                    GuiCanvas_Transition(Gui_Canvas(), self, scr);
                     return 1;
                 }
             }
@@ -294,34 +294,34 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
             switch (v) {
             case 2:
                 sprintf(buf, D_004AA248, g_LevelDirName);
-                AgentData_SetLevelFlag(Agent_GetSelected(g_Game, -1), self->f1CC + 1, 5, 0, 1);
+                cAgentData_SetZeusItemSeen(cGameSystem_GetAgentData(g_Game, -1), self->f1CC + 1, 5, 0, 1);
                 break;
             case 3:
                 sprintf(buf, D_004AA488, self->f324);
-                AgentData_SetLevelFlag(Agent_GetSelected(g_Game, -1), self->f1CC + 1, 5, 2, 1);
+                cAgentData_SetZeusItemSeen(cGameSystem_GetAgentData(g_Game, -1), self->f1CC + 1, 5, 2, 1);
                 break;
             case 4:
                 sprintf(buf, D_004AA268, g_LevelDirName);
-                AgentData_SetLevelFlag(Agent_GetSelected(g_Game, -1), self->f1CC + 1, 5, 1, 1);
+                cAgentData_SetZeusItemSeen(cGameSystem_GetAgentData(g_Game, -1), self->f1CC + 1, 5, 1, 1);
                 break;
             case 0:
-                String_Copy(buf, D_004AA490);
+                Libc_Strcpy(buf, D_004AA490);
                 break;
             case 1:
-                String_Copy(buf, D_004AA498);
-                AgentData_SetLevelFlag(Agent_GetSelected(g_Game, -1), 0x11, 5, 1, 1);
+                Libc_Strcpy(buf, D_004AA498);
+                cAgentData_SetZeusItemSeen(cGameSystem_GetAgentData(g_Game, -1), 0x11, 5, 1, 1);
                 break;
             default:
                 if (v >= 10000) {
                     sprintf(buf, D_004AA4A0, 0x11, v - 9999);
-                    AgentData_SetLevelFlag(Agent_GetSelected(g_Game, -1), 0x12, 5, v - 10000, 1);
+                    cAgentData_SetZeusItemSeen(cGameSystem_GetAgentData(g_Game, -1), 0x12, 5, v - 10000, 1);
                 } else
                     return 1;
                 break;
             }
-            GuiCommandCenter_BonusFlags(self);
+            GuiCommandCenter_RefreshSeenLevelZeus(self);
             D_004FFC04->f13C = 1;
-            String_Copy(D_004FFC04->text, buf);
+            Libc_Strcpy(D_004FFC04->text, buf);
             g_PrevGameState = g_GameState;
             g_GameState = 4;
             return 1;
@@ -330,7 +330,7 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
     }
     if (type == 0)
         self->p2D0[self->b1D4] = msg;
-    return GuiScreen_HandleEvent(self, msg, type, sub, str);
+    return GuiLobbyScreen_onMessage(self, msg, type, sub, str);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002958B0 */
@@ -348,38 +348,38 @@ typedef struct S_00296660 {
 static const float dat_004AA1F8[2] = { 500.0f, 0.0f };
 extern Col_00296660 D_00587B80;
 extern Col_00296660 D_00587B90;
-void GuiCommandCenter_UpdateBgCircle(S_00296660* self);
-void GuiScreen_Update(S_00296660* self, float dt);
-float Math_FMod(float x, float y);
+void GuiCommandCenter_UpdateBackground(S_00296660* self);
+void GuiLobbyScreen_onAdvanceTime(S_00296660* self, float dt);
+float Libc_Fmodf(float x, float y);
 void InterpolateColor_tRGBAR_tRGBAR_float(float t, Col_00296660* out, Col_00296660* a, Col_00296660* b);
 #if 0 /* merge_units */
-Ag_00296660* Agent_GetSelected(void* a, int b);
+Ag_00296660* cGameSystem_GetAgentData(void* a, int b);
 #endif /* merge_units */
-#define Agent_GetSelected(a0, a1) ((Ag_00296660 *)Agent_GetSelected((a0), (a1))) /* merge_units */
+#define cGameSystem_GetAgentData(a0, a1) ((Ag_00296660 *)cGameSystem_GetAgentData((a0), (a1))) /* merge_units */
 
-int AgentData_GetBonusFlag(Ag_00296660* ag, int a, int b);
-int AgentData_IsZeusViewed(Ag_00296660* ag, int a, int b, int c);
-void GuiTextWidget_SetColour(W_00296660* w, Col_00296660* c);
+int cAgentData_HasUnseenZeusItems(Ag_00296660* ag, int a, int b);
+int cAgentData_SeenZeusItem(Ag_00296660* ag, int a, int b, int c);
+void GuiTextWidget_SetTextColor(W_00296660* w, Col_00296660* c);
 /* abs.s has no C spelling in MW */
 static inline float Fabs_00296660(float x) { float r; asm { abs.s r, x } return r; }
 
 /* Per-frame update of a menu page: pulses the highlight colour of the enabled entries. */
-void GuiCommandCenter_Update(S_00296660* self, float dt)
+void GuiCommandCenter_onAdvanceTime(S_00296660* self, float dt)
 {
     Col_00296660 col;
     Ag_00296660* ag;
 int n;
 int i;
     unsigned char st;
-    GuiCommandCenter_UpdateBgCircle(self);
-    GuiScreen_Update(self, dt);
+    GuiCommandCenter_UpdateBackground(self);
+    GuiLobbyScreen_onAdvanceTime(self, dt);
     st = self->state;
     if (!(st == 1 || (unsigned int)(st - 3) <= 1 || st == 5))
         return;
     self->f1B0 += 33.333332f * dt;
-    self->f1B0 = Math_FMod(self->f1B0, (*(float*)dat_004AA1F8));
+    self->f1B0 = Libc_Fmodf(self->f1B0, (*(float*)dat_004AA1F8));
     InterpolateColor_tRGBAR_tRGBAR_float(Fabs_00296660(1.0f - 2.0f * self->f1B0 / (*(float*)dat_004AA1F8)), &col, &D_00587B90, &D_00587B80);
-    ag = Agent_GetSelected(g_Game, -1);
+    ag = cGameSystem_GetAgentData(g_Game, -1);
     if (self->state == 4) {
         n = -1;
         if (self->f1CC < 0x11)
@@ -389,34 +389,34 @@ int i;
         if (n != -1) {
             for (i = 0; i < 6; i++) {
                 if (self->w198[i]) {
-                    if (AgentData_GetBonusFlag(ag, n, i))
-                        GuiTextWidget_SetColour(self->w198[i], &col);
+                    if (cAgentData_HasUnseenZeusItems(ag, n, i))
+                        GuiTextWidget_SetTextColor(self->w198[i], &col);
                     else
-                        GuiTextWidget_SetColour(self->w198[i], &D_00587B80);
+                        GuiTextWidget_SetTextColor(self->w198[i], &D_00587B80);
                 }
             }
         } else {
             int j;
             for (j = 0; j < 6; j++) {
                 if (self->w198[j])
-                    GuiTextWidget_SetColour(self->w198[j], &D_00587B80);
+                    GuiTextWidget_SetTextColor(self->w198[j], &D_00587B80);
             }
         }
     }
     if (self->state == 3 && self->p2F0) {
-        if (Agent_GetSelected(g_Game, -1)->bB68)
-            GuiTextWidget_SetColour(self->p2F0, &col);
+        if (cGameSystem_GetAgentData(g_Game, -1)->bB68)
+            GuiTextWidget_SetTextColor(self->p2F0, &col);
         else
-            GuiTextWidget_SetColour(self->p2F0, &D_00587B80);
+            GuiTextWidget_SetTextColor(self->p2F0, &D_00587B80);
     }
     if (self->state == 1 && self->p2EC) {
         if (self->f1CC < 0x11) {
-            if (AgentData_GetBonusFlag(ag, self->f1CC + 1, -1))
-                GuiTextWidget_SetColour(self->p2EC, &col);
+            if (cAgentData_HasUnseenZeusItems(ag, self->f1CC + 1, -1))
+                GuiTextWidget_SetTextColor(self->p2EC, &col);
             else
-                GuiTextWidget_SetColour(self->p2EC, &D_00587B80);
+                GuiTextWidget_SetTextColor(self->p2EC, &D_00587B80);
         } else {
-            GuiTextWidget_SetColour(self->p2EC, &D_00587B80);
+            GuiTextWidget_SetTextColor(self->p2EC, &D_00587B80);
         }
     }
     if (self->state == 5) {
@@ -428,30 +428,30 @@ int i;
                 on = 0;
                 if (w->flags & 4) {
                     if (self->f1CC == 0x14) {
-                        on = !AgentData_IsZeusViewed(ag, 0x12, 5, k);
+                        on = !cAgentData_SeenZeusItem(ag, 0x12, 5, k);
                     } else {
                         switch (w->kind) {
                         case 2:
-                            on = !AgentData_IsZeusViewed(ag, self->f1CC + 1, 5, 0);
+                            on = !cAgentData_SeenZeusItem(ag, self->f1CC + 1, 5, 0);
                             break;
                         case 3:
-                            on = !AgentData_IsZeusViewed(ag, self->f1CC + 1, 5, 2);
+                            on = !cAgentData_SeenZeusItem(ag, self->f1CC + 1, 5, 2);
                             break;
                         case 4:
                         case 1:
-                            on = !AgentData_IsZeusViewed(ag, self->f1CC + 1, 5, 1);
+                            on = !cAgentData_SeenZeusItem(ag, self->f1CC + 1, 5, 1);
                             break;
                         }
                     }
                 }
                 if (on)
-                    GuiTextWidget_SetColour(self->w2FC[k], &col);
+                    GuiTextWidget_SetTextColor(self->w2FC[k], &col);
                 else
-                    GuiTextWidget_SetColour(self->w2FC[k], &D_00587B80);
+                    GuiTextWidget_SetTextColor(self->w2FC[k], &D_00587B80);
             }
         }
     }
 }
-#undef Agent_GetSelected /* merge_units */
+#undef cGameSystem_GetAgentData /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00296660 */

@@ -47,11 +47,11 @@ struct Probes { Probe a; Probe b; };
 struct Plc { V4 quat; V4 pos; V4* Transform(V4* v); };
 extern "C" {
 extern float D_004A0358;
-void ColResult_Construct(Res*);
-void ColQuery_InitSphere(Res*, void*, V4*, V4*, float, float, float, float, float, int);
+void cCollisionProbe_SphereSweptRay_ctor(Res*);
+void cCollisionProbe_SphereSweptRay_Reset_cArrayR_float_float_float_etc(Res*, void*, V4*, V4*, float, float, float, float, float, int);
 int ColQuery_ExecuteThunk(Res*, int, int);
-Plc* Root_GetWorldPlacement(void* r);
-V4* Placement_GetPosition(Plc* p);
+Plc* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void* r);
+V4* cQuatVec_Translation(Plc* p);
 /* wrappers: the local pointer copies keep the probe/position addresses in registers as retail */
 static inline void RunB(Probe* p, void* f, V4* pos, float z) { Probe* q = p; q->Run(f, pos, z); }
 void ActorPhys_AuxiliaryProbe(Probes* self, void* filter, V4* pos, void* root, float z);
@@ -62,8 +62,8 @@ inline void Probe::Run(void* filter, V4* pos, float z)
     hit = 0;
     if (on) {
         Res r;
-        ColResult_Construct(&r);
-        ColQuery_InitSphere(&r, filter, pos, &V4(0.0f, 0.0f, D_004A0358, 0.0f), 0.1f, 0.05f, 0.05f, 0.0f, 0.1f, 0);
+        cCollisionProbe_SphereSweptRay_ctor(&r);
+        cCollisionProbe_SphereSweptRay_Reset_cArrayR_float_float_float_etc(&r, filter, pos, &V4(0.0f, 0.0f, D_004A0358, 0.0f), 0.1f, 0.05f, 0.05f, 0.0f, 0.1f, 0);
         r.b110 = 0;
         ColQuery_ExecuteThunk(&r, 0, 128);
         if (r.hit && r.f58 - z <= D_004A0358)
@@ -76,7 +76,7 @@ void ActorPhys_AuxiliaryProbe(Probes* self, void* filter, V4* pos, void* root, f
 {
     RunB(&self->a, filter, pos, z);
     {
-        V4 p2 = *XformP(&V4(0.0f, 0.35f, 0.7f, 1.0f), Root_GetWorldPlacement(root));
-        RunB(&self->b, filter, &p2, Placement_GetPosition(Root_GetWorldPlacement(root))->z);
+        V4 p2 = *XformP(&V4(0.0f, 0.35f, 0.7f, 1.0f), cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(root));
+        RunB(&self->b, filter, &p2, cQuatVec_Translation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(root))->z);
     }
 }

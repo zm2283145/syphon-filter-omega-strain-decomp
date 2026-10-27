@@ -1,8 +1,8 @@
 #include "types.h"
-/* IeScreen_Draw: draws the in-engine screen tree under an orthographic
+/* cInterface_Render: draws the in-engine screen tree under an orthographic
  * scale (D_00493950/D_00493958) with the depth range forced to 0..1000,
  * restoring the slot state afterwards. Render-state helpers as in
- * GuiFrontendCanvas_Draw (GuiCanvas_415B20.c). */
+ * GuiCanvas_Render (GuiCanvas_415B20.c). */
 #pragma opt_rebuildconditionals off
 #pragma cplusplus on
 
@@ -28,7 +28,7 @@ extern unsigned char D_00493948;
 extern float D_00493950;
 extern float D_00493958;
 extern float D_00539170[4];
-void IeNode_DrawChildren(void* n);
+void cInterfaceModel_Render(void* n);
 }
 
 #define SlotAt(i) ((Slot*)(g_Video + 0x1F0 + (i) * 0x110))
@@ -42,7 +42,7 @@ static inline void MM(void* d, void* a, void* b)
 
 static inline void SetM(M4* d, float sx, float sy, float sz) { d->m[0] = sx; d->m[1] = 0.0f; d->m[2] = 0.0f; d->m[3] = 0.0f; d->m[4] = 0.0f; d->m[5] = 0.0f; d->m[6] = sy; d->m[7] = 0.0f; d->m[8] = 0.0f; d->m[9] = 1.0f; d->m[10] = 0.0f; d->m[11] = 0.0f; d->m[12] = 0.0f; d->m[13] = 0.0f; d->m[14] = sz; d->m[15] = 1.0f; }
 struct IeScreen { void* root; };
-extern "C" int IeScreen_Draw(IeScreen* self)
+extern "C" int cInterface_Render(IeScreen* self)
 {
     if (D_00493948) {
         M4 m;
@@ -76,7 +76,7 @@ extern "C" int IeScreen_Draw(IeScreen* self)
             SetM(&m, D_00493950, D_00493950, D_00493958);
             { Mtx* c = MtxAt(D_00538C64); MM(c, c, &m); }
             D_00538C68 = 1;
-            IeNode_DrawChildren(self->root);
+            cInterfaceModel_Render(self->root);
             s->fF0 = f0;
             s->fF8 = f8;
             s->b106 = 1;

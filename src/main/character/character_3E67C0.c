@@ -16,21 +16,21 @@ const float D_00493940[2] = { -2.0f, 0.0f };
 extern char g_ActorActionMsgClass[];
 extern char D_004E0160[];
 extern char D_004E0840[];
-extern int* Receiver_GetOwner(void);
-extern void Event_Construct(Msg_3E67C0* m, void* type);
-extern void Event_Send(Msg_3E67C0* m, void* target, int x);
+extern int* cSystem_GetName(void);
+extern void cMessage_ctor_cMessageNameR(Msg_3E67C0* m, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg_3E67C0* m, void* target, int x);
 extern void cMessage_dtor(Msg_3E67C0* m, int f);
 
-void ObjectAction_SendKind7(Pt2_Tgt* t, char cat, Pt2_Hd* h, unsigned char flag, float val) {
+void nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(Pt2_Tgt* t, char cat, Pt2_Hd* h, unsigned char flag, float val) {
     int tmp[1];
     int* idp;
     Msg_3E67C0 m;
-    { int k = *Receiver_GetOwner(); if (k == D_0055A840) t = (Pt2_Tgt*)t->owner; }
+    { int k = *cSystem_GetName(); if (k == D_0055A840) t = (Pt2_Tgt*)t->owner; }
     if (val == (*(float*)D_00493938)) val = -1.0f;
     else if (val == (*(float*)D_00493940)) val = 3.4028235e38f;
     if (h) idp = &h->id;
     else { tmp[0] = -1; idp = tmp; }
-    Event_Construct(&m, g_ActorActionMsgClass);
+    cMessage_ctor_cMessageNameR(&m, g_ActorActionMsgClass);
     m.cat = cat;
     m.kind = 7;
     m.vt = D_004E0160;
@@ -39,7 +39,7 @@ void ObjectAction_SendKind7(Pt2_Tgt* t, char cat, Pt2_Hd* h, unsigned char flag,
     m.x30 = -1;
     m.x1C = 0x40;
     m.flag = flag;
-    Event_Send(&m, t, 0);
+    QueueMessage_cMessageR_cSystemP_int(&m, t, 0);
     m.vt = D_004E0840;
     cMessage_dtor(&m, 0);
 }
@@ -57,29 +57,29 @@ extern const float D_00493938[2];
 extern const float D_00493940[2];
 extern char D_004DA910[];
 #if 0 /* merge_units */
-extern void Event_Construct(Msg_3E6910* m, void* type);
+extern void cMessage_ctor_cMessageNameR(Msg_3E6910* m, void* type);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((Msg_3E67C0 *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((Msg_3E67C0 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Event_Send(Msg_3E6910* m, void* target, int x);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg_3E6910* m, void* target, int x);
 #endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((Msg_3E67C0 *)(a0), (a1), (a2))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((Msg_3E67C0 *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(Msg_3E6910* m, int f);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((Msg_3E67C0 *)(a0), (a1))) /* merge_units */
 
-extern void String_CtorCStr_13B480(Str_3E6910* s, const char* c);
-extern void String_AssignString(Str_3E6910* d, Str_3E6910* s);
+extern void std_basic_string_char_char_traits_char_ctor_charP(Str_3E6910* s, const char* c);
+extern void std_basic_string_char_char_traits_char_assign_basicstringR(Str_3E6910* d, Str_3E6910* s);
 extern void String_Dtor(Str_3E6910* s, int f);
 extern void std_basic_string_char_char_traits_char_begin(It_3E6910* out, Str_3E6910* s);
 extern void std_basic_string_char_char_traits_char_end(It_3E6910* out, Str_3E6910* s);
 extern int std_opNe_wrapiteratorR_wrapiteratorR(It_3E6910* a, It_3E6910* b);
 extern char* std_wrap_iterator_basic_string_char_charPtr_opMul(It_3E6910* a);
 extern void std_wrap_iterator_basic_string_char_charPtr_opInc(It_3E6910* a);
-extern char* String_CStr(Str_3E6910* s);
+extern char* std_basic_string_char_char_traits_char_c_str(Str_3E6910* s);
 
 static inline void KQ_Copy(void* dd, void* ss, int nn)
 {
@@ -98,7 +98,7 @@ static inline void KQ_Copy(void* dd, void* ss, int nn)
 }
 static inline Msg_3E6910* Msg_Init(Msg_3E6910* self, char cat, int* idp, Key_3E6910* key, float val, unsigned char flag)
 {
-    Event_Construct(self, g_ActorActionMsgClass);
+    cMessage_ctor_cMessageNameR(self, g_ActorActionMsgClass);
     self->vt = D_004E0840;
     self->cat = cat;
     self->kind = 10;
@@ -129,7 +129,7 @@ static inline void Str_Ctor(Str_3E6910* self) { unsigned int i; for (i = 0; i < 
 #pragma opt_unroll_loops off
 #pragma opt_strength_reduction off
 #pragma opt_propagation off
-void Global_PerformAction_WithObject(Pt2_Tgt* t, char cat, Pt2_Hd* h, const char* name, unsigned char flag, float val)
+void nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_charP_etc(Pt2_Tgt* t, char cat, Pt2_Hd* h, const char* name, unsigned char flag, float val)
 {
     Msg_3E6910* pm;
     int tmp[1];
@@ -139,15 +139,15 @@ void Global_PerformAction_WithObject(Pt2_Tgt* t, char cat, Pt2_Hd* h, const char
     Str_3E6910 s;
     It_3E6910 it;
     It_3E6910 end;
-    { int k = *Receiver_GetOwner(); if (k == D_0055A840) t = (Pt2_Tgt*)t->owner; }
+    { int k = *cSystem_GetName(); if (k == D_0055A840) t = (Pt2_Tgt*)t->owner; }
     if (val == (*(float*)D_00493938)) val = -1.0f;
     else if (val == (*(float*)D_00493940)) val = 3.4028235e38f;
     { Str_3E6910* ps = &s; Str_Ctor(ps); }
     if (*name) {
         Str_3E6910 t1;
         cat = 0x25;
-        String_CtorCStr_13B480(&t1, name);
-        String_AssignString(&s, &t1);
+        std_basic_string_char_char_traits_char_ctor_charP(&t1, name);
+        std_basic_string_char_char_traits_char_assign_basicstringR(&s, &t1);
         String_Dtor(&t1, 0);
         std_basic_string_char_char_traits_char_begin(&it, &s);
         std_basic_string_char_char_traits_char_end(&end, &s);
@@ -157,12 +157,12 @@ void Global_PerformAction_WithObject(Pt2_Tgt* t, char cat, Pt2_Hd* h, const char
         }
     } else {
         Str_3E6910 t2;
-        String_CtorCStr_13B480(&t2, name);
-        String_AssignString(&s, &t2);
+        std_basic_string_char_char_traits_char_ctor_charP(&t2, name);
+        std_basic_string_char_char_traits_char_assign_basicstringR(&s, &t2);
         String_Dtor(&t2, 0);
     }
     {
-        char* c = String_CStr(&s);
+        char* c = std_basic_string_char_char_traits_char_c_str(&s);
         CANONICAL_KEY_INIT(key.c, c)
     }
     if (h) idp = &h->id;
@@ -170,14 +170,14 @@ void Global_PerformAction_WithObject(Pt2_Tgt* t, char cat, Pt2_Hd* h, const char
     pm = &m; Msg_Init(pm, cat, idp, &key, val, flag);
     m.x20 = 1;
     m.x1C = 0x40;
-    Event_Send(&m, t, 0);
+    QueueMessage_cMessageR_cSystemP_int(&m, t, 0);
     m.vt = D_004E0840;
     cMessage_dtor(&m, 0);
     String_Dtor(&s, 0);
 }
 #pragma pop
-#undef Event_Construct /* merge_units */
-#undef Event_Send /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E6910 */

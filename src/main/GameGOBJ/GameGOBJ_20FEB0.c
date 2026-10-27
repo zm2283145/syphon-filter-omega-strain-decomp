@@ -16,7 +16,7 @@
 
 extern int D_004F5418;
 
-int cAtmosphericEffectMsg_v05(void) {
+int cAtmosphericEffectMsg_GetMsgId(void) {
     return D_004F5418;
 }
 #pragma pop /* merge_units */
@@ -37,7 +37,7 @@ struct Msg_0020FEC0 : ClonedMessageBase {
 #define CLONE_BODY(p, s) p->vtable = D_004DCF10; p->vtable = D_004DAE50; p->b24 = s->b24;
 
 extern "C" { char D_004A41A8[] = "player_msg.hh"; }
-DEFINE_MESSAGE_CLONE(cAtmosphericEffectMsg_v01, Msg_0020FEC0, 40, D_004A41A8, 86, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cAtmosphericEffectMsg_Clone, Msg_0020FEC0, 40, D_004A41A8, 86, CLONE_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_0020FEC0 */
 
@@ -50,15 +50,15 @@ typedef struct { void* vtable; char pad[0x20]; signed char b; } M_20FFD0;
 extern char D_004F5410[];
 extern char D_004DAE50[];
 extern char D_004DCF10[];
-extern void Event_Construct(M_20FFD0* m, void* type);
-extern void cAtmosphericEffectMsg_Apply(int b);
+extern void cMessage_ctor_cMessageNameR(M_20FFD0* m, void* type);
+extern void SfxAtmosphericParticleEffect_eAtmosphericEffect(int b);
 extern void cMessage_dtor(M_20FFD0* m, int flags);
 void cAtmosphericEffectMsg_NetReceive(void) {
     M_20FFD0 m;
-    Event_Construct(&m, D_004F5410);
+    cMessage_ctor_cMessageNameR(&m, D_004F5410);
     m.vtable = D_004DAE50;
     m.b = R32_20FFD0();
-    cAtmosphericEffectMsg_Apply(m.b);
+    SfxAtmosphericParticleEffect_eAtmosphericEffect(m.b);
     m.vtable = D_004DCF10;
     cMessage_dtor(&m, 0);
 }
@@ -71,7 +71,7 @@ void cAtmosphericEffectMsg_NetReceive(void) {
 
 typedef struct { char pad[0x24]; unsigned char value; } Atm002100C0;
 
-void cAtmosphericEffectMsg_v04(Atm002100C0* self)
+void cAtmosphericEffectMsg_Pack(Atm002100C0* self)
 {
     NetW1_write32(self->value);
 }

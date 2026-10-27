@@ -10,7 +10,7 @@
 #include "alloc_guard.h"
 
 extern "C" {
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
 }
 
@@ -29,7 +29,7 @@ struct OwnedBuffer8 {
             if (p) {                                                          \
                 if (p) {                                                      \
                     AllocGuard guard;                                         \
-                    Mem_Free(0, p, fileSym, 0x64);                            \
+                    cMemMan_Deallocate(0, p, fileSym, 0x64);                            \
                 }                                                             \
             }                                                                 \
             if (deleteFlag > 0)                                               \

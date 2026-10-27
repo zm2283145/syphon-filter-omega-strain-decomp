@@ -135,6 +135,6 @@ DEFINE_STREAM_STRING_DTOR(func_002AD100)
 
 union E_002AD1F0 { struct { int a, b, c; } w; struct { char b[12]; } c; };
 extern "C" { char D_004ABA20[] = "vector::insert length error\n"; }
-DEFINE_VIF_UF(Vector_Insert_2AD1F0, E_002AD1F0, 0x800000, 0x400000, D_004ABA20, D_004ABA70, 0x5C, std_swap_vectordeleterR_vectordeleterR_25, D_004ABA60, 0x64)
+DEFINE_VIF_UF(std_vector_imp_SelectElem_insert, E_002AD1F0, 0x800000, 0x400000, D_004ABA20, D_004ABA70, 0x5C, std_swap_vectordeleterR_vectordeleterR_25, D_004ABA60, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_002AD1F0 */

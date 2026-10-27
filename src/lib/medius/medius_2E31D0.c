@@ -79,7 +79,7 @@ extern int NetIGetObject(E_002E3340 **, unsigned int);
 
 extern int NetGetConnInfo(unsigned int, S **);
 extern unsigned char NetClientIndexToClientIndexPacket(unsigned int);
-extern char *String_Copy(char *, const char *);
+extern char *Libc_Strcpy(char *, const char *);
 extern void *memcpy(void *, const void *, unsigned int);
 extern int NetIGetClient(int *, unsigned int, int);
 
@@ -123,7 +123,7 @@ int NetISendObjectFullUpdate(int to, unsigned int id)
     h.f3 = e->f3;
     h.fC = e->f2C;
     h.f10 = e->f30;
-    String_Copy(h.name, e->name);
+    Libc_Strcpy(h.name, e->name);
     memcpy(D_0051FAD8, &h, sizeof(h));
     for (i = 0; i < t->n; i++) {
         x = t->items[i];

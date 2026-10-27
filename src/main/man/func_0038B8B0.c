@@ -8,6 +8,6 @@
 
 extern int WoundEffectTable[256];
 
-void WoundEffectIds_Set(int index, int value) {
+void cMan_SetBloodEffect(int index, int value) {
     WoundEffectTable[index & 0xFF] = value;
 }

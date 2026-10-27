@@ -13,8 +13,8 @@ typedef struct { char pad[0x4C]; int classKey; char pad50[0x3524 - 0x50]; void* 
 typedef struct { char pad[0x30]; Hum_5BF0* hum; } Obj_5BF0;
 typedef struct { Obj_5BF0* obj; int id; } Arg_5BF0;
 typedef struct { char pad[0x13C]; int ok; } Wdb_5BF0;
-Wdb_5BF0* WeaponDb_Get(int, int);
-int WeaponInv_Add(void*, int, int, int, int, int);
+Wdb_5BF0* cWeaponDB_GetEntry(int, int);
+int cWeapon_Add(void*, int, int, int, int, int);
 extern int g_HumanActorClassKey;
 extern int g_WeaponDatabase;
 /* script: give the player a weapon when the weapon database entry is valid;
@@ -28,8 +28,8 @@ int Script_cPlayer_AddWeapon(Arg_5BF0* args)
     w[0] = args->id;
     h = args->obj->hum;
     id = w[0];
-    if (h && h->classKey == g_HumanActorClassKey && WeaponDb_Get(g_WeaponDatabase, id)->ok)
-        WeaponInv_Add(h->inv, id, 1, 1, 0, 0);
+    if (h && h->classKey == g_HumanActorClassKey && cWeaponDB_GetEntry(g_WeaponDatabase, id)->ok)
+        cWeapon_Add(h->inv, id, 1, 1, 0, 0);
     return 0;
 }
 #pragma pop
@@ -45,7 +45,7 @@ extern char g_HumanActorClassKey[];
 #endif /* merge_units */
 #define g_HumanActorClassKey ((char*)&g_HumanActorClassKey) /* merge_units */
 
-extern int WeaponInv_EquipItem(int, int);
+extern int cWeapon_Select(int, int);
 
 int Script_cPlayer_ArmWeapon(int a0) {
     int loc[1];
@@ -64,7 +64,7 @@ int Script_cPlayer_ArmWeapon(int a0) {
     cond = v1 != v0;
     if (cond) goto L00175CC0;
     a0 = *(int*)((char*)a0 + 13604);
-    v0 = WeaponInv_EquipItem(a0, a1);
+    v0 = cWeapon_Select(a0, a1);
 L00175CC0:;
     v0 = 0;
     goto ret;

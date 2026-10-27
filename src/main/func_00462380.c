@@ -15,10 +15,10 @@ extern unsigned char g_IsMultiplayer;
 extern char D_004C2660[];
 extern char D_004C2668[];
 extern char D_004C2680[];
-Stack_462380* Gui_GetScreenStack(void);
-void* Gui_GetScreenList(void);
-void* GuiManager_FindOrLoad(void* a, char* b, char* c);
-int GuiObjectives_HandleInput(void* self, Ev_462380* ev);
+Stack_462380* Gui_Canvas(void);
+void* Gui_Manager(void);
+void* GuiManager_OpenGui(void* a, char* b, char* c);
+int GuiObjectives_onInput(void* self, Ev_462380* ev);
 }
 static inline unsigned char Down_462380(Ev_462380* e)
 {
@@ -46,10 +46,10 @@ extern "C" int GuiEndGameObjectives_HandleInput(void* self, Ev_462380* ev)
     if (Press_462380(ev, 0x40)) {
         char* name;
         void* pg;
-        Gui_GetScreenStack()->Pop(self);
+        Gui_Canvas()->Pop(self);
         name = g_IsMultiplayer ? D_004C2660 : D_004C2668;
-        pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C2680, name);
-        Gui_GetScreenStack()->Push(pg, 1);
+        pg = GuiManager_OpenGui(Gui_Manager(), D_004C2680, name);
+        Gui_Canvas()->Push(pg, 1);
         return 1;
     }
     {
@@ -57,5 +57,5 @@ extern "C" int GuiEndGameObjectives_HandleInput(void* self, Ev_462380* ev)
         if (b)
             return 1;
     }
-    return GuiObjectives_HandleInput(self, ev);
+    return GuiObjectives_onInput(self, ev);
 }

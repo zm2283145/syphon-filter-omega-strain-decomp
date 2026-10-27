@@ -6,8 +6,8 @@
 #include "types.h"
 #include "AgentData_types.h"
 
-extern unsigned char AgentData_IsObjectiveComplete(cAgentData* agent, int key);
-extern int AgentData_SetObjectiveBit(cAgentData* agent, int key, int global);
+extern unsigned char cAgentData_IsObjectiveComplete(cAgentData* agent, int key);
+extern int cAgentData_AddObjective(cAgentData* agent, int key, int global);
 extern unsigned char cAgentData_AreObjectivesComplete(cAgentData* agent, int keys);
 
 int Script_cAgentData_AreObjectivesComplete(AgentScriptArg* args) {
@@ -19,14 +19,14 @@ int Script_cAgentData_AreObjectivesComplete(AgentScriptArg* args) {
 int Game_IsObjectiveComplete(AgentScriptArg* args) {
     int key[1];
     key[0] = args[1].i;
-    return AgentData_IsObjectiveComplete(args[0].p, STACK_COPY(key));
+    return cAgentData_IsObjectiveComplete(args[0].p, STACK_COPY(key));
 }
 
 /* AgentData.AddObjective(key): sets the objective bit without the multiplayer message. */
 int AgentData_AddObjective(AgentScriptArg* args) {
     int key[1];
     key[0] = args[1].i;
-    AgentData_SetObjectiveBit(args[0].p, STACK_COPY(key), 0);
+    cAgentData_AddObjective(args[0].p, STACK_COPY(key), 0);
     return 0;
 }
 

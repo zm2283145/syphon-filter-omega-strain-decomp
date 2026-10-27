@@ -18,7 +18,7 @@ struct Obj_23FD00 {
 extern "C" {
 extern char cNIEventOBJ_vtable[];
 extern char D_004DC190[];
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 void cNIEventFXTrack_dtor(void* p, int f);
 void std_vector_deleter_FloatKey_dtor(void* p, int f);
 void cArray_VisKey_dtor(void* p, int f);
@@ -50,7 +50,7 @@ extern "C" Obj_23FD00* cNIEventOBJ_dtor(Obj_23FD00* l, short flag)
         if (o) {
             AllocGuard g;
             o->Destroy(-1);
-            Mem_Free(0, o, "NIEvent.hh", 0x166);
+            cMemMan_Deallocate(0, o, "NIEvent.hh", 0x166);
         }
         cNIEventFXTrack_dtor(l->m1A4, -1);
         L1_23FD00(l->m184);

@@ -29,7 +29,7 @@ typedef struct { unsigned char kind; unsigned char id; unsigned short len; int v
 typedef struct { int sock; char pad[0x44]; unsigned char b48; } ScfSock;
 typedef struct { int f0; int f4; int addr[4]; unsigned short port; char pad[0x5A]; int f74; int seq2; int seq4; } ScfPeer;
 
-int RtUdp_BuildHeader(ScfSock *s, ScfPeer *e, unsigned char flags, ScfHdr *h)
+int rt_udp_setup_packet_header(ScfSock *s, ScfPeer *e, unsigned char flags, ScfHdr *h)
 {
     int ret = 1;
     if (h == 0) return ret;
@@ -59,7 +59,7 @@ extern int rt_list_buf_insert(int *list, void *node, void *data, int len);
 extern int rt_list_buf_append_data(int *list, void *node, void *data, int len);
 extern int rt_list_buf_remove(int *list, void *node);
 
-int RtUdp_CopyPacket(ScfPeer_00308B38 *e, ScfHdr_00308B38 *hd, void *data, int len)
+int rt_udp_buffer_data_for_send(ScfPeer_00308B38 *e, ScfHdr_00308B38 *hd, void *data, int len)
 {
     ScfHdr_00308B38 tmp;
     int zero;
@@ -137,7 +137,7 @@ extern int rt_list_buf_get_head(int *list, void **pkt);
 extern void *rt_list_buf_get_next(void *pkt);
 extern char *rt_list_buf_get_data_ptr(void *pkt);
 extern int rt_list_buf_get_data_size(void *pkt);
-extern int Name_Compare48(const char *a, const char *b, int n);
+extern int Libc_Memcmp(const char *a, const char *b, int n);
 
 int rt_udp_append_data_to_packet(int unused, Obj8d18 *o, unsigned char flags, void *pkt, void *data, int len)
 {
@@ -152,7 +152,7 @@ int rt_udp_append_data_to_packet(int unused, Obj8d18 *o, unsigned char flags, vo
     rt_list_buf_get_head(&o->list, &pkt);
     while (pkt != 0) {
         rt_udp_get_packet_header(pkt, &cur);
-        if (Name_Compare48((char *)&hd, (char *)&cur, 12) == 0) {
+        if (Libc_Memcmp((char *)&hd, (char *)&cur, 12) == 0) {
             memcpy(rt_list_buf_get_data_ptr(pkt) + hd.off + 0x18, data, len);
             p = rt_list_buf_get_data_ptr(pkt);
             p += rt_list_buf_get_data_size(pkt);

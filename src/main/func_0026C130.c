@@ -14,7 +14,7 @@ extern int D_004FF074;
 extern int D_004FF078;
 extern int D_004FF07C;
 
-void HudMap_Reset(Unk26C130* self) {
+void cMap_ResetCamera(Unk26C130* self) {
     D_004FF074 = 0;
     D_004FF078 = 0;
     D_004FF07C = 0;

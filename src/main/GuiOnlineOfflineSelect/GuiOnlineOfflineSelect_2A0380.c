@@ -14,7 +14,7 @@
 /* Play a sound on a matching event. */
 extern "C" { char D_004AAED8[] = "GuiTitleScreen"; }
 extern "C" { char D_004AAEE8[] = "titlescr"; }
-DEFINE_EVENT_SOUND_CHECK(GuiOnlineOfflineSelect_HandleInput, D_004AAED8, D_004AAEE8)
+DEFINE_EVENT_SOUND_CHECK(GuiOnlineOfflineSelect_onInput, D_004AAED8, D_004AAEE8)
 #pragma pop /* merge_units */
 /* merge_units: end func_002A0380 */
 
@@ -26,17 +26,17 @@ extern Game* D_004FFC04;
 extern char D_004AAEB0[];
 extern char D_004AAEC8[];
 extern void FrontEnd_SetOnlineMode(Game*, int);
-extern void* Gui_GetScreenList(void);
+extern void* Gui_Manager(void);
 #if 0 /* merge_units */
-extern Item* GuiManager_FindOrLoad(void*, const char*, const char*);
+extern Item* GuiManager_OpenGui(void*, const char*, const char*);
 #endif /* merge_units */
-#define GuiManager_FindOrLoad(a0, a1, a2) ((Item *)GuiManager_FindOrLoad((a0), (char *)(a1), (char *)(a2))) /* merge_units */
+#define GuiManager_OpenGui(a0, a1, a2) ((Item *)GuiManager_OpenGui((a0), (char *)(a1), (char *)(a2))) /* merge_units */
 
-extern void* Gui_GetScreenStack(void);
+extern void* Gui_Canvas(void);
 #if 0 /* merge_units */
-extern void GuiStack_SwapScreens(void*, void*, Item*);
+extern void GuiCanvas_Transition(void*, void*, Item*);
 #endif /* merge_units */
-#define GuiStack_SwapScreens(a0, a1, a2) (GuiStack_SwapScreens((a0), (a1), (int)(a2))) /* merge_units */
+#define GuiCanvas_Transition(a0, a1, a2) (GuiCanvas_Transition((a0), (a1), (int)(a2))) /* merge_units */
 
 /* Resets the game flag, creates a UI item and adds it with the given argument. */
 void GuiOnlineOfflineSelect_LaunchOffline(void* arg)
@@ -44,12 +44,12 @@ void GuiOnlineOfflineSelect_LaunchOffline(void* arg)
     Item* item;
     FrontEnd_SetOnlineMode(D_004FFC04, 0);
     D_004FFC04->flag = 0;
-    item = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AAEB0, D_004AAEC8);
+    item = GuiManager_OpenGui(Gui_Manager(), D_004AAEB0, D_004AAEC8);
     item->enabled = 1;
-    GuiStack_SwapScreens(Gui_GetScreenStack(), arg, item);
+    GuiCanvas_Transition(Gui_Canvas(), arg, item);
 }
-#undef GuiManager_FindOrLoad /* merge_units */
-#undef GuiStack_SwapScreens /* merge_units */
+#undef GuiManager_OpenGui /* merge_units */
+#undef GuiCanvas_Transition /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002A0440 */
 
@@ -70,14 +70,14 @@ extern void FrontEnd_SetOnlineMode(Hud32* hud, int a1);
 #define FrontEnd_SetOnlineMode(a0, a1) (FrontEnd_SetOnlineMode((Game *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void* GuiManager_FindOrLoad(void* manager, const char* a, const char* b);
+extern void* GuiManager_OpenGui(void* manager, const char* a, const char* b);
 #endif /* merge_units */
-#define GuiManager_FindOrLoad(a0, a1, a2) ((void *)GuiManager_FindOrLoad((a0), (char *)(a1), (char *)(a2))) /* merge_units */
+#define GuiManager_OpenGui(a0, a1, a2) ((void *)GuiManager_OpenGui((a0), (char *)(a1), (char *)(a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void GuiStack_SwapScreens(void* target, void* self, void* handle);
+extern void GuiCanvas_Transition(void* target, void* self, void* handle);
 #endif /* merge_units */
-#define GuiStack_SwapScreens(a0, a1, a2) (GuiStack_SwapScreens((a0), (a1), (int)(a2))) /* merge_units */
+#define GuiCanvas_Transition(a0, a1, a2) (GuiCanvas_Transition((a0), (a1), (int)(a2))) /* merge_units */
 
 
 /* Resets HUD state and registers self with a handle created from the two names. */
@@ -87,13 +87,13 @@ void GuiOnlineOfflineSelect_LaunchOnline(void* self)
     D_00532FE8 = 0;
     FrontEnd_SetOnlineMode(D_004FFC04, 1);
     D_004FFC04->flag = 0;
-    handle = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AAE80, D_004AAE98);
-    GuiStack_SwapScreens(Gui_GetScreenStack(), self, handle);
+    handle = GuiManager_OpenGui(Gui_Manager(), D_004AAE80, D_004AAE98);
+    GuiCanvas_Transition(Gui_Canvas(), self, handle);
 }
 #undef D_004FFC04 /* merge_units */
 #undef FrontEnd_SetOnlineMode /* merge_units */
-#undef GuiManager_FindOrLoad /* merge_units */
-#undef GuiStack_SwapScreens /* merge_units */
+#undef GuiManager_OpenGui /* merge_units */
+#undef GuiCanvas_Transition /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002A04C0 */
 
@@ -101,25 +101,25 @@ void GuiOnlineOfflineSelect_LaunchOnline(void* self)
 #pragma push /* merge_units */
 typedef struct { char pad[0x10]; int flag; } Widget;
 #if 0 /* merge_units */
-extern Widget* GuiManager_FindOrLoad(void* factory, const char* a, const char* b);
+extern Widget* GuiManager_OpenGui(void* factory, const char* a, const char* b);
 #endif /* merge_units */
-#define GuiManager_FindOrLoad(a0, a1, a2) ((Widget *)GuiManager_FindOrLoad((a0), (char *)(a1), (char *)(a2))) /* merge_units */
+#define GuiManager_OpenGui(a0, a1, a2) ((Widget *)GuiManager_OpenGui((a0), (char *)(a1), (char *)(a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void GuiStack_SwapScreens(void* mgr, void* self, Widget* w);
+extern void GuiCanvas_Transition(void* mgr, void* self, Widget* w);
 #endif /* merge_units */
-#define GuiStack_SwapScreens(a0, a1, a2) (GuiStack_SwapScreens((a0), (a1), (int)(a2))) /* merge_units */
+#define GuiCanvas_Transition(a0, a1, a2) (GuiCanvas_Transition((a0), (a1), (int)(a2))) /* merge_units */
 
 
 /* Creates a widget from two names, flags it and registers it for self. */
 void GuiOnlineOfflineSelect_LaunchLAN(void* self)
 {
-    Widget* w = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AAEB0, D_004AAEC8);
+    Widget* w = GuiManager_OpenGui(Gui_Manager(), D_004AAEB0, D_004AAEC8);
     w->flag = 1;
-    GuiStack_SwapScreens(Gui_GetScreenStack(), self, w);
+    GuiCanvas_Transition(Gui_Canvas(), self, w);
 }
-#undef GuiManager_FindOrLoad /* merge_units */
-#undef GuiStack_SwapScreens /* merge_units */
+#undef GuiManager_OpenGui /* merge_units */
+#undef GuiCanvas_Transition /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002A0540 */
 
@@ -148,14 +148,14 @@ extern Mgr_002A05B0* D_004FFC04;
 
 extern unsigned char D_0051EEA0;
 extern G_002A05B0* g_MemCard;
-void GuiWidget_Update(Self_002A05B0* self);
-Ctl_002A05B0* GuiWidget_FindChildByName(Self_002A05B0* self, char* name);
+void GuiWidget_onAdvanceTime(Self_002A05B0* self);
+Ctl_002A05B0* GuiWidget_FindChild_charP(Self_002A05B0* self, char* name);
 #if 0 /* merge_units */
-Ui_002A05B0* Gui_GetScreenStack(void);
+Ui_002A05B0* Gui_Canvas(void);
 #endif /* merge_units */
-#define Gui_GetScreenStack() ((Ui_002A05B0 *)Gui_GetScreenStack()) /* merge_units */
+#define Gui_Canvas() ((Ui_002A05B0 *)Gui_Canvas()) /* merge_units */
 
-void GuiScreen_SetFocus(Ui_002A05B0* ui, void* w);
+void GuiCanvas_SetFocus(Ui_002A05B0* ui, void* w);
 }
 
 static inline void SetHidden_002A05B0(Ctl_002A05B0* w, bool h)
@@ -165,11 +165,11 @@ static inline void SetHidden_002A05B0(Ctl_002A05B0* w, bool h)
     else
         w->flags &= ~4;
 }
-extern "C" void GuiOnlineOfflineSelect_Update(Self_002A05B0* self)
+extern "C" void GuiOnlineOfflineSelect_onAdvanceTime(Self_002A05B0* self)
 {
     Ctl_002A05B0* w;
-    GuiWidget_Update(self);
-    w = GuiWidget_FindChildByName(self, D_0048BA28);
+    GuiWidget_onAdvanceTime(self);
+    w = GuiWidget_FindChild_charP(self, D_0048BA28);
     if (w) {
         bool hide;
         if (D_004FFC04->b31) {
@@ -177,14 +177,14 @@ extern "C" void GuiOnlineOfflineSelect_Update(Self_002A05B0* self)
             return;
         }
         hide = g_MemCard->b59D && !D_0051EEA0;
-        if (!hide && Gui_GetScreenStack()->p20 == w) {
-            GuiScreen_SetFocus(Gui_GetScreenStack(), w->h->Make(w, 1));
+        if (!hide && Gui_Canvas()->p20 == w) {
+            GuiCanvas_SetFocus(Gui_Canvas(), w->h->Make(w, 1));
         }
         SetHidden_002A05B0(w, hide);
     }
 }
 #undef D_004FFC04 /* merge_units */
-#undef Gui_GetScreenStack /* merge_units */
+#undef Gui_Canvas /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002A05B0 */
 
@@ -217,22 +217,22 @@ extern G_002A06C0* g_MemCard;
 #endif /* merge_units */
 #define g_MemCard (*(G_002A06C0 **)&g_MemCard) /* merge_units */
 
-void GuiWidget_BaseWake(Self_002A06C0* self);
-void FrontEnd_SetMusic(Mgr_002A06C0* m, int a);
+void GuiWidget_onWake(Self_002A06C0* self);
+void cGameFrontEnd_PlayMusic(Mgr_002A06C0* m, int a);
 #if 0 /* merge_units */
-Ctl_002A06C0* GuiWidget_FindChildByName(Self_002A06C0* self, char* name);
+Ctl_002A06C0* GuiWidget_FindChild_charP(Self_002A06C0* self, char* name);
 #endif /* merge_units */
-#define GuiWidget_FindChildByName(a0, a1) ((Ctl_002A06C0 *)GuiWidget_FindChildByName((Self_002A05B0 *)(a0), (a1))) /* merge_units */
+#define GuiWidget_FindChild_charP(a0, a1) ((Ctl_002A06C0 *)GuiWidget_FindChild_charP((Self_002A05B0 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-Ui_002A06C0* Gui_GetScreenStack(void);
+Ui_002A06C0* Gui_Canvas(void);
 #endif /* merge_units */
-#define Gui_GetScreenStack() ((Ui_002A06C0 *)Gui_GetScreenStack()) /* merge_units */
+#define Gui_Canvas() ((Ui_002A06C0 *)Gui_Canvas()) /* merge_units */
 
 #if 0 /* merge_units */
-void GuiScreen_SetFocus(Ui_002A06C0* ui, void* w);
+void GuiCanvas_SetFocus(Ui_002A06C0* ui, void* w);
 #endif /* merge_units */
-#define GuiScreen_SetFocus(a0, a1) (GuiScreen_SetFocus((Ui_002A05B0 *)(a0), (a1))) /* merge_units */
+#define GuiCanvas_SetFocus(a0, a1) (GuiCanvas_SetFocus((Ui_002A05B0 *)(a0), (a1))) /* merge_units */
 
 }
 
@@ -244,16 +244,16 @@ static inline void SetHidden_002A06C0(Ctl_002A06C0* w, bool h)
         w->flags &= ~4;
 }
 
-extern "C" void GuiOnlineOfflineSelect_Wake(Self_002A06C0* self)
+extern "C" void GuiOnlineOfflineSelect_onWake(Self_002A06C0* self)
 {
     Ctl_002A06C0* w;
-    GuiWidget_BaseWake(self);
-    FrontEnd_SetMusic(D_004FFC04, 0);
-    self->p20 = GuiWidget_FindChildByName(self, self->b48 ? D_0048BA28 : D_0048BA30);
-    w = GuiWidget_FindChildByName(self, D_0048BA38);
+    GuiWidget_onWake(self);
+    cGameFrontEnd_PlayMusic(D_004FFC04, 0);
+    self->p20 = GuiWidget_FindChild_charP(self, self->b48 ? D_0048BA28 : D_0048BA30);
+    w = GuiWidget_FindChild_charP(self, D_0048BA38);
     if (w)
         SetHidden_002A06C0(w, !D_0051EEA8);
-    w = GuiWidget_FindChildByName(self, D_0048BA28);
+    w = GuiWidget_FindChild_charP(self, D_0048BA28);
     if (w) {
         bool hide;
         if (D_004FFC04->b31) {
@@ -261,17 +261,17 @@ extern "C" void GuiOnlineOfflineSelect_Wake(Self_002A06C0* self)
             return;
         }
         hide = g_MemCard->b59D && !D_0051EEA0;
-        if (!hide && Gui_GetScreenStack()->p20 == w) {
-            GuiScreen_SetFocus(Gui_GetScreenStack(), w->h->Make(w, 1));
+        if (!hide && Gui_Canvas()->p20 == w) {
+            GuiCanvas_SetFocus(Gui_Canvas(), w->h->Make(w, 1));
         }
         SetHidden_002A06C0(w, hide);
     }
 }
 #undef D_004FFC04 /* merge_units */
 #undef g_MemCard /* merge_units */
-#undef GuiWidget_FindChildByName /* merge_units */
-#undef Gui_GetScreenStack /* merge_units */
-#undef GuiScreen_SetFocus /* merge_units */
+#undef GuiWidget_FindChild_charP /* merge_units */
+#undef Gui_Canvas /* merge_units */
+#undef GuiCanvas_SetFocus /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002A06C0 */
 
@@ -302,24 +302,24 @@ extern G_002A0860* g_MemCard;
 #define g_MemCard (*(G_002A0860 **)&g_MemCard) /* merge_units */
 
 #if 0 /* merge_units */
-void GuiWidget_Update(Self_002A0860* self);
+void GuiWidget_onAdvanceTime(Self_002A0860* self);
 #endif /* merge_units */
-#define GuiWidget_Update(a0) (GuiWidget_Update((Self_002A05B0 *)(a0))) /* merge_units */
+#define GuiWidget_onAdvanceTime(a0) (GuiWidget_onAdvanceTime((Self_002A05B0 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-Ctl_002A0860* GuiWidget_FindChildByName(Self_002A0860* self, char* name);
+Ctl_002A0860* GuiWidget_FindChild_charP(Self_002A0860* self, char* name);
 #endif /* merge_units */
-#define GuiWidget_FindChildByName(a0, a1) ((Ctl_002A0860 *)GuiWidget_FindChildByName((Self_002A05B0 *)(a0), (a1))) /* merge_units */
+#define GuiWidget_FindChild_charP(a0, a1) ((Ctl_002A0860 *)GuiWidget_FindChild_charP((Self_002A05B0 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-Ui_002A0860* Gui_GetScreenStack(void);
+Ui_002A0860* Gui_Canvas(void);
 #endif /* merge_units */
-#define Gui_GetScreenStack() ((Ui_002A0860 *)Gui_GetScreenStack()) /* merge_units */
+#define Gui_Canvas() ((Ui_002A0860 *)Gui_Canvas()) /* merge_units */
 
 #if 0 /* merge_units */
-void GuiScreen_SetFocus(Ui_002A0860* ui, void* w);
+void GuiCanvas_SetFocus(Ui_002A0860* ui, void* w);
 #endif /* merge_units */
-#define GuiScreen_SetFocus(a0, a1) (GuiScreen_SetFocus((Ui_002A05B0 *)(a0), (a1))) /* merge_units */
+#define GuiCanvas_SetFocus(a0, a1) (GuiCanvas_SetFocus((Ui_002A05B0 *)(a0), (a1))) /* merge_units */
 
 }
 
@@ -330,11 +330,11 @@ static inline void SetHidden_002A0860(Ctl_002A0860* w, bool h)
     else
         w->flags &= ~4;
 }
-extern "C" void GuiOnlineOfflineSelect_UpdateOnline(Self_002A0860* self)
+extern "C" void GuiOnlineOfflineSelect_SetOnlineState(Self_002A0860* self)
 {
     Ctl_002A0860* w;
     
-    w = GuiWidget_FindChildByName(self, D_0048BA28);
+    w = GuiWidget_FindChild_charP(self, D_0048BA28);
     if (w) {
         bool hide;
         if (D_004FFC04->b31) {
@@ -342,18 +342,18 @@ extern "C" void GuiOnlineOfflineSelect_UpdateOnline(Self_002A0860* self)
             return;
         }
         hide = g_MemCard->b59D && !D_0051EEA0;
-        if (!hide && Gui_GetScreenStack()->p20 == w) {
-            GuiScreen_SetFocus(Gui_GetScreenStack(), w->h->Make(w, 1));
+        if (!hide && Gui_Canvas()->p20 == w) {
+            GuiCanvas_SetFocus(Gui_Canvas(), w->h->Make(w, 1));
         }
         SetHidden_002A0860(w, hide);
     }
 }
 #undef D_004FFC04 /* merge_units */
 #undef g_MemCard /* merge_units */
-#undef GuiWidget_Update /* merge_units */
-#undef GuiWidget_FindChildByName /* merge_units */
-#undef Gui_GetScreenStack /* merge_units */
-#undef GuiScreen_SetFocus /* merge_units */
+#undef GuiWidget_onAdvanceTime /* merge_units */
+#undef GuiWidget_FindChild_charP /* merge_units */
+#undef Gui_Canvas /* merge_units */
+#undef GuiCanvas_SetFocus /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002A0860 */
 
@@ -375,28 +375,28 @@ extern const char* D_0048BA30;
 #endif /* merge_units */
 #define D_0048BA30 (*(const char **)&D_0048BA30) /* merge_units */
 
-void GuiWidget_Init(S2A0970* s);
+void GuiWidget_onAdd(S2A0970* s);
 #if 0 /* merge_units */
-W2A0970* GuiWidget_FindChildByName(S2A0970* s, const char* name);
+W2A0970* GuiWidget_FindChild_charP(S2A0970* s, const char* name);
 #endif /* merge_units */
-#define GuiWidget_FindChildByName(a0, a1) ((W2A0970 *)GuiWidget_FindChildByName((Self_002A05B0 *)(a0), (char *)(a1))) /* merge_units */
+#define GuiWidget_FindChild_charP(a0, a1) ((W2A0970 *)GuiWidget_FindChild_charP((Self_002A05B0 *)(a0), (char *)(a1))) /* merge_units */
 
 }
 
 static inline int Nz2A0970(unsigned char v) { return v != 0; }
 /* Screen init: copies the global mode flag and shows/hides two widgets accordingly. */
-extern "C" void GuiOnlineOfflineSelect_Init(S2A0970* s)
+extern "C" void GuiOnlineOfflineSelect_onAdd(S2A0970* s)
 {
     W2A0970* w;
-    GuiWidget_Init(s);
+    GuiWidget_onAdd(s);
     s->b48 = D_00506488;
-    w = GuiWidget_FindChildByName(s, D_0048BA38);
+    w = GuiWidget_FindChild_charP(s, D_0048BA38);
     if (w) {
         bool c = !s->b48 && D_00506490;
         if (c) w->flags |= 2;
         else w->flags &= ~2;
     }
-    w = GuiWidget_FindChildByName(s, D_0048BA30);
+    w = GuiWidget_FindChild_charP(s, D_0048BA30);
     if (w) {
         if (Nz2A0970(s->b48) ^ 1) w->flags |= 4;
         else w->flags &= ~4;
@@ -404,7 +404,7 @@ extern "C" void GuiOnlineOfflineSelect_Init(S2A0970* s)
 }
 #undef D_0048BA38 /* merge_units */
 #undef D_0048BA30 /* merge_units */
-#undef GuiWidget_FindChildByName /* merge_units */
+#undef GuiWidget_FindChild_charP /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002A0970 */
 
@@ -437,13 +437,13 @@ typedef struct { unsigned char isLong : 1; unsigned char len : 7; } ShortHdr;
 typedef struct { union { unsigned int word; ShortHdr s; } hdr; int longLen; char* longData; } SsoString;
 
 extern int strlen(const char* s); /* strlen */
-extern void String_Compare(SsoString* self, int pos, int n, const char* s, int len);
+extern void std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(SsoString* self, int pos, int n, const char* s, int len);
 
 /* Assigns a C string to the string by replacing its whole contents. */
 void func_002A0A90(SsoString* self, const char* s)
 {
     int len = strlen(s);
-    String_Compare(self, 0, (self->hdr.word & 1) ? self->longLen : (unsigned char)self->hdr.s.len, s, len);
+    std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(self, 0, (self->hdr.word & 1) ? self->longLen : (unsigned char)self->hdr.s.len, s, len);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002A0A90 */

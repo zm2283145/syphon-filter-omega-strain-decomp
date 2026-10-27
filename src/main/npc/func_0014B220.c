@@ -18,7 +18,7 @@ struct E2Npc {
 };
 struct E2Handle { E2Npc* obj; int serial; };
 struct E2Node { int f0; E2Node* next; E2Handle* handle; };
-extern "C" void List_Begin(int*, void*);
+extern "C" void std_list_deleter_voidPtr_begin_void(int*, void*);
 extern "C" void std_list_cActiveListItemPtr_generic_iterator_ctor(E2Node**, int*);
 extern "C" void std_list_cActiveListItemPtr_end_void(int*, void*);
 extern "C" void cLListIterator_cActiveListItemPtr_ctor(E2Node**, int*);
@@ -35,13 +35,13 @@ static inline E2Npc* E2Get(E2Handle* h) {
     if ((E2NonNull(h->obj) ^ 1) == 0 && h->obj->serial != h->serial) ok = false;
     return ok ? h->obj : 0;
 }
-extern "C" int NpcAi_CountThinking(void)
+extern "C" int cNPC_GetActiveNpcCount(void)
 {
     E2Node* e;
     E2Node* it;
     int b;
     int count = 0;
-    List_Begin(&b, g_NpcThinkList);
+    std_list_deleter_voidPtr_begin_void(&b, g_NpcThinkList);
     std_list_cActiveListItemPtr_generic_iterator_ctor(&it, &b);
     for (E2Node* n = it; E2End(&e), n != e; n = n->next) {
         if (!E2Idle(E2Get(n->handle)->GetState())) count++;

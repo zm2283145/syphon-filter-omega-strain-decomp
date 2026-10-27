@@ -8,22 +8,22 @@
 
 extern char D_004D91C0[]; /* LosResultEvent vtable */
 extern char g_LosResultMsgClass[]; /* "LOS result ready" event descriptor */
-extern int Event_Construct(void*, void*);
-extern int Vec4_Assign(Vec4*, Vec4*);
-extern int Vec4_Copy(Vec4*, Vec4*);
+extern int cMessage_ctor_cMessageNameR(void*, void*);
+extern int cVector_ctor_cVectorR(Vec4*, Vec4*);
+extern int cVector_opAssign(Vec4*, Vec4*);
 extern int cCollisionFace_ctor_cCollisionFaceR(LosHitInfo*, LosHitInfo*);
 extern int cCollisionModel_FaceLocator_opAssign(Vec4*, Vec4*);
 extern int cCollisionModel_FaceProperties_opAssign(Vec4*, Vec4*);
 
 /* Construct a "LOS result ready" event carrying a copy of the result. */
-LosResultEvent* LosResultEvent_Ctor(LosResultEvent* ev, LosResult* src) {
+LosResultEvent* cLosResultReadyMessage_ctor(LosResultEvent* ev, LosResult* src) {
     LosResult* dst;
 
-    Event_Construct(ev, g_LosResultMsgClass);
+    cMessage_ctor_cMessageNameR(ev, g_LosResultMsgClass);
     dst = &ev->result;
     ev->vtable = D_004D91C0;
     dst->status = src->status;
-    Vec4_Assign(&dst->point, &src->point);
+    cVector_ctor_cVectorR(&dst->point, &src->point);
     cCollisionFace_ctor_cCollisionFaceR(&dst->hit, &src->hit);
     dst->unk90 = src->unk90;
     return ev;
@@ -40,10 +40,10 @@ int cLosResult_SetBlockingFace(LosResult* dst, LosHitInfo* src) {
     unsigned char tmp13;
     unsigned char tmp14;
 
-    Vec4_Copy(&dst->hit.row0, &src->row0);
-    Vec4_Copy(&dst->hit.row1, &src->row1);
-    Vec4_Copy(&dst->hit.row2, &src->row2);
-    Vec4_Copy(&dst->hit.row3, &src->row3);
+    cVector_opAssign(&dst->hit.row0, &src->row0);
+    cVector_opAssign(&dst->hit.row1, &src->row1);
+    cVector_opAssign(&dst->hit.row2, &src->row2);
+    cVector_opAssign(&dst->hit.row3, &src->row3);
     tmp8 = src->unk50;
     dst->hit.unk50 = tmp8;
     cCollisionModel_FaceProperties_opAssign(&dst->hit.unk40, &src->unk40);

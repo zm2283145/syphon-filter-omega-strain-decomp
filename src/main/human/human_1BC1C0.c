@@ -19,10 +19,10 @@ struct V4 {
 } __attribute__((aligned(16)));
 struct R { char pad[0x80]; V4 q; char pad90[0x12]; unsigned char dirty; char padA3[0xD]; void* parent; };
 extern "C" {
-void* Root_GetParent(R*);
-void* Root_GetWorldPlacement(void*);
-V4* Placement_GetQuat(void*);
-V4* Quat_Assign(V4*, V4*);
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(R*);
+void* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void*);
+V4* cQuatVec_Rotation(void*);
+V4* cQuaternion_opAssign(V4*, V4*);
 V4* cQuaternion_InvertUnitQuat(V4*);
 }
 static inline V4 QMul(const V4& a, const V4& b)
@@ -34,12 +34,12 @@ static inline V4 QMul(const V4& a, const V4& b)
 static inline void G1(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
 #pragma peephole off
 #pragma opt_propagation off
-extern "C" void SceneRoot_SetPoseCacheRot(R* self, V4* q)
+extern "C" void cSkaAnimAnchor_TreeNode_SetSkeletonTargetRotation_WorldSpace(R* self, V4* q)
 {
     V4 t;
     self->q = *q;
     if (self->parent) {
-        Quat_Assign(&t, Placement_GetQuat(Root_GetWorldPlacement(Root_GetParent(self))));
+        cQuaternion_opAssign(&t, cQuatVec_Rotation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(self))));
         cQuaternion_InvertUnitQuat(&t);
         { V4* pt = &t; V4* pq = &self->q; *pq = QMul(*pt, *pq); }
     }
@@ -57,7 +57,7 @@ typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-V4 Quat_Conjugate(V4 v) {
+V4 cQuaternion_GetInverseUnitQuat(V4 v) {
     V4* p = &v;
     asm {
         

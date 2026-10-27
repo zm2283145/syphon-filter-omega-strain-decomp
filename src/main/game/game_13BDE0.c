@@ -15,13 +15,13 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int String_CopyCtor(Unk0013BDE0* self, int a1);
+extern int std_basic_string_char_char_traits_char_ctor_basicstringR(Unk0013BDE0* self, int a1);
 
-/* Base init through String_CopyCtor, then store the word at +0x0C. */
+/* Base init through std_basic_string_char_char_traits_char_ctor_basicstringR, then store the word at +0x0C. */
 int std_make_pair_cString_cConsCommandP(Unk0013BDE0* self, int a1, int value) {
     int result;
 
-    result = String_CopyCtor(self, a1);
+    result = std_basic_string_char_char_traits_char_ctor_basicstringR(self, a1);
     self->unk0C = value;
     return result;
 }

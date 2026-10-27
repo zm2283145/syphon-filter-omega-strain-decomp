@@ -29,14 +29,14 @@ void DecodeKey_XorB3(char*, int);
  * check with dnasArg/dnasData at a raised thread priority, and on success decodes
  * the returned password. On failure asks the update hook (event 3) whether to
  * continue anyway. */
-int SFOLobby_DnasAuth(SFOLobby* self)
+int SFOLobby_ConfigVerifyDNAS(SFOLobby* self)
 {
     int old;
     int r;
 
     self->dnasResult = 0;
     SFOLobby_DumpMemInfo(D_004C0D58);
-    SFOLobby_CallUpdateHook(self, 2, 2);
+    SFOLobby_GuiCallback(self, 2, 2);
     if (SFOLibInit_RequestOverlay(2) == 0) {
         SFOLobby_SetError(self, 5, D_004C0D70, 0x27A);
         return 0;
@@ -55,7 +55,7 @@ int SFOLobby_DnasAuth(SFOLobby* self)
             return 0;
         }
         r = 0;
-        SFOLobby_CallUpdateHook(self, 3, (int)&r);
+        SFOLobby_GuiCallback(self, 3, (int)&r);
         return r == 1;
     }
     ChangeThreadPriority(GetThreadId(), old);
@@ -82,7 +82,7 @@ extern void sceCdInit(int);
 extern void sceSifExitCmd(void);
 extern int func_00169920(void);
 extern void LoadExecPS2_2(char*, int, char**);
-void SFOLobby_LaunchNetGui(char* name, char* arg) {
+void SFOLobby_ConfigLaunchNetGui(char* name, char* arg) {
     char buf[0x100];
     char* argv[2];
     int argc;
@@ -112,9 +112,9 @@ static inline void merge_flush_func_0044B970(void) {}
 /* merge_units: begin func_0044BAB0 */
 #pragma push /* merge_units */
 int SFOLobby_NetUp(); /* defined below with (SFOLobby *, int); this block passes a NetCfg_44BAB0 * */
-int SFOLobby_NetDown(SFOLobby* a); /* gsynth: defined below */
+int SFOLobby_DownCtl(SFOLobby* a); /* gsynth: defined below */
 typedef struct { int w[0x1340 / 4]; } __attribute__((aligned(16))) NetCfg_44BAB0;
-/* netConfigList entry (0x13C0 bytes, see SFOLobby_ListNetConfigs) */
+/* netConfigList entry (0x13C0 bytes, see SFOLobby_ConfigGetList) */
 typedef struct {
     char hdr[0x80];
     NetCfg_44BAB0 cfg;
@@ -126,25 +126,25 @@ extern char D_004C0E40[]; /* "Dummy universe name" */
 extern char D_004C0E60[]; /* "Dummy description" */
 extern void FlushCache(int);
 extern int SFOLibInit_RequestNetworkIRX(int);
-extern int SFOLobby_ResolveHost(SFOLobby*, char*, char*);
+extern int SFOLobby_DNSLookup(SFOLobby*, char*, char*);
 #if 0 /* merge_units */
-extern int SFOLobby_DnasAuth(SFOLobby*);
+extern int SFOLobby_ConfigVerifyDNAS(SFOLobby*);
 #endif /* merge_units */
-#define SFOLobby_DnasAuth(a0) (SFOLobby_DnasAuth((a0))) /* merge_units */
+#define SFOLobby_ConfigVerifyDNAS(a0) (SFOLobby_ConfigVerifyDNAS((a0))) /* merge_units */
 
-extern int SFOLobby_ConnectDir(SFOLobby*);
+extern int SFOLobby_MediusConnectMUIS(SFOLobby*);
 extern int SFOLobby_UniverseInformationRequest(SFOLobby*);
-#define LobbyArray_At(a0, a1) ((NetProfile_44BAB0 *)LobbyArray_At((a0), (a1))) /* merge_units */
-extern void LobbyArray_Append(LobbyArray*, LobbyUniverseEntry*);
+#define SFOLobbyList_GetSlot(a0, a1) ((NetProfile_44BAB0 *)SFOLobbyList_GetSlot((a0), (a1))) /* merge_units */
+extern void SFOLobbyList_Append(LobbyArray*, LobbyUniverseEntry*);
 extern int SFOLobby_ShutdownMedius(SFOLobby*, int);
 extern int SFOLobby_InitializeMediusBare(SFOLobby*);
 #if 0 /* merge_units */
 #endif /* merge_units */
 
 #if 0 /* merge_units */
-int SFOLobby_NetDown(SFOLobby*);
+int SFOLobby_DownCtl(SFOLobby*);
 #endif /* merge_units */
-#define SFOLobby_NetDown(a0) (SFOLobby_NetDown((a0))) /* merge_units */
+#define SFOLobby_DownCtl(a0) (SFOLobby_DownCtl((a0))) /* merge_units */
 
 
 /* hand-written quad copy loop (retail uses addi) */
@@ -174,10 +174,10 @@ int SFOLobby_StartNetwork(SFOLobby* self, int id, unsigned char useDnas) {
     NetProfile_44BAB0* prof;
     LobbyUniverseEntry ent;
 
-    SFOLobby_CallUpdateHook(self, 2, 1);
+    SFOLobby_GuiCallback(self, 2, 1);
     self->useDnas = useDnas;
     self->passwordLen = 0;
-    prof = LobbyArray_At(self->netConfigList, id);
+    prof = SFOLobbyList_GetSlot(self->netConfigList, id);
     if (prof == 0) {
         SFOLobby_SetError(self, 0x34, D_004C0D70, 0x1B8);
         return 0;
@@ -203,43 +203,43 @@ int SFOLobby_StartNetwork(SFOLobby* self, int id, unsigned char useDnas) {
         return 0;
     }
     if (SFOLobby_NetUp(self, &D_005849C0) == 0) {
-        SFOLobby_NetDown(self);
+        SFOLobby_DownCtl(self);
         return 0;
     }
     if (SFOLobby_InitializeMediusBare(self) == 0) {
-        SFOLobby_NetDown(self);
+        SFOLobby_DownCtl(self);
         return 0;
     }
-    if (self->useDnas != 0 && SFOLobby_DnasAuth(self) == 0) {
+    if (self->useDnas != 0 && SFOLobby_ConfigVerifyDNAS(self) == 0) {
         SFOLobby_ShutdownMedius(self, 1);
-        SFOLobby_NetDown(self);
+        SFOLobby_DownCtl(self);
         return 0;
     }
     if (self->directAuth != 0) {
-        if (SFOLobby_ResolveHost(self, self->authHostName, self->authServer) == 0) {
+        if (SFOLobby_DNSLookup(self, self->authHostName, self->authServer) == 0) {
             SFOLobby_ShutdownMedius(self, 1);
-            SFOLobby_NetDown(self);
+            SFOLobby_DownCtl(self);
             return 0;
         }
         memset(&ent, 0, sizeof(ent));
-        String_Copy(ent.name, D_004C0E40);
-        String_Copy(ent.hostName, self->authHostName);
-        String_Copy(ent.description, D_004C0E60);
-        LobbyArray_Append(self->universeList, &ent);
+        Libc_Strcpy(ent.name, D_004C0E40);
+        Libc_Strcpy(ent.hostName, self->authHostName);
+        Libc_Strcpy(ent.description, D_004C0E60);
+        SFOLobbyList_Append(self->universeList, &ent);
     } else {
-        if (SFOLobby_ResolveHost(self, self->dirHostName, self->dirServer) == 0) {
+        if (SFOLobby_DNSLookup(self, self->dirHostName, self->dirServer) == 0) {
             SFOLobby_ShutdownMedius(self, 1);
-            SFOLobby_NetDown(self);
+            SFOLobby_DownCtl(self);
             return 0;
         }
-        if (SFOLobby_ConnectDir(self) == 0) {
+        if (SFOLobby_MediusConnectMUIS(self) == 0) {
             SFOLobby_ShutdownMedius(self, 1);
-            SFOLobby_NetDown(self);
+            SFOLobby_DownCtl(self);
             return 0;
         }
         if (SFOLobby_UniverseInformationRequest(self) == 0) {
             SFOLobby_ShutdownMedius(self, 1);
-            SFOLobby_NetDown(self);
+            SFOLobby_DownCtl(self);
             return 0;
         }
         self->connHandle = -1;
@@ -247,9 +247,9 @@ int SFOLobby_StartNetwork(SFOLobby* self, int id, unsigned char useDnas) {
     SFOLobby_SetError(self, 0, D_004C0D70, 0x233);
     return 1;
 }
-#undef LobbyArray_At /* merge_units */
-#undef SFOLobby_DnasAuth /* merge_units */
-#undef SFOLobby_NetDown /* merge_units */
+#undef SFOLobbyList_GetSlot /* merge_units */
+#undef SFOLobby_ConfigVerifyDNAS /* merge_units */
+#undef SFOLobby_DownCtl /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0044BAB0(void) {}
 #pragma pop /* merge_units */
@@ -262,7 +262,7 @@ int ezNetCtlSetProperties(int);
 int ezNetCtlGetStatus(void*);
 int ezNetCtlUpInterface(void);
 int SFOLibInit_RequestCancel(int);
-extern int D_00585D00;    /* time the network was last brought down (SFOLobby_NetDown) */
+extern int D_00585D00;    /* time the network was last brought down (SFOLobby_DownCtl) */
 extern char D_00585D40[]; /* ezNetCtl status buffer */
 extern int D_00585D4C;    /* ezNetCtl state: 3 = up, 5 = down */
 
@@ -280,12 +280,12 @@ int SFOLobby_NetUp(SFOLobby* self, int props)
         SFOLobby_SetError(self, 7, D_004C0D70, 0x14A);
         return 0;
     }
-    now = Lobby_GetTime();
+    now = SFOLobby_GetMillisecs();
     if (now < D_00585D00)
         D_00585D00 = now;
     while (now < D_00585D00 + 0x9C4) {
-        SFOLobby_CallUpdateHook(self, 0, 0);
-        now = Lobby_GetTime();
+        SFOLobby_GuiCallback(self, 0, 0);
+        now = SFOLobby_GetMillisecs();
     }
     D_00585D00 = 0;
     self->waitStart = now;
@@ -294,7 +294,7 @@ int SFOLobby_NetUp(SFOLobby* self, int props)
         return 0;
     }
     for (;;) {
-        SFOLobby_CallUpdateHook(self, 1, 0);
+        SFOLobby_GuiCallback(self, 1, 0);
         if (!!SFOLibInit_RequestCancel(0)) {
             SFOLobby_SetError(self, 0x3E, D_004C0D70, 0x16D);
             return 0;
@@ -315,7 +315,7 @@ int SFOLobby_NetUp(SFOLobby* self, int props)
                 SFOLobby_SetError(self, 2, D_004C0D70, 0x190);
                 return 0;
             }
-            now = Lobby_GetTime();
+            now = SFOLobby_GetMillisecs();
         } else
             return 1;
     }
@@ -332,16 +332,16 @@ extern int ezNetCtlDownInterface(SFOLobby *);
 extern int ezNetCtlGetStatus(void *);
 
 /* Stops the network and waits (60 s timeout) until it reports down. */
-int SFOLobby_NetDown(SFOLobby *a) {
+int SFOLobby_DownCtl(SFOLobby *a) {
     int t;
     if (ezNetCtlDownInterface(a) < 0) {
         SFOLobby_SetError(a, 0x20, D_004C0D70, 0x11A);
         return 0;
     }
-    a->waitStart = t = Lobby_GetTime();
+    a->waitStart = t = SFOLobby_GetMillisecs();
     D_00585D00 = t;
     for (;;) {
-        SFOLobby_CallUpdateHook(a, 0, 0);
+        SFOLobby_GuiCallback(a, 0, 0);
         if (ezNetCtlGetStatus(D_00585D40) < 0 || D_00585D4C == 5) {
             break;
         }
@@ -349,7 +349,7 @@ int SFOLobby_NetDown(SFOLobby *a) {
             SFOLobby_SetError(a, 2, D_004C0D70, 0x134);
             return 0;
         }
-        t = Lobby_GetTime();
+        t = SFOLobby_GetMillisecs();
     }
     return 1;
 }
@@ -401,20 +401,20 @@ int ezNetCnfGetCombinationList(char*, int, CombList*);
 int ezNetCnfGetProperties(char*, char*, void*);
 
 #if 0 /* merge_units */
-void LobbyArray_Append(void*, NetCfgInfo*);
+void SFOLobbyList_Append(void*, NetCfgInfo*);
 #endif /* merge_units */
-#define LobbyArray_Append(a0, a1) (LobbyArray_Append((void *)(a0), (void *)(a1))) /* merge_units */
+#define SFOLobbyList_Append(a0, a1) (SFOLobbyList_Append((void *)(a0), (void *)(a1))) /* merge_units */
 
 
-int SFOLobby_ListNetConfigs(NetCfg* self, int which)
+int SFOLobby_ConfigGetList(NetCfg* self, int which)
 {
     int dev;
     int n;
     int i;
     NetCfgInfo info;
 
-    SFOLobby_CallUpdateHook(self, 2, 1);
-    LobbyArray_Clear(self->list);
+    SFOLobby_GuiCallback(self, 2, 1);
+    SFOLobbyList_ClearList(self->list);
     for (dev = 0; dev < 2; dev++) {
         if (which >= 0 && which != dev) continue;
         FlushCache(0);
@@ -449,7 +449,7 @@ int SFOLobby_ListNetConfigs(NetCfg* self, int which)
                 if (ezNetCnfGetProperties(D_00497720[info.dev], info.a, D_005849C0) == 0) {
                     FlushCache(0);
                     memcpy(info.prop, D_005849C0, sizeof(info.prop));
-                    LobbyArray_Append(self->list, &info);
+                    SFOLobbyList_Append(self->list, &info);
                 }
             }
         }
@@ -461,7 +461,7 @@ int SFOLobby_ListNetConfigs(NetCfg* self, int which)
     return 1;
 }
 #undef D_005849C0 /* merge_units */
-#undef LobbyArray_Append /* merge_units */
+#undef SFOLobbyList_Append /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0044C0E0(void) {}
 #pragma pop /* merge_units */
@@ -469,15 +469,15 @@ static inline void merge_flush_func_0044C0E0(void) {}
 
 /* merge_units: begin func_0044C3C0 */
 #pragma push /* merge_units */
-extern int LobbyArray_Free(LobbyArray* p);
+extern int SFOLobbyList_ClearAndCompactList(LobbyArray* p);
 
 /* Leaves the NETWORK state (1) for IDLE (9), releasing netConfigList. */
-void SFOLobby_LeaveNetworkState(SFOLobby* self)
+void SFOLobby_ConfigScreenExit(SFOLobby* self)
 {
     if (self->state != SFOLOBBY_STATE_IDLE && self->state == SFOLOBBY_STATE_NETWORK) {
         self->state = SFOLOBBY_STATE_IDLE;
         if (self->netConfigList) {
-            LobbyArray_Free(self->netConfigList);
+            SFOLobbyList_ClearAndCompactList(self->netConfigList);
         }
         self->netConfigList = 0;
         SFOLobby_SetCallback(self, 0);
@@ -503,24 +503,24 @@ static inline void merge_flush_func_0044C420(void) {}
 /* merge_units: begin func_0044C440 */
 #pragma push /* merge_units */
 #pragma mpwc_relax on
-int Iop_LoadEzNetModules(int);
+int SFOLibInit_RequestEzNetConfig(int);
 #if 0 /* merge_units */
-int SFOLobby_NetDown(SFOLobby *);
+int SFOLobby_DownCtl(SFOLobby *);
 #endif /* merge_units */
-#define SFOLobby_NetDown(a0) (SFOLobby_NetDown((a0))) /* merge_units */
+#define SFOLobby_DownCtl(a0) (SFOLobby_DownCtl((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-int SFOLobby_ListNetConfigs(SFOLobby *, int);
+int SFOLobby_ConfigGetList(SFOLobby *, int);
 #endif /* merge_units */
-#define SFOLobby_ListNetConfigs(a0, a1) (SFOLobby_ListNetConfigs((void *)(a0), (a1))) /* merge_units */
+#define SFOLobby_ConfigGetList(a0, a1) (SFOLobby_ConfigGetList((void *)(a0), (a1))) /* merge_units */
 
-int SFOLobby_DisconnectAuthServer(SFOLobby *);
+int SFOLobby_MediusDisconnectMAS(SFOLobby *);
 #if 0 /* merge_units */
-int LobbyArray_Free(LobbyArray *);
+int SFOLobbyList_ClearAndCompactList(LobbyArray *);
 #endif /* merge_units */
-#define LobbyArray_Free(a0) (LobbyArray_Free((a0))) /* merge_units */
+#define SFOLobbyList_ClearAndCompactList(a0) (SFOLobbyList_ClearAndCompactList((a0))) /* merge_units */
 
-int LobbyArray_Init(LobbyArray *, int, int, int);
+int SFOLobbyList_AllocList(LobbyArray *, int, int, int);
 int SFOLobby_ShutdownMedius(SFOLobby *, int);
 #if 0 /* merge_units */
 extern char D_004C0D70; /* "SFOLobby_Config.cc" */
@@ -530,8 +530,8 @@ extern char D_004C0D70; /* "SFOLobby_Config.cc" */
 
 /* Enters the NETWORK state (1) from IDLE/initial: shuts down any previous network
  * session, loads the network modules and sets up the caller-supplied lists, then
- * enumerates the network configurations (SFOLobby_ListNetConfigs). */
-int SFOLobby_EnterNetworkState(SFOLobby *self, int arg1, LobbyArray *netConfigs, LobbyArray *list2404, char *universes) {
+ * enumerates the network configurations (SFOLobby_ConfigGetList). */
+int SFOLobby_ConfigScreenStart(SFOLobby *self, int arg1, LobbyArray *netConfigs, LobbyArray *list2404, char *universes) {
     LobbyArray *a;
 
     if ((self->state != SFOLOBBY_STATE_IDLE) && (self->state != SFOLOBBY_STATE_0)) {
@@ -542,55 +542,55 @@ int SFOLobby_EnterNetworkState(SFOLobby *self, int arg1, LobbyArray *netConfigs,
     self->unk2578 = 0;
     if (self->unk1EA8 > 0) {
         if (self->connHandle > 0) {
-            SFOLobby_DisconnectAuthServer(self);
+            SFOLobby_MediusDisconnectMAS(self);
         }
         SFOLobby_ShutdownMedius(self, 1);
-        SFOLobby_NetDown(self);
-        Iop_LoadEzNetModules(0);
+        SFOLobby_DownCtl(self);
+        SFOLibInit_RequestEzNetConfig(0);
         a = self->outList2404;
         if (a != 0) {
-            LobbyArray_Free(a);
+            SFOLobbyList_ClearAndCompactList(a);
         }
         self->outList2404 = 0;
         a = self->universeList;
         if (a != 0) {
-            LobbyArray_Free(a);
+            SFOLobbyList_ClearAndCompactList(a);
         }
         self->universeList = 0;
     }
-    if (Iop_LoadEzNetModules(1) == 0) {
+    if (SFOLibInit_RequestEzNetConfig(1) == 0) {
         SFOLobby_SetError(self, 0x2E, &D_004C0D70, 0x44);
         return 0;
     }
     self->outList2404 = list2404;
-    LobbyArray_Init(self->outList2404, 0x10, 0x10, 0x100);
+    SFOLobbyList_AllocList(self->outList2404, 0x10, 0x10, 0x100);
     self->universeList = (LobbyArray *) universes;
-    LobbyArray_Init(self->universeList, 0x10, 0x10, sizeof(LobbyUniverseEntry));
+    SFOLobbyList_AllocList(self->universeList, 0x10, 0x10, sizeof(LobbyUniverseEntry));
     self->netConfigList = netConfigs;
-    LobbyArray_Init(self->netConfigList, 0x10, 0x10, 0x13C0);
-    if (SFOLobby_ListNetConfigs(self, 0) == 0) {
+    SFOLobbyList_AllocList(self->netConfigList, 0x10, 0x10, 0x13C0);
+    if (SFOLobby_ConfigGetList(self, 0) == 0) {
         a = self->outList2404;
         if (a != 0) {
-            LobbyArray_Free(a);
+            SFOLobbyList_ClearAndCompactList(a);
         }
         self->outList2404 = 0;
         a = self->universeList;
         if (a != 0) {
-            LobbyArray_Free(a);
+            SFOLobbyList_ClearAndCompactList(a);
         }
         self->universeList = 0;
         a = self->netConfigList;
         if (a != 0) {
-            LobbyArray_Free(a);
+            SFOLobbyList_ClearAndCompactList(a);
         }
         self->netConfigList = 0;
         return 0;
     }
     return 1;
 }
-#undef SFOLobby_NetDown /* merge_units */
-#undef SFOLobby_ListNetConfigs /* merge_units */
-#undef LobbyArray_Free /* merge_units */
+#undef SFOLobby_DownCtl /* merge_units */
+#undef SFOLobby_ConfigGetList /* merge_units */
+#undef SFOLobbyList_ClearAndCompactList /* merge_units */
 #undef D_004C0D70 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0044C440(void) {}

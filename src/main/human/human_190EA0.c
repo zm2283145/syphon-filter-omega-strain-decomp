@@ -73,14 +73,14 @@ static inline void merge_flush_func_00190F00(void) {}
 #pragma push /* merge_units */
 typedef struct { int unk0; unsigned char disabled; } Item;
 typedef struct { void* owner; } Holder;
-extern int NodeNameMap_Find(void* owner);
-extern Item** Registry_At(void* table, int key);
+extern int cSkaAnimationSet_GetNodeId(void* owner);
+extern Item** cArray_cSkaNodePtr_opIndex(void* table, int key);
 
 /* Looks up the owner's item; returns it unless it is disabled (then 0). */
-Item* ModelCtx_FindNodeByName(Holder* self)
+Item* cSkaSystem_GetAnimation(Holder* self)
 {
     char* owner = self->owner;
-    Item* item = *Registry_At(owner + 0x34, NodeNameMap_Find(owner));
+    Item* item = *cArray_cSkaNodePtr_opIndex(owner + 0x34, cSkaAnimationSet_GetNodeId(owner));
     return item->disabled == 0 ? item : 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -106,7 +106,7 @@ typedef struct Holder_00190F90 {
 } Holder_00190F90;
 
 extern void func_00191040(Tmp20*, int, int*);
-extern void Vector_Insert_1BDA10(void*, Rec14*, int, Tmp20*);
+extern void std_vector_imp_cTimedEvent_insert(void*, Rec14*, int, Tmp20*);
 
 /* Builds a record from (a1, {a2, a3}) and appends it to the vector at +0x3C. */
 Holder_00190F90* cSkaAnimCheckpoints_ScheduleEvent(Holder_00190F90* self, int a1, int a2, int a3) {
@@ -115,7 +115,7 @@ Holder_00190F90* cSkaAnimCheckpoints_ScheduleEvent(Holder_00190F90* self, int a1
     pair[0] = a2;
     pair[1] = a3;
     func_00191040(&rec, a1, pair);
-    Vector_Insert_1BDA10(self->vec, self->data + self->count, 1, &rec);
+    std_vector_imp_cTimedEvent_insert(self->vec, self->data + self->count, 1, &rec);
     return self;
 }
 /* merge_units: generate this block's code under its own pragmas */

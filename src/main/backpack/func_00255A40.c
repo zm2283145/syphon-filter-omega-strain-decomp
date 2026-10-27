@@ -6,6 +6,6 @@
 #include "types.h"
 #include "backpack_types.h"
 
-void Backpack_MarkChanged(cBackpack* backpack) {
+void cBackpack_SetHasTakenPlayerItems(cBackpack* backpack) {
     backpack->unk30C = 1;
 }

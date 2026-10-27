@@ -9,13 +9,13 @@
 #include "types.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
-int GuiWidget_FindChildByName(int , signed char *);                    
-int GuiWidget_FindChildBySubstring(int , signed char *);                    
+int GuiWidget_FindChild_charP(int , signed char *);                    
+int GuiWidget_FindChildPartial(int , signed char *);                    
 extern signed char D_0048B7A0;
 extern int D_0048B7A4;
 
 #pragma opt_common_subs off
-void GuiCommandCenter_RestoreSelection(int arg0) {
+void GuiCommandCenter_RestoreStaticGuiState(int arg0) {
     int var_s2;
     signed char *var_s1;
     int var_s0;
@@ -27,9 +27,9 @@ void GuiCommandCenter_RestoreSelection(int arg0) {
     F_(arg0, 0x1CC, int) = (int) D_0048B7A4;
     do {
         if (F_(var_s1, 0x8, signed char) != 0) {
-            F_(var_s0, 0x2D0, int) = GuiWidget_FindChildByName(arg0, var_s1 + 8);
+            F_(var_s0, 0x2D0, int) = GuiWidget_FindChild_charP(arg0, var_s1 + 8);
             if (F_(var_s0, 0x2D0, int) == 0) {
-                F_(var_s0, 0x2D0, int) = GuiWidget_FindChildBySubstring(arg0, var_s1 + 8);
+                F_(var_s0, 0x2D0, int) = GuiWidget_FindChildPartial(arg0, var_s1 + 8);
             }
         } else {
             F_(var_s0, 0x2D0, int) = 0;
@@ -45,10 +45,10 @@ void GuiCommandCenter_RestoreSelection(int arg0) {
 /* merge_units: begin func_00298420 */
 #pragma push /* merge_units */
 #pragma mpwc_relax on
-int String_CStr(int);                             
+int std_basic_string_char_char_traits_char_c_str(int);                             
 int strncpy(signed char *, int, int);
 
-void GuiCommandCenter_SaveState(char * arg0) {
+void GuiCommandCenter_StoreStaticGuiState(char * arg0) {
     int var_s2;
     int temp_v1;
     char * var_s1;
@@ -62,7 +62,7 @@ void GuiCommandCenter_SaveState(char * arg0) {
     do {
         temp_v1 = F_(var_s1, 0x2D0, int);
         if (temp_v1 != 0) {
-            strncpy(var_s0 + 8, String_CStr(temp_v1 + 4), 0x1F);
+            strncpy(var_s0 + 8, std_basic_string_char_char_traits_char_c_str(temp_v1 + 4), 0x1F);
             F_(var_s0, 0x28, signed char) = 0;
         } else {
             F_(var_s0, 0x8, signed char) = 0;
@@ -111,17 +111,17 @@ typedef struct {
     unsigned char f2F4;     /* 0x2F4 */
 } Scr_2984D0;
 extern char D_004DD4F0[];
-extern void GuiScreen_ctor(Scr_2984D0* s);
+extern void GuiLobbyScreen_ctor(Scr_2984D0* s);
 extern void __construct_array(void* arr, void (*ctor)(void*), void (*dtor)(void*), int size, int count);
-extern void String_CtorEmpty(void*);
+extern void cString_ctor_void(void*);
 extern void String_Dtor_138350(void*);
 
 Scr_2984D0* GuiCommandCenter_ctor(Scr_2984D0* s)
 {
     int i;
-    GuiScreen_ctor(s);
+    GuiLobbyScreen_ctor(s);
     s->vtbl = D_004DD4F0;
-    __construct_array(s->f204, String_CtorEmpty, String_Dtor_138350, 0xC, 0x11);
+    __construct_array(s->f204, cString_ctor_void, String_Dtor_138350, 0xC, 0x11);
     s->f84 = 1;
     s->f1D4 = 0;
     for (i = 0; i < 3; i++) s->f98[i] = 0;

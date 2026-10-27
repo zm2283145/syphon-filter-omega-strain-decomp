@@ -7,11 +7,11 @@
 #include "types.h"
 #include "scriptManager_types.h"
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int value);
 
 /* push_back: inserts one value at the end. */
-int ScriptStr_AppendTracking(PtrVec* v, int value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+int std_vector_StringPtr_push_back(PtrVec* v, int value) {
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 
 void cScriptInterpreter_setInstructionPtr(ScriptManager* self, int value) {

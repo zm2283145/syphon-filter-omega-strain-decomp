@@ -5,7 +5,7 @@ extern signed char D_004E1D88;
 extern SkV4 D_004E1D90;
 #pragma peephole off
 #pragma opt_propagation off
-SkV4 SkaClip_AddBaseline(SkClip* c) {
+SkV4 cSkaAnimData_RootOffsetFromFirstFrameTranslation(SkClip* c) {
     if (c->type < 2) {
         if (!D_004E1D88) {
             ((int*)&D_004E1D90)[0] = 0;

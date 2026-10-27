@@ -8,17 +8,17 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { char pad[0x62]; unsigned char useLos; } Col_3BCDD0;
-extern int Los_TraceWithWater(Col_3BCDD0* c, void* ray, int mode, void* out);
+extern int cCollisionProbe_Ray_DetectForCollision_cArrayR_4(Col_3BCDD0* c, void* ray, int mode, void* out);
 extern int cCollisionProbe_Ray_DetectForCollision_cArrayR_3(Col_3BCDD0* c, void* ray, int mode, void* out);
-extern int Los_TraceTriangles(Col_3BCDD0* c, void* ray, int mode, void* out);
-extern int Col_TraceFloorTriangles(Col_3BCDD0* c, void* ray, int mode, void* out);
-unsigned char Col_TraceFloorRay(Col_3BCDD0* c, void* ray, int mode, void* out) {
+extern int cCollisionProbe_Ray_DetectForCollision_cArrayR_2(Col_3BCDD0* c, void* ray, int mode, void* out);
+extern int cCollisionProbe_Ray_DetectForCollision_cArrayR(Col_3BCDD0* c, void* ray, int mode, void* out);
+unsigned char cCollisionProbe_Ray_DetectForCollision_cArrayR_bool(Col_3BCDD0* c, void* ray, int mode, void* out) {
     unsigned char r;
     if (c->useLos) {
-        if (mode) r = Los_TraceWithWater(c, ray, mode, out);
+        if (mode) r = cCollisionProbe_Ray_DetectForCollision_cArrayR_4(c, ray, mode, out);
         else r = cCollisionProbe_Ray_DetectForCollision_cArrayR_3(c, ray, mode, out);
-    } else if (mode) r = Los_TraceTriangles(c, ray, mode, out);
-    else r = Col_TraceFloorTriangles(c, ray, mode, out);
+    } else if (mode) r = cCollisionProbe_Ray_DetectForCollision_cArrayR_2(c, ray, mode, out);
+    else r = cCollisionProbe_Ray_DetectForCollision_cArrayR(c, ray, mode, out);
     return r;
 }
 #pragma pop /* merge_units */
@@ -28,23 +28,23 @@ unsigned char Col_TraceFloorRay(Col_3BCDD0* c, void* ray, int mode, void* out) {
 #pragma push /* merge_units */
 typedef struct { char p00[0x62]; unsigned char mask; } ColA_3BCE50;
 typedef struct { char p00[0x40]; unsigned char mask; } ColB_3BCE50;
-extern int Los_TraceWaterSurfaces(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d);
-extern int Los_IntersectRecord(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d);
+extern int cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_4(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d);
+extern int cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_3(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d);
 extern int cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_2(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d);
-extern int Col_SegmentVsTriangle(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d);
-unsigned char Col_TestSegmentTriangles(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d) {
+extern int cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d);
+unsigned char cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_bool(ColA_3BCE50* a, ColB_3BCE50* b, int mode, void* d) {
     unsigned char r;
     int hit = (unsigned char)(b->mask & a->mask) != 0;
     if (mode) {
         if (hit)
-            r = Los_TraceWaterSurfaces(a, b, mode, d);
+            r = cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_4(a, b, mode, d);
         else
-            r = Los_IntersectRecord(a, b, mode, d);
+            r = cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_3(a, b, mode, d);
     } else {
         if (hit)
             r = cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_2(a, b, mode, d);
         else
-            r = Col_SegmentVsTriangle(a, b, mode, d);
+            r = cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR(a, b, mode, d);
     }
     return r;
 }

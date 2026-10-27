@@ -5,7 +5,7 @@ extern int D_0053DE80;
 extern char D_0053DE84[];
 extern char D_005428C4[]; /* end of snd_rpcResult, for SyncDCache */
 extern void printf(char*);
-extern void String_Copy(char*, char*);
+extern void Libc_Strcpy(char*, char*);
 extern void SyncDCache(int*, char*);
 extern int sceSifCheckStatRpc(char*);
 extern void snd_FlushSoundCommands(void);
@@ -20,7 +20,7 @@ int snd_BankLoad(char* name, int arg) {
         return 0;
     }
     D_0053DE80 = arg;
-    String_Copy(D_0053DE84, name);
+    Libc_Strcpy(D_0053DE84, name);
     snd_rpcResult = -1;
     SyncDCache(&snd_rpcResult, D_005428C4);
     while (sceSifCheckStatRpc(snd_bankCd)) {

@@ -8,20 +8,20 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { char pad[0x98]; void* a98; void* a9C; } S294B20;
-extern void String_Copy(char* dst, char* src);
+extern void Libc_Strcpy(char* dst, char* src);
 extern char* strchr(char* s, int c);
 extern void GuiTextWidget_SetText(void* w, char* text, int f);
 #pragma bool off
 static inline int IsZero294B20(int c) { return (c != 0) ^ 1; }
 static inline int IsSp294B20(int c) { return (char)c == ' '; }
 #pragma opt_rotateloops off
-void GuiCommandCenter_SplitLevelName(S294B20* s, char* str)
+void GuiCommandCenter_SplitAndSetLevelName(S294B20* s, char* str)
 {
     char* p;
     char buf[0x70];
     if (!str)
         return;
-    String_Copy(buf, str);
+    Libc_Strcpy(buf, str);
     p = strchr(buf, ':');
     if (p) {
         *p = 0;
@@ -45,10 +45,10 @@ void GuiCommandCenter_SplitLevelName(S294B20* s, char* str)
 #pragma cplusplus on
 struct V294BF0 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); };
 typedef struct { char pad[0x44]; V294BF0* m44; } O294BF0;
-extern "C" O294BF0* GuiWidget_FindChildByName(int a, int b);
+extern "C" O294BF0* GuiWidget_FindChild_charP(int a, int b);
 extern "C" void GuiCommandCenter_SetActiveByName(int a, int b, int on)
 {
-    O294BF0* o = GuiWidget_FindChildByName(a, b);
+    O294BF0* o = GuiWidget_FindChild_charP(a, b);
     if (o) {
         if (on)
             o->m44->v3();
@@ -83,24 +83,24 @@ void GuiTextWidget_SetText(void* w, char* s, int a);
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((a0), (a1), (a2))) /* merge_units */
 
 char* strncpy(char* d, const char* s, int n);
-char* Loc_LookupText(char* key);
-void String_CtorCStr_13B480(Str_00294C60* s, const char* c);
-void String_AssignString(Str12_00294C60* d, Str_00294C60* s);
+char* nGlobalization_GetString_charP(char* key);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_00294C60* s, const char* c);
+void std_basic_string_char_char_traits_char_assign_basicstringR(Str12_00294C60* d, Str_00294C60* s);
 void String_Dtor(Str_00294C60* s, int flags);
-int String_Length(Str12_00294C60* s);
-char* String_CStr(Str12_00294C60* s);
+int cString_Length(Str12_00294C60* s);
+char* std_basic_string_char_char_traits_char_c_str(Str12_00294C60* s);
 #if 0 /* merge_units */
-void GuiCommandCenter_SplitLevelName(S_00294C60* self, char* t);
+void GuiCommandCenter_SplitAndSetLevelName(S_00294C60* self, char* t);
 #endif /* merge_units */
-#define GuiCommandCenter_SplitLevelName(a0, a1) (GuiCommandCenter_SplitLevelName((S294B20 *)(a0), (a1))) /* merge_units */
+#define GuiCommandCenter_SplitAndSetLevelName(a0, a1) (GuiCommandCenter_SplitAndSetLevelName((S294B20 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void String_Copy(char* d, const char* s);
+void Libc_Strcpy(char* d, const char* s);
 #endif /* merge_units */
-#define String_Copy(a0, a1) (String_Copy((a0), (char *)(a1))) /* merge_units */
+#define Libc_Strcpy(a0, a1) (Libc_Strcpy((a0), (char *)(a1))) /* merge_units */
 
 }
-extern "C" void GuiCommandCenter_SetTexts(S_00294C60* self)
+extern "C" void GuiCommandCenter_SetTitleText(S_00294C60* self)
 {
     char* key;
     int i;
@@ -121,36 +121,36 @@ extern "C" void GuiCommandCenter_SetTexts(S_00294C60* self)
             key = D_0048C160[i];
             strncpy(g_LevelDirName, key, 0x80);
             if (!self->b1F0[i]) {
-                char* t = Loc_LookupText(key);
+                char* t = nGlobalization_GetString_charP(key);
                 if (t) {
                     Str_00294C60 s;
-                    String_CtorCStr_13B480(&s, t);
-                    String_AssignString(&self->s204[i], &s);
+                    std_basic_string_char_char_traits_char_ctor_charP(&s, t);
+                    std_basic_string_char_char_traits_char_assign_basicstringR(&self->s204[i], &s);
                     String_Dtor(&s, 0);
                 }
                 self->b1F0[i] = 1;
             }
             txt = (char*)&self->s204[i];
             {
-                bool e = String_Length((Str12_00294C60*)txt) == 0;
+                bool e = cString_Length((Str12_00294C60*)txt) == 0;
                 if (e) {
                     txt = 0;
                 } else {
-                    txt = String_CStr((Str12_00294C60*)txt);
+                    txt = std_basic_string_char_char_traits_char_c_str((Str12_00294C60*)txt);
                     asm { .set reorder } /* scheduling barrier: keeps retail's branch layout */
                 }
             }
             if (txt)
-                GuiCommandCenter_SplitLevelName(self, txt);
+                GuiCommandCenter_SplitAndSetLevelName(self, txt);
             else
                 GuiTextWidget_SetText(self->p98, key, 0);
             {
                 Sub_00294C60* sub = &D_004FFC04->sub;
-                String_Copy(sub->name, txt ? txt : key);
+                Libc_Strcpy(sub->name, txt ? txt : key);
             }
             return;
         } else {
-            char* t = Loc_LookupText(D_004AA200);
+            char* t = nGlobalization_GetString_charP(D_004AA200);
             GuiTextWidget_SetText(self->pA0, t ? t : D_004AA288, 0);
             return;
         }
@@ -158,18 +158,18 @@ extern "C" void GuiCommandCenter_SetTexts(S_00294C60* self)
     if (self->pA0) {
         int k = ((S2_00294C60*)self)->f1D0;
         if (k == self->fA8)
-            GuiTextWidget_SetText(self->pA0, Loc_LookupText("Online"), 0);
+            GuiTextWidget_SetText(self->pA0, nGlobalization_GetString_charP("Online"), 0);
         else if (k == self->fA4)
-            GuiTextWidget_SetText(self->pA0, Loc_LookupText("Personnel"), 0);
+            GuiTextWidget_SetText(self->pA0, nGlobalization_GetString_charP("Personnel"), 0);
         else if (k == self->fAC)
-            GuiTextWidget_SetText(self->pA0, Loc_LookupText("UnlockedMedia"), 0);
+            GuiTextWidget_SetText(self->pA0, nGlobalization_GetString_charP("UnlockedMedia"), 0);
         else if (k == self->fB0)
-            GuiCommandCenter_SplitLevelName(self, Loc_LookupText("Training"));
+            GuiCommandCenter_SplitAndSetLevelName(self, nGlobalization_GetString_charP("Training"));
     }
 }
 #undef GuiTextWidget_SetText /* merge_units */
-#undef GuiCommandCenter_SplitLevelName /* merge_units */
-#undef String_Copy /* merge_units */
+#undef GuiCommandCenter_SplitAndSetLevelName /* merge_units */
+#undef Libc_Strcpy /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00294C60 */
 
@@ -177,17 +177,17 @@ extern "C" void GuiCommandCenter_SetTexts(S_00294C60* self)
 #pragma push /* merge_units */
 typedef struct { char pad[0x14]; unsigned short flags; } E294F50;
 typedef struct { char pad[0x118]; E294F50* items[45]; int cur; } S294F50;
-extern int GuiCommandCenter_GetDefaultSlot(S294F50* s);
-extern void GuiCommandCenter_Select(S294F50* s, int i, int f);
-extern void* Gui_GetScreenStack(void);
-extern void GuiWidget_SendEvent(void* a, void* b, int c, int d, int e);
-void GuiCommandCenter_MoveSelection(S294F50* s, int dir)
+extern int GuiCommandCenter_GetDefaultButton(S294F50* s);
+extern void GuiCommandCenter_ActivateButton(S294F50* s, int i, int f);
+extern void* Gui_Canvas(void);
+extern void GuiWidget_SendMessage(void* a, void* b, int c, int d, int e);
+void GuiCommandCenter_MoveButtonFocus(S294F50* s, int dir)
 {
     int cur = s->cur;
     int i;
     int step;
     if (cur == -1) {
-        GuiCommandCenter_Select(s, GuiCommandCenter_GetDefaultSlot(s), 1);
+        GuiCommandCenter_ActivateButton(s, GuiCommandCenter_GetDefaultButton(s), 1);
         return;
     }
     {
@@ -206,8 +206,8 @@ void GuiCommandCenter_MoveSelection(S294F50* s, int dir)
                     i = 23;
                 e = s->items[i];
                 if (e && (e->flags & 4) && (e->flags & 2)) {
-                    GuiWidget_SendEvent(s, Gui_GetScreenStack(), 0x10, 9, 0);
-                    GuiCommandCenter_Select(s, i, 1);
+                    GuiWidget_SendMessage(s, Gui_Canvas(), 0x10, 9, 0);
+                    GuiCommandCenter_ActivateButton(s, i, 1);
                     return;
                 }
             }

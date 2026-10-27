@@ -55,7 +55,7 @@ static inline void ScaleTo_2370(V4* out, V4* v, float s) {
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-void AnimRoot_AccumQuatAligned(A_2370* a, V4* v, unsigned char flag, float s) {
+void cSkaAnimAnchor_AccumulateRot(A_2370* a, V4* v, unsigned char flag, float s) {
     if (!flag || Dot_2370(v, &a->q) >= 0.0f) {
         V4 u;
         V4* d;

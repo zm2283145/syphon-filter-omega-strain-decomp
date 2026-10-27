@@ -30,11 +30,11 @@ typedef struct cAgentData {
     unsigned int objectiveBits[8];    /* 0x84: persistent objective completion bits */
     unsigned int missionBits[8];      /* 0xA4: per-mission objective completion bits */
     char padC4[0x8AC - 0xC4];
-    unsigned char unk8AC;             /* 0x8AC: cleared by AgentData_ResetProfileNames */
+    unsigned char unk8AC;             /* 0x8AC: cleared by cAgentData_Clear */
     char pad8AD[0x8BC - 0x8AD];
-    unsigned char unk8BC;             /* 0x8BC: cleared by AgentData_ResetProfileNames */
+    unsigned char unk8BC;             /* 0x8BC: cleared by cAgentData_Clear */
     char pad8BD[0x8CC - 0x8BD];
-    unsigned char unk8CC;             /* 0x8CC: cleared by AgentData_ResetProfileNames */
+    unsigned char unk8CC;             /* 0x8CC: cleared by cAgentData_Clear */
     char pad8CD[0xAF0 - 0x8CD];
     unsigned char* omega;             /* 0xAF0: flag byte read by Script_cAgentData_HasOmega */
 } cAgentData;

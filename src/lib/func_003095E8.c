@@ -12,13 +12,13 @@ extern int rt_udp_process_connect(PpSock *s, PpHdr *h, int idx);
 extern int rt_udp_process_disconnect(PpSock *s, PpHdr *h, int idx);
 extern int rt_udp_process_reset(PpSock *s, PpHdr *h);
 extern int rt_udp_process_heartbeat(PpSock *s, PpHdr *h, int idx);
-extern int RtUdp_HandleAck(PpSock *s, int idx, char *p, unsigned short len);
-extern int RtUdp_ReceiveData(PpSock *s, PpHdr *h, int idx, char *p, unsigned short len);
+extern int rt_udp_process_acknowlege(PpSock *s, int idx, char *p, unsigned short len);
+extern int rt_udp_process_data(PpSock *s, PpHdr *h, int idx, char *p, unsigned short len);
 extern int rt_udp_process_unconnected_data(PpSock *s, PpHdr *h, char *name, unsigned short port, char *p, unsigned short len);
 extern int rt_udp_process_new_connect(PpSock *s, PpHdr *h, char *name, unsigned short port);
 extern int rt_udp_reset(PpSock *s, char *name, unsigned short port, int val);
 
-int RtUdp_ParsePacket(PpSock *s, char *name, unsigned short port, unsigned short len)
+int rt_udp_process_message(PpSock *s, char *name, unsigned short port, unsigned short len)
 {
     PpHdr hdr;
     int key;
@@ -110,11 +110,11 @@ int RtUdp_ParsePacket(PpSock *s, char *name, unsigned short port, unsigned short
         }
     } else {
         if (hdr.h.flags & 0x20) {
-            r = RtUdp_HandleAck(s, idx, p, len);
+            r = rt_udp_process_acknowlege(s, idx, p, len);
             if (r) return r;
         }
         if (hdr.h.flags & 0x40) {
-            r = RtUdp_ReceiveData(s, &hdr, idx, p, len);
+            r = rt_udp_process_data(s, &hdr, idx, p, len);
             if (r) return r;
         }
         if (!hdr.h.flags) {

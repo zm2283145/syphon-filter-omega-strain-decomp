@@ -12,8 +12,8 @@ struct Obj266 {
 };
 extern "C" {
 extern Vec266 D_004F8350; extern int D_004F8354; extern int* D_004F8358;
-void PtrVector_Resize(Vec266* v, int n, int* fill);
-void HeldItem_Release(Obj266* self);
+void std_vector_pod_int_resize(Vec266* v, int n, int* fill);
+void cAirTaser_Release(Obj266* self);
 void std_vector_deleter_TaserPoint_clear(void* p);
 void std_list_TaserPulse_dtor(void* p, short flag);
 void std_vector_deleter_TaserPoint_dtor(void* p, short flag);
@@ -22,7 +22,7 @@ void std_vector_deleter_TaserPoint_dtor(void* p, short flag);
 extern "C" Obj266* cAirTaser_dtor(Obj266* self, short deleteFlag) {
     if (self) {
         self->f8 = 0;
-        HeldItem_Release(self);
+        cAirTaser_Release(self);
         std_vector_deleter_TaserPoint_clear(self->m10);
         {
             VObj266* m = self->fC;
@@ -43,7 +43,7 @@ extern "C" Obj266* cAirTaser_dtor(Obj266* self, short deleteFlag) {
                 }
             }
             fill = 0;
-            PtrVector_Resize(&D_004F8350, last + 1, &fill);
+            std_vector_pod_int_resize(&D_004F8350, last + 1, &fill);
         }
         {
             void* a = self->m20;

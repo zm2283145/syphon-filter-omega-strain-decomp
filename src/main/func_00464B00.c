@@ -5,12 +5,12 @@ typedef struct Obj4C {
     int handle;
 } Obj4C;
 
-extern void GuiWidget_BaseSleep(Obj4C*);
-extern void HudMap_Close(int);
+extern void GuiWidget_onSleep(Obj4C*);
+extern void cMap_Deactivate(int);
 
-/* Calls GuiWidget_BaseSleep, releases the handle at +0x4C and clears it. */
-void GuiMapScreen_Sleep(Obj4C* o) {
-    GuiWidget_BaseSleep(o);
-    HudMap_Close(o->handle);
+/* Calls GuiWidget_onSleep, releases the handle at +0x4C and clears it. */
+void GuiMapScreen_onSleep(Obj4C* o) {
+    GuiWidget_onSleep(o);
+    cMap_Deactivate(o->handle);
     o->handle = 0;
 }

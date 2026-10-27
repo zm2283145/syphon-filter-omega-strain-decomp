@@ -3,4 +3,4 @@
 #include "player_ctl_level.h"
 
 /* Controller level of the player, -1 without an active controller. */
-DEFINE_PLAYER_CTL_LEVEL(cPlayer_v18)
+DEFINE_PLAYER_CTL_LEVEL(cPlayer_Team)

@@ -3,7 +3,7 @@
 #define SOUND_EVENT_NO_PROTOS
 #include "sound_event.h"
 extern void __register_global_object(void* obj, void* dtor, void* link);
-extern char SoundRequest_dtor[];
+extern char cString_dtor[];
 extern char D_004EF0B0[];
 extern char D_004EF098[];
 extern char D_004EF250[];
@@ -92,20 +92,20 @@ extern char cStopAllQuipsMsg_NetReceive[], cPlayQuipMsg_NetReceive[];
 extern char Script_PlaySnd_2[], Script_StopSnd_2[], Script_PlaySnd[], Script_StopSnd[];
 extern char Script_PlayMusic[], Script_StopMusic[], Script_PlayQuip[], Script_PlayQuip_2[];
 extern char Script_StopAllQuips[], Script_SetReverb[], Script_AddPDAQuip[], Script_AddPDAQuip_2[];
-extern int NetMsgTable_Add();
-extern int ScriptEnum_Register();
-extern int cGOBJ_GetScriptTypeKeyPtr();
-extern int Script_RegisterNative_2();
+extern int cNetMsg_RegisterMsg();
+extern int cScriptBase_registerEnum();
+extern int cGOBJ_SOBJ_getClassId();
+extern int cScriptBase_registerFunc_intPintPint_intP_charP_int_etc();
 
 /* 37 global SoundRequest objects (inlined ctor, voice 0; name is a 16-char
  * 128-bit literal, built by mw as li + pcpyld) registered with dtor
- * SoundRequest_dtor, then the SYS_SOUND message / script native registrations. */
+ * cString_dtor, then the SYS_SOUND message / script native registrations. */
 #define SNDREQ(obj, t, Q, link) \
     p = (SoundRequest*)obj; \
     ((SoundRequest*)obj)->voice = 0; \
     ((SoundRequest*)obj)->voiceId = -2; \
-    Resource_Construct(&((SoundRequest*)obj)->a); \
-    Resource_Construct(&((SoundRequest*)obj)->b); \
+    cFileMan_ctor_void(&((SoundRequest*)obj)->a); \
+    cFileMan_ctor_void(&((SoundRequest*)obj)->b); \
     p->type = t; \
     *(__int128*)p->name = Q; \
     p->voice = 0; \
@@ -115,9 +115,9 @@ extern int Script_RegisterNative_2();
     p->x38 = 0; \
     p->x184 = -1; \
     p->x186 = 0; \
-    __register_global_object(p, SoundRequest_dtor, link)
+    __register_global_object(p, cString_dtor, link)
 
-void StaticInit_RegisterGameSound(void)
+void StaticInit_gameSound(void)
 {
     SoundRequest* p;
     SNDREQ(D_004EF0B0, 1, 0x4D5F43505F5449485F42, D_004EF098);
@@ -159,22 +159,22 @@ void StaticInit_RegisterGameSound(void)
     SNDREQ(D_004F2B30, 1, 0x455249465952445F4E554748535F47, D_004F2B20);
     D_004F2CC0 = "SYS_SOUND";
     D_004F2CE8 = "cStopAllQuipsMsg";
-    D_004F2CF8 = NetMsgTable_Add(cStopAllQuipsMsg_NetReceive, D_004F2CF0, "cStopAllQuipsMsg");
+    D_004F2CF8 = cNetMsg_RegisterMsg(cStopAllQuipsMsg_NetReceive, D_004F2CF0, "cStopAllQuipsMsg");
     D_004F2D00 = "cPlayQuipMsg";
-    D_004F2D10 = NetMsgTable_Add(cPlayQuipMsg_NetReceive, D_004F2D08, "cPlayQuipMsg");
-    D_004F2D18 = ScriptEnum_Register("cGameSound::eSndBank", D_0048A340, 7);
-    D_004F2D20 = Script_RegisterNative_2(Script_PlaySnd_2, D_00493880, "PlaySnd", 2, &D_004F2D18, D_00493898);
-    D_004F2D28 = Script_RegisterNative_2(Script_StopSnd_2, D_00493880, "StopSnd", 2, &D_004F2D18, D_00493898);
-    D_004F2D30 = Script_RegisterNative_2(Script_PlaySnd, D_00493880, "PlaySnd", 3, &D_004F2D18, D_00493898, cGOBJ_GetScriptTypeKeyPtr());
-    D_004F2D38 = Script_RegisterNative_2(Script_StopSnd, D_00493880, "StopSnd", 3, &D_004F2D18, D_00493898, cGOBJ_GetScriptTypeKeyPtr());
-    D_004F2D40 = Script_RegisterNative_2(Script_PlayMusic, D_00493880, "PlayMusic", 2, D_00493898, cGOBJ_GetScriptTypeKeyPtr());
-    D_004F2D48 = Script_RegisterNative_2(Script_StopMusic, D_00493880, "StopMusic", 2, D_00493898, cGOBJ_GetScriptTypeKeyPtr());
-    D_004F2D50 = Script_RegisterNative_2(Script_PlayQuip, D_00493880, "PlayQuip", 2, D_00493898, D_00493888);
-    D_004F2D58 = Script_RegisterNative_2(Script_PlayQuip_2, D_00493880, "PlayQuip", 3, D_00493898, cGOBJ_GetScriptTypeKeyPtr(), D_00493888);
-    D_004F2D60 = Script_RegisterNative_2(Script_StopAllQuips, D_00493880, "StopAllQuips", 0);
-    D_004F2D68 = Script_RegisterNative_2(Script_SetReverb, D_00493880, "SetReverb", 1, D_00493888);
-    D_004F2D70 = Script_RegisterNative_2(Script_AddPDAQuip, D_00493880, "AddPDAQuip", 1, D_00493898);
-    D_004F2D78 = Script_RegisterNative_2(Script_AddPDAQuip_2, D_00493880, "AddPDAQuip", 2, D_00493898, D_00493898);
+    D_004F2D10 = cNetMsg_RegisterMsg(cPlayQuipMsg_NetReceive, D_004F2D08, "cPlayQuipMsg");
+    D_004F2D18 = cScriptBase_registerEnum("cGameSound::eSndBank", D_0048A340, 7);
+    D_004F2D20 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_PlaySnd_2, D_00493880, "PlaySnd", 2, &D_004F2D18, D_00493898);
+    D_004F2D28 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_StopSnd_2, D_00493880, "StopSnd", 2, &D_004F2D18, D_00493898);
+    D_004F2D30 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_PlaySnd, D_00493880, "PlaySnd", 3, &D_004F2D18, D_00493898, cGOBJ_SOBJ_getClassId());
+    D_004F2D38 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_StopSnd, D_00493880, "StopSnd", 3, &D_004F2D18, D_00493898, cGOBJ_SOBJ_getClassId());
+    D_004F2D40 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_PlayMusic, D_00493880, "PlayMusic", 2, D_00493898, cGOBJ_SOBJ_getClassId());
+    D_004F2D48 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_StopMusic, D_00493880, "StopMusic", 2, D_00493898, cGOBJ_SOBJ_getClassId());
+    D_004F2D50 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_PlayQuip, D_00493880, "PlayQuip", 2, D_00493898, D_00493888);
+    D_004F2D58 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_PlayQuip_2, D_00493880, "PlayQuip", 3, D_00493898, cGOBJ_SOBJ_getClassId(), D_00493888);
+    D_004F2D60 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_StopAllQuips, D_00493880, "StopAllQuips", 0);
+    D_004F2D68 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_SetReverb, D_00493880, "SetReverb", 1, D_00493888);
+    D_004F2D70 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_AddPDAQuip, D_00493880, "AddPDAQuip", 1, D_00493898);
+    D_004F2D78 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_AddPDAQuip_2, D_00493880, "AddPDAQuip", 2, D_00493898, D_00493898);
 }
 
 

@@ -16,7 +16,7 @@ int strcmp(const void *, const void *);
 char D_004A7530[] = "GuiWidget"; /* "GuiWidget" */
 
 /* GuiWidget::IsA: returns 1 if the given class name is "GuiWidget". */
-int GuiWidget_IsType(void* self, const char* name)
+int GuiWidget_IsClass(void* self, const char* name)
 {
     return strcmp(D_004A7530, name) == 0;
 }
@@ -34,7 +34,7 @@ static inline void merge_flush_func_00246510(void) {}
  */
 
 
-extern ListPos* List_InsertBefore(ListPos* result, void* list, ListPos* pos, int value);
+extern ListPos* std_list_deleter_voidPtr_insert(ListPos* result, void* list, ListPos* pos, int value);
 
 /* push_back on a list whose sentinel node is at +4. */
 ListPos* cLList_cHudTargetsObserverPtr_PushBackActual(void* list, int value) {
@@ -42,7 +42,7 @@ ListPos* cLList_cHudTargetsObserverPtr_PushBackActual(void* list, int value) {
     ListPos result;
 
     end.node = (char*)list + 4;
-    return List_InsertBefore(&result, list, &end, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &end, value);
 }
 
 Rel* std_vector_cInterfaceElementPtr_ctor(Rel* r) {

@@ -38,14 +38,14 @@ void std_list_GuiWidgetPtr_end(LIt_414F00* out, List_414F00* list);
 void cLListIterator_GuiWidgetPtr_ctor_listR(LIt_414F00* out, LIt_414F00* in);
 void std_list_GuiWidgetPtr_generic_iterator_opCast(LIt_414F00* out, LIt_414F00* in);
 LIt_414F00* std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(LIt_414F00* out, LIt_414F00* in);
-void List_InsertBefore(LIt_414F00* out, List_414F00* list, LIt_414F00* pos, W_414F00** v);
-int GuiWidget_SendEvent(W_414F00* a, W_414F00* b, int msg, int c, int d);
-void GuiWidget_ClearAwake(W_414F00* w);
-void Pad_ResetHeldMask(void* p);
+void std_list_deleter_voidPtr_insert(LIt_414F00* out, List_414F00* list, LIt_414F00* pos, W_414F00** v);
+int GuiWidget_SendMessage(W_414F00* a, W_414F00* b, int msg, int c, int d);
+void GuiWidget_ClearSleepStatus(W_414F00* w);
+void cJoystick_Debounce(void* p);
 extern char D_0055A300[];
 }
 
-extern "C" void GuiCanvas_PushScreen(W_414F00* o, W_414F00* w, int pri)
+extern "C" void GuiCanvas_PushGui(W_414F00* o, W_414F00* w, int pri)
 {
     LIt_414F00 it;
     LIt_414F00 first;
@@ -69,18 +69,18 @@ extern "C" void GuiCanvas_PushScreen(W_414F00* o, W_414F00* w, int pri)
         std_list_GuiWidgetPtr_end(&endTmp, &o->children);
         cLListIterator_GuiWidgetPtr_ctor_listR(&last, &endTmp);
     }
-    if ((w->flags & 2) && GuiWidget_SendEvent(o, w, 0x10, 2, 0) == 0)
-        GuiWidget_SendEvent(w, o, 0x10, 2, 0);
+    if ((w->flags & 2) && GuiWidget_SendMessage(o, w, 0x10, 2, 0) == 0)
+        GuiWidget_SendMessage(w, o, 0x10, 2, 0);
     w->parent = o;
     w->pri = pri;
     pos.node = it.node;
     std_list_GuiWidgetPtr_generic_iterator_opCast(&pos2, &pos);
-    List_InsertBefore(&res, &o->children, std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&pos3, &pos2), &w);
-    GuiWidget_ClearAwake(w);
+    std_list_deleter_voidPtr_insert(&res, &o->children, std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&pos3, &pos2), &w);
+    GuiWidget_ClearSleepStatus(w);
     w->comp->Show();
-    GuiWidget_SendEvent(o, w, 0x18, 0, 0);
+    GuiWidget_SendMessage(o, w, 0x18, 0, 0);
     if (o->children.size > 0 && o->children.first->value == w) {
-        Pad_ResetHeldMask(D_0055A300);
+        cJoystick_Debounce(D_0055A300);
         if (o->focus) o->focus->comp->Unfocus();
         o->focus = w->focus;
         if (o->focus == 0) o->focus = w->DefaultFocus();

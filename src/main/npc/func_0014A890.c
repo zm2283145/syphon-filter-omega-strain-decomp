@@ -51,12 +51,12 @@ extern unsigned char g_IsMultiplayer;
 extern PtrVec g_NpcDeadList;
 extern Tree g_NpcThinkList;
 
-extern void NetEvent_Send(Actor_A890* actor, int id, int size, unsigned char value, int a, int b, int c);
-extern void NpcThinkList_Add(Actor_A890* actor);
-extern void NpcThinkList_RemoveActor(Actor_A890* actor);
-extern void ActiveList_EraseMatching(PtrVec* v, Pred_A890 p);
-extern void NpcAi_AddToDeadList(PtrVec* v, cNPC_A890** self);
-extern void List_Begin(Iter* out, Tree* t);
+extern void cNetNPCMsgs_SendMessage(Actor_A890* actor, int id, int size, unsigned char value, int a, int b, int c);
+extern void cNPC_AddToActiveList(Actor_A890* actor);
+extern void cNPC_RemoveFromActiveList(Actor_A890* actor);
+extern void std_list_imp_voidPtr_remove_if(PtrVec* v, Pred_A890 p);
+extern void std_list_cNPCPtr_push_back(PtrVec* v, cNPC_A890** self);
+extern void std_list_deleter_voidPtr_begin_void(Iter* out, Tree* t);
 extern Word* cLListIterator_cActiveListItemPtr_ctor(Word* dst, Word* src);
 extern void std_list_cActiveListItemPtr_end_void(Iter* out, Tree* t);
 extern Word* std_list_cActiveListItemPtr_generic_iterator_ctor(Word* dst, Word* src);
@@ -73,7 +73,7 @@ extern Iter* cLListIterator_cNPCPtr_ctor_void(Iter* self);
 }
 
 /* Sets the NPC active flag (networked or via vtable), then adds or removes it from the AI think/dead lists. */
-extern "C" void cNPC_v73(cNPC_A890* self, char on, int send)
+extern "C" void cNPC_SetPickupable(cNPC_A890* self, char on, int send)
 {
     Word w4;
     Word w3;
@@ -95,7 +95,7 @@ extern "C" void cNPC_v73(cNPC_A890* self, char on, int send)
     if (g_IsMultiplayer) {
         self->inactive = !on;
         if (send) {
-            NetEvent_Send(self->actor, 0x21, 4, on, 0, 0, 0);
+            cNetNPCMsgs_SendMessage(self->actor, 0x21, 4, on, 0, 0, 0);
         }
     } else {
         self->SetFlag(!on);
@@ -122,11 +122,11 @@ extern "C" void cNPC_v73(cNPC_A890* self, char on, int send)
         std_list_cNPCPtr_end(&end2, &g_NpcDeadList);
         cLListIterator_cNPCPtr_ctor_listR(&w3, (Word*)&end2);
         if (x != w3.value) {
-            NpcThinkList_Add(self->actor);
-            ActiveList_EraseMatching(&g_NpcDeadList, Pred_A890(e, &self));
+            cNPC_AddToActiveList(self->actor);
+            std_list_imp_voidPtr_remove_if(&g_NpcDeadList, Pred_A890(e, &self));
         }
     } else {
-        List_Begin(&b2, &g_NpcThinkList);
+        std_list_deleter_voidPtr_begin_void(&b2, &g_NpcThinkList);
         std_list_cActiveListItemPtr_generic_iterator_ctor(&w1, (Word*)&b2);
         n = (Node_A890*)w1.value;
         std_list_cActiveListItemPtr_end_void(&end3, &g_NpcThinkList);
@@ -144,8 +144,8 @@ extern "C" void cNPC_v73(cNPC_A890* self, char on, int send)
                 valid = 0;
             }
             if ((Actor_A890*)(valid ? o : 0) == actor) {
-                NpcThinkList_RemoveActor(actor);
-                NpcAi_AddToDeadList(&g_NpcDeadList, &self);
+                cNPC_RemoveFromActiveList(actor);
+                std_list_cNPCPtr_push_back(&g_NpcDeadList, &self);
                 return;
             }
             n = n->next;

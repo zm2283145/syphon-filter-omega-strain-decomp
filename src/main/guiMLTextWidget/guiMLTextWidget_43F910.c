@@ -9,7 +9,7 @@ extern char D_004E10C0[]; /* vtable */
 extern GuiWidget* GuiWidget_ctor(void* self);
 
 /* Constructor: base widget, then defaults for this widget type. */
-GuiWidget43F910* GuiSliderWidget_Create(GuiWidget43F910* self) {
+GuiWidget43F910* GuiSliderWidget_ctor_2(GuiWidget43F910* self) {
     GuiWidget_ctor(self);
     self->base.vtable = D_004E10C0;
     self->base.flags |= 0x80;

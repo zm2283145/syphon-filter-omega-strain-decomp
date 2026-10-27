@@ -27,24 +27,24 @@ typedef struct AnimRootBase {
     unsigned char flagA2;
 } AnimRootBase;
 
-extern void Root_BaseConstruct(Temp32* t);
-extern void VecPair_Copy(void* channel, Temp32* t);
-extern void* Vec4_GetZero(void);
-extern void Vec4_Assign(void* dst, void* src);
+extern void cQuatVec_GetUnit(Temp32* t);
+extern void cQuatVec_ctor_cQuatVecR(void* channel, Temp32* t);
+extern void* cVector_GetZero(void);
+extern void cVector_ctor_cVectorR(void* dst, void* src);
 
 /* Constructs the base part of an animation root: four channels, two default refs, flags cleared. */
-AnimRootBase* AnimRoot_ConstructBase(AnimRootBase* self) {
+AnimRootBase* cSkaAnimAnchor_TreeNodeData_ctor_void(AnimRootBase* self) {
     Temp32 t4, t3, t2, t1;
-    Root_BaseConstruct(&t1);
-    VecPair_Copy(self->channel0, &t1);
-    Vec4_Assign(self->ref20, Vec4_GetZero());
-    Root_BaseConstruct(&t2);
-    VecPair_Copy(self->channel30, &t2);
-    Root_BaseConstruct(&t3);
-    VecPair_Copy(self->channel50, &t3);
-    Vec4_Assign(self->ref70, Vec4_GetZero());
-    Root_BaseConstruct(&t4);
-    VecPair_Copy(self->channel80, &t4);
+    cQuatVec_GetUnit(&t1);
+    cQuatVec_ctor_cQuatVecR(self->channel0, &t1);
+    cVector_ctor_cVectorR(self->ref20, cVector_GetZero());
+    cQuatVec_GetUnit(&t2);
+    cQuatVec_ctor_cQuatVecR(self->channel30, &t2);
+    cQuatVec_GetUnit(&t3);
+    cQuatVec_ctor_cQuatVecR(self->channel50, &t3);
+    cVector_ctor_cVectorR(self->ref70, cVector_GetZero());
+    cQuatVec_GetUnit(&t4);
+    cQuatVec_ctor_cQuatVecR(self->channel80, &t4);
     self->flagA0 = 0;
     self->flagA1 = 0;
     self->flagA2 = 0;

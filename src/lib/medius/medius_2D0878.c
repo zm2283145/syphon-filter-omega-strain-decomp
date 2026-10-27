@@ -8,11 +8,11 @@
 extern short D_0048C414;
 extern int D_0048C3D8;
 extern int iTerminateString_void(char *, int);
-extern int Net_SendLocked(int, int, int, int, int, int, void *);extern int D_0048C3A0;
+extern int NetSendMessage(int, int, int, int, int, int, void *);extern int D_0048C3A0;
 int MGCLCreateGameResponse(char *a)
 {
     iTerminateString_void(a, 0x15);
-    return Net_SendLocked(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3A0, 0x1C, a) ? -5 : 0;
+    return NetSendMessage(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3A0, 0x1C, a) ? -5 : 0;
 }
 /* merge_units: end func_002D0878 */
 
@@ -23,7 +23,7 @@ int MGCLJoinGameResponse(char *a)
     iTerminateString_void(a, 0x15);
     iTerminateString_void(a + 0x16, 0x11);
     if (D_0048C414 != 1) return -0xC;
-    return Net_SendLocked(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3A8, 0x68, a) ? -5 : 0;
+    return NetSendMessage(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3A8, 0x68, a) ? -5 : 0;
 }
 /* merge_units: end func_002D08D8 */
 
@@ -32,7 +32,7 @@ extern int D_0048C3B0;
 int MGCLEndGameResponse(char *a)
 {
     iTerminateString_void(a, 0x15);
-    return Net_SendLocked(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3B0, 0x16, a) ? -5 : 0;
+    return NetSendMessage(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3B0, 0x16, a) ? -5 : 0;
 }
 /* merge_units: end func_002D0958 */
 
@@ -43,7 +43,7 @@ int MGCLWorldStatusResponse(char *a)
     iTerminateString_void(a, 0x15);
     if (*(int *)(a + 0x20) < 0) return -0xC;
     if (D_0048C414 != 1) return -0xC;
-    return Net_SendLocked(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3B8, 0x28, a) ? -5 : 0;
+    return NetSendMessage(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3B8, 0x28, a) ? -5 : 0;
 }
 /* merge_units: end func_002D09B8 */
 
@@ -75,7 +75,7 @@ int MGCLCreateGameOnMeRequest(Msg_0A38 *a, int b)
     } else {
         return -0xD;
     }
-    r = Net_SendLocked(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3BC, 0x1D4, a);
+    r = NetSendMessage(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3BC, 0x1D4, a);
     D_0048C3F8 = b;
     return r ? -5 : 0;
 }
@@ -90,7 +90,7 @@ int MGCLEndGameOnMeRequest(char *a, int b)
     int r;
     iTerminateString_void(a, 0x15);
     if (D_0048C414 != 1) return -0xC;
-    r = Net_SendLocked(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3C4, 0x1C, a);
+    r = NetSendMessage(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3C4, 0x1C, a);
     D_0048C3FC = b;
     return r ? -5 : 0;
 }
@@ -105,7 +105,7 @@ int MGCLSendWorldReportOnMe(char *a)
     iTerminateString_void(a + 0x155, 0x20);
     iTerminateString_void(a + 0x55, 0x100);
     if (D_0048C414 != 1) return -0xC;
-    return Net_SendLocked(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3CC, 0x1A8, a) ? -5 : 0;
+    return NetSendMessage(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3CC, 0x1A8, a) ? -5 : 0;
 }
 /* merge_units: end func_002D0BE0 */
 
@@ -131,7 +131,7 @@ int MGCLMoveGameWorldOnMe(char *a, int b)
     } else {
         return -0xD;
     }
-    r = Net_SendLocked(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3D0, 0x50, a);
+    r = NetSendMessage(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C3D0, 0x50, a);
     D_0048C400 = b;
     return r ? -5 : 0;
 }

@@ -5,11 +5,11 @@
 #pragma tailcall off
 
 
-extern void NetMsg_RegisterTypeInner(void* msg, int kind, void* arg);
+extern void NetIRegisterMessage(void* msg, int kind, void* arg);
 
 /* Registers a message type with kind 2. */
 void NetIRegisterApplicationMessage(void* msg, void* arg) {
-    NetMsg_RegisterTypeInner(msg, 2, arg);
+    NetIRegisterMessage(msg, 2, arg);
 }
 
 

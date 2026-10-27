@@ -9,14 +9,14 @@
 #include "types.h"
 #pragma mpwc_relax on
 int Alloc_Lock(int);
-int Alloc_Unlock(int);
-int Event_Construct(char **, char *);
-int Event_Send(char **, int, int);
-int Mem_Alloc(int, int, char *, int);
-int String_Copy(int, int);
+int EnableIntc(int);
+int cMessage_ctor_cMessageNameR(char **, char *);
+int QueueMessage_cMessageR_cSystemP_int(char **, int, int);
+int cMemMan_Allocate(int, int, char *, int);
+int Libc_Strcpy(int, int);
 int cMessage_dtor(char **, int);
 int strlen(int);
-int PlayerSlots_Get(int);
+int cNetObj_GetPlayer(int);
 extern char D_004A6698;
 extern char D_004DB8D0;
 extern char D_004F7930;
@@ -31,24 +31,24 @@ void Global_SetPlayersCheckpoint(int arg1, int arg2) {
     int buf;
 
     for (i = 0; i < 4; i++) {
-        p = PlayerSlots_Get(i);
+        p = cNetObj_GetPlayer(i);
         if (p != 0) {
             len = strlen(arg2) + 1;
             if (g_ProfileLockEnabled != 0) {
                 Alloc_Lock(9);
             }
             g_ProfileLockDepth += 1;
-            buf = Mem_Alloc(0, len, &D_004A6698, 0x1E6);
+            buf = cMemMan_Allocate(0, len, &D_004A6698, 0x1E6);
             if (g_ProfileLockEnabled != 0) {
-                Alloc_Unlock(9);
+                EnableIntc(9);
             }
             g_ProfileLockDepth -= 1;
-            String_Copy(buf, arg2);
-            Event_Construct(sl.f50, &D_004F7930);
+            Libc_Strcpy(buf, arg2);
+            cMessage_ctor_cMessageNameR(sl.f50, &D_004F7930);
             sl.f50[0] = &D_004DB8D0;
             sl.f74 = arg1;
             sl.f78[0] = buf;
-            Event_Send(sl.f50, p, 0);
+            QueueMessage_cMessageR_cSystemP_int(sl.f50, p, 0);
             sl.f50[0] = &D_004DB8D0;
             cMessage_dtor(sl.f50, 0);
         }
@@ -72,7 +72,7 @@ extern int Global_SetCheckpoint(int checkpoint, int object, int value);
 int Script_SetCheckpoint(CheckpointScriptArg* args) {
     volatile int value = args[2].i; /* original stack temporary */
     int checkpoint = cPlayer_SOBJ_convert(args[0].i);
-    int object = GObj_IdentityB(args[1].i);
+    int object = cGOBJ_SOBJ_convert(args[1].i);
     Global_SetCheckpoint(checkpoint, object, value);
     return 0;
 }

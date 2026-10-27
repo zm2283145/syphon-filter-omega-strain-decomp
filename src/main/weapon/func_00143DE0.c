@@ -6,8 +6,8 @@
 #include "types.h"
 #include "weapon_types.h"
 
-extern int WeaponInv_ClipsForActor(void* a0, int key);
+extern int cHuman_AdjustMaxClips(void* a0, int key);
 
 int cWeapon_AdjustMaxClips(Inventory* inv, int key) {
-    return WeaponInv_ClipsForActor(inv->unk88, key);
+    return cHuman_AdjustMaxClips(inv->unk88, key);
 }

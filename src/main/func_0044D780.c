@@ -2,9 +2,9 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int String_Copy(char *, char *);                            
-int Lobby_GetTime();                                
-int SFOLobby_CallUpdateHook(char * , int, int);                      
+int Libc_Strcpy(char *, char *);                            
+int SFOLobby_GetMillisecs();                                
+int SFOLobby_GuiCallback(char * , int, int);                      
 int SFOLobby_Poll(char * , int, int, int);             
 int MediusGetBuddyInvitations(char *, char *);                        
 int memset(char *, int, int);                                
@@ -19,14 +19,14 @@ void SFOLobby_ContactGetInvites(PS0_0044D780 *arg0) {
     if (arg0->f228 == 0) {
         arg0->f228 = 1;
         memset(sp30, 0, 0x15);
-        String_Copy(sp30, "1");
+        Libc_Strcpy(sp30, "1");
         arg0->f24C = MediusGetBuddyInvitations(sp30, &SFOLobby_Callback_GetBuddyInvitations);
         if (arg0->f24C == 0) {
-            temp_v0 = Lobby_GetTime();
+            temp_v0 = SFOLobby_GetMillisecs();
             arg0->f22C = 0;
             if (arg0->f22C == 0) {
 loop_4:
-                SFOLobby_CallUpdateHook(arg0, 0, 0);
+                SFOLobby_GuiCallback(arg0, 0, 0);
                 if (SFOLobby_Poll(arg0, temp_v0, D_00497890, 0) != 0) {
                     if (arg0->f22C != 0) {
 

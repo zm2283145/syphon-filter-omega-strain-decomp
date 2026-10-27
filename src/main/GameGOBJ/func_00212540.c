@@ -13,10 +13,10 @@ extern char D_004F5450[];
 extern char D_004DAE90[];
 extern int D_004F5488;
 extern unsigned char D_005723C8;
-extern void Event_Construct(void* m, void* type);
-extern void Event_Send(void* m, void* target, int immediate);
+extern void cMessage_ctor_cMessageNameR(void* m, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 extern void cMessage_dtor(void* m, int flags);
-extern Obj_00212540* Object_LookupById(int* id);
+extern Obj_00212540* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
 extern int NetGetObject(Src_00212540** out);
 }
 #pragma define_section GUARD_212540_DTOR ".dtors_drop" far_absolute RX
@@ -34,7 +34,7 @@ extern "C" void cPathedGOBJ_PathedGobjUpdateCallback(void* a0, void* a1, int typ
             Req_00212540* r = src->req;
             if (r->idx > -1) {
                 id = r->lo | (r->hi << 16);
-                Obj_00212540* o = Object_LookupById(&id);
+                Obj_00212540* o = nGobjManager_LookupGOBJ_cObjectIdR(&id);
                 if (o) {
                     int idx = r->idx;
                     if (idx >= 0 && idx <= o->count - 1 && o->lift->cur != idx) {
@@ -47,15 +47,15 @@ extern "C" void cPathedGOBJ_PathedGobjUpdateCallback(void* a0, void* a1, int typ
                         o->lift->target = idx;
                         o->fCC = idx;
                         { o->bDC = 0;
-                            Event_Construct(&m, D_004F5450); m.vtable = D_004DAE90; m.kind = 1; m.arg = idx;
-                            Event_Send(&m, o, 0); m.vtable = D_004DAE90; cMessage_dtor(&m, 0); }
+                            cMessage_ctor_cMessageNameR(&m, D_004F5450); m.vtable = D_004DAE90; m.kind = 1; m.arg = idx;
+                            QueueMessage_cMessageR_cSystemP_int(&m, o, 0); m.vtable = D_004DAE90; cMessage_dtor(&m, 0); }
                     }
                     { o->bDC = 0;
-                        Event_Construct(&n, D_004F5450);
+                        cMessage_ctor_cMessageNameR(&n, D_004F5450);
                         n.vtable = D_004DAE90;
                         n.kind = 1;
                         n.arg = 0;
-                        Event_Send(&n, o, 0);
+                        QueueMessage_cMessageR_cSystemP_int(&n, o, 0);
                         n.vtable = D_004DAE90;
                         cMessage_dtor(&n, 0);
                     }

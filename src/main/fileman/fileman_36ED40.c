@@ -17,7 +17,7 @@ typedef struct Xform_ED40 {
     char local[0x40];
     struct Xform_ED40* parent;
 } Xform_ED40;
-extern "C" void Xform_ComputeWorld(Xform_ED40* x)
+extern "C" void cXformNode_UpdateSelf(Xform_ED40* x)
 {
     if (x->parent) {
         MM_ED40(x->world, x->parent->world, x->local);
@@ -42,14 +42,14 @@ typedef struct Xform_EE10 {
     struct Xform_EE10* parent;
 } Xform_EE10;
 #if 0 /* merge_units */
-extern "C" void Xform_ComputeWorld(Xform_EE10* x);
+extern "C" void cXformNode_UpdateSelf(Xform_EE10* x);
 #endif /* merge_units */
-#define Xform_ComputeWorld(a0) (Xform_ComputeWorld((Xform_ED40 *)(a0))) /* merge_units */
+#define cXformNode_UpdateSelf(a0) (cXformNode_UpdateSelf((Xform_ED40 *)(a0))) /* merge_units */
 
 extern "C" void nMatrix_Multiply_NonTransposedMatrices(void* a, void* b, void* c);
 extern "C" void func_0036F090(void* a, void* b, void* c);
-extern "C" void Mtx_Copy_23E150(void* d, void* s);
-extern "C" void Xform_EvalAncestors(Xform_EE10* x)
+extern "C" void cMatrix_opAssign(void* d, void* s);
+extern "C" void cXformNode_UpdateAncestorsAndSelf(Xform_EE10* x)
 {
     if (x->dirty) {
         Xform_EE10* p = x->parent;
@@ -58,12 +58,12 @@ extern "C" void Xform_EvalAncestors(Xform_EE10* x)
             if (g && g->dirty) {
                 Xform_EE10* h = g->parent;
                 if (h && h->dirty) {
-                    if (h->parent) Xform_EvalAncestors(h->parent);
-                    Xform_ComputeWorld(h);
+                    if (h->parent) cXformNode_UpdateAncestorsAndSelf(h->parent);
+                    cXformNode_UpdateSelf(h);
                     h->dirty = 0;
                 }
                 if (g->parent) func_0036F090(g->world, g->local, g->parent->world);
-                else Mtx_Copy_23E150(g->world, g->local);
+                else cMatrix_opAssign(g->world, g->local);
                 g->dirty = 0;
             }
             if (p->parent) nMatrix_Multiply_NonTransposedMatrices(p->world, p->local, p->parent->world);
@@ -85,6 +85,6 @@ extern "C" void Xform_EvalAncestors(Xform_EE10* x)
         x->dirty = 0;
     }
 }
-#undef Xform_ComputeWorld /* merge_units */
+#undef cXformNode_UpdateSelf /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0036EE10 */

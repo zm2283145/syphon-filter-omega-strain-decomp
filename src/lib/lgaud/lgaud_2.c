@@ -119,7 +119,7 @@ int lgAudDeInit(void)
 {
     if (lgAud_sema != -1) {
         WaitSema(lgAud_sema);
-        lgAudSync(0, 0);
+        lgAudASync(0, 0);
         if (lgAud_heapBuf) {
             if (lgAud_freeFunc)
                 lgAud_freeFunc(lgAud_heapBuf);

@@ -120,7 +120,7 @@ extern int rt_msg_client_get_valid_connection(unsigned short, char **);
 #endif /* merge_units */
 #define rt_msg_client_get_valid_connection(a0, a1) (rt_msg_client_get_valid_connection((a0), (O * *)(a1))) /* merge_units */
 
-extern void String_Copy(char *, char *);
+extern void Libc_Strcpy(char *, char *);
 int rt_msg_client_iget_connection_ip(unsigned short id, char *dst)
 {
     char *p = 0;
@@ -130,7 +130,7 @@ int rt_msg_client_iget_connection_ip(unsigned short id, char *dst)
     r = rt_msg_client_get_valid_connection(id, &p);
     if (r) return r;
     if (*(int *)(p + 8) != 8) return 0x17;
-    String_Copy(dst, p + 0x5C);
+    Libc_Strcpy(dst, p + 0x5C);
     return 0;
 }
 #undef rt_msg_client_get_valid_connection /* merge_units */
@@ -143,7 +143,7 @@ extern int rt_msg_client_get_valid_connection(unsigned short, char **);
 #define rt_msg_client_get_valid_connection(a0, a1) (rt_msg_client_get_valid_connection((a0), (O * *)(a1))) /* merge_units */
 
 extern int rt_msg_set_ubyte(char *, int);
-extern int NetConn_BufferMessage(int, int, int, char *, int, int);
+extern int rt_msg_client_store_msg_in_send_buf(int, int, int, char *, int, int);
 int rt_msg_client_ireceive_broadcasts(unsigned short id, unsigned char f)
 {
     char buf[16];
@@ -153,7 +153,7 @@ int rt_msg_client_ireceive_broadcasts(unsigned short id, unsigned char f)
     r = rt_msg_client_get_valid_connection(id, &p);
     if (r) return r;
     if (rt_msg_set_ubyte(buf, 2) || rt_msg_set_ubyte(buf + 1, f == 1)) return 7;
-    return NetConn_BufferMessage(*(int *)(p + 0x80), 0xD, 0xFFFF, buf, 2, 0);
+    return rt_msg_client_store_msg_in_send_buf(*(int *)(p + 0x80), 0xD, 0xFFFF, buf, 2, 0);
 }
 #undef rt_msg_client_get_valid_connection /* merge_units */
 /* merge_units: end func_002FD670 */

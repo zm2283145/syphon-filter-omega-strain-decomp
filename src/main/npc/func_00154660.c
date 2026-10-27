@@ -57,30 +57,30 @@ extern int D_004ED9B8;
 extern char g_Game[];
 extern char g_NpcRouteMgr[];
 extern int g_NpcRegionTable[];
-int* Event_GetType(Ev_00154660* ev);
-void* Service_Lookup(void* a, void* b);
-void NpcRoute_Release(void* svc, int a);
-void NpcRoute_RequestToNode(Brain_00154660* b, int a);
-Act_00154660* Object_LookupById(int* id);
-int Controller_NotifySeen(Act_00154660* a);
-int NpcRoute_RegionAt(void* v, int z);
-void NpcPath_RequestRoute(Brain_00154660* b, void* v, int z);
+int* cMessage_Name(Ev_00154660* ev);
+void* cSystemContainer_GetSystem(void* a, void* b);
+void cPathSystem_ClearRequests(void* svc, int a);
+void cPathNavigator_Request_int(Brain_00154660* b, int a);
+Act_00154660* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+int cGOBJ_Team(Act_00154660* a);
+int cAIPathData_GetGroupIndex(void* v, int z);
+void cPathNavigator_Request_cVectorR_int(Brain_00154660* b, void* v, int z);
 }
-extern "C" unsigned char NpcAi_ScriptControlMode(Self_00154660* self, Ev_00154660* ev)
+extern "C" unsigned char cNPC_ScriptControl(Self_00154660* self, Ev_00154660* ev)
 {
     unsigned char handled = 0;
-    int t = *Event_GetType(ev);
+    int t = *cMessage_Name(ev);
     if (t == D_004EE550) {
         if (ev->b24 == 0) {
             float f;
-            NpcRoute_Release(Service_Lookup(g_Game, g_NpcRouteMgr), self->f30);
+            cPathSystem_ClearRequests(cSystemContainer_GetSystem(g_Game, g_NpcRouteMgr), self->f30);
             if (self->f138 >= 0) {
-                NpcRoute_RequestToNode(self->p1B0, self->f138);
+                cPathNavigator_Request_int(self->p1B0, self->f138);
             } else if (self->fF4 != -1) {
                 int id[1];
                 Act_00154660* a;
                 id[0] = self->fF4;
-                a = Object_LookupById(id);
+                a = nGobjManager_LookupGOBJ_cObjectIdR(id);
                 if (a && (unsigned char)a->GetState() == 3) {
                     int z;
                     unsigned char r = 0;
@@ -88,14 +88,14 @@ extern "C" unsigned char NpcAi_ScriptControlMode(Self_00154660* self, Ev_0015466
                     if (c && c->IsPlayer())
                         r = 1;
                     if (r) {
-                        z = g_NpcRegionTable[Controller_NotifySeen(a)];
+                        z = g_NpcRegionTable[cGOBJ_Team(a)];
                     } else if (a->ctl && a->ctl->IsAi()) {
                         z = a->ctl->p1B0->f5C;
                     } else {
                         z = self->p1B0->f5C;
-                        z = NpcRoute_RegionAt(a->GetA().Pos(), z);
+                        z = cAIPathData_GetGroupIndex(a->GetA().Pos(), z);
                     }
-                    NpcPath_RequestRoute(self->p1B0, a->GetB().Pos(), z);
+                    cPathNavigator_Request_cVectorR_int(self->p1B0, a->GetB().Pos(), z);
                     self->fE8 = -1;
                 }
             }
@@ -112,7 +112,7 @@ extern "C" unsigned char NpcAi_ScriptControlMode(Self_00154660* self, Ev_0015466
             handled = 1;
         }
     } else {
-        int t2 = *Event_GetType(ev);
+        int t2 = *cMessage_Name(ev);
         if (t2 == D_004ED9B8) {
         if (ev->b24 == 2)
             self->Reset();

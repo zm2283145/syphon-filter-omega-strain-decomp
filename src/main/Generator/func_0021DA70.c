@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 #include "vslot_pad.h"
-/* cGenerator_v05: send a newly joined peer the generator's state - enable flag, active flag and
+/* cGenerator_SendCreated: send a newly joined peer the generator's state - enable flag, active flag and
    rate - and a spawn record for every live spawned actor still in the generator's list. */
 typedef union { __int128 q; struct { float x, y, z, w; } f; } GvV4;
 struct GvMtx { GvV4 r[3]; GvV4 t; };
@@ -76,25 +76,25 @@ extern char D_0051F058[];
 extern char D_004E0880[];
 extern char D_004DB5E0[];
 extern char D_004DE240[];
-int NetGame_InitLocalSlot(int* slot, int v);
-int Player_GetIndex(int id);
-int Event_Construct(void* msg, void* name);
+int NetGetMyClientIndex(int* slot, int v);
+int cNetObj_GetOwner(int id);
+int cMessage_ctor_cMessageNameR(void* msg, void* name);
 int cMessage_dtor(void* msg, int flags);
-unsigned char NetObj_SendMessage(int a, int b, void* c, int target, int type);
-int Transport_Send(int id, void* msg, int flags, int peer);
-void Mtx_ToEuler(GvV4* out, GvMtx* m);
+unsigned char cNetObj_SendMessage_int_int_ucharP_int_etc(int a, int b, void* c, int target, int type);
+int cNetObj_SendMessage_int_cMessageR_int_int(int id, void* msg, int flags, int peer);
+void cEulerAngle_T_1_2_ctor_cMatrixR(GvV4* out, GvMtx* m);
 GvNodeL* std_list_deleter_cSafePtr_cGOBJ_tail(void* l);
 GvIt* std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(GvIt* it, GvNodeL* n);
 GvIt* std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(GvIt* it, GvNodeL* n);
-int cGenerator_v05(GvGen* self, int peer);
-int cEnableMsg_v02(GvEnMsg* m, int id, int* len, int a, int b, int max, char* buf);
+int cGenerator_SendCreated(GvGen* self, int peer);
+int cEnableMsg_Pack(GvEnMsg* m, int id, int* len, int a, int b, int max, char* buf);
 int cNetGeneratorCreateMsg_Pack(GvSpMsg* m, int id, int* len, int a, int b, int max, char* buf);
 }
 static inline void Q4(void* d0, const void* s0) { void* d = d0; __int128 qa, qb; const void* s = s0; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 static inline void QZ(void* d0, const void* s0) { void* d = d0; __int128 q = 0; const void* s = s0; __asm__ volatile("lq %0, 0x0(%1)" : "+r"(q) : "r"(s) : "memory"); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(q), "r"(d) : "memory"); }
-static inline void MsgInit(GvSpMsg* m, int id, int x10, int x68) { Event_Construct(m, D_0051F058); m->vt = D_004DE240; m->id = id; m->x54 = x10; m->x58 = x68; }
+static inline void MsgInit(GvSpMsg* m, int id, int x10, int x68) { cMessage_ctor_cMessageNameR(m, D_0051F058); m->vt = D_004DE240; m->id = id; m->x54 = x10; m->x58 = x68; }
 static inline int* IdPtr(GvObj* o) { int* p = &o->id; return p; }
-static inline int NetSlot(int a) { int r = 0; if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a); return D_00494178; } return r; }
+static inline int NetSlot(int a) { int r = 0; if (g_IsMultiplayer) { if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, a); return D_00494178; } return r; }
 static inline bool Not(unsigned char x) { return !x; }
 static inline bool ReadyG(GvGen* t) { bool r = false; bool a = false; if (t->b2D && t->b2C) a = true; if (a && Not(t->b2E)) r = true; return r; }
 static inline bool ReadyO(GvObj* t) { bool r = false; bool a = false; if (t->b2D && t->b2C) a = true; if (a && Not(t->b2E)) r = true; return r; }
@@ -107,7 +107,7 @@ static inline GvObj* HGet(GvHnd* h) {
 static inline GvIt Begin(void* l) { GvIt t; std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(&t, std_list_deleter_cSafePtr_cGOBJ_tail(l)->next); return t; }
 static inline GvIt End(void* l) { GvIt t; std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&t, std_list_deleter_cSafePtr_cGOBJ_tail(l)); return t; }
 
-int cGenerator_v05(GvGen* self, int peer)
+int cGenerator_SendCreated(GvGen* self, int peer)
 {
     int len;
     char buf[0x400];
@@ -118,44 +118,44 @@ int cGenerator_v05(GvGen* self, int peer)
     GvMtx mc;
     GvV4 e;
     int id = self->id;
-    if (NetSlot(D_005721A8) == Player_GetIndex(id)) {
+    if (NetSlot(D_005721A8) == cNetObj_GetOwner(id)) {
         if (ReadyG(self)) {
             GvEnMsg* pe;
             int slot = NetSlot(D_005721A8);
             pe = &em;
             int r;
-            Event_Construct(pe, g_cEnableMsgClass);
+            cMessage_ctor_cMessageNameR(pe, g_cEnableMsgClass);
             pe->vt = D_004E0880;
             pe->player = slot;
             pe->flags = 0x40;
             em.kind = 4;
-            r = cEnableMsg_v02(&em, self->id, &len, 0, 0, 0x400, buf);
+            r = cEnableMsg_Pack(&em, self->id, &len, 0, 0, 0x400, buf);
             if (r > -1)
-                NetObj_SendMessage(D_0055D4C0, r, buf, peer, 0);
+                cNetObj_SendMessage_int_int_ucharP_int_etc(D_0055D4C0, r, buf, peer, 0);
             em.vt = D_004E0880;
             cMessage_dtor(&em, 0);
         }
         {
             unsigned char on = self->active;
             GvSetMsg* p = &m2;
-            Event_Construct(p, D_004A4A78);
+            cMessage_ctor_cMessageNameR(p, D_004A4A78);
             p->vt = D_004DB5E0;
             p->arg = on;
             p->what = 0;
             m2.kind = 4;
-            Transport_Send(self->id, p, 0, peer);
+            cNetObj_SendMessage_int_cMessageR_int_int(self->id, p, 0, peer);
             m2.vt = D_004DB5E0;
             cMessage_dtor(p, 0);
         }
         {
             float rate = self->rate;
             GvSetMsg* p = &m3;
-            Event_Construct(p, D_004A4A78);
+            cMessage_ctor_cMessageNameR(p, D_004A4A78);
             p->vt = D_004DB5E0;
             p->arg = (int)rate;
             p->what = 1;
             m3.kind = 4;
-            Transport_Send(self->id, p, 0, peer);
+            cNetObj_SendMessage_int_cMessageR_int_int(self->id, p, 0, peer);
             m3.vt = D_004DB5E0;
             cMessage_dtor(p, 0);
         }
@@ -182,7 +182,7 @@ int cGenerator_v05(GvGen* self, int peer)
                     grp = self->x68;
                     onet = t->x10;
                     MsgInit(m, oid, onet, grp);
-                    Mtx_ToEuler(&e, &mc);
+                    cEulerAngle_T_1_2_ctor_cMatrixR(&e, &mc);
                     QZ(&m->rot, &e);
                     m->pos = mc.t;
                     m->rnd = rnd;
@@ -191,7 +191,7 @@ int cGenerator_v05(GvGen* self, int peer)
                     msg.x20 = 4;
                     r = cNetGeneratorCreateMsg_Pack(&msg, self->id, &len, 0, 0, 0x400, buf);
                     if (r > -1)
-                        NetObj_SendMessage(D_0051F060, r, buf, peer, 0);
+                        cNetObj_SendMessage_int_int_ucharP_int_etc(D_0051F060, r, buf, peer, 0);
                     msg.vt = D_004DE240;
                     cMessage_dtor(&msg, 0);
                 }

@@ -5,12 +5,12 @@
 
 #include "types.h"
 
-extern int List_InsertBefore(Iter*, List*, Iter*, int);
+extern int std_list_deleter_voidPtr_insert(Iter*, List*, Iter*, int);
 
-int List_PushBack_16CEE0(List* list, int value) {
+int std_list_cTargetAwarenessPtr_push_front(List* list, int value) {
     Iter pos;
     Iter result;
 
     pos.p = list->last;
-    return List_InsertBefore(&result, list, &pos, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &pos, value);
 }

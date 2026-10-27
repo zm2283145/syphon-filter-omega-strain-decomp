@@ -1,4 +1,4 @@
-// UpperBodyIk_World: like UpperBodyIk_Position, but also composes the rotation with the parent quaternion (VU0).
+// cBoneIk_LimbPose_CalculateSkelSpaceInfo: like cBoneIk_LimbPose_CalculateSkelSpacePos, but also composes the rotation with the parent quaternion (VU0).
 #pragma cplusplus on
 #include "types.h"
 #pragma always_inline on
@@ -80,7 +80,7 @@ static inline void Apply(const V& prot, const V& ppos, V& p)
     }
 }
 
-extern "C" void UpperBodyIk_World(Obj* o)
+extern "C" void cBoneIk_LimbPose_CalculateSkelSpaceInfo(Obj* o)
 {
     o->xf.Rot() = o->xf.A();
     o->xf.Pos() = o->src->Get();

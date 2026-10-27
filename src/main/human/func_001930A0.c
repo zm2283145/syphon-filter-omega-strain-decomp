@@ -43,38 +43,38 @@ extern float D_0049D180; extern float D_0049D188; extern float D_0049D190;
 extern signed char D_004EEF00; extern signed char D_004EEF08; extern signed char D_004EEF10;
 void* cObjectId_ctor_uint(int* p, int v);
 unsigned char opNe_cObjectIdR_cObjectIdR(int* a, int* b);
-void* Object_LookupById(int* id);
-void* Camera_GetNode(void* o);
-void* Transform_GetUpdated(void* p);
-Plc_L* Mtx_ToPlacement(Plc_L* d, void* m);
-void* Mtx_GetIdentity(void);
-void Placement_ApplyParent(Plc_L* d, Plc_L* s, Plc_L* p);
-void VecPair_Copy(Plc_L* d, Plc_L* s);
-void Root_SetWorldPlacement(Root_L* r, Plc_L* p);
-void* Root_GetWorldPlacement(Root_L* r);
-void* Root_ResolveWorldPlacement(Root_L* r);
-float* Placement_GetPosition(void* p);
+void* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+void* cGOBJ_GetXform_void(void* o);
+void* cXform_GetMatrix(void* p);
+Plc_L* cQuatVec_ctor_cMatrixR(Plc_L* d, void* m);
+void* cMatrix_GetUnit(void);
+void cQuatVec_Copy_Transform(Plc_L* d, Plc_L* s, Plc_L* p);
+void cQuatVec_ctor_cQuatVecR(Plc_L* d, Plc_L* s);
+void cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(Root_L* r, Plc_L* p);
+void* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(Root_L* r);
+void* cSkaAnimAnchor_GetTransform(Root_L* r);
+float* cQuatVec_Translation(void* p);
 void** cArray_FixedSize_cGOBJPtr_3_opIndex(void* p, int i);
 void* cArray_FixedSize_cQuatVec_3_opIndex(void* p, int i);
 unsigned char* func_00195DB0(void* p, int i);
-void Transform_SetOrientation(void* t, Plc_L* p);
-void MotionTokens_Init(void* p);
+void cQuatVec_opAssign(void* t, Plc_L* p);
+void cArray_FixedSize_cSkaAnimEvent_7_ctor_void(void* p);
 void cArray_cTimedEvent_ctor_void(void* p);
 void cString16N_3_ctor_void(void* p);
 void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(void* d, void* s);
 void cSkaPlaybackGroupId_ctor_int(void* p, int v);
-void MotionRequest_Construct(void* d, Name_L* n);
-void Actor_ResolveMotionSelection(Sel_L* sel, int* out, Y_L* y, void* model);
-float Model_GetFirstFloat(void* m);
-V4_L* AnimRate_Init(V4_L* p, float f);
-V4_L* Vec4_Copy_18A350(V4_L* d, V4_L* s);
-void AnimEvent_Construct(Ev_L* e);
-signed char MotionRequest_GetMode(Sel_L* s);
+void cString16N_3_ctor_cString16NR(void* d, Name_L* n);
+void cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(Sel_L* sel, int* out, Y_L* y, void* model);
+float cSkaAnimationSet_DefaultCrossFadeDuration(void* m);
+V4_L* cSkaCrossFadeDuration_ctor_float(V4_L* p, float f);
+V4_L* cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(V4_L* d, V4_L* s);
+void cSkaAnimEndedMessage_ctor_void(Ev_L* e);
+signed char cSkaRequestStream_AnimationPacket_GetInstruction(Sel_L* s);
 void* cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(Sel_L* s);
 float cSkaRequestStream_AnimationPacket_GetDuration(Sel_L* s);
 float func_0018A2C0(Sel_L* s);
-void AnimCtl_InstallMotion(void* ctl, int id, signed char mode, void* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
-void AnimEvent_dtor(void* p, int f);
+void cSkaRequestStream_AddRequest(void* ctl, int id, signed char mode, void* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
+void cSkaAnimEndedMessage_dtor(void* p, int f);
 void func_001BE5A0(void* p, int f);
 void __destroy_array(void* p, void* dtor, int size, int n);
 void func_0018A210(void* p, int f);
@@ -84,19 +84,19 @@ void cSkaAnimEvent_ctor_char_cSystemR(P2_L* p, int a, void* b);
 void func_00191040(Rec_L* d, Range_L* r, P2_L* p);
 void cArray_cTimedEvent_PushBackActual(void* v, Rec_L* r);
 void cSkaAnimCheckpoints_cTimedEvent_dtor(Rec_L* r, int f);
-int Motion_Lookup(void* lib, Name_L* n);
+int cSkaAnimationSet_GetNode_cString16NR(void* lib, Name_L* n);
 void* func_0018C6A0(Sys_L* s);
 void nSka_GetPlaybackGroupId(Y_L* y, int m);
 unsigned char AnimPriority_Helper3(void* bits, int index);
 void AnimPriority_Helper2(void* p, int index, int v);
 void AnimPriority_Helper1(void* p);
 void AnimPriority_Helper0(void* p, int index, unsigned char on);
-void Physical_SetModeBit(void* p, int b);
-void Actor_SendCasAction(CMsg_L* m, int a, int b);
-void Ledge_ToObjectPlacement(void* d, int a, void* p, int b);
-void Event_Send(void* m, void* t, int f);
+void cModeSwitch_WithHistory_12_ActivateMode_uint_2(void* p, int b);
+void cCharActionMsg_ctor_int_eParamType(CMsg_L* m, int a, int b);
+void cInteractParams_ctor_int_cQuatVecR_cGOBJP(void* d, int a, void* p, int b);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* t, int f);
 void cMessage_dtor(void* m, int f);
-void Actor_CatchLedgeInAir(Act_L* a);
+void cHuman_GrabLedge(Act_L* a);
 }
 
 struct Flags_L { int w[1]; Flags_L() { int i; for (i = 0; i < 1; i++) w[i] = 0; } };
@@ -162,7 +162,7 @@ static inline void QZeroW_L(void* d) { QZero_L(d); }
 static inline float Min_L(float a, float b) { float r; asm { min.s r, a, b } return r; }
 static inline float Recip_L(float v) { return v != 0.0f ? 1.0f / v : 3.4028235e38f; }
 
-static inline void XInit_L(X_L* x) { x->kind = 0; MotionTokens_Init(x->pairs); cArray_cTimedEvent_ctor_void(x->tail); }
+static inline void XInit_L(X_L* x) { x->kind = 0; cArray_FixedSize_cSkaAnimEvent_7_ctor_void(x->pairs); cArray_cTimedEvent_ctor_void(x->tail); }
 static inline X_L* XSetR_L(X_L* x, int i, int id, void* a, unsigned char k) { Pair_L* p = &x->pairs[i]; p->id = id; p->a = a; x->kind = k; return x; }
 static inline void XDtor_L(X_L* x) { func_001BE5A0(x->tail, 0); __destroy_array(x->pairs, (void*)func_0018A210, 8, 7); }
 static inline X_L* Set5_L(X_L* x, int a, int b, int c, int d, int e, void* act)
@@ -193,7 +193,7 @@ static inline float ClampY_L(float x, float z, float o) { float lo = z; float hi
 static inline void SelName_L(Sel_L* s, Name_L* n, X_L* x, unsigned char f)
 {
     s->mode = 0;
-    MotionRequest_Construct(s->sub, n);
+    cString16N_3_ctor_cString16NR(s->sub, n);
     s->f48 = f;
     cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&s->x, x);
     s->f98 = -1.0f;
@@ -225,20 +225,20 @@ static inline void Install_L(Act_L* a, Sel_L* sel, Rate_L* r)
     a->sys.anim.v.w = r->w;
     a->sys.anim.b5 = 1;
     cSkaPlaybackGroupId_ctor_int(&y, -1);
-    Actor_ResolveMotionSelection(sel, &out, &y, an->model);
+    cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(sel, &out, &y, an->model);
     if (out) {
         V4_L* p;
         if (an->b5)
             p = &an->v;
         else
-            p = AnimRate_Init(&rate, Model_GetFirstFloat(an->model));
-        Vec4_Copy_18A350(&vec, p);
+            p = cSkaCrossFadeDuration_ctor_float(&rate, cSkaAnimationSet_DefaultCrossFadeDuration(an->model));
+        cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(&vec, p);
         an->b5 = 0;
-        AnimEvent_Construct(&e1);
-        AnimEvent_Construct(&e2);
-        AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(sel), cSkaRequestStream_AnimationPacket_GetDuration(sel), func_0018A2C0(sel));
-        AnimEvent_dtor(&e2, -1);
-        AnimEvent_dtor(&e1, -1);
+        cSkaAnimEndedMessage_ctor_void(&e1);
+        cSkaAnimEndedMessage_ctor_void(&e2);
+        cSkaRequestStream_AddRequest(an, out, cSkaRequestStream_AnimationPacket_GetInstruction(sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(sel), cSkaRequestStream_AnimationPacket_GetDuration(sel), func_0018A2C0(sel));
+        cSkaAnimEndedMessage_dtor(&e2, -1);
+        cSkaAnimEndedMessage_dtor(&e1, -1);
     }
     cSkaAnimCheckpoints_dtor(&sel->x, -1);
 }
@@ -249,13 +249,13 @@ static inline void Play_L(Sys_L* sys, int m, int mode, Rate_L* r, X_L* px)
         Ev_L e2;
         Y_L y;
         void* ctl;
-        AnimEvent_Construct(&e1);
-        AnimEvent_Construct(&e2);
+        cSkaAnimEndedMessage_ctor_void(&e1);
+        cSkaAnimEndedMessage_ctor_void(&e2);
         ctl = func_0018C6A0(sys);
         nSka_GetPlaybackGroupId(&y, m);
-        AnimCtl_InstallMotion(ctl, m, mode, r, &y, &e1, &e2, px, -1.0f, 0.0f);
-        AnimEvent_dtor(&e2, -1);
-        AnimEvent_dtor(&e1, -1);
+        cSkaRequestStream_AddRequest(ctl, m, mode, r, &y, &e1, &e2, px, -1.0f, 0.0f);
+        cSkaAnimEndedMessage_dtor(&e2, -1);
+        cSkaAnimEndedMessage_dtor(&e1, -1);
     }
 }
 static inline void Direct_L(Act_L* a, char* name, int mode, int i0, int i1, int i3, int i5, int i6)
@@ -272,7 +272,7 @@ static inline void Direct_L(Act_L* a, char* name, int mode, int i0, int i1, int 
     px = Set5_L(&x, i0, i1, i3, i5, i6, a);
 
     NAME_COPY_N(n.c, name)
-    m = Motion_Lookup(sys->lib, &n);
+    m = cSkaAnimationSet_GetNode_cString16NR(sys->lib, &n);
     Play_L(sys, m, mode, &r, px);
     XDtor_L(&x);
 }
@@ -306,10 +306,10 @@ static inline void Bind_L(Act_L* a, void* o, Msg_L* msg, int idx)
         void* m;
         Plc_L* pp = &msg->plc;
         *cArray_FixedSize_cGOBJPtr_3_opIndex(s + 0x1F0, idx) = o;
-        Transform_SetOrientation(cArray_FixedSize_cQuatVec_3_opIndex(s + 0x200, idx), pp);
-        p = o ? Camera_GetNode(o) : 0;
-        if (p) m = Transform_GetUpdated(p); else m = Mtx_GetIdentity();
-        Transform_SetOrientation(cArray_FixedSize_cQuatVec_3_opIndex(s + 0x260, idx), Mtx_ToPlacement(&t, m));
+        cQuatVec_opAssign(cArray_FixedSize_cQuatVec_3_opIndex(s + 0x200, idx), pp);
+        p = o ? cGOBJ_GetXform_void(o) : 0;
+        if (p) m = cXform_GetMatrix(p); else m = cMatrix_GetUnit();
+        cQuatVec_opAssign(cArray_FixedSize_cQuatVec_3_opIndex(s + 0x260, idx), cQuatVec_ctor_cMatrixR(&t, m));
         *func_00195DB0(s + 0x2C0, idx) = 1;
     }
 }
@@ -346,7 +346,7 @@ static inline void Dir19_L(Act_L* actor)
                 RateDef_L(&r);
                 px = XSetR_L(XSetR_L(XSetR_L(XSetR_L(&x, 0, 0x19, actor, 1), 3, 0x1A, actor, 1), 5, 0x1B, actor, 1), 6, 0x1C, actor, 1);
                 NAME_COPY(n.c, D_0049DCF0)
-                m = Motion_Lookup(sys->lib, &n);
+                m = cSkaAnimationSet_GetNode_cString16NR(sys->lib, &n);
                 Play_L(sys, m, 0, &r, px);
                 XDtor_L(&x);
             }
@@ -418,12 +418,12 @@ static inline void SendCas_L(Act_L* actor)
 {
         CMsg_L m;
         CMsg_L* pm;
-        void* p = Root_ResolveWorldPlacement(actor->r3294);
+        void* p = cSkaAnimAnchor_GetTransform(actor->r3294);
         pm = &m;
-        Actor_SendCasAction(pm, 0x14, 0xE);
-        Ledge_ToObjectPlacement(pm->f30, 0, p, 0);
+        cCharActionMsg_ctor_int_eParamType(pm, 0x14, 0xE);
+        cInteractParams_ctor_int_cQuatVecR_cGOBJP(pm->f30, 0, p, 0);
         pm->vtable = D_004E00E0;
-        { int one = 1; m.kind = one; Event_Send(pm, actor, one); }
+        { int one = 1; m.kind = one; QueueMessage_cMessageR_cSystemP_int(pm, actor, one); }
         m.vtable = D_004E0840;
         cMessage_dtor(pm, 0);
 }
@@ -434,15 +434,15 @@ static inline void GetPlc_L(Plc_L* pplc, Msg_L* msg, int* pt)
         Plc_L* src;
         Plc_L t7B0;
         Plc_L t790;
-        obj = opNe_cObjectIdR_cObjectIdR(&msg->id, (int*)cObjectId_ctor_uint(pt, -1)) != 0 ? Object_LookupById(&msg->id) : 0;
-        parent = obj ? Camera_GetNode(obj) : 0;
+        obj = opNe_cObjectIdR_cObjectIdR(&msg->id, (int*)cObjectId_ctor_uint(pt, -1)) != 0 ? nGobjManager_LookupGOBJ_cObjectIdR(&msg->id) : 0;
+        parent = obj ? cGOBJ_GetXform_void(obj) : 0;
         if (parent) {
-            Placement_ApplyParent(&t790, &msg->plc, Mtx_ToPlacement(&t7B0, Transform_GetUpdated(parent)));
+            cQuatVec_Copy_Transform(&t790, &msg->plc, cQuatVec_ctor_cMatrixR(&t7B0, cXform_GetMatrix(parent)));
             src = &t790;
         } else {
             src = &msg->plc;
         }
-        VecPair_Copy(pplc, src);
+        cQuatVec_ctor_cQuatVecR(pplc, src);
 }
 static inline void GetPlcW_L(Plc_L* pplc, Msg_L* msg, int* pt) { GetPlc_L(pplc, msg, pt); }
 extern "C" void Actor_HandleLedgeAction(Act_L* actor, Msg_L* msg)
@@ -460,13 +460,13 @@ extern "C" void Actor_HandleLedgeAction(Act_L* actor, Msg_L* msg)
     flags.w[0] = msg->flags;
     GetPlcW_L(&plc, msg, &t);
     tm1[0] = -1;
-    o2 = IdNe_L(&msg->id, tm1) ? Object_LookupById(&msg->id) : 0;
+    o2 = IdNe_L(&msg->id, tm1) ? nGobjManager_LookupGOBJ_cObjectIdR(&msg->id) : 0;
     s6 = actor->r3290;
     s1 = actor->r3294;
     f1 = flags.w[0];
     if ((f1 >> 16) & 1 || (f1 >> 17) & 1)
         plc.p[2] -= 1.0f;
-    Root_SetWorldPlacement(s1, &plc);
+    cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(s1, &plc);
     s1->f160 = 0;
     BindW_L(actor, o2, msg, 1);
     f2 = flags.w[0];
@@ -476,7 +476,7 @@ extern "C" void Actor_HandleLedgeAction(Act_L* actor, Msg_L* msg)
         BindW_L(actor, o2, msg, 2);
         {
             Root_L* r = actor->r3298;
-            Root_SetWorldPlacement(r, &plc);
+            cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(r, &plc);
             r->f160 = 0;
         }
         { X_L* p0 = &x; XInit_L(p0); Set5_L(&x, 0x46, 0x47, 0x48, 0x49, 0x4A, actor); }
@@ -496,7 +496,7 @@ extern "C" void Actor_HandleLedgeAction(Act_L* actor, Msg_L* msg)
             Range_L rb;
             {
                 Root_L* r = actor->r3298;
-                Root_SetWorldPlacement(r, &plc);
+                cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(r, &plc);
                 r->f160 = 0;
             }
             a = 0.0f;
@@ -529,9 +529,9 @@ extern "C" void Actor_HandleLedgeAction(Act_L* actor, Msg_L* msg)
             Dir19_L(actor);
             Prio_L(actor->prio, 1, 1);
             { char* s = actor->s3310; if (s) {
-                Physical_SetModeBit(s + 0x18, 5);
-                Physical_SetModeBit(actor->s3310 + 0x18, 3);
-                Physical_SetModeBit(actor->s3310 + 0x18, 2);
+                cModeSwitch_WithHistory_12_ActivateMode_uint_2(s + 0x18, 5);
+                cModeSwitch_WithHistory_12_ActivateMode_uint_2(actor->s3310 + 0x18, 3);
+                cModeSwitch_WithHistory_12_ActivateMode_uint_2(actor->s3310 + 0x18, 2);
             } }
         } else {
             Name_L name;
@@ -541,21 +541,21 @@ extern "C" void Actor_HandleLedgeAction(Act_L* actor, Msg_L* msg)
             Auto_L(actor);
             Prio_L(actor->prio, 1, 1);
             { char* s = actor->s3310; if (s) {
-                Physical_SetModeBit(s + 0x18, 5);
-                Physical_SetModeBit(actor->s3310 + 0x18, 3);
-                Physical_SetModeBit(actor->s3310 + 0x18, 2);
+                cModeSwitch_WithHistory_12_ActivateMode_uint_2(s + 0x18, 5);
+                cModeSwitch_WithHistory_12_ActivateMode_uint_2(actor->s3310 + 0x18, 3);
+                cModeSwitch_WithHistory_12_ActivateMode_uint_2(actor->s3310 + 0x18, 2);
             } }
         }
     } else if ((f2 >> 3) & 1) {
-        float z0 = Placement_GetPosition(Root_GetWorldPlacement(s6))[2];
-        float dy = Placement_GetPosition(Root_GetWorldPlacement(s1))[2] - z0;
+        float z0 = cQuatVec_Translation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(s6))[2];
+        float dy = cQuatVec_Translation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(s1))[2] - z0;
         if (dy < D_004A03B8) {
             SiteB_L(actor);
             Auto_L(actor);
             Prio_L(actor->prio, 1, 1);
             { char* s = actor->s3310; if (s) {
-                Physical_SetModeBit(s + 0x18, 5);
-                Physical_SetModeBit(actor->s3310 + 0x18, 3);
+                cModeSwitch_WithHistory_12_ActivateMode_uint_2(s + 0x18, 5);
+                cModeSwitch_WithHistory_12_ActivateMode_uint_2(actor->s3310 + 0x18, 3);
             } }        } else {
             float t;
             float d;
@@ -570,14 +570,14 @@ extern "C" void Actor_HandleLedgeAction(Act_L* actor, Msg_L* msg)
             Auto_L(actor);
             Prio_L(actor->prio, 1, 1);
             { char* s = actor->s3310; if (s) {
-                Physical_SetModeBit(s + 0x18, 5);
-                Physical_SetModeBit(actor->s3310 + 0x18, 3);
+                cModeSwitch_WithHistory_12_ActivateMode_uint_2(s + 0x18, 5);
+                cModeSwitch_WithHistory_12_ActivateMode_uint_2(actor->s3310 + 0x18, 3);
             } }
         }
     } else if ((f2 >> 5) & 1 || (f2 >> 6) & 1) {
         SendCas_L(actor);
     } else if ((f2 >> 7) & 1) {
-        Actor_CatchLedgeInAir(actor);
+        cHuman_GrabLedge(actor);
     }
 }
 #pragma pop

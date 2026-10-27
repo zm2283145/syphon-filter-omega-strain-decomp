@@ -14,19 +14,19 @@ struct Obj428EF0 { VPAD4(a) VPAD2(b) virtual void Reset(); char pad[0xC]; void* 
 typedef struct { int kind; int id; int val; } Pk428EF0;
 extern "C" {
 extern unsigned char D_005721D0;
-Obj428EF0** NetMap_Lookup(int);
-void* Object_LookupById(int*);
+Obj428EF0** cNetObj_GetNetSystem(int);
+void* nGobjManager_LookupGOBJ_cObjectIdR(int*);
 void cNetObj_SetOwner(void*, int);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int cActivateMsg_NetReceive(int a0, int a1, int a2, Pk428EF0* arg) {
+extern "C" int cActivateMsg_ActivateCallback(int a0, int a1, int a2, Pk428EF0* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Pk428EF0* p = arg;
-        Obj428EF0** e = NetMap_Lookup(p->id);
+        Obj428EF0** e = cNetObj_GetNetSystem(p->id);
         Obj428EF0* o;
-        if (!e) { int id = p->id; o = (Obj428EF0*)Object_LookupById(&id); } else o = *e;
+        if (!e) { int id = p->id; o = (Obj428EF0*)nGobjManager_LookupGOBJ_cObjectIdR(&id); } else o = *e;
         if (o) {
             if (p->val > -1) { o->Reset(); cNetObj_SetOwner(o->f10, p->val); o->f14 = 0; } else o->Reset();
         }
@@ -47,11 +47,11 @@ extern "C" int cActivateMsg_NetReceive(int a0, int a1, int a2, Pk428EF0* arg) {
 
 #include "loose04_types.h"
 
-extern int Transport_Send(int, int, int, int);
+extern int cNetObj_SendMessage_int_cMessageR_int_int(int, int, int, int);
 
 /* Sends with the first two arguments swapped and -1 for the rest. */
 int cActivateMsg_SendActivated(int a0, int a1) {
-    return Transport_Send(a1, a0, -1, -1);
+    return cNetObj_SendMessage_int_cMessageR_int_int(a1, a0, -1, -1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00428FD0 */
@@ -69,7 +69,7 @@ struct Msg_0022ED30 : ClonedMessageBase {
 #define CLONE_BODY(p, s) p->vtable = D_004E0E80;
 
 extern "C" { char D_004BF970[] = "DeactivateMsg.hh"; }
-DEFINE_MESSAGE_CLONE(cDeactivateMsg_v01, Msg_0022ED30, 0x24, D_004BF970, 0x13, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cDeactivateMsg_Clone, Msg_0022ED30, 0x24, D_004BF970, 0x13, CLONE_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_00428FF0 */
 
@@ -77,16 +77,16 @@ DEFINE_MESSAGE_CLONE(cDeactivateMsg_v01, Msg_0022ED30, 0x24, D_004BF970, 0x13, C
 #pragma push /* merge_units */
 extern int D_005721A0;
 extern int NetRegisterMessageStart(void);
-extern int Event_UnpackHeader(int*);
+extern int cMessage_RegisterFields(int*);
 extern int NetRegisterApplicationMessage(void*, void*);
-extern void cDeactivateMsg_NetReceive(void);
+extern void cDeactivateMsg_DeactivateCallback(void);
 
-/* Registers the cDeactivateMsg_NetReceive handler when the preconditions hold; returns 1 on success. */
-unsigned char cDeactivateMsg_NetRegister(void) {
+/* Registers the cDeactivateMsg_DeactivateCallback handler when the preconditions hold; returns 1 on success. */
+unsigned char cDeactivateMsg_InitNet(void) {
     unsigned char ok = 0;
     int tmp[2];
-    if (NetRegisterMessageStart() == 0 && Event_UnpackHeader(tmp) != 0 &&
-        NetRegisterApplicationMessage(&D_005721A0, cDeactivateMsg_NetReceive) == 0) {
+    if (NetRegisterMessageStart() == 0 && cMessage_RegisterFields(tmp) != 0 &&
+        NetRegisterApplicationMessage(&D_005721A0, cDeactivateMsg_DeactivateCallback) == 0) {
         ok = 1;
     }
     return ok;
@@ -99,7 +99,7 @@ unsigned char cDeactivateMsg_NetRegister(void) {
 extern int Event_PackHeader(void* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf);
 
 /* Serializer for a message with no payload: header plus type id, 8 bytes. */
-int cDeactivateMsg_v02(void* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf) {
+int cDeactivateMsg_Pack(void* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf) {
     Event_PackHeader(msg, a1, outType, a3, a4, a5, buf);
     *outType = D_005721A0;
     return 8;

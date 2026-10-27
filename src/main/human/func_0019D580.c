@@ -7,6 +7,6 @@
 #include "types.h"
 #include "human_types.h"
 
-AnimChannel* Model_GetChannelData(ChannelVec* v, int i) {
+AnimChannel* std_vector_cSkaSliderValue_opIndex(ChannelVec* v, int i) {
     return &v->data[i];
 }

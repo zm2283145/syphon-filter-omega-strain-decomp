@@ -23,12 +23,12 @@ void cArray_cBaseObjListPtr_RBegin(Iter* out, PtrVec* v) { Iter it = Iter_Make(v
 
 #include "loose04_types.h"
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int count, int value);
-extern int PtrVector_Resize(PtrVec* v, int a1, int a2);
-extern int PtrVec_Reserve(int, int);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int count, int value);
+extern int std_vector_pod_int_resize(PtrVec* v, int a1, int a2);
+extern int std_vector_pod_int_reserve(int, int);
 
 int cArray_cBaseObjListPtr_ResizeActual(PtrVec* v, int a1, int a2) {
-    return PtrVector_Resize(v, a1, a2);
+    return std_vector_pod_int_resize(v, a1, a2);
 }
 
 int cArray_cBaseObjListPtr_Size(PtrVec* v) {
@@ -36,12 +36,12 @@ int cArray_cBaseObjListPtr_Size(PtrVec* v) {
 }
 
 /* push_back: inserts one value at end(). */
-int PtrVec_PushBack_40BC70(PtrVec* v, int value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+int std_vector_cBaseObjListPtr_push_back(PtrVec* v, int value) {
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 
 int std_vector_cSystemPtr_reserve(int a0, int a1) {
-    return PtrVec_Reserve(a0, a1);
+    return std_vector_pod_int_reserve(a0, a1);
 }
 
 Rel* std_vector_cSystemPtr_ctor(Rel* r) {

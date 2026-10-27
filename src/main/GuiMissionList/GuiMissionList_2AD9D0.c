@@ -28,7 +28,7 @@ char* GuiNetContacts_GetClassName(void) {
 extern int strcmp(const char* a, const char* b); /* strcmp */
 
 /* Returns 1 if name equals the string "GuiNetContacts". */
-int GuiNetContacts_IsType(void* self, const char* name)
+int GuiNetContacts_IsClass(void* self, const char* name)
 {
     return strcmp("GuiNetContacts", name) == 0;
 }

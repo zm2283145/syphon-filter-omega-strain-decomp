@@ -74,18 +74,18 @@ extern char D_004BB588[];
 extern void* g_WeaponDatabase;
 extern char D_00533790[];
 extern unsigned char g_IsMultiplayer;
-Stack_35BFB0* Gui_GetScreenStack(void);
-char* Loc_LookupText(char* key);
-Player_35BFB0* PlayerSlots_Get(int i);
-void Skel_Rebind(Skel_35BFB0* s, void* p);
-WDef_35BFB0* WeaponDb_Get(void* table, int id);
+Stack_35BFB0* Gui_Canvas(void);
+char* nGlobalization_GetString_charP(char* key);
+Player_35BFB0* cNetObj_GetPlayer(int i);
+void cSKM_GOBJ_CloneMan(Skel_35BFB0* s, void* p);
+WDef_35BFB0* cWeaponDB_GetEntry(void* table, int id);
 int cAgentData_GetStat(Agent_35BFB0* a, int stat);
 char Libc_Toupper(char c);
-Agent_35BFB0* Player_GetAgentData(Player_35BFB0* p, unsigned char* flag);
-char* AgentData_GetName(Agent_35BFB0* a);
+Agent_35BFB0* cHuman_GetAgentData(Player_35BFB0* p, unsigned char* flag);
+char* cAgentData_GetUserName(Agent_35BFB0* a);
 void GuiTextWidget_SetText(W_35BFB0* w, char* text, int flags);
-void GuiWidget_SendEvent(Screen_35BFB0* s, W_35BFB0* w, int a, int b, int c);
-void GuiWidget_Update(Screen_35BFB0* s, float dt);
+void GuiWidget_SendMessage(Screen_35BFB0* s, W_35BFB0* w, int a, int b, int c);
+void GuiWidget_onAdvanceTime(Screen_35BFB0* s, float dt);
 float cDME_GetConnectionStatus(int i);
 #define strlen(a0) ((unsigned int)strlen((a0))) /* merge_units */
 }
@@ -94,7 +94,7 @@ static inline int Slot_35BFB0(Player_35BFB0* p) { return ((p->fC & 0x7F000000) >
 
 static inline void SetLoc_35BFB0(W_35BFB0* w, char* key)
 {
-    char* t = Loc_LookupText(key);
+    char* t = nGlobalization_GetString_charP(key);
     if (t)
         GuiTextWidget_SetText(w, t, 0);
     else
@@ -104,7 +104,7 @@ static inline void SetLoc_35BFB0(W_35BFB0* w, char* key)
 static inline void ShowItem_35BFB0(W_35BFB0* w, Item_35BFB0* it)
 {
     if (it) {
-        WDef_35BFB0* d = WeaponDb_Get(g_WeaponDatabase, it->id);
+        WDef_35BFB0* d = cWeaponDB_GetEntry(g_WeaponDatabase, it->id);
         SetLoc_35BFB0(w, d->name);
     } else {
         GuiTextWidget_SetText(w, D_004BB530, 0);
@@ -113,8 +113,8 @@ static inline void ShowItem_35BFB0(W_35BFB0* w, Item_35BFB0* it)
 
 #define SHOW_ITEM(W, IT) \
     if (IT) { \
-        WDef_35BFB0* d = WeaponDb_Get(g_WeaponDatabase, (IT)->id); \
-        char* t = Loc_LookupText(d->name); \
+        WDef_35BFB0* d = cWeaponDB_GetEntry(g_WeaponDatabase, (IT)->id); \
+        char* t = nGlobalization_GetString_charP(d->name); \
         if (t) \
             GuiTextWidget_SetText(W, t, 0); \
         else \
@@ -124,7 +124,7 @@ static inline void ShowItem_35BFB0(W_35BFB0* w, Item_35BFB0* it)
     }
 
 static const float kPi_35BFB0 = 3.1415927f;
-extern "C" void GuiScoresEquip_Update(Screen_35BFB0* s, float dt)
+extern "C" void GuiScoresEquip_onAdvanceTime(Screen_35BFB0* s, float dt)
 {
     int i;
     for (i = 0; i < 4; i++) {
@@ -138,24 +138,24 @@ extern "C" void GuiScoresEquip_Update(Screen_35BFB0* s, float dt)
     {
     int n;
     for (n = 0; n < 4; n++) {
-        Player_35BFB0* p = PlayerSlots_Get(n);
+        Player_35BFB0* p = cNetObj_GetPlayer(n);
         if (p) {
             int slot = Slot_35BFB0(p);
             Agent_35BFB0* a;
             if (slot < 0) slot = 0;
-            Skel_Rebind(s->skel[slot], p->m60);
+            cSKM_GOBJ_CloneMan(s->skel[slot], p->m60);
             s->skel[slot]->b2C71 = 1;
             if (!s->f220[slot]) s->f220[slot] = 1;
-            a = Player_GetAgentData(p, &s->f220[slot]);
+            a = cHuman_GetAgentData(p, &s->f220[slot]);
             if (a->bB70) {
                 char buf[0x10];
                 char key[0x20];
                 unsigned int k;
                 int d;
-                GuiTextWidget_SetText(s->rows[slot][0], AgentData_GetName(a), 0);
-                GuiTextWidget_SetText(s->rows[slot][13], AgentData_GetName(a), 0);
+                GuiTextWidget_SetText(s->rows[slot][0], cAgentData_GetUserName(a), 0);
+                GuiTextWidget_SetText(s->rows[slot][13], cAgentData_GetUserName(a), 0);
                 sprintf(key, D_004BB558, slot);
-                sprintf(D_00533790, D_004BB568, 0x11, Loc_LookupText(key), 0x10);
+                sprintf(D_00533790, D_004BB568, 0x11, nGlobalization_GetString_charP(key), 0x10);
                 for (k = 0; k < strlen(D_00533790); k++)
                     D_00533790[k] = Libc_Toupper(D_00533790[k]);
                 GuiTextWidget_SetText(s->rows[slot][1], D_00533790, 0);
@@ -193,7 +193,7 @@ extern "C" void GuiScoresEquip_Update(Screen_35BFB0* s, float dt)
                 for (j = 15; j < 20; j++) GuiTextWidget_SetText(s->rows[slot][j], D_004BB530, 0);
             }
             if (s->skel[slot]->inv.arr[0]) {
-                WDef_35BFB0* d = WeaponDb_Get(g_WeaponDatabase, s->skel[slot]->inv.arr[0]->id);
+                WDef_35BFB0* d = cWeaponDB_GetEntry(g_WeaponDatabase, s->skel[slot]->inv.arr[0]->id);
                 s->skel[slot]->inv.Slot(d->slot) = s->skel[slot]->inv.Slot(0);
             }
             SHOW_ITEM(s->rows[slot][15], s->skel[slot]->inv.arr[3])
@@ -202,7 +202,7 @@ extern "C" void GuiScoresEquip_Update(Screen_35BFB0* s, float dt)
             SHOW_ITEM(s->rows[slot][18], s->skel[slot]->inv.arr[8])
             SHOW_ITEM(s->rows[slot][19], s->skel[slot]->inv.arr[9])
             if (s->skel[slot]->inv.arr[0]) {
-                WDef_35BFB0* d = WeaponDb_Get(g_WeaponDatabase, s->skel[slot]->inv.arr[0]->id);
+                WDef_35BFB0* d = cWeaponDB_GetEntry(g_WeaponDatabase, s->skel[slot]->inv.arr[0]->id);
                 s->skel[slot]->inv.Slot(d->slot) = 0;
             }
         } else {
@@ -227,7 +227,7 @@ extern "C" void GuiScoresEquip_Update(Screen_35BFB0* s, float dt)
         int m;
         for (m = 0; m < 4; m++) {
             if (s->f48[m]) {
-                Player_35BFB0* p = PlayerSlots_Get(m);
+                Player_35BFB0* p = cNetObj_GetPlayer(m);
                 if (p) {
                     if (p->b14) {
                         s->f48[m]->flags &= ~2;
@@ -242,7 +242,7 @@ extern "C" void GuiScoresEquip_Update(Screen_35BFB0* s, float dt)
                         } else {
                             idx = 0;
                         }
-                        GuiWidget_SendEvent(s, s->f48[m], 0xB, s->f58 + (int)((float)(s->f5C - s->f58) * (1.0f - cDME_GetConnectionStatus(idx))), 0);
+                        GuiWidget_SendMessage(s, s->f48[m], 0xB, s->f58 + (int)((float)(s->f5C - s->f58) * (1.0f - cDME_GetConnectionStatus(idx))), 0);
                     }
                 } else {
                     s->f48[m]->flags &= ~2;
@@ -250,7 +250,7 @@ extern "C" void GuiScoresEquip_Update(Screen_35BFB0* s, float dt)
             }
         }
     }
-    if (Gui_GetScreenStack()->f2C->f8 != s) {
+    if (Gui_Canvas()->f2C->f8 != s) {
         s->f228 = 0.0f;
     } else {
         float k = kPi_35BFB0 * (dt / 30.0f); s->f1C8 += k * s->f228;
@@ -259,7 +259,7 @@ extern "C" void GuiScoresEquip_Update(Screen_35BFB0* s, float dt)
         else if (s->f1C8 < -3.1415927f)
             s->f1C8 += 6.2831855f;
     }
-    GuiWidget_Update(s, dt);
+    GuiWidget_onAdvanceTime(s, dt);
 }
 #undef strlen /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -269,7 +269,7 @@ static inline void merge_flush_func_0035BFB0(void) {}
 
 /* merge_units: begin func_0035CB30 */
 #pragma push /* merge_units */
-extern char* Loc_LookupText(char* key);
+extern char* nGlobalization_GetString_charP(char* key);
 #define strlen(a0) ((unsigned int)strlen((a0))) /* merge_units */
 #if 0 /* merge_units */
 extern char Libc_Toupper(int c);
@@ -281,7 +281,7 @@ char* GetCodename(int n)
     char buf[32];
     unsigned int i;
     sprintf(buf, D_004BB558, n);
-    sprintf(D_00533790, D_004BB568, 0x11, Loc_LookupText(buf), 0x10);
+    sprintf(D_00533790, D_004BB568, 0x11, nGlobalization_GetString_charP(buf), 0x10);
     for (i = 0; i < strlen(D_00533790); i++) D_00533790[i] = Libc_Toupper(D_00533790[i]);
     return D_00533790;
 }
@@ -308,33 +308,33 @@ extern char D_004BB4E8[];
 extern char D_004BB500[];
 extern char D_004BB520[];
 extern char D_004A9870[];
-void GuiWidget_BaseWake(S35CBF0* o);
-W35CBF0* GuiWidget_FindChildByName(void* self, char* name);
+void GuiWidget_onWake(S35CBF0* o);
+W35CBF0* GuiWidget_FindChild_charP(void* self, char* name);
 #if 0 /* merge_units */
 void GuiTextWidget_SetText(W35CBF0* w, char* text, int flags);
 #endif /* merge_units */
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((W_35BFB0 *)(a0), (a1), (a2))) /* merge_units */
 
-void GuiScoresEquip_Wake(S35CBF0* o);
+void GuiScoresEquip_onWake(S35CBF0* o);
 }
 static inline W35CBF0* cast35CBF0(W35CBF0* w)
 {
     return (w && w->IsA(D_004A9870)) ? w : 0;
 }
-void GuiScoresEquip_Wake(S35CBF0* o)
+void GuiScoresEquip_onWake(S35CBF0* o)
 {
     W35CBF0* a;
     W35CBF0* b;
     W35CBF0* c;
-    GuiWidget_BaseWake(o);
+    GuiWidget_onWake(o);
     o->a224 = 0;
-    a = GuiWidget_FindChildByName(o, D_004BB4D8);
-    b = GuiWidget_FindChildByName(o, D_004BB4E8);
+    a = GuiWidget_FindChild_charP(o, D_004BB4D8);
+    b = GuiWidget_FindChild_charP(o, D_004BB4E8);
     if (a) a->a14 |= 2;
     if (b) b->a14 &= ~2;
-    c = cast35CBF0(GuiWidget_FindChildByName(o, D_004BB500));
+    c = cast35CBF0(GuiWidget_FindChild_charP(o, D_004BB500));
     if (c) {
-        char* t = Loc_LookupText(D_004BB520);
+        char* t = nGlobalization_GetString_charP(D_004BB520);
         GuiTextWidget_SetText(c, t ? t : D_004BB530, 0);
     }
     o->a22C = 1;

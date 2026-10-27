@@ -5,15 +5,15 @@
 
 #include "npc_types.h"
 
-extern int NpcPerception_InViewCone(NpcAi* ai, int gobj, int a2);
-extern int Object_ClosestPlayerDistSq(NpcActor* actor, int a1);
+extern int cAITarget_TestGobjInViewCone(NpcAi* ai, int gobj, int a2);
+extern int cGOBJ_GetClosestPlayer(NpcActor* actor, int a1);
 
 /* vtable slot 0x60: InViewCone. */
 int cNPC_InViewCone(cNPC* self, int gobj) {
-    return NpcPerception_InViewCone(self->ai, gobj, 1);
+    return cAITarget_TestGobjInViewCone(self->ai, gobj, 1);
 }
 
 /* vtable slot 0x3A: GetClosestPlayer. */
 int cNPC_GetClosestPlayer(cNPC* self) {
-    return Object_ClosestPlayerDistSq(self->actor, 0);
+    return cGOBJ_GetClosestPlayer(self->actor, 0);
 }

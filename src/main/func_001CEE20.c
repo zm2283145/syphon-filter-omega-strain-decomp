@@ -8,7 +8,7 @@ extern int cArray_cXformNodePtr_ConstIterator_opNe(F8It_1CE* a, F8It_1CE* b);
 extern int* cArray_cXformNodePtr_ConstIterator_opMul(F8It_1CE* it);
 extern void cXformNode_SetNeedsUpdate(int child);
 extern F8It_1CE* cArray_cXformNodePtr_ConstIterator_opInc(F8It_1CE* it);
-void Bone_SetLocalBasis(F8Bone_1CE* b, F8Mtx_1CE* m)
+void cXformNode_SetRotationMatrix_ParentRelative(F8Bone_1CE* b, F8Mtx_1CE* m)
 {
     b->basis.m[0][0] = m->m[0][0];
     b->basis.m[0][1] = m->m[0][1];

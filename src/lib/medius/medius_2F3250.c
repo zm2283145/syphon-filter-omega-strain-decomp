@@ -19,11 +19,11 @@ unsigned short GetSetPreviousMessage(char* base, E2F3250* k, int v)
 /* merge_units: end func_002F3250 */
 
 /* merge_units: begin func_002F3298 */
-extern int Net_AllocZeroed(int** out, unsigned long n);
+extern int rt_memory_allocate_init_zero(int** out, unsigned long n);
 int* CreatePlayerSet(void)
 {
     int* p = 0;
-    Net_AllocZeroed(&p, 8);
+    rt_memory_allocate_init_zero(&p, 8);
     if (p) {
         p[0] = 0;
         p[1] = 0;

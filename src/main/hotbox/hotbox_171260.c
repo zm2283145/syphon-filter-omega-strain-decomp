@@ -25,13 +25,13 @@ struct N171260 { int m0; N171260* next; Ent171260* data; };
 struct Own171260 { char pad[0x320C]; int state; };
 struct Hb171260 { char pad[0x20]; Own171260* owner; float f24; char list[4]; };
 extern "C" {
-void List_Begin(int* out, void* list);
+void std_list_deleter_voidPtr_begin_void(int* out, void* list);
 void std_list_cHotboxPtr_generic_iterator_ctor(N171260** out, int* in);
 void std_list_cHotboxPtr_end_void(int* out, void* list);
 void cLListIterator_cHotboxPtr_ctor_listR(N171260** out, int* in);
 }
 
-extern "C" Ent171260* Hotbox_SelectInteraction(Hb171260* h, int mode)
+extern "C" Ent171260* cHotboxMan_CanInteract(Hb171260* h, int mode)
 {
     Ent171260* best = 0;
     if (h->f24 <= 0.0f) {
@@ -43,7 +43,7 @@ extern "C" Ent171260* Hotbox_SelectInteraction(Hb171260* h, int mode)
         int t2;
         int bp;
         N171260* n;
-        List_Begin(&t0, h->list);
+        std_list_deleter_voidPtr_begin_void(&t0, h->list);
         std_list_cHotboxPtr_generic_iterator_ctor(&it, &t0);
         n = it;
         bp = -1;
@@ -94,16 +94,16 @@ extern "C" unsigned char g_IsMultiplayer;
 extern "C" char D_004EE698[];
 extern "C" char D_004D9940[];
 #if 0 /* merge_units */
-extern "C" IObj_f4* Hotbox_SelectInteraction(Act_f4*, int);
+extern "C" IObj_f4* cHotboxMan_CanInteract(Act_f4*, int);
 #endif /* merge_units */
-#define Hotbox_SelectInteraction(a0, a1) ((IObj_f4 *)Hotbox_SelectInteraction((Hb171260 *)(a0), (a1))) /* merge_units */
+#define cHotboxMan_CanInteract(a0, a1) ((IObj_f4 *)cHotboxMan_CanInteract((Hb171260 *)(a0), (a1))) /* merge_units */
 
-extern "C" void Event_Construct(void*, void*);
-extern "C" void Event_Send(void*, void*, int);
+extern "C" void cMessage_ctor_cMessageNameR(void*, void*);
+extern "C" void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 extern "C" void cMessage_dtor(void*, int);
-extern "C" int Actor_TryObjectInteraction(Act_f4* self, void* who, int setTimer, int id)
+extern "C" int cHotboxMan_Interact(Act_f4* self, void* who, int setTimer, int id)
 {
-    IObj_f4* obj = Hotbox_SelectInteraction(self, id);
+    IObj_f4* obj = cHotboxMan_CanInteract(self, id);
     if (obj) {
         if (g_IsMultiplayer) {
             void* actor;
@@ -111,14 +111,14 @@ extern "C" int Actor_TryObjectInteraction(Act_f4* self, void* who, int setTimer,
             if (kind == 12) {
                 actor = self->actor;
                 IMsg_f4 msg;
-                Event_Construct(&msg, D_004EE698);
+                cMessage_ctor_cMessageNameR(&msg, D_004EE698);
                 msg.vt = D_004D9940;
                 msg.kind = kind;
                 msg.action = 3;
                 msg.actor = actor;
                 msg.mode = 2;
                 msg.zero = 0;
-                Event_Send(&msg, obj, 0);
+                QueueMessage_cMessageR_cSystemP_int(&msg, obj, 0);
                 msg.vt = D_004D9940;
                 cMessage_dtor(&msg, 0);
             } else {
@@ -133,7 +133,7 @@ extern "C" int Actor_TryObjectInteraction(Act_f4* self, void* who, int setTimer,
     }
     return obj != 0;
 }
-#undef Hotbox_SelectInteraction /* merge_units */
+#undef cHotboxMan_CanInteract /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001714C0(void) {}
 #pragma pop /* merge_units */

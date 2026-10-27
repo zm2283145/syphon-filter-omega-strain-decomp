@@ -50,31 +50,31 @@ struct Self394590 {
 
 extern "C" {
 extern char D_004BC430[];
-void Mem_Free(int pool, void* p, char* file, int line);
-void ParticleInst_Kill(Tracer394590* t, int flag);
-void ParticleInst_Update(Tracer394590* t, void* pos, int z, float dt);
-void Object_Unregister(Self394590* self);
-void Object_DeleteLater(Self394590* self, float t);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+void cParticle_dtor(Tracer394590* t, int flag);
+void cParticle_NextFrame(Tracer394590* t, void* pos, int z, float dt);
+void nGobjManager_RemoveGOBJ(Self394590* self);
+void cSystem_ActualScheduleDelete(Self394590* self, float t);
 }
 
-extern "C" void cPARTICLE_GOBJ_v10(Self394590* self, float dt)
+extern "C" void cPARTICLE_GOBJ_NextFrame(Self394590* self, float dt)
 {
     if (self->tracer) {
         if (self->tracer->active) {
             Owner394590* o = self->owner;
             if (o->dirty) ((OwnerV394590*)o)->Update();
-            ParticleInst_Update(self->tracer, o->pos, 0, dt);
+            cParticle_NextFrame(self->tracer, o->pos, 0, dt);
         } else if (((SelfV394590*)self)->IsDone()) {
             ((SelfV394590*)self)->Kill(-1);
             if (((self->type & 0xFF0000) >> 16) == 0xE7) {
-                Object_Unregister(self);
-                Object_DeleteLater(self, 0.1f);
+                nGobjManager_RemoveGOBJ(self);
+                cSystem_ActualScheduleDelete(self, 0.1f);
                 Tracer394590* t = self->tracer;
                 if (t) {
                     {
                         AllocGuard g;
-                        ParticleInst_Kill(t, -1);
-                        Mem_Free(0, t, D_004BC430, 0x23A);
+                        cParticle_dtor(t, -1);
+                        cMemMan_Deallocate(0, t, D_004BC430, 0x23A);
                     }
                     self->tracer = 0;
                 }

@@ -20,19 +20,19 @@ extern char D_004A7520[];
 extern unsigned char g_GameState;
 extern int g_Hud;
 extern char g_Game[];
-VObj45* GuiWidget_FindChildByName(W456830*, char*);
+VObj45* GuiWidget_FindChild_charP(W456830*, char*);
 int sprintf(char*, const char*, ...);
-char* Loc_LookupText(char*);
+char* nGlobalization_GetString_charP(char*);
 void GuiTextWidget_SetText(VObj45*, char*, int);
-Mgr45* Gui_GetScreenStack(void);
-void GuiStartMenu_SelectButton(W456830*, int);
-void Hud_ClosePauseMenu(int);
-void Game_EndLevel(void*, int);
-void Game_SetPaused(void*, int);
-int GuiObjectives_HandleEvent(W456830*, Ev45*, int, int, int);
+Mgr45* Gui_Canvas(void);
+void GuiStartMenu_ActivateOption(W456830*, int);
+void cHud_DeactivateObjectiveMenu(int);
+void cGameSystem_Restart(void*, int);
+void cGameSystem_PauseGame(void*, int);
+int GuiObjectives_onMessage(W456830*, Ev45*, int, int, int);
 }
 
-extern "C" int GuiStartMenu_OnEvent(W456830* self, Ev45* ev, int code, int a3, int a4)
+extern "C" int GuiStartMenu_onMessage(W456830* self, Ev45* ev, int code, int a3, int a4)
 {
     unsigned short c = code;
     if (c == 0) {
@@ -41,12 +41,12 @@ extern "C" int GuiStartMenu_OnEvent(W456830* self, Ev45* ev, int code, int a3, i
             VObj45* o;
             char buf[16];
             self->id = id;
-            o = GuiWidget_FindChildByName(self, D_004C1C60);
+            o = GuiWidget_FindChild_charP(self, D_004C1C60);
             o = (o != 0 && o->v20(D_004A7520) != 0) ? o : 0;
             if (o) {
                 char* s;
                 sprintf(buf, D_004C1C70, id);
-                s = Loc_LookupText(buf);
+                s = nGlobalization_GetString_charP(buf);
                 if (s) GuiTextWidget_SetText(o, s, 0);
                 else GuiTextWidget_SetText(o, D_004C1A38, 0);
             }
@@ -54,24 +54,24 @@ extern "C" int GuiStartMenu_OnEvent(W456830* self, Ev45* ev, int code, int a3, i
         }
     }
     if (c == 2) {
-        int x; if (Gui_GetScreenStack()->sel) x = Gui_GetScreenStack()->sel->id; else {
+        int x; if (Gui_Canvas()->sel) x = Gui_Canvas()->sel->id; else {
             asm { .set reorder } /* barrier: keeps the else block out of the beqz delay slot */
             x = -1;
         }
         if (x != -1) {
-            GuiStartMenu_SelectButton(self, x);
+            GuiStartMenu_ActivateOption(self, x);
             return 1;
         }
     }
     if (c == 0x1A && a3 == 0) {
         if (g_GameState != 0x13 && g_GameState != 0x14) {
-            Hud_ClosePauseMenu(g_Hud);
-            Game_EndLevel(g_Game, 2);
-            Game_SetPaused(g_Game, 0);
+            cHud_DeactivateObjectiveMenu(g_Hud);
+            cGameSystem_Restart(g_Game, 2);
+            cGameSystem_PauseGame(g_Game, 0);
         }
         return 1;
     }
-    return GuiObjectives_HandleEvent(self, ev, code, a3, a4);
+    return GuiObjectives_onMessage(self, ev, code, a3, a4);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00456830 */
@@ -85,13 +85,13 @@ extern "C" int GuiStartMenu_OnEvent(W456830* self, Ev45* ev, int code, int a3, i
 
 #include "loose05_types.h"
 
-extern int GuiWidget_BaseSleep(void* self);
+extern int GuiWidget_onSleep(void* self);
 
 /* Shutdown: base shutdown, then clears the handle at +0x10. */
-int GuiStartMenu_OnSleep(GuiWidget* self) {
+int GuiStartMenu_onSleep(GuiWidget* self) {
     int ret;
 
-    ret = GuiWidget_BaseSleep(self);
+    ret = GuiWidget_onSleep(self);
     self->unk10 = -1;
     return ret;
 }
@@ -101,16 +101,16 @@ int GuiStartMenu_OnSleep(GuiWidget* self) {
 /* merge_units: begin func_00456A60 */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int GuiWidget_FocusFirst(void);
+int GuiWidget_FindFirstFocus(void);
 typedef struct { char pad[0x10]; int idx; char pad2[0x7C]; int tab[1]; } S456;
-int GuiStartMenu_First(S456 *p) {
+int GuiStartMenu_FindFirstFocus(S456 *p) {
     int i = p->idx;
     if (i != -1) {
         int r = p->tab[i];
         p->idx = -1;
         return r;
     }
-    return GuiWidget_FocusFirst();
+    return GuiWidget_FindFirstFocus();
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00456A60 */
@@ -123,11 +123,11 @@ struct C_456AB0 { char p[0x14]; unsigned short flags; };
 struct W_456AB0 { char p[0x10]; int focus; char p14[0x8C - 0x14]; C_456AB0* f8C; void* items[8]; int id; };
 extern "C" {
 extern unsigned char D_004FFBB7;
-void GuiObjectives_Wake(W_456AB0*);
+void GuiObjectives_onWake(W_456AB0*);
 #if 0 /* merge_units */
-VObj_456AB0* GuiWidget_FindChildByName(W_456AB0*, char*);
+VObj_456AB0* GuiWidget_FindChild_charP(W_456AB0*, char*);
 #endif /* merge_units */
-#define GuiWidget_FindChildByName(a0, a1) ((VObj_456AB0 *)GuiWidget_FindChildByName((W456830 *)(a0), (a1))) /* merge_units */
+#define GuiWidget_FindChild_charP(a0, a1) ((VObj_456AB0 *)GuiWidget_FindChild_charP((W456830 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 void GuiTextWidget_SetText(VObj_456AB0*, char*, int);
@@ -135,37 +135,37 @@ void GuiTextWidget_SetText(VObj_456AB0*, char*, int);
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((VObj45 *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-void* Gui_GetScreenStack(void);
+void* Gui_Canvas(void);
 #endif /* merge_units */
-#define Gui_GetScreenStack() ((void *)Gui_GetScreenStack()) /* merge_units */
+#define Gui_Canvas() ((void *)Gui_Canvas()) /* merge_units */
 
-void GuiScreen_SetFocus(void*, void*);
+void GuiCanvas_SetFocus(void*, void*);
 }
 
-extern "C" void GuiStartMenu_OnWake(W_456AB0* self)
+extern "C" void GuiStartMenu_onWake(W_456AB0* self)
 {
     VObj_456AB0* o;
     char buf[16];
-    GuiObjectives_Wake(self);
+    GuiObjectives_onWake(self);
     self->id = 0;
-    o = GuiWidget_FindChildByName(self, D_004C1C60);
+    o = GuiWidget_FindChild_charP(self, D_004C1C60);
     o = (o != 0 && o->v20(D_004A7520) != 0) ? o : 0;
     if (o) {
         char* s;
         sprintf(buf, D_004C1C70, 0);
-        s = Loc_LookupText(buf);
+        s = nGlobalization_GetString_charP(buf);
         if (s) GuiTextWidget_SetText(o, s, 0);
         else GuiTextWidget_SetText(o, D_004C1A38, 0);
     }
     if (self->focus != -1)
-        GuiScreen_SetFocus(Gui_GetScreenStack(), self->items[self->focus]);
+        GuiCanvas_SetFocus(Gui_Canvas(), self->items[self->focus]);
     if (self->f8C) {
         if (D_004FFBB7) self->f8C->flags |= 2;
         else self->f8C->flags &= ~2;
     }
 }
-#undef GuiWidget_FindChildByName /* merge_units */
+#undef GuiWidget_FindChild_charP /* merge_units */
 #undef GuiTextWidget_SetText /* merge_units */
-#undef Gui_GetScreenStack /* merge_units */
+#undef Gui_Canvas /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00456AB0 */

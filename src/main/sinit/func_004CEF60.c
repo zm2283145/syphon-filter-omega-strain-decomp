@@ -1,15 +1,15 @@
 #include "types.h"
 int Script_cGameGobjController_Gobj();
-int ScriptType_cGameGobjController_Init();
+int cGameGobjController_SOBJ_init();
 int Script_cTimerExpiredMsg_IsPersonal();
-int ScriptType_cTimerExpiredMsg_Init();
+int cTimerExpiredMsg_SOBJ_init();
 int cTimerExpiredMsg_NetReceive();
-int ScriptType_ToHitSettings_Init();
-int NetMsgTable_Add();
-int cGOBJ_GetScriptTypeKeyPtr();
-int Script_RegisterNative();
-int Script_RegisterVariable();
-int Script_RegisterType();
+int ToHitSettings_SOBJ_init();
+int cNetMsg_RegisterMsg();
+int cGOBJ_SOBJ_getClassId();
+int cScriptBase_registerFunc_int_intPintPint_intP_charP_etc();
+int cScriptBase_registerGlobalVar();
+int cScriptBase_addClass();
 extern char D_0048ACB8;
 extern char D_0048ACC0;
 extern char D_0048ACC8;
@@ -29,18 +29,18 @@ extern int D_004F7A30;
 extern int D_004F7A38;
 extern int D_004F7A40;
 extern int D_004F7A48;
-void StaticInit_ToHitSettings(void) {
-    D_004F79E0 = Script_RegisterType("ToHitSettings", ScriptType_ToHitSettings_Init, 0, 0);
+void StaticInit_gameGobjController(void) {
+    D_004F79E0 = cScriptBase_addClass("ToHitSettings", ToHitSettings_SOBJ_init, 0, 0);
     D_004F79E8 = D_004F79E0;
-    D_004F79F0 = Script_RegisterVariable("ToHit", (int)&D_0048ACB8, &D_004F79E0);
-    D_004F79F8 = Script_RegisterVariable("globalNpcSkill", (int)&D_0048ACC0, &D_00493890);
-    D_004F7A00 = Script_RegisterVariable("PlayerAimTimePct", (int)&D_0048ACC8, &D_00493890);
+    D_004F79F0 = cScriptBase_registerGlobalVar("ToHit", (int)&D_0048ACB8, &D_004F79E0);
+    D_004F79F8 = cScriptBase_registerGlobalVar("globalNpcSkill", (int)&D_0048ACC0, &D_00493890);
+    D_004F7A00 = cScriptBase_registerGlobalVar("PlayerAimTimePct", (int)&D_0048ACC8, &D_00493890);
     D_004F7A08 = "cTimerExpiredMsg";
-    D_004F7A18 = NetMsgTable_Add(cTimerExpiredMsg_NetReceive, &D_004F7A10, "cTimerExpiredMsg");
-    D_004F7A20 = Script_RegisterType("cTimerExpiredMsg", ScriptType_cTimerExpiredMsg_Init, 1, 0);
+    D_004F7A18 = cNetMsg_RegisterMsg(cTimerExpiredMsg_NetReceive, &D_004F7A10, "cTimerExpiredMsg");
+    D_004F7A20 = cScriptBase_addClass("cTimerExpiredMsg", cTimerExpiredMsg_SOBJ_init, 1, 0);
     D_004F7A28 = D_004F7A20;
-    D_004F7A30 = Script_RegisterNative(D_004F7A20, Script_cTimerExpiredMsg_IsPersonal, &D_00493878, "IsPersonal", 1, &D_004F7A20);
-    D_004F7A38 = Script_RegisterType("cGameGobjController", ScriptType_cGameGobjController_Init, 0, 1);
+    D_004F7A30 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_004F7A20, Script_cTimerExpiredMsg_IsPersonal, &D_00493878, "IsPersonal", 1, &D_004F7A20);
+    D_004F7A38 = cScriptBase_addClass("cGameGobjController", cGameGobjController_SOBJ_init, 0, 1);
     D_004F7A40 = D_004F7A38;
-    D_004F7A48 = Script_RegisterNative(D_004F7A38, Script_cGameGobjController_Gobj, cGOBJ_GetScriptTypeKeyPtr(), "Gobj", 1, &D_004F7A38);
+    D_004F7A48 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_004F7A38, Script_cGameGobjController_Gobj, cGOBJ_SOBJ_getClassId(), "Gobj", 1, &D_004F7A38);
 }

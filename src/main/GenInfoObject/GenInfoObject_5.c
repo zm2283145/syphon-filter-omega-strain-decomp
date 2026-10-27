@@ -9,12 +9,12 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
-extern "C" { extern char D_004BFDB0[]; void Mem_Free(int pool, void* p, char* file, int line); }
+extern "C" { extern char D_004BFDB0[]; void cMemMan_Deallocate(int pool, void* p, char* file, int line); }
 extern "C" void cAllocator_node_deallocate_nodeP_uint_18(void* tree, void* node)
 {
     if (node) {
         AllocGuard guard;
-        Mem_Free(0, node, D_004BFDB0, 0x64);
+        cMemMan_Deallocate(0, node, D_004BFDB0, 0x64);
     }
 }
 #pragma pop /* merge_units */
@@ -109,38 +109,38 @@ DEFINE_BASE_DTOR_CHAIN(cLList_tGenInfoPtr_dtor, func_00135C90)
 
 extern "C" {
 extern "C" void GuiWidget_onInput();
-extern "C" void GuiWidget_FocusPrev();
-extern "C" void GuiWidget_FocusNext();
-extern "C" void GuiWidget_FocusLast();
-extern "C" void GuiWidget_FocusFirst();
-extern "C" void GuiWidget_BubbleActivate();
-extern "C" void GuiWidget_BubbleType1();
-extern "C" void GuiWidget_BubbleType0();
-extern "C" void GuiWidget_Update();
-extern "C" void GuiWidget_Draw();
-extern "C" void GuiWidget_BaseSleep();
-extern "C" void GuiWidget_OnEvent();
-extern "C" void GuiWidget_ClearFlag4();
-extern "C" void GuiWidget_SetFlag4();
-extern "C" void GuiWidget_Deinit();
+extern "C" void GuiWidget_FindPrevFocus();
+extern "C" void GuiWidget_FindNextFocus();
+extern "C" void GuiWidget_FindLastFocus();
+extern "C" void GuiWidget_FindFirstFocus();
+extern "C" void GuiWidget_onAction();
+extern "C" void GuiWidget_onLoseFocus();
+extern "C" void GuiWidget_onGainFocus();
+extern "C" void GuiWidget_onAdvanceTime();
+extern "C" void GuiWidget_onRender();
+extern "C" void GuiWidget_onSleep();
+extern "C" void GuiWidget_onMessage();
+extern "C" void GuiWidget_onDeactivate();
+extern "C" void GuiWidget_onActivate();
+extern "C" void GuiWidget_onRemove();
 extern "C" void GuiWidget_Load();
 extern "C" void GuiScrollBarWidget_GetClassName();
-extern "C" void GuiScrollBarWidget_IsType();
-extern "C" void GuiScrollBarWidget_Wake();
-extern "C" void GuiScrollBarWidget_Init();
+extern "C" void GuiScrollBarWidget_IsClass();
+extern "C" void GuiScrollBarWidget_onWake();
+extern "C" void GuiScrollBarWidget_onAdd();
 extern void * const D_004E0F40[];
-void* GuiWidget_Destroy(void* self, short deleteFlag);
+void* GuiWidget_dtor(void* self, short deleteFlag);
 }
 extern "C" VtableObject* GuiScrollBarWidget_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004E0F40);
-        GuiWidget_Destroy(self, 0);
+        GuiWidget_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004E0F40[24] = { (void*)0x0, (void*)0x0, (void*)GuiScrollBarWidget_dtor, (void*)GuiScrollBarWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScrollBarWidget_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiWidget_onInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiScrollBarWidget_GetClassName, (void*)GuiScrollBarWidget_IsType, (void*)0x0 };
+void * const D_004E0F40[24] = { (void*)0x0, (void*)0x0, (void*)GuiScrollBarWidget_dtor, (void*)GuiScrollBarWidget_onAdd, (void*)GuiWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiWidget_onDeactivate, (void*)GuiScrollBarWidget_onWake, (void*)GuiWidget_onSleep, (void*)GuiWidget_onGainFocus, (void*)GuiWidget_onLoseFocus, (void*)GuiWidget_onInput, (void*)GuiWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiWidget_onAdvanceTime, (void*)GuiWidget_onMessage, (void*)GuiWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiScrollBarWidget_GetClassName, (void*)GuiScrollBarWidget_IsClass, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_0043BB20 */

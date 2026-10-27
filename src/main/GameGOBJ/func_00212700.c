@@ -4,9 +4,9 @@
 #pragma mpwc_relax on
 /*fc*/
 int Alloc_Lock(int);                                    
-int Alloc_Unlock(int);                                  
-int Mem_Free(int, char * , char *, int);                      
-char * Object_LookupById(int *);                     
+int EnableIntc(int);                                  
+int cMemMan_Deallocate(int, char * , char *, int);                      
+char * nGobjManager_LookupGOBJ_cObjectIdR(int *);                     
 int func_00211DA0();                                
 int NetGetObject(void **, int);                    
 int NetFreeObject(int);                               
@@ -31,7 +31,7 @@ void cPathedGOBJ_PathedGobjCreationCallback(int d0, int arg1) {
     if (NetGetObject(sl.f58, arg1) == 0) {
         temp_s1 = (char *)(F_(sl.f58[0], 0x1C, int));
         sl.f54 = F_(temp_s1, 0x10, unsigned short) | (F_(temp_s1, 0xE, unsigned short) << 0x10);
-        temp_v0 = (char *)(Object_LookupById(&sl.f54));
+        temp_v0 = (char *)(nGobjManager_LookupGOBJ_cObjectIdR(&sl.f54));
         if (temp_v0 != NULL) {
             temp_v1 = (char *)(F_(temp_v0, 0xD0, int));
             if ((temp_v1 != NULL) && (temp_s1 != NULL)) {
@@ -46,9 +46,9 @@ void cPathedGOBJ_PathedGobjCreationCallback(int d0, int arg1) {
                             Alloc_Lock(9);
                         }
                         g_ProfileLockDepth += 1;
-                        Mem_Free(0, temp_s3, &D_004A4550, 0xB83);
+                        cMemMan_Deallocate(0, temp_s3, &D_004A4550, 0xB83);
                         if (g_ProfileLockEnabled != 0) {
-                            Alloc_Unlock(9);
+                            EnableIntc(9);
                         }
                         g_ProfileLockDepth -= 1;
                     }

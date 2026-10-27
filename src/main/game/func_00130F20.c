@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void PtrVec_Insert(IndexedList* list, int* end, int n, void* arg);
+extern void std_vector_pod_int_insert(IndexedList* list, int* end, int n, void* arg);
 
 void std_vector_tVUMNamePairPtr_push_back(IndexedList* list, void* arg) {
-    PtrVec_Insert(list, list->base + list->count, 1, arg);
+    std_vector_pod_int_insert(list, list->base + list->count, 1, arg);
 }

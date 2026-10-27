@@ -25,43 +25,43 @@ extern char D_004F5448[];
 extern char D_004DAED0[];
 extern char g_Game[];
 extern char D_004DAE30[];
-extern int cElevatorGOBJ_LinksClosed(Lift_f3* l);
-extern int cElevatorGOBJ_TriggerLinks(Lift_f3* l);
-extern int cElevatorGOBJ_FloorExtrasClosed(Lift_f3* l);
-extern void cElevatorGOBJ_TriggerFloorExtras(Lift_f3* l);
-extern void Event_Construct(LdMsg_f3* m, void* type);
-extern void Event_Send(void* m, void* target, int immediate);
+extern int cElevatorGOBJ_InsideDoorsAreClosed(Lift_f3* l);
+extern int cElevatorGOBJ_ToggleInsideDoors(Lift_f3* l);
+extern int cElevatorGOBJ_OutsideDoorsAreClosed(Lift_f3* l);
+extern void cElevatorGOBJ_ToggleOutsideDoors(Lift_f3* l);
+extern void cMessage_ctor_cMessageNameR(LdMsg_f3* m, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 extern void cMessage_dtor(void* m, int flags);
-extern void SoundEvent_CtorFromPreset(LdSnd_f3* e, void* preset, Lift_f3* l);
-extern void FileMan_Release(LdStr_f3* s, int flag);
-unsigned char Lift_OpenDoors(Lift_f3* l)
+extern void cPlaySoundMsg_ctor_cSndFxR(LdSnd_f3* e, void* preset, Lift_f3* l);
+extern void cFileMan_dtor(LdStr_f3* s, int flag);
+unsigned char cElevatorGOBJ_OpenDoors(Lift_f3* l)
 {
     LdSnd_f3 ev;
     LdMsg_f3 msg;
     unsigned char r;
-    if (cElevatorGOBJ_LinksClosed(l)) {
-        r = cElevatorGOBJ_TriggerLinks(l);
+    if (cElevatorGOBJ_InsideDoorsAreClosed(l)) {
+        r = cElevatorGOBJ_ToggleInsideDoors(l);
         if (r) {
-            Event_Construct(&msg, D_004F5448);
+            cMessage_ctor_cMessageNameR(&msg, D_004F5448);
             msg.vtable = D_004DAED0;
             msg.kind = 2;
             msg.arg = 0;
-            Event_Send(&msg, l, 0);
+            QueueMessage_cMessageR_cSystemP_int(&msg, l, 0);
             msg.vtable = D_004DAED0;
             cMessage_dtor(&msg, 0);
         }
-        SoundEvent_CtorFromPreset(&ev, l->preset, l);
+        cPlaySoundMsg_ctor_cSndFxR(&ev, l->preset, l);
         ev.flag = 1;
-        Event_Send(&ev, g_Game, 1);
+        QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 1);
         ev.vt = D_004DAE30;
-        FileMan_Release(&ev.s114, -1);
-        FileMan_Release(&ev.s78, -1);
+        cFileMan_dtor(&ev.s114, -1);
+        cFileMan_dtor(&ev.s78, -1);
         cMessage_dtor(&ev, 0);
     } else {
         r = 1;
     }
-    if (cElevatorGOBJ_FloorExtrasClosed(l)) {
-        cElevatorGOBJ_TriggerFloorExtras(l);
+    if (cElevatorGOBJ_OutsideDoorsAreClosed(l)) {
+        cElevatorGOBJ_ToggleOutsideDoors(l);
     }
     return r;
 }
@@ -79,58 +79,58 @@ typedef struct MsgLC {
     int f28;
     char pad[4];
 } MsgLC;
-extern int cElevatorGOBJ_LinksOpen(void* lift);
+extern int cElevatorGOBJ_InsideDoorsAreOpen(void* lift);
 #if 0 /* merge_units */
-extern unsigned char cElevatorGOBJ_TriggerLinks(void* lift);
+extern unsigned char cElevatorGOBJ_ToggleInsideDoors(void* lift);
 #endif /* merge_units */
-#define cElevatorGOBJ_TriggerLinks(a0) ((unsigned char)cElevatorGOBJ_TriggerLinks((void *)(a0))) /* merge_units */
+#define cElevatorGOBJ_ToggleInsideDoors(a0) ((unsigned char)cElevatorGOBJ_ToggleInsideDoors((void *)(a0))) /* merge_units */
 
-extern int cElevatorGOBJ_FloorExtrasOpen(void* lift);
+extern int cElevatorGOBJ_OutsideDoorsAreOpen(void* lift);
 #if 0 /* merge_units */
-extern void cElevatorGOBJ_TriggerFloorExtras(void* lift);
+extern void cElevatorGOBJ_ToggleOutsideDoors(void* lift);
 #endif /* merge_units */
-#define cElevatorGOBJ_TriggerFloorExtras(a0) (cElevatorGOBJ_TriggerFloorExtras((void *)(a0))) /* merge_units */
-
-#if 0 /* merge_units */
-extern void Event_Construct(MsgLC* msg, void* name);
-#endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
+#define cElevatorGOBJ_ToggleOutsideDoors(a0) (cElevatorGOBJ_ToggleOutsideDoors((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Event_Send(MsgLC* msg, void* target, int flags);
+extern void cMessage_ctor_cMessageNameR(MsgLC* msg, void* name);
 #endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((void *)(a0), (a1), (a2))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
+
+#if 0 /* merge_units */
+extern void QueueMessage_cMessageR_cSystemP_int(MsgLC* msg, void* target, int flags);
+#endif /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(MsgLC* msg, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
-unsigned char Lift_CloseDoors(void* lift)
+unsigned char cElevatorGOBJ_CloseDoors(void* lift)
 {
     unsigned char r = 1;
-    if (cElevatorGOBJ_LinksOpen(lift)) {
-        r = cElevatorGOBJ_TriggerLinks(lift);
+    if (cElevatorGOBJ_InsideDoorsAreOpen(lift)) {
+        r = cElevatorGOBJ_ToggleInsideDoors(lift);
         if (r) {
             MsgLC msg;
-            Event_Construct(&msg, D_004F5448);
+            cMessage_ctor_cMessageNameR(&msg, D_004F5448);
             msg.vtable = D_004DAED0;
             msg.f24 = 3;
             msg.f28 = 0;
-            Event_Send(&msg, lift, 0);
+            QueueMessage_cMessageR_cSystemP_int(&msg, lift, 0);
             msg.vtable = D_004DAED0;
             cMessage_dtor(&msg, 0);
         }
     }
-    if (cElevatorGOBJ_FloorExtrasOpen(lift)) {
-        cElevatorGOBJ_TriggerFloorExtras(lift);
+    if (cElevatorGOBJ_OutsideDoorsAreOpen(lift)) {
+        cElevatorGOBJ_ToggleOutsideDoors(lift);
     }
     return r;
 }
-#undef cElevatorGOBJ_TriggerLinks /* merge_units */
-#undef cElevatorGOBJ_TriggerFloorExtras /* merge_units */
-#undef Event_Construct /* merge_units */
-#undef Event_Send /* merge_units */
+#undef cElevatorGOBJ_ToggleInsideDoors /* merge_units */
+#undef cElevatorGOBJ_ToggleOutsideDoors /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00213EE0(void) {}

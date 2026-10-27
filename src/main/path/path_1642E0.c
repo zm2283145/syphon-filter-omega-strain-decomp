@@ -12,13 +12,13 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_001642E0 */
 #pragma push /* merge_units */
-extern int List_Erase(int, int, int);
+extern int std_list_deleter_voidPtr_erase_listdeleter(int, int, int);
 
-int NpcRouteMgr_TakeFreeRequest(int a0) {
+int cPathSystem_GetRequest(int a0) {
     int loc[2];
     int a1, a2, s0, v0;
     int cond;
@@ -33,7 +33,7 @@ int NpcRouteMgr_TakeFreeRequest(int a0) {
     s0 = *(int*)((char*)v0 + 8);
     a0 = (int)((char*)loc + 4);
     *(int*)(char*)loc = v0;
-    v0 = List_Erase(a0, a1, a2);
+    v0 = std_list_deleter_voidPtr_erase_listdeleter(a0, a1, a2);
 L00164318:;
     v0 = s0;
     goto ret;
@@ -56,8 +56,8 @@ static inline void merge_flush_func_001642E0(void) {}
 
 
 extern "C" {
-int ObjectList_EraseRange(...); 
-int NpcRoute_Release(...);                                 
+int std_list_deleter_voidPtr_erase_listdeleter_listdeleter(...); 
+int cPathSystem_ClearRequests(...);                                 
 int std_vector_deleter_cBox_dtor(...);                            
 extern int D_0049C1B8;
 extern int D_004EE118;
@@ -65,19 +65,19 @@ extern unsigned char g_ProfileLockEnabled;
 }
 static inline int Identity(int p){return p;}
 #define DECLS int sp48; int sp44; int sp40;
-static inline void clr0(char *arg0) { int sp48; int sp44; int sp40; sp40 = (int)arg0 + 0x30; sp44 = F_(arg0, 0x34, int); ObjectList_EraseRange(&sp48, arg0 + 0x2C, &sp44, &sp40); }
-static inline void fr0(int p) { AllocGuard g; Mem_Free(0, p, &D_0049C1B8, 0x41); }
+static inline void clr0(char *arg0) { int sp48; int sp44; int sp40; sp40 = (int)arg0 + 0x30; sp44 = F_(arg0, 0x34, int); std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&sp48, arg0 + 0x2C, &sp44, &sp40); }
+static inline void fr0(int p) { AllocGuard g; cMemMan_Deallocate(0, p, &D_0049C1B8, 0x41); }
 extern "C" void cPathSystem_Clear(char *arg0) {
     int temp_s0;
     int temp_s1;
 
-    NpcRoute_Release(arg0, 0);
+    cPathSystem_ClearRequests(arg0, 0);
     temp_s1 = F_(arg0, 0x38, int);
     {
         AllocGuard g;
-    Mem_Free(0, temp_s1, &D_0049C1B8, 0x41);
+    cMemMan_Deallocate(0, temp_s1, &D_0049C1B8, 0x41);
     }
-    { int sp48; int sp44; int sp40; sp40 = Identity((int)(arg0 + 0x30)); sp44 = F_(arg0, 0x34, int); ObjectList_EraseRange(&sp48, arg0 + 0x2C, &sp44, &sp40); }
+    { int sp48; int sp44; int sp40; sp40 = Identity((int)(arg0 + 0x30)); sp44 = F_(arg0, 0x34, int); std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&sp48, arg0 + 0x2C, &sp44, &sp40); }
     temp_s0 = D_004EE118;
     if (temp_s0 != 0) {
         {
@@ -85,7 +85,7 @@ extern "C" void cPathSystem_Clear(char *arg0) {
         if ((temp_s0 != 0) && (temp_s0 != 0) && (temp_s0 != 0)) {
             std_vector_deleter_cBox_dtor(temp_s0, 0);
         }
-        Mem_Free(0, temp_s0, &D_0049C1B8, 0xB2E);
+        cMemMan_Deallocate(0, temp_s0, &D_0049C1B8, 0xB2E);
         }
         D_004EE118 = 0;
     }

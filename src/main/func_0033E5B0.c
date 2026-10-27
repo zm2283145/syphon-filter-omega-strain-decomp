@@ -13,7 +13,7 @@ struct Ent5B0 { char pad0[0x24]; int f24; char pad28[0x34 - 0x28]; int f34; int 
 struct FE5B0 { char pad0[0x35]; char f35; char pad36[0x188 - 0x36]; char ls[0x24C - 0x188]; int f24C; char pad250[4]; int f254; };
 struct Lobby5B0 { char pad0[0x255C]; int f255C; int f2560; };
 extern "C" {
-extern Lobby5B0* DME_GetLobby(void);
+extern Lobby5B0* cDME_GetLobby(void);
 extern void DME_Update(void);
 extern FE5B0* D_004FFC04;
 extern char D_004B9C60[];
@@ -28,11 +28,11 @@ extern char g_Game[];
 extern char g_LevelDirName[];
 extern int g_OnlineMissionTable[];
 extern char* D_0048C160[];
-extern char* GuiScreen_GetLobbyString(O5B0*, unsigned char, char*, int, int, int);
-extern int FrontEnd_OpenPopup(FE5B0*, int, char*, char*, O5B0*, int);
-extern void FrontEnd_ClosePopup(FE5B0*, int);
-extern void String_CtorCStr_13B480(Str5B0*, const char*);
-extern char* String_CStr(void*);
+extern char* GuiLobbyScreen_GetLobbyString(O5B0*, unsigned char, char*, int, int, int);
+extern int cGameFrontEnd_PushMessageBox(FE5B0*, int, char*, char*, O5B0*, int);
+extern void cGameFrontEnd_PopMessageBox(FE5B0*, int);
+extern void std_basic_string_char_char_traits_char_ctor_charP(Str5B0*, const char*);
+extern char* std_basic_string_char_char_traits_char_c_str(void*);
 extern void String_Dtor(Str5B0*, int);
 extern char* strncpy(char*, const char*, int);
 extern char* strchr(const char*, int);
@@ -40,15 +40,15 @@ extern int strlen(const char*);
 extern Ent5B0* SFOLobby_GetGameInfo(Lobby5B0*, int);
 extern int SFOLobby_JoinGame(Lobby5B0*, int);
 extern void SFOLobby_ExitGame(Lobby5B0*);
-extern unsigned char SFOLobby_FormatError(Lobby5B0*, int);
-extern void SFOLobby_Update(Lobby5B0*);
+extern unsigned char SFOLobby_GetErrorDetails(Lobby5B0*, int);
+extern void SFOLobby_Intel(Lobby5B0*);
 extern void Game_ClearOtherAgentsB70(char*);
-extern void App_GetInstance(void);
-extern void App_InitSystemsOnce(void);
-extern void LevelSelect_SetLevel(void*, int);
-extern unsigned long long Time_GetMilliseconds(void);
-extern void App_CardWaitPoll(int, int);
-extern char* Loc_LookupText(char*);
+extern void GetMachine(void);
+extern void cMachine_InitDME(void);
+extern void MissionSelectData_SelectMission(void*, int);
+extern unsigned long long cTimer_GetMillisecondTime(void);
+extern void cGameFrontEnd_LobbyCallback(int, int);
+extern char* nGlobalization_GetString_charP(char*);
 extern void Net_CleanupGame(void);
 }
 extern "C" void GuiMenuScreen_JoinGame(O5B0* o, Info5B0* info, int arg2) {
@@ -67,11 +67,11 @@ extern "C" void GuiMenuScreen_JoinGame(O5B0* o, Info5B0* info, int arg2) {
     char* name;
     bool fail;
     Ent5B0* e;
-    if (!o->fa8 || !DME_GetLobby()) return;
-    lobby = DME_GetLobby();
+    if (!o->fa8 || !cDME_GetLobby()) return;
+    lobby = cDME_GetLobby();
     {
         FE5B0* g = D_004FFC04;
-        h = FrontEnd_OpenPopup(g, 0, D_004B9C60, GuiScreen_GetLobbyString(o, 0x15, 0, 0, 0, 0), 0, 0);
+        h = cGameFrontEnd_PushMessageBox(g, 0, D_004B9C60, GuiLobbyScreen_GetLobbyString(o, 0x15, 0, 0, 0, 0), 0, 0);
     }
     name = 0;
     if (info->rest.w[7] >= 0 && info->rest.w[7] < 9) {
@@ -84,13 +84,13 @@ extern "C" void GuiMenuScreen_JoinGame(O5B0* o, Info5B0* info, int arg2) {
     if (name && name[0]) {
         strncpy(g_LevelDirName, name, 0x80);
     } else {
-        String_CtorCStr_13B480(&a1, GuiScreen_GetLobbyString(o, 0x66, 0, 0, 0, 0));
-        String_CtorCStr_13B480(&b1, GuiScreen_GetLobbyString(o, 0x68, info->name.c, 0, 0, 0));
+        std_basic_string_char_char_traits_char_ctor_charP(&a1, GuiLobbyScreen_GetLobbyString(o, 0x66, 0, 0, 0, 0));
+        std_basic_string_char_char_traits_char_ctor_charP(&b1, GuiLobbyScreen_GetLobbyString(o, 0x68, info->name.c, 0, 0, 0));
         {
-            char* tb = String_CStr(&b1);
-            FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a1), tb, 0, 0);
+            char* tb = std_basic_string_char_char_traits_char_c_str(&b1);
+            cGameFrontEnd_PushMessageBox(D_004FFC04, 2, std_basic_string_char_char_traits_char_c_str(&a1), tb, 0, 0);
         }
-        FrontEnd_ClosePopup(D_004FFC04, h);
+        cGameFrontEnd_PopMessageBox(D_004FFC04, h);
         String_Dtor(&b1, 0);
         String_Dtor(&a1, 0);
         return;
@@ -124,13 +124,13 @@ extern "C" void GuiMenuScreen_JoinGame(O5B0* o, Info5B0* info, int arg2) {
                         o->rest.w[9] = info->rest.w[9];
                         o->rest.w[10] = info->rest.w[10];
                         {
-                            String_CtorCStr_13B480(&a2, GuiScreen_GetLobbyString(o, 0x89, 0, 0, 0, 0));
-                            String_CtorCStr_13B480(&b2, GuiScreen_GetLobbyString(o, 0x8A, buf, 0, 0, 0));
+                            std_basic_string_char_char_traits_char_ctor_charP(&a2, GuiLobbyScreen_GetLobbyString(o, 0x89, 0, 0, 0, 0));
+                            std_basic_string_char_char_traits_char_ctor_charP(&b2, GuiLobbyScreen_GetLobbyString(o, 0x8A, buf, 0, 0, 0));
                             {
-                                char* tb = String_CStr(&b2);
-                                FrontEnd_OpenPopup(D_004FFC04, 4, String_CStr(&a2), tb, o, 0x1E);
+                                char* tb = std_basic_string_char_char_traits_char_c_str(&b2);
+                                cGameFrontEnd_PushMessageBox(D_004FFC04, 4, std_basic_string_char_char_traits_char_c_str(&a2), tb, o, 0x1E);
                             }
-                            FrontEnd_ClosePopup(D_004FFC04, h);
+                            cGameFrontEnd_PopMessageBox(D_004FFC04, h);
                             String_Dtor(&b2, 0);
                             String_Dtor(&a2, 0);
                         }
@@ -144,13 +144,13 @@ extern "C" void GuiMenuScreen_JoinGame(O5B0* o, Info5B0* info, int arg2) {
     }
     }
     if (fail) {
-        String_CtorCStr_13B480(&a3, GuiScreen_GetLobbyString(o, 0x66, 0, 0, 0, 0));
-        String_CtorCStr_13B480(&b3, GuiScreen_GetLobbyString(o, 0x68, info->name.c, 0, 0, 0));
+        std_basic_string_char_char_traits_char_ctor_charP(&a3, GuiLobbyScreen_GetLobbyString(o, 0x66, 0, 0, 0, 0));
+        std_basic_string_char_char_traits_char_ctor_charP(&b3, GuiLobbyScreen_GetLobbyString(o, 0x68, info->name.c, 0, 0, 0));
         {
-            char* tb = String_CStr(&b3);
-            FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a3), tb, 0, 0);
+            char* tb = std_basic_string_char_char_traits_char_c_str(&b3);
+            cGameFrontEnd_PushMessageBox(D_004FFC04, 2, std_basic_string_char_char_traits_char_c_str(&a3), tb, 0, 0);
         }
-        FrontEnd_ClosePopup(D_004FFC04, h);
+        cGameFrontEnd_PopMessageBox(D_004FFC04, h);
         String_Dtor(&b3, 0);
         String_Dtor(&a3, 0);
         return;
@@ -162,18 +162,18 @@ extern "C" void GuiMenuScreen_JoinGame(O5B0* o, Info5B0* info, int arg2) {
         if (n < 1 || n > 4) n = 4;
         D_004FFC04->f254 = n;
         Game_ClearOtherAgentsB70(g_Game);
-        App_GetInstance();
-        App_InitSystemsOnce();
+        GetMachine();
+        cMachine_InitDME();
         lobby->f2560 = lobby->f255C;
         saved = D_004FFC04->f24C;
         ls = D_004FFC04->ls;
-        LevelSelect_SetLevel(ls, g_OnlineMissionTable[info->rest.w[7]]);
+        MissionSelectData_SelectMission(ls, g_OnlineMissionTable[info->rest.w[7]]);
         if (SFOLobby_JoinGame(lobby, info->rest.w[9])) {
             bool timeout;
-            int deadline = (int)Time_GetMilliseconds() + 60000;
-            while (!D_00532FF0 && deadline > Time_GetMilliseconds()) {
-                App_CardWaitPoll(0, 0);
-                SFOLobby_Update(lobby);
+            int deadline = (int)cTimer_GetMillisecondTime() + 60000;
+            while (!D_00532FF0 && deadline > cTimer_GetMillisecondTime()) {
+                cGameFrontEnd_LobbyCallback(0, 0);
+                SFOLobby_Intel(lobby);
                 DME_Update();
             }
             timeout = false;
@@ -184,9 +184,9 @@ extern "C" void GuiMenuScreen_JoinGame(O5B0* o, Info5B0* info, int arg2) {
                 D_004FFC04->f35 = 1;
             } else {
                 char* msg;
-                String_CtorCStr_13B480(&a4, GuiScreen_GetLobbyString(o, 0x66, 0, 0, 0, 0));
-                msg = Loc_LookupText(timeout ? D_004B9C98 : D_00533000);
-                FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a4), msg, 0, 0);
+                std_basic_string_char_char_traits_char_ctor_charP(&a4, GuiLobbyScreen_GetLobbyString(o, 0x66, 0, 0, 0, 0));
+                msg = nGlobalization_GetString_charP(timeout ? D_004B9C98 : D_00533000);
+                cGameFrontEnd_PushMessageBox(D_004FFC04, 2, std_basic_string_char_char_traits_char_c_str(&a4), msg, 0, 0);
                 if (timeout) {
                     int s = D_005721A8;
                     D_005721A8 = 0;
@@ -197,12 +197,12 @@ extern "C" void GuiMenuScreen_JoinGame(O5B0* o, Info5B0* info, int arg2) {
                 }
                 SFOLobby_ExitGame(lobby);
                 lobby->f255C = lobby->f2560;
-                LevelSelect_SetLevel(ls, saved);
+                MissionSelectData_SelectMission(ls, saved);
                 String_Dtor(&a4, 0);
             }
         } else {
             int code;
-            switch (SFOLobby_FormatError(lobby, 0)) {
+            switch (SFOLobby_GetErrorDetails(lobby, 0)) {
             case 2: code = 0x6A; break;
             case 0x33: code = 0x6E; break;
             case 0x35: code = 0x6B; break;
@@ -212,19 +212,19 @@ extern "C" void GuiMenuScreen_JoinGame(O5B0* o, Info5B0* info, int arg2) {
             default: code = 0x68; break;
             }
             {
-                String_CtorCStr_13B480(&a5, GuiScreen_GetLobbyString(o, 0x66, 0, 0, 0, 0));
-                String_CtorCStr_13B480(&b5, GuiScreen_GetLobbyString(o, code, info->name.c, 0, 0, 0));
+                std_basic_string_char_char_traits_char_ctor_charP(&a5, GuiLobbyScreen_GetLobbyString(o, 0x66, 0, 0, 0, 0));
+                std_basic_string_char_char_traits_char_ctor_charP(&b5, GuiLobbyScreen_GetLobbyString(o, code, info->name.c, 0, 0, 0));
                 {
-                    char* tb = String_CStr(&b5);
-                    FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a5), tb, 0, 0);
+                    char* tb = std_basic_string_char_char_traits_char_c_str(&b5);
+                    cGameFrontEnd_PushMessageBox(D_004FFC04, 2, std_basic_string_char_char_traits_char_c_str(&a5), tb, 0, 0);
                 }
-                LevelSelect_SetLevel(ls, saved);
+                MissionSelectData_SelectMission(ls, saved);
                 String_Dtor(&b5, 0);
                 String_Dtor(&a5, 0);
             }
         }
     }
-    FrontEnd_ClosePopup(D_004FFC04, h);
+    cGameFrontEnd_PopMessageBox(D_004FFC04, h);
     D_00532FF0 = 0;
     D_00532FF8 = 0;
     D_00533000 = 0;

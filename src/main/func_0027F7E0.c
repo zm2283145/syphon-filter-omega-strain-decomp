@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 #pragma inline_depth(8)
-/* PlayerCamera_ComputeSlopePitch: pitch the camera by the slope of the floor under the player along its facing */
+/* GetCameraPitchAlongSlope: pitch the camera by the slope of the floor under the player along its facing */
 struct V4 {
     float x, y, z, w;
     V4() {}
@@ -12,9 +12,9 @@ struct V4 {
     V4(const V4& o) { __int128* d = (__int128*)this; const __int128* s = (const __int128*)&o; __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(s)); *d = t; }
 } __attribute__((aligned(16)));
 extern "C" {
-V4* Vec4_Assign(V4* d, const V4* s);
-V4* Vec4_RejectFromNormal(V4* a, const V4* b);
-float Math_Atan2f(float y, float x);
+V4* cVector_ctor_cVectorR(V4* d, const V4* s);
+V4* cVector_VectorProjectOnPlane(V4* a, const V4* b);
+float Libc_Atan2f(float y, float x);
 }
 // VU0 quaternion rotation of v by q in place (COP2), not expressible in C
 static inline void QRot(V4* v, V4* q) {
@@ -44,7 +44,7 @@ static inline float Len(const V4* a) { float r = 0.0f; int t; __asm__ volatile("
 static inline V4 Rotate(V4 v, V4* q) { QRot(&v, q); return v; }
 static inline V4 Flat(V4 v) { v.w = 0.0f; return v; }
 static inline float LenXY(V4 v) { v.z = 0.0f; return Len(&v); }
-static inline V4* Reject(const V4& v, const V4& nn) { V4 t; return Vec4_RejectFromNormal(Vec4_Assign(&t, &v), &nn); }
+static inline V4* Reject(const V4& v, const V4& nn) { V4 t; return cVector_VectorProjectOnPlane(cVector_ctor_cVectorR(&t, &v), &nn); }
 struct Obj {
     virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03(); virtual void v04(); virtual void v05();
     virtual void v06(); virtual void v07(); virtual void v08(); virtual void v09(); virtual void v0A(); virtual void v0B();
@@ -58,8 +58,8 @@ struct Obj {
     virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v3A(); virtual void v3B();
     virtual bool GetFloorNormal(V4* n); /* 0xF8 */
 };
-extern "C" unsigned char PlayerCamera_ComputeSlopePitch(float* out, V4* q, Obj* o, float base);
-unsigned char PlayerCamera_ComputeSlopePitch(float* out, V4* q, Obj* o, float base)
+extern "C" unsigned char GetCameraPitchAlongSlope(float* out, V4* q, Obj* o, float base);
+unsigned char GetCameraPitchAlongSlope(float* out, V4* q, Obj* o, float base)
 {
     bool ok;
     unsigned char res;
@@ -76,10 +76,10 @@ unsigned char PlayerCamera_ComputeSlopePitch(float* out, V4* q, Obj* o, float ba
         V4 fp(n);
         { V4* pf = (V4*)(int)&fp; pf->w = 0.0f; flat = *pf; }
         V4 t;
-        Vec4_Assign(&r, Vec4_RejectFromNormal(Vec4_Assign(&t, &dir), &flat));
+        cVector_ctor_cVectorR(&r, cVector_VectorProjectOnPlane(cVector_ctor_cVectorR(&t, &dir), &flat));
         lp.Set(r);
         lp.z = 0.0f;
-        *out = Math_Atan2f(r.z, Len(&lp));
+        *out = Libc_Atan2f(r.z, Len(&lp));
         if (!(*out <= 0.0f)) *out = *out * 0.5f;
         else *out = *out * 0.8f;
         *out = *out + base;

@@ -6,7 +6,7 @@
 #include "types.h"
 #include "path_types.h"
 
-PathPoint* NpcNodeSearch_SetQuery(PathPoint* self, int tag, float x, float y) {
+PathPoint* cNodePickerParameters_ctor_float_float_bool(PathPoint* self, int tag, float x, float y) {
     self->x = x;
     self->y = y;
     self->tag = tag;

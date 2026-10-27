@@ -16,10 +16,10 @@ typedef struct { char pad[0x18]; int x18; } H_2620;
 extern unsigned char g_IsMultiplayer;
 extern char D_0052ACC8[];
 extern char D_004DE610[];
-void Event_Construct(Ev_2620* e, void* type);
-void Event_Send(Ev_2620* e, void* target, int a);
+void cMessage_ctor_cMessageNameR(Ev_2620* e, void* type);
+void QueueMessage_cMessageR_cSystemP_int(Ev_2620* e, void* target, int a);
 void cMessage_dtor(Ev_2620* e, int f);
-int cNetWeaponMsg_Send(S_2620* self, int slot, int amount, int remote)
+int cWeapon_RemoveAmmo(S_2620* self, int slot, int amount, int remote)
 {
     unsigned char dbl;
     Slot_2620* s;
@@ -40,14 +40,14 @@ int cNetWeaponMsg_Send(S_2620* self, int slot, int amount, int remote)
     s->count -= dec;
     if (g_IsMultiplayer && !remote) {
         Ev_2620 e;
-        Event_Construct(&e, D_0052ACC8);
+        cMessage_ctor_cMessageNameR(&e, D_0052ACC8);
         e.slot = slot;
         e.amount = n;
         e.vt = D_004DE610;
         e.b2C = 1;
         e.size = 0x40;
         e.kind = 4;
-        Event_Send(&e, self->own, 0);
+        QueueMessage_cMessageR_cSystemP_int(&e, self->own, 0);
         e.vt = D_004DE610;
         cMessage_dtor(&e, 0);
     }
@@ -75,40 +75,40 @@ typedef struct {
 typedef struct { int a; int b; int c; int d; } E_INV;
 typedef struct { E_INV e[8]; char pad[0x88 - 0x80]; void* owner; } INV;
 #if 0 /* merge_units */
-extern void Event_Construct(Msg_INV* msg, void* name);
+extern void cMessage_ctor_cMessageNameR(Msg_INV* msg, void* name);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Event_Send(Msg_INV* msg, void* target, int flags);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg_INV* msg, void* target, int flags);
 #endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((void *)(a0), (a1), (a2))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(Msg_INV* msg, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
-int WeaponInv_SetClip(INV* self, unsigned char slot, int v, int quiet)
+int cWeapon_PickupClip(INV* self, unsigned char slot, int v, int quiet)
 {
     self->e[slot].d = v;
     if (g_IsMultiplayer && !quiet) {
         Msg_INV msg;
-        Event_Construct(&msg, D_0052ACC8);
+        cMessage_ctor_cMessageNameR(&msg, D_0052ACC8);
         msg.vtable = D_004DE610;
         msg.slot = slot;
         msg.value = v;
         msg.op = 3;
         msg.x1C = 0x40;
         msg.kind = 4;
-        Event_Send(&msg, self->owner, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, self->owner, 0);
         msg.vtable = D_004DE610;
         cMessage_dtor(&msg, 0);
     }
     return 1;
 }
-#undef Event_Construct /* merge_units */
-#undef Event_Send /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00142760(void) {}
@@ -118,40 +118,40 @@ static inline void merge_flush_func_00142760(void) {}
 /* merge_units: begin func_00142830 */
 #pragma push /* merge_units */
 typedef struct { char pad[0xF0]; unsigned char state; char pad2[0x10C-0xF1]; int team; } S2960;
-int WeaponInv_IsSameAmmo(void* unused, S2960* a, S2960* b); /* gsynth: defined below */typedef struct { int a; int id; int c; int d; } E_830;
+int cWeapon_AmmoMatches(void* unused, S2960* a, S2960* b); /* gsynth: defined below */typedef struct { int a; int id; int c; int d; } E_830;
 typedef struct { int pad; E_830 e[7]; char pad2[0x84 - 0x74]; signed char held; } INV_830;
 extern int g_WeaponDatabase;
-extern void* WeaponInv_GetHeldItem(INV_830* self);
-extern void* WeaponDb_Get(int db, int id);
+extern void* cWeapon_GetWeaponEntry(INV_830* self);
+extern void* cWeaponDB_GetEntry(int db, int id);
 #if 0 /* merge_units */
-extern int WeaponInv_IsSameAmmo(INV_830* self, void* a, void* b);
+extern int cWeapon_AmmoMatches(INV_830* self, void* a, void* b);
 #endif /* merge_units */
-#define WeaponInv_IsSameAmmo(a0, a1, a2) (WeaponInv_IsSameAmmo((void *)(a0), (void *)(a1), (void *)(a2))) /* merge_units */
+#define cWeapon_AmmoMatches(a0, a1, a2) (cWeapon_AmmoMatches((void *)(a0), (void *)(a1), (void *)(a2))) /* merge_units */
 
-extern int WeaponInv_AddSpare(INV_830* self, int slot, int req, int quiet);
-extern void WeaponInv_DualShare(INV_830* self);
-int WeaponInv_AddAmmo(INV_830* self, void* who, int req)
+extern int cWeapon_PickupAmmo_eWpnSlot_int_bool(INV_830* self, int slot, int req, int quiet);
+extern void cWeapon_EqualizeDualWieldAmmo(INV_830* self);
+int cWeapon_PickupAmmo_tWDBDataP_int(INV_830* self, void* who, int req)
 {
     int total = 0;
-    void* held = WeaponInv_GetHeldItem(self);
+    void* held = cWeapon_GetWeaponEntry(self);
     int i;
-    if (held && WeaponInv_IsSameAmmo(self, held, who)) {
-        total = WeaponInv_AddSpare(self, self->held, req, 0);
+    if (held && cWeapon_AmmoMatches(self, held, who)) {
+        total = cWeapon_PickupAmmo_eWpnSlot_int_bool(self, self->held, req, 0);
         req -= total;
     }
     for (i = 0; req && i < 6; i++) {
         if (i != (unsigned char)self->held && self->e[i].id != -1) {
-            if (WeaponInv_IsSameAmmo(self, WeaponDb_Get(g_WeaponDatabase, self->e[i].id), who)) {
-                int n = WeaponInv_AddSpare(self, (unsigned char)i, req, 0);
+            if (cWeapon_AmmoMatches(self, cWeaponDB_GetEntry(g_WeaponDatabase, self->e[i].id), who)) {
+                int n = cWeapon_PickupAmmo_eWpnSlot_int_bool(self, (unsigned char)i, req, 0);
                 total += n;
                 req -= n;
             }
         }
     }
-    WeaponInv_DualShare(self);
+    cWeapon_EqualizeDualWieldAmmo(self);
     return total;
 }
-#undef WeaponInv_IsSameAmmo /* merge_units */
+#undef cWeapon_AmmoMatches /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00142830(void) {}
 #pragma pop /* merge_units */
@@ -159,7 +159,7 @@ static inline void merge_flush_func_00142830(void) {}
 
 /* merge_units: begin func_00142960 */
 #pragma push /* merge_units */
-int WeaponInv_IsSameAmmo(void* unused, S2960* a, S2960* b)
+int cWeapon_AmmoMatches(void* unused, S2960* a, S2960* b)
 {
     if (a && b) {
         if (a == b)

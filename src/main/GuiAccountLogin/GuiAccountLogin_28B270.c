@@ -20,7 +20,7 @@ typedef struct SsoString {
     char* longData;             /* 0x08 */
 } SsoString;
 
-extern void String_Replace(SsoString* str, int pos, int count, const char* first, const char* last, signed char tag);
+extern void std_basic_string_char_char_traits_char_do_replace(SsoString* str, int pos, int count, const char* first, const char* last, signed char tag);
 
 /* Assigns the range [first, last) to the string, replacing its whole contents. */
 void func_0028B270(SsoString* str, const char* first, const char* last) {
@@ -31,7 +31,7 @@ void func_0028B270(SsoString* str, const char* first, const char* last) {
     } else {
         len = (unsigned char)str->mode.bits.shortLen;
     }
-    String_Replace(str, 0, len, first, last, tag[0]);
+    std_basic_string_char_char_traits_char_do_replace(str, 0, len, first, last, tag[0]);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0028B270 */
@@ -43,6 +43,6 @@ void func_0028B270(SsoString* str, const char* first, const char* last) {
 
 /* Factory: allocate, run the base constructor, set the vtable and mode. */
 extern "C" { char D_004A9840[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_VT_INT(GuiAccountLogin_Create, 0xB0, D_004A9840, GuiScreen_ctor, D_004DD120, 0x84, 7)
+DEFINE_GUARDED_NEW_VT_INT(ConcreteWidgetClassRep_GuiAccountLogin_Create, 0xB0, D_004A9840, GuiLobbyScreen_ctor, D_004DD120, 0x84, 7)
 #pragma pop /* merge_units */
 /* merge_units: end func_0028B2C0 */

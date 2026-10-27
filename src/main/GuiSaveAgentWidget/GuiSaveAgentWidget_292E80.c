@@ -26,24 +26,24 @@ struct AoFocus {
     VPAD8(a) VPAD4(b) VPAD2(c) VPAD1(d) virtual GuiWidget*GetFocus();
 };
 extern "C" {
-    AoStack*Gui_GetScreenStack();
-    void GuiScreen_SetFocus(void*,void*);
+    AoStack*Gui_Canvas();
+    void GuiCanvas_SetFocus(void*,void*);
     void std_vector_charPtr_ctor_void_2(AoVec*);
     void std_vector_charPtr_dtor_void_2(AoVec*,int);
     char**std_vector_charPtr_opIndex_uint_2(AoVec*,int);
-    void PtrVector_Resize(AoVec*,int,int*);
-    void MemCardWrap_Enumerate(void*,AoVec*);
-    void MemCardWrap_Rename(void*,const char*,const char*);
+    void std_vector_pod_int_resize(AoVec*,int,int*);
+    void cMemCard_GetFilenames(void*,AoVec*);
+    void cMemCard_RenameFile(void*,const char*,const char*);
     char*strchr(const char*,int);
     int strncasecmp(const char*,const char*,int);
     char*strncpy(char*,const char*,int);
     int AgentFile_DecodeName(const char*,char*,int*,int);
     int AgentFile_EncodeName(const char*,char*,int,int);
-    int FrontEnd_OpenPopup(void*,int,const char*,const char*,void*,int);
-    void FrontEnd_ClosePopup(void*,int);
-    char*Loc_LookupText(const char*);
+    int cGameFrontEnd_PushMessageBox(void*,int,const char*,const char*,void*,int);
+    void cGameFrontEnd_PopMessageBox(void*,int);
+    char*nGlobalization_GetString_charP(const char*);
     void GuiTextWidget_SetText(void*,const char*,int);
-    void GuiAgentSave_CardWaitPoll();
+    void tempCallback();
     extern char g_MemCard[];
     extern void(*g_CardWaitPollFn)();
     extern void*D_004FFC04;
@@ -58,19 +58,19 @@ extern "C" {
 static inline int AoCount(AoVec*const&v) {
     return v->vec.b;
 }
-extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
+extern "C" void GuiAgentDirectoryWidget_UpdateNameList(GuiSaveAgentWidget*self) {
     int slot,unused,zero;
     AoVec files,slots;
     char decoded[16],oldname[32],newname[32],label[16];
-    GuiWidget* focus=Gui_GetScreenStack()->focus;
+    GuiWidget* focus=Gui_Canvas()->focus;
     unsigned char clearFocus=0,haveSlot=0;
     std_vector_charPtr_ctor_void_2(&files);
     files.owned=1;
     std_vector_charPtr_ctor_void_2(&slots);
     slots.owned=1;
-    MemCardWrap_Enumerate(g_MemCard,&files);
+    cMemCard_GetFilenames(g_MemCard,&files);
     zero=0;
-    PtrVector_Resize(&slots,8,&zero);
+    std_vector_pod_int_resize(&slots,8,&zero);
     for(int i=0;i<slots.vec.b;i++)AO_DATA(slots)[i]=0;
     for(int i=0;i<files.vec.b;i++) {
         if(!strchr(AO_DATA(files)[i],'.')&&(D_00499C70[(signed char)**std_vector_charPtr_opIndex_uint_2(&files,i)+1]&4)&&AgentFile_DecodeName(AO_DATA(files)[i],decoded,&slot,16))AO_DATA(slots)[slot]=AO_DATA(files)[i];
@@ -89,15 +89,15 @@ extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
                 do {
                     if(!data[j]) {
                         if(!popup) {
-                            g_CardWaitPollFn=GuiAgentSave_CardWaitPoll;
+                            g_CardWaitPollFn=tempCallback;
                             popup=1;
-                            popupId=FrontEnd_OpenPopup(D_004FFC04,0,D_004A9D80,D_004A9D90,self,0);
+                            popupId=cGameFrontEnd_PushMessageBox(D_004FFC04,0,D_004A9D80,D_004A9D90,self,0);
                         }
                         char*ext=strchr(AO_DATA(files)[i],'.');
                         strncpy(oldname,AO_DATA(files)[i],ext-AO_DATA(files)[i]);
                         oldname[ext-AO_DATA(files)[i]]=0;
                         if(AgentFile_EncodeName(oldname,newname,j,32)) {
-                            MemCardWrap_Rename(g_MemCard,AO_DATA(files)[i],newname);
+                            cMemCard_RenameFile(g_MemCard,AO_DATA(files)[i],newname);
                             AO_DATA(slots)[j]=newname;
                         }
                         break;
@@ -107,7 +107,7 @@ extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
         }
     }
     if(popup) {
-        FrontEnd_ClosePopup(D_004FFC04,popupId);
+        cGameFrontEnd_PopMessageBox(D_004FFC04,popupId);
         g_CardWaitPollFn=0;
     }
     char*name=(char*)&D_004A9DB0;
@@ -127,7 +127,7 @@ extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
             }
             if(!valid) {
                 if(!self->unk7C&&w==focus)clearFocus=1;
-                GuiTextWidget_SetText(w,Loc_LookupText(D_004A9DB8),0);
+                GuiTextWidget_SetText(w,nGlobalization_GetString_charP(D_004A9DB8),0);
                 if(self->unk7C)w->flags|=4;
                 else w->flags&=0xfffb;
             }
@@ -135,8 +135,8 @@ extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
         name[0]++;
     }
     if(clearFocus||(haveSlot&&focus==(GuiWidget*)self)) {
-        AoStack*stack=Gui_GetScreenStack();
-        GuiScreen_SetFocus(stack,((AoFocus*)self)->GetFocus());
+        AoStack*stack=Gui_Canvas();
+        GuiCanvas_SetFocus(stack,((AoFocus*)self)->GetFocus());
     }
     std_vector_charPtr_dtor_void_2(&slots,-1);
     std_vector_charPtr_dtor_void_2(&files,-1);
@@ -183,7 +183,7 @@ DEFINE_BUF_HOLDER_DTOR(func_00293530)
  */
 
 
-extern void App_CardWaitPoll(int, int);
+extern void cGameFrontEnd_LobbyCallback(int, int);
 
 int* func_00293620(PtrVec* v, int i) {
     return v->data + i;
@@ -196,8 +196,8 @@ Rel* func_00293630(Rel* r) {
     return r;
 }
 
-void GuiAgentSave_CardWaitPoll(void) {
-    App_CardWaitPoll(0, 0);
+void tempCallback(void) {
+    cGameFrontEnd_LobbyCallback(0, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00293620 */
@@ -206,19 +206,19 @@ void GuiAgentSave_CardWaitPoll(void) {
 #pragma push /* merge_units */
 typedef struct { char pad[0x78]; float t; } S293660;
 #if 0 /* merge_units */
-extern void AgentOpen_BuildSlotList(S293660*);
+extern void GuiAgentDirectoryWidget_UpdateNameList(S293660*);
 #endif /* merge_units */
-#define AgentOpen_BuildSlotList(a0) ((void)AgentOpen_BuildSlotList((GuiSaveAgentWidget *)(a0))) /* merge_units */
+#define GuiAgentDirectoryWidget_UpdateNameList(a0) ((void)GuiAgentDirectoryWidget_UpdateNameList((GuiSaveAgentWidget *)(a0))) /* merge_units */
 
-extern void GuiWidget_Update(S293660*, float);
-void GuiAgentLoad_Update(S293660* s, float dt) {
+extern void GuiWidget_onAdvanceTime(S293660*, float);
+void GuiAgentDirectoryWidget_onAdvanceTime(S293660* s, float dt) {
     s->t += dt;
     if (!(s->t <= 1.0f)) {
-        AgentOpen_BuildSlotList(s);
+        GuiAgentDirectoryWidget_UpdateNameList(s);
         s->t -= 1.0f;
     }
-    GuiWidget_Update(s, dt);
+    GuiWidget_onAdvanceTime(s, dt);
 }
-#undef AgentOpen_BuildSlotList /* merge_units */
+#undef GuiAgentDirectoryWidget_UpdateNameList /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00293660 */

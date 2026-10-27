@@ -36,12 +36,12 @@ static inline void VAdd3(V4* s, V4* d) {
 static inline void QC(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
 struct Nd { char pad[0x50]; Plc p; char pad70[0x30]; unsigned char bA0; char padA1[0xF]; int bB0; };
 extern "C" {
-void* Root_GetParent(Nd* n);
-Plc* Root_GetWorldPlacement(void* r);
-void Transform_SetOrientation(Plc* d, Plc* s);
-void Placement_Invert(Plc* p);
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(Nd* n);
+Plc* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void* r);
+void cQuatVec_opAssign(Plc* d, Plc* s);
+void cQuatVec_InvertAssumingUnitQuat(Plc* p);
 void cQuaternion_ctor_void(V4* q);
-void Quat_Multiply(V4* a, V4* b, V4* c);
+void cQuaternion_VU0Multiply(V4* a, V4* b, V4* c);
 void cQuaternion_ctor_cQuaternionR(V4* d, V4* s);
 int cTreeNode_cSkaAnimAnchor_TreeNodeData_HasChildren(Nd* n);
 void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(Nd* n);
@@ -62,12 +62,12 @@ extern "C" void Root_SetWorldPlacement_3626B0(Nd* self, Plc* src)
         V4 m;
         Plc* p;
         Plc* ip;
-        Transform_SetOrientation(&inv, Root_GetWorldPlacement(Root_GetParent(self)));
-        Placement_Invert(&inv);
+        cQuatVec_opAssign(&inv, cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(self)));
+        cQuatVec_InvertAssumingUnitQuat(&inv);
         ip = &inv;
         p = &self->p;
         cQuaternion_ctor_void(&m);
-        Quat_Multiply(&m, &ip->rot, &p->rot);
+        cQuaternion_VU0Multiply(&m, &ip->rot, &p->rot);
         cQuaternion_ctor_cQuaternionR(&r, &m);
         { void* xx = &r; /* dead on purpose: retail keeps this addiu */ }
         QC(&p->rot, &r);

@@ -15,7 +15,7 @@ extern char D_004E1D94[];
 extern char D_004E1D98[];
 extern char D_004E1D9C[];
 
-int Vec4_GetZero(void) {
+int cVector_GetZero(void) {
     int v0;
     int cond;
 
@@ -44,12 +44,12 @@ static inline void merge_flush_func_00136080(void) {}
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 int Alloc_Lock(int);                                    
-int Alloc_Unlock(int);                                  
-int Mem_Alloc(int, int, int *, int);                      
-int Vector_Reserve_139920_Thunk(int , int);                       
+int EnableIntc(int);                                  
+int cMemMan_Allocate(int, int, int *, int);                      
+int std_vector_cCollisionFace_reserve(int , int);                       
 int cArrayCapacity_Int(int *);                           
 int std_vector_cCollisionFace_ctor(int );                            
-int Vector_Reserve_139920(int , int);                       
+int std_vector_imp_cCollisionFace_reserve(int , int);                       
 extern int D_004EA0C0;
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
@@ -63,21 +63,21 @@ void cCollisionSystem_cBox_InitStatics(int arg0) {
             Alloc_Lock(9);
         }
         g_ProfileLockDepth += 1;
-        temp_s1 = Mem_Alloc(0, 0x10, ((int*)"collision.hh"), 0xAE6);
+        temp_s1 = cMemMan_Allocate(0, 0x10, ((int*)"collision.hh"), 0xAE6);
         if (g_ProfileLockEnabled != 0) {
-            Alloc_Unlock(9);
+            EnableIntc(9);
         }
         g_ProfileLockDepth -= 1;
         if (temp_s1 != NULL) {
             sp3C = arg0;
             std_vector_cCollisionFace_ctor(temp_s1);
-            Vector_Reserve_139920_Thunk(temp_s1, cArrayCapacity_Int(&sp3C));
+            std_vector_cCollisionFace_reserve(temp_s1, cArrayCapacity_Int(&sp3C));
             F_(temp_s1, 0xC, signed char) = 1;
         }
         D_004EA0C0 = temp_s1;
         return;
     }
-    Vector_Reserve_139920(D_004EA0C0, arg0);
+    std_vector_imp_cCollisionFace_reserve(D_004EA0C0, arg0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001360D0(void) {}

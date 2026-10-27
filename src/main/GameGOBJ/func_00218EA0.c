@@ -35,8 +35,8 @@ struct PathObj { char pad[0x6C]; Holder* p6C; char pad70[0x24]; Vec v94; };
 extern "C" {
 V* std_vector_cVector_opIndex(Vec* v, int i);
 int func_00219060(Vec* v);
-V* Vec4_Assign(V* d, V* s);
-V* Mtx_Multiply4(V* v, M* m);
+V* cVector_ctor_cVectorR(V* d, V* s);
+V* cVector_Transform_cMatrixR(V* v, M* m);
 }
 static inline V* At(Vec* v, int i) {
     if (i < 0) i = 0;
@@ -44,7 +44,7 @@ static inline V* At(Vec* v, int i) {
     return std_vector_cVector_opIndex(v, func_00219060(v) - 1);
 }
 /* Tf is wrapped once more (Tf2) so its temp lands below Add's result on the stack */
-static inline void Tf(V* t2, V* p, M* m) { V t; Vec4_Assign(t2, Mtx_Multiply4(Vec4_Assign(&t, p), m)); }
+static inline void Tf(V* t2, V* p, M* m) { V t; cVector_ctor_cVectorR(t2, cVector_Transform_cMatrixR(cVector_ctor_cVectorR(&t, p), m)); }
 static inline void Tf2(V* t2, V* p, M* m) { Tf(t2, p, m); }
 static inline V Calc2(V* p, M* m, const V& pos) {
     V t2;

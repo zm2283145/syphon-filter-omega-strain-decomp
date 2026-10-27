@@ -29,10 +29,10 @@ DEFINE_VTABLE3_BASE_DTOR(cAISoundSystemGobjToGobjMessage_dtor, D_004D9870, D_004
 #pragma cplusplus on
 extern "C" {
 extern char D_004D9870[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void cMessage_ctor2(void* self, void* other);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cAISoundSystemGOBJMessage_ctor_cAISoundSystemGOBJMessageR(void* self, void* other);
 void cObjectId_ctor_cObjectIdR(void* dst, void* src);
-void Vec4_Assign(void* dst, void* src);
+void cVector_ctor_cVectorR(void* dst, void* src);
 }
 struct Msg_0016F910 {
     void* vtable;
@@ -45,13 +45,13 @@ extern "C" Msg_0016F910* cAISoundSystemGobjToGobjMessage_Clone(Msg_0016F910* sel
     Msg_0016F910* p;
     {
         AllocGuard guard;
-        p = (Msg_0016F910*)Mem_Alloc(0, 0x50, "ai.hh", 0x16E);
+        p = (Msg_0016F910*)cMemMan_Allocate(0, 0x50, "ai.hh", 0x16E);
     }
     if (p) {
-        cMessage_ctor2(p, self);
+        cAISoundSystemGOBJMessage_ctor_cAISoundSystemGOBJMessageR(p, self);
         p->vtable = D_004D9870;
         cObjectId_ctor_cObjectIdR(p->a, self->a);
-        Vec4_Assign(p->v, self->v);
+        cVector_ctor_cVectorR(p->v, self->v);
     }
     return p;
 }

@@ -6,7 +6,7 @@
  * accessors and constructors in this file.
  */
 
-/* Doubly linked list header as built by ScalarCollection_Init (12 bytes). */
+/* Doubly linked list header as built by std_list_deleter_voidPtr_ctor_void (12 bytes). */
 typedef struct PathListLink {
     struct PathListLink* next;
     struct PathListLink* prev;

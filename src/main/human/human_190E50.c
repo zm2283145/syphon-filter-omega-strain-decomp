@@ -11,7 +11,7 @@
 /* merge_units: begin func_00190E50 */
 #pragma push /* merge_units */
 /* Convert a float to int. */
-DEFINE_FLOAT_TO_INT(Math_TruncFloatSat)
+DEFINE_FLOAT_TO_INT(nSFO_Macros_FTOI)
 #pragma pop /* merge_units */
 /* merge_units: end func_00190E50 */
 

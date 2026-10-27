@@ -11,11 +11,11 @@ typedef struct { char pad[0x48]; void* f48; } O_454150;
 extern "C" {
 extern void* g_Hud;
 extern char g_Game[];
-M_454150* Gui_GetScreenStack(void);
+M_454150* Gui_Canvas(void);
 void GuiStartMenu_ReturnToMenu(O_454150* o);
-void Hud_ClosePauseMenu(void* p);
-void Game_SetPaused(void* p, int v);
-int GuiRadioLog_HandleInput(O_454150* o, Ev_454150* ev);
+void cHud_DeactivateObjectiveMenu(void* p);
+void cGameSystem_PauseGame(void* p, int v);
+int GuiRadioLog_onInput(O_454150* o, Ev_454150* ev);
 }
 static inline unsigned char Down_454150(Ev_454150* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Btn_454150(Ev_454150* e, int b) { unsigned char r = 0; if (Down_454150(e) && e->btn == b) r = 1; return r; }
@@ -24,16 +24,16 @@ static inline bool Down2_454150(Ev_454150* e) { return e->type == 1 && e->b2 == 
 static inline bool Btn2_454150(Ev_454150* e, int b) { return Down2_454150(e) && e->btn == b; }
 static inline bool Plain2_454150(Ev_454150* e, int b) { return Btn2_454150(e, b) && e->b6 == 0; }
 
-int GuiRadioLog_HandleInput(O_454150* o, Ev_454150* ev)
+int GuiRadioLog_onInput(O_454150* o, Ev_454150* ev)
 {
     if (Plain_454150(ev, 0x10)) {
         GuiStartMenu_ReturnToMenu(o);
         return 1;
     }
     if (Plain2_454150(ev, 0x800)) {
-        Gui_GetScreenStack()->v24(o);
-        Hud_ClosePauseMenu(g_Hud);
-        Game_SetPaused(g_Game, 0);
+        Gui_Canvas()->v24(o);
+        cHud_DeactivateObjectiveMenu(g_Hud);
+        cGameSystem_PauseGame(g_Game, 0);
         return 1;
     }
     return 0;

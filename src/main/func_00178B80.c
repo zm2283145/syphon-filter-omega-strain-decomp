@@ -8,7 +8,7 @@
 #include "loose00_types.h"
 
 /* Build a Vec4 from an xyz vector and w. */
-Vec4* Vec4_SetFromVec3W(Vec4* d, Vec4* xyz, float w) {
+Vec4* tRGBA_ctor_tRGBR_float(Vec4* d, Vec4* xyz, float w) {
     d->x = xyz->x;
     d->y = xyz->y;
     d->z = xyz->z;

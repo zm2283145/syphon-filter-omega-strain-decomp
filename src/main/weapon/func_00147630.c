@@ -1,10 +1,10 @@
 #include "types.h"
 #pragma mpwc_relax on
 int Alloc_Lock();
-int Alloc_Unlock();
-int FileMan_LoadFile();
-int Mem_Free(int, void*, char*, int);
-int FileMan_Release();
+int EnableIntc();
+int cDB_LoadDB();
+int cMemMan_Deallocate(int, void*, char*, int);
+int cFileMan_dtor();
 int cFileMan_ctor_charP_cFileIOP_bool();
 int sprintf();
 void* memcpy(void*, const void*, unsigned int);
@@ -45,7 +45,7 @@ typedef struct {
 } WDb;
 
 
-void WeaponDb_LoadReloadVariant(WDb* db) {
+void cWeaponDB_Reload(WDb* db) {
     int spE0[36];
     int sp40[40];
 
@@ -59,7 +59,7 @@ void WeaponDb_LoadReloadVariant(WDb* db) {
     src = (WEnt*)(old + 0x10);
     sprintf(spE0, &D_0049B310, &D_0048B2F8);
     cFileMan_ctor_charP_cFileIOP_bool(sp40, spE0, 0, 0);
-    db->loaded = FileMan_LoadFile(db, sp40);
+    db->loaded = cDB_LoadDB(db, sp40);
     for (i = 0, dst = (WEnt*)(db->data + 0x10); i < db->hdr->count; i++, src++, dst++) {
         dst->x13C = src->x13C;
         dst->x11C = src->x11C;
@@ -80,12 +80,12 @@ void WeaponDb_LoadReloadVariant(WDb* db) {
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    Mem_Free(0, p, &D_0049B1D0, 0x10B);
+    cMemMan_Deallocate(0, p, &D_0049B1D0, 0x10B);
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     g_ProfileLockDepth -= 1;
     db->data = old;
     db->hdr = (WHdr*)db->data;
-    FileMan_Release(sp40, -1);
+    cFileMan_dtor(sp40, -1);
 }

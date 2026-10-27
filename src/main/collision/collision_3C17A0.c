@@ -18,10 +18,10 @@ typedef struct { float r; int pad[3]; V4 c; } Sphere_18A0;
 void cBox_BoundingSphere(Sphere_18A0* out, Box_18A0* b); /* gsynth: defined below */typedef struct { int pad[7]; int f1C; } ColData_f3;
 typedef struct { ColData_f3* data; unsigned char loaded; char pad[11]; int f10; } ColHolder_f3;
 typedef struct { int w[11]; } ColTmp_f3;
-extern int FileMan_FindMember(void* f);
-extern void FileMan_LoadMemberSync(void* f, int* out, int z);
+extern int cFileMan_Open(void* f);
+extern void cFileMan_Read_charPP_int(void* f, int* out, int z);
 extern void cFileMan_Close(void* f);
-extern void Col_Relocate(ColData_f3* d);
+extern void cCollisionModel_Data_FixUpPointers(ColData_f3* d);
 extern void* cCollisionModel_Data_BoundingBox(ColData_f3* d);
 #if 0 /* merge_units */
 extern void cBox_BoundingSphere(ColTmp_f3* t, void* p);
@@ -33,20 +33,20 @@ extern void cSphere_opAssign(int* dst, ColTmp_f3* t);
 #endif /* merge_units */
 #define cSphere_opAssign(a0, a1) ((void)cSphere_opAssign((void *)(a0), (void *)(a1))) /* merge_units */
 
-int Col_Load(ColHolder_f3* c, void* file)
+int cCollisionModelMaster_Load(ColHolder_f3* c, void* file)
 {
     int buf[1];
     ColTmp_f3 tmp;
     if (c->data == 0) {
         buf[0] = 0;
-        if ((unsigned char)FileMan_FindMember(file)) {
+        if ((unsigned char)cFileMan_Open(file)) {
             c->loaded = 1;
             return 0;
         }
-        FileMan_LoadMemberSync(file, buf, 0);
+        cFileMan_Read_charPP_int(file, buf, 0);
         cFileMan_Close(file);
         c->data = (ColData_f3*)buf[0];
-        Col_Relocate(c->data);
+        cCollisionModel_Data_FixUpPointers(c->data);
         cBox_BoundingSphere(&tmp, cCollisionModel_Data_BoundingBox(c->data));
         cSphere_opAssign(&c->f10, &tmp);
         {

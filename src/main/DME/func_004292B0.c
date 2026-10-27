@@ -14,7 +14,7 @@ static inline void EI4292B0(void) { asm { sync }
 #pragma push
 #pragma optimization_level 3
 /* Timer0 interrupt handler: counts ticks and wakes the DME thread every 100 ticks. */
-int DME_TimerHandler(void)
+int cThreadMgr_ThreadInterruptHandler(void)
 {
     int mode = T0_MODE;
     T0_MODE = mode; /* acknowledge the interrupt flags */

@@ -5,17 +5,17 @@
  */
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 int sprintf(void *, const void *, ...);
 
 /* merge_units: begin func_0040BF50 */
 #pragma push /* merge_units */
 #include "types.h"
 #include "GobjMan_types.h"
-GobjEntry* IdMgr_IsOccupied(GobjScope* scope, const GobjId* id); /* gsynth: defined below */
-void IdVec_End(Iter* out, PtrVec* v); /* gsynth: defined below */
-int IdVecIter_Ne(Iter* a, Iter* b); /* gsynth: defined below */
-void IdVec_Find(int** out, PtrVec* v, int* id); /* gsynth: defined below */
+GobjEntry* cObjList_cGOBJPtr_LookupObj(GobjScope* scope, const GobjId* id); /* gsynth: defined below */
+void cArray_cObjectId_End_void_2(Iter* out, PtrVec* v); /* gsynth: defined below */
+int cArray_cObjectId_ConstIterator_opNe(Iter* a, Iter* b); /* gsynth: defined below */
+void cArray_cObjectId_Find(int** out, PtrVec* v, int* id); /* gsynth: defined below */
 #pragma cplusplus on
 #include "alloc_guard.h"
 /* Registered object; vtable slot 0 is the destructor. */
@@ -27,24 +27,24 @@ extern unsigned char g_GobjDeleting;
 extern char D_004BECA8[]; /* "GobjMan.cc" */
 int cSystem_GetObjectID_void(void); /* returns its argument + 0xC: here &obj->id */
 #if 0 /* merge_units */
-void IdVec_Find(IdIter* out, PtrVec* v, int id);
+void cArray_cObjectId_Find(IdIter* out, PtrVec* v, int id);
 #endif /* merge_units */
-#define IdVec_Find(a0, a1, a2) (IdVec_Find((int * *)(a0), (a1), (int *)(a2))) /* merge_units */
+#define cArray_cObjectId_Find(a0, a1, a2) (cArray_cObjectId_Find((int * *)(a0), (a1), (int *)(a2))) /* merge_units */
 
 #if 0 /* merge_units */
-void IdVec_End(IdIter* out, PtrVec* v);
+void cArray_cObjectId_End_void_2(IdIter* out, PtrVec* v);
 #endif /* merge_units */
-#define IdVec_End(a0, a1) (IdVec_End((Iter *)(a0), (a1))) /* merge_units */
+#define cArray_cObjectId_End_void_2(a0, a1) (cArray_cObjectId_End_void_2((Iter *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-int IdVecIter_Ne(IdIter* a, IdIter* b);
+int cArray_cObjectId_ConstIterator_opNe(IdIter* a, IdIter* b);
 #endif /* merge_units */
-#define IdVecIter_Ne(a0, a1) (IdVecIter_Ne((Iter *)(a0), (Iter *)(a1))) /* merge_units */
+#define cArray_cObjectId_ConstIterator_opNe(a0, a1) (cArray_cObjectId_ConstIterator_opNe((Iter *)(a0), (Iter *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-int IdMgr_IsOccupied(GobjScope* scope, int id);
+int cObjList_cGOBJPtr_LookupObj(GobjScope* scope, int id);
 #endif /* merge_units */
-#define IdMgr_IsOccupied(a0, a1) ((int)IdMgr_IsOccupied((a0), (const GobjId *)(a1))) /* merge_units */
+#define cObjList_cGOBJPtr_LookupObj(a0, a1) ((int)cObjList_cGOBJPtr_LookupObj((a0), (const GobjId *)(a1))) /* merge_units */
 
 }
 /* True when the id is listed in the scope's id vector or no longer visible from it. */
@@ -52,12 +52,12 @@ static inline bool CanDelete(GobjScope* scope, int id)
 {
     IdIter it;
     IdIter end;
-    IdVec_Find(&it, (PtrVec*)&scope->ids, id);
-    IdVec_End(&end, (PtrVec*)&scope->ids);
-    return IdVecIter_Ne(&it, &end) || !IdMgr_IsOccupied(scope, id);
+    cArray_cObjectId_Find(&it, (PtrVec*)&scope->ids, id);
+    cArray_cObjectId_End_void_2(&end, (PtrVec*)&scope->ids);
+    return cArray_cObjectId_ConstIterator_opNe(&it, &end) || !cObjList_cGOBJPtr_LookupObj(scope, id);
 }
 /* Deletes obj (with g_GobjDeleting set) when CanDelete allows it in the root scope. */
-extern "C" void Gobj_TryDelete(GobjVirt* obj)
+extern "C" void nGobjManager_DeleteNow(GobjVirt* obj)
 {
     GobjScope* root = g_GobjRootScope;
     int id = cSystem_GetObjectID_void();
@@ -66,15 +66,15 @@ extern "C" void Gobj_TryDelete(GobjVirt* obj)
         if (obj) {
             AllocGuard guard;
             obj->~GobjVirt();
-            Mem_Free(0, obj, D_004BECA8, 0x11C);
+            cMemMan_Deallocate(0, obj, D_004BECA8, 0x11C);
         }
         g_GobjDeleting = 0;
     }
 }
-#undef IdVec_Find /* merge_units */
-#undef IdVec_End /* merge_units */
-#undef IdVecIter_Ne /* merge_units */
-#undef IdMgr_IsOccupied /* merge_units */
+#undef cArray_cObjectId_Find /* merge_units */
+#undef cArray_cObjectId_End_void_2 /* merge_units */
+#undef cArray_cObjectId_ConstIterator_opNe /* merge_units */
+#undef cObjList_cGOBJPtr_LookupObj /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0040BF50(void) {}
 #pragma pop /* merge_units */
@@ -82,17 +82,17 @@ static inline void merge_flush_func_0040BF50(void) {}
 
 /* merge_units: begin func_0040C080 */
 #pragma push /* merge_units */
-extern GobjEntry* ObjRegistry_Find(GobjScope* scope, const GobjId* id);
+extern GobjEntry* cBaseObjList_LookupObj(GobjScope* scope, const GobjId* id);
 
 /*
  * Returns the object registered under id if it is visible from scope (its
  * scope chain reaches scope), otherwise null.
  */
-GobjEntry* IdMgr_IsOccupied(GobjScope* scope, const GobjId* id) {
+GobjEntry* cObjList_cGOBJPtr_LookupObj(GobjScope* scope, const GobjId* id) {
     GobjScope* s;
     GobjEntry* obj;
 
-    obj = ObjRegistry_Find(scope, id);
+    obj = cBaseObjList_LookupObj(scope, id);
     if (obj != 0) {
         s = obj->scope;
         if (s != 0) {
@@ -124,12 +124,12 @@ static inline void merge_flush_func_0040C080(void) {}
 
 
 /* Iterator inequality. */
-int IdVecIter_Ne(Iter* a, Iter* b) {
+int cArray_cObjectId_ConstIterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
 /* end() iterator of the id vector. */
-void IdVec_End(Iter* out, PtrVec* v) {
+void cArray_cObjectId_End_void_2(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -140,12 +140,12 @@ static inline void merge_flush_func_0040C0E0(void) {}
 /* merge_units: begin func_0040C120 */
 #pragma push /* merge_units */
 #pragma bool off
-extern int** IdVec_DataRef(PtrVec* v);
+extern int** std_vector_deleter_cObjectId_data_void_2(PtrVec* v);
 static inline int IdIter_Ne(int* a, int* b) { return (a == b) ^ 1; }
 /* Finds the id word *id in the vector; stores its iterator (end() if absent). */
-void IdVec_Find(int** out, PtrVec* v, int* id) {
-    int* it = *IdVec_DataRef(v);
-    int* end = *IdVec_DataRef(v) + v->count;
+void cArray_cObjectId_Find(int** out, PtrVec* v, int* id) {
+    int* it = *std_vector_deleter_cObjectId_data_void_2(v);
+    int* end = *std_vector_deleter_cObjectId_data_void_2(v) + v->count;
     while (IdIter_Ne(it, end)) {
         if (*it == *id) {
             *out = it;
@@ -170,7 +170,7 @@ static inline void merge_flush_func_0040C120(void) {}
 
 
 /* Address of the vector's data pointer. */
-int** IdVec_DataRef(PtrVec* v) {
+int** std_vector_deleter_cObjectId_data_void_2(PtrVec* v) {
     return &v->data;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -183,7 +183,7 @@ static inline void merge_flush_func_0040C1E0(void) {}
 extern char g_GobjIdText[];
 
 /* Formats an id as "(category index)" into a static buffer and returns it. */
-char* Object_ToString(GobjId* id)
+char* nGobjManager_GetObjectName(GobjId* id)
 {
     sprintf(g_GobjIdText, "(%d %d)", (id->word & 0xFF0000) >> 16, id->word & 0xFFFF);
     return g_GobjIdText;
@@ -195,12 +195,12 @@ static inline void merge_flush_func_0040C1F0(void) {}
 
 /* merge_units: begin func_0040C240 */
 #pragma push /* merge_units */
-GobjEntry* IdMgr_FindCollision(unsigned int category, unsigned int index); /* gsynth: defined below */
+GobjEntry* nGobjManager_LookupGOBJ_int_int(unsigned int category, unsigned int index); /* gsynth: defined below */
 #pragma mpwc_relax on
 #if 0 /* merge_units */
-int IdMgr_FindCollision(int category, int index);
+int nGobjManager_LookupGOBJ_int_int(int category, int index);
 #endif /* merge_units */
-#define IdMgr_FindCollision(a0, a1) ((int)IdMgr_FindCollision((unsigned int)(a0), (unsigned int)(a1))) /* merge_units */
+#define nGobjManager_LookupGOBJ_int_int(a0, a1) ((int)nGobjManager_LookupGOBJ_int_int((unsigned int)(a0), (unsigned int)(a1))) /* merge_units */
 
 /* Next index per category (256 counters). */
 extern char g_GobjIdCounters;
@@ -209,7 +209,7 @@ extern char g_GobjIdCounters;
  * Allocates a fresh id in a category: bumps the category's counter (wrapping
  * after 0xFFFF) until no visible object uses the index.
  */
-void IdMgr_Allocate(GobjId* out, int category) {
+void nGobjManager_GetNextId(GobjId* out, int category) {
     int next;
     int* counter;
     int cat;
@@ -222,10 +222,10 @@ void IdMgr_Allocate(GobjId* out, int category) {
         if (next > 0xFFFF) {
             *counter = 0;
         }
-    } while (IdMgr_FindCollision(cat, *counter) != 0);
+    } while (nGobjManager_LookupGOBJ_int_int(cat, *counter) != 0);
     out->word = *counter | (cat << 0x10);
 }
-#undef IdMgr_FindCollision /* merge_units */
+#undef nGobjManager_LookupGOBJ_int_int /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0040C240(void) {}
 #pragma pop /* merge_units */
@@ -242,27 +242,27 @@ extern int g_GobjIdCounters[256];
 #define g_GobjIdCounters ((int*)&g_GobjIdCounters) /* merge_units */
 
 
-void* Mem_Alloc(int, int, char*, int);
-void GobjScopeBase_Ctor(GobjScope* self, int capacity, GobjScope* parent);
+void* cMemMan_Allocate(int, int, char*, int);
+void cBaseObjList_ctor(GobjScope* self, int capacity, GobjScope* parent);
 }
 static inline void* AllocL_n1(int size, char* file, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, file, line);
+    return cMemMan_Allocate(0, size, file, line);
 }
 /* Creates the root and world scopes and resets the per-category id counters. */
-extern "C" void IdMgr_Init(void)
+extern "C" void nGobjManager_InitIDs(void)
 {
     int i;
     GobjScope* scope;
     scope = (GobjScope*)AllocL_n1(sizeof(GobjScope), D_004BECA8, 0xCF);
     if (scope) {
-        GobjScopeBase_Ctor(scope, 4500, 0);
+        cBaseObjList_ctor(scope, 4500, 0);
     }
     g_GobjRootScope = scope;
     scope = (GobjScope*)AllocL_n1(sizeof(GobjScope), D_004BECA8, 0xD0);
     if (scope) {
-        GobjScopeBase_Ctor(scope, 2500, g_GobjRootScope);
+        cBaseObjList_ctor(scope, 2500, g_GobjRootScope);
     }
     g_GobjWorldScope = scope;
     for (i = 0; i < 256; i++) {
@@ -283,11 +283,11 @@ static inline void merge_flush_func_0040C2D0(void) {}
  */
 
 
-GobjScope* Scope_GetParent(GobjScope* self) {
+GobjScope* cBaseObjList_GetParent(GobjScope* self) {
     return self->parent;
 }
 
-GobjScope* Object_GetScope(GobjEntry* self) {
+GobjScope* cSystem_GetOwningList(GobjEntry* self) {
     return self->scope;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -297,25 +297,25 @@ static inline void merge_flush_func_0040C460(void) {}
 
 /* merge_units: begin func_0040C480 */
 #pragma push /* merge_units */
-extern int Id_IsValidCategory(unsigned int category);
-extern int Id_IsValidIndex(unsigned int index);
-extern GobjId* Id_Build(GobjId* id, int category, int index, int kind);
+extern int cObjectId_IsValidLevelID(unsigned int category);
+extern int cObjectId_IsValidItemID(unsigned int index);
+extern GobjId* cObjectId_ctor_int_int_int(GobjId* id, int category, int index, int kind);
 #if 0 /* merge_units */
-extern GobjEntry* IdMgr_IsOccupied(GobjScope* scope, GobjId* id);
+extern GobjEntry* cObjList_cGOBJPtr_LookupObj(GobjScope* scope, GobjId* id);
 #endif /* merge_units */
-#define IdMgr_IsOccupied(a0, a1) (IdMgr_IsOccupied((a0), (void *)(a1))) /* merge_units */
+#define cObjList_cGOBJPtr_LookupObj(a0, a1) (cObjList_cGOBJPtr_LookupObj((a0), (void *)(a1))) /* merge_units */
 
 
 /* Check whether a valid category and index already identify a visible object. */
-GobjEntry* IdMgr_FindCollision(unsigned int category, unsigned int index)
+GobjEntry* nGobjManager_LookupGOBJ_int_int(unsigned int category, unsigned int index)
 {
     GobjScope* root = g_GobjRootScope;
     GobjId id;
-    if (!Id_IsValidCategory(category) || !Id_IsValidIndex(index))
+    if (!cObjectId_IsValidLevelID(category) || !cObjectId_IsValidItemID(index))
         return 0;
-    return IdMgr_IsOccupied(root, Id_Build(&id, category, index, -1));
+    return cObjList_cGOBJPtr_LookupObj(root, cObjectId_ctor_int_int_int(&id, category, index, -1));
 }
-#undef IdMgr_IsOccupied /* merge_units */
+#undef cObjList_cGOBJPtr_LookupObj /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0040C480(void) {}
 #pragma pop /* merge_units */
@@ -330,18 +330,18 @@ static inline void merge_flush_func_0040C480(void) {}
 
 
 /* Pack (category, index, kind) into an ID word. */
-GobjId* Id_Build(GobjId* id, int category, int index, int kind) {
+GobjId* cObjectId_ctor_int_int_int(GobjId* id, int category, int index, int kind) {
     id->word = index | (((kind + 1) << 24) | (category << 16));
     return id;
 }
 
 /* Index fits in the 16-bit index field. */
-int Id_IsValidIndex(unsigned int index) {
+int cObjectId_IsValidItemID(unsigned int index) {
     return index < 0x10000;
 }
 
 /* Category fits in the 8-bit category field. */
-int Id_IsValidCategory(unsigned int category) {
+int cObjectId_IsValidLevelID(unsigned int category) {
     return category < 256;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -352,27 +352,27 @@ static inline void merge_flush_func_0040C500(void) {}
 /* merge_units: begin func_0040C540 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern GobjScope* Object_GetScope(GobjEntry* obj);
+extern GobjScope* cSystem_GetOwningList(GobjEntry* obj);
 #endif /* merge_units */
-#define Object_GetScope(a0) (Object_GetScope((a0))) /* merge_units */
+#define cSystem_GetOwningList(a0) (cSystem_GetOwningList((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern GobjScope* Scope_GetParent(GobjScope* scope);
+extern GobjScope* cBaseObjList_GetParent(GobjScope* scope);
 #endif /* merge_units */
-#define Scope_GetParent(a0) (Scope_GetParent((a0))) /* merge_units */
+#define cBaseObjList_GetParent(a0) (cBaseObjList_GetParent((a0))) /* merge_units */
 
 
 /*
  * Looks an id up in the global registry; returns the object only if its
  * scope chain reaches the root scope, otherwise null.
  */
-GobjEntry* Object_LookupById(const GobjId* id) {
+GobjEntry* nGobjManager_LookupGOBJ_cObjectIdR(const GobjId* id) {
     GobjEntry* o;
     GobjScope* s;
     GobjScope* root = g_GobjRootScope;
-    o = ObjRegistry_Find(root, id);
+    o = cBaseObjList_LookupObj(root, id);
     if (o) {
-        for (s = Object_GetScope(o); s; s = Scope_GetParent(s)) {
+        for (s = cSystem_GetOwningList(o); s; s = cBaseObjList_GetParent(s)) {
             if (s == root) { asm { .set reorder } goto out; } /* barrier: keeps the found branch unmerged */
         }
     }
@@ -380,8 +380,8 @@ GobjEntry* Object_LookupById(const GobjId* id) {
 out:
     return o;
 }
-#undef Object_GetScope /* merge_units */
-#undef Scope_GetParent /* merge_units */
+#undef cSystem_GetOwningList /* merge_units */
+#undef cBaseObjList_GetParent /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0040C540(void) {}
 #pragma pop /* merge_units */
@@ -395,11 +395,11 @@ static inline void merge_flush_func_0040C540(void) {}
  */
 
 
-extern void ActorWorld_FlushRemovals(void);
+extern void cBaseObjList_PurgeRemovals(void);
 
-/* Thunk to ActorWorld_FlushRemovals (calls cBaseObjList_Purge on every scope, newest first). */
-void ActorWorld_FlushPending(void) {
-    ActorWorld_FlushRemovals();
+/* Thunk to cBaseObjList_PurgeRemovals (calls cBaseObjList_Purge on every scope, newest first). */
+void nGobjManager_PurgeRemovals(void) {
+    cBaseObjList_PurgeRemovals();
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0040C5C0(void) {}
@@ -408,7 +408,7 @@ static inline void merge_flush_func_0040C5C0(void) {}
 
 /* merge_units: begin func_0040C5D0 */
 #pragma push /* merge_units */
-void* GobjScope_Dtor(void* self, short del); /* gsynth: defined below */
+void* cObjList_cGOBJPtr_dtor(void* self, short del); /* gsynth: defined below */
 #pragma cplusplus on
 #pragma inline_depth(10)
 
@@ -435,38 +435,38 @@ extern Pool_40C5D0* D_00571750;
 extern Pool_40C5D0* D_00571758;
 extern Pool_40C5D0* D_00571760;
 extern char D_00571C10[]; /* global id -> object map (GobjMap) */
-GobjIterB PtrVec_Begin(int v);
-void PtrVec_End(GobjIter* out, int v);
+GobjIterB cArray_cGOBJPtr_Begin(int v);
+void cArray_cGOBJPtr_End(GobjIter* out, int v);
 int cObjList_cGOBJPtr_GetList(void* p);
-void PtrVec_Dtor_134E80(void* p, int f);
+void cArray_cGOBJPtr_dtor(void* p, int f);
 #if 0 /* merge_units */
-void GobjScope_Dtor(void* p, int f);
+void cObjList_cGOBJPtr_dtor(void* p, int f);
 #endif /* merge_units */
-#define GobjScope_Dtor(a0, a1) ((void)GobjScope_Dtor((a0), (short)(a1))) /* merge_units */
+#define cObjList_cGOBJPtr_dtor(a0, a1) ((void)cObjList_cGOBJPtr_dtor((a0), (short)(a1))) /* merge_units */
 
 void std_tree_pair_cObjectId_value_compare_clear(void* p);
 }
-static inline void DeleteObject(GobjVirt_0040C5D0* o) { AllocGuard g; o->Dtor(-1); Mem_Free(0, o, D_004BECA8, 0x9B); }
+static inline void DeleteObject(GobjVirt_0040C5D0* o) { AllocGuard g; o->Dtor(-1); cMemMan_Deallocate(0, o, D_004BECA8, 0x9B); }
 static inline bool IterNe(const GobjIter& a, const GobjIter& b) { return !(a.p == b.p); }
-static inline void DeleteScope(void* p, int line) { AllocGuardCall g; GobjScope_Dtor(p, -1); Mem_Free(0, p, D_004BECA8, line); }
-static inline void DeletePool(void* p, int line) { AllocGuardCall g; PtrVec_Dtor_134E80(p, -1); Mem_Free(0, p, D_004BECA8, line); }
+static inline void DeleteScope(void* p, int line) { AllocGuardCall g; cObjList_cGOBJPtr_dtor(p, -1); cMemMan_Deallocate(0, p, D_004BECA8, line); }
+static inline void DeletePool(void* p, int line) { AllocGuardCall g; cArray_cGOBJPtr_dtor(p, -1); cMemMan_Deallocate(0, p, D_004BECA8, line); }
 
 /*
  * Tears the object manager down: deletes every live object registered in the
  * root scope, clears the global registry map, deletes both scopes and the
  * three pools.
  */
-extern "C" void IdMgr_Destroy(void)
+extern "C" void nGobjManager_RemoveAll(void)
 {
-    ActorWorld_FlushPending();
+    nGobjManager_PurgeRemovals();
     {
         void* root = g_GobjRootScope;
         GobjIter end;
         unsigned char wasDeleting;
-        PtrVec_End(&end, cObjList_cGOBJPtr_GetList(root));
+        cArray_cGOBJPtr_End(&end, cObjList_cGOBJPtr_GetList(root));
         wasDeleting = g_GobjDeleting;
         g_GobjDeleting = 1;
-        GobjIter it = PtrVec_Begin(cObjList_cGOBJPtr_GetList(root));
+        GobjIter it = cArray_cGOBJPtr_Begin(cObjList_cGOBJPtr_GetList(root));
         while (IterNe(it, end)) {
             GobjVirt_0040C5D0* o = *it.p;
             if (((GobjEntry*)o)->magic == (int)GOBJ_ALIVE_MAGIC) DeleteObject(o);
@@ -492,7 +492,7 @@ extern "C" void IdMgr_Destroy(void)
     }
 }
 #undef g_GobjWorldScope /* merge_units */
-#undef GobjScope_Dtor /* merge_units */
+#undef cObjList_cGOBJPtr_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0040C5D0(void) {}
 #pragma pop /* merge_units */
@@ -500,13 +500,13 @@ static inline void merge_flush_func_0040C5D0(void) {}
 
 /* merge_units: begin func_0040C8E0 */
 #pragma push /* merge_units */
-extern void GobjScopeBase_Dtor(void* self, short del);
+extern void cBaseObjList_dtor(void* self, short del);
 extern void operator_delete(void* p);
 /* Scope destructor: run the base destructor, then delete when del > 0. */
-void* GobjScope_Dtor(void* self, short del)
+void* cObjList_cGOBJPtr_dtor(void* self, short del)
 {
     if (self) {
-        GobjScopeBase_Dtor(self, 0);
+        cBaseObjList_dtor(self, 0);
         if (del > 0)
             operator_delete(self);
     }

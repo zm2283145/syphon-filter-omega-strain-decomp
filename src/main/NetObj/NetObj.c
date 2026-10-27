@@ -6,10 +6,10 @@
 
 /* merge_units: begin func_003FAD50 */
 #pragma push /* merge_units */
-extern int Net_SendLocked(char type, int session, int target, int flags, int a, int b, void *c);
+extern int NetSendMessage(char type, int session, int target, int flags, int a, int b, void *c);
 extern void printf(const char *fmt, ...);
 extern int DME_Update(void);
-extern int Net_GetClock(int);
+extern int cDME_GetTime(int);
 extern char *strncpy(char *d, const char *s, unsigned int n);
 
 extern unsigned char D_005721D0;
@@ -31,7 +31,7 @@ extern char D_004BE2E0[];
 extern char D_004BE320[];
 extern char D_004BE330[];
 
-unsigned char NetObj_SendMessage(int a, int b, void *c, int target, int type)
+unsigned char cNetObj_SendMessage_int_int_ucharP_int_etc(int a, int b, void *c, int target, int type)
 {
     unsigned char ok;
     int r;
@@ -40,8 +40,8 @@ unsigned char NetObj_SendMessage(int a, int b, void *c, int target, int type)
 
     ok = 0;
     if (D_005721D0) {
-        if (D_0055C9E0 || D_0055C9D8 + 1000 < Net_GetClock(1)) {
-            D_0055C9D8 = Net_GetClock(1);
+        if (D_0055C9E0 || D_0055C9D8 + 1000 < cDME_GetTime(1)) {
+            D_0055C9D8 = cDME_GetTime(1);
             D_0055C9A0 = 0;
             D_0055C9A4[0] = 0;
             D_0055C9A8 = 0;
@@ -55,12 +55,12 @@ unsigned char NetObj_SendMessage(int a, int b, void *c, int target, int type)
                 return 0;
             }
         }
-        r = Net_SendLocked(type, D_005721A8, target == -1 ? -1 : target, 2, a, b, c);
+        r = NetSendMessage(type, D_005721A8, target == -1 ? -1 : target, 2, a, b, c);
         if (r == 0) {
             ok = 1;
         } else {
             if (!DME_Update() && type != 0x40) {
-                r2 = Net_SendLocked(type, D_005721A8, target == -1 ? -1 : target, 2, a, b, c);
+                r2 = NetSendMessage(type, D_005721A8, target == -1 ? -1 : target, 2, a, b, c);
                 if (r2 == 0) {
                     ok = 1;
                 } else {
@@ -117,13 +117,13 @@ extern int D_0055C7B8;
 extern int g_ActorActionMsgClass;
 extern unsigned char D_005721C0;
 extern unsigned char g_IsMultiplayer;
-int Net_GetClock(int);
-int* Event_GetType(Event3FB020*);
-unsigned char NetObj_SendMessage(int a, int b, void* c, int target, int type);
+int cDME_GetTime(int);
+int* cMessage_Name(Event3FB020*);
+unsigned char cNetObj_SendMessage_int_int_ucharP_int_etc(int a, int b, void* c, int target, int type);
 void NetGetPeerToPeerHostClientIndex(int, int*);
 }
 
-extern "C" int Transport_Send(int target, Event3FB020* e, int a2, int a3)
+extern "C" int cNetObj_SendMessage_int_cMessageR_int_int(int target, Event3FB020* e, int a2, int a3)
 {
     char buf[0x400];
     int handle;
@@ -131,10 +131,10 @@ extern "C" int Transport_Send(int target, Event3FB020* e, int a2, int a3)
     int r;
     unsigned char send;
 
-    r = e->Serialize(target, &handle, Net_GetClock(0), D_0055C7B8, 0x400, buf);
+    r = e->Serialize(target, &handle, cDME_GetTime(0), D_0055C7B8, 0x400, buf);
     if (D_005721D0 && target > -1 && r > -1) {
         send = 1;
-        int* ty = Event_GetType(e);
+        int* ty = cMessage_Name(e);
         if (*ty == g_ActorActionMsgClass) {
             if (e->sub == 1 || e->sub == 0xC || e->kind == 1 || e->kind == 2 || e->kind == 0x43 ||
                 e->kind == 0x3E || e->kind == 0x3F || e->kind == 0x39 || e->kind == 0x3A || e->kind == 0xD)
@@ -142,18 +142,18 @@ extern "C" int Transport_Send(int target, Event3FB020* e, int a2, int a3)
         }
         if (send && e->flags != 1) {
             if ((e->flags & 0x15) || (e->flags & 5) || (e->flags & 4)) {
-                if (!NetObj_SendMessage(handle, r, buf, a3, e->f1C))
+                if (!cNetObj_SendMessage_int_int_ucharP_int_etc(handle, r, buf, a3, e->f1C))
                     r = -1;
             }
             if (e->flags & 8) {
-                if (!NetObj_SendMessage(handle, r, buf, a2, e->f1C))
+                if (!cNetObj_SendMessage_int_int_ucharP_int_etc(handle, r, buf, a2, e->f1C))
                     r = -1;
             }
             if (e->flags & 2) {
                 if (!(g_IsMultiplayer ? D_005721C0 : 1)) {
                     int type = e->f1C;
                     NetGetPeerToPeerHostClientIndex(D_005721A8, &peer);
-                    if (!NetObj_SendMessage(handle, r, buf, peer, type))
+                    if (!cNetObj_SendMessage_int_int_ucharP_int_etc(handle, r, buf, peer, type))
                         r = -1;
                 }
             }
@@ -186,25 +186,25 @@ extern int cCharActionMsg_Int_InitNet(void);
 extern int cCharActionMsg_InitNet(void);
 extern int cDisableMsg_InitNet(void);
 extern int cEnableMsg_InitNet(void);
-extern int cDamageMsg_NetRegister(void);
-extern int cActivateMsg_NetRegister(void);
-extern int cDeactivateMsg_NetRegister(void);
-extern int cNetActivateAndControlMsg_NetRegister(void);
-extern int cNetPlayGameMsg_NetRegister(void);
-extern int cNetSetGobjMsg_NetRegister(void);
-extern int cNetTerrainActivationMsg_NetRegister(void);
-extern int cNetTransferMsg_NetRegister(void);
-extern int NpcInfo_RegisterNetType(void);
-extern int Voice_RegisterHeadsetSemaphore(void);
-extern int GenInfo_RegisterNetType(void);
+extern int cDamageMsg_InitNet(void);
+extern int cActivateMsg_InitNet(void);
+extern int cDeactivateMsg_InitNet(void);
+extern int cNetActivateAndControlMsg_InitNet(void);
+extern int cNetPlayGameMsg_InitNet(void);
+extern int cNetSetGobjMsg_InitNet(void);
+extern int cNetTerrainActivation_InitNet(void);
+extern int cNetTransferMsg_InitNet(void);
+extern int cNPCInfoObject_InitNet(void);
+extern int HeadsetSemaphore_InitNet(void);
+extern int cGenInfoObject_InitNet(void);
 extern int cNetTransferRecvMsg_NetRegister(void);
-extern int cNetLevelInfoMsg_NetRegister(void);
+extern int cNetMsg_InitNet(void);
 
 /*
  * Runs the per-class registration functions of the message/event types (each
- * callee registers one class), then stores Net_GetClock(0) in D_0055C7B8.
+ * callee registers one class), then stores cDME_GetTime(0) in D_0055C7B8.
  */
-void NetMsgTypes_RegisterAll(void) {
+void cNetObj_NetInit(void) {
     cCharActionMsg_InitNet();
     cCharActionMsg_Scalar_InitNet();
     cCharActionMsg_Int_InitNet();
@@ -215,22 +215,22 @@ void NetMsgTypes_RegisterAll(void) {
     cCharActionMsg_MotionParams_InitNet();
     cCharActionMsg_DestinationParams_InitNet();
     cCharActionMsg_InteractParams_InitNet();
-    cNetActivateAndControlMsg_NetRegister();
-    cNetPlayGameMsg_NetRegister();
-    cNetSetGobjMsg_NetRegister();
-    cNetTransferMsg_NetRegister();
-    cNetTerrainActivationMsg_NetRegister();
-    cDamageMsg_NetRegister();
-    cDeactivateMsg_NetRegister();
-    cActivateMsg_NetRegister();
+    cNetActivateAndControlMsg_InitNet();
+    cNetPlayGameMsg_InitNet();
+    cNetSetGobjMsg_InitNet();
+    cNetTransferMsg_InitNet();
+    cNetTerrainActivation_InitNet();
+    cDamageMsg_InitNet();
+    cDeactivateMsg_InitNet();
+    cActivateMsg_InitNet();
     cDisableMsg_InitNet();
     cEnableMsg_InitNet();
     cNetTransferRecvMsg_NetRegister();
-    Voice_RegisterHeadsetSemaphore();
-    NpcInfo_RegisterNetType();
-    GenInfo_RegisterNetType();
-    cNetLevelInfoMsg_NetRegister();
-    D_0055C7B8 = Net_GetClock(0);
+    HeadsetSemaphore_InitNet();
+    cNPCInfoObject_InitNet();
+    cGenInfoObject_InitNet();
+    cNetMsg_InitNet();
+    D_0055C7B8 = cDME_GetTime(0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003FB250 */
@@ -255,17 +255,17 @@ struct NObj { char pad[0x49]; unsigned char type; char pad4A[0xE]; Ctrl* ctrl; }
 struct NMap { NObj* obj; int index; };
 
 extern "C" {
-NMap* NetMap_Lookup(int id);
-void* Mem_Alloc(int, int, char*, int);
+NMap* cNetObj_GetNetSystem(int id);
+void* cMemMan_Allocate(int, int, char*, int);
 void* cNPCInfoObject_ctor(void* p);
 int cNPCInfoObject_GetOwner_uint(void* mgr, int id);
 extern void* D_0055C988;
 extern char D_004BE228[];
-int Player_GetIndex(int id);
+int cNetObj_GetOwner(int id);
 }
 
-extern "C" int Player_GetIndex(int id) {
-    NMap* m = NetMap_Lookup(id);
+extern "C" int cNetObj_GetOwner(int id) {
+    NMap* m = cNetObj_GetNetSystem(id);
     int r = -1;
     if (m) {
         NObj* o = m->obj;
@@ -275,7 +275,7 @@ extern "C" int Player_GetIndex(int id) {
                     void* p;
                     {
                         AllocGuard g;
-                        p = Mem_Alloc(0, 1, D_004BE228, 0x22F);
+                        p = cMemMan_Allocate(0, 1, D_004BE228, 0x22F);
                     }
                     if (p) p = cNPCInfoObject_ctor(p);
                     D_0055C988 = p;

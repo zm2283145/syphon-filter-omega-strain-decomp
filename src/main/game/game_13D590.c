@@ -15,7 +15,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int value);
 
 /* push_back(value). */
 int cArray_tServerPtr_PushBackActual(PtrVec* v, int value) {
@@ -24,7 +24,7 @@ int cArray_tServerPtr_PushBackActual(PtrVec* v, int value) {
 
     count = v->count;
     data = v->data;
-    return PtrVec_Insert(v, data + count, 1, value);
+    return std_vector_pod_int_insert(v, data + count, 1, value);
 }
 
 Unk0013D5B0* cDME_tServer_ctor(Unk0013D5B0* self) {
@@ -50,7 +50,7 @@ DEFINE_GUARDED_ALLOCATE(opNew_uint_int_charP_int)
 #include "short_string_assign.h"
 
 /* Assign one string to another. */
-DEFINE_SHORT_STRING_ASSIGN(String_AssignString)
+DEFINE_SHORT_STRING_ASSIGN(std_basic_string_char_char_traits_char_assign_basicstringR)
 #pragma pop /* merge_units */
 /* merge_units: end func_0013D680 */
 

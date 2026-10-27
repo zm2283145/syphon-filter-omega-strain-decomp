@@ -15,18 +15,18 @@ struct Self236380 {
     int x84;
 };
 extern "C" {
-void ParticleInst_Draw(void* obj, int a, M4* m);
-void FireEffectObj_Draw(Self236380* self);
+void cParticle_Render(void* obj, int a, M4* m);
+void cHumanParticleGroup_Render(Self236380* self);
 }
 static inline void UM(void* m) { void* p = m; int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
-extern "C" void FireEffectObj_Draw(Self236380* self) {
+extern "C" void cHumanParticleGroup_Render(Self236380* self) {
     int i;
     for (i = 0; i < self->x84; i++) {
         if (self->x7C[i]->obj) {
             M4 m;
             UM(&m);
             m.t = self->x7C[i]->pos;
-            { Sub236380* s = self->x74; ParticleInst_Draw(self->x7C[i]->obj, s->x38, &m); }
+            { Sub236380* s = self->x74; cParticle_Render(self->x7C[i]->obj, s->x38, &m); }
         }
     }
 }

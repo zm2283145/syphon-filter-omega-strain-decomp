@@ -35,7 +35,7 @@ int rt_msg_client_iupdate_all(unsigned char k)
 #define F(p,T,o) (*(T *)((char *)(p) + (o)))
 
 extern int rt_msg_client_get_valid_connection(int, void **);
-extern int NetConn_BufferMessage(void *, int, int, int, int, int);
+extern int rt_msg_client_store_msg_in_send_buf(void *, int, int, int, int, int);
 int rt_msg_client_isend_target(unsigned short a0, unsigned short id, int flags, int data, unsigned short len)
 {
     void *c = 0;
@@ -59,6 +59,6 @@ int rt_msg_client_isend_target(unsigned short a0, unsigned short id, int flags, 
     if (id == 0xFFFE) type = 2;
     else if (id == 0xFFFF) type = 0xB;
     else type = 3;
-    return NetConn_BufferMessage(dst, type, id, data, len, (flags >> 7) & 1);
+    return rt_msg_client_store_msg_in_send_buf(dst, type, id, data, len, (flags >> 7) & 1);
 }
 /* merge_units: end func_002FD180 */

@@ -12,7 +12,7 @@
 #pragma opt_dead_assignments off
 #pragma opt_common_subs on
 
-/* GuiAgentDisplay_Wake: (re)builds the front-end agent model of the agent display widget:
+/* GuiAgentDisplay_onWake: (re)builds the front-end agent model of the agent display widget:
  * camera and turntable matrices, appearance copied from the widget's block, body model,
  * collision spheres, idle animation, and the default display parameters.
  * Same model set-up as GuiAgentModify_ctor (GuiAgentModify/GuiAgentModify_ctor.c). */
@@ -92,32 +92,32 @@ extern char D_004BBA00[];
 extern char D_004BBA10[];
 extern void* D_004F77A0;
 extern GDef_A1 D_0056F9B0;
-void GuiWidget_Init(Self_A1* self);
-float Math_SinThunk(float a);
-float Math_CosThunk(float a);
-void Mtx44_SetRotation(M4_A1* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
-unsigned short Appearance_GetPairCount(void* app);
-unsigned short AgentPacking_AddBlankPairs(void* app, unsigned short n);
-void Appearance_ReorderParts(Man_A1* m);
-int Appearance_GetBodyKind(void* app);
-void cVUM_GOBJ_InitModel(Model_A1* m, char* name);
-void String_Copy(char* d, const char* s);
+void GuiWidget_onAdd(Self_A1* self);
+float SIN(float a);
+float COS(float a);
+void cMatrix_Set_ColumnMajorForm(M4_A1* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
+unsigned short SKL_CountAttribs(void* app);
+unsigned short SKL_AddBlankParts(void* app, unsigned short n);
+void cMan_SortParts(Man_A1* m);
+int SKL_FindSex(void* app);
+void cSKM_GOBJ_ResetSkeleton(Model_A1* m, char* name);
+void Libc_Strcpy(char* d, const char* s);
 void cArrayCapacity_ctor(Word_A1* w, int n);
 void cArray_cSkeletonBBoxContributionPtr_ctor(SVec_A1* v, Word_A1* w, unsigned char f);
-V4_A1* Vec4_Set(V4_A1* v, float x, float y, float z, float w);
+V4_A1* cVector_ctor_float_float_float_float(V4_A1* v, float x, float y, float z, float w);
 void cSkeletonBBoxContribution_ctor(Sph_A1* s, int bone, float r, V4_A1* off);
 void cArray_cSkeletonBBoxContributionPtr_PushBackActual(SVec_A1* v, Sph_A1** p);
 void cSkeletonBBoxContribution_dtor(Sph_A1* s, int f);
 void* cSKM_GOBJ_GetSkeleton_void_2(Model_A1* m);
-void FrontEnd_SetNodeSpheres(void* n, SVec_A1* v);
+void cSkeleton_ResetBBoxContributors(void* n, SVec_A1* v);
 void cArray_cSkeletonBBoxContributionPtr_dtor(SVec_A1* v, int f);
-void Model_Attach(void* a, void* b);
-void AnimModel_InitAnim(void* a);
-void Model_HardMeshAttachPoints(Man_A1* m);
+void cSkaParams_HandleNewAnimationSet(void* a, void* b);
+void cSkaSystem_SetInitialAnimation(void* a);
+void cMan_SetGunOffsets(Man_A1* m);
 void cMan_GetTextureIDs(Man_A1* m);
-void ActorModel_Setup(Man_A1* m, int flag);
-void Skel_ApplyScalePreset(Man_A1* m, int a);
-void GuiAgentDisplay_Wake(Self_A1* self);
+void cMan_BuildMan(Man_A1* m, int flag);
+void cMan_SetBoneSet(Man_A1* m, int a);
+void GuiAgentDisplay_onWake(Self_A1* self);
 }
 
 /* quadword block copy (addi loop counter, hand-scheduled delay slot): not expressible in C */
@@ -138,7 +138,7 @@ static inline void QCopy_A1(void* d0, void* s0, int n0) { int n = n0; void* d = 
 static inline Man_A1* MANP_A1(Model_A1* m) { return &m->man; }
 static inline char* APP_A1(Man_A1* m) { return m->app; }
 static inline char* NAME_A1(Man_A1* m) { return m->name; }
-static inline V4_A1* Splat_A1(V4_A1* t, float) { float z = 0.0f; return Vec4_Set(t, z, z, z, z); }
+static inline V4_A1* Splat_A1(V4_A1* t, float) { float z = 0.0f; return cVector_ctor_float_float_float_float(t, z, z, z, z); }
 static inline void Spheres_A1(Model_A1* md)
 {
             Word_A1 w;
@@ -176,7 +176,7 @@ static inline void Spheres_A1(Model_A1* md)
                 cSkeletonBBoxContribution_dtor(&arr[2], -1);
                 cSkeletonBBoxContribution_dtor(&arr[1], -1);
                 cSkeletonBBoxContribution_dtor(&arr[0], -1);
-                FrontEnd_SetNodeSpheres(cSKM_GOBJ_GetSkeleton_void_2(md), &vec);
+                cSkeleton_ResetBBoxContributors(cSKM_GOBJ_GetSkeleton_void_2(md), &vec);
                 cArray_cSkeletonBBoxContributionPtr_dtor(&vec, -1);
             }
 }
@@ -197,14 +197,14 @@ static inline void Tail_A1(Self_A1* self, V4_A1& v)
                 void** an;
                 void* a = D_004F77A0;
                 an = (void**)((char*)self->model + 0x2EC0);
-                Model_Attach(an + 4, a);
+                cSkaParams_HandleNewAnimationSet(an + 4, a);
                 *an = a;
-                AnimModel_InitAnim(an);
+                cSkaSystem_SetInitialAnimation(an);
             }
             {
                 SetF_A1(self->model, 1.0f);
                 self->model->man.f23F4 = 0.0f;
-                Model_HardMeshAttachPoints(&self->model->man);
+                cMan_SetGunOffsets(&self->model->man);
             }
             {
                 Man_A1* m;
@@ -219,18 +219,18 @@ static inline void Tail_A1(Self_A1* self, V4_A1& v)
                 int c;
                 Model_A1* m;
                 c = 1; m = self->model; m->man.f2BD0 = c;
-                ActorModel_Setup(&self->model->man, 1);
+                cMan_BuildMan(&self->model->man, 1);
             }
-            Skel_ApplyScalePreset(&self->model->man, -1);
+            cMan_SetBoneSet(&self->model->man, -1);
             {
                 SetS_A1(self->model, 0);
                 SetB_A1(self->model, 1);
             }
 }
-extern "C" void GuiAgentDisplay_Wake(Self_A1* self)
+extern "C" void GuiAgentDisplay_onWake(Self_A1* self)
 {
     M4_A1 mtx;
-    GuiWidget_Init(self);
+    GuiWidget_onAdd(self);
     self->speed = 0.0f;
     {
         MANP_A1(self->model)->f2C04 = Buf_A1(self->model);
@@ -248,25 +248,25 @@ extern "C" void GuiAgentDisplay_Wake(Self_A1* self)
     {
         Xf_A1* xf = self->model->xf;
         M4_A1 rot;
-        float s = Math_SinThunk(0.0f);
-        float c = Math_CosThunk(0.0f);
-        { M4_A1* pr = &rot; float z = 0.0f; Mtx44_SetRotation(pr, c, -s, z, s, c, z, z, z, 1.0f); }
+        float s = SIN(0.0f);
+        float c = COS(0.0f);
+        { M4_A1* pr = &rot; float z = 0.0f; cMatrix_Set_ColumnMajorForm(pr, c, -s, z, s, c, z, z, z, 1.0f); }
         { M4_A1* pr = &rot; xf->SetMtx(pr); }
     }
     QCopy_A1(APP_A1(MANP_A1(self->model)), &self->app, 0x44);
     {
         Man_A1* m = &self->model->man;
-        m->cnt = Appearance_GetPairCount(m->app);
+        m->cnt = SKL_CountAttribs(m->app);
     }
     {
         Man_A1* m = &self->model->man;
-        m->cnt = AgentPacking_AddBlankPairs(m->app, m->cnt);
+        m->cnt = SKL_AddBlankParts(m->app, m->cnt);
     }
-    Appearance_ReorderParts(&self->model->man);
+    cMan_SortParts(&self->model->man);
     {
-        char* nm; if (Appearance_GetBodyKind(APP_A1(&self->model->man)) == 0) nm = D_004BBA00; else { nm = D_004BBA10; asm { .set reorder } }
-        cVUM_GOBJ_InitModel(self->model, nm);
-        String_Copy(NAME_A1(&self->model->man), nm);
+        char* nm; if (SKL_FindSex(APP_A1(&self->model->man)) == 0) nm = D_004BBA00; else { nm = D_004BBA10; asm { .set reorder } }
+        cSKM_GOBJ_ResetSkeleton(self->model, nm);
+        Libc_Strcpy(NAME_A1(&self->model->man), nm);
     }
     self->model->Init(1);
     { V4_A1 v; Tail_A1(self, v); }

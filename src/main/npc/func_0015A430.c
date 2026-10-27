@@ -6,6 +6,6 @@
 #include "npc_types.h"
 
 /* True when the message's mode byte is 3. */
-int TeleportMsg_IsMode3(NpcAiMsg* msg) {
+int cMoveMsg_Template_1_HasDeltaPosition(NpcAiMsg* msg) {
     return (unsigned int)(msg->aiMode ^ 3) < 1U;
 }

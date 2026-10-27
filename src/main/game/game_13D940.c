@@ -27,16 +27,16 @@ Word* std_list_cScenePtr_generic_iterator_ctor(Word* dst, Word* src) {
 typedef struct Nd_D950 { struct Nd_D950* prev; struct Nd_D950* next; int obj; } Nd_D950;
 struct It_D950 { Nd_D950* n; It_D950() {} void operator=(const It_D950& o) { const float* s = (const float*)&o; float* d = (float*)this; *d = *s; } };
 extern "C" {
-void List_Begin(It_D950*, int);
+void std_list_deleter_voidPtr_begin_void(It_D950*, int);
 void std_list_deleter_voidPtr_end_void(It_D950*, int);
 #if 0 /* merge_units */
 void std_list_cScenePtr_generic_iterator_ctor(It_D950*, It_D950*);
 #endif /* merge_units */
 #define std_list_cScenePtr_generic_iterator_ctor(a0, a1) ((void)std_list_cScenePtr_generic_iterator_ctor((Word *)(a0), (Word *)(a1))) /* merge_units */
 
-int World_DrawPass(int);
+int cScene_Render(int);
 }
-/* run World_DrawPass over every entry of the list (begin/end iterators) */
+/* run cScene_Render over every entry of the list (begin/end iterators) */
 #pragma push
 #pragma opt_propagation off
 extern "C" void cSceneManager_Render(int l)
@@ -48,7 +48,7 @@ extern "C" void cSceneManager_Render(int l)
     It_D950 t1;
     It_D950 t2;
     Nd_D950* n;
-    List_Begin(&t1, l);
+    std_list_deleter_voidPtr_begin_void(&t1, l);
     std_list_cScenePtr_generic_iterator_ctor(&b, &t1);
     n = b.n;
     std_list_deleter_voidPtr_end_void(&t2, l);
@@ -59,7 +59,7 @@ extern "C" void cSceneManager_Render(int l)
     /* the iterator lives in memory: every access reloads it (volatile view) */
 #define IT (((volatile It_D950*)&it)->n)
     while (IT != n) {
-        World_DrawPass(IT->obj);
+        cScene_Render(IT->obj);
         IT = IT->next;
     }
 #undef IT
@@ -75,16 +75,16 @@ typedef struct { char b[0xC]; } ScalarCollection;
 extern signed char D_004EA100;
 extern int D_004EA108;
 extern ScalarCollection D_004EA118;
-extern void ScalarCollection_Init(ScalarCollection* c);
-extern void ScalarCollection_Dtor_13DAD0(void);
+extern void std_list_deleter_voidPtr_ctor_void(ScalarCollection* c);
+extern void cSceneManager_dtor(void);
 extern void __register_global_object(void* obj, void* dtor, void* link);
 
 /* Returns the lazily constructed static collection at D_004EA118. */
 ScalarCollection* GetSceneManager(void)
 {
     if (D_004EA100 == 0) {
-        ScalarCollection_Init(&D_004EA118);
-        __register_global_object(&D_004EA118, ScalarCollection_Dtor_13DAD0, &D_004EA108);
+        std_list_deleter_voidPtr_ctor_void(&D_004EA118);
+        __register_global_object(&D_004EA118, cSceneManager_dtor, &D_004EA108);
         D_004EA100 = 1;
     }
     return &D_004EA118;

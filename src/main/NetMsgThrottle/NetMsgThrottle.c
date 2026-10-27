@@ -93,12 +93,12 @@ void func_00472370(Iter* out, PtrVec* v);
 void func_00472050(ThrLIt* r, const ThrLIt& s);
 #endif /* merge_units */
 
-ThrLIt List_Erase(ThrList* l, const ThrLIt& pos);
-int Net_GetClock(int);
+ThrLIt std_list_deleter_voidPtr_erase_listdeleter(ThrList* l, const ThrLIt& pos);
+int cDME_GetTime(int);
 void printf(char* fmt, ...);
-void Event_Send(ThrMsg* msg, void* target, int flags);
-void Tree_Successor(void* it);
-void Mem_Free(int pool, void* p, char* file, int line);
+void QueueMessage_cMessageR_cSystemP_int(ThrMsg* msg, void* target, int flags);
+void std_red_black_tree_1_increment(void* it);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 }
 
 static inline void LGet(ThrList* l, ThrLIt* b, ThrLIt* e)
@@ -118,7 +118,7 @@ static inline int MapNe(ThrIt* it, ThrIt* end)
     return (it->node == end->node) ^ 1;
 }
 
-extern "C" void NetMsgThrottle_SendMsg(void)
+extern "C" void cNetMsgThrottle_NextFrame(void)
 {
     ThrIt it;
     ThrLIt e;
@@ -129,7 +129,7 @@ extern "C" void NetMsgThrottle_SendMsg(void)
 
     func_00472070(&begin, D_00588020);
     it.node = begin.node;
-    now = Net_GetClock(1);
+    now = cDME_GetTime(1);
     while (MapNe(&it, &end)) {
         ThrList* l = &it.node->list;
         float f = (float)l->count * l->rate;
@@ -143,24 +143,24 @@ extern "C" void NetMsgThrottle_SendMsg(void)
                 LGet(l, &b, &e);
                 if (e.node == b.node) break;
                 ent = l->head->entry;
-                List_Erase(l, ThrLIt(l->head));
+                std_list_deleter_voidPtr_erase_listdeleter(l, ThrLIt(l->head));
                 printf(D_004C3430, now, ++D_00588030, it.node->key);
-                Event_Send(ent->msg, ent->target, ent->flags);
+                QueueMessage_cMessageR_cSystemP_int(ent->msg, ent->target, ent->flags);
                 msg = ent->msg;
                 {
                     AllocGuard guard;
                     msg->~ThrMsg();
-                    Mem_Free(0, msg, D_004C3410, 0x32);
+                    cMemMan_Deallocate(0, msg, D_004C3410, 0x32);
                 }
                 {
                     AllocGuard guard;
-                    Mem_Free(0, ent, D_004C3410, 0x33);
+                    cMemMan_Deallocate(0, ent, D_004C3410, 0x33);
                 }
             }
         } else {
             l->count++;
         }
-        Tree_Successor(&it);
+        std_red_black_tree_1_increment(&it);
     }
 }
 #undef func_00472070 /* merge_units */

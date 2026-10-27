@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-float AnimPhase_GetCurrent(char* self) {
+float cSkaPlaybackGroup_cPlaybackPosWithHistory_Curr(char* self) {
     return *(float*)(self + 4);
 }

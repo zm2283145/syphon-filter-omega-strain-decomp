@@ -18,14 +18,14 @@
 extern char D_005724B0;
 extern int NetRequestServersOnSubnet(void* callback);
 extern int NetUpdate(void);
-extern int DME_AddGameAddress(int, int);
+extern int cDME_SvrResponseCallback(int, int);
 
-/* Sets D_005724B0 to 3 and installs DME_AddGameAddress via NetRequestServersOnSubnet; falls back to NetUpdate on failure. */
+/* Sets D_005724B0 to 3 and installs cDME_SvrResponseCallback via NetRequestServersOnSubnet; falls back to NetUpdate on failure. */
 int cDME_CreateServerList(void) {
     int ret;
 
     D_005724B0 = 3;
-    ret = NetRequestServersOnSubnet(DME_AddGameAddress);
+    ret = NetRequestServersOnSubnet(cDME_SvrResponseCallback);
     if (ret == 0) {
         ret = NetUpdate();
     }
@@ -54,7 +54,7 @@ extern signed char D_005724B0;
 #define D_005724B0 (*(signed char*)&D_005724B0) /* merge_units */
 
 extern char Sfo_Malloc;
-extern char sfo_malloc_2CA9B0;
+extern char sfo_free;
 
 void cDME_Init(void) {
     int sp40[8];
@@ -66,7 +66,7 @@ void cDME_Init(void) {
     D_00572419 = 0;
     D_0057241A = 0;
     D_0057241B = 0;
-    temp_v0 = NetRegisterMallocFreeCallbacks(&Sfo_Malloc, &sfo_malloc_2CA9B0);
+    temp_v0 = NetRegisterMallocFreeCallbacks(&Sfo_Malloc, &sfo_free);
     if (temp_v0 == 0) {
         if (temp_v0 == 0) {
             NetSetDefaultInitializeParams(sp40);

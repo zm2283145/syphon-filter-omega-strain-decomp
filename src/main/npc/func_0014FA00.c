@@ -57,7 +57,7 @@ extern void std_list_cActiveListItemPtr_end_void(Iter* out, Tree* t);
 
 static inline void FCopy4FA(float* d, float* s) { float* ss = s; float* dd = d; *dd = *ss; }
 
-extern "C" Ctl4FA* NpcAi_NodeReservedBy(int node)
+extern "C" Ctl4FA* cNPC_IsNodeOccupied(int node)
 {
     Node4FA* it;
     int tmp;

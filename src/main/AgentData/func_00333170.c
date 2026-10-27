@@ -1,7 +1,7 @@
 /*
- * Awards_FindRequirementRow: finds the range definition of table D_00532A70[type] that
+ * cAgentData_FindRequirement: finds the range definition of table D_00532A70[type] that
  * contains the localised key and returns the matching byte of the agent's
- * per-type record (used by AgentData_UnlockRequirement to set a flag byte).
+ * per-type record (used by cAgentData_UnlockRequirement to set a flag byte).
  */
 
 /* Range definition (24 bytes). */
@@ -42,12 +42,12 @@ typedef struct AgentRanges {
 } AgentRanges;
 
 extern RangeTable D_00532A70[5];
-extern int Loc_FindKeyThunk(const char* key);
+extern int nGlobalization_GetStringIndex(const char* key);
 
 #pragma opt_strength_reduction off
 #pragma opt_loop_invariants off
-unsigned char* Awards_FindRequirementRow(AgentRanges* self, unsigned char type, const char* key) {
-    int k = Loc_FindKeyThunk(key);
+unsigned char* cAgentData_FindRequirement(AgentRanges* self, unsigned char type, const char* key) {
+    int k = nGlobalization_GetStringIndex(key);
     int i;
     int s;
     int l;

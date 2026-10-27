@@ -13,7 +13,7 @@ extern int D_0048C38C;
 extern char D_004AD218[];
 extern char D_004AD220[];
 extern int iTerminateString_void(void *, int);
-extern int Net_SendLocked(int, int, int, int, int, int, void *);
+extern int NetSendMessage(int, int, int, int, int, int, void *);
 extern void MGCLSetServerType(int);
 extern void MGCLSetServerPort(int);
 extern int strcmp(const char *, const char *);
@@ -33,7 +33,7 @@ int MGCLSessionBegin(Msg_F1C8 *a, int b)
     }
     iTerminateString_void(a, 0x15);
     iTerminateString_void(a->name, 0x10);
-    return Net_SendLocked(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C38C, 0x38, a) ? -5 : 0;
+    return NetSendMessage(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C38C, 0x38, a) ? -5 : 0;
 }
 /* merge_units: end func_002CF1C8 */
 
@@ -50,7 +50,7 @@ int MGCLSessionEnd(char *a, int b)
     iTerminateString_void(a, 0x15);
     if (D_0048C414 != 1) return -0xC;
     D_0048C3E4 = b;
-    return Net_SendLocked(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C394, 0x15, a) ? -5 : 0;
+    return NetSendMessage(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C394, 0x15, a) ? -5 : 0;
 }
 #undef iTerminateString_void /* merge_units */
 /* merge_units: end func_002CF2C0 */

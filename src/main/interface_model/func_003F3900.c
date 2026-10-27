@@ -12,15 +12,15 @@ extern Err_3F3900* D_00489738;
 extern char D_004BE100[];
 extern char D_004BE120[];
 extern char D_004BE150[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void Mem_Free(int pool, void* p, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 void Libc_Abort(void);
 void Libc_Fprintf(void* s, char* msg);
 void std_swap_vectordeleterR_vectordeleterR_45(Vec_3F3900* a, Vec_3F3900* b);
 void func_003F43B0(Vec_3F3900* a);
 }
 
-static inline E_3F3900* Alloc_3F3900(unsigned int n) { AllocGuard g; return (E_3F3900*)Mem_Alloc(0, n * sizeof(E_3F3900), D_004BE150, 0x5C); }
+static inline E_3F3900* Alloc_3F3900(unsigned int n) { AllocGuard g; return (E_3F3900*)cMemMan_Allocate(0, n * sizeof(E_3F3900), D_004BE150, 0x5C); }
 #pragma push
 #pragma peephole off
 #pragma opt_propagation off
@@ -51,7 +51,7 @@ extern "C" void func_003F3900(Vec_3F3900* v0, unsigned int n0)
             func_003F43B0(&tmp);
             {
                 E_3F3900* p = tmp.data;
-                if (p) { if (p) { AllocGuard g; Mem_Free(0, p, D_004BE120, 0x64); } }
+                if (p) { if (p) { AllocGuard g; cMemMan_Deallocate(0, p, D_004BE120, 0x64); } }
             }
         }
     }

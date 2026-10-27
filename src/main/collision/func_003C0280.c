@@ -46,8 +46,8 @@ struct ColResult {
     unsigned char b118, b119, b11A;
     M m120, m160, m1A0;
 };
-extern "C" ColResult* ColResult_Construct(ColResult* r);
-ColResult* ColResult_Construct(ColResult* r)
+extern "C" ColResult* cCollisionProbe_SphereSweptRay_ctor(ColResult* r);
+ColResult* cCollisionProbe_SphereSweptRay_ctor(ColResult* r)
 {
     r->b0 = 0;
     r->v10 = Zero();

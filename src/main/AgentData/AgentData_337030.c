@@ -23,7 +23,7 @@
 extern "C" {
 char D_004B9988[] = "AgentData.cc";
 }
-DEFINE_NET_MSG_CLONE(cNetAddObjectiveMsg_v01, 0x28, D_004B9988, 0x3C4, D_004DE810, NMC_W(0x24))
+DEFINE_NET_MSG_CLONE(cNetAddObjectiveMsg_Clone, 0x28, D_004B9988, 0x3C4, D_004DE810, NMC_W(0x24))
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00337030(void) {}
 #pragma pop /* merge_units */

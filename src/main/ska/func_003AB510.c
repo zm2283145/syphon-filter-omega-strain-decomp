@@ -69,7 +69,7 @@ typedef struct {
 } AnimModel_3AB510;
 
 extern "C" {
-void AnimChannels_Update(void* ch, float dt, float inv);
+void cSkaSliderValueList_NextFrame(void* ch, float dt, float inv);
 void cLList_cSkaTransPlaybackPtr_Begin(LIt_3AB510* out, void* list);
 void cLList_cSkaTransPlaybackPtr_End(LIt_3AB510* out, void* list);
 int opNe_cLListIteratorR_cLListIteratorR_8(LIt_3AB510* a, LIt_3AB510* b);
@@ -78,25 +78,25 @@ void cLListIterator_cSkaTransPlaybackPtr_opInc(LIt_3AB510* it);
 int cSkaTransPlayback_NextFrame(int e, void* key);
 void cLList_cSkaTransPlaybackPtr_Remove(void* list, int* v);
 void opDelete_cSkaTransPlaybackP_int_bool_charP_etc(int p, int pool, int flags, char* file, int line);
-void Bone_ResetAccumulators(char* b);
-void Bone_FinalizeTranslation(char* b);
-void Bone_FinalizeRotation(char* b);
-void RootCollection_Reset(Root_3AB510* r);
+void cBone_AnimationClearAccumulation(char* b);
+void cBone_AnimationSetWeightedOffset(char* b);
+void cBone_AnimationSetWeightedRotation(char* b);
+void cSkaAnimAnchorList_ClearAccumulation(Root_3AB510* r);
 void AnimCtl_Update(void* ctl, void* m, float dt);
-void SkelNode_AccumulateOutputs(Root_3AB510* r);
+void cSkaAnimAnchorList_Update(Root_3AB510* r);
 }
 
 static inline void ResetAll_3AB510(BIt_3AB510 first, BIt_3AB510 last)
 {
     for (; first != last; ++first)
-        Bone_ResetAccumulators(first.p);
+        cBone_AnimationClearAccumulation(first.p);
 }
 
 static inline void FinAll_3AB510(BIt_3AB510 first, BIt_3AB510 last)
 {
     for (; first != last; ++first) {
-        Bone_FinalizeTranslation(first.p);
-        Bone_FinalizeRotation(first.p);
+        cBone_AnimationSetWeightedOffset(first.p);
+        cBone_AnimationSetWeightedRotation(first.p);
     }
 }
 
@@ -162,7 +162,7 @@ static inline void PurgeList_3AB510(int* list, void* key)
 #pragma opt_unroll_loops off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" void AnimModel_Update(AnimModel_3AB510* m, float dt)
+extern "C" void cSkaSystem_NextFrame(AnimModel_3AB510* m, float dt)
 {
     {
         unsigned int c = m->count;
@@ -171,26 +171,26 @@ extern "C" void AnimModel_Update(AnimModel_3AB510* m, float dt)
             m->count++;
         }
     }
-    AnimChannels_Update(m->chans, dt, 1.0f / dt);
+    cSkaSliderValueList_NextFrame(m->chans, dt, 1.0f / dt);
     PurgeList_3AB510(m->list, &m->count);
     {
         BIt_3AB510 it = BIt_3AB510(m->skel->bones.begin());
         BIt_3AB510 e = BIt_3AB510(m->skel->bones.end());
         for (; it != e; ++it) {
-            Bone_ResetAccumulators(it.p);
+            cBone_AnimationClearAccumulation(it.p);
         }
     }
-    RootCollection_Reset(&m->root);
+    cSkaAnimAnchorList_ClearAccumulation(&m->root);
     AnimCtl_Update(m->ctl, &m->count, dt);
     {
         BIt_3AB510 it = BIt_3AB510(m->skel->bones.begin());
         BIt_3AB510 e = BIt_3AB510(m->skel->bones.end());
         for (; it != e; ++it) {
-            Bone_FinalizeTranslation(it.p);
-            Bone_FinalizeRotation(it.p);
+            cBone_AnimationSetWeightedOffset(it.p);
+            cBone_AnimationSetWeightedRotation(it.p);
         }
     }
-    SkelNode_AccumulateOutputs(&m->root);
+    cSkaAnimAnchorList_Update(&m->root);
     {
         Skel_3AB510* sk = m->skel;
         Root_3AB510* r = &m->root;

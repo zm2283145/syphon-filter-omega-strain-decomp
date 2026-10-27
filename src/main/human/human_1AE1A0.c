@@ -14,7 +14,7 @@
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_rotateloops off
-char* CanonicalKey_Construct(char* d, char* s)
+char* cString16N_3_ctor_charP(char* d, char* s)
 {
     CANONICAL_KEY_INIT(d, s)
     return d;
@@ -29,7 +29,7 @@ static inline void merge_flush_func_001AE1A0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[5]; char flag; char pad6[10]; __int128 q; char pad20[0x50]; } E_E230;
 typedef struct { char pad[0x3A0]; E_E230 e[4]; } O_E230;
-void LookCtl_SetSlotPoint(O_E230* o, unsigned char i, __int128* src) {
+void cHumanIkRoutine_SetAimAtPoint(O_E230* o, unsigned char i, __int128* src) {
     E_E230* e = (E_E230*)((char*)o->e + i * sizeof(E_E230));
     __int128* d = &e->q;
     VCopyF(d, src);

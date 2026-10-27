@@ -1,6 +1,6 @@
 #pragma cplusplus on
 #include "types.h"
-/* LosRegion_FindGlobal: nearest LOS region (by squared box distance) to a point.
+/* nActivation_GetClosestTerrainPiece: nearest LOS region (by squared box distance) to a point.
    Iterator wraps its pointer in a nested struct so `it = b` is a block copy (lwc1/swc1);
    `it` declared first gets the top slot; dead `xx = &d` gives the duplicate addiu. */
 #pragma always_inline on
@@ -46,19 +46,19 @@ struct It {
 extern "C" {
 extern void* D_004FFD48;
 void* cObjList_cTerrainPtr_GetList(void* list);
-void LosRegionArray_Begin(It* it, void* node);
-void LosRegionArray_End(It* it, void* node);
+void cArray_cTerrainPtr_Begin(It* it, void* node);
+void cArray_cTerrainPtr_End(It* it, void* node);
 }
-extern "C" LosRegion* LosRegion_FindGlobal(const V* p)
+extern "C" LosRegion* nActivation_GetClosestTerrainPiece(const V* p)
 {
     void* list = D_004FFD48;
     float best = 3.4028235e38f;
     LosRegion* found = 0;
     It it;
     It e;
-    LosRegionArray_End(&e, cObjList_cTerrainPtr_GetList(list));
+    cArray_cTerrainPtr_End(&e, cObjList_cTerrainPtr_GetList(list));
     It b;
-    LosRegionArray_Begin(&b, cObjList_cTerrainPtr_GetList(list));
+    cArray_cTerrainPtr_Begin(&b, cObjList_cTerrainPtr_GetList(list));
     for (it = b; it != e; ++it) {
         LosRegion* r = *it.q.p;
         V d = BoxDelta(p, r->GetBounds());

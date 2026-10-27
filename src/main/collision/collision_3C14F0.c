@@ -100,10 +100,10 @@ V* cCollisionEdge_Vertex0(Edge* e);
 V* cCollisionEdge_UnitEdgeVector(Edge* e);
 V* cCollisionEdge_Vertex1(Edge* e);
 float GetDistanceSquaredPointToLine(const V* a, const V* b, const V* dir);
-float Math_MaxF(float a, float b);
-bool ColEdge_AreConnected(Edge* a, Edge* b, float eps, float maxd, float tol);
+float MAX(float a, float b);
+bool cCollisionEdge_CanBeConnected(Edge* a, Edge* b, float eps, float maxd, float tol);
 }
-bool ColEdge_AreConnected(Edge* a_, Edge* b_, float eps, float maxd, float tol)
+bool cCollisionEdge_CanBeConnected(Edge* a_, Edge* b_, float eps, float maxd, float tol)
 {
     Edge* bb = b_;
     Edge* aa = a_;
@@ -118,7 +118,7 @@ bool ColEdge_AreConnected(Edge* a_, Edge* b_, float eps, float maxd, float tol)
     if ((pa->bf & ~0x80) == (fb.bf & ~0x80)) {
         bool ok;
         if (AreNearParallel(a, b, eps))
-            ok = Math_MaxF(GetDistanceSquaredPointToLine(cCollisionEdge_Vertex0(b), cCollisionEdge_Vertex0(a), cCollisionEdge_UnitEdgeVector(a)),
+            ok = MAX(GetDistanceSquaredPointToLine(cCollisionEdge_Vertex0(b), cCollisionEdge_Vertex0(a), cCollisionEdge_UnitEdgeVector(a)),
                       GetDistanceSquaredPointToLine(cCollisionEdge_Vertex1(b), cCollisionEdge_Vertex0(a), cCollisionEdge_UnitEdgeVector(a))) <= maxd;
         else ok = false;
         if (ok) {

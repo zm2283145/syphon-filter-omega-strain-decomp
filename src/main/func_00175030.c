@@ -10,7 +10,7 @@ extern char D_0049CAC8[];
 void std_swap_vectordeleterR_vectordeleterR_5(KV* a, KV* b);
 }
 
-extern "C" void KeyVector_Reserve(KV* v, unsigned int n)
+extern "C" void std_vector_imp_cObjectId_reserve(KV* v, unsigned int n)
 {
     if (v->cap < n) {
         if (n > 0x1800000) {

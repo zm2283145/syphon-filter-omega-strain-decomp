@@ -6,9 +6,9 @@
 #include "types.h"
 #include "path_types.h"
 
-extern int PathList_PushBack(PathList* list, int* value);
+extern int std_list_cPathSystemRequestPtr_push_back(PathList* list, int* value);
 
-void NpcRouteMgr_FreeRequest(PathReceiver* self, int value) {
+void cPathSystem_FreeRequest(PathReceiver* self, int value) {
     volatile int tmp = value; /* original stack temporary */
-    PathList_PushBack(&self->listB, (int*)&tmp);
+    std_list_cPathSystemRequestPtr_push_back(&self->listB, (int*)&tmp);
 }

@@ -25,14 +25,14 @@ DEFINE_VTABLE2_BASE_DTOR(cNetForceHolsterMsg_dtor, D_004DA9B0, D_004DCF10, cMess
 typedef struct { char pad[0x4C]; int classKey; char pad50[0x3524 - 0x50]; void* weapons; } G_185550;
 typedef union { int i; unsigned char b; } A_185550;
 extern int g_HumanActorClassKey;
-extern G_185550* GObj_IdentityB(int handle);
-extern void Global_SetHardpointVis(void* w, unsigned char hp, unsigned char vis);
+extern G_185550* cGOBJ_SOBJ_convert(int handle);
+extern void cWeapon_SetHardpointVisibility(void* w, unsigned char hp, unsigned char vis);
 int Script_SetHardpointVis(A_185550* args)
 {
     unsigned char vis = args[2].i != 0;
     unsigned char hp = args[1].b;
-    G_185550* g = GObj_IdentityB(args[0].i);
-    if (g && g->classKey == g_HumanActorClassKey) Global_SetHardpointVis(g->weapons, hp, vis);
+    G_185550* g = cGOBJ_SOBJ_convert(args[0].i);
+    if (g && g->classKey == g_HumanActorClassKey) cWeapon_SetHardpointVisibility(g->weapons, hp, vis);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -46,14 +46,14 @@ typedef struct { int pad0; int pad4; int id; int padC; } Slot_1855C0;
 typedef struct { Slot_1855C0 s[8]; char pad80[4]; unsigned char cur; } W_1855C0;
 typedef struct { char pad[0x4C]; int classKey; char pad50[0x3524 - 0x50]; W_1855C0* weapons; } G_1855C0;
 #if 0 /* merge_units */
-extern G_1855C0* GObj_IdentityB(int handle);
+extern G_1855C0* cGOBJ_SOBJ_convert(int handle);
 #endif /* merge_units */
-#define GObj_IdentityB(a0) ((G_1855C0 *)GObj_IdentityB((a0))) /* merge_units */
+#define cGOBJ_SOBJ_convert(a0) ((G_1855C0 *)cGOBJ_SOBJ_convert((a0))) /* merge_units */
 
 int Script_GetActiveWeapon(int* args)
 {
     volatile int r;
-    G_1855C0* g = GObj_IdentityB(args[0]);
+    G_1855C0* g = cGOBJ_SOBJ_convert(args[0]);
     int v = -1;
     if (g && g->classKey == g_HumanActorClassKey) {
         W_1855C0* w = g->weapons;
@@ -62,7 +62,7 @@ int Script_GetActiveWeapon(int* args)
     r = v;
     return r;
 }
-#undef GObj_IdentityB /* merge_units */
+#undef cGOBJ_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001855C0(void) {}
 #pragma pop /* merge_units */

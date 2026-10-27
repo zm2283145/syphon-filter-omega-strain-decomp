@@ -35,7 +35,7 @@ static inline void merge_flush_func_003B8CB0(void) {}
 /* merge_units: begin func_003B8CE0 */
 #pragma push /* merge_units */
 typedef struct { int unk0; int begin; int end; } RangeColl;
-RangeColl* GroupCollection_CopyConstruct(RangeColl* self, RangeColl* src); /* gsynth: defined below */SkaFlaggedVec* NotifyRange_CopyConstruct(SkaFlaggedVec* dst, SkaFlaggedVec* src); /* gsynth: defined below */SkaNotifyTable* NotifyTable_CopyConstruct(SkaNotifyTable* dst, SkaNotifyTable* src); /* gsynth: defined below */extern char D_004DFD80[]; /* base message vtable */
+RangeColl* cLList_GuiWidgetPtr_ctor(RangeColl* self, RangeColl* src); /* gsynth: defined below */SkaFlaggedVec* NotifyRange_CopyConstruct(SkaFlaggedVec* dst, SkaFlaggedVec* src); /* gsynth: defined below */SkaNotifyTable* cArray_FixedSize_cSkaAnimEvent_7_ctor_cArrayFixedSizeR(SkaNotifyTable* dst, SkaNotifyTable* src); /* gsynth: defined below */extern char D_004DFD80[]; /* base message vtable */
 extern char D_004DA930[]; /* blend channel vtable */
 
 typedef struct ChannelBase {
@@ -79,9 +79,9 @@ typedef struct BlendRecord {
 } BlendRecord;
 
 #if 0 /* merge_units */
-extern void NotifyTable_CopyConstruct(Track* dst, Track* src);
+extern void cArray_FixedSize_cSkaAnimEvent_7_ctor_cArrayFixedSizeR(Track* dst, Track* src);
 #endif /* merge_units */
-#define NotifyTable_CopyConstruct(a0, a1) ((void)NotifyTable_CopyConstruct((void *)(a0), (void *)(a1))) /* merge_units */
+#define cArray_FixedSize_cSkaAnimEvent_7_ctor_cArrayFixedSizeR(a0, a1) ((void)cArray_FixedSize_cSkaAnimEvent_7_ctor_cArrayFixedSizeR((void *)(a0), (void *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void NotifyRange_CopyConstruct(Curve* dst, Curve* src);
@@ -89,9 +89,9 @@ extern void NotifyRange_CopyConstruct(Curve* dst, Curve* src);
 #define NotifyRange_CopyConstruct(a0, a1) ((void)NotifyRange_CopyConstruct((void *)(a0), (void *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void GroupCollection_CopyConstruct(Ramp* dst, Ramp* src);
+extern void cLList_GuiWidgetPtr_ctor(Ramp* dst, Ramp* src);
 #endif /* merge_units */
-#define GroupCollection_CopyConstruct(a0, a1) ((void)GroupCollection_CopyConstruct((void *)(a0), (void *)(a1))) /* merge_units */
+#define cLList_GuiWidgetPtr_ctor(a0, a1) ((void)cLList_GuiWidgetPtr_ctor((void *)(a0), (void *)(a1))) /* merge_units */
 
 
 static inline void ChannelBase_Copy(ChannelBase* d, ChannelBase* s)
@@ -121,18 +121,18 @@ static inline void Channel_Copy(Channel* d, Channel* s)
 static inline void BlendState_Copy(BlendState* d, BlendState* s)
 {
     d->kind = s->kind;
-    NotifyTable_CopyConstruct(&d->track, &s->track);
+    cArray_FixedSize_cSkaAnimEvent_7_ctor_cArrayFixedSizeR(&d->track, &s->track);
     NotifyRange_CopyConstruct(&d->curve, &s->curve);
 }
 
 static inline void Ramp_Copy(Ramp* d, Ramp* s)
 {
-    GroupCollection_CopyConstruct(d, s);
+    cLList_GuiWidgetPtr_ctor(d, s);
     d->scale = s->scale;
 }
 
 /* Copy constructor for a blend record. */
-BlendRecord* BlendRecord_CopyConstruct(BlendRecord* d, BlendRecord* s)
+BlendRecord* cSkaSystem_Request_ctor(BlendRecord* d, BlendRecord* s)
 {
     BlendState* state = &d->state;
     Ramp* ramp;
@@ -155,9 +155,9 @@ BlendRecord* BlendRecord_CopyConstruct(BlendRecord* d, BlendRecord* s)
     Ramp_Copy(ramp, &s->ramp);
     return d;
 }
-#undef NotifyTable_CopyConstruct /* merge_units */
+#undef cArray_FixedSize_cSkaAnimEvent_7_ctor_cArrayFixedSizeR /* merge_units */
 #undef NotifyRange_CopyConstruct /* merge_units */
-#undef GroupCollection_CopyConstruct /* merge_units */
+#undef cLList_GuiWidgetPtr_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B8CE0(void) {}
 #pragma pop /* merge_units */
@@ -165,15 +165,15 @@ static inline void merge_flush_func_003B8CE0(void) {}
 
 /* merge_units: begin func_003B8EB0 */
 #pragma push /* merge_units */
-extern void List_Construct(RangeColl* self);
+extern void std_list_deleter_voidPtr_ctor_cAllocatorR(RangeColl* self);
 extern void List_CopyRange(RangeColl* self, int end, int beginRef);
 
 /* Copy constructor: default-initializes self, then inserts src's range. */
-RangeColl* GroupCollection_CopyConstruct(RangeColl* self, RangeColl* src)
+RangeColl* cLList_GuiWidgetPtr_ctor(RangeColl* self, RangeColl* src)
 {
     int first[1];
     int last[1];
-    List_Construct(self);
+    std_list_deleter_voidPtr_ctor_cAllocatorR(self);
     first[0] = (int)&src->begin;
     last[0] = src->end;
     List_CopyRange(self, *(int*)last, *(int*)first);
@@ -194,20 +194,20 @@ typedef struct Array20 {
     int count;
     Elem20* items;
 } Array20;
-Array20* MotionArray_CopyConstruct(Array20* self, Array20* src); /* gsynth: defined below */
+Array20* std_vector_imp_cTimedEvent_ctor_vectorimpR(Array20* self, Array20* src); /* gsynth: defined below */
 #if 0 /* merge_units */
-extern SkaFlaggedVec* MotionArray_CopyConstruct(SkaFlaggedVec* dst, SkaFlaggedVec* src);
+extern SkaFlaggedVec* std_vector_imp_cTimedEvent_ctor_vectorimpR(SkaFlaggedVec* dst, SkaFlaggedVec* src);
 #endif /* merge_units */
-#define MotionArray_CopyConstruct(a0, a1) ((SkaFlaggedVec *)MotionArray_CopyConstruct((void *)(a0), (void *)(a1))) /* merge_units */
+#define std_vector_imp_cTimedEvent_ctor_vectorimpR(a0, a1) ((SkaFlaggedVec *)std_vector_imp_cTimedEvent_ctor_vectorimpR((void *)(a0), (void *)(a1))) /* merge_units */
 
 
 /* Copy-construct: copy the array part, then the flag byte. */
 SkaFlaggedVec* NotifyRange_CopyConstruct(SkaFlaggedVec* dst, SkaFlaggedVec* src) {
-    MotionArray_CopyConstruct(dst, src);
+    std_vector_imp_cTimedEvent_ctor_vectorimpR(dst, src);
     dst->flag = src->flag;
     return dst;
 }
-#undef MotionArray_CopyConstruct /* merge_units */
+#undef std_vector_imp_cTimedEvent_ctor_vectorimpR /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B8F10(void) {}
 #pragma pop /* merge_units */
@@ -215,15 +215,15 @@ static inline void merge_flush_func_003B8F10(void) {}
 
 /* merge_units: begin func_003B8F50 */
 #pragma push /* merge_units */
-extern void Array_CopyRange20(Array20* self, Elem20* first, Elem20* last, char alloc);
+extern void std_vector_imp_cTimedEvent_init(Array20* self, Elem20* first, Elem20* last, char alloc);
 
 /* Copy constructor: clears the array, then inserts [src->items, src->items + count). */
-Array20* MotionArray_CopyConstruct(Array20* self, Array20* src) {
+Array20* std_vector_imp_cTimedEvent_ctor_vectorimpR(Array20* self, Array20* src) {
     volatile char alloc[4];
     self->unk0 = 0;
     self->count = 0;
     self->items = 0;
-    Array_CopyRange20(self, src->items, src->items + src->count, alloc[0]);
+    std_vector_imp_cTimedEvent_init(self, src->items, src->items + src->count, alloc[0]);
     return self;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -238,7 +238,7 @@ extern int func_0018A210(int, int);
 extern int cSkaAnimEvent_ctor_void(int);
 
 /* Copy-construct the notification table: construct seven 8-byte entries, then copy all fourteen words. */
-SkaNotifyTable* NotifyTable_CopyConstruct(SkaNotifyTable* dst, SkaNotifyTable* src) {
+SkaNotifyTable* cArray_FixedSize_cSkaAnimEvent_7_ctor_cArrayFixedSizeR(SkaNotifyTable* dst, SkaNotifyTable* src) {
     __construct_array(dst, (void*)cSkaAnimEvent_ctor_void, (void*)func_0018A210, 8, 7);
     dst->words[0] = src->words[0];
     dst->words[1] = src->words[1];

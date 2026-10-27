@@ -11,10 +11,10 @@
 typedef union ScriptArg { int i; float f; void* p; } ScriptArg;
 typedef struct { char data[0x30]; } Rank;
 extern char g_RankRows[];
-extern int Loc_FindKeyThunk(const char* s);           /* string hash */
-extern int Awards_ResolveUnlock(int hash);
+extern int nGlobalization_GetStringIndex(const char* s);           /* string hash */
+extern int cAgentData_GetWpnIndex(int hash);
 extern int cArray_tRankInfo_Size(void* registry);
-extern void* Awards_FormatRankTitle(Rank* r, int a, int b, int req, int index, int d);
+extern void* cAgentData_tRankInfo_ctor(Rank* r, int a, int b, int req, int index, int d);
 extern void cArray_tRankInfo_PushBackActual(void* registry, void* item);
 
 /* Script native: registers a rank (args[0], args[1], requirement named args[2], args[3]); returns 0. */
@@ -38,8 +38,8 @@ int Script_cAgentData__RegisterRank_3(ScriptArg* args)
     a1 = *(int*)p1;
     p0[0] = args[0].i;
     a0 = *(int*)p0;
-    req = Awards_ResolveUnlock(Loc_FindKeyThunk((const char*)a2));
-    cArray_tRankInfo_PushBackActual(g_RankRows, Awards_FormatRankTitle(&r, a0, a1, req, cArray_tRankInfo_Size(g_RankRows), a3));
+    req = cAgentData_GetWpnIndex(nGlobalization_GetStringIndex((const char*)a2));
+    cArray_tRankInfo_PushBackActual(g_RankRows, cAgentData_tRankInfo_ctor(&r, a0, a1, req, cArray_tRankInfo_Size(g_RankRows), a3));
     return 0;
 }
 #pragma pop /* merge_units */
@@ -58,19 +58,19 @@ typedef struct RankRec {
     char data[0x20];
 } RankRec;
 #if 0 /* merge_units */
-extern int Loc_FindKeyThunk(int handle);
+extern int nGlobalization_GetStringIndex(int handle);
 #endif /* merge_units */
-#define Loc_FindKeyThunk(a0) (Loc_FindKeyThunk((const char *)(a0))) /* merge_units */
+#define nGlobalization_GetStringIndex(a0) (nGlobalization_GetStringIndex((const char *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int Awards_ResolveUnlock(int id);
+extern int cAgentData_GetWpnIndex(int id);
 #endif /* merge_units */
-#define Awards_ResolveUnlock(a0) (Awards_ResolveUnlock((a0))) /* merge_units */
+#define cAgentData_GetWpnIndex(a0) (cAgentData_GetWpnIndex((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int Awards_FormatRankTitle(RankRec* rec, int a0, int a1, int id, int index, int flags);
+extern int cAgentData_tRankInfo_ctor(RankRec* rec, int a0, int a1, int id, int index, int flags);
 #endif /* merge_units */
-#define Awards_FormatRankTitle(a0, a1, a2, a3, a4, a5) ((int)Awards_FormatRankTitle((Rank *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define cAgentData_tRankInfo_ctor(a0, a1, a2, a3, a4, a5) ((int)cAgentData_tRankInfo_ctor((Rank *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cArray_tRankInfo_PushBackActual(void* registry, int rec);
@@ -89,13 +89,13 @@ int Script_cAgentData__RegisterRank_2(RankArgs* args) {
     v1 = w1;
     w0 = args->a0;
     v0 = w0;
-    id = Awards_ResolveUnlock(Loc_FindKeyThunk(v2));
-    cArray_tRankInfo_PushBackActual(g_RankRows, Awards_FormatRankTitle(&rec, v0, v1, id, cArray_tRankInfo_Size(g_RankRows), 0));
+    id = cAgentData_GetWpnIndex(nGlobalization_GetStringIndex(v2));
+    cArray_tRankInfo_PushBackActual(g_RankRows, cAgentData_tRankInfo_ctor(&rec, v0, v1, id, cArray_tRankInfo_Size(g_RankRows), 0));
     return 0;
 }
-#undef Loc_FindKeyThunk /* merge_units */
-#undef Awards_ResolveUnlock /* merge_units */
-#undef Awards_FormatRankTitle /* merge_units */
+#undef nGlobalization_GetStringIndex /* merge_units */
+#undef cAgentData_GetWpnIndex /* merge_units */
+#undef cAgentData_tRankInfo_ctor /* merge_units */
 #undef cArray_tRankInfo_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032EC50 */
@@ -104,14 +104,14 @@ int Script_cAgentData__RegisterRank_2(RankArgs* args) {
 #pragma push /* merge_units */
 typedef struct { char pad[0x28]; } Rank_0032ECF0;
 #if 0 /* merge_units */
-extern void* Loc_FindKeyThunk(int);
+extern void* nGlobalization_GetStringIndex(int);
 #endif /* merge_units */
-#define Loc_FindKeyThunk(a0) ((void *)Loc_FindKeyThunk((const char *)(a0))) /* merge_units */
+#define nGlobalization_GetStringIndex(a0) ((void *)nGlobalization_GetStringIndex((const char *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int Awards_ResolveUnlock(void*);
+extern int cAgentData_GetWpnIndex(void*);
 #endif /* merge_units */
-#define Awards_ResolveUnlock(a0) (Awards_ResolveUnlock((int)(a0))) /* merge_units */
+#define cAgentData_GetWpnIndex(a0) (cAgentData_GetWpnIndex((int)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int cArray_tRankInfo_Size(void*);
@@ -119,9 +119,9 @@ extern int cArray_tRankInfo_Size(void*);
 #define cArray_tRankInfo_Size(a0) (cArray_tRankInfo_Size((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern Rank_0032ECF0* Awards_FormatRankTitle(Rank_0032ECF0* r, int name, int score, int a, int b, int c);
+extern Rank_0032ECF0* cAgentData_tRankInfo_ctor(Rank_0032ECF0* r, int name, int score, int a, int b, int c);
 #endif /* merge_units */
-#define Awards_FormatRankTitle(a0, a1, a2, a3, a4, a5) ((Rank_0032ECF0 *)Awards_FormatRankTitle((Rank *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define cAgentData_tRankInfo_ctor(a0, a1, a2, a3, a4, a5) ((Rank_0032ECF0 *)cAgentData_tRankInfo_ctor((Rank *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cArray_tRankInfo_PushBackActual(void* list, Rank_0032ECF0* r);
@@ -141,14 +141,14 @@ int Script_cAgentData__RegisterRank(ScriptArg* args)
     s = *(volatile int*)score;
     name[0] = args[0].i;
     n = *(volatile int*)name;
-    agent = Awards_ResolveUnlock(Loc_FindKeyThunk(0));
-    cArray_tRankInfo_PushBackActual(g_RankRows, Awards_FormatRankTitle(&rank, n, s, agent, cArray_tRankInfo_Size(g_RankRows), 0));
+    agent = cAgentData_GetWpnIndex(nGlobalization_GetStringIndex(0));
+    cArray_tRankInfo_PushBackActual(g_RankRows, cAgentData_tRankInfo_ctor(&rank, n, s, agent, cArray_tRankInfo_Size(g_RankRows), 0));
     return 0;
 }
-#undef Loc_FindKeyThunk /* merge_units */
-#undef Awards_ResolveUnlock /* merge_units */
+#undef nGlobalization_GetStringIndex /* merge_units */
+#undef cAgentData_GetWpnIndex /* merge_units */
 #undef cArray_tRankInfo_Size /* merge_units */
-#undef Awards_FormatRankTitle /* merge_units */
+#undef cAgentData_tRankInfo_ctor /* merge_units */
 #undef cArray_tRankInfo_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032ECF0 */
@@ -159,7 +159,7 @@ typedef union { int i; void* p; } ScriptArg_0032ED90;
 typedef struct { char data[0x24]; } BonusReq;
 
 extern char D_00532AA0[];
-extern void* AwardRow_Construct(BonusReq* req, int level, int a, int b, int c, int d);
+extern void* cAgentData_Record_ctor_charP_int_charP_int_etc_2(BonusReq* req, int level, int a, int b, int c, int d);
 extern void cArray_Record_PushBackActual(void* list, void* item);
 
 /* Script native: registers a bonus level requirement with the agent data. */
@@ -172,7 +172,7 @@ int Script_cAgentData__RegisterBonusLevel(ScriptArg_0032ED90* args)
     c[0] = args[2].i;
     b[0] = args[1].i;
     level[0] = args[0].i;
-    cArray_Record_PushBackActual(D_00532AA0, AwardRow_Construct(&req, *(int*)level, 0, *(int*)b, *(int*)c, 0));
+    cArray_Record_PushBackActual(D_00532AA0, cAgentData_Record_ctor_charP_int_charP_int_etc_2(&req, *(int*)level, 0, *(int*)b, *(int*)c, 0));
     return 0;
 }
 #pragma pop /* merge_units */
@@ -191,7 +191,7 @@ typedef struct LevelKey {
 extern int D_004926E0;
 extern int D_00532AF0;
 extern int D_00532B90;
-extern void* ObjectiveRow_Construct(LevelReq*, int, int, int);
+extern void* cAgentData_Record_ctor_charP_int_int(LevelReq*, int, int, int);
 #if 0 /* merge_units */
 extern void cArray_Record_PushBackActual(void*, void*);
 #endif /* merge_units */
@@ -219,7 +219,7 @@ int Script_cAgentData__RegisterLevel_2(ScriptArg* args) {
     D_004926E0 = index + 1;
     cv = *(int*)c;
     bv = *(int*)b;
-    cArray_Record_PushBackActual(&D_00532AF0, ObjectiveRow_Construct(&req, *(int*)a, *(int*)d, index));
+    cArray_Record_PushBackActual(&D_00532AF0, cAgentData_Record_ctor_charP_int_int(&req, *(int*)a, *(int*)d, index));
     cArray_tParTimes_PushBackActual(&D_00532B90, cAgentData_tParTimes_ctor(&key, bv, cv));
     return 0;
 }

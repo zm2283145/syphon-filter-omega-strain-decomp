@@ -14,9 +14,9 @@ extern char D_004C24B0[];
 extern char D_004C24B8[];
 extern char D_004C24C0[];
 int sprintf(char* buf, const char* fmt, ...);
-void String_Copy(char* d, const char* s);
+void Libc_Strcpy(char* d, const char* s);
 void Libc_Strcat(char* d, const char* s);
-void GuiBitmapWidget_SetImage(void* obj, char* name, int x);
+void GuiBitmapWidget_SetBitmap(void* obj, char* name, int x);
 
 void GuiEndGameAwards_AddAward(O_4602C0* o, int x, int type, int sub, int val)
 {
@@ -25,10 +25,10 @@ void GuiEndGameAwards_AddAward(O_4602C0* o, int x, int type, int sub, int val)
     if (o->n < 15) {
         e = &o->e[o->n];
         sprintf(buf, D_004C24A8, type, sub);
-        String_Copy(e->name, D_004C24B0);
+        Libc_Strcpy(e->name, D_004C24B0);
         if (type != 7) Libc_Strcat(buf, D_004C24B8);
         Libc_Strcat(buf, D_004C24C0);
-        if (e->obj) GuiBitmapWidget_SetImage(e->obj, buf, x);
+        if (e->obj) GuiBitmapWidget_SetBitmap(e->obj, buf, x);
         e->val = val;
         o->n++;
     }

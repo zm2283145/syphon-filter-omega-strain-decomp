@@ -9,7 +9,7 @@
 
 /* merge_units: begin func_00147840 */
 #pragma push /* merge_units */
-int WeaponDb_Get(int a0, int a1) {
+int cWeaponDB_GetEntry(int a0, int a1) {
     int v0, v1;
     int cond;
 
@@ -44,7 +44,7 @@ typedef struct { char pad[0x2C0]; Q_7880 e[16]; short x3C0; char pad2[0x40C - 0x
 typedef struct { char pad[0xCC]; T_7880* t; } S_7880;
 static const unsigned int dat_00489CE0[8] = { 0xFF0000, 0x1, 0x401FF06, 0xFF020404, 0x2010105, 0x3030202, 0xFFFF0105, 0xFF };
 extern int D_0055DE90;
-Q_7880* WeaponDb_GetShellRecord(S_7880* self, int id)
+Q_7880* cWeaponDB_GetShellCasing(S_7880* self, int id)
 {
     signed char k;
     T_7880* t;

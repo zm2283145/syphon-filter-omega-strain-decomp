@@ -21,9 +21,9 @@ struct Self_32CA00 {
 };
 
 extern "C" {
-void GuiWidget_BaseWake(Self_32CA00* self);
+void GuiWidget_onWake(Self_32CA00* self);
 void GuiKeyboard_Relabel(Self_32CA00* self, unsigned int flags);
-Stack_32CA00* Gui_GetScreenStack(void);
+Stack_32CA00* Gui_Canvas(void);
 W_32CA00*** std_vector_pod_int_data(Vec_32CA00* v);
 VC_32CA00* func_0032C110(W_32CA00* w);
 int GuiKeyboard_IsSpecialKey(Self_32CA00* self, W_32CA00* w);
@@ -35,7 +35,7 @@ static inline W_32CA00* At(Vec_32CA00* v, int i) { return (*std_vector_pod_int_d
 
 static inline void Focus(Self_32CA00* self, W_32CA00* w)
 {
-    Stack_32CA00* ss = Gui_GetScreenStack();
+    Stack_32CA00* ss = Gui_Canvas();
     if (w != ss->focus) {
         if (ss->focus) func_0032C110(ss->focus)->v8();
         ss->focus = w;
@@ -47,15 +47,15 @@ static inline void Focus(Self_32CA00* self, W_32CA00* w)
 
 extern "C" void GuiKeyboard_Wake(Self_32CA00* self)
 {
-    GuiWidget_BaseWake(self);
+    GuiWidget_onWake(self);
     self->sel = 0;
     self->bE1 = 0;
     self->mods = 0;
     GuiKeyboard_Relabel(self, 0);
-    Gui_GetScreenStack();
+    Gui_Canvas();
     Focus(self, At(&self->vec, self->sel));
     self->focus = self->vec.data[self->sel];
-    Gui_GetScreenStack()->flags |= 0x40;
+    Gui_Canvas()->flags |= 0x40;
     {
         char* s = self->menu->slider;
         if (s) *(float*)(s + 0x54) = clamp01(0.2f);

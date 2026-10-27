@@ -43,7 +43,7 @@ ret:;
 }
 
 /* Command 0x21 with six words; t2/t3 are the callback and its user data. */
-void snd_RestartVAGStream(int a0, int a1, int a2, int a3, int t0, int t1, int t2, int t3) {
+void snd_SetSoundParams_CB(int a0, int a1, int a2, int a3, int t0, int t1, int t2, int t3) {
     int loc[8];
     int v0;
 
@@ -64,7 +64,7 @@ ret:;
 }
 
 /* Command 0x61 with one word (role unknown). */
-void snd_StopVAGStreamsInGroup(int a0) {
+void snd_StopAllSoundsInGroup(int a0) {
     int loc[1];
     int a1, a2, a3, t0, v0;
 
@@ -127,7 +127,7 @@ extern int snd_SendIOPCommandNoWait(int cmd, int size, void* data, int x, int y)
 #endif /* merge_units */
 #define snd_SendIOPCommandNoWait(a0, a1, a2, a3, a4) (snd_SendIOPCommandNoWait((a0), (a1), (int)(a2), (a3), (a4))) /* merge_units */
 
-int snd_GetSoundUserData(int a, long long b, int c, __int128 d, int e, int x, int y)
+int snd_GetSoundUserData_CB(int a, long long b, int c, __int128 d, int e, int x, int y)
 {
     P3A8000 p;
     p.a = a;

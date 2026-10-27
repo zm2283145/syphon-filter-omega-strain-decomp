@@ -3,9 +3,9 @@
 extern char D_004FEED0[];
 extern char D_0055A340[];
 extern char D_0055A500[];
-extern int Pad_SetVibration(int, int, int);
+extern int cJoyPad_SetVibration(int, int, int);
 
-int PadRumble_Stop(void) {
+int nRumbleManager_StopAll(void) {
     int a0, a1, a2, v0, v1;
     int cond;
 
@@ -26,11 +26,11 @@ L0026BD78:;
     a1 = 0;
     a0 = (int)D_0055A340;
     a2 = 0;
-    v0 = Pad_SetVibration(a0, a1, a2);
+    v0 = cJoyPad_SetVibration(a0, a1, a2);
     a1 = 0;
     a0 = (int)D_0055A500;
     a2 = 0;
-    v0 = Pad_SetVibration(a0, a1, a2);
+    v0 = cJoyPad_SetVibration(a0, a1, a2);
     goto ret;
 ret:
     return v0;

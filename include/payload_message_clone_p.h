@@ -9,7 +9,7 @@
  */
 #include "alloc_guard.h"
 
-extern "C" void* Mem_Alloc(int pool, int size, char* file, int line);
+extern "C" void* cMemMan_Allocate(int pool, int size, char* file, int line);
 
 struct PayloadMessageP {
     void* vtable;
@@ -30,7 +30,7 @@ struct PayloadMessageP {
         PayloadMessageP* p;                                                   \
         {                                                                     \
             AllocGuard guard;                                                 \
-            p = (PayloadMessageP*)Mem_Alloc(0, (size), fileSym, (line));      \
+            p = (PayloadMessageP*)cMemMan_Allocate(0, (size), fileSym, (line));      \
         }                                                                     \
         if (p) {                                                              \
             baseCtor(p, self);                                                \

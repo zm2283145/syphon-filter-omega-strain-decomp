@@ -14,10 +14,10 @@ typedef struct {
     Container* list;
 } Npc14F;
 
-extern void LookSlot_Release(int* out, Container* self, int* value, int** where);
+extern void std_list_deleter_cLookAtListItem_erase(int* out, Container* self, int* value, int** where);
 
 /* Sets a new request if its priority is at least the current one, clearing the pending list. */
-void NpcLook_Begin(Npc14F* self, unsigned char a, unsigned char b, int priority)
+void cNPC_NewLookAtList(Npc14F* self, unsigned char a, unsigned char b, int priority)
 {
     if (priority >= self->priority) {
         Container* list = self->list;
@@ -27,7 +27,7 @@ void NpcLook_Begin(Npc14F* self, unsigned char a, unsigned char b, int priority)
             int result;
             where = &list->unk4;
             value = list->unk8;
-            LookSlot_Release(&result, list, &value, &where);
+            std_list_deleter_cLookAtListItem_erase(&result, list, &value, &where);
         }
         self->unk15C = 0;
         self->a = a;

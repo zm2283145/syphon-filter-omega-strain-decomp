@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int ColQuery_Execute(int);
+extern int cCollisionProbe_SphereSweptRay_DetectForCollision_uchar_uchar(int);
 
 int ColQuery_ExecuteThunk(int a0) {
-    return ColQuery_Execute(a0);
+    return cCollisionProbe_SphereSweptRay_DetectForCollision_uchar_uchar(a0);
 }

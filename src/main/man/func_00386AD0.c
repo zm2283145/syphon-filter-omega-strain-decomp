@@ -81,9 +81,9 @@ extern int g_VisionThermal;
 extern M D_0055DEC0;
 extern M D_00537E10;
 extern V D_00537D80;
-void Skm_BuildPalette(void* hv, void* out, void* m);
+void cSkeleton_GetMeshToSkeletonSpaceMatrices_WithScale(void* hv, void* out, void* m);
 }
-extern "C" void Skm_UploadBones(Skm* s, Pkt* p, void* unused, void* pal, U64 t0, int s2, int s1, int s0, int a8)
+extern "C" void cMan_ManDMAHeader(Skm* s, Pkt* p, void* unused, void* pal, U64 t0, int s2, int s1, int s0, int a8)
 {
     p->tag = 0x100000A4;
     p->gif = 0x6CA3007501000404ULL;
@@ -128,7 +128,7 @@ extern "C" void Skm_UploadBones(Skm* s, Pkt* p, void* unused, void* pal, U64 t0,
         }
         p->v = off;
     }
-    Skm_BuildPalette(s->hv, p->pal, pal);
+    cSkeleton_GetMeshToSkeletonSpaceMatrices_WithScale(s->hv, p->pal, pal);
     if (s1) {
         p->r[0] = 0x8000;
         p->r[1] = 0x10424000;

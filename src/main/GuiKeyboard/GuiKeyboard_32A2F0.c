@@ -21,9 +21,9 @@ DEFINE_RELEASE_BUFFER_CALL_DTOR(std_vector_deleter_Section_dtor, std_vector_dele
 #include "types.h"
 #include "alloc_guard.h"
 
-/* Allocator release(ptr, pool, destroy, file, line): destroy the element (member at +0x4C, then base), then Mem_Free under the guard. */
+/* Allocator release(ptr, pool, destroy, file, line): destroy the element (member at +0x4C, then base), then cMemMan_Deallocate under the guard. */
 extern "C" {
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void* cArray_StatsRequirement_dtor(void* self, short flags);
 void* String_Dtor_138350(void* self, short flags);
 void* cArray_Slide_dtor(void* self, short flags);
@@ -38,7 +38,7 @@ void opDelete_SectionP_int_bool_charP_etc(void* allocation, int pool, int destro
             String_Dtor_138350(allocation, -1);
         }
     }
-    Mem_Free(pool, allocation, file, line);
+    cMemMan_Deallocate(pool, allocation, file, line);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0032A370 */

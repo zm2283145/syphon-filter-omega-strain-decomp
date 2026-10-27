@@ -1,11 +1,11 @@
 #include "types.h"
 extern int D_0048A038;
-extern void LoadingScreen_VblankHandler(void);
+extern void VBLANKInterruptHandler(void);
 extern int AddIntcHandler(int id, void (*fn)(void), int arg);
-extern void Alloc_Unlock(int id);
+extern void EnableIntc(int id);
 /* Register handler 2 and start it. */
-void LoadingScreen_InstallVblank(void)
+void RegisterVBLANKHandler(void)
 {
-    D_0048A038 = AddIntcHandler(2, LoadingScreen_VblankHandler, 0);
-    Alloc_Unlock(2);
+    D_0048A038 = AddIntcHandler(2, VBLANKInterruptHandler, 0);
+    EnableIntc(2);
 }

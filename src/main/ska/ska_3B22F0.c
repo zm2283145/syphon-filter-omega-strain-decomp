@@ -28,7 +28,7 @@ static inline V4 Scale_(V4* v, float s) {
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-void AnimRoot_AccumPose(A_22F0* a, V4* v, float s) {
+void cSkaAnimAnchor_AccumulatePos(A_22F0* a, V4* v, float s) {
     V4 u;
     V4* d;
     V4* e;
@@ -50,7 +50,7 @@ static inline void merge_flush_func_003B22F0(void) {}
 
 /* merge_units: begin func_003B2340 */
 #pragma push /* merge_units */
-void Bone_AccumQuat(V4* a, V4* b, float s) {
+void cBone_AnimationAccumulateRotation(V4* a, V4* b, float s) {
     int rv1;
     a = (V4*)((char*)a + 0x190);
     asm {

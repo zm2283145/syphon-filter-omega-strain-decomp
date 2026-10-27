@@ -7,7 +7,7 @@
 
 
 extern "C" {
-int Mem_Free(int, int, char *, int);                         
+int cMemMan_Deallocate(int, int, char *, int);                         
 int __destroy_array(char * , char *, int, int);               
 int std_vector_charPtr_dtor_void_2(char * , int);                         
 int std_vector_eAchievementState_dtor(char * , int);                         
@@ -26,7 +26,7 @@ extern "C" char * cAgentData_dtor(char * arg0, long long arg1) {
         temp_s2 = F_(arg0, 0x9A4, int);
         {
             AllocGuard g;
-        Mem_Free(0, temp_s2, "AgentData.cc", 0xE0);
+        cMemMan_Deallocate(0, temp_s2, "AgentData.cc", 0xE0);
         }
         temp_a0 = arg0 + 0xB58;
         if (temp_a0 != NULL) {

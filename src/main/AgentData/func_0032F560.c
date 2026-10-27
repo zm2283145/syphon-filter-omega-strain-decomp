@@ -6,14 +6,14 @@
 #include "types.h"
 #include "AgentData_types.h"
 
-extern unsigned char AgentData_IsObjectiveComplete(cAgentData* agent, int key);
+extern unsigned char cAgentData_IsObjectiveComplete(cAgentData* agent, int key);
 extern int g_HumanActorClassKey;
-extern AgentGObj* GObj_IdentityB(int handle);
+extern AgentGObj* cGOBJ_SOBJ_convert(int handle);
 extern unsigned char Global_IsObjectiveComplete(AgentGObj* gobj, int key);
 extern unsigned char cAgentData_HasBonusLevel(cAgentData* agent, int level);
 extern void cAgentData_UnlockLevel(cAgentData* agent, int level);
 extern void cAgentData_UnlockWeapon(cAgentData* agent, int weapon);
-extern cAgentData* Player_GetAgentData(AgentGObj* gobj);
+extern cAgentData* cHuman_GetAgentData(AgentGObj* gobj);
 
 int Script_cAgentData_UnlockWeapon(AgentScriptArg* args) {
     int weapon[1];
@@ -32,14 +32,14 @@ int Script_cAgentData_UnlockLevel(AgentScriptArg* args) {
 /* game::IsObjectiveComplete(gobj, key); the volatile local mirrors the stack temporary. */
 int Script_IsObjectiveComplete(AgentScriptArg* args) {
     volatile int key = args[1].i;
-    AgentGObj* gobj = GObj_IdentityB(args[0].i);
+    AgentGObj* gobj = cGOBJ_SOBJ_convert(args[0].i);
     return Global_IsObjectiveComplete(gobj, key);
 }
 
 /* Queries the agent data of an object of the agent class; other objects report false. */
 unsigned char Global_IsObjectiveComplete(AgentGObj* gobj, int key) {
     if (gobj->classKey == g_HumanActorClassKey) {
-        return AgentData_IsObjectiveComplete(Player_GetAgentData(gobj), key);
+        return cAgentData_IsObjectiveComplete(cHuman_GetAgentData(gobj), key);
     }
     return 0;
 }

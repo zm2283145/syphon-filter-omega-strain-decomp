@@ -50,6 +50,6 @@ Float6* cHermiteSplineWithScaledDuration_float_opAssign(Float6* d, Float6* s) {
 #include "vector_insert_fill_obj.h"
 
 extern "C" { char D_0049ECF8[] = "allocator.hh"; }
-DEFINE_VECTOR_INSERT_FILL_OBJ(AnimChannelVec_Grow, 0x3C, 0x199999, 0xCCCCC, D_0049E980, D_0049ECF8, 0x5C, Mem_PlacementNew, AnimChannel_CopyCtor, std_copy_backward_cSkaSliderValue_copy_backward, std_fill_n_cSkaSliderValue_int_fill_n, std_swap_vectordeleterR_vectordeleterR_9, std_vector_deleter_cSkaSliderValue_dtor)
+DEFINE_VECTOR_INSERT_FILL_OBJ(std_vector_imp_cSkaSliderValue_insert, 0x3C, 0x199999, 0xCCCCC, D_0049E980, D_0049ECF8, 0x5C, opNew_uint_voidP, cSkaSliderValue_ctor_cSkaSliderValueR, std_copy_backward_cSkaSliderValue_copy_backward, std_fill_n_cSkaSliderValue_int_fill_n, std_swap_vectordeleterR_vectordeleterR_9, std_vector_deleter_cSkaSliderValue_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001BEDC0 */

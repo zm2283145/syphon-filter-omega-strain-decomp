@@ -21,7 +21,7 @@ typedef struct SsoString {
 typedef struct { char unused; } Allocator; /* empty allocator object passed by value */
 
 /* Replaces count characters at pos with the range [first, last). */
-extern void* String_Replace(SsoString* str, int pos, int count, const char* first, const char* last, Allocator alloc);
+extern void* std_basic_string_char_char_traits_char_do_replace(SsoString* str, int pos, int count, const char* first, const char* last, Allocator alloc);
 
 /* Assigns the range [first, last) to the string (replaces the whole contents). */
 void* func_0043D620(SsoString* str, const char* first, const char* last)
@@ -32,7 +32,7 @@ void* func_0043D620(SsoString* str, const char* first, const char* last)
         len = (unsigned char)str->h.s.shortLen;
     else
         len = str->longLen;
-    return String_Replace(str, 0, len, first, last, alloc);
+    return std_basic_string_char_char_traits_char_do_replace(str, 0, len, first, last, alloc);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0043D620 */
@@ -44,6 +44,6 @@ void* func_0043D620(SsoString* str, const char* first, const char* last)
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004C00A0[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(GuiBitmapWidget_Create, 0x80, D_004C00A0, GuiBitmapWidget_ctor)
+DEFINE_GUARDED_NEW_CTOR(ConcreteWidgetClassRep_GuiBitmapWidget_Create, 0x80, D_004C00A0, GuiBitmapWidget_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0043D670 */

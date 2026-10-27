@@ -14,7 +14,7 @@ typedef struct {
 } Font;
 extern FontMgr* g_TextureMgr;
 
-int Font_GetStringWidth(Font* font, const unsigned char* s, int n) {
+int cFont_GetStringWidth(Font* font, const unsigned char* s, int n) {
     float scale = (int)g_TextureMgr->tex[font->texId]->hdr[2];
     float w = 0.0f;
     int c;

@@ -58,28 +58,28 @@ extern char D_0049C088[];
 extern char D_004A4550[];
 extern char g_Game[];
 void cGOBJ_ctor(GObj_21ADD0* o, int* id, int kind, void* info);
-void PtrVec_InitEmpty(Rel_21ADD0* r);
+void std_vector_cGOBJPtr_ctor_void(Rel_21ADD0* r);
 void func_0021B770(Rel_21ADD0* r);
 int String_CompareNoCase(const char* a, const char* b);
 char* strchr(const char* s, int c);
-void String_Copy(char* d, const char* s);
-int Hog_Register(void* h, const char* name, int arg, int opt);
-void* Mem_Alloc(int heap, int size, char* file, int line);
-void Script_LookupResource(Name_21ADD0* n, char* s);
-void Mtx_SetBasis(Mat_21ADD0* m, V4_21ADD0* a, V4_21ADD0* b, V4_21ADD0* c);
-void Mtx_SetTranslation(Mat_21ADD0* m, V4_21ADD0* t);
-void PtrVec_Reserve(RelFlag_21ADD0* r, int n);
-GObj_21ADD0* IdMgr_FindCollision(int region, int id);
-unsigned char FileMan_FindMember(void* e);
-unsigned char Game_FindNamedResource(void* m, char* name, int* out);
-VUM_21ADD0* cVUM_GOBJ_ctor2(void* p, int* a);
+void Libc_Strcpy(char* d, const char* s);
+int cFileMan_EncodeFilename_charP_cHogFileR_bool(void* h, const char* name, int arg, int opt);
+void* cMemMan_Allocate(int heap, int size, char* file, int line);
+void cScriptVars_initScriptlet(Name_21ADD0* n, char* s);
+void cMatrix_SetAxes(Mat_21ADD0* m, V4_21ADD0* a, V4_21ADD0* b, V4_21ADD0* c);
+void cMatrix_SetTranslation(Mat_21ADD0* m, V4_21ADD0* t);
+void std_vector_pod_int_reserve(RelFlag_21ADD0* r, int n);
+GObj_21ADD0* nGobjManager_LookupGOBJ_int_int(int region, int id);
+unsigned char cFileMan_Open(void* e);
+unsigned char cGameSystem_FindVUMGOBJ_charP_cVUMGOBJPP(void* m, char* name, int* out);
+VUM_21ADD0* cVUM_GOBJ_ctor_cObjectIdR(void* p, int* a);
 void cGameSystem_AddVUMGOBJ(void* m, VUM_21ADD0* v, char* name, int z);
 void cFileMan_Close(void* e);
-void Node_ClearLocalMatrix(GObj_21ADD0* o);
-void Object_AttachTransform(GObj_21ADD0* o, Mat_21ADD0* m, int z);
-void Object_ShareTransform(VUM_21ADD0* v, void* xf);
-void ZoneMgr_Associate(GObj_21ADD0* found, GObj_21ADD0* o, int a, GObj_21ADD0* b);
-void NetMap_BindReceiver(int id, int owner, GObj_21ADD0* o);
+void cGOBJ_DestroyXform(GObj_21ADD0* o);
+void cGOBJ_CreateXform(GObj_21ADD0* o, Mat_21ADD0* m, int z);
+void cGOBJ_SetXformPointer(VUM_21ADD0* v, void* xf);
+void cTerrain_AddActivation(GObj_21ADD0* found, GObj_21ADD0* o, int a, GObj_21ADD0* b);
+void cNetObj_AddSystem(int id, int owner, GObj_21ADD0* o);
 }
 static inline int Read_21ADD0(Reader_21ADD0* r) { int v = *(int*)r->cur; r->cur += 4; return v; }
 static inline void ReadInt_21ADD0(Reader_21ADD0* r, int* out) { *out = *(int*)r->cur; r->cur += 4; }
@@ -104,7 +104,7 @@ static inline void Align_21ADD0(Reader_21ADD0* r)
 static inline void* New_21ADD0(int size, char* file, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, file, line);
+    return cMemMan_Allocate(0, size, file, line);
 }
 static inline int ObjId_21ADD0(void)
 {
@@ -155,7 +155,7 @@ extern "C" GObj_21ADD0* cGameGOBJ_ctor(GObj_21ADD0* self, int arg, Reader_21ADD0
     *(void**)self = D_004DB4C0;
     {
         RelFlag_21ADD0* rf = &self->r74;
-        PtrVec_InitEmpty(&rf->rel);
+        std_vector_cGOBJPtr_ctor_void(&rf->rel);
         rf->flag = 1;
     }
     {
@@ -163,7 +163,7 @@ extern "C" GObj_21ADD0* cGameGOBJ_ctor(GObj_21ADD0* self, int arg, Reader_21ADD0
         func_0021B770(&rf->rel);
         rf->flag = 1;
     }
-    Resource_Construct(&e);
+    cFileMan_ctor_void(&e);
     self->kind = kind;
     ReadInt_21ADD0(r, &hi);
     ReadInt_21ADD0(r, &lo);
@@ -172,8 +172,8 @@ extern "C" GObj_21ADD0* cGameGOBJ_ctor(GObj_21ADD0* self, int arg, Reader_21ADD0
     Align_21ADD0(r);
     self->b60 = String_CompareNoCase(D_004A4638, s) != 0;
     if (self->b60) {
-        String_Copy(strchr(s, '.'), D_004A4640);
-        Hog_Register(&e, s, arg, 1);
+        Libc_Strcpy(strchr(s, '.'), D_004A4640);
+        cFileMan_EncodeFilename_charP_cHogFileR_bool(&e, s, arg, 1);
     } else {
         self->b49 = 0xE;
     }
@@ -183,26 +183,26 @@ extern "C" GObj_21ADD0* cGameGOBJ_ctor(GObj_21ADD0* self, int arg, Reader_21ADD0
         if (!self->name18) {
 self->name18 = NewName_21ADD0();
         }
-        Script_LookupResource(self->name18, s2);
+        cScriptVars_initScriptlet(self->name18, s2);
     }
     Align_21ADD0(r);
     ReadV_21ADD0(r, &t, 1.0f);
     ReadV_21ADD0(r, &r0, 0.0f);
     ReadV_21ADD0(r, &r1, 0.0f);
     ReadV_21ADD0(r, &r2, 0.0f);
-    Mtx_SetBasis(&m, &r0, &r1, &r2);
-    Mtx_SetTranslation(&m, &t);
+    cMatrix_SetAxes(&m, &r0, &r1, &r2);
+    cMatrix_SetTranslation(&m, &t);
     n = Read_21ADD0(r);
     for (i = 0; i < n; i++) {
         ReadInt_21ADD0(r, &ia[i]);
         ReadInt_21ADD0(r, &ib[i]);
     }
     ReadInt_21ADD0(r, &self->f70);
-    PtrVec_Reserve(&self->r74, self->f70);
+    std_vector_pod_int_reserve(&self->r74, self->f70);
     for (i = 0; i < self->f70; i++) {
         int a = Read_21ADD0(r);
         int b = Read_21ADD0(r);
-        GObj_21ADD0* p = IdMgr_FindCollision(a, b);
+        GObj_21ADD0* p = nGobjManager_LookupGOBJ_int_int(a, b);
         ((GObj_21ADD0**)self->r74.rel.c)[(unsigned)i] = p;
         if (p && p->b49 != 0xB && p->b49 != 0xA && p->b49 != 9)
             p->Link(self);
@@ -212,15 +212,15 @@ self->name18 = NewName_21ADD0();
         self->idC = id;
         self->id10 = id;
     }
-    if (self->b60 && FileMan_FindMember(&e) == 0) {
+    if (self->b60 && cFileMan_Open(&e) == 0) {
         unsigned char have;
         got = 0;
-        have = Game_FindNamedResource(g_Game, s, &got);
+        have = cGameSystem_FindVUMGOBJ_charP_cVUMGOBJPP(g_Game, s, &got);
         {
             VUM_21ADD0* v = (VUM_21ADD0*)New_21ADD0(0x1F4, D_004A4550, 0xBC);
             if (v) {
                 int z = 0;
-                v = cVUM_GOBJ_ctor2(v, &z);
+                v = cVUM_GOBJ_ctor_cObjectIdR(v, &z);
             }
             self->vum = v;
         }
@@ -240,16 +240,16 @@ self->name18 = NewName_21ADD0();
         self->b60 = 0;
         self->vum = 0;
     }
-    Node_ClearLocalMatrix(self);
-    Object_AttachTransform(self, &m, 0);
+    cGOBJ_DestroyXform(self);
+    cGOBJ_CreateXform(self, &m, 0);
     if (self->vum)
-        Object_ShareTransform(self->vum, self->xf50);
+        cGOBJ_SetXformPointer(self->vum, self->xf50);
     self->SetActive(1);
     for (j = 0; j < n; j++) {
         if (ia[j] != -1 && ib[j] != -1) {
-            GObj_21ADD0* f = IdMgr_FindCollision(ia[j], ib[j]);
+            GObj_21ADD0* f = nGobjManager_LookupGOBJ_int_int(ia[j], ib[j]);
             if (f)
-                ZoneMgr_Associate(f, self, 1, f);
+                cTerrain_AddActivation(f, self, 1, f);
         }
     }
     self->f6C = 0;
@@ -257,9 +257,9 @@ self->name18 = NewName_21ADD0();
         if (!IsAuth_21ADD0())
             self->b14 = 0;
         int id = self->id10;
-        NetMap_BindReceiver(id, ObjId_21ADD0(), self);
+        cNetObj_AddSystem(id, ObjId_21ADD0(), self);
     }
-    FileMan_Release(&e, -1);
+    cFileMan_dtor(&e, -1);
     return self;
 }
 

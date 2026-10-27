@@ -5,14 +5,14 @@ typedef struct {
     char p25[0x3C - 0x25];
     int flags;
 } PlayerInput_24A5A0;
-extern unsigned char PlayerInput_TryStand(PlayerInput_24A5A0* p);
-extern unsigned char PlayerInput_Crouch(PlayerInput_24A5A0* p);
-unsigned char PlayerInput_CrouchToggle(PlayerInput_24A5A0* p) {
+extern unsigned char cPlayerControls_ExitCrawl_cHumanR(PlayerInput_24A5A0* p);
+extern unsigned char cPlayerControls_EnterCrawl(PlayerInput_24A5A0* p);
+unsigned char cPlayerControls_ToggleCrawl(PlayerInput_24A5A0* p) {
     unsigned char result = 0;
     int crouched = (p->flags >> 4) & 1;
     if (crouched)
-        result = PlayerInput_TryStand(p);
+        result = cPlayerControls_ExitCrawl_cHumanR(p);
     else if (!crouched && p->b24)
-        result = PlayerInput_Crouch(p);
+        result = cPlayerControls_EnterCrawl(p);
     return result;
 }

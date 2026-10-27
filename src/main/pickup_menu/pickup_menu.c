@@ -16,14 +16,14 @@
 #include "pickup_menu_types.h"
 
 extern char g_PickupTextColour[]; /* text colour (Vec4f; set by sinit and backpack Global_SetPickupTextColor) */
-extern float TextObj_SetColour(PickupMenu* text, char* color);
+extern float cTextArea_SetColor(PickupMenu* text, char* color);
 
 /* Applies the pickup-menu text colour to a model's text object (model +0x74),
  * setting the two flags at +0x10/+0x11 first. */
-float PickupMenuEntry_SetPickupColor(PickupMenu* text) {
+float cPickupMenu_PickupEntry_SetupTextArea(PickupMenu* text) {
     text->unk10 = 1;
     text->unk11 = 1;
-    return TextObj_SetColour(text, g_PickupTextColour);
+    return cTextArea_SetColor(text, g_PickupTextColour);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00251040 */
@@ -32,10 +32,10 @@ float PickupMenuEntry_SetPickupColor(PickupMenu* text) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "alloc_guard.h"
-/* Interface model instance (0x80 bytes, made by IeElement_Create); +0x74 is its text object. */
+/* Interface model instance (0x80 bytes, made by cInterfaceModel_CreateInstance); +0x74 is its text object. */
 struct PickupMenuModel { char pad[0x74]; int text; };
 /* The pickup menu: one or two interface models (the second is only made when
- * t == 0), each paired with a 0x68-byte game object (WeaponPreview_ctor). */
+ * t == 0), each paired with a 0x68-byte game object (cHudWeapon_ctor). */
 struct PickupMenuObj {
     signed char kind;        /* 0x00 */
     char pad1[3];
@@ -51,75 +51,75 @@ extern int D_004F7E90; /* interface model template of the first panel */
 extern int D_004F7E98; /* interface model template of the second panel */
 extern int D_0048AEF8;
 extern char D_004A7998[]; /* "pickup_menu.cc" */
-void* Mem_Alloc(int pool, int size, char* file, int line);
-PickupMenuModel* IeElement_Create(int tmpl);
-void IeElement_EvaluateAt(float t, PickupMenuModel* m);
-void IeElement_Fade(float t, PickupMenuModel* m);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+PickupMenuModel* cInterfaceModel_CreateInstance(int tmpl);
+void viBufGetTs(float t, PickupMenuModel* m);
+void cAnimator_AnimateTo(float t, PickupMenuModel* m);
 #if 0 /* merge_units */
-void PickupMenuEntry_SetPickupColor(int x);
+void cPickupMenu_PickupEntry_SetupTextArea(int x);
 #endif /* merge_units */
-#define PickupMenuEntry_SetPickupColor(a0) ((void)PickupMenuEntry_SetPickupColor((PickupMenu *)(a0))) /* merge_units */
+#define cPickupMenu_PickupEntry_SetupTextArea(a0) ((void)cPickupMenu_PickupEntry_SetupTextArea((PickupMenu *)(a0))) /* merge_units */
 
 
-void* WeaponPreview_ctor(void* obj);
-void IeNode_SetShown(int node, int visible, int recurse); /* show/hide a model tree */
+void* cHudWeapon_ctor(void* obj);
+void cInterfaceModel_Activate(int node, int visible, int recurse); /* show/hide a model tree */
 }
 /* Sets up the pickup menu: instantiates the panel model(s) and their game objects. */
-extern "C" void PickupMenu_AddEntry(PickupMenuObj* s, signed char kind, int id, int t)
+extern "C" void cPickupMenu_PickupEntry_Activate(PickupMenuObj* s, signed char kind, int id, int t)
 {
     void* p;
     s->kind = kind;
     s->id = id;
     s->x8 = 0;
-    s->model1 = IeElement_Create(D_004F7E90);
-    IeElement_EvaluateAt(t, s->model1);
-    IeElement_Fade(t + D_0048AEF8, s->model1);
-    PickupMenuEntry_SetPickupColor(s->model1->text);
+    s->model1 = cInterfaceModel_CreateInstance(D_004F7E90);
+    viBufGetTs(t, s->model1);
+    cAnimator_AnimateTo(t + D_0048AEF8, s->model1);
+    cPickupMenu_PickupEntry_SetupTextArea(s->model1->text);
     {
         AllocGuard g;
-        p = Mem_Alloc(0, 0x68, D_004A7998, 0x352);
+        p = cMemMan_Allocate(0, 0x68, D_004A7998, 0x352);
     }
     if (p)
-        p = WeaponPreview_ctor(p);
+        p = cHudWeapon_ctor(p);
     s->obj1 = p;
     if (t) {
-        IeNode_SetShown(D_004F7E98, 0, 1);
+        cInterfaceModel_Activate(D_004F7E98, 0, 1);
         return;
     }
-    IeNode_SetShown(D_004F7E98, 1, 1);
-    s->model2 = IeElement_Create(D_004F7E98);
-    IeElement_EvaluateAt(t, s->model2);
-    IeElement_Fade(t + D_0048AEF8, s->model2);
-    PickupMenuEntry_SetPickupColor(s->model2->text);
+    cInterfaceModel_Activate(D_004F7E98, 1, 1);
+    s->model2 = cInterfaceModel_CreateInstance(D_004F7E98);
+    viBufGetTs(t, s->model2);
+    cAnimator_AnimateTo(t + D_0048AEF8, s->model2);
+    cPickupMenu_PickupEntry_SetupTextArea(s->model2->text);
     {
         AllocGuard g;
-        p = Mem_Alloc(0, 0x68, D_004A7998, 0x35D);
+        p = cMemMan_Allocate(0, 0x68, D_004A7998, 0x35D);
     }
     if (p)
-        p = WeaponPreview_ctor(p);
+        p = cHudWeapon_ctor(p);
     s->obj2 = p;
 }
-#undef PickupMenuEntry_SetPickupColor /* merge_units */
+#undef cPickupMenu_PickupEntry_SetupTextArea /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00251060 */
 
 /* merge_units: begin func_00251290 */
 #pragma push /* merge_units */
 typedef struct { char pad[0xC]; int fx0; int fx1; void* s0; void* s1; } Obj_251290;
-extern void Object_DeleteLater(int fx, float t);
-extern void IeElement_Release(void* s);
+extern void cSystem_ActualScheduleDelete(int fx, float t);
+extern void cInterfaceElement_Destroy(void* s);
 extern void operator_delete(void* p);
-Obj_251290* PickupMenuEntry_dtor(Obj_251290* o, short flag)
+Obj_251290* cPickupMenu_PickupEntry_dtor(Obj_251290* o, short flag)
 {
     if (o) {
         if (o->fx0)
-            Object_DeleteLater(o->fx0, 0.1f);
+            cSystem_ActualScheduleDelete(o->fx0, 0.1f);
         if (o->fx1)
-            Object_DeleteLater(o->fx1, 0.1f);
+            cSystem_ActualScheduleDelete(o->fx1, 0.1f);
         if (o->s0)
-            IeElement_Release(o->s0);
+            cInterfaceElement_Destroy(o->s0);
         if (o->s1)
-            IeElement_Release(o->s1);
+            cInterfaceElement_Destroy(o->s1);
         if (flag > 0)
             operator_delete(o);
     }
@@ -138,7 +138,7 @@ Obj_251290* PickupMenuEntry_dtor(Obj_251290* o, short flag)
 
 #include "loose01_types.h"
 
-Unk251350* PickupMenuEntry_ctor(Unk251350* self) {
+Unk251350* cPickupMenu_PickupEntry_ctor(Unk251350* self) {
     self->unk0C = 0;
     self->unk10 = 0;
     self->unk14 = 0;
@@ -181,23 +181,23 @@ extern "C" {
 extern char g_Game[];
 extern char D_004DAE30[];
 extern char D_004A79A8[];
-void Resource_Construct(void* m);
-void FileMan_Release(void* part, int flags);
+void cFileMan_ctor_void(void* m);
+void cFileMan_dtor(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
-void Event_Send(void* msg, void* target, int flags);
-void SoundAction_CtorVoice(void* action, int kind, char* name, int a, int b);
-int Backpack_CycleItem(int a, int b, int c);
+void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int flags);
+void cSndFx_SetSndFx(void* action, int kind, char* name, int a, int b);
+int cBackpack_GetNextWeapon(int a, int b, int c);
 void EffectMsg_WrapRequest(Msg_251370* msg, void* action);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" void PickupMenu_OnLeft(Self_251370* s)
+extern "C" void cPickupMenu_PrevWeapon(Self_251370* s)
 {
     Act_251370* p;
     int v;
     char* pb;
     char* pa;
-    v = Backpack_CycleItem(s->e[0].a0, s->e[s->cur].v, 1);
+    v = cBackpack_GetNextWeapon(s->e[0].a0, s->e[s->cur].v, 1);
     if (v != s->e[s->cur].v) {
         Act_251370 act;
         Msg_251370 m;
@@ -205,9 +205,9 @@ extern "C" void PickupMenu_OnLeft(Self_251370* s)
         act.h24.v = -2;
         act.w20 = 0;
         pa = act.memberA;
-        Resource_Construct(pa);
+        cFileMan_ctor_void(pa);
         pb = act.memberB;
-        Resource_Construct(pb);
+        cFileMan_ctor_void(pb);
         p->id = -1;
         p->mask = -1;
         p->w20 = 0;
@@ -218,17 +218,17 @@ extern "C" void PickupMenu_OnLeft(Self_251370* s)
         p->h184 = -1;
         p->w180 = 0;
         p->b186 = 0;
-        SoundAction_CtorVoice(p, 3, D_004A79A8, 0, 0);
+        cSndFx_SetSndFx(p, 3, D_004A79A8, 0, 0);
         EffectMsg_WrapRequest(&m, &act);
         m.flag = 1;
-        Event_Send(&m, g_Game, 1);
+        QueueMessage_cMessageR_cSystemP_int(&m, g_Game, 1);
         m.vtbl = D_004DAE30;
-        FileMan_Release(m.partB, -1);
-        FileMan_Release(m.partA, -1);
+        cFileMan_dtor(m.partB, -1);
+        cFileMan_dtor(m.partA, -1);
         cMessage_dtor(&m, 0);
         s->e[s->cur].v = v;
-        FileMan_Release(pb, -1);
-        FileMan_Release(pa, -1);
+        cFileMan_dtor(pb, -1);
+        cFileMan_dtor(pa, -1);
     }
 }
 #pragma pop
@@ -276,7 +276,7 @@ void EffectMsg_WrapRequest(Msg_251500* msg, void* action);
 #pragma opt_propagation off
 extern "C" void PickupMenu_OnRight(Self_251500* s)
 {
-    int v = Backpack_CycleItem(s->e[0].a0, s->e[s->cur].v, 0);
+    int v = cBackpack_GetNextWeapon(s->e[0].a0, s->e[s->cur].v, 0);
     if (v != s->e[s->cur].v) {
         Act_251500 act;
         Msg_251500 m;
@@ -287,9 +287,9 @@ extern "C" void PickupMenu_OnRight(Self_251500* s)
         act.h24.v = -2;
         act.w20 = 0;
         pa = act.memberA;
-        Resource_Construct(pa);
+        cFileMan_ctor_void(pa);
         pb = act.memberB;
-        Resource_Construct(pb);
+        cFileMan_ctor_void(pb);
         p->id = -1;
         p->mask = -1;
         p->w20 = 0;
@@ -300,17 +300,17 @@ extern "C" void PickupMenu_OnRight(Self_251500* s)
         p->h184 = -1;
         p->w180 = 0;
         p->b186 = 0;
-        SoundAction_CtorVoice(p, 3, D_004A79A8, 0, 0);
+        cSndFx_SetSndFx(p, 3, D_004A79A8, 0, 0);
         EffectMsg_WrapRequest(&m, &act);
         m.flag = 1;
-        Event_Send(&m, g_Game, 1);
+        QueueMessage_cMessageR_cSystemP_int(&m, g_Game, 1);
         m.vtbl = D_004DAE30;
-        FileMan_Release(m.partB, -1);
-        FileMan_Release(m.partA, -1);
+        cFileMan_dtor(m.partB, -1);
+        cFileMan_dtor(m.partA, -1);
         cMessage_dtor(&m, 0);
         s->e[s->cur].v = v;
-        FileMan_Release(pb, -1);
-        FileMan_Release(pa, -1);
+        cFileMan_dtor(pb, -1);
+        cFileMan_dtor(pa, -1);
     }
 }
 #pragma pop
@@ -356,7 +356,7 @@ void EffectMsg_WrapRequest(Msg_251690* msg, void* action);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" void PickupMenu_CursorPrev(Self_251690* s)
+extern "C" void cPickupMenu_Prev(Self_251690* s)
 {
     if (s->cur > 0) {
         Act_251690 act;
@@ -368,9 +368,9 @@ extern "C" void PickupMenu_CursorPrev(Self_251690* s)
         act.h24.v = -2;
         act.w20 = 0;
         pa = act.memberA;
-        Resource_Construct(pa);
+        cFileMan_ctor_void(pa);
         pb = act.memberB;
-        Resource_Construct(pb);
+        cFileMan_ctor_void(pb);
         p->id = -1;
         p->mask = -1;
         p->w20 = 0;
@@ -381,17 +381,17 @@ extern "C" void PickupMenu_CursorPrev(Self_251690* s)
         p->h184 = -1;
         p->w180 = 0;
         p->b186 = 0;
-        SoundAction_CtorVoice(p, 3, D_004A79A8, 0, 0);
+        cSndFx_SetSndFx(p, 3, D_004A79A8, 0, 0);
         EffectMsg_WrapRequest(&m, &act);
         m.flag = 1;
-        Event_Send(&m, g_Game, 1);
+        QueueMessage_cMessageR_cSystemP_int(&m, g_Game, 1);
         m.vtbl = D_004DAE30;
-        FileMan_Release(m.partB, -1);
-        FileMan_Release(m.partA, -1);
+        cFileMan_dtor(m.partB, -1);
+        cFileMan_dtor(m.partA, -1);
         cMessage_dtor(&m, 0);
         s->cur--;
-        FileMan_Release(pb, -1);
-        FileMan_Release(pa, -1);
+        cFileMan_dtor(pb, -1);
+        cFileMan_dtor(pa, -1);
     }
 }
 #pragma pop

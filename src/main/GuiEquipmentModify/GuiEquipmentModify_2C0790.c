@@ -6,7 +6,7 @@
 
 /* library prototypes shared by the blocks below (C linkage) */
 #include "SFOLobby_helpers.h"
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_002C0790 */
 #pragma push /* merge_units */
@@ -27,22 +27,22 @@ struct Screen {
 struct Agent { char pad[0xB70]; unsigned char unkB70; };
 struct State { char pad[0x251]; unsigned char unk251; };
 extern "C" {
-int Loc_FindKeyThunk(char*);
-char* Loc_GetTextById(int);
-char* Loc_LookupText(char*);
-Agent* Player_GetAgentData(int);
+int nGlobalization_GetStringIndex(char*);
+char* nGlobalization_GetString_int(int);
+char* nGlobalization_GetString_charP(char*);
+Agent* cHuman_GetAgentData(int);
 char* AgentData_GetRankText(Agent*);
-char* AgentData_GetName(Agent*);
+char* cAgentData_GetUserName(Agent*);
 void GuiTextWidget_SetText(Widget*, char*, int);
-void GuiWidget_Init();
+void GuiWidget_onAdd();
 void GuiTextListWidget_Clear(Widget*);
 extern State* D_004FFC04;
 extern int D_00506508;
 extern Screen* D_0051EE10;
 extern unsigned char g_IsMultiplayer;
-void GuiEquipmentModify_DrawWeaponBox2();
-void GuiEquipmentModify_DrawWeaponBox1();
-void GuiEquipmentModify_DrawFigure();
+void EM_Gun2RenderWrapper();
+void EM_Gun1RenderWrapper();
+void EM_ManRenderWrapper();
 extern char D_0048BA80[];
 extern char D_004A7520[];
 extern char D_004A9870[];
@@ -73,7 +73,7 @@ extern char D_004AC590[];
 extern char D_004AC5A0[];
 extern char D_004AC5B0[];
 }
-extern "C" void GuiEquipmentModify_Init(Screen* arg0) {
+extern "C" void GuiEquipmentModify_onAdd(Screen* arg0) {
     Widget *var_s2;
     char *temp_s2;
     char *var_a0;
@@ -102,23 +102,23 @@ extern "C" void GuiEquipmentModify_Init(Screen* arg0) {
     Widget *var_s2_2;
     char *temp_s1;
 
-    GuiWidget_Init();
+    GuiWidget_onAdd();
     D_0051EE10 = arg0;
     var_s1 = (Widget*)GuiFindAs(arg0, D_004AC4A0, D_004A9BF0);
     if (var_s1 != 0) {
-        var_s1->unk48 = (void*)&GuiEquipmentModify_DrawFigure;
+        var_s1->unk48 = (void*)&EM_ManRenderWrapper;
     }
     var_s1_2 = (Widget*)GuiFindAs(arg0, D_004AC4B0, D_004A9BF0);
     arg0->unkD0 = var_s1_2;
     temp_v1 = arg0->unkD0;
     if (temp_v1 != 0) {
-        temp_v1->unk48 = (void*)&GuiEquipmentModify_DrawWeaponBox1;
+        temp_v1->unk48 = (void*)&EM_Gun1RenderWrapper;
     }
     var_s1_3 = (Widget*)GuiFindAs(arg0, D_004AC4C0, D_004A9BF0);
     arg0->unkD4 = var_s1_3;
     temp_v1_2 = arg0->unkD4;
     if (temp_v1_2 != 0) {
-        temp_v1_2->unk48 = (void*)&GuiEquipmentModify_DrawWeaponBox2;
+        temp_v1_2->unk48 = (void*)&EM_Gun2RenderWrapper;
     }
     var_s1_4 = (Widget*)GuiFindAs(arg0, D_004AC4D0, D_004AA640);
     arg0->unk94 = var_s1_4;
@@ -126,19 +126,19 @@ extern "C" void GuiEquipmentModify_Init(Screen* arg0) {
     arg0->unk9C = (int) arg0->unk94->unk38;
     arg0->unkA4 = (int) arg0->unk94->unk5C;
     arg0->unkA8 = (int) ((arg0->unk94->unk40 / (float) arg0->unkA4) - 1.0f);
-    arg0->unkCC = (Widget*)GuiWidget_FindChildByName(arg0, D_004AC4E0);
+    arg0->unkCC = (Widget*)GuiWidget_FindChild_charP(arg0, D_004AC4E0);
     temp_v1_3 = arg0->unkCC;
     temp_v1_3->unk14 = (unsigned short) (temp_v1_3->unk14 & 0xFF7F);
     temp_v1_4 = arg0->unk94;
     temp_v1_4->unk14 = (unsigned short) (temp_v1_4->unk14 & 0xFF7F);
     var_s2 = (Widget*)GuiFindAs(arg0, D_004AC4F8, D_004A7520);
     var_s1_5 = (Widget*)GuiFindAs(arg0, D_004AC508, D_004A7520);
-    if (Player_GetAgentData(arg0->unk48)->unkB70 != 0) {
-        GuiTextWidget_SetText(var_s2, AgentData_GetName(Player_GetAgentData(arg0->unk48)), 0);
-        GuiTextWidget_SetText(var_s1_5, AgentData_GetRankText(Player_GetAgentData(arg0->unk48)), 0);
+    if (cHuman_GetAgentData(arg0->unk48)->unkB70 != 0) {
+        GuiTextWidget_SetText(var_s2, cAgentData_GetUserName(cHuman_GetAgentData(arg0->unk48)), 0);
+        GuiTextWidget_SetText(var_s1_5, AgentData_GetRankText(cHuman_GetAgentData(arg0->unk48)), 0);
     } else {
         GuiTextWidget_SetText(var_s2, D_004AC518, 0);
-        GuiTextWidget_SetText(var_s1_5, Loc_GetTextById(Loc_FindKeyThunk(D_004AC520) + 1), 0);
+        GuiTextWidget_SetText(var_s1_5, nGlobalization_GetString_int(nGlobalization_GetStringIndex(D_004AC520) + 1), 0);
     }
     if (D_004FFC04->unk251 != 0) {
         var_s1_6 = (Widget*)GuiFindAs(arg0, D_004AC340, D_004A9870);
@@ -161,19 +161,19 @@ extern "C" void GuiEquipmentModify_Init(Screen* arg0) {
         temp_v1_7 = arg0->unkCC;
         temp_v1_7->unk14 = (unsigned short) (temp_v1_7->unk14 & 0xFFFD);
     }
-    temp_s2 = Loc_LookupText(D_004AC530);
+    temp_s2 = nGlobalization_GetString_charP(D_004AC530);
     var_s1_12 = (Widget*)GuiFindAs(arg0, D_004AC540, D_004A7520);
     if ((temp_s2 != 0) && (var_s1_12 != 0)) {
         GuiTextWidget_SetText(var_s1_12, temp_s2, 0);
     }
-    temp_s1 = Loc_LookupText(D_004AC550);
+    temp_s1 = nGlobalization_GetString_charP(D_004AC550);
     var_s2_2 = (Widget*)GuiFindAs(arg0, D_004AC560, D_004A7520);
     if ((temp_s1 != 0) && (var_s2_2 != 0)) {
         GuiTextWidget_SetText(var_s2_2, temp_s1, 0);
     }
     var_s1_13 = (Widget*)GuiFindAs(arg0, D_004AC570, D_004A7520);
     arg0->unk958 = var_s1_13;
-    arg0->unk95C = Loc_LookupText(D_004AC580);
+    arg0->unk95C = nGlobalization_GetString_charP(D_004AC580);
     if (arg0->unk95C == 0) {
         arg0->unk95C = D_0048BA80;
     }
@@ -190,7 +190,7 @@ extern "C" void GuiEquipmentModify_Init(Screen* arg0) {
         } else {
             var_a0 = D_004AC5B0;
         }
-        GuiTextWidget_SetText(var_s0, Loc_LookupText(var_a0), 0);
+        GuiTextWidget_SetText(var_s0, nGlobalization_GetString_charP(var_a0), 0);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -210,30 +210,30 @@ extern char g_AgentPartCache[];
 extern char D_004DDEE0[];
 extern char D_004E1220[];
 extern int D_00506500;
-void AgentPartCache_Unlock(void* p);
-void World_ClearPendingIfLoaded(void);
-void GuiEquipmentModify_RingRelease(void* p);
-void GuiWidget_Destroy(void* p, int f);
+void Monster_RestoreLockedPartsTex(void* p);
+void cMotionManager_FlushUpdateList(void);
+void GuiEquipmentModify_EmptyQue(void* p);
+void GuiWidget_dtor(void* p, int f);
 void operator_delete(void* p);
 }
 static inline void Del002C0F00(V002C0F00* o, int line)
 {
     AllocGuard g;
     o->v0(-1);
-    Mem_Free(0, o, "GuiEquipmentModify.cc", line);
+    cMemMan_Deallocate(0, o, "GuiEquipmentModify.cc", line);
 }
 extern "C" O002C0F00* GuiEquipmentModify_dtor(O002C0F00* self, short del)
 {
     if (self) {
         int i;
         self->vt = D_004DDEE0;
-        GuiEquipmentModify_RingRelease(self);
+        GuiEquipmentModify_EmptyQue(self);
         Del002C0F00(self->p50, 0x169);
         self->p4C->h2420 = 0;
         self->p4C->x2C74 = 0;
         self->p4C->v22(1);
         Del002C0F00(self->p4C, 0x16D);
-        GuiWidget_Destroy(self, 0);
+        GuiWidget_dtor(self, 0);
         if (del > 0)
             operator_delete(self);
     }
@@ -411,61 +411,61 @@ extern void* D_00506500;
 
 extern void* g_WeaponDatabase;
 void GuiWidget_ctor(Self_1100* self);
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void cGOBJ_ctor(void* p, int* a, int b, int* c);
-void Object_AttachTransform(void* p, void* t, int a);
-Model_1100* DisplayActor_Construct(void* p, int* idx);
-float Math_SinThunk(float a);
-float Math_CosThunk(float a);
-void Mtx44_SetRotation(M4_1100* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
-Model_1100* PlayerSlots_Get(void* a);
-WDef_1100* WeaponDb_Get(void* db, int id);
-int Appearance_GetBodyKind(void* app);
+void cGOBJ_CreateXform(void* p, void* t, int a);
+Model_1100* cSKM_GOBJ_ctor_cObjectIdR(void* p, int* idx);
+float SIN(float a);
+float COS(float a);
+void cMatrix_Set_ColumnMajorForm(M4_1100* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
+Model_1100* cNetObj_GetPlayer(void* a);
+WDef_1100* cWeaponDB_GetEntry(void* db, int id);
+int SKL_FindSex(void* app);
 void cMan_AddDisguise(Man_1100* m, void* p);
-void Skel_Rebind(Model_1100* m, Man_1100* src);
-void Appearance_ReorderParts(Man_1100* m);
-void cVUM_GOBJ_InitModel(Model_1100* m, char* name);
+void cSKM_GOBJ_CloneMan(Model_1100* m, Man_1100* src);
+void cMan_SortParts(Man_1100* m);
+void cSKM_GOBJ_ResetSkeleton(Model_1100* m, char* name);
 void cArrayCapacity_ctor(Word_1100* w, int n);
 void cArray_cSkeletonBBoxContributionPtr_ctor(SVec_1100* v, Word_1100* w, unsigned char f);
-V4_1100* Vec4_Set(V4_1100* v, float x, float y, float z, float w);
+V4_1100* cVector_ctor_float_float_float_float(V4_1100* v, float x, float y, float z, float w);
 void cSkeletonBBoxContribution_ctor(Sph_1100* s, int bone, float r, V4_1100* off);
 void cArray_cSkeletonBBoxContributionPtr_PushBackActual(SVec_1100* v, Sph_1100** p);
 void cSkeletonBBoxContribution_dtor(Sph_1100* s, int f);
 void* cSKM_GOBJ_GetSkeleton_void_2(Model_1100* m);
-void FrontEnd_SetNodeSpheres(void* n, SVec_1100* v);
+void cSkeleton_ResetBBoxContributors(void* n, SVec_1100* v);
 void cArray_cSkeletonBBoxContributionPtr_dtor(SVec_1100* v, int f);
 void cAssocArray_cString_cSkaAnimationSetPtr_Find(It_1100* it, void* tab, char* key);
 void cAssocArray_cString_cSkaAnimationSetPtr_End(It_1100* it, void* tab);
 int cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opNe(It_1100* a, It_1100* b);
 void** cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opMul(It_1100* it);
-void Model_Attach(void* a, void* b);
-void AnimModel_InitAnim(void* a);
-void MotionTokens_Init(Arr7_1100* a);
+void cSkaParams_HandleNewAnimationSet(void* a, void* b);
+void cSkaSystem_SetInitialAnimation(void* a);
+void cArray_FixedSize_cSkaAnimEvent_7_ctor_void(Arr7_1100* a);
 void cArray_cTimedEvent_ctor_void(Y_1100* y);
-void MotionRequest_Construct(void* mr, Str_1100* s);
+void cString16N_3_ctor_cString16NR(void* mr, Str_1100* s);
 void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(Sel_1100* d, Sel_1100* s);
 void func_001BE5A0(Y_1100* y, int f);
 void __destroy_array(void* a, void* dtor, int size, int n);
 void func_0018A210(void* p, int f);
 void cSkaPlaybackGroupId_ctor_int(Word_1100* w, int a);
-void Actor_ResolveMotionSelection(Req_1100* r, int* sel, Word_1100* w, void* m);
-float Model_GetFirstFloat(void* m);
-V4_1100* AnimRate_Init(Rate_1100* r, float f);
+void cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(Req_1100* r, int* sel, Word_1100* w, void* m);
+float cSkaAnimationSet_DefaultCrossFadeDuration(void* m);
+V4_1100* cSkaCrossFadeDuration_ctor_float(Rate_1100* r, float f);
 }
-static inline V4_1100* Splat_1100(V4_1100* t, float) { float z = 0.0f; return Vec4_Set(t, z, z, z, z); }
+static inline V4_1100* Splat_1100(V4_1100* t, float) { float z = 0.0f; return cVector_ctor_float_float_float_float(t, z, z, z, z); }
 extern "C" {
-void Vec4_Copy_18A350(Rate_1100* d, V4_1100* s);
-void AnimEvent_Construct(Ev_1100* e);
-int MotionRequest_GetMode(Req_1100* r);
+void cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(Rate_1100* d, V4_1100* s);
+void cSkaAnimEndedMessage_ctor_void(Ev_1100* e);
+int cSkaRequestStream_AnimationPacket_GetInstruction(Req_1100* r);
 int cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(Req_1100* r);
 float cSkaRequestStream_AnimationPacket_GetDuration(Req_1100* r);
 float func_0018A2C0(Req_1100* r);
-void AnimCtl_InstallMotion(Anim_1100* a, int sel, int b, Rate_1100* r, Word_1100* w, Ev_1100* e0, Ev_1100* e1, int c, float f0, float f1);
-void AnimEvent_dtor(Ev_1100* e, int f);
-void Model_HardMeshAttachPoints(Man_1100* m);
+void cSkaRequestStream_AddRequest(Anim_1100* a, int sel, int b, Rate_1100* r, Word_1100* w, Ev_1100* e0, Ev_1100* e1, int c, float f0, float f1);
+void cSkaAnimEndedMessage_dtor(Ev_1100* e, int f);
+void cMan_SetGunOffsets(Man_1100* m);
 void cMan_GetTextureIDs(Man_1100* m);
-void ActorModel_Setup(Man_1100* m, int flag);
-void Skel_ApplyScalePreset(Man_1100* m, int a);
+void cMan_BuildMan(Man_1100* m, int flag);
+void cMan_SetBoneSet(Man_1100* m, int a);
 Self_1100* GuiEquipmentModify_ctor(Self_1100* self);
 }
 
@@ -483,7 +483,7 @@ static inline void QCopy_1100(void* d0, void* s0, int n0) { int n = n0; void* d 
     }
 }
 static inline void G_1100(void* p, int a, int n, int b) { int* pa = &a; cGOBJ_ctor(p, pa, n, &b); }
-static inline Model_1100* M_1100(void* p, int x) { return DisplayActor_Construct(p, &x); }
+static inline Model_1100* M_1100(void* p, int x) { return cSKM_GOBJ_ctor_cObjectIdR(p, &x); }
 struct V4C_1100 { float x, y, z, w; V4C_1100(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; } V4C_1100(float a, float b, float c) { x = a; y = b; z = c; } } __attribute__((aligned(16)));
 static inline void MKd_1100(V4_1100* t, float x, float y, float z, float w) { t->x = x; t->y = y; t->z = z; t->w = w; }
 static inline void MKd3_1100(V4_1100* t, float x, float y, float z) { t->x = x; t->y = y; t->z = z; }
@@ -491,10 +491,10 @@ static inline void Q3_1100(void* a0, const void* b0, void* c0, float z) { void* 
 static inline Man_1100* ManA_1100(Model_1100* md) { return &md->man; }
 static inline Wpn_1100* GetW_1100(Man_1100* m, int o) { return *(Wpn_1100**)((char*)m->wpn + o); }
 struct V4R_1100 { float x, y, z, w; V4R_1100(const float& a, const float& b, const float& c, const float& d) { x = a; y = b; z = c; w = d; } V4R_1100(const float& a, const float& b, const float& c) { x = a; y = b; z = c; } } __attribute__((aligned(16)));
-static inline void* Alloc_1100(int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004AC5C0, line); }
+static inline void* Alloc_1100(int n, int line) { AllocGuard g; return cMemMan_Allocate(0, n, D_004AC5C0, line); }
 
-static inline void SelInit_1100(Sel_1100* s0) { Sel_1100* s = s0; s->b0 = 0; MotionTokens_Init(&s->arr); cArray_cTimedEvent_ctor_void(&s->y); }
-static inline void ReqInit2_1100(Req_1100* r0, Str_1100* str0, Sel_1100* sel) { Str_1100* str = str0; Req_1100* r = r0; r->b0 = 0; MotionRequest_Construct(r->mr, str); r->b48 = 3; cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&r->sel, sel); r->f98 = -1.0f; r->f9C = 0; }
+static inline void SelInit_1100(Sel_1100* s0) { Sel_1100* s = s0; s->b0 = 0; cArray_FixedSize_cSkaAnimEvent_7_ctor_void(&s->arr); cArray_cTimedEvent_ctor_void(&s->y); }
+static inline void ReqInit2_1100(Req_1100* r0, Str_1100* str0, Sel_1100* sel) { Str_1100* str = str0; Req_1100* r = r0; r->b0 = 0; cString16N_3_ctor_cString16NR(r->mr, str); r->b48 = 3; cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&r->sel, sel); r->f98 = -1.0f; r->f9C = 0; }
 static inline void Spheres_1100(Model_1100* md)
 {
             Word_1100 w;
@@ -532,7 +532,7 @@ Sph_1100* sp; Sph_1100** pp = &sp; sp = &arr[k]; cArray_cSkeletonBBoxContributio
             cSkeletonBBoxContribution_dtor(&arr[2], -1);
             cSkeletonBBoxContribution_dtor(&arr[1], -1);
             cSkeletonBBoxContribution_dtor(&arr[0], -1);
-            FrontEnd_SetNodeSpheres(cSKM_GOBJ_GetSkeleton_void_2(md), &vec);
+            cSkeleton_ResetBBoxContributors(cSKM_GOBJ_GetSkeleton_void_2(md), &vec);
             cArray_cSkeletonBBoxContributionPtr_dtor(&vec, -1);
             }
 }
@@ -544,14 +544,14 @@ static inline void Install_1100(Anim_1100* an, int* selp, Req_1100* rq, Word_110
                 Ev_1100 e1;
                 V4_1100* v;
                 if (an->b5) v = (V4_1100*)an->v8;
-                else { v = AnimRate_Init(&tmp, Model_GetFirstFloat(an->f0)); asm { .set reorder } }
-                Vec4_Copy_18A350(&rate, v);
+                else { v = cSkaCrossFadeDuration_ctor_float(&tmp, cSkaAnimationSet_DefaultCrossFadeDuration(an->f0)); asm { .set reorder } }
+                cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(&rate, v);
                 an->b5 = 0;
-                AnimEvent_Construct(&e0);
-                AnimEvent_Construct(&e1);
-                AnimCtl_InstallMotion(an, *selp, MotionRequest_GetMode(rq), &rate, wp, &e0, &e1, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(rq), cSkaRequestStream_AnimationPacket_GetDuration(rq), func_0018A2C0(rq));
-                AnimEvent_dtor(&e1, -1);
-                AnimEvent_dtor(&e0, -1);
+                cSkaAnimEndedMessage_ctor_void(&e0);
+                cSkaAnimEndedMessage_ctor_void(&e1);
+                cSkaRequestStream_AddRequest(an, *selp, cSkaRequestStream_AnimationPacket_GetInstruction(rq), &rate, wp, &e0, &e1, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(rq), cSkaRequestStream_AnimationPacket_GetDuration(rq), func_0018A2C0(rq));
+                cSkaAnimEndedMessage_dtor(&e1, -1);
+                cSkaAnimEndedMessage_dtor(&e0, -1);
 }
 static inline void FindAnim_1100(Self_1100* self, int kind)
 {
@@ -566,9 +566,9 @@ static inline void FindAnim_1100(Self_1100* self, int kind)
             else { a = 0; asm { .set reorder } }
             {
                 void** an = (void**)((char*)self->model + 0x2EC0);
-                Model_Attach(an + 4, a);
+                cSkaParams_HandleNewAnimationSet(an + 4, a);
                 *an = a;
-                AnimModel_InitAnim(an);
+                cSkaSystem_SetInitialAnimation(an);
             }
         }
 
@@ -579,7 +579,7 @@ static inline void Motion_1100(Model_1100* md, Req_1100* rq)
             int sel;
             Word_1100 w[3];
             cSkaPlaybackGroupId_ctor_int(w, -1);
-            Actor_ResolveMotionSelection(rq, &sel, w, an->f0);
+            cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(rq, &sel, w, an->f0);
             if (sel) {
                 Install_1100(an, &sel, rq, w);
             }
@@ -599,39 +599,39 @@ static inline void F_1100(Self_1100* self, M4_1100* mtx, Req_1100* req)
         {
             Xf_1100* xf = self->model->xf;
             M4_1100 rot;
-            float s = Math_SinThunk(0.0f);
-            float c = Math_CosThunk(0.0f);
-            { M4_1100* pr = &rot; float z = 0.0f; Mtx44_SetRotation(pr, c, -s, z, s, c, z, z, z, 1.0f); }
+            float s = SIN(0.0f);
+            float c = COS(0.0f);
+            { M4_1100* pr = &rot; float z = 0.0f; cMatrix_Set_ColumnMajorForm(pr, c, -s, z, s, c, z, z, z, 1.0f); }
             { M4_1100* pr = &rot; xf->SetMtx(pr); }
         }
         self->fFC = 0;
-        self->plr = PlayerSlots_Get(D_00506500);
+        self->plr = cNetObj_GetPlayer(D_00506500);
         Model_1100* pl;
         if ((pl = self->plr) != 0) {
             Wpn_1100* w = pl->man.wpn[0];
             if (w) {
-                int n = WeaponDb_Get(g_WeaponDatabase, w->id)->b30;
+                int n = cWeaponDB_GetEntry(g_WeaponDatabase, w->id)->b30;
                 if (n > 0 && n < 10) self->fFC = n;
             }
             if (!g_IsMultiplayer && D_0055DE94) {
-                void* a = D_0055DE98[Appearance_GetBodyKind(APP_1100(MAN(self->plr)))].p;
+                void* a = D_0055DE98[SKL_FindSex(APP_1100(MAN(self->plr)))].p;
                 if (a) cMan_AddDisguise(MAN(self->plr), a);
             }
-            Skel_Rebind(self->model, MAN(self->plr));
+            cSKM_GOBJ_CloneMan(self->model, MAN(self->plr));
         } else {
             { int n = 0x44; int i = D_00493A60; Model_1100* m = self->model; QCopy_1100(APP_1100(MAN(m)), &D_0055D510[i], n); }
             if (!g_IsMultiplayer && D_0055DE94) {
-                void* a = D_0055DE98[Appearance_GetBodyKind(APP_1100(MAN(self->model)))].p;
+                void* a = D_0055DE98[SKL_FindSex(APP_1100(MAN(self->model)))].p;
                 if (a) cMan_AddDisguise(MAN(self->model), a);
             }
         }
         self->f100 = self->fFC;
-        Appearance_ReorderParts(MAN(self->model));
-        kind = Appearance_GetBodyKind(APP_1100(MAN(self->model)));
+        cMan_SortParts(MAN(self->model));
+        kind = SKL_FindSex(APP_1100(MAN(self->model)));
         {
             char* nm; if (kind == 0) nm = D_004AC5D8; else { nm = D_004AC5E8; asm { .set reorder } }
-            cVUM_GOBJ_InitModel(self->model, nm);
-            String_Copy(NAME_1100(MAN(self->model)), nm);
+            cSKM_GOBJ_ResetSkeleton(self->model, nm);
+            Libc_Strcpy(NAME_1100(MAN(self->model)), nm);
         }
         self->model->Init(1);
         {
@@ -672,7 +672,7 @@ static inline void F_1100(Self_1100* self, M4_1100* mtx, Req_1100* req)
         }
     SetF_1100(self->model, 1.0f);
     FLD(self->model, float, 0x2454) = 0.0f;
-    Model_HardMeshAttachPoints(MAN(self->model));
+    cMan_SetGunOffsets(MAN(self->model));
     {
         V4_1100 v;
         Man_1100* m;
@@ -710,7 +710,7 @@ extern "C" Self_1100* GuiEquipmentModify_ctor(Self_1100* p0)
             *(char**)p = D_004DA470;
             ((int*)p)[0x60 / 4] = 0;
             ((int*)p)[0x64 / 4] = 0;
-            Object_AttachTransform(p, g_IdentityMatrix, 0);
+            cGOBJ_CreateXform(p, g_IdentityMatrix, 0);
             ((int*)p)[0x30 / 4] = 0;
         }
         self->gobj = p;
@@ -737,15 +737,15 @@ extern "C" Self_1100* GuiEquipmentModify_ctor(Self_1100* p0)
             p = (Model_1100*)Alloc_1100(0x3030, 0xCD);
             if (p) {
                 x = 0;
-                p = DisplayActor_Construct(p, &x);
+                p = cSKM_GOBJ_ctor_cObjectIdR(p, &x);
             }
             self->model = p;
         }
         F_1100(self, &mtx, &req);
     cMan_GetTextureIDs(MAN(self->model));
     SetI_1100(self->model, 1);
-    ActorModel_Setup(MAN(self->model), 1);
-    Skel_ApplyScalePreset(MAN(self->model), -1);
+    cMan_BuildMan(MAN(self->model), 1);
+    cMan_SetBoneSet(MAN(self->model), -1);
     SetS_1100(self->model, 0);
     SetB_1100(self->model, 1);
     self->fD8 = 0;
@@ -756,7 +756,7 @@ extern "C" Self_1100* GuiEquipmentModify_ctor(Self_1100* p0)
         w = GetW_1100(ManA_1100(self->model), o);
         if (w) {
             self->fDC[self->fD8] = w->id;
-            self->fF0[self->fD8] = WeaponDb_Get(g_WeaponDatabase, GetW_1100(ManA_1100(self->model), o)->id)->b30;
+            self->fF0[self->fD8] = cWeaponDB_GetEntry(g_WeaponDatabase, GetW_1100(ManA_1100(self->model), o)->id)->b30;
             self->fD8++;
         }
     }

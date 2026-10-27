@@ -19,7 +19,7 @@ void Tree_Begin(Iter* out, Tree* t) {
 }
 
 /* Clears the global tree g_MotionManager if it exists. */
-void World_ClearPendingIfLoaded(void) {
+void cMotionManager_FlushUpdateList(void) {
     Tree* t = g_MotionManager;
 
     if (t != 0) {

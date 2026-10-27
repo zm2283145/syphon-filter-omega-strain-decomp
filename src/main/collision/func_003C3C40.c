@@ -2,7 +2,7 @@
 #pragma always_inline on
 #pragma inline_depth(8)
 #include "types.h"
-/* Col_SegmentVsTriangle: Los_IntersectRecord's twin that flips back faces only for double-sided
+/* cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR: cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_3's twin that flips back faces only for double-sided
  * candidates (otherwise a back face is rejected): segment vs triangle c, plane hit inside the
  * segment, barycentric test in the plane of the two smallest normal components; a hit is recorded
  * in q (flag, normal, point, surface vector, scaled direction) and 1 returned. */
@@ -53,14 +53,14 @@ static inline float Dot3(const V* a, const V* b)
 struct Cand { V p[3]; V n; unsigned char flags; char pad41[0x1F]; V surf; };
 struct LosQ { unsigned char hit; char pad1[0xF]; V n; V p; V surf; V dir; V org; };
 extern "C" {
-V* ColCandidate_GetNormal(Cand* c);
-float Vec4_GetX(V* v);
-float Vec4_GetY(V* v);
-float Vec4_GetZ(V* v);
+V* cCollisionFace_UnitNormal(Cand* c);
+float cVector_X_void(V* v);
+float cVector_Y_void(V* v);
+float cVector_Z_void(V* v);
 float Math_Fabs(float f);
-V* Array16_At(Cand* c, int i);
-V Sphere_FromCenter(const V* a, const V* b);
-int Col_SegmentVsTriangle(LosQ* q, Cand* c);
+V* cCollisionFace_Vertex(Cand* c, int i);
+V cVector_opSub(const V* a, const V* b);
+int cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR(LosQ* q, Cand* c);
 }
 
 /* the barycentric test is returned as a materialised bool */
@@ -68,9 +68,9 @@ static inline bool InTri(float u, float v) { return (u >= 0.0f && v >= 0.0f) && 
 static inline bool Inside(Cand* c, const V& hit)
 {
     int axis;
-    float ax = Math_Fabs(Vec4_GetX(ColCandidate_GetNormal(c)));
-    float ay = Math_Fabs(Vec4_GetY(ColCandidate_GetNormal(c)));
-    float az = Math_Fabs(Vec4_GetZ(ColCandidate_GetNormal(c)));
+    float ax = Math_Fabs(cVector_X_void(cCollisionFace_UnitNormal(c)));
+    float ay = Math_Fabs(cVector_Y_void(cCollisionFace_UnitNormal(c)));
+    float az = Math_Fabs(cVector_Z_void(cCollisionFace_UnitNormal(c)));
     if (ax > ay) {
         if (az > ax)
             axis = 2;
@@ -83,9 +83,9 @@ static inline bool Inside(Cand* c, const V& hit)
             axis = 2;
     }
     float u, v;
-    V e1 = Sphere_FromCenter(Array16_At(c, 1), Array16_At(c, 0));
-    V e2 = Sphere_FromCenter(Array16_At(c, 2), Array16_At(c, 0));
-    V e3 = Sphere_FromCenter(&hit, Array16_At(c, 0));
+    V e1 = cVector_opSub(cCollisionFace_Vertex(c, 1), cCollisionFace_Vertex(c, 0));
+    V e2 = cVector_opSub(cCollisionFace_Vertex(c, 2), cCollisionFace_Vertex(c, 0));
+    V e3 = cVector_opSub(&hit, cCollisionFace_Vertex(c, 0));
     switch ((unsigned char)axis) {
     case 0: {
         float det = e1.y * e2.z - e1.z * e2.y;
@@ -112,7 +112,7 @@ static inline bool Inside(Cand* c, const V& hit)
     return InTri(u, v);
 }
 
-extern "C" int Col_SegmentVsTriangle(LosQ* q, Cand* c)
+extern "C" int cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR(LosQ* q, Cand* c)
 {
     V t;
     const V* n = &c->n;

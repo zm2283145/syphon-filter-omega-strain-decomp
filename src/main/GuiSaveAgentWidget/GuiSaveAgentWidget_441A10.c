@@ -34,23 +34,23 @@ extern unsigned char D_004FFBB8;
 extern Net_441A10 g_MemCard;
 extern char D_004C0448[]; extern char D_004C04F0[]; extern char D_004C0500[];
 extern char D_004C0510[]; extern char D_004C0520[];
-int* Agent_GetSelected(void*, int);
-char* Loc_LookupText(char*);
-int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
-void MemCard_Refresh(Net_441A10*);
-void GuiSaveAgentWidget_WriteCard(Obj_441A10*);
-void App_CardWaitPollThunk(void);
+int* cGameSystem_GetAgentData(void*, int);
+char* nGlobalization_GetString_charP(char*);
+int cGameFrontEnd_PushMessageBox(int, int, char*, char*, void*, int);
+void cMemCard_FullCheck(Net_441A10*);
+void GuiSaveAgentWidget_StartChecks(Obj_441A10*);
+void SaveCallback(void);
 }
 
-static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, Loc_LookupText(t), Loc_LookupText(m), cb, x); }
+static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) { return cGameFrontEnd_PushMessageBox(mgr, type, nGlobalization_GetString_charP(t), nGlobalization_GetString_charP(m), cb, x); }
 
 extern "C" void GuiSaveAgentWidget_HandleEvent(Obj_441A10* self)
 {
     Net_441A10* net = &g_MemCard;
-    if (self->mode != 0 && self->mode != 4) self->f50 = Agent_GetSelected(g_Game, -1)[1];
+    if (self->mode != 0 && self->mode != 4) self->f50 = cGameSystem_GetAgentData(g_Game, -1)[1];
     self->shown = 0;
-    net->cb = (void*)App_CardWaitPollThunk;
-    MemCard_Refresh(net);
+    net->cb = (void*)SaveCallback;
+    cMemCard_FullCheck(net);
     if (!net->impl->f59D) {
         if (self->mode == 2 && !D_004FFBB8) {
             net->cb = 0;
@@ -72,7 +72,7 @@ extern "C" void GuiSaveAgentWidget_HandleEvent(Obj_441A10* self)
         self->dlg = ShowDlg(D_004FFC04, 5, D_004C0448, D_004C0520, self, 5);
         return;
     }
-    GuiSaveAgentWidget_WriteCard(self);
+    GuiSaveAgentWidget_StartChecks(self);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00441A10 */
@@ -86,10 +86,10 @@ extern "C" void GuiSaveAgentWidget_HandleEvent(Obj_441A10* self)
  */
 
 
-extern void App_CardWaitPoll(int, int);
+extern void cGameFrontEnd_LobbyCallback(int, int);
 
-void App_CardWaitPollThunk(void) {
-    App_CardWaitPoll(0, 0);
+void SaveCallback(void) {
+    cGameFrontEnd_LobbyCallback(0, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00441C10 */

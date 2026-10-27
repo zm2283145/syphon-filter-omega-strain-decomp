@@ -84,7 +84,7 @@ extern int D_0058D180;
 extern int D_0059841C;
 extern int rt_msg_client_get_broadcast_ip(char *);
 extern int NetMapMsgClientError(int, int);
-extern int String_CompareN(char *, char *, int);
+extern int Libc_Strncmp(char *, char *, int);
 extern int NetISendMessageByUDPToIP(int, char *, int, int, int, int *);
 int NetIRequestServersOnSubnet(int a)
 {
@@ -100,7 +100,7 @@ int NetIRequestServersOnSubnet(int a)
     if (r) return r;
     D_0058DF84 = a;
     x = D_0058D180;
-    if (String_CompareN(buf, "0.0.0.0", 0x10) == 0) return 0x23;
+    if (Libc_Strncmp(buf, "0.0.0.0", 0x10) == 0) return 0x23;
     NetIIpStringToBinary(buf2, buf);
     return NetISendMessageByUDPToIP(0, buf2, 0, D_0059841C, 4, &x);
 }
@@ -125,7 +125,7 @@ extern unsigned short D_0058D178;
 extern char D_005880A0[];
 extern unsigned int RtMsgToDmeConnectionIndex(unsigned short);
 extern int NetGetMyWorldID(void);
-extern void Net_DispatchRecv(int, int, int, int, unsigned short);
+extern void ParseMessageList(int, int, int, int, unsigned short);
 void IncomingMessageFunc(unsigned short a, unsigned short b, int c, unsigned short d)
 {
     unsigned int h = RtMsgToDmeConnectionIndex(a);
@@ -134,7 +134,7 @@ void IncomingMessageFunc(unsigned short a, unsigned short b, int c, unsigned sho
     if (d == 0) return;
     D_005880A0[0] = 0;
     D_0058D178 = 0;
-    Net_DispatchRecv(NetGetMyWorldID(), h, b, c, d);
+    ParseMessageList(NetGetMyWorldID(), h, b, c, d);
 }
 /* merge_units: end func_002DF958 */
 

@@ -15,7 +15,7 @@ Word* cObjectId_ctor_cObjectIdR(Word* dst, Word* src) {
     return dst;
 }
 
-cActionMsg* cMessage_ctor2(cActionMsg* self, cActionMsg* src) {
+cActionMsg* cAISoundSystemGOBJMessage_ctor_cAISoundSystemGOBJMessageR(cActionMsg* self, cActionMsg* src) {
     self->base.vtable = D_004DFD80;
     self->base.unk04 = src->base.unk04;
     self->base.unk08 = src->base.unk08;

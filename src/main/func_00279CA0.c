@@ -4,8 +4,8 @@ typedef struct {
     E279CA0** items; int pad4; int cap; int padC; int count; int pad14;
     unsigned int head; int pad1C; int base;
 } R279CA0;
-extern void DecalMgr_SetRecord(E279CA0* e, int flags, int a, int b, float x, float y);
-void DecalMgr_AddBulletDecal(R279CA0* r, int a1, int a2, unsigned char a3, int t0, float f)
+extern void cDecal_ctor(E279CA0* e, int flags, int a, int b, float x, float y);
+void cDecalMan_AddDecal(R279CA0* r, int a1, int a2, unsigned char a3, int t0, float f)
 {
     unsigned int idx;
     unsigned int slot;
@@ -27,6 +27,6 @@ void DecalMgr_AddBulletDecal(R279CA0* r, int a1, int a2, unsigned char a3, int t
     fl = a3 | 1;
     e = r->items[idx];
     if (e) {
-        DecalMgr_SetRecord(e, fl, a1, t0, f, (float)a2);
+        cDecal_ctor(e, fl, a1, t0, f, (float)a2);
     }
 }

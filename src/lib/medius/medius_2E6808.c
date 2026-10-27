@@ -70,7 +70,7 @@ typedef struct { char pad[0x400]; int f400; } Ctx;
 extern char D_00588074[];
 extern unsigned short D_0058D178, D_0058C0B0;
 extern int NetGetConnInfo(int, Ctx **);
-extern int Net_IpToString(char *, char *);
+extern int NetIIpBinaryToString(char *, char *);
 extern int strcmp(const char *, const char *);
 extern int DmeToRtMsgConnectionIndex(int);
 extern int KM_SetPublicKey(int, int, char *);
@@ -83,7 +83,7 @@ int ClientConnectsPacketHandler(int h, int b, int c, Q *q)
     ctx[0] = 0;
     if (q == 0) return -1;
     if (NetGetConnInfo(h, ctx) || ctx[0] == 0) return -1;
-    Net_IpToString(name, q->name);
+    NetIIpBinaryToString(name, q->name);
     if (q->f0 == 0) h2 = 0;
     if (strcmp(name, D_00588074) != 0 || q->f1 != ctx[0]->f400) {
         if (h == 0xFFFF) KM_SetPublicKey(-1, q->f1, q->f8);
@@ -150,7 +150,7 @@ extern int NetGetClientInfo(unsigned int, unsigned int, void **);
 extern void NetIGetClient(Ent **, unsigned int, unsigned int);
 extern Ent *NetCreateClient(unsigned int, unsigned int);
 extern void NetClientJoins(unsigned int, unsigned int);
-extern char *String_Copy(char *, const char *);
+extern char *Libc_Strcpy(char *, const char *);
 
 int ClientUpdatePacketHandler(unsigned int slot, int a1, int a2, Msg *m)
 {
@@ -178,7 +178,7 @@ int ClientUpdatePacketHandler(unsigned int slot, int a1, int a2, Msg *m)
         e->f8 = m->sC;
         e->fA = m->sE;
         e->fC = m->s10;
-        String_Copy(e->name, m->name);
+        Libc_Strcpy(e->name, m->name);
         if (e->f0 == 0) NetClientJoins(slot, id);
     }
     return 0x24;
@@ -208,7 +208,7 @@ int RequestServersPacketHandler(int a, int b, int c, int *id)
     if (id == 0) return -1;
     if (NetIsPeerToPeerHost(flag)) return 4;
     NetGetCurrentUDPSourceBinaryIP(b2);
-    Net_IpToString(b1, b2);
+    NetIIpBinaryToString(b1, b2);
     g = D_0058D17C;
     if (g != 0 || flag[0] != 0) {
         if (*id != D_0058D180) return 4;
@@ -225,9 +225,9 @@ int RequestServersPacketHandler(int a, int b, int c, int *id)
 /* merge_units: begin func_002E6ED8 */
 extern void (*D_0058DF84)(char *, int);
 #if 0 /* merge_units */
-extern void Net_IpToString(char *, int *);
+extern void NetIIpBinaryToString(char *, int *);
 #endif /* merge_units */
-#define Net_IpToString(a0, a1) ((void)Net_IpToString((a0), (char *)(a1))) /* merge_units */
+#define NetIIpBinaryToString(a0, a1) ((void)NetIIpBinaryToString((a0), (char *)(a1))) /* merge_units */
 
 int ServerResponsePacketHandler(int a, int b, int c, int *k)
 {
@@ -236,11 +236,11 @@ int ServerResponsePacketHandler(int a, int b, int c, int *k)
     {
         void (**pf)(char *, int) = &D_0058DF84;
         if (*pf != 0) {
-            Net_IpToString(buf, k + 1);
+            NetIIpBinaryToString(buf, k + 1);
             (*pf)(buf, k[0]);
         }
     }
     return 8;
 }
-#undef Net_IpToString /* merge_units */
+#undef NetIIpBinaryToString /* merge_units */
 /* merge_units: end func_002E6ED8 */

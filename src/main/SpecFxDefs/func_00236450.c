@@ -11,8 +11,8 @@ struct S_6450 { char pad[0x74]; void* actor; E_6450* ents; };
 
 extern "C" {
 extern signed char ActorNodeCodeTable[];
-void* Actor_GetSkeleton(void* h);
-V_6450 Model_GetSkeletonNodePos(void* skel, int node);
+void* cSKM_GOBJ_GetSkeleton_void(void* h);
+V_6450 cSkeleton_GetBoneToWorldTranslation(void* skel, int node);
 }
 
 static inline void Add_6450(V_6450* a, V_6450* b) {
@@ -37,15 +37,15 @@ static inline void Unit_6450(M_6450* m) {
     }
 }
 
-extern "C" void FireEffectObj_RecordMatrix(S_6450* s, int i, M_6450* out)
+extern "C" void cHumanParticleGroup_SetMatrix(S_6450* s, int i, M_6450* out)
 {
     E_6450* e = &s->ents[i];
     unsigned char b = e->b4;
-    V_6450 p = Model_GetSkeletonNodePos(Actor_GetSkeleton(s->actor), ActorNodeCodeTable[b]);
+    V_6450 p = cSkeleton_GetBoneToWorldTranslation(cSKM_GOBJ_GetSkeleton_void(s->actor), ActorNodeCodeTable[b]);
     int k = e->i8;
     if (k != 0x15) {
         unsigned char c = k;
-        V_6450 q = Model_GetSkeletonNodePos(Actor_GetSkeleton(s->actor), ActorNodeCodeTable[c]);
+        V_6450 q = cSkeleton_GetBoneToWorldTranslation(cSKM_GOBJ_GetSkeleton_void(s->actor), ActorNodeCodeTable[c]);
         Add_6450(&p, &q);
         {
             int tt; V_6450* d; V_6450* src; float h;

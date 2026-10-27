@@ -30,30 +30,30 @@ struct PNode { unsigned char b0; char pad1[0xF]; M44 m10; };
 struct Owner { char pad0[0x54]; PNode* p54; };
 
 extern "C" {
-void Mtx_InvertRigid_13ECA0(M44* out, M44* in);
-void Transform_GetInverseMatrix(M44* out, Xf* t);
-V4* Vec4_Assign(V4* d, const V4* s);
-void Vec_SetPositionW1(V4* v);
-void Mtx_Multiply4b(Box* b);
-V4 Mtx_MulVec4(V4* v, M44* m);
-V4* Mtx_Multiply4(V4* v, M44* m);
-V4* Vec4_Set(V4* o, float x, float y, float z, float w);
-void Box_ExtendXYZ(Box* b, V4* v);
+void cMatrix_Copy_InvertRotTrans(M44* out, M44* in);
+void cXform_GetInverseMatrix(M44* out, Xf* t);
+V4* cVector_ctor_cVectorR(V4* d, const V4* s);
+void cVector_WSet1(V4* v);
+void cBox_Empty(Box* b);
+V4 cVector_GetTransformed(V4* v, M44* m);
+V4* cVector_Transform_cMatrixR(V4* v, M44* m);
+V4* cVector_ctor_float_float_float_float(V4* o, float x, float y, float z, float w);
+void cBox_Include(Box* b, V4* v);
 }
 
 static inline void TB(Box* b, M44* m)
 {
-    V4 mn; Vec4_Assign(&mn, &b->mn); Vec_SetPositionW1(&mn);
-    V4 mx; Vec4_Assign(&mx, &b->mx); Vec_SetPositionW1(&mx);
-    Mtx_Multiply4b(b);
-    { V4 t = Mtx_MulVec4(&mn, m); Box_ExtendXYZ(b, &t); }
-    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(Vec4_Set(&t, mn.x, mn.y, mx.z, 1.0f), m)); }
-    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(Vec4_Set(&t, mn.x, mx.y, mn.z, 1.0f), m)); }
-    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(Vec4_Set(&t, mn.x, mx.y, mx.z, 1.0f), m)); }
-    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(Vec4_Set(&t, mx.x, mn.y, mn.z, 1.0f), m)); }
-    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(Vec4_Set(&t, mx.x, mn.y, mx.z, 1.0f), m)); }
-    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(Vec4_Set(&t, mx.x, mx.y, mn.z, 1.0f), m)); }
-    { V4 t = Mtx_MulVec4(&mx, m); Box_ExtendXYZ(b, &t); }
+    V4 mn; cVector_ctor_cVectorR(&mn, &b->mn); cVector_WSet1(&mn);
+    V4 mx; cVector_ctor_cVectorR(&mx, &b->mx); cVector_WSet1(&mx);
+    cBox_Empty(b);
+    { V4 t = cVector_GetTransformed(&mn, m); cBox_Include(b, &t); }
+    { V4 t; cBox_Include(b, cVector_Transform_cMatrixR(cVector_ctor_float_float_float_float(&t, mn.x, mn.y, mx.z, 1.0f), m)); }
+    { V4 t; cBox_Include(b, cVector_Transform_cMatrixR(cVector_ctor_float_float_float_float(&t, mn.x, mx.y, mn.z, 1.0f), m)); }
+    { V4 t; cBox_Include(b, cVector_Transform_cMatrixR(cVector_ctor_float_float_float_float(&t, mn.x, mx.y, mx.z, 1.0f), m)); }
+    { V4 t; cBox_Include(b, cVector_Transform_cMatrixR(cVector_ctor_float_float_float_float(&t, mx.x, mn.y, mn.z, 1.0f), m)); }
+    { V4 t; cBox_Include(b, cVector_Transform_cMatrixR(cVector_ctor_float_float_float_float(&t, mx.x, mn.y, mx.z, 1.0f), m)); }
+    { V4 t; cBox_Include(b, cVector_Transform_cMatrixR(cVector_ctor_float_float_float_float(&t, mx.x, mx.y, mn.z, 1.0f), m)); }
+    { V4 t = cVector_GetTransformed(&mx, m); cBox_Include(b, &t); }
 }
 
 static inline void Ext(Box* b, V4* v_)
@@ -94,15 +94,15 @@ extern "C" void nCollision_GetTransformedCollectorObject_RelativeToObjectWithXfo
         M44* nm = &n->m10;
         M44* xm = XfMtx(xf);
         GQ(&tmp.mn, &in->mn); GQ(&tmp.mx, &in->mx);
-        Mtx_InvertRigid_13ECA0(&m1, nm);
+        cMatrix_Copy_InvertRotTrans(&m1, nm);
         TB(&tmp, &m1);
         CopyBox(out, in);
-        Mtx_InvertRigid_13ECA0(&m2, xm);
+        cMatrix_Copy_InvertRotTrans(&m2, xm);
         TB(out, &m2);
         BoxUnion(out, &tmp);
     } else {
         CopyBox(out, in);
-        Transform_GetInverseMatrix(&m3, xf);
+        cXform_GetInverseMatrix(&m3, xf);
         TB(out, &m3);
     }
 }

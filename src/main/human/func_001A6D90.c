@@ -11,18 +11,18 @@ typedef struct RootIdentity {
     unsigned char dirty;    /* 0xA0 */
 } RootIdentity;
 
-extern void Root_BaseConstruct(VecPair* base);
-extern RootIdentity* Root_IdentityAccessor(void* root);
-extern void Transform_SetOrientation(void* xform, VecPair* base);
-extern void Root_PropagateChildren(void* root);
+extern void cQuatVec_GetUnit(VecPair* base);
+extern RootIdentity* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(void* root);
+extern void cQuatVec_opAssign(void* xform, VecPair* base);
+extern void cSkaAnimAnchor_TreeNode_TellChildrenNeedToUpdate(void* root);
 
 /* Resets the root's local base to identity and propagates it to the children. */
-void Root_ResetLocalBase(void* root) {
+void cSkaAnimAnchor_ClearLocalTransform(void* root) {
     VecPair base;
     int one;
-    Root_BaseConstruct(&base);
-    Transform_SetOrientation(Root_IdentityAccessor(root)->orientation, &base);
+    cQuatVec_GetUnit(&base);
+    cQuatVec_opAssign(cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(root)->orientation, &base);
     one = 1;
-    Root_IdentityAccessor(root)->dirty = one;
-    Root_PropagateChildren(root);
+    cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(root)->dirty = one;
+    cSkaAnimAnchor_TreeNode_TellChildrenNeedToUpdate(root);
 }

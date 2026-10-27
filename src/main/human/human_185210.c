@@ -16,7 +16,7 @@
 #pragma cplusplus on
 
 /* Two-level destructor: restore vtables, run base destructor, optionally delete. */
-DEFINE_VTABLE2_BASE_DTOR(cNetSetFlagMsg_dtor, D_004DA9D0, D_004DCF10, cMessage_dtor)
+DEFINE_VTABLE2_BASE_DTOR(cCharActionMsg_Int_dtor_void_2, D_004DA9D0, D_004DCF10, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00185210 */
 
@@ -34,18 +34,18 @@ struct B7_Human {
     char pad4[0x33BC - 4];
     float health;
 };
-extern "C" B7_GObj* GObj_IdentityB(int id);
+extern "C" B7_GObj* cGOBJ_SOBJ_convert(int id);
 extern "C" int g_HumanActorClassKey;
-extern "C" void Global_ShockToDeath(B7_Human* o, float a, float b, int c, int d);
+extern "C" void cHuman_Shock(B7_Human* o, float a, float b, int c, int d);
 extern "C" int Script_ShockToDeath(int* args)
 {
-    B7_GObj* o = GObj_IdentityB(args[0]);
+    B7_GObj* o = cGOBJ_SOBJ_convert(args[0]);
     if (o && o->type == g_HumanActorClassKey) {
         B7_Human* h = (B7_Human*)o;
         unsigned char s = h->GetState();
         bool dying = (s == 2 || s == 3);
         if (!dying && h->health < 0.0f) {
-            Global_ShockToDeath(h, 0.5f, 10000.0f, 1, 1);
+            cHuman_Shock(h, 0.5f, 10000.0f, 1, 1);
         }
     }
     return 0;
@@ -60,10 +60,10 @@ static inline void merge_flush_func_00185280(void) {}
 typedef struct { char pad[0x3524]; void* weapons; } H_185330;
 typedef struct { char pad[0x30]; H_185330* player; } G_185330;
 extern G_185330* g_LocalPlayer;
-extern void WeaponInv_ClearSlots(void* w);
-extern void WeaponInv_Add(void* w, int id, int a, int b, int c, int d);
-extern int WeaponInv_SlotOfItem(int id);
-extern void WeaponInv_Equip(void* w, int slot);
+extern void cWeapon_RemoveAllWeapons(void* w);
+extern void cWeapon_Add(void* w, int id, int a, int b, int c, int d);
+extern int cWeapon_GetWeaponSlot(int id);
+extern void cWeapon_DrawWeapon_eWpnSlot(void* w, int slot);
 int Script_SetPlayerWeapons(int* args)
 {
     volatile int b;
@@ -76,13 +76,13 @@ int Script_SetPlayerWeapons(int* args)
     a = args[0];
     pa = a;
     w = g_LocalPlayer->player->weapons;
-    WeaponInv_ClearSlots(w);
-    if (pa > -1) WeaponInv_Add(w, pa, 1, 0, 1, 0);
+    cWeapon_RemoveAllWeapons(w);
+    if (pa > -1) cWeapon_Add(w, pa, 1, 0, 1, 0);
     if (pb > -1) {
-        WeaponInv_Add(w, pb, 1, 0, 1, 0);
+        cWeapon_Add(w, pb, 1, 0, 1, 0);
         if (pa < 0) pa = pb;
     }
-    if (pa >= 0) WeaponInv_Equip(w, WeaponInv_SlotOfItem(pa));
+    if (pa >= 0) cWeapon_DrawWeapon_eWpnSlot(w, cWeapon_GetWeaponSlot(pa));
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

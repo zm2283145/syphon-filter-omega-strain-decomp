@@ -31,21 +31,21 @@ int Alloc_Lock(int);
 #define Alloc_Lock(a0) (Alloc_Lock((a0))) /* merge_units */
                                     
 #if 0 /* merge_units */
-int Alloc_Unlock(int);
+int EnableIntc(int);
 #endif /* merge_units */
-#define Alloc_Unlock(a0) (Alloc_Unlock((a0))) /* merge_units */
+#define EnableIntc(a0) (EnableIntc((a0))) /* merge_units */
                                   
-int ColScratch_Init(int, int, int, int);                      
-int HumanCol_Init();                                  
-char * Mem_Alloc(int, int, char *, int);                      
+int nCollision_InitStatics(int, int, int, int);                      
+int cHumanCollisionRoutine_InitStatics();                                  
+char * cMemMan_Allocate(int, int, char *, int);                      
 int cCollisionSystem_cBox_InitStatics(int);                                 
 int cArrayCapacity_Int(int *);                           
-int PtrVec_Reserve_Thunk_1AFCF0(char * , int);                       
+int std_vector_cSkeletonBBoxContributionPtr_reserve(char * , int);                       
 int std_vector_cSkeletonBBoxContributionPtr_ctor(char * );                            
-int PtrVec_Reserve_Thunk_1AFD20(char * , int);                       
+int std_vector_cSkeletonCenterOfMassContributionPtr_reserve(char * , int);                       
 int std_vector_cSkeletonCenterOfMassContributionPtr_ctor(char * );                            
-int HumanBounds_BuildTable(char * );                            
-int HumanCentroid_GetTable(char * );                            
+int InitStatics_BBox(char * );                            
+int InitStatics_CenterOfMass(char * );                            
 int cHumanIkRoutine_InitStatics();                                  
 extern char D_0049D8D0;
 extern char * D_004EE9D0;
@@ -53,14 +53,14 @@ extern char * D_004EE9D8;
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 
-void Human_InitStatics(void) {
+void cHuman_InitStatics(void) {
     int sp2C;
     char * temp_s0;
     char * temp_s0_2;
 
-    ColScratch_Init(0, 0, 0, 0);
+    nCollision_InitStatics(0, 0, 0, 0);
     cCollisionSystem_cBox_InitStatics(0x320);
-    HumanCol_Init();
+    cHumanCollisionRoutine_InitStatics();
     cHumanIkRoutine_InitStatics();
     sp2C = 0x15;
     if (D_004EE9D0 == NULL) {
@@ -68,40 +68,40 @@ void Human_InitStatics(void) {
             Alloc_Lock(9);
         }
         g_ProfileLockDepth += 1;
-        temp_s0 = Mem_Alloc(0, 0x10, &D_0049D8D0, 0xB1A);
+        temp_s0 = cMemMan_Allocate(0, 0x10, &D_0049D8D0, 0xB1A);
         if (g_ProfileLockEnabled != 0) {
-            Alloc_Unlock(9);
+            EnableIntc(9);
         }
         g_ProfileLockDepth -= 1;
         if (temp_s0 != NULL) {
             std_vector_cSkeletonCenterOfMassContributionPtr_ctor(temp_s0);
-            PtrVec_Reserve_Thunk_1AFD20(temp_s0, cArrayCapacity_Int(&sp2C));
+            std_vector_cSkeletonCenterOfMassContributionPtr_reserve(temp_s0, cArrayCapacity_Int(&sp2C));
             F_(temp_s0, 0xC, signed char) = 1;
         }
         D_004EE9D0 = temp_s0;
-        HumanCentroid_GetTable(temp_s0);
+        InitStatics_CenterOfMass(temp_s0);
     }
     if (D_004EE9D8 == NULL) {
         if (g_ProfileLockEnabled != 0) {
             Alloc_Lock(9);
         }
         g_ProfileLockDepth += 1;
-        temp_s0_2 = Mem_Alloc(0, 0x10, &D_0049D8D0, 0xB20);
+        temp_s0_2 = cMemMan_Allocate(0, 0x10, &D_0049D8D0, 0xB20);
         if (g_ProfileLockEnabled != 0) {
-            Alloc_Unlock(9);
+            EnableIntc(9);
         }
         g_ProfileLockDepth -= 1;
         if (temp_s0_2 != NULL) {
             std_vector_cSkeletonBBoxContributionPtr_ctor(temp_s0_2);
-            PtrVec_Reserve_Thunk_1AFCF0(temp_s0_2, cArrayCapacity_Int(&sp2C));
+            std_vector_cSkeletonBBoxContributionPtr_reserve(temp_s0_2, cArrayCapacity_Int(&sp2C));
             F_(temp_s0_2, 0xC, signed char) = 1;
         }
         D_004EE9D8 = temp_s0_2;
-        HumanBounds_BuildTable(temp_s0_2);
+        InitStatics_BBox(temp_s0_2);
     }
 }
 #undef Alloc_Lock /* merge_units */
-#undef Alloc_Unlock /* merge_units */
+#undef EnableIntc /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001AFB20(void) {}
 #pragma pop /* merge_units */

@@ -5,15 +5,15 @@
  * Sound request / sound event stack objects (gameSound + cSoundGOBJ users,
  * ~35 src files). Plain C or C++; MW kinds.
  *
- * SoundRequest (0x190), built by SoundRequest_Ctor 0x001CA210
+ * SoundRequest (0x190), built by cSndFx_ctor_int_charP_cGOBJP_int 0x001CA210
  *   (req, type, name, voice, x180); two FileManEntry at +0x48/+0xE4.
  * SoundEvent (0x1D0) = CMsg header + SoundRequest at +0x30 + 0x10 tail,
- *   built by SoundEvent_Ctor 0x0020ECB0 (ev, action, 0). After Event_Send
+ *   built by cStopSoundMsg_ctor_cSndFxR_bool 0x0020ECB0 (ev, action, 0). After QueueMessage_cMessageR_cSystemP_int
  *   the vtable is reset to D_004DADF0 (or D_004DAE30), then
- *     FileMan_Release(&ev.req.b, -1); FileMan_Release(&ev.req.a, -1);
+ *     cFileMan_dtor(&ev.req.b, -1); cFileMan_dtor(&ev.req.a, -1);
  *     cMessage_dtor(&ev, 0);
  * SoundEventP (0x1C0, aligned 16) is the shorter form built by
- *   SoundEvent_CtorFromPreset 0x0020F990 / SoundMsg_WrapAction 0x0020F2A0.
+ *   cPlaySoundMsg_ctor_cSndFxR 0x0020F990 / SoundMsg_WrapAction 0x0020F2A0.
  *   Pick the one whose size matches the target's stack frame.
  * The byte at +0x20 (CMsg.kind) is set to 1 for "immediate" sends.
  */
@@ -62,9 +62,9 @@ LAYOUT_SIZE(SoundEventP, 0x1C0);
 #ifdef __cplusplus
 extern "C" {
 #endif
-void SoundRequest_Ctor(void* req, int type, const char* name, void* voice, int x180);
-void SoundEvent_Ctor(void* ev, void* action, int flags);
-void SoundEvent_CtorFromPreset(void* ev, void* preset, void* owner);
+void cSndFx_ctor_int_charP_cGOBJP_int(void* req, int type, const char* name, void* voice, int x180);
+void cStopSoundMsg_ctor_cSndFxR_bool(void* ev, void* action, int flags);
+void cPlaySoundMsg_ctor_cSndFxR(void* ev, void* preset, void* owner);
 void SoundMsg_WrapAction(void* ev, void* action);
 #ifdef __cplusplus
 }

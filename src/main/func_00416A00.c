@@ -7,18 +7,18 @@ int operator_delete(char * );
 extern void GuiDecorator_Load();
 extern void GuiDecorator_onAdd();
 extern void GuiAbstractInterface_dtor();
-extern void func_00416850();
-extern void func_00416870();
-extern void func_00416890();
-extern void func_004168B0();
-extern void func_004168D0();
-extern void func_004168F0();
-extern void func_00416910();
-extern void func_00416930();
-extern void func_00416950();
-extern void func_00416970();
-extern void func_00416990();
-extern void func_004169B0();
+extern void GuiDecorator_onRemove();
+extern void GuiDecorator_onWake();
+extern void GuiDecorator_onSleep();
+extern void GuiDecorator_onActivate();
+extern void GuiDecorator_onDeactivate();
+extern void GuiDecorator_onGainFocus();
+extern void GuiDecorator_onLoseFocus();
+extern void GuiDecorator_onInput();
+extern void GuiDecorator_onRender();
+extern void GuiDecorator_onAction();
+extern void GuiDecorator_onMessage();
+extern void GuiDecorator_onAdvanceTime();
 extern void * const D_004E0960[];
 extern void * const D_004E09B0[];
 extern int D_00572130;
@@ -42,5 +42,5 @@ char * GuiDecorator_dtor(char * arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004E0960[20] = { (void*)0x0, (void*)0x0, (void*)GuiDecorator_dtor, (void*)GuiDecorator_onAdd, (void*)func_00416850, (void*)func_004168B0, (void*)func_004168D0, (void*)func_00416870, (void*)func_00416890, (void*)func_004168F0, (void*)func_00416910, (void*)func_00416930, (void*)func_00416950, (void*)func_00416970, (void*)func_004169B0, (void*)func_00416990, (void*)GuiDecorator_Load, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004E0960[20] = { (void*)0x0, (void*)0x0, (void*)GuiDecorator_dtor, (void*)GuiDecorator_onAdd, (void*)GuiDecorator_onRemove, (void*)GuiDecorator_onActivate, (void*)GuiDecorator_onDeactivate, (void*)GuiDecorator_onWake, (void*)GuiDecorator_onSleep, (void*)GuiDecorator_onGainFocus, (void*)GuiDecorator_onLoseFocus, (void*)GuiDecorator_onInput, (void*)GuiDecorator_onRender, (void*)GuiDecorator_onAction, (void*)GuiDecorator_onAdvanceTime, (void*)GuiDecorator_onMessage, (void*)GuiDecorator_Load, (void*)0x0, (void*)0x0, (void*)0x0 };
 void * const D_004E09B0[16] = { (void*)0x0, (void*)0x0, (void*)GuiAbstractInterface_dtor, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0 };

@@ -87,7 +87,7 @@ typedef struct Codec {
     int ctx;
 } Codec;
 
-extern int Net_AllocZeroed(void *, int);
+extern int rt_memory_allocate_init_zero(void *, int);
 extern void DestroyCodec(Codec *);
 extern int stubCreate(void);
 extern void stubDestroy(void);
@@ -163,7 +163,7 @@ Codec *CreateCodec(int owner, int type, int mode)
 {
     Codec *p = 0;
 
-    Net_AllocZeroed(&p, 0xA20);
+    rt_memory_allocate_init_zero(&p, 0xA20);
     if (p == 0) return 0;
     p->type = type;
     p->mode = mode;

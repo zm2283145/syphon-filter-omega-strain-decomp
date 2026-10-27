@@ -24,18 +24,18 @@ typedef struct {
 } O_340C80;
 char D_004B9F50[] = "head"; extern char D_004B9F58[]; extern char D_004B9F60[]; extern char D_004B9F68[];
 extern char g_AgentPartCache[]; extern char D_004B9ED0[]; extern char D_004B9EE8[];
-char* String_CStr(void* s);
-void GuiAgentModify_SelectCategory(O_340C80* o, char* s);
-void GuiAgentModify_GroupHide(O_340C80* o, int v);
-void GuiAgentModify_GroupShow(O_340C80* o, Snd_340C80* s);
-void GuiAgentModify_ShowPatch(O_340C80* o);
-void GuiAgentModify_UpdateAvailability(O_340C80* o);
-void AgentPartCache_Unlock(void* p);
-void World_ClearPendingIfLoaded(void);
-void* Gui_GetScreenList(void);
-void* Gui_GetScreenStack(void);
-void* GuiManager_FindOrLoad(void* mgr, char* a, char* b);
-void GuiStack_SwapScreens(void* mgr, void* o, void* w);
+char* std_basic_string_char_char_traits_char_c_str(void* s);
+void GuiAgentModify_UserInterfaceNextButton(O_340C80* o, char* s);
+void GuiAgentModify_MakeChildrenInvisible(O_340C80* o, int v);
+void GuiAgentModify_MakeChildrenVisible(O_340C80* o, Snd_340C80* s);
+void GuiAgentModify_SetBigPatch(O_340C80* o);
+void GuiAgentModify_TattooPatchesLockout(O_340C80* o);
+void Monster_RestoreLockedPartsTex(void* p);
+void cMotionManager_FlushUpdateList(void);
+void* Gui_Manager(void);
+void* Gui_Canvas(void);
+void* GuiManager_OpenGui(void* mgr, char* a, char* b);
+void GuiCanvas_Transition(void* mgr, void* o, void* w);
 int GuiSaveAgentWidget_OnEvent(O_340C80* o, Snd_340C80* s, unsigned short msg, int param, int extra);
 
 int GuiAgentModify_HandleEvent(O_340C80* o, Snd_340C80* snd, unsigned short msg, int param, int extra)
@@ -44,50 +44,50 @@ int GuiAgentModify_HandleEvent(O_340C80* o, Snd_340C80* snd, unsigned short msg,
     if (msg == 0) {
         char* s;
         o->fF0 = 0;
-        s = String_CStr(snd->s4);
-        GuiAgentModify_SelectCategory(o, s);
+        s = std_basic_string_char_char_traits_char_c_str(snd->s4);
+        GuiAgentModify_UserInterfaceNextButton(o, s);
         if (!strcmp(s, D_004B9F50)) {
-            GuiAgentModify_GroupHide(o, o->f144);
-            GuiAgentModify_GroupHide(o, o->f14C);
-            GuiAgentModify_GroupHide(o, o->f150);
-            GuiAgentModify_GroupShow(o, snd);
+            GuiAgentModify_MakeChildrenInvisible(o, o->f144);
+            GuiAgentModify_MakeChildrenInvisible(o, o->f14C);
+            GuiAgentModify_MakeChildrenInvisible(o, o->f150);
+            GuiAgentModify_MakeChildrenVisible(o, snd);
             if (o->fF8 == 0 && o->f88) o->f88->flags &= ~2;
             o->fEC = 3;
             o->fF0 = 1;
         }
         if (!strcmp(s, D_004B9F58)) {
-            GuiAgentModify_GroupHide(o, o->f148);
-            GuiAgentModify_GroupHide(o, o->f14C);
-            GuiAgentModify_GroupHide(o, o->f150);
-            GuiAgentModify_GroupShow(o, snd);
+            GuiAgentModify_MakeChildrenInvisible(o, o->f148);
+            GuiAgentModify_MakeChildrenInvisible(o, o->f14C);
+            GuiAgentModify_MakeChildrenInvisible(o, o->f150);
+            GuiAgentModify_MakeChildrenVisible(o, snd);
             o->fEC = 2;
             o->fF0 = 1;
         }
         if (!strcmp(s, D_004B9F60)) {
-            GuiAgentModify_GroupHide(o, o->f148);
-            GuiAgentModify_GroupHide(o, o->f144);
-            GuiAgentModify_GroupHide(o, o->f150);
-            GuiAgentModify_GroupShow(o, snd);
+            GuiAgentModify_MakeChildrenInvisible(o, o->f148);
+            GuiAgentModify_MakeChildrenInvisible(o, o->f144);
+            GuiAgentModify_MakeChildrenInvisible(o, o->f150);
+            GuiAgentModify_MakeChildrenVisible(o, snd);
             o->fEC = 0;
             o->fF0 = 1;
         }
         if (!strcmp(s, D_004B9F68)) {
-            GuiAgentModify_GroupHide(o, o->f148);
-            GuiAgentModify_GroupHide(o, o->f144);
-            GuiAgentModify_GroupHide(o, o->f14C);
-            GuiAgentModify_GroupShow(o, snd);
+            GuiAgentModify_MakeChildrenInvisible(o, o->f148);
+            GuiAgentModify_MakeChildrenInvisible(o, o->f144);
+            GuiAgentModify_MakeChildrenInvisible(o, o->f14C);
+            GuiAgentModify_MakeChildrenVisible(o, snd);
             o->fEC = 1;
             o->fF0 = 1;
         }
-        if (o->fF0 == 0 && o->fEC == 1) GuiAgentModify_ShowPatch(o);
-        GuiAgentModify_UpdateAvailability(o);
+        if (o->fF0 == 0 && o->fEC == 1) GuiAgentModify_SetBigPatch(o);
+        GuiAgentModify_TattooPatchesLockout(o);
     }
     if (msg == 0x1A && param == 0xC) {
         void* w;
-        AgentPartCache_Unlock(g_AgentPartCache);
-        World_ClearPendingIfLoaded();
-        w = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004B9ED0, D_004B9EE8);
-        GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
+        Monster_RestoreLockedPartsTex(g_AgentPartCache);
+        cMotionManager_FlushUpdateList();
+        w = GuiManager_OpenGui(Gui_Manager(), D_004B9ED0, D_004B9EE8);
+        GuiCanvas_Transition(Gui_Canvas(), o, w);
         return 1;
     }
     return GuiSaveAgentWidget_OnEvent(o, snd, msg, param, extra);
@@ -104,13 +104,13 @@ static inline void merge_flush_func_00340C80(void) {}
 /* Clear flag 0x80 on every other child of the given type. */
 extern "C" {
 extern char D_004A9870[];
-void GuiAgentModify_GroupUnlock(void* self, ChildWidget* o);
+void GuiAgentModify_MakeChildrenNotFocusable(void* self, ChildWidget* o);
 }
 static inline ChildWidget* cast340F60(ChildWidget* w)
 {
     return (w && w->IsA(D_004A9870)) ? w : 0;
 }
-void GuiAgentModify_GroupUnlock(void* self, ChildWidget* o)
+void GuiAgentModify_MakeChildrenNotFocusable(void* self, ChildWidget* o)
 {
     ChildIter e;
     void* l;
@@ -136,13 +136,13 @@ static inline void merge_flush_func_00340F60(void) {}
 
 /* Set flags 4 and 0x80 on every other child of the given type. */
 extern "C" {
-void GuiAgentModify_GroupLock(void* self, ChildWidget* o);
+void GuiAgentModify_MakeChildrenFocusable(void* self, ChildWidget* o);
 }
 static inline ChildWidget* cast341060(ChildWidget* w)
 {
     return (w && w->IsA(D_004A9870)) ? w : 0;
 }
-void GuiAgentModify_GroupLock(void* self, ChildWidget* o)
+void GuiAgentModify_MakeChildrenFocusable(void* self, ChildWidget* o)
 {
     ChildIter e;
     void* l;

@@ -91,7 +91,7 @@ extern int NetGetConnInfo(unsigned int, void **);
 extern int NetGetClientInfo(unsigned int, unsigned int, void **);
 extern unsigned char NetClientIndexToClientIndexPacket(unsigned int);
 extern void NetIGetClient(Ent **, unsigned int, unsigned int);
-extern char *String_Copy(char *, const char *);
+extern char *Libc_Strcpy(char *, const char *);
 extern int NetSendDmeMessage(int, unsigned int, int, int, int, Msg *);
 int NetISendMyClientUpdate(unsigned int slot, int who)
 {
@@ -117,7 +117,7 @@ int NetISendMyClientUpdate(unsigned int slot, int who)
     m.sC = e->f8;
     m.sE = e->fA;
     m.s10 = e->fC;
-    String_Copy(m.name, e->name);
+    Libc_Strcpy(m.name, e->name);
     NetSendDmeMessage(0x50, D_0048C450, who, D_00598410, 0x24, &m);
     return 0;
     }

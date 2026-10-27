@@ -3,13 +3,13 @@
 #include "alloc_guard.h"
 extern "C" {
 extern char D_0049A890[];
-void Mem_Free(int heap, void* p, char* file, int line);
-void PtrVec_Reserve(void* p, int a);
+void cMemMan_Deallocate(int heap, void* p, char* file, int line);
+void std_vector_pod_int_reserve(void* p, int a);
 }
 struct E_00130B10 { int x0; void* a; void* b; };
 struct S_00130B10 { char pad[0x2C]; char m2C[4]; int n; E_00130B10** arr; };
-static inline void Free_00130B10(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_0049A890, line); }
-static inline void Del_00130B10(void* p, int line) { if (p) { AllocGuard g; Mem_Free(0, p, D_0049A890, line); } }
+static inline void Free_00130B10(void* p, int line) { AllocGuard g; cMemMan_Deallocate(0, p, D_0049A890, line); }
+static inline void Del_00130B10(void* p, int line) { if (p) { AllocGuard g; cMemMan_Deallocate(0, p, D_0049A890, line); } }
 #pragma opt_strength_reduction off
 extern "C" void cGameSystem_RemoveVUMGOBJNames(S_00130B10* self)
 {
@@ -24,5 +24,5 @@ extern "C" void cGameSystem_RemoveVUMGOBJNames(S_00130B10* self)
         Free_00130B10(e, 0x950);
     }
     self->n = 0;
-    PtrVec_Reserve(self->m2C, 0x100);
+    std_vector_pod_int_reserve(self->m2C, 0x100);
 }

@@ -13,11 +13,11 @@ int cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(char* self) {
 }
 
 /* back(): address of the last element. */
-int* PtrVec_Back(PtrVec* v) {
+int* cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Back(PtrVec* v) {
     return v->data + v->count - 1;
 }
 
 /* Find in the root collection at +0xB0. */
-void* RootCollection_FindByKey_Thunk(char* self, int key) {
+void* cSkaSystem_GetAnchor(char* self, int key) {
     return RootCollection_FindByKey(self + 176, key);
 }

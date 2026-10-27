@@ -8,7 +8,7 @@ extern char D_004ACC38[];
 extern char D_004ACC48[];
 extern char D_004ACC58[];
 static void * const dat_0048C200[18] = { (void*)0x0, (void*)0x0, (void*)0x0, (void*)D_004ACC28, (void*)0x0, (void*)0x0, (void*)D_004ACC38, (void*)0x0, (void*)0x0, (void*)0x0, (void*)D_004ACC48, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)D_004ACC58, (void*)0x0, (void*)0x0 };
-extern char* Loc_LookupText(char* key);
+extern char* nGlobalization_GetString_charP(char* key);
 char* App_GetAgentRankGate(Obj9070* o)
 {
     int i;
@@ -18,7 +18,7 @@ char* App_GetAgentRankGate(Obj9070* o)
         if (i != -1) {
             key = ((char**)dat_0048C200)[i];
             if (key)
-                return Loc_LookupText(key);
+                return nGlobalization_GetString_charP(key);
         }
     }
     return 0;

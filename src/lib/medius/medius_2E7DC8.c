@@ -2,7 +2,7 @@ typedef struct { unsigned char type, f1, cb, f3, f4, pad5; unsigned short size; 
 typedef struct { unsigned short pad0; unsigned short pad2; unsigned short pad4; unsigned short pad6; unsigned short pad8; unsigned short base; unsigned short span; } E2E7DC8;
 typedef struct { unsigned char state, f1, f2, f3, f4, f5; char pad6[6]; int fC; char *buf; char *end; char *f18; int f1C; int f20; int pad24; int f28; char sub[8]; int f34; int pad38; char *f3C; } O2E7DC8;
 extern int NetGetStreamChannel(unsigned char, O2E7DC8 **);
-extern char *Rt_MemoryAllocate(unsigned short);
+extern char *DMEmalloc(unsigned short);
 extern int rt_circ_buf_create(void *, unsigned short, char *);
 extern void DmeFree(void *);
 extern int NetIGetSessionMasterClientIndex(int *, int);
@@ -27,7 +27,7 @@ int DataStreamUpdatePacketHandler(int a, int b, int c, H2E7DC8 *h)
     if (NetGetStreamChannel(h->type, &o) != 0 || o == 0) return h->len + 0xC;
     if (o->state != 2) {
         if (h->f4 != 0) {
-            o->buf = Rt_MemoryAllocate(h->size);
+            o->buf = DMEmalloc(h->size);
             if (o->buf == 0) {
                 o->state = 0;
                 return h->len + 0xC;

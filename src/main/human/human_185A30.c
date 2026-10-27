@@ -30,7 +30,7 @@ static const Ids_5A D_0048A2F8 = { { -1, -1, -1, -1 }, -1 };
 static inline bool Ready_5A(O_5A* o) { return o->b2D && o->b2C && !o->b2E; }
 extern "C" void netCreatePlayer_SendCreated(int a, int b, int c, void* d, void* e, Ids_5A* ids, int f);
 extern "C" void netCreateNPC_SendCreated(int a, int b, int c, void* d, void* e, Ids_5A* ids, unsigned char r, unsigned char g, int f);
-extern "C" int Npc_v05(O_5A* o, int a)
+extern "C" int cHuman_SendCreated(O_5A* o, int a)
 {
     if (Ready_5A(o)) {
         Ids_5A ids = D_0048A2F8;
@@ -92,7 +92,7 @@ struct O_185C70 { char pad[0xC]; unsigned int id; char pad10[0x48]; C_185C70* ct
 extern "C" {
 extern unsigned char g_IsMultiplayer;
 extern char g_Game[];
-void* Agent_GetSelected(void* list, int idx);
+void* cGameSystem_GetAgentData(void* list, int idx);
 }
 static inline unsigned char Has_185C70(O_185C70* o)
 {
@@ -100,7 +100,7 @@ static inline unsigned char Has_185C70(O_185C70* o)
     if (o->ctl && o->ctl->IsLocal()) r = 1;
     return r;
 }
-extern "C" void* Player_GetAgentData(O_185C70* o)
+extern "C" void* cHuman_GetAgentData(O_185C70* o)
 {
     int idx;
     if (g_IsMultiplayer) {
@@ -109,7 +109,7 @@ extern "C" void* Player_GetAgentData(O_185C70* o)
     } else {
         idx = 0;
     }
-    if (Has_185C70(o)) return Agent_GetSelected(g_Game, idx);
+    if (Has_185C70(o)) return cGameSystem_GetAgentData(g_Game, idx);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

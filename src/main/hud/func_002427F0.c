@@ -6,15 +6,15 @@ public:
     VPAD16(a) VPAD4(b) VPAD2(c) VPAD1(d) virtual void s23(void* x, int y); virtual void s24(void* x);
 };
 extern "C" {
-void* Gui_GetScreenList(void);
-Mgr2427* Gui_GetScreenStack(void);
-void* GuiManager_FindByName(void* a, void* b);
-void* GuiManager_FindOrLoad(void* a, void* b, void* c);
+void* Gui_Manager(void);
+Mgr2427* Gui_Canvas(void);
+void* GuiManager_FindOpenGui(void* a, void* b);
+void* GuiManager_OpenGui(void* a, void* b, void* c);
 extern char D_004A7240[];
-}extern "C" void Hud_CloseMapScreen(Obj2426* s) {
+}extern "C" void cHud_DeactivateMap(Obj2426* s) {
     if (s->b6A9) {
-        void* x = GuiManager_FindByName(Gui_GetScreenList(), "GuiMapScreen");
-        if (x) Gui_GetScreenStack()->s24(x);
+        void* x = GuiManager_FindOpenGui(Gui_Manager(), "GuiMapScreen");
+        if (x) Gui_Canvas()->s24(x);
         s->b6A9 = 0;
     }
 }

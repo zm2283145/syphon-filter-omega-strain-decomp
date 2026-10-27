@@ -21,7 +21,7 @@ extern int D_0048C464;
 extern int NetGetConnInfo(unsigned int, S **);
 extern int NetISetMyClientReceiveBroadcast(unsigned int, int);
 extern unsigned char NetClientIndexToClientIndexPacket(unsigned int);
-extern int Net_SendTyped(char, int, int, unsigned int, unsigned int, int, void *);
+extern int NetISendMessage(char, int, int, unsigned int, unsigned int, int, void *);
 extern int NetFreeAllDataStreams(void);
 extern int NetIFreeAllObjects(void);
 extern void NetFreeClients(unsigned int);
@@ -45,7 +45,7 @@ int NetILeave(unsigned int id)
     if (s == 0) return ret;
     NetISetMyClientReceiveBroadcast(id, 0);
     b[0] = NetClientIndexToClientIndexPacket(s->self);
-    Net_SendTyped(0x50, id, -1, 0, D_00598418, 1, b);
+    NetISendMessage(0x50, id, -1, 0, D_00598418, 1, b);
     NetFreeAllDataStreams();
     NetIFreeAllObjects();
     NetFreeClients(id);

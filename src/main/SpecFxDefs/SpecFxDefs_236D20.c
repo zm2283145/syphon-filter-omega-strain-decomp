@@ -8,7 +8,7 @@
 #include "types.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00236D20 */
 #pragma push /* merge_units */
@@ -17,16 +17,16 @@ int Mem_Free();
 typedef struct { char pad[0xC]; void* buf; } E4Own;
 extern "C" {
 extern char D_004A6E38[];
-void ParticleInst_Kill(void* p, int n);
+void cParticle_dtor(void* p, int n);
 }
-extern "C" void ParticleEffectComp_Stop(E4Own* o)
+extern "C" void cParticleFx_SfxStop(E4Own* o)
 {
     void* p = o->buf;
     if (p) {
         {
             AllocGuard g;
-            ParticleInst_Kill(p, -1);
-            Mem_Free(0, p, D_004A6E38, 0x12C);
+            cParticle_dtor(p, -1);
+            cMemMan_Deallocate(0, p, D_004A6E38, 0x12C);
         }
         o->buf = 0;
     }
@@ -45,8 +45,8 @@ static inline void merge_flush_func_00236D20(void) {}
 
 
 extern "C" {
-int Mem_Alloc(...);                        
-int Tracer_Create(int, int, char*, float);             
+int cMemMan_Allocate(...);                        
+int cParticle_ctor(int, int, char*, float);             
 #if 0 /* merge_units */
 extern char D_004A6E38;
 #endif /* merge_units */
@@ -54,15 +54,15 @@ extern char D_004A6E38;
 
 extern unsigned char g_ProfileLockEnabled;
 }
-extern "C" void ParticleEffectComp_Start(char * arg0) {
+extern "C" void cParticleFx_SfxStart(char * arg0) {
     int var_s1;
 
     {
         AllocGuard g;
-    var_s1 = Mem_Alloc(0, 0x70, &D_004A6E38, 0x125);
+    var_s1 = cMemMan_Allocate(0, 0x70, &D_004A6E38, 0x125);
     }
     if (var_s1 != 0) {
-        var_s1 = Tracer_Create(var_s1, F_(arg0, 0x8, int), arg0 + 0x10, 1.0f);
+        var_s1 = cParticle_ctor(var_s1, F_(arg0, 0x8, int), arg0 + 0x10, 1.0f);
     }
     F_(arg0, 0xC, int) = var_s1;
 }
@@ -86,7 +86,7 @@ struct Raw00236EA0 { int id; void* vt; };
 extern "C" char D_004DBE90[];
 extern "C" char D_004D9280[];
 extern "C" void cSpecFx_opDelete(void* p);
-extern "C" Obj00236EA0* ParticleEffectComp_Destroy(Obj00236EA0* self, short deleteFlag)
+extern "C" Obj00236EA0* cParticleFx_dtor(Obj00236EA0* self, short deleteFlag)
 {
     if (self) {
         Raw00236EA0* r = (Raw00236EA0*)self;
@@ -114,7 +114,7 @@ static inline D2_FxEntry* d2_get(int id) {
     if ((unsigned int)id < 41) return &SpecFxTable[id];
     return 0;
 }
-D2_FxEntry* SpecFx_GetEffectDef(signed char id) {
+D2_FxEntry* nSfxLoader_GetHandle(signed char id) {
     if (!D_004F7A54[id].flag) return 0;
     return d2_get(id);
 }
@@ -133,13 +133,13 @@ extern G236F SpecFxTable;
 #define SpecFxTable (*(G236F*)&SpecFxTable) /* merge_units */
 
 extern int g_TextureMgr;
-extern void Tex_Release(int a, int b, int c);
+extern void cTexMan_RemoveTexture(int a, int b, int c);
 void nSfxLoader_UnloadEffects(void)
 {
     int i;
     for (i = 0; i < 15; i++) {
         if (SpecFxTable.e[i].flag) {
-            Tex_Release(g_TextureMgr, SpecFxTable.e[i].obj, 1);
+            cTexMan_RemoveTexture(g_TextureMgr, SpecFxTable.e[i].obj, 1);
             SpecFxTable.e[i].flag = 0;
         }
     }

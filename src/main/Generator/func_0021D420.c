@@ -5,4 +5,4 @@
 DEFINE_MESSAGE_PACK_INLINE(GeneratorMessageBase_Pack, 0x14, D_004F56C8, BASE_BODY)
 
 #define PACK_TAIL(e, b) MP_S(b, 8) = 2;
-DEFINE_MESSAGE_PACK_DERIVED(cDespawnedNPCMsg_v02, 0x14, GeneratorMessageBase_Pack, PACK_TAIL)
+DEFINE_MESSAGE_PACK_DERIVED(cDespawnedNPCMsg_Pack, 0x14, GeneratorMessageBase_Pack, PACK_TAIL)

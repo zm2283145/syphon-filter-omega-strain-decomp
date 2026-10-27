@@ -5,5 +5,5 @@ void cNetNPC_SetAimSubtarget(Npc3A30* o, signed char v)
 {
     if (NpcAuth_IsLocal())
         o->i11C = v;
-    NetEvent_Send(o->net, 0xA, 8, v, 0, 0, 0);
+    cNetNPCMsgs_SendMessage(o->net, 0xA, 8, v, 0, 0, 0);
 }

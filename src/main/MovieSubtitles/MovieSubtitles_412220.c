@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 int strlen(const char *);
 
 /* merge_units: begin func_00412220 */
@@ -42,14 +42,14 @@ extern int cSubtitleFeed_GetDisplayFlags(void* src);
 extern int cSubtitleFeed_GetNumLines(void* src);
 extern char* cSubtitleFeed_GetText(void* src, int col);
 extern SubVec4* cSubtitleFeed_GetColor(void* src);
-extern SubVec4* SubtitleTrack_LoadCue(SubVec4* dst, SubVec4* src);
+extern SubVec4* tRGBA_opAssign(SubVec4* dst, SubVec4* src);
 extern float cSubtitleFeed_GetStartTime(void* src);
 extern float cSubtitleFeed_GetEndTime(void* src);
 extern int cSubtitleFeed_GetLanguage(void* src);
 extern void cSubtitleFeed_NextItem(void* src);
 extern void cMovieSubtitles_ResetText(Sub412220* self);
 
-void MovieSubtitles_Start(Sub412220* self) {
+void cMovieSubtitles_FirstFrame(Sub412220* self) {
     int i;
     self->iB4 = 0;
     if (cSubtitleFeed_ItemPending(self->src)) {
@@ -60,7 +60,7 @@ void MovieSubtitles_Start(Sub412220* self) {
             self->lens[i] = strlen(self->lines[i]);
             self->pos[i] = 0;
         }
-        SubtitleTrack_LoadCue(&self->color, cSubtitleFeed_GetColor(self->src));
+        tRGBA_opAssign(&self->color, cSubtitleFeed_GetColor(self->src));
         self->f9C = cSubtitleFeed_GetStartTime(self->src);
         self->fA0 = cSubtitleFeed_GetEndTime(self->src);
         self->iA8 = cSubtitleFeed_GetLanguage(self->src);
@@ -96,10 +96,10 @@ extern int D_00538C64;
 extern char D_00538C68;
 void sceGsSyncPath(int a, int b, int c, int d);
 }
-static inline void Free_412320(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004BEE90, line); }
+static inline void Free_412320(void* p, int line) { AllocGuard g; cMemMan_Deallocate(0, p, D_004BEE90, line); }
 static inline void SubDtor_412320(Sub_412320* s) { if (s) { if (s->p60) Free_412320(s->p60, 0x29A); } }
 
-extern "C" void SubtitleTrack_Destroy(Self_412320* self)
+extern "C" void cMovieSubtitles_Purge(Self_412320* self)
 {
     int i;
     D_00538C68 = 1;
@@ -119,14 +119,14 @@ extern "C" void SubtitleTrack_Destroy(Self_412320* self)
     {
         Sub_412320* p = self->p50;
         if (p) {
-            { AllocGuard g; SubDtor_412320(p); Mem_Free(0, p, D_004BEE90, 0x9C); }
+            { AllocGuard g; SubDtor_412320(p); cMemMan_Deallocate(0, p, D_004BEE90, 0x9C); }
             self->p50 = 0;
         }
     }
     {
         VBig_412320* q = self->p54;
         if (q) {
-            { AllocGuard g; q->dtor(-1); Mem_Free(0, q, D_004BEE90, 0xA2); }
+            { AllocGuard g; q->dtor(-1); cMemMan_Deallocate(0, q, D_004BEE90, 0xA2); }
             self->p54 = 0;
         }
     }

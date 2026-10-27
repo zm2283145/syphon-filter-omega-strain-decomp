@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-V4* Box_ExtendXYZ(V4* a, V4* b) {
+V4* cBox_Include(V4* a, V4* b) {
     char* pv0 = (char*)a + 0x10;
     asm {
         lqc2 vf1, 0x0(a)

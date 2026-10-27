@@ -3,7 +3,7 @@
 extern "C" char D_004DC460[];
 extern "C" char D_004DCF10[];
 extern "C" char D_004DFD80[];
-MSG_CLONE_BEGIN(cInventoryMsg_v01, 0x30, "backpack.hh", 0xCB)
+MSG_CLONE_BEGIN(cInventoryMsg_Clone, 0x30, "backpack.hh", 0xCB)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

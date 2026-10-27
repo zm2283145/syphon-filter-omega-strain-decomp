@@ -19,28 +19,28 @@ static inline void Req_Init(SoundRequest* p, int type, __int128 name, Voice_F190
 static inline void Req_Default(SoundRequest* p) {
     p->voiceId = -2;
     p->voice = 0;
-    Resource_Construct(&p->a);
-    Resource_Construct(&p->b);
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
 }
 typedef struct { int pad[2]; int type; int pad0c; __int128 name; int x180; int id; unsigned char x186; } Preset_F060;
-extern Voice_F190* Object_LookupById(int* id);
+extern Voice_F190* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
 SoundEvent* func_0020F060(SoundEvent* ev, Preset_F060* pr) {
     SoundRequest* p;
     Voice_F190* voice;
     int id;
-    Event_Construct(ev, D_004F53C8);
+    cMessage_ctor_cMessageNameR(ev, D_004F53C8);
     ev->vtable = D_004DAE10;
     p = &ev->req;
     p->voiceId = -2;
     p->voice = 0;
-    Resource_Construct(&p->a);
-    Resource_Construct(&p->b);
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
     voice = 0;
-    if (pr->id) { id = pr->id; voice = Object_LookupById(&id); }
+    if (pr->id) { id = pr->id; voice = nGobjManager_LookupGOBJ_cObjectIdR(&id); }
     Req_Init(&ev->req, pr->type, pr->name, voice, pr->x180);
     ev->req.x186 = pr->x186;
     return ev;

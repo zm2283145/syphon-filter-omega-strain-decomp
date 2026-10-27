@@ -6,7 +6,7 @@ int cScriptBase_registerField(int, char *, int, int);
 extern int D_00493890;
 extern int D_004F79E8;
 
-void ScriptType_ToHitSettings_Init(int arg0) {
+void ToHitSettings_SOBJ_init(int arg0) {
     cScriptBase_registerField(D_004F79E8, "runAccFactor", arg0, D_00493890);
     cScriptBase_registerField(D_004F79E8, "runAimFactor", arg0 + 4, D_00493890);
     cScriptBase_registerField(D_004F79E8, "kneelAccFactor", arg0 + 8, D_00493890);

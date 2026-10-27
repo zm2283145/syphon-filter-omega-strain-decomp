@@ -75,7 +75,7 @@ static inline void merge_flush_func_003F18C0(void) {}
 
 /* merge_units: begin func_003F1940 */
 #pragma push /* merge_units */
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int value);
 
 /* Clears the three vector words. */
 OwnedVec* std_vector_imp_cKeyframe_tRGB_ctor(OwnedVec* v) {
@@ -87,7 +87,7 @@ OwnedVec* std_vector_imp_cKeyframe_tRGB_ctor(OwnedVec* v) {
 
 /* push_back: inserts one value at the end. */
 int cArray_cAnimatorPtr_PushBackActual(PtrVec* v, int value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003F1940(void) {}

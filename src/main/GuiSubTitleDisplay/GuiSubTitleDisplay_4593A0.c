@@ -13,7 +13,7 @@
 
 /* library prototypes shared by the blocks below (C linkage) */
 #include "SFOLobby_helpers.h"
-int Mem_Free();
+int cMemMan_Deallocate();
 int strlen(const char *);
 
 /* merge_units: begin func_004593A0 */
@@ -36,7 +36,7 @@ void GuiSubTitleDisplay_DestroyTextLines(S_4593A0* s)
         int guard;
         cTimerDisable_ctor(&guard);
         cLList_TextAtom_dtor(e, -1);
-        Mem_Free(0, e, D_004C1EB0, 0x48);
+        cMemMan_Deallocate(0, e, D_004C1EB0, 0x48);
         cTimerDisable_dtor(&guard, -1);
     }
     s->v.count = 0;
@@ -66,7 +66,7 @@ extern "C" void GuiSubTitleDisplay_Clear(S_459450* s)
     if (p != 0) {
         {
             AllocGuard g;
-            Mem_Free(0, p, &D_004C1EB0, 0x3F);
+            cMemMan_Deallocate(0, p, &D_004C1EB0, 0x3F);
         }
         s->buf = 0;
     }
@@ -82,7 +82,7 @@ static inline void merge_flush_func_00459450(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-void* Mem_Alloc(int, int, char*, int);
+void* cMemMan_Allocate(int, int, char*, int);
 #if 0 /* merge_units */
 extern char D_004C1EB0;
 #endif /* merge_units */
@@ -90,7 +90,7 @@ extern char D_004C1EB0;
 
 }
 typedef struct { char pad[0x50]; int buf; int n; } S_459500;
-extern "C" int GuiSubTitleDisplay_Parse(S_459500*);
+extern "C" int GuiSubTitleDisplay_Atomize(S_459500*);
 
 static inline void Clear_459500(S_459500* s)
 {
@@ -98,14 +98,14 @@ static inline void Clear_459500(S_459500* s)
     if (p != 0) {
         {
             AllocGuard g;
-            Mem_Free(0, p, &D_004C1EB0, 0x3F);
+            cMemMan_Deallocate(0, p, &D_004C1EB0, 0x3F);
         }
         s->buf = 0;
     }
     s->n = 0;
 }
 
-extern "C" int GuiSubTitleDisplay_SetText(S_459500* s, char* text)
+extern "C" int GuiSubTitleDisplay_AddMessage(S_459500* s, char* text)
 {
     int len;
     int p;
@@ -115,12 +115,12 @@ extern "C" int GuiSubTitleDisplay_SetText(S_459500* s, char* text)
     len = strlen(text) + 1;
     {
         AllocGuard g;
-        p = (int)Mem_Alloc(0, len, &D_004C1EB0, 0x2E);
+        p = (int)cMemMan_Allocate(0, len, &D_004C1EB0, 0x2E);
     }
     s->buf = p;
-    String_Copy((char*)s->buf, text);
+    Libc_Strcpy((char*)s->buf, text);
     s->n = 0;
-    if (!GuiSubTitleDisplay_Parse(s))
+    if (!GuiSubTitleDisplay_Atomize(s))
         return 0;
     return 1;
 }

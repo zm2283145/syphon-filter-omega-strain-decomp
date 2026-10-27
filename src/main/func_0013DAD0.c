@@ -4,4 +4,4 @@
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(ScalarCollection_Dtor_13DAD0, std_list_cScenePtr_dtor)
+DEFINE_BASE_DTOR_CHAIN(cSceneManager_dtor, std_list_cScenePtr_dtor)

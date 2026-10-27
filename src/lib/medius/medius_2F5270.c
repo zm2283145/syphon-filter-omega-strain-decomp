@@ -19,14 +19,14 @@ void WaitTimeMs(int a)
 
 /* merge_units: begin func_002F52A8 */
 extern void *memset(void *, int, unsigned int);
-extern int Net_AllocZeroed(int *, unsigned long);
+extern int rt_memory_allocate_init_zero(int *, unsigned long);
 int rt_circ_buf_create(int *s, unsigned int n, int x)
 {
     int r;
     if (s == 0) return 2;
     if (n == 0) return 2;
     memset(s, 0, 0x18);
-    r = Net_AllocZeroed(s + 4, n);
+    r = rt_memory_allocate_init_zero(s + 4, n);
     if (r) return 3;
     if (s[4] == 0) return 3;
     s[5] = x;

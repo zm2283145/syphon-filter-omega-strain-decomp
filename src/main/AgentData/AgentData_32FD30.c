@@ -16,11 +16,11 @@
  */
 
 
-extern int AgentData_TotalPoints(cAgentData* agent);
+extern int cAgentData_GetClearancePoints(cAgentData* agent);
 
 /* Returns the agent's total clearance points; volatile mirrors the stack temporary. */
 int Script_cAgentData_GetClearancePoints(AgentScriptArg* args) {
-    volatile int points = AgentData_TotalPoints(args[0].p);
+    volatile int points = cAgentData_GetClearancePoints(args[0].p);
     return points;
 }
 
@@ -34,12 +34,12 @@ static inline void merge_flush_func_0032FD30(void) {}
 /* merge_units: begin func_0032FD70 */
 #pragma push /* merge_units */
 typedef struct { int key; int a; char b; int c; int d; int e; } Medal;
-extern int Loc_FindKeyThunk(const char* name);
+extern int nGlobalization_GetStringIndex(const char* name);
 
 /* Medal constructor: resolves the name key and stores the fields; id is 10000 + index. */
-Medal* RatingRow_ConstructIndexed(Medal* self, const char* name, int a, char b, int c, int d, unsigned char index)
+Medal* cAgentData_RatingRecord_ctor_charP_int_eScoreTypes_int_etc(Medal* self, const char* name, int a, char b, int c, int d, unsigned char index)
 {
-    self->key = Loc_FindKeyThunk(name);
+    self->key = nGlobalization_GetStringIndex(name);
     self->a = a;
     self->b = b;
     self->c = c;

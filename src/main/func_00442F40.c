@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int LobbyArray_Init(int, int, int, int);                      
+int SFOLobbyList_AllocList(int, int, int, int);                      
 int SFOLobby_SetCallback();                                  
 
 #pragma push
@@ -15,7 +15,7 @@ int SFOLobby_ServerScreenStart(char * arg0, int d1, int arg2) {
     F_(arg0, 0x255C, int) = 2;
     SFOLobby_SetCallback();
     F_(arg0, 0x23E0, int) = arg2;
-    { int w = 0x20; LobbyArray_Init(F_(arg0, 0x23E0, int), w, w, 0x44); }
+    { int w = 0x20; SFOLobbyList_AllocList(F_(arg0, 0x23E0, int), w, w, 0x44); }
     return 1;
 }
 

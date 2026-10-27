@@ -14,16 +14,16 @@
 
 #include "types.h"
 
-void PtrVec_End_42A640(Iter* out, PtrVec* v) {
+void std_vector_tServerPtr_end(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-Word* Iter_Copy_42A660(Word* dst, Word* src) {
+Word* cArray_tServerPtr_Iterator_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void PtrVec_Begin_42A670(Iter* out, PtrVec* v) {
+void std_vector_tServerPtr_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 #pragma pop /* merge_units */
@@ -49,9 +49,9 @@ int iWakeupThread(int thread);
 void DelayThread(int delay);
 }
 
-/* Stop the DME thread: request the stop, wake it and wait until DME_ThreadMain
+/* Stop the DME thread: request the stop, wake it and wait until cDME_ThrFunction
    exits, then clear the thread and allocator-locking flags. */
-extern "C" void DME_StopThread(void)
+extern "C" void cDME_StopUpdateThread(void)
 {
     EeThreadParam worker;
     EeThreadParam current;
@@ -77,12 +77,12 @@ extern "C" void DME_StopThread(void)
 
 /* merge_units: begin func_0042A770 */
 #pragma push /* merge_units */
-extern int DME_CreateThread(int);
-extern int DME_ThreadMain(void);
+extern int cThreadMgr_AddThread(int);
+extern int cDME_ThrFunction(void);
 
-/* Starts the DME thread running DME_ThreadMain. */
-int DME_StartThread(void) {
-    return DME_CreateThread((int)DME_ThreadMain);
+/* Starts the DME thread running cDME_ThrFunction. */
+int cDME_StartUpdateThread(void) {
+    return cThreadMgr_AddThread((int)cDME_ThrFunction);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0042A770 */
@@ -94,8 +94,8 @@ int DME_StartThread(void) {
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
 int NetGetTime(char *);
-int Gui_GetScreenStack();
-int GuiWidget_SendEvent(int, int, int, int, int);
+int Gui_Canvas();
+int GuiWidget_SendMessage(int, int, int, int, int);
 int Net_ConnectGameByName();
 extern signed char D_005721E0;
 extern signed char D_005721F0;
@@ -127,9 +127,9 @@ void Net_RetryConnect(void) {
         D_00572468 = 1;
         return;
     }
-    if (Gui_GetScreenStack(retries) != 0) {
-        screens = Gui_GetScreenStack();
-        GuiWidget_SendEvent(screens, Gui_GetScreenStack(), 0x1E, 0, (int)&D_004BF9B8);
+    if (Gui_Canvas(retries) != 0) {
+        screens = Gui_Canvas();
+        GuiWidget_SendMessage(screens, Gui_Canvas(), 0x1E, 0, (int)&D_004BF9B8);
     }
     g_DmeConnectRetries = 0;
     g_DmeConnectMaxRetries = 0;

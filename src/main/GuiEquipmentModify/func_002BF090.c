@@ -1,11 +1,11 @@
 #include "types.h"
-/* GuiEquipmentModify_BuildCategoryList: collects the weapon ids of the
+/* GuiEquipmentModify_UpdateSelectionList: collects the weapon ids of the
  * selected category: every weapon in the database (D_0051EE38 set),
  * otherwise the agent's unlocked weapons plus the screen's extra entries of
  * that category not already listed; then places the list widget and
  * rebuilds the columns. Layout and placement as in
- * GuiEquipmentModify_BuildEquipList (GuiEquipmentModify_BuildEquipList.c); id list as in
- * GuiEndGameStatistics_QueueVoices (GuiEndGameStatistics_QueueVoices.c). */
+ * GuiEquipmentModify_UpdateSelectionHand (GuiEquipmentModify_UpdateSelectionHand.c); id list as in
+ * GuiEndGameStatistics_PlayQuips (GuiEndGameStatistics_PlayQuips.c). */
 typedef struct { int a0; int n; int* data; unsigned char owned; char pad[3]; } IntVec_F090;
 typedef struct { char pad[0x30]; unsigned char cls; } Wpn_F090;
 typedef struct { int pad; int n; } WpnList_F090;
@@ -31,18 +31,18 @@ typedef struct {
 extern char g_Game[];
 extern WpnDb_F090* g_WeaponDatabase;
 extern unsigned char D_0051EE38;
-void* Agent_GetSelected(void* mgr, int idx);
+void* cGameSystem_GetAgentData(void* mgr, int idx);
 void std_vector_int_ctor_void(IntVec_F090* v);
 void func_0013A040(IntVec_F090* v, int flags);
-void AgentData_GetUnlockedWeapons(void* agent, IntVec_F090* v);
-Wpn_F090* WeaponDb_Get(WpnDb_F090* db, int id);
-void GuiEquipmentModify_PreloadWindow(Self_F090* self, int f);
-void GuiWidget_SetPos(void*, float, float);
-void GuiEquipmentModify_BuildList(Self_F090*);
-void GuiEquipmentModify_BuildCurrentColumn(Self_F090*);
-void GuiEquipmentModify_BuildSelectionColumn(Self_F090*);
+void cAgentData_GetWeaponIndices(void* agent, IntVec_F090* v);
+Wpn_F090* cWeaponDB_GetEntry(WpnDb_F090* db, int id);
+void GuiEquipmentModify_PrefetchQue(Self_F090* self, int f);
+void GuiWidget_SetPosition(void*, float, float);
+void GuiEquipmentModify_UpdateList(Self_F090*);
+void GuiEquipmentModify_UpdateCurrent(Self_F090*);
+void GuiEquipmentModify_UpdateSelection(Self_F090*);
 
-void GuiEquipmentModify_BuildCategoryList(Self_F090* self)
+void GuiEquipmentModify_UpdateSelectionList(Self_F090* self)
 {
     int i;
     int lim;
@@ -52,16 +52,16 @@ void GuiEquipmentModify_BuildCategoryList(Self_F090* self)
     int first;
     self->count = 0;
     if (!D_0051EE38) {
-        void* a = Agent_GetSelected(g_Game, -1);
+        void* a = cGameSystem_GetAgentData(g_Game, -1);
         IntVec_F090 list;
         int n;
         int j;
         std_vector_int_ctor_void(&list);
         list.owned = 1;
-        AgentData_GetUnlockedWeapons(a, &list);
+        cAgentData_GetWeaponIndices(a, &list);
         n = list.n;
         for (j = 0; j < n; j++) {
-            Wpn_F090* w = WeaponDb_Get(g_WeaponDatabase, list.data[(unsigned)j]);
+            Wpn_F090* w = cWeaponDB_GetEntry(g_WeaponDatabase, list.data[(unsigned)j]);
             if (w->cls == self->cat) {
                 self->ids[self->count] = list.data[(unsigned)j];
                 self->count++;
@@ -87,14 +87,14 @@ void GuiEquipmentModify_BuildCategoryList(Self_F090* self)
     } else {
         int n = g_WeaponDatabase->list->n;
         for (i = 0; i < n; i++) {
-            Wpn_F090* w = WeaponDb_Get(g_WeaponDatabase, i);
+            Wpn_F090* w = cWeaponDB_GetEntry(g_WeaponDatabase, i);
             if (w->cls == self->cat) {
                 self->ids[self->count] = i;
                 self->count++;
             }
         }
     }
-    GuiEquipmentModify_PreloadWindow(self, 1);
+    GuiEquipmentModify_PrefetchQue(self, 1);
     span = self->total - self->base;
     q = span / self->step;
     first = q - (self->count >> 1);
@@ -106,8 +106,8 @@ void GuiEquipmentModify_BuildCategoryList(Self_F090* self)
         lim = 0;
     if (lim < first)
         first = lim;
-    GuiWidget_SetPos(self->list, (float)self->x, (float)(self->total - off - first * self->step));
-    GuiEquipmentModify_BuildList(self);
-    GuiEquipmentModify_BuildCurrentColumn(self);
-    GuiEquipmentModify_BuildSelectionColumn(self);
+    GuiWidget_SetPosition(self->list, (float)self->x, (float)(self->total - off - first * self->step));
+    GuiEquipmentModify_UpdateList(self);
+    GuiEquipmentModify_UpdateCurrent(self);
+    GuiEquipmentModify_UpdateSelection(self);
 }

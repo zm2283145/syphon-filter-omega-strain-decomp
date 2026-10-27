@@ -29,28 +29,28 @@ extern void* D_004FFC34;
 extern float D_004A9098;
 extern char g_Game[];
 extern char D_004DAE30[];
-extern void WaterFx_PointSplash(void* fx, float a, float b);
-extern void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
-extern void SoundPosRequest_Ctor(SoundMsg* msg, SoundRequest* req, Hit08* hit);
-extern void Event_Send(SoundMsg* msg, void* target, int flags);
-extern void FileMan_Release(void* part, int flags);
+extern void cWaterFx_AddBody_cVectorR_float_float(void* fx, float a, float b);
+extern void cSndFx_ctor_int_charP_cGOBJP_int(SoundRequest* req, int kind, void* name, int a, int b);
+extern void cPlaySoundMsg_ctor_cSndFxR_cGOBJP(SoundMsg* msg, SoundRequest* req, Hit08* hit);
+extern void QueueMessage_cMessageR_cSystemP_int(SoundMsg* msg, void* target, int flags);
+extern void cFileMan_dtor(void* part, int flags);
 extern void cMessage_dtor(SoundMsg* msg, int flags);
 
 /* On a flagged hit, spawns a water splash and broadcasts the impact sound. */
-void Bullet_OnWaterCrossing(void* self, Hit08* hit, HitFlags* info) {
+void cBulletCollideContinueCallback_Trigger(void* self, Hit08* hit, HitFlags* info) {
     SoundMsg msg;
     SoundRequest req;
     if (info->flags & 0x80) {
-        WaterFx_PointSplash(D_004FFC34, D_004A9098, hit->strength);
-        SoundRequest_Ctor(&req, 1, "B_HIT_WATER", 0, 0);
-        SoundPosRequest_Ctor(&msg, &req, hit);
+        cWaterFx_AddBody_cVectorR_float_float(D_004FFC34, D_004A9098, hit->strength);
+        cSndFx_ctor_int_charP_cGOBJP_int(&req, 1, "B_HIT_WATER", 0, 0);
+        cPlaySoundMsg_ctor_cSndFxR_cGOBJP(&msg, &req, hit);
         msg.flag = 1;
-        Event_Send(&msg, g_Game, 1);
+        QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 1);
         msg.vtbl = D_004DAE30;
-        FileMan_Release(msg.partB, -1);
-        FileMan_Release(msg.partA, -1);
+        cFileMan_dtor(msg.partB, -1);
+        cFileMan_dtor(msg.partA, -1);
         cMessage_dtor(&msg, 0);
-        FileMan_Release(req.partB, -1);
-        FileMan_Release(req.partA, -1);
+        cFileMan_dtor(req.partB, -1);
+        cFileMan_dtor(req.partA, -1);
     }
 }

@@ -22,7 +22,7 @@ extern E* cAllocator_cSkaBlendSequenceItem_allocate(void* alloc, unsigned int n,
 
 #pragma push
 #pragma optimization_level 1
-void Vector_Assign_209A20(V* v, E* first, E* last)
+void std_vector_imp_cSkaBlendSequenceItem_do_assign(V* v, E* first, E* last)
 {
     unsigned int n;
     E* p;

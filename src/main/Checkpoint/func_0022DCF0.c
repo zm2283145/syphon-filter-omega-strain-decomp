@@ -17,73 +17,73 @@ extern int D_004F79C8; /* cRespawnMsg type id */
 extern int D_004F79D0; /* cCheckpoint key */
 extern int D_004F79D8; /* cCheckpoint type id */
 extern int Global_SetPlayersCheckpoint(int player, int checkpoint);
-extern int* Checkpoint_GetScriptTypeKeyPtr(void);
+extern int* cCheckpoint_SOBJ_getClassId(void);
 extern int* cRespawnMsg_SOBJ_getClassId(void);
 extern int* cNotifyCheckpointMsg_SOBJ_getClassId(void);
 extern int* cAddCheckpointMsg_SOBJ_getClassId(void);
 
 /* cCheckpoint derives from cGObj. */
-void ScriptType_cCheckpoint_Init(void) {
-    int* parent = cGOBJ_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F79D8, *parent);
+void cCheckpoint_SOBJ_init(void) {
+    int* parent = cGOBJ_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F79D8, *parent);
 }
 
-int* Checkpoint_GetScriptTypeKeyPtr(void) {
+int* cCheckpoint_SOBJ_getClassId(void) {
     return &D_004F79D0;
 }
 
-int cCheckpoint_v0B(void) {
-    return *Checkpoint_GetScriptTypeKeyPtr();
+int cCheckpoint_getSOBJClassId(void) {
+    return *cCheckpoint_SOBJ_getClassId();
 }
 
-int cCheckpoint_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cCheckpoint_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 
 /* cRespawnMsg derives from the message base type. */
-void ScriptType_cRespawnMsg_Init(void) {
-    int* parent = Message_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F79C8, *parent);
+void cRespawnMsg_SOBJ_init(void) {
+    int* parent = cMessage_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F79C8, *parent);
 }
 
 int* cRespawnMsg_SOBJ_getClassId(void) {
     return &D_004F79C0;
 }
 
-int cRespawnMsg_v03(void) {
+int cRespawnMsg_getSOBJClassId(void) {
     return *cRespawnMsg_SOBJ_getClassId();
 }
 
-void ScriptType_cNotifyCheckpointMsg_Init(void) {
-    int* parent = Message_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F79B8, *parent);
+void cNotifyCheckpointMsg_SOBJ_init(void) {
+    int* parent = cMessage_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F79B8, *parent);
 }
 
 int* cNotifyCheckpointMsg_SOBJ_getClassId(void) {
     return &D_004F79B0;
 }
 
-int cNotifyCheckpointMsg_v03(void) {
+int cNotifyCheckpointMsg_getSOBJClassId(void) {
     return *cNotifyCheckpointMsg_SOBJ_getClassId();
 }
 
-void ScriptType_cAddCheckpointMsg_Init(void) {
-    int* parent = Message_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F79A8, *parent);
+void cAddCheckpointMsg_SOBJ_init(void) {
+    int* parent = cMessage_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F79A8, *parent);
 }
 
 int* cAddCheckpointMsg_SOBJ_getClassId(void) {
     return &D_004F79A0;
 }
 
-int cAddCheckpointMsg_v03(void) {
+int cAddCheckpointMsg_getSOBJClassId(void) {
     return *cAddCheckpointMsg_SOBJ_getClassId();
 }
 
 /* SetPlayersCheckpoint(player, checkpoint) */
 int Script_SetPlayersCheckpoint(CheckpointScriptArg* args) {
     volatile int checkpoint = args[1].i; /* original stack temporary */
-    int player = GObj_IdentityB(args[0].i);
+    int player = cGOBJ_SOBJ_convert(args[0].i);
     Global_SetPlayersCheckpoint(player, checkpoint);
     return 0;
 }

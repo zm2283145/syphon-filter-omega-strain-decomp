@@ -26,7 +26,7 @@ static inline unsigned char PrioSet_e8_Test(PrioSet_e8* p, int n)
 {
     return ((p->bits[n / 32] >> (n & 31)) & 1) != 0;
 }
-void PrioritySet_Clear(PrioSet_e8* p, int bit)
+void cModeSwitch_12_DeactivateMode(PrioSet_e8* p, int bit)
 {
     int i;
     p->bits[bit / 32] &= ~(1 << (bit & 31));
@@ -45,7 +45,7 @@ static inline void merge_flush_func_0024FFE0(void) {}
 
 /* merge_units: begin func_002500C0 */
 #pragma push /* merge_units */
-void PrioritySet_Set(PrioSet_e8* p, int bit)
+void cModeSwitch_12_ActivateMode(PrioSet_e8* p, int bit)
 {
     int i;
     p->bits[bit / 32] |= 1 << (bit & 31);

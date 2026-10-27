@@ -3,12 +3,12 @@ typedef struct GuiWidgetValueSlot {
     int value;
 } GuiWidgetValueSlot;
 
-extern GuiWidgetValueSlot* GuiWidget_FindChildByName(void* self, const char* name);
+extern GuiWidgetValueSlot* GuiWidget_FindChild_charP(void* self, const char* name);
 
 /* Set a named widget's value when that widget exists. */
-int GuiWidget_SetChildValue(void* self, const char* name, int value)
+int GuiWidget_SetChildUserID(void* self, const char* name, int value)
 {
-    GuiWidgetValueSlot* widget = GuiWidget_FindChildByName(self, name);
+    GuiWidgetValueSlot* widget = GuiWidget_FindChild_charP(self, name);
     if (widget) {
         widget->value = value;
         return 1;

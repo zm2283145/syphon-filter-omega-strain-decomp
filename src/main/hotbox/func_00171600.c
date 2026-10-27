@@ -21,21 +21,21 @@ struct Trk_1600 { virtual void v0(); virtual void v1(); virtual void v2(); virtu
     char pad4[0xC]; M4_1600 mat; unsigned char active; };
 typedef struct { char pad[0x14]; unsigned char on; char pad15[0x3B]; Trk_1600* trk; } Src_1600;
 typedef struct { char pad[0x20]; Src_1600* src; } HT_1600;
-extern "C" int* Event_GetType(void* e);
+extern "C" int* cMessage_Name(void* e);
 extern "C" int D_005436B0;
-extern "C" void Hotbox_UpdateTracker(HT_1600* self, V4_1600 pos, int f);
+extern "C" void cHotboxMan_Update(HT_1600* self, V4_1600 pos, int f);
 static inline V4_1600 Trans_1600(M4_1600 m) { return m.r[3]; }
 static inline V4_1600 TransR_1600(const M4_1600& m) { return m.r[3]; }
-extern "C" int HotboxTracker_HandleMessage(HT_1600* self, void* e)
+extern "C" int cHotboxMan_HandleMessage(HT_1600* self, void* e)
 {
-    int ty = *Event_GetType(e);
+    int ty = *cMessage_Name(e);
     if (ty == D_005436B0) {
         Src_1600* s = self->src;
         if (s && s->on) {
             Trk_1600* t = s->trk;
             if (t->active) t->Update();
             M4_1600 m(t->mat);
-            Hotbox_UpdateTracker(self, TransR_1600(m), 0);
+            cHotboxMan_Update(self, TransR_1600(m), 0);
         }
         return 1;
     }

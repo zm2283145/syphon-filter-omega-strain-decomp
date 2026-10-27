@@ -24,11 +24,11 @@ extern ScriptEnum** cArray_EnumDefPtr_opIndex(PtrVec* v, int i);
 #endif /* merge_units */
 #define cArray_EnumDefPtr_opIndex(a0, a1) ((ScriptEnum * *)cArray_EnumDefPtr_opIndex((a0), (a1))) /* merge_units */
 
-extern int Script_RemapEnumId(Script* script, int localId);
+extern int cScriptInterpreter_SymbolTable_remapEnum(Script* script, int localId);
 
 /* First word of member 'index' of the script-local enum 'localId'. */
 int cScriptInterpreter_SymbolTable_remapEnumVal(Script* script, int localId, int index) {
-    int id = Script_RemapEnumId(script, localId);
+    int id = cScriptInterpreter_SymbolTable_remapEnum(script, localId);
     ScriptEnum* e = *cArray_EnumDefPtr_opIndex(D_00554F30, id - 10);
     return e->members[index].unk0;
 }
@@ -45,7 +45,7 @@ int* cArray_EnumDefPtr_opIndex(PtrVec* v, int i) {
 }
 
 /* Maps a script-local enum id (>= 10) to the global enum id. */
-int Script_RemapEnumId(Script* script, int localId) {
+int cScriptInterpreter_SymbolTable_remapEnum(Script* script, int localId) {
     int i = localId - 10;
 
     return script->enumMap[i];

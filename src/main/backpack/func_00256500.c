@@ -22,7 +22,7 @@ static inline Tgt* GetH2(Handle* h) {
     return Valid(h) ? h->obj : 0;
 }
 static inline int NotEq(Handle* a, Handle* b) { return (a == b) ^ 1; }
-extern "C" void HandleVec_FindResolved(Handle** out, HVec* v, Handle* h)
+extern "C" void cArray_cSafePtr_cGOBJ_Find(Handle** out, HVec* v, Handle* h)
 {
     Handle* it = *func_00256620(v);
     Handle* end = *func_00256620(v) + v->count;

@@ -27,6 +27,6 @@ const char* GuiDossiers_GetClassName(void) {
 #include "types.h"
 extern int strcmp(void* p);
 /* Returns whether the test on the global object fails. */
-int GuiDossiers_IsType(void) { return strcmp("GuiDossiers") == 0; }
+int GuiDossiers_IsClass(void) { return strcmp("GuiDossiers") == 0; }
 #pragma pop /* merge_units */
 /* merge_units: end func_00349EA0 */

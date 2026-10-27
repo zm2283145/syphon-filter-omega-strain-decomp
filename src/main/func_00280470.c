@@ -36,9 +36,9 @@ extern "C" {
 extern signed char D_004E1D88;
 extern V D_004E1D90;
 extern const char D_004A9338[];
-void* Secondary_RootWeight(void* self, void* key);
-void* Root_GetWorldPlacement(void* r);
-V* Placement_GetQuat(void* p);
+void* cSkaAnimAnchorList_Find(void* self, void* key);
+void* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void* r);
+V* cQuatVec_Rotation(void* p);
 }
 struct Key {
     char c[4];
@@ -62,12 +62,12 @@ static inline V& Zero()
     }
     return D_004E1D90;
 }
-static inline void* RWr(void* c, const Key& k) { return Secondary_RootWeight(c, (void*)&k); }
+static inline void* RWr(void* c, const Key& k) { return cSkaAnimAnchorList_Find(c, (void*)&k); }
 extern "C" void func_00280470(Obj* self, Ctx* ctx)
 {
     int f = self->flags;
     if (((f >> 9) & 1) || ((f >> 6) & 1) || ((f >> 4) & 1)) {
-        VR d = -QM(Placement_GetQuat(Root_GetWorldPlacement(RWr(ctx->S()->Coll(), Key(D_004A9338))))).R(1) * 1.25f;
+        VR d = -QM(cQuatVec_Rotation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(RWr(ctx->S()->Coll(), Key(D_004A9338))))).R(1) * 1.25f;
         self->b100 = 1;
         self->v110 = d;
     } else {

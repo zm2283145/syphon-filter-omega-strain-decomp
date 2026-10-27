@@ -51,7 +51,7 @@ typedef struct LevelKey {
 extern int D_004926E0;
 extern int D_00532AF0;
 extern int D_00532B90;
-extern void* ObjectiveRow_Construct(LevelReq*, int, int, int);
+extern void* cAgentData_Record_ctor_charP_int_int(LevelReq*, int, int, int);
 extern void cArray_Record_PushBackActual(void*, void*);
 #if 0 /* merge_units */
 extern void* cAgentData_tParTimes_ctor(LevelKey*, int, int);
@@ -81,7 +81,7 @@ int Script_cAgentData__RegisterLevel(ScriptArg* args) {
     bv = *(int*)b;
     a[0] = args[0].i;
     D_004926E0 = index + 1;
-    cArray_Record_PushBackActual(&D_00532AF0, ObjectiveRow_Construct(&req, *(int*)a, -1, index));
+    cArray_Record_PushBackActual(&D_00532AF0, cAgentData_Record_ctor_charP_int_int(&req, *(int*)a, -1, index));
     cArray_tParTimes_PushBackActual(&D_00532B90, cAgentData_tParTimes_ctor(&key, bv, cv));
     return 0;
 }

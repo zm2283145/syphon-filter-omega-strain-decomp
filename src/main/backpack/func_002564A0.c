@@ -6,11 +6,11 @@
 #include "types.h"
 #include "backpack_types.h"
 
-extern int HandleVec_Insert(PairVec* v, Pair* pos, int n, int value);
+extern int std_vector_imp_cSafePtr_cGOBJ_insert(PairVec* v, Pair* pos, int n, int value);
 
 /* push_back(value) */
-int HandleVec_PushBack(PairVec* v, int value) {
-    return HandleVec_Insert(v, v->data + v->count, 1, value);
+int cArray_cSafePtr_cGOBJ_PushBackActual(PairVec* v, int value) {
+    return std_vector_imp_cSafePtr_cGOBJ_insert(v, v->data + v->count, 1, value);
 }
 
 int func_002564C0(Word* a, Word* b) {

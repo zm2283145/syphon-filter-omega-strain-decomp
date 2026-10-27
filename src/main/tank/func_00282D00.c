@@ -6,10 +6,10 @@
 #include "types.h"
 #include "tank_types.h"
 
-extern int Actor_SetHealth(void* gobj, int hitpoints, int unk);
+extern int cGOBJ_SetHitpoints(void* gobj, int hitpoints, int unk);
 
 int Script_cTank_SetHitpoints(TankScriptArg* args) {
     volatile int hitpoints = args[1].i; /* mirrors the original stack temporary */
-    Actor_SetHealth(((cTank*)args[0].p)->gobj, hitpoints, 0);
+    cGOBJ_SetHitpoints(((cTank*)args[0].p)->gobj, hitpoints, 0);
     return 0;
 }

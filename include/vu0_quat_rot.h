@@ -1,6 +1,6 @@
 #ifndef VU0_QUAT_ROT_H
 #define VU0_QUAT_ROT_H
-/* VU0 quaternion helpers (vc1, Placement_Invert family 00191400/001A90D0).
+/* VU0 quaternion helpers (vc1, cQuatVec_InvertAssumingUnitQuat family 00191400/001A90D0).
  * VU0_QROT(V, Q, D): rotate vector *V by quaternion *Q (q v q*), result to *D
  * (w of the result keeps V's w). Operands must be pointer variables. */
 #define VU0_QROT(V, Q, D) asm { \

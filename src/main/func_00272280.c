@@ -1,13 +1,13 @@
 #include "types.h"
 
-extern void IeElement_Release(int);
+extern void cInterfaceElement_Destroy(int);
 
-void IeScreen_RemoveElementIfSet(int a0) {
+void DestroyElement(int a0) {
     int cond;
 
     cond = a0 == 0;
     if (cond) goto L00272298;
-    IeElement_Release(a0);
+    cInterfaceElement_Destroy(a0);
 L00272298:;
     goto ret;
 ret:;

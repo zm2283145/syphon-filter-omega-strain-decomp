@@ -19,7 +19,7 @@ extern int D_0055D4A0;            /* cDisableMsg type id */
 extern int Event_PackHeader(void* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf);
 
 /* Serializes a cDisableMsg: header plus one word, 12 bytes. */
-int cDisableMsg_v02(L4Msg24* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf) {
+int cDisableMsg_Pack(L4Msg24* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf) {
     Event_PackHeader(msg, a1, outType, a3, a4, a5, buf);
     buf->unk08 = msg->unk24;
     *outType = D_0055D4A0;
@@ -37,7 +37,7 @@ struct Obj003FF5D0 { VPAD8(a) VPAD1(b) virtual void Set(int v); };
 typedef struct { int kind; int id; int val; } Pk003FF5D0;
 extern "C" {
 extern unsigned char D_005721D0;
-Obj003FF5D0** NetMap_Lookup(int);
+Obj003FF5D0** cNetObj_GetNetSystem(int);
 }
 #pragma push
 #pragma opt_propagation off
@@ -45,7 +45,7 @@ extern "C" int cDisableMsg_DisableCallback(int a0, int a1, int a2, Pk003FF5D0* a
     NetRecvGuard g;
     if (D_005721D0) {
         Pk003FF5D0* p = arg;
-        Obj003FF5D0** obj = NetMap_Lookup(p->id);
+        Obj003FF5D0** obj = cNetObj_GetNetSystem(p->id);
         if (obj) (*obj)->Set(p->val);
     }
     return 0xC;
@@ -57,11 +57,11 @@ extern "C" int cDisableMsg_DisableCallback(int a0, int a1, int a2, Pk003FF5D0* a
 /* merge_units: begin func_003FF650 */
 #pragma push /* merge_units */
 extern unsigned char g_IsMultiplayer;
-extern void Transport_Send(void* a, void* b, int c, void* d);
-void NetMsg_Send(void* a0, void* a1, void* a2)
+extern void cNetObj_SendMessage_int_cMessageR_int_int(void* a, void* b, int c, void* d);
+void cDisableMsg_SendDisabled(void* a0, void* a1, void* a2)
 {
     if (g_IsMultiplayer)
-        Transport_Send(a1, a0, -1, a2);
+        cNetObj_SendMessage_int_cMessageR_int_int(a1, a0, -1, a2);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003FF650 */
@@ -71,17 +71,17 @@ void NetMsg_Send(void* a0, void* a1, void* a2)
 #pragma cplusplus on
 #include "alloc_guard.h"
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern char D_004DFD80[];
 extern char D_004E0880[];
 }
 struct M1EEDC0 { void* vtable; int w4, w8, wC, w10, w14, w18, w1C; char b20; int w24; };
-extern "C" M1EEDC0* cEnableMsg_v01(M1EEDC0* self)
+extern "C" M1EEDC0* cEnableMsg_Clone(M1EEDC0* self)
 {
     M1EEDC0* p;
     {
         AllocGuard guard;
-        p = (M1EEDC0*)Mem_Alloc(0, 0x28, "EnableMsg.hh", 0x21);
+        p = (M1EEDC0*)cMemMan_Allocate(0, 0x28, "EnableMsg.hh", 0x21);
     }
     if (p) {
         p->vtable = D_004DFD80;
@@ -111,15 +111,15 @@ extern "C" M1EEDC0* cEnableMsg_v01(M1EEDC0* self)
 
 extern int D_0055D4C8;
 extern int D_0055D4D0;
-extern int* Message_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int type, int baseType);
+extern int* cMessage_SOBJ_getClassId(void);
+extern void cScriptBase_declareParent(int type, int baseType);
 
-void ScriptType_cEnableMsg_Init(void) {
-    int* base = Message_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_0055D4D0, *base);
+void cEnableMsg_SOBJ_init(void) {
+    int* base = cMessage_SOBJ_getClassId();
+    cScriptBase_declareParent(D_0055D4D0, *base);
 }
 
-int cEnableMsg_v03(void) {
+int cEnableMsg_getSOBJClassId(void) {
     return D_0055D4C8;
 }
 #pragma pop /* merge_units */
@@ -128,7 +128,7 @@ int cEnableMsg_v03(void) {
 /* merge_units: begin func_003FF7D0 */
 #pragma push /* merge_units */
 extern int NetRegisterMessageStart(void);
-extern int Event_UnpackHeader(void* p);
+extern int cMessage_RegisterFields(void* p);
 extern int NetMessageField(void* a, void* b, int c, int d);
 extern int NetRegisterApplicationMessage(void* t, void* fn);
 extern int D_0055D4C0;
@@ -137,7 +137,7 @@ unsigned char cEnableMsg_InitNet(void) {
     int ok[2];
     int buf[2];
     unsigned char r = 0;
-    if (NetRegisterMessageStart() == 0 && Event_UnpackHeader(buf) != 0 && NetMessageField(buf, ok, 4, 1) == 0 &&
+    if (NetRegisterMessageStart() == 0 && cMessage_RegisterFields(buf) != 0 && NetMessageField(buf, ok, 4, 1) == 0 &&
         NetRegisterApplicationMessage(&D_0055D4C0, cEnableMsg_EnableCallback) == 0) {
         r = 1;
     }
@@ -149,7 +149,7 @@ unsigned char cEnableMsg_InitNet(void) {
 /* merge_units: begin func_003FF850 */
 #pragma push /* merge_units */
 /* Serializes a cEnableMsg: header plus one word, 12 bytes. */
-int cEnableMsg_v02(L4Msg24* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf) {
+int cEnableMsg_Pack(L4Msg24* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf) {
     Event_PackHeader(msg, a1, outType, a3, a4, a5, buf);
     buf->unk08 = msg->unk24;
     *outType = D_0055D4C0;

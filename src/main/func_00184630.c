@@ -6,5 +6,5 @@
 
 #include "types.h"
 
-void Npc_v26(void) {
+void cHuman_ApplyTransform(void) {
 }

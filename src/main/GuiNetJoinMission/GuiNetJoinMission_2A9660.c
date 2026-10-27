@@ -27,7 +27,7 @@ char* GuiOnlineOptions_GetClassName(void) {
 #pragma push /* merge_units */
 extern int strcmp(const char*, const char*);
 /* Returns whether the string equals the table name. */
-int GuiOnlineOptions_IsType(void* a0, const char* s) { return strcmp("GuiOnlineOptions", s) == 0; }
+int GuiOnlineOptions_IsClass(void* a0, const char* s) { return strcmp("GuiOnlineOptions", s) == 0; }
 #pragma pop /* merge_units */
 /* merge_units: end func_002A9670 */
 
@@ -38,27 +38,27 @@ typedef struct { char pad[0x268]; int f268; } Ui;
 typedef struct { char pad[0x98]; int f98; } S;
 extern Ui* D_004FFC04;
 extern char D_004AB808[];
-extern int GuiScreen_GetLobbyString(S* self, int a, int b, int c, int d, int e);
-extern void FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S* d, int e);
-extern void String_CtorCStr_13B480(Str* s, int c);
-extern int String_CStr(Str* s);
+extern int GuiLobbyScreen_GetLobbyString(S* self, int a, int b, int c, int d, int e);
+extern void cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, int c, S* d, int e);
+extern void std_basic_string_char_char_traits_char_ctor_charP(Str* s, int c);
+extern int std_basic_string_char_char_traits_char_c_str(Str* s);
 extern void String_Dtor(Str* s, int flags);
-extern int GuiScreen_Navigate(S* self, int v);
+extern int GuiLobbyScreen_PushLobbyScreen(S* self, int v);
 void GuiOnlineOptions_ExitScreen(S* self, int flag)
 {
     if (flag && self->f98 == -1) {
         Str a;
         Str b;
         int t;
-        String_CtorCStr_13B480(&a, GuiScreen_GetLobbyString(self, 0x73, 0, 0, 0, 0));
-        String_CtorCStr_13B480(&b, GuiScreen_GetLobbyString(self, 0x74, 0, 0, 0, 0));
-        t = String_CStr(&b);
-        FrontEnd_OpenPopup(D_004FFC04, 2, (char*)String_CStr(&a), t, 0, 0);
+        std_basic_string_char_char_traits_char_ctor_charP(&a, GuiLobbyScreen_GetLobbyString(self, 0x73, 0, 0, 0, 0));
+        std_basic_string_char_char_traits_char_ctor_charP(&b, GuiLobbyScreen_GetLobbyString(self, 0x74, 0, 0, 0, 0));
+        t = std_basic_string_char_char_traits_char_c_str(&b);
+        cGameFrontEnd_PushMessageBox(D_004FFC04, 2, (char*)std_basic_string_char_char_traits_char_c_str(&a), t, 0, 0);
         String_Dtor(&b, 0);
         String_Dtor(&a, 0);
-    } else if (!GuiScreen_Navigate(self, D_004FFC04->f268)) {
+    } else if (!GuiLobbyScreen_PushLobbyScreen(self, D_004FFC04->f268)) {
         Ui* ui = D_004FFC04;
-        FrontEnd_OpenPopup(ui, 2, D_004AB808, GuiScreen_GetLobbyString(self, 0x71, 0, 0, 0, 0), 0, 0);
+        cGameFrontEnd_PushMessageBox(ui, 2, D_004AB808, GuiLobbyScreen_GetLobbyString(self, 0x71, 0, 0, 0, 0), 0, 0);
         D_004FFC04->f268 = 1;
     }
 }

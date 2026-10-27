@@ -13,11 +13,11 @@ extern Cfg356850 *D_004FFC04;
 char D_004BB2E8[] = "0_%d_%d.tdx";
 char D_004BB2F8[] = "AB_SPECIAL_%d";
 extern int sprintf(char *buf, const char *fmt, ...);
-extern void GuiBitmapWidget_SetImage(W356850 *w, char *s, int v);
-extern char *Loc_LookupText(char *key);
+extern void GuiBitmapWidget_SetBitmap(W356850 *w, char *s, int v);
+extern char *nGlobalization_GetString_charP(char *key);
 extern void GuiTextWidget_SetText(W356850 *w, char *s, int v);
-extern void GuiWeaponDisplay_Set(W356850 *w, int n);
-void GuiPersonnelScreen_ShowItem(S356850 *self, int a, int n)
+extern void GuiWeaponDisplay_SetWeapon(W356850 *w, int n);
+void GuiPersonnelScreen_SetupPreviewWidgets(S356850 *self, int a, int n)
 {
     char buf[0x40];
     char buf2[0x40];
@@ -26,26 +26,26 @@ void GuiPersonnelScreen_ShowItem(S356850 *self, int a, int n)
         if (self->w54) {
             self->w54->flags |= 2;
             sprintf(buf, D_004BB2E8, 7, n - 9999);
-            GuiBitmapWidget_SetImage(self->w54, buf, D_004FFC04->f25C);
+            GuiBitmapWidget_SetBitmap(self->w54, buf, D_004FFC04->f25C);
             if (self->w58) {
                 char *t;
                 self->w58->flags |= 2;
                 sprintf(buf, D_004BB2F8, n - 10000);
-                t = Loc_LookupText(buf);
+                t = nGlobalization_GetString_charP(buf);
                 GuiTextWidget_SetText(self->w58, t ? t : "", 0);
             }
         }
     } else {
         if (self->w5C) {
             self->w5C->flags |= 2;
-            GuiWeaponDisplay_Set(self->w5C, n);
+            GuiWeaponDisplay_SetWeapon(self->w5C, n);
         }
         if (self->w54) self->w54->flags &= ~2;
         if (self->w58) self->w58->flags &= ~2;
     }
     if (self->w50) {
         sprintf(buf2, "0_%d_%ds.tdx", self->x64, a + self->x68);
-        GuiBitmapWidget_SetImage(self->w50, buf2, D_004FFC04->f25C);
+        GuiBitmapWidget_SetBitmap(self->w50, buf2, D_004FFC04->f25C);
     }
 }
 #pragma pop /* merge_units */
@@ -63,21 +63,21 @@ public:
     char s4[0xC];
 };
 extern "C" {
-void* Gui_GetScreenList(void);
-void* Gui_GetScreenStack(void);
-int GuiManager_FindOrLoad(void* mgr, char* a, char* b);
-char* String_CStr(void* str);
-void GuiPersonnelMenu_Setup(int snd, int a, char* s, int b, int c, int d, int e);
-void GuiStack_SwapScreens(void* mgr, void* self, int snd);
-void GuiPersonnelScreen_OpenMenu(S3569F0* self, char* name, int b, int c, int d, int e);
+void* Gui_Manager(void);
+void* Gui_Canvas(void);
+int GuiManager_OpenGui(void* mgr, char* a, char* b);
+char* std_basic_string_char_char_traits_char_c_str(void* str);
+void GuiPersonnelMenu_SetInfo(int snd, int a, char* s, int b, int c, int d, int e);
+void GuiCanvas_Transition(void* mgr, void* self, int snd);
+void GuiPersonnelScreen_OpenSubMenu(S3569F0* self, char* name, int b, int c, int d, int e);
 }
-void GuiPersonnelScreen_OpenMenu(S3569F0* self, char* name, int b, int c, int d, int e)
+void GuiPersonnelScreen_OpenSubMenu(S3569F0* self, char* name, int b, int c, int d, int e)
 {
-    int s = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiPersonnelMenu", name);
+    int s = GuiManager_OpenGui(Gui_Manager(), "GuiPersonnelMenu", name);
     if (s) {
-        char* str = String_CStr(self->s4);
-        GuiPersonnelMenu_Setup(s, self->f54(), str, b, c, d, e);
-        GuiStack_SwapScreens(Gui_GetScreenStack(), self, s);
+        char* str = std_basic_string_char_char_traits_char_c_str(self->s4);
+        GuiPersonnelMenu_SetInfo(s, self->f54(), str, b, c, d, e);
+        GuiCanvas_Transition(Gui_Canvas(), self, s);
     }
 }
 #pragma pop /* merge_units */
@@ -85,27 +85,27 @@ void GuiPersonnelScreen_OpenMenu(S3569F0* self, char* name, int b, int c, int d,
 
 /* merge_units: begin func_00356AD0 */
 #pragma push /* merge_units */
-extern void* Gui_GetScreenList(void);
+extern void* Gui_Manager(void);
 #if 0 /* merge_units */
-extern void* GuiManager_FindOrLoad(void* manager, const char* a, const char* b);
+extern void* GuiManager_OpenGui(void* manager, const char* a, const char* b);
 #endif /* merge_units */
-#define GuiManager_FindOrLoad(a0, a1, a2) ((void *)GuiManager_FindOrLoad((a0), (char *)(a1), (char *)(a2))) /* merge_units */
+#define GuiManager_OpenGui(a0, a1, a2) ((void *)GuiManager_OpenGui((a0), (char *)(a1), (char *)(a2))) /* merge_units */
 
-extern void* Gui_GetScreenStack(void);
+extern void* Gui_Canvas(void);
 #if 0 /* merge_units */
-extern void GuiStack_SwapScreens(void* target, void* self, void* handle);
+extern void GuiCanvas_Transition(void* target, void* self, void* handle);
 #endif /* merge_units */
-#define GuiStack_SwapScreens(a0, a1, a2) (GuiStack_SwapScreens((a0), (a1), (int)(a2))) /* merge_units */
+#define GuiCanvas_Transition(a0, a1, a2) (GuiCanvas_Transition((a0), (a1), (int)(a2))) /* merge_units */
 
 
 /* Creates a handle from the two name strings and registers it for self. */
-void GuiPersonnelScreen_Back(void* self)
+void GuiPersonnelScreen_PreviousScreen(void* self)
 {
-    void* handle = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiCommandCenter", "cmdcentr");
-    GuiStack_SwapScreens(Gui_GetScreenStack(), self, handle);
+    void* handle = GuiManager_OpenGui(Gui_Manager(), "GuiCommandCenter", "cmdcentr");
+    GuiCanvas_Transition(Gui_Canvas(), self, handle);
 }
-#undef GuiManager_FindOrLoad /* merge_units */
-#undef GuiStack_SwapScreens /* merge_units */
+#undef GuiManager_OpenGui /* merge_units */
+#undef GuiCanvas_Transition /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00356AD0 */
 
@@ -141,8 +141,8 @@ public:
     char pad[0x5C];
     int x60;
 };
-extern "C" int GuiWidget_OnEvent(Obj356B30 *self, int a1, unsigned short msg, int a3, int param);
-extern "C" int GuiPersonnelScreen_HandleEvent(Obj356B30 *self, int a1, unsigned short msg, int a3, int param)
+extern "C" int GuiWidget_onMessage(Obj356B30 *self, int a1, unsigned short msg, int a3, int param);
+extern "C" int GuiPersonnelScreen_onMessage(Obj356B30 *self, int a1, unsigned short msg, int a3, int param)
 {
     if (msg == 0x14) {
         self->f60(param);
@@ -158,7 +158,7 @@ extern "C" int GuiPersonnelScreen_HandleEvent(Obj356B30 *self, int a1, unsigned 
         self->x60 = a3;
         return 1;
     }
-    return GuiWidget_OnEvent(self, a1, msg, a3, param);
+    return GuiWidget_onMessage(self, a1, msg, a3, param);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00356B30 */
@@ -172,8 +172,8 @@ public:
     VPAD16(a) VPAD8(b)
     virtual void f68();
 };
-extern "C" int GuiPersonnelScreen_HandleInput(S356BE0* self, E356BE0* e);
-int GuiPersonnelScreen_HandleInput(S356BE0* self, E356BE0* e)
+extern "C" int GuiPersonnelScreen_onInput(S356BE0* self, E356BE0* e);
+int GuiPersonnelScreen_onInput(S356BE0* self, E356BE0* e)
 {
     bool b = e->a0 == 1 && e->a2 == 0 && e->a8 == 0x10 && e->a6 == 0;
     if (b) {
@@ -202,18 +202,18 @@ struct Widget {
     int index; /* +0x60 */
 };
 
-extern "C" void GuiWidget_BaseWake(Widget* self);
+extern "C" void GuiWidget_onWake(Widget* self);
 extern "C" void GuiTextListWidget_Clear(void* list);
-extern "C" void GuiArrayWidget_Select(void* list, int a, unsigned int index);
+extern "C" void GuiArrayWidget_SetSelected(void* list, int a, unsigned int index);
 
-/* GuiWidget_BaseWake(self); if +0x48 is set: GuiTextListWidget_Clear, virtual +0x5C, then GuiArrayWidget_Select(+0x48, 0, +0x60). */
-extern "C" void GuiPersonnelScreen_Wake(Widget* self)
+/* GuiWidget_onWake(self); if +0x48 is set: GuiTextListWidget_Clear, virtual +0x5C, then GuiArrayWidget_SetSelected(+0x48, 0, +0x60). */
+extern "C" void GuiPersonnelScreen_onWake(Widget* self)
 {
-    GuiWidget_BaseWake(self);
+    GuiWidget_onWake(self);
     if (self->list) {
     GuiTextListWidget_Clear(self->list);
     self->Method5C();
-    GuiArrayWidget_Select(self->list, 0, self->index);
+    GuiArrayWidget_SetSelected(self->list, 0, self->index);
     }
 }
 #pragma pop /* merge_units */
@@ -249,41 +249,41 @@ extern char g_Game[];
 extern QCol_356CD0 D_00587BA0;
 extern QCol_356CD0 D_00587BB0;
 extern QCol_356CD0 D_00587BC0;
-void GuiWidget_Init(S_356CD0* o);
-W_356CD0* GuiWidget_FindChildByName(void* self, char* name);
+void GuiWidget_onAdd(S_356CD0* o);
+W_356CD0* GuiWidget_FindChild_charP(void* self, char* name);
 #if 0 /* merge_units */
 void GuiTextWidget_SetText(W_356CD0* w, char* text, int flags);
 #endif /* merge_units */
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((W356850 *)(a0), (a1), (a2))) /* merge_units */
 
-int Agent_GetSelected(void* a, int i);
-char* AgentData_GetName(int agent);
-void GuiPersonnelScreen_Init(S_356CD0* o);
+int cGameSystem_GetAgentData(void* a, int i);
+char* cAgentData_GetUserName(int agent);
+void GuiPersonnelScreen_onAdd(S_356CD0* o);
 }
 static inline W_356CD0* cast_356CD0(W_356CD0* w, char* type)
 {
     return (w && w->IsA(type)) ? w : 0;
 }
 static inline void Put_356CD0(Col_356CD0* d, QCol_356CD0 c) { d->r = c.r; d->g = c.g; d->b = c.b; d->a = c.a; }
-void GuiPersonnelScreen_Init(S_356CD0* o)
+void GuiPersonnelScreen_onAdd(S_356CD0* o)
 {
     W_356CD0* w;
-    GuiWidget_Init(o);
-    o->w48 = cast_356CD0(GuiWidget_FindChildByName(o, D_00492C88), D_004AA640);
-    o->w5C = cast_356CD0(GuiWidget_FindChildByName(o, D_00492CA0), D_004BB3D0);
-    o->w54 = cast_356CD0(GuiWidget_FindChildByName(o, D_00492CA8), D_004B88F0);
-    o->w58 = cast_356CD0(GuiWidget_FindChildByName(o, D_00492CB0), D_004A7520);
-    o->w4C = GuiWidget_FindChildByName(o, D_00492C90);
+    GuiWidget_onAdd(o);
+    o->w48 = cast_356CD0(GuiWidget_FindChild_charP(o, D_00492C88), D_004AA640);
+    o->w5C = cast_356CD0(GuiWidget_FindChild_charP(o, D_00492CA0), D_004BB3D0);
+    o->w54 = cast_356CD0(GuiWidget_FindChild_charP(o, D_00492CA8), D_004B88F0);
+    o->w58 = cast_356CD0(GuiWidget_FindChild_charP(o, D_00492CB0), D_004A7520);
+    o->w4C = GuiWidget_FindChild_charP(o, D_00492C90);
     if (o->w48) {
         o->w48->link88 = o->w4C;
         Put_356CD0(&o->w48->cB0, D_00587BA0);
         Put_356CD0(&o->w48->cC0, D_00587BB0);
         Put_356CD0(&o->w48->cD0, D_00587BC0);
-        if (o->w48) o->w48->link8C = cast_356CD0(GuiWidget_FindChildByName(o, "vscrollbar"), D_004AAE00);
+        if (o->w48) o->w48->link8C = cast_356CD0(GuiWidget_FindChild_charP(o, "vscrollbar"), D_004AAE00);
     }
-    o->w50 = cast_356CD0(GuiWidget_FindChildByName(o, D_00492C98), D_004B88F0);
-    w = cast_356CD0(GuiWidget_FindChildByName(o, D_00492C80), D_004A7520);
-    if (w) GuiTextWidget_SetText(w, AgentData_GetName(Agent_GetSelected(g_Game, -1)), 0);
+    o->w50 = cast_356CD0(GuiWidget_FindChild_charP(o, D_00492C98), D_004B88F0);
+    w = cast_356CD0(GuiWidget_FindChild_charP(o, D_00492C80), D_004A7520);
+    if (w) GuiTextWidget_SetText(w, cAgentData_GetUserName(cGameSystem_GetAgentData(g_Game, -1)), 0);
 }
 #undef GuiTextWidget_SetText /* merge_units */
 #pragma pop /* merge_units */

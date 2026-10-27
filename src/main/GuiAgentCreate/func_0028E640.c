@@ -5,8 +5,8 @@
 /* Camera preset blend: eases the current camera preset toward the selected table entry. */
 
 extern "C" {
-float Math_StepEighth(float* p, float a, float b);
-float Math_StepAngleEighth(float target, float cur, float* maxStep);
+float BlendFloat(float* p, float a, float b);
+float BlendRot(float target, float cur, float* maxStep);
 }
 struct Fl { float v; Fl& operator=(const Fl& o) { v = o.v; return *this; } operator float() const { return v; } Fl& operator=(float x) { v = x; return *this; } };
 struct CamE {
@@ -34,18 +34,18 @@ static inline void GetE(CamT* t, CamE& o) {
     else o = g_AgentPartCache.e[0];
 }
 
-extern "C" void GuiAgentCreate_CameraApproach(CamT* t)
+extern "C" void GuiAgentCreate_BlendMenOnOff(CamT* t)
 {
     if (t->c0) {
         float acc = 0.0f;
         CamE e; GetE(t, e);
-        t->cur.f0 = Math_StepEighth(&acc, e.f0, t->cur.f0);
-        t->cur.f1 = Math_StepEighth(&acc, e.f1, t->cur.f1);
-        t->cur.f2 = Math_StepEighth(&acc, e.f2, t->cur.f2);
-        t->cur.f3 = Math_StepEighth(&acc, e.f3, t->cur.f3);
-        t->cur.f4 = Math_StepAngleEighth(e.f4, t->cur.f4, &acc);
-        t->cur.f5 = Math_StepAngleEighth(e.f5, t->cur.f5, &acc);
-        t->cur.f6 = Math_StepAngleEighth(e.f6, t->cur.f6, &acc);
+        t->cur.f0 = BlendFloat(&acc, e.f0, t->cur.f0);
+        t->cur.f1 = BlendFloat(&acc, e.f1, t->cur.f1);
+        t->cur.f2 = BlendFloat(&acc, e.f2, t->cur.f2);
+        t->cur.f3 = BlendFloat(&acc, e.f3, t->cur.f3);
+        t->cur.f4 = BlendRot(e.f4, t->cur.f4, &acc);
+        t->cur.f5 = BlendRot(e.f5, t->cur.f5, &acc);
+        t->cur.f6 = BlendRot(e.f6, t->cur.f6, &acc);
         t->c0++;
         if (acc < 0.0001f) {
             t->c0 = 0;

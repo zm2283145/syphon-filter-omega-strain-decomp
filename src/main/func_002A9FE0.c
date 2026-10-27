@@ -30,8 +30,8 @@ extern char D_004A7520[];
 extern char D_004AA640[];
 extern const char* D_0048BBF0;
 
-void GuiScreen_Init(Screen9FE0* self);
-Obj9FE0* GuiWidget_FindChildByName(Screen9FE0* self, const char* name);
+void GuiLobbyScreen_onAdd(Screen9FE0* self);
+Obj9FE0* GuiWidget_FindChild_charP(Screen9FE0* self, const char* name);
 }
 
 static inline Obj9FE0* AsA9FE0(Obj9FE0* obj)
@@ -44,13 +44,13 @@ static inline Obj9FE0* AsB9FE0(Obj9FE0* obj)
 }
 
 /* Screen init: base init, looks up the named child widgets and links the extra one to the second. */
-extern "C" void GuiOnlineOptions_Init(Screen9FE0* self)
+extern "C" void GuiOnlineOptions_onAdd(Screen9FE0* self)
 {
-    GuiScreen_Init(self);
-    self->item0 = AsA9FE0(GuiWidget_FindChildByName(self, *(const char**)dat_0048BC00));
-    self->item1 = (Sub9FE0*)AsB9FE0(GuiWidget_FindChildByName(self, *(const char**)dat_0048BC08));
-    self->item2 = AsA9FE0(GuiWidget_FindChildByName(self, D_0048BBF0));
-    self->extra = GuiWidget_FindChildByName(self, *(const char**)dat_0048BC10);
+    GuiLobbyScreen_onAdd(self);
+    self->item0 = AsA9FE0(GuiWidget_FindChild_charP(self, *(const char**)dat_0048BC00));
+    self->item1 = (Sub9FE0*)AsB9FE0(GuiWidget_FindChild_charP(self, *(const char**)dat_0048BC08));
+    self->item2 = AsA9FE0(GuiWidget_FindChild_charP(self, D_0048BBF0));
+    self->extra = GuiWidget_FindChild_charP(self, *(const char**)dat_0048BC10);
     if (self->extra && self->item1)
         self->item1->link = self->extra;
 }

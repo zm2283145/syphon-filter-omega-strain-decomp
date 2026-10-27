@@ -1,4 +1,4 @@
-/* cHumanCollisionRoutine_cFinalLedgeSearchInfo_ctor: ctor; function-local static identity placement D_00497F00 (guard D_004E1D80) copied via VecPair_Copy then lq/sq into place. */
+/* cHumanCollisionRoutine_cFinalLedgeSearchInfo_ctor: ctor; function-local static identity placement D_00497F00 (guard D_004E1D80) copied via cQuatVec_ctor_cQuatVecR then lq/sq into place. */
 #pragma cplusplus on
 #pragma exceptions off
 struct V4c {
@@ -23,15 +23,15 @@ struct T {
 extern "C" {
 extern signed char D_004E1D80;
 extern Pair D_00497F00;
-Pair* Placement_GetIdentity(Pair* p, const V4c* a, const V4c* b);
-Pair* VecPair_Copy(Pair* d, const Pair* s);
-V4c Vec4_SetOrigin(void);
-V4c Quat_SetIdentity(void);
+Pair* cQuatVec_ctor_cQuaternionR_cVectorR(Pair* p, const V4c* a, const V4c* b);
+Pair* cQuatVec_ctor_cQuatVecR(Pair* d, const Pair* s);
+V4c cVector_Get0001(void);
+V4c cQuaternion_GetIdentity(void);
 }
 static inline const Pair& IdentPl(void)
 {
     if (!D_004E1D80) {
-        Placement_GetIdentity(&D_00497F00, &Quat_SetIdentity(), &Vec4_SetOrigin());
+        cQuatVec_ctor_cQuaternionR_cVectorR(&D_00497F00, &cQuaternion_GetIdentity(), &cVector_Get0001());
         D_004E1D80 = 1;
     }
     return D_00497F00;
@@ -51,7 +51,7 @@ extern "C" T* cHumanCollisionRoutine_cFinalLedgeSearchInfo_ctor(T* p)
     {
         Pair pl;
         IdentPl();
-        VecPair_Copy(&pl, &D_00497F00);
+        cQuatVec_ctor_cQuatVecR(&pl, &D_00497F00);
         p->place.a = pl.a;
         p->place.b = pl.b;
     }

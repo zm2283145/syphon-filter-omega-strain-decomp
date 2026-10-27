@@ -41,22 +41,22 @@ typedef struct {
     unsigned char pad0C[0x434 - 0xC];
     int freeA[3];
 } Obj_381870;
-extern "C" void Tdx_Clone(Obj_381870* o, int* file, int idx); /* gsynth: defined below */
+extern "C" void cTexMan_RemoveTextureTDX(Obj_381870* o, int* file, int idx); /* gsynth: defined below */
 #pragma pop
 typedef struct { char pad[0x148]; struct { int pad0; int count; }* list; } F3814D0;
 typedef struct { char pad[0x98]; F3814D0* f; } A3814D0;
 typedef struct { char pad[8]; char** names; int pad0C; int count; } S3814D0;
 typedef struct { int pad0; char path[0x9C]; } B3814D0;
-extern void Resource_Construct(void*);
-extern void FileMan_Release(void*, int);
-extern int Archive_GetMemberName(void*, int);
+extern void cFileMan_ctor_void(void*);
+extern void cFileMan_dtor(void*, int);
+extern int cHogFile_GetBlockName(void*, int);
 extern void cFileMan_EncodeFilename_charP_cFileManR(void*, int, void*);
-extern void FileMan_FindMember(void*);
+extern void cFileMan_Open(void*);
 extern int String_CompareNoCase(char*, char*);
 #if 0 /* merge_units */
-extern void Tdx_Clone(void*, void*, int);
+extern void cTexMan_RemoveTextureTDX(void*, void*, int);
 #endif /* merge_units */
-#define Tdx_Clone(a0, a1, a2) (Tdx_Clone((void *)(a0), (void *)(a1), (a2))) /* merge_units */
+#define cTexMan_RemoveTextureTDX(a0, a1, a2) (cTexMan_RemoveTextureTDX((void *)(a0), (void *)(a1), (a2))) /* merge_units */
 
 extern char D_004BC2C8[];
 
@@ -67,12 +67,12 @@ void cTexMan_RemoveTextureHOG(S3814D0* self, A3814D0* arg1)
     F3814D0* f = arg1->f;
     int n;
     int i;
-    Resource_Construct(&buf);
+    cFileMan_ctor_void(&buf);
     n = f->list->count;
     for (i = 0; i < n; i++) {
         char* path = buf.path;
-        cFileMan_EncodeFilename_charP_cFileManR(&buf, Archive_GetMemberName(f, i), arg1);
-        FileMan_FindMember(&buf);
+        cFileMan_EncodeFilename_charP_cFileManR(&buf, cHogFile_GetBlockName(f, i), arg1);
+        cFileMan_Open(&buf);
         if (String_CompareNoCase(path + strlen(path) - 3, D_004BC2C8) == 0) {
             char* s = path;
             char* end = s + strlen(s);
@@ -96,12 +96,12 @@ void cTexMan_RemoveTextureHOG(S3814D0* self, A3814D0* arg1)
             if (j < self->count)
                 idx = j;
             if (idx != -1)
-                Tdx_Clone(self, &buf, idx);
+                cTexMan_RemoveTextureTDX(self, &buf, idx);
         }
     }
-    FileMan_Release(&buf, -1);
+    cFileMan_dtor(&buf, -1);
 }
-#undef Tdx_Clone /* merge_units */
+#undef cTexMan_RemoveTextureTDX /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003814D0(void) {}
 #pragma pop /* merge_units */
@@ -126,9 +126,9 @@ extern int String_CompareNoCase(const char* a, const char* b);
 #define String_CompareNoCase(a0, a1) (String_CompareNoCase((void *)(a0), (void *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Tdx_Clone(TdxMgr* m, TdxEnt* e, int idx);
+extern void cTexMan_RemoveTextureTDX(TdxMgr* m, TdxEnt* e, int idx);
 #endif /* merge_units */
-#define Tdx_Clone(a0, a1, a2) (Tdx_Clone((void *)(a0), (void *)(a1), (a2))) /* merge_units */
+#define cTexMan_RemoveTextureTDX(a0, a1, a2) (cTexMan_RemoveTextureTDX((void *)(a0), (void *)(a1), (a2))) /* merge_units */
 
 
 void cTexMan_RemoveTextureFromFile(TdxMgr* m, TdxEnt* e)
@@ -155,12 +155,12 @@ void cTexMan_RemoveTextureFromFile(TdxMgr* m, TdxEnt* e)
         }
         if (i < m->count) idx = i;
         }
-        if (idx != -1) Tdx_Clone(m, e, idx);
+        if (idx != -1) cTexMan_RemoveTextureTDX(m, e, idx);
     }
 }
 #undef strlen /* merge_units */
 #undef String_CompareNoCase /* merge_units */
-#undef Tdx_Clone /* merge_units */
+#undef cTexMan_RemoveTextureTDX /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003816F0(void) {}
 #pragma pop /* merge_units */
@@ -170,7 +170,7 @@ static inline void merge_flush_func_003816F0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x54]; int v; } F_00381B90;
 typedef struct { F_00381B90* a[5]; F_00381B90* b[1]; int o0; int o1; } T_00381B90;
-void Tdx_Unrelocate(T_00381B90* t, int base, int n1, int n2, int x, int y); /* gsynth: defined below */
+void tTDXImageFrame_UnPatchup(T_00381B90* t, int base, int n1, int n2, int x, int y); /* gsynth: defined below */
 #pragma cplusplus on
 #pragma opt_rotateloops off
 #pragma opt_propagation off
@@ -183,20 +183,20 @@ void Tdx_Unrelocate(T_00381B90* t, int base, int n1, int n2, int x, int y); /* g
 
 extern "C" {
 extern char D_004BC2B8[], D_004BC300[];
-void* FileMan_ReadData(int* f);
-int FileMan_GetSize(int* f);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-int TexHeader_PixelOffset(TdxHdr_381870* t);
-int TexHeader_PaletteOffset(TdxHdr_381870* t);
-void* Tdx_GetFrame(TdxHdr_381870* t, int n);
+void* cFileMan_Read_void(int* f);
+int cFileMan_GetSize(int* f);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+int tTDXHeader_OffToImageData(TdxHdr_381870* t);
+int tTDXHeader_OffToMapData(TdxHdr_381870* t);
+void* tTDXHeader_GetFrameData(TdxHdr_381870* t, int n);
 #if 0 /* merge_units */
-void Tdx_Unrelocate(void* fr, char* base, int n1, int n2, int x, int y);
+void tTDXImageFrame_UnPatchup(void* fr, char* base, int n1, int n2, int x, int y);
 #endif /* merge_units */
-#define Tdx_Unrelocate(a0, a1, a2, a3, a4, a5) (Tdx_Unrelocate((T_00381B90 *)(a0), (int)(a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define tTDXImageFrame_UnPatchup(a0, a1, a2, a3, a4, a5) (tTDXImageFrame_UnPatchup((T_00381B90 *)(a0), (int)(a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
-void Tdx_RelocateFrames(void* fr, char* base, int n1, int n2, int x, int y);
+void tTDXImageFrame_Patchup(void* fr, char* base, int n1, int n2, int x, int y);
 int cTexture_GetRefCount(void* t);
-void Tex_DestroyRecord(void* t, int a, int b, char* file, int line);
+void opDelete_cTextureP_int_bool_charP_etc(void* t, int a, int b, char* file, int line);
 void cTexMan_EraseDeletedTID(Obj_381870* o, int v);
 void cLList_int_PushBackActual(void* list, int* value);
 void cTexture_SetReallocData(Tex_381870* t, TdxHdr_381870* h);
@@ -243,14 +243,14 @@ static inline void Copy_381870(void* d0, void* s0, int n0)
 static inline void Release_381870(Obj_381870* o, int idx)
 {
     if (o->tex[idx] && cTexture_GetRefCount(o->tex[idx]) <= 0) {
-        Tex_DestroyRecord(o->tex[idx], 0, 1, D_004BC300, 0x39E);
+        opDelete_cTextureP_int_bool_charP_etc(o->tex[idx], 0, 1, D_004BC300, 0x39E);
         o->tex[idx] = 0;
         cTexMan_EraseDeletedTID(o, idx);
         cLList_int_PushBackActual(o->freeA, &idx);
     }
 }
 
-extern "C" void Tdx_Clone(Obj_381870* o, int* file, int idx)
+extern "C" void cTexMan_RemoveTextureTDX(Obj_381870* o, int* file, int idx)
 {
     Tex_381870* t = o->tex[idx];
     if (t->flags & 0x1000) {
@@ -261,34 +261,34 @@ extern "C" void Tdx_Clone(Obj_381870* o, int* file, int idx)
         TdxHdr_381870* n;
         int size;
         TdxHdr_381870* h0 = t->hdr;
-        if (FileMan_ReadData(file) != h0) {
+        if (cFileMan_Read_void(file) != h0) {
             return;
         }
         h = t->hdr;
         if (h->relocated) {
             char* p = h->data;
-            int px = TexHeader_PixelOffset(h);
-            int pl = TexHeader_PaletteOffset(h);
+            int px = tTDXHeader_OffToImageData(h);
+            int pl = tTDXHeader_OffToMapData(h);
             int i;
             for (i = 0; i < h->nframes; i++) {
-                Tdx_Unrelocate(Tdx_GetFrame(h, i), p, h->n1, h->n2, px, pl);
+                tTDXImageFrame_UnPatchup(tTDXHeader_GetFrameData(h, i), p, h->n1, h->n2, px, pl);
                 p += h->stride;
             }
             h->relocated = 0;
         }
-        size = FileMan_GetSize(file);
+        size = cFileMan_GetSize(file);
         {
             AllocGuard guard;
-            n = (TdxHdr_381870*)Mem_Alloc(0, size, D_004BC2B8, 0x349);
+            n = (TdxHdr_381870*)cMemMan_Allocate(0, size, D_004BC2B8, 0x349);
         }
-        Copy_381870(n, h, FileMan_GetSize(file));
+        Copy_381870(n, h, cFileMan_GetSize(file));
         if (!n->relocated) {
             char* p = n->data;
-            int px = TexHeader_PixelOffset(n);
-            int pl = TexHeader_PaletteOffset(n);
+            int px = tTDXHeader_OffToImageData(n);
+            int pl = tTDXHeader_OffToMapData(n);
             int i;
             for (i = 0; i < n->nframes; i++) {
-                Tdx_RelocateFrames(Tdx_GetFrame(n, i), p, n->n1, n->n2, px, pl);
+                tTDXImageFrame_Patchup(tTDXHeader_GetFrameData(n, i), p, n->n1, n->n2, px, pl);
                 p += n->stride;
             }
             n->relocated = 1;
@@ -298,7 +298,7 @@ extern "C" void Tdx_Clone(Obj_381870* o, int* file, int idx)
         Release_381870(o, idx);
     }
 }
-#undef Tdx_Unrelocate /* merge_units */
+#undef tTDXImageFrame_UnPatchup /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00381870(void) {}
 #pragma pop /* merge_units */
@@ -306,7 +306,7 @@ static inline void merge_flush_func_00381870(void) {}
 
 /* merge_units: begin func_00381B90 */
 #pragma push /* merge_units */
-void Tdx_Unrelocate(T_00381B90* t, int base, int n1, int n2, int x, int y) {
+void tTDXImageFrame_UnPatchup(T_00381B90* t, int base, int n1, int n2, int x, int y) {
     int i, j;
     for (i = 0; i < n1; i++) {
         t->a[i]->v -= t->o0 + x;
@@ -345,7 +345,7 @@ static inline int qeq(__int128 a, __int128 b) {
     return r == -1;
 }
 
-int Tex_FindInList(TdxMgr_00381F30* m, __int128 key)
+int FindTexture__7cTexManCF1(TdxMgr_00381F30* m, __int128 key)
 {
     int i;
     int idx = -1;

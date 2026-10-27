@@ -16,7 +16,7 @@ virtual void Target(int,int);
 };
 extern "C" { static inline void CxNpcThunk_Call(CxNpcThunk* self,int arg) { self->Target(arg,100); } }
 #pragma cplusplus off
-void cNPC_v43(struct CxNpcThunk* self,int arg) { CxNpcThunk_Call(self,arg); }
+void cNPC_SetAimMode_eAimMode(struct CxNpcThunk* self,int arg) { CxNpcThunk_Call(self,arg); }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014FC40(void) {}
 #pragma pop /* merge_units */
@@ -26,17 +26,17 @@ static inline void merge_flush_func_0014FC40(void) {}
 #pragma push /* merge_units */
 typedef struct CxBurstActor { char pad0[0xC]; int serial; char pad10[0x3524-0x10]; void* weapons; } CxBurstActor;
 typedef struct CxBurstNpc { char pad0[0x30]; CxBurstActor* actor; char pad34[0xA4-0x34]; int burst; int shots; } CxBurstNpc;
-extern int Actor_IsArmed(CxBurstActor*);
-extern int Random_Next(void);
-extern int WeaponInv_GetClipSize(void*,int);
+extern int cHuman_IsHoldingGun(CxBurstActor*);
+extern int Libc_Rand(void);
+extern int cWeapon_GetClipSize(void*,int);
 void func_0014FC60(CxBurstNpc* self) {
     CxBurstActor* actor=self->actor;
-    if(Actor_IsArmed(actor)) {
+    if(cHuman_IsHoldingGun(actor)) {
         void* weapons=actor->weapons;
         self->burst=(self->actor->serial&7)+3;
-        if(Random_Next()&1)self->burst++;
-        if(self->burst>WeaponInv_GetClipSize(weapons,6)) {
-            int n=WeaponInv_GetClipSize(weapons,6)/2;
+        if(Libc_Rand()&1)self->burst++;
+        if(self->burst>cWeapon_GetClipSize(weapons,6)) {
+            int n=cWeapon_GetClipSize(weapons,6)/2;
             if(n<=0)n=1;
             self->burst=n;
         }

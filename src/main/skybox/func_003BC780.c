@@ -10,7 +10,7 @@ typedef struct cSKYBOX_GOBJ {
 } cSKYBOX_GOBJ;
 
 extern char D_004DFC70[];
-extern void IdMgr_Allocate(int* outId, int type);
+extern void nGobjManager_GetNextId(int* outId, int type);
 extern void cGOBJ_ctor(cSKYBOX_GOBJ* self, int* id, int kind, int* parent);
 extern void memset(void* dst, int value, int size);
 
@@ -19,7 +19,7 @@ cSKYBOX_GOBJ* cSKYBOX_GOBJ_ctor(cSKYBOX_GOBJ* self) {
     int parent;
     int id;
     parent = 0;
-    IdMgr_Allocate(&id, 0xDC);
+    nGobjManager_GetNextId(&id, 0xDC);
     cGOBJ_ctor(self, &id, 5, &parent);
     self->vtbl = D_004DFC70;
     self->visible = 1;

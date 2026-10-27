@@ -10,7 +10,7 @@ int cGameSystem_IsNetworked(void) {
     return 1;
 }
 
-void* GObj_GetID(char* self) {
+void* cSystem_ScriptGetObjectId(char* self) {
     return self + 12;
 }
 

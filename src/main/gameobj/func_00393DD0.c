@@ -3,7 +3,7 @@
 #include "alloc_guard.h"
 extern "C" {
 extern char D_0049AF00[];
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
 }
 typedef struct { int a; int b; int c; void* buffer; } BufHolder393DD0;
@@ -15,7 +15,7 @@ extern "C" BufHolder393DD0* _cdeque_imp_cSkaSystem_RequestPtr_1_dtor(BufHolder39
             if (p) {
                 if (p) {
                     AllocGuard guard;
-                    Mem_Free(0, p, D_0049AF00, 0x64);
+                    cMemMan_Deallocate(0, p, D_0049AF00, 0x64);
                 }
             }
         }

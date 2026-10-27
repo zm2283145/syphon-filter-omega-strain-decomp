@@ -37,7 +37,7 @@ static inline void merge_flush_func_00330820(void) {}
 /* merge_units: begin func_00330870 */
 #pragma push /* merge_units */
 /* Tests bit `index` in a bit array of ints. */
-int AgentData_TestObjectiveBit(int* bits, int index) {
+int cBitArray_224_opIndex(int* bits, int index) {
     return ((bits[index / 32] >> (index & 0x1F)) & 1) != 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

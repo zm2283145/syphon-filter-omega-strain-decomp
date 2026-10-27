@@ -25,7 +25,7 @@ struct Msg_0022ED30 : ClonedMessageBase {
 extern "C" {
 char D_004A67D8[] = "Checkpoint.hh";
 }
-DEFINE_MESSAGE_CLONE(cNotifyCheckpointMsg_v01, Msg_0022ED30, 36, D_004A67D8, 73, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cNotifyCheckpointMsg_Clone, Msg_0022ED30, 36, D_004A67D8, 73, CLONE_BODY)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0022ED30(void) {}
 #pragma pop /* merge_units */
@@ -48,7 +48,7 @@ struct Msg_0022EE30 : ClonedMessageBase {
 extern "C" {
 char D_004A67E8[] = "Checkpoint.hh";
 }
-DEFINE_MESSAGE_CLONE(cAddCheckpointMsg_v01, Msg_0022EE30, 44, D_004A67E8, 35, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cAddCheckpointMsg_Clone, Msg_0022EE30, 44, D_004A67E8, 35, CLONE_BODY)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0022EE30(void) {}
 #pragma pop /* merge_units */

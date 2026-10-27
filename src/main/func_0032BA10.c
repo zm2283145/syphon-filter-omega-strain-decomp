@@ -53,11 +53,11 @@ extern int GuiKeyboard_GetModifierIndex(Self_BA10* self, Item_BA10* it);
 extern int GuiKeyboard_IsCharAllowed(Self_BA10* self, unsigned char c);
 extern int GuiKeyboard_IsSpecialKey(Self_BA10* self, Wid_BA10* w);
 extern int CharMap_Lookup(unsigned short key);
-extern void GuiTextEditWidget_ClampCursor(Menu_BA10* m, int sel);
-extern void GuiTextEditWidget_Delete(Menu_BA10* m, int sel);
-extern void GuiTextEditWidget_Insert(Menu_BA10* m, char* s);
-extern Scr_BA10* Gui_GetScreenStack(void);
-extern void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
+extern void GuiTextEditWidget_SetCursorPos(Menu_BA10* m, int sel);
+extern void GuiTextEditWidget_RemoveCharAtCursor(Menu_BA10* m, int sel);
+extern void GuiTextEditWidget_InsertAtCursor(Menu_BA10* m, char* s);
+extern Scr_BA10* Gui_Canvas(void);
+extern void GuiWidget_SendMessage(void* a, void* b, int kind, int v, int f);
 extern VO_BA10* func_0032C110(Wid_BA10* w);
 int GuiKeyboard_HandleInput(Self_BA10* self, Ev_BA10* ev);
 }
@@ -125,15 +125,15 @@ extern "C" int GuiKeyboard_HandleInput(Self_BA10* self, Ev_BA10* ev)
             self->cur = sel;
             pw = &self->keys[self->cur];
             w = *pw;
-            GuiWidget_SendEvent(*pw, Gui_GetScreenStack(), 0x10, 6, 0);
-            Gui_GetScreenStack()->flags &= ~0x40;
+            GuiWidget_SendMessage(*pw, Gui_Canvas(), 0x10, 6, 0);
+            Gui_Canvas()->flags &= ~0x40;
         } else if (ev->b6 == 1) {
-            Gui_GetScreenStack()->flags |= 0x40;
+            Gui_Canvas()->flags |= 0x40;
         }
     }
     if (w) {
         int hi = ev->b4 == 1;
-        Scr_BA10* st = Gui_GetScreenStack();
+        Scr_BA10* st = Gui_Canvas();
         if (hi)
             st->flags |= 0x40;
         else
@@ -158,19 +158,19 @@ extern "C" int GuiKeyboard_HandleInput(Self_BA10* self, Ev_BA10* ev)
             GuiKeyboard_Relabel(self, (self->flags & 2) ? self->flags & ~2 : self->flags | 2);
             break;
         case 0x4F:
-            GuiTextEditWidget_ClampCursor(m, m->sel + 1);
+            GuiTextEditWidget_SetCursorPos(m, m->sel + 1);
             self->curEntry = 0;
             break;
         case 0x50:
-            if (m->sel != 0) GuiTextEditWidget_ClampCursor(m, m->sel - 1);
+            if (m->sel != 0) GuiTextEditWidget_SetCursorPos(m, m->sel - 1);
             self->curEntry = 0;
             break;
         case 0x2A:
-            if (m) GuiTextEditWidget_Delete(m, 0);
+            if (m) GuiTextEditWidget_RemoveCharAtCursor(m, 0);
             self->curEntry = 0;
             break;
         case 0x4C:
-            if (m) GuiTextEditWidget_Delete(m, 1);
+            if (m) GuiTextEditWidget_RemoveCharAtCursor(m, 1);
             self->curEntry = 0;
             break;
         default: {
@@ -195,7 +195,7 @@ extern "C" int GuiKeyboard_HandleInput(Self_BA10* self, Ev_BA10* ev)
                                 char buf[2];
                                 buf[0] = ch;
                                 buf[1] = 0;
-                                GuiTextEditWidget_Insert(self->menu, buf);
+                                GuiTextEditWidget_InsertAtCursor(self->menu, buf);
                                 ok = 1;
                             }
                         }
@@ -204,7 +204,7 @@ extern "C" int GuiKeyboard_HandleInput(Self_BA10* self, Ev_BA10* ev)
                 }
             }
             if (!ok)
-                GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 4, 0);
+                GuiWidget_SendMessage(self, Gui_Canvas(), 0x10, 4, 0);
             break;
         }
         }
@@ -213,7 +213,7 @@ extern "C" int GuiKeyboard_HandleInput(Self_BA10* self, Ev_BA10* ev)
         return 1;
     }
     if (w) {
-        Scr_BA10* st = Gui_GetScreenStack();
+        Scr_BA10* st = Gui_Canvas();
         if (w != st->hover) {
             if (st->hover)
                 func_0032C110(st->hover)->Leave();

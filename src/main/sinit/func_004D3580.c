@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0051F058;
 
-void StaticInit_NetGeneratorCreateMsgName(void) {
+void StaticInit_NetGeneratorCreate(void) {
     D_0051F058 = "MSGGAME_NET_GENERATORCREATE_REQUEST";
 }

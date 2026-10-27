@@ -1,4 +1,4 @@
-#define ObjectList_EraseRange std_list_deleter_cHogFile_erase_listdeleter_listdeleter
+#define std_list_deleter_voidPtr_erase_listdeleter_listdeleter std_list_deleter_cHogFile_erase_listdeleter_listdeleter
 #pragma cplusplus on
 
 #include "types.h"

@@ -5,31 +5,31 @@ typedef struct {
     char p0[0x8C]; void* p8C; char p90[0xAC - 0x90];
     char lAC[4]; int count;
 } T3DE00;
-extern void GuiScreen_Update(T3DE00* self);
-extern G3DE00* Gui_GetScreenStack(void);
+extern void GuiLobbyScreen_onAdvanceTime(T3DE00* self);
+extern G3DE00* Gui_Canvas(void);
 extern T3DE00** func_0033DEF0(void* key);
-extern int DME_GetLobby(void);
-extern E3DE00* LobbyArray_At(void* list, int i);
+extern int cDME_GetLobby(void);
+extern E3DE00* SFOLobbyList_GetSlot(void* list, int i);
 extern void GuiChatWindow_AddChatLine(void* p, char* a, char* b, unsigned char c);
-extern void LobbyArray_Clear(void* list);
-void GuiMenuScreen_Update(T3DE00* self)
+extern void SFOLobbyList_ClearList(void* list);
+void GuiMissionLobbyScreen_onAdvanceTime(T3DE00* self)
 {
     G3DE00* g;
     int on;
     int i;
-    GuiScreen_Update(self);
-    on = *func_0033DEF0(Gui_GetScreenStack()->key) == self;
-    g = Gui_GetScreenStack();
+    GuiLobbyScreen_onAdvanceTime(self);
+    on = *func_0033DEF0(Gui_Canvas()->key) == self;
+    g = Gui_Canvas();
     if (on)
         g->flags |= 3;
     else
         g->flags &= ~3;
-    if (DME_GetLobby() && self->count) {
+    if (cDME_GetLobby() && self->count) {
         for (i = 0; i < self->count; i++) {
-            E3DE00* e = LobbyArray_At(self->lAC, i);
+            E3DE00* e = SFOLobbyList_GetSlot(self->lAC, i);
             if (e)
                 GuiChatWindow_AddChatLine(self->p8C, e->a, e->b, e->c);
         }
-        LobbyArray_Clear(self->lAC);
+        SFOLobbyList_ClearList(self->lAC);
     }
 }

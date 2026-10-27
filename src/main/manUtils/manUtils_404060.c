@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 int strcmp(const void *, const void *);
 
 /* merge_units: begin func_00404060 */
@@ -54,17 +54,17 @@ extern __int128* D_005712F8[2];
 extern __int128* D_005714F0[2][2];
 extern unsigned char D_00571500[2][2];
 extern unsigned char D_00571510[2][2][24];
-int Hog_GetEntrySize(Npc_S* npc, int i);
-char* Archive_GetMemberName(Npc_S* npc, int i);
-__int128* Hog_GetMemberInPlace(Npc_S* npc, int i);
-void Appearance_RegistryKey(char* dst, int n, char* src);
+int cHogFile_GetBlockSize(Npc_S* npc, int i);
+char* cHogFile_GetBlockName(Npc_S* npc, int i);
+__int128* cHogFile_GetBlock_int(Npc_S* npc, int i);
+void strCpyPad(char* dst, int n, char* src);
 char* strrchr(char* s, int c);
-unsigned int TexCache_FindOrAddSlot(Cache_S* c, __int128 key, int k);
-void Skm_LoadPacket(Rec_S* r, void* pkt, int a, long long slot, long long k, long long z);
+unsigned int Monster_AddMonsterPart(Cache_S* c, __int128 key, int k);
+void Parts_SetManData(Rec_S* r, void* pkt, int a, long long slot, long long k, long long z);
 
 typedef union { __int128 q; char s[16]; } KU;
 
-void Skf_Register(Cache_S* c, Npc_S* npc)
+void Monster_LoadFaceHog(Cache_S* c, Npc_S* npc)
 {
     unsigned int j;
     void* p;
@@ -82,12 +82,12 @@ void Skf_Register(Cache_S* c, Npc_S* npc)
     if (p) {
         {
             AllocGuard g;
-            Mem_Free(0, p, D_004BE7F0, 0x7D1);
+            cMemMan_Deallocate(0, p, D_004BE7F0, 0x7D1);
         }
         p = c->bufD8;
         {
             AllocGuard g;
-            Mem_Free(0, p, D_004BE7F0, 0x7D2);
+            cMemMan_Deallocate(0, p, D_004BE7F0, 0x7D2);
         }
         c->bufD4 = 0;
         c->bufD8 = 0;
@@ -97,18 +97,18 @@ void Skf_Register(Cache_S* c, Npc_S* npc)
         KU key;
         KU k2;
         char* ks = key.s;
-        a = Hog_GetEntrySize(npc, i);
+        a = cHogFile_GetBlockSize(npc, i);
         if (!a) continue;
-        name = Archive_GetMemberName(npc, i);
-        pkt = Hog_GetMemberInPlace(npc, i);
-        Appearance_RegistryKey(ks, 15, name);
+        name = cHogFile_GetBlockName(npc, i);
+        pkt = cHogFile_GetBlock_int(npc, i);
+        strCpyPad(ks, 15, name);
         ext = strrchr(name, '.');
         if (!ext) ext = name;
         if (strcmp(ext, D_004BE830) == 0 || strcmp(ext, D_004BE838) == 0) {
             k2.q = key.q;
             lod = *(k2.s + 14) - '0';
             if (lod >= 2 || lod < 0) lod = 0;
-            slot = TexCache_FindOrAddSlot(c, key.q, lod);
+            slot = Monster_AddMonsterPart(c, key.q, lod);
         }
         if (strcmp(ext, D_004BE830) == 0) {
             long long z;
@@ -120,7 +120,7 @@ void Skf_Register(Cache_S* c, Npc_S* npc)
             } else {
                 z = 0;
             }
-            Skm_LoadPacket(&c->recs[slot][lod], pkt, a, slot, lod, z);
+            Parts_SetManData(&c->recs[slot][lod], pkt, a, slot, lod, z);
             c->h210[slot] = 0;
         } else if (strcmp(ext, D_004BE838) == 0) {
             c->recs[slot][lod].fC = pkt;
@@ -215,7 +215,7 @@ static inline int k690eq(__int128 a, __int128 b) {
     }
     return r == -1;
 }
-unsigned int AgentPartCache_FindMesh(K690* s, __int128 key) {
+unsigned int FindPartNumber__7MonsterF1(K690* s, __int128 key) {
     unsigned int i;
     for (i = 0; i < s->count; i++) {
         if (k690eq(key, s->keys[i]))
@@ -245,7 +245,7 @@ static inline int k6f0eq(__int128 a, __int128 b) {
     }
     return r == -1;
 }
-unsigned int MeshCache_FindSlot(K6F0* s, __int128 key) {
+unsigned int FindPart__7MonsterF1(K6F0* s, __int128 key) {
     unsigned int i;
     for (i = 0; i < s->count; i++) {
         if (k6f0eq(k6f0and(s->mask, s->keys[i]), k6f0and(s->mask, key)))

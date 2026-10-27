@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_0016A970 */
 #pragma push /* merge_units */
@@ -23,9 +23,9 @@ int Mem_Free();
 
 
 extern "C" {
-int Mem_Alloc(...);
-int TeamRelations_CreateMultiplayer(...);
-int TeamRelations_SetDefaults(...);
+int cMemMan_Allocate(...);
+int cTeam_TeamNetCreate(...);
+int cTeam_InitTeamData(...);
 extern unsigned char D_0048A100;
 extern char D_0049C650;
 extern int D_004EE620;
@@ -33,27 +33,27 @@ extern unsigned char D_004EE628;
 extern unsigned char g_ProfileLockEnabled;
 extern unsigned char g_IsMultiplayer;
 }
-extern "C" void TeamRelations_Create(void) {
+extern "C" void cTeam_Init(void) {
     int temp_s0;
 
     if (g_IsMultiplayer != 0) {
         if (D_004EE628 == 0) {
-            TeamRelations_CreateMultiplayer();
+            cTeam_TeamNetCreate();
         }
         if (D_0048A100 != 0) {
             D_0048A100 = 0;
-            TeamRelations_SetDefaults(D_004EE620);
+            cTeam_InitTeamData(D_004EE620);
         }
     } else {
         if (D_004EE620 == 0) {
             {
                 AllocGuard g;
-            temp_s0 = Mem_Alloc(0, 0x100, &D_0049C650, 0x71B);
+            temp_s0 = cMemMan_Allocate(0, 0x100, &D_0049C650, 0x71B);
             }
             asm { nop } /* scheduling barrier: keeps the store after the unlock, as in retail */
             D_004EE620 = temp_s0;
         }
-        TeamRelations_SetDefaults(D_004EE620);
+        cTeam_InitTeamData(D_004EE620);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -82,12 +82,12 @@ extern char D_0049C650[];
 #define D_0049C650 ((char*)&D_0049C650) /* merge_units */
 
 }
-extern "C" void TeamRelations_Teardown(void)
+extern "C" void cTeam_Reset(void)
 {
     void* p = D_004EE620;
     if (p && !D_004EE628) {
         AllocGuard g;
-        Mem_Free(0, p, D_0049C650, 0x6FE);
+        cMemMan_Deallocate(0, p, D_0049C650, 0x6FE);
     }
     D_004EE620 = 0;
     D_004EE628 = 0;

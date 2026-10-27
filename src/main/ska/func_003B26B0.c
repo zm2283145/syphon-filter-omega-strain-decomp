@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-void Vec3_LerpKeepW(V4* a, V4* b, V4* c, V4* d, V4* e) {
+void cSkaAnim_LerpXYZ(V4* a, V4* b, V4* c, V4* d, V4* e) {
     asm {
         lqc2 vf1, 0x0(c)
         lqc2 vf2, 0x0(d)

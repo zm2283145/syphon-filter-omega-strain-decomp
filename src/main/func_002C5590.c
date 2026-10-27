@@ -10,7 +10,7 @@ typedef struct V4 { float x, y, z, w; } __attribute__((aligned(16))) V4;
 typedef struct Q16 { int w[4]; } __attribute__((aligned(16))) Q16;
 extern Mat3Words* cBitArray_256_ctor(Mat3Words* dst, Mat3Words* src);
 extern Word* cNpcTransfer_cStateID_ctor(Word* dst, Word* src);
-extern V4* Vec4_Assign(V4* dst, V4* src);
+extern V4* cVector_ctor_cVectorR(V4* dst, V4* src);
 typedef struct Payload2C5590 {
     float f000;
     int i004;
@@ -204,7 +204,7 @@ Payload2C5590* cNetworkTransferNpc_ctor_cNetworkTransferNpcR(Payload2C5590* d, P
     d->i08C = s->i08C;
     d->i090 = s->i090;
     d->i094 = s->i094;
-    Vec4_Assign(&d->o0A0, &s->o0A0);
+    cVector_ctor_cVectorR(&d->o0A0, &s->o0A0);
     cNpcTransfer_cStateID_ctor(&d->o0B0, &s->o0B0);
     d->i0B4 = s->i0B4;
     d->i0B8 = s->i0B8;
@@ -235,10 +235,10 @@ Payload2C5590* cNetworkTransferNpc_ctor_cNetworkTransferNpcR(Payload2C5590* d, P
     d->i12C = s->i12C;
     d->b130 = s->b130;
     d->b131 = s->b131;
-    Vec4_Assign(&d->o140, &s->o140);
-    Vec4_Assign(&d->o150, &s->o150);
-    Vec4_Assign(&d->o160, &s->o160);
-    Vec4_Assign(&d->o170, &s->o170);
+    cVector_ctor_cVectorR(&d->o140, &s->o140);
+    cVector_ctor_cVectorR(&d->o150, &s->o150);
+    cVector_ctor_cVectorR(&d->o160, &s->o160);
+    cVector_ctor_cVectorR(&d->o170, &s->o170);
     d->f180 = s->f180;
     d->f184 = s->f184;
     d->i188 = s->i188;

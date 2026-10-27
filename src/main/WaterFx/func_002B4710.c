@@ -25,7 +25,7 @@ struct V4c {
 } __attribute__((aligned(16)));
 struct M44 { __int128 r[4]; };
 extern "C" {
-void Effect_SpawnById(int id, M44* m);
+void SfxParticleEffect_eEffectName_cMatrixR(int id, M44* m);
 }
 static inline void UnitMtx(void* m) { int t; __asm__ volatile("sqc2 vf0, 0x30(%1); qmfc2.ni %0, vf0; pcpyud %0, %0, zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(m) : "memory"); }
 static inline void CP2(V4* d0, const V4* s) { V4* d = d0; __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=&r"(t) : "r"(s)); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(d) : "memory"); }
@@ -43,6 +43,6 @@ extern "C" void WaterFx_InitSplash(Splash* s, const V4* p, float size, float z)
     UnitMtx(&m);
     V4c v(s->pos.x, s->pos.y, s->pos.z - 0.25f * size, 1.0f);
     CP2((V4*)&m.r[3], (V4*)&v);
-    if (size >= 2.0f) Effect_SpawnById(0x11, &m);
-    else Effect_SpawnById(0x12, &m);
+    if (size >= 2.0f) SfxParticleEffect_eEffectName_cMatrixR(0x11, &m);
+    else SfxParticleEffect_eEffectName_cMatrixR(0x12, &m);
 }

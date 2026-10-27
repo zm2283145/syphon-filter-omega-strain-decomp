@@ -29,7 +29,7 @@ static inline void AddEq_(V4* x, V4* y) {
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-void PhysState_Translate(PS* s, V4* t) {
+void cPointMass_Teleport(PS* s, V4* t) {
     V4 u;
     V4 tmp;
     Sub2_(&tmp, t, &s->pos);

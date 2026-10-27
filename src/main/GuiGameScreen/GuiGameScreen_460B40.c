@@ -6,9 +6,9 @@
 #include "types.h"
 
 extern int D_004FFC04;
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
-extern int FrontEnd_UnloadZeusHog(int);
-extern int GuiWidget_Deinit(void* self);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int value);
+extern int cGameFrontEnd_CloseZeusHog(int);
+extern int GuiWidget_onRemove(void* self);
 
 int* func_00460B40(PtrVec* v, int i) {
     return v->data + i;
@@ -25,10 +25,10 @@ int func_00460B60(PtrVec* v, int value) {
 
     count = v->count;
     data = v->data;
-    return PtrVec_Insert(v, data + count, 1, value);
+    return std_vector_pod_int_insert(v, data + count, 1, value);
 }
 
-int GuiEndGameAwards_Deinit(void* self) {
-    GuiWidget_Deinit(self);
-    return FrontEnd_UnloadZeusHog(D_004FFC04);
+int GuiEndGameAwards_onRemove(void* self) {
+    GuiWidget_onRemove(self);
+    return cGameFrontEnd_CloseZeusHog(D_004FFC04);
 }

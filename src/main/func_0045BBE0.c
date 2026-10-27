@@ -7,14 +7,14 @@
 
 const float FlashDazzleSize[4] = { 8.0f, 0.0f, 0.0f, 0.0f };
 
-float FlashGlare_GetCoronaSize(Float40* self) {
+float cDazzleLight_GetDazzlePct(Float40* self) {
     return self->unk40;
 }
 
-int FlashGlare_GetCoronaFlag(void) {
+int cDazzleLight_DazzleCoversScreen(void) {
     return 0;
 }
 
-float FlashGlare_GetRange(void) {
+float cDazzleLight_GetAttenDist(void) {
     return (*(float*)FlashDazzleSize);
 }

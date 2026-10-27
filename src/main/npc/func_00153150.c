@@ -2,7 +2,7 @@
 #pragma inline_depth(8)
 #include "types.h"
 #include "vslot_pad.h"
-/* NpcAi_ModeCarryBody: carry-body mode message handler: walk to the body,
+/* cNPC_CarryBody: carry-body mode message handler: walk to the body,
  * pick it up (route to its region node or path to its head), then carry it
  * away; announces pick-up/put-down to the owner. */
 /* lq/sq: 128-bit quadword moves have no C equivalent (asm). */
@@ -57,22 +57,22 @@ extern int g_NpcRegionTable[];
 extern signed char g_HeadNodeCode;
 extern char g_ActorActionMsgClass[];
 extern char D_004E0840[], D_004E01A0[];
-int* Event_GetType(void* ev);
-unsigned char NpcRoute_RequestToNode(void* path, int node);
-unsigned char NpcPath_RequestRoute(void* path, V* pos, int region);
-Obj* Object_LookupById(int* id);
-int Controller_NotifySeen(Obj* o);
-void* Actor_GetSkeleton(Obj* o);
-M Model_GetComponentTransform(void* skel, signed char code);
-void Event_Construct(void*, void*);
-void Event_Send(void*, void*, int);
+int* cMessage_Name(void* ev);
+unsigned char cPathNavigator_Request_int(void* path, int node);
+unsigned char cPathNavigator_Request_cVectorR_int(void* path, V* pos, int region);
+Obj* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+int cGOBJ_Team(Obj* o);
+void* cSKM_GOBJ_GetSkeleton_void(Obj* o);
+M cSkeleton_GetBoneToWorldMatrix(void* skel, signed char code);
+void cMessage_ctor_cMessageNameR(void*, void*);
+void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 void cMessage_dtor(void*, int);
-unsigned char NpcAi_ModeCarryBody(Ai* self, Msg* msg);
+unsigned char cNPC_CarryBody(Ai* self, Msg* msg);
 }
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
 struct MsgB {
     void* vtable; void* type; int pad8[5]; int flags; unsigned char kind; char pad21[3];
-    MsgB(void* t) { Event_Construct(this, t); }
+    MsgB(void* t) { cMessage_ctor_cMessageNameR(this, t); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); }
 };
 struct MsgI : MsgB {
@@ -86,21 +86,21 @@ struct MsgVal : MsgI {
     __declspec(weak) __declspec(MSG_DTOR) ~MsgVal() {}
 };
 
-unsigned char NpcAi_ModeCarryBody(Ai* self0, Msg* msg0)
+unsigned char cNPC_CarryBody(Ai* self0, Msg* msg0)
 {
     bool release; Ai* self = self0; Msg* msg = msg0; int type; unsigned char handled;
     handled = 0;
     release = false;
-    type = *Event_GetType(msg);
+    type = *cMessage_Name(msg);
     if (type == D_004EE550) {
         if ((unsigned char)msg->kind == 3) {
             if (self->carryState == 1) {
                 self->carryState = 2;
-                handled = NpcRoute_RequestToNode(self->path, self->region);
+                handled = cPathNavigator_Request_int(self->path, self->region);
                 self->state = -1;
             } else {
                 int id = self->bodyId;
-                Obj* body = Object_LookupById(&id);
+                Obj* body = nGobjManager_LookupGOBJ_cObjectIdR(&id);
                 if (body) {
                     self->state = 3;
                     handled = 1;
@@ -111,7 +111,7 @@ unsigned char NpcAi_ModeCarryBody(Ai* self0, Msg* msg0)
                         if (body->ctrl && body->ctrl->Seen())
                             seen = true;
                         if (seen) {
-                            region = g_NpcRegionTable[Controller_NotifySeen(body)];
+                            region = g_NpcRegionTable[cGOBJ_Team(body)];
                         } else if (body->ctrl->IsA() || body->ctrl->IsB()) {
                             Ctl* c = body->ctrl;
                             region = c->route->node;
@@ -119,12 +119,12 @@ unsigned char NpcAi_ModeCarryBody(Ai* self0, Msg* msg0)
                             if (r)
                                 node = r->node;
                         }
-                        V head = Model_GetComponentTransform(Actor_GetSkeleton(body), g_HeadNodeCode).T();
+                        V head = cSkeleton_GetBoneToWorldMatrix(cSKM_GOBJ_GetSkeleton_void(body), g_HeadNodeCode).T();
                         self->carryState = 0;
                         if (node >= 0)
-                            NpcRoute_RequestToNode(self->path, node);
+                            cPathNavigator_Request_int(self->path, node);
                         else
-                            handled = NpcPath_RequestRoute(self->path, &head, region);
+                            handled = cPathNavigator_Request_cVectorR_int(self->path, &head, region);
                         self->state = -1;
                     }
                 }
@@ -146,7 +146,7 @@ unsigned char NpcAi_ModeCarryBody(Ai* self0, Msg* msg0)
             handled = 1;
         }
     } else {
-      type = *Event_GetType(msg);
+      type = *cMessage_Name(msg);
       if (type == D_004ED9B8) {
         if ((unsigned char)msg->kind == 6) {
             if (self->carryState == 0) {
@@ -154,11 +154,11 @@ unsigned char NpcAi_ModeCarryBody(Ai* self0, Msg* msg0)
                 self->state = 1;
                 volatile int id = self->bodyId; /* stack copy, as in retail */
                 MsgVal m(43, id);
-                m.kind = 1; Event_Send(&m, self->owner, 0);
+                m.kind = 1; QueueMessage_cMessageR_cSystemP_int(&m, self->owner, 0);
             } else if (self->carryState == 2) {
                 volatile int id = self->bodyId; /* stack copy, as in retail */
                 MsgVal m(44, id);
-                m.kind = 1; Event_Send(&m, self->owner, 0);
+                m.kind = 1; QueueMessage_cMessageR_cSystemP_int(&m, self->owner, 0);
                 self->Release();
             }
         } else if ((unsigned char)msg->kind == 1 || (unsigned char)msg->kind == 3) {

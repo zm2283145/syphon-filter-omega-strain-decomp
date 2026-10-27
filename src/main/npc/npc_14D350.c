@@ -14,7 +14,7 @@ typedef struct { char pad[0xC]; int serial; } Tracked;
 typedef struct { Tracked* obj; int serial; } WeakRef;
 
 /* Returns the referenced object if it is still the same instance (serial matches), else 0. */
-Tracked* Handle_Resolve(WeakRef* self)
+Tracked* cSafePtr_cGOBJ_GetPtr_void(WeakRef* self)
 {
     Tracked* obj = self->obj;
     unsigned char valid = 1;
@@ -36,7 +36,7 @@ static inline void merge_flush_func_0014D350(void) {}
 
 
 /* vtable slot 0x28. */
-int cNPC_v28(cNPC* self, unsigned char i) {
+int cNPC_UseCurrentLookAt(cNPC* self, unsigned char i) {
     return self->unk17C[i].unk00;
 }
 
@@ -46,7 +46,7 @@ signed char cNPC_v27(cNPC* self) {
 }
 
 /* vtable slot 0x34. */
-float cNPC_v34(cNPC* self) {
+float cNPC_GetRawTravelSpeed(cNPC* self) {
     return self->unk060;
 }
 /* merge_units: generate this block's code under its own pragmas */

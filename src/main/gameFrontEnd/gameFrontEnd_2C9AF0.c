@@ -16,7 +16,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 int sprintf(void *, const void *, ...);
 
 /* merge_units: begin func_002C9AF0 */
@@ -39,14 +39,14 @@ extern char g_Game[];
 extern char D_004F2CC0[];
 extern char D_004DAE30[];
 extern char* D_0048C148[];
-extern int Service_Lookup(void*, void*);
-extern void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
+extern int cSystemContainer_GetSystem(void*, void*);
+extern void cSndFx_ctor_int_charP_cGOBJP_int(SoundRequest* req, int kind, void* name, int a, int b);
 extern void EffectMsg_WrapRequest(EffectMsg* msg, SoundRequest* req);
-extern void Event_Send(EffectMsg* msg, int target, int flags);
+extern void QueueMessage_cMessageR_cSystemP_int(EffectMsg* msg, int target, int flags);
 #if 0 /* merge_units */
-extern void FileMan_Release(void* part, int flags);
+extern void cFileMan_dtor(void* part, int flags);
 #endif /* merge_units */
-#define FileMan_Release(a0, a1) (FileMan_Release((a0), (a1))) /* merge_units */
+#define cFileMan_dtor(a0, a1) (cFileMan_dtor((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(EffectMsg* msg, int flags);
@@ -54,27 +54,27 @@ extern void cMessage_dtor(EffectMsg* msg, int flags);
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
 
-void FrontEnd_SetMusic(char* self, unsigned char kind) {
+void cGameFrontEnd_PlayMusic(char* self, unsigned char kind) {
     EffectMsg msg;
     SoundRequest req;
     int target;
 
     if (*(int*)(self + 0x30C) != kind) {
-        target = Service_Lookup(g_Game, D_004F2CC0);
-        SoundRequest_Ctor(&req, 5, D_0048C148[kind], 0, 0);
+        target = cSystemContainer_GetSystem(g_Game, D_004F2CC0);
+        cSndFx_ctor_int_charP_cGOBJP_int(&req, 5, D_0048C148[kind], 0, 0);
         EffectMsg_WrapRequest(&msg, &req);
-        FileMan_Release(req.partB, -1);
-        FileMan_Release(req.partA, -1);
+        cFileMan_dtor(req.partB, -1);
+        cFileMan_dtor(req.partA, -1);
         msg.flag = 1;
-        Event_Send(&msg, target, 1);
+        QueueMessage_cMessageR_cSystemP_int(&msg, target, 1);
         *(int*)(self + 0x30C) = kind;
         msg.vtbl = D_004DAE30;
-        FileMan_Release(msg.partB, -1);
-        FileMan_Release(msg.partA, -1);
+        cFileMan_dtor(msg.partB, -1);
+        cFileMan_dtor(msg.partA, -1);
         cMessage_dtor(&msg, 0);
     }
 }
-#undef FileMan_Release /* merge_units */
+#undef cFileMan_dtor /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002C9AF0(void) {}
@@ -97,13 +97,13 @@ struct V2C9C80 { virtual void v0(int f); virtual int v1(); virtual int v2(); vir
 struct S2C9C80 { char pad[0x260]; V2C9C80* p260; };
 extern "C" {
 extern char D_004ACF10[];
-void World_ClearPendingIfLoaded(void);
+void cMotionManager_FlushUpdateList(void);
 }
 static inline void Del2C9C80(V2C9C80* o, int line)
 {
     AllocGuard g;
     o->v0(-1);
-    Mem_Free(0, o, D_004ACF10, line);
+    cMemMan_Deallocate(0, o, D_004ACF10, line);
 }
 extern "C" void cGameFrontEnd_CloseCharacter(S2C9C80* s, int flag)
 {
@@ -113,7 +113,7 @@ extern "C" void cGameFrontEnd_CloseCharacter(S2C9C80* s, int flag)
             Del2C9C80(p, 0x653);
             s->p260 = 0;
         } else {
-            World_ClearPendingIfLoaded();
+            cMotionManager_FlushUpdateList();
         }
     }
 }
@@ -126,9 +126,9 @@ static inline void merge_flush_func_002C9C80(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void* FrontEndScene_ctor(void* p);
-void FrontEndScene_Init(void* p);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void* cFrontendSystem_ctor(void* p);
+void cFrontendSystem_Init(void* p);
 }
 struct Obj9D50 { char pad[0x260]; void* timer; };
 extern "C" void FrontEnd_GetCharacterData(Obj9D50* o)
@@ -137,12 +137,12 @@ extern "C" void FrontEnd_GetCharacterData(Obj9D50* o)
         void* p;
         {
             AllocGuard guard;
-            p = Mem_Alloc(0, 0x3C, D_004ACF10, 0x645);
+            p = cMemMan_Allocate(0, 0x3C, D_004ACF10, 0x645);
         }
         if (p)
-            p = FrontEndScene_ctor(p);
+            p = cFrontendSystem_ctor(p);
         o->timer = p;
-        FrontEndScene_Init(o->timer);
+        cFrontendSystem_Init(o->timer);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -155,18 +155,18 @@ static inline void merge_flush_func_002C9D50(void) {}
 #pragma cplusplus on
 struct S2C9E20 { char pad[0x25C]; void* p25C; };
 extern "C" {
-void Hog_Unload(void* p);
+void cHogFile_CloseHog(void* p);
 void cHogFile_dtor(void* p, short f);
 }
-extern "C" void FrontEnd_UnloadZeusHog(S2C9E20* s)
+extern "C" void cGameFrontEnd_CloseZeusHog(S2C9E20* s)
 {
     if (s->p25C) {
-        Hog_Unload(s->p25C);
+        cHogFile_CloseHog(s->p25C);
         {
             void* p = s->p25C;
             AllocGuard g;
             cHogFile_dtor(p, -1);
-            Mem_Free(0, p, D_004ACF10, 0x639);
+            cMemMan_Deallocate(0, p, D_004ACF10, 0x639);
         }
         s->p25C = 0;
     }
@@ -188,10 +188,10 @@ void cHogFile_dtor(void* p, int flags);
 #endif /* merge_units */
 #define cHogFile_dtor(a0, a1) (cHogFile_dtor((a0), (short)(a1))) /* merge_units */
 
-int Hog_Load(void* hog, char* path, int mode, int flags);
+int cHogFile_OpenHog(void* hog, char* path, int mode, int flags);
 }
 struct Obj9EE0 { char pad[0x25C]; void* hog; };
-extern "C" bool FrontEnd_LoadZeusHog(Obj9EE0* o)
+extern "C" bool cGameFrontEnd_OpenZeusHog(Obj9EE0* o)
 {
     if (!o->hog) {
         char path[0x100];
@@ -199,17 +199,17 @@ extern "C" bool FrontEnd_LoadZeusHog(Obj9EE0* o)
         sprintf(path, "%s\\FRONTEND\\LANG\\%s\\ZEUS.HOG", D_0048B2F8, Loc_GetCurrentLanguageName_Thunk());
         {
             AllocGuard guard;
-            p = Mem_Alloc(0, 0x16C, D_004ACF10, 0x628);
+            p = cMemMan_Allocate(0, 0x16C, D_004ACF10, 0x628);
         }
         if (p)
             p = cHogFile_ctor(p);
         o->hog = p;
-        if (Hog_Load(o->hog, path, 2, 0)) {
+        if (cHogFile_OpenHog(o->hog, path, 2, 0)) {
             void* q = o->hog;
             {
                 AllocGuard guard;
                 cHogFile_dtor(q, -1);
-                Mem_Free(0, q, D_004ACF10, 0x62C);
+                cMemMan_Deallocate(0, q, D_004ACF10, 0x62C);
             }
             o->hog = 0;
         }
@@ -228,13 +228,13 @@ static inline void merge_flush_func_002C9EE0(void) {}
 extern "C" {
 extern signed char D_0051EF60;
 extern bool D_0051EF58;
-char* GameIni_GetString(char* s);
+char* cSFOini_GetKeyValue(char* s);
 int String_CompareNoCase(char* a, char* b);
 }
 extern "C" bool FrontEnd_IsRegisterEnabled(void)
 {
     if (!D_0051EF60) {
-        bool eq = String_CompareNoCase(GameIni_GetString("LOBBY_DISABLE_REGISTER"), "1") == 0;
+        bool eq = String_CompareNoCase(cSFOini_GetKeyValue("LOBBY_DISABLE_REGISTER"), "1") == 0;
         D_0051EF60 = 1;
         D_0051EF58 = !eq;
     }

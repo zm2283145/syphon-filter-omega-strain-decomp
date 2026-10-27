@@ -19,21 +19,21 @@ static inline void Req_Init(SoundRequest* p, int type, __int128 name, Voice_F190
 static inline void Req_Default(SoundRequest* p) {
     p->voiceId = -2;
     p->voice = 0;
-    Resource_Construct(&p->a);
-    Resource_Construct(&p->b);
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
 }
 typedef struct { int pad0[2]; int type; int pad[1]; __int128 name; int x20; unsigned char x24; } Src_EAB0;
 SoundEvent* cStopSoundMsg_ctor_netStopSoundMsgR(SoundEvent* ev, Src_EAB0* src) {
     SoundRequest* p;
-    Event_Construct(ev, D_004F53D8);
+    cMessage_ctor_cMessageNameR(ev, D_004F53D8);
     ev->vtable = D_004DADF0;
     p = &ev->req;
     p->voiceId = -2;
     p->voice = 0;
-    Resource_Construct(&p->a);
-    Resource_Construct(&p->b);
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
     ev->pad1C0[0] = src->x24;

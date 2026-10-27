@@ -48,13 +48,13 @@ struct BP {
 extern "C" {
 extern int g_WeaponDatabase;
 extern int g_HotboxTracker;
-int WeaponInv_SlotOfItem(int id);
-void* WeaponDb_Get(int db, int item);
+int cWeapon_GetWeaponSlot(int id);
+void* cWeaponDB_GetEntry(int db, int item);
 int cHuman_CanPackBeDeleted(Owner_00254990* o);
-void Hotbox_RemoveObjectBox(int, void*);
-int Object_Unregister(void*);
-int Object_DeleteLater(void*, float);
-void Backpack_Destroy(BP* bp);
+void cHotboxMan_RemoveHotbox(int, void*);
+int nGobjManager_RemoveGOBJ(void*);
+int cSystem_ActualScheduleDelete(void*, float);
+void cBackpack_Remove(BP* bp);
 }
 
 static inline bool HolderReady(BP* bp) {
@@ -63,7 +63,7 @@ static inline bool HolderReady(BP* bp) {
     return r;
 }
 
-extern "C" void Backpack_CheckEmpty(BP* bp) {
+extern "C" void cBackpack_CheckForRemoval(BP* bp) {
     Slot* s;
     int i;
     bool ok;
@@ -72,7 +72,7 @@ extern "C" void Backpack_CheckEmpty(BP* bp) {
         Entry* e = s->e;
         int j;
         for (j = 0; j < s->count; j++, e++) {
-            if ((unsigned char)WeaponInv_SlotOfItem(e->item) == 4 && (e->n == 0 || e->amount[e->n - 1] == 0)) {
+            if ((unsigned char)cWeapon_GetWeaponSlot(e->item) == 4 && (e->n == 0 || e->amount[e->n - 1] == 0)) {
                 j--;
                 *e-- = s->e[--s->count];
             }
@@ -93,7 +93,7 @@ extern "C" void Backpack_CheckEmpty(BP* bp) {
             } else if (s2->count) {
                 int j;
                 e = s2->e;
-                WeaponDb_Get(g_WeaponDatabase, s2->e[0].item);
+                cWeaponDB_GetEntry(g_WeaponDatabase, s2->e[0].item);
                 for (j = 0; all && j < s2->count; j++, e++) {
                     if (e->n) all = false;
                 }
@@ -103,13 +103,13 @@ extern "C" void Backpack_CheckEmpty(BP* bp) {
     if (all) {
         if (bp->b60 == 1) {
             if (bp->fx) {
-                Hotbox_RemoveObjectBox(g_HotboxTracker, bp->fx);
-                Object_Unregister(bp->fx);
-                Object_DeleteLater(bp->fx, 0.1f);
+                cHotboxMan_RemoveHotbox(g_HotboxTracker, bp->fx);
+                nGobjManager_RemoveGOBJ(bp->fx);
+                cSystem_ActualScheduleDelete(bp->fx, 0.1f);
                 bp->fx = 0;
             }
         } else {
-            Backpack_Destroy(bp);
+            cBackpack_Remove(bp);
         }
     }
 }
@@ -124,17 +124,17 @@ typedef struct { char pad[0x24]; int id; } Ent_4CA0;
 typedef struct { union { unsigned char type; Ent_4CA0 ents[5]; } u; int pad; int count; unsigned char flag; char pad2[3]; } Slot_4CA0;
 typedef struct { char pad[0x64]; Slot_4CA0 slots[3]; } Pack_4CA0;
 #if 0 /* merge_units */
-extern int WeaponInv_SlotOfItem(int key);
+extern int cWeapon_GetWeaponSlot(int key);
 #endif /* merge_units */
-#define WeaponInv_SlotOfItem(a0) (WeaponInv_SlotOfItem((a0))) /* merge_units */
+#define cWeapon_GetWeaponSlot(a0) (cWeapon_GetWeaponSlot((a0))) /* merge_units */
 
 #pragma opt_rotateloops off
 
-int Backpack_CycleItem(Pack_4CA0* s, int id, int back)
+int cBackpack_GetNextWeapon(Pack_4CA0* s, int id, int back)
 {
     Slot_4CA0* p; int i;
     int t;
-     t = WeaponInv_SlotOfItem(id); p = s->slots;
+     t = cWeapon_GetWeaponSlot(id); p = s->slots;
     i = 0;
     for (; i < 3; i++, p++) {
         if (p->u.type == (unsigned char)t) {
@@ -155,7 +155,7 @@ int Backpack_CycleItem(Pack_4CA0* s, int id, int back)
     return id;
 }
 #pragma opt_rotateloops reset
-#undef WeaponInv_SlotOfItem /* merge_units */
+#undef cWeapon_GetWeaponSlot /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00254CA0(void) {}
 #pragma pop /* merge_units */

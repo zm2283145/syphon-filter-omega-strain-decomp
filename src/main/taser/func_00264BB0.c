@@ -25,19 +25,19 @@ struct HeldItem {
     M m60;
 };
 extern "C" {
-extern void Event_Construct(void* msg, void* name);
-extern void Event_Send(void* msg, void* target, int immediate);
+extern void cMessage_ctor_cMessageNameR(void* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int immediate);
 extern void cMessage_dtor(void* msg, int flags);
-extern void* Actor_GetSkeleton(Tgt* t);
-extern void Model_GetComponentTransform(M* out, void* skel, signed char code);
-extern void Mtx_Transpose3x3(M* m);
-extern int Mtx_IsTranslationZero(M* m);
+extern void* cSKM_GOBJ_GetSkeleton_void(Tgt* t);
+extern void cSkeleton_GetBoneToWorldMatrix(M* out, void* skel, signed char code);
+extern void cMatrix_InvertRot(M* m);
+extern int cMatrix_IsZeroTranslation(M* m);
 extern V* func_00133EC0(M* m);
-extern V* Vec4_Assign(V* d, V* s);
-extern void Vec3_Negate(V* v);
-extern void Mtx_TransformByTranspose(V* v, M* m);
-extern void Mtx_SetTranslation(M* m, V* v);
-extern void World_PushObject(void* w, Tgt* t, Ctl* c);
+extern V* cVector_ctor_cVectorR(V* d, V* s);
+extern void cVector_NegateXYZ(V* v);
+extern void cVector_Rotate_cMatrixR(V* v, M* m);
+extern void cMatrix_SetTranslation(M* m, V* v);
+extern void cGameSystem_PushWeaponCam(void* w, Tgt* t, Ctl* c);
 extern void cAirTaser_BeginShocking_cHumanP_int_cVector(HeldItem* h, Tgt* t, int part, V pos);
 extern unsigned char g_IsMultiplayer;
 extern signed char ActorNodeCodeTable[];
@@ -53,13 +53,13 @@ void cAirTaser_BeginShocking_cHumanP_int(HeldItem* h, Tgt* t, int part);
 }
 static inline void InvertRigid(M* m)
 {
-    Mtx_Transpose3x3(m);
-    if (!Mtx_IsTranslationZero(m)) {
+    cMatrix_InvertRot(m);
+    if (!cMatrix_IsZeroTranslation(m)) {
         V t;
-        Vec4_Assign(&t, func_00133EC0(m));
-        Vec3_Negate(&t);
-        Mtx_TransformByTranspose(&t, m);
-        Mtx_SetTranslation(m, &t);
+        cVector_ctor_cVectorR(&t, func_00133EC0(m));
+        cVector_NegateXYZ(&t);
+        cVector_Rotate_cMatrixR(&t, m);
+        cMatrix_SetTranslation(m, &t);
     }
 }
 
@@ -86,7 +86,7 @@ struct TaserMsg {
 };
 static inline void StateMsg_Init(StateMsg* p, int st, char sb)
 {
-    Event_Construct(p, g_ActorActionMsgClass);
+    cMessage_ctor_cMessageNameR(p, g_ActorActionMsgClass);
     p->vt = D_004E0840;
     p->state = st;
     p->sub = sb;
@@ -95,7 +95,7 @@ static inline void StateMsg_Init(StateMsg* p, int st, char sb)
 }
 static inline void TaserMsg_Init(TaserMsg* p, Tgt* t, int part, V v)
 {
-    Event_Construct(p, D_00504050);
+    cMessage_ctor_cMessageNameR(p, D_00504050);
     p->vt = D_004DCF10;
     p->vt = D_004DCDA0;
     p->b24 = 1;
@@ -110,28 +110,28 @@ void cAirTaser_BeginShocking_cHumanP_int(HeldItem* h, Tgt* t, int part)
     TaserMsg tm;
     StateMsg sm;
     if (part > -1) {
-        Model_GetComponentTransform(&m, Actor_GetSkeleton(t), ActorNodeCodeTable[(unsigned char)part]);
+        cSkeleton_GetBoneToWorldMatrix(&m, cSKM_GOBJ_GetSkeleton_void(t), ActorNodeCodeTable[(unsigned char)part]);
         InvertRigid(&m);
         pos = h->m60.t;
         Apply(&pos, &m, &pos);
     }
-    if (!h->b34) World_PushObject(g_Game, t, h->ctl);
+    if (!h->b34) cGameSystem_PushWeaponCam(g_Game, t, h->ctl);
     {
         StateMsg* p = &sm;
-        Event_Construct(p, g_ActorActionMsgClass);
+        cMessage_ctor_cMessageNameR(p, g_ActorActionMsgClass);
         p->vt = D_004E0840;
         p->state = 7;
         p->sub = 2;
         p->vt = D_004E01E0;
         p->stamp = D_0048B1D0;
-        Event_Send(p, t, 0);
+        QueueMessage_cMessageR_cSystemP_int(p, t, 0);
         sm.vt = D_004E0840;
         cMessage_dtor(p, 0);
     }
     if (g_IsMultiplayer) {
         V v = pos;
         TaserMsg* p = &tm;
-        Event_Construct(p, D_00504050);
+        cMessage_ctor_cMessageNameR(p, D_00504050);
         p->vt = D_004DCF10;
         p->vt = D_004DCDA0;
         p->b24 = 1;
@@ -140,7 +140,7 @@ void cAirTaser_BeginShocking_cHumanP_int(HeldItem* h, Tgt* t, int part)
         p->pos = v;
         tm.b20 = 4;
         tm.i1C = 0x40;
-        Event_Send(&tm, h->ctl, 0);
+        QueueMessage_cMessageR_cSystemP_int(&tm, h->ctl, 0);
         tm.vt = D_004DCF10;
         cMessage_dtor(p, 0);
     }

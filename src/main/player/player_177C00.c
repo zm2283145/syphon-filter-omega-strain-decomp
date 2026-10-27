@@ -36,15 +36,15 @@ extern char D_004F7940[];
 extern char D_004DB890[];
 extern char D_004D9DE0[];
 extern char D_004D9DC0[];
-void Event_Construct(Ev_7C60* e, void* type);
-void Event_Send(Ev_7C60* e, void* target, int a);
+void cMessage_ctor_cMessageNameR(Ev_7C60* e, void* type);
+void QueueMessage_cMessageR_cSystemP_int(Ev_7C60* e, void* target, int a);
 void cMessage_dtor(Ev_7C60* e, int f);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void EventQueue_Admit(Q_7C60* q);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void nCallback_SetCallback(Q_7C60* q);
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
-void Alloc_Unlock(int id);
+void EnableIntc(int id);
 }
 static inline void Init_7C60(Q_7C60* q, O_7C60* obj)
 {
@@ -55,16 +55,16 @@ static inline void Init_7C60(Q_7C60* q, O_7C60* obj)
     q->vt = D_004D9DC0;
     q->obj = obj;
 }
-extern "C" void Player_RespawnPollEvent(S_7C60* self)
+extern "C" void cPlayerRespawnCB_Call(S_7C60* self)
 {
     Q_7C60* q;
     if (g_Fader->t == 0.0f) {
         Ev_7C60 e;
-        Event_Construct(&e, D_004F7940);
+        cMessage_ctor_cMessageNameR(&e, D_004F7940);
         e.target = 0;
         e.vt = D_004DB890;
         e.size = 0x40;
-        Event_Send(&e, self->obj->recv, 0);
+        QueueMessage_cMessageR_cSystemP_int(&e, self->obj->recv, 0);
         e.vt = D_004DB890;
         cMessage_dtor(&e, 0);
         return;
@@ -72,13 +72,13 @@ extern "C" void Player_RespawnPollEvent(S_7C60* self)
     if (g_ProfileLockEnabled)
         Alloc_Lock(9);
     g_ProfileLockDepth++;
-    q = (Q_7C60*)Mem_Alloc(0, 0x10, "player.cc", 0x1AA);
+    q = (Q_7C60*)cMemMan_Allocate(0, 0x10, "player.cc", 0x1AA);
     if (g_ProfileLockEnabled)
-        Alloc_Unlock(9);
+        EnableIntc(9);
     g_ProfileLockDepth--;
     if (q)
         Init_7C60(q, self->obj);
-    EventQueue_Admit(q);
+    nCallback_SetCallback(q);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00177C60(void) {}

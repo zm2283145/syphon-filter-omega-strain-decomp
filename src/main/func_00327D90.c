@@ -8,12 +8,12 @@ typedef struct {
 extern void* D_004FFC04;
 extern char* D_00491560;
 extern char* D_00491568;
-extern void GuiWidget_BaseWake(S327D90* self);
-extern void Heap_ReleaseSlot(int a0);
-extern void Heap_AllocSlot(int a0, int a1, int a2);
-extern void FrontEnd_SetMusic(void* a0, int a1);
-extern void GuiSlideShow_Refresh(S327D90* self);
-extern W327D90* GuiWidget_FindChildByName(S327D90* self, char* name);
+extern void GuiWidget_onWake(S327D90* self);
+extern void cMemMan_ReleaseBin(int a0);
+extern void cMemMan_Init_int_uint_uint(int a0, int a1, int a2);
+extern void cGameFrontEnd_PlayMusic(void* a0, int a1);
+extern void GuiSlideShow_UpdateCurrentSlide(S327D90* self);
+extern W327D90* GuiWidget_FindChild_charP(S327D90* self, char* name);
 #pragma opt_strength_reduction off
 #pragma opt_unroll_loops off
 /* Total number of sub-items over all entries (inlined GuiSlideShow_GetNumSlides; the
@@ -36,28 +36,28 @@ static inline int Count327D90(S327D90* l)
     }
     return total;
 }
-void GuiSlideShow_Wake(S327D90* self)
+void GuiSlideShow_onWake(S327D90* self)
 {
     int n;
     W327D90* w;
-    GuiWidget_BaseWake(self);
-    Heap_ReleaseSlot(1);
-    Heap_AllocSlot(1, 0x100000, 0x800);
-    FrontEnd_SetMusic(D_004FFC04, 2);
+    GuiWidget_onWake(self);
+    cMemMan_ReleaseBin(1);
+    cMemMan_Init_int_uint_uint(1, 0x100000, 0x800);
+    cGameFrontEnd_PlayMusic(D_004FFC04, 2);
     self->active = 0;
-    GuiSlideShow_Refresh(self);
+    GuiSlideShow_UpdateCurrentSlide(self);
     n = Count327D90(self);
     w = self->w64;
     if (w) {
         if (n > 1) w->flags |= 2;
         else w->flags &= ~2;
     }
-    w = GuiWidget_FindChildByName(self, D_00491560);
+    w = GuiWidget_FindChild_charP(self, D_00491560);
     if (w) {
         if (n > 1) w->flags |= 2;
         else w->flags &= ~2;
     }
-    w = GuiWidget_FindChildByName(self, D_00491568);
+    w = GuiWidget_FindChild_charP(self, D_00491568);
     if (w) {
         if (n > 1) w->flags |= 2;
         else w->flags &= ~2;

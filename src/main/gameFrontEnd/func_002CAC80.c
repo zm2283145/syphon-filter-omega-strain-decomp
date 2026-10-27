@@ -46,22 +46,22 @@ struct SelfCAC80 {
 };
 
 extern "C" {
-Mgr* Gui_GetScreenStack(void);
+Mgr* Gui_Canvas(void);
 Node* func_002CAC70(void* p);
 Node* func_002CAC60(void* p);
 void func_002CAC50(Node** it, Node* n);
 void std_list_deleter_MessageBoxEntry_erase_listdeleter(void* ret, void* list, Node** it);
-int String_CStr(void* p);
-void GuiMessageBox_Setup(Obj258* o, int a, int b, int c, int d, int e);
+int std_basic_string_char_char_traits_char_c_str(void* p);
+void GuiMessageBox_SetInfo(Obj258* o, int a, int b, int c, int d, int e);
 }
 
-extern "C" bool FrontEnd_ClosePopup(SelfCAC80* self, int id)
+extern "C" bool cGameFrontEnd_PopMessageBox(SelfCAC80* self, int id)
 {
     Obj258* o = self->obj;
     if (!o)
         return 0;
     if (!self->list) {
-        Gui_GetScreenStack()->Release(o);
+        Gui_Canvas()->Release(o);
         return 0;
     }
     {
@@ -84,13 +84,13 @@ extern "C" bool FrontEnd_ClosePopup(SelfCAC80* self, int id)
         if (self->list) {
             if (first) {
                 Ent* e = &self->head->e;
-                int c = String_CStr(e->s14);
-                GuiMessageBox_Setup(self->obj, e->a4, String_CStr(e->s8), c, e->a20, e->a24);
+                int c = std_basic_string_char_char_traits_char_c_str(e->s14);
+                GuiMessageBox_SetInfo(self->obj, e->a4, std_basic_string_char_char_traits_char_c_str(e->s8), c, e->a20, e->a24);
                 self->obj->id = e->id;
             }
         } else {
             self->obj->id = -1;
-            Gui_GetScreenStack()->Release(self->obj);
+            Gui_Canvas()->Release(self->obj);
         }
         return found;
     }

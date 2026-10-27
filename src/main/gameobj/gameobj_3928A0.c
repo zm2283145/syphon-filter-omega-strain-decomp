@@ -16,28 +16,28 @@
  */
 
 
-extern int Model_HardMeshAttachPoints(int* p);
+extern int cMan_SetGunOffsets(int* p);
 extern void cSkeleton_Deactivate(int* ctx);
-extern int SkelNodes_ConstructActive(int* ctx);
-extern void Object_Deactivate(cVUM_GOBJ* self);
-extern void cNode_v07(cVUM_GOBJ* self);
-extern void cNode_v06(cVUM_GOBJ* self);
+extern int cSkeleton_Activate(int* ctx);
+extern void cGOBJ_Deactivate(cVUM_GOBJ* self);
+extern void cGOBJ_NetDeactivate(cVUM_GOBJ* self);
+extern void cGOBJ_NetActivate(cVUM_GOBJ* self);
 
-void Actor_v07(cVUM_GOBJ* self) {
-    cNode_v07(self);
+void cSKM_GOBJ_NetDeactivate(cVUM_GOBJ* self) {
+    cGOBJ_NetDeactivate(self);
     cSkeleton_Deactivate(&self->modelCtx);
 }
 
-void Actor_Deactivate(cVUM_GOBJ* self) {
-    Object_Deactivate(self);
+void cSKM_GOBJ_Deactivate(cVUM_GOBJ* self) {
+    cGOBJ_Deactivate(self);
     cSkeleton_Deactivate(&self->modelCtx);
 }
 
-void Actor_v06(cVUM_GOBJ* self) {
-    SkelNodes_ConstructActive(&self->modelCtx);
+void cSKM_GOBJ_NetActivate(cVUM_GOBJ* self) {
+    cSkeleton_Activate(&self->modelCtx);
     self->model = &self->modelCtx;
-    Model_HardMeshAttachPoints(&self->unk60);
-    cNode_v06(self);
+    cMan_SetGunOffsets(&self->unk60);
+    cGOBJ_NetActivate(self);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003928A0(void) {}
@@ -59,28 +59,28 @@ typedef struct Obj3929 {
 } Obj3929;
 
 #if 0 /* merge_units */
-extern int SkelNodes_ConstructActive(void* part);
+extern int cSkeleton_Activate(void* part);
 #endif /* merge_units */
-#define SkelNodes_ConstructActive(a0) (SkelNodes_ConstructActive((void *)(a0))) /* merge_units */
+#define cSkeleton_Activate(a0) (cSkeleton_Activate((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int Model_HardMeshAttachPoints(void* part);
+extern int cMan_SetGunOffsets(void* part);
 #endif /* merge_units */
-#define Model_HardMeshAttachPoints(a0) (Model_HardMeshAttachPoints((void *)(a0))) /* merge_units */
+#define cMan_SetGunOffsets(a0) (cMan_SetGunOffsets((void *)(a0))) /* merge_units */
 
-extern void Object_Activate(Obj3929* self, int arg);
+extern void cGOBJ_Activate(Obj3929* self, int arg);
 
 /* Initializes the sub-parts and activates the object. */
-void ActorModel_Activate(Obj3929* self, int arg) {
-    SkelNodes_ConstructActive(self->part2E50);
+void cSKM_GOBJ_Activate(Obj3929* self, int arg) {
+    cSkeleton_Activate(self->part2E50);
     self->current = self->part2E50;
-    Model_HardMeshAttachPoints(self->part60);
-    Object_Activate(self, arg);
+    cMan_SetGunOffsets(self->part60);
+    cGOBJ_Activate(self, arg);
 }
 
 #pragma pop
-#undef SkelNodes_ConstructActive /* merge_units */
-#undef Model_HardMeshAttachPoints /* merge_units */
+#undef cSkeleton_Activate /* merge_units */
+#undef cMan_SetGunOffsets /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00392940(void) {}
 #pragma pop /* merge_units */

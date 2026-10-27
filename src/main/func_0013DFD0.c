@@ -3,4 +3,4 @@
 #include "trivial_dtor.h"
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(StaticInit_FloorContactVecs)
+DEFINE_TRIVIAL_DTOR(cPlane_dtor)

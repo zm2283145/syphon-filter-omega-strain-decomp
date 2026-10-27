@@ -1,4 +1,4 @@
-/* NpcRoute_AddLinkedRegions: for every node of the current region that has
+/* cNodeRequest_AddNeighborsToGroupList: for every node of the current region that has
  * links, add the group of each type-10 (region link) target node to the
  * candidate list unless it is already there (cost: base + squared distance
  * from the start point or from the linking node). */
@@ -49,13 +49,13 @@ void cArray_int_ConstIterator_ctor(It4* out, It4* raw);
 int* std_vector_imp_tNodeLink_begin_void_2(void* c);
 int* std_vector_imp_tNodeLink_end_void_2(void* c);
 void std_vector_tNodeLink_pointer2iterator_tNodeLinkPR_2(It8* out, void* c, int** raw);
-V4 Node_GetTranslation(PNode* n);
-void NpcRoute_AddLinkedRegions(Route* self, Ctx* ctx);
+V4 cNode_GetLoc(PNode* n);
+void cNodeRequest_AddNeighborsToGroupList(Route* self, Ctx* ctx);
 }
 static inline bool Eq4(const It4& a, const It4& b) { int* x = a.p; return b.p == x; }
 static inline bool Eq8(const It8& a, const It8& b) { return a.p == b.p; }
 
-void NpcRoute_AddLinkedRegions(Route* self, Ctx* ctx)
+void cNodeRequest_AddNeighborsToGroupList(Route* self, Ctx* ctx)
 {
     It4 it1;
     It8 it2;
@@ -97,9 +97,9 @@ void NpcRoute_AddLinkedRegions(Route* self, Ctx* ctx)
                     if (found < 0) {
                         float cost = ctx->cost;
                         if (ctx->mode < 0)
-                            cost += SumSq(Node_GetTranslation(m) - self->start);
+                            cost += SumSq(cNode_GetLoc(m) - self->start);
                         else
-                            cost += SumSq(Node_GetTranslation(m) - Node_GetTranslation(n));
+                            cost += SumSq(cNode_GetLoc(m) - cNode_GetLoc(n));
                         self->e[self->count].id = grp;
                         self->e[self->count].b = -1;
                         self->e[self->count].c = 0;

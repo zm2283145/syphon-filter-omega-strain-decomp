@@ -3,12 +3,12 @@
 #define NULL 0
 #pragma mpwc_relax on
 int Alloc_Lock(int);                                    
-int Alloc_Unlock(int);                                  
-int Loc_ReadPoolFile(char * , char *);                    
-char * Mem_Alloc(int, int, char *, int);                      
-int Mem_Free(int, char * , char *, int);                      
-int PtrVector_Resize(char *, int, int *);                
-int String_Copy(char *, int);                            
+int EnableIntc(int);                                  
+int LoadStrings(char * , char *);                    
+char * cMemMan_Allocate(int, int, char *, int);                      
+int cMemMan_Deallocate(int, char * , char *, int);                      
+int std_vector_pod_int_resize(char *, int, int *);                
+int Libc_Strcpy(char *, int);                            
 int Libc_Strcat(char *, char *);                          
 int cArrayCapacity_Int(int *);                           
 int std_vector_1_reserve(char * , int);                       
@@ -24,7 +24,7 @@ extern char D_0055CA70;
 extern int D_0055CA80;
 extern unsigned char D_0055D470;
 
-void Loc_LoadMissionPool(int arg0, char *arg1) {
+void nGlobalization_LoadLevelStrings(int arg0, char *arg1) {
     int sp13C;
     int sp138;
     int sp30[66];
@@ -32,7 +32,7 @@ void Loc_LoadMissionPool(int arg0, char *arg1) {
     char * temp_s0;
     char * temp_s0_2;
 
-    String_Copy(sp30, arg0);
+    Libc_Strcpy(sp30, arg0);
     Libc_Strcat(sp30, "\\");
     Libc_Strcat(sp30, arg1);
     sprintf(sp20, "\\STRINGS%s.DAT", F_(&D_00493A40, (D_0055D470 * 4), int));
@@ -46,23 +46,23 @@ void Loc_LoadMissionPool(int arg0, char *arg1) {
         if ((temp_s0 != NULL) && (temp_s0 != NULL) && (temp_s0 != NULL)) {
             std_vector_deleter_1_dtor(temp_s0, 0);
         }
-        Mem_Free(0, temp_s0, &D_004BE440, 0x9B);
+        cMemMan_Deallocate(0, temp_s0, &D_004BE440, 0x9B);
         if (g_ProfileLockEnabled != 0) {
-            Alloc_Unlock(9);
+            EnableIntc(9);
         }
         D_0055CA50 = NULL;
         g_ProfileLockDepth -= 1;
     }
     sp138 = 0;
-    PtrVector_Resize(&D_0055CA70, D_0055CA80, &sp138);
+    std_vector_pod_int_resize(&D_0055CA70, D_0055CA80, &sp138);
     if (D_0055CA50 == NULL) {
         if (g_ProfileLockEnabled != 0) {
             Alloc_Lock(9);
         }
         g_ProfileLockDepth += 1;
-        temp_s0_2 = Mem_Alloc(0, 0x10, &D_004BE440, 0x12C);
+        temp_s0_2 = cMemMan_Allocate(0, 0x10, &D_004BE440, 0x12C);
         if (g_ProfileLockEnabled != 0) {
-            Alloc_Unlock(9);
+            EnableIntc(9);
         }
         g_ProfileLockDepth -= 1;
         if (temp_s0_2 != NULL) {
@@ -73,5 +73,5 @@ void Loc_LoadMissionPool(int arg0, char *arg1) {
         }
         D_0055CA50 = temp_s0_2;
     }
-    Loc_ReadPoolFile(D_0055CA50, sp30);
+    LoadStrings(D_0055CA50, sp30);
 }

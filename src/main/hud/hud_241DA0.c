@@ -14,21 +14,21 @@
 #pragma push /* merge_units */
 typedef struct { char flag; char name[16]; char value[16]; } Entry21; /* size 0x21 */
 typedef struct { int unk0; int count; Entry21* data; } EntryVec;
-extern void* Gui_GetScreenStack(void);
-extern void GuiWidget_SendEvent(void* a, void* b, int a2, int a3, int a4);
-extern void Vector_Insert_2469F0(EntryVec* v, Entry21* pos, int n, Entry21* value);
+extern void* Gui_Canvas(void);
+extern void GuiWidget_SendMessage(void* a, void* b, int a2, int a3, int a4);
+extern void std_vector_imp_PDAQuip_insert(EntryVec* v, Entry21* pos, int n, Entry21* value);
 
 /* Appends a (name, value) entry to the vector after notifying the UI. */
-void Hud_AddPdaQuip(EntryVec* self, const char* value, const char* name)
+void cHud_AddPDAQuip(EntryVec* self, const char* value, const char* name)
 {
     Entry21 e;
     void* ui;
-    String_Copy(e.value, value);
-    String_Copy(e.name, name);
+    Libc_Strcpy(e.value, value);
+    Libc_Strcpy(e.name, name);
     e.flag = 0;
-    ui = Gui_GetScreenStack();
-    GuiWidget_SendEvent(ui, Gui_GetScreenStack(), 0x10, 5, 0);
-    Vector_Insert_2469F0(self, self->data + self->count, 1, &e);
+    ui = Gui_Canvas();
+    GuiWidget_SendMessage(ui, Gui_Canvas(), 0x10, 5, 0);
+    std_vector_imp_PDAQuip_insert(self, self->data + self->count, 1, &e);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00241DA0(void) {}
@@ -52,12 +52,12 @@ extern float g_TextColourBlock;
 extern float D_0055A284;
 extern float D_0055A288;
 extern float D_0055A28C;
-extern void Hud_SelectColourRamp(int);
+extern void nHud_UseNightVisionColors(int);
 
 /* Selects one of two color presets and publishes it to the global color. */
-void Hud_SelectTextColorTable(Obj6E4* o, int alt) {
+void cHud_UseNightVisionColors(Obj6E4* o, int alt) {
     Color4* c;
-    Hud_SelectColourRamp(alt);
+    nHud_UseNightVisionColors(alt);
     o->color = alt ? &g_NvHudTextColour : &g_HudTextColour;
     c = o->color;
     g_TextColourBlock = c->r;

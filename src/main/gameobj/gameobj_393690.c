@@ -125,49 +125,49 @@ typedef struct Actor {
 
 extern char D_004DF740[];
 extern void cGOBJ_ctor(Actor* self, int* name, int type, int* extra);
-extern void ManModel_ClearAttachPoints(void*);
+extern void cMan_ctor(void*);
 extern void cArray_cBoneScale_ctor(void*);
-extern void SkelNode_Construct(SkelNode*);
+extern void cBone_ctor_void(SkelNode*);
 extern void cArray_cBone_ctor(void*, int, SkelNode*);
 extern void cBone_dtor(SkelNode*, int);
-extern void Bounds_SetEmpty(void*);
-extern void Vec4_SetOrigin(V4*);
-extern void Vec4_Assign(V4*, V4*);
+extern void cBox_ctor_void(void*);
+extern void cVector_Get0001(V4*);
+extern void cVector_ctor_cVectorR(V4*, V4*);
 extern void cSkaParams_ctor(void*, void*, void*);
 extern void cTreeNode_cSkaSystemPtr_ctor(void*, Anim**);
-extern void AnimModel_InitAnim(Anim*);
+extern void cSkaSystem_SetInitialAnimation(Anim*);
 
 static inline void Anim_ctor(Anim* a, void* owner)
 {
     a->x0 = 0;
     cSkaParams_ctor(a->x10, owner, 0);
     cTreeNode_cSkaSystemPtr_ctor(a->x100, &a);
-    AnimModel_InitAnim(a);
+    cSkaSystem_SetInitialAnimation(a);
 }
 
-Actor* Actor_Construct(Actor* me, int* name, int* extra)
+Actor* cSKM_GOBJ_ctor_cObjectIdR_cSubclassIdR(Actor* me, int* name, int* extra)
 {
     Sub2E50* s;
     Actor* self = me;
     cGOBJ_ctor(me, name, 2, extra);
     self->vt = D_004DF740;
-    ManModel_ClearAttachPoints(self->x60);
+    cMan_ctor(self->x60);
     s = &self->x2E50;
     s->x0 = 0;
     cArray_cBoneScale_ctor(s->x4);
     s->x14 = 0;
     {
         SkelNode n;
-        SkelNode_Construct(&n);
+        cBone_ctor_void(&n);
         cArray_cBone_ctor(s->x18, 0, &n);
         cBone_dtor(&n, -1);
     }
     s->x28 = 0;
-    Bounds_SetEmpty(s->x30);
+    cBox_ctor_void(s->x30);
     {
         V4 v;
-        Vec4_SetOrigin(&v);
-        Vec4_Assign(&s->x50, &v);
+        cVector_Get0001(&v);
+        cVector_ctor_cVectorR(&s->x50, &v);
     }
     self->x2EB0 = 0xDEADBEEF;
     Anim_ctor(&self->x2EC0, &self->x2E50);

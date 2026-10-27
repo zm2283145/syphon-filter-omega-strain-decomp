@@ -24,7 +24,7 @@ struct UpnpD2B8 { char pad[4]; char host[0x20]; unsigned short port; char pad26[
 extern int func_0030BC98(UpnpD2B8 *u, unsigned char *done);
 extern int func_00310C90(int p, char *s, int a, int b);
 extern int func_00310D20(int p, UpListD2B8 **out);
-extern int String_CompareN(char *a, char *b, int n);
+extern int Libc_Strncmp(char *a, char *b, int n);
 extern int strtol(char *s, char **end, int base);
 extern int func_00310C30(int p);
 extern void rt_comm_destroy(int s);
@@ -49,12 +49,12 @@ int func_0030D2B8(UpnpD2B8 *u)
             unsigned int i = 0;
             unsigned char k = 0;
             for (; i < list->count; i++) {
-                    if (String_CompareN(list->name[i], D_004B0008, 0x100) == 0 && String_CompareN(list->value[i], u->host, 0x100) == 0) {
+                    if (Libc_Strncmp(list->name[i], D_004B0008, 0x100) == 0 && Libc_Strncmp(list->value[i], u->host, 0x100) == 0) {
                         a = 1;
-                    } else if (String_CompareN(list->name[i], D_004B0020, 0x100) == 0) {
+                    } else if (Libc_Strncmp(list->name[i], D_004B0020, 0x100) == 0) {
                         if (u->port == (unsigned short)strtol(list->value[i], 0, 10))
                             b = 1;
-                    } else if (String_CompareN(list->name[i], D_004B00A8, 0x100) == 0) {
+                    } else if (Libc_Strncmp(list->name[i], D_004B00A8, 0x100) == 0) {
                         k = strtol(list->value[i], 0, 10);
                     }
             }
@@ -189,7 +189,7 @@ extern int sprintf(char *buf, const char *fmt, ...);
 extern char D_004B00B8[];
 extern int rt_time_get_time_stamp(int *timer);
 extern int rt_time_elapsed(int *timer, unsigned int *elapsed);
-extern int Socket_WriteAddressed(int sock, char *addr, unsigned short port, char *data, int len, unsigned short *sent);
+extern int rt_comm_send_to(int sock, char *addr, unsigned short port, char *data, int len, unsigned short *sent);
 extern void func_0030ECF8(UpnpD610 *u);
 
 int process_nat_resolution_timeslice(UpnpD610 *u)
@@ -206,7 +206,7 @@ int process_nat_resolution_timeslice(UpnpD610 *u)
     in.recvd = 0;
     in.port2 = 0;
     if (rt_comm_receive_from(u->sock, buf, &in.port, &data, 6, &in.recvd) == 0 && in.recvd == 6) {
-        if (String_CompareN(buf, u->host, 0x10) == 0 && in.port == u->port2) {
+        if (Libc_Strncmp(buf, u->host, 0x10) == 0 && in.port == u->port2) {
             *(IpD610 *)ip = data.ip;
             in.port2 = data.port;
             sprintf(u->name, D_004B00B8, ip[0], ip[1], ip[2], ip[3]);
@@ -227,7 +227,7 @@ int process_nat_resolution_timeslice(UpnpD610 *u)
             if (u->retries < 5) {
                 pkt[2] = -0x1C;
                 sent = 0;
-                if (Socket_WriteAddressed(u->sock, u->host, u->port2, pkt, 4, &sent) == 0 && sent == 4) {
+                if (rt_comm_send_to(u->sock, u->host, u->port2, pkt, 4, &sent) == 0 && sent == 4) {
                     rt_time_get_time_stamp(u->timer);
                     u->retries++;
                 } else {
@@ -259,9 +259,9 @@ typedef struct {
     unsigned char active;
 } UpnpD830;
 #if 0 /* merge_units */
-extern int Socket_WriteAddressed(int sock, void *addr, unsigned short port, void *data, int len, unsigned short *sent);
+extern int rt_comm_send_to(int sock, void *addr, unsigned short port, void *data, int len, unsigned short *sent);
 #endif /* merge_units */
-#define Socket_WriteAddressed(a0, a1, a2, a3, a4, a5) (Socket_WriteAddressed((a0), (char *)(a1), (a2), (char *)(a3), (a4), (a5))) /* merge_units */
+#define rt_comm_send_to(a0, a1, a2, a3, a4, a5) (rt_comm_send_to((a0), (char *)(a1), (a2), (char *)(a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void rt_time_get_time_stamp(int *timer);
@@ -277,13 +277,13 @@ int process_heartbeat_timeslice(UpnpD830 *u)
         rt_time_elapsed(u->timer, &elapsed);
         if (elapsed > 5000) {
             pkt[3] = 0xD4;
-            Socket_WriteAddressed(u->sock, u->host, u->port, pkt, 4, &sent);
+            rt_comm_send_to(u->sock, u->host, u->port, pkt, 4, &sent);
             rt_time_get_time_stamp(u->timer);
         }
     }
     return 0;
 }
-#undef Socket_WriteAddressed /* merge_units */
+#undef rt_comm_send_to /* merge_units */
 #undef rt_time_get_time_stamp /* merge_units */
 /* merge_units: end func_0030D830 */
 

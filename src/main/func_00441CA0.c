@@ -28,54 +28,54 @@ extern Net_441CA0 g_MemCard;
 extern char D_004C0448[]; extern char D_004C0458[]; extern char D_004C0468[];
 extern char D_004C0498[]; extern char D_004C04A8[]; extern char D_004C0530[];
 extern char D_004C0540[]; extern char D_004C0550[]; extern char D_004C0560[];
-char* Agent_GetSelected(void*, int);
-char* Loc_LookupText(char*);
-int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
-void FrontEnd_ClosePopup(int, int);
-unsigned char AgentData_Create(char*, int, int);
-void MemCard_Refresh(Net_441CA0*);
-int MemCardWrap_Format(Net_441CA0*);
-int MemCardWrap_MakeDirectory(Net_441CA0*);
+char* cGameSystem_GetAgentData(void*, int);
+char* nGlobalization_GetString_charP(char*);
+int cGameFrontEnd_PushMessageBox(int, int, char*, char*, void*, int);
+void cGameFrontEnd_PopMessageBox(int, int);
+unsigned char cAgentData_Create(char*, int, int);
+void cMemCard_FullCheck(Net_441CA0*);
+int cMemCard_Format(Net_441CA0*);
+int cMemCard_MakeGameDir(Net_441CA0*);
 int SaveAgentWidget_FindSlotFile(int, char*, char*);
-void SaveAgentWidget_Save(Obj_441CA0*);
-void GuiSaveAgentWidget_WriteCard(Obj_441CA0*);
+void GuiSaveAgentWidget_Write(Obj_441CA0*);
+void GuiSaveAgentWidget_StartChecks(Obj_441CA0*);
 void GuiSaveAgentWidget_HandleEvent(Obj_441CA0*);
-int GuiWidget_OnEvent(void*, void*, int, int, void*);
+int GuiWidget_onMessage(void*, void*, int, int, void*);
 }
 
-static inline int Open1(int mgr, int type, char* t, char* key, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, t, Loc_LookupText(key), cb, x); }
-static inline int Open2(int mgr, int type, char* t, char* key, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, Loc_LookupText(t), Loc_LookupText(key), cb, x); }
+static inline int Open1(int mgr, int type, char* t, char* key, void* cb, int x) { return cGameFrontEnd_PushMessageBox(mgr, type, t, nGlobalization_GetString_charP(key), cb, x); }
+static inline int Open2(int mgr, int type, char* t, char* key, void* cb, int x) { return cGameFrontEnd_PushMessageBox(mgr, type, nGlobalization_GetString_charP(t), nGlobalization_GetString_charP(key), cb, x); }
 
 extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, int sub, void* arg)
 {
     Net_441CA0* net = &g_MemCard;
-    char* err = Loc_LookupText(D_004C0468);
-    char* title = Loc_LookupText(D_004C0448);
+    char* err = nGlobalization_GetString_charP(D_004C0468);
+    char* title = nGlobalization_GetString_charP(D_004C0448);
     unsigned short m = msg;
 
     if (m == 27) {
         if (sub == 3 || sub == 9) {
-            FrontEnd_ClosePopup(D_004FFC04, self->dlg);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, self->dlg);
             GuiSaveAgentWidget_HandleEvent(self);
             return 1;
         }
         if (sub == 2) {
-            FrontEnd_ClosePopup(D_004FFC04, self->dlg);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, self->dlg);
             net->cb = 0;
             self->Close(0);
             return 1;
         }
         if (sub == 0 || sub == 1 || sub == 5) {
-            FrontEnd_ClosePopup(D_004FFC04, self->dlg);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, self->dlg);
             if (self->mode == 2)
                 self->dlg = Open1(D_004FFC04, 5, title, D_004C0530, self, 9);
             return 1;
         }
     } else if (m == 26) {
         if (sub == 3) {
-            FrontEnd_ClosePopup(D_004FFC04, self->dlg);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, self->dlg);
             if (!self->mode)
-                AgentData_Create(Agent_GetSelected(g_Game, -1), self->f50, 1);
+                cAgentData_Create(cGameSystem_GetAgentData(g_Game, -1), self->f50, 1);
             if (self->mode == 3 || !self->mode)
                 g_CardSlotId = -1;
             net->cb = 0;
@@ -85,7 +85,7 @@ extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, in
         }
         if (sub == 0) {
             NetImpl_441CA0* impl;
-            FrontEnd_ClosePopup(D_004FFC04, self->dlg);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, self->dlg);
             impl = net->impl;
             if (!impl->f59D) {
                 GuiSaveAgentWidget_HandleEvent(self);
@@ -94,8 +94,8 @@ extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, in
             } else {
                 int ok;
                 self->dlg = Open1(D_004FFC04, 0, title, D_004C0550, self, 0);
-                ok = MemCardWrap_Format(net);
-                FrontEnd_ClosePopup(D_004FFC04, self->dlg);
+                ok = cMemCard_Format(net);
+                cGameFrontEnd_PopMessageBox(D_004FFC04, self->dlg);
                 if (!ok) {
                     self->dlg = Open1(D_004FFC04, 2, err, D_004C0560, self, 2);
                 } else {
@@ -103,11 +103,11 @@ extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, in
                         self->shown = 1;
                         self->dlg = Open2(D_004FFC04, 0, D_004C0448, D_004C0458, self, 0);
                     }
-                    if (!MemCardWrap_MakeDirectory(net)) {
-                        FrontEnd_ClosePopup(D_004FFC04, self->dlg);
+                    if (!cMemCard_MakeGameDir(net)) {
+                        cGameFrontEnd_PopMessageBox(D_004FFC04, self->dlg);
                         self->dlg = Open1(D_004FFC04, 2, err, D_004C04A8, self, 2);
                     } else {
-                        char* agent = Agent_GetSelected(g_Game, -1);
+                        char* agent = cGameSystem_GetAgentData(g_Game, -1);
                         int changed = g_MemCard.impl->f5A8 != g_CardSlotId;
                         if (self->mode != 4) {
                             char* name = 0;
@@ -118,7 +118,7 @@ extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, in
                                 goto done;
                             }
                         }
-                        SaveAgentWidget_Save(self);
+                        GuiSaveAgentWidget_Write(self);
                     }
                 }
             }
@@ -127,17 +127,17 @@ extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, in
         }
         if (sub == 1) {
             NetImpl_441CA0* impl;
-            FrontEnd_ClosePopup(D_004FFC04, self->dlg);
-            MemCard_Refresh(net);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, self->dlg);
+            cMemCard_FullCheck(net);
             impl = net->impl;
             if (!impl->f59D || !impl->f59E || !impl->f59F)
                 GuiSaveAgentWidget_HandleEvent(self);
             else
-                SaveAgentWidget_Save(self);
+                GuiSaveAgentWidget_Write(self);
             return 1;
         }
         if (sub == 2) {
-            FrontEnd_ClosePopup(D_004FFC04, self->dlg);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, self->dlg);
             GuiSaveAgentWidget_HandleEvent(self);
             return 1;
         }
@@ -146,24 +146,24 @@ extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, in
             return 1;
         }
         if (sub == 7) {
-            FrontEnd_ClosePopup(D_004FFC04, self->dlg);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, self->dlg);
             if (self->mode == 2)
                 self->dlg = Open1(D_004FFC04, 5, title, D_004C0530, self, 9);
             return 1;
         }
         if (sub == 5) {
-            FrontEnd_ClosePopup(D_004FFC04, self->dlg);
-            MemCard_Refresh(net);
-            GuiSaveAgentWidget_WriteCard(self);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, self->dlg);
+            cMemCard_FullCheck(net);
+            GuiSaveAgentWidget_StartChecks(self);
             return 1;
         }
         if (sub == 9) {
-            FrontEnd_ClosePopup(D_004FFC04, self->dlg);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, self->dlg);
             net->cb = 0;
             self->Close(0);
             return 1;
         }
         return 1;
     }
-    return GuiWidget_OnEvent(self, w, msg, sub, arg);
+    return GuiWidget_onMessage(self, w, msg, sub, arg);
 }

@@ -6,9 +6,9 @@ extern "C" {
 }
 #include "net_owner_map.h"
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 void std_tree_pair_tGenInfoPtr_value_compare_erase(void* map, NetOwnNode** n);
-void Map_Clear(void* map);
+void std_tree_pair_tGenInfoPtr_value_compare_clear(void* map);
 }
 extern "C" void cGenInfoObject_DoPendingActDeacts(NetOwnEnt* tbl)
 {
@@ -24,7 +24,7 @@ extern "C" void cGenInfoObject_DoPendingActDeacts(NetOwnEnt* tbl)
         cur = it.node;
         k = cur->v.first;
         flag = cur->v.second;
-        Tree_Successor(&it);
+        std_red_black_tree_1_increment(&it);
         for (i = 0; i != 55; i++) {
             if (k->key == tbl[i].key) { found = &tbl[i]; break; }
         }
@@ -34,12 +34,12 @@ extern "C" void cGenInfoObject_DoPendingActDeacts(NetOwnEnt* tbl)
         }
         {
             AllocGuard g;
-            Mem_Free(0, k, D_004BFD60, 0x2B6);
+            cMemMan_Deallocate(0, k, D_004BFD60, 0x2B6);
         }
         {
             NetOwnNode* c = cur;
             std_tree_pair_tGenInfoPtr_value_compare_erase(D_00583900, &c);
         }
     }
-    Map_Clear(D_00583900);
+    std_tree_pair_tGenInfoPtr_value_compare_clear(D_00583900);
 }

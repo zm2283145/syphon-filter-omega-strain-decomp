@@ -8,7 +8,7 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-V4* Mtx_TransformByTranspose(V4* a, V4* b) {
+V4* cVector_Rotate_cMatrixR(V4* a, V4* b) {
     asm {
         lqc2 vf8, 0x0(a)
         lqc2 vf4, 0x0(b)
@@ -26,7 +26,7 @@ V4* Mtx_TransformByTranspose(V4* a, V4* b) {
 
 /* merge_units: begin func_0013ED90 */
 #pragma push /* merge_units */
-V4* Vec3_Negate(V4* a) {
+V4* cVector_NegateXYZ(V4* a) {
     asm {
         lqc2 vf1, 0x0(a)
         vsub.xyz vf1, vf0, vf1
@@ -39,7 +39,7 @@ V4* Vec3_Negate(V4* a) {
 
 /* merge_units: begin func_0013EDB0 */
 #pragma push /* merge_units */
-int Mtx_IsTranslationZero(float* m) { return m[12] == 0.0f && m[13] == 0.0f && m[14] == 0.0f; }
+int cMatrix_IsZeroTranslation(float* m) { return m[12] == 0.0f && m[13] == 0.0f && m[14] == 0.0f; }
 #pragma pop /* merge_units */
 /* merge_units: end func_0013EDB0 */
 
@@ -53,10 +53,10 @@ int Mtx_IsTranslationZero(float* m) { return m[12] == 0.0f && m[13] == 0.0f && m
 
 #include "loose00_types.h"
 
-extern int TerrainList_GetFirst(void);
+extern int nActivation_GetFirstTerrainPieceOnGobjList(void);
 
 /* Transpose the upper 3x3 of a 4x4 matrix in place. */
-Mtx44* Mtx_Transpose3x3(Mtx44* m) {
+Mtx44* cMatrix_InvertRot(Mtx44* m) {
     float m01;
     float m10;
     float m02;
@@ -83,12 +83,12 @@ int cGOBJ_GetBBox(void) {
     return 0;
 }
 
-/* Init: owner, a value from TerrainList_GetFirst and a set flag. */
-Unk0013EE70* ZoneTracker_Ctor(Unk0013EE70* self, int owner) {
+/* Init: owner, a value from nActivation_GetFirstTerrainPieceOnGobjList and a set flag. */
+Unk0013EE70* cScene_ctor(Unk0013EE70* self, int owner) {
     int value;
 
     self->owner = owner;
-    value = TerrainList_GetFirst();
+    value = nActivation_GetFirstTerrainPieceOnGobjList();
     self->value = value;
     self->valid = 1;
     return self;
@@ -101,7 +101,7 @@ Unk0013EE70* ZoneTracker_Ctor(Unk0013EE70* self, int owner) {
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #pragma push
 #pragma optimization_level 3
-int SceneDraw_ComparePtr(char * arg0, char * arg1) {
+int CompareVUMs(char * arg0, char * arg1) {
     unsigned int b = F_(arg1, 0x68, int);
     unsigned int a = F_(arg0, 0x68, int);
     if (a < b) return -1; asm { .set reorder } /* barrier: keeps retail label padding */ return b < a;
@@ -122,16 +122,16 @@ typedef struct { char* p; } DbIt;
 extern "C" {
 extern void std_tree_pair_float_value_compare_ctor(DbMap* m, void* cmp, void* alloc);
 extern void std_pair_float_cGOBJPtr_ctor(DbPair* p, float* f, DbObj** o);
-extern void SceneDrawMap_Insert(DbIt* out, DbMap* m, DbPair* kv);
+extern void std_tree_pair_float_value_compare_insert_multi(DbIt* out, DbMap* m, DbPair* kv);
 extern void cAssocMultiArray_float_cGOBJPtr_Begin(DbIt* out, DbMap* m);
 extern void cAssocMultiArray_float_cGOBJPtr_End(DbIt* out, DbMap* m);
 extern int cAssocMultiArray_float_cGOBJPtr_Iterator_opNe(DbIt* a, DbIt* b);
 extern DbObj** cAssocMultiArray_float_cGOBJPtr_Iterator_opMul(DbIt* it);
-extern void TreeIter_Increment(DbIt* it);
+extern void cAssocMultiArray_float_cGOBJPtr_Iterator_opInc(DbIt* it);
 extern void cAssocMultiArray_float_cGOBJPtr_dtor(DbMap* m, short del);
 }
 
-extern "C" void World_DrawBuckets(DbWorld* w, int sorted)
+extern "C" void BatchDraw(DbWorld* w, int sorted)
 {
     if (!sorted) {
         DbObj** p;
@@ -158,14 +158,14 @@ extern "C" void World_DrawBuckets(DbWorld* w, int sorted)
             std_pair_float_cGOBJPtr_ctor(&tmp, &f, &o);
             kv.f = tmp.f;
             kv.o = tmp.o;
-            SceneDrawMap_Insert(&res, &m, &kv);
+            std_tree_pair_float_value_compare_insert_multi(&res, &m, &kv);
         }
         cAssocMultiArray_float_cGOBJPtr_Begin(&it, &m);
         cAssocMultiArray_float_cGOBJPtr_End(&e, &m);
         while (cAssocMultiArray_float_cGOBJPtr_Iterator_opNe(&it, &e)) {
             DbObj* d = *cAssocMultiArray_float_cGOBJPtr_Iterator_opMul(&it);
             d->Draw();
-            TreeIter_Increment(&it);
+            cAssocMultiArray_float_cGOBJPtr_Iterator_opInc(&it);
             cAssocMultiArray_float_cGOBJPtr_End(&e, &m);
         }
         cAssocMultiArray_float_cGOBJPtr_dtor(&m, -1);

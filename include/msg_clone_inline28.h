@@ -9,7 +9,7 @@
  */
 #include "alloc_guard.h"
 
-extern "C" void* Mem_Alloc(int pool, int size, char* file, int line);
+extern "C" void* cMemMan_Allocate(int pool, int size, char* file, int line);
 
 struct MsgInl28 {
     void* vtable;
@@ -29,7 +29,7 @@ struct MsgInl28 {
         MsgInl28* p;                                                          \
         {                                                                     \
             AllocGuard guard;                                                 \
-            p = (MsgInl28*)Mem_Alloc(0, (size), fileSym, (line));             \
+            p = (MsgInl28*)cMemMan_Allocate(0, (size), fileSym, (line));             \
         }                                                                     \
         if (p) {                                                              \
             p->vtable = baseVt;                                               \

@@ -53,19 +53,19 @@ extern char D_004D9760[];
 extern char D_0051F0C0[];
 extern char D_004DE510[];
 extern unsigned char g_IsMultiplayer;
-PNode* NpcPath_GetNode(int id);
-void Node_GetTranslation(V4* out, PNode* node);
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, Actor* to, int flags);
+PNode* cAIPathData_GetNode(int id);
+void cNode_GetLoc(V4* out, PNode* node);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, Actor* to, int flags);
 void cMessage_dtor(void* m, int flags);
-unsigned char NpcPath_SetSegment(Path* p, int seg);
-void NpcPath_HoldNode(Path* p, int node);
-int NpcPath_NextPatrolNode(int seg);
-unsigned char NpcRoute_Step(Path* p);
+unsigned char cPathNavigator_StartPathSegment_int(Path* p, int seg);
+void cPathNavigator_SetNodeIndex(Path* p, int node);
+int cAIPathData_GetNextPatrolPathNodeIndex(int seg);
+unsigned char cPathNavigator_NextPathSegment(Path* p);
 void cNetPathMsg_SendPath(Msg2* m, int a, Route* r);
 }
 static inline void Push(Route* r, int v) { r->nodes[r->count] = v; r->count++; }
-static inline void Construct(Msg* m, unsigned char kind, int id) { Event_Construct(m, D_004ED9B8); m->vt = D_004D9760; m->kind = kind; m->id = id; }
+static inline void Construct(Msg* m, unsigned char kind, int id) { cMessage_ctor_cMessageNameR(m, D_004ED9B8); m->vt = D_004D9760; m->kind = kind; m->id = id; }
 static inline void Destroy(Msg* loc) { loc->vt = D_004D9760; cMessage_dtor(loc, 0); }
 static inline void Notify(Path* p, unsigned char kind, int id)
 {
@@ -73,7 +73,7 @@ static inline void Notify(Path* p, unsigned char kind, int id)
     Msg* m = &msg;
     Construct(m, kind, id);
     Actor* a = p->actor; Actor* o = a->owner; Actor* to = a; if (!o) { asm { .set reorder } } else to = o;
-    Event_Send(&msg, to, 0);
+    QueueMessage_cMessageR_cSystemP_int(&msg, to, 0);
     Destroy(&msg);
 }
 static inline void Notify5(Path* p, unsigned char kind)
@@ -84,7 +84,7 @@ static inline void Notify5(Path* p, unsigned char kind)
     m = &msg;
     Construct(m, kind, i);
     Actor* a = p->actor; Actor* o = a->owner; Actor* to = a; if (!o) { asm { .set reorder } } else to = o;
-    Event_Send(&msg, to, 0);
+    QueueMessage_cMessageR_cSystemP_int(&msg, to, 0);
     Destroy(&msg);
 }
 static inline void GetPos(V4* out, Path* p)
@@ -109,7 +109,7 @@ static inline float LengthSq(V4* a)
 }
 #pragma opt_propagation off
 
-extern "C" void NpcPath_Update(Path* self)
+extern "C" void cPathNavigator_Update(Path* self)
 {
     V4 pos;
     V4 d;
@@ -121,7 +121,7 @@ extern "C" void NpcPath_Update(Path* self)
     self->dist = Length(&d);
     int node = self->node;
     if (node >= 0) {
-        Node_GetTranslation(&t, NpcPath_GetNode(node));
+        cNode_GetLoc(&t, cAIPathData_GetNode(node));
         VSub(&t, &t, &pos);
         if (!(LengthSq(&t) <= 4.0f)) {
             self->prev = self->node;
@@ -131,11 +131,11 @@ extern "C" void NpcPath_Update(Path* self)
     if (!self->arrived) return;
     self->arrived = 0;
     if (self->patrol) {
-        int next = NpcPath_NextPatrolNode(self->seg);
+        int next = cAIPathData_GetNextPatrolPathNodeIndex(self->seg);
         if (next >= 0) {
             Notify5(self, 5);
-            self->held = !NpcPath_SetSegment(self, next);
-            self->f5C = NpcPath_GetNode(self->seg)->f7C;
+            self->held = !cPathNavigator_StartPathSegment_int(self, next);
+            self->f5C = cAIPathData_GetNode(self->seg)->f7C;
             if (g_IsMultiplayer && self->actor->f14) {
                 Route* r = self->route;
                 if (r->nodes) {
@@ -147,7 +147,7 @@ extern "C" void NpcPath_Update(Path* self)
                         Msg2 m2;
                         Msg2* m = &m2;
                         int i;
-                        Event_Construct(m, D_0051F0C0);
+                        cMessage_ctor_cMessageNameR(m, D_0051F0C0);
                         m->vt = D_004DE510;
                         m->f38 = -1.0f;
                         m->f3C = -1.0f;
@@ -161,14 +161,14 @@ extern "C" void NpcPath_Update(Path* self)
                 }
             }
         } else {
-            PNode* n = NpcPath_GetNode(self->seg);
-            NpcPath_HoldNode(self, self->seg);
+            PNode* n = cAIPathData_GetNode(self->seg);
+            cPathNavigator_SetNodeIndex(self, self->seg);
             self->held = 1;
             Notify(self, 6, self->seg);
             if (!(n->flags & 0x80))
-                NpcPath_HoldNode(self, -1);
+                cPathNavigator_SetNodeIndex(self, -1);
         }
     } else {
-        self->held = !NpcRoute_Step(self);
+        self->held = !cPathNavigator_NextPathSegment(self);
     }
 }

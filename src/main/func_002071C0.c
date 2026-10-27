@@ -15,6 +15,6 @@ int std_basic_string_char_char_traits_char_is_long(Word* self) {
     return (details_compressed_pair_imp_rep_s_2_first_void(self)->value & 1) != 0;
 }
 
-void String_Length(void) {
+void cString_Length(void) {
     std_basic_string_char_char_traits_char_length();
 }

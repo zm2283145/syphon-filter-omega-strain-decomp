@@ -10,10 +10,10 @@ typedef struct {
 
 void* cArray_cSkaSwitchItem_opIndex(void* v, int i);
 TElem* cSkaSwitchItem_GetTrans(void* t, int i);
-float AnimChannel_GetCurrent(TCtx* c, int i);
+float cSkaParams_GetSliderValue(TCtx* c, int i);
 void* cSkaParams_GetSwitchValue(TCtx* c, int i);
 int cSkaSwitchValue_CurrGoalState(void* p);
-void AnimTransition_GetProgress(TTrans* t, TElem* e, float w);
+void cSkaTransPlayback_UpdateWhatToPlay(TTrans* t, TElem* e, float w);
 
 /* Last frame delta: ctx->dt[n-1]; the byte-offset form keeps retail's addiu -1 / lwc1 4(..) */
 #define DT(c) (*(float*)((char*)(c) + 4 + ((c)->n - 1) * 4))
@@ -31,7 +31,7 @@ int cSkaTransPlayback_NextFrame(TTrans* self, TCtx* ctx)
     if (e->chan == -1) {
         w = e->from;
     } else {
-        float r = AnimChannel_GetCurrent(ctx, e->chan); w = e->from + r * (e->to - e->from);
+        float r = cSkaParams_GetSliderValue(ctx, e->chan); w = e->from + r * (e->to - e->from);
     }
     if (w != 0.0f) {
         int target = cSkaSwitchValue_CurrGoalState(cSkaParams_GetSwitchValue(ctx, self->sel->idx));
@@ -61,7 +61,7 @@ int cSkaTransPlayback_NextFrame(TTrans* self, TCtx* ctx)
             }
         }
         if (!done) {
-            AnimTransition_GetProgress(self, e, w);
+            cSkaTransPlayback_UpdateWhatToPlay(self, e, w);
             return 0;
         }
     }

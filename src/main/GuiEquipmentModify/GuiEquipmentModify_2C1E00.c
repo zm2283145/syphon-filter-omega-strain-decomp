@@ -46,7 +46,7 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_002C1F00)
  */
 
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int value);
 
 /* Vector end(). */
 int* func_002C1FF0(PtrVec* v) {
@@ -68,7 +68,7 @@ int** func_002C2030(PtrVec* v) {
 
 /* Vector push_back. */
 int func_002C2040(PtrVec* v, int value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002C1FF0 */
@@ -81,12 +81,12 @@ typedef struct Obj2C20 {
 } Obj2C20;
 
 extern void std_vector_imp_cSkeletonBBoxContributionPtr_1_ctor(Obj2C20* self, int* src, unsigned char flag);
-extern void PtrVec_Reserve(Obj2C20* self, int value);
+extern void std_vector_pod_int_reserve(Obj2C20* self, int value);
 
 /* Constructor: base init, copies *src and stores the flag byte. */
 Obj2C20* func_002C2060(Obj2C20* self, int* src, unsigned char flag) {
     std_vector_imp_cSkeletonBBoxContributionPtr_1_ctor(self, src, flag);
-    PtrVec_Reserve(self, *src);
+    std_vector_pod_int_reserve(self, *src);
     self->flag = flag;
     return self;
 }
@@ -108,8 +108,8 @@ DEFINE_BUF_HOLDER_DTOR(func_002C20B0)
 
 extern void* g_WeaponDatabase;                    /* weapon definition table */
 extern GuiEquipmentModifyObj* D_0051EE10;   /* GuiEquipmentModify instance */
-extern WeaponDefL2* WeaponDb_Get(void* table, int id);
-extern int GuiEquipmentModify_WeaponBoxMatrix(GuiEquipmentModifyObj* screen, WeaponLinkL2* link, int arg);
+extern WeaponDefL2* cWeaponDB_GetEntry(void* table, int id);
+extern int GuiEquipmentModify_DrawGun(GuiEquipmentModifyObj* screen, WeaponLinkL2* link, int arg);
 
 Rel* func_002C21A0(Rel* r) {
     r->a = 0;
@@ -119,7 +119,7 @@ Rel* func_002C21A0(Rel* r) {
 }
 
 /* Applies the attachment of the currently selected weapon (or its linked record). */
-void GuiEquipmentModify_DrawWeaponBox2(void) {
+void EM_Gun2RenderWrapper(void) {
     GuiEquipmentModifyObj* screen;
     WeaponLinkL2* link;
     WeaponDefL2* def;
@@ -130,15 +130,15 @@ void GuiEquipmentModify_DrawWeaponBox2(void) {
         index = screen->weaponIndex;
         link = 0;
         if (index < screen->weaponCount) {
-            link = WeaponDb_Get(g_WeaponDatabase, screen->weaponIds[index])->attachment;
+            link = cWeaponDB_GetEntry(g_WeaponDatabase, screen->weaponIds[index])->attachment;
         }
         if (link != 0 && D_0051EE10->unkD4 != 0) {
-            def = WeaponDb_Get(g_WeaponDatabase, link->weaponId);
+            def = cWeaponDB_GetEntry(g_WeaponDatabase, link->weaponId);
             if (def->kind == 7) {
                 link = def->link;
             }
             if (link != 0) {
-                GuiEquipmentModify_WeaponBoxMatrix(D_0051EE10, link, D_0051EE10->unkD4);
+                GuiEquipmentModify_DrawGun(D_0051EE10, link, D_0051EE10->unkD4);
             }
         }
     }
@@ -158,17 +158,17 @@ extern G2C2290* D_0051EE10;
 #define D_0051EE10 (*(G2C2290 **)&D_0051EE10) /* merge_units */
 
 #if 0 /* merge_units */
-extern W2C2290* WeaponDb_Get(void* db, int id);
+extern W2C2290* cWeaponDB_GetEntry(void* db, int id);
 #endif /* merge_units */
-#define WeaponDb_Get(a0, a1) ((W2C2290 *)WeaponDb_Get((a0), (a1))) /* merge_units */
+#define cWeaponDB_GetEntry(a0, a1) ((W2C2290 *)cWeaponDB_GetEntry((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void GuiEquipmentModify_WeaponBoxMatrix(G2C2290* g, O2C2290* o, int v);
+extern void GuiEquipmentModify_DrawGun(G2C2290* g, O2C2290* o, int v);
 #endif /* merge_units */
-#define GuiEquipmentModify_WeaponBoxMatrix(a0, a1, a2) ((void)GuiEquipmentModify_WeaponBoxMatrix((GuiEquipmentModifyObj *)(a0), (WeaponLinkL2 *)(a1), (a2))) /* merge_units */
+#define GuiEquipmentModify_DrawGun(a0, a1, a2) ((void)GuiEquipmentModify_DrawGun((GuiEquipmentModifyObj *)(a0), (WeaponLinkL2 *)(a1), (a2))) /* merge_units */
 
 /* Applies the current (or alternate-mode) weapon of the active slot. */
-void GuiEquipmentModify_DrawWeaponBox1(void)
+void EM_Gun1RenderWrapper(void)
 {
     G2C2290* g = D_0051EE10;
     if (g->f84) {
@@ -176,24 +176,24 @@ void GuiEquipmentModify_DrawWeaponBox1(void)
         if (g->f88 != g->fFC) o = g->p4C->arr[g->f88];
         else o = g->p4C->arr[0];
         if (o && g->fD0) {
-            W2C2290* w = WeaponDb_Get(g_WeaponDatabase, o->h40A);
+            W2C2290* w = cWeaponDB_GetEntry(g_WeaponDatabase, o->h40A);
             if (w->kind == 7) o = w->alt;
-            if (o) GuiEquipmentModify_WeaponBoxMatrix(D_0051EE10, o, D_0051EE10->fD0);
+            if (o) GuiEquipmentModify_DrawGun(D_0051EE10, o, D_0051EE10->fD0);
         }
     }
 }
 #undef D_0051EE10 /* merge_units */
-#undef WeaponDb_Get /* merge_units */
-#undef GuiEquipmentModify_WeaponBoxMatrix /* merge_units */
+#undef cWeaponDB_GetEntry /* merge_units */
+#undef GuiEquipmentModify_DrawGun /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002C2290 */
 
 /* merge_units: begin func_002C2340 */
 #pragma push /* merge_units */
-extern int GuiEquipmentModify_UpdateFigure(GuiEquipmentModifyObj* screen);
+extern int GuiEquipmentModify_ManRender(GuiEquipmentModifyObj* screen);
 
-int GuiEquipmentModify_DrawFigure(void) {
-    return GuiEquipmentModify_UpdateFigure(D_0051EE10);
+int EM_ManRenderWrapper(void) {
+    return GuiEquipmentModify_ManRender(D_0051EE10);
 }
 
 void func_002C2350(void) {
@@ -214,8 +214,8 @@ struct Sub2C2370 { char pad[0x10]; Q2C2370 pos; };
 struct T2C2370 { V2C2370 v; char pad4[0xC]; Sub2C2370 sub; char pad40[0x20]; unsigned char b50; };
 struct A2C2370 { char pad[0x50]; T2C2370* t; char pad54[0x10]; float heading; };
 extern "C" {
-float Math_Atan2f(float y, float x);
-void Actor_BaseLogicUpdate(A2C2370* a, float dt);
+float Libc_Atan2f(float y, float x);
+void cGOBJ_NextFrame(A2C2370* a, float dt);
 }
 extern "C" void func_002C2370(A2C2370* a, float dt)
 {
@@ -225,8 +225,8 @@ extern "C" void func_002C2370(A2C2370* a, float dt)
         t->v.v20();
     Sub2C2370* s = (Sub2C2370*)((char*)t + 0x10);
     V4Copy(&p, &s->pos);
-    a->heading = Math_Atan2f(p.f.x, *(volatile float*)&p.f.y);
-    Actor_BaseLogicUpdate(a, dt);
+    a->heading = Libc_Atan2f(p.f.x, *(volatile float*)&p.f.y);
+    cGOBJ_NextFrame(a, dt);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002C2370 */

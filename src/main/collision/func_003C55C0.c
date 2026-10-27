@@ -17,7 +17,7 @@ struct CtOut;
 
 extern "C" {
 extern int D_00542D10;
-int ColTree_IsLeaf(CtMesh* m, const H& h);
+int cCollisionModel_Data_IsTreeLeaf(CtMesh* m, const H& h);
 CtNode* cCollisionModel_Data_GetTreeNode(CtMesh* m, const H& h);
 unsigned char cCollisionModel_Data_TestBox(CtMesh* m, void* box);
 int cCollisionModel_TreeLink_opNe(int* p, int z);
@@ -91,7 +91,7 @@ extern "C" void cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cRayM
                     {
                         HO h;
                         cCollisionModel_TreeLink_ctor(&h, c);
-                        leaf = ColTree_IsLeaf(m, *(H*)&h);
+                        leaf = cCollisionModel_Data_IsTreeLeaf(m, *(H*)&h);
                         cCollisionModel_TreeLink_dtor(&h, -1);
                     }
                     if (!leaf) {

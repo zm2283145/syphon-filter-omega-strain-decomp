@@ -15,7 +15,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003CDA60 */
 #pragma push /* merge_units */
@@ -78,7 +78,7 @@ struct Mover_A60 {
 typedef struct Node_3CDA60 { unsigned char flag; char pad[15]; M44 m; M44 xf; __int128 v90; __int128 vA0; } Node_3CDA60;
 struct Obj_3CDA60 { char pad[0x50]; Xf_A60* xf; Node_3CDA60* node; Mover_A60* mover; };
 
-extern "C" void cNode_v29(Obj_3CDA60* o, M44* mtx)
+extern "C" void cGOBJ_SetTransform_ResetPhysics(Obj_3CDA60* o, M44* mtx)
 {
     Xf_A60* xf = o->xf;
     if (xf) {
@@ -135,7 +135,7 @@ static inline void merge_flush_func_003CDA60(void) {}
 #pragma cplusplus on
 class C003CDBE0 { public: VPAD4(p0) VPAD2(p1) VPAD1(p2)  virtual void f(); };
 struct O003CDBE0 { char pad[0x50]; C003CDBE0* m; };
-extern "C" void cNode_v28(O003CDBE0* self)
+extern "C" void cGOBJ_ApplyTranslation(O003CDBE0* self)
 {
     C003CDBE0* m = self->m;
     if (m)
@@ -175,7 +175,7 @@ static inline void MulRot_3CDC20(MQ* d, MQ* s, MQ* r)
     __asm__ volatile("lqc2 vf8, 0x0(%2); lqc2 vf9, 0x10(%2); lqc2 vf10, 0x20(%2); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddz.xyzw vf12, vf6, vf8z; vmulax.xyzw ACC, vf4, vf9x; vmadday.xyzw ACC, vf5, vf9y; vmaddz.xyzw vf13, vf6, vf9z; vmulax.xyzw ACC, vf4, vf10x; vmadday.xyzw ACC, vf5, vf10y; vmaddz.xyzw vf14, vf6, vf10z; vmove.xyzw vf15, vf7; sqc2 vf12, 0x0(%0); sqc2 vf13, 0x10(%0); sqc2 vf14, 0x20(%0); sqc2 vf15, 0x30(%0)" : : "r"(d), "r"(s), "r"(r) : "memory");
 }
 static inline MQ World_3CDC20(NodeQ* n) { if (n->dirty) ((NodeQV*)n)->v20(); return n->world; }
-extern "C" void cNode_v27(OwnQ* o, MQ* rot) { NodeQ* n = o->node; if (n) { MQ b; MQ a = World_3CDC20(n); b = a.RotR(rot); void* xx = &b; /* dead on purpose: retail keeps this addiu */ ((XfP*)o->node)->SetMtxP(&b); } }
+extern "C" void cGOBJ_ApplyLocalRotation(OwnQ* o, MQ* rot) { NodeQ* n = o->node; if (n) { MQ b; MQ a = World_3CDC20(n); b = a.RotR(rot); void* xx = &b; /* dead on purpose: retail keeps this addiu */ ((XfP*)o->node)->SetMtxP(&b); } }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003CDC20(void) {}
 #pragma pop /* merge_units */
@@ -186,7 +186,7 @@ static inline void merge_flush_func_003CDC20(void) {}
 #pragma cplusplus on
 class C3CDD40 { public: VPAD4(a) virtual void f18(); };
 struct O3CDD40 { char pad[0x50]; C3CDD40* m; };
-extern "C" void cNode_v26(O3CDD40* self)
+extern "C" void cGOBJ_ApplyTransform(O3CDD40* self)
 {
     C3CDD40* m = self->m;
     if (m)
@@ -202,7 +202,7 @@ static inline void merge_flush_func_003CDD40(void) {}
 #pragma cplusplus on
 class C003CDD80 { public: VPAD2(p0) VPAD1(p1)  virtual void f(); };
 struct O003CDD80 { char pad[0x50]; C003CDD80* m; };
-extern "C" void cNode_v25(O003CDD80* self)
+extern "C" void cGOBJ_SetTranslation(O003CDD80* self)
 {
     C003CDD80* m = self->m;
     if (m)
@@ -218,7 +218,7 @@ static inline void merge_flush_func_003CDD80(void) {}
 #pragma cplusplus on
 class C003CDDC0 { public: VPAD2(p0)  virtual void f(); };
 struct O003CDDC0 { char pad[0x50]; C003CDDC0* m; };
-extern "C" void cNode_v24(O003CDDC0* self)
+extern "C" void cGOBJ_SetRotation(O003CDDC0* self)
 {
     C003CDDC0* m = self->m;
     if (m)
@@ -234,7 +234,7 @@ static inline void merge_flush_func_003CDDC0(void) {}
 #pragma cplusplus on
 class C003CDE00 { public: VPAD1(p0)  virtual void f(); };
 struct O003CDE00 { char pad[0x50]; C003CDE00* m; };
-extern "C" void Player_GetActiveWeapon(O003CDE00* self)
+extern "C" void cGOBJ_SetTransform(O003CDE00* self)
 {
     C003CDE00* m = self->m;
     if (m)
@@ -256,7 +256,7 @@ struct Obj_f4 { char pad[0x48]; unsigned char owns; char pad49[7]; Xf_f4* xf; };
 extern "C" {
 extern char D_004BD228[];
 }
-extern "C" void Object_ShareTransform(Obj_f4* self, Xf_f4* xf)
+extern "C" void cGOBJ_SetXformPointer(Obj_f4* self, Xf_f4* xf)
 {
     Xf_f4* old = self->xf;
     if (old) {
@@ -264,7 +264,7 @@ extern "C" void Object_ShareTransform(Obj_f4* self, Xf_f4* xf)
             {
                 AllocGuard g;
                 old->Destroy(-1);
-                Mem_Free(0, old, D_004BD228, 0x174);
+                cMemMan_Deallocate(0, old, D_004BD228, 0x174);
             }
             self->owns = 0;
         }
@@ -297,7 +297,7 @@ extern unsigned char g_ProfileLockEnabled;
 }
 #pragma push
 #pragma opt_common_subs off
-extern "C" void Node_ClearLocalMatrix(char * arg0) {
+extern "C" void cGOBJ_DestroyXform(char * arg0) {
     void **temp_s1;
 
     temp_s1 = (void **)(F_(arg0, 0x50, int));
@@ -306,7 +306,7 @@ extern "C" void Node_ClearLocalMatrix(char * arg0) {
             {
                 AllocGuard g;
             ((VC003CDF20 *)(temp_s1))->v0(-1);
-            Mem_Free(0, temp_s1, &D_004BD228, 0x174);
+            cMemMan_Deallocate(0, temp_s1, &D_004BD228, 0x174);
             }
             F_(arg0, 0x48, unsigned char) = 0U;
         }
@@ -350,13 +350,13 @@ public:
 typedef struct { void* vt; char pad4[0xC]; Mat_3CDFF0 m; unsigned char f50; } Xf2_3CDFF0;
 extern "C" {
 extern char D_004DF6A0[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 Xf_3CDFF0* cXformNode_ctor_cMatrixR(void* p, Mat_3CDFF0* m);
 }
-static inline void* Alloc_3CDFF0(unsigned int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004BD228, line); }
+static inline void* Alloc_3CDFF0(unsigned int n, int line) { AllocGuard g; return cMemMan_Allocate(0, n, D_004BD228, line); }
 
 #pragma push
-extern "C" void Object_AttachTransform(ObjV_3CDFF0* self, Mat_3CDFF0* m, int flag)
+extern "C" void cGOBJ_CreateXform(ObjV_3CDFF0* self, Mat_3CDFF0* m, int flag)
 {
     if (!self->xf) {
         if (flag) {
@@ -389,7 +389,7 @@ extern "C" void Object_AttachTransform(ObjV_3CDFF0* self, Mat_3CDFF0* m, int fla
         Xf_3CDFF0* p = self->xf;
         if (p) {
             if (self->owns) {
-                { AllocGuard g; p->dtor(-1); Mem_Free(0, p, D_004BD228, 0x174); }
+                { AllocGuard g; p->dtor(-1); cMemMan_Deallocate(0, p, D_004BD228, 0x174); }
                 self->owns = 0;
             }
             self->xf = 0;
@@ -408,8 +408,8 @@ static inline void merge_flush_func_003CDFF0(void) {}
 /* merge_units: begin func_003CE2A0 */
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-V4* Quat_MulInverse(V4* a, V4* b); /* gsynth: defined below */
-int Mtx_Equal(int a0, int a1); /* gsynth: defined below */
+V4* cMatrix_Transform(V4* a, V4* b); /* gsynth: defined below */
+int cMatrix_opEq(int a0, int a1); /* gsynth: defined below */
 #pragma cplusplus on
 typedef struct { float m[16]; } BwMtx_f3;
 typedef struct { float v[4]; } BwVec_f3;
@@ -434,25 +434,25 @@ typedef struct {
 typedef struct { char pad[0x50]; BwSrc_f3* src; BwDst_f3* dst; } BwActor_f3;
 extern "C" {
 #if 0 /* merge_units */
-extern int Mtx_Equal(BwMtx_f3* a, BwMtx_f3* b);
+extern int cMatrix_opEq(BwMtx_f3* a, BwMtx_f3* b);
 #endif /* merge_units */
-#define Mtx_Equal(a0, a1) (Mtx_Equal((int)(a0), (int)(a1))) /* merge_units */
+#define cMatrix_opEq(a0, a1) (cMatrix_opEq((int)(a0), (int)(a1))) /* merge_units */
 
-extern void Mtx_InvertRigid_13ECA0(BwMtx_f3* out, BwMtx_f3* in);
+extern void cMatrix_Copy_InvertRotTrans(BwMtx_f3* out, BwMtx_f3* in);
 #if 0 /* merge_units */
-extern BwMtx_f3* Quat_MulInverse(BwMtx_f3* a, BwMtx_f3* b);
+extern BwMtx_f3* cMatrix_Transform(BwMtx_f3* a, BwMtx_f3* b);
 #endif /* merge_units */
-#define Quat_MulInverse(a0, a1) ((BwMtx_f3 *)Quat_MulInverse((V4 *)(a0), (V4 *)(a1))) /* merge_units */
+#define cMatrix_Transform(a0, a1) ((BwMtx_f3 *)cMatrix_Transform((V4 *)(a0), (V4 *)(a1))) /* merge_units */
 
-extern void Mtx_Copy_23E150(BwMtx_f3* d, BwMtx_f3* s);
+extern void cMatrix_opAssign(BwMtx_f3* d, BwMtx_f3* s);
 extern BwVec_f3* func_00133EC0(BwMtx_f3* m);
-extern void Sphere_FromCenter(BwVec_f3* out, BwVec_f3* a, BwVec_f3* b);
-extern BwVec_f3* Vec4_ClearW(BwVec_f3* v);
-extern void Vec4_Copy(BwVec_f3* d, BwVec_f3* s);
-extern void Vec4_Scale(BwVec_f3* out, BwVec_f3* in, float s);
-void Actor_BaseWorldUpdate(BwActor_f3* self, float dt);
+extern void cVector_opSub(BwVec_f3* out, BwVec_f3* a, BwVec_f3* b);
+extern BwVec_f3* cVector_WSet0(BwVec_f3* v);
+extern void cVector_opAssign(BwVec_f3* d, BwVec_f3* s);
+extern void cVector_opMul(BwVec_f3* out, BwVec_f3* in, float s);
+void cGOBJ_UpdateMotion(BwActor_f3* self, float dt);
 }
-void Actor_BaseWorldUpdate(BwActor_f3* self, float dt)
+void cGOBJ_UpdateMotion(BwActor_f3* self, float dt)
 {
     BwMtx_f3 inv;
     BwVec_f3 diff;
@@ -468,17 +468,17 @@ void Actor_BaseWorldUpdate(BwActor_f3* self, float dt)
     }
     dst = self->dst;
     sx = &src->xform;
-    dst->changed = !Mtx_Equal(sx, &dst->xform);
-    Mtx_InvertRigid_13ECA0(&inv, &dst->xform);
-    Mtx_Copy_23E150(&dst->delta, Quat_MulInverse(&inv, sx));
-    Sphere_FromCenter(&diff, func_00133EC0(sx), func_00133EC0(&dst->xform));
-    Vec4_Copy(&dst->vel, Vec4_ClearW(&diff));
-    Vec4_Scale(&rate, &dst->vel, 1.0f / dt);
-    Vec4_Copy(&dst->velRate, Vec4_ClearW(&rate));
-    Mtx_Copy_23E150(&dst->xform, sx);
+    dst->changed = !cMatrix_opEq(sx, &dst->xform);
+    cMatrix_Copy_InvertRotTrans(&inv, &dst->xform);
+    cMatrix_opAssign(&dst->delta, cMatrix_Transform(&inv, sx));
+    cVector_opSub(&diff, func_00133EC0(sx), func_00133EC0(&dst->xform));
+    cVector_opAssign(&dst->vel, cVector_WSet0(&diff));
+    cVector_opMul(&rate, &dst->vel, 1.0f / dt);
+    cVector_opAssign(&dst->velRate, cVector_WSet0(&rate));
+    cMatrix_opAssign(&dst->xform, sx);
 }
-#undef Mtx_Equal /* merge_units */
-#undef Quat_MulInverse /* merge_units */
+#undef cMatrix_opEq /* merge_units */
+#undef cMatrix_Transform /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003CE2A0(void) {}
 #pragma pop /* merge_units */
@@ -486,7 +486,7 @@ static inline void merge_flush_func_003CE2A0(void) {}
 
 /* merge_units: begin func_003CE3D0 */
 #pragma push /* merge_units */
-V4* Quat_MulInverse(V4* a, V4* b) {
+V4* cMatrix_Transform(V4* a, V4* b) {
     asm {
         lqc2 vf4, 0x0(b)
         lqc2 vf5, 0x10(b)
@@ -526,7 +526,7 @@ static inline void merge_flush_func_003CE3D0(void) {}
 
 /* merge_units: begin func_003CE450 */
 #pragma push /* merge_units */
-int Mtx_Equal(int a0, int a1) {
+int cMatrix_opEq(int a0, int a1) {
     int v0;
     float f0, f1;
     int cond, fcc;
@@ -710,10 +710,10 @@ public:
 };
 typedef struct { int a; int b; } D2_WeakRef;
 typedef struct { char pad[0x30]; int id; char pad2[0x24]; D2_Logic* logic; } D2_ActorBase;
-extern "C" D2_WeakRef* WeakRef_Capture(D2_WeakRef* r, void* obj);
+extern "C" D2_WeakRef* cSafePtr_cGOBJ_ctor_cGOBJP(D2_WeakRef* r, void* obj);
 extern "C" void cAssocMultiArray_int_cSafePtr_cGOBJ_Add(void* mgr, int* id, D2_WeakRef* r);
 extern "C" void* g_MotionManager;
-extern "C" void Actor_BaseLogicUpdate(D2_ActorBase* a) {
+extern "C" void cGOBJ_NextFrame(D2_ActorBase* a) {
     if (a->logic != 0) {
         a->logic->Update();
     }
@@ -721,7 +721,7 @@ extern "C" void Actor_BaseLogicUpdate(D2_ActorBase* a) {
         D2_WeakRef ref;
         int id[1];
         id[0] = a->id;
-        cAssocMultiArray_int_cSafePtr_cGOBJ_Add(g_MotionManager, id, WeakRef_Capture(&ref, a));
+        cAssocMultiArray_int_cSafePtr_cGOBJ_Add(g_MotionManager, id, cSafePtr_cGOBJ_ctor_cGOBJP(&ref, a));
     }
 }
 #pragma cplusplus reset

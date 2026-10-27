@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00146040 */
 #pragma push /* merge_units */
@@ -27,11 +27,11 @@ extern "C" void Alloc_Lock(int);
 #define Alloc_Lock(a0) (Alloc_Lock((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern "C" void Alloc_Unlock(int);
+extern "C" void EnableIntc(int);
 #endif /* merge_units */
-#define Alloc_Unlock(a0) (Alloc_Unlock((a0))) /* merge_units */
+#define EnableIntc(a0) (EnableIntc((a0))) /* merge_units */
 
-extern "C" void *Mem_Alloc(int, int, char *, int);
+extern "C" void *cMemMan_Allocate(int, int, char *, int);
 struct Sub46 { char p[0x20]; Sub46() {} };
 struct Obj46 {
     char p0[0x140];
@@ -41,15 +41,15 @@ struct Obj46 {
     float mx[4];
     char p400[0x20];
     Obj46() { mn[0] = 3.4028235e38f; mn[1] = 3.4028235e38f; mn[2] = 3.4028235e38f; mn[3] = 1.0f; mx[0] = -3.4028235e38f; mx[1] = -3.4028235e38f; mx[2] = -3.4028235e38f; mx[3] = 1.0f; }
-    void *operator new(unsigned int sz, int line) { void *o; if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; o = Mem_Alloc(0, sz, D_0049B1D0, line); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; return o; }
+    void *operator new(unsigned int sz, int line) { void *o; if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; o = cMemMan_Allocate(0, sz, D_0049B1D0, line); if (g_ProfileLockEnabled) EnableIntc(9); g_ProfileLockDepth--; return o; }
 };
 typedef struct { char p0[4]; int f4; } Tbl46;
 typedef struct { char p0[0x148]; Tbl46 *f148; } Src46;
 typedef struct { char p0[0xB8]; Obj46 *slot[7]; } Slot46;
-extern "C" char *Archive_GetMemberName(Src46 *, int);
-extern "C" int Hog_GetMemberInPlace(Src46 *, int);
-extern "C" void ManModel_ctor(Obj46 *, char *, int, int, int, int, int, int);
-extern "C" void ActorModel_LoadFromHog(Obj46 *, int);
+extern "C" char *cHogFile_GetBlockName(Src46 *, int);
+extern "C" int cHogFile_GetBlock_int(Src46 *, int);
+extern "C" void gunList_LoadGunInit(Obj46 *, char *, int, int, int, int, int, int);
+extern "C" void gunList_LoadGunHog(Obj46 *, int);
 extern "C" void WeaponDb_CloneModel(void *, Obj46 *, Obj46 *);
 
 static inline int NameCmp_46(const char *a, const char *b)
@@ -70,7 +70,7 @@ static inline int NameCmp_46(const char *a, const char *b)
     }
 }
 
-#define OBJ46_NEW(o, line) do { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; o = (Obj46 *)Mem_Alloc(0, 0x420, D_0049B1D0, line); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; o = new (o) Obj46; } while (0)
+#define OBJ46_NEW(o, line) do { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; o = (Obj46 *)cMemMan_Allocate(0, 0x420, D_0049B1D0, line); if (g_ProfileLockEnabled) EnableIntc(9); g_ProfileLockDepth--; o = new (o) Obj46; } while (0)
 
 extern "C" void WeaponDb_LoadShellsArchive(Slot46 *self, Src46 *src)
 {
@@ -78,32 +78,32 @@ extern "C" void WeaponDb_LoadShellsArchive(Slot46 *self, Src46 *src)
     int i;
     for (i = 0; i < n; i++) {
         int found = 0;
-        char *name = Archive_GetMemberName(src, i);
-        int x = Hog_GetMemberInPlace(src, i);
+        char *name = cHogFile_GetBlockName(src, i);
+        int x = cHogFile_GetBlock_int(src, i);
         int k;
         for (k = 0; k < 7; k++) {
             if (NameCmp_46(D_00489CC0[k], name) == 0) {
                 self->slot[k] = new (0x293) Obj46;
-                ManModel_ctor(self->slot[k], D_00489CC0[k], k, 0, 0, 0, 0, 0);
-                ActorModel_LoadFromHog(self->slot[k], x);
+                gunList_LoadGunInit(self->slot[k], D_00489CC0[k], k, 0, 0, 0, 0, 0);
+                gunList_LoadGunHog(self->slot[k], x);
                 found = 1;
             }
         }
         if (!found) {
             Obj46 *t = new (0x2B4) Obj46;
-            ManModel_ctor(t, name, 0, 0, 0, 0, 0, 0);
-            ActorModel_LoadFromHog(t, x);
+            gunList_LoadGunInit(t, name, 0, 0, 0, 0, 0, 0);
+            gunList_LoadGunHog(t, x);
             WeaponDb_CloneModel(self, t, t);
             if (g_ProfileLockEnabled) Alloc_Lock(9);
             g_ProfileLockDepth++;
-            Mem_Free(0, t, D_0049B1D0, 0x2BC);
-            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            cMemMan_Deallocate(0, t, D_0049B1D0, 0x2BC);
+            if (g_ProfileLockEnabled) EnableIntc(9);
             g_ProfileLockDepth--;
         }
     }
 }
 #undef Alloc_Lock /* merge_units */
-#undef Alloc_Unlock /* merge_units */
+#undef EnableIntc /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00146040(void) {}
 #pragma pop /* merge_units */
@@ -137,7 +137,7 @@ static inline int NameCmp_64(const char *a, const char *b)
     }
 }
 
-#define FREE64(p, line) { AllocGuard g; Mem_Free(0, p, D_0049B1D0, line); }
+#define FREE64(p, line) { AllocGuard g; cMemMan_Deallocate(0, p, D_0049B1D0, line); }
 
 static inline void FreeAll(Wpn64 *w, char *name, int n, int& cnt)
 {
@@ -191,7 +191,7 @@ typedef struct { char pad[0x404]; int f404; unsigned short f408; short f40A; cha
 typedef struct { char name[0xCC]; unsigned char fCC; char pCD[0x3B]; unsigned char f108; char p109[3]; int f10C; char p110[0xC]; BlkV *f11C; char name2[0x1C]; BlkV *f13C; } Ent;
 typedef struct { int f0; unsigned short f4; } Res;
 typedef struct { char p0[4]; int *f4; char p8[0xC]; Ent *f14; } Wpn;
-Res *WeaponDb_GetShellRecord(Wpn *, int, int);
+Res *cWeaponDB_GetShellCasing(Wpn *, int, int);
 
 static inline int Cmp(char *a, char *b) {
     int ca, cb;
@@ -247,7 +247,7 @@ void WeaponDb_PropagateModel(Wpn *w, char *name, Blk *src) {
             e->f13C->f40A = i;
             e->f13C->f40D = e->fCC;
             e->f13C->f40E = e->f108;
-            r = WeaponDb_GetShellRecord(w, e->f10C, save);
+            r = cWeaponDB_GetShellCasing(w, e->f10C, save);
             if (r != NULL) {
                 e->f13C->f404 = r->f0;
                 e->f13C->f408 = r->f4;

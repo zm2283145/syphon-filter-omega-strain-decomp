@@ -7,6 +7,6 @@
 
 extern int D_005329C8;
 
-int cNetAddObjectiveMsg_v05(void) {
+int cNetAddObjectiveMsg_GetMsgId(void) {
     return D_005329C8;
 }

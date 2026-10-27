@@ -26,21 +26,21 @@ extern int D_0048BC28;
 extern char D_004ABAB0[];
 extern char D_004AB9D0[]; /* fallback text */
 /* key formats */
-extern "C" void GuiArrayWidget_Init(Screen* self);
-extern "C" Widget* GuiWidget_FindChildByName(Screen* self, int id);
+extern "C" void GuiArrayWidget_onAdd(Screen* self);
+extern "C" Widget* GuiWidget_FindChild_charP(Screen* self, int id);
 extern "C" int sprintf(char* buf, const char* fmt, ...);
-extern "C" const char* Loc_LookupText(const char* key);
+extern "C" const char* nGlobalization_GetString_charP(const char* key);
 
 /* Screen init: base init, caches the D_0048BC28 child (type D_004ABAB0) at +0xB0 and looks up the localized text tables (+0xD0/+0xE0/+0xF4/+0x90) from formatted keys. */
-extern "C" void GuiMissionList_Init(Screen* self)
+extern "C" void GuiMissionList_onAdd(Screen* self)
 {
     char key4[0x10];
     char key3[0x20];
     char key2[0x20];
     char key1[0x20];
     Widget* child;
-    GuiArrayWidget_Init(self);
-    child = GuiWidget_FindChildByName(self, D_0048BC28);
+    GuiArrayWidget_onAdd(self);
+    child = GuiWidget_FindChild_charP(self, D_0048BC28);
     if (!child || !child->IsA(D_004ABAB0))
     child = 0;
     self->child = child;
@@ -49,7 +49,7 @@ extern "C" void GuiMissionList_Init(Screen* self)
     unsigned int i;
     for (i = 0, p = self; i < 4; i++, p = (Screen*)((char*)p + 4)) {
     sprintf(key1, "AgentStatus%d", i);
-    p->textA[0] = Loc_LookupText(key1);
+    p->textA[0] = nGlobalization_GetString_charP(key1);
     if (!p->textA[0])
     p->textA[0] = D_004AB9D0;
     }
@@ -59,7 +59,7 @@ extern "C" void GuiMissionList_Init(Screen* self)
     unsigned int i;
     for (i = 0, p = self; i < 5; i++, p = (Screen*)((char*)p + 4)) {
     sprintf(key2, "PingResult%d", i);
-    p->textB[0] = Loc_LookupText(key2);
+    p->textB[0] = nGlobalization_GetString_charP(key2);
     if (!p->textB[0])
     p->textB[0] = D_004AB9D0;
     }
@@ -69,7 +69,7 @@ extern "C" void GuiMissionList_Init(Screen* self)
     unsigned int i;
     for (i = 0, p = self; i < 5; i++, p = (Screen*)((char*)p + 4)) {
     sprintf(key3, "FilterType%d", i);
-    p->textC[0] = Loc_LookupText(key3);
+    p->textC[0] = nGlobalization_GetString_charP(key3);
     if (!p->textC[0])
     p->textC[0] = D_004AB9D0;
     }
@@ -79,7 +79,7 @@ extern "C" void GuiMissionList_Init(Screen* self)
     int i;
     for (i = 0, p = self; i < 6; i++, p = (Screen*)((char*)p + 4)) {
     sprintf(key4, "MisListHeader%d", i);
-    p->textE[0] = Loc_LookupText(key4);
+    p->textE[0] = nGlobalization_GetString_charP(key4);
     }
     }
     self->unk5C -= 4;

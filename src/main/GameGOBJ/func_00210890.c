@@ -5,7 +5,7 @@
 extern int g_LocalPlayer;
 extern char g_Game[];
 extern char D_004DADF0[];
-extern void SoundStopMsg_Ctor(SoundEvent* ev, void* src, void* voice);
+extern void cStopSoundMsg_ctor_cSndFxR_cGOBJP(SoundEvent* ev, void* src, void* voice);
 
 int Script_cSoundGOBJ_KillSnd(void** arg0) {
     SoundEvent ev;
@@ -14,11 +14,11 @@ int Script_cSoundGOBJ_KillSnd(void** arg0) {
     if (F_(o, 0x1F2, unsigned char)) v = o;
     else if (g_LocalPlayer) v = 0;
     else v = o;
-    SoundStopMsg_Ctor(&ev, o + 0x60, v);
-    Event_Send(&ev, g_Game, 1);
+    cStopSoundMsg_ctor_cSndFxR_cGOBJP(&ev, o + 0x60, v);
+    QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 1);
     ev.vtable = D_004DADF0;
-    FileMan_Release(&ev.req.b, -1);
-    FileMan_Release(&ev.req.a, -1);
+    cFileMan_dtor(&ev.req.b, -1);
+    cFileMan_dtor(&ev.req.a, -1);
     cMessage_dtor(&ev, 0);
     F_(o, 0x1F0, unsigned char) = 0;
     return 0;

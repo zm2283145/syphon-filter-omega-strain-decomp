@@ -18,18 +18,18 @@ extern unsigned char g_LoadoutPending;
 extern char g_Video[];
 void HudRadar_ComputeMarkerMatrix(char* o);
 void XLib_ClearZBuffer(void* a);
-Mgr_244B90* Gui_GetScreenStack(void);
-void List_Begin_16E880(Word* w, void* l);
+Mgr_244B90* Gui_Canvas(void);
+void std_list_deleter_voidPtr_begin_void_2(Word* w, void* l);
 int* std_list_tCalloutPtr_generic_iterator_1_ctor(int* dst, int value);
 void std_list_tCalloutPtr_end_void_2(Word* w, void* l);
 Word* cConstLListIterator_tCalloutPtr_ctor(Word* dst, Word* src);
-void IeScreen_Draw(int a);
-void Hud_DrawCallouts(char* o);
+void cInterface_Render(int a);
+void cHud_UpdateEdgeCallouts(char* o);
 }
-#define Begin_244B90(l) (List_Begin_16E880(&tmp, l), std_list_tCalloutPtr_generic_iterator_1_ctor(&r, tmp.value), (char*)r)
+#define Begin_244B90(l) (std_list_deleter_voidPtr_begin_void_2(&tmp, l), std_list_tCalloutPtr_generic_iterator_1_ctor(&r, tmp.value), (char*)r)
 #define End_244B90(l) (std_list_tCalloutPtr_end_void_2(&e, l), cConstLListIterator_tCalloutPtr_ctor(&e2, &e), (char*)e2.value)
 
-extern "C" void Hud_Draw(char* o)
+extern "C" void cHud_Render(char* o)
 {
     char* n;
     char* v;
@@ -39,7 +39,7 @@ extern "C" void Hud_Draw(char* o)
     if (!g_LoadoutPending) {
         XLib_ClearZBuffer(g_Video);
         if (F_(o, 0x6A0, int) && F_(o, 0x6A9, unsigned char)) {
-            Gui_GetScreenStack()->Refresh();
+            Gui_Canvas()->Refresh();
             for (n = Begin_244B90(o + 0x6E8); n != End_244B90(o + 0x6E8); n = F_(n, 4, char*)) {
                 v = F_(n, 8, char*);
                 a = F_(v, 0x10, W_244B90*);
@@ -47,15 +47,15 @@ extern "C" void Hud_Draw(char* o)
                     a->Draw();
                 }
             }
-            IeScreen_Draw(F_(o, 0x54, int));
+            cInterface_Render(F_(o, 0x54, int));
             XLib_ClearZBuffer(g_Video);
         } else {
-            Hud_DrawCallouts(o);
-            IeScreen_Draw(F_(o, 0x54, int));
-            Gui_GetScreenStack()->Refresh();
+            cHud_UpdateEdgeCallouts(o);
+            cInterface_Render(F_(o, 0x54, int));
+            Gui_Canvas()->Refresh();
         }
     } else {
-        Gui_GetScreenStack()->Refresh();
+        Gui_Canvas()->Refresh();
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -70,10 +70,10 @@ typedef struct { char pad[0x14]; unsigned short flags; } Tx_244D10;
 typedef struct { char pad[0x14]; unsigned short flags; char pad16[0x32]; char sub[4]; } Ob_244D10;
 typedef struct { float time; unsigned char b4; char pad5[3]; float f8; unsigned char bC; char padD[3]; Ob_244D10* obj; Tx_244D10* text; } T_244D10;
 typedef struct { float r, g, b, a; } Col_244D10;
-extern "C" int ScriptEvent_TimeFormat(char* buf, float seconds);
-extern "C" void GuiTextWidget_SetColour(Tx_244D10* t, Col_244D10* c);
+extern "C" int MakeClockString(char* buf, float seconds);
+extern "C" void GuiTextWidget_SetTextColor(Tx_244D10* t, Col_244D10* c);
 extern "C" void GuiTextWidget_SetText(Tx_244D10* t, char* text, int zero);
-extern "C" int String_Length(void* p);
+extern "C" int cString_Length(void* p);
 
 extern "C" bool HudTimer_Update(T_244D10* t, float now)
 {
@@ -92,7 +92,7 @@ extern "C" bool HudTimer_Update(T_244D10* t, float now)
             char buf[16];
             Col_244D10 c;
             bool show;
-            ScriptEvent_TimeFormat(buf, t->b4 ? t->time - now : 0.0f);
+            MakeClockString(buf, t->b4 ? t->time - now : 0.0f);
             c.r = 1.0f;
             c.g = 1.0f;
             c.b = 1.0f;
@@ -107,10 +107,10 @@ extern "C" bool HudTimer_Update(T_244D10* t, float now)
                 }
             }
             if (show) {
-                GuiTextWidget_SetColour(t->text, &c);
+                GuiTextWidget_SetTextColor(t->text, &c);
                 GuiTextWidget_SetText(t->text, buf, 0);
                 t->text->flags |= 2;
-                if (String_Length(t->obj->sub))
+                if (cString_Length(t->obj->sub))
                     t->obj->flags |= 2;
             }
             t->bC = show;
@@ -134,7 +134,7 @@ extern void GuiTextWidget_SetText(void* target, const char* text, int zero);
 #endif /* merge_units */
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((void *)(a0), (void *)(a1), (a2))) /* merge_units */
 
-void HudTimer_Start(T4EE0* t, char* text, float time) {
+void cHud_cHudTimer_ScheduleExpiration(T4EE0* t, char* text, float time) {
     t->time = time;
     t->f8 = 0;
     t->b4 = 0;

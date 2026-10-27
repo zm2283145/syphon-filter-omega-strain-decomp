@@ -16,15 +16,15 @@
  */
 
 
-extern int List_InsertBefore(HotboxListIter* out, Tree* list, HotboxListIter* pos, int* value);
+extern int std_list_deleter_voidPtr_insert(HotboxListIter* out, Tree* list, HotboxListIter* pos, int* value);
 
 /* Inserts value with end() as the position hint; the result iterator is discarded. */
-int HotboxTracker_LinkBox(Tree* list, int* value) {
+int std_list_cHotboxPtr_push_back(Tree* list, int* value) {
     HotboxListIter end;
     HotboxListIter result;
 
     end.node = (HotboxListNode*)&list->header;
-    return List_InsertBefore(&result, list, &end, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &end, value);
 }
 
 Word* cLListIterator_cHotboxPtr_ctor_cLListIteratorR(Word* dst, Word* src) {
@@ -97,9 +97,9 @@ typedef struct { int unk0; int unk4; int unk8; } Container;
 typedef struct { char pad[0x28]; Container list; } Obj170;
 
 extern Container g_HotboxList;
-extern void ObjectList_EraseRange(int* out, Container* self, int* value, int** where);
+extern void std_list_deleter_voidPtr_erase_listdeleter_listdeleter(int* out, Container* self, int* value, int** where);
 
-/* Calls ObjectList_EraseRange for the global container and for the object's container at +0x28. */
+/* Calls std_list_deleter_voidPtr_erase_listdeleter_listdeleter for the global container and for the object's container at +0x28. */
 void cHotboxMan_ClearLists(Obj170* self)
 {
     int* where2;
@@ -110,10 +110,10 @@ void cHotboxMan_ClearLists(Obj170* self)
     int result;
     where = &g_HotboxList.unk4;
     value = g_HotboxList.unk8;
-    ObjectList_EraseRange(&result, &g_HotboxList, &value, &where);
+    std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&result, &g_HotboxList, &value, &where);
     where2 = &self->list.unk4;
     value2 = self->list.unk8;
-    ObjectList_EraseRange(&result2, &self->list, &value2, &where2);
+    std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&result2, &self->list, &value2, &where2);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00170D30(void) {}

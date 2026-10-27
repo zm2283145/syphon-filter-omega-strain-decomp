@@ -21,12 +21,12 @@ struct V_47E0 {
     E_47E0* begin() { return data; }
     E_47E0* end() { return data + count; }
 };
-extern "C" void Vector_Insert_164CA0(V_47E0* v, E_47E0* pos, unsigned int n, void* val);
+extern "C" void std_vector_imp_cBox_insert(V_47E0* v, E_47E0* pos, unsigned int n, void* val);
 extern "C" void std_vector_imp_cBox_erase(V_47E0* v, E_47E0* first, E_47E0* last);
 extern "C" void std_vector_imp_cBox_resize(V_47E0* v, unsigned int n, void* val)
 {
     if (v->size() < n)
-        Vector_Insert_164CA0(v, v->end(), n - v->size(), val);
+        std_vector_imp_cBox_insert(v, v->end(), n - v->size(), val);
     else if (n < v->size())
         std_vector_imp_cBox_erase(v, v->begin() + n, v->end());
 }

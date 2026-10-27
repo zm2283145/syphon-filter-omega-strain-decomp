@@ -9,7 +9,7 @@ void srand(unsigned int seed)   /* srand */
     _REENT->_rand_next = seed;
 }
 
-int Random_Next(void)   /* rand */
+int Libc_Rand(void)   /* rand */
 {
     struct _reent *r = _REENT;
 

@@ -29,7 +29,7 @@ Word* cArray_cObjectId_Iterator_ctor(Word* dst, Word* src) {
 }
 
 /* Word equality. */
-int ObjectKey_Equals(Word* a, Word* b) {
+int opEq(Word* a, Word* b) {
     return a->value == b->value;
 }
 

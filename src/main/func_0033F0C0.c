@@ -1,7 +1,7 @@
 #include "types.h"
 
 extern int func_002ACC80(int, int);
-extern int Gui_GetScreenStack(void);
+extern int Gui_Canvas(void);
 
 int GuiMissionLobbyScreen_ExitLobbyScreen(int a0) {
     int a1, v0, v1;
@@ -17,7 +17,7 @@ int GuiMissionLobbyScreen_ExitLobbyScreen(int a0) {
     if (cond) goto L0033F0F0;
     v0 = func_002ACC80(a0, a1);
 L0033F0F0:;
-    v0 = Gui_GetScreenStack();
+    v0 = Gui_Canvas();
     v1 = *(int*)((char*)v0 + 104);
     v1 = v1 | 12;
     *(int*)((char*)v0 + 104) = v1;

@@ -37,7 +37,7 @@ struct SkaClip : ClipBase {
     SkaClip() {}
     ~SkaClip() { vt = (void*)D_004DFC30; }
 };
-extern "C" float Math_FMod(float x, float y);
+extern "C" float Libc_Fmodf(float x, float y);
 extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_eModifier(SkaClip* self, const SkaClip* o, unsigned char mode)
 {
     V u(Unit());
@@ -69,7 +69,7 @@ extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_eModifier(SkaClip* self, const SkaCl
         break;
     case 3:
         self->b29 = !o->b29;
-        self->f34 = Math_FMod(0.5f + o->f34, 1.0f);
+        self->f34 = Libc_Fmodf(0.5f + o->f34, 1.0f);
         break;
     }
     return self;

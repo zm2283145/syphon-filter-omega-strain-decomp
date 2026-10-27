@@ -21,9 +21,9 @@ typedef struct {
 extern char D_004DEB80[];
 extern char D_004BA338[];
 extern void GuiArrayWidget_ctor(S348FC0* self);
-extern char* Loc_LookupText(char* key);
-extern void String_CtorCStr_13B480(Str348FC0* s, char* text);
-extern void String_AssignString(Str348FC0* dst, Str348FC0* src);
+extern char* nGlobalization_GetString_charP(char* key);
+extern void std_basic_string_char_char_traits_char_ctor_charP(Str348FC0* s, char* text);
+extern void std_basic_string_char_char_traits_char_assign_basicstringR(Str348FC0* dst, Str348FC0* src);
 extern void String_Dtor(Str348FC0* s, int flags);
 S348FC0* GuiNetMessageArray_ctor(S348FC0* self)
 {
@@ -40,9 +40,9 @@ S348FC0* GuiNetMessageArray_ctor(S348FC0* self)
     self->a9C = 0;
     self->a58 = 2;
     self->aA4 = 0;
-    t = Loc_LookupText("TOSSystem");
-    { Str348FC0* p = &tmp; String_CtorCStr_13B480(p, t ? t : D_004BA338); }
-    String_AssignString(&self->sA8, &tmp);
+    t = nGlobalization_GetString_charP("TOSSystem");
+    { Str348FC0* p = &tmp; std_basic_string_char_char_traits_char_ctor_charP(p, t ? t : D_004BA338); }
+    std_basic_string_char_char_traits_char_assign_basicstringR(&self->sA8, &tmp);
     String_Dtor(&tmp, 0);
     return self;
 }
@@ -56,7 +56,7 @@ static inline void merge_flush_func_00348FC0(void) {}
 #pragma cplusplus on
 
 /* Derived destructor: member, then base, optionally delete. */
-DEFINE_VTABLE_MEMBER_BASE_DTOR(GuiArrayWidget_dtor_349070, D_004E0D20, 0x60, func_0013A040, GuiWidget_Destroy)
+DEFINE_VTABLE_MEMBER_BASE_DTOR(GuiNetMessageArray_dtor_void, D_004E0D20, 0x60, func_0013A040, GuiWidget_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00349070 */
 
@@ -64,7 +64,7 @@ DEFINE_VTABLE_MEMBER_BASE_DTOR(GuiArrayWidget_dtor_349070, D_004E0D20, 0x60, fun
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-/* Deleting destructor: string member at +0xA8, middle class with a member at +0x60, base GuiWidget_Destroy. */
+/* Deleting destructor: string member at +0xA8, middle class with a member at +0x60, base GuiWidget_dtor. */
 extern "C" {
 extern char D_004E0D20[];
 #if 0 /* merge_units */
@@ -78,10 +78,10 @@ void* String_Dtor(void* self, short deleteFlag);
 #define String_Dtor(a0, a1) (String_Dtor((Str348FC0 *)(a0), (int)(a1))) /* merge_units */
 
 void* cArray_int_dtor(void* self, short deleteFlag);
-void* GuiWidget_Destroy(void* self, short deleteFlag);
+void* GuiWidget_dtor(void* self, short deleteFlag);
 }
 struct O3490F0 { void* vtable; };
-extern "C" O3490F0* GuiNetMessageArray_dtor(O3490F0* self, short deleteFlag)
+extern "C" O3490F0* GuiNetMessageArray_dtor_void_2(O3490F0* self, short deleteFlag)
 {
     if (self) {
         self->vtable = D_004DEB80;
@@ -91,7 +91,7 @@ extern "C" O3490F0* GuiNetMessageArray_dtor(O3490F0* self, short deleteFlag)
         if (self) {
             self->vtable = D_004E0D20;
             cArray_int_dtor((char*)self + 0x60, -1);
-            GuiWidget_Destroy(self, 0);
+            GuiWidget_dtor(self, 0);
         }
         if (deleteFlag > 0)
             operator_delete(self);

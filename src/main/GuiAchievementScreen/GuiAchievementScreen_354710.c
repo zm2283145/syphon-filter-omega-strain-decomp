@@ -35,7 +35,7 @@ struct O354740 { int x0; int count; E354740* data; };
 extern "C" {
 extern char D_004AA5B8[];
 void details_compressed_pair_imp_cAllocator_tAchievementInfo_int_1_first(O354740* v);
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 void operator_delete(void* p);
 }
 extern "C" O354740* func_00354740(O354740* self, short del)
@@ -55,7 +55,7 @@ extern "C" O354740* func_00354740(O354740* self, short del)
                 if (p) {
                     if (p) {
                         AllocGuard g;
-                        Mem_Free(0, p, D_004AA5B8, 0x64);
+                        cMemMan_Deallocate(0, p, D_004AA5B8, 0x64);
                     }
                 }
             }

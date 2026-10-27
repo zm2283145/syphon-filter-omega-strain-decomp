@@ -3,8 +3,8 @@
 
 extern "C" {
 extern "C" void Event_PackHeader();
-extern "C" void cMenuChoiceMsg_v01();
-extern "C" void cMenuChoiceMsg_v03();
+extern "C" void cMenuChoiceMsg_Clone();
+extern "C" void cMenuChoiceMsg_getSOBJClassId();
 extern void * const D_004DC330[];
 void* cMessage_dtor(void* self, short deleteFlag);
 }
@@ -18,4 +18,4 @@ extern "C" VtableObject* cMenuChoiceMsg_dtor(VtableObject* self, short deleteFla
     }
     return self;
 }
-void * const D_004DC330[8] = { (void*)0x0, (void*)0x0, (void*)cMenuChoiceMsg_dtor, (void*)cMenuChoiceMsg_v01, (void*)Event_PackHeader, (void*)cMenuChoiceMsg_v03, (void*)0x0, (void*)0x0 };
+void * const D_004DC330[8] = { (void*)0x0, (void*)0x0, (void*)cMenuChoiceMsg_dtor, (void*)cMenuChoiceMsg_Clone, (void*)Event_PackHeader, (void*)cMenuChoiceMsg_getSOBJClassId, (void*)0x0, (void*)0x0 };

@@ -5,7 +5,7 @@ extern char D_004AC1B0[];
 extern const char D_004AC1C8[];
 extern int strcmp(const char *, const char *);
 extern unsigned int strlen(const char *);
-extern char *String_Copy(char *, const char *);
+extern char *Libc_Strcpy(char *, const char *);
 extern char *_strtok(char *, const char *);
 extern int func_002B8188(int, char *, char *);
 extern int _GetEntryByPos(int, MC2Dirent *, int, int);
@@ -38,7 +38,7 @@ int _sceMcFatSearchFile(int idx, char *path, MC2Dirent *st, int *x, int *y)
     }
     p = _strtok(f + 1, D_004AC1C8);
     for (;;) {
-        String_Copy(name, p);
+        Libc_Strcpy(name, p);
         p = _strtok(0, D_004AC1C8);
         if (p == 0) last = 1;
         dir = buf;

@@ -14,8 +14,8 @@
 
 extern "C" {
 extern char D_0049CD60[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 }
 
 struct I8_00222980Val { int w0; int w1; };
@@ -49,7 +49,7 @@ struct ListI8_00222980Holder {
             ListI8_00222980Node* p = node;
             if (p) {
                 AllocGuard guard;
-                Mem_Free(0, p, D_0049CD60, 0x64);
+                cMemMan_Deallocate(0, p, D_0049CD60, 0x64);
             }
         }
     }
@@ -64,7 +64,7 @@ struct ListI8_00222980Holder {
         ListI8_00222980Flag flag;                                                  \
         {                                                                     \
             AllocGuard guard;                                                 \
-            n = (ListI8_00222980Node*)Mem_Alloc(0, 16, "allocator.hh", 0x5C);            \
+            n = (ListI8_00222980Node*)cMemMan_Allocate(0, 16, "allocator.hh", 0x5C);            \
         }                                                                     \
         ListI8_00222980Holder h;                                                     \
         h.alloc = alloc;                                                      \
@@ -86,4 +86,4 @@ struct ListI8_00222980Holder {
     }
 
 #endif /* LIB_00222980 */
-DEFINE_LIST_INSERT_BEFORE8(WeakHandleList_Append)
+DEFINE_LIST_INSERT_BEFORE8(std_list_deleter_cSafePtr_cGOBJ_insert)

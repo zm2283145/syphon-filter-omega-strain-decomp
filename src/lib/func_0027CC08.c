@@ -5,16 +5,16 @@ extern McArg D_005040C0;
 extern int D_0048B370;
 extern int sceNetcnfifInit(void);
 extern int sce_call_rpc(RpcCd *, McArg *, int);
-extern char *String_Copy(char *, const char *);
+extern char *Libc_Strcpy(char *, const char *);
 int sceNetcnfifEditEntry(const char *name, int a1, const char *name2, const char *name3)
 {
     McArg *p;
     sceNetcnfifInit();
     p = &D_005040C0;
-    String_Copy(p->name, name);
+    Libc_Strcpy(p->name, name);
     p->x8 = a1;
-    String_Copy(p->name2, name2);
-    String_Copy(p->name3, name3);
+    Libc_Strcpy(p->name2, name2);
+    Libc_Strcpy(p->name3, name3);
     p->x4 = D_0048B370;
     return sce_call_rpc(&D_00504080, p, 4);
 }

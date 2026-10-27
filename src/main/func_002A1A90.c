@@ -8,7 +8,7 @@ typedef struct StrHdr {
 } StrHdr;
 
 extern int strlen(const char* s); /* strlen */
-extern void String_Compare(StrHdr* str, int pos, int count, const char* src, int srcLen);
+extern void std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(StrHdr* str, int pos, int count, const char* src, int srcLen);
 
 /* String assign from a C string: replaces the whole contents with cstr. */
 void func_002A1A90(StrHdr* str, const char* cstr) {
@@ -19,5 +19,5 @@ void func_002A1A90(StrHdr* str, const char* cstr) {
     } else {
         len = (unsigned char)str->shortLen;
     }
-    String_Compare(str, 0, len, cstr, srcLen);
+    std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(str, 0, len, cstr, srcLen);
 }

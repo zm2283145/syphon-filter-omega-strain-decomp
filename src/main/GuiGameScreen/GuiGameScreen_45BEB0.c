@@ -17,16 +17,16 @@
  */
 
 
-extern int GuiArrayWidget_Select(GuiChoiceList* list, int a1, int index);
+extern int GuiArrayWidget_SetSelected(GuiChoiceList* list, int a1, int index);
 
 void GuiGameScreen_SetMenuReceiver(GuiGameScreen* self, int value) {
     self->unkEC = value;
 }
 
 /* Forwards a valid choice index (0 < index < count) to the choice list. */
-void GuiGameScreen_SelectMenuRow(GuiGameScreen* self, int index) {
+void GuiGameScreen_SetChooseMenuDefault(GuiGameScreen* self, int index) {
     if (self->menu != 0 && index > 0 && index < self->choices->count) {
-        GuiArrayWidget_Select(self->choices, 0, index);
+        GuiArrayWidget_SetSelected(self->choices, 0, index);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -41,7 +41,7 @@ typedef struct { char pad[0xE0]; int menuActive; void* menu; } cPlayer;
 extern void GuiTextWidget_SetText(void* menu, const char* title, int flags);
 
 /* Sets the title of the player's menu when it is active. */
-void cPlayer_SetMenuTitle(cPlayer* self, const char* title)
+void GuiGameScreen_SetMenuTitle(cPlayer* self, const char* title)
 {
     if (self->menuActive)
         GuiTextWidget_SetText(self->menu, title, 0);

@@ -9,13 +9,13 @@
 
 extern void* D_004DB810;
 extern int std_list_deleter_cHogFile_ctor(int*);
-extern int ListReceiver_Ctor(Unk229E60*);
-extern int MotionManager_Init(void);
+extern int cSystemContainer_ctor_void(Unk229E60*);
+extern int cMotionManager_InitStatics(void);
 
-Unk229E60* FrontEndScene_ctor(Unk229E60* self) {
-    ListReceiver_Ctor(self);
+Unk229E60* cFrontendSystem_ctor(Unk229E60* self) {
+    cSystemContainer_ctor_void(self);
     self->vtable = &D_004DB810;
     std_list_deleter_cHogFile_ctor(&self->unk2C);
-    MotionManager_Init();
+    cMotionManager_InitStatics();
     return self;
 }

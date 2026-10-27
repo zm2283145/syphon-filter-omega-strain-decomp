@@ -43,18 +43,18 @@ extern char D_004C2610[];
 extern char g_Game[];
 extern unsigned char g_IsMultiplayer;
 int sprintf(char *buf, const char *fmt, ...);
-Agent0450 *Agent_GetSelected(void *a, int i);
-void PtrVec_PushBack_1C1080(VecI0450 *v, int *p);
+Agent0450 *cGameSystem_GetAgentData(void *a, int i);
+void std_vector_int_push_back(VecI0450 *v, int *p);
 void func_0013A040(VecI0450 *v, int f);
 void std_vector_int_ctor_void(VecI0450 *v);
 void func_00296FA0(List0450 *l);
 void func_00299360(List0450 *l, short f);
-void AgentData_GetAwardRows(Agent0450 *a, unsigned char type, List0450 *out);
-void AgentData_GetRatings(Agent0450 *a, List0450 *out);
-void VoiceQueue_Push(void *vec, char *name, float seconds);
+void cAgentData_GetAchievements(Agent0450 *a, unsigned char type, List0450 *out);
+void cAgentData_GetRatings(Agent0450 *a, List0450 *out);
+void cQuipList_QueueUp(void *vec, char *name, float seconds);
 int *func_00460B40(VecI0450 *v, int i);
 int func_00460B50(VecI0450 *v);
-void GuiEndGameAwards_QueueVoices(Obj0450 *o);
+void GuiEndGameAwards_PlayQuips(Obj0450 *o);
 }
 
 static inline bool HasCur(Agent0450 *a)
@@ -74,18 +74,18 @@ static inline void Report(Obj0450 *o, VecI0450 *v, int kind)
             int i;
             for (i = 0; i < func_00460B50(v); i++) {
                 sprintf(buf, D_004C2610, *func_00460B40(v, i) + 1);
-                VoiceQueue_Push(&o->vec350, buf, 0.0f);
+                cQuipList_QueueUp(&o->vec350, buf, 0.0f);
             }
             sprintf(buf, D_004C2608, kind);
-            VoiceQueue_Push(&o->vec350, buf, 1.0f);
+            cQuipList_QueueUp(&o->vec350, buf, 1.0f);
         } else {
             sprintf(buf, D_004C25F8, kind, *func_00460B40(v, 0) + 1);
-            VoiceQueue_Push(&o->vec350, buf, 1.0f);
+            cQuipList_QueueUp(&o->vec350, buf, 1.0f);
         }
     }
 }
 
-void GuiEndGameAwards_QueueVoices(Obj0450 *o)
+void GuiEndGameAwards_PlayQuips(Obj0450 *o)
 {
     VecI0450 v6;
     VecI0450 v9;
@@ -104,34 +104,34 @@ void GuiEndGameAwards_QueueVoices(Obj0450 *o)
     v7.owns = 1;
     n = g_IsMultiplayer ? 4 : 1;
     for (idx = 0; idx < n; idx++) {
-        Agent0450 *agent = Agent_GetSelected(g_Game, idx);
+        Agent0450 *agent = cGameSystem_GetAgentData(g_Game, idx);
         List0450 list;
         func_00296FA0(&list);
         list.flag = 1;
         if (agent->b70) {
             if (HasCur(agent))
-                PtrVec_PushBack_1C1080(&v6, &idx);
-            AgentData_GetRatings(agent, &list);
+                std_vector_int_push_back(&v6, &idx);
+            cAgentData_GetRatings(agent, &list);
                         { int j = 0; Item0450** pit = &list.items;
-            if (j < list.count) do { if ((*pit)[j].type == 1) { PtrVec_PushBack_1C1080(&v7, &idx); break; } } while (++j < list.count); }
+            if (j < list.count) do { if ((*pit)[j].type == 1) { std_vector_int_push_back(&v7, &idx); break; } } while (++j < list.count); }
 
 
-            AgentData_GetAwardRows(agent, 1, &list);
+            cAgentData_GetAchievements(agent, 1, &list);
             {
                 int j = 0;
                 if (j < list.count) do {
                     if (list.items[j].type == 1) {
-                        PtrVec_PushBack_1C1080(&v8, &idx);
+                        std_vector_int_push_back(&v8, &idx);
                         break;
                     }
                 } while (++j < list.count);
             }
-            AgentData_GetAwardRows(agent, 2, &list);
+            cAgentData_GetAchievements(agent, 2, &list);
             {
                 int j = 0;
                 if (j < list.count) do {
                     if (list.items[j].type == 1) {
-                        PtrVec_PushBack_1C1080(&v9, &idx);
+                        std_vector_int_push_back(&v9, &idx);
                         break;
                     }
                 } while (++j < list.count);

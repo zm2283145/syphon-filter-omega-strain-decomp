@@ -5,8 +5,8 @@
 extern "C" {
 extern char D_004ABFC0[];
 extern char D_004ABFD0[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 }
 inline void* operator new(unsigned int, void* p) { return p; }
 struct Q_B4AA0 {
@@ -35,13 +35,13 @@ struct Holder_B4AA0 {
             Node_B4AA0* p = node;
             if (p) {
                 AllocGuard guard;
-                Mem_Free(0, p, D_004ABFD0, 0x64);
+                cMemMan_Deallocate(0, p, D_004ABFD0, 0x64);
             }
         }
     }
 };
 
-static inline Node_B4AA0* NewNode() { AllocGuard guard; return (Node_B4AA0*)Mem_Alloc(0, 0x70, D_004ABFC0, 0x5C); }
+static inline Node_B4AA0* NewNode() { AllocGuard guard; return (Node_B4AA0*)cMemMan_Allocate(0, 0x70, D_004ABFC0, 0x5C); }
 #pragma push
 #pragma opt_propagation off
 extern "C" int std_list_deleter_tNode_insert(Node_B4AA0** result, List_B4AA0* list, Node_B4AA0** pos, const Val_B4AA0* value)

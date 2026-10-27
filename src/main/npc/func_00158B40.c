@@ -1,6 +1,6 @@
 #pragma cplusplus on
 
-#define ObjectList_EraseRange LookSlot_Release
+#define std_list_deleter_voidPtr_erase_listdeleter_listdeleter std_list_deleter_cLookAtListItem_erase
 #include "obj_list_dtor.h"
 
 DEFINE_OBJ_LIST_DTOR(std_list_cLookAtListItem_dtor)

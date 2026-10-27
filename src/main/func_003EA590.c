@@ -11,7 +11,7 @@ struct VObj {
 struct Owner { char pad[0x30]; VObj* child; };
 
 /* Forwards to virtual method +0x10 of the object held at +0x30. */
-extern "C" void Component_GetOwnerId(Owner* o)
+extern "C" void cGobjController_ScriptGetObjectId(Owner* o)
 {
     o->child->Method10();
 }

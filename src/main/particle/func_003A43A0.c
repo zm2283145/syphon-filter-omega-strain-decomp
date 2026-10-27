@@ -10,13 +10,13 @@ float SoftFloat_DoubleToFloat(long long);
 char* strchr(const char*, int);
 long strtoul(char*, char**, int);
 long strtol(char*, char**, int);
-float SoftFloat_U64ToFloat(unsigned long long);
+float _f_ulltof(unsigned long long);
 float SoftFloat_S64ToFloat(long long);
 long long SoftFloat_DoubleMultiply(long long, long long);
-int SoftFloat_DoubleNotEqual(long long, long long);
+int _dpfne(long long, long long);
 char* strncpy(char*, const char*, int);
-void String_Copy(char*, const char*);
-void ParticleLib_NormalizeName(char*, char*, int);
+void Libc_Strcpy(char*, const char*);
+void cParticleSystem_CopyEffectName(char*, char*, int);
 extern char D_004BC648[];
 }
 
@@ -110,7 +110,7 @@ struct PD_43A0 {
 #define NL() s = strchr(s, '\n') + 1
 #define HALF ((long long)0x3FE00000 << 32)
 
-extern "C" bool ParticleDef_ParseCommon(PD_43A0* self, char* str, char* name, float ver)
+extern "C" bool cParticleDefinition_Load(PD_43A0* self, char* str, char* name, float ver)
 {
     char* s = str;
     bool ok; /* a bool local gives retail's daddiu return value */
@@ -123,7 +123,7 @@ extern "C" bool ParticleDef_ParseCommon(PD_43A0* self, char* str, char* name, fl
     lo.w = RD();
     NL();
     self->i0C = strtoul(s, &s, 10);
-    self->f10 = SoftFloat_U64ToFloat(strtoul(s, &s, 10));
+    self->f10 = _f_ulltof(strtoul(s, &s, 10));
     NL();
     self->f14 = SoftFloat_DoubleToFloat(SoftFloat_DoubleMultiply(HALF, strtod(s, &s)));
     self->f18 = RD();
@@ -178,7 +178,7 @@ extern "C" bool ParticleDef_ParseCommon(PD_43A0* self, char* str, char* name, fl
         self->i60 = 0;
     }
     if (ver >= 1.9f) {
-        self->b64 = SoftFloat_DoubleNotEqual(strtod(s, &s), 0);
+        self->b64 = _dpfne(strtod(s, &s), 0);
         NL();
         self->f68 = RD();
         self->f6C = RD();
@@ -200,7 +200,7 @@ extern "C" bool ParticleDef_ParseCommon(PD_43A0* self, char* str, char* name, fl
         s = strchr(s, ';') - 5;
         while ((s - n)[-1] != '\\') n++;
         strncpy(name, s - n, n);
-        String_Copy(name + n, D_004BC648);
+        Libc_Strcpy(name + n, D_004BC648);
     } else {
         *name = 0;
     }
@@ -220,7 +220,7 @@ extern "C" bool ParticleDef_ParseCommon(PD_43A0* self, char* str, char* name, fl
     {
         char* e = strchr(s, ';');
         *(__int128*)self->name170 = 0;
-        ParticleLib_NormalizeName(self->name170, s, e - s - 1);
+        cParticleSystem_CopyEffectName(self->name170, s, e - s - 1);
     }
     NL();
     self->i180 = strtoul(s, &s, 10);
@@ -231,7 +231,7 @@ extern "C" bool ParticleDef_ParseCommon(PD_43A0* self, char* str, char* name, fl
             int off = i * sizeof(Ent_43A0); /* explicit offset: retail adds it before self */
             Ent_43A0* en = (Ent_43A0*)(off + (char*)self->e);
             *(__int128*)en->name = 0;
-            ParticleLib_NormalizeName(en->name, s, e - s - 1);
+            cParticleSystem_CopyEffectName(en->name, s, e - s - 1);
         }
         NL();
         int cnt = strtoul(s, &s, 10);

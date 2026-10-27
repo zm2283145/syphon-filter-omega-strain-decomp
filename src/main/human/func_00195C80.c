@@ -9,10 +9,10 @@
 
 extern char D_004E0840[];   /* ArgMsg vtable */
 extern char g_ActorActionMsgClass[];   /* CAS action message type */
-extern Message* Event_Construct(Message*, void*);
+extern Message* cMessage_ctor_cMessageNameR(Message*, void*);
 
-ArgMsg* Actor_SendCasAction(ArgMsg* self, int action, int flag) {
-    Event_Construct(&self->base, g_ActorActionMsgClass);
+ArgMsg* cCharActionMsg_ctor_int_eParamType(ArgMsg* self, int action, int flag) {
+    cMessage_ctor_cMessageNameR(&self->base, g_ActorActionMsgClass);
     self->base.vtable = D_004E0840;
     self->arg0 = action;
     self->arg1 = flag;

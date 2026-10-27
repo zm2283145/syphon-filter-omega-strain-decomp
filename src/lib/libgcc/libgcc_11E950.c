@@ -42,7 +42,7 @@ static const int npio2_hw[32] = {
 	0x41D5A000, 0x41E23100, 0x41EEC200, 0x41FB5300, 0x4203F200, 0x420A3A00, 0x42108300, 0x4216CB00,
 	0x421D1400, 0x42235C00, 0x4229A500, 0x422FED00, 0x42363600, 0x423C7E00, 0x4242C700, 0x42490F00,
 };
-extern float Math_Fabsf(float x);
+extern float Libc_Fabsf(float x);
 extern int Math_RemPio2Kernel(float *x, float *y, int e0, int nx, int prec, const int *ipio2);
 int Math_RemPio2(float x, float *y)
 {
@@ -92,7 +92,7 @@ int Math_RemPio2(float x, float *y)
 	    }
 	}
 	if(ix<=0x43490f80) {
-	    t  = Math_Fabsf(x);
+	    t  = Libc_Fabsf(x);
 	    n  = (int) (t*invpio2+half);
 	    fn = (float)n;
 	    r  = t-fn*pio2_1;

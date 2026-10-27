@@ -50,7 +50,7 @@ Rel* func_0018A8F0(Rel* r) {
 }
 
 /* Construct an array of seven 8-byte pairs. */
-void* MotionTokens_Init(void* array) {
+void* cArray_FixedSize_cSkaAnimEvent_7_ctor_void(void* array) {
     __construct_array(array, cSkaAnimEvent_ctor_void, func_0018A210, 8, 7);
     return array;
 }

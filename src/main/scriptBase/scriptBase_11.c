@@ -66,12 +66,12 @@ char* buildNameWithPrefix(char* path)
 #pragma push /* merge_units */
 typedef struct { char pad[8]; char** types; } TypeTable003D9400;
 extern TypeTable003D9400* D_00554F28;
-extern void PtrVec_PushBack_1C1080(void* list, int* value);
+extern void std_vector_int_push_back(void* list, int* value);
 /* Add an accepted interface to a script type. */
-void ScriptType_AddAccepted(int type, int iface)
+void cScriptBase_declareMsgUse(int type, int iface)
 {
     int i = type - 100;
-    PtrVec_PushBack_1C1080(D_00554F28->types[i] + 0x24, &iface);
+    std_vector_int_push_back(D_00554F28->types[i] + 0x24, &iface);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003D9400(void) {}
@@ -95,7 +95,7 @@ extern PtrVec* D_00554F28;  /* global script type table (ScriptType* entries, id
 
 
 /* Sets field +0x40 of script type 'typeId'. */
-void ScriptType_SetParent(int typeId, int value) {
+void cScriptBase_declareParent(int typeId, int value) {
     int i = typeId - 100;
     ScriptType* type = (ScriptType*)D_00554F28->data[i];
 

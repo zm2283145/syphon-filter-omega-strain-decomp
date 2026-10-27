@@ -10,7 +10,7 @@
 typedef struct { int a; int b; int c; } S92Str;
 typedef struct { S92Str key; unsigned char val; } S92Pair;
 typedef struct { void* it; unsigned char ok; } S92Res;
-extern void String_CopyCtor(S92Str* dst, const S92Str* src);
+extern void std_basic_string_char_char_traits_char_ctor_basicstringR(S92Str* dst, const S92Str* src);
 extern void String_Dtor(S92Str* s, int del);
 extern void std_make_pair_cString_uchar(S92Pair* out, S92Str* key, unsigned char val);
 extern void std_tree_pair_cString_value_compare_insert_one_pairR_3(S92Res* out, void* map, S92Pair* p);
@@ -21,9 +21,9 @@ unsigned char cAssocArray_cString_char_Add(void* map, const S92Str* name, unsign
     S92Pair p1;
     S92Pair p2;
     unsigned char ok;
-    String_CopyCtor(&k, name);
+    std_basic_string_char_char_traits_char_ctor_basicstringR(&k, name);
     std_make_pair_cString_uchar(&p1, &k, *val);
-    String_CopyCtor(&p2.key, &p1.key);
+    std_basic_string_char_char_traits_char_ctor_basicstringR(&p2.key, &p1.key);
     p2.val = p1.val;
     std_tree_pair_cString_value_compare_insert_one_pairR_3(&r, map, &p2);
     ok = r.ok;
@@ -48,12 +48,12 @@ unsigned char cAssocArray_cString_char_Add(void* map, const S92Str* name, unsign
 extern int std_vector_imp_cMaterialProperties_insert(MaterialVec* v, MaterialProps* pos, int n, int value);   /* insert */
 
 /* back() */
-MaterialProps* MaterialVec_Back(MaterialVec* v) {
+MaterialProps* cArray_cMaterialProperties_Back(MaterialVec* v) {
     return &v->data[v->count] - 1;
 }
 
 /* push_back(v, value) */
-int MaterialVec_PushBack(MaterialVec* v, int value) {
+int cArray_cMaterialProperties_PushBackActual(MaterialVec* v, int value) {
     return std_vector_imp_cMaterialProperties_insert(v, v->data + v->count, 1, value);
 }
 
@@ -70,21 +70,21 @@ int cArray_cMaterialProperties_Size(MaterialVec* v) {
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int String_AssignString();                    
+int std_basic_string_char_char_traits_char_assign_basicstringR();                    
 
 int func_004093E0(int arg0, int arg1) {
     char * var_s2;
     char * var_s1;
 
-    String_AssignString();
+    std_basic_string_char_char_traits_char_assign_basicstringR();
     var_s1 = (char *)(arg1 + 0xC);
     var_s2 = (char *)(arg0 + 0xC);
     do {
-        String_AssignString(var_s2, var_s1);
+        std_basic_string_char_char_traits_char_assign_basicstringR(var_s2, var_s1);
         F_(var_s2, 0xC, int) = F_(var_s1, 0xC, int);
         F_(var_s2, 0x10, int) = F_(var_s1, 0x10, int);
-        String_AssignString(var_s2 + 0x14, var_s1 + 0x14);
-        String_AssignString(var_s2 + 0x20, var_s1 + 0x20);
+        std_basic_string_char_char_traits_char_assign_basicstringR(var_s2 + 0x14, var_s1 + 0x14);
+        std_basic_string_char_char_traits_char_assign_basicstringR(var_s2 + 0x20, var_s1 + 0x20);
         F_(var_s2, 0x2C, int) = F_(var_s1, 0x2C, int);
         F_(var_s2, 0x30, float) = F_(var_s1, 0x30, float);
         F_(var_s2, 0x34, signed char) = F_(var_s1, 0x34, signed char);

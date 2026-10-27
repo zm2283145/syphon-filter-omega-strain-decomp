@@ -38,7 +38,7 @@ typedef struct Ring {
     unsigned int head;  /* 0x08 */
     int* items;         /* 0x0C */
 } Ring;
-int* Ring_SlotAt(Ring* ring, unsigned int offset); /* gsynth: defined below */
+int* cdeque_cSkaSystem_RequestPtr_opIndex(Ring* ring, unsigned int offset); /* gsynth: defined below */
 /*
  * Matched functions (byte-identical with the retail executable).
  * Part of ska.cc (skeletal animation).
@@ -46,18 +46,18 @@ int* Ring_SlotAt(Ring* ring, unsigned int offset); /* gsynth: defined below */
 
 
 #if 0 /* merge_units */
-extern char** Ring_SlotAt(void* blocks, unsigned int block);
+extern char** cdeque_cSkaSystem_RequestPtr_opIndex(void* blocks, unsigned int block);
 #endif /* merge_units */
-#define Ring_SlotAt(a0, a1) ((char * *)Ring_SlotAt((void *)(a0), (a1))) /* merge_units */
+#define cdeque_cSkaSystem_RequestPtr_opIndex(a0, a1) ((char * *)cdeque_cSkaSystem_RequestPtr_opIndex((void *)(a0), (a1))) /* merge_units */
 
 extern void* std_deque_deleter_common_cSkaSystem_Request_buf(void* self);
 
 /* Address of entry (first + index) in a block array of 248-byte entries, eight per block. */
 char* std_deque_cSkaSystem_Request_opIndex(SkaBlockArray* self, int index) {
     int i = index + self->first;
-    return *Ring_SlotAt(std_deque_deleter_common_cSkaSystem_Request_buf(self), (unsigned int)i >> 3) + (i & 7) * 248;
+    return *cdeque_cSkaSystem_RequestPtr_opIndex(std_deque_deleter_common_cSkaSystem_Request_buf(self), (unsigned int)i >> 3) + (i & 7) * 248;
 }
-#undef Ring_SlotAt /* merge_units */
+#undef cdeque_cSkaSystem_RequestPtr_opIndex /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003AC4A0(void) {}
 #pragma pop /* merge_units */
@@ -66,7 +66,7 @@ static inline void merge_flush_func_003AC4A0(void) {}
 /* merge_units: begin func_003AC4F0 */
 #pragma push /* merge_units */
 /* Returns the address of the slot `offset` past the ring head. */
-int* Ring_SlotAt(Ring* ring, unsigned int offset) {
+int* cdeque_cSkaSystem_RequestPtr_opIndex(Ring* ring, unsigned int offset) {
     return &ring->items[(ring->head + offset) % ring->size];
 }
 /* merge_units: generate this block's code under its own pragmas */

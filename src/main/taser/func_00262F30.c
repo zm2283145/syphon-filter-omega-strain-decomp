@@ -13,7 +13,7 @@ struct Rope { char pad[0x14]; int n; Seg* segs; char pad1C[0xC4 - 0x1C]; float l
 extern "C" {
 extern int D_0048B170[];
 extern float D_0048B160[];
-float Math_Sin(float);
+float Libc_Sinf(float);
 }
 
 extern "C" void cAirTaser_AddWhipAction(Rope* r, float dt)
@@ -28,9 +28,9 @@ extern "C" void cAirTaser_AddWhipAction(Rope* r, float dt)
     int i;
     for (i = 1; i < n; i++) {
         V v;
-        v.x = ax * ((float)i / cnt) * Math_Sin(ang);
+        v.x = ax * ((float)i / cnt) * Libc_Sinf(ang);
         v.y = 0.0f;
-        v.z = az * ((float)i / cnt) * Math_Sin(ang);
+        v.z = az * ((float)i / cnt) * Libc_Sinf(ang);
         r->segs[i].pos += v;
         ang += step;
         r->At(i).pos.y *= D_0048B160[0];

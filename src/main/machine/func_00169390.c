@@ -8,18 +8,18 @@
 
 extern void* D_004FFC04;
 extern unsigned char g_IsMultiplayer;    /* nonzero in a multiplayer game */
-extern int NetMsgThrottle_SendMsg(void);
+extern int cNetMsgThrottle_NextFrame(void);
 extern void cGameFrontEnd_LobbyUpdate(void* obj);
-extern int DME_GetLobby(void);
+extern int cDME_GetLobby(void);
 extern int DME_Update(void);
 
 /* Per-frame service: flush network messages in multiplayer, then update D_004FFC04. */
 void cMachine_NetUpdate(void) {
     if (g_IsMultiplayer != 0) {
-        NetMsgThrottle_SendMsg();
+        cNetMsgThrottle_NextFrame();
         DME_Update();
     }
-    if (D_004FFC04 != 0 && DME_GetLobby() != 0) {
+    if (D_004FFC04 != 0 && cDME_GetLobby() != 0) {
         cGameFrontEnd_LobbyUpdate(D_004FFC04);
     }
 }

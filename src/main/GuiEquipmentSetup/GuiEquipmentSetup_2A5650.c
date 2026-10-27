@@ -38,8 +38,8 @@ struct Sub2A5650 { char pad[0x10]; Q2A5650 pos; };
 struct T2A5650 { V2A5650 v; char pad4[0xC]; Sub2A5650 sub; char pad40[0x20]; unsigned char b50; };
 struct A2A5650 { char pad[0x50]; T2A5650* t; char pad54[0x10]; float heading; };
 extern "C" {
-float Math_Atan2f(float y, float x);
-void Actor_BaseLogicUpdate(A2A5650* a, float dt);
+float Libc_Atan2f(float y, float x);
+void cGOBJ_NextFrame(A2A5650* a, float dt);
 }
 extern "C" void func_002A5650(A2A5650* a, float dt)
 {
@@ -49,8 +49,8 @@ extern "C" void func_002A5650(A2A5650* a, float dt)
         t->v.v20();
     Sub2A5650* s = (Sub2A5650*)((char*)t + 0x10);
     V4Copy(&p, &s->pos);
-    a->heading = Math_Atan2f(p.f.x, *(volatile float*)&p.f.y);
-    Actor_BaseLogicUpdate(a, dt);
+    a->heading = Libc_Atan2f(p.f.x, *(volatile float*)&p.f.y);
+    cGOBJ_NextFrame(a, dt);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002A5650(void) {}
@@ -96,7 +96,7 @@ DEFINE_TREE_FIND(func_002A5980, std_basic_string_char_char_traits_char_compare_b
 /* Resize a vector of 60-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem60, 60)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_002A5A50, Elem60, AnimChannelVec_Grow, std_vector_imp_cSkaSliderValue_erase)
+DEFINE_VECTOR_RESIZE(func_002A5A50, Elem60, std_vector_imp_cSkaSliderValue_insert, std_vector_imp_cSkaSliderValue_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_002A5A50 */
@@ -108,7 +108,7 @@ DEFINE_VECTOR_RESIZE(func_002A5A50, Elem60, AnimChannelVec_Grow, std_vector_imp_
 /* Resize a vector of 8-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem8, 8)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_002A5AE0, Elem8, Vector_Insert_1BF5A0, std_vector_imp_cSkaSwitchValue_erase)
+DEFINE_VECTOR_RESIZE(func_002A5AE0, Elem8, std_vector_imp_cSkaSwitchValue_insert, std_vector_imp_cSkaSwitchValue_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_002A5AE0 */

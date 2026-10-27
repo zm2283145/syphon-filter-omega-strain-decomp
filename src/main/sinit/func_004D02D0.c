@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_004F80B8;
 
-void StaticInit_SwitchBodiesMsgName(void) {
+void StaticInit_SwitchBodies(void) {
     D_004F80B8 = "MSGGAME_SWITCH_BODIES_REQUEST";
 }

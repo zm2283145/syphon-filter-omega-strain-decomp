@@ -68,11 +68,11 @@ extern u64_t D_005392D8;
 extern int D_00554EFC;
 extern void cTexMan_EndBatch(TexMgr6250*);
 extern void cDmaMan_InsertChain(void*, int, int, int);
-extern unsigned int Renderer_SetDrawState(void*, Mtx6250*, unsigned int, unsigned int);
+extern unsigned int XLib_SetModelContext(void*, Mtx6250*, unsigned int, unsigned int);
 extern Q6250* cDmaMan_BeginChain_eDmaChannel_int(void*, int, int);
-extern void DmaPacket_Close(void*, int, Q6250*);
-extern void Shadow_RenderBatch(void*);
-extern void Shadow_NextReceiverBatch(void*);
+extern void cDmaMan_EndChain_int_ulongP(void*, int, Q6250*);
+extern void cShadowMan_BeginShadowBatch(void*);
+extern void cShadowMan_NextShadowBatch(void*);
 
 /* quadword copy through a register (lq/sq) */
 static inline void QC(const void* s0, void* d0) { void* d = d0; __int128 q; const void* s = s0; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
@@ -99,7 +99,7 @@ static inline void QCopy6250(void* s, int n, void* d)
         .set reorder
     }
 }
-static inline void Dma_StartToSpr(int sadr, int madr, int qwc)
+static inline void FASTDMA_ToSPR(int sadr, int madr, int qwc)
 {
     *(volatile int*)0x1000D420 = qwc;
     *(volatile int*)0x1000D480 = sadr;
@@ -107,7 +107,7 @@ static inline void Dma_StartToSpr(int sadr, int madr, int qwc)
     *(volatile int*)0x1000D400 = 0x100;
     __asm__ volatile ("sync");
 }
-static inline void Dma_WaitToSpr(void)
+static inline void FASTDMA_Wait_ToSPR(void)
 {
     while (*(volatile int*)0x1000D400 & 0x100)
         ;
@@ -129,7 +129,7 @@ static inline void SetTexEnv(void)
     }
 }
 
-void Model_Draw(Model6250* m, unsigned int flags, Mtx6250* xf)
+void cVU1Model_Render(Model6250* m, unsigned int flags, Mtx6250* xf)
 {
     TexMgr6250* tm;
     int spr;
@@ -179,10 +179,10 @@ void Model_Draw(Model6250* m, unsigned int flags, Mtx6250* xf)
     D_005381C4++;
     QC(&m->data->color, &D_005381D0);
     D_005392D8 = D_004BC1B0;
-    Renderer_SetDrawState(g_Video, xf, flags, m->extra);
+    XLib_SetModelContext(g_Video, xf, flags, m->extra);
     if (m->qwc <= 0x300) {
-        Dma_StartToSpr(spr, (int)m->data->packet, m->qwc);
-        Dma_WaitToSpr();
+        FASTDMA_ToSPR(spr, (int)m->data->packet, m->qwc);
+        FASTDMA_Wait_ToSPR();
     }
     {
         u64_t* s = (u64_t*)(spr + 0x3000);
@@ -203,19 +203,19 @@ void Model_Draw(Model6250* m, unsigned int flags, Mtx6250* xf)
         } else {
             QCopy6250(m->data->packet, m->qwc, p);
         }
-        DmaPacket_Close(D_00537F80, 1, p + m->qwc);
+        cDmaMan_EndChain_int_ulongP(D_00537F80, 1, p + m->qwc);
     }
     while (D_00554EFC) {
         Q6250* p;
-        Shadow_RenderBatch(D_00543790);
+        cShadowMan_BeginShadowBatch(D_00543790);
         D_005381C4 = 0;
         SetTexEnv();
         D_005381C4++;
-        Renderer_SetDrawState(g_Video, xf, flags, m->extra);
+        XLib_SetModelContext(g_Video, xf, flags, m->extra);
         p = cDmaMan_BeginChain_eDmaChannel_int(D_00537F80, 1, m->qwc);
         QCopy6250(m->data->packet, m->qwc, p);
-        DmaPacket_Close(D_00537F80, 1, p + m->qwc);
-        Shadow_NextReceiverBatch(D_00543790);
+        cDmaMan_EndChain_int_ulongP(D_00537F80, 1, p + m->qwc);
+        cShadowMan_NextShadowBatch(D_00543790);
     }
     if (xf) {
         D_00538C64--;

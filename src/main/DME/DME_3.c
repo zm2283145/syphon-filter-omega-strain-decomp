@@ -15,15 +15,15 @@
 #include "types.h"
 #include "DME.h"
 
-extern int PtrVec_Insert(int, int, int, int);
+extern int std_vector_pod_int_insert(int, int, int, int);
 
-int PtrVec_PushBack_429770(int vec, int value) {
+int std_vector_tServerPtr_push_back(int vec, int value) {
     int count;
     int data;
 
     count = *(int*)((char*)vec + 4);
     data = *(int*)((char*)vec + 8);
-    return PtrVec_Insert(vec, (data + (count << 2)), 1, value);
+    return std_vector_pod_int_insert(vec, (data + (count << 2)), 1, value);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00429770 */
@@ -39,21 +39,21 @@ extern unsigned char D_005723C8;
 extern int g_DmeConnectRetries;
 extern int g_DmeConnectMaxRetries;
 extern signed char D_005724B0;
-extern int Gui_GetScreenStack(void);
-extern void GuiWidget_SendEvent(int a, int b, int c, int d, int e);
-extern void NetGame_InitLocalSlot(int* out, int session);
+extern int Gui_Canvas(void);
+extern void GuiWidget_SendMessage(int a, int b, int c, int d, int e);
+extern void NetGetMyClientIndex(int* out, int session);
 extern void NetGetPeerToPeerHostClientIndex(int session, int* out);
 static inline int LocalSlot_h5(int session)
 {
     if (g_IsMultiplayer) {
         if (D_00494178 == -1) {
-            NetGame_InitLocalSlot(&D_00494178, session);
+            NetGetMyClientIndex(&D_00494178, session);
         }
         return D_00494178;
     }
     return 0;
 }
-/* Connect callback (NetGame_Create / Net_ConnectGame). */
+/* Connect callback (NetHostPeerToPeer / Net_ConnectGame). */
 void DME_OnConnectResult(NetConnInfo_h5* info)
 {
     int slot[2];
@@ -63,17 +63,17 @@ void DME_OnConnectResult(NetConnInfo_h5* info)
     D_005721A8 = info->session;
     if (info->status == 3) {
         D_005724B0 = DME_STATE_DISCONNECTED;
-        if (Gui_GetScreenStack()) {
-            GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, (int)"F_TO_CONNECT");
+        if (Gui_Canvas()) {
+            GuiWidget_SendMessage(Gui_Canvas(), Gui_Canvas(), 0x1E, 0, (int)"F_TO_CONNECT");
         }
     } else {
         D_005724B0 = DME_STATE_CONNECTED;
         g_IsMultiplayer = 1;
-        NetGame_InitLocalSlot(slot, info->session);
+        NetGetMyClientIndex(slot, info->session);
         D_00494178 = slot[0];
         NetGetPeerToPeerHostClientIndex(info->session, slot);
-        if (slot[0] == LocalSlot_h5(D_005721A8) && Gui_GetScreenStack()) {
-            GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 1, 0);
+        if (slot[0] == LocalSlot_h5(D_005721A8) && Gui_Canvas()) {
+            GuiWidget_SendMessage(Gui_Canvas(), Gui_Canvas(), 0x1E, 1, 0);
         }
     }
     g_DmeConnectRetries = 0;
@@ -116,7 +116,7 @@ struct Guard_9920 {
 };
 /* Client-left callback: drops the session if the host left, marks the client
    disconnected and (on the host) clears a pending level-info slot. */
-extern "C" void DME_OnClientDisconnect(Pk429920* p)
+extern "C" void cDME_RemoteClientDisconnectCallback(Pk429920* p)
 {
     Guard_9920 g;
     int buf;
@@ -154,7 +154,7 @@ extern char D_005721E0[16];
 extern int snprintf(char* buf, int size, const char* fmt, ...); /* snprintf-like */
 
 /* Join-failure callback: records the "HOST_DISCONNECT" disconnect reason. */
-void DME_OnHostDisconnect(void)
+void cDME_HostChangeCallback(void)
 {
     D_00572410 = 1;
     D_005721D8 = 1;

@@ -15,22 +15,22 @@ typedef struct cNPC {
     int ai;
 } cNPC;
 
-extern void NpcPerception_AddAwareness(int ai, int arg, int mode, float value);
-extern void Event_Construct(NpcMsg* msg, void* name);
-extern void Event_Send(NpcMsg* msg, cNPC* target, int flags);
+extern void cAITarget_AddAwareness(int ai, int arg, int mode, float value);
+extern void cMessage_ctor_cMessageNameR(NpcMsg* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(NpcMsg* msg, cNPC* target, int flags);
 extern void cMessage_dtor(NpcMsg* msg, int flags);
 extern char D_004EE550[];
 extern char D_004D9340[]; /* AI mode message vtable */
 
 /* cNPC vtable slot 0x1C: switches the AI to mode 8 and notifies itself. */
-void cNPC_v1C(cNPC* self, int arg) {
+void cNPC_NoticeDamage(cNPC* self, int arg) {
     NpcMsg msg;
-    NpcPerception_AddAwareness(self->ai, arg, 8, 0.0f);
-    Event_Construct(&msg, D_004EE550);
+    cAITarget_AddAwareness(self->ai, arg, 8, 0.0f);
+    cMessage_ctor_cMessageNameR(&msg, D_004EE550);
     msg.vtable = D_004D9340;
     msg.mode = 8;
     msg.target = -1;
-    Event_Send(&msg, self, 0);
+    QueueMessage_cMessageR_cSystemP_int(&msg, self, 0);
     msg.vtable = D_004D9340;
     cMessage_dtor(&msg, 0);
 }

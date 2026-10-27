@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-float Root_GetWeightCached(char* self) {
+float cSkaAnimAnchor_GetWeight(char* self) {
     return *(float*)(self + 208);
 }

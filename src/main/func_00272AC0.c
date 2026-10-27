@@ -7,6 +7,6 @@
 #include "types.h"
 #include "loose01_types.h"
 
-int HudMarkers_GetHighlight(Unk272AC0* self) {
+int cHudTargetManager_GetObjectiveTarget(Unk272AC0* self) {
     return self->unk3C;
 }

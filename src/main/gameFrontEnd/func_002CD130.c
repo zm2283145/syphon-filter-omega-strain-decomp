@@ -8,8 +8,8 @@ typedef struct StrObj {
 } StrObj;
 
 extern int strlen(const char* s); /* strlen */
-extern void String_Reserve(StrObj* str, int capacity);
-extern void String_Replace(StrObj* str, int pos, int count, const char* first, const char* last, char alloc);
+extern void std_basic_string_char_char_traits_char_reserve(StrObj* str, int capacity);
+extern void std_basic_string_char_char_traits_char_do_replace(StrObj* str, int pos, int count, const char* first, const char* last, char alloc);
 
 /* String constructor from a C string. */
 StrObj* func_002CD130(StrObj* self, const char* cstr) {
@@ -19,7 +19,7 @@ StrObj* func_002CD130(StrObj* self, const char* cstr) {
     self->w1 = 0;
     self->w2 = 0;
     len = strlen(cstr);
-    String_Reserve(self, len);
-    String_Replace(self, 0, 0, cstr, cstr + len, alloc[0]);
+    std_basic_string_char_char_traits_char_reserve(self, len);
+    std_basic_string_char_char_traits_char_do_replace(self, 0, 0, cstr, cstr + len, alloc[0]);
     return self;
 }

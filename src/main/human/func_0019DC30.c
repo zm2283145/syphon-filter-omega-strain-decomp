@@ -16,8 +16,8 @@ typedef struct {
     Ctl* ctl;               /* 0x3310 */
 } Actor;
 extern float D_0049CF58;
-extern void Actor_PrepareNeutralChannels(Actor* a, int b, int c, int d, int e);
-extern void AnimChannel_SetTarget(void* a, int idx, unsigned int n, float target, float dur, float damping);
+extern void cHuman_ClearMotionSettings(Actor* a, int b, int c, int d, int e);
+extern void cSkaParams_SetSliderValue_UsingSplineForInterpolation(void* a, int idx, unsigned int n, float target, float dur, float damping);
 /* Picks the lean-channel target (left/right/neutral) from the lean value and controller flags. */
 void cHuman_Hang_NextFrame(Actor* self)
 {
@@ -26,7 +26,7 @@ void cHuman_Hang_NextFrame(Actor* self)
     if (0.0f == self->speed) {
         self->flags3208 |= 1;
     }
-    Actor_PrepareNeutralChannels(self, 0, 0, 0, 1);
+    cHuman_ClearMotionSettings(self, 0, 0, 0, 1);
     if (self->lean < -0.75f && self->ctl && ((self->ctl->flags >> 10) & 1)) {
         t = 0.0f;
         self->flags3248 |= 0x100;
@@ -38,5 +38,5 @@ void cHuman_Hang_NextFrame(Actor* self)
         self->flags3248 &= ~0x100;
         self->flags3248 &= ~0x200;
     }
-    AnimChannel_SetTarget(blk->anim, 6, 0, t, D_0049CF58, 3.0f);
+    cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 6, 0, t, D_0049CF58, 3.0f);
 }

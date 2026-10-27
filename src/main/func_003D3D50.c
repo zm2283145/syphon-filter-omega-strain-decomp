@@ -2,9 +2,9 @@
 #include "types.h"
 #pragma always_inline on
 #pragma inline_depth(8)
-/* Shadow_AddToReceivers: adds projector idx to every receiver whose model takes this projector type,
+/* cShadowMan_AssignShadow: adds projector idx to every receiver whose model takes this projector type,
  * lies within the shadow range of c and whose (world) bounds intersect the projector frustum.
- * VU0 math and quad copies are inline asm (as in Shadow_AddReceiver / Shadow_BuildProjection). */
+ * VU0 math and quad copies are inline asm (as in cShadowMan_AddReceiver / cShadowMan_ProcessCaster). */
 struct V {
     float x, y, z, w;
     V() {}
@@ -44,8 +44,8 @@ struct Shadow {
 };
 extern "C" {
 extern char g_Video[];
-int Model_BoundsIntersect(Obj* o, M* m, const V* mn, const V* mx);
-void Shadow_AddToReceivers(Shadow* sh, int idx, V* c);
+int XLib_TestBBox_cMatrixR_cVectorR_cVectorR(Obj* o, M* m, const V* mn, const V* mx);
+void cShadowMan_AssignShadow(Shadow* sh, int idx, V* c);
 }
 static inline void Sub(V* r, const V* a, const V* b) { __asm__ volatile("lqc2 vf1, 0x0(%1); lqc2 vf2, 0x0(%2); vsub.xyzw vf1, vf1, vf2; sqc2 vf1, 0x0(%0)" : : "r"(r), "r"(a), "r"(b) : "memory"); }
 static inline V operator-(const V& a, const V& b) { V r; Sub(&r, &a, &b); return r; }
@@ -64,7 +64,7 @@ static inline M* WorldX(Xf* x) { if (x->dirty) ((XV*)x)->Refresh(); return &x->w
 static inline M* World(Obj* o) { Xf* x = o->x50; if (x->dirty) ((XV*)x)->Refresh(); return &x->world; }
 static inline float LenR(const V& v) { return v.Length(); }
 #pragma opt_common_subs off
-extern "C" void Shadow_AddToReceivers(Shadow* sh, int idx, V* c)
+extern "C" void cShadowMan_AssignShadow(Shadow* sh, int idx, V* c)
 {
     V mn; Proj* p; int i; V mx; Recv* rc;
     p = &sh->proj[idx];
@@ -84,7 +84,7 @@ extern "C" void Shadow_AddToReceivers(Shadow* sh, int idx, V* c)
                         mn = XformPt(mn, WorldX(x));
                         mx = XformPt(mx, World(rc->obj));
                     }
-                    bool hit = Model_BoundsIntersect((Obj*)g_Video, &p->x50, &mn, &mx) != 0x80;
+                    bool hit = XLib_TestBBox_cMatrixR_cVectorR_cVectorR((Obj*)g_Video, &p->x50, &mn, &mx) != 0x80;
                     if (hit) {
                         int n = rc->nProj;
                         if (n < 24) {

@@ -9,11 +9,11 @@
 
 extern "C" {
 /*fc*/
-int Mem_Free(...);                         
-int List_Begin(...);                          
+int cMemMan_Deallocate(...);                         
+int std_list_deleter_voidPtr_begin_void(...);                          
 int std_vector_deleter_cSkaSliderValue_dtor(...);                            
 int std_vector_deleter_cSkaSwitchValue_dtor(...);                            
-int ReceiverList_Dtor_392F50(...);                            
+int std_list_cSkaTransPlaybackPtr_dtor(...);                            
 int cLListIterator_cSkaTransPlaybackPtr_ctor(...);                        
 int std_list_cSkaTransPlaybackPtr_end(...);                          
 int std_list_cSkaTransPlaybackPtr_generic_iterator_ctor(...);                      
@@ -23,7 +23,7 @@ int operator_delete(...);
 extern unsigned char g_ProfileLockEnabled;
 }
 #pragma inline_depth(10)
-static inline void itb_(char **o, char *l) { int r; List_Begin(&r, l); std_list_cSkaTransPlaybackPtr_generic_iterator_ctor(o, &r); }
+static inline void itb_(char **o, char *l) { int r; std_list_deleter_voidPtr_begin_void(&r, l); std_list_cSkaTransPlaybackPtr_generic_iterator_ctor(o, &r); }
 static inline void ite_(char **o, char *l) { int r; std_list_cSkaTransPlaybackPtr_end(&r, l); cLListIterator_cSkaTransPlaybackPtr_ctor(o, &r); }
 extern "C" int cSkaParams_dtor(char *arg0, long long arg1) {
     int temp_a0_4;
@@ -46,7 +46,7 @@ extern "C" int cSkaParams_dtor(char *arg0, long long arg1) {
                 temp_s3 = F_(var_s0, 0x8, int);
                 {
                     AllocGuard g;
-                Mem_Free(0, temp_s3, "ska.icc", 0x423);
+                cMemMan_Deallocate(0, temp_s3, "ska.icc", 0x423);
                 }
                 var_s0 = (char *)(F_(var_s0, 0x4, int));
         }
@@ -64,7 +64,7 @@ extern "C" int cSkaParams_dtor(char *arg0, long long arg1) {
         }
         temp_a0_4 = (int)(arg0 + 0x6C);
         if (temp_a0_4 != 0) {
-            ReceiverList_Dtor_392F50(temp_a0_4, 0);
+            std_list_cSkaTransPlaybackPtr_dtor(temp_a0_4, 0);
         }
         temp_a0_5 = (int)(arg0 + 0x54);
         if ((arg0 + 0x24) != 0) {

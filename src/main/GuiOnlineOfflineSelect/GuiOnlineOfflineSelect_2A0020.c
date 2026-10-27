@@ -12,7 +12,7 @@ typedef struct StrHdr {
     unsigned shortLen : 7;
     int longLen;
 } StrHdr;
-extern void String_Replace(StrHdr* str, int pos, int count, const char* first, const char* last, char alloc);
+extern void std_basic_string_char_char_traits_char_do_replace(StrHdr* str, int pos, int count, const char* first, const char* last, char alloc);
 void func_002A0020(StrHdr* str, const char* first, const char* last)
 {
     volatile char alloc[4];
@@ -22,7 +22,7 @@ void func_002A0020(StrHdr* str, const char* first, const char* last)
     } else {
         len = (unsigned char)str->shortLen;
     }
-    String_Replace(str, 0, len, first, last, alloc[0]);
+    std_basic_string_char_char_traits_char_do_replace(str, 0, len, first, last, alloc[0]);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002A0020 */
@@ -34,6 +34,6 @@ void func_002A0020(StrHdr* str, const char* first, const char* last)
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004AAD88[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(GuiOnlineConnect_Create, 0x124, D_004AAD88, GuiOnlineConnect_ctor)
+DEFINE_GUARDED_NEW_CTOR(ConcreteWidgetClassRep_GuiOnlineConnect_Create, 0x124, D_004AAD88, GuiOnlineConnect_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002A0070 */

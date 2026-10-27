@@ -4,13 +4,13 @@
 #pragma opt_loop_invariants off
 #include "types.h"
 #include "vslot_pad.h"
-/* cNIEventOBJ_v01 (message handler): for play messages, start (kind 0:
+/* cNIEventOBJ_HandleMessage (message handler): for play messages, start (kind 0:
  * finish flags on the rotation/switch tracks, forward to the children),
  * stop (kind 1: forward) or reset (kind 2: rewind the tracks, rebuild the
  * node matrix from the first position key and the start rotations like
- * cNIEventOBJ_v48 (NIEvent_23B450.c), reset the attached object, forward and
- * return 1); everything else goes to NiEvent_HandlePlayMsg. Message layout
- * as in NiEvent_Stop (NiEvent_Stop.c). */
+ * cNIEventOBJ_SetEndState (NIEvent_23B450.c), reset the attached object, forward and
+ * return 1); everything else goes to cNIEventBase_HandleMessage. Message layout
+ * as in cNIEventBase_Stop (cNIEventBase_Stop.c). */
 struct V4_B7D0 { float x, y, z, w;
     void Set(float a, float b, float c, float d) { void* xx = this; x = a; y = b; z = c; w = d; }
 } __attribute__((aligned(16)));
@@ -24,7 +24,7 @@ struct Key_B7D0 { float t; float v; char pad8[8]; };
 struct Rot_B7D0 { float val; int cap; int n; Key_B7D0* data; int pad10; int state; int t; unsigned char flag; char pad1D[3]; };
 extern "C" { extern int D_004F7C28; extern char D_004DC2F0[]; }
 struct Msg_B7D0;
-extern "C" { void Event_Construct(Msg_B7D0* m, void* name); void cMessage_dtor(Msg_B7D0* m, int flags); }
+extern "C" { void cMessage_ctor_cMessageNameR(Msg_B7D0* m, void* name); void cMessage_dtor(Msg_B7D0* m, int flags); }
 struct Msg_B7D0 { void* vtable; char pad04[0x1C]; unsigned char b20; char pad21[3]; int kind; char pad28[8];
 };
 class Obj_B7D0 {
@@ -66,22 +66,22 @@ public:
 extern "C" {
 extern int D_004F7C28;
 extern char D_004DC2F0[];
-int* Event_GetType(void* ev);
-void Event_Construct(Msg_B7D0* m, void* name);
-void Event_Send(Msg_B7D0* m, void* target, int a);
+int* cMessage_Name(void* ev);
+void cMessage_ctor_cMessageNameR(Msg_B7D0* m, void* name);
+void QueueMessage_cMessageR_cSystemP_int(Msg_B7D0* m, void* target, int a);
 void cMessage_dtor(Msg_B7D0* m, int flags);
-float Vec4_GetX(V4_B7D0* v);
-float Vec4_GetY(V4_B7D0* v);
-float Vec4_GetZ(V4_B7D0* v);
-void Mtx_MakeAxisRotation(M4_B7D0* m, float x, float y, float z, float a);
+float cVector_X_void(V4_B7D0* v);
+float cVector_Y_void(V4_B7D0* v);
+float cVector_Z_void(V4_B7D0* v);
+void cMatrix_SetWithAxisAngle(M4_B7D0* m, float x, float y, float z, float a);
 void cMatrix_ctor_void(M4_B7D0* m);
-void Mtx_Multiply(M4_B7D0* a, M4_B7D0* b);
-int NiEvent_HandlePlayMsg(Self_B7D0* self, Msg_B7D0* ev);
-int cNIEventOBJ_v01(Self_B7D0* self, Msg_B7D0* ev);
+void cMatrix_Rotate(M4_B7D0* a, M4_B7D0* b);
+int cNIEventBase_HandleMessage(Self_B7D0* self, Msg_B7D0* ev);
+int cNIEventOBJ_HandleMessage(Self_B7D0* self, Msg_B7D0* ev);
 }
 static inline void VCopy_B7D0(V4_B7D0* d, const V4_B7D0* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
 static inline void Cp_B7D0(void* d, const void* s) { __int128 t; asm volatile { .set reorder; lq t, 0(s); sq t, 0(d) } }
-static inline void MakeRot_B7D0(M4_B7D0* m, const V4_B7D0& a, float ang) { Mtx_MakeAxisRotation(m, a.x, a.y, a.z, ang); }
+static inline void MakeRot_B7D0(M4_B7D0* m, const V4_B7D0& a, float ang) { cMatrix_SetWithAxisAngle(m, a.x, a.y, a.z, ang); }
 static inline void Rewind_B7D0(Rot_B7D0* r) {
     r->t = 0;
     if (r->n > 0)
@@ -98,22 +98,22 @@ static inline void BuildRot_B7D0(Self_B7D0* o, M4_B7D0* pm)
     float ang; float bng; float cng;
     ang = Rad_B7D0(o->rx.val);
     ax1.Set(1.0f, 0.0f, 0.0f, 0.0f);
-    Mtx_MakeAxisRotation(pm, Vec4_GetX(&ax1), Vec4_GetY(&ax1), Vec4_GetZ(&ax1), ang);
+    cMatrix_SetWithAxisAngle(pm, cVector_X_void(&ax1), cVector_Y_void(&ax1), cVector_Z_void(&ax1), ang);
     bng = Rad_B7D0(o->ry.val);
     ax2.Set(0.0f, 1.0f, 0.0f, 0.0f);
     cMatrix_ctor_void(&m1);
     MakeRot_B7D0(&m1, ax2, bng);
-    Mtx_Multiply(pm, &m1);
+    cMatrix_Rotate(pm, &m1);
     cng = Rad_B7D0(o->rz.val);
     ax3.Set(0.0f, 0.0f, 1.0f, 0.0f);
     cMatrix_ctor_void(&m2);
     MakeRot_B7D0(&m2, ax3, cng);
-    Mtx_Multiply(pm, &m2);
+    cMatrix_Rotate(pm, &m2);
 }
 
 // 4x128-bit lq/sq matrix copy, interleaved as in retail (no C equivalent for the quadword pairing)
 static inline void CopyM_B7D0(M4_B7D0* d, const M4_B7D0* s) { __int128 qa; __int128 qb; asm { lq qa, 0x0(s); lq qb, 0x10(s); sq qa, 0x0(d); lq qa, 0x20(s); sq qb, 0x10(d); lq qb, 0x30(s); sq qa, 0x20(d); sq qb, 0x30(d) } }
-extern "C" int cNIEventOBJ_v01(Self_B7D0* self, Msg_B7D0* ev)
+extern "C" int cNIEventOBJ_HandleMessage(Self_B7D0* self, Msg_B7D0* ev)
 {
     Msg_B7D0* e = ev;
     int i;
@@ -122,7 +122,7 @@ extern "C" int cNIEventOBJ_v01(Self_B7D0* self, Msg_B7D0* ev)
     int j;
     Self_B7D0* o = self;
     int t;
-    t = *Event_GetType(e);
+    t = *cMessage_Name(e);
     if (t == D_004F7C28) {
         switch (e->kind) {
         case 0:
@@ -133,11 +133,11 @@ extern "C" int cNIEventOBJ_v01(Self_B7D0* self, Msg_B7D0* ev)
             for (i = 0; i < o->an; i++) {
                 Msg_B7D0 m;
                 p = &m;
-                Event_Construct(p, &D_004F7C28);
+                cMessage_ctor_cMessageNameR(p, &D_004F7C28);
                 p->vtable = D_004DC2F0;
                 p->kind = 0;
                 m.b20 = 1;
-                Event_Send(p, o->adata[i], 0);
+                QueueMessage_cMessageR_cSystemP_int(p, o->adata[i], 0);
                 m.vtable = D_004DC2F0;
                 cMessage_dtor(p, 0);
             }
@@ -146,11 +146,11 @@ extern "C" int cNIEventOBJ_v01(Self_B7D0* self, Msg_B7D0* ev)
             for (i = 0; i < o->an; i++) {
                 Msg_B7D0 m;
                 p = &m;
-                Event_Construct(p, &D_004F7C28);
+                cMessage_ctor_cMessageNameR(p, &D_004F7C28);
                 p->vtable = D_004DC2F0;
                 p->kind = 1;
                 m.b20 = 1;
-                Event_Send(p, o->adata[i], 0);
+                QueueMessage_cMessageR_cSystemP_int(p, o->adata[i], 0);
                 m.vtable = D_004DC2F0;
                 cMessage_dtor(p, 0);
             }
@@ -177,11 +177,11 @@ extern "C" int cNIEventOBJ_v01(Self_B7D0* self, Msg_B7D0* ev)
             for (j = 0; j < o->an; j++) {
                 Msg_B7D0 m;
                 q = &m;
-                Event_Construct(q, &D_004F7C28);
+                cMessage_ctor_cMessageNameR(q, &D_004F7C28);
                 q->vtable = D_004DC2F0;
                 q->kind = 2;
                 m.b20 = 1;
-                Event_Send(q, o->adata[j], 0);
+                QueueMessage_cMessageR_cSystemP_int(q, o->adata[j], 0);
                 m.vtable = D_004DC2F0;
                 cMessage_dtor(q, 0);
             }
@@ -189,5 +189,5 @@ extern "C" int cNIEventOBJ_v01(Self_B7D0* self, Msg_B7D0* ev)
         }
         }
     }
-    return NiEvent_HandlePlayMsg(o, e);
+    return cNIEventBase_HandleMessage(o, e);
 }

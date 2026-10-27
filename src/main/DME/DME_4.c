@@ -25,9 +25,9 @@ extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005723C8;
 extern unsigned char D_005724B0;
 
-/* Join callback (DME_JoinGame): a client needs two successful results
+/* Join callback (cDME_JoinGame): a client needs two successful results
    (JOIN_WAIT, then JOINED); the host is joined after the first. */
-void DME_OnJoinResult(int *result) {
+void cDME_LocalJoinCallback(int *result) {
     int isHost;
 
     if (D_005723C8 == 0) {
@@ -58,7 +58,7 @@ extern float g_DmeLatencySum;
 extern int g_DmeLatencyCount;
 
 /* Accumulates a round-trip sample in ms (0..999) into a running average in seconds. */
-void DME_AddLatencySample(int ms) {
+void cDME_AddToAvgLatency(int ms) {
     if (ms < 0x3E8 && 0 <= ms) {
         g_DmeLatencyCount += 1;
         g_DmeLatencySum += 0.001f * (float) ms;

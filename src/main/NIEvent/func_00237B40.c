@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void Object_Activate(int);
+extern void cGOBJ_Activate(int);
 
-void cNIEventLight_v15(int a0) {
-    Object_Activate(a0);
+void cNIEventLight_Activate(int a0) {
+    cGOBJ_Activate(a0);
 }

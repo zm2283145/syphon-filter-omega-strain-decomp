@@ -8,6 +8,6 @@
 
 extern void cSKM_GOBJ_Init(void*);
 
-void Npc_ResetTime(void* self) {
+void cHuman_Init(void* self) {
     cSKM_GOBJ_Init(self);
 }

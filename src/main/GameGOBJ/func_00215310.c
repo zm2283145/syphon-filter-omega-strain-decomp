@@ -24,26 +24,26 @@ typedef struct ElevE6 {
 extern "C" char g_Game[];
 extern "C" char D_004DADF0[];
 extern "C" char g_TargetVisMgr[];
-extern "C" void SoundStopMsg_Ctor(ElevE6Msg* msg, void* key, ElevE6* self);
-extern "C" void Event_Send(ElevE6Msg*, void*, int);
-extern "C" void FileMan_Release(void*, int);
+extern "C" void cStopSoundMsg_ctor_cSndFxR_cGOBJP(ElevE6Msg* msg, void* key, ElevE6* self);
+extern "C" void QueueMessage_cMessageR_cSystemP_int(ElevE6Msg*, void*, int);
+extern "C" void cFileMan_dtor(void*, int);
 extern "C" void cMessage_dtor(ElevE6Msg*, int);
-extern "C" void Object_Deactivate(ElevE6* self, void* arg);
-extern "C" void TargetVis_Unregister(void* list, ElevE6* self);
+extern "C" void cGOBJ_Deactivate(ElevE6* self, void* arg);
+extern "C" void cTargetManager_RemoveGobj(void* list, ElevE6* self);
 
 /* cElevatorGOBJ vtable slot 16: broadcast, forward to the child, then base handling. */
-extern "C" void cElevatorGOBJ_v16(ElevE6* self, void* arg)
+extern "C" void cElevatorGOBJ_Deactivate(ElevE6* self, void* arg)
 {
     ElevE6Msg msg;
-    SoundStopMsg_Ctor(&msg, self->key, self);
-    Event_Send(&msg, g_Game, 1);
+    cStopSoundMsg_ctor_cSndFxR_cGOBJP(&msg, self->key, self);
+    QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 1);
     msg.vtbl = D_004DADF0;
-    FileMan_Release(msg.b, -1);
-    FileMan_Release(msg.a, -1);
+    cFileMan_dtor(msg.b, -1);
+    cFileMan_dtor(msg.a, -1);
     cMessage_dtor(&msg, 0);
     if (self->child != 0) {
         self->child->Fn(arg);
     }
-    Object_Deactivate(self, arg);
-    TargetVis_Unregister(g_TargetVisMgr, self);
+    cGOBJ_Deactivate(self, arg);
+    cTargetManager_RemoveGobj(g_TargetVisMgr, self);
 }

@@ -46,19 +46,19 @@ extern char D_004DAE30[];
 extern char g_Game[];
 extern int D_0055D4D8;
 extern int g_TeleportMsgClass;
-extern int* Event_GetType(void* ev);
-extern void Event_Construct(void* m, void* type);
-extern void Event_Send(void* m, void* target, int immediate);
+extern int* cMessage_Name(void* ev);
+extern void cMessage_ctor_cMessageNameR(void* m, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 extern void cMessage_dtor(void* m, int flags);
-extern void SoundEvent_CtorFromPreset(Snd_00219070* e, void* preset, void* owner);
-extern void FileMan_Release(Str_00219070* s, int flag);
-extern int Object_HandleMessage(Path_00219070* self, void* ev);
+extern void cPlaySoundMsg_ctor_cSndFxR(Snd_00219070* e, void* preset, void* owner);
+extern void cFileMan_dtor(Str_00219070* s, int flag);
+extern int cGOBJ_HandleMessage(Path_00219070* self, void* ev);
 }
 static inline int ObjId_00219070(Obj_00219070* o) { return o ? o->id : 0; }
 #pragma opt_strength_reduction off
-extern "C" int PathObj_Receive(Path_00219070* self, void* ev)
+extern "C" int cPathedGOBJ_HandleMessage(Path_00219070* self, void* ev)
 {
-    int t = *Event_GetType(ev);
+    int t = *cMessage_Name(ev);
     if (t == g_TriggerMsgKey) {
         int i;
         Snd_00219070 s;
@@ -66,48 +66,48 @@ extern "C" int PathObj_Receive(Path_00219070* self, void* ev)
         Notice_00219070 n;
         {
             self->bDC = 0;
-            Event_Construct(&n, D_004F5450);
+            cMessage_ctor_cMessageNameR(&n, D_004F5450);
             n.vtable = D_004DAE90;
             n.kind = 1;
             n.arg = -1;
-            Event_Send(&n, self, 0);
+            QueueMessage_cMessageR_cSystemP_int(&n, self, 0);
             n.vtable = D_004DAE90;
             cMessage_dtor(&n, 0);
         }
         self->fE0 = 0;
         if (self->preset) {
-            SoundEvent_CtorFromPreset(&s, self->preset, self);
+            cPlaySoundMsg_ctor_cSndFxR(&s, self->preset, self);
             s.flag = 1;
-            Event_Send(&s, g_Game, 1);
+            QueueMessage_cMessageR_cSystemP_int(&s, g_Game, 1);
             s.vt = D_004DAE30;
-            FileMan_Release(&s.s114, -1);
-            FileMan_Release(&s.s78, -1);
+            cFileMan_dtor(&s.s114, -1);
+            cFileMan_dtor(&s.s78, -1);
             cMessage_dtor(&s, 0);
         }
         for (i = 0; i < self->count; i++) {
             if (self->nodes[i]->type == 0xB) {
                 LiftMsg_00219070* m = &msg;
-                Event_Construct(m, &g_TriggerMsgKey);
+                cMessage_ctor_cMessageNameR(m, &g_TriggerMsgKey);
                 msg.vtable = D_004DAF10;
                 msg.kind = 0;
                 msg.floor = 0;
                 m->to = ObjId_00219070(0);
                 m->from = ObjId_00219070(0);
-                Event_Send(&msg, self->nodes[i], 0);
+                QueueMessage_cMessageR_cSystemP_int(&msg, self->nodes[i], 0);
                 msg.vtable = D_004DAF10;
                 cMessage_dtor(&msg, 0);
             }
         }
         return 1;
     }
-    t = *Event_GetType(ev);
-    if (t == D_0055D4D8 || (t = *Event_GetType(ev), t == g_TeleportMsgClass)) {
+    t = *cMessage_Name(ev);
+    if (t == D_0055D4D8 || (t = *cMessage_Name(ev), t == g_TeleportMsgClass)) {
         Handler_00219070* h = self->handler;
         if (h)
             h->Receive(ev);
-        return Object_HandleMessage(self, ev);
+        return cGOBJ_HandleMessage(self, ev);
     }
-    return Object_HandleMessage(self, ev);
+    return cGOBJ_HandleMessage(self, ev);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00219070(void) {}
@@ -119,7 +119,7 @@ static inline void merge_flush_func_00219070(void) {}
 #pragma cplusplus on
 
 /* GOBJ virtual 7: notify attached object, update, register. */
-DEFINE_GOBJ_V07_REGISTER(cPathedGOBJ_v07)
+DEFINE_GOBJ_V07_REGISTER(cPathedGOBJ_NetDeactivate)
 #pragma pop /* merge_units */
 /* merge_units: end func_002192F0 */
 
@@ -128,6 +128,6 @@ DEFINE_GOBJ_V07_REGISTER(cPathedGOBJ_v07)
 #pragma cplusplus on
 
 /* GOBJ virtual 6: notify attached object, update, call slot 47. */
-DEFINE_GOBJ_V06_UPDATE(cPathedGOBJ_v06)
+DEFINE_GOBJ_V06_UPDATE(cPathedGOBJ_NetActivate)
 #pragma pop /* merge_units */
 /* merge_units: end func_00219350 */

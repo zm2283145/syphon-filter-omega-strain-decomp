@@ -10,7 +10,7 @@
 extern int Global_RemoveArray(ScriptArray* array);
 extern int ScriptArray_Create(int arg);
 extern int Array_SOBJ_toInt(int value);
-extern ScriptArray* ScriptArray_Cast(void* obj);
+extern ScriptArray* Array_SOBJ_convert(void* obj);
 
 Word* cLListIterator_ArrayPtr_ctor_listR(Word* dst, Word* src) {
     dst->value = src->value;
@@ -42,7 +42,7 @@ Word* std_list_cNodeListPtr_generic_iterator_ctor(Word* dst, Word* src) {
 
 /* Script native: RemoveArray(args[0]). */
 int Script_RemoveArray(ScriptArg* args) {
-    Global_RemoveArray(ScriptArray_Cast(args[0].p));
+    Global_RemoveArray(Array_SOBJ_convert(args[0].p));
     return 0;
 }
 

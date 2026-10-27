@@ -27,7 +27,7 @@ static inline void merge_flush_func_002501B0(void) {}
 #pragma push /* merge_units */
 typedef struct { int head; int bits[1]; } SelectorT;
 #pragma optimization_level 3
-SelectorT* Selector_Copy(SelectorT* d, const SelectorT* s)
+SelectorT* cModeSwitch_2_opAssign(SelectorT* d, const SelectorT* s)
 {
     int i;
     d->head = s->head;
@@ -49,7 +49,7 @@ static inline void merge_flush_func_002501F0(void) {}
 /* merge_units: begin func_00250280 */
 #pragma push /* merge_units */
 typedef struct { int head; int bits[1]; } E7PS;
-E7PS* PrioritySet_Copy(E7PS* dst, E7PS* src) {
+E7PS* cModeSwitch_12_opAssign(E7PS* dst, E7PS* src) {
     int i;
     dst->head = src->head;
     for (i = 0; i < 12; i++) {

@@ -9,21 +9,21 @@ struct Widget : GuiWidgetV { char pad4[0x10]; unsigned short unk14; };
 struct Screen { char pad0[0x48]; Agent* unk48; Agent* unk4C; char pad50[0x34]; int unk84; int unk88; int unk8C; int unk90; Widget* unk94; char pad98[0x34]; Widget* unkCC; char padD0[0x2C]; int unkFC; };
 struct Stack { char pad0[0x20]; Widget* unk20; };
 extern "C" {
-void FrontEnd_OpenPopup(void*,int,char*,char*,void* =0,int=0);
-void Game_NetSendPauseState(void*,int,int);
-void GuiScreen_SetFocus(Stack*,Widget*);
-void GuiStack_SwapScreens(Stack*,Screen*,void*);
-void* Gui_GetScreenList();
-Stack* Gui_GetScreenStack();
-char* Loc_LookupText(char*);
-void Pad_Reset(void*);
-void WeaponInv_Add(void*,short,int,int,int=1,int=0);
-void WeaponInv_Equip(void*,int);
-void WeaponInv_HolsterCurrent(void*);
-void WeaponInv_RemoveSlot(void*,int,int,int,int=0);
-int WeaponInv_SlotOfItem(short);
-void* GuiManager_FindOrLoad(void*,char*,char*);
-void GuiWidget_SendEvent(void*,void*,int,int,int=0);
+void cGameFrontEnd_PushMessageBox(void*,int,char*,char*,void* =0,int=0);
+void cGameSystem_SendAgentData(void*,int,int);
+void GuiCanvas_SetFocus(Stack*,Widget*);
+void GuiCanvas_Transition(Stack*,Screen*,void*);
+void* Gui_Manager();
+Stack* Gui_Canvas();
+char* nGlobalization_GetString_charP(char*);
+void cJoystick_Poll(void*);
+void cWeapon_Add(void*,short,int,int,int=1,int=0);
+void cWeapon_DrawWeapon_eWpnSlot(void*,int);
+void cWeapon_StoreWeapon_void(void*);
+void cWeapon_RemoveWeapon(void*,int,int,int,int=0);
+int cWeapon_GetWeaponSlot(short);
+void* GuiManager_OpenGui(void*,char*,char*);
+void GuiWidget_SendMessage(void*,void*,int,int,int=0);
 extern signed char D_00489D62[];
 extern char D_004A9870[],D_004AC2B0[],D_004AC2C8[],D_004AC2D0[],D_004AC2E0[],D_004AC2F0[],D_004AC300[],D_004AC310[],D_004AC320[],D_004AC330[],D_004AC340[],D_004AC350[],D_004AC360[],g_Game[],D_0055A300[];
 extern void* D_004FFC04;
@@ -35,7 +35,7 @@ extern unsigned char g_IsMultiplayer;
 #pragma bool off
 static inline int Press(GuiGridInput*p,int button) { return p->type==1 && p->device==0 && p->button==button && p->action==0; }
 #pragma pop
-extern "C" int GuiEquipmentModify_Accept(Screen* arg0, GuiGridInput* arg1) {
+extern "C" int GuiEquipmentModify_onInput(Screen* arg0, GuiGridInput* arg1) {
     void* temp_s0;
     char* temp_s0_2;
     int temp_v0_6;
@@ -96,7 +96,7 @@ extern "C" int GuiEquipmentModify_Accept(Screen* arg0, GuiGridInput* arg1) {
                 }
             }
         }
-        WeaponInv_HolsterCurrent(arg0->unk48->unk3524);
+        cWeapon_StoreWeapon_void(arg0->unk48->unk3524);
         var_s2 = 2;
         var_s1 = 8;
         var_s0 = D_00489D62;
@@ -105,11 +105,11 @@ extern "C" int GuiEquipmentModify_Accept(Screen* arg0, GuiGridInput* arg1) {
             temp_v1_2 = ((Slots*)((int)((Slots*)((int)temp_a0_2+0x60)) + var_s1))->unk2410;
             if (((Agent*)(var_s1 + (int)arg0->unk4C))->unk2470 != temp_v1_2) {
                 if (temp_v1_2 != 0) {
-                    WeaponInv_RemoveSlot(temp_a0_2->unk3524, *var_s0, 0, 0);
+                    cWeapon_RemoveWeapon(temp_a0_2->unk3524, *var_s0, 0, 0);
                 }
                 temp_v0_5 = ((Slots*)((int)((Slots*)((int)arg0->unk4C+0x60)) + var_s1))->unk2410;
                 if (temp_v0_5 != 0) {
-                    WeaponInv_Add(arg0->unk48->unk3524, temp_v0_5->unk40A, 1, 0);
+                    cWeapon_Add(arg0->unk48->unk3524, temp_v0_5->unk40A, 1, 0);
                 }
             }
             var_s2 += 1;
@@ -123,32 +123,32 @@ extern "C" int GuiEquipmentModify_Accept(Screen* arg0, GuiGridInput* arg1) {
             Agent* agent=*(Agent* volatile*)&arg0->unk4C;
             temp_v0_7=((Slots*)(off+((int)agent+0x60)))->unk2410;
             if (temp_v0_7 != 0) {
-                WeaponInv_Equip(arg0->unk48->unk3524, WeaponInv_SlotOfItem(temp_v0_7->unk40A));
+                cWeapon_DrawWeapon_eWpnSlot(arg0->unk48->unk3524, cWeapon_GetWeaponSlot(temp_v0_7->unk40A));
             }
         }
         var_s0_2 = 0;
         if (g_IsMultiplayer != 0) {
-            var_s0_2 = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AC2B0, D_004AC2C8);
+            var_s0_2 = GuiManager_OpenGui(Gui_Manager(), D_004AC2B0, D_004AC2C8);
         } else {
             g_LoadoutPending = 0;
-            Pad_Reset(D_0055A300);
+            cJoystick_Poll(D_0055A300);
         }
-        GuiStack_SwapScreens(Gui_GetScreenStack(), arg0, var_s0_2);
-        Game_NetSendPauseState(g_Game, 0, 0);
+        GuiCanvas_Transition(Gui_Canvas(), arg0, var_s0_2);
+        cGameSystem_SendAgentData(g_Game, 0, 0);
         return 1;
     }
     var_v0 = Press(arg1,0x10);
     if (var_v0 != 0) {
         if (g_IsMultiplayer != 0) {
-            temp_s0 = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AC2B0, D_004AC2C8);
-            GuiStack_SwapScreens(Gui_GetScreenStack(), arg0, temp_s0);
-            Game_NetSendPauseState(g_Game, 0, 0);
+            temp_s0 = GuiManager_OpenGui(Gui_Manager(), D_004AC2B0, D_004AC2C8);
+            GuiCanvas_Transition(Gui_Canvas(), arg0, temp_s0);
+            cGameSystem_SendAgentData(g_Game, 0, 0);
             return 1;
         }
-        temp_s0_2 = Loc_LookupText(D_004AC2D0);
-        temp_v0_8 = Loc_LookupText(D_004AC2E0);
+        temp_s0_2 = nGlobalization_GetString_charP(D_004AC2D0);
+        temp_v0_8 = nGlobalization_GetString_charP(D_004AC2E0);
         if ((temp_s0_2 != 0) && (temp_v0_8 != 0)) {
-            FrontEnd_OpenPopup(D_004FFC04, 5, temp_s0_2, temp_v0_8,arg0);
+            cGameFrontEnd_PushMessageBox(D_004FFC04, 5, temp_s0_2, temp_v0_8,arg0);
         }
         return 1;
     }
@@ -178,16 +178,16 @@ extern "C" int GuiEquipmentModify_Accept(Screen* arg0, GuiGridInput* arg1) {
             var_s0_3 = (Widget*)GuiFindAs(arg0, D_004AC350, D_004A9870);
         }
         if (var_s0_3 != 0) {
-            if (Gui_GetScreenStack()->unk20 == var_s0_3) {
+            if (Gui_Canvas()->unk20 == var_s0_3) {
                 return 1;
             }
             arg0->unk8C = 0;
-            GuiScreen_SetFocus(Gui_GetScreenStack(), var_s0_3);
+            GuiCanvas_SetFocus(Gui_Canvas(), var_s0_3);
             temp_v1_4 = arg0->unkCC;
             temp_v1_4->unk14 = (unsigned short) (temp_v1_4->unk14 & 0xFF7F);
             temp_v1_5 = arg0->unk94;
             temp_v1_5->unk14 = (unsigned short) (temp_v1_5->unk14 & 0xFF7F);
-            GuiWidget_SendEvent(var_s0_3, Gui_GetScreenStack(), 0x10, 0);
+            GuiWidget_SendMessage(var_s0_3, Gui_Canvas(), 0x10, 0);
             goto block_88;
         }
 block_88:
@@ -196,7 +196,7 @@ block_88:
     if (arg0->unk84 > 0) {
         var_v0_3 = Press(arg1,0x2000);
         if (var_v0_3 != 0) {
-            if (Gui_GetScreenStack()->unk20 == arg0->unk94) {
+            if (Gui_Canvas()->unk20 == arg0->unk94) {
                 return 1;
             }
             arg0->unk8C = 1;
@@ -223,14 +223,14 @@ block_88:
             else if (temp_v1_6 == 0) {
                 var_s0_4 = (Widget*)GuiFindAs(arg0, D_004AC350, D_004A9870);
             }
-            GuiScreen_SetFocus(Gui_GetScreenStack(), arg0->unk94);
+            GuiCanvas_SetFocus(Gui_Canvas(), arg0->unk94);
             temp_v1_7 = arg0->unkCC;
             temp_v1_7->unk14 = (unsigned short) (temp_v1_7->unk14 | 2);
             temp_v1_8 = arg0->unkCC;
             temp_v1_8->unk14 = (unsigned short) (temp_v1_8->unk14 | 8);
             if (var_s0_4 != 0) {
-                GuiWidget_SendEvent(arg0, var_s0_4, 6, (int)D_004AC360);
-                GuiWidget_SendEvent(var_s0_4, Gui_GetScreenStack(), 0x10, 0);
+                GuiWidget_SendMessage(arg0, var_s0_4, 6, (int)D_004AC360);
+                GuiWidget_SendMessage(var_s0_4, Gui_Canvas(), 0x10, 0);
             }
             return 1;
         }

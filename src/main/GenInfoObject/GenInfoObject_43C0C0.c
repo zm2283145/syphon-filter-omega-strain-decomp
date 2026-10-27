@@ -9,7 +9,7 @@
 #include "types.h"
 extern int strcmp(void* p);
 /* Returns whether the test on the global object fails. */
-int GuiBitmapWidget_IsType(void) { return strcmp("GuiBitmapWidget") == 0; }
+int GuiBitmapWidget_IsClass(void) { return strcmp("GuiBitmapWidget") == 0; }
 #pragma pop /* merge_units */
 /* merge_units: end func_0043C0C0 */
 
@@ -63,15 +63,15 @@ extern int D_00539238;
 extern int D_0053923C;
 extern TexMan* g_TextureMgr;
 extern int g_DrawMode;
-void GuiWidget_Draw(Self* self);
-void Renderer_BindTexture(TexMan* m, int idx);
+void GuiWidget_onRender(Self* self);
+void cTexMan_SetActive(TexMan* m, int idx);
 void XLib_NewStrip(char* r);
 void XLib_NextBatchVert(char* r);
-void Vec4_Copy(void* d, const void* s);
-void GuiBatch_AddVertexColor(void* out, const void* in);
-float GuiBatch_AddVertexUV(void);
-V4* Vec4_Set(V4* o, float x, float y, float z, float w);
-void Renderer_FlushPrimitives(char* r);
+void cVector_opAssign(void* d, const void* s);
+void tIRGBA_opAssign_tRGBAR(void* out, const void* in);
+float tVifFloatToInt_short_4_Bias(void);
+V4* cVector_ctor_float_float_float_float(V4* o, float x, float y, float z, float w);
+void XLib_DrawSprites2(char* r);
 }
 
 #define SlotAt(i) ((Slot*)(g_Video + 0x1F0 + (i) * 0x110))
@@ -89,16 +89,16 @@ static inline void Emit(const V4& pos, const V4& col, const V4c& uv)
     float u;
     XLib_NextBatchVert(g_Video);
     e = EntAt(D_00539210);
-    Vec4_Copy(e->pos + (D_00539224 - 1) * 16, &pos);
-    GuiBatch_AddVertexColor(e->c30 + (D_00539224 - 1) * 16, &col);
-    u = uv.x + GuiBatch_AddVertexUV();
-    Vec4_Copy(e->c34 + (D_00539224 - 1) * 16, Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
+    cVector_opAssign(e->pos + (D_00539224 - 1) * 16, &pos);
+    tIRGBA_opAssign_tRGBAR(e->c30 + (D_00539224 - 1) * 16, &col);
+    u = uv.x + tVifFloatToInt_short_4_Bias();
+    cVector_opAssign(e->c34 + (D_00539224 - 1) * 16, cVector_ctor_float_float_float_float(&tmp, u, uv.y + tVifFloatToInt_short_4_Bias(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 
-extern "C" void GuiBitmapWidget_Draw(Self* self)
+extern "C" void GuiBitmapWidget_onRender(Self* self)
 {
-    GuiWidget_Draw(self);
+    GuiWidget_onRender(self);
     if (self->tex == -1) return;
     int save = g_DrawMode;
     { int i = D_00538C64; GQR(MtxAt(i + 1), MtxAt(i)); }
@@ -106,7 +106,7 @@ extern "C" void GuiBitmapWidget_Draw(Self* self)
     UM(MtxAt(D_00538C64));
     D_00538C68 = 1;
     g_DrawMode = 5;
-    Renderer_BindTexture(g_TextureMgr, self->tex);
+    cTexMan_SetActive(g_TextureMgr, self->tex);
     {
         Slot* s = SlotAt(D_00538C60);
         float* v = D_00539170;
@@ -146,7 +146,7 @@ extern "C" void GuiBitmapWidget_Draw(Self* self)
     }
     Emit(p0, self->color, V4c(0.0f, 0.0f, 1.0f, 0.0f));
     Emit(p1, self->color, V4c(us, vs, 1.0f, 0.0f));
-    Renderer_FlushPrimitives(g_Video);
+    XLib_DrawSprites2(g_Video);
     g_DrawMode = save;
     D_00538C68 = 1;
     D_00538C64--;
@@ -186,7 +186,7 @@ Quad* func_0043C6B0(Quad* d, Quad* s) {
 /* merge_units: begin func_0043C6E0 */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int Tex_Release(int, int, int);                       
+int cTexMan_RemoveTexture(int, int, int);                       
 #if 0 /* merge_units */
 extern int g_TextureMgr;
 #endif /* merge_units */
@@ -199,7 +199,7 @@ void GuiBitmapWidget_UnloadBitmap(int arg0) {
 
     temp_a1 = F_(arg0, 0x48, int);
     if (temp_a1 != -1) {
-        Tex_Release(g_TextureMgr, temp_a1, 0);
+        cTexMan_RemoveTexture(g_TextureMgr, temp_a1, 0);
         F_(arg0, 0x48, int) = -1;
     }
 }
@@ -212,13 +212,13 @@ void GuiBitmapWidget_UnloadBitmap(int arg0) {
 #define NULL 0
 #pragma mpwc_relax on
 /*fc*/
-int Hog_Register();                   
-int String_CStr();                          
-int String_Length();                             
-int FileMan_Release();                            
+int cFileMan_EncodeFilename_charP_cHogFileR_bool();                   
+int std_basic_string_char_char_traits_char_c_str();                          
+int cString_Length();                             
+int cFileMan_dtor();                            
 int cFileMan_ctor_charP_cFileIOP_bool();                    
-int Resource_Construct();                               
-int TexMan_FindOrLoad();                        
+int cFileMan_ctor_void();                               
+int cTexMan_AddTextureFromFile_cFileManR();                        
 #if 0 /* merge_units */
 extern int g_TextureMgr;
 #endif /* merge_units */
@@ -227,21 +227,21 @@ extern int g_TextureMgr;
 
 #pragma push
 #pragma opt_common_subs off
-int GuiBitmapWidget_Load(char * arg0) {
+int GuiBitmapWidget_LoadBitmap(char * arg0) {
     struct { int f20[40]; int fC0[40]; } sl;
 
-    if (String_Length(arg0 + 0x50) == 0) {
+    if (cString_Length(arg0 + 0x50) == 0) {
         return 0;
     }
     if (F_(arg0, 0x4C, int) != 0) {
-        Resource_Construct(sl.fC0);
-        Hog_Register(sl.fC0, String_CStr(arg0 + 0x50), F_(arg0, 0x4C, int), 0);
-        F_(arg0, 0x48, int) = TexMan_FindOrLoad(g_TextureMgr, sl.fC0);
-        FileMan_Release(sl.fC0, -1);
+        cFileMan_ctor_void(sl.fC0);
+        cFileMan_EncodeFilename_charP_cHogFileR_bool(sl.fC0, std_basic_string_char_char_traits_char_c_str(arg0 + 0x50), F_(arg0, 0x4C, int), 0);
+        F_(arg0, 0x48, int) = cTexMan_AddTextureFromFile_cFileManR(g_TextureMgr, sl.fC0);
+        cFileMan_dtor(sl.fC0, -1);
     } else {
-        cFileMan_ctor_charP_cFileIOP_bool(sl.f20, String_CStr(arg0 + 0x50), 0, 0);
-        F_(arg0, 0x48, int) = TexMan_FindOrLoad(g_TextureMgr, sl.f20);
-        FileMan_Release(sl.f20, -1);
+        cFileMan_ctor_charP_cFileIOP_bool(sl.f20, std_basic_string_char_char_traits_char_c_str(arg0 + 0x50), 0, 0);
+        F_(arg0, 0x48, int) = cTexMan_AddTextureFromFile_cFileManR(g_TextureMgr, sl.f20);
+        cFileMan_dtor(sl.f20, -1);
     }
     return ~F_(arg0, 0x48, int) != 0;
 }

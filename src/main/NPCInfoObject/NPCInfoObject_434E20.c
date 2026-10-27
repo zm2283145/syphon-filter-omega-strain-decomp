@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00434E20 */
 #pragma push /* merge_units */
@@ -24,8 +24,8 @@ int Mem_Free();
 
 
 extern "C" {
-char * Mem_Alloc(...);                      
-int List_Erase(...);                     
+char * cMemMan_Allocate(...);                      
+int std_list_deleter_voidPtr_erase_listdeleter(...);                     
                           
 int std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(...);                      
                         
@@ -38,11 +38,11 @@ extern char D_00582AB0;
 extern char D_00582AD0;
 }
 struct Raw_4E20 { int p; Raw_4E20() {} };
-extern "C" Raw_4E20 List_Begin(void*);
+extern "C" Raw_4E20 std_list_deleter_voidPtr_begin_void(void*);
 extern "C" Raw_4E20 std_list_tNPCInfoPtr_end(void*);
 extern "C" void std_list_tNPCInfoPtr_generic_iterator_ctor(char**, const Raw_4E20&);
 extern "C" void cLListIterator_tNPCInfoPtr_ctor(char**, const Raw_4E20&);
-static inline void Begin_4E20(char** out) { std_list_tNPCInfoPtr_generic_iterator_ctor(out, List_Begin(&D_00582AB0)); }
+static inline void Begin_4E20(char** out) { std_list_tNPCInfoPtr_generic_iterator_ctor(out, std_list_deleter_voidPtr_begin_void(&D_00582AB0)); }
 static inline void End_4E20(char** out) { cLListIterator_tNPCInfoPtr_ctor(out, std_list_tNPCInfoPtr_end(&D_00582AB0)); }
 
 
@@ -52,7 +52,7 @@ extern "C" void cNPCInfoObject_AddPendingDeactivate(int d0, char * arg1) {
     char * temp_s0;
     {
         AllocGuard g;
-    temp_s0 = Mem_Alloc(0, 0x14, &D_004BFCA0, 0x2D5);
+    temp_s0 = cMemMan_Allocate(0, 0x14, &D_004BFCA0, 0x2D5);
     }
     if (temp_s0 != NULL) {
         F_(temp_s0, 0x4, unsigned char) = F_(arg1, 0x4, unsigned char);
@@ -84,7 +84,7 @@ extern "C" void cNPCInfoObject_AddPendingDeactivate(int d0, char * arg1) {
             if (*temp_s2 == F_(arg1, 0x0, int)) {
                 {
                     AllocGuard g;
-                Mem_Free(0, temp_s2, &D_004BFCA0, 0x2E6);
+                cMemMan_Deallocate(0, temp_s2, &D_004BFCA0, 0x2E6);
                 }
                 {
                 char * sp68;
@@ -92,7 +92,7 @@ extern "C" void cNPCInfoObject_AddPendingDeactivate(int d0, char * arg1) {
                 int sp60;
                 sp68 = temp_s0_2;
                 std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&sp60, &sp68);
-                List_Erase(&sp64, &D_00582AB0, &sp60);
+                std_list_deleter_voidPtr_erase_listdeleter(&sp64, &D_00582AB0, &sp60);
                 }
             }
     }
@@ -112,7 +112,7 @@ static inline void merge_flush_func_00434E20(void) {}
 
 extern "C" {
 }
-static inline void Begin_4E20_00435070(char** out) { std_list_tNPCInfoPtr_generic_iterator_ctor(out, List_Begin(&D_00582AD0)); }
+static inline void Begin_4E20_00435070(char** out) { std_list_tNPCInfoPtr_generic_iterator_ctor(out, std_list_deleter_voidPtr_begin_void(&D_00582AD0)); }
 static inline void End_4E20_00435070(char** out) { cLListIterator_tNPCInfoPtr_ctor(out, std_list_tNPCInfoPtr_end(&D_00582AD0)); }
 
 
@@ -122,7 +122,7 @@ extern "C" void cNPCInfoObject_AddPendingActivate(int d0, char * arg1) {
     char * temp_s0;
     {
         AllocGuard g;
-    temp_s0 = Mem_Alloc(0, 0x14, &D_004BFCA0, 0x2B5);
+    temp_s0 = cMemMan_Allocate(0, 0x14, &D_004BFCA0, 0x2B5);
     }
     if (temp_s0 != NULL) {
         F_(temp_s0, 0x4, unsigned char) = F_(arg1, 0x4, unsigned char);
@@ -154,7 +154,7 @@ extern "C" void cNPCInfoObject_AddPendingActivate(int d0, char * arg1) {
             if (*temp_s2 == F_(arg1, 0x0, int)) {
                 {
                     AllocGuard g;
-                Mem_Free(0, temp_s2, &D_004BFCA0, 0x2C6);
+                cMemMan_Deallocate(0, temp_s2, &D_004BFCA0, 0x2C6);
                 }
                 {
                 char * sp68;
@@ -162,7 +162,7 @@ extern "C" void cNPCInfoObject_AddPendingActivate(int d0, char * arg1) {
                 int sp60;
                 sp68 = temp_s0_2;
                 std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&sp60, &sp68);
-                List_Erase(&sp64, &D_00582AD0, &sp60);
+                std_list_deleter_voidPtr_erase_listdeleter(&sp64, &D_00582AD0, &sp60);
                 }
             }
     }
@@ -176,10 +176,10 @@ static inline void merge_flush_func_00435070(void) {}
 
 /* merge_units: begin func_004352C0 */
 #pragma push /* merge_units */
-#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 #pragma mpwc_relax on
 int NetGetObject(void **, int);                      
-int NetGame_InitLocalSlot(int *, int);                        
+int NetGetMyClientIndex(int *, int);                        
 int NetReleaseObjectPrivateOwnership(int);                               
 extern int D_00494178;
 extern int D_005721A8;

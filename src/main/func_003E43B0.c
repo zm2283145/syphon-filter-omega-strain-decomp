@@ -9,7 +9,7 @@
 
 extern char D_004E0840[];         /* Msg3E43D0 vtable */
 extern char g_ActorActionMsgClass[];         /* Msg3E43D0 type descriptor */
-extern void* cMessage_ctor5(void* self, void* type, void* arg);
+extern void* cMessage_ctor_cMessageNameR_messagebaseR(void* self, void* type, void* arg);
 
 Vec4* cQuaternion_ctor_float_float_float_float(Vec4* v, float x, float y, float z, float w) {
     v->x = x;
@@ -21,7 +21,7 @@ Vec4* cQuaternion_ctor_float_float_float_float(Vec4* v, float x, float y, float 
 
 /* Builds the message from a source record. */
 Msg3E43D0* cCharActionMsg_ctor_netcharactionreqR(Msg3E43D0* self, Msg3E43D0Src* src) {
-    cMessage_ctor5(self, g_ActorActionMsgClass, src);
+    cMessage_ctor_cMessageNameR_messagebaseR(self, g_ActorActionMsgClass, src);
     self->vtable = D_004E0840;
     self->unk24 = src->unk08;
     self->unk28 = src->unk09;

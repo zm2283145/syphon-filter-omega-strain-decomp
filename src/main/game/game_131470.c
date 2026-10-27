@@ -14,18 +14,18 @@ typedef struct { char pad[0x67]; unsigned char on; char pad68[0x1DC - 0x68]; Cfg
 typedef struct { char pad[0xC]; unsigned char flag; } G_1470;
 extern unsigned char g_IsMultiplayer;
 extern G_1470* g_Fader;
-void PadRumble_Stop(void);
-void Pad_EnableVibration(unsigned char v);
-void Game_SetPaused(S_1470* self, unsigned char on)
+void nRumbleManager_StopAll(void);
+void nRumbleManager_SetEnabled(unsigned char v);
+void cGameSystem_PauseGame(S_1470* self, unsigned char on)
 {
     if (!g_IsMultiplayer)
         self->on = on;
     if (self->on) {
-        PadRumble_Stop();
-        Pad_EnableVibration(0);
+        nRumbleManager_StopAll();
+        nRumbleManager_SetEnabled(0);
         g_Fader->flag = 1;
     } else {
-        Pad_EnableVibration(self->cfg->v);
+        nRumbleManager_SetEnabled(self->cfg->v);
         g_Fader->flag = 0;
     }
 }
@@ -36,7 +36,7 @@ static inline void merge_flush_func_00131470(void) {}
 
 /* merge_units: begin func_001314F0 */
 #pragma push /* merge_units */
-int Agent_GetSelected(int a0, int a1) {
+int cGameSystem_GetAgentData(int a0, int a1) {
     int v0;
     int cond;
 

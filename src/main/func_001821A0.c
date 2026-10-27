@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-int ColTree_IsLeaf(Leaf* l, int* addr) {
+int cCollisionModel_Data_IsTreeLeaf(Leaf* l, int* addr) {
     return *addr >= l->limit;
 }
 

@@ -3,7 +3,7 @@
 
 /*
  * Timed event queue (callback.cc). Events live in an intrusive list
- * (g_EventQueue); EventQueue_Pump counts each event's timer down and runs and
+ * (g_EventQueue); nCallback_Process counts each event's timer down and runs and
  * destroys the expired ones. C++ only (#pragma cplusplus on before including).
  */
 
@@ -21,7 +21,7 @@ struct EQEvent : EQBase {
     virtual void run();
 };
 
-/* Predicate for ActiveList_EraseMatching: matches the node holding *pp. */
+/* Predicate for std_list_imp_voidPtr_remove_if: matches the node holding *pp. */
 struct EQCmp {};
 struct EQPred {
     EQCmp cmp;

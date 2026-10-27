@@ -15,7 +15,7 @@ struct V {
     void Clear() { __asm__ volatile("sq $0, 0x0(%0)" : : "r"(this) : "memory"); }
 } __attribute__((aligned(16)));
 struct M { V a, b, c, d; };
-extern "C" void Ptr_Identity(void* p);
+extern "C" void cVector_ctor_void(void* p);
 static inline void Xform(V* d, const V* s, const M* m) { __asm__ volatile("lqc2 vf8, 0x0(%2); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; sqc2 vf12, 0x0(%0)" : : "r"(d), "r"(m), "r"(s) : "memory"); }
 static inline void Fix(V& v, const M& m) { Xform(&v, &v, &m); }
 struct CQ {
@@ -36,19 +36,19 @@ struct ATri {
     ATri(V* src);
 };
 extern "C" {
-unsigned char ColQuery_ExecuteMoving(CQ* q, int a, int b);
-unsigned char ColQuery_ExecuteStatic(CQ* q, int a, int b);
+unsigned char cCollisionProbe_SphereSweptRay_DetectForCollision_AccountForMovementOfCollidingObjects(CQ* q, int a, int b);
+unsigned char cCollisionProbe_SphereSweptRay_DetectForCollision_IgnoreMovementOfCollidingObjects(CQ* q, int a, int b);
 void cCollisionModel_FaceProperties_ctor(void* p);
 void cCollisionModel_FaceLocator_ctor(void* p);
-void Col_ReconstructSourceTriangle(ATri* t, V* src);
+void cCollisionFace_Set_cCollisionModelFaceLocatorR(ATri* t, V* src);
 }
-inline ATri::ATri(V* src) { ATri* p = this; PV* it = p->v; do { Ptr_Identity(it); it++; } while (it != p->v + 3); Ptr_Identity(&p->n); cCollisionModel_FaceProperties_ctor(p->x40); cCollisionModel_FaceLocator_ctor(p->x60); Col_ReconstructSourceTriangle(p, src); }
-extern "C" unsigned char ColQuery_Execute(CQ* q, int a, int b)
+inline ATri::ATri(V* src) { ATri* p = this; PV* it = p->v; do { cVector_ctor_void(it); it++; } while (it != p->v + 3); cVector_ctor_void(&p->n); cCollisionModel_FaceProperties_ctor(p->x40); cCollisionModel_FaceLocator_ctor(p->x60); cCollisionFace_Set_cCollisionModelFaceLocatorR(p, src); }
+extern "C" unsigned char cCollisionProbe_SphereSweptRay_DetectForCollision_uchar_uchar(CQ* q, int a, int b)
 {
     unsigned char hit;
     if (q->xD0) {
-    if (q->b119) hit = ColQuery_ExecuteMoving(q, a, b);
-    else hit = ColQuery_ExecuteStatic(q, a, b);
+    if (q->b119) hit = cCollisionProbe_SphereSweptRay_DetectForCollision_AccountForMovementOfCollidingObjects(q, a, b);
+    else hit = cCollisionProbe_SphereSweptRay_DetectForCollision_IgnoreMovementOfCollidingObjects(q, a, b);
     if (hit) {
         q->v20 = q->v10;
         q->v50 = q->v40;

@@ -22,7 +22,7 @@ DEFINE_VTABLE_BASE_DTOR(cAIMessage_dtor, D_004D9340, cMessage_dtor)
 /* merge_units: begin func_0014D670 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x60]; float x60; } NpcB1;
-int cNPC_v51(NpcB1* n) {
+int cNPC_GetTravelSpeed_void(NpcB1* n) {
     float f = n->x60;
     int r;
     if (f >= 0.0005f) {

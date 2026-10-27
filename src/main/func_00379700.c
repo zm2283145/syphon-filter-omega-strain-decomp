@@ -6,7 +6,7 @@
 
 #include "loose03_types.h"
 
-extern int Gs_MakeTex1(TexEntry*);
+extern int cTexture_GetTEX1_1(TexEntry*);
 
 /* Address of the entry's embedded sub-object. */
 void* cTexture_GetTEX0_1(TexEntry* self) {
@@ -25,7 +25,7 @@ int cTexture_GetWidth(TexEntry* self) {
     return self->info->unk04;
 }
 
-TexEntry* Tex_GetRecord(TexRegistry* reg, int index) {
+TexEntry* cTexMan_GetTexture(TexRegistry* reg, int index) {
     return reg->entries[index];
 }
 
@@ -41,7 +41,7 @@ void cDmaMan_EndChain_int(void) {
 }
 
 int cTexMan_GetTEX1_1(TexRegistry* reg, int index) {
-    return Gs_MakeTex1(reg->entries[index]);
+    return cTexture_GetTEX1_1(reg->entries[index]);
 }
 
 void* cTexMan_GetTEX0_1(TexRegistry* reg, int index) {

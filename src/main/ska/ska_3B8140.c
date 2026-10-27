@@ -74,7 +74,7 @@ struct V003B8230 { unsigned int cap; unsigned int count; E003B8230* data; };
 extern "C" {
 extern char D_004BCE80[];
 extern char D_004BCFB8[];
-void* Mem_PlacementNew(unsigned int size, void* p);
+void* opNew_uint_voidP(unsigned int size, void* p);
 void cSkaAnimAnchorListEntry_ctor(void* dst, const E003B8230* src);
 void std_swap_vectordeleterR_vectordeleterR_41(V003B8230* a, V003B8230* b);
 void std_vector_deleter_cSkaAnimAnchorListEntry_dtor(V003B8230* a, int f);
@@ -96,7 +96,7 @@ extern "C" void std_vector_imp_cSkaAnimAnchorListEntry_reserve(V003B8230* v, uns
         E003B8230* s = v->data;
         E003B8230* e = s + v->count;
         for (; s < e; s++, d++) {
-            void* o = Mem_PlacementNew(sizeof(E003B8230), d);
+            void* o = opNew_uint_voidP(sizeof(E003B8230), d);
             if (o) cSkaAnimAnchorListEntry_ctor(o, s);
             tmp.count++;
         }
@@ -116,14 +116,14 @@ typedef struct Node_3B83D0 { struct Node_3B83D0* left; struct Node_3B83D0* right
 typedef struct { int pad; Node_3B83D0* root; } Tree_3B83D0;
 typedef struct { Node_3B83D0* node; bool inserted; } Res_3B83D0;
 extern "C" {
-int Name_Compare48(const char* a, const char* b, int n);
+int Libc_Memcmp(const char* a, const char* b, int n);
 Node_3B83D0* std_tree_pair_cString16N_value_compare_cAllocator_pair_insert_node_at_nodeP_bool_bool_pairR(Tree_3B83D0* t, Node_3B83D0* y, bool comp, bool leftmost, const char* key);
 static bool D_00493518 = true;
 extern const bool D_00493520;
 }
 static inline bool Less_3B83D0(const char* a, const char* b)
 {
-    return !(a[0] == 0 && b[0] == 0) && Name_Compare48(a, b, 0x30) < 0;
+    return !(a[0] == 0 && b[0] == 0) && Libc_Memcmp(a, b, 0x30) < 0;
 }
 extern "C" void std_tree_pair_cString16N_value_compare_cAllocator_pair_insert_one_pairR(Res_3B83D0* out, Tree_3B83D0* t, const char* key)
 {

@@ -30,52 +30,52 @@ static char* D_00492C48 = D_004BB088;
 extern char D_004A7520[];
 extern char g_Game[];
 extern const char* D_0048C160[];
-void String_CtorCStr_13B480(Str4E40* s, const char* text);
-void String_AssignString(void* dst, Str4E40* s);
+void std_basic_string_char_char_traits_char_ctor_charP(Str4E40* s, const char* text);
+void std_basic_string_char_char_traits_char_assign_basicstringR(void* dst, Str4E40* s);
 void String_Dtor(Str4E40* s, int flags);
-W4E40* GuiWidget_FindChildByName(void* o, char* name);
-void* Agent_GetSelected(void* p, int i);
+W4E40* GuiWidget_FindChild_charP(void* o, char* name);
+void* cGameSystem_GetAgentData(void* p, int i);
 void func_00296FA0(L4E40* l);
 void func_00299360(L4E40* l, int flags);
-void AgentData_GetAwardRows(void* ag, unsigned char kind, L4E40* l);
+void cAgentData_GetAchievements(void* ag, unsigned char kind, L4E40* l);
 void GuiTextWidget_SetDisableWrap(W4E40* w, int v);
 void GuiTextWidget_SetText(W4E40* w, int text, int f);
-int Loc_LookupText(const char* key);
+int nGlobalization_GetString_charP(const char* key);
 enum E4E40on { ON0, ON1 };
-void GuiPersonnelMenu_ToggleDetail(O4E40* o, unsigned char on);
-void GuiPersonnelMenu_Setup(O4E40* self, const char* a, const char* b, unsigned char kind, int arg, int c, int d);
+void GuiPersonnelMenu_SetMode(O4E40* o, unsigned char on);
+void GuiPersonnelMenu_SetInfo(O4E40* self, const char* a, const char* b, unsigned char kind, int arg, int c, int d);
 }
 
 /* The &l.data local and the re-derived element pointer reproduce retail register allocation; the enum ternary keeps the movz/andi argument. */
 static inline W4E40* Cast(W4E40* w, void* t) { return w && w->IsA(t) ? w : 0; }
 
-void GuiPersonnelMenu_Setup(O4E40* self, const char* a, const char* b, unsigned char kind, int arg, int c, int d)
+void GuiPersonnelMenu_SetInfo(O4E40* self, const char* a, const char* b, unsigned char kind, int arg, int c, int d)
 {
     W4E40* w;
     {
         Str4E40 s;
-        String_CtorCStr_13B480(&s, a);
-        String_AssignString(self->s6C, &s);
+        std_basic_string_char_char_traits_char_ctor_charP(&s, a);
+        std_basic_string_char_char_traits_char_assign_basicstringR(self->s6C, &s);
         String_Dtor(&s, 0);
     }
     {
         Str4E40 s;
-        String_CtorCStr_13B480(&s, b);
-        String_AssignString(self->s78, &s);
+        std_basic_string_char_char_traits_char_ctor_charP(&s, b);
+        std_basic_string_char_char_traits_char_assign_basicstringR(self->s78, &s);
         String_Dtor(&s, 0);
     }
     self->kind = kind;
     self->arg = arg;
     self->f8C = c;
     self->f90 = d;
-    w = Cast(GuiWidget_FindChildByName(self, D_00492C48), D_004A7520);
+    w = Cast(GuiWidget_FindChild_charP(self, D_00492C48), D_004A7520);
     if (w) {
-        void* ag = Agent_GetSelected(g_Game, -1);
+        void* ag = cGameSystem_GetAgentData(g_Game, -1);
         if (self->kind != 6) {
             L4E40 l;
             func_00296FA0(&l);
             l.aC = 1;
-            AgentData_GetAwardRows(ag, kind, &l);
+            cAgentData_GetAchievements(ag, kind, &l);
             if (arg < l.size()) {
                 GuiTextWidget_SetDisableWrap(w, 1);
                 E4E40** pd = &l.data;
@@ -83,7 +83,7 @@ void GuiPersonnelMenu_Setup(O4E40* self, const char* a, const char* b, unsigned 
                 GuiTextWidget_SetText(w, e->id, 0);
                 e = *pd + arg;
                 self->on = e->flag != 0;
-                GuiPersonnelMenu_ToggleDetail(self, self->on ? ON1 : ON0);
+                GuiPersonnelMenu_SetMode(self, self->on ? ON1 : ON0);
             }
             func_00299360(&l, 0);
         } else {
@@ -91,11 +91,11 @@ void GuiPersonnelMenu_Setup(O4E40* self, const char* a, const char* b, unsigned 
             if (self->arg >= 0 && self->arg < 17)
                 name = D_0048C160[self->arg];
             if (name) {
-                GuiTextWidget_SetText(w, Loc_LookupText(name), 0);
+                GuiTextWidget_SetText(w, nGlobalization_GetString_charP(name), 0);
                 GuiTextWidget_SetDisableWrap(w, 1);
             }
             self->on = false;
-            GuiPersonnelMenu_ToggleDetail(self, ON0);
+            GuiPersonnelMenu_SetMode(self, ON0);
         }
     }
     if (self->fA4) {

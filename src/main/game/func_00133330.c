@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int Camera_GetNode(char* self) {
+int cGOBJ_GetXform_void(char* self) {
     return *(int*)(self + 80);
 }

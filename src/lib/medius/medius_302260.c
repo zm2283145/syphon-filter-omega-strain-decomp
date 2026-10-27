@@ -15,7 +15,7 @@ typedef struct {
 extern int rt_mutex_platform_get_thread_id(int *);
 extern int rt_mutex_platform_lock(RecursiveLock *);
 
-int RecursiveLock_Acquire(RecursiveLock *l, int *out)
+int rt_mutex_lock(RecursiveLock *l, int *out)
 {
     int self;
     int r;

@@ -38,9 +38,9 @@ extern float D_004A7E6C;
 extern int D_004F80C0, D_004F80C8, D_004F80D0, D_004F80D8, D_004F80E0;
 extern char D_0048B030[], D_0048B070[], D_00493880[], D_00493890[];
 extern char Script_setFxMode[], Script_setFxFlair[], Script_setFxLightDist[];
-extern int ScriptEnum_Register(void* a, void* b, int n);
-extern int Script_RegisterNative_2(void* fn, void* name, void* desc, int n, ...);
-void StaticInit_FlareColours(void)
+extern int cScriptBase_registerEnum(void* a, void* b, int n);
+extern int cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(void* fn, void* name, void* desc, int n, ...);
+void StaticInit_VisionFxMan(void)
 {
     D_004A7DE0 = 1.0f;
     D_004A7DE4 = 1.0f;
@@ -78,9 +78,9 @@ void StaticInit_FlareColours(void)
     D_004A7E64 = 0.6499999761581421f;
     D_004A7E68 = 0.10999999940395355f;
     D_004A7E6C = 0.10000000149011612f;
-    D_004F80C0 = ScriptEnum_Register("cVisionFxMan::eMode", D_0048B030, 5);
-    D_004F80C8 = ScriptEnum_Register("cVisionFxMan::eFlair", D_0048B070, 4);
-    D_004F80D0 = Script_RegisterNative_2(Script_setFxMode, D_00493880, "setFxMode", 1, &D_004F80C0);
-    D_004F80D8 = Script_RegisterNative_2(Script_setFxFlair, D_00493880, "setFxFlair", 4, &D_004F80C8, D_00493890, D_00493890, D_00493890);
-    D_004F80E0 = Script_RegisterNative_2(Script_setFxLightDist, D_00493880, "setFxLightDist", 2, &D_004F80C0, D_00493890);
+    D_004F80C0 = cScriptBase_registerEnum("cVisionFxMan::eMode", D_0048B030, 5);
+    D_004F80C8 = cScriptBase_registerEnum("cVisionFxMan::eFlair", D_0048B070, 4);
+    D_004F80D0 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_setFxMode, D_00493880, "setFxMode", 1, &D_004F80C0);
+    D_004F80D8 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_setFxFlair, D_00493880, "setFxFlair", 4, &D_004F80C8, D_00493890, D_00493890, D_00493890);
+    D_004F80E0 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_setFxLightDist, D_00493880, "setFxLightDist", 2, &D_004F80C0, D_00493890);
 }

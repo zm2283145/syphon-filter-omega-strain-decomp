@@ -8,7 +8,7 @@ extern "C" void* memcpy(void*, const void*, int);
 extern "C" char* strncpy(char*, const char*, int);
 extern "C" int String_CompareNoCase(const char*, const char*);
 extern "C" int ParseSystemMessage(char*, int);
-extern "C" void LobbyArray_Append(void*, void*);
+extern "C" void SFOLobbyList_Append(void*, void*);
 extern "C" int D_00584540;
 extern "C" char* D_00584530;
 extern "C" char* D_00584534;
@@ -44,7 +44,7 @@ extern "C" void SFOLobby_Callback_SystemMessage(LMsg* m) {
         } else {
             memcpy(big.data, m->data, big.len);
         }
-        LobbyArray_Append(D_00585E60 + 0x38, &big);
+        SFOLobbyList_Append(D_00585E60 + 0x38, &big);
         return;
     }
     if (m->len >= 0x80) return;
@@ -110,5 +110,5 @@ extern "C" void SFOLobby_Callback_SystemMessage(LMsg* m) {
         break;
     }
     if (send)
-        LobbyArray_Append(D_00585E60 + 0x1C, &sm);
+        SFOLobbyList_Append(D_00585E60 + 0x1C, &sm);
 }

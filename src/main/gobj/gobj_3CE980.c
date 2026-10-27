@@ -29,7 +29,7 @@ typedef struct Owner {
 } Owner;
 
 /* Marks the object active (+0x2D) and, if enabled (+0x2C), activates its component (+0x58, virtual +0x48). */
-extern "C" void Object_Activate(Owner* self)
+extern "C" void cGOBJ_Activate(Owner* self)
 {
     Component* component;
     self->active = 1;
@@ -49,7 +49,7 @@ static inline void merge_flush_func_003CE980(void) {}
  */
 
 
-void cNode_v14(void) {
+void cGOBJ_Render(void) {
 }
 
 void cGOBJ_Load(void) {
@@ -58,7 +58,7 @@ void cGOBJ_Load(void) {
 void cGOBJ_Init(void) {
 }
 
-void cNode_v0D(void) {
+void cGOBJ_ProcessMessage(void) {
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003CE9D0(void) {}

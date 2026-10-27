@@ -32,11 +32,11 @@ static inline void merge_flush_func_003EAA40(void) {}
  */
 
 
-extern int AsyncLoader_QueueUnload(int a0, int a1, int a2, int a3, int a4);
+extern int cFileStreamMan_StreamRequestFlush_cFileManR_voidPcFSHandlePvoidPbool_voidP_eStreamMode(int a0, int a1, int a2, int a3, int a4);
 
-/* Forward to AsyncLoader_QueueUnload with the two middle arguments zero. */
-int Fstream_ReleaseNoCallback(int a0, int a1, int a4) {
-    return AsyncLoader_QueueUnload(a0, a1, 0, 0, a4);
+/* Forward to cFileStreamMan_StreamRequestFlush_cFileManR_voidPcFSHandlePvoidPbool_voidP_eStreamMode with the two middle arguments zero. */
+int cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(int a0, int a1, int a4) {
+    return cFileStreamMan_StreamRequestFlush_cFileManR_voidPcFSHandlePvoidPbool_voidP_eStreamMode(a0, a1, 0, 0, a4);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003EAA60(void) {}

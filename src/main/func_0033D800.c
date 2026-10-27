@@ -10,10 +10,10 @@ struct VC0033D800 { virtual int v0(); virtual int v1(); virtual int v2(); virtua
 extern "C" {
 int FrontEnd_StopSplashThread(...);
 int FrontEnd_StartSplashThread(...);
-int Gui_GetScreenList(...);
-void **Gui_GetScreenStack(...);
-int GuiManager_FindOrLoad(...);
-char * DME_GetLobby(...);
+int Gui_Manager(...);
+void **Gui_Canvas(...);
+int GuiManager_OpenGui(...);
+char * cDME_GetLobby(...);
 extern int D_004FFC04;
 }
 extern "C" void func_0033D800(char * arg0) {
@@ -21,16 +21,16 @@ extern "C" void func_0033D800(char * arg0) {
     void **temp_v0_2;
     char * temp_v0;
 
-    temp_v0 = DME_GetLobby();
+    temp_v0 = cDME_GetLobby();
     if ((temp_v0 == NULL) || (F_(temp_v0, 0x255C, int) != 5)) {
         return;
     }
     FrontEnd_StartSplashThread(D_004FFC04);
-    temp_s0 = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiMissionSetup", "MSNSETUP");
+    temp_s0 = GuiManager_OpenGui(Gui_Manager(), "GuiMissionSetup", "MSNSETUP");
     FrontEnd_StopSplashThread(D_004FFC04);
     if (temp_s0 != 0) {
         F_(arg0, 0x14, unsigned short) = (unsigned short) (F_(arg0, 0x14, unsigned short) & 0xFFFD);
-        temp_v0_2 = Gui_GetScreenStack();
+        temp_v0_2 = Gui_Canvas();
         ((VC0033D800 *)(temp_v0_2))->v23(temp_s0, 0x14);
     }
 }

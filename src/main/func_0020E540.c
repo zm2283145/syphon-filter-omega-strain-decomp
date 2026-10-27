@@ -8,9 +8,9 @@
 
 extern int D_004F5388;
 
-void ScriptType_cStartLevelMsg_Init(void) {
+void cStartLevelMsg_SOBJ_init(void) {
 }
 
-int cStartLevelMsg_v03(void) {
+int cStartLevelMsg_getSOBJClassId(void) {
     return D_004F5388;
 }

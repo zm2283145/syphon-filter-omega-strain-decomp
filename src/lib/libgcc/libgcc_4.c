@@ -31,7 +31,7 @@ float scalbnf(float x, int n)
 extern float Math_SinKernel(float x, float y, int iy);
 extern float Math_CosKernel(float x, float y);
 extern int Math_RemPio2(float x, float* y);
-float Math_Sin(float x)
+float Libc_Sinf(float x)
 {
     float y[2];
     float z = 0.0f;
@@ -50,7 +50,7 @@ float Math_Sin(float x)
 
 /* merge_units: begin func_00121A10 */
 extern float Math_TanKernel(float x, float y, int k);
-float Math_Tan(float x) { float y[2], z = 0.0f; int n, ix; GET_FLOAT_WORD(ix, x); ix &= 0x7fffffff; if (ix <= 0x3f490fda) return Math_TanKernel(x, z, 1); else { n = Math_RemPio2(x, y); return Math_TanKernel(y[0], y[1], 1 - ((n & 1) << 1)); } }
+float Libc_Tanf(float x) { float y[2], z = 0.0f; int n, ix; GET_FLOAT_WORD(ix, x); ix &= 0x7fffffff; if (ix <= 0x3f490fda) return Math_TanKernel(x, z, 1); else { n = Math_RemPio2(x, y); return Math_TanKernel(y[0], y[1], 1 - ((n & 1) << 1)); } }
 /* merge_units: end func_00121A10 */
 
 /* merge_units: begin func_00121A88 */
@@ -64,7 +64,7 @@ int Math_Acos(float f12) {
 /* merge_units: begin func_00121AA0 */
 extern int Math_AsinfImpl(float);
 
-int Math_Asinf(float f12) {
+int Libc_Asinf(float f12) {
     return Math_AsinfImpl(f12);
 }
 /* merge_units: end func_00121AA0 */
@@ -72,7 +72,7 @@ int Math_Asinf(float f12) {
 /* merge_units: begin func_00121AB8 */
 extern int Math_Atan2Kernel(float, float);
 
-int Math_Atan2f(float f12, float f13) {
+int Libc_Atan2f(float f12, float f13) {
     return Math_Atan2Kernel(f12, f13);
 }
 /* merge_units: end func_00121AB8 */
@@ -89,7 +89,7 @@ int Libc_Expf(float f12) {
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 int Math_FModImpl();                                  
 
-void Math_FMod(void) {
+void Libc_Fmodf(void) {
     Math_FModImpl();
 }
 /* merge_units: end libgcc_121AE8 */
@@ -113,7 +113,7 @@ int Libc_Log10f(float f12) {
 /* merge_units: begin func_00121B30 */
 extern int Math_PowfKernel(float, float);
 
-int Math_Powf(float f12, float f13) {
+int Libc_Powf(float f12, float f13) {
     return Math_PowfKernel(f12, f13);
 }
 /* merge_units: end func_00121B30 */

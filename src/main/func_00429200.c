@@ -7,11 +7,11 @@
 #include "types.h"
 
 extern char D_00582550[];         /* 32-byte decoded key buffer */
-extern int Transport_Send(int, int, int, int);
+extern int cNetObj_SendMessage_int_cMessageR_int_int(int, int, int, int);
 
 /* Sends a2 through the transport with the first two arguments swapped and -1 as the third. */
 int cDeactivateMsg_SendDeactivated(int a0, int a1, int a2) {
-    return Transport_Send(a1, a0, -1, a2);
+    return cNetObj_SendMessage_int_cMessageR_int_int(a1, a0, -1, a2);
 }
 
 /*

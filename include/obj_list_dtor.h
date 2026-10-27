@@ -4,7 +4,7 @@
 /*
  * Destructor body shared by identical object-list destructor clones
  * (one per translation unit): erase [first, sentinel) through
- * ObjectList_EraseRange, then delete the object when deleteFlag > 0.
+ * std_list_deleter_voidPtr_erase_listdeleter_listdeleter, then delete the object when deleteFlag > 0.
  * C++ only (#pragma cplusplus on before including).
  */
 typedef struct ObjListNode ObjListNode;
@@ -15,7 +15,7 @@ typedef struct ObjList {
 } ObjList;
 
 extern "C" {
-void ObjectList_EraseRange(ObjListNode** result, ObjList* list,
+void std_list_deleter_voidPtr_erase_listdeleter_listdeleter(ObjListNode** result, ObjList* list,
                            ObjListNode** first, ObjListNode** last);
 void operator_delete(void* allocation);
 }
@@ -31,7 +31,7 @@ void operator_delete(void* allocation);
                     ObjListNode* last;                                        \
                     last = (ObjListNode*)&self->sentinelPrev;                 \
                     first = self->first;                                      \
-                    ObjectList_EraseRange(&result, self, &first, &last);      \
+                    std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&result, self, &first, &last);      \
                 }                                                             \
             }                                                                 \
             if (deleteFlag > 0)                                               \

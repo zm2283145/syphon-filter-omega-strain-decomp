@@ -8,7 +8,7 @@
 #include "types.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 int sprintf(void *, const void *, ...);
 
 /* merge_units: begin func_001C3940 */
@@ -17,42 +17,42 @@ typedef struct { int unk0; int size; unsigned int base; char* cur; } PopReader_1
 extern char D_0048B2F8[];
 extern char D_0049F030[];
 extern char g_LevelDirName[];
-extern void Loader_UpdateLoadingScreen(void* a, char* name, int x);
-extern void* App_GetInstance(void);
-extern int Archive_Open(void* a, char* name, int b, int c);
-extern void Pop_LoadTER(void* l, void* a1, PopReader_1C3940* r, void* arc);
-extern void Loader_InitActivationMap(void* l, PopReader_1C3940* r);
-extern void Loader_InitNodes(void* l, PopReader_1C3940* r);
-extern void Loader_InitSoundGOBJs(void* l, PopReader_1C3940* r, void* arc);
-extern void Pop_LoadGOB(void* l, PopReader_1C3940* r, int h);
-extern void Pop_LoadNPC(void* l, PopReader_1C3940* r, void* arc);
-extern void Loader_LoadParticles(void* l, PopReader_1C3940* r, void* arc);
-extern void Loader_InitSkybox(void* l, void* a1, PopReader_1C3940* r, void* arc);
-extern void Loader_InitNIEvents(void* l, PopReader_1C3940* r, int h);
-void Pop_LoadMissionSections(void* l, void* a1, PopReader_1C3940* r, void* arc)
+extern void cMachine_ShowLoadingScreen(void* a, char* name, int x);
+extern void* GetMachine(void);
+extern int cHogList_Open(void* a, char* name, int b, int c);
+extern void cLoader_LoadVUMs(void* l, void* a1, PopReader_1C3940* r, void* arc);
+extern void cLoader_LoadActivation(void* l, PopReader_1C3940* r);
+extern void cLoader_LoadNodes(void* l, PopReader_1C3940* r);
+extern void cLoader_LoadSoundGOBJs(void* l, PopReader_1C3940* r, void* arc);
+extern void cLoader_LoadGOBJs(void* l, PopReader_1C3940* r, int h);
+extern void cLoader_LoadSKMs(void* l, PopReader_1C3940* r, void* arc);
+extern void cLoader_LoadPARs(void* l, PopReader_1C3940* r, void* arc);
+extern void cLoader_LoadSKY(void* l, void* a1, PopReader_1C3940* r, void* arc);
+extern void cLoader_LoadNIEvents(void* l, PopReader_1C3940* r, int h);
+void cLoader_LoadModels(void* l, void* a1, PopReader_1C3940* r, void* arc)
 {
     if (r->cur) {
         char name[128];
         int h;
         int mis;
         sprintf(name, "%s\\%s\\OBJECTS.HOG", D_0048B2F8, g_LevelDirName, g_LevelDirName);
-        h = Archive_Open(arc, name, 1, 0);
-        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Terrain and GOBJ's...", 0);
-        Pop_LoadTER(l, a1, r, arc);
-        Loader_InitActivationMap(l, r);
-        Loader_InitNodes(l, r);
-        Loader_InitSoundGOBJs(l, r, arc);
-        Pop_LoadGOB(l, r, h);
-        Loader_UpdateLoadingScreen(App_GetInstance(), "Loading Character Models...", 0);
-        Pop_LoadNPC(l, r, arc);
-        Loader_UpdateLoadingScreen(App_GetInstance(), D_0049F030, 0);
-        Loader_LoadParticles(l, r, arc);
+        h = cHogList_Open(arc, name, 1, 0);
+        cMachine_ShowLoadingScreen(GetMachine(), "Initializing Terrain and GOBJ's...", 0);
+        cLoader_LoadVUMs(l, a1, r, arc);
+        cLoader_LoadActivation(l, r);
+        cLoader_LoadNodes(l, r);
+        cLoader_LoadSoundGOBJs(l, r, arc);
+        cLoader_LoadGOBJs(l, r, h);
+        cMachine_ShowLoadingScreen(GetMachine(), "Loading Character Models...", 0);
+        cLoader_LoadSKMs(l, r, arc);
+        cMachine_ShowLoadingScreen(GetMachine(), D_0049F030, 0);
+        cLoader_LoadPARs(l, r, arc);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;
-        Loader_UpdateLoadingScreen(App_GetInstance(), "Loading Skybox...", 0);
-        Loader_InitSkybox(l, a1, r, arc);
-        Loader_InitNIEvents(l, r, h);
+        cMachine_ShowLoadingScreen(GetMachine(), "Loading Skybox...", 0);
+        cLoader_LoadSKY(l, a1, r, arc);
+        cLoader_LoadNIEvents(l, r, h);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -68,8 +68,8 @@ extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 extern char D_0049EE88[];
 extern void Alloc_Lock(int n);
-extern void Alloc_Unlock(int n);
-extern void** PtrVec_Back_1C3C30(Vec_1C3B00* v);
+extern void EnableIntc(int n);
+extern void** std_vector_charPtr_back(Vec_1C3B00* v);
 extern void cTimerDisable_ctor(int* g);
 extern void cTimerDisable_dtor(int* g, int f);
 extern void cArray_charPtr_dtor_void(Vec_1C3B00* v, int f);
@@ -79,20 +79,20 @@ void cLoader_DeallocateAllAnimationBuffers(Obj_1C3B00* o)
     if (v) {
         int g[2];
         while (v->count) {
-            void* p = *PtrVec_Back_1C3C30(v);
+            void* p = *std_vector_charPtr_back(v);
             if (g_ProfileLockEnabled)
                 Alloc_Lock(9);
             g_ProfileLockDepth++;
-            Mem_Free(0, p, D_0049EE88, 0x10D);
+            cMemMan_Deallocate(0, p, D_0049EE88, 0x10D);
             if (g_ProfileLockEnabled)
-                Alloc_Unlock(9);
+                EnableIntc(9);
             g_ProfileLockDepth--;
             o->vec->count--;
             v = o->vec;
         }
         cTimerDisable_ctor(g);
         cArray_charPtr_dtor_void(v, -1);
-        Mem_Free(0, v, D_0049EE88, 0x111);
+        cMemMan_Deallocate(0, v, D_0049EE88, 0x111);
         cTimerDisable_dtor(g, -1);
         o->vec = 0;
     }

@@ -23,7 +23,7 @@
 extern "C" {
 char D_0049F6F8[] = "gameSound.cc";
 }
-DEFINE_NET_MSG_CLONE(cPlayQuipMsg_v01, 0x2C, D_0049F6F8, 0x6F0, D_004DAC70, NMC_W(0x24); NMC_W(0x28))
+DEFINE_NET_MSG_CLONE(cStopAllQuipsMsg_Clone, 0x2C, D_0049F6F8, 0x6F0, D_004DAC70, NMC_W(0x24); NMC_W(0x28))
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001CA5D0(void) {}
 #pragma pop /* merge_units */
@@ -42,8 +42,8 @@ DEFINE_VT8_CHAIN_DTOR(func_001CA6F0, D_004DAC90, D_004D9DE0)
 extern "C" {
 extern char D_004DACB0[];
 void __destroy_array(void* p, void* dtor, int size, int n);
-void* SoundSlot_Dtor(void* self, short deleteFlag);
-void Receiver_Destruct(void* self, int flags);
+void* cGameSound_tSndFxPlayList_dtor(void* self, short deleteFlag);
+void cSystem_dtor(void* self, int flags);
 #if 0 /* merge_units */
 void operator_delete(void* p);
 #endif /* merge_units */
@@ -51,12 +51,12 @@ void operator_delete(void* p);
 
 }
 struct O1CA750 { void* vtable; char pad[0x2C]; char items[0x32][0x1B0]; };
-extern "C" O1CA750* SoundMgr_dtor(O1CA750* self, short deleteFlag)
+extern "C" O1CA750* cGameSound_dtor(O1CA750* self, short deleteFlag)
 {
     if (self) {
         self->vtable = D_004DACB0;
-        __destroy_array(self->items, (void*)SoundSlot_Dtor, 0x1B0, 0x32);
-        Receiver_Destruct(self, 0);
+        __destroy_array(self->items, (void*)cGameSound_tSndFxPlayList_dtor, 0x1B0, 0x32);
+        cSystem_dtor(self, 0);
         if (deleteFlag > 0) operator_delete(self);
     }
     return self;

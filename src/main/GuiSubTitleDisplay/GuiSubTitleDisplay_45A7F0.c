@@ -11,7 +11,7 @@ extern void* memset(void*, int, unsigned int);
 extern int sprintf(char*, const char*, ...);
 extern int mwLoadOverlay(const char*, char*);
 
-int Overlay_Load(int id)
+int SFO_RequestOverlay(int id)
 {
     char path[256];
     char* buf;

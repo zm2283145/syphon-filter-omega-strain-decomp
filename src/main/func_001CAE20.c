@@ -54,7 +54,7 @@ typedef struct {
 } Obj;
 
 #include "alloc_guard.h"
-extern "C" void* Mem_Alloc(int, int, char*, int);
+extern "C" void* cMemMan_Allocate(int, int, char*, int);
 extern "C" char D_004A0308[];
 
 extern "C" int Secondary_RequestOneShot(Obj *o, Name *src, unsigned char kind, Params *p)
@@ -69,7 +69,7 @@ extern "C" int Secondary_RequestOneShot(Obj *o, Name *src, unsigned char kind, P
             Name *t;
             {
                 AllocGuard g;
-                t = (Name *)Mem_Alloc(0, 0x30, D_004A0308, 0x569);
+                t = (Name *)cMemMan_Allocate(0, 0x30, D_004A0308, 0x569);
             }
             if (t) KeyQCopyNew(t, src, 3);
             s->p = t;
@@ -90,7 +90,7 @@ extern "C" int Secondary_RequestOneShot(Obj *o, Name *src, unsigned char kind, P
             Name *t;
             {
                 AllocGuard g;
-                t = (Name *)Mem_Alloc(0, 0x30, D_004A0308, 0x569);
+                t = (Name *)cMemMan_Allocate(0, 0x30, D_004A0308, 0x569);
             }
             if (t) KeyQCopyNew(t, src, 3);
             s->p = t;

@@ -28,7 +28,7 @@ struct R { int a, b, c, d; };
 struct T { V4 q; int m10; int m14; };
 extern "C" signed char D_004E1D88;
 extern "C" V4 D_004E1D90;
-/* Inlined Vec4_GetZero: lazily zeroed shared vector. */
+/* Inlined cVector_GetZero: lazily zeroed shared vector. */
 static inline V4* Vec4_Zero(void) {
     if (!D_004E1D88) {
         D_004E1D90.x = 0;

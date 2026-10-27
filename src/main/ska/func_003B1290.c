@@ -23,8 +23,8 @@ extern "C" {
 Ent** std_vector_deleter_cSkaPlaybackItem_data(EVec* v);
 Ent* cSkaPlaybackItem_opAssign(Ent* d, Ent* s);
 V4 cSkaPlaybackItem_GetSummedOffsetRootRotation(Ent* e);
-V4 Vec4_Add_3B1420(V4* a, V4* b);
-V4* Quat_Assign(V4* d, V4* s);
+V4 cQuaternion_opAdd_cQuaternionR(V4* a, V4* b);
+V4* cQuaternion_opAssign(V4* d, V4* s);
 int std_vector_imp_cSkaPlaybackItem_insert(EVec* v, Ent* pos, int n, Ent* value);
 void cSkaPlaybackGroup_Add(Contrib* c, Ent* e, float k);
 }
@@ -43,7 +43,7 @@ void cSkaPlaybackGroup_Add(Contrib* c, Ent* e, float k)
             if (it->weight == 0.0f) {
                 cSkaPlaybackItem_opAssign(it, e);
             } else {
-                Quat_Assign(&it->v, &Vec4_Add_3B1420(&cSkaPlaybackItem_GetSummedOffsetRootRotation(it), &cSkaPlaybackItem_GetSummedOffsetRootRotation(e)));
+                cQuaternion_opAssign(&it->v, &cQuaternion_opAdd_cQuaternionR(&cSkaPlaybackItem_GetSummedOffsetRootRotation(it), &cSkaPlaybackItem_GetSummedOffsetRootRotation(e)));
                 it->weight += e->weight;
                 it->active = 0;
             }

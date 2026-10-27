@@ -5,12 +5,12 @@ typedef struct { char c[0x30]; } __attribute__((aligned(16))) Key_18D1A0;
 typedef struct { char pad[0x320C]; int state; char pad2[0x324C - 0x3210]; int flags; char pad3[0x3314 - 0x3250]; int target; } O_18D1A0;
 extern char D_004DA930[];
 extern char D_00542B60[];
-extern Message* Event_Construct(Message*, void*);
+extern Message* cMessage_ctor_cMessageNameR(Message*, void*);
 extern void cMessage_dtor(AnimEvent* msg, int flags);
 extern void Secondary_RequestOneShot(int target, Key_18D1A0* key, int n, AnimEvent* ev);
 static inline AnimEvent* AnimEvent_Init_18D1A0(AnimEvent* self)
 {
-    Event_Construct(&self->base, D_00542B60);
+    cMessage_ctor_cMessageNameR(&self->base, D_00542B60);
     self->base.vtable = D_004DA930;
     self->unk24 = 0;
     self->unk28 = 0;
@@ -25,7 +25,7 @@ static inline AnimEvent* AnimEvent_Init_18D1A0(AnimEvent* self)
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
 #pragma opt_propagation off
-void Actor_FlashbangHide(O_18D1A0* o)
+void cHuman_CoverEyes(O_18D1A0* o)
 {
     int st;
     if (o->target == 0) return;

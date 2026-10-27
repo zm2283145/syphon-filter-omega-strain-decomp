@@ -35,11 +35,11 @@ typedef struct Node_41F890 { int pad0; struct Node_41F890* next; Data_41F890* da
 typedef struct { Node_41F890* p; } It_41F890;
 typedef struct { int w[1]; } Raw_41F890;
 extern "C" {
-void List_Begin(Raw_41F890* out, void* list);
+void std_list_deleter_voidPtr_begin_void(Raw_41F890* out, void* list);
 void std_list_GuiWidgetPtr_generic_iterator_ctor(It_41F890* out, Raw_41F890* raw);
 void std_list_GuiWidgetPtr_end(Raw_41F890* out, void* list);
 void cLListIterator_GuiWidgetPtr_ctor_listR(It_41F890* out, Raw_41F890* raw);
-int String_AssignCStr_1C43A0(void* s, const char* key);
+int std_basic_string_char_char_traits_char_compare_charP(void* s, const char* key);
 }
 extern "C" Data_41F890* GuiWidgetList_FindByName(void* o, const char* key)
 {
@@ -48,10 +48,10 @@ extern "C" Data_41F890* GuiWidgetList_FindByName(void* o, const char* key)
     Raw_41F890 rawFirst;
     Raw_41F890 rawEnd;
     Node_41F890* n;
-    List_Begin(&rawFirst, o);
+    std_list_deleter_voidPtr_begin_void(&rawFirst, o);
     std_list_GuiWidgetPtr_generic_iterator_ctor(&first, &rawFirst);
     for (n = first.p; (std_list_GuiWidgetPtr_end(&rawEnd, o), cLListIterator_GuiWidgetPtr_ctor_listR(&last, &rawEnd), n != last.p); n = n->next) {
-        if (!String_AssignCStr_1C43A0(n->data->name, key))
+        if (!std_basic_string_char_char_traits_char_compare_charP(n->data->name, key))
             return n->data;
     }
     return 0;
@@ -67,7 +67,7 @@ extern "C" {
 int String_CompareNoCase(int, int);
 extern N41F960 *D_00572118;
 }
-extern "C" int GuiFactory_CreateWidget(int arg0) {
+extern "C" int AbstractWidgetClassRep_Create(int arg0) {
     N41F960 *n;
     for (n = D_00572118; n != 0; n = n->next) {
         if (String_CompareNoCase(arg0, n->id) == 0) {
@@ -96,7 +96,7 @@ extern L4FreeNode* D_00572118;    /* free-list head */
 
 
 /* Pushes node onto the free list. */
-void FreeList_Push(L4FreeNode* node) {
+void AbstractWidgetClassRep_AddClassRep(L4FreeNode* node) {
     node->next = D_00572118;
     D_00572118 = node;
 }
@@ -109,8 +109,8 @@ void FreeList_Push(L4FreeNode* node) {
 typedef struct { int words[3]; } SsoString;
 typedef struct { char unused; } Allocator; /* empty allocator object passed by value */
 extern int strlen(const char* s); /* strlen */
-extern void String_Reserve(SsoString* s, int capacity);
-extern void* String_Replace(SsoString* s, int pos, int count, const char* first, const char* last, Allocator alloc);
+extern void std_basic_string_char_char_traits_char_reserve(SsoString* s, int capacity);
+extern void* std_basic_string_char_char_traits_char_do_replace(SsoString* s, int pos, int count, const char* first, const char* last, Allocator alloc);
 
 /* String constructor from a C string. */
 SsoString* String_CtorCStr_41FA00(SsoString* self, const char* text)
@@ -121,8 +121,8 @@ SsoString* String_CtorCStr_41FA00(SsoString* self, const char* text)
     self->words[1] = 0;
     self->words[2] = 0;
     len = strlen(text);
-    String_Reserve(self, len);
-    String_Replace(self, 0, 0, text, text + len, alloc);
+    std_basic_string_char_char_traits_char_reserve(self, len);
+    std_basic_string_char_char_traits_char_do_replace(self, 0, 0, text, text + len, alloc);
     return self;
 }
 #pragma pop /* merge_units */
@@ -139,7 +139,7 @@ typedef struct SsoString_0041FA80 {
     int longLen;
     char* longData;
 } SsoString_0041FA80;
-extern int String_Compare(SsoString_0041FA80* a, int pos, int len, const char* data, int n);
+extern int std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(SsoString_0041FA80* a, int pos, int len, const char* data, int n);
 
 /* Compares the string with a C string (compare(0, size(), text, strlen(text))). */
 int String_CompareCStr(SsoString_0041FA80* self, const char* text)
@@ -150,7 +150,7 @@ int String_CompareCStr(SsoString_0041FA80* self, const char* text)
         len = (unsigned char)self->h.s.shortLen;
     else
         len = self->longLen;
-    return String_Compare(self, 0, len, text, n);
+    return std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(self, 0, len, text, n);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0041FA80 */
@@ -162,6 +162,6 @@ int String_CompareCStr(SsoString_0041FA80* self, const char* text)
 
 extern "C" { char D_004BF3E0[] = "basic_string: out_of_range"; }
 extern "C" { char D_004BF400[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_0041FAF0, D_004BF3E0, D_004BF400, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00494120, D_00494128, Libc_Memmove, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_0041FAF0, D_004BF3E0, D_004BF400, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00494120, D_00494128, Libc_Memmove, std_basic_string_char_char_traits_char_assign_charP_charP_intP)
 #pragma pop /* merge_units */
 /* merge_units: end func_0041FAF0 */

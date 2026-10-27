@@ -13,7 +13,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00432230 */
 #pragma push /* merge_units */
@@ -51,7 +51,7 @@ void func_00432510(L_432230* l, T_432230* t, int key);
 #endif /* merge_units */
 #define func_00432510(a0, a1, a2) (func_00432510((int)(a0), (Ent_2750 *)(a1), (a2))) /* merge_units */
 
-Obj_432230* Object_LookupById(int* id);
+Obj_432230* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
 T_432230* cNPCInfoObject_Find(int* id, int f);
 void cNPCInfoObject_NPCInfoUpdateCallback(int unused, int key, int code);
 }
@@ -78,7 +78,7 @@ void cNPCInfoObject_NPCInfoUpdateCallback(int unused, int key, int code)
                 int id;
                 if (t->id != -1 && t->b4 == NetLocalId()) {
                     id = t->id;
-                    Obj_432230* o = Object_LookupById(&id);
+                    Obj_432230* o = nGobjManager_LookupGOBJ_cObjectIdR(&id);
                     if (o && o->f58 && !o->f58->v15()) {
                         id2 = t->id;
                         T_432230* e = cNPCInfoObject_Find(&id2, 0);
@@ -115,8 +115,8 @@ static inline void merge_flush_func_00432230(void) {}
 struct Raw_2750 { int p; };
 
 extern "C" {
-void List_Erase(int*, char*, int*);
-Raw_2750 List_Begin(void*);
+void std_list_deleter_voidPtr_erase_listdeleter(int*, char*, int*);
+Raw_2750 std_list_deleter_voidPtr_begin_void(void*);
 Raw_2750 std_list_tNPCInfoPtr_end(void*);
 void std_list_tNPCInfoPtr_generic_iterator_ctor(char**, const Raw_2750&);
 void cLListIterator_tNPCInfoPtr_ctor(char**, const Raw_2750&);
@@ -125,7 +125,7 @@ extern char D_00582B30;
 extern unsigned char D_005721C0;
 extern unsigned char g_IsMultiplayer;
 }
-#define Begin_2750(o) std_list_tNPCInfoPtr_generic_iterator_ctor(o, List_Begin(&D_00582B30))
+#define Begin_2750(o) std_list_tNPCInfoPtr_generic_iterator_ctor(o, std_list_deleter_voidPtr_begin_void(&D_00582B30))
 #define End_2750(o) cLListIterator_tNPCInfoPtr_ctor(o, std_list_tNPCInfoPtr_end(&D_00582B30))
 static inline unsigned char IsHost_2510() { if (g_IsMultiplayer) return D_005721C0; return 1; }
 extern "C" void func_00432510(int d0, Ent_2750* tbl, int key) {
@@ -153,7 +153,7 @@ extern "C" void func_00432510(int d0, Ent_2750* tbl, int key) {
                 }
                 {
                     AllocGuard g;
-                    Mem_Free(0, e, "NPCInfoObject.cc", 0x78B);
+                    cMemMan_Deallocate(0, e, "NPCInfoObject.cc", 0x78B);
                 }
                 {
                     char* c;
@@ -161,7 +161,7 @@ extern "C" void func_00432510(int d0, Ent_2750* tbl, int key) {
                     int pos;
                     c = cur;
                     std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&pos, &c);
-                    List_Erase(&res, &D_00582B30, &pos);
+                    std_list_deleter_voidPtr_erase_listdeleter(&res, &D_00582B30, &pos);
                 }
             }
         }

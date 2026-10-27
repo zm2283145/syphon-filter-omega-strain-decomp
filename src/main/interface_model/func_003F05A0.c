@@ -13,10 +13,10 @@ typedef struct Obj05A0 {
 } Obj05A0;
 extern int g_TextureMgr;
 extern char D_004BE048[];
-extern void Resource_Construct(FileMan05A0* f);
+extern void cFileMan_ctor_void(FileMan05A0* f);
 extern void cFileMan_EncodeFilename_charP_cFileManR(FileMan05A0* f, char* name, int a);
-extern void FileMan_Release(FileMan05A0* f, int flag);
-extern int TexMan_FindOrLoad(int mgr, FileMan05A0* f);
+extern void cFileMan_dtor(FileMan05A0* f, int flag);
+extern int cTexMan_AddTextureFromFile_cFileManR(int mgr, FileMan05A0* f);
 
 static inline void Copy(PStr05A0* buf, char* t, const char* s)
 {
@@ -67,12 +67,12 @@ void cInterfaceModel_Refresh(Obj05A0* o, int arg1)
     int i;
 
     if (Len05A0(&o->name) > 0) {
-        Copy(&s, s.text, String_CStr(&o->name));
+        Copy(&s, s.text, std_basic_string_char_char_traits_char_c_str(&o->name));
         Append((char*)&s, D_004BE048);
-        Resource_Construct(&fm);
+        cFileMan_ctor_void(&fm);
         cFileMan_EncodeFilename_charP_cFileManR(&fm, (char*)&s + 1, arg1);
-        o->f18 = TexMan_FindOrLoad(g_TextureMgr, &fm);
-        FileMan_Release(&fm, -1);
+        o->f18 = cTexMan_AddTextureFromFile_cFileManR(g_TextureMgr, &fm);
+        cFileMan_dtor(&fm, -1);
     }
     for (i = 0; i < o->count; i++) {
         cInterfaceModel_Refresh(o->kids[i], arg1);

@@ -13,11 +13,11 @@ struct S_463160 { char pad0[0x250]; void* f250; };
 extern "C" {
 extern char D_004C2780[];
 extern char D_004C2798[];
-Ui_463160* Gui_GetScreenStack(void);
-void* Gui_GetScreenList(void);
-void* GuiManager_FindOrLoad(void* a, char* b, char* c);
-void GuiStack_SwapScreens(void* ui, S_463160* self, void* pg);
-int GuiScoresEquip_HandleInput(S_463160* self, Ev_463160* ev);
+Ui_463160* Gui_Canvas(void);
+void* Gui_Manager(void);
+void* GuiManager_OpenGui(void* a, char* b, char* c);
+void GuiCanvas_Transition(void* ui, S_463160* self, void* pg);
+int GuiScoresEquip_onInput(S_463160* self, Ev_463160* ev);
 }
 static inline unsigned char Down_463160(Ev_463160* e)
 {
@@ -53,11 +53,11 @@ extern "C" int GuiEndGameStatistics_HandleInput(S_463160* self, Ev_463160* ev)
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x40 && ev->f6 == 0;
         if (b) {
             void* pg;
-            Gui_GetScreenStack()->Hide(self->f250);
-            pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C2780, D_004C2798);
-            GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
+            Gui_Canvas()->Hide(self->f250);
+            pg = GuiManager_OpenGui(Gui_Manager(), D_004C2780, D_004C2798);
+            GuiCanvas_Transition(Gui_Canvas(), self, pg);
             return 1;
         }
     }
-    return GuiScoresEquip_HandleInput(self, ev);
+    return GuiScoresEquip_onInput(self, ev);
 }

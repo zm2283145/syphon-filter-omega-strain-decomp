@@ -2,7 +2,7 @@
 typedef struct { unsigned char type; int a; float f; int b; int c; int id; unsigned char used; } C4Slot26B;
 extern C4Slot26B D_004FEED0[][6];
 static unsigned int dat_0048B270[2] = { 0x1, 0x0 };
-int PadRumble_Start(int idx, unsigned char type, int a, int b, float f) {
+int nRumbleManager_Start(int idx, unsigned char type, int a, int b, float f) {
     int i;
     for (i = 0; i < 6; i++) {
         C4Slot26B* s = &D_004FEED0[idx][i];

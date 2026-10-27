@@ -16,7 +16,7 @@
 
 
 extern "C" {
-int Mem_Free(...);                      
+int cMemMan_Deallocate(...);                      
 extern char D_0049AE90;
 extern unsigned char g_ProfileLockEnabled;
 }
@@ -30,11 +30,11 @@ extern "C" void opDelete_cStringP_int_bool_charP_etc(char * arg0, int arg1, int 
         if (temp_s2 != NULL) {
             {
                 AllocGuard g;
-            Mem_Free(0, temp_s2, &D_0049AE90, 0x64);
+            cMemMan_Deallocate(0, temp_s2, &D_0049AE90, 0x64);
             }
         }
     }
-    Mem_Free(arg1, arg0, arg3, arg4);
+    cMemMan_Deallocate(arg1, arg0, arg3, arg4);
     }
 }
 #pragma pop /* merge_units */
@@ -53,11 +53,11 @@ extern "C" void opDelete_cStringP_int_bool_charP_etc(char * arg0, int arg1, int 
 extern int D_00571FB0;
 extern int D_00571FB8;
 
-int Gui_GetScreenList(void) {
+int Gui_Manager(void) {
     return D_00571FB8;
 }
 
-int Gui_GetScreenStack(void) {
+int Gui_Canvas(void) {
     return D_00571FB0;
 }
 #pragma pop /* merge_units */
@@ -84,7 +84,7 @@ extern void **D_00571FB8;
 
 extern unsigned char D_00571FC0;
 }
-extern "C" void GuiCanvas_Destroy(void) {
+extern "C" void Gui_Destroy(void) {
     void **temp_s0;
     void **temp_s0_2;
 
@@ -93,14 +93,14 @@ extern "C" void GuiCanvas_Destroy(void) {
         {
             AllocGuard g;
         ((VC004147B0 *)(temp_s0))->v0(-1);
-        Mem_Free(0, temp_s0, "gui.cc", 0x27);
+        cMemMan_Deallocate(0, temp_s0, "gui.cc", 0x27);
         }
         D_00571FB0 = NULL;
         temp_s0_2 = D_00571FB8;
         {
             AllocGuard g;
         GuiManager_dtor(temp_s0_2, -1);
-        Mem_Free(0, temp_s0_2, "gui.cc", 0x2A);
+        cMemMan_Deallocate(0, temp_s0_2, "gui.cc", 0x2A);
         }
         D_00571FB8 = NULL;
     }

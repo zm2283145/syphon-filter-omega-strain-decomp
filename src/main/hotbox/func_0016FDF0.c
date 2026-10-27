@@ -10,17 +10,17 @@ extern int D_004EE700;   /* cHotboxMsg type id */
 extern int D_004EE738;   /* cHotbox class type id */
 extern int D_004EE740;   /* cHotbox script type */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
-extern int* cGOBJ_GetScriptTypeKeyPtr(void);
-extern int ScriptType_AddAccepted(int type, int messageType);
-extern void ScriptType_SetParent(int type, int parentType);
+extern int cScriptInterpreter_CallEvent(void* filter, int a0, int a1);
+extern int* cGOBJ_SOBJ_getClassId(void);
+extern int cScriptBase_declareMsgUse(int type, int messageType);
+extern void cScriptBase_declareParent(int type, int parentType);
 
 /* Registers the cHotbox script type under its parent and adds cHotboxMsg to it. */
-int ScriptType_cHotbox_Init(void) {
-    int* parent = cGOBJ_GetScriptTypeKeyPtr();
+int cHotbox_SOBJ_init(void) {
+    int* parent = cGOBJ_SOBJ_getClassId();
 
-    ScriptType_SetParent(D_004EE740, *parent);
-    return ScriptType_AddAccepted(D_004EE740, D_004EE700);
+    cScriptBase_declareParent(D_004EE740, *parent);
+    return cScriptBase_declareMsgUse(D_004EE740, D_004EE700);
 }
 
 void* cHotbox_SOBJ_convert(void* self) {
@@ -31,10 +31,10 @@ int* cHotbox_SOBJ_getClassId(void) {
     return &D_004EE738;
 }
 
-int cHotbox_v0B(void) {
+int cHotbox_getSOBJClassId(void) {
     return D_004EE738;
 }
 
-int Hotbox_ScriptFilter(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cHotbox_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }

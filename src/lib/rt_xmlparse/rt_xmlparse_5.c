@@ -50,7 +50,7 @@ int func_003132E0(Ctx313200 *c, Node313200 *n)
 extern char D_004B0EA8[];
 extern char D_004B11B0[];
 extern unsigned int strlen(const char *);
-extern char *String_Copy(char *, const char *);
+extern char *Libc_Strcpy(char *, const char *);
 typedef struct { char pad[0x8414]; char buf[0x800]; int len; } Ctx3133C0;
 typedef struct { int type; char *str; int len; char *attr[64]; } Node3133C0;
 #if 0 /* merge_units */
@@ -97,7 +97,7 @@ done2:
                 printf(D_004B0DE0, D_004B0E18, 0x510, D_004B0F38);
                 return r;
             }
-            String_Copy(n->attr[i], s);
+            Libc_Strcpy(n->attr[i], s);
             break;
         }
     }

@@ -12,7 +12,7 @@ struct V {
     V& operator+=(const V& o) { __asm__ volatile("lqc2 vf1, 0x0(%1); lqc2 vf2, 0x0(%0); vadd.xyz vf1, vf1, vf2; sqc2 vf1, 0x0(%1)" : : "r"(&o), "r"(this) : "memory"); return *this; }
 } __attribute__((aligned(16)));
 struct Box { V min; V max; };
-extern "C" void Bounds_ExpandByRadius(Box* b, float rad)
+extern "C" void cBox_Grow(Box* b, float rad)
 {
     V r(rad, rad, rad, 0.0f);
     b->min += -r;

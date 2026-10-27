@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int String_CopyCtor(int, int);
+extern int std_basic_string_char_char_traits_char_ctor_basicstringR(int, int);
 
 int cString_ctor_cStringR(int a0, int a1) {
-    String_CopyCtor(a0, a1);
+    std_basic_string_char_char_traits_char_ctor_basicstringR(a0, a1);
     return a0;
 }

@@ -10,7 +10,7 @@
 /* merge_units: begin func_00175D60 */
 #pragma push /* merge_units */
 extern char g_Hud[];
-extern int Script_ValueToObj(int);
+extern int cSystem_SOBJ_convert(int);
 extern void GuiGameScreen_SetMenuReceiver(int, int);
 
 int Script_cPlayer_SetMenuReceiver(int a0) {
@@ -18,7 +18,7 @@ int Script_cPlayer_SetMenuReceiver(int a0) {
     int cond;
 
     a0 = *(int*)((char*)a0 + 4);
-    v0 = Script_ValueToObj(a0);
+    v0 = cSystem_SOBJ_convert(a0);
     v1 = *(int*)(char*)g_Hud;
     a0 = *(int*)((char*)v1 + 1700);
     cond = a0 == 0;
@@ -45,12 +45,12 @@ extern Game_P* g_Hud;
 #endif /* merge_units */
 #define g_Hud (*(Game_P **)&g_Hud) /* merge_units */
 
-extern void cPlayer_SetMenuTitle(void* p, int v);
+extern void GuiGameScreen_SetMenuTitle(void* p, int v);
 static inline void Call_00175DA0(int v)
 {
     void* p = g_Hud->player;
     if (p)
-        cPlayer_SetMenuTitle(p, v);
+        GuiGameScreen_SetMenuTitle(p, v);
 }
 int Script_cPlayer_SetMenuTitle(int* args)
 {
@@ -74,12 +74,12 @@ extern Game_P* g_Hud;
 #endif /* merge_units */
 #define g_Hud (*(Game_P **)&g_Hud) /* merge_units */
 
-extern void cPlayer_AddMenuChoice(void* p, int v);
+extern void GuiGameScreen_AddMenuChoice(void* p, int v);
 static inline void Call_00175DE0(int v)
 {
     void* p = g_Hud->player;
     if (p)
-        cPlayer_AddMenuChoice(p, v);
+        GuiGameScreen_AddMenuChoice(p, v);
 }
 int Script_cPlayer_AddMenuChoice(int* args)
 {
@@ -109,13 +109,13 @@ extern Game_P_00175E20* g_Hud;
 
 extern int g_HumanActorClassKey;
 static inline Plr_P* AsPlayer(GObj_P* o) { Plr_P* p = o->ctl; return (p && p->kind == g_HumanActorClassKey) ? p : 0; }
-extern void cPlayer_LaunchChooseMenu(Plr_P* pl, Plr_P* who);
+extern void GuiGameScreen_BeginChooseMenu(Plr_P* pl, Plr_P* who);
 int Script_cPlayer_LaunchChooseMenu(GObj_P** args)
 {
     GObj_P* o = args[0];
     Plr_P* pl = g_Hud->player;
     if (pl)
-        cPlayer_LaunchChooseMenu(pl, AsPlayer(o));
+        GuiGameScreen_BeginChooseMenu(pl, AsPlayer(o));
     return 0;
 }
 #undef g_Hud /* merge_units */

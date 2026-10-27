@@ -25,7 +25,7 @@ typedef struct {
     char *dst;
 } Xml04F8;
 extern char *func_0030F0E8(char *buf, int len);
-extern int String_CompareN(const char *a, const char *b, int n);
+extern int Libc_Strncmp(const char *a, const char *b, int n);
 extern char *strncpy(char *d, const char *s, unsigned int n);
 void func_003104F8(const char *s, int len, Xml04F8 *p)
 {
@@ -33,7 +33,7 @@ void func_003104F8(const char *s, int len, Xml04F8 *p)
     if (p->stop) return;
     if (len == 0) return;
     if (isspace(*s)) return;
-    if (String_CompareN(func_0030F0E8(p->buf, p->bufLen), "return", 0x100) == 0)
+    if (Libc_Strncmp(func_0030F0E8(p->buf, p->bufLen), "return", 0x100) == 0)
         strncpy(dst, s, len);
 }
 /* merge_units: end func_003104F8 */

@@ -148,7 +148,7 @@ static inline void write16(int v)
 }
 
 /* cNetTimerMsg virtual 4: writes the time (raw float bits) little-endian, then serializes the payload. */
-void cNetTimerMsg_v04(cNetTimerMsg* self)
+void cNetTimerMsg_Pack(cNetTimerMsg* self)
 {
     float time = self->time;
     int value = *(int*)&time;
@@ -165,7 +165,7 @@ static inline void merge_flush_func_002467D0(void) {}
 #pragma push /* merge_units */
 extern int D_004F7DC8;
 
-int cNetTimerMsg_v05(void) {
+int cNetTimerMsg_GetMsgId(void) {
     return D_004F7DC8;
 }
 /* merge_units: generate this block's code under its own pragmas */

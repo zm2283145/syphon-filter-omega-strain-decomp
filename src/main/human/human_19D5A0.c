@@ -13,7 +13,7 @@ typedef struct { char pad[0x10]; float f10; } Src_D640;
 typedef struct {
     char pad[0x1C]; float f1C; float f20; float f24; float f28; float f2C; Src_D640* p30; float f34;
 } Ch_D640;
-void AnimChannel_SetDuration(Ch_D640* c, float d); /* gsynth: defined below */typedef struct {
+void cSplinedMotion_float_RestartTransition(Ch_D640* c, float d); /* gsynth: defined below */typedef struct {
     char pad0[0x10];
     float target;
     float damping;
@@ -23,19 +23,19 @@ void AnimChannel_SetDuration(Ch_D640* c, float d); /* gsynth: defined below */ty
 } B7_Chan;
 typedef struct { char pad[0x80]; B7_Chan* chans; } B7_Anim;
 #if 0 /* merge_units */
-extern void AnimChannel_SetDuration(B7_Chan* ch, float d);
+extern void cSplinedMotion_float_RestartTransition(B7_Chan* ch, float d);
 #endif /* merge_units */
-#define AnimChannel_SetDuration(a0, a1) (AnimChannel_SetDuration((void *)(a0), (a1))) /* merge_units */
+#define cSplinedMotion_float_RestartTransition(a0, a1) (cSplinedMotion_float_RestartTransition((void *)(a0), (a1))) /* merge_units */
 
-void AnimChannel_SetTarget(B7_Anim* a, int idx, unsigned int n, float target, float dur, float damping)
+void cSkaParams_SetSliderValue_UsingSplineForInterpolation(B7_Anim* a, int idx, unsigned int n, float target, float dur, float damping)
 {
     B7_Chan* ch = &a->chans[idx];
     ch->target = target;
     ch->damping = damping;
-    AnimChannel_SetDuration(ch, dur);
+    cSplinedMotion_float_RestartTransition(ch, dur);
     { float fn = n; float z = 0.0f; ch->active = fn != z; }
 }
-#undef AnimChannel_SetDuration /* merge_units */
+#undef cSplinedMotion_float_RestartTransition /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0019D5A0(void) {}
 #pragma pop /* merge_units */
@@ -43,7 +43,7 @@ static inline void merge_flush_func_0019D5A0(void) {}
 
 /* merge_units: begin func_0019D640 */
 #pragma push /* merge_units */
-void AnimChannel_SetDuration(Ch_D640* c, float d) {
+void cSplinedMotion_float_RestartTransition(Ch_D640* c, float d) {
     float s;
     if (d >= 0.0f) {
         s = d * c->f2C;

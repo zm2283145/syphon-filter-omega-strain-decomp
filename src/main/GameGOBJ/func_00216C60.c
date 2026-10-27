@@ -102,15 +102,15 @@ extern char g_TriggerMsgKey[];
 extern char D_004DAF10[];
 extern char D_004F5450[];
 extern char D_004DAE90[];
-void Actor_BaseLogicUpdate(PathObj* o, float dt);
+void cGOBJ_NextFrame(PathObj* o, float dt);
 void PathObj_GetPoint(PathObj* o, V* out, int i);
-void Mtx_InvertRigid_13ECA0(M* out, M* in);
+void cMatrix_Copy_InvertRotTrans(M* out, M* in);
 Qt* func_002181C0(Arr* v, int i);
 int func_002181D0(Arr* v);
 float* func_002181E0(Arr* v, int i);
 int func_002181F0(Arr* v);
-void PathObj_PropagateMovement(PathObj* o, M m, int f);
-M PathObj_InterpRotation(PathObj* o, int a, int b, float t);
+void cPathedGOBJ_TransformAttached(PathObj* o, M m, int f);
+M cPathedGOBJ_GetAdjustedRot(PathObj* o, int a, int b, float t);
 }
 
 static inline int ObjId(Kid* o) { return o ? *(int*)((char*)o + 0xC) : 0; }
@@ -125,14 +125,14 @@ struct LiftMsg {
     LiftMsg(int k, int f)
     {
         LiftMsg* p = this;
-        Event_Construct(p, g_TriggerMsgKey);
+        cMessage_ctor_cMessageNameR(p, g_TriggerMsgKey);
         p->vtable = D_004DAF10;
         p->mkind = k;
         p->floor = f;
         p->to = ObjId(0);
         p->from = ObjId(0);
     }
-    void Send(void* to) { Event_Send(this, to, 0); }
+    void Send(void* to) { QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~LiftMsg() { vtable = D_004DAF10; cMessage_dtor(this, 0); }
 };
 
@@ -141,9 +141,9 @@ struct Notice {
     int nkind;
     int arg;
     char pad2C[4];
-    Notice(int k, int a) { Notice* p = this; Event_Construct(p, D_004F5450); p->vtable = D_004DAE90; p->nkind = k; p->arg = a; }
-    Notice(Cursor* c) { Notice* p = this; int a = c->cur; Event_Construct(p, D_004F5450); p->vtable = D_004DAE90; p->nkind = 0; p->arg = a; }
-    void Send(void* to) { Event_Send(this, to, 0); }
+    Notice(int k, int a) { Notice* p = this; cMessage_ctor_cMessageNameR(p, D_004F5450); p->vtable = D_004DAE90; p->nkind = k; p->arg = a; }
+    Notice(Cursor* c) { Notice* p = this; int a = c->cur; cMessage_ctor_cMessageNameR(p, D_004F5450); p->vtable = D_004DAE90; p->nkind = 0; p->arg = a; }
+    void Send(void* to) { QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Notice() { vtable = D_004DAE90; cMessage_dtor(this, 0); }
 };
 
@@ -167,10 +167,10 @@ static inline float* SegAt(PathObj* o, int idx)
     return q;
 }
 
-extern "C" void PathObj_Update(PathObj* self, float dt)
+extern "C" void cPathedGOBJ_NextFrame(PathObj* self, float dt)
 {
     if (self->done || !self->nPts) {
-        Actor_BaseLogicUpdate(self, dt);
+        cGOBJ_NextFrame(self, dt);
         return;
     }
     if (self->wait > 0.0f) {
@@ -178,12 +178,12 @@ extern "C" void PathObj_Update(PathObj* self, float dt)
         if (self->wait > 0.0f) return;
         if (self->snd) {
             SoundEventP ev;
-            SoundEvent_CtorFromPreset(&ev, self->snd, self);
+            cPlaySoundMsg_ctor_cSndFxR(&ev, self->snd, self);
             ev.kind = 1;
-            Event_Send(&ev, g_Game, 1);
+            QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 1);
             ev.vtable = D_004DAE30;
-            FileMan_Release(&ev.req.b, -1);
-            FileMan_Release(&ev.req.a, -1);
+            cFileMan_dtor(&ev.req.b, -1);
+            cFileMan_dtor(&ev.req.a, -1);
             cMessage_dtor(&ev, 0);
         }
         for (int i = 0; i < self->nKids; i++) {
@@ -213,12 +213,12 @@ extern "C" void PathObj_Update(PathObj* self, float dt)
         Notice(2, self->cur->cur).Send(self);
         if (self->cur->cur == self->stopAt) {
             M inv;
-            Mtx_InvertRigid_13ECA0(&inv, self->src->Xform());
+            cMatrix_Copy_InvertRotTrans(&inv, self->src->Xform());
             V pt;
             PathObj_GetPoint(self, &pt, self->stopAt);
             Plc p(M(*RotAt(self, self->stopAt)), pt);
             self->SetPlacement(&p);
-            PathObj_PropagateMovement(self, MMul(p, inv), 1);
+            cPathedGOBJ_TransformAttached(self, MMul(p, inv), 1);
             self->done = 1;
             Notify(self, 0, self->cur->cur);
             self->stopAt = -1;
@@ -236,20 +236,20 @@ extern "C" void PathObj_Update(PathObj* self, float dt)
                     self->cur->dir = -1;
                     self->cur->cur = self->nPts - 1;
                     M inv;
-                    Mtx_InvertRigid_13ECA0(&inv, self->src->Xform());
+                    cMatrix_Copy_InvertRotTrans(&inv, self->src->Xform());
                     V pt;
                     PathObj_GetPoint(self, &pt, self->cur->cur);
                     Plc p(M(*RotAt(self, c)), pt);
                     self->SetPlacement(&p);
-                    PathObj_PropagateMovement(self, MMul(p, inv), 1);
+                    cPathedGOBJ_TransformAttached(self, MMul(p, inv), 1);
                 } else if (self->cur->cur <= 0) {
                     M inv;
-                    Mtx_InvertRigid_13ECA0(&inv, self->src->Xform());
+                    cMatrix_Copy_InvertRotTrans(&inv, self->src->Xform());
                     V pt;
                     PathObj_GetPoint(self, &pt, 0);
                     Plc p(M(*RotAt(self, 0)), pt);
                     self->SetPlacement(&p);
-                    PathObj_PropagateMovement(self, MMul(p, inv), 1);
+                    cPathedGOBJ_TransformAttached(self, MMul(p, inv), 1);
                     self->done = 1;
                     Notify(self, 0, self->cur->cur);
                     self->wait = 0.0f;
@@ -262,12 +262,12 @@ extern "C" void PathObj_Update(PathObj* self, float dt)
                     self->cur->cur = 0;
                     self->wait = self->delay;
                     M inv;
-                    Mtx_InvertRigid_13ECA0(&inv, self->src->Xform());
+                    cMatrix_Copy_InvertRotTrans(&inv, self->src->Xform());
                     V pt;
                     PathObj_GetPoint(self, &pt, self->cur->cur);
                     Plc p(M(*RotAt(self, c)), pt);
                     self->SetPlacement(&p);
-                    PathObj_PropagateMovement(self, MMul(p, inv), 1);
+                    cPathedGOBJ_TransformAttached(self, MMul(p, inv), 1);
                 }
                 break;
             case 3:
@@ -291,12 +291,12 @@ extern "C" void PathObj_Update(PathObj* self, float dt)
                 break;
             case 4: {
                 M inv;
-                Mtx_InvertRigid_13ECA0(&inv, self->src->Xform());
+                cMatrix_Copy_InvertRotTrans(&inv, self->src->Xform());
                 V pt;
                 PathObj_GetPoint(self, &pt, self->cur->cur);
                 Plc p(M(*RotAt(self, c)), pt);
                 self->SetPlacement(&p);
-                PathObj_PropagateMovement(self, MMul(p, inv), 1);
+                cPathedGOBJ_TransformAttached(self, MMul(p, inv), 1);
                 self->done = 1;
                 Notify(self, 0, self->cur->cur);
                 self->t = 1.0f;
@@ -310,10 +310,10 @@ extern "C" void PathObj_Update(PathObj* self, float dt)
         PathObj_GetPoint(self, &pt, self->cur->cur);
         pt += delta;
         M inv;
-        Mtx_InvertRigid_13ECA0(&inv, self->src->Xform());
-        Plc p(PathObj_InterpRotation(self, next, self->cur->cur, self->t), pt);
+        cMatrix_Copy_InvertRotTrans(&inv, self->src->Xform());
+        Plc p(cPathedGOBJ_GetAdjustedRot(self, next, self->cur->cur, self->t), pt);
         self->SetPlacementI(&p);
-        PathObj_PropagateMovement(self, MMul(p, inv), 0);
+        cPathedGOBJ_TransformAttached(self, MMul(p, inv), 0);
     }
-    Actor_BaseLogicUpdate(self, dt);
+    cGOBJ_NextFrame(self, dt);
 }

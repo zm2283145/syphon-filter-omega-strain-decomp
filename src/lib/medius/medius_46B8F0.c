@@ -8,7 +8,7 @@
 extern char D_004C3040[], D_004C3090[], D_004C30A0[], D_004C30B8[], D_004C30D0[], D_004C30F0[], D_004C3108[], D_004C3128[], D_004C3140[], D_004C3160[], D_004C3180[], D_004C3198[], D_004C31B8[], D_004C31D0[], D_004C31F0[], D_004C3208[], D_004C3228[], D_004C3240[], D_004C3260[], D_004C3290[], D_004C32C8[];
 
 /* MediusErrorType -> name */
-const char* Medius_ErrorCodeToString(int err)
+const char* MediusGetErrorCodeString(int err)
 {
     switch (err) {
     case 0: return D_004C3090;

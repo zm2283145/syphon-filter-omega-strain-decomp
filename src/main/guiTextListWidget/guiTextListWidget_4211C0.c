@@ -43,11 +43,11 @@ static inline void merge_flush_func_004211C0(void) {}
 
 #include "guiTextListWidget_types.h"
 
-extern void* String_AssignString(void* dst, void* src);
+extern void* std_basic_string_char_char_traits_char_assign_basicstringR(void* dst, void* src);
 
 /* TextListEntry copy constructor. */
 TextListEntry* GuiTextListWidget_Item_opAssign(TextListEntry* self, TextListEntry* src) {
-    String_AssignString(self, src);
+    std_basic_string_char_char_traits_char_assign_basicstringR(self, src);
     self->unk0C = src->unk0C;
     self->unk10 = src->unk10;
     return self;

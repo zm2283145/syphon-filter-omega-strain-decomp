@@ -41,13 +41,13 @@ static inline int df00eqm(__int128 m, __int128 a, __int128 b) {
     }
     return x == -1;
 }
-unsigned int ActorModel_StepMorph(Df00Obj* self, int step, unsigned int idx, int type)
+unsigned int cMan_NextFaceShape(Df00Obj* self, int step, unsigned int idx, int type)
 {
     __int128 mask = df00mask(0xFFFFFFFFFFFFLL);
     __int128* tbl;
     char buf[16] __attribute__((aligned(16)));
     __int128 key;
-    String_Copy(buf, "SHAPE_");
+    Libc_Strcpy(buf, "SHAPE_");
     tbl = D_005712F8[type];
     key = *(__int128*)buf;
     do {
@@ -91,8 +91,8 @@ typedef struct Obj8E030 {
 } Obj8E030;
 
 extern int g_TextureMgr;
-extern short Tex_FindInList(int lib, __int128 name);
-extern short TexCache_LoadErrorTexture(int lib);
+extern short FindTexture__7cTexManCF1(int lib, __int128 name);
+extern short cTexMan_UseMrYuckTexture(int lib);
 
 void cMan_GetTextureIDs(Obj8E030* o)
 {
@@ -101,11 +101,11 @@ void cMan_GetTextureIDs(Obj8E030* o)
     for (i = 0; (long)o->parts[i].name.q != 0; i++) {
         Name8E030 n;
         n.q = o->parts[i].name.q;
-        o->texA[i] = Tex_FindInList(lib, n.q);
+        o->texA[i] = FindTexture__7cTexManCF1(lib, n.q);
         if (o->texA[i] == -1)
-            o->texA[i] = TexCache_LoadErrorTexture(lib);
+            o->texA[i] = cTexMan_UseMrYuckTexture(lib);
         n.c[14] = '1';
-        o->texB[i] = Tex_FindInList(lib, n.q);
+        o->texB[i] = FindTexture__7cTexManCF1(lib, n.q);
         if (o->texB[i] == -1)
             o->texB[i] = o->texA[i];
     }

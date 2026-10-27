@@ -29,11 +29,11 @@ extern E43AA40 *D_00583888;
 extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char g_IsMultiplayer;
-int NetGame_InitLocalSlot(int *, int);
+int NetGetMyClientIndex(int *, int);
 static inline int Get43AA40(int a) {
     if (g_IsMultiplayer != 0) {
         if (D_00494178 == -1) {
-            NetGame_InitLocalSlot(&D_00494178, a);
+            NetGetMyClientIndex(&D_00494178, a);
         }
         return D_00494178;
     }

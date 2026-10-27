@@ -9,16 +9,16 @@ typedef struct FlagMsg {
 
 extern char g_Game[];
 extern char D_004D97F0[];
-extern void SoundPauseMsg_Ctor(FlagMsg* msg);
-extern void Event_Send(FlagMsg* msg, void* target, int flags);
+extern void cPauseMusicMsg_ctor(FlagMsg* msg);
+extern void QueueMessage_cMessageR_cSystemP_int(FlagMsg* msg, void* target, int flags);
 extern void cMessage_dtor(FlagMsg* msg, int flags);
 
 /* Broadcasts a flagged message. */
-void SoundPauseMsg_Send(void) {
+void cGameFrontEnd_PauseMusic(void) {
     FlagMsg msg;
-    SoundPauseMsg_Ctor(&msg);
+    cPauseMusicMsg_ctor(&msg);
     msg.flag = 1;
-    Event_Send(&msg, g_Game, 1);
+    QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 1);
     msg.vtbl = D_004D97F0;
     cMessage_dtor(&msg, 0);
 }

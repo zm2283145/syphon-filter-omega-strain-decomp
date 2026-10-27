@@ -56,7 +56,7 @@ static inline void transfer_tree_erase(RbTree* tree, Node** position)
     std_red_black_tree_1_balance_erase((TransferTreeNode*)node, tree->root);
     if (node) {
         AllocGuard guard;
-        Mem_Free(0, node, File, 0x64);
+        cMemMan_Deallocate(0, node, File, 0x64);
     }
     tree->count--;
 }

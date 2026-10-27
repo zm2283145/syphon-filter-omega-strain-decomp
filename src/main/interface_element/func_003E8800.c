@@ -52,7 +52,7 @@ static inline bool IsIdent(float* m) {
            m[12] == 0.0f && m[13] == 0.0f && m[14] == 0.0f && m[15] == 1.0f;
 }
 
-extern "C" void IeElement_PushMatrix(Elem_E88* e)
+extern "C" void cInterfaceElement_SetupView(Elem_E88* e)
 {
     M4_E88 a;
     M4_E88 r;

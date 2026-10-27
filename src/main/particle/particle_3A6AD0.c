@@ -118,7 +118,7 @@ void snd_InitMovieSoundEx(int a0, int a1, int a2, int a3, int t0, int t1) {
     snd_SendIOPCommandAndWait(59, 24, args);
 }
 
-void Global_SetReverb(int a0, int a1, int a2) {
+void snd_SetReverbDepth(int a0, int a1, int a2) {
     int args[4];
 
     args[0] = a0;
@@ -143,7 +143,7 @@ extern char D_0053DC00[];
 extern char D_0053DC08[];
 extern int sceCdCallback(int);
 
-int Cd_SetCallback(int a0) {
+int snd_StreamSafeCdCallback(int a0) {
     int v0;
     int cond;
 

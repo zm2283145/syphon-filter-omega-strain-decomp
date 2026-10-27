@@ -15,14 +15,14 @@ struct Transform {
     unsigned char dirty; /* +0x50 */
 };
 
-extern "C" Mtx* Mtx_Copy(Mtx* dst, Mtx* src);
-extern "C" Mtx* Mtx_InvertRigid(Mtx* m);
+extern "C" Mtx* cMatrix_ctor_cMatrixR(Mtx* dst, Mtx* src);
+extern "C" Mtx* cMatrix_InvertRotTrans(Mtx* m);
 
 /* Writes the inverse of the transform world matrix to out (updating it first when dirty). */
-extern "C" void Transform_GetInverseMatrix(Mtx* out, Transform* xf)
+extern "C" void cXform_GetInverseMatrix(Mtx* out, Transform* xf)
 {
     Mtx tmp;
     if (xf->dirty)
     xf->Update();
-    Mtx_Copy(out, Mtx_InvertRigid(Mtx_Copy(&tmp, &xf->matrix)));
+    cMatrix_ctor_cMatrixR(out, cMatrix_InvertRotTrans(cMatrix_ctor_cMatrixR(&tmp, &xf->matrix)));
 }

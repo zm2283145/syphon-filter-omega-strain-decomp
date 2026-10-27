@@ -44,6 +44,6 @@ void func_00346B90(H346* h)
 #include "guarded_new.h"
 
 extern "C" { char D_004BA130[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(GuiAgentModify_Create, 0x160, D_004BA130, GuiAgentModify_ctor)
+DEFINE_GUARDED_NEW_CTOR(ConcreteWidgetClassRep_GuiAgentModify_Create, 0x160, D_004BA130, GuiAgentModify_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00346C10 */

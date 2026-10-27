@@ -11,7 +11,7 @@ extern int sceBInetOpen(char *, char *, int, int);
 extern int sceBInetClose(char *, char *, int, int);
 extern int sceBInetControl(char *, char *, int, int, void *, int);
 
-int Socket_Construct(int *out, char *host, unsigned short *port, SockCfg *cfg, unsigned char *flag)
+int rt_comm_platform2_create(int *out, char *host, unsigned short *port, SockCfg *cfg, unsigned char *flag)
 {
     SockDesc p;
     SockInfo info;

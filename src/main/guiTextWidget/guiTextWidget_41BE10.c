@@ -33,7 +33,7 @@ static inline void merge_flush_func_0041BE10(void) {}
 char D_004BF3A8[] = "GuiTextWidget"; /* "GuiTextWidget" */
 
 /* GuiTextWidget type check: true when name equals the class name "GuiTextWidget". */
-int GuiTextWidget_IsType(void* self, const char* name) {
+int GuiTextWidget_IsClass(void* self, const char* name) {
     return strcmp(D_004BF3A8, name) == 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

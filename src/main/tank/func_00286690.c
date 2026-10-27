@@ -2,7 +2,7 @@
 #include "types.h"
 #include "vslot_pad.h"
 
-/* cTank_Fire: start the reload timer, request one shell from the bullet pool (every n-th one a
+/* cTurret_Fire: start the reload timer, request one shell from the bullet pool (every n-th one a
  * tracer), kick the gun's recoil animation and tell the network peers about the shot. */
 extern "C" {
 extern unsigned char g_IsMultiplayer;
@@ -11,14 +11,14 @@ extern char D_00506260[];
 extern char D_004DCF50[];
 extern char D_004DCF10[];
 struct BulletReq;
-void BulletPool_Request(BulletReq* r);
+void cBulletManager_AddBullet(BulletReq* r);
 struct Gun;
-void cNIEventOBJ_SetSpeedRecursive(float f, Gun* g);
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, int target, int immediate);
+void cNIEventBase_SetSpeed(float f, Gun* g);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, int target, int immediate);
 void cMessage_dtor(void* m, int flags);
 struct Turret;
-void cTank_Fire(Turret* t);
+void cTurret_Fire(Turret* t);
 }
 struct VP { float x, y, z, w; } __attribute__((aligned(16)));
 struct M4 {
@@ -71,7 +71,7 @@ struct Gun { VPAD32(a) VPAD32(b) VPAD2(c) VPAD1(d) virtual void Start(); virtual
 /* message destructors are inlined; the out-of-line weak copies go to .dtors_drop (dropped at link) */
 struct MsgB {
     void* vtable; char base[0x18]; int f1C; unsigned char b20; char p21[3];
-    MsgB() { MsgB* m = this; Event_Construct(m, D_00506260); m->vtable = D_004DCF10; }
+    MsgB() { MsgB* m = this; cMessage_ctor_cMessageNameR(m, D_00506260); m->vtable = D_004DCF10; }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); }
 };
 struct Msg : MsgB {
@@ -91,7 +91,7 @@ struct Turret {
     Aux* aux;
 };
 static inline unsigned char IsAuth(void) { unsigned char r; if (g_IsMultiplayer) r = D_005721C0; else r = true; return r; }
-extern "C" void cTank_Fire(Turret* t)
+extern "C" void cTurret_Fire(Turret* t)
 {
     t->cooldown = 1.0f / t->aux->rate;
     t->shots++;
@@ -107,12 +107,12 @@ extern "C" void cTank_Fire(Turret* t)
     if (o->dirty) o->Update();
     req.m = o->mtx;
     req.f48 = 0;
-    BulletPool_Request(&req);
-    cNIEventOBJ_SetSpeedRecursive(3.0f, t->gun);
+    cBulletManager_AddBullet(&req);
+    cNIEventBase_SetSpeed(3.0f, t->gun);
     t->gun->Fire();
     t->gun->Start();
     if (g_IsMultiplayer && IsAuth() && t->aux->rate <= 1.0f) {
         Msg m(3);
-        Event_Send(&m, t->owner, 0);
+        QueueMessage_cMessageR_cSystemP_int(&m, t->owner, 0);
     }
 }

@@ -7,8 +7,8 @@ typedef struct {
 extern int g_DrawMode;
 extern long long D_004BC1B0;
 extern long long D_005392D8;
-extern void Shadow_SilhouetteLevel(C5Shadow* s, int i);
-void Shadow_RenderBatch(C5Shadow* s) {
+extern void cShadowMan_BuildShadowMap(C5Shadow* s, int i);
+void cShadowMan_BeginShadowBatch(C5Shadow* s) {
     if (s->recv) {
         int n = s->recv->count - s->first;
         int i;
@@ -19,7 +19,7 @@ void Shadow_RenderBatch(C5Shadow* s) {
         g_DrawMode = 5;
         D_005392D8 = D_004BC1B0;
         for (i = 0; i < s->n; i++)
-            Shadow_SilhouetteLevel(s, i);
+            cShadowMan_BuildShadowMap(s, i);
         g_DrawMode = save;
     }
 }

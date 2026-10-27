@@ -30,13 +30,13 @@ int Alloc_Lock(int);
 #define Alloc_Lock(a0) (Alloc_Lock((a0))) /* merge_units */
                                     
 #if 0 /* merge_units */
-int Alloc_Unlock(int);
+int EnableIntc(int);
 #endif /* merge_units */
-#define Alloc_Unlock(a0) (Alloc_Unlock((a0))) /* merge_units */
+#define EnableIntc(a0) (EnableIntc((a0))) /* merge_units */
                                   
-int Mem_Alloc(int, int, int *, int);                      
+int cMemMan_Allocate(int, int, int *, int);                      
 int cArrayCapacity_Int(int *);                           
-int PtrVec_Reserve_Thunk_257450(int , int);                       
+int std_vector_cBackpackPtr_reserve(int , int);                       
 int std_vector_cBackpackPtr_ctor(int );                            
 extern int D_004A7B50;
 extern int g_BackpackList;
@@ -51,21 +51,21 @@ void cBackpack_InitLevel(void) {
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    temp_s0 = Mem_Alloc(0, 0x10, &D_004A7B50, 0x17D);
+    temp_s0 = cMemMan_Allocate(0, 0x10, &D_004A7B50, 0x17D);
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     g_ProfileLockDepth -= 1;
     if (temp_s0 != NULL) {
         sp2C = 0x14;
         std_vector_cBackpackPtr_ctor(temp_s0);
-        PtrVec_Reserve_Thunk_257450(temp_s0, cArrayCapacity_Int(&sp2C));
+        std_vector_cBackpackPtr_reserve(temp_s0, cArrayCapacity_Int(&sp2C));
         F_(temp_s0, 0xC, signed char) = 1;
     }
     g_BackpackList = temp_s0;
 }
 #undef Alloc_Lock /* merge_units */
-#undef Alloc_Unlock /* merge_units */
+#undef EnableIntc /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00257380(void) {}
 #pragma pop /* merge_units */

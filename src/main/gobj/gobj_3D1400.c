@@ -10,13 +10,13 @@
 extern char D_004BD328[];
 extern void cTimerDisable_ctor(int* g);
 extern void cTimerDisable_dtor(int* g, int del);
-extern void Mem_Free(int heap, void* p, const char* file, int line);
+extern void cMemMan_Deallocate(int heap, void* p, const char* file, int line);
 void cAllocator_node_deallocate_nodeP_uint_6(void* self, void* p)
 {
     if (p) {
         int g[1];
         cTimerDisable_ctor(g);
-        Mem_Free(0, p, D_004BD328, 100);
+        cMemMan_Deallocate(0, p, D_004BD328, 100);
         cTimerDisable_dtor(g, -1);
     }
 }
@@ -59,9 +59,9 @@ extern "C" SF6_3D1490* cText_ctor(SF6_3D1490* self, const SF6_3D1490* src)
         self->first.u.l.word = 0;
         self->first.u.l.length = 0;
         self->first.u.l.data = 0;
-        String_Reserve(&self->first, src->first.u.l.length);
+        std_basic_string_char_char_traits_char_reserve(&self->first, src->first.u.l.length);
         ShortStrIterTag tag;
-        String_Replace(&self->first, 0, 0, src->first.u.l.data,
+        std_basic_string_char_char_traits_char_do_replace(&self->first, 0, 0, src->first.u.l.data,
                        src->first.u.l.data + src->first.u.l.length, tag);
     }
     self->second = src->second;
@@ -78,7 +78,7 @@ extern "C" SF6_3D1490* cText_ctor(SF6_3D1490* self, const SF6_3D1490* src)
 
 /* merge_units: begin func_003D1560 */
 #pragma push /* merge_units */
-List* List_InitEmpty(List* l) {
+List* std_list_deleter_cText_ctor(List* l) {
     l->count = 0;
     l->first = l->last = &l->first;
     return l;
@@ -90,7 +90,7 @@ List* List_InitEmpty(List* l) {
 #pragma push /* merge_units */
 static unsigned char D_00493800[] = "abcdefghijklmnopqrstuvwxyz1234567890\nE\b\t -=[]?\\;'?,./";
 static unsigned char D_00493840[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()\nE\b\t _+{}?|:\"?<>?";
-unsigned char UsbKbd_TranslateKey(unsigned char c, int flags)
+unsigned char cUSBKeybd_KeyToAscii(unsigned char c, int flags)
 {
     int v = c;
     if (v >= 0x42 || v < 4) return 0;
@@ -103,7 +103,7 @@ unsigned char UsbKbd_TranslateKey(unsigned char c, int flags)
 /* merge_units: begin func_003D1610 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x98]; int m98; unsigned short m9C; } T1610;
-unsigned char UsbKbd_GetCode(T1610* p)
+unsigned char cUSBKeybd_GetAsciiKey(T1610* p)
 {
     unsigned char r = 0;
     if (p->m98) {
@@ -127,7 +127,7 @@ typedef struct { unsigned char m0; unsigned char m1; char pad[0x8E]; char data[8
 extern int sceUsbKbRead(unsigned int no, void* data);
 extern int sceUsbKbSync(int mode, int* result);
 extern void cUSBKeybd_Init(T1660* kb);
-int UsbKbd_Poll(T1660* kb, int flag)
+int cUSBKeybd_Read(T1660* kb, int flag)
 {
     int v;
     if (kb->m1) {

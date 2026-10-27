@@ -19,7 +19,7 @@ struct VRElem20 { float a; float b; unsigned char c; int d; int e; };
 struct V3B6F80 { unsigned int cap; unsigned int count; VRElem20* data; };
 extern "C" {
 extern char D_004A3F20[];
-void* Mem_PlacementNew(unsigned int size, void* p);
+void* opNew_uint_voidP(unsigned int size, void* p);
 void cSkaSwitchItem_ctor_cSkaSwitchItemR(void* dst, const VRElem20* src);
 }
 extern "C" void std_vector_imp_cSkaSwitchItem_init(V3B6F80* v, const VRElem20* first, const VRElem20* last)
@@ -35,7 +35,7 @@ extern "C" void std_vector_imp_cSkaSwitchItem_init(V3B6F80* v, const VRElem20* f
         v->cap = n;
         VRElem20* p = v->data;
         for (; first != last; first++, p++) {
-            void* o = Mem_PlacementNew(sizeof(VRElem20), p);
+            void* o = opNew_uint_voidP(sizeof(VRElem20), p);
             if (o) cSkaSwitchItem_ctor_cSkaSwitchItemR(o, first);
             v->count++;
         }

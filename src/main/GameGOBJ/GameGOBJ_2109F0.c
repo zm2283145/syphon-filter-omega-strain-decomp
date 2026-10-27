@@ -19,30 +19,30 @@
 extern int D_004F5680;   /* cSoundGOBJ script-type value */
 extern int D_004F5688;   /* cSoundGOBJ script-type key */
 extern char D_00555070[];
-extern int GObj_IdentityA(int obj);
-extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
-extern int* cGOBJ_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int type, int base);
+extern int cGOBJ_SOBJ_toInt(int obj);
+extern int cScriptInterpreter_CallEvent(void* filter, int a0, int a1);
+extern int* cGOBJ_SOBJ_getClassId(void);
+extern void cScriptBase_declareParent(int type, int base);
 
 /* Registers the cSoundGOBJ script type under cGOBJ. */
-void ScriptType_cSoundGOBJ_Init(void) {
+void cSoundGOBJ_SOBJ_init(void) {
     int* base;
 
-    base = cGOBJ_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F5688, *base);
+    base = cGOBJ_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F5688, *base);
 }
 
-int cSoundGOBJ_v0B(void) {
+int cSoundGOBJ_getSOBJClassId(void) {
     return D_004F5680;
 }
 
-int cSoundGOBJ_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cSoundGOBJ_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 
 /* GetLocationObj(interact): returns the object stored at +0xA8. */
 int Script_cInteractGOBJ_GetLocationObj(ScriptArg* args) {
-    return GObj_IdentityA(*(int*)((char*)args[0].p + 0xA8));
+    return cGOBJ_SOBJ_toInt(*(int*)((char*)args[0].p + 0xA8));
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002109F0(void) {}
@@ -97,23 +97,23 @@ extern int D_004F5638;   /* cPathedNotice script-type value */
 extern int D_004F5640;   /* cPathedNotice script-type key */
 extern int D_004F5660;   /* cInteractGOBJ script-type value */
 extern int D_004F5668;   /* cInteractGOBJ script-type key */
-extern int Object_LookupById(int* id);
-extern int SoundAction_CtorVoice(LiftSound* snd, int a1, int id, cElevatorGOBJ* owner, int a4);
+extern int nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+extern int cSndFx_SetSndFx(LiftSound* snd, int a1, int id, cElevatorGOBJ* owner, int a4);
 extern int cElevatorGOBJ_LockFloor(cElevatorGOBJ* lift, int floor, int a2);
 extern int cElevatorGOBJ_UnlockFloor(cElevatorGOBJ* lift, int floor, int a2);
-extern int* Message_GetScriptTypeKeyPtr(void);
+extern int* cMessage_SOBJ_getClassId(void);
 
 /* Registers the cInteractGOBJ script type under cGameGOBJ. */
-void ScriptType_cInteractGOBJ_Init(void) {
-    ScriptType_SetParent(D_004F5668, D_004F54D0);
+void cInteractGOBJ_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004F5668, D_004F54D0);
 }
 
-int cInteractGOBJ_v0B(void) {
+int cInteractGOBJ_getSOBJClassId(void) {
     return D_004F5660;
 }
 
-int cInteractGOBJ_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cInteractGOBJ_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 
 /* --- cPathedNotice --- */
@@ -128,14 +128,14 @@ int PathedNotice_GetAction(ScriptArg* args) {
 }
 
 /* Registers the cPathedNotice script type under the notice base type. */
-void ScriptType_cPathedNotice_Init(void) {
+void cPathedNotice_SOBJ_init(void) {
     int* base;
 
-    base = Message_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F5640, *base);
+    base = cMessage_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F5640, *base);
 }
 
-int PathedNotice_GetScriptType(void) {
+int cPathedNotice_getSOBJClassId(void) {
     return D_004F5638;
 }
 
@@ -151,14 +151,14 @@ int Script_cElevatorNotice_Action(ScriptArg* args) {
 }
 
 /* Registers the cElevatorNotice script type under the notice base type. */
-void ScriptType_cElevatorNotice_Init(void) {
+void cElevatorNotice_SOBJ_init(void) {
     int* base;
 
-    base = Message_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F5618, *base);
+    base = cMessage_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F5618, *base);
 }
 
-int cElevatorNotice_v03(void) {
+int cElevatorNotice_getSOBJClassId(void) {
     return D_004F5610;
 }
 
@@ -167,13 +167,13 @@ int cElevatorNotice_v03(void) {
 /* Box(msg): resolves the trigger box object id. */
 int Script_cGOBJTriggerEventMsg_Box(ScriptArg* args) {
     int id = ((cGOBJNotice*)args[0].p)->box;
-    return GObj_IdentityA(Object_LookupById(&id));
+    return cGOBJ_SOBJ_toInt(nGobjManager_LookupGOBJ_cObjectIdR(&id));
 }
 
 /* Who(msg): resolves the triggering object id. */
 int Script_cGOBJTriggerEventMsg_Who(ScriptArg* args) {
     int id = ((cGOBJNotice*)args[0].p)->who;
-    return GObj_IdentityA(Object_LookupById(&id));
+    return cGOBJ_SOBJ_toInt(nGobjManager_LookupGOBJ_cObjectIdR(&id));
 }
 
 int Script_cGOBJTriggerEventMsg_Data(ScriptArg* args) {
@@ -186,19 +186,19 @@ int Script_cGOBJTriggerEventMsg_Action(ScriptArg* args) {
 }
 
 /* Registers the cGOBJTriggerEventMsg script type under the notice base type. */
-void ScriptType_cGOBJTriggerEventMsg_Init(void) {
+void cGOBJTriggerEventMsg_SOBJ_init(void) {
     int* base;
 
-    base = Message_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F55E0, *base);
+    base = cMessage_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F55E0, *base);
 }
 
 /* Address of the cGOBJTriggerEventMsg script-type value. */
-int* cGOBJTriggerEventMsg_GetScriptTypeKeyPtr(void) {
+int* cGOBJTriggerEventMsg_SOBJ_getClassId(void) {
     return &D_004F55D8;
 }
 
-int TriggerEvent_GetScriptType(void) {
+int cGOBJTriggerEventMsg_getSOBJClassId(void) {
     return D_004F55D8;
 }
 
@@ -233,28 +233,28 @@ int Script_cElevatorGOBJ_LockFloor(ScriptArg* args) {
 int Script_cElevatorGOBJ_SetLoopSound(ScriptArg* args) {
     volatile int id = args[1].i;
     cElevatorGOBJ* lift = args[0].p;
-    SoundAction_CtorVoice(&lift->loopSound, 0, id, lift, 0);
+    cSndFx_SetSndFx(&lift->loopSound, 0, id, lift, 0);
     return 0;
 }
 
 int Script_cElevatorGOBJ_SetStopSound(ScriptArg* args) {
     volatile int id = args[1].i;
     cElevatorGOBJ* lift = args[0].p;
-    SoundAction_CtorVoice(&lift->stopSound, 0, id, lift, 0);
+    cSndFx_SetSndFx(&lift->stopSound, 0, id, lift, 0);
     return 0;
 }
 
 int Script_cElevatorGOBJ_SetStartSound(ScriptArg* args) {
     volatile int id = args[1].i;
     cElevatorGOBJ* lift = args[0].p;
-    SoundAction_CtorVoice(&lift->startSound, 0, id, lift, 0);
+    cSndFx_SetSndFx(&lift->startSound, 0, id, lift, 0);
     return 0;
 }
 
 int Script_cElevatorGOBJ_SetDingSound(ScriptArg* args) {
     volatile int id = args[1].i;
     cElevatorGOBJ* lift = args[0].p;
-    SoundAction_CtorVoice(&lift->dingSound, 0, id, lift, 0);
+    cSndFx_SetSndFx(&lift->dingSound, 0, id, lift, 0);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

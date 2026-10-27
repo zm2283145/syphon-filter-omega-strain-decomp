@@ -61,18 +61,18 @@ extern char D_004D9180[], D_004DAE30[], D_004DCC30[], D_004DCD70[], D_004E01E0[]
 extern char g_LosCheckService[], D_004EF0B0[], D_004EF250[], D_004EF730[], D_004EFF50[], D_004F0290[], D_004F05D0[], D_004F0910[];
 extern char g_ScriptAIUnconsciousMsgKey[], g_Game[], g_LosRequestMsgClass[], g_ActorActionMsgClass[];
 extern int g_MsgLibDamageRequestKey;
-void Event_Construct(void*, void*);
-void Event_Send(void*, void*, int);
+void cMessage_ctor_cMessageNameR(void*, void*);
+void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 void cMessage_dtor(void*, int);
-Svc* Service_Lookup(void*, void*);
-void SoundEvent_CtorFromPreset(void*, void*, Actor*);
-void FileMan_Release(void*, int);
-void Hud_ShowCallout(float, int, const int*, void*, int, float, int, int);
+Svc* cSystemContainer_GetSystem(void*, void*);
+void cPlaySoundMsg_ctor_cSndFxR(void*, void*, Actor*);
+void cFileMan_dtor(void*, int);
+void cHud_SetCallout(float, int, const int*, void*, int, float, int, int);
 void Actor_Ignite(Actor*, float, int, int, int, int);
-void Actor_ApplyContactDamage(Actor*, float, Actor*, unsigned char, unsigned char, int*, unsigned char, V*);
-int Random_Next(void);
-void PadRumble_Start(float, int, int, int, int);
-int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char loc, unsigned char type, int* armor, unsigned char flag, V* hitPos);
+void cGOBJ_ReceiveDamage(Actor*, float, Actor*, unsigned char, unsigned char, int*, unsigned char, V*);
+int Libc_Rand(void);
+void nRumbleManager_Start(float, int, int, int, int);
+int cHuman_ReceiveDamage(Actor* self, float dmg, Actor* src, unsigned char loc, unsigned char type, int* armor, unsigned char flag, V* hitPos);
 }
 
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
@@ -80,9 +80,9 @@ int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char lo
 struct MsgB {
     void* vtable; void* type; int pad8[5]; int flags; unsigned char kind; char pad21[3];
     MsgB() {}
-    MsgB(void* t) { Event_Construct(this, t); }
-    void SendF(void* to) { flags = 0x40; Event_Send(this, to, 0); }
-    void SendK(void* to, unsigned char k) { kind = k; Event_Send(this, to, 0); }
+    MsgB(void* t) { cMessage_ctor_cMessageNameR(this, t); }
+    void SendF(void* to) { flags = 0x40; QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
+    void SendK(void* to, unsigned char k) { kind = k; QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); }
 };
 struct MsgRay : MsgB {
@@ -126,7 +126,7 @@ static inline bool IsA(Actor* a) { bool r = 0; if (a->ctrl && a->ctrl->IsA()) r 
 static inline bool IsB(Actor* a) { bool r = 0; if (a->ctrl && a->ctrl->IsB()) r = 1; return r; }
 static inline bool Dying(Actor* a) { bool r; unsigned char s = a->Stance(); r = 1; if (s != 3 && s != 2) r = 0; return r; }
 
-int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char loc, unsigned char type, int* armor, unsigned char flag, V* hitPos)
+int cHuman_ReceiveDamage(Actor* self, float dmg, Actor* src, unsigned char loc, unsigned char type, int* armor, unsigned char flag, V* hitPos)
 {
     int arm;
     if (type == 4 && self->h3480.Get()) {
@@ -141,7 +141,7 @@ int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char lo
         if (hitPos) from = *hitPos;
         V to = self->Pos(0);
         MsgRay m(&info, from, Diff(to, from), src, self);
-        Service_Lookup(g_Game, g_LosCheckService)->Post(&m);
+        cSystemContainer_GetSystem(g_Game, g_LosCheckService)->Post(&m);
         if (info.hit)
             return 0;
     }
@@ -179,7 +179,7 @@ int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char lo
             if (type != 9) self->armorHP = (int)((float)self->armorHP - armorDmg);
             snd2 = D_004EF730;
             if (IsHuman(src) && !IsHuman(self))
-                Hud_ShowCallout(5.0f, g_Hud, &self->serial, D_0049D8F0, -1, 0.0f, 0, 0);
+                cHud_SetCallout(5.0f, g_Hud, &self->serial, D_0049D8F0, -1, 0.0f, 0, 0);
         }
         arm -= BodyPenetrationResistance;
     } else {
@@ -195,14 +195,14 @@ int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char lo
         snd2 = 0;
     }
     unsigned char dying = Dying(self);
-    Actor_ApplyContactDamage(self, bodyDmg, src, loc, type, &arm, flag, hitPos);
+    cGOBJ_ReceiveDamage(self, bodyDmg, src, loc, type, &arm, flag, hitPos);
     if (!self->alive && !flag) {
         MsgDmg m(dmg, src, type, loc);
         m.kind = 8;
         m.b2E = 0;
         if (!Dying(self) && (int)self->health <= dmg)
             m.flags = 0x40;
-        Event_Send(&m, self, 0);
+        QueueMessage_cMessageR_cSystemP_int(&m, self, 0);
     }
     if (type == 7 && !self->dead) {
         self->b33A5 = 1;
@@ -222,10 +222,10 @@ int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char lo
                     int vol;
                     if (dmg < 50.0f) vol = 0x7F; else vol = 0xE1;
                     float m = 2147483648.0f;
-                    int r = (int)(5.0f * ((float)Random_Next() / (1.0f + m)));
+                    int r = (int)(5.0f * ((float)Libc_Rand() / (1.0f + m)));
                     int r2 = r + 5;
-                    PadRumble_Start(0.033333335f * (float)r, 0, 1, 0, 1);
-                    PadRumble_Start(0.033333335f * (float)r2, 0, 0, vol, 1);
+                    nRumbleManager_Start(0.033333335f * (float)r, 0, 1, 0, 1);
+                    nRumbleManager_Start(0.033333335f * (float)r2, 0, 0, vol, 1);
                 }
             } else if (!self->ctrl->IsHuman()) {
                 snd1 = self->team == 1 ? D_004F0290 : D_004EFF50;
@@ -238,22 +238,22 @@ int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char lo
     }
     if (snd1 && type != 10) {
         SEv e;
-        SoundEvent_CtorFromPreset(&e, snd1, self);
+        cPlaySoundMsg_ctor_cSndFxR(&e, snd1, self);
         e.kind = 1;
-        Event_Send(&e, g_Game, 1);
+        QueueMessage_cMessageR_cSystemP_int(&e, g_Game, 1);
         e.vtable = D_004DAE30;
-        FileMan_Release(&e.s114, -1);
-        FileMan_Release(&e.s78, -1);
+        cFileMan_dtor(&e.s114, -1);
+        cFileMan_dtor(&e.s78, -1);
         cMessage_dtor(&e, 0);
     }
     if (snd2) {
         SEv e;
-        SoundEvent_CtorFromPreset(&e, snd2, self);
+        cPlaySoundMsg_ctor_cSndFxR(&e, snd2, self);
         e.kind = 1;
-        Event_Send(&e, g_Game, 1);
+        QueueMessage_cMessageR_cSystemP_int(&e, g_Game, 1);
         e.vtable = D_004DAE30;
-        FileMan_Release(&e.s114, -1);
-        FileMan_Release(&e.s78, -1);
+        cFileMan_dtor(&e.s114, -1);
+        cFileMan_dtor(&e.s78, -1);
         cMessage_dtor(&e, 0);
     }
     if (armor) *armor = arm;

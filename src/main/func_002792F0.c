@@ -70,14 +70,14 @@ struct Self_92F0 { char pad0[4]; Proj_92F0** items; char pad8[0xC]; int count; }
 
 extern "C" {
 extern char D_00543790[];
-void Shadow_ResetProjectors(void* list);
-void Shadow_AddProjectorSlot(void* list, Caster_92F0* c, V4_92F0* pos, V4_92F0* dir, float a, float b, int c2);
+void cShadowMan_ClearProjTexs(void* list);
+void cShadowMan_AddProjTex(void* list, Caster_92F0* c, V4_92F0* pos, V4_92F0* dir, float a, float b, int c2);
 }
 
-extern "C" void DecalMgr_DrawBloodProjectors(Self_92F0* self)
+extern "C" void cDecalMan_PreRender(Self_92F0* self)
 {
     int i;
-    Shadow_ResetProjectors(D_00543790);
+    cShadowMan_ClearProjTexs(D_00543790);
     for (i = 0; i < self->count; i++) {
         Proj_92F0* p = self->items[i];
         Caster_92F0* c;
@@ -113,7 +113,7 @@ extern "C" void DecalMgr_DrawBloodProjectors(Self_92F0* self)
                 m = n->GetMatrix();
                 dir = Xform_92F0(dir, m);
             }
-            Shadow_AddProjectorSlot(D_00543790, c, &pos, &dir, p->f50, 0.33f * k, p->i54);
+            cShadowMan_AddProjTex(D_00543790, c, &pos, &dir, p->f50, 0.33f * k, p->i54);
         }
     }
 }

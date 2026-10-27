@@ -9,12 +9,12 @@
 
 extern void* cNodeList_ctor(void* obj);
 extern int cNodeList_SOBJ_toInt(void* obj);
-extern void* Group_FromHandle(void* obj);
+extern void* cGroup_SOBJ_convert(void* obj);
 
 void Debug_PrintStub(void) {
 }
 
 /* Script native: CreateNodeList(args[0]). */
 int Script_CreateNodeList(ScriptArg* args) {
-    return cNodeList_SOBJ_toInt(cNodeList_ctor(Group_FromHandle(args[0].p)));
+    return cNodeList_SOBJ_toInt(cNodeList_ctor(cGroup_SOBJ_convert(args[0].p)));
 }

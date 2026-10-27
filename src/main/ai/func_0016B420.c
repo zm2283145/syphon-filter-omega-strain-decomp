@@ -19,14 +19,14 @@ extern char D_004EE5C8[];
 extern char D_004D92A0[];
 extern char D_004D92C0[];
 extern void Event_PackHeader();
-extern void Message_GetScriptTypeKey();
+extern void cMessage_getSOBJClassId();
 extern void cAISoundSystemGOBJPositionMessage_dtor();
 extern void cAISoundSystemGOBJPositionMessage_Clone();
-void * const D_004D9850[8] = { (void*)0x0, (void*)0x0, (void*)cAISoundSystemGOBJPositionMessage_dtor, (void*)cAISoundSystemGOBJPositionMessage_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
-void Event_Construct(M_B420* m, void* type);
+void * const D_004D9850[8] = { (void*)0x0, (void*)0x0, (void*)cAISoundSystemGOBJPositionMessage_dtor, (void*)cAISoundSystemGOBJPositionMessage_Clone, (void*)Event_PackHeader, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
+void cMessage_ctor_cMessageNameR(M_B420* m, void* type);
 static inline void C1_B420(M_B420* m, float a, float b, signed char k)
 {
-    Event_Construct(m, D_004EE5C8);
+    cMessage_ctor_cMessageNameR(m, D_004EE5C8);
     m->vt = D_004D92A0;
     m->on = 0;
     m->kind = k;
@@ -39,7 +39,7 @@ static inline void C2_B420(M_B420* m, float a, float b, int* id, signed char k)
     m->vt = D_004D92C0;
     m->id = *id;
 }
-M_B420* AiSound_SendImpactNoise(M_B420* self, float a, float b, int* id, V_B420* pos, signed char kind)
+M_B420* cAISoundSystemGOBJPositionMessage_ctor(M_B420* self, float a, float b, int* id, V_B420* pos, signed char kind)
 {
     C2_B420(self, a, b, id, kind);
     self->vt = ((char*)D_004D9850);

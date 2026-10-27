@@ -12,7 +12,7 @@
 #pragma opt_strength_reduction off
 typedef struct { char pad[0x68]; int type; char pad2[0x64]; int* p; char pad3[0x8]; unsigned char flag; } LObj_c7;
 typedef struct { char pad[0xEC]; int count; LObj_c7** objs; char pad2[0x34]; int* index; } Lift_c7;
-unsigned char cElevatorGOBJ_FloorExtrasClosed(Lift_c7* self) {
+unsigned char cElevatorGOBJ_OutsideDoorsAreClosed(Lift_c7* self) {
     int idx = *self->index;
     unsigned char r = 1;
     int i;
@@ -53,7 +53,7 @@ typedef struct {
 extern F214Ent* std_vector_cGOBJPtr_opIndex(void*, int);
 extern int g_GameGobjClassWord;
 #pragma opt_strength_reduction off
-unsigned char cElevatorGOBJ_LinksClosed(F214Mgr* m)
+unsigned char cElevatorGOBJ_InsideDoorsAreClosed(F214Mgr* m)
 {
     unsigned char result = 1;
     int i;
@@ -88,8 +88,8 @@ struct Lift214310 { char p[0xEC]; int count; Car214310** cars; char pF4[0x34]; S
 extern "C" {
 extern char g_TriggerMsgKey[];
 extern char D_004DAF10[];
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, void* target, int immediate);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 }
 static inline int ObjId214310(Obj214310* o) { return o ? o->id : 0; }
@@ -97,7 +97,7 @@ static inline int ObjId214310(Obj214310* o) { return o ? o->id : 0; }
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
 
-extern "C" unsigned char cElevatorGOBJ_TriggerFloorExtras(Lift214310* l)
+extern "C" unsigned char cElevatorGOBJ_ToggleOutsideDoors(Lift214310* l)
 {
     unsigned char found = 0;
     int base = l->state->cur * 2;
@@ -107,14 +107,14 @@ extern "C" unsigned char cElevatorGOBJ_TriggerFloorExtras(Lift214310* l)
         if (l->cars[i]->kind == 2) {
             Msg214310 m;
             Msg214310* p = &m;
-            Event_Construct(&m, g_TriggerMsgKey);
+            cMessage_ctor_cMessageNameR(&m, g_TriggerMsgKey);
             m.vtable = D_004DAF10;
             m.kind = 0;
             m.floor = 0;
             p->to = ObjId214310(0);
             p->from = ObjId214310(0);
             m.b20 = 1;
-            Event_Send(&m, l->cars[i], 0);
+            QueueMessage_cMessageR_cSystemP_int(&m, l->cars[i], 0);
             m.vtable = D_004DAF10;
             cMessage_dtor(&m, 0);
         }
@@ -144,8 +144,8 @@ struct Lift214470 { char p[0x70]; int count; char list[8]; Car214470** cars; cha
 extern "C" {
 extern char g_Game[];
 extern char D_004DADF0[];
-void SoundStopMsg_Ctor(ElevatorMsg214470* msg, int* floors, Lift214470* self);
-void FileMan_Release(void* member, int flag);
+void cStopSoundMsg_ctor_cSndFxR_cGOBJP(ElevatorMsg214470* msg, int* floors, Lift214470* self);
+void cFileMan_dtor(void* member, int flag);
 #if 0 /* merge_units */
 Ent214470** std_vector_cGOBJPtr_opIndex(void* list, int i);
 #endif /* merge_units */
@@ -157,18 +157,18 @@ static inline int ObjId214470(Obj214470* o) { return o ? o->id : 0; }
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
 
-extern "C" unsigned char cElevatorGOBJ_TriggerLinks(Lift214470* l)
+extern "C" unsigned char cElevatorGOBJ_ToggleInsideDoors(Lift214470* l)
 {
     unsigned char found = 0;
     int i;
     Msg214470 m;
     {
         ElevatorMsg214470 msg;
-        SoundStopMsg_Ctor(&msg, &l->floors, l);
-        Event_Send(&msg, g_Game, 1);
+        cStopSoundMsg_ctor_cSndFxR_cGOBJP(&msg, &l->floors, l);
+        QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 1);
         msg.vtable = D_004DADF0;
-        FileMan_Release(msg.memberB, -1);
-        FileMan_Release(msg.memberA, -1);
+        cFileMan_dtor(msg.memberB, -1);
+        cFileMan_dtor(msg.memberA, -1);
         cMessage_dtor(&msg, 0);
     }
     for (i = 0; i < l->count; i++) {
@@ -176,14 +176,14 @@ extern "C" unsigned char cElevatorGOBJ_TriggerLinks(Lift214470* l)
         Ent214470* e = *std_vector_cGOBJPtr_opIndex(l->list, i); if (e->type == g_GameGobjClassWord) {
             if (l->cars[i]->kind == 2) {
                 Msg214470* p = &m;
-                Event_Construct(&m, g_TriggerMsgKey);
+                cMessage_ctor_cMessageNameR(&m, g_TriggerMsgKey);
                 m.vtable = D_004DAF10;
                 m.kind = 0;
                 m.floor = 0;
                 p->to = ObjId214470(0);
                 p->from = ObjId214470(0);
                 m.b20 = 1;
-                Event_Send(&m, l->cars[i], 0);
+                QueueMessage_cMessageR_cSystemP_int(&m, l->cars[i], 0);
                 m.vtable = D_004DAF10;
                 cMessage_dtor(&m, 0);
             }
@@ -226,12 +226,12 @@ extern int g_TriggerMsgKey;
 #define g_TriggerMsgKey (*(int*)&g_TriggerMsgKey) /* merge_units */
 
 extern int D_004F7E48;
-int* Event_GetType(void* ev);
-Obj_00214640* Object_LookupById(int* id);
-void Lift_SeekFloor(Lift_00214640* l, int floor, unsigned char a2, int a3);
-void Lift_SetFloorLock(Lift_00214640* l, int floor, int lock);
-int PathObj_Receive(Lift_00214640* l, void* ev);
-void Transport_Send(int target, LiftMsg_00214640* msg, int a, int b);
+int* cMessage_Name(void* ev);
+Obj_00214640* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+void cElevatorGOBJ_SeekFloor(Lift_00214640* l, int floor, unsigned char a2, int a3);
+void cElevatorGOBJ_SetLockState(Lift_00214640* l, int floor, int lock);
+int cPathedGOBJ_HandleMessage(Lift_00214640* l, void* ev);
+void cNetObj_SendMessage_int_cMessageR_int_int(int target, LiftMsg_00214640* msg, int a, int b);
 void func_00214BC0();
 void NetReleaseObjectPrivateOwnership(void* h);
 }
@@ -281,7 +281,7 @@ extern "C" int Lift_Receive(Lift_00214640* l, In_00214640* m)
     int id10;
     LiftMsg_00214640 msgB;
     LiftMsg_00214640 msg;
-    int t = *Event_GetType(m);
+    int t = *cMessage_Name(m);
     if (t == g_TriggerMsgKey) {
         switch (m->kind) {
         case 4:
@@ -289,7 +289,7 @@ extern "C" int Lift_Receive(Lift_00214640* l, In_00214640* m)
             if (g_IsMultiplayer) {
                 unsigned char isPlayer;
                 id1 = m->id;
-                o = Object_LookupById(&id1);
+                o = nGobjManager_LookupGOBJ_cObjectIdR(&id1);
                 isPlayer = 0;
                 if (o->b14 && IsPlayerCtl_00214640(o))
                     isPlayer = 1;
@@ -297,42 +297,42 @@ extern "C" int Lift_Receive(Lift_00214640* l, In_00214640* m)
                 if (floor >= 0 && l->state->busy) {
                     Enqueue_00214640(l, floor);
                 } else {
-                    Lift_SeekFloor(l, floor, isPlayer, 0);
+                    cElevatorGOBJ_SeekFloor(l, floor, isPlayer, 0);
                     if (floor >= 0)
                         l->state->busy = 1;
                 }
                 if (IsAuth_00214640()) {
                     m->b20 = 4;
-                    Event_Send(m, l, 0);
+                    QueueMessage_cMessageR_cSystemP_int(m, l, 0);
                 }
             } else {
                 floor = m->floor;
                 if (floor >= 0 && l->state->busy) {
                     Enqueue_00214640(l, floor);
                 } else {
-                    Lift_SeekFloor(l, floor, 1, 0);
+                    cElevatorGOBJ_SeekFloor(l, floor, 1, 0);
                     if (floor >= 0)
                         l->state->busy = 1;
                 }
             }
             break;
         case 5:
-            Lift_SetFloorLock(l, m->floor, 1);
+            cElevatorGOBJ_SetLockState(l, m->floor, 1);
             break;
         case 6:
-            Lift_SetFloorLock(l, m->floor, 0);
+            cElevatorGOBJ_SetLockState(l, m->floor, 0);
             break;
         case 10: {
             id10 = m->id;
-            o = Object_LookupById(&id10);
+            o = nGobjManager_LookupGOBJ_cObjectIdR(&id10);
             if (o) {
                 if (o->b14 && IsPlayerCtl_00214640(o)) {
-                    Lift_SeekFloor(l, -1, 1, 0);
+                    cElevatorGOBJ_SeekFloor(l, -1, 1, 0);
                 } else {
                     LiftMsg_00214640* p = &msg;
                     int dest;
                     int tid;
-                    Event_Construct(p, &g_TriggerMsgKey);
+                    cMessage_ctor_cMessageNameR(p, &g_TriggerMsgKey);
                     msg.vtable = D_004DAF10;
                     msg.kind = 1;
                     msg.floor = -1;
@@ -347,7 +347,7 @@ extern "C" int Lift_Receive(Lift_00214640* l, In_00214640* m)
                     } else {
                         dest = 0;
                     }
-                    Transport_Send(tid, &msg, 0, dest);
+                    cNetObj_SendMessage_int_cMessageR_int_int(tid, &msg, 0, dest);
                     msg.vtable = D_004DAF10;
                     cMessage_dtor(&msg, 0);
                 }
@@ -355,11 +355,11 @@ extern "C" int Lift_Receive(Lift_00214640* l, In_00214640* m)
             break;
         }
         default:
-            return PathObj_Receive(l, m);
+            return cPathedGOBJ_HandleMessage(l, m);
         }
         return 1;
     }
-    t = *Event_GetType(m);
+    t = *cMessage_Name(m);
     if (t == D_004F7E48) {
         if (func_00214BC0 && l->snd && ((In2_00214640*)m)->floor == -0xFF) {
             NetReleaseObjectPrivateOwnership(l->snd->h);
@@ -370,20 +370,20 @@ extern "C" int Lift_Receive(Lift_00214640* l, In_00214640* m)
             if (floor != -0xFF) {
                 Obj_00214640* who = ((In2_00214640*)m)->who;
                 LiftMsg_00214640* p = &msgB;
-                Event_Construct(p, &g_TriggerMsgKey);
+                cMessage_ctor_cMessageNameR(p, &g_TriggerMsgKey);
                 msgB.floor = floor;
                 msgB.vtable = D_004DAF10;
                 msgB.kind = 1;
                 p->to = ObjId_00214640(who);
                 p->from = ObjId_00214640(0);
-                Event_Send(&msgB, l, 0);
+                QueueMessage_cMessageR_cSystemP_int(&msgB, l, 0);
                 msgB.vtable = D_004DAF10;
                 cMessage_dtor(&msgB, 0);
             }
         }
         return 1;
     }
-    return PathObj_Receive(l, m);
+    return cPathedGOBJ_HandleMessage(l, m);
 }
 #undef g_TriggerMsgKey /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

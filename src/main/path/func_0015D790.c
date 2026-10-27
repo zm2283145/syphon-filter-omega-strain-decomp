@@ -1,4 +1,4 @@
-/* NpcRoute_RegionAt: index of the route region whose box contains the point
+/* cAIPathData_GetGroupIndex: index of the route region whose box contains the point
  * (the hint first); when several boxes overlap, the one with the nearest
  * group node wins. -1 if none. */
 #pragma cplusplus on
@@ -40,11 +40,11 @@ extern BoxVec* D_004EE118;
 extern int D_004FFBE4;
 extern RegionVec* D_004FFBE8;
 extern char D_0049C1B8[];
-void* NpcPath_GetNode(int id);
-V4 Node_GetTranslation(void* node);
-void NpcRoute_BuildRegionBoxes(void);
-int NpcRoute_NearestGroupNode(int region, V4* p, int mask, int skip);
-int NpcRoute_RegionAt(V4* pos, int hint);
+void* cAIPathData_GetNode(int id);
+V4 cNode_GetLoc(void* node);
+void cAIPathData_InitSystem(void);
+int cAIPathData_GetClosestNodeIndex(int region, V4* p, int mask, int skip);
+int cAIPathData_GetGroupIndex(V4* pos, int hint);
 }
 
 /* VU0 point-in-box test via MAC sign flags (hand-scheduled, .set noreorder) */
@@ -104,13 +104,13 @@ static inline float SumSq(V4 v)
     return r;
 }
 
-int NpcRoute_RegionAt(V4* pos, int hint)
+int cAIPathData_GetGroupIndex(V4* pos, int hint)
 {
     int best = -1;
     int count = 0;
     float bestD;
     int i;
-    NpcRoute_BuildRegionBoxes();
+    cAIPathData_InitSystem();
     if (hint >= 0 && D_004EE118 && Contains(&D_004EE118->data[hint], pos)) {
         best = hint;
     } else
@@ -121,14 +121,14 @@ int NpcRoute_RegionAt(V4* pos, int hint)
             } else {
                 int n;
                 if (count == 1) {
-                    n = NpcRoute_NearestGroupNode(best, pos, 0x88, -1);
+                    n = cAIPathData_GetClosestNodeIndex(best, pos, 0x88, -1);
                     if (n >= 0) {
-                        bestD = SumSq(*pos - Node_GetTranslation(NpcPath_GetNode(n)));
+                        bestD = SumSq(*pos - cNode_GetLoc(cAIPathData_GetNode(n)));
                     }
                 }
-                n = NpcRoute_NearestGroupNode(i, pos, 0x88, -1);
+                n = cAIPathData_GetClosestNodeIndex(i, pos, 0x88, -1);
                 if (n >= 0) {
-                    float d = SumSq(*pos - Node_GetTranslation(NpcPath_GetNode(n)));
+                    float d = SumSq(*pos - cNode_GetLoc(cAIPathData_GetNode(n)));
                     if (d < bestD) {
                         bestD = d;
                         best = i;

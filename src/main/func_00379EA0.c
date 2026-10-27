@@ -19,7 +19,7 @@ struct M { V r[4]; };
 struct R { char pad[0xF00]; M m; };
 
 extern "C" {
-void Renderer_UpdateCameraMatrices(R*);
+void XLib_UpdateCompMat(R*);
 bool XLib_Inside(R* r, V* p);
 }
 
@@ -44,10 +44,10 @@ static inline V Xform(M* m, const V& v)
 
 bool XLib_Inside(R* r, V* p)
 {
-    Renderer_UpdateCameraMatrices(r);
+    XLib_UpdateCompMat(r);
     V c = Xform(&r->m, *p);
     float aw = 0.0f;
     float cw = c.w;
-    asm { abs.s aw, cw } /* fabs: same asm idiom as src/main/Ladder_ChannelArrived.c */
+    asm { abs.s aw, cw } /* fabs: same asm idiom as src/main/cSkaParams_HasJustArrivedAtTarget.c */
     return c.x <= aw && c.x >= -aw && c.y <= aw && c.y >= -aw && c.z <= aw && c.z >= -aw;
 }

@@ -19,7 +19,7 @@ extern int DeleteSema(int);
 extern int D_00492CE0;
 extern int *Newlib_Errno(void);
 
-int Insck_SetErrno(N81E0 *n, int err)
+int thread_leave(N81E0 *n, int err)
 {
     n->err = err;
     if (D_00492CE0) *Newlib_Errno() = err;
@@ -33,13 +33,13 @@ int Insck_SetErrno(N81E0 *n, int err)
 #define NULL 0
 #pragma mpwc_relax on
 int unblock();                                  
-int Insck_GetThreadContext(int);                               
+int thread_enter(int);                               
 int D_00492CE4 = 12;
 
 int func_003583F0(void) {
     int temp_v0;
 
-    temp_v0 = Insck_GetThreadContext(1);
+    temp_v0 = thread_enter(1);
     if (temp_v0 == 0) {
         return &D_00492CE4;
     }
@@ -56,7 +56,7 @@ static const unsigned int dat_00492CE8[2] = { 0xFFFFFFFF, 0x0 };
 int func_00358438(void) {
     int temp_v0;
 
-    temp_v0 = Insck_GetThreadContext(1);
+    temp_v0 = thread_enter(1);
     if (temp_v0 == 0) {
         return &(*(int*)dat_00492CE8);
     }

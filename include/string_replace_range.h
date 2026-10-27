@@ -6,8 +6,8 @@
  * range checks, then either grow into a new heap buffer (capacity doubled
  * in 16-byte steps) or edit in place with memmove, copying an aliasing
  * source range into a temporary string first.
- * Parameters: name, out_of_range msg, length_error msg, Mem_Alloc file/line,
- * Mem_Free file/line, terminator chars (grow path, in-place path),
+ * Parameters: name, out_of_range msg, length_error msg, cMemMan_Allocate file/line,
+ * cMemMan_Deallocate file/line, terminator chars (grow path, in-place path),
  * memmove, range assign. C++ only (#pragma cplusplus on before including).
  */
 #include "tstr_types.h"

@@ -33,7 +33,7 @@ typedef struct { char pad[0x24]; int a; int b; void* crate; } cCrateInteractMsg;
 extern void cNetMsg_PutGOBJ(void* crate);
 
 /* cCrateInteractMsg virtual 4: serializes the crate, then writes both values little-endian. */
-void cCrateInteractMsg_v04(cCrateInteractMsg* self)
+void cCrateInteractMsg_Pack(cCrateInteractMsg* self)
 {
     cNetMsg_PutGOBJ(self->crate);
     write32(self->a);
@@ -55,16 +55,16 @@ typedef struct Msg {
 extern char D_004F7EA0[];
 extern char D_004DC480[];        /* derived message vtable */
 extern char D_004DCF10[]; /* base message vtable */
-extern void Event_Construct(Msg* msg, void* name);
-extern void cCrateInteractMsg_Apply(Msg* msg, void* target);
+extern void cMessage_ctor_cMessageNameR(Msg* msg, void* name);
+extern void cCrateInteractMsg_UnpackAndProcess(Msg* msg, void* target);
 extern void cMessage_dtor(Msg* msg, int flags);
 
 /* Builds a temporary message, sends it to target, then destroys it. */
 void cCrateInteractMsg_NetReceive(void* target) {
     Msg msg;
-    Event_Construct(&msg, D_004F7EA0);
+    cMessage_ctor_cMessageNameR(&msg, D_004F7EA0);
     msg.vtable = D_004DC480;
-    cCrateInteractMsg_Apply(&msg, target);
+    cCrateInteractMsg_UnpackAndProcess(&msg, target);
     msg.vtable = D_004DCF10;
     cMessage_dtor(&msg, 0);
 }

@@ -8,12 +8,12 @@
 #include "loose01_types.h"
 
 extern void* D_004DFBF0;
-extern MotionNode* MotionNode_BaseCtor(MotionNode*, int, int);
+extern MotionNode* cSkaNode_ctor_eType_cQuaternionR(MotionNode*, int, int);
 extern ObjVec* cArray_cSkaBlendSequenceItem_ctor_void(ObjVec*);
 extern void cSkaInitListOfPointers_cSkaBlendSequenceItem_CopyPointerContentsToArray(int, ObjVec*);
 
-MotionSlider* MotionSlider_Ctor(MotionSlider* self, int a1, int a2, int a3, int t0, int t1) {
-    MotionNode_BaseCtor(&self->base, 2, t1);
+MotionSlider* cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(MotionSlider* self, int a1, int a2, int a3, int t0, int t1) {
+    cSkaNode_ctor_eType_cQuaternionR(&self->base, 2, t1);
     self->base.vtable = &D_004DFBF0;
     self->unk20 = a1;
     cArray_cSkaBlendSequenceItem_ctor_void(&self->children);

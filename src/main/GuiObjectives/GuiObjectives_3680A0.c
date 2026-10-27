@@ -26,21 +26,21 @@ extern "C" {
 extern Hud3680A0* g_Hud;
 extern char D_00587C90[];
 void* ObjMan_GetService(void);
-T3680A0* ObjMan_GetObjective(void* mgr, int id);
-void List_Begin_16E880(void* out, void* list);
+T3680A0* cObjectiveMan_GetObjective(void* mgr, int id);
+void std_list_deleter_voidPtr_begin_void_2(void* out, void* list);
 void std_list_cHudTargetInfoPtr_generic_iterator_1_ctor(void* out, void* raw);
 void std_list_cHudTargetInfoPtr_end_void(void* out, void* list);
 void cConstLListIterator_cHudTargetInfoPtr_ctor(void* out, void* in);
-void HudMarkers_SetHighlight(void* a, I3680A0* item);
-void HudMap_Commit(int a);
-char* HudMarker_GetTickerText(I3680A0* item, char* buf);
-void Notify_Insert(void* list, char* text, void* color, int a, int b);
+void cHudTargetManager_SetObjectiveTarget(void* a, I3680A0* item);
+void cMap_ObjectiveSelected(int a);
+char* cHudTargetInfo_GetObjectiveLocationString(I3680A0* item, char* buf);
+void cInfoBar_AddMessage(void* list, char* text, void* color, int a, int b);
 int GuiTextListWidget_GetItemId(void* list, int a);
-int GuiWidget_OnEvent(void* self, void* sender, unsigned short msg, int a3, int a4);
+int GuiWidget_onMessage(void* self, void* sender, unsigned short msg, int a3, int a4);
 }
 
 /* Tab list message handler: on select (0x13) announce every tracked item bound to the chosen objective. */
-extern "C" int GuiObjectives_HandleEvent(S3680A0* self, void* sender, unsigned short msg, int a3, int a4)
+extern "C" int GuiObjectives_onMessage(S3680A0* self, void* sender, unsigned short msg, int a3, int a4)
 {
     if (msg == 0x10 && a3 == 1 && sender != self->w48) return 1;
     if (sender == self->w48) {
@@ -51,7 +51,7 @@ extern "C" int GuiObjectives_HandleEvent(S3680A0* self, void* sender, unsigned s
         }
         if (msg == 0x13) {
             if (idx != -1) {
-                T3680A0* obj = ObjMan_GetObjective(ObjMan_GetService(), idx);
+                T3680A0* obj = cObjectiveMan_GetObjective(ObjMan_GetService(), idx);
                 if (obj) {
                     N3680A0* end[1];
                     N3680A0* it[1];
@@ -62,17 +62,17 @@ extern "C" int GuiObjectives_HandleEvent(S3680A0* self, void* sender, unsigned s
                     void* list = base + 0x24;
                     I3680A0* item;
                     N3680A0* n;
-                    List_Begin_16E880(b, list);
+                    std_list_deleter_voidPtr_begin_void_2(b, list);
                     std_list_cHudTargetInfoPtr_generic_iterator_1_ctor(it, b[0]);
                     for (n = it[0]; std_list_cHudTargetInfoPtr_end_void(t, list), cConstLListIterator_cHudTargetInfoPtr_ctor(end, t), n != end[0]; n = n->next) {
                         item = n->item;
                         if (item->h.Get() != 0 && item->h.Get() == obj) {
                             char* name;
-                            HudMarkers_SetHighlight(base, item);
-                            HudMap_Commit(g_Hud->a6A0);
-                            name = HudMarker_GetTickerText(item, buf);
+                            cHudTargetManager_SetObjectiveTarget(base, item);
+                            cMap_ObjectiveSelected(g_Hud->a6A0);
+                            name = cHudTargetInfo_GetObjectiveLocationString(item, buf);
                             if (name)
-                                Notify_Insert((char*)g_Hud + 0x100, name, D_00587C90, 2, 1);
+                                cInfoBar_AddMessage((char*)g_Hud + 0x100, name, D_00587C90, 2, 1);
                         }
                     }
                 }
@@ -80,7 +80,7 @@ extern "C" int GuiObjectives_HandleEvent(S3680A0* self, void* sender, unsigned s
             return 1;
         }
     }
-    return GuiWidget_OnEvent(self, sender, msg, a3, a4);
+    return GuiWidget_onMessage(self, sender, msg, a3, a4);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003680A0 */
@@ -98,12 +98,12 @@ extern G_368300* g_Hud;
 #endif /* merge_units */
 #define g_Hud (*(G_368300 **)&g_Hud) /* merge_units */
 
-void GuiObjectives_SetTab(S_368300* o, int page, int f);
-M_368300* Gui_GetScreenStack(void);
-void GuiWidget_SendEvent(void* w, void* m, int kind, int v, int f);
+void GuiObjectives_SetActiveTab(S_368300* o, int page, int f);
+M_368300* Gui_Canvas(void);
+void GuiWidget_SendMessage(void* w, void* m, int kind, int v, int f);
 void GuiStartMenu_ReturnToMenu(S_368300* o);
-void GuiStartMenu_CloseAll(S_368300* o);
-int GuiObjectives_HandleInput(S_368300* o, Ev_368300* ev);
+void GuiStartMenu_PopStartMenu(S_368300* o);
+int GuiObjectives_onInput(S_368300* o, Ev_368300* ev);
 }
 static inline unsigned char Down_368300(Ev_368300* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Btn_368300(Ev_368300* e, int b) { unsigned char r = 0; if (Down_368300(e) && e->btn == b) r = 1; return r; }
@@ -112,19 +112,19 @@ static inline bool Down2_368300(Ev_368300* e) { return e->type == 1 && e->b2 == 
 static inline bool Btn2_368300(Ev_368300* e, int b) { return Down2_368300(e) && e->btn == b; }
 static inline bool Plain2_368300(Ev_368300* e, int b) { return Btn2_368300(e, b) && e->b6 == 0; }
 
-int GuiObjectives_HandleInput(S_368300* o, Ev_368300* ev)
+int GuiObjectives_onInput(S_368300* o, Ev_368300* ev)
 {
     if (Plain_368300(ev, 0x2000)) {
         if (o->page == 0 && o->w64) {
-            GuiObjectives_SetTab(o, 1, 0);
-            GuiWidget_SendEvent(o->w6C, Gui_GetScreenStack(), 0x10, 0, 0);
+            GuiObjectives_SetActiveTab(o, 1, 0);
+            GuiWidget_SendMessage(o->w6C, Gui_Canvas(), 0x10, 0, 0);
         }
         return 1;
     }
     if (Plain2_368300(ev, 0x8000)) {
         if (o->page == 1 && o->w60) {
-            GuiObjectives_SetTab(o, 0, 0);
-            GuiWidget_SendEvent(o->w68, Gui_GetScreenStack(), 0x10, 0, 0);
+            GuiObjectives_SetActiveTab(o, 0, 0);
+            GuiWidget_SendMessage(o->w68, Gui_Canvas(), 0x10, 0, 0);
         }
         return 1;
     }
@@ -133,11 +133,11 @@ int GuiObjectives_HandleInput(S_368300* o, Ev_368300* ev)
         return 1;
     }
     if (Plain2_368300(ev, 0x800) && g_Hud->b6A8) {
-        GuiStartMenu_CloseAll(o);
+        GuiStartMenu_PopStartMenu(o);
         return 1;
     }
     if ((Plain2_368300(ev, 0x4000) || Plain2_368300(ev, 0x1000))
-        && (Gui_GetScreenStack()->focus == o->w68 || Gui_GetScreenStack()->focus == o->w6C)) return 1;
+        && (Gui_Canvas()->focus == o->w68 || Gui_Canvas()->focus == o->w6C)) return 1;
     return 0;
 }
 #undef g_Hud /* merge_units */
@@ -148,12 +148,12 @@ int GuiObjectives_HandleInput(S_368300* o, Ev_368300* ev)
 #pragma push /* merge_units */
 typedef struct { char pad[0xD4]; float time; char padD8[0xB71 - 0xD8]; unsigned char flagB71; } AgentT;
 typedef struct { char pad[0x70]; void* text; void* text2; char pad78[0x89 - 0x78]; unsigned char useTimer; } S368620;
-extern AgentT* Agent_GetSelected(void* list, int idx);
-extern float Hud_GetMissionTime(int id);
-extern void GuiObjectives_FillList(S368620* self);
+extern AgentT* cGameSystem_GetAgentData(void* list, int idx);
+extern float cHud_GetMissionTime(int id);
+extern void GuiObjectives_UpdateObjectives(S368620* self);
 extern void GuiTextWidget_SetText(void* text, char* str, int flag);
-extern void GuiTextWidget_SetColour(void* text, void* color);
-extern void GuiWidget_Update(S368620* self, float dt);
+extern void GuiTextWidget_SetTextColor(void* text, void* color);
+extern void GuiWidget_onAdvanceTime(S368620* self, float dt);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char D_004BBC48[];
 extern char g_Game[];
@@ -165,27 +165,27 @@ extern int g_Hud;
 extern char D_00587D00[];
 extern char D_00587D10[];
 
-void GuiObjectives_Update(S368620* self, float dt) {
+void GuiObjectives_onAdvanceTime(S368620* self, float dt) {
     char buf[32];
     float f;
 
-    GuiWidget_Update(self, dt);
-    GuiObjectives_FillList(self);
+    GuiWidget_onAdvanceTime(self, dt);
+    GuiObjectives_UpdateObjectives(self);
     if (self->text != 0) {
         if (self->useTimer) {
-            f = Hud_GetMissionTime(g_Hud);
+            f = cHud_GetMissionTime(g_Hud);
         } else {
-            f = Agent_GetSelected(g_Game, -1)->time;
+            f = cGameSystem_GetAgentData(g_Game, -1)->time;
             asm { .set reorder } /* scheduling barrier: keeps cvt at the join, not in the b delay slot */
         }
         { int t = f; int m = t / 60; sprintf(buf, D_004BBC48, m, t - m * 60); }
         if (!self->useTimer) {
-            if (Agent_GetSelected(g_Game, -1)->flagB71) {
-                GuiTextWidget_SetColour(self->text, D_00587D00);
-                GuiTextWidget_SetColour(self->text2, D_00587D00);
+            if (cGameSystem_GetAgentData(g_Game, -1)->flagB71) {
+                GuiTextWidget_SetTextColor(self->text, D_00587D00);
+                GuiTextWidget_SetTextColor(self->text2, D_00587D00);
             } else {
-                GuiTextWidget_SetColour(self->text, D_00587D10);
-                GuiTextWidget_SetColour(self->text2, D_00587D10);
+                GuiTextWidget_SetTextColor(self->text, D_00587D10);
+                GuiTextWidget_SetTextColor(self->text2, D_00587D10);
             }
         }
         GuiTextWidget_SetText(self->text, buf, 0);

@@ -39,14 +39,14 @@ extern G D_00539210;
 extern char g_Video[];
 extern long long D_005381F8;
 extern long long D_004BC1B0;
-void Renderer_BindTexture(void* m, int idx);
+void cTexMan_SetActive(void* m, int idx);
 void XLib_NewStrip(void* s);
 void XLib_NextBatchVert(void* s);
-void Vec4_Copy(V4* d, const V4* s);
-void GuiBatch_AddVertexColor(V4* d, const V4* s);
-float GuiBatch_AddVertexUV(void);
-V4* Vec4_Set(V4* o, float x, float y, float z, float w);
-void Renderer_FlushBatch(void* s);
+void cVector_opAssign(V4* d, const V4* s);
+void tIRGBA_opAssign_tRGBAR(V4* d, const V4* s);
+float tVifFloatToInt_short_4_Bias(void);
+V4* cVector_ctor_float_float_float_float(V4* o, float x, float y, float z, float w);
+void XLib_DrawStrip(void* s);
 }
 #define D_00539224 (D_00539210.f24)
 #define D_00539228 (D_00539210.f28)
@@ -123,10 +123,10 @@ static inline void Emit(const V4& pos, const V4c& col, const V4c& uv)
     float u;
     XLib_NextBatchVert(g_Video);
     e = &RS->ents[D_00539210.f10];
-    Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
-    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (const V4*)&col);
-    u = uv.x + GuiBatch_AddVertexUV();
-    Vec4_Copy(&e->c34[D_00539224 - 1], Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
+    cVector_opAssign(&e->pos[D_00539224 - 1], &pos);
+    tIRGBA_opAssign_tRGBAR(&e->c30[D_00539224 - 1], (const V4*)&col);
+    u = uv.x + tVifFloatToInt_short_4_Bias();
+    cVector_opAssign(&e->c34[D_00539224 - 1], cVector_ctor_float_float_float_float(&tmp, u, uv.y + tVifFloatToInt_short_4_Bias(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 static inline unsigned char Prim(void) { if (g_DrawMode & 1) return 3; return 2; }
@@ -144,14 +144,14 @@ static inline void AddX(V4* out, const V4c& a0, const V4& b0, const V4c*& a, con
     __asm__ volatile("lq %0, 0x0(%0)" : "+r"(sp));
     __asm__ volatile("sq %0, 0x0(%1)" : : "r"(sp), "r"(o) : "memory");
 }
-extern "C" void WaterFx_RenderSplash(Splash* s)
+extern "C" void cSplash_Render(Splash* s)
 {
     float a, r;
     Ent* e;
     { float z = 0.0f; if (z == *(volatile float*)&s->t) return; }
     { float k = 0.14f; a = k * s->t; }
     if (a <= 0.0078125f) return;
-    Renderer_BindTexture(g_TextureMgr, s->tex);
+    cTexMan_SetActive(g_TextureMgr, s->tex);
     D_005392D8 = D_004BC1B0;
     { float k = (5.0f - s->t) / 5.0f; r = s->r20 + k * s->r24; }
     V4 c0, c1, c2, c3;
@@ -175,7 +175,7 @@ extern "C" void WaterFx_RenderSplash(Splash* s)
     Emit(c1, V4c(1.0f, 1.0f, 1.0f, a), V4c(0.0f, 0.0f, 1.0f, 0.0f));
     Emit(c2, V4c(1.0f, 1.0f, 1.0f, a), V4c(1.0f, 1.0f, 1.0f, 0.0f));
     Emit(c3, V4c(1.0f, 1.0f, 1.0f, a), V4c(1.0f, 0.0f, 1.0f, 0.0f));
-    Renderer_FlushBatch(g_Video);
+    XLib_DrawStrip(g_Video);
 }
 
 

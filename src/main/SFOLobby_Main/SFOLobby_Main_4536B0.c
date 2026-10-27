@@ -14,11 +14,11 @@ extern void SFOLobby_ConfigScreenIntel(S4536B0*);
 extern void SFOLobby_ServerScreenIntel(S4536B0*);
 extern void SFOLobby_AccountScreenIntel(S4536B0*);
 extern void SFOLobby_LobbyScreenIntel(S4536B0*);
-extern void SFOLobby_UpdateContacts(S4536B0*);
+extern void SFOLobby_ContactScreenIntel(S4536B0*);
 extern void SFOLobby_CellScreenIntel(S4536B0*);
 extern void SFOLobby_MissionScreenIntel(S4536B0*);
 extern void SFOLobby_GameIntel(S4536B0*);
-void SFOLobby_Update(S4536B0* s) {
+void SFOLobby_Intel(S4536B0* s) {
     if (D_00585FB8) return;
     D_00585FB8 = 1;
     if (s->mode != 0 && s->mode != 1) {
@@ -32,7 +32,7 @@ void SFOLobby_Update(S4536B0* s) {
     case 2: SFOLobby_ServerScreenIntel(s); break;
     case 3: SFOLobby_AccountScreenIntel(s); break;
     case 5: SFOLobby_LobbyScreenIntel(s); break;
-    case 6: SFOLobby_UpdateContacts(s); break;
+    case 6: SFOLobby_ContactScreenIntel(s); break;
     case 7: SFOLobby_CellScreenIntel(s); break;
     case 4: SFOLobby_MissionScreenIntel(s); break;
     case 10: SFOLobby_GameIntel(s); break;
@@ -116,9 +116,9 @@ int SFOLobby_ResetConnectionFlags(SFOLobby* self) {
 /* merge_units: begin func_004538D0 */
 #pragma push /* merge_units */
 typedef struct { char p0[0x23D8]; int h[11]; } S4538D0;
-extern void LobbyArray_Free(int h);
+extern void SFOLobbyList_ClearAndCompactList(int h);
 extern void SFOLobbyList_FreeList(void* p);
-static inline void Release4538D0(int* h) { int t = *h; if (t != 0) LobbyArray_Free(t); *h = 0; }
+static inline void Release4538D0(int* h) { int t = *h; if (t != 0) SFOLobbyList_ClearAndCompactList(t); *h = 0; }
 #pragma push
 #pragma opt_common_subs off
 void SFOLobby_FreeLists(S4538D0* s)
@@ -150,17 +150,17 @@ void SFOLobby_FreeLists(S4538D0* s)
  */
 
 
-extern int LobbyArray_Init(LobbyRecord1C* pool, int count, int grow, int elemSize);
+extern int SFOLobbyList_AllocList(LobbyRecord1C* pool, int count, int grow, int elemSize);
 
 /* Sets up the lobby's record pools (count, growth, element size). */
 int SFOLobby_InitLists(SFOLobby* self) {
-    LobbyArray_Init(&self->pool70, 32, 32, 276);
-    LobbyArray_Init(&self->accountCache, 512, 0, 320);
-    LobbyArray_Init(&self->pool118, 1024, 512, 44);
-    LobbyArray_Init(&self->poolC4, 64, 32, 80);
-    LobbyArray_Init(&self->buddyList, 64, 32, 80);
-    LobbyArray_Init(&self->pool134, 64, 32, 80);
-    return LobbyArray_Init(&self->pool150, 64, 32, 80);
+    SFOLobbyList_AllocList(&self->pool70, 32, 32, 276);
+    SFOLobbyList_AllocList(&self->accountCache, 512, 0, 320);
+    SFOLobbyList_AllocList(&self->pool118, 1024, 512, 44);
+    SFOLobbyList_AllocList(&self->poolC4, 64, 32, 80);
+    SFOLobbyList_AllocList(&self->buddyList, 64, 32, 80);
+    SFOLobbyList_AllocList(&self->pool134, 64, 32, 80);
+    return SFOLobbyList_AllocList(&self->pool150, 64, 32, 80);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00453A50 */
@@ -178,32 +178,32 @@ typedef struct {
     unsigned char err;
 } S453B00;
 extern void SFOMGCL_Shutdown(int);
-extern void SFOLobby_DisconnectAuthServer(S453B00*);
+extern void SFOLobby_MediusDisconnectMAS(S453B00*);
 extern void MediusCloseBare(void);
 extern void NetClose(void);
 extern void SFOMGCL_Close_API(void);
 #if 0 /* merge_units */
-extern void LobbyArray_Free(void*);
+extern void SFOLobbyList_ClearAndCompactList(void*);
 #endif /* merge_units */
-#define LobbyArray_Free(a0) (LobbyArray_Free((int)(a0))) /* merge_units */
+#define SFOLobbyList_ClearAndCompactList(a0) (SFOLobbyList_ClearAndCompactList((int)(a0))) /* merge_units */
 
-extern void SFOLobby_NetDown(S453B00*);
-extern void Iop_LoadEzNetModules(int);
+extern void SFOLobby_DownCtl(S453B00*);
+extern void SFOLibInit_RequestEzNetConfig(int);
 #if 0 /* merge_units */
 extern void SFOLobby_FreeLists(S453B00*);
 #endif /* merge_units */
 #define SFOLobby_FreeLists(a0) (SFOLobby_FreeLists((S4538D0 *)(a0))) /* merge_units */
 
-extern void LobbyArray_Clear(void*);
+extern void SFOLobbyList_ClearList(void*);
 
 void SFOLobby_Reset(S453B00* s, int full)
 {
     if (s->f1EA8 > 0) {
         SFOMGCL_Shutdown(0);
         if (s->f180 > 0)
-            SFOLobby_DisconnectAuthServer(s);
+            SFOLobby_MediusDisconnectMAS(s);
         if (s->f180 > 0)
-            SFOLobby_DisconnectAuthServer(s);
+            SFOLobby_MediusDisconnectMAS(s);
         if (full) {
             MediusCloseBare();
             NetClose();
@@ -212,10 +212,10 @@ void SFOLobby_Reset(S453B00* s, int full)
         if (full)
             SFOMGCL_Close_API();
         if (s->f2404)
-            LobbyArray_Free(s->f2404);
+            SFOLobbyList_ClearAndCompactList(s->f2404);
         s->f2404 = 0;
         if (s->f23DC)
-            LobbyArray_Free(s->f23DC);
+            SFOLobbyList_ClearAndCompactList(s->f23DC);
         s->f23DC = 0;
         s->f1EA8 = full ? 1 : -1;
     }
@@ -226,22 +226,22 @@ void SFOLobby_Reset(S453B00* s, int full)
                 SFOMGCL_Close_API();
                 NetClose();
             }
-            SFOLobby_NetDown(s);
+            SFOLobby_DownCtl(s);
             s->f1EA8 = 0;
         }
-        Iop_LoadEzNetModules(0);
+        SFOLibInit_RequestEzNetConfig(0);
     }
     s->f180 = -1;
     SFOLobby_FreeLists(s);
     if (full) {
-        LobbyArray_Clear(s->f1C);
-        LobbyArray_Clear(s->f38);
-        LobbyArray_Clear(s->f54);
+        SFOLobbyList_ClearList(s->f1C);
+        SFOLobbyList_ClearList(s->f38);
+        SFOLobbyList_ClearList(s->f54);
     }
     s->f255C = 0;
     s->err = 0;
 }
-#undef LobbyArray_Free /* merge_units */
+#undef SFOLobbyList_ClearAndCompactList /* merge_units */
 #undef SFOLobby_FreeLists /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00453B00 */

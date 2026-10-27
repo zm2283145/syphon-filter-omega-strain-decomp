@@ -55,7 +55,7 @@ int AnimChannel_IsFreshSegment_3650B0(A5_003650B0* p) {
 /* merge_units: begin func_00365100 */
 #pragma push /* merge_units */
 typedef struct { char pad0[8]; float t; char pad1[0x38 - 0xC]; unsigned char wrap; } B4Obj3;
-extern float Math_FMod(float, float);
+extern float Libc_Fmodf(float, float);
 static inline float b4clamp(float x, float lo, float hi) { float r; asm { max.s r, x, lo; min.s r, r, hi } return r; }
 void AnimChannel_ClampValue_365100(B4Obj3* p) {
     float t = p->t;
@@ -63,7 +63,7 @@ void AnimChannel_ClampValue_365100(B4Obj3* p) {
     if (!p->wrap) {
         r = b4clamp(t, 0.0f, 1.0f);
     } else {
-        r = Math_FMod(t, 1.0f);
+        r = Libc_Fmodf(t, 1.0f);
         if (r < 0.0f) r += 1.0f;
     }
     p->t = r;
@@ -90,7 +90,7 @@ static inline float B7_Wrap(B7_AnimCh* p, float d)
     if (!p->b38) {
         return d;
     }
-    r = Math_FMod(d, 1.0f);
+    r = Libc_Fmodf(d, 1.0f);
     if (r < 0.5f) {
         r += 1.0f;
     } else if (r > 0.5f) {
@@ -112,6 +112,6 @@ void AnimChannel_UpdateRate_365180(B7_AnimCh* p, float dt, float speed)
 #pragma cplusplus on
 #include "vtable_base_dtor.h"
 
-DEFINE_VTABLE_BASE_DTOR(GuiAgentDisplay_dtor, GuiAgentDisplay_vtable, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(GuiAgentDisplay_dtor, GuiAgentDisplay_vtable, GuiWidget_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00365260 */

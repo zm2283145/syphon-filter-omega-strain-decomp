@@ -33,14 +33,14 @@ void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_10(voi
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "alloc_guard.h"
-extern "C" void Mem_Free(int pool, void* allocation, char* file, int line);
+extern "C" void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 extern "C" void cTexture_dtor(void* p, int flags);
-extern "C" void Tex_DestroyRecord(void* allocation, int pool, int destroy, char* file, int line)
+extern "C" void opDelete_cTextureP_int_bool_charP_etc(void* allocation, int pool, int destroy, char* file, int line)
 {
     AllocGuard guard;
     if (destroy)
         cTexture_dtor(allocation, -1);
-    Mem_Free(pool, allocation, file, line);
+    cMemMan_Deallocate(pool, allocation, file, line);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00380280 */
@@ -61,41 +61,41 @@ int cTexture_GetRefCount(TexEntry* e) {
 
 /* merge_units: begin func_00380370 */
 #pragma push /* merge_units */
-int Tdx_Relocate(void* tdx, int data, unsigned int* fl); /* gsynth: defined below */
+int cTexMan_PatchupTDX_charP_intR(void* tdx, int data, unsigned int* fl); /* gsynth: defined below */
 /* Read a TDX resource from a stream and relocate it. */
-int FileMan_GetSize(void* stream);
-void FileMan_LoadMemberSync(void* stream, int* out, int size);
+int cFileMan_GetSize(void* stream);
+void cFileMan_Read_charPP_int(void* stream, int* out, int size);
 void cFileMan_Close(void* stream);
 #if 0 /* merge_units */
-int Tdx_Relocate(void* tdx, int data, void* arg);
+int cTexMan_PatchupTDX_charP_intR(void* tdx, int data, void* arg);
 #endif /* merge_units */
-#define Tdx_Relocate(a0, a1, a2) (Tdx_Relocate((a0), (a1), (unsigned int *)(a2))) /* merge_units */
+#define cTexMan_PatchupTDX_charP_intR(a0, a1, a2) (cTexMan_PatchupTDX_charP_intR((a0), (a1), (unsigned int *)(a2))) /* merge_units */
 
 
 
-int Tdx_Read(void* tdx, void* stream, void* arg)
+int cTexMan_PatchupTDX_cFileManR_intR(void* tdx, void* stream, void* arg)
 {
     int data = 0;
-    FileMan_LoadMemberSync(stream, &data, FileMan_GetSize(stream));
+    cFileMan_Read_charPP_int(stream, &data, cFileMan_GetSize(stream));
     cFileMan_Close(stream);
     if (data == 0)
         return 0;
     else {
-        int r = Tdx_Relocate(tdx, data, arg);
+        int r = cTexMan_PatchupTDX_charP_intR(tdx, data, arg);
         return r;
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00380370(void) {}
-#undef Tdx_Relocate /* merge_units */
+#undef cTexMan_PatchupTDX_charP_intR /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00380370 */
 
 /* merge_units: begin func_003803F0 */
 #pragma push /* merge_units */
 typedef struct { int a[5]; int b[1]; int o0; int o1; } T_00380570;
-void Tdx_RelocateFrames(T_00380570* t, char* base, int n1, int n2, int x, int y); /* gsynth: defined below */typedef struct { char pad[0x38]; int stride; int pad2; } TdxHdr_e1;
-char* Tdx_GetFrame(TdxHdr_e1* t, unsigned int n); /* gsynth: defined below */
+void tTDXImageFrame_Patchup(T_00380570* t, char* base, int n1, int n2, int x, int y); /* gsynth: defined below */typedef struct { char pad[0x38]; int stride; int pad2; } TdxHdr_e1;
+char* tTDXHeader_GetFrameData(TdxHdr_e1* t, unsigned int n); /* gsynth: defined below */
 typedef struct TdxH {
     unsigned short magic;
     unsigned short flags;
@@ -107,22 +107,22 @@ typedef struct TdxH {
     int stride;
     int relocated;
 } TdxH;
-extern int TexHeader_PixelOffset(TdxH* t);
-extern int TexHeader_PaletteOffset(TdxH* t);
+extern int tTDXHeader_OffToImageData(TdxH* t);
+extern int tTDXHeader_OffToMapData(TdxH* t);
 #if 0 /* merge_units */
-extern char* Tdx_GetFrame(TdxH* t, unsigned int n);
+extern char* tTDXHeader_GetFrameData(TdxH* t, unsigned int n);
 #endif /* merge_units */
-#define Tdx_GetFrame(a0, a1) (Tdx_GetFrame((TdxHdr_e1 *)(a0), (a1))) /* merge_units */
+#define tTDXHeader_GetFrameData(a0, a1) (tTDXHeader_GetFrameData((TdxHdr_e1 *)(a0), (a1))) /* merge_units */
 
 
 #if 0 /* merge_units */
-extern void Tdx_RelocateFrames(char* f, char* base, int w, int h, int pix, int pal);
+extern void tTDXImageFrame_Patchup(char* f, char* base, int w, int h, int pix, int pal);
 #endif /* merge_units */
-#define Tdx_RelocateFrames(a0, a1, a2, a3, a4, a5) (Tdx_RelocateFrames((T_00380570 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define tTDXImageFrame_Patchup(a0, a1, a2, a3, a4, a5) (tTDXImageFrame_Patchup((T_00380570 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 
 
-int Tdx_Relocate(void* tdx, int data, unsigned int* fl)
+int cTexMan_PatchupTDX_charP_intR(void* tdx, int data, unsigned int* fl)
 {
     TdxH* t = (TdxH*)data;
     if (t->magic != 5) return 0;
@@ -132,10 +132,10 @@ int Tdx_Relocate(void* tdx, int data, unsigned int* fl)
         int i;
         unsigned int pal;
         base = (char*)t + 0x40;
-        pix = TexHeader_PixelOffset(t);
-        pal = TexHeader_PaletteOffset(t);
+        pix = tTDXHeader_OffToImageData(t);
+        pal = tTDXHeader_OffToMapData(t);
         for (i = 0; i < t->nframes; i++) {
-            Tdx_RelocateFrames(Tdx_GetFrame(t, i), base, t->w, t->h, pix, pal);
+            tTDXImageFrame_Patchup(tTDXHeader_GetFrameData(t, i), base, t->w, t->h, pix, pal);
             base += t->stride;
         }
         t->relocated = 1;
@@ -149,8 +149,8 @@ int Tdx_Relocate(void* tdx, int data, unsigned int* fl)
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003803F0(void) {}
-#undef Tdx_GetFrame /* merge_units */
-#undef Tdx_RelocateFrames /* merge_units */
+#undef tTDXHeader_GetFrameData /* merge_units */
+#undef tTDXImageFrame_Patchup /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003803F0 */
 
@@ -159,7 +159,7 @@ static inline void merge_flush_func_003803F0(void) {}
 extern void SyncDCache(char* a, char* b);
 typedef struct { char pad[0x54]; int v; } F_00380570;
 
-void Tdx_RelocateFrames(T_00380570* t, char* base, int n1, int n2, int x, int y) {
+void tTDXImageFrame_Patchup(T_00380570* t, char* base, int n1, int n2, int x, int y) {
     int i, j;
     t->o0 = (int)((int)base + (int)t->o0);
     for (i = 0; i < n1; i++) {
@@ -184,7 +184,7 @@ static inline void merge_flush_func_00380570(void) {}
 
 /* merge_units: begin func_00380920 */
 #pragma push /* merge_units */
-char* Tdx_GetFrame(TdxHdr_e1* t, unsigned int n)
+char* tTDXHeader_GetFrameData(TdxHdr_e1* t, unsigned int n)
 {
     char* p = (char*)t + 0x40;
     unsigned int i;

@@ -13,7 +13,7 @@
 
 /* library prototypes shared by the blocks below (C linkage) */
 #include "SFOLobby_helpers.h"
-int Mem_Free();
+int cMemMan_Deallocate();
 void *memcpy();
 int strlen(const char *);
 
@@ -56,44 +56,44 @@ extern char D_004BDC68[];
 extern char D_004BE440[];
 extern char* D_0055D460;
 extern char D_0055CA70[];
-void* Mem_Alloc(int, int, char*, int);
-void FileHal_Dtor(void*,int);
+void* cMemMan_Allocate(int, int, char*, int);
+void cFileIO_dtor(void*,int);
 void cFileMan_Close(void*);
-void FileMan_Release(void*,int);
-void Resource_Construct(void*);
-void FileMan_Open(void*,char*,int);
-void* FileMan_ReadData(void*);
-int FileMan_GetSize(void*);
+void cFileMan_dtor(void*,int);
+void cFileMan_ctor_void(void*);
+void ScriptFileBuff_open(void*,char*,int);
+void* cFileMan_Read_void(void*);
+int cFileMan_GetSize(void*);
 void std_vector_deleter_1_clear(void*);
 #define strlen(a0) ((unsigned int)strlen((a0))) /* merge_units */
-char String_ToLower(char);
+char Libc_Tolower(char);
 void insert__Q23std33__vector_impTFP1UiRC1(void*, void*, int, char*);
 void func_003FE640(void*);
-void PtrVec_PushBack_330280(void*, char**);
+void std_vector_charPtr_push_back_charPR_2(void*, char**);
 }
 struct Stream {
  void* file; int size; char hog[0x9C]; void* owned; char* a8; char* ac; int b0; int b4; unsigned char ready; char pad[3];
- Stream() { Resource_Construct(hog); file=0;size=0; }
+ Stream() { cFileMan_ctor_void(hog); file=0;size=0; }
  __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Stream() {
   cFileMan_Close(hog);
-  { void* p=file; if(p) { { AllocGuard g; FileHal_Dtor(p,-1); Mem_Free(0,p,D_004BDC28,0x45); } file=0; } }
+  { void* p=file; if(p) { { AllocGuard g; cFileIO_dtor(p,-1); cMemMan_Deallocate(0,p,D_004BDC28,0x45); } file=0; } }
   size=0;
-  { void* p=owned; if(p) { AllocGuard g; Mem_Free(0,p,D_004BDC18,0x4B); } }
+  { void* p=owned; if(p) { AllocGuard g; cMemMan_Deallocate(0,p,D_004BDC18,0x4B); } }
   a8=0;owned=0;ac=0;ready=0;
-  FileMan_Release(hog,-1);
+  cFileMan_dtor(hog,-1);
  }
 };
 struct LocEntry { char pad[0x10]; };
 struct Loc { int f0; int count; LocEntry* entries; };
-extern "C" bool Loc_ReadPoolFile(Loc* self, char* name) {
+extern "C" bool LoadStrings(Loc* self, char* name) {
  char* str;
  Stream s;
  char key[0x10];
- FileMan_Open(&s, name, 0);
+ ScriptFileBuff_open(&s, name, 0);
  bool ok = false;
  if (s.ready) {
-  s.ac = (char*)FileMan_ReadData(s.hog);
-  s.b4 = FileMan_GetSize(s.hog);
+  s.ac = (char*)cFileMan_Read_void(s.hog);
+  s.b4 = cFileMan_GetSize(s.hog);
   s.a8 = s.ac;
   s.owned = 0;
   int* pc = (int*)s.a8; s.a8 += 4;
@@ -104,30 +104,30 @@ extern "C" bool Loc_ReadPoolFile(Loc* self, char* name) {
    s.a8 += 0x10;
    char* k = key;
    int len = strlen(k);
-   for (int j = 0; j < len; j++) { *k = String_ToLower(*k); k++; }
+   for (int j = 0; j < len; j++) { *k = Libc_Tolower(*k); k++; }
    int* pn = (int*)s.a8; s.a8 += 4;
    char* tmp;
    int n = *pn;
    if (n) {
     AllocGuard g;
-    tmp = (char*)Mem_Alloc(0, n, D_004BDC68, 0xF9);
+    tmp = (char*)cMemMan_Allocate(0, n, D_004BDC68, 0xF9);
    } else {
     tmp = 0;
    }
    if (tmp) {
-    String_Copy(tmp, s.a8);
+    Libc_Strcpy(tmp, s.a8);
     s.a8 += ((unsigned int)(n + 3) >> 2) * sizeof(int);
    }
-   String_Copy(D_0055D460, tmp);
+   Libc_Strcpy(D_0055D460, tmp);
    str = D_0055D460;
    D_0055D460 += strlen(tmp) + 1;
    {
     AllocGuard g;
-    Mem_Free(0, tmp, D_004BE440, 0x83);
+    cMemMan_Deallocate(0, tmp, D_004BE440, 0x83);
    }
    insert__Q23std33__vector_impTFP1UiRC1(self, &self->entries[self->count], 1, key);
    func_003FE640(D_0055CA70);
-   PtrVec_PushBack_330280(D_0055CA70, &str);
+   std_vector_charPtr_push_back_charPR_2(D_0055CA70, &str);
   }
   ok = true;
  }

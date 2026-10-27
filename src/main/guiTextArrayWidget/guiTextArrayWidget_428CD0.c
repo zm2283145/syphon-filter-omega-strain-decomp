@@ -7,14 +7,14 @@ extern "C" {
 extern char D_004DFD80[];
 extern char D_004E0E60[];
 extern int D_00572190;
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 int NetRegisterMessageStart(void);
-int Event_UnpackHeader(NetworkValuePacket* packet);
+int cMessage_RegisterFields(NetworkValuePacket* packet);
 int NetMessageField(NetworkValuePacket* packet, void* destination, int size, int count);
 int NetRegisterApplicationMessage(int* type, NetworkValueHandler callback);
 int Event_PackHeader(NetworkValueEvent* self, int first, int* type, int third,
                       int fourth, unsigned int capacity, NetworkValuePacket* packet);
-int cActivateMsg_NetReceive(int first, int second, int third, const NetworkValuePacket* packet);
+int cActivateMsg_ActivateCallback(int first, int second, int third, const NetworkValuePacket* packet);
 }
 
 static inline void copy_event_base(NetworkValueEvent* destination, const NetworkValueEvent* source)
@@ -31,12 +31,12 @@ static inline void copy_event_base(NetworkValueEvent* destination, const Network
 }
 
 /* Allocate an event clone and preserve its base header and value payload. */
-extern "C" NetworkValueEvent* cActivateMsg_v01(const NetworkValueEvent* source)
+extern "C" NetworkValueEvent* cActivateMsg_Clone(const NetworkValueEvent* source)
 {
     NetworkValueEvent* result;
     {
         AllocGuard guard;
-        result = (NetworkValueEvent*)Mem_Alloc(0, sizeof(NetworkValueEvent), "ActivateMsg.hh", 0x18);
+        result = (NetworkValueEvent*)cMemMan_Allocate(0, sizeof(NetworkValueEvent), "ActivateMsg.hh", 0x18);
     }
     if (result) {
         copy_event_base(result, source);
@@ -48,20 +48,20 @@ extern "C" NetworkValueEvent* cActivateMsg_v01(const NetworkValueEvent* source)
 }
 
 /* Register the value-event payload fields and its receive callback. */
-extern "C" bool cActivateMsg_NetRegister(void)
+extern "C" bool cActivateMsg_InitNet(void)
 {
     bool success = false;
     NetworkValuePacket packet;
-    if (!NetRegisterMessageStart() && Event_UnpackHeader(&packet) &&
+    if (!NetRegisterMessageStart() && cMessage_RegisterFields(&packet) &&
         !NetMessageField(&packet, &packet.value, 4, 1) &&
         !NetMessageField(&packet, &packet.state, 1, 1) &&
-        !NetRegisterApplicationMessage(&D_00572190, cActivateMsg_NetReceive))
+        !NetRegisterApplicationMessage(&D_00572190, cActivateMsg_ActivateCallback))
         success = true;
     return success;
 }
 
 /* Pack the payload when the retail capacity and output-type requirements hold. */
-extern "C" int cActivateMsg_v02(NetworkValueEvent* self, int first, int* type, int third,
+extern "C" int cActivateMsg_Pack(NetworkValueEvent* self, int first, int* type, int third,
                             int fourth, unsigned int capacity, NetworkValuePacket* packet)
 {
     Event_PackHeader(self, first, type, third, fourth, capacity, packet);

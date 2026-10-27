@@ -16,7 +16,7 @@ static const unsigned int dat_00493C30[4] = { 0x0, 0x0, 0x0, 0x0 };
 TUNode* std_tree_pair_cObjectId_value_compare_insert_node_at(TUTree* t, TUNode* parent, bool left, bool first,
                  const unsigned int* v);
 }
-extern "C" void ObjMap_Insert(TUPair* ret, TUTree* t, const unsigned int* v)
+extern "C" void std_tree_pair_cObjectId_value_compare_insert_one(TUPair* ret, TUTree* t, const unsigned int* v)
 {
     bool left = true;
     bool first = left;

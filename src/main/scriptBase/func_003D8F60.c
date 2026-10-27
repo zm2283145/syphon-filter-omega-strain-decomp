@@ -2,10 +2,10 @@
 #pragma inline_depth(10)
 #include "types.h"
 #include "alloc_guard.h"
-/* ScriptEnum_Register: create a script enum (name, value items with the "scope:" prefix stripped) and register it */
+/* cScriptBase_registerEnum: create a script enum (name, value items with the "scope:" prefix stripped) and register it */
 extern "C" {
 extern char D_004BD3B0[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 int strlen(const char* s);
 void* memcpy(void* d, const void* s, int n);
 char* strrchr(const char* s, int c);
@@ -20,12 +20,12 @@ void cScriptBase_checkInitTypes(void* src);
 char* buildNameWithPrefix(void* src);
 void cArray_EnumField_ctor(EVec* v, int n, const EItem& fill);
 void std_vector_EnumDefPtr_push_back(SReg* r, SEnum** e);
-int ScriptEnum_Register(void* src, EItem* items, int n);
+int cScriptBase_registerEnum(void* src, EItem* items, int n);
 }
 static inline void* SD_Alloc(int n, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, n, D_004BD3B0, line);
+    return cMemMan_Allocate(0, n, D_004BD3B0, line);
 }
 static inline char* Dup(char* s)
 {
@@ -40,7 +40,7 @@ static inline char* Dup(char* s)
 }
 static inline void Resize_8F60(EVec* v, int n, const EItem& f = EItem()) { cArray_EnumField_ctor(v, n, f); }
 #pragma opt_strength_reduction off
-int ScriptEnum_Register(void* src, EItem* items, int n)
+int cScriptBase_registerEnum(void* src, EItem* items, int n)
 {
     char* name;
     SEnum* e;

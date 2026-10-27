@@ -29,7 +29,7 @@ typedef struct DblBuf {
     unsigned long long* tags[4]; /* 0x24 */
 } DblBuf;
 
-extern "C" void MovieSubtitles_PatchVblank(DblBuf* db, int i, int j) {
+extern "C" void cMovieSubtitles_PatchDma(DblBuf* db, int i, int j) {
     unsigned long long* p = db->tags[j + i * 2];
     bool other;
     *p &= 0x8FFFFFFF;
@@ -85,10 +85,10 @@ extern "C" {
 extern TexMgr_18E0* g_TextureMgr;
 extern char D_004BEF10[];
 extern char D_004BEF20[];
-extern u64_18E0* Gs_MakeTex1(TexEnt_18E0* e);
-extern void SubtitleOverlay_MeasureLine(Font_18E0* f, const char* s, const char* end, float* w, float* h);
-extern u64_18E0* SubtitleOverlay_BuildGlyphs(Font_18E0* f, u64_18E0* pkt, float x, const char* s, float y, Vec_18E0* color, void* p, const char* end);
-extern float Math_FMod(float a, float b);
+extern u64_18E0* cTexture_GetTEX1_1(TexEnt_18E0* e);
+extern void cSubtitleFont_GetBounds(Font_18E0* f, const char* s, const char* end, float* w, float* h);
+extern u64_18E0* cSubtitleFont_Display(Font_18E0* f, u64_18E0* pkt, float x, const char* s, float y, Vec_18E0* color, void* p, const char* end);
+extern float Libc_Fmodf(float a, float b);
 extern void FlushCache(int mode);
 extern void DIntr(void);
 extern void EIntr(void);
@@ -96,7 +96,7 @@ extern void EIntr(void);
 
 #pragma opt_dead_assignments off
 static inline bool CanDraw(Sub_18E0* s) { return s->font != 0 && s->active != 0; }
-extern "C" void MovieSubtitles_SetupPackets(Sub_18E0* self)
+extern "C" void cMovieSubtitles_Render(Sub_18E0* self)
 {
     if (self->ready) {
         self->pkt++;
@@ -105,7 +105,7 @@ extern "C" void MovieSubtitles_SetupPackets(Sub_18E0* self)
         self->pkt++;
         *self->pkt++ = g_TextureMgr->ents[self->font->tex]->tex0;
         *self->pkt++ = 6;
-        *self->pkt++ = *Gs_MakeTex1(g_TextureMgr->ents[self->font->tex]);
+        *self->pkt++ = *cTexture_GetTEX1_1(g_TextureMgr->ents[self->font->tex]);
         *self->pkt++ = 0x14;
         *self->pkt++ = 0x44;
         *self->pkt++ = 0x42;
@@ -130,7 +130,7 @@ extern "C" void MovieSubtitles_SetupPackets(Sub_18E0* self)
             for (j = 0; j < n; j++) {
                 xs[j] = 0.5f * -self->w;
                 ys[j] = 0.5f * -self->h;
-                SubtitleOverlay_MeasureLine(self->font, self->text[j], self->cur[j], &tw, &th);
+                cSubtitleFont_GetBounds(self->font, self->text[j], self->cur[j], &tw, &th);
                 ys[j] += (4.0f + th) * (float)(n - j);
                 if (self->flags & 4) {
                     float d = self->w - tw;
@@ -138,21 +138,21 @@ extern "C" void MovieSubtitles_SetupPackets(Sub_18E0* self)
                 }
             }
             for (k = 0; k < n; k++) {
-                self->pkt = SubtitleOverlay_BuildGlyphs(self->font, self->pkt, xs[k], self->text[k], ys[k], &self->color, self->f40, self->cur[k]);
+                self->pkt = cSubtitleFont_Display(self->font, self->pkt, xs[k], self->text[k], ys[k], &self->color, self->f40, self->cur[k]);
             }
         }
         if (self->showTime) {
             Vec_18E0 c;
             float t = self->time;
             float m = t / 60.0f;
-            float s = Math_FMod(t, 60.0f);
-            float f = Math_FMod(10.0f * s, 10.0f);
+            float s = Libc_Fmodf(t, 60.0f);
+            float f = Libc_Fmodf(10.0f * s, 10.0f);
             sprintf(D_004BEF20, D_004BEF10, (int)m, (int)s, (int)f);
             c.w = 0.5f;
             c.x = 1.0f;
             c.y = 1.0f;
             c.z = 1.0f;
-            self->pkt = SubtitleOverlay_BuildGlyphs(self->font, self->pkt, 200.0f, D_004BEF20, 218.0f, &c, self->f40, 0);
+            self->pkt = cSubtitleFont_Display(self->font, self->pkt, 200.0f, D_004BEF20, 218.0f, &c, self->f40, 0);
         }
         {
             int qwc = ((self->pkt - self->base) >> 1) - 1;
@@ -208,7 +208,7 @@ extern int cSubtitleFeed_GetDisplayFlags(void* src);
 extern int cSubtitleFeed_GetNumLines(void* src);
 extern char* cSubtitleFeed_GetText(void* src, int i);
 extern Vec411DB0* cSubtitleFeed_GetColor(void* src);
-extern void SubtitleTrack_LoadCue(Vec411DB0* d, Vec411DB0* s);
+extern void tRGBA_opAssign(Vec411DB0* d, Vec411DB0* s);
 extern float cSubtitleFeed_GetStartTime(void* src);
 extern float cSubtitleFeed_GetEndTime(void* src);
 extern int cSubtitleFeed_GetLanguage(void* src);
@@ -216,7 +216,7 @@ extern void cSubtitleFeed_NextItem(void* src);
 extern void cMovieSubtitles_ResetText(Sub411DB0* s);
 }
 
-extern "C" void MovieSubtitles_Update(Sub411DB0* s)
+extern "C" void cMovieSubtitles_NextFrame(Sub411DB0* s)
 {
     int j;
     int i;
@@ -259,7 +259,7 @@ extern "C" void MovieSubtitles_Update(Sub411DB0* s)
                     s->len[j] = strlen(s->text[j]);
                     s->cur[j] = 0;
                 }
-                SubtitleTrack_LoadCue(&s->color, cSubtitleFeed_GetColor(s->src));
+                tRGBA_opAssign(&s->color, cSubtitleFeed_GetColor(s->src));
                 s->start = cSubtitleFeed_GetStartTime(s->src);
                 s->stop = cSubtitleFeed_GetEndTime(s->src);
                 s->fA8 = cSubtitleFeed_GetLanguage(s->src);

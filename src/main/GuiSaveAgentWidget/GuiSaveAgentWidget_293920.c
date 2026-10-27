@@ -13,7 +13,7 @@
 extern int strcmp(const char* a, const char* b);
 
 /* GuiSaveAgentWidget::IsA: returns 1 if the given class name is "GuiSaveAgentWidget". */
-int GuiSaveAgentWidget_IsType(void* self, const char* name)
+int GuiSaveAgentWidget_IsClass(void* self, const char* name)
 {
     return strcmp("GuiSaveAgentWidget", name) == 0;
 }
@@ -43,7 +43,7 @@ int GuiWidget_onInput(void) {
 /* Resize a vector of 4-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem4, 4)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_00293960, Elem4, PtrVec_Insert, PtrVector_Erase)
+DEFINE_VECTOR_RESIZE(func_00293960, Elem4, std_vector_pod_int_insert, std_vector_pod_int_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_00293960 */

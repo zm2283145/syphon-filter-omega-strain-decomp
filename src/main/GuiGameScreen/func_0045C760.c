@@ -6,8 +6,8 @@ typedef struct { char p[0x30]; Gm45* g; } Root45;
 typedef struct { char p[0x70]; PtrVec vec; char p7c[0x14]; int idx; char p94[0x48]; int vis; } W45C760;
 extern Root45* g_LocalPlayer;
 extern int D_00497B18;
-extern int WeaponInv_SlotOfItem(int);
-extern void PtrVec_PushBack_1C1080(PtrVec*, int*);
+extern int cWeapon_GetWeaponSlot(int);
+extern void std_vector_int_push_back(PtrVec*, int*);
 extern int cArray_int_Iterator_opNe(Iter*, Iter*);
 extern Iter* func_0045C980(Iter*);
 extern Word* func_0045C9A0(Word*, Iter*);
@@ -28,7 +28,7 @@ static inline Word* find45(Word* out, Iter* b, Iter* e, int* v)
     func_0045C9A0(out, e);
     return out;
 }
-void GuiGameScreen_GatherWeapons(W45C760* w)
+void GuiGameScreen_BuildWeaponSelectList(W45C760* w)
 {
     Slots45* s = g_LocalPlayer->g->s;
     int cur;
@@ -36,7 +36,7 @@ void GuiGameScreen_GatherWeapons(W45C760* w)
     cur = s->sel != 6 ? s->e[s->sel].id : -1;
     w->vec.count = 0;
     w->idx = -1;
-    start = cur != -1 ? (unsigned char)WeaponInv_SlotOfItem(cur) : 0;
+    start = cur != -1 ? (unsigned char)cWeapon_GetWeaponSlot(cur) : 0;
     i = start;
     n = 0;
     do {
@@ -52,7 +52,7 @@ void GuiGameScreen_GatherWeapons(W45C760* w)
             func_0045C9E0(&b, &w->vec);
             cArray_int_End(&e, &w->vec);
             if (r = find45(&found, &b, &e, &item), r->value == endc.value) {
-                PtrVec_PushBack_1C1080(&w->vec, &item);
+                std_vector_int_push_back(&w->vec, &item);
                 if (cur == item) w->idx = n;
                 n++;
             }
@@ -60,7 +60,7 @@ void GuiGameScreen_GatherWeapons(W45C760* w)
         i++;
         if (i >= 6) i = 0;
     } while (i != start);
-    PtrVec_PushBack_1C1080(&w->vec, &D_00497B18);
+    std_vector_int_push_back(&w->vec, &D_00497B18);
     if (w->idx == -1) w->idx = w->vec.count - 1;
     w->vis = w->vec.count < 5 ? w->vec.count : 5;
 }

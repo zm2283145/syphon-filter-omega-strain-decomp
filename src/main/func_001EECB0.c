@@ -5,14 +5,14 @@ typedef struct { void* vt; int f[7]; char b20; char pad21[3]; char b24; char pad
 extern "C" {
 extern char D_004DFD80[];
 extern char D_004DAD20[];
-void* Mem_Alloc(int, int, char*, int);
+void* cMemMan_Allocate(int, int, char*, int);
 }
 static inline void* AllocL_f4(int size, char* file, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, file, line);
+    return cMemMan_Allocate(0, size, file, line);
 }
-extern "C" CEv_f4* ContactEvent_Clone(CEv_f4* src)
+extern "C" CEv_f4* cGameEventMsg_Clone(CEv_f4* src)
 {
     CEv_f4* e = (CEv_f4*)AllocL_f4(sizeof(CEv_f4), "gameEventMsg.hh", 0x2C);
     if (e) {

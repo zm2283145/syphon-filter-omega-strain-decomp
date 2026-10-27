@@ -17,7 +17,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int Net_GetClock(int);                               
+int cDME_GetTime(int);                               
 int cNetObjectMgr_NextFrame();                                  
 int cNPCInfoObject_Setup(char *);                               
 int cNPCInfoObject_dtor(char *, int);                            
@@ -29,7 +29,7 @@ static unsigned int dat_00493A18[2] = { 0x1, 0x0 };
 extern int D_0055C7B8;
 extern signed char D_005724D0;
 
-void Net_Pump(void) {
+void cNetObj_NextFrame(void) {
     int sp1C;
     int sp18;
 
@@ -41,7 +41,7 @@ void Net_Pump(void) {
     cNPCInfoObject_Setup(&sp1C);
     cGenInfoObject_ctor(&sp18);
     func_0043AA30(&sp18);
-    D_0055C7B8 = Net_GetClock(0) + 0x64;
+    D_0055C7B8 = cDME_GetTime(0) + 0x64;
     cNetObjectMgr_NextFrame();
     cHeadSet_NextFrame(0);
     cNPCInfoObject_dtor(&sp1C, -1);
@@ -55,7 +55,7 @@ static inline void merge_flush_func_003FBEC0(void) {}
 #pragma push /* merge_units */
 /* map<int, {int, int}>::operator[] with value {0, -2} */
 typedef struct { int key; int a; int b; } PBF40;
-DEFINE_INT_MAP_SUBSCRIPT(std_tree_pair_int_value_compare_cAllocator_pair_find_or_insert_intR_2, PBF40, FrameTree_Insert_3FC520, (v.a = 0, v.b = -2))
+DEFINE_INT_MAP_SUBSCRIPT(std_tree_pair_int_value_compare_cAllocator_pair_find_or_insert_intR_2, PBF40, std_tree_pair_int_value_compare_cAllocator_pair_insert_node_at_nodeP_bool_bool_pairR_3, (v.a = 0, v.b = -2))
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003FBF40(void) {}
 #pragma pop /* merge_units */

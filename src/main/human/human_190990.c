@@ -20,7 +20,7 @@ void* cSkaAnimDataSample_DeltaTranslation(char* self) {
     return self + 32;
 }
 
-int RootClip_TranslationEnabled(G14* s) {
+int cSkaAnimData_RootHasDeltaTranslation(G14* s) {
     return s->v != 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

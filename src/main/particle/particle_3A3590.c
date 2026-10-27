@@ -22,10 +22,10 @@ DEFINE_ITER_BEGIN(std_list_cParticleDefinitionPtr_begin_void)
 /* Look up a resource by its lower-cased short name (up to 16 chars, stops at '.'). */
 typedef struct { __int128 q; } Name_3A35C0;
 extern Name_3A35C0 D_0053BAB0;
-extern char String_ToLower(char c);
-extern void ParticleDefs_FindByName(void* self, char* name);
+extern char Libc_Tolower(char c);
+extern void GetEffectID__15cParticleSystemCFRC1(void* self, char* name);
 
-void ParticleLib_FindId(void* self, const char* s)
+void cParticleSystem_GetEffectID(void* self, const char* s)
 {
     Name_3A35C0* name = &D_0053BAB0;
     unsigned int i;
@@ -33,8 +33,8 @@ void ParticleLib_FindId(void* self, const char* s)
     int c;
     name->q = 0;
     for (i = 0, o = (char*)name; i < 16 && (c = s[i]) != 0 && c != '.'; i++)
-        *o++ = String_ToLower(c);
-    ParticleDefs_FindByName(self, (char*)name);
+        *o++ = Libc_Tolower(c);
+    GetEffectID__15cParticleSystemCFRC1(self, (char*)name);
 }
 #pragma opt_propagation reset
 /* merge_units: generate this block's code under its own pragmas */

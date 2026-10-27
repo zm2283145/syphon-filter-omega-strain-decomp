@@ -23,10 +23,10 @@ int rt_comm_platform_shutdown(void) {
 /* merge_units: end func_002F7B60 */
 
 /* merge_units: begin func_002F7B78 */
-extern int Socket_Construct(float);
+extern int rt_comm_platform2_create(float);
 
 int rt_comm_platform_create(float f12) {
-    return Socket_Construct(f12);
+    return rt_comm_platform2_create(f12);
 }
 /* merge_units: end func_002F7B78 */
 

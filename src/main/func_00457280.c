@@ -2,31 +2,31 @@
 #include "vtable_base_dtor.h"
 
 extern "C" {
-extern "C" void GuiWeaponStats_IsType();
-extern "C" void GuiWidget_FocusPrev();
-extern "C" void GuiWidget_FocusNext();
-extern "C" void GuiWidget_FocusLast();
-extern "C" void GuiWidget_FocusFirst();
-extern "C" void GuiWidget_BubbleActivate();
-extern "C" void GuiWidget_Update();
-extern "C" void GuiWidget_OnEvent();
-extern "C" void GuiWidget_ClearFlag4();
-extern "C" void GuiWidget_SetFlag4();
-extern "C" void GuiWidget_Deinit();
+extern "C" void GuiWeaponStats_IsClass();
+extern "C" void GuiWidget_FindPrevFocus();
+extern "C" void GuiWidget_FindNextFocus();
+extern "C" void GuiWidget_FindLastFocus();
+extern "C" void GuiWidget_FindFirstFocus();
+extern "C" void GuiWidget_onAction();
+extern "C" void GuiWidget_onAdvanceTime();
+extern "C" void GuiWidget_onMessage();
+extern "C" void GuiWidget_onDeactivate();
+extern "C" void GuiWidget_onActivate();
+extern "C" void GuiWidget_onRemove();
 extern "C" void GuiWidget_Load();
-extern "C" void GuiArrayWidget_SendEvent21();
-extern "C" void GuiArrayWidget_SendEvent20();
+extern "C" void GuiArrayWidget_onElementLoseFocus();
+extern "C" void GuiArrayWidget_onElementGainFocus();
 extern "C" void GuiArrayWidget_onRowRender();
 extern "C" void GuiArrayWidget_onColumnRender();
-extern "C" void GuiArrayWidget_Draw();
-extern "C" void GuiArrayWidget_OnLoseFocus();
-extern "C" void GuiArrayWidget_OnGainFocus();
-extern "C" void GuiTextArrayWidget_Sleep();
-extern "C" void GuiTextArrayWidget_Wake();
-extern "C" void GuiTextArrayWidget_SetDims();
+extern "C" void GuiArrayWidget_onRender();
+extern "C" void GuiArrayWidget_onLoseFocus();
+extern "C" void GuiArrayWidget_onGainFocus();
+extern "C" void GuiTextArrayWidget_onSleep();
+extern "C" void GuiTextArrayWidget_onWake();
+extern "C" void GuiTextArrayWidget_SetSize();
 extern "C" void GuiWeaponStats_HandleInput();
-extern "C" void GuiWeaponStats_CellColour();
-extern "C" void GuiWeaponStats_Init();
+extern "C" void GuiWeaponStats_onElementRender();
+extern "C" void GuiWeaponStats_onAdd();
 extern "C" void GuiWeaponStats_GetClassName();
 extern void * const D_004E1350[];
 void* GuiTextArrayWidget_dtor(void* self, short deleteFlag);
@@ -41,4 +41,4 @@ extern "C" VtableObject* GuiWeaponStats_dtor(VtableObject* self, short deleteFla
     }
     return self;
 }
-void * const D_004E1350[32] = { (void*)0x0, (void*)0x0, (void*)GuiWeaponStats_dtor, (void*)GuiWeaponStats_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextArrayWidget_Wake, (void*)GuiTextArrayWidget_Sleep, (void*)GuiArrayWidget_OnGainFocus, (void*)GuiArrayWidget_OnLoseFocus, (void*)GuiWeaponStats_HandleInput, (void*)GuiArrayWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiWeaponStats_GetClassName, (void*)GuiWeaponStats_IsType, (void*)GuiTextArrayWidget_SetDims, (void*)GuiArrayWidget_onColumnRender, (void*)GuiArrayWidget_onRowRender, (void*)GuiWeaponStats_CellColour, (void*)GuiArrayWidget_SendEvent20, (void*)GuiArrayWidget_SendEvent21, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004E1350[32] = { (void*)0x0, (void*)0x0, (void*)GuiWeaponStats_dtor, (void*)GuiWeaponStats_onAdd, (void*)GuiWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiWidget_onDeactivate, (void*)GuiTextArrayWidget_onWake, (void*)GuiTextArrayWidget_onSleep, (void*)GuiArrayWidget_onGainFocus, (void*)GuiArrayWidget_onLoseFocus, (void*)GuiWeaponStats_HandleInput, (void*)GuiArrayWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiWidget_onAdvanceTime, (void*)GuiWidget_onMessage, (void*)GuiWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiWeaponStats_GetClassName, (void*)GuiWeaponStats_IsClass, (void*)GuiTextArrayWidget_SetSize, (void*)GuiArrayWidget_onColumnRender, (void*)GuiArrayWidget_onRowRender, (void*)GuiWeaponStats_onElementRender, (void*)GuiArrayWidget_onElementGainFocus, (void*)GuiArrayWidget_onElementLoseFocus, (void*)0x0, (void*)0x0, (void*)0x0 };

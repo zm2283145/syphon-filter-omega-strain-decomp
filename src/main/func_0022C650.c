@@ -1,6 +1,6 @@
 #pragma cplusplus on
 #include "types.h"
-/* TargetVis_Register: add an actor to the visibility registry (30 slots + handle list) */
+/* cTargetManager_AddGobj: add an actor to the visibility registry (30 slots + handle list) */
 struct Pt1TvActor { char pad0[0xC]; int serial; };
 struct Pt1TvHandle { Pt1TvActor* target; int serial; };
 struct Pt1TvIt { void* p; };
@@ -11,8 +11,8 @@ struct Pt1TvReg {
     char list[4];
     char sentinel[4];
 };
-extern "C" void WeakHandleList_Append(Pt1TvIt* out, void* list, Pt1TvIt* pos, Pt1TvHandle* h);
-extern "C" int TargetVis_Register(Pt1TvReg* r, Pt1TvActor* a)
+extern "C" void std_list_deleter_cSafePtr_cGOBJ_insert(Pt1TvIt* out, void* list, Pt1TvIt* pos, Pt1TvHandle* h);
+extern "C" int cTargetManager_AddGobj(Pt1TvReg* r, Pt1TvActor* a)
 {
     for (int i = 0; i < 30; i++)
         if (r->slots[i] == a)
@@ -28,7 +28,7 @@ extern "C" int TargetVis_Register(Pt1TvReg* r, Pt1TvActor* a)
             h.target = a;
             h.serial = *(a ? &a->serial : (none = -1, &none));
             pos.p = r->sentinel;
-            WeakHandleList_Append(&res, r->list, &pos, &h);
+            std_list_deleter_cSafePtr_cGOBJ_insert(&res, r->list, &pos, &h);
             return 1;
         }
     }

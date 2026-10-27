@@ -6,18 +6,18 @@
 #include "types.h"
 #include "interface_element_types.h"
 
-extern int List_InsertBefore(int** out, StdList* list, int** pos, int value);
-extern int IeScreen_RemoveElement(int owner, IfElement* elem);
+extern int std_list_deleter_voidPtr_insert(int** out, StdList* list, int** pos, int value);
+extern int cInterfaceModel_DestroyInstance(int owner, IfElement* elem);
 
 /* list.push_back(value): insert before the sentinel. */
-int TextManager_AddText(StdList* list, int value) {
+int cLList_cTextAreaPtr_PushBackActual(StdList* list, int value) {
     ListInsertArgs it;
 
     it.pos = &list->header;
-    return List_InsertBefore(&it.result, list, &it.pos, value);
+    return std_list_deleter_voidPtr_insert(&it.result, list, &it.pos, value);
 }
 
-/* Forward the element to IeScreen_RemoveElement on its owner. */
-int IeElement_Release(IfElement* elem) {
-    return IeScreen_RemoveElement(elem->owner, elem);
+/* Forward the element to cInterfaceModel_DestroyInstance on its owner. */
+int cInterfaceElement_Destroy(IfElement* elem) {
+    return cInterfaceModel_DestroyInstance(elem->owner, elem);
 }

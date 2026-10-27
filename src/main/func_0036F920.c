@@ -22,13 +22,13 @@ typedef struct Xform_F920 {
     int lA4[3];
 } Xform_F920;
 extern "C" {
-void Mtx_Transpose3x3(M_F920* m);
-int Mtx_IsTranslationZero(M_F920* m);
+void cMatrix_InvertRot(M_F920* m);
+int cMatrix_IsZeroTranslation(M_F920* m);
 V_F920* func_00133EC0(M_F920* m);
-void Vec4_Assign(V_F920* d, V_F920* s);
-void Vec3_Negate(V_F920* v);
-void Mtx_TransformByTranspose(V_F920* v, M_F920* m);
-void Mtx_SetTranslation(M_F920* m, V_F920* v);
+void cVector_ctor_cVectorR(V_F920* d, V_F920* s);
+void cVector_NegateXYZ(V_F920* v);
+void cVector_Rotate_cMatrixR(V_F920* v, M_F920* m);
+void cMatrix_SetTranslation(M_F920* m, V_F920* v);
 void cArray_cXformNodePtr_Begin(It_F920* it, void* c);
 void cArray_cXformNodePtr_End(It_F920* it, void* c);
 int cArray_cXformNodePtr_ConstIterator_opNe(It_F920* a, It_F920* b);
@@ -39,7 +39,7 @@ void cArray_cXformNodePtr_ConstIterator_opInc(It_F920* it);
 
 #pragma opt_rotateloops off
 
-extern "C" void Xform_SetWorld(Xform_F920* x, M_F920* w)
+extern "C" void cXformNode_SetMatrix(Xform_F920* x, M_F920* w)
 {
     It_F920 b;
     It_F920 e;
@@ -54,13 +54,13 @@ extern "C" void Xform_SetWorld(Xform_F920* x, M_F920* w)
             __int128 qa;
             __int128 qb;
             __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
-        Mtx_Transpose3x3(&inv);
-        if (!Mtx_IsTranslationZero(&inv)) {
+        cMatrix_InvertRot(&inv);
+        if (!cMatrix_IsZeroTranslation(&inv)) {
             V_F920 t;
-            Vec4_Assign(&t, func_00133EC0(&inv));
-            Vec3_Negate(&t);
-            Mtx_TransformByTranspose(&t, &inv);
-            Mtx_SetTranslation(&inv, &t);
+            cVector_ctor_cVectorR(&t, func_00133EC0(&inv));
+            cVector_NegateXYZ(&t);
+            cVector_Rotate_cMatrixR(&t, &inv);
+            cMatrix_SetTranslation(&inv, &t);
         }
         MM_F920(&inv, &inv, w);
         {

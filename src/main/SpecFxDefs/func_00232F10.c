@@ -194,23 +194,23 @@ extern char D_004A6F38[];
 extern char g_CameraObject[];
 extern char g_HotboxList[];
 extern char D_0053B5C0[];
-Cam10** List_Front(void* p);
+Cam10** cLList_cCAMERA_GOBJPtr_Front(void* p);
 void std_list_cElementPtr_end_void(It10* out, void* list);
 It10* cLListIterator_cElementPtr_ctor_listR(It10* dst, It10* src);
 void std_list_cElementPtr_begin_void(It10* out, void* list);
 void std_list_deleter_voidPtr_end_void(It10* out, void* list);
 void func_00234070(It10* dst, It10* src);
-void List_Begin_16E880(ONode10** out, void* list);
+void std_list_deleter_voidPtr_begin_void_2(ONode10** out, void* list);
 void std_list_cHotboxPtr_generic_iterator_1_ctor(OIt10* dst, ONode10* n);
 void std_list_cHotboxPtr_end_void_2(OIt10* out, void* list);
 void func_00234080(OIt10* dst, OIt10* src);
 void std_list_cElementPtr_push_back_cElementPR(void* list, Entry10** v);
-void ActiveList_EraseMatching(void* list, Pred10 p);
-void ParticleInst_Kill(Tracer10* t, int n);
-void Mem_Free(int pool, void* p, char* file, int line);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-Tracer10* Tracer_Create(void* p, int id, M4* m, float scale);
-void ParticleInst_Update(Tracer10* t, float dt, M4* m, int z);
+void std_list_imp_voidPtr_remove_if(void* list, Pred10 p);
+void cParticle_dtor(Tracer10* t, int n);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+Tracer10* cParticle_ctor(void* p, int id, M4* m, float scale);
+void cParticle_NextFrame(Tracer10* t, float dt, M4* m, int z);
 void cParticle_SetBoxData_cGOBJP_float_float_float_etc(Tracer10* t, float a, float b, Cam10* cam, float c, int flag);
 void func_003A3340(Tracer10* t, Cam10* cam, Box0* box, bool flag);
 void cParticle_SetBoxData_float_float(Tracer10* t, float s, float f);
@@ -238,7 +238,7 @@ static inline void EndI_(It10* out, void* l) { It10 t; std_list_cElementPtr_end_
 static inline void EndI(It10* out, void* l) { EndI_(out, l); }
 static inline void End(It10* out, void* l) { EndI(out, l); }
 static inline bool NotEnd(It10* it, void* l) { It10 end; End(&end, l); return it->n != end.n; }
-static inline void OBegI_(OIt10* out, void* l) { ONode10* raw; List_Begin_16E880(&raw, l); std_list_cHotboxPtr_generic_iterator_1_ctor(out, raw); }
+static inline void OBegI_(OIt10* out, void* l) { ONode10* raw; std_list_deleter_voidPtr_begin_void_2(&raw, l); std_list_cHotboxPtr_generic_iterator_1_ctor(out, raw); }
 static inline void OBegI(OIt10* out, void* l) { OBegI_(out, l); }
 static inline void OBegin0(OIt10* out, void* l) { OIt10 t; OBegI(&t, l); *out = t; }
 static inline void OBegin(OIt10* out, void* l) { OBegin0(out, l); }
@@ -259,8 +259,8 @@ static inline void FreeTracer(Tracer10* t)
 {
     if (t) {
         AllocGuard g2;
-        ParticleInst_Kill(t, -1);
-        Mem_Free(0, t, D_004A6F38, 0x14F);
+        cParticle_dtor(t, -1);
+        cMemMan_Deallocate(0, t, D_004A6F38, 0x14F);
     }
 }
 static inline void FreeEntry(Entry10* e, int line)
@@ -269,9 +269,9 @@ static inline void FreeEntry(Entry10* e, int line)
     if (e) {
         FreeTracer(e->t);
     }
-    Mem_Free(0, e, D_004A6E38, line);
+    cMemMan_Deallocate(0, e, D_004A6E38, line);
 }
-static inline void Erase10_(void* l, Entry10** v) { Eq10 eq; ActiveList_EraseMatching(l, Pred10(eq, v)); }
+static inline void Erase10_(void* l, Entry10** v) { Eq10 eq; std_list_imp_voidPtr_remove_if(l, Pred10(eq, v)); }
 static inline void Erase10W(void* l, Entry10** v) { Erase10_(l, v); }
 static inline void Erase10(void* l, Entry10** v) { Erase10W(l, v); }
 static inline Entry10* NewEntry(int line)
@@ -279,7 +279,7 @@ static inline Entry10* NewEntry(int line)
     Entry10* e;
     {
         AllocGuard g;
-        e = (Entry10*)Mem_Alloc(0, 0xC, D_004A6E38, line);
+        e = (Entry10*)cMemMan_Allocate(0, 0xC, D_004A6E38, line);
     }
     if (e) e->t = 0;
     return e;
@@ -289,9 +289,9 @@ static inline Tracer10* MakeTracer(Self10* self, M4* m, int line)
     void* p;
     {
         AllocGuard g;
-        p = Mem_Alloc(0, 0x70, D_004A6E38, line);
+        p = cMemMan_Allocate(0, 0x70, D_004A6E38, line);
     }
-    if (p) p = Tracer_Create(p, GetDef(self->id)->a, m, 1.0f);
+    if (p) p = cParticle_ctor(p, GetDef(self->id)->a, m, 1.0f);
     return (Tracer10*)p;
 }
 static inline Entry10* NewEntryM(int line) { return NewEntry(line); }
@@ -312,7 +312,7 @@ extern "C" void SnowField_Update(Self10* self, float dt)
     Cam10* cam;
     Entry10* e;
 
-    cam = *List_Front(g_CameraObject);
+    cam = *cLList_cCAMERA_GOBJPtr_Front(g_CameraObject);
     if (cam && self->c4 >= 0) {
         M4 m;
         UM(&m);
@@ -427,8 +427,8 @@ extern "C" void SnowField_Update(Self10* self, float dt)
                 b2 = func_00234110(&big, e->obj->GetBox());
                 SetCP(&m, &b2, V4());
                 func_003A3340(e->t, cam, &b2, self->id != 0x16);
-                cParticle_SetBoxData_float_float(e->t, scale, ((CamF*)*List_Front(g_CameraObject))->f60);
-                ParticleInst_Update(e->t, dt, &m, 0);
+                cParticle_SetBoxData_float_float(e->t, scale, ((CamF*)*cLList_cCAMERA_GOBJPtr_Front(g_CameraObject))->f60);
+                cParticle_NextFrame(e->t, dt, &m, 0);
             }
         }
         self->last = camPos;

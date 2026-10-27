@@ -33,6 +33,6 @@ extern void cString_opAssign(S29930* dst, S29930* src);E2C* std_copy_backward_Sl
 #include "vector_insert_fill_obj.h"
 
 extern "C" { char D_004B88B0[] = "allocator.hh"; }
-DEFINE_VECTOR_INSERT_FILL_OBJ(std_vector_imp_Section_insert, 0x20, 0x300000, 0x180000, D_004B8810, D_004B88B0, 0x5C, Mem_PlacementNew, GuiSlideShow_Section_ctor, std_copy_backward_Section_copy_backward, std_fill_n_Section_int_fill_n, std_swap_vectordeleterR_vectordeleterR_27, std_vector_deleter_Section_dtor)
+DEFINE_VECTOR_INSERT_FILL_OBJ(std_vector_imp_Section_insert, 0x20, 0x300000, 0x180000, D_004B8810, D_004B88B0, 0x5C, opNew_uint_voidP, GuiSlideShow_Section_ctor, std_copy_backward_Section_copy_backward, std_fill_n_Section_int_fill_n, std_swap_vectordeleterR_vectordeleterR_27, std_vector_deleter_Section_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00329A70 */

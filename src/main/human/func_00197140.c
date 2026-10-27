@@ -21,8 +21,8 @@ extern "C" {
 extern char D_00542B60[]; extern char D_004DA930[];
 extern char D_004EEED0[]; extern char D_004DA8D0[]; extern char D_004DCF10[];
 extern char D_0049DFE0[];
-void Event_Construct(void* m, void* t);
-void Event_Send(void* m, void* t, int f);
+void cMessage_ctor_cMessageNameR(void* m, void* t);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* t, int f);
 void cMessage_dtor(void* m, int f);
 unsigned char Secondary_RequestOneShot(Ob2_S7* o, Name_S7* n, unsigned char kind, AEv_S7* p);
 }
@@ -43,14 +43,14 @@ unsigned char Secondary_RequestOneShot(Ob2_S7* o, Name_S7* n, unsigned char kind
 static inline void QCp_S7(Q_S7* d, const Q_S7* s) { __int128 q; asm volatile { lq q, 0(s)
  sq q, 0(d) } }
 
-extern "C" void Actor_StartStarThrow(SA_S7* a, int* id, Q_S7* pos)
+extern "C" void cHuman_ThrowStar(SA_S7* a, int* id, Q_S7* pos)
 {
     if (a->s3314) {
         Name_S7 n;
         AEv_S7 e;
         unsigned char ok;
         AEv_S7* pe = &e;
-        Event_Construct(pe, D_00542B60);
+        cMessage_ctor_cMessageNameR(pe, D_00542B60);
         pe->vtable = D_004DA930;
         pe->f24 = 2;
         pe->f28 = 0;
@@ -69,14 +69,14 @@ extern "C" void Actor_StartStarThrow(SA_S7* a, int* id, Q_S7* pos)
             if (a->b14) {
                 MsgT_S7 m;
                 MsgT_S7* pm = &m;
-                Event_Construct(pm, D_004EEED0);
+                cMessage_ctor_cMessageNameR(pm, D_004EEED0);
                 pm->vtable = D_004DCF10;
                 pm->vtable = D_004DA8D0;
                 pm->id = -1;
                 pm->id = *id;
                 QCp_S7(&pm->pos, pos);
                 pm->f20 = 4;
-                Event_Send(&m, a, 0);
+                QueueMessage_cMessageR_cSystemP_int(&m, a, 0);
                 m.vtable = D_004DCF10;
                 cMessage_dtor(pm, 0);
             }

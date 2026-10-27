@@ -78,7 +78,7 @@ static inline void Mul_9D40(void* d, void* a, void* b) {
 struct HitVolumes_9D40 { char pad[0x18]; Coll_9D40 coll; };
 #pragma opt_rotateloops off
 #pragma opt_propagation off
-extern "C" void HitVolumes_NodeMatrices(HitVolumes_9D40* self, Mtx_9D40* out, Mtx_9D40* m)
+extern "C" void cSkeleton_GetMeshToSkeletonSpaceMatrices(HitVolumes_9D40* self, Mtx_9D40* out, Mtx_9D40* m)
 {
     Coll_9D40* c = &self->coll;
     It_9D40 it = HBegin(c);
@@ -105,7 +105,7 @@ extern "C" void HitVolumes_NodeMatrices(HitVolumes_9D40* self, Mtx_9D40* out, Mt
 
 #include "loose03_types.h"
 
-extern int SkelNodes_Construct(SkelNodes*);
+extern int cSkeleton_CreateBones(SkelNodes*);
 extern void cSkeleton_DestroyBones(SkelNodes*);
 
 void cSkeleton_Deactivate(SkelNodes* self) {
@@ -114,9 +114,9 @@ void cSkeleton_Deactivate(SkelNodes* self) {
 }
 
 /* Sets unk14 then constructs the node set. */
-int SkelNodes_ConstructActive(SkelNodes* self) {
+int cSkeleton_Activate(SkelNodes* self) {
     self->unk14 = 1;
-    return SkelNodes_Construct(self);
+    return cSkeleton_CreateBones(self);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003A9F00 */
@@ -140,28 +140,28 @@ typedef struct Vec3f {
     float x, y, z;
 } Vec3f;
 
-extern void BoneScales_Init(void* scales, int* bones, Vec3f* scale);
+extern void std_vector_imp_cBoneScale_resize(void* scales, int* bones, Vec3f* scale);
 #if 0 /* merge_units */
-extern void SkelNodes_Construct(ModelCtx* ctx);
+extern void cSkeleton_CreateBones(ModelCtx* ctx);
 #endif /* merge_units */
-#define SkelNodes_Construct(a0) ((void)SkelNodes_Construct((SkelNodes *)(a0))) /* merge_units */
+#define cSkeleton_CreateBones(a0) ((void)cSkeleton_CreateBones((SkelNodes *)(a0))) /* merge_units */
 
 
 
 /* Initializes a model context from src with unit bone scale. */
-void ModelCtx_Init(ModelCtx* ctx, ModelSrc* src) {
+void cSkeleton_Reset(ModelCtx* ctx, ModelSrc* src) {
     Vec3f scale;
     ctx->model = src->model;
     ctx->unk28 = src->unk04;
     scale.x = 1.0f;
     scale.y = 1.0f;
     scale.z = 1.0f;
-    BoneScales_Init(ctx->scales, *ctx->model, &scale);
+    std_vector_imp_cBoneScale_resize(ctx->scales, *ctx->model, &scale);
     if (ctx->hasSkel) {
-        SkelNodes_Construct(ctx);
+        cSkeleton_CreateBones(ctx);
     }
 }
-#undef SkelNodes_Construct /* merge_units */
+#undef cSkeleton_CreateBones /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003A9F20 */
 
@@ -171,39 +171,39 @@ void ModelCtx_Init(ModelCtx* ctx, ModelSrc* src) {
 #include "alloc_guard.h"
 typedef struct { char* name; int count; int a, b; } N3A9;
 extern "C" {
-extern void FileMan_FindMember(void*);
-extern void FileMan_LoadMemberSync(void*, int*, int);
+extern void cFileMan_Open(void*);
+extern void cFileMan_Read_charPP_int(void*, int*, int);
 extern void cFileMan_Close(void*);
-extern void* Mem_Alloc(int, int, char*, int);
+extern void* cMemMan_Allocate(int, int, char*, int);
 extern char D_004BCCF8[];
 extern unsigned int strlen(const char*);
-extern void String_Copy(char*, char*);
+extern void Libc_Strcpy(char*, char*);
 extern void std_list_cSkeletonDataBankEntryPtr_push_back(void*, N3A9**);
 }
-extern "C" void Skel_ReadFile(int* out, void* list, char* name, void* file) {
+extern "C" void cSkeletonDataBank_AddSkeletonData_charP_cFileManR(int* out, void* list, char* name, void* file) {
     int n[1];
     N3A9* tmp[1];
     int cnt;
     N3A9* node;
     n[0] = 0;
-    FileMan_FindMember(file);
-    FileMan_LoadMemberSync(file, n, 0);
+    cFileMan_Open(file);
+    cFileMan_Read_charPP_int(file, n, 0);
     cFileMan_Close(file);
     cnt = n[0];
     {
         AllocGuard g;
-        node = (N3A9*)Mem_Alloc(0, 0x10, D_004BCCF8, 0x60);
+        node = (N3A9*)cMemMan_Allocate(0, 0x10, D_004BCCF8, 0x60);
     }
     if (node) {
         int len = strlen(name) + 1;
         char* s;
         {
             AllocGuard g;
-            s = (char*)Mem_Alloc(0, len, "skeleton.hh", 0x61);
+            s = (char*)cMemMan_Allocate(0, len, "skeleton.hh", 0x61);
         }
         node->name = s;
         node->count = cnt;
-        String_Copy(node->name, name);
+        Libc_Strcpy(node->name, name);
     }
     tmp[0] = node;
     std_list_cSkeletonDataBankEntryPtr_push_back(list, tmp);

@@ -43,7 +43,7 @@ static inline void merge_flush_func_001B99E0(void) {}
 extern int D_004EEED8;
 
 /* Message type id. */
-int cNetThrowStarMsg_v05(void) {
+int cNetThrowStarMsg_GetMsgId(void) {
     return D_004EEED8;
 }
 /* merge_units: generate this block's code under its own pragmas */

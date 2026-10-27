@@ -6,9 +6,9 @@ extern unsigned int D_00529808, D_0052980C;
 extern unsigned int D_00529810;
 typedef int (*NetMsgCb)(int, int, int, void *);
 typedef void (*NetMsgPost)(int *, int *, int *);
-extern int NetMsg_GetCallback(unsigned int type, unsigned int sub, NetMsgCb *cb);
+extern int rt_parse_get_callback(unsigned int type, unsigned int sub, NetMsgCb *cb);
 extern void *memcpy(void *d, const void *s, unsigned int n);
-int NetMsg_Dispatch(int a0, int a1, int a2, unsigned char *data, unsigned int len, NetMsgPost post)
+int rt_parse_execute(int a0, int a1, int a2, unsigned char *data, unsigned int len, NetMsgPost post)
 {
     NetMsgCb cb;
     int a, b, c;
@@ -32,7 +32,7 @@ int NetMsg_Dispatch(int a0, int a1, int a2, unsigned char *data, unsigned int le
         sub = data[off + 1];
         off += 2;
         if (type >= D_0052980C || sub >= D_00529808) return 7;
-        if (NetMsg_GetCallback(type, sub, &cb) != 0) return 7;
+        if (rt_parse_get_callback(type, sub, &cb) != 0) return 7;
         if (cb == 0) return 7;
         D_004912F8[type * D_00529808 + sub]++;
         memcpy(D_004912EC, data + off, len - off);

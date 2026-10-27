@@ -126,25 +126,25 @@ extern float D_0048AC3C;
 extern float D_0048AC40;
 extern float D_0048AC44;
 extern char g_TargetVisMgr;
-WNode* WorldObjList_Get(void* l);
+WNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_2(void* l);
 int func_00159570(void* p);
-Cam** List_Front(void* p);
-Item* WeaponInv_GetHeldItem(Inv* inv);
-int TeamTable_AreEnemies(Tgt* a, Tgt* b);
-void Combat_HitDirection(Mtx3* m, V4* v, V4* out);
-Tgt* Controller_GetAimTarget(Ctl* c);
+Cam** cLList_cCAMERA_GOBJPtr_Front(void* p);
+Item* cWeapon_GetWeaponEntry(Inv* inv);
+int cGOBJ_Enemy(Tgt* a, Tgt* b);
+void GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP(Mtx3* m, V4* v, V4* out);
+Tgt* cGobjController_GetTarget(Ctl* c);
 WNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4(void* n);
 WNode* std_list_deleter_cSafePtr_cGOBJ_tail(void* l);
 WNode** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(WIt* it, WNode* n);
 WNode** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(WIt* it, WNode* n);
-int TargetVis_Test(void* mgr, Tgt* a, Tgt* b, int c, int d);
-void TargetVis_LeaveRecent(RList* l, Pred p);
-WIt WeakHandleList_Append(RList* list, const WIt& pos, HndT* h);
-Tgt* Targeting_AutoPick(Tgt* self, Tgt* cur);
+int cTargetManager_IsLosBlocked(void* mgr, Tgt* a, Tgt* b, int c, int d);
+void std_list_imp_cSafePtr_cGOBJ_remove_if(RList* l, Pred p);
+WIt std_list_deleter_cSafePtr_cGOBJ_insert(RList* list, const WIt& pos, HndT* h);
+Tgt* ChooseAutoTarget(Tgt* self, Tgt* cur);
 }
 
-static inline WIt2 WBegin(WList& l) { WIt2 r(WorldObjList_Get(&l.list)->next); return r; }
-static inline WIt2 WEnd(WList& l) { WIt2 r(WorldObjList_Get(&l.list)); return r; }
+static inline WIt2 WBegin(WList& l) { WIt2 r(details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_2(&l.list)->next); return r; }
+static inline WIt2 WEnd(WList& l) { WIt2 r(details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_2(&l.list)); return r; }
 static inline V4 Sub(const V4& a, const V4& b) {
     V4 r;
     V4* pr = &r; const V4* pa = &a; const V4* pb = &b;
@@ -175,11 +175,11 @@ static inline void QCp(V4* d, const V4* s) { __int128 t; __asm__ volatile("lq %0
 /* sqrt.s: no C equivalent */
 static inline float SqrtZ(float x) { float r = 0.0f; asm { sqrt.s r, x } return r; }
 static inline float Sq(float x) { return x * x; }
-static inline bool Vis(Tgt* a, Tgt* b) { return TargetVis_Test(&g_TargetVisMgr, a, b, 0, 0); }
+static inline bool Vis(Tgt* a, Tgt* b) { return cTargetManager_IsLosBlocked(&g_TargetVisMgr, a, b, 0, 0); }
 
-/* Targeting_AutoPick: nearest visible enemy within the held weapon's range,
+/* ChooseAutoTarget: nearest visible enemy within the held weapon's range,
  * weighted by its cover level and by how far off the aim direction it is. */
-Tgt* Targeting_AutoPick(Tgt* self, Tgt* cur)
+Tgt* ChooseAutoTarget(Tgt* self, Tgt* cur)
 {
     WList& wl = g_Hud->S()->objs;
     WIt2 it = WBegin(wl);
@@ -189,7 +189,7 @@ Tgt* Targeting_AutoPick(Tgt* self, Tgt* cur)
     Mtx3 cm = self->GetViewMtx();
     QCp(&org, &dir);
     Tgt* best = 0;
-    Item* item = WeaponInv_GetHeldItem(self->inv);
+    Item* item = cWeapon_GetWeaponEntry(self->inv);
     if (!item || item->kind == 1 || item->kind == 3 || item->kind == 4 || item->kind == 10)
         return 0;
     float bestSq = (float)(item ? item->x3C * item->x3C : 0);
@@ -197,14 +197,14 @@ Tgt* Targeting_AutoPick(Tgt* self, Tgt* cur)
         Tgt* t = HGet(&*it);
         if (!t) continue;
         if (!t->Targetable()) continue;
-        if (t == self || !TeamTable_AreEnemies(self, t)) continue;
+        if (t == self || !cGOBJ_Enemy(self, t)) continue;
         if (t->Kind() != 2) continue;
         if (Vis(self, t)) continue;
         V4 pos = t->GetPos(-1);
         V4 diff = Sub(pos, dir);
         V4 hd;
         V4 tdir = t->GetDir();
-        Combat_HitDirection(&cm, &tdir, &hd);
+        GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP(&cm, &tdir, &hd);
         float aim = SqrtZ(Sq(hd.u.f.x) + Sq(hd.u.f.z));
         aim = 1.0f - aim / 3.1415927f;
         if (t == cur) aim += D_0048AC54;

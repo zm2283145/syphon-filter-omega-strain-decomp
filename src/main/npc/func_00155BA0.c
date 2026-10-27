@@ -2,7 +2,7 @@
 #pragma inline_depth(8)
 #include "types.h"
 #include "vslot_pad.h"
-/* NpcAi_ModeAttackFromCover: attack-from-cover message handler - leave cover when out of ammo or
+/* cNPC_AttackFromCover: attack-from-cover message handler - leave cover when out of ammo or
    out-gunned, keep the alert counter, pick a firing position on hits and restart, and ask for ammo. */
 /* quadword copy (lq/sq): a 128-bit move C cannot express, the retail vector copy */
 static inline void Q16(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
@@ -67,26 +67,26 @@ extern int D_004EE550;
 extern int D_004ED9B8;
 extern int g_HumanActorClassKey[4];
 extern char g_ActorActionMsgClass[], D_004E0840[];
-int* Event_GetType(Ev* ev);
-Obj* ActorRef_Copy(Obj** h);
-int WeaponInv_GetHeldRating(Inv* inv);
-int WeaponInv_GetClip(Inv* inv, int slot);
-int WeaponInv_AllowsAction(Inv* inv);
-float NpcPerception_IsEnemy(Ai* t, Obj* o);
-int NpcAlert_SearchAllowed(Npc* self);
-void NpcAi_RequestMode(void* brain, int mode, int arg);
-void NpcAi_CoverSearch(Npc* self);
-void NpcAi_FiringPositionSearch(Npc* self);
-void Event_Construct(void*, void*);
-void Event_Send(void*, void*, int);
+int* cMessage_Name(Ev* ev);
+Obj* cSafePtr_cGOBJ_opCast_cGOBJPtr(Obj** h);
+int cWeapon_GetDamage(Inv* inv);
+int cWeapon_GetClipAmmo(Inv* inv, int slot);
+int cWeapon_CanReload(Inv* inv);
+float cAITarget_GetAwarenessThreat(Ai* t, Obj* o);
+int cNPC_SearchAvailable(Npc* self);
+void cStateMachine_ChangeState(void* brain, int mode, int arg);
+void cNPC_MoveToCoverNode(Npc* self);
+void cNPC_MoveToAttackFromCoverNode(Npc* self);
+void cMessage_ctor_cMessageNameR(void*, void*);
+void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 void cMessage_dtor(void*, int);
-unsigned char NpcAi_ModeAttackFromCover(Npc* self, Ev* ev);
+unsigned char cNPC_AttackFromCover(Npc* self, Ev* ev);
 }
 
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
 struct MsgB {
     void* vtable; void* type; int pad8[5]; int flags; unsigned char kind; char pad21[3];
-    MsgB(void* t) { Event_Construct(this, t); }
+    MsgB(void* t) { cMessage_ctor_cMessageNameR(this, t); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); }
 };
 struct MsgI : MsgB {
@@ -102,7 +102,7 @@ static inline void QD(void* d0, const void* s0) { void* d = d0; __int128 q; cons
 static inline unsigned char Engaged(Ai* ai) { unsigned char f = 0; if (ai->b0) { unsigned char b = ai->b2; if (b) f = 1; } return f; }
 static inline void Offset(Npc* self, V* p) { { M m = self->obj->GetMatrix(); M* pm = &m; QD(p, &pm->r[3]); } Sub(p, p, &self->target->pos); }
 static inline int* HumanKey() { return g_HumanActorClassKey; }
-static inline bool IsKind(Ai* t, int* cls) { Obj* o = ActorRef_Copy(&t->obj); int k = *cls; return o->classKey == k; }
+static inline bool IsKind(Ai* t, int* cls) { Obj* o = cSafePtr_cGOBJ_opCast_cGOBJPtr(&t->obj); int k = *cls; return o->classKey == k; }
 static inline unsigned char Exposed(Npc* self)
 {
     V d;
@@ -121,41 +121,41 @@ static inline unsigned char Exposed(Npc* self)
 }
 static inline bool IsId(Obj* o, Ev* ev) { int s = o->serial; return ev->f28 == s; }
 static inline float Area(Npc* s) { float b = s->f24; return s->f20 * b; }
-static inline bool LowAmmo(Npc* self) { bool low = 1; Inv* inv = self->obj->inv; if (!inv->bA0 && !(WeaponInv_GetClip(inv, 6) < self->clipMin)) low = 0; return low; }
+static inline bool LowAmmo(Npc* self) { bool low = 1; Inv* inv = self->obj->inv; if (!inv->bA0 && !(cWeapon_GetClipAmmo(inv, 6) < self->clipMin)) low = 0; return low; }
 
-unsigned char NpcAi_ModeAttackFromCover(Npc* self0, Ev* ev0)
+unsigned char cNPC_AttackFromCover(Npc* self0, Ev* ev0)
 {
     Npc* self; unsigned char handled; int t; Ev* ev; Inv* inv;
     self = self0;
     ev = ev0;
     handled = 0;
     inv = self->obj->inv;
-    t = *Event_GetType(ev);
+    t = *cMessage_Name(ev);
     if (t == D_004EE550) {
         if ((unsigned char)ev->kind == 3) {
             int rating = 0;
             if (self->target->Get() && IsKind(self->target, HumanKey()))
-                rating = WeaponInv_GetHeldRating(self->target->Get()->inv);
+                rating = cWeapon_GetDamage(self->target->Get()->inv);
             if ((LowAmmo(self) || Exposed(self)) && rating > 0) {
                 if (self->pair.b != 2) {
-                    NpcAi_CoverSearch(self);
+                    cNPC_MoveToCoverNode(self);
                     self->pair = Pair(3, 2);
                 }
             } else if (!(unsigned char)self->Busy()) {
                 if (self->fA8 < self->clipMin && self->target->Get() && rating > 0) {
-                    float e = NpcPerception_IsEnemy(self->target, self->target->Get());
+                    float e = cAITarget_GetAwarenessThreat(self->target, self->target->Get());
                     float k = self->aggression * (float)rating;
                     if (!(e <= k) && k * Area(self) - e < -1.0f) {
-                        NpcAi_CoverSearch(self);
+                        cNPC_MoveToCoverNode(self);
                         self->pair = Pair(3, 2);
                     }
                 }
                 if (Engaged(self->target)) {
                     self->fEC = 0;
                 } else {
-                    if (self->fEC > 4 && NpcAlert_SearchAllowed(self))
-                        NpcAi_RequestMode(self->brain, 5, 0);
-                    if (self->fEC == 2 && NpcAlert_SearchAllowed(self))
+                    if (self->fEC > 4 && cNPC_SearchAvailable(self))
+                        cStateMachine_ChangeState(self->brain, 5, 0);
+                    if (self->fEC == 2 && cNPC_SearchAvailable(self))
                         self->Alert(0);
                     self->fEC++;
                 }
@@ -167,7 +167,7 @@ unsigned char NpcAi_ModeAttackFromCover(Npc* self0, Ev* ev0)
             if (!(unsigned char)self->Busy() && !Engaged(self->target) && ev->f2C != 6 && ev->f2C != 9 &&
                 self->target->Get() && IsId(self->target->Get(), ev)) {
                 self->fE0 = -1;
-                NpcAi_FiringPositionSearch(self);
+                cNPC_MoveToAttackFromCoverNode(self);
                 self->fEC = 0;
                 self->fE8 = -1;
             }
@@ -178,12 +178,12 @@ unsigned char NpcAi_ModeAttackFromCover(Npc* self0, Ev* ev0)
             self->fE8 = 30;
         } else if ((unsigned char)ev->kind == 8) {
             if (self->aggression <= 0.5f) {
-                NpcAi_CoverSearch(self);
+                cNPC_MoveToCoverNode(self);
                 self->pair = Pair(3, 2);
             }
         } else if ((unsigned char)ev->kind == 0) {
             if (self->f13F != 3 && self->f140 != 3)
-                NpcAi_FiringPositionSearch(self);
+                cNPC_MoveToAttackFromCoverNode(self);
             self->pair = Pair(3, 3);
             if ((unsigned char)self->Busy())
                 self->fE8 = -1;
@@ -192,17 +192,17 @@ unsigned char NpcAi_ModeAttackFromCover(Npc* self0, Ev* ev0)
             self->fEC = 0;
         }
     } else {
-        int t2 = *Event_GetType(ev);
+        int t2 = *cMessage_Name(ev);
         if (t2 == D_004ED9B8) {
         if ((unsigned char)ev->kind == 6) {
             self->fE8 = 30;
         } else if ((unsigned char)ev->kind == 2) {
             if (self->pair.b != 3)
-                NpcAi_RequestMode(self->brain, self->pair.b, 0);
+                cStateMachine_ChangeState(self->brain, self->pair.b, 0);
         } else if ((unsigned char)ev->kind == 1 || (unsigned char)ev->kind == 3) {
-            if (LowAmmo(self) && WeaponInv_AllowsAction(inv)) {
+            if (LowAmmo(self) && cWeapon_CanReload(inv)) {
                 MsgI m(60, 0);
-                Event_Send(&m, self->obj, 0);
+                QueueMessage_cMessageR_cSystemP_int(&m, self->obj, 0);
             }
             self->pair = Pair(3, 3);
         }

@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* GuiSliderWidget_ctor(void) {
+char* GuiSliderWidget_GetClassName(void) {
     return "GuiSliderWidget";
 }

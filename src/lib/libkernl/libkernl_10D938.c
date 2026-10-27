@@ -9,13 +9,13 @@
 
 /* compiler: ee-gcc 2.95 -O2 (check.py --gcc) */
 
-extern void Newlib_SysExit(int arg);
+extern void Exit_2(int arg);
 
-/* Handles command 1 by forwarding its argument to Newlib_SysExit; always returns 0. */
-int Newlib_SysKill(int cmd, int arg)
+/* Handles command 1 by forwarding its argument to Exit_2; always returns 0. */
+int Libc_Kill(int cmd, int arg)
 {
     if (cmd == 1)
-        Newlib_SysExit(arg);
+        Exit_2(arg);
     return 0;
 }
 /* merge_units: end func_0010D938 */

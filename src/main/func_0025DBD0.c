@@ -15,7 +15,7 @@ extern char D_0049CEA8[];
 void std_swap_vectordeleterR_vectordeleterR_6(V25DBD0* a, V25DBD0* b);
 }
 static inline void Construct25DBD0(E25DBD0* p, const E25DBD0* s) { if (p) *p = *s; }
-extern "C" void Vector_Reserve_25DBD0(V25DBD0* v, unsigned int n)
+extern "C" void std_vector_imp_cVector_reserve(V25DBD0* v, unsigned int n)
 {
     if (v->cap < n) {
         unsigned int max = 0x600000;

@@ -11,17 +11,17 @@ typedef struct { char pad0[0x244]; char flag; char pad245[3]; int* table; } Lobb
 typedef struct { char pad0[0x18]; int busy; char pad1C[0x44 - 0x1C]; int val; char name[0x8C - 0x48]; char kind; } Msg_452A70;
 extern Lobby_452A70* D_00585E60;
 extern int D_00585F90;
-extern int SFOLobby_NoInstance(int a, int b, int c, Msg_452A70* s);
-extern void String_Copy(char* d, char* s);
+extern int SFOLobby_IgnoreCallbacks(int a, int b, int c, Msg_452A70* s);
+extern void Libc_Strcpy(char* d, char* s);
 extern char* strrchr(char* s, int c);
 extern int atoi(char* s);
 void func_00452A70(int a, int b, int c, Msg_452A70* s) {
     char buf[0x40];
     char* p;
     int n;
-    if (SFOLobby_NoInstance(a, b, c, s) || !D_00585E60->table) return;
+    if (SFOLobby_IgnoreCallbacks(a, b, c, s) || !D_00585E60->table) return;
     if (s->busy == 0) {
-        String_Copy(buf, s->name);
+        Libc_Strcpy(buf, s->name);
         *strrchr(buf, ':') = 0;
         p = strrchr(buf, '_');
         if (p) {
@@ -51,7 +51,7 @@ typedef struct {
 } S452B40;
 extern char D_004C0FA8[];
 extern char D_004C0FB0[];
-extern void String_Copy(char*, char*);
+extern void Libc_Strcpy(char*, char*);
 extern void func_00454010(void*);
 extern int SFOLobby_FindChannel(S452B40*, char*);
 extern int SFOLobby_CreateChannel(S452B40*, char*, char*);
@@ -72,7 +72,7 @@ int SFOLobby_JoinMissionChannel(S452B40* s, char* name)
     char pass[0x100];
     char info[0x60];
 
-    String_Copy(pass, D_004C0FA8);
+    Libc_Strcpy(pass, D_004C0FA8);
     func_00454010(info);
     if (!SFOLobby_FindChannel(s, name)) {
         if (!SFOLobby_CreateChannel(s, name, pass)) {
@@ -84,7 +84,7 @@ int SFOLobby_JoinMissionChannel(S452B40* s, char* name)
             return 0;
         }
         s->f1EB4 = s->f1B38;
-        String_Copy(s->f1EB8, name);
+        Libc_Strcpy(s->f1EB8, name);
     } else if (!SFOLobby_HandleOverflowJoinChannel(s, s->f1B80)) {
         return 0;
     }
@@ -97,7 +97,7 @@ int SFOLobby_JoinMissionChannel(S452B40* s, char* name)
 #pragma push /* merge_units */
 #include "SFOLobby_Main_types.h"
 
-extern void SFOLobby_DisconnectAuthServer(void);
+extern void SFOLobby_MediusDisconnectMAS(void);
 extern void MediusCloseBare(void);
 extern void NetClose(void);
 
@@ -105,7 +105,7 @@ extern void NetClose(void);
 int SFOLobby_ShutdownMedius(LobbyMain* self, int notify)
 {
     if (self->unk180 > 0)
-        SFOLobby_DisconnectAuthServer();
+        SFOLobby_MediusDisconnectMAS();
     if (notify) {
         MediusCloseBare();
         NetClose();
@@ -172,7 +172,7 @@ extern void NetInitialize(Req1C*, Res18*);
 extern void KM_GenerateRSAKeyPair(void*, void*);
 extern int KM_GetSoftwareID(void);
 extern void srand(int);
-extern int Random_Next(void);
+extern int Libc_Rand(void);
 extern int MediusInitializeBare(Cb14*, int*);
 extern void KM_GetMediusPublicKey(void*);
 extern void SFOLobby_Callback_SystemMessage(void);
@@ -213,7 +213,7 @@ int SFOLobby_InitializeMediusBare(Net* s)
     req.f8 = s->b23D6 ? 0 : &buf;
     x = D_00572538;
     srand(SoftFloat_DoubleToInt(SoftFloat_DoubleSub(SoftFloat_IntToDouble(x), SoftFloat_DoubleMultiply(0.0625, SoftFloat_FloatToDouble((float)x)))));
-    req.fC = Random_Next() % 1000 + 6000;
+    req.fC = Libc_Rand() % 1000 + 6000;
     req.f14 = SFOLobby_Callback_SystemMessage;
     req.f10 = 1;
     req.f18 = 0;
@@ -280,7 +280,7 @@ void SFOLobby_SetStatsCallback(LobbyMain* self, LobbyMainCallback cb) {
 #pragma mpwc_relax on
 #pragma push
 #pragma opt_common_subs off
-void SFOLobby_CallUpdateHook(char * arg0, int arg1, int arg2) {
+void SFOLobby_GuiCallback(char * arg0, int arg1, int arg2) {
     int (*temp_v1)(int, int);
 
     F_(arg0, 0x2409, signed char) = 1;
@@ -305,7 +305,7 @@ int SFOLobby_IsFatalError(LobbyMain* self) {
     return self->state == 5;
 }
 
-int SFOLobby_GetDnasResult(LobbyMain* self) {
+int SFOLobby_GetDNASError(LobbyMain* self) {
     return self->unk2570;
 }
 #pragma pop /* merge_units */
@@ -315,7 +315,7 @@ int SFOLobby_GetDnasResult(LobbyMain* self) {
 #pragma push /* merge_units */
 typedef struct { char pad[0x2564]; signed char code; char pad2[3]; char* file; int line; } E452;
 extern int sprintf(char*, const char*, ...);
-signed char SFOLobby_FormatError(E452* e, char* buf) {
+signed char SFOLobby_GetErrorDetails(E452* e, char* buf) {
     signed char r = e->code;
     if (buf) {
         char* s;
@@ -404,7 +404,7 @@ signed char SFOLobby_FormatError(E452* e, char* buf) {
 #pragma cplusplus on
 extern "C" {
 int NetGetNetUpdateErrors(int *);
-int Lobby_GetTime(void);
+int SFOLobby_GetMillisecs(void);
 int MediusUpdate(void);
 int MediusUpdateUniverseInformation(void);
 int MediusUpdateBare(void);
@@ -465,7 +465,7 @@ extern "C" int SFOLobby_Poll(Conn4534A0* self, int start, int timeout, int flag)
         return 1;
     }
     D_00585FC0 = 1;
-    now = Lobby_GetTime();
+    now = SFOLobby_GetMillisecs();
     fallback = false;
     self->now = now;
     if (flag != 0) {

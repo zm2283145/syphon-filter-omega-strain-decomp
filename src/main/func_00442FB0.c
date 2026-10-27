@@ -2,7 +2,7 @@
 extern char D_00584200[];
 extern char D_004C05E8[];
 extern int sprintf(char* b, const char* f, ...);
-char* Net_FormatIPv4(unsigned int ip)
+char* SFOLobby_UnpackIPAddress(unsigned int ip)
 {
     D_00584200[0] = 0;
     if (!ip) return D_00584200;

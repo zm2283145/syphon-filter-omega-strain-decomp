@@ -24,8 +24,8 @@ extern unsigned int D_005983DC;
 extern int NetGetClientInfo(unsigned int, int, void **);
 extern int NetIGetTime(void *);
 extern int NetIGetLocalTime(int *);
-extern int Net_IpToString(void *, void *);
-extern int Net_SendTyped(signed char, int, int, int, unsigned int, int, void *);
+extern int NetIIpBinaryToString(void *, void *);
+extern int NetISendMessage(signed char, int, int, int, unsigned int, int, void *);
 int PingPacketHandler(unsigned int slot, int unused, int id, P2E7118 *p)
 {
     M2E7118 m;
@@ -45,7 +45,7 @@ int PingPacketHandler(unsigned int slot, int unused, int id, P2E7118 *p)
         NetIGetTime(&m);
         m.b4 = p->b4;
         m.b5 = 0;
-        Net_SendTyped(-0x80, slot, id, 0, D_005983DC, 8, &m);
+        NetISendMessage(-0x80, slot, id, 0, D_005983DC, 8, &m);
         goto done;
     }
     NetIGetLocalTime(&t);
@@ -53,8 +53,8 @@ int PingPacketHandler(unsigned int slot, int unused, int id, P2E7118 *p)
     if (cb == 0) goto done;
     NetIGetLocalTime(&t);
     dt = t - D_0058D188[p->b4].f10;
-    Net_IpToString(buf, &D_0058D188[p->b4]);
-    Net_IpToString(D_005880A0, &D_0058D188[p->b4]);
+    NetIIpBinaryToString(buf, &D_0058D188[p->b4]);
+    NetIIpBinaryToString(D_005880A0, &D_0058D188[p->b4]);
     D_0058D178 = D_0058D188[p->b4].f4;
     if (D_0058D188[p->b4].f8 == 1)
         cb(0, buf, dt, p->f0, D_0058D188[p->b4].f14, D_0058D188[p->b4].f18);
@@ -72,7 +72,7 @@ typedef struct { unsigned char type, sub; unsigned short len; unsigned short x; 
 extern int NetFindMultiPacket(int, int, H2E7328 *, T2E7328 **);
 extern void *memcpy(void *, const void *, unsigned int);
 extern void rt_time_get_local(int *);
-extern void NetMsg_GetCallback(unsigned char, unsigned char, void (**)(int, int, int, char *));
+extern void rt_parse_get_callback(unsigned char, unsigned char, void (**)(int, int, int, char *));
 extern void DmeFree(void *);
 int PacketFragmentPacketHandler(int a, int b, int c, H2E7328 *h)
 {
@@ -95,7 +95,7 @@ int PacketFragmentPacketHandler(int a, int b, int c, H2E7328 *h)
     }
     if (done) {
         cb = 0;
-        NetMsg_GetCallback(h->type, h->sub, &cb);
+        rt_parse_get_callback(h->type, h->sub, &cb);
         if (cb) cb(a, b, c, t->data);
         if (t->data) {
             DmeFree(&t->data);

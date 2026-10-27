@@ -67,19 +67,19 @@ extern char D_004E0840[];
 extern char D_004E01E0[];
 extern char D_004E0120[];
 extern char D_004D9360[];
-float Math_CosThunk(float);
-float Math_SinThunk(float);
-void* Mtx44_SetRotation(M4u* m, float a, float b, float c, float d, float e, float f,
+float COS(float);
+float SIN(float);
+void* cMatrix_Set_ColumnMajorForm(M4u* m, float a, float b, float c, float d, float e, float f,
                         float g, float h, float i);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-Actor* Object_LookupById(NetId* id);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+Actor* nGobjManager_LookupGOBJ_cObjectIdR(NetId* id);
 Comp* cNetNPC_ctor(void* p, int a, Actor* o);
-void Actor_InitComponents(Actor* a, int n, int b, Comp* c);
-void Actor_SetHealth(Actor* a, int h, int f);
-void Event_Construct(void* e, char* t);
-void Event_Send(void* e, Actor* a, int f);
+void cHuman_CreateGobjController(Actor* a, int n, int b, Comp* c);
+void cGOBJ_SetHitpoints(Actor* a, int h, int f);
+void cMessage_ctor_cMessageNameR(void* e, char* t);
+void QueueMessage_cMessageR_cSystemP_int(void* e, Actor* a, int f);
 void cMessage_dtor(void* e, int f);
-int NetMap_BindReceiver(int id, int b, Actor* a);
+int cNetObj_AddSystem(int id, int b, Actor* a);
 void cHuman_SetNetworkID(Actor* a, int id);
 void cHuman_SetupNetworkFields(Actor* a, int r);
 }
@@ -87,7 +87,7 @@ void cHuman_SetupNetworkFields(Actor* a, int r);
 static inline void* NewMem(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004AC940, line);
+    return cMemMan_Allocate(0, size, D_004AC940, line);
 }
 
 static inline void SetRow(__int128* d0, const Fv& v)
@@ -101,17 +101,17 @@ static inline void SetEulerPos(M4u* m, const Fv& p, const Ang& r)
     float y = r.y;
     float x = r.x;
     float z = r.z;
-    float cy = Math_CosThunk(y);
-    float sy = Math_SinThunk(y);
-    float cx = Math_CosThunk(x);
-    float sx = Math_SinThunk(x);
-    float cz = Math_CosThunk(z);
-    float sz = Math_SinThunk(z);
+    float cy = COS(y);
+    float sy = SIN(y);
+    float cx = COS(x);
+    float sx = SIN(x);
+    float cz = COS(z);
+    float sz = SIN(z);
     float czcy = cz * cy;
     float czsy = cz * sy;
     float szcy = sz * cy;
     float szsy = sz * sy;
-    Mtx44_SetRotation(m,
+    cMatrix_Set_ColumnMajorForm(m,
                       czcy - szsy * sx, -sz * cx, czsy + szcy * sx,
                       szcy + czsy * sx, cz * cx, szsy - czcy * sx,
                       -cx * sy, sx, cx * cy);
@@ -120,7 +120,7 @@ static inline void SetEulerPos(M4u* m, const Fv& p, const Ang& r)
 
 static inline void EvInit(Ev30* e, int id, unsigned char b)
 {
-    Event_Construct(e, g_ActorActionMsgClass);
+    cMessage_ctor_cMessageNameR(e, g_ActorActionMsgClass);
     e->vt = D_004E0840;
     e->f24 = id;
     e->f28 = b;
@@ -128,7 +128,7 @@ static inline void EvInit(Ev30* e, int id, unsigned char b)
 
 static inline void Ev50Init(Ev50* e, const __int128& v, float a, float b, unsigned char k)
 {
-    Event_Construct(e, g_ActorActionMsgClass);
+    cMessage_ctor_cMessageNameR(e, g_ActorActionMsgClass);
     e->vt = D_004E0840;
     e->f24 = 0;
     e->f28 = 0xC;
@@ -160,25 +160,25 @@ extern "C" void netCreateNPC_HandleNetNPCCreate(Msg* msg, int arg1)
     SetEulerPos(&m, pos.Set(msg->px, msg->py, msg->pz, 1.0f), r);
     SetRow(&m.r3, pos);
     id = msg->id;
-    a = Object_LookupById(&id);
+    a = nGobjManager_LookupGOBJ_cObjectIdR(&id);
     if (a) {
         {
             void* p = NewMem(0x220, 0x21B);
             if (p) p = cNetNPC_ctor(p, 0, a);
             c = (Comp*)p;
         }
-        Actor_InitComponents(a, 4, 0, c);
+        cHuman_CreateGobjController(a, 4, 0, c);
         {
             int h = msg->health;
             a->health = h;
-            Actor_SetHealth(a, h, 0);
+            cGOBJ_SetHitpoints(a, h, 0);
         }
         if (a->Kind() == 3) {
             {
                 Ev30 e;
                 Ev30* p = &e;
                 EvInit(p, 0x3A, 0);
-                Event_Send(p, a, 0);
+                QueueMessage_cMessageR_cSystemP_int(p, a, 0);
                 e.vt = D_004E0840;
                 cMessage_dtor(p, 0);
             }
@@ -186,7 +186,7 @@ extern "C" void netCreateNPC_HandleNetNPCCreate(Msg* msg, int arg1)
                 Ev30 e;
                 Ev30* p = &e;
                 EvInit(p, 0x3F, 0);
-                Event_Send(p, a, 0);
+                QueueMessage_cMessageR_cSystemP_int(p, a, 0);
                 e.vt = D_004E0840;
                 cMessage_dtor(p, 0);
             }
@@ -197,7 +197,7 @@ extern "C" void netCreateNPC_HandleNetNPCCreate(Msg* msg, int arg1)
                 EvInit(p, 0x42, 2);
                 p->vt = D_004E01E0;
                 p->f2C = v;
-                Event_Send(p, a, 0);
+                QueueMessage_cMessageR_cSystemP_int(p, a, 0);
                 e.vt = D_004E0840;
                 cMessage_dtor(p, 0);
             }
@@ -207,7 +207,7 @@ extern "C" void netCreateNPC_HandleNetNPCCreate(Msg* msg, int arg1)
                 Ev50* p = &e;
                 const __int128& r = t.r1;
                 Ev50Init(p, r, 0.0f, 0.0f, 2);
-                Event_Send(&e, a, 1);
+                QueueMessage_cMessageR_cSystemP_int(&e, a, 1);
                 e.vt = D_004E0840;
                 cMessage_dtor(p, 0);
             }
@@ -216,18 +216,18 @@ extern "C" void netCreateNPC_HandleNetNPCCreate(Msg* msg, int arg1)
         {
             Ev70 e;
             Ev70* p = &e;
-            Event_Construct(p, g_TeleportMsgClass);
+            cMessage_ctor_cMessageNameR(p, g_TeleportMsgClass);
             p->vt = D_004D9360;
             p->f24 = 2;
             MCopy(&p->m, &m);
-            Event_Send(&e, a, 1);
+            QueueMessage_cMessageR_cSystemP_int(&e, a, 1);
             e.vt = D_004D9360;
             cMessage_dtor(p, 0);
         }
         a->b14 = 0;
         cHuman_SetNetworkID(a, msg->id.v);
-        cHuman_SetupNetworkFields(a, NetMap_BindReceiver(msg->id.v, arg1, a));
+        cHuman_SetupNetworkFields(a, cNetObj_AddSystem(msg->id.v, arg1, a));
     } else {
-        NetMap_BindReceiver(msg->id.v, arg1, a);
+        cNetObj_AddSystem(msg->id.v, arg1, a);
     }
 }

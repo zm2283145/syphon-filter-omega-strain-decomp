@@ -25,9 +25,9 @@ extern char D_004EE698[];
 extern char D_004D9940[];
 extern char g_Game[];
 extern void* D_004FFBD4;
-extern int Player_GetIndex(int);
-extern void Event_Construct(void*, char*);
-extern void Event_Send(void*, void*, int);
+extern int cNetObj_GetOwner(int);
+extern void cMessage_ctor_cMessageNameR(void*, char*);
+extern void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 extern void cMessage_dtor(void*, int);
 extern int cLList_cEnvSettingsPtr_Empty(void*);
 #if 0 /* merge_units */
@@ -35,8 +35,8 @@ extern int* cLList_cEnvSettingsPtr_opIndex(void*, int);
 #endif /* merge_units */
 #define cLList_cEnvSettingsPtr_opIndex(a0, a1) ((int *)cLList_cEnvSettingsPtr_opIndex((char *)(a0), (a1))) /* merge_units */
 
-extern void EnvController_ActivateFirst(void*, int);
-extern void ActiveList_RemoveObject(char*, T171*);
+extern void cEnvMan_SetCurrent(void*, int);
+extern void cGameSystem_RemoveCamera(char*, T171*);
 }
 #define BCAST171(o, ev, mi, me) \
     if (((V171*)(o))->v25()) { \
@@ -44,28 +44,28 @@ extern void ActiveList_RemoveObject(char*, T171*);
         for (i = 0; i < (o)->n; i++) { \
             if (g_IsMultiplayer) { \
                 int id = -1; \
-                if (ev) id = Player_GetIndex((ev)->fc); \
-                Event_Construct(&mi, g_cDisableMsgClass); \
+                if (ev) id = cNetObj_GetOwner((ev)->fc); \
+                cMessage_ctor_cMessageNameR(&mi, g_cDisableMsgClass); \
                 mi.vt = D_004E0860; \
                 mi.f24 = id; \
                 mi.f1c = 0x40; \
                 mi.b20 = 2; \
-                Event_Send(&mi, (o)->items[i], 0); \
+                QueueMessage_cMessageR_cSystemP_int(&mi, (o)->items[i], 0); \
                 mi.vt = D_004E0860; \
                 cMessage_dtor(&mi, 0); \
             } else { \
-                Event_Construct(&me, g_cDisableMsgClass); \
+                cMessage_ctor_cMessageNameR(&me, g_cDisableMsgClass); \
                 me.vt = D_004E0860; \
                 me.f24 = -1; \
                 me.f1c = 0x40; \
-                Event_Send(&me, (o)->items[i], 0); \
+                QueueMessage_cMessageR_cSystemP_int(&me, (o)->items[i], 0); \
                 me.vt = D_004E0860; \
                 cMessage_dtor(&me, 0); \
             } \
         } \
     }
 #pragma opt_strength_reduction off
-extern "C" void Hotbox_SendLinkMessages(O171* o, E171* ev) {
+extern "C" void cHotbox_HandleExit(O171* o, E171* ev) {
     MA171 m1i;
     MA171 m7i;
     MB171 m9;
@@ -82,25 +82,25 @@ extern "C" void Hotbox_SendLinkMessages(O171* o, E171* ev) {
         break;
     case 5: {
         void* g = D_004FFBD4;
-        EnvController_ActivateFirst(g, cLList_cEnvSettingsPtr_Empty(g) ? 0 : *cLList_cEnvSettingsPtr_opIndex(g, 0));
+        cEnvMan_SetCurrent(g, cLList_cEnvSettingsPtr_Empty(g) ? 0 : *cLList_cEnvSettingsPtr_opIndex(g, 0));
         break;
     }
     case 8: case 12: case 13: case 14: case 18: {
         int x = o->f94;
-        Event_Construct(&m8, D_004EE698);
+        cMessage_ctor_cMessageNameR(&m8, D_004EE698);
         m8.vt = D_004D9940;
         m8.f24 = 2;
         m8.f28 = type;
         m8.f2c = x;
         m8.f30 = (int)ev;
-        Event_Send(&m8, ev, 0);
+        QueueMessage_cMessageR_cSystemP_int(&m8, ev, 0);
         m8.vt = D_004D9940;
         cMessage_dtor(&m8, 0);
         break;
     }
     case 9: case 15: case 16: {
         int x = o->f94;
-        Event_Construct(&m9, D_004EE698);
+        cMessage_ctor_cMessageNameR(&m9, D_004EE698);
         m9.f30 = (int)ev;
         m9.vt = D_004D9940;
         m9.f28 = type;
@@ -108,13 +108,13 @@ extern "C" void Hotbox_SendLinkMessages(O171* o, E171* ev) {
         m9.f2c = x;
         m9.b20 = 8;
         m9.f1c = 0x40;
-        Event_Send(&m9, ev, 0);
+        QueueMessage_cMessageR_cSystemP_int(&m9, ev, 0);
         m9.vt = D_004D9940;
         cMessage_dtor(&m9, 0);
         break;
     }
     case 11:
-        if (o->n && o->items[0]->b49 == 9) ActiveList_RemoveObject(g_Game, o->items[0]);
+        if (o->n && o->items[0]->b49 == 9) cGameSystem_RemoveCamera(g_Game, o->items[0]);
         break;
     case 0: case 2: case 3: case 4: case 6: case 10: case 17:
         break;

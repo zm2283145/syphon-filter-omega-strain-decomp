@@ -3,7 +3,7 @@
 
 /*
  * compare(a, b) for the short/long string (see short_string_assign.h)
- * shared by identical clones: tail-calls String_Compare(a, 0, a.size(),
+ * shared by identical clones: tail-calls std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(a, 0, a.size(),
  * b.data(), b.size()). Plain C: C++ mode does not emit the tail call.
  */
 typedef struct ShortStrCLong {
@@ -25,7 +25,7 @@ typedef struct ShortStrC {
     } u;
 } ShortStrC;
 
-int String_Compare(const ShortStrC* self, unsigned int pos, unsigned int n,
+int std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(const ShortStrC* self, unsigned int pos, unsigned int n,
                    const char* s, unsigned int len);
 
 static inline unsigned char ShortStrC_ShortLen(const ShortStrC* s)
@@ -45,7 +45,7 @@ static inline unsigned char ShortStrC_ShortLen(const ShortStrC* s)
             d = b->u.l.data;                                                  \
             n = b->u.l.length;                                                \
         }                                                                     \
-        return String_Compare(a, 0,                                           \
+        return std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(a, 0,                                           \
                               (a->u.l.word & 1) ? a->u.l.length               \
                                                 : ShortStrC_ShortLen(a),      \
                               d, n);                                          \

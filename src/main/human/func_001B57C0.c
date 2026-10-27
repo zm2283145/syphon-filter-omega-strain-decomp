@@ -71,25 +71,25 @@ extern char D_0055C7A0[];
 extern char D_004F12D0[];
 extern char g_Game[];
 extern unsigned char g_IsMultiplayer;
-void Mem_Free(int, void*, char*, int);
-void WeaponInv_Dtor(void*, int);
-void Node_ReleaseComponent58(Npc*);
-void Actor_ShockReaction(Npc*, unsigned char, int, float);
+void cMemMan_Deallocate(int, void*, char*, int);
+void cWeapon_dtor(void*, int);
+void cGOBJ_DeleteController(Npc*);
+void cHuman_SetParticleEffect(Npc*, unsigned char, int, float);
 int func_002D2210(Net*);
 void NetFreeObject(int);
 void cAssocArray_int_netSystemField_End(Iter*, char*);
 void cAssocArray_int_netSystemField_Find(Iter*, char*, int*);
 int cAssocArray_int_netSystemField_Iterator_opNe(Iter*, Iter*);
-int ReceiverMap_Erase(char*, Iter*);
+int cAssocArray_int_netSystemField_Erase(char*, Iter*);
 void cNPCInfoObject_ctor(int*);
 void cNPCInfoObject_Deactivate(int*, void*);
 void cNPCInfoObject_dtor(int*, int);
 void cNetObj_RemovePlayer_cGOBJP(Npc*);
-void Flashlight_Destroy(void*, int);
+void cFlashlight_dtor(void*, int);
 void std_vector_deleter_tItem_dtor(void*, int);
-void SoundStopMsg_Ctor(Msg*, char*, Npc*);
-void Event_Send(Msg*, char*, int);
-void FileMan_Release(void*, int);
+void cStopSoundMsg_ctor_cSndFxR_cGOBJP(Msg*, char*, Npc*);
+void QueueMessage_cMessageR_cSystemP_int(Msg*, char*, int);
+void cFileMan_dtor(void*, int);
 void cMessage_dtor(Msg*, int);
 void Actor_UnlinkAll(Npc*);
 void cCheckpoint_dtor(void*, int);
@@ -101,7 +101,7 @@ void func_0017ED20(void*, int);
 void cHumanMotionParams_cTargetZRotationStack_dtor(void*, int);
 void cSplinedMotion_Angle_dtor(void*, int);
 void cStatesWithHistory_1_dtor(void*, int);
-void Actor_Destroy(Npc*, int);
+void cSKM_GOBJ_dtor(Npc*, int);
 void operator_delete(void*);
 }
 
@@ -113,18 +113,18 @@ static inline void Unreg(int key)
     if (cAssocArray_int_netSystemField_Iterator_opNe(&e, &f)) {
         Iter g;
         cAssocArray_int_netSystemField_Find(&g, D_0055C7A0, &key);
-        ReceiverMap_Erase(D_0055C7A0, &g);
+        cAssocArray_int_netSystemField_Erase(D_0055C7A0, &g);
     }
 }
 static inline void SendDeath(Npc* a)
 {
     Msg m;
-    SoundStopMsg_Ctor(&m, D_004F12D0, a);
+    cStopSoundMsg_ctor_cSndFxR_cGOBJP(&m, D_004F12D0, a);
     m.b20 = 1;
-    Event_Send(&m, g_Game, 1);
+    QueueMessage_cMessageR_cSystemP_int(&m, g_Game, 1);
     m.vt = D_004DADF0;
-    FileMan_Release(m.sub114, -1);
-    FileMan_Release(m.sub78, -1);
+    cFileMan_dtor(m.sub114, -1);
+    cFileMan_dtor(m.sub78, -1);
     cMessage_dtor(&m, 0);
 }
 static inline bool IsOn(Npc* a)
@@ -134,7 +134,7 @@ static inline bool IsOn(Npc* a)
     return on;
 }
 
-extern "C" Npc* Npc_Dtor(Npc* a, short flag)
+extern "C" Npc* cHuman_dtor(Npc* a, short flag)
 {
     int loc;
     if (a) {
@@ -145,7 +145,7 @@ extern "C" Npc* Npc_Dtor(Npc* a, short flag)
             if (p) {
                 {
                     AllocGuard g;
-                    Mem_Free(0, p, D_0049EDB8, 0x39A);
+                    cMemMan_Deallocate(0, p, D_0049EDB8, 0x39A);
                 }
                 a->p3264 = 0;
             }
@@ -153,14 +153,14 @@ extern "C" Npc* Npc_Dtor(Npc* a, short flag)
         {
             void* p = a->p3524;
             AllocGuard g;
-            WeaponInv_Dtor(p, -1);
-            Mem_Free(0, p, D_0049D8D0, 0x3E9);
+            cWeapon_dtor(p, -1);
+            cMemMan_Deallocate(0, p, D_0049D8D0, 0x3E9);
         }
         if (a->b31FC) {
-            Node_ReleaseComponent58(a);
+            cGOBJ_DeleteController(a);
             a->b31FC = 0;
         }
-        for (i = 0; i < 3; i++) Actor_ShockReaction(a, i, 0, 1.0f);
+        for (i = 0; i < 3; i++) cHuman_SetParticleEffect(a, i, 0, 1.0f);
         if (g_IsMultiplayer) {
             Net* n = a->p3584;
             if (n) {
@@ -177,8 +177,8 @@ extern "C" Npc* Npc_Dtor(Npc* a, short flag)
             void* p = a->p33EC;
             if (p) {
                 AllocGuard g;
-                Flashlight_Destroy(p, -1);
-                Mem_Free(0, p, D_0049D8D0, 0x402);
+                cFlashlight_dtor(p, -1);
+                cMemMan_Deallocate(0, p, D_0049D8D0, 0x402);
             }
         }
         int v = a->b2D != 0;
@@ -190,7 +190,7 @@ extern "C" Npc* Npc_Dtor(Npc* a, short flag)
                 {
                     AllocGuard g;
                     o->~VObj();
-                    Mem_Free(0, o, D_0049D8D0, 0x408);
+                    cMemMan_Deallocate(0, o, D_0049D8D0, 0x408);
                 }
                 a->w3310 = 0;
             }
@@ -199,7 +199,7 @@ extern "C" Npc* Npc_Dtor(Npc* a, short flag)
                 {
                     AllocGuard g;
                     o->~VObj();
-                    Mem_Free(0, o, D_0049D8D0, 0x40D);
+                    cMemMan_Deallocate(0, o, D_0049D8D0, 0x40D);
                 }
                 a->w3314 = 0;
             }
@@ -208,7 +208,7 @@ extern "C" Npc* Npc_Dtor(Npc* a, short flag)
             void* p = a->p3528;
             AllocGuard g;
             if (p) if (p) if (p) if (p) std_vector_deleter_tItem_dtor(p, 0);
-            Mem_Free(0, p, D_0049D8D0, 0x412);
+            cMemMan_Deallocate(0, p, D_0049D8D0, 0x412);
         }
         if (!(a->f33BC < 0.0f)) SendDeath(a);
         Actor_UnlinkAll(a);
@@ -232,7 +232,7 @@ extern "C" Npc* Npc_Dtor(Npc* a, short flag)
             cSplinedMotion_Angle_dtor(a->m3050, -1);
             cStatesWithHistory_1_dtor(a->m3030, -1);
         }
-        Actor_Destroy(a, 0);
+        cSKM_GOBJ_dtor(a, 0);
         if (flag > 0) operator_delete(a);
     }
     return a;

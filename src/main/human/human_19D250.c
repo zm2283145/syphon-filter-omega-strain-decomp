@@ -11,12 +11,12 @@
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4_D250;
 typedef struct { V4_D250 r[4]; } M4_D250;
-extern float Math_Atan2f(float y, float x);
+extern float Libc_Atan2f(float y, float x);
 static inline float GetX_D250(V4_D250* v) { return v->x; }
 static inline float GetY_D250(V4_D250* v) { return v->y; }
 static inline float GetZ_D250(V4_D250* v) { return v->z; }
-static inline float H180_D250(V4_D250* v) { return Math_Atan2f(GetY_D250(v), GetX_D250(v)); }
-static inline float H170_D250(float* v) { return Math_Atan2f(-v[0], v[1]); }
+static inline float H180_D250(V4_D250* v) { return Libc_Atan2f(GetY_D250(v), GetX_D250(v)); }
+static inline float H170_D250(float* v) { return Libc_Atan2f(-v[0], v[1]); }
 #pragma push
 #pragma peephole off
 #pragma opt_propagation off
@@ -93,7 +93,7 @@ static inline MtxD4* QuatToMtx_19D2C0(MtxD4* a, V4D4* b)
 #pragma opt_propagation off
 static inline V4D4* PlGetQuat_19D2C0(Placement* p) { return &p->quat; }
 static inline V4D4* PlGetPos_19D2C0(Placement* p) { return &p->pos; }
-MtxD4* Placement_ToMatrix(MtxD4* out, Placement* pl)
+MtxD4* cMatrix_ctor_cQuatVecR(MtxD4* out, Placement* pl)
 {
     MtxD4 rot;
     V4D4* pos = PlGetPos_19D2C0(pl);

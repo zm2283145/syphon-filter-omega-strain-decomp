@@ -118,24 +118,24 @@ typedef struct HeldItem_263080 {
 } HeldItem_263080;
 
 extern "C" {
-extern void Event_Construct(void* msg, void* name);
-extern void Event_Send(void* msg, void* target, int immediate);
+extern void cMessage_ctor_cMessageNameR(void* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int immediate);
 extern void cMessage_dtor(void* msg, int flags);
-extern void Actor_ShockReaction(HTarget_263080* a, int kind, int b, float f);
-extern void SoundStopMsg_Ctor(HSnd_263080* e, void* preset, void* owner);
-extern void FileMan_Release(HStr_263080* s, int flag);
+extern void cHuman_SetParticleEffect(HTarget_263080* a, int kind, int b, float f);
+extern void cStopSoundMsg_ctor_cSndFxR_cGOBJP(HSnd_263080* e, void* preset, void* owner);
+extern void cFileMan_dtor(HStr_263080* s, int flag);
 extern HHead_263080* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_6(HHead_263080* p);
 extern HNode_263080* std_list_deleter_TaserPulse_tail(int* list);
 extern void std_list_deleter_TaserPulse_generic_iterator_ctor(HIter_263080* it, HNode_263080* n);
 extern void std_list_deleter_TaserPulse_erase_listdeleter(HIter_263080* res, int* list, HIter_263080* pos);
-extern void ParticleInst_Kill(void* p, int flag);
-extern void Mem_Free(int pool, void* p, char* file, int line);
-extern void World_PopObject(void* w);
-extern int Agent_GetSelected(void* w, int idx);
-extern void Stats_Add(int agent, int kind, int n);
-extern int Random_Next(void);
-extern void* Service_Lookup(void* w, void* key);
-extern void AiSound_SendImpactNoise(HNoiseMsg_263080* m, float a, int* id, HPos_263080* pos, signed char kind, float b);
+extern void cParticle_dtor(void* p, int flag);
+extern void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+extern void cGameSystem_PopWeaponCam(void* w);
+extern int cGameSystem_GetAgentData(void* w, int idx);
+extern void cAgentData_AddScore(int agent, int kind, int n);
+extern int Libc_Rand(void);
+extern void* cSystemContainer_GetSystem(void* w, void* key);
+extern void cAISoundSystemGOBJPositionMessage_ctor(HNoiseMsg_263080* m, float a, int* id, HPos_263080* pos, signed char kind, float b);
 
 extern unsigned char g_IsMultiplayer;
 extern char D_00504050[];
@@ -179,8 +179,8 @@ static inline HTarget_263080* Handle_Ptr(HeldItem_263080* h) {
 
 static inline void Del_263080(void* p, int line) {
     AllocGuard g;
-    ParticleInst_Kill(p, -1);
-    Mem_Free(0, p, D_004A81E8, line);
+    cParticle_dtor(p, -1);
+    cMemMan_Deallocate(0, p, D_004A81E8, line);
 }
 
 static inline bool HasF54(HIface_263080* q) {
@@ -196,7 +196,7 @@ static inline bool HasF54b(HActor_263080* a) {
 }
 
 static inline float Rand01(void) {
-    return (float)Random_Next() / 2147483648.0f;
+    return (float)Libc_Rand() / 2147483648.0f;
 }
 
 /* Wrapper depth matters: MW allocates inline locals breadth-first by inline depth,
@@ -205,18 +205,18 @@ static inline HNode_263080* EndN263(int* l) { HIter_263080 e; std_list_deleter_T
 static inline HNode_263080* End2263(int* l) { return EndN263(l); }
 static inline HNode_263080* EraseN263(int* l, HNode_263080* it) { HIter_263080 res; HIter_263080 tmp; tmp.n = it; std_list_deleter_TaserPulse_erase_listdeleter(&res, l, &tmp); return res.n; }
 static inline HNode_263080* Erase1263(int* l, HNode_263080* it) { return EraseN263(l, it); }
-extern "C" void HeldItem_Release(HeldItem_263080* s)
+extern "C" void cAirTaser_Release(HeldItem_263080* s)
 {
     if (s->state) {
         if (s->actor->f14 && g_IsMultiplayer) {
             HTaserMsg_263080 m;
-            Event_Construct(&m, D_00504050);
+            cMessage_ctor_cMessageNameR(&m, D_00504050);
             m.i28 = 0;
             m.vt = D_004DCDA0;
             m.b24 = 2;
             m.b20 = 4;
             m.i1C = 0x40;
-            Event_Send(&m, s->actor, 0);
+            QueueMessage_cMessageR_cSystemP_int(&m, s->actor, 0);
             m.vt = D_004DCF10;
             cMessage_dtor(&m, 0);
         }
@@ -224,28 +224,28 @@ extern "C" void HeldItem_Release(HeldItem_263080* s)
             HStateMsg_263080 sm;
             HSnd_263080 a;
             HSnd_263080 b;
-            Actor_ShockReaction(Handle_Ptr(s), 2, 0, 1.0f);
-            Actor_ShockReaction(Handle_Get(s), 1, 0, 1.0f);
-            Event_Construct(&sm, g_ActorActionMsgClass);
+            cHuman_SetParticleEffect(Handle_Ptr(s), 2, 0, 1.0f);
+            cHuman_SetParticleEffect(Handle_Get(s), 1, 0, 1.0f);
+            cMessage_ctor_cMessageNameR(&sm, g_ActorActionMsgClass);
             sm.state = 7;
             sm.sub = 2;
             sm.vt = D_004E01E0;
             sm.immediate = 1;
             sm.stamp = D_0048B1D8;
-            Event_Send(&sm, Handle_Get(s), 0);
-            SoundStopMsg_Ctor(&a, D_004F12D0, Handle_Get(s));
+            QueueMessage_cMessageR_cSystemP_int(&sm, Handle_Get(s), 0);
+            cStopSoundMsg_ctor_cSndFxR_cGOBJP(&a, D_004F12D0, Handle_Get(s));
             a.flag = 1;
-            Event_Send(&a, g_Game, 0);
-            SoundStopMsg_Ctor(&b, D_004F1470, Handle_Get(s));
+            QueueMessage_cMessageR_cSystemP_int(&a, g_Game, 0);
+            cStopSoundMsg_ctor_cSndFxR_cGOBJP(&b, D_004F1470, Handle_Get(s));
             b.flag = 1;
-            Event_Send(&b, g_Game, 0);
+            QueueMessage_cMessageR_cSystemP_int(&b, g_Game, 0);
             b.vt = D_004DADF0;
-            FileMan_Release(&b.s114, -1);
-            FileMan_Release(&b.s78, -1);
+            cFileMan_dtor(&b.s114, -1);
+            cFileMan_dtor(&b.s78, -1);
             cMessage_dtor(&b, 0);
             a.vt = D_004DADF0;
-            FileMan_Release(&a.s114, -1);
-            FileMan_Release(&a.s78, -1);
+            cFileMan_dtor(&a.s114, -1);
+            cFileMan_dtor(&a.s78, -1);
             cMessage_dtor(&a, 0);
             sm.vt = D_004E0840;
             cMessage_dtor(&sm, 0);
@@ -270,7 +270,7 @@ extern "C" void HeldItem_Release(HeldItem_263080* s)
             s->owned = 0;
         }
         if (s->state == 2) {
-            World_PopObject(g_Game);
+            cGameSystem_PopWeaponCam(g_Game);
             if (Handle_Get(s)) {
                 if (s->bBC) {
                     Handle_Ptr(s)->f100(s->actor, 1, 4, 0, 0, 0, 10000.0f);
@@ -279,7 +279,7 @@ extern "C" void HeldItem_Release(HeldItem_263080* s)
                     if (s->actor->f14) {
                         HIface_263080* q = s->actor->p58;
                         bool ok = HasF54b(s->actor);
-                        if (ok) Stats_Add(Agent_GetSelected(g_Game, -1), 6, 1);
+                        if (ok) cAgentData_AddScore(cGameSystem_GetAgentData(g_Game, -1), 6, 1);
                     }
                     t = Handle_Get(s);
                     t->f100(s->actor, 1, 7, 0, 0, 0, 0.0f);
@@ -290,13 +290,13 @@ extern "C" void HeldItem_Release(HeldItem_263080* s)
         s->fC4 = D_0048B150 + (D_0048B158 - D_0048B150) * Rand01();
         s->fC8 = D_004F8330 + (D_0048B148 - D_004F8330) * Rand01();
         s->fCC = D_0048B148 - s->fC8;
-        if (Random_Next() & 1) s->fC8 = -s->fC8;
-        if (Random_Next() & 1) s->fCC = -s->fCC;
+        if (Libc_Rand() & 1) s->fC8 = -s->fC8;
+        if (Libc_Rand() & 1) s->fCC = -s->fCC;
         if (s->count > 1) {
-            void* svc = Service_Lookup(g_Game, D_004EE5C0);
+            void* svc = cSystemContainer_GetSystem(g_Game, D_004EE5C0);
             HNoiseMsg_263080 nm;
-            AiSound_SendImpactNoise(&nm, 1.0f, s->actor->pos, &s->pos[s->count - 1], 4, s->def->fFC);
-            Event_Send(&nm, svc, 0);
+            cAISoundSystemGOBJPositionMessage_ctor(&nm, 1.0f, s->actor->pos, &s->pos[s->count - 1], 4, s->def->fFC);
+            QueueMessage_cMessageR_cSystemP_int(&nm, svc, 0);
             nm.vt = D_004D92A0;
             cMessage_dtor(&nm, 0);
         }

@@ -9,30 +9,30 @@
 
 /* merge_units: begin func_003E0AB0 */
 #pragma push /* merge_units */
-/* Script_CallHandler */
+/* cScriptInterpreter_callFunction */
 typedef struct { int type; } Pt2_ArgType;
 typedef struct { char* name; char pad4[0xC]; Pt2_ArgType** argTypes; char pad14[4]; int script; int (*native)(int*, int); } Pt2_Handler;
 typedef struct { char pad[0x4E68]; int cur; } Pt2_Interp;
 extern char D_004BD510[];
-extern void ScriptStack_Push(Pt2_Interp*, int);
-extern int Script_Interpret(Pt2_Interp*, Pt2_Handler*);
-extern void Script_InvalidArgNop(Pt2_Interp*, char*, int, char*);
+extern void cScriptInterpreter_pushInt(Pt2_Interp*, int);
+extern int cScriptInterpreter_execute(Pt2_Interp*, Pt2_Handler*);
+extern void cScriptInterpreter_error(Pt2_Interp*, char*, int, char*);
 
 #pragma opt_strength_reduction off
-int Script_CallHandler(Pt2_Interp* in, Pt2_Handler* h, int* args, int n) {
+int cScriptInterpreter_callFunction(Pt2_Interp* in, Pt2_Handler* h, int* args, int n) {
     int i;
     int* a;
     if (h->script) {
-        for (i = 0; i < n; i++) ScriptStack_Push(in, args[n - i - 1]);
+        for (i = 0; i < n; i++) cScriptInterpreter_pushInt(in, args[n - i - 1]);
         in->cur = h->script;
-        return Script_Interpret(in, h);
+        return cScriptInterpreter_execute(in, h);
     }
     i = 0;
     if (i < n) {
         a = args;
         do {
             if (h->argTypes[i]->type >= 100 && *a < 1000) {
-                Script_InvalidArgNop(in, D_004BD510, i, h->name);
+                cScriptInterpreter_error(in, D_004BD510, i, h->name);
                 return 0;
             }
             i++;
@@ -50,7 +50,7 @@ static inline void merge_flush_func_003E0AB0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x3C]; unsigned char m3C; } T0BE0;
 extern T0BE0* cScriptInterpreter_findCls(int a);
-T0BE0* ScriptMgr_FindResource(int a)
+T0BE0* cScriptInterpreter_findScriptObj(int a)
 {
     T0BE0* p = cScriptInterpreter_findCls(a);
     if (p && p->m3C)

@@ -61,13 +61,13 @@ extern char D_0049D8D0[];
 extern char D_004A03C8[];
 extern char D_004A03D0[];
 void Alloc_Lock(int);
-void Alloc_Unlock(int);
-void* Mem_Alloc(int, int, char*, int);
-Phys* ActorPhys_Ctor(void*);
-Sec* ActorSecondary_Ctor(void*);
+void EnableIntc(int);
+void* cMemMan_Allocate(int, int, char*, int);
+Phys* cHumanCollisionRoutine_ctor(void*);
+Sec* cHumanIkRoutine_ctor(void*);
 Found* RootCollection_FindByKey(void*, char*);
-void Actor_ChooseSecondaryMode(Act*, int);
-void ActorPhys_InitFrame(Phys*);
+void cHuman_AimWeapon(Act*, int);
+void cHumanCollisionRoutine_InitializePosition(Phys*);
 }
 static inline Found* FindC(char* c, char* key)
 {
@@ -88,21 +88,21 @@ static inline void Set3(Act* a, void* x, void* p)
     a->w3014 = p;
     a->w3010 = 0;
 }
-extern "C" void Npc_CreatePhysical(Act* a)
+extern "C" void cHuman_InitializationToDoUponActivation(Act* a)
 {
     Phys* p;
     Sec* s;
     {
         AllocGuard g;
-        p = (Phys*)Mem_Alloc(0, 0xA30, D_0049D8D0, 0x424);
+        p = (Phys*)cMemMan_Allocate(0, 0xA30, D_0049D8D0, 0x424);
     }
-    if (p) p = ActorPhys_Ctor(p);
+    if (p) p = cHumanCollisionRoutine_ctor(p);
     a->p3310 = p;
     {
         AllocGuard g;
-        s = (Sec*)Mem_Alloc(0, 0x840, D_0049D8D0, 0x425);
+        s = (Sec*)cMemMan_Allocate(0, 0x840, D_0049D8D0, 0x425);
     }
-    if (s) s = ActorSecondary_Ctor(s);
+    if (s) s = cHumanIkRoutine_ctor(s);
     a->p3314 = s;
     {
         Root* r = &a->r2EC0;
@@ -120,10 +120,10 @@ extern "C" void Npc_CreatePhysical(Act* a)
     s = a->p3314;
     a->w3024 = s;
     s->w4 = a->w3020;
-    Actor_ChooseSecondaryMode(a, 0);
+    cHuman_AimWeapon(a, 0);
     if (a->p3524) a->p3524->bA0 = 0;
     a->p3310->b11 = 1;
-    ActorPhys_InitFrame(a->p3310);
+    cHumanCollisionRoutine_InitializePosition(a->p3310);
     if (a->b14) {
         bool on = 0;
         if (a->p58 && a->p58->IsOn()) on = 1;

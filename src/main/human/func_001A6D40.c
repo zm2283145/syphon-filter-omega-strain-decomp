@@ -1,9 +1,9 @@
 #include "types.h"
-extern void Root_SetParent(void* child, void* parent);
-extern void Root_ResetLocalBase(void* child);
-void Root_Attach(void* parent, void* child, int reset) {
-    Root_SetParent(child, parent);
+extern void cSkaAnimAnchor_TreeNode_AttachParent(void* child, void* parent);
+extern void cSkaAnimAnchor_ClearLocalTransform(void* child);
+void cSkaAnimAnchor_AttachChild(void* parent, void* child, int reset) {
+    cSkaAnimAnchor_TreeNode_AttachParent(child, parent);
     if (reset) {
-        Root_ResetLocalBase(child);
+        cSkaAnimAnchor_ClearLocalTransform(child);
     }
 }

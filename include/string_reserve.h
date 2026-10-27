@@ -2,12 +2,12 @@
 #define STRING_RESERVE_H
 
 /*
- * reserve(n) of the short/long string template clones (String_Reserve):
+ * reserve(n) of the short/long string template clones (std_basic_string_char_char_traits_char_reserve):
  * length-check n, round the capacity (11 = in place, else 16-byte steps),
  * move the contents into the new buffer, free the old heap buffer and
  * rewrite the flag/capacity/length words.
- * Parameters: name, length-error message, Mem_Alloc file/line,
- * Mem_Free file/line. C++ only (#pragma cplusplus on before including).
+ * Parameters: name, length-error message, cMemMan_Allocate file/line,
+ * cMemMan_Deallocate file/line. C++ only (#pragma cplusplus on before including).
  */
 #include "tstr_types.h"
 

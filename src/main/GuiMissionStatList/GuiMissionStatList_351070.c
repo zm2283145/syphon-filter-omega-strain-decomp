@@ -21,9 +21,9 @@ DEFINE_VECTOR_RELEASE_DTOR(std_vector_deleter_StatsRequirement_dtor, std_vector_
 #pragma cplusplus on
 #include "alloc_guard.h"
 
-/* Allocator release(ptr, pool, destroy, file, line): destroy the element's member at +4, then Mem_Free under the guard. */
+/* Allocator release(ptr, pool, destroy, file, line): destroy the element's member at +4, then cMemMan_Deallocate under the guard. */
 extern "C" {
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void* cArray_StatType_dtor(void* self, short flags);
 void opDelete_StatsRequirementP_int_bool_charP_etc(void* allocation, int pool, int destroy, char* file, int line);
 }
@@ -34,7 +34,7 @@ void opDelete_StatsRequirementP_int_bool_charP_etc(void* allocation, int pool, i
         if (allocation)
             cArray_StatType_dtor((char*)allocation + 4, -1);
     }
-    Mem_Free(pool, allocation, file, line);
+    cMemMan_Deallocate(pool, allocation, file, line);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003510F0 */

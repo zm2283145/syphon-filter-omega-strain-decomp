@@ -13,11 +13,11 @@ extern "C" {
 extern unsigned char g_IsMultiplayer;
 extern int g_TriggerMsgKey;
 extern char D_004DAF10[];
-void Event_Construct(void* m, void* type);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
 void cMessage_dtor(void* m, int flags);
-Obj_00210E70* GObj_IdentityB(void*);
-void Lift_SeekFloor(Lift_00210E70* l, int floor, int a2, int a3);
-void Transport_Send(int target, LiftMsg_00210E70* msg, int a, int b);
+Obj_00210E70* cGOBJ_SOBJ_convert(void*);
+void cElevatorGOBJ_SeekFloor(Lift_00210E70* l, int floor, int a2, int a3);
+void cNetObj_SendMessage_int_cMessageR_int_int(int target, LiftMsg_00210E70* msg, int a, int b);
 }
 static inline Lift_00210E70* GetLift_00210E70(void** a) { return (Lift_00210E70*)a[0]; }
 static inline int ObjId_00210E70(Obj_00210E70* o) { return o ? o->id : 0; }
@@ -32,16 +32,16 @@ static inline unsigned char IsPlayerCtl_00210E70(Obj_00210E70* o)
 extern "C" int Script_cElevatorGOBJ_ChooseFloor_2(void** args)
 {
     LiftMsg_00210E70 msg;
-    Obj_00210E70* o = GObj_IdentityB(args[1]);
+    Obj_00210E70* o = cGOBJ_SOBJ_convert(args[1]);
     Lift_00210E70* l = GetLift_00210E70(args);
     if (o) {
         if (o->b14 && IsPlayerCtl_00210E70(o)) {
-            Lift_SeekFloor(l, -1, 1, 0);
+            cElevatorGOBJ_SeekFloor(l, -1, 1, 0);
         } else {
             LiftMsg_00210E70* p = &msg;
             int dest;
             int tid;
-            Event_Construct(p, &g_TriggerMsgKey);
+            cMessage_ctor_cMessageNameR(p, &g_TriggerMsgKey);
             msg.vtable = D_004DAF10;
             msg.kind = 1;
             msg.floor = -1;
@@ -56,7 +56,7 @@ extern "C" int Script_cElevatorGOBJ_ChooseFloor_2(void** args)
             } else {
                 dest = 0;
             }
-            Transport_Send(tid, &msg, 0, dest);
+            cNetObj_SendMessage_int_cMessageR_int_int(tid, &msg, 0, dest);
             msg.vtable = D_004DAF10;
             cMessage_dtor(&msg, 0);
         }

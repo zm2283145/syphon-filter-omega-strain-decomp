@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003D9DA0 */
 #pragma push /* merge_units */
@@ -20,7 +20,7 @@ int Mem_Free();
 
 extern "C" {
 extern char D_004BD4C0[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 }
 
 static inline void MemClear_3D9(void* d0, int n0) { int n = n0; void* dst = d0;
@@ -59,19 +59,19 @@ struct Arr_3D9DA0 { int* data; int count; };
 
 #pragma opt_common_subs off
 #pragma opt_propagation off
-extern "C" void ScriptSlot_ResizeBuffer(Arr_3D9DA0* a, int n)
+extern "C" void cScriptVars_extend(Arr_3D9DA0* a, int n)
 {
     int* old = a->data;
     if (old) {
         AllocGuard g;
-        Mem_Free(0, old, D_004BD4C0, 0xD54);
+        cMemMan_Deallocate(0, old, D_004BD4C0, 0xD54);
     }
     a->count = n;
     if (n) {
         int* p;
         {
             AllocGuard g;
-            p = (int*)Mem_Alloc(0, n * 4, D_004BD4C0, 0xD58);
+            p = (int*)cMemMan_Allocate(0, n * 4, D_004BD4C0, 0xD58);
         }
         a->data = p;
         MemClear_3D9(a->data, n * 4);
@@ -86,19 +86,19 @@ static inline void merge_flush_func_003D9DA0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x58]; void* m58; } O9F40;
 typedef struct { char pad[0x4E50]; int count; void** groups; } T9F40;
-extern int Group_FindByObject(void* g, void* o);
-extern void Group_RemoveObject(void* g, void* o);
+extern int cGroup_Find_cSystemP(void* g, void* o);
+extern void cGroup_Remove(void* g, void* o);
 #pragma opt_strength_reduction off
-void Script_DropFromGroups(T9F40* self, O9F40* o)
+void cScriptInterpreter_RemoveFromAllGroups(T9F40* self, O9F40* o)
 {
     void* sub = o->m58;
     int i;
     for (i = 0; i < self->count; i++) {
         void* g = self->groups[i];
-        if (Group_FindByObject(g, o) != -1)
-            Group_RemoveObject(g, o);
-        if (sub && Group_FindByObject(g, sub) != -1)
-            Group_RemoveObject(g, sub);
+        if (cGroup_Find_cSystemP(g, o) != -1)
+            cGroup_Remove(g, o);
+        if (sub && cGroup_Find_cSystemP(g, sub) != -1)
+            cGroup_Remove(g, sub);
     }
 }
 #pragma opt_strength_reduction reset
@@ -115,10 +115,10 @@ typedef struct { int x0; int count; SrvVar** vars; } SrvScript;
 extern char D_00555070[];
 extern void FuncDef_ctor_charP_voidP_intP(SrvCtx*, void*, SrvScript*, void*);
 extern void cScriptInterpreter_setInstructionPtr(void*, void*);
-extern void Script_Interpret(void*, SrvCtx*);
+extern void cScriptInterpreter_execute(void*, SrvCtx*);
 extern void FuncDef_dtor(SrvCtx*, int);
 #pragma opt_strength_reduction off
-void Script_RunVarInitializers(SrvScript* s)
+void cScriptInterpreter_SymbolTable_executeInitCode(SrvScript* s)
 {
     int n = s->count;
     int i;
@@ -135,7 +135,7 @@ void Script_RunVarInitializers(SrvScript* s)
                 arg[0] = 4;
                 ctx.args = arg;
                 cScriptInterpreter_setInstructionPtr(D_00555070, init);
-                Script_Interpret(D_00555070, &ctx);
+                cScriptInterpreter_execute(D_00555070, &ctx);
                 FuncDef_dtor(&ctx, -1);
             }
         }

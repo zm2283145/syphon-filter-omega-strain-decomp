@@ -3,6 +3,6 @@
 extern int strcmp(void*);
 
 /* Returns whether strcmp(((int*)"GuiAgentDisplay")) returned 0. */
-int GuiAgentDisplay_IsType(void) {
+int GuiAgentDisplay_IsClass(void) {
     return strcmp(((int*)"GuiAgentDisplay")) == 0;
 }

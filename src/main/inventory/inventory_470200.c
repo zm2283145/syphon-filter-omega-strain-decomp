@@ -9,13 +9,13 @@
 #include "types.h"
 #include "scriptUtils_types.h"
 
-extern void Global_cInventory__RegisterItem(int item, int count);
+extern void cInventory_RegisterItem(int item, int count);
 
 /* Script native: cInventory::RegisterItem(item, count). */
 int Script_cInventory__RegisterItem(ScriptArg* args) {
     volatile int count = args[1].i;
     volatile int item = args[0].i;
-    Global_cInventory__RegisterItem(item, count);
+    cInventory_RegisterItem(item, count);
     return 0;
 }
 #pragma pop /* merge_units */
@@ -31,24 +31,24 @@ int Script_cInventory__RegisterItem(ScriptArg* args) {
 #include "loose05_types.h"
 
 extern TextPairEntry* D_00587FF8; /* 44-byte entries */
-extern int Loc_GetTextById(int id);
+extern int nGlobalization_GetString_int(int id);
 
 /* Localized text for the second id of entry `index`. */
-int ItemTable_GetDesc(int index) {
+int cInventory_GetLongName(int index) {
     TextPairEntry* entry;
 
     entry = D_00587FF8 + index;
-    return Loc_GetTextById(entry->textId1);
+    return nGlobalization_GetString_int(entry->textId1);
 }
 
 /* Localized text for the first id of entry `index`. */
-int ItemTable_GetName(int index) {
+int cInventory_GetShortName(int index) {
     TextPairEntry* table;
     int id;
 
     table = D_00587FF8;
     id = table[index].textId0;
-    return Loc_GetTextById(id);
+    return nGlobalization_GetString_int(id);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00470240 */

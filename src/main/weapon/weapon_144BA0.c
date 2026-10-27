@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00144BA0 */
 #pragma push /* merge_units */
@@ -21,28 +21,28 @@ typedef struct { char pad[0x48]; char m48[0x9C]; char mE4[0xAC]; } Req_4BA0;
 typedef struct { char pad[0x88]; int src; char pad8C[0x38]; int snd[6]; } S_4BA0;
 extern char D_004DADF0[];
 extern char g_Game[];
-void SoundRequest_Ctor(Req_4BA0* r, int a, int id, int b, int c);
-void SoundStopMsg_Ctor(Msg_4BA0* m, Req_4BA0* r, int src);
-void Event_Send(Msg_4BA0* m, void* target, int a);
-void FileMan_Release(void* p, int f);
+void cSndFx_ctor_int_charP_cGOBJP_int(Req_4BA0* r, int a, int id, int b, int c);
+void cStopSoundMsg_ctor_cSndFxR_cGOBJP(Msg_4BA0* m, Req_4BA0* r, int src);
+void QueueMessage_cMessageR_cSystemP_int(Msg_4BA0* m, void* target, int a);
+void cFileMan_dtor(void* p, int f);
 void cMessage_dtor(Msg_4BA0* m, int f);
-void WeaponInv_StopLoopSound(S_4BA0* self, unsigned char slot)
+void cWeapon_StopLoopingSound(S_4BA0* self, unsigned char slot)
 {
     int* p = (int*)((char*)self->snd + (slot << 2));
     if (*p) {
         Req_4BA0 req;
         Msg_4BA0 msg;
-        SoundRequest_Ctor(&req, 1, *p, 0, 0);
-        SoundStopMsg_Ctor(&msg, &req, self->src);
+        cSndFx_ctor_int_charP_cGOBJP_int(&req, 1, *p, 0, 0);
+        cStopSoundMsg_ctor_cSndFxR_cGOBJP(&msg, &req, self->src);
         msg.flag = 1;
-        Event_Send(&msg, g_Game, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 0);
         *p = 0;
         msg.vt = D_004DADF0;
-        FileMan_Release(msg.m114, -1);
-        FileMan_Release(msg.m78, -1);
+        cFileMan_dtor(msg.m114, -1);
+        cFileMan_dtor(msg.m78, -1);
         cMessage_dtor(&msg, 0);
-        FileMan_Release(req.mE4, -1);
-        FileMan_Release(req.m48, -1);
+        cFileMan_dtor(req.mE4, -1);
+        cFileMan_dtor(req.m48, -1);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -59,15 +59,15 @@ extern "C" {
 extern char D_0049B1D0[];
 void cAirTaser_dtor(void* p, int f);
 #if 0 /* merge_units */
-void WeaponInv_StopLoopSound(S_4C70* self, int slot);
+void cWeapon_StopLoopingSound(S_4C70* self, int slot);
 #endif /* merge_units */
-#define WeaponInv_StopLoopSound(a0, a1) (WeaponInv_StopLoopSound((S_4BA0 *)(a0), (unsigned char)(a1))) /* merge_units */
+#define cWeapon_StopLoopingSound(a0, a1) (cWeapon_StopLoopingSound((S_4BA0 *)(a0), (unsigned char)(a1))) /* merge_units */
 
-void Object_Unregister(void* n);
-void Object_DeleteLater(float t, void* n);
+void nGobjManager_RemoveGOBJ(void* n);
+void cSystem_ActualScheduleDelete(float t, void* n);
 void operator_delete(void* p);
 }
-extern "C" S_4C70* WeaponInv_Dtor(S_4C70* self, short del)
+extern "C" S_4C70* cWeapon_dtor(S_4C70* self, short del)
 {
     if (self) {
         void* s = self->snd;
@@ -75,25 +75,25 @@ extern "C" S_4C70* WeaponInv_Dtor(S_4C70* self, short del)
         if (s) {
             AllocGuard g;
             cAirTaser_dtor(s, -1);
-            Mem_Free(0, s, D_0049B1D0, 0x4CE);
+            cMemMan_Deallocate(0, s, D_0049B1D0, 0x4CE);
         }
-        WeaponInv_StopLoopSound(self, 0);
-        WeaponInv_StopLoopSound(self, 1);
+        cWeapon_StopLoopingSound(self, 0);
+        cWeapon_StopLoopingSound(self, 1);
         o = self->obj;
         if (o) {
             if (o)
                 o->Destroy(1);
         }
         if (self->node) {
-            Object_Unregister(self->node);
-            Object_DeleteLater(0.1f, self->node);
+            nGobjManager_RemoveGOBJ(self->node);
+            cSystem_ActualScheduleDelete(0.1f, self->node);
         }
         if (del > 0)
             operator_delete(self);
     }
     return self;
 }
-#undef WeaponInv_StopLoopSound /* merge_units */
+#undef cWeapon_StopLoopingSound /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00144C70(void) {}
 #pragma pop /* merge_units */
@@ -105,9 +105,9 @@ static inline void merge_flush_func_00144C70(void) {}
 
 extern "C" {
 extern unsigned char WeaponHolsterAttachPoints[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void* HeldItem_Construct(void* p, void* actor);
-void WeaponInv_Add(void* inv, int item, int a, int b, int c, int d);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void* cAirTaser_ctor(void* p, void* actor);
+void cWeapon_Add(void* inv, int item, int a, int b, int c, int d);
 }
 
 struct WiObj { char pad[0xC]; int id; };
@@ -122,8 +122,8 @@ static inline int NoId() { return -1; }
 enum { kNoId = -1 };
 static inline void* NewHeld(void* actor) {
     void* p;
-    { AllocGuard g; p = Mem_Alloc(0, 0xD0, D_0049B1D0, 0x4B7); }
-    if (p) p = HeldItem_Construct(p, actor);
+    { AllocGuard g; p = cMemMan_Allocate(0, 0xD0, D_0049B1D0, 0x4B7); }
+    if (p) p = cAirTaser_ctor(p, actor);
     return p;
 }
 
@@ -171,7 +171,7 @@ struct WiInv {
     char padF1[7];
 };
 
-extern "C" WiInv* WeaponInv_Construct(WiInv* self, void* actor, int withHeld) {
+extern "C" WiInv* cWeapon_ctor(WiInv* self, void* actor, int withHeld) {
     int i;
     self->burstTarget.id = -2;
     self->burstTarget.obj = 0;
@@ -212,7 +212,7 @@ extern "C" WiInv* WeaponInv_Construct(WiInv* self, void* actor, int withHeld) {
     self->spinUp[1] = 0.0f;
     self->loopSoundActive[1] = 0;
     if (withHeld) {
-        WeaponInv_Add(self, 0x67, 0, 0, 0, 1);
+        cWeapon_Add(self, 0x67, 0, 0, 0, 1);
     }
     return self;
 }

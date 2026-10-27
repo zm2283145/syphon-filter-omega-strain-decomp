@@ -21,17 +21,17 @@ struct Iter {
 };
 struct Self { char pad[0x1F4]; PtrVec list; };
 extern "C" {
-extern GObj** LosCache_End(PtrVec* v);
-extern Iter CachedCollection_End(PtrVec* self, GObj** const& src);
-extern Iter Iter_Begin(PtrVec* v);
-extern Iter Iter_Assign(const Iter& s);
+extern GObj** std_vector_imp_cGOBJPtr_1_end_void_2(PtrVec* v);
+extern Iter std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR_2(PtrVec* self, GObj** const& src);
+extern Iter std_vector_cGOBJPtr_begin(PtrVec* v);
+extern Iter cArray_cGOBJPtr_ConstIterator_ctor_wrapiteratorR(const Iter& s);
 extern int D_004EE780;
-unsigned char Zone_IsReady(Self* self);
+unsigned char nActivation_IsActivationLoaded(Self* self);
 }
-static inline void EndO(Iter* o, PtrVec* v) { *o = CachedCollection_End(v, LosCache_End(v)); }
-static inline Iter FirstI(PtrVec* v) { return Iter_Assign(Iter_Begin(v)); }
+static inline void EndO(Iter* o, PtrVec* v) { *o = std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR_2(v, std_vector_imp_cGOBJPtr_1_end_void_2(v)); }
+static inline Iter FirstI(PtrVec* v) { return cArray_cGOBJPtr_ConstIterator_ctor_wrapiteratorR(std_vector_cGOBJPtr_begin(v)); }
 inline bool GObj::Own() { return x4C == D_004EE780; }
-unsigned char Zone_IsReady(Self* self)
+unsigned char nActivation_IsActivationLoaded(Self* self)
 {
     unsigned char r = 1;
     PtrVec* v = &self->list;

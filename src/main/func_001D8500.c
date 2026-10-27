@@ -13,33 +13,33 @@ extern signed char D_004E1D80;
 extern VP D_00497F00;
 extern char D_004DA440[];
 extern char D_004DA410[];
-void Quat_SetIdentity(V* q);
-void Vec4_SetOrigin(V* v);
-void Placement_GetIdentity(VP* p, V* q, V* v);
-void VecPair_Copy(VP* d, VP* s);
+void cQuaternion_GetIdentity(V* q);
+void cVector_Get0001(V* v);
+void cQuatVec_ctor_cQuaternionR_cVectorR(VP* p, V* q, V* v);
+void cQuatVec_ctor_cQuatVecR(VP* d, VP* s);
 void cQuaternion_GetZero(V* v);
-void CameraCurve_MakeQuaternion(Curve8500* c, V* q, V* v);
-V* Vec4_GetZero(void);
-void VecCurve_InitState(VCurve8500* c, V* a, V* b);
+void cSplinedMotion_cQuaternion_ctor(Curve8500* c, V* q, V* v);
+V* cVector_GetZero(void);
+void cSplinedMotion_cVector_ctor(VCurve8500* c, V* a, V* b);
 O8500* cIkTargetWithSplinedTransition_ctor(O8500* o);
 }
-static inline const VP& IdentPl() { if (!D_004E1D80) { V q; V p; Quat_SetIdentity(&q); Vec4_SetOrigin(&p); Placement_GetIdentity(&D_00497F00, &q, &p); D_004E1D80 = 1; } return D_00497F00; }
+static inline const VP& IdentPl() { if (!D_004E1D80) { V q; V p; cQuaternion_GetIdentity(&q); cVector_Get0001(&p); cQuatVec_ctor_cQuaternionR_cVectorR(&D_00497F00, &q, &p); D_004E1D80 = 1; } return D_00497F00; }
 #pragma opt_propagation off
 static inline void CurveCtor(Curve8500* c)
 {
     V q;
     V v;
-    Quat_SetIdentity(&q);
+    cQuaternion_GetIdentity(&q);
     cQuaternion_GetZero(&v);
-    CameraCurve_MakeQuaternion(c, &q, &v);
+    cSplinedMotion_cQuaternion_ctor(c, &q, &v);
     c->vt = D_004DA440;
     c->bC0 = 0;
 }
 static inline void VCurveCtor(VCurve8500* c)
 {
     V z;
-    Vec4_SetOrigin(&z);
-    VecCurve_InitState(c, &z, Vec4_GetZero());
+    cVector_Get0001(&z);
+    cSplinedMotion_cVector_ctor(c, &z, cVector_GetZero());
     c->vt = D_004DA410;
 }
 static inline void CC(O8500* o) { Curve8500* c = &o->curve; CurveCtor(c); }
@@ -49,7 +49,7 @@ O8500* cIkTargetWithSplinedTransition_ctor(O8500* o_)
     O8500* o; VP t;
     o = o_;
     IdentPl();
-    VecPair_Copy(&t, &D_00497F00);
+    cQuatVec_ctor_cQuatVecR(&t, &D_00497F00);
     o->p0 = t.a;
     o->p10 = t.b;
     o->b20 = -1;

@@ -5,7 +5,7 @@
 typedef struct FileManEntry {
     int flags;          /* 0x00: bit 0 = has an open HAL file */
     char pad04[0x94];
-    int halFile;        /* 0x98: FileHalPS2 handle passed to FileHal_Close */
+    int halFile;        /* 0x98: FileHalPS2 handle passed to cFileIO_Close */
 } FileManEntry;
 
 #endif

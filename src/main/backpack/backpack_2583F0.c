@@ -18,12 +18,12 @@
 
 extern int D_004F7EF8;
 extern int D_004F7F00;
-extern int GObj_IdentityA(int who);
-extern int* Message_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int type, int baseType);
+extern int cGOBJ_SOBJ_toInt(int who);
+extern int* cMessage_SOBJ_getClassId(void);
+extern void cScriptBase_declareParent(int type, int baseType);
 
 int Script_cInventoryMsg_Who(cItemMsg** msg) {
-    return GObj_IdentityA((*msg)->who);
+    return cGOBJ_SOBJ_toInt((*msg)->who);
 }
 
 /* Volatile locals mirror the original stack temporaries. */
@@ -37,9 +37,9 @@ int Script_cInventoryMsg_Taken(cItemMsg** msg) {
     return taken;
 }
 
-void ScriptType_cInventoryMsg_Init(void) {
-    int* base = Message_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F7F00, *base);
+void cInventoryMsg_SOBJ_init(void) {
+    int* base = cMessage_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F7F00, *base);
 }
 
 int cInventoryMsg_v03(void) {
@@ -68,17 +68,17 @@ static inline int read32(void)
 }
 
 typedef struct { char pad[0x20]; unsigned char received; char pad21[3]; int a; int b; char item[1]; } cInventoryMsg;
-extern void NetStream_ReadObject(void* item);
-extern void Event_Send(cInventoryMsg* msg, void* target, int flags);
+extern void cNetMsg_GetGOBJ(void* item);
+extern void QueueMessage_cMessageR_cSystemP_int(cInventoryMsg* msg, void* target, int flags);
 
 /* cInventoryMsg receive: reads the item and two 32-bit values, then dispatches to target. */
-void cInventoryMsg_Apply(cInventoryMsg* self, void* target)
+void cInventoryMsg_UnpackAndProcess(cInventoryMsg* self, void* target)
 {
-    NetStream_ReadObject(self->item);
+    cNetMsg_GetGOBJ(self->item);
     self->a = read32();
     self->b = read32();
     self->received = 1;
-    Event_Send(self, target, 0);
+    QueueMessage_cMessageR_cSystemP_int(self, target, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00258480(void) {}
@@ -104,7 +104,7 @@ typedef struct { char pad[0x24]; int a; int b; void* item; } cInventoryMsg_00258
 extern void cNetMsg_PutGOBJ(void* item);
 
 /* cInventoryMsg virtual 4: serializes the item, then writes two 32-bit values. */
-void cInventoryMsg_v04(cInventoryMsg_00258600* self)
+void cInventoryMsg_Pack(cInventoryMsg_00258600* self)
 {
     cNetMsg_PutGOBJ(self->item);
     write32(self->a);
@@ -121,11 +121,11 @@ typedef struct { void* vtable; char data[0x2C]; } Visitor; /* 0x30-byte stack ob
 extern char D_004F7EE0[];
 extern char D_004DC460[]; /* visitor vtable */
 extern char D_004DCF10[]; /* base vtable */
-extern void Event_Construct(Visitor* v, const char* name);
+extern void cMessage_ctor_cMessageNameR(Visitor* v, const char* name);
 #if 0 /* merge_units */
-extern void cInventoryMsg_Apply(Visitor* v, void* target);
+extern void cInventoryMsg_UnpackAndProcess(Visitor* v, void* target);
 #endif /* merge_units */
-#define cInventoryMsg_Apply(a0, a1) (cInventoryMsg_Apply((void *)(a0), (a1))) /* merge_units */
+#define cInventoryMsg_UnpackAndProcess(a0, a1) (cInventoryMsg_UnpackAndProcess((void *)(a0), (a1))) /* merge_units */
 
 extern void cMessage_dtor(Visitor* v, int flags);
 
@@ -133,13 +133,13 @@ extern void cMessage_dtor(Visitor* v, int flags);
 void cInventoryMsg_NetReceive(void* target)
 {
     Visitor v;
-    Event_Construct(&v, D_004F7EE0);
+    cMessage_ctor_cMessageNameR(&v, D_004F7EE0);
     v.vtable = D_004DC460;
-    cInventoryMsg_Apply(&v, target);
+    cInventoryMsg_UnpackAndProcess(&v, target);
     v.vtable = D_004DCF10;
     cMessage_dtor(&v, 0);
 }
-#undef cInventoryMsg_Apply /* merge_units */
+#undef cInventoryMsg_UnpackAndProcess /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00258770(void) {}
 #pragma pop /* merge_units */
@@ -157,7 +157,7 @@ extern int D_004F7EB8;
 extern int D_004F7EC0;
 
 int Script_cCrateInteractMsg_Who(cItemMsg** msg) {
-    return GObj_IdentityA((*msg)->who);
+    return cGOBJ_SOBJ_toInt((*msg)->who);
 }
 
 /* Volatile locals mirror the original stack temporaries. */
@@ -171,9 +171,9 @@ int Script_cCrateInteractMsg_Given(cItemMsg** msg) {
     return given;
 }
 
-void ScriptType_cCrateInteractMsg_Init(void) {
-    int* base = Message_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F7EC0, *base);
+void cCrateInteractMsg_SOBJ_init(void) {
+    int* base = cMessage_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F7EC0, *base);
 }
 
 int cCrateInteractMsg_v03(void) {

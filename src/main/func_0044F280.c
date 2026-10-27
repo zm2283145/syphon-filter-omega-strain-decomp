@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void LobbyArray_SetDirty(char* self, char value) {
+void SFOLobbyList_SetUpdateFlag(char* self, char value) {
     self[24] = value;
 }

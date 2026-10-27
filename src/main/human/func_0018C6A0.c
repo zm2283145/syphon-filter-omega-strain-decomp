@@ -10,6 +10,6 @@ void* func_0018C6A0(char* self) {
     return self + 52;
 }
 
-int ModelCtx_GetAnchorById(char* self, int i) {
+int cSkaAnimationSet_GetNode_int(char* self, int i) {
     return (*(int**)(self + 60))[i];
 }

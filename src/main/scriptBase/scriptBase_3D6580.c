@@ -85,7 +85,7 @@ static inline void WStr6730(W6730* w, const char* s)
     ScriptFileBuff_put(w, n);
     n = ScriptFileBuff_charsToInts(w, n);
     ScriptFileBuff_expand(w, n);
-    String_Copy(w->cur, s);
+    Libc_Strcpy(w->cur, s);
     w->cur += n;
 }
 static inline void WInt6730(W6730* w, int v)
@@ -143,7 +143,7 @@ static inline void Writer_PutString(Writer* w, char* s)
     ScriptFileBuff_put(w, size);
     words = ScriptFileBuff_charsToInts(w, size);
     ScriptFileBuff_expand(w, words);
-    String_Copy((char*)w->cursor, s);
+    Libc_Strcpy((char*)w->cursor, s);
     w->cursor += words;
 }
 static inline void Writer_PutInt(Writer* w, int v)

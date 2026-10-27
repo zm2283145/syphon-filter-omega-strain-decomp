@@ -87,17 +87,17 @@ typedef struct ColHdr {
     int surf;
 } ColHdr;
 
-extern void Vec4_Assign(V4* d, V4* s);
+extern void cVector_ctor_cVectorR(V4* d, V4* s);
 extern char* tFaceFlags_ctor(Bytes4* p);
 extern Bytes4* tFaceFlags_opAssign(Bytes4* dst, Bytes4* src);
-extern void Sphere_FromCenter(V4* out, V4* a, V4* b);
-extern void Vec4_Cross(V4* out, V4* a, V4* b);
-extern float Vec4_Length(V4* v);
-extern float Vec4_Dot3(V4* a, V4* b);
-extern char MaterialProps_Find(void* tbl, char* name);
+extern void cVector_opSub(V4* out, V4* a, V4* b);
+extern void cVector_Cross(V4* out, V4* a, V4* b);
+extern float cVector_GetLength(V4* v);
+extern float cVector_Dot(V4* a, V4* b);
+extern char cMaterialPropertiesTable_Lookup_charP(void* tbl, char* name);
 extern char D_0053BB90[];
 
-/* Col_Relocate: fixes up offsets in a loaded collision blob and converts
+/* cCollisionModel_Data_FixUpPointers: fixes up offsets in a loaded collision blob and converts
  * old-format triangles (v<4: 0x40 stride, v==4: 0x20) to the packed form. */
 #pragma push
 #pragma opt_unroll_loops off
@@ -118,7 +118,7 @@ static inline void Col_FixTri(char* tri, V4* verts, int v)
 
     if (v < 5) {
         p = tri;
-        Vec4_Assign(&n, (V4*)tri);
+        cVector_ctor_cVectorR(&n, (V4*)tri);
         tFaceFlags_ctor(&col);
         if (v < 4) {
             ip = idx; p += 0x30;
@@ -133,11 +133,11 @@ static inline void Col_FixTri(char* tri, V4* verts, int v)
             }
             tFaceFlags_opAssign(&col, (Bytes4*)p);
         }
-        Sphere_FromCenter(&e1, &verts[idx[1]], &verts[idx[0]]);
-        Sphere_FromCenter(&e2, &verts[idx[2]], &verts[idx[0]]);
-        Vec4_Cross(&c, &e1, &e2);
-        ((ColTri*)tri)->f0 = 1.0f / Vec4_Length(&c);
-        if (Vec4_Dot3(&c, &n) < 0.0f) {
+        cVector_opSub(&e1, &verts[idx[1]], &verts[idx[0]]);
+        cVector_opSub(&e2, &verts[idx[2]], &verts[idx[0]]);
+        cVector_Cross(&c, &e1, &e2);
+        ((ColTri*)tri)->f0 = 1.0f / cVector_GetLength(&c);
+        if (cVector_Dot(&c, &n) < 0.0f) {
             ((ColTri*)tri)->f0 = -((ColTri*)tri)->f0;
         }
         for (j3 = 0; j3 < 3; j3++) {
@@ -147,7 +147,7 @@ static inline void Col_FixTri(char* tri, V4* verts, int v)
     }
 }
 
-void Col_Relocate(ColHdr* h)
+void cCollisionModel_Data_FixUpPointers(ColHdr* h)
 {
     unsigned int x;
     unsigned int y;
@@ -196,7 +196,7 @@ void Col_Relocate(ColHdr* h)
     if (h->version >= 3) {
         for (i = 0; i < h->nSurf; i++) {
             ColSurf* s = &((ColSurf*)h->surf)[i];
-            s->b1 = MaterialProps_Find(D_0053BB90, s->name);
+            s->b1 = cMaterialPropertiesTable_Lookup_charP(D_0053BB90, s->name);
         }
     }
 

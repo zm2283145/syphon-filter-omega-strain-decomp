@@ -2,10 +2,10 @@
 #include "vtable2_base_dtor.h"
 
 extern "C" {
-extern "C" void Message_GetScriptTypeKey();
-extern "C" void cNetSpawnLightMsg_v01();
-extern "C" void cNetSpawnLightMsg_v04();
-extern "C" void cNetSpawnLightMsg_v05();
+extern "C" void cMessage_getSOBJClassId();
+extern "C" void cNetSpawnLightMsg_Clone();
+extern "C" void cNetSpawnLightMsg_Pack();
+extern "C" void cNetSpawnLightMsg_GetMsgId();
 extern "C" void cNetMsg_Pack();
 extern void * const D_004DBAC0[];
 extern char D_004DCF10[];
@@ -24,4 +24,4 @@ extern "C" Vtable2Object* cNetSpawnLightMsg_dtor(Vtable2Object* self, short dele
     }
     return self;
 }
-void * const D_004DBAC0[8] = { (void*)0x0, (void*)0x0, (void*)cNetSpawnLightMsg_dtor, (void*)cNetSpawnLightMsg_v01, (void*)cNetMsg_Pack, (void*)Message_GetScriptTypeKey, (void*)cNetSpawnLightMsg_v04, (void*)cNetSpawnLightMsg_v05 };
+void * const D_004DBAC0[8] = { (void*)0x0, (void*)0x0, (void*)cNetSpawnLightMsg_dtor, (void*)cNetSpawnLightMsg_Clone, (void*)cNetMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)cNetSpawnLightMsg_Pack, (void*)cNetSpawnLightMsg_GetMsgId };

@@ -23,7 +23,7 @@ public:
     virtual Mat GetMatrix();
 };
 struct PNode { char pad[0x7C]; int f7C; };
-extern "C" PNode* NpcPath_GetNode(int);
+extern "C" PNode* cAIPathData_GetNode(int);
 struct Self_S {
     char pad0[0x30]; GObj* obj; char pad34[0x3C]; float f70; float f74; char pad78[0x44];
     int bitsBC[8]; char padDC[4]; int fE0; char padE4[0x5B]; unsigned char f13F; char pad140; unsigned char u141;
@@ -32,28 +32,28 @@ struct Self_S {
 extern "C" {
 extern char g_Game[];
 extern char g_NpcRouteMgr[];
-void* Service_Lookup(void* a, void* b);
-int NpcRoute_IsHeadPending(void* svc, GObj* id);
-void NpcRoute_RequestToNode(int r, int node);
-int NpcRoute_StartRegion(int r);
-unsigned char NpcRoute_NodeSearch(float d, void* svc, GObj* obj, void* e0, V4* pos, V4* tgt, int reg, int n, int k, long m);
-void NpcNodeSearch_SetQuery(float a, float b, void* out, int k);
+void* cSystemContainer_GetSystem(void* a, void* b);
+int cPathSystem_IsRequestBeingProcessed(void* svc, GObj* id);
+void cPathNavigator_Request_int(int r, int node);
+int cPathNavigator_GetGroupIndexForPatrolPath(int r);
+unsigned char cPathSystem_RequestNodeIndexFromGroup(float d, void* svc, GObj* obj, void* e0, V4* pos, V4* tgt, int reg, int n, int k, long m);
+void cNodePickerParameters_ctor_float_float_bool(float a, float b, void* out, int k);
 }
 
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" unsigned char NpcAi_ApproachSearch(Self_S* self) {
+extern "C" unsigned char cNPC_MoveToAttackNode(Self_S* self) {
     char e0[0x10];
     V4 pos;
     V4 tgt;
     unsigned char r = 0;
-    if (!NpcRoute_IsHeadPending(Service_Lookup(g_Game, g_NpcRouteMgr), self->obj)) {
+    if (!cPathSystem_IsRequestBeingProcessed(cSystemContainer_GetSystem(g_Game, g_NpcRouteMgr), self->obj)) {
         void* svc;
         float dist;
         GObj* o;
-        NpcNodeSearch_SetQuery(self->f70, self->f74, e0, 0);
+        cNodePickerParameters_ctor_float_float_bool(self->f70, self->f74, e0, 0);
         { Mat m = self->obj->GetMatrix(); V4* d = &pos; Mat* pm = &m; V4* s = &pm->r[3]; __int128 x; asm { .set reorder; lq x, 0(s) } *(__int128*)d = x; } { V4* d = &tgt; *(__int128*)d = *(__int128*)self->target; }
-        svc = Service_Lookup(g_Game, g_NpcRouteMgr);
+        svc = cSystemContainer_GetSystem(g_Game, g_NpcRouteMgr);
         {
             V4 d;
             V4 rr;
@@ -80,7 +80,7 @@ extern "C" unsigned char NpcAi_ApproachSearch(Self_S* self) {
         }
         { float lim = self->f74; if (dist < lim) dist = lim; }
         o = self->obj;
-        r = NpcRoute_NodeSearch(15.0f + dist, svc, o, e0, &pos, &tgt, NpcRoute_StartRegion(self->f1B0), 0x80, 1, -1);
+        r = cPathSystem_RequestNodeIndexFromGroup(15.0f + dist, svc, o, e0, &pos, &tgt, cPathNavigator_GetGroupIndexForPatrolPath(self->f1B0), 0x80, 1, -1);
         self->f13F = 4;
     }
     return r;

@@ -14,8 +14,8 @@
 struct Ctl_61F0 { VPAD16(a) VPAD2(b) VPAD1(c) virtual unsigned char IsPlayer(); };
 struct Hum_61F0 { char pad[0xC]; unsigned int flags; char pad10[0x48]; Ctl_61F0* ctl; };
 extern "C" {
-void* Agent_GetSelected(void*, int);
-int AgentData_HasUnlock(void*, int);
+void* cGameSystem_GetAgentData(void*, int);
+int cAgentData_HasSpecialBonus(void*, int);
 extern char g_Game[];
 extern float D_0048A2D0;
 extern unsigned char g_IsMultiplayer;
@@ -23,16 +23,16 @@ extern unsigned char g_IsMultiplayer;
 static inline unsigned char IsPlayer_61F0(Hum_61F0* h) { unsigned char r = 0; if (h->ctl && h->ctl->IsPlayer()) r = 1; return r; }
 static inline int IsPlayerB_61F0(Hum_61F0* h) { int b = h->ctl != 0; if (b) b = h->ctl->IsPlayer(); return b; }
 static inline int LocalId_61F0(Hum_61F0* h) { int id; if (g_IsMultiplayer) { if (IsPlayer_61F0(h)) id = ((h->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
-static inline void* Agent_61F0(Hum_61F0* h) { return IsPlayerB_61F0(h) ? Agent_GetSelected(g_Game, LocalId_61F0(h)) : 0; }
+static inline void* Agent_61F0(Hum_61F0* h) { return IsPlayerB_61F0(h) ? cGameSystem_GetAgentData(g_Game, LocalId_61F0(h)) : 0; }
 /* clips granted to an actor: the player's count is scaled when the agent has perk 5 */
 #pragma push
 #pragma opt_propagation off
-extern "C" int WeaponInv_ClipsForActor(Hum_61F0* h, int n)
+extern "C" int cHuman_AdjustMaxClips(Hum_61F0* h, int n)
 {
     int r = n;
     if (IsPlayer_61F0(h)) {
-        int id = LocalId_61F0(h); void* ag = IsPlayerB_61F0(h) ? Agent_GetSelected(g_Game, id) : 0;
-        if (AgentData_HasUnlock(ag, 5)) {
+        int id = LocalId_61F0(h); void* ag = IsPlayerB_61F0(h) ? cGameSystem_GetAgentData(g_Game, id) : 0;
+        if (cAgentData_HasSpecialBonus(ag, 5)) {
             r = (int)(n * D_0048A2D0);
             if (r == n) r++;
         }
@@ -80,20 +80,20 @@ extern char D_0049D8E0[];
 extern char D_004DAE30[];
 extern char D_004DADF0[];
 extern char g_ActorActionMsgClass[];
-extern "C" void Message_GetScriptTypeKey();
+extern "C" void cMessage_getSOBJClassId();
 extern "C" void func_00186670();
 extern "C" void cCharActionMsg_ObjectId_Int_Pack();
 extern "C" void cCharActionMsg_ObjectId_Int_Clone();
-void * const D_004E0180[8] = { (void*)0x0, (void*)0x0, (void*)func_00186670, (void*)cCharActionMsg_ObjectId_Int_Clone, (void*)cCharActionMsg_ObjectId_Int_Pack, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+void * const D_004E0180[8] = { (void*)0x0, (void*)0x0, (void*)func_00186670, (void*)cCharActionMsg_ObjectId_Int_Clone, (void*)cCharActionMsg_ObjectId_Int_Pack, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
 extern char D_004E0840[];
-void Actor_ShockReaction(Npc_00186360* self, int a, int b, float f);
-void SoundRequest_Ctor(Req_00186360* r, int a, char* name, int b, int c);
-void SoundEvent_CtorFromPreset(Snd_00186360* e, Req_00186360* r, void* owner);
-void SoundStopMsg_Ctor(Snd2_00186360* e, Req_00186360* r, void* owner);
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, void* target, int immediate);
+void cHuman_SetParticleEffect(Npc_00186360* self, int a, int b, float f);
+void cSndFx_ctor_int_charP_cGOBJP_int(Req_00186360* r, int a, char* name, int b, int c);
+void cPlaySoundMsg_ctor_cSndFxR(Snd_00186360* e, Req_00186360* r, void* owner);
+void cStopSoundMsg_ctor_cSndFxR_cGOBJP(Snd2_00186360* e, Req_00186360* r, void* owner);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
-void FileMan_Release(Str_00186360* s, int flag);
+void cFileMan_dtor(Str_00186360* s, int flag);
 }
 static inline int GetId_00186360(Obj_00186360* o, int& t)
 {
@@ -116,8 +116,8 @@ extern "C" void Actor_Ignite(Npc_00186360* self, unsigned char on, Obj_00186360*
     else
         self->b326A = on;
     if (!old && self->b326A) {
-        Actor_ShockReaction(self, 0, 1, 0.4f);
-        Actor_ShockReaction(self, 1, 1, 0.4f);
+        cHuman_SetParticleEffect(self, 0, 1, 0.4f);
+        cHuman_SetParticleEffect(self, 1, 1, 0.4f);
         self->f31F4 = f;
         self->p3480 = obj;
         self->id3484 = GetId_00186360(obj, t1);
@@ -125,40 +125,40 @@ extern "C" void Actor_Ignite(Npc_00186360* self, unsigned char on, Obj_00186360*
         {
             Req_00186360 req;
             Snd_00186360 ev;
-            SoundRequest_Ctor(&req, 1, D_0049D8E0, 0, 0);
-            SoundEvent_CtorFromPreset(&ev, &req, self);
+            cSndFx_ctor_int_charP_cGOBJP_int(&req, 1, D_0049D8E0, 0, 0);
+            cPlaySoundMsg_ctor_cSndFxR(&ev, &req, self);
             ev.flag = 1;
-            Event_Send(&ev, g_Game, 0);
+            QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 0);
             ev.vt = D_004DAE30;
-            FileMan_Release(&ev.s114, -1);
-            FileMan_Release(&ev.s78, -1);
+            cFileMan_dtor(&ev.s114, -1);
+            cFileMan_dtor(&ev.s78, -1);
             cMessage_dtor(&ev, 0);
-            FileMan_Release(&req.sE4, -1);
-            FileMan_Release(&req.s48, -1);
+            cFileMan_dtor(&req.sE4, -1);
+            cFileMan_dtor(&req.s48, -1);
         }
     } else if (!self->b326A) {
-        Actor_ShockReaction(self, 0, 0, 1.0f);
-        Actor_ShockReaction(self, 1, 0, 1.0f);
+        cHuman_SetParticleEffect(self, 0, 0, 1.0f);
+        cHuman_SetParticleEffect(self, 1, 0, 1.0f);
         {
             Req_00186360 req;
             Snd2_00186360 ev;
-            SoundRequest_Ctor(&req, 1, D_0049D8E0, 0, 0);
-            SoundStopMsg_Ctor(&ev, &req, self);
+            cSndFx_ctor_int_charP_cGOBJP_int(&req, 1, D_0049D8E0, 0, 0);
+            cStopSoundMsg_ctor_cSndFxR_cGOBJP(&ev, &req, self);
             ev.flag = 1;
-            Event_Send(&ev, g_Game, 0);
+            QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 0);
             ev.vt = D_004DADF0;
-            FileMan_Release(&ev.s114, -1);
-            FileMan_Release(&ev.s78, -1);
+            cFileMan_dtor(&ev.s114, -1);
+            cFileMan_dtor(&ev.s78, -1);
             cMessage_dtor(&ev, 0);
-            FileMan_Release(&req.sE4, -1);
-            FileMan_Release(&req.s48, -1);
+            cFileMan_dtor(&req.sE4, -1);
+            cFileMan_dtor(&req.s48, -1);
         }
     }
     if (g_IsMultiplayer && !quiet) {
         int id = GetId_00186360(obj, t2);
         int st = self->b326A;
         Msg_00186360 m;
-        Event_Construct(&m, g_ActorActionMsgClass);
+        cMessage_ctor_cMessageNameR(&m, g_ActorActionMsgClass);
         m.kind = 0x44;
         m.b28 = 6;
         m.id = id;
@@ -166,7 +166,7 @@ extern "C" void Actor_Ignite(Npc_00186360* self, unsigned char on, Obj_00186360*
         m.vt = ((char*)D_004E0180);
         m.b20 = 4;
         m.f1C = 0x40;
-        Event_Send(&m, self, 0);
+        QueueMessage_cMessageR_cSystemP_int(&m, self, 0);
         m.vt = D_004E0840;
         cMessage_dtor(&m, 0);
     }

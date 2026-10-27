@@ -20,7 +20,7 @@
 #pragma cplusplus on
 DEFINE_RESIZE_ELEMENT(Elem1C4410, 16)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(std_vector_imp_cArray_int_resize, Elem1C4410, Vector_Insert_1C49F0, std_vector_imp_cArray_int_erase)
+DEFINE_VECTOR_RESIZE(std_vector_imp_cArray_int_resize, Elem1C4410, std_vector_imp_cArray_int_insert, std_vector_imp_cArray_int_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_001C4410 */

@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_0016A0A0 */
 #pragma push /* merge_units */
@@ -29,7 +29,7 @@ extern unsigned char D_005721D0;
 extern char D_0049C800[];
 extern char D_0049C650[];
 extern char D_0049C648[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 int NetCreateObject(int* out, int a, int b, int c, int d, int e, int f, void* g, char* h, int i);
 int NetGetObject(P_A0A0** out, int id);
 }
@@ -45,8 +45,8 @@ struct Blk_A0A0 {
         void* p;
         if (g_ProfileLockEnabled) Alloc_Lock(9);
         g_ProfileLockDepth++;
-        p = Mem_Alloc(0, sz, D_0049C650, line);
-        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        p = cMemMan_Allocate(0, sz, D_0049C650, line);
+        if (g_ProfileLockEnabled) EnableIntc(9);
         g_ProfileLockDepth--;
         return p;
     }
@@ -58,11 +58,11 @@ static inline void Set_A0A0(void* nv)
     if (old && !D_004EE628)
     {
         AllocGuard g;
-        Mem_Free(0, old, D_0049C800, 0x1FE);
+        cMemMan_Deallocate(0, old, D_0049C800, 0x1FE);
     }
     D_004EE620 = nv;
 }
-extern "C" void TeamRelations_CreateMultiplayer(void)
+extern "C" void cTeam_TeamNetCreate(void)
 {
     
     if (g_IsMultiplayer ? D_005721C0 : 1) {
@@ -75,7 +75,7 @@ extern "C" void TeamRelations_CreateMultiplayer(void)
                 void* nv = p->data;
                 if (old && !D_004EE628) {
                     AllocGuard g;
-                    Mem_Free(0, old, D_0049C800, 0x1FE);
+                    cMemMan_Deallocate(0, old, D_0049C800, 0x1FE);
                 }
                 D_004EE620 = nv;
                 D_004EE628 = 1;
@@ -107,7 +107,7 @@ extern "C" void cTeam_TeamDeleteCallback(void)
     void* p = D_004EE620;
     if (p && !D_004EE628) {
         AllocGuard g;
-        Mem_Free(0, p, D_0049C650, 0x6FE);
+        cMemMan_Deallocate(0, p, D_0049C650, 0x6FE);
     }
     D_004EE620 = 0;
     D_004EE628 = 0;

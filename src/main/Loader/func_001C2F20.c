@@ -5,11 +5,11 @@
 
 #include "types.h"
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int value);
 
 /* v.push_back(value): insert one copy at end(). */
 int std_vector_cTerrainPtr_push_back(PtrVec* v, int value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 
 /* Zero-initialise a three-word vector. */

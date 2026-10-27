@@ -20,7 +20,7 @@ typedef struct SsoString {
     char* longData;             /* 0x08 */
 } SsoString;
 
-extern void String_Replace(SsoString* str, int pos, int count, const char* first, const char* last, signed char tag);
+extern void std_basic_string_char_char_traits_char_do_replace(SsoString* str, int pos, int count, const char* first, const char* last, signed char tag);
 
 /* Assigns the range [first, last) to the string, replacing its whole contents. */
 void func_0032A550(SsoString* str, const char* first, const char* last) {
@@ -31,7 +31,7 @@ void func_0032A550(SsoString* str, const char* first, const char* last) {
     } else {
         len = (unsigned char)str->mode.bits.shortLen;
     }
-    String_Replace(str, 0, len, first, last, tag[0]);
+    std_basic_string_char_char_traits_char_do_replace(str, 0, len, first, last, tag[0]);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0032A550 */
@@ -45,7 +45,7 @@ struct VRElem20 { int w[11]; };
 struct V32A5A0 { unsigned int cap; unsigned int count; VRElem20* data; };
 extern "C" {
 extern char D_004B88C0[];
-void* Mem_PlacementNew(unsigned int size, void* p);
+void* opNew_uint_voidP(unsigned int size, void* p);
 void GuiSlideShow_Slide_ctor(void* dst, const VRElem20* src);
 }
 extern "C" void std_vector_imp_Slide_init(V32A5A0* v, const VRElem20* first, const VRElem20* last)
@@ -61,7 +61,7 @@ extern "C" void std_vector_imp_Slide_init(V32A5A0* v, const VRElem20* first, con
         v->cap = n;
         VRElem20* p = v->data;
         for (; first != last; first++, p++) {
-            void* o = Mem_PlacementNew(sizeof(VRElem20), p);
+            void* o = opNew_uint_voidP(sizeof(VRElem20), p);
             if (o) GuiSlideShow_Slide_ctor(o, first);
             v->count++;
         }

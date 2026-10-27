@@ -100,13 +100,13 @@ typedef struct GuiItem {
     int unk48;                      /* 0x48: -2 after construction */
 } GuiItem;
 
-/* Manager singleton returned by Gui_GetScreenStack. */
+/* Manager singleton returned by Gui_Canvas. */
 typedef struct GuiManager {
     char pad00[0x68];
     unsigned int flags;             /* 0x68 */
 } GuiManager;
 
-/* Animated GUI slot (0x1C bytes); constructor LobbyArray_ctor, reset LobbyArray_Free. */
+/* Animated GUI slot (0x1C bytes); constructor SFOLobbyList_ctor, reset SFOLobbyList_ClearAndCompactList. */
 typedef struct GuiSlot {
     int unk00;                      /* 0x00 */
     int unk04;                      /* 0x04 */
@@ -120,7 +120,7 @@ typedef struct GuiSlot {
     char pad1B;
 } GuiSlot;
 
-/* Screen base built by GuiScreen_ctor (table D_004DE830), >= 0x88 bytes. */
+/* Screen base built by GuiLobbyScreen_ctor (table D_004DE830), >= 0x88 bytes. */
 typedef struct GuiScreen {
     GuiItem base;                   /* 0x00 */
     char pad4C[0x78 - 0x4C];
@@ -131,7 +131,7 @@ typedef struct GuiScreen {
     int screenId;                   /* 0x84 */
 } GuiScreen;
 
-/* Menu screen base built by GuiMenuScreen_ctor (table D_004DE8A0), >= 0x110 bytes. */
+/* Menu screen base built by GuiMissionLobbyScreen_ctor (table D_004DE8A0), >= 0x110 bytes. */
 typedef struct GuiMenuScreen {
     GuiScreen base;                 /* 0x00 */
     int unk88;                      /* 0x88 */
@@ -168,7 +168,7 @@ typedef struct GuiOnlineConnect {
     int unkFC;                      /* 0xFC */
     int unk100;                     /* 0x100 */
     int unk104;                     /* 0x104 */
-    int resource;                   /* 0x108: released through GuiManager_UnloadRoot */
+    int resource;                   /* 0x108: released through GuiManager_DestroyWidget */
     int unk10C;                     /* 0x10C */
     int unk110;                     /* 0x110 */
     int unk114;                     /* 0x114 */
@@ -271,7 +271,7 @@ typedef struct GuiQuickChat {
 /* GuiCharacterDisplay (table D_004DE670). */
 typedef struct GuiCharacterDisplay {
     GuiWidget base;                 /* 0x00 */
-    void (*onDestroy)(void);        /* 0x48: called by GuiCharacterDisplay_Draw when set */
+    void (*onDestroy)(void);        /* 0x48: called by GuiCharacterDisplay_onRender when set */
 } GuiCharacterDisplay;
 
 /* GuiMissionList (table D_004DDB80); derives from the widget built by GuiArrayWidget_ctor. */
@@ -308,7 +308,7 @@ typedef struct GameMachine {
     char data140[1];                /* 0x140 */
 } GameMachine;
 
-/* Command-center style screen used by GuiCommandCenter_Deactivate / GuiCommandCenter_RestoreState. */
+/* Command-center style screen used by GuiCommandCenter_Deactivate / GuiCommandCenter_RestoreGuiState. */
 typedef struct GuiCommandCenter {
     char pad00[0x80];
     unsigned char active;           /* 0x80 */
@@ -339,7 +339,7 @@ typedef struct GuiEquipmentModifyObj {
     short weaponIds[1];             /* 0x10C */
 } GuiEquipmentModifyObj;
 
-/* Weapon definition fields read by GuiEquipmentModify_DrawWeaponBox2 (see weapon_types.h WeaponDef). */
+/* Weapon definition fields read by EM_Gun2RenderWrapper (see weapon_types.h WeaponDef). */
 typedef struct WeaponDefL2 {
     char pad000[0xF0];
     unsigned char kind;             /* 0x0F0: 7 = uses the linked record at +0x11C */
@@ -500,7 +500,7 @@ typedef struct Obj328630 {
 
 /* Copyable record (GuiSlideShow_Section_ctor): base part, owning vector at +0x0C, word at +0x1C. */
 typedef struct Rec32A050 {
-    char pad00[0x0C];               /* 0x00: copied by String_CopyCtor */
+    char pad00[0x0C];               /* 0x00: copied by std_basic_string_char_char_traits_char_ctor_basicstringR */
     OwnedRel vec;                   /* 0x0C */
     int unk1C;                      /* 0x1C */
 } Rec32A050;

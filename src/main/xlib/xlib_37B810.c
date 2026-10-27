@@ -30,16 +30,16 @@ typedef struct {
 } RB810;
 extern char D_00537F80[];
 extern u64_t D_004BC1B0[];
-extern GsQ *DmaPacket_Reserve(void *q, int a, int b, int c, int d, int e);
+extern GsQ *cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(void *q, int a, int b, int c, int d, int e);
 extern void cDmaMan_EndChain_int(void *q, int a);
 extern u64_t *cTexMan_GetTEX1_1(void *p, int i);
 extern u64_t *cTexMan_GetTEX0_1(void *p, int i);
 extern void *XLib_GetTexMan(RB810 *o);
-extern u64_t Renderer_SetTestReg(RB810 *o);
-extern u64_t Renderer_SetPrmodeReg(RB810 *o);
-extern void Renderer_RestoreRenderState(RB810 *o);
+extern u64_t XLib_GetPixelEnv(RB810 *o);
+extern u64_t XLib_GetPrimEnv(RB810 *o);
+extern void XLib_UpdateRenderFrameEnv(RB810 *o);
 
-void Video_DrawScreenFxBuf(RB810 *o, int *rgba, int fbp, unsigned int fbw, int tv, int psm, int ai)
+void XLib_FullScreenSprite(RB810 *o, int *rgba, int fbp, unsigned int fbw, int tv, int psm, int ai)
 {
     unsigned int x1;
     int y1;
@@ -57,14 +57,14 @@ void Video_DrawScreenFxBuf(RB810 *o, int *rgba, int fbp, unsigned int fbw, int t
     x1 = x0 + o->w * 16;
     y1 = y0 + o->h * 16;
     if (o->ready) {
-        Renderer_RestoreRenderState(o);
+        XLib_UpdateRenderFrameEnv(o);
         o->ready = 0;
     }
     n = 9;
     if (o->f1060 != -1) {
         n += 2;
     }
-    q = DmaPacket_Reserve(D_00537F80, 1, 1, n + 2, 0, 1);
+    q = cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(D_00537F80, 1, 1, n + 2, 0, 1);
     q->lo = 0x11000000;
     q->hi = 0x300002EULL | ((u64_t)0x20001E9 << 32);
     q++;
@@ -73,8 +73,8 @@ void Video_DrawScreenFxBuf(RB810 *o, int *rgba, int fbp, unsigned int fbw, int t
     q++;
     q->lo = 0xE;
     q->hi = o->f120; q++; q->lo = 0x1A;
-    q->hi = Renderer_SetPrmodeReg(o); q++; q->lo = 0x1B;
-    q->hi = Renderer_SetTestReg(o); q++; q->lo = 0x47;
+    q->hi = XLib_GetPrimEnv(o); q++; q->lo = 0x1B;
+    q->hi = XLib_GetPixelEnv(o); q++; q->lo = 0x47;
     q->hi = o->f124; q++; q->lo = 0x46;
     if (o->f10E8 == D_004BC1B0[0]) {
         q->hi = (long long)o->f160 | ((long long)o->f164 << 8) | ((long long)o->f168 << 16); q++;
@@ -92,7 +92,7 @@ void Video_DrawScreenFxBuf(RB810 *o, int *rgba, int fbp, unsigned int fbw, int t
         o->f1060 = -1;
     }
     cDmaMan_EndChain_int(D_00537F80, 1);
-    q = DmaPacket_Reserve(D_00537F80, 1, 1, 0xE, 0, 1);
+    q = cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(D_00537F80, 1, 1, 0xE, 0, 1);
     q->lo = 0x11000000ULL | ((u64_t)0x5000000E << 32);
     q->hi = 0x800DULL | ((u64_t)0x10000000 << 32);
     q++;
@@ -152,19 +152,19 @@ extern void *XLib_GetTexMan(RB810_0037BD40 *o);
 #define XLib_GetTexMan(a0) (XLib_GetTexMan((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern u64_t Renderer_SetTestReg(RB810_0037BD40 *o);
+extern u64_t XLib_GetPixelEnv(RB810_0037BD40 *o);
 #endif /* merge_units */
-#define Renderer_SetTestReg(a0) (Renderer_SetTestReg((void *)(a0))) /* merge_units */
+#define XLib_GetPixelEnv(a0) (XLib_GetPixelEnv((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern u64_t Renderer_SetPrmodeReg(RB810_0037BD40 *o);
+extern u64_t XLib_GetPrimEnv(RB810_0037BD40 *o);
 #endif /* merge_units */
-#define Renderer_SetPrmodeReg(a0) (Renderer_SetPrmodeReg((void *)(a0))) /* merge_units */
+#define XLib_GetPrimEnv(a0) (XLib_GetPrimEnv((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Renderer_RestoreRenderState(RB810_0037BD40 *o);
+extern void XLib_UpdateRenderFrameEnv(RB810_0037BD40 *o);
 #endif /* merge_units */
-#define Renderer_RestoreRenderState(a0) (Renderer_RestoreRenderState((void *)(a0))) /* merge_units */
+#define XLib_UpdateRenderFrameEnv(a0) (XLib_UpdateRenderFrameEnv((void *)(a0))) /* merge_units */
 
 extern unsigned int cUserFrameEnv_GetVramAddr(Sub10CC *s);
 extern int cUserFrameEnv_GetHeight(Sub10CC *s);
@@ -174,7 +174,7 @@ extern void cUserFrameEnv_Activate(Sub10CC *s);
 
 static inline u64_t Tex(unsigned int a, int b, int c) { u64_t t = (u64_t)a | ((long long)b << 16); return t | ((u64_t)(unsigned int)c << 24); }
 
-void Video_CopyToScreenFxBuf(RB810_0037BD40 *o, int ai)
+void XLib_FrameBuffToUserEnv(RB810_0037BD40 *o, int ai)
 {
     GsQ *r;
     Sub10CC *sub;
@@ -200,14 +200,14 @@ void Video_CopyToScreenFxBuf(RB810_0037BD40 *o, int ai)
     tbp = o->tbp[o->cur];
     t20 = cUserFrameEnv_GetVramAddr(sub);
     if (o->ready) {
-        Renderer_RestoreRenderState(o);
+        XLib_UpdateRenderFrameEnv(o);
         o->ready = 0;
     }
     n = 9;
     if (o->f1060 != -1) {
         n += 2;
     }
-    q = DmaPacket_Reserve(D_00537F80, 1, 1, n + 2, 0, 1);
+    q = cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(D_00537F80, 1, 1, n + 2, 0, 1);
     q->lo = 0x11000000;
     q->hi = 0x300002EULL | ((u64_t)0x20001E9 << 32);
     q++;
@@ -216,8 +216,8 @@ void Video_CopyToScreenFxBuf(RB810_0037BD40 *o, int ai)
     q++;
     q->lo = 0xE;
     q->hi = o->f120; q++; q->lo = 0x1A;
-    q->hi = Renderer_SetPrmodeReg(o); q++; q->lo = 0x1B;
-    q->hi = Renderer_SetTestReg(o); q++; q->lo = 0x47;
+    q->hi = XLib_GetPrimEnv(o); q++; q->lo = 0x1B;
+    q->hi = XLib_GetPixelEnv(o); q++; q->lo = 0x47;
     q->hi = o->f124; q++; q->lo = 0x46;
     if (o->f10E8 == D_004BC1B0[0]) {
         q->hi = (long long)o->f160 | ((long long)o->f164 << 8) | ((long long)o->f168 << 16); q++;
@@ -235,7 +235,7 @@ void Video_CopyToScreenFxBuf(RB810_0037BD40 *o, int ai)
         o->f1060 = -1;
     }
     cDmaMan_EndChain_int(D_00537F80, 1);
-    r = DmaPacket_Reserve(D_00537F80, 1, 1, 0x11, 0, 1);
+    r = cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(D_00537F80, 1, 1, 0x11, 0, 1);
     r->lo = 0x11000000ULL | ((u64_t)0x50000011 << 32);
     r->hi = 0x8010ULL | ((u64_t)0x10000000 << 32);
     r++;
@@ -260,9 +260,9 @@ void Video_CopyToScreenFxBuf(RB810_0037BD40 *o, int ai)
     cUserFrameEnv_Deactivate(sub, 1);
 }
 #undef XLib_GetTexMan /* merge_units */
-#undef Renderer_SetTestReg /* merge_units */
-#undef Renderer_SetPrmodeReg /* merge_units */
-#undef Renderer_RestoreRenderState /* merge_units */
+#undef XLib_GetPixelEnv /* merge_units */
+#undef XLib_GetPrimEnv /* merge_units */
+#undef XLib_UpdateRenderFrameEnv /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0037BD40(void) {}
 #pragma pop /* merge_units */

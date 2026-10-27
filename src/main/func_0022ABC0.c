@@ -22,25 +22,25 @@ struct M {
 };
 static inline void MulV(V* v, M* m) { __asm__ volatile("lqc2 $vf8, 0x0(%0); lqc2 $vf4, 0x0(%1); lqc2 $vf5, 0x10(%1); lqc2 $vf6, 0x20(%1); lqc2 $vf7, 0x30(%1); vmulax.xyzw $ACC, $vf4, $vf8x; vmadday.xyzw $ACC, $vf5, $vf8y; vmaddaz.xyzw $ACC, $vf6, $vf8z; vmaddw.xyzw $vf12, $vf7, $vf8w; sqc2 $vf12, 0x0(%0)" : : "r"(v), "r"(m) : "memory"); }
 extern "C" {
-V* Vec4_Assign(V* d, V* s);
-void Mtx_Transpose3x3(M* m);
-int Mtx_IsTranslationZero(M* m);
+V* cVector_ctor_cVectorR(V* d, V* s);
+void cMatrix_InvertRot(M* m);
+int cMatrix_IsZeroTranslation(M* m);
 V* func_00133EC0(M* m);
-void Vec3_Negate(V* v);
-void Mtx_TransformByTranspose(V* v, M* m);
-void Mtx_SetTranslation(M* m, V* v);
-float Math_Atan2f(float y, float x);
-float Combat_HitDirection(M* m, V* p, V* out);
+void cVector_NegateXYZ(V* v);
+void cVector_Rotate_cMatrixR(V* v, M* m);
+void cMatrix_SetTranslation(M* m, V* v);
+float Libc_Atan2f(float y, float x);
+float GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP(M* m, V* p, V* out);
 }
 static inline void InvertRigid(M* m)
 {
-    Mtx_Transpose3x3(m);
-    if (!Mtx_IsTranslationZero(m)) {
+    cMatrix_InvertRot(m);
+    if (!cMatrix_IsZeroTranslation(m)) {
         V t;
-        Vec4_Assign(&t, func_00133EC0(m));
-        Vec3_Negate(&t);
-        Mtx_TransformByTranspose(&t, m);
-        Mtx_SetTranslation(m, &t);
+        cVector_ctor_cVectorR(&t, func_00133EC0(m));
+        cVector_NegateXYZ(&t);
+        cVector_Rotate_cMatrixR(&t, m);
+        cMatrix_SetTranslation(m, &t);
     }
 }
 static inline void CP1(V* d, const V* s) { __int128 t; asm volatile { lq t, 0(s); sq t, 0(d) } }
@@ -62,8 +62,8 @@ static inline float Len(V* v) {
     }
     return r;
 }
-/* Combat_HitDirection: hit point in the target frame; yaw/pitch of it into out, returns the horizontal distance */
-float Combat_HitDirection(M* m, V* p, V* out)
+/* GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP: hit point in the target frame; yaw/pitch of it into out, returns the horizontal distance */
+float GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP(M* m, V* p, V* out)
 {
     M inv = *m;
     InvertRigid(&inv);
@@ -72,8 +72,8 @@ float Combat_HitDirection(M* m, V* p, V* out)
     MulVO(&l, &l, &inv);
     V h(l.x, l.y, 0.0f, 0.0f);
     float d = Len(&h);
-    out->x = Math_Atan2f(l.z, d);
+    out->x = Libc_Atan2f(l.z, d);
     out->y = 0.0f;
-    out->z = Math_Atan2f(-l.x, l.y);
+    out->z = Libc_Atan2f(-l.x, l.y);
     return d;
 }

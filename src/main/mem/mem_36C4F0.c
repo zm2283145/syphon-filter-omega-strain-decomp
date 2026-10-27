@@ -169,10 +169,10 @@ extern int D_00533C90;
 extern char* D_00533890[];
 extern Heap36C960 D_00533CB0[];
 extern char D_004BBE50[];
-void Mem_HeapFree(Heap36C960* heap, void* p, char* file, int line);
-void Mem_PumpDeferredFrees(void);
+void cMemBin_Deallocate(Heap36C960* heap, void* p, char* file, int line);
+void DELETE_DELAYS(void);
 }
-void Mem_PumpDeferredFrees(void)
+void DELETE_DELAYS(void)
 {
     while (D_00533C90) {
         char* p;
@@ -182,7 +182,7 @@ void Mem_PumpDeferredFrees(void)
             AllocGuard guard;
             if (p) {
                 char heap = p[-12] & 0xF;
-                Mem_HeapFree(&D_00533CB0[heap], p, D_004BBE50, 0x46);
+                cMemBin_Deallocate(&D_00533CB0[heap], p, D_004BBE50, 0x46);
             }
         }
     }

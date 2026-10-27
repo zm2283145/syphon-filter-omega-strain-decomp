@@ -7,9 +7,9 @@
 #include "types.h"
 
 extern char D_00532FE8;
-extern int App_Broadcast(int, int, int);
+extern int cGameFrontEnd_LobbySendShutdownMessage(int, int, int);
 
 int func_002CA6F0(void) {
     D_00532FE8 = 1;
-    return App_Broadcast(8192, 0, 0);
+    return cGameFrontEnd_LobbySendShutdownMessage(8192, 0, 0);
 }

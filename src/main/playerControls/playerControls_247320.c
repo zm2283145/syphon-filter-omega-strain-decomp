@@ -8,7 +8,7 @@
 #include "types.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00247320 */
 #pragma push /* merge_units */
@@ -16,16 +16,16 @@ int Mem_Free();
 #include "alloc_guard.h"
 typedef struct { char pad[0x128]; void* buf; } E4Own;
 extern "C" {
-void PickupMenu_Destroy(void* p, int n);
+void cPickupMenu_dtor(void* p, int n);
 }
-extern "C" void PlayerInput_ClosePickupMenu(E4Own* o)
+extern "C" void cPlayerControls_KillPickup(E4Own* o)
 {
     void* p = o->buf;
     if (p) {
         {
             AllocGuard g;
-            PickupMenu_Destroy(p, -1);
-            Mem_Free(0, p, "playerControls.cc", 0xF29);
+            cPickupMenu_dtor(p, -1);
+            cMemMan_Deallocate(0, p, "playerControls.cc", 0xF29);
         }
         o->buf = 0;
     }
@@ -67,16 +67,16 @@ typedef struct { int x; int y; } Tmp_247410;
 extern "C" {
 void* cHumanMotionParams_cTargetZRotationStackSlot_ctor(Tmp_247410* t, float f);
 void cArray_cTargetZRotationStackSlot_PushBackActual(char* h, void* e);
-void ActorHeading_RetargetLast(char* h, float f);
+void cHumanMotionParams_UpdateTargetZRotation_AfterChangeInStack_AndSetNewTransitionDuration(char* h, float f);
 int cHumanMotionParams_GetTargetZRotation_TopOfStackId(char* h);
 #if 0 /* merge_units */
 void cHumanMotionParams_cTargetZRotationStack_Remove_ByIndex_And_CleanUp(char* h, int id);
 #endif /* merge_units */
 #define cHumanMotionParams_cTargetZRotationStack_Remove_ByIndex_And_CleanUp(a0, a1) (cHumanMotionParams_cTargetZRotationStack_Remove_ByIndex_And_CleanUp((V247720 *)(a0), (a1))) /* merge_units */
 
-HEnt_247410* History_At(char* h, int id);
+HEnt_247410* cArray_cTargetZRotationStackSlot_opIndex(char* h, int id);
 }
-extern "C" void PlayerInput_UpdateAimHeading(St_247410* s, char* a, int on, float f)
+extern "C" void cPlayerControls_UpdateCharacterZRotation(St_247410* s, char* a, int on, float f)
 {
     float spd;
     if ((s->Entered(5) && s->NotIn(8)) || (s->Entered(8) && s->NotIn(5)) || (s->Entered(5) && s->Entered(8))) {
@@ -87,18 +87,18 @@ extern "C" void PlayerInput_UpdateAimHeading(St_247410* s, char* a, int on, floa
             else if (s->cur == 5)
                 spd = 1.0f;
             cArray_cTargetZRotationStackSlot_PushBackActual(a + 0x3088, cHumanMotionParams_cTargetZRotationStackSlot_ctor(&t, f));
-            ActorHeading_RetargetLast(a + 0x3030, spd);
+            cHumanMotionParams_UpdateTargetZRotation_AfterChangeInStack_AndSetNewTransitionDuration(a + 0x3030, spd);
             s->id = cHumanMotionParams_GetTargetZRotation_TopOfStackId(a + 0x3030);
         }
     } else if ((s->Left(5) && s->cur != 8) || (s->Left(8) && s->cur != 5) || (s->Left(5) && s->Left(8))) {
         if (s->id != -1) {
             cHumanMotionParams_cTargetZRotationStack_Remove_ByIndex_And_CleanUp(a + 0x3088, s->id);
-            ActorHeading_RetargetLast(a + 0x3030, -1.0f);
+            cHumanMotionParams_UpdateTargetZRotation_AfterChangeInStack_AndSetNewTransitionDuration(a + 0x3030, -1.0f);
             s->id = -1;
         }
     } else if ((s->cur == 5 || s->cur == 8) && on && s->id != -1) {
-        History_At(a + 0x3088, s->id)->b = f;
-        ActorHeading_RetargetLast(a + 0x3030, -1.0f);
+        cArray_cTargetZRotationStackSlot_opIndex(a + 0x3088, s->id)->b = f;
+        cHumanMotionParams_UpdateTargetZRotation_AfterChangeInStack_AndSetNewTransitionDuration(a + 0x3030, -1.0f);
     }
 }
 #undef cHumanMotionParams_cTargetZRotationStack_Remove_ByIndex_And_CleanUp /* merge_units */

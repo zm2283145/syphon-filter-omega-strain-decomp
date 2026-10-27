@@ -16,7 +16,7 @@
  */
 
 
-List* List_Construct(List* l) {
+List* std_list_deleter_voidPtr_ctor_cAllocatorR(List* l) {
     l->count = 0;
     l->first = l->last = &l->first;
     return l;

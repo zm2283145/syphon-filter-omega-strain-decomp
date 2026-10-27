@@ -19,7 +19,7 @@ int strcmp(const void *, const void *);
 #pragma cplusplus on
 struct Look { char pad[0x440]; } __attribute__((aligned(16)));
 struct Prof { char pad0[0x40]; Look look; };
-/* quad copy loop idiom as in src\main\LightMgr_RemoveFromTable.c (retail uses a hand-written addi) */
+/* quad copy loop idiom as in src\main\cLightMan_RemoveLight.c (retail uses a hand-written addi) */
 static inline void QMoveP(void* d, Prof* p, int n) {
     void* ss = &p->look;
     int nn = n;
@@ -54,42 +54,42 @@ extern char g_Game[];
 extern int D_004FFC04;
 extern Holder g_MemCard;
 extern char g_AgentPartCache[];
-void Appearance_RemoveBlankPairs(Look* l);
-void AgentPartCache_Unlock(void* p);
-Agent* Agent_GetSelected(void* p, int i);
-void AgentData_StoreAppearance(Agent* a, Look* l);
-int Gui_GetScreenList(void);
-int Gui_GetScreenStack(void);
-int GuiManager_FindOrLoad(int list, char* a, char* b);
-void GuiStack_SwapScreens(int stack, Screen* s, int n);
-int Loc_LookupText(char* s);
-void FrontEnd_OpenPopup(int a, int b, int t1, int t2, Screen* s, int c);
+void SKL_RemoveBlanks(Look* l);
+void Monster_RestoreLockedPartsTex(void* p);
+Agent* cGameSystem_GetAgentData(void* p, int i);
+void cAgentData_SetSkl(Agent* a, Look* l);
+int Gui_Manager(void);
+int Gui_Canvas(void);
+int GuiManager_OpenGui(int list, char* a, char* b);
+void GuiCanvas_Transition(int stack, Screen* s, int n);
+int nGlobalization_GetString_charP(char* s);
+void cGameFrontEnd_PushMessageBox(int a, int b, int t1, int t2, Screen* s, int c);
 }
 /* opt_propagation off + the Holder* local keep the lui/addiu/lw 0 form for g_MemCard. */
 #pragma opt_propagation off
-extern "C" void GuiAgentCreate_Save(Screen* self)
+extern "C" void GuiAgentCreate_NextScreen(Screen* self)
 {
     Look look;
     QMoveP(&look, &self->data->prof, 0x44);
-    Appearance_RemoveBlankPairs(&look);
-    AgentPartCache_Unlock(g_AgentPartCache);
+    SKL_RemoveBlanks(&look);
+    Monster_RestoreLockedPartsTex(g_AgentPartCache);
     {
-        Agent* a = Agent_GetSelected(g_Game, -1);
+        Agent* a = cGameSystem_GetAgentData(g_Game, -1);
         a->b8DC = 0;
         a->b91C = 0;
         a->i99C = -1;
         a->b95C = 0;
         a->i9A0 = -1;
     }
-    AgentData_StoreAppearance(Agent_GetSelected(g_Game, -1), &look);
+    cAgentData_SetSkl(cGameSystem_GetAgentData(g_Game, -1), &look);
     Holder* h = &g_MemCard;
     if (h->cfg->b59D) {
-        int n = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9930, D_004A9940);
-        GuiStack_SwapScreens(Gui_GetScreenStack(), self, n);
+        int n = GuiManager_OpenGui(Gui_Manager(), D_004A9930, D_004A9940);
+        GuiCanvas_Transition(Gui_Canvas(), self, n);
     } else {
         int p = D_004FFC04;
-        int t1 = Loc_LookupText(D_004A9950);
-        FrontEnd_OpenPopup(p, 4, t1, Loc_LookupText(D_004A9960), self, 3);
+        int t1 = nGlobalization_GetString_charP(D_004A9950);
+        cGameFrontEnd_PushMessageBox(p, 4, t1, nGlobalization_GetString_charP(D_004A9960), self, 3);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -122,54 +122,54 @@ extern Ui_0028BBE0* D_004FFC04;
 #endif /* merge_units */
 #define D_004FFC04 (*(Ui_0028BBE0 **)&D_004FFC04) /* merge_units */
 
-char* String_CStr(void* s);
-void GuiAgentCreate_SelectOption(Self_0028BBE0* self, char* n);
-void GuiAgentCreate_SleepChildren(void* p);
-void GuiAgentCreate_Randomize(Self_0028BBE0* self, int a, int b);
-void GuiAgentCreate_WakeChildren(Src_0028BBE0* w);
+char* std_basic_string_char_char_traits_char_c_str(void* s);
+void GuiAgentCreate_UserInterfaceNextButton(Self_0028BBE0* self, char* n);
+void RecurseChildrenHide(void* p);
+void GuiAgentCreate_UpdateClones(Self_0028BBE0* self, int a, int b);
+void RecurseChildrenVisible(Src_0028BBE0* w);
 #if 0 /* merge_units */
-void* Agent_GetSelected(void* a, int b);
+void* cGameSystem_GetAgentData(void* a, int b);
 #endif /* merge_units */
-#define Agent_GetSelected(a0, a1) ((void *)Agent_GetSelected((a0), (a1))) /* merge_units */
+#define cGameSystem_GetAgentData(a0, a1) ((void *)cGameSystem_GetAgentData((a0), (a1))) /* merge_units */
 
 void AgentData_SetName(void* ag, char* text);
-void* GuiWidget_FindChildByName(Self_0028BBE0* self, char* name);
+void* GuiWidget_FindChild_charP(Self_0028BBE0* self, char* name);
 void GuiTextWidget_SetText(W_0028BBE0* w, char* s, int a);
 #if 0 /* merge_units */
-void GuiAgentCreate_Save(Self_0028BBE0* self);
+void GuiAgentCreate_NextScreen(Self_0028BBE0* self);
 #endif /* merge_units */
-#define GuiAgentCreate_Save(a0) (GuiAgentCreate_Save((Screen *)(a0))) /* merge_units */
+#define GuiAgentCreate_NextScreen(a0) (GuiAgentCreate_NextScreen((Screen *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void* Gui_GetScreenStack(void);
+void* Gui_Canvas(void);
 #endif /* merge_units */
-#define Gui_GetScreenStack() ((void *)Gui_GetScreenStack()) /* merge_units */
+#define Gui_Canvas() ((void *)Gui_Canvas()) /* merge_units */
 
-void GuiScreen_SetFocus(void* ui, void* w);
-void AgentData_Create(void* ag, int a, int b);
+void GuiCanvas_SetFocus(void* ui, void* w);
+void cAgentData_Create(void* ag, int a, int b);
 #if 0 /* merge_units */
-void* Gui_GetScreenList(void);
+void* Gui_Manager(void);
 #endif /* merge_units */
-#define Gui_GetScreenList() ((void *)Gui_GetScreenList()) /* merge_units */
-
-#if 0 /* merge_units */
-void* GuiManager_FindOrLoad(void* a, char* b, char* c);
-#endif /* merge_units */
-#define GuiManager_FindOrLoad(a0, a1, a2) ((void *)GuiManager_FindOrLoad((int)(a0), (a1), (a2))) /* merge_units */
+#define Gui_Manager() ((void *)Gui_Manager()) /* merge_units */
 
 #if 0 /* merge_units */
-void GuiStack_SwapScreens(void* ui, Self_0028BBE0* self, void* pg);
+void* GuiManager_OpenGui(void* a, char* b, char* c);
 #endif /* merge_units */
-#define GuiStack_SwapScreens(a0, a1, a2) (GuiStack_SwapScreens((int)(a0), (Screen *)(a1), (int)(a2))) /* merge_units */
+#define GuiManager_OpenGui(a0, a1, a2) ((void *)GuiManager_OpenGui((int)(a0), (a1), (a2))) /* merge_units */
 
-int GuiWidget_OnEvent(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int sub, char* text);
+#if 0 /* merge_units */
+void GuiCanvas_Transition(void* ui, Self_0028BBE0* self, void* pg);
+#endif /* merge_units */
+#define GuiCanvas_Transition(a0, a1, a2) (GuiCanvas_Transition((int)(a0), (Screen *)(a1), (int)(a2))) /* merge_units */
+
+int GuiWidget_onMessage(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int sub, char* text);
 }
 static inline W_0028BBE0* FindAs_0028BBE0(Self_0028BBE0* self, char* name, char* type)
 {
-    W_0028BBE0* w = (W_0028BBE0*)GuiWidget_FindChildByName(self, name);
+    W_0028BBE0* w = (W_0028BBE0*)GuiWidget_FindChild_charP(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
-extern "C" int GuiAgentCreate_HandleEvent(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int sub, char* text)
+extern "C" int GuiAgentCreate_onMessage(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int sub, char* text)
 {
     unsigned short m = msg;
     if (m == 0x10 && sub == 1)
@@ -177,34 +177,34 @@ extern "C" int GuiAgentCreate_HandleEvent(Self_0028BBE0* self, Src_0028BBE0* w, 
     if (m == 0) {
         char* n;
         self->fD0 = 0;
-        n = String_CStr(w->name);
-        GuiAgentCreate_SelectOption(self, n);
+        n = std_basic_string_char_char_traits_char_c_str(w->name);
+        GuiAgentCreate_UserInterfaceNextButton(self, n);
         if (!strcmp(n, "gender")) {
             self->fCC = 0;
             self->fD0 = 1;
         }
         if (!strcmp(n, "randomize")) {
-            GuiAgentCreate_SleepChildren(self->f4C);
+            RecurseChildrenHide(self->f4C);
             self->fCC = 1;
             self->fD0 = 1;
-            GuiAgentCreate_Randomize(self, 1, 0);
+            GuiAgentCreate_UpdateClones(self, 1, 0);
         }
         if (!strcmp(n, "body")) {
-            GuiAgentCreate_WakeChildren(w);
-            GuiAgentCreate_SleepChildren(self->f50);
+            RecurseChildrenVisible(w);
+            RecurseChildrenHide(self->f50);
             self->fCC = 2;
             self->fD0 = 1;
         }
         if (!strcmp(n, "head")) {
-            GuiAgentCreate_WakeChildren(w);
-            GuiAgentCreate_SleepChildren(self->f4C);
+            RecurseChildrenVisible(w);
+            RecurseChildrenHide(self->f4C);
             if (!self->fD8 && self->f54)
                 self->f54->flags &= ~2;
             self->fCC = 3;
             self->fD0 = 1;
         }
         if (!strcmp(n, "agentname")) {
-            GuiAgentCreate_SleepChildren(self->f50);
+            RecurseChildrenHide(self->f50);
             self->fCC = 4;
             self->fD0 = 1;
         }
@@ -214,40 +214,40 @@ extern "C" int GuiAgentCreate_HandleEvent(Self_0028BBE0* self, Src_0028BBE0* w, 
             W_0028BBE0* x;
             if (text && *text) {
                 W_0028BBE0* t;
-                AgentData_SetName(Agent_GetSelected(g_Game, -1), text);
+                AgentData_SetName(cGameSystem_GetAgentData(g_Game, -1), text);
                 t = FindAs_0028BBE0(self, "value_agent_name", D_004A7520);
                 if (t)
                     GuiTextWidget_SetText(t, text, 0);
             }
             if (sub == 2 && text && *text) {
-                GuiAgentCreate_Save(self);
+                GuiAgentCreate_NextScreen(self);
                 return 1;
             }
-            x = (W_0028BBE0*)GuiWidget_FindChildByName(self, "agentname");
+            x = (W_0028BBE0*)GuiWidget_FindChild_charP(self, "agentname");
             if (x)
-                GuiScreen_SetFocus(Gui_GetScreenStack(), x);
+                GuiCanvas_SetFocus(Gui_Canvas(), x);
             return 1;
         } else if (sub == 3) {
             void* pg;
             D_004FFBB8 = 0;
             g_CardSlotId = -1;
-            AgentData_Create(Agent_GetSelected(g_Game, -1), 0, 1);
+            cAgentData_Create(cGameSystem_GetAgentData(g_Game, -1), 0, 1);
             if (D_004FFC04->b2E)
-                pg = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR");
+                pg = GuiManager_OpenGui(Gui_Manager(), "GuiCommandCenter", "CMDCENTR");
             else
-                pg = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "onoffsel");
-            GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
+                pg = GuiManager_OpenGui(Gui_Manager(), "GuiOnlineOfflineSelect", "onoffsel");
+            GuiCanvas_Transition(Gui_Canvas(), self, pg);
         }
     }
-    return GuiWidget_OnEvent(self, w, msg, sub, text);
+    return GuiWidget_onMessage(self, w, msg, sub, text);
 }
 #undef D_004FFC04 /* merge_units */
-#undef Agent_GetSelected /* merge_units */
-#undef GuiAgentCreate_Save /* merge_units */
-#undef Gui_GetScreenStack /* merge_units */
-#undef Gui_GetScreenList /* merge_units */
-#undef GuiManager_FindOrLoad /* merge_units */
-#undef GuiStack_SwapScreens /* merge_units */
+#undef cGameSystem_GetAgentData /* merge_units */
+#undef GuiAgentCreate_NextScreen /* merge_units */
+#undef Gui_Canvas /* merge_units */
+#undef Gui_Manager /* merge_units */
+#undef GuiManager_OpenGui /* merge_units */
+#undef GuiCanvas_Transition /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0028BBE0(void) {}
 #pragma pop /* merge_units */

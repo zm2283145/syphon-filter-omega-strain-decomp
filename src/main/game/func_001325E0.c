@@ -6,16 +6,16 @@
 
 #include "types.h"
 
-Vec4* Vec4_Copy(Vec4* d, Vec4* s) {
+Vec4* cVector_opAssign(Vec4* d, Vec4* s) {
     *d = *s;
     return d;
 }
 
-Vec4* Quat_Assign(Vec4* d, Vec4* s) {
+Vec4* cQuaternion_opAssign(Vec4* d, Vec4* s) {
     *d = *s;
     return d;
 }
 
-void* Root_Identity(void* self) {
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(void* self) {
     return self;
 }

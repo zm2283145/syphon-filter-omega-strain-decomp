@@ -17,6 +17,6 @@ TankLink* func_00287C10(TankLink* self, int unk00, char* source) {
 }
 
 /* Message type id for cNetCreateTankMsg. */
-int cNetCreateTankMsg_v05(void) {
+int cNetCreateTankMsg_GetMsgId(void) {
     return D_00506250;
 }

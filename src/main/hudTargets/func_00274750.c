@@ -3,10 +3,10 @@
 #include "alloc_guard.h"
 
 extern "C" {
-void* Mem_Alloc(int, int, char*, int);
-int IeElement_Create(int);
-void HudTracker_Construct(void*, int, void*);
-void IeElement_SetColour(int, void*);
+void* cMemMan_Allocate(int, int, char*, int);
+int cInterfaceModel_CreateInstance(int);
+void cIE_GOBJ_ctor(void*, int, void*);
+void cInterfaceElement_SetFilterColor(int, void*);
 extern char D_004A8F40[];
 extern char D_004A8F50[];
 extern char D_004A8F60[];
@@ -36,7 +36,7 @@ struct Marker274750 {
     int type;
 };
 
-extern "C" void ObjMarker_ConstructIcon(Marker274750* m, signed char big)
+extern "C" void cHudTargetInfo_SetModel(Marker274750* m, signed char big)
 {
     int s1;
     void* o;
@@ -48,27 +48,27 @@ extern "C" void ObjMarker_ConstructIcon(Marker274750* m, signed char big)
     if (!(m->type == 1 || m->type == 2))
         f = 0;
     id = f ? D_004FFD78 : (big ? D_004FFD68 : D_004FFD70);
-    s1 = IeElement_Create(id);
+    s1 = cInterfaceModel_CreateInstance(id);
     {
         AllocGuard g;
-        o = Mem_Alloc(0, 0x90, D_004A8F60, 0xE9);
+        o = cMemMan_Allocate(0, 0x90, D_004A8F60, 0xE9);
     }
     if (o) {
-        HudTracker_Construct(o, s1, m);
+        cIE_GOBJ_ctor(o, s1, m);
         *(char**)o = D_004E0360;
     }
     m->label = o;
-    IeElement_SetColour(s1, big ? D_004A8F50 : D_004A8F40);
+    cInterfaceElement_SetFilterColor(s1, big ? D_004A8F50 : D_004A8F40);
     f = 1;
     if (!(m->type == 1 || m->type == 2))
         f = 0;
     id = f ? D_004FFD60 : (big ? D_004FFD50 : D_004FFD58);
     {
         AllocGuard g;
-        o = Mem_Alloc(0, 0x90, D_004A8F60, 0xF3);
+        o = cMemMan_Allocate(0, 0x90, D_004A8F60, 0xF3);
     }
     if (o) {
-        HudTracker_Construct(o, IeElement_Create(id), m);
+        cIE_GOBJ_ctor(o, cInterfaceModel_CreateInstance(id), m);
         *(char**)o = D_004DC810;
     }
     m->icon = (Icon274750*)o;

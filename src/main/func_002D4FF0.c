@@ -7,17 +7,17 @@ typedef struct {
     char vec[0x1C]; int val; char p210[4]; unsigned char b0 : 1; unsigned char b1 : 1;
 } Self2D4FF0;
 extern int D_004ED9B8, g_CasEventMsgClass, D_0051F0C0;
-extern int* Event_GetType(Ev2D4FF0*);
-extern void cNPC_v01(Self2D4FF0*, Ev2D4FF0*);
+extern int* cMessage_Name(Ev2D4FF0*);
+extern void cNPC_HandleMessage(Self2D4FF0*, Ev2D4FF0*);
 extern void cPathNavigator_Request_int_int_cVectorP(Ctl2D4FF0*, int, int, void*);
 extern void cPathNavigator_ForceDestination(Ctl2D4FF0*, void*, int);
 extern void cNetPathMsg_GetDestination(Ev2D4FF0*, void*);
 int cNetNPC_HandleMessage(Self2D4FF0* s, Ev2D4FF0* e)
 {
-    int t = *Event_GetType(e);
-    if (t == D_004ED9B8 || (t = *Event_GetType(e), t == g_CasEventMsgClass)) {
-        cNPC_v01(s, e);
-    } else if (t = *Event_GetType(e), t == D_0051F0C0) {
+    int t = *cMessage_Name(e);
+    if (t == D_004ED9B8 || (t = *cMessage_Name(e), t == g_CasEventMsgClass)) {
+        cNPC_HandleMessage(s, e);
+    } else if (t = *cMessage_Name(e), t == D_0051F0C0) {
         Obj2D4FF0* o;
         int b;
         s->val = e->val;

@@ -13,7 +13,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_0041C070 */
 #pragma push /* merge_units */
@@ -21,13 +21,13 @@ int Mem_Free();
 struct C0041C070 { float r, g, b, a; };
 struct Q0041C070 { __int128 q; };
 struct W0041C070 { char p[0x60]; C0041C070 c; char p70[8]; void* h; };
-extern "C" void TextObj_SetColour(void* h, C0041C070* c);
+extern "C" void cTextArea_SetColor(void* h, C0041C070* c);
 static inline void Set0041C070(C0041C070* d, const C0041C070& s) { d->r = s.r; d->g = s.g; d->b = s.b; d->a = s.a; }
-extern "C" void GuiTextWidget_SetColour(W0041C070* w, Q0041C070* in)
+extern "C" void GuiTextWidget_SetTextColor(W0041C070* w, Q0041C070* in)
 {
     Q0041C070 t = *in;
     Set0041C070(&w->c, *(C0041C070*)&t);
-    if (w->h) TextObj_SetColour(w->h, &w->c);
+    if (w->h) cTextArea_SetColor(w->h, &w->c);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0041C070(void) {}
@@ -66,7 +66,7 @@ static inline void merge_flush_func_0041C0F0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x11]; unsigned char b11; unsigned char b12; } PC110;
 typedef struct { char pad[0x74]; unsigned char mode; char pad2[3]; PC110* p; } TC110;
-void GuiTextWidget_SetB74(TC110* t, unsigned char mode) {
+void GuiTextWidget_SetVerticleJustify(TC110* t, unsigned char mode) {
     t->mode = mode;
     if (t->p) {
         t->p->b12 = t->mode == 0;
@@ -104,11 +104,11 @@ extern "C" {
 extern char g_Video[];
 extern int D_00538C64;
 extern char D_00538C68;
-void GuiWidget_Draw(Self* self);
+void GuiWidget_onRender(Self* self);
 #if 0 /* merge_units */
-void TextObj_SetColour(Child* c, float* color);
+void cTextArea_SetColor(Child* c, float* color);
 #endif /* merge_units */
-#define TextObj_SetColour(a0, a1) (TextObj_SetColour((void *)(a0), (C0041C070 *)(a1))) /* merge_units */
+#define cTextArea_SetColor(a0, a1) (cTextArea_SetColor((void *)(a0), (C0041C070 *)(a1))) /* merge_units */
 
 void TextObj_Draw(Child* c);
 }
@@ -119,11 +119,11 @@ static inline Mtx* MtxAt(int i) { return &((Render*)g_Video)->mtx[i]; }
 static inline void GQR(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 static inline void UM(void* p) { int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
 
-extern "C" void GuiTextWidget_Draw(Self* self)
+extern "C" void GuiTextWidget_onRender(Self* self)
 {
     float c[4];
     Mtx saved;
-    GuiWidget_Draw(self);
+    GuiWidget_onRender(self);
     if (self->child == 0) return;
     c[0] = self->color[0];
     c[1] = self->color[1];
@@ -134,7 +134,7 @@ extern "C" void GuiTextWidget_Draw(Self* self)
         c[1] *= 0.5f;
         c[2] *= 0.5f;
     }
-    TextObj_SetColour(self->child, c);
+    cTextArea_SetColor(self->child, c);
     { Mtx* s = MtxAt(D_00538C64); Mtx* d = &saved; GQR(d, s); }
     UM(MtxAt(D_00538C64));
     D_00538C68 = 1;
@@ -144,7 +144,7 @@ extern "C" void GuiTextWidget_Draw(Self* self)
     GQR(MtxAt(D_00538C64), &saved);
     D_00538C68 = 1;
 }
-#undef TextObj_SetColour /* merge_units */
+#undef cTextArea_SetColor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0041C150(void) {}
 #pragma pop /* merge_units */
@@ -157,13 +157,13 @@ static inline void merge_flush_func_0041C150(void) {}
 /* Release the owned record at +0xDC (string member at +0x14) under the allocator guard, reset +0x10. */
 extern "C" {
 void* String_Dtor(void* self, short flags);
-void GuiWidget_BaseSleep(void* self);
+void GuiWidget_onSleep(void* self);
 }
 struct O34DB10 { char pad[0x10]; int a10; char pad14[0x64]; char* aDC; };
-extern "C" void GuiTextWidget_OnSleep(O34DB10* o)
+extern "C" void GuiTextWidget_onSleep(O34DB10* o)
 {
     char* p;
-    GuiWidget_BaseSleep(o);
+    GuiWidget_onSleep(o);
     p = o->aDC;
     if (p) {
         {
@@ -173,7 +173,7 @@ extern "C" void GuiTextWidget_OnSleep(O34DB10* o)
                 if (s)
                     String_Dtor(s, 0);
             }
-            Mem_Free(0, p, "guiTextWidget.cc", 0x56);
+            cMemMan_Deallocate(0, p, "guiTextWidget.cc", 0x56);
         }
         o->aDC = 0;
     }
@@ -220,17 +220,17 @@ struct GuiText {
 
 extern "C" {
 extern char D_004BF2D0[];
-void GuiWidget_BaseWake(GuiText* self);
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-GuiTextChild* TextObj_Construct(void* p, int x, int y, int w, int h, int resource, float* color);
-char* String_CStr(void* s);
-void TextObj_SetText(GuiTextChild* child, char* text);
+void GuiWidget_onWake(GuiText* self);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+GuiTextChild* cTextArea_ctor(void* p, int x, int y, int w, int h, int resource, float* color);
+char* std_basic_string_char_char_traits_char_c_str(void* s);
+void cTextArea_SetText(GuiTextChild* child, char* text);
 }
 
 static inline void* Alloc_C3E0(unsigned int size)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004BF2D0, 0x45);
+    return cMemMan_Allocate(0, size, D_004BF2D0, 0x45);
 }
 
 static inline void Set75(GuiText* self, unsigned char v)
@@ -247,13 +247,13 @@ static inline void Set76(GuiText* self, unsigned char v)
         self->child->s5B = v;
 }
 
-extern "C" void GuiTextWidget_OnWake(GuiText* self)
+extern "C" void GuiTextWidget_onWake(GuiText* self)
 {
-    GuiWidget_BaseWake(self);
+    GuiWidget_onWake(self);
     if (!self->child) {
         void* p = Alloc_C3E0(0x60);
         if (p)
-            p = TextObj_Construct(p, (int)self->x, (int)self->y, (int)self->w, (int)self->h, self->resource, self->color);
+            p = cTextArea_ctor(p, (int)self->x, (int)self->y, (int)self->w, (int)self->h, self->resource, self->color);
         self->child = (GuiTextChild*)p;
     }
     if (self->child) {
@@ -262,7 +262,7 @@ extern "C" void GuiTextWidget_OnWake(GuiText* self)
     }
     Set75(self, self->s75);
     Set76(self, self->s76);
-    TextObj_SetText(self->child, String_CStr(self->text));
+    cTextArea_SetText(self->child, std_basic_string_char_char_traits_char_c_str(self->text));
     self->child->value = self->value;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -274,8 +274,8 @@ static inline void merge_flush_func_0041C3E0(void) {}
 #pragma push /* merge_units */
 extern int GuiWidget_Load(GuiWidgetStreamRecord* self, char** cursor);
 extern void GuiTextWidget_SetText(GuiTextStreamRecord* self, const char* text, int localized);
-extern void* Gui_GetScreenList(void);
-extern int GuiFont_Find(void* manager, const char* name);
+extern void* Gui_Manager(void);
+extern int GuiManager_GetFont(void* manager, const char* name);
 
 static inline const char* read_string(char** cursor)
 {
@@ -293,7 +293,7 @@ int GuiTextWidget_Load(GuiTextStreamRecord* self, char** cursor)
         return 0;
     GuiTextWidget_SetText(self, read_string(cursor), 1);
     resource = read_string(cursor);
-    self->resource = GuiFont_Find(Gui_GetScreenList(), resource);
+    self->resource = GuiManager_GetFont(Gui_Manager(), resource);
     *cursor = (char*)(((unsigned int)*cursor + 3) & ~3u);
     self->first = *(float*)*cursor;
     *cursor += 4;

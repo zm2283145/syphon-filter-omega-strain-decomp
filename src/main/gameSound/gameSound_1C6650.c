@@ -9,11 +9,11 @@
 
 /* merge_units: begin func_001C6650 */
 #pragma push /* merge_units */
-int Event_Send(void*, void*, int);
-int SoundEvent_Ctor(void*, void*, int);
-int SoundRequest_Ctor(void*, int, void*, int, int);
+int QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
+int cStopSoundMsg_ctor_cSndFxR_bool(void*, void*, int);
+int cSndFx_ctor_int_charP_cGOBJP_int(void*, int, void*, int, int);
 int cMessage_dtor(void*, int);
-int FileMan_Release(void*, int);
+int cFileMan_dtor(void*, int);
 extern char D_004DADF0[];
 extern char g_Game[];
 extern unsigned char func_001C6700(void);
@@ -22,18 +22,18 @@ typedef struct { int w[43]; } A2C4; typedef struct { int w[39]; } A228; typedef 
  * stack block (4-byte aligned layout) */
 #pragma push
 #pragma opt_common_subs off
-void Global_StopAllQuips(void) {
+void nGameSound_StopAllQuips(void) {
     struct { A10 sp10; A88 sp88; A124 sp124; A1E0 sp1E0; A228 sp228; A2C4 sp2C4; } L;
     if (&func_001C6700 != 0) {
-        SoundRequest_Ctor(&L.sp1E0, 4, "", 0, 0);
-        SoundEvent_Ctor(&L.sp10, &L.sp1E0, 0);
-        Event_Send(&L.sp10, g_Game, 0);
+        cSndFx_ctor_int_charP_cGOBJP_int(&L.sp1E0, 4, "", 0, 0);
+        cStopSoundMsg_ctor_cSndFxR_bool(&L.sp10, &L.sp1E0, 0);
+        QueueMessage_cMessageR_cSystemP_int(&L.sp10, g_Game, 0);
         L.sp10.vt = D_004DADF0;
-        FileMan_Release(&L.sp124, -1);
-        FileMan_Release(&L.sp88, -1);
+        cFileMan_dtor(&L.sp124, -1);
+        cFileMan_dtor(&L.sp88, -1);
         cMessage_dtor(&L.sp10, 0);
-        FileMan_Release(&L.sp2C4, -1);
-        FileMan_Release(&L.sp228, -1);
+        cFileMan_dtor(&L.sp2C4, -1);
+        cFileMan_dtor(&L.sp228, -1);
     }
 }
 #pragma pop

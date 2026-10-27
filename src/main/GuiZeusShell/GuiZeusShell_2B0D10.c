@@ -8,12 +8,12 @@
 #include "loose02_types.h"
 
 extern char D_004DDDE0[];   /* GuiZeusShell vtable */
-extern int GuiWidget_BaseWake(GuiWidget* self);
+extern int GuiWidget_onWake(GuiWidget* self);
 extern void GuiWidget_ctor(GuiWidget* self);
 
 /* GuiZeusShell vtable slot 5: forwards to the base widget. */
-int GuiZeusShell_Wake(GuiWidget* self) {
-    return GuiWidget_BaseWake(self);
+int GuiZeusShell_onWake(GuiWidget* self) {
+    return GuiWidget_onWake(self);
 }
 
 /* GuiZeusShell constructor. */

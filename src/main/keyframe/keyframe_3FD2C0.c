@@ -15,10 +15,10 @@
 #include "types.h"
 #include "loose04_types.h"
 
-extern void Loc_LookupText(void);
+extern void nGlobalization_GetString_charP(void);
 
 void func_003FD2C0(void) {
-    Loc_LookupText();
+    nGlobalization_GetString_charP();
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003FD2C0 */
@@ -27,11 +27,11 @@ void func_003FD2C0(void) {
 #pragma push /* merge_units */
 typedef struct { int w[4]; } SD2D0;
 extern unsigned char D_0055D450;
-extern void String_CtorCStr_13B480(SD2D0* s, const char* c);
+extern void std_basic_string_char_char_traits_char_ctor_charP(SD2D0* s, const char* c);
 extern int func_003FD740(SD2D0* s);
 extern void String_Dtor(SD2D0* s, int del);
-extern const char* String_CStr(SD2D0* s);
-extern void String_Copy(char* d, const char* s);
+extern const char* std_basic_string_char_char_traits_char_c_str(SD2D0* s);
+extern void Libc_Strcpy(char* d, const char* s);
 int func_003FD2D0(char* buf)
 {
     SD2D0 s;
@@ -39,12 +39,12 @@ int func_003FD2D0(char* buf)
         return 0;
     if (!buf || !*buf)
         return 1;
-    String_CtorCStr_13B480(&s, buf);
+    std_basic_string_char_char_traits_char_ctor_charP(&s, buf);
     if (!func_003FD740(&s)) {
         String_Dtor(&s, 0);
         return 0;
     }
-    String_Copy(buf, String_CStr(&s));
+    Libc_Strcpy(buf, std_basic_string_char_char_traits_char_c_str(&s));
     String_Dtor(&s, 0);
     return 1;
 }

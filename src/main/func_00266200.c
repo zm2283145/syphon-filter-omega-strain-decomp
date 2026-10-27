@@ -57,7 +57,7 @@ struct DartMsg {
     V v;
     DartMsg(Tgt* tgt, bool a, int b, V v) {
         DartMsg* m = this;
-        Event_Construct(m, D_00504050);
+        cMessage_ctor_cMessageNameR(m, D_00504050);
         m->vtable = D_004DCF10;
         m->vtable = D_004DCDA0;
         m->b24 = 0;
@@ -73,10 +73,10 @@ extern unsigned char g_IsMultiplayer;
 extern char D_00504050[];
 extern char D_004DCDA0[];
 extern char D_004DCF10[];
-void HeldItem_LaunchDart(HeldItem* self, Tgt* tgt, bool a, int b, V v);
+void cAirTaser_Shoot_cGOBJP_bool_int_cVector(HeldItem* self, Tgt* tgt, bool a, int b, V v);
 }
 
-extern "C" bool HeldItem_Discharge(HeldItem* self, Tgt* tgt, bool a, int b) {
+extern "C" bool cAirTaser_Shoot_cGOBJP_bool_int(HeldItem* self, Tgt* tgt, bool a, int b) {
     bool fired = false;
     if (!self->state) {
         V v(0.0f, 0.0f, 0.0f, 1.0f);
@@ -91,13 +91,13 @@ extern "C" bool HeldItem_Discharge(HeldItem* self, Tgt* tgt, bool a, int b) {
         } else {
             v = tgt->GetPos(b);
         }
-        HeldItem_LaunchDart(self, tgt, a, b, v);
+        cAirTaser_Shoot_cGOBJP_bool_int_cVector(self, tgt, a, b, v);
         fired = true;
         if (g_IsMultiplayer) {
             DartMsg msg(tgt, a, b, v);
             msg.kind = 4;
             msg.flags = 0x40;
-            Event_Send(&msg, self->actor, 0);
+            QueueMessage_cMessageR_cSystemP_int(&msg, self->actor, 0);
             msg.vtable = D_004DCF10;
             cMessage_dtor(&msg, 0);
         }

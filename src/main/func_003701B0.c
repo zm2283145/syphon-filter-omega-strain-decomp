@@ -5,15 +5,15 @@ typedef struct { u64_t a; u64_t b; } QW;
 typedef struct { char pad[0x24]; Pkt* pk; int aFD8; int padFDC; int aFE0; int aFE4; char padFE8[0x10]; } E;
 typedef struct { char pad[8]; u64_t f8; char pad10[0xFA0]; E ents[1]; } Hdr;
 typedef struct { char pad[8]; u64_t f8; char pad10[0x1010]; int cur; char pad1024[0xC]; int n; int pad1034; int base; int* arr; int pend; char pad1044[0x9C]; unsigned int a10E0; } S;
-extern void Renderer_SetReceiverConsts(S* o, unsigned int flags);
+extern void XLib_ApplyContext(S* o, unsigned int flags);
 extern char D_00538080[];
 extern char D_00537F80[];
 extern int D_00492F70;
 extern void cVU1Man_NewProgBatch(void*);
-extern void Vu1_UploadMicrocode(void*, int);
+extern void cVU1Man_RequestProg(void*, int);
 extern void cDmaMan_RegisterModel(void*, int);
 extern int cDmaMan_BeginChain_eDmaChannel_int(void*, unsigned char, int);
-extern void DmaPacket_Close(void*, unsigned char, void*);
+extern void cDmaMan_EndChain_int_ulongP(void*, unsigned char, void*);
 extern long long DMATAG3(int a, int b, int c);
 extern int cVU1Man_GetMSCAL(void* table, int index);
 
@@ -41,7 +41,7 @@ void XLib_DrawLines(S* o)
         o->pend = 0;
     }
     if (o->arr[o->n - o->base] > 0) {
-        Renderer_SetReceiverConsts(o, o->a10E0 | 0x40000);
+        XLib_ApplyContext(o, o->a10E0 | 0x40000);
         d = 0;
         f = 0;
         ep = (E*)((char*)o + 0xFB0 + o->cur * 56);
@@ -51,7 +51,7 @@ void XLib_DrawLines(S* o)
         {
         E* ep; int i;
         cVU1Man_NewProgBatch(D_00538080);
-        Vu1_UploadMicrocode(D_00538080, 1);
+        cVU1Man_RequestProg(D_00538080, 1);
         ep = (E*)((char*)o + o->cur * 56 + 0xFB0);
         cDmaMan_RegisterModel(D_00537F80, D_00492F70);
         p = (QW*)cDmaMan_BeginChain_eDmaChannel_int(D_00537F80, 1, o->base * 4);
@@ -88,7 +88,7 @@ void XLib_DrawLines(S* o)
                 p++;
             }
         }
-        DmaPacket_Close(D_00537F80, 1, p);
+        cDmaMan_EndChain_int_ulongP(D_00537F80, 1, p);
         }
     }
 }

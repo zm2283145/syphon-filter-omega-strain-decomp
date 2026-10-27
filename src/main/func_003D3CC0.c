@@ -19,7 +19,7 @@ typedef struct E3ShMgr {
 } E3ShMgr;
 
 /* Selects the shadow receiver record whose key matches. */
-void Shadow_SelectReceiver(E3ShMgr* m, int key)
+void cShadowMan_PreRenderReceiver(E3ShMgr* m, int key)
 {
     int i;
     m->sel = 0;

@@ -14,7 +14,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00185630 */
 #pragma push /* merge_units */
@@ -25,17 +25,17 @@ extern char D_004EF030[];
 extern char D_004DA9B0[];
 extern char D_004DCF10[];
 extern signed char* D_005061D0;
-extern void Event_Construct(Msg_185630* msg, void* name);
+extern void cMessage_ctor_cMessageNameR(Msg_185630* msg, void* name);
 extern void cMessage_dtor(Msg_185630* msg, int flags);
-extern void Global_ForceHolster(void* w);
+extern void cWeapon_ForceHolster(void* w);
 void cNetForceHolsterMsg_NetReceive(G_185630* g)
 {
     Msg_185630 msg;
-    Event_Construct(&msg, D_004EF030);
+    cMessage_ctor_cMessageNameR(&msg, D_004EF030);
     msg.vtable = D_004DA9B0;
     msg.size = 0x40;
     msg.holster = *D_005061D0++ != 0;
-    if (g && g->classKey == g_HumanActorClassKey) Global_ForceHolster(g->weapons);
+    if (g && g->classKey == g_HumanActorClassKey) cWeapon_ForceHolster(g->weapons);
     msg.vtable = D_004DCF10;
     cMessage_dtor(&msg, 0);
 }
@@ -54,7 +54,7 @@ typedef struct { char pad[0xC]; int idC; int id10; char pad14[0x18]; unsigned ch
 extern "C" {
 int cNetObj_IsOwner(int id);
 void cNetHuman_CreateNetHuman(void* key, int id);
-int NetMap_BindReceiver(int id, int owner, Obj_56D0* o);
+int cNetObj_AddSystem(int id, int owner, Obj_56D0* o);
 }
 static inline unsigned char IsNet_56D0(Obj_56D0* o)
 {
@@ -75,7 +75,7 @@ extern "C" void cHuman_InitNetwork(Obj_56D0* o)
     }
     {
         int t = o->id10;
-        NetMap_BindReceiver(t, NetLocalId(), o);
+        cNetObj_AddSystem(t, NetLocalId(), o);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -88,7 +88,7 @@ static inline void merge_flush_func_001856D0(void) {}
 #pragma cplusplus on
 extern "C" {
 int cNetObj_GetDelayedMsgs(int* a, unsigned char* flag, void** p);
-void Coop_CreatePartnerActor(void* p, int a);
+void netCreatePlayer_HandleNetPlayerCreate(void* p, int a);
 void netCreateNPC_HandleNetNPCCreate(void* p, int a);
 }
 extern "C" void cHuman_LoadNetworkData(void)
@@ -97,12 +97,12 @@ extern "C" void cHuman_LoadNetworkData(void)
     void* p;
     int a;
     while (cNetObj_GetDelayedMsgs(&a, &flag, &p)) {
-        if (flag) Coop_CreatePartnerActor(p, a);
+        if (flag) netCreatePlayer_HandleNetPlayerCreate(p, a);
         else netCreateNPC_HandleNetNPCCreate(p, a);
         {
             void* q = p;
             AllocGuard guard;
-            Mem_Free(0, q, "human.cc", 0x447D);
+            cMemMan_Deallocate(0, q, "human.cc", 0x447D);
         }
     }
 }

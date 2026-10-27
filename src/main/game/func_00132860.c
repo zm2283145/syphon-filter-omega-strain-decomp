@@ -6,11 +6,11 @@
 typedef struct { __int128 q; } V_2860;
 struct Mdl_2860 { VPAD16(a) VPAD4(b) virtual void Update(); int pad4[3]; V_2860 m[4]; unsigned char dirty; };
 struct Ctx_2860 { char pad[0x2E78]; Mdl_2860* model; char pad2e7c[0x24]; V_2860 pos; };
-/* anchor point (sibling of ModelCtx_GetAnchor): refresh the model if dirty, transform pos by its matrix (VU0) */
+/* anchor point (sibling of cSkeleton_GetCenterOfMass): refresh the model if dirty, transform pos by its matrix (VU0) */
 #pragma push
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" V_2860 Actor_GetPosition(Ctx_2860* self)
+extern "C" V_2860 cSKM_GOBJ_GetCenterOfMass(Ctx_2860* self)
 {
     Mdl_2860* m = self->model;
     if (m->dirty) m->Update();

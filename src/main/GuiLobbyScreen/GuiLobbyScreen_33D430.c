@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_0033D430 */
 #pragma push /* merge_units */
@@ -24,10 +24,10 @@ extern char D_004E1220[];
 extern int D_00532FD8;
 extern void* D_00532FE0;
 void String_Dtor(void* p, int f);
-void GuiWidget_Destroy(void* p, int f);
+void GuiWidget_dtor(void* p, int f);
 void operator_delete(void* p);
 }
-extern "C" O33D430* GuiScreen_dtor(O33D430* self, short del)
+extern "C" O33D430* GuiLobbyScreen_dtor(O33D430* self, short del)
 {
     if (self) {
         self->vt = D_004DE830;
@@ -39,14 +39,14 @@ extern "C" O33D430* GuiScreen_dtor(O33D430* self, short del)
                     AllocGuard g;
                     if (p)
                         String_Dtor(p, 0);
-                    Mem_Free(0, p, "GuiLobbyScreen.cc", 0x6F);
+                    cMemMan_Deallocate(0, p, "GuiLobbyScreen.cc", 0x6F);
                 }
                 D_00532FE0 = 0;
             }
         }
         if (self) {
             self->vt = D_004E1220;
-            GuiWidget_Destroy(self, 0);
+            GuiWidget_dtor(self, 0);
         }
         if (del > 0)
             operator_delete(self);
@@ -69,7 +69,7 @@ static inline void merge_flush_func_0033D430(void) {}
 
 extern "C" {
 int GuiWidget_ctor(...);                                 
-char * Mem_Alloc(...);                      
+char * cMemMan_Allocate(...);                      
 extern char D_004B9BB0;
 #if 0 /* merge_units */
 extern char D_004DE830;
@@ -88,7 +88,7 @@ extern char * D_00532FE0;
 
 extern unsigned char g_ProfileLockEnabled;
 }
-extern "C" char * GuiScreen_ctor(char * arg0) {
+extern "C" char * GuiLobbyScreen_ctor(char * arg0) {
     char * temp_s1;
 
     GuiWidget_ctor();
@@ -98,7 +98,7 @@ extern "C" char * GuiScreen_ctor(char * arg0) {
     if ((D_00532FD8 == 0) && (D_00532FE0 == NULL)) {
         {
             AllocGuard g;
-        temp_s1 = Mem_Alloc(0, 0xC, &D_004B9BB0, 0x5B);
+        temp_s1 = cMemMan_Allocate(0, 0xC, &D_004B9BB0, 0x5B);
         }
         if (temp_s1 != NULL) {
             F_(temp_s1, 0x0, int) = 0;

@@ -49,14 +49,14 @@ extern struct ObjCC260* D_004FFC04;
 
 extern unsigned char g_DebugTriangle;
 extern char D_0055A300[];
-void FrontEnd_DrawGui(struct ObjCC260*);
-void FrontEnd_UpdateGui(struct ObjCC260*);
-void Pad_Reset(void*);
-void* Gui_GetScreenStack(void);
-void GuiCanvas_UpdatePads(void*);
-void GuiWidget_BroadcastEvent(void*, int, int, int);
+void cGameFrontEnd_Render(struct ObjCC260*);
+void cGameFrontEnd_NextFrame(struct ObjCC260*);
+void cJoystick_Poll(void*);
+void* Gui_Canvas(void);
+void GuiCanvas_ProcessInput_void(void*);
+void GuiWidget_SendChildrenMessage(void*, int, int, int);
 
-void App_CardWaitPoll(int arg0, int arg1)
+void cGameFrontEnd_LobbyCallback(int arg0, int arg1)
 {
     int i;
 
@@ -66,28 +66,28 @@ void App_CardWaitPoll(int arg0, int arg1)
     g_DebugTriangle = 1;
     if (arg0 == 0) {
         if (D_004FFC04->b310 == 0 || arg1 == 0x3039) {
-            FrontEnd_UpdateGui(D_004FFC04);
-            FrontEnd_DrawGui(D_004FFC04);
+            cGameFrontEnd_NextFrame(D_004FFC04);
+            cGameFrontEnd_Render(D_004FFC04);
         }
     } else if (arg0 == 1) {
-        Pad_Reset(D_0055A300);
-        GuiCanvas_UpdatePads(Gui_GetScreenStack());
+        cJoystick_Poll(D_0055A300);
+        GuiCanvas_ProcessInput_void(Gui_Canvas());
         if (D_004FFC04->b310 == 0) {
-            FrontEnd_UpdateGui(D_004FFC04);
-            FrontEnd_DrawGui(D_004FFC04);
+            cGameFrontEnd_NextFrame(D_004FFC04);
+            cGameFrontEnd_Render(D_004FFC04);
         }
     } else if (arg0 == 2) {
         if (arg1 == 2) {
-            GuiWidget_BroadcastEvent(Gui_GetScreenStack(), 0x2001, 0, 0);
+            GuiWidget_SendChildrenMessage(Gui_Canvas(), 0x2001, 0, 0);
             if (D_004FFC04->b310 == 0) {
                 for (i = 0; i < 3; i++) {
-                    FrontEnd_UpdateGui(D_004FFC04);
-                    FrontEnd_DrawGui(D_004FFC04);
+                    cGameFrontEnd_NextFrame(D_004FFC04);
+                    cGameFrontEnd_Render(D_004FFC04);
                 }
             }
         }
     } else if (arg0 == 3) {
-        GuiWidget_BroadcastEvent(Gui_GetScreenStack(), 0x2002, arg1, 0);
+        GuiWidget_SendChildrenMessage(Gui_Canvas(), 0x2002, arg1, 0);
     }
     g_DebugTriangle = 0;
 }
@@ -105,25 +105,25 @@ static unsigned int dat_0048C248[2] = { 0x1, 0x0 };
 extern void* g_OptionsRecord;
 extern char D_004ACFA8[];
 extern int D_005383D4;
-extern void Options_Load(void* p);
-extern void FrontEnd_InitLevelNameKeys(void);
-extern char* GameIni_GetString(char* key);
-extern void FrontEnd_StartGui(ObjC3E0* o, int a);
-extern HudC3E0* App_GetInstance(void);
-void FrontEnd_FirstEntry(ObjC3E0* o)
+extern void cGameOptions_Load(void* p);
+extern void SFOLevels_SetupMissionInfo(void);
+extern char* cSFOini_GetKeyValue(char* key);
+extern void cGameFrontEnd_InitGui(ObjC3E0* o, int a);
+extern HudC3E0* GetMachine(void);
+void cGameFrontEnd_Init(ObjC3E0* o)
 {
     if ((*(unsigned char*)dat_0048C248)) {
         char* s;
-        Options_Load(g_OptionsRecord);
+        cGameOptions_Load(g_OptionsRecord);
         o->b2C = 0;
-        FrontEnd_InitLevelNameKeys();
-        s = GameIni_GetString(D_004ACFA8);
+        SFOLevels_SetupMissionInfo();
+        s = cSFOini_GetKeyValue(D_004ACFA8);
         if (s)
             strncpy(o->name, s, 0x40);
         (*(unsigned char*)dat_0048C248) = 0;
     }
-    FrontEnd_StartGui(o, 0);
-    D_005383D4 = (App_GetInstance()->mode == 2) ? 0x32 : 0x3C;
+    cGameFrontEnd_InitGui(o, 0);
+    D_005383D4 = (GetMachine()->mode == 2) ? 0x32 : 0x3C;
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002CC3E0(void) {}

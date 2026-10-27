@@ -124,26 +124,26 @@ extern char g_LightMgr[];
 extern unsigned char g_LevelLightsDirty;
 extern char D_00583968[];
 extern char g_IdentityMatrix[];
-void Weapon_Discharge(WiInv* self, WiObj* target, int sub, unsigned char view, int a);
-unsigned char WeaponInv_GetHeldClass(WiInv* self);
-void Effect_SpawnById(int id, WiFx* fx);
-void WeaponInv_StopLoopSound(WiInv* self, unsigned char slot);
-int WeaponInv_GetCarriedValue(WiInv* self);
-void Event_Construct(void* msg, void* type);
-void Event_Send(void* msg, void* target, int immediate);
+void cWeapon_FireIfReady(WiInv* self, WiObj* target, int sub, unsigned char view, int a);
+unsigned char cWeapon_GetEquipmentType(WiInv* self);
+void SfxParticleEffect_eEffectName_cMatrixR(int id, WiFx* fx);
+void cWeapon_StopLoopingSound(WiInv* self, unsigned char slot);
+int cWeapon_GetMostVisible(WiInv* self);
+void cMessage_ctor_cMessageNameR(void* msg, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int immediate);
 void cMessage_dtor(void* msg, int flags);
-void HeldItem_Dispatch(void* held, float dt);
-WiLight* LightMgr_AllocPoint(void* pool, int kind);
-int* SpecFx_GetEffectDef(int id);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void IdMgr_Allocate(int* out, int kind);
+void cAirTaser_NextFrame(void* held, float dt);
+WiLight* cLightMan_AddLight(void* pool, int kind);
+int* nSfxLoader_GetHandle(int id);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void nGobjManager_GetNextId(int* out, int kind);
 void cGOBJ_ctor(void* p, int* id, int a, int* b);
-void Object_Register(void* p);
-void Object_Unregister(void* p);
-void Object_DeleteLater(float t, void* p);
-void ActorModel_GetAttachPointWorld(WiV4* out, WiV4* src, int a);
-int Random_Next();
-void ParticleEmitter_SetRate(float r, void* e);
+void nGobjManager_AddGOBJ(void* p);
+void nGobjManager_RemoveGOBJ(void* p);
+void cSystem_ActualScheduleDelete(float t, void* p);
+void cMan_GetGunBarrelEnd(WiV4* out, WiV4* src, int a);
+int Libc_Rand();
+void cParticle_SetScale(float r, void* e);
 }
 
 struct WiMsg {
@@ -168,14 +168,14 @@ static inline float WiLenSq(WiV4* a) {
     return ret;
 }
 
-static inline float WiR01() { return (float)Random_Next() / 2147483648.0f; }
+static inline float WiR01() { return (float)Libc_Rand() / 2147483648.0f; }
 static inline float WiRand(float m) { return m * WiR01(); }
 static inline float WiRandRR(const float& lo, const float& hi) { return lo + WiRand(hi - lo); }
-static inline void* WiAlloc() { AllocGuard g; return Mem_Alloc(0, 0x74, D_0049B1D0, 0x533); }
+static inline void* WiAlloc() { AllocGuard g; return cMemMan_Allocate(0, 0x74, D_0049B1D0, 0x533); }
 
 static inline void WiFxCtor(WiFxObj* o, int def, int& id) {
     int z;
-    IdMgr_Allocate(&id, 0xE7);
+    nGobjManager_GetNextId(&id, 0xE7);
     z = 0;
     cGOBJ_ctor(o, &id, 4, &z);
     *(void**)o = D_004DF860;
@@ -185,26 +185,26 @@ static inline void WiFxCtor(WiFxObj* o, int def, int& id) {
     o->f70 = 1.0f;
     o->b2F = 1;
 }
-extern "C" void WeaponInv_Update(WiInv* self, float dt)
+extern "C" void cWeapon_NextFrame(WiInv* self, float dt)
 {
     int i;
     int j;
     for (i = 0; i < 2; i++) {
         if (self->burstLeft[i] > 0)
-            Weapon_Discharge(self, self->Target(), self->subtarget, self->aimView, 1);
+            cWeapon_FireIfReady(self, self->Target(), self->subtarget, self->aimView, 1);
     }
     for (j = 0; j < 2; j++) {
         if (!(self->cooldown[j] <= 0.0f))
             self->cooldown[j] -= dt;
         self->unkB4[j] += dt;
         if (!self->aimView && self->actor->f38 != 0x80 && !(g_VideoFrameRate <= 35.0f)
-            && WeaponInv_GetHeldClass(self) != 8 && !(self->unkB4[j] <= 0.5f) && self->unkB4[j] < 1.5f) {
+            && cWeapon_GetEquipmentType(self) != 8 && !(self->unkB4[j] <= 0.5f) && self->unkB4[j] < 1.5f) {
             WiFx fx;
             self->actor->ctl->GetMuzzle(&fx, j != 0, 0);
-            Effect_SpawnById(5, &fx);
+            SfxParticleEffect_eEffectName_cMatrixR(5, &fx);
         }
         if (!self->burstLeft[j] && !(self->unkB4[j] <= 0.5f))
-            WeaponInv_StopLoopSound(self, j != 0);
+            cWeapon_StopLoopingSound(self, j != 0);
         if (!(self->spinUp[j] <= 0.0f)) {
             self->spinUp[j] -= dt;
             if (self->spinUp[j] < 0.0f)
@@ -217,25 +217,25 @@ extern "C" void WeaponInv_Update(WiInv* self, float dt)
         if (c && c->IsReady())
             ready = true;
         if (ready) {
-            int v = WeaponInv_GetCarriedValue(self);
+            int v = cWeapon_GetMostVisible(self);
             if (v != self->carried) {
                 WiMsg m;
                 self->carried = v;
-                Event_Construct(&m, D_00583968);
+                cMessage_ctor_cMessageNameR(&m, D_00583968);
                 m.vtable = D_004E1140;
                 m.kind = 2;
                 m.value = v;
-                Event_Send(&m, self->actor->ctl, 0);
+                QueueMessage_cMessageR_cSystemP_int(&m, self->actor->ctl, 0);
                 m.vtable = D_004E1140;
                 cMessage_dtor(&m, 0);
             }
         }
     }
     if (self->held)
-        HeldItem_Dispatch(self->held, dt);
-    if (WeaponInv_GetHeldClass(self) == 10 && self->actor->GetState() != 3) {
+        cAirTaser_NextFrame(self->held, dt);
+    if (cWeapon_GetEquipmentType(self) == 10 && self->actor->GetState() != 3) {
         if (!self->light) {
-            WiLight* l = LightMgr_AllocPoint(g_LightMgr, 4);
+            WiLight* l = cLightMan_AddLight(g_LightMgr, 4);
             if (l) {
                 *(void**)((char*)l + 4) = D_004D9280;
                 l->kind = D_00489C08;
@@ -268,18 +268,18 @@ extern "C" void WeaponInv_Update(WiInv* self, float dt)
         }
         if (!self->fx) {
             int id;
-            int def = *SpecFx_GetEffectDef(7);
+            int def = *nSfxLoader_GetHandle(7);
             WiFxObj* o;
-            { AllocGuard g; o = (WiFxObj*)Mem_Alloc(0, 0x74, D_0049B1D0, 0x533); }
+            { AllocGuard g; o = (WiFxObj*)cMemMan_Allocate(0, 0x74, D_0049B1D0, 0x533); }
             if (o) WiFxCtor(o, def, id);
 
             self->fx = o;
             self->fx->Attach(g_IdentityMatrix, 0);
-            Object_Register(self->fx);
+            nGobjManager_AddGOBJ(self->fx);
         }
         {
             WiV4 pos;
-            ActorModel_GetAttachPointWorld(&pos, &self->actor->pos, 0);
+            cMan_GetGunBarrelEnd(&pos, &self->actor->pos, 0);
             if (self->light) {
                 WiLight* l = self->light;
                 float s = D_00489C70 + self->fE0 * (D_00489C78 - D_00489C70);
@@ -316,7 +316,7 @@ extern "C" void WeaponInv_Update(WiInv* self, float dt)
                 else if (!self->actor->On() && self->fx->On())
                     self->fx->Deactivate(1);
                 if (self->fx->emitter)
-                    ParticleEmitter_SetRate(D_00489C90 + self->fE0 * (D_00489C98 - D_00489C90), self->fx->emitter);
+                    cParticle_SetScale(D_00489C90 + self->fE0 * (D_00489C98 - D_00489C90), self->fx->emitter);
                 self->fx->Update(&pos);
             }
         }
@@ -328,8 +328,8 @@ extern "C" void WeaponInv_Update(WiInv* self, float dt)
             self->light = 0;
         }
         if (self->fx) {
-            Object_Unregister(self->fx);
-            Object_DeleteLater(0.1f, self->fx);
+            nGobjManager_RemoveGOBJ(self->fx);
+            cSystem_ActualScheduleDelete(0.1f, self->fx);
             self->fx = 0;
         }
     }

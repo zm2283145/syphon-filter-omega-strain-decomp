@@ -8,11 +8,11 @@ extern int D_004F8020, D_004F8028;
 extern signed char D_004EA0C8;
 extern char* g_LosCheckService;
 extern void std_vector_cVector_ctor(void* p);
-extern void Vector_Reserve_25DBD0_Thunk(void* p, int n);
+extern void std_vector_cVector_reserve(void* p, int n);
 extern void func_0025DBA0(void* p);
 extern void PtrVec_Reserve_Thunk_25DB90(void* p, int n);
 extern int cArrayCapacity_Int(int* n);
-extern int Script_RegisterVariable();
+extern int cScriptBase_registerGlobalVar();
 extern void __register_global_object(void* obj, void* dtor, void* link);
 void StaticInit_grenade(void)
 {
@@ -21,12 +21,12 @@ void StaticInit_grenade(void)
         Obj_4D0190* o = (Obj_4D0190*)D_004F8000;
         n[0] = 0x40;
         std_vector_cVector_ctor(o);
-        Vector_Reserve_25DBD0_Thunk(o, cArrayCapacity_Int(n));
+        std_vector_cVector_reserve(o, cArrayCapacity_Int(n));
         o->ready = 0;
         __register_global_object(o, cArray_cVector_dtor, D_004F7FF0);
     }
-    D_004F8020 = Script_RegisterVariable("BlindDuration", (int)&BlindDuration, D_00493890);
-    D_004F8028 = Script_RegisterVariable("BlindNVFactor", (int)&BlindNVFactor, D_00493890);
+    D_004F8020 = cScriptBase_registerGlobalVar("BlindDuration", (int)&BlindDuration, D_00493890);
+    D_004F8028 = cScriptBase_registerGlobalVar("BlindNVFactor", (int)&BlindNVFactor, D_00493890);
     {
         int n[1];
         Obj_4D0190* o = (Obj_4D0190*)D_004F8040;

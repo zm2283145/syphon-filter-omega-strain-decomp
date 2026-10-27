@@ -4,8 +4,8 @@
 #include "vslot_pad.h"
 
 struct M;
-extern "C" void Mtx44_SetRotation(M* m, float, float, float, float, float, float, float, float, float);
-extern "C" M* Mtx_Copy(M* d, const M* s);
+extern "C" void cMatrix_Set_ColumnMajorForm(M* m, float, float, float, float, float, float, float, float, float);
+extern "C" M* cMatrix_ctor_cMatrixR(M* d, const M* s);
 struct V {
     float x, y, z, w;
     V() {}
@@ -16,8 +16,8 @@ struct V {
 struct M {
     float m[4][4];
     M() {}
-    M(const M* p) { Mtx_Copy(this, p); void* xx = this; }
-    M(float a, float b, float c, float d, float e, float f, float g, float h, float i) { Mtx44_SetRotation(this, a, b, c, d, e, f, g, h, i); }
+    M(const M* p) { cMatrix_ctor_cMatrixR(this, p); void* xx = this; }
+    M(float a, float b, float c, float d, float e, float f, float g, float h, float i) { cMatrix_Set_ColumnMajorForm(this, a, b, c, d, e, f, g, h, i); }
     V& r(int i) { return *(V*)m[i]; }
     M(const M& o) { void* xx = this; __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(this), "r"(&o) : "memory"); }
     M& operator=(const M& o) { void* d = this; __int128 qa; __int128 qb; const void* s = &o; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); return *this; }
@@ -72,20 +72,20 @@ extern float D_00539170[4];
 extern char D_004B9F20[];
 void XLib_ClearZBuffer(char* p);
 void XLib_Restore(char* p);
-float Math_CosThunk(float);
-float Math_SinThunk(float);
-void Mtx44_SetRotation(M* m, float, float, float, float, float, float, float, float, float);
-M* Mtx_Copy(M* d, const M* s);
-M* Mtx_InvertRigid(M* m);
+float COS(float);
+float SIN(float);
+void cMatrix_Set_ColumnMajorForm(M* m, float, float, float, float, float, float, float, float, float);
+M* cMatrix_ctor_cMatrixR(M* d, const M* s);
+M* cMatrix_InvertRotTrans(M* m);
 void cMatrix_ctor_void(TM* m);
-void Mtx_MakeAxisRotation(TM* m, float x, float y, float z, float a);
-void Mtx_Multiply(M* a, TM* b);
+void cMatrix_SetWithAxisAngle(TM* m, float x, float y, float z, float a);
+void cMatrix_Rotate(M* a, TM* b);
 Root* RootCollection_FindByKey(void* c, char* key);
-void Root_SetWorldPlacement(Root* r, Place* p);
-Scr* Gui_GetScreenStack(void);
-void ActorRender_Update(void* p, float t);
-void World_PhysicsTraversal(float t);
-void GuiAgentModify_DrawModelCallback(Self* self); void GuiAgentModify_CameraApproach(Self* self); void Fog_ComputeTerms(char* r);
+void cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(Root* r, Place* p);
+Scr* Gui_Canvas(void);
+void cMan_ManNextFrame(void* p, float t);
+void cMotionManager_NextFrame(float t);
+void GuiAgentModify_ManRender(Self* self); void GuiAgentModify_BlendMenOnOff(Self* self); void XLib_UpdateFogParms(char* r);
 }
 
 #define SLOT(i) ((Slot*)(g_Video + (i) * 0x110))
@@ -216,12 +216,12 @@ static inline void MtxToQuat(void* m, void* out) {
 
 static inline M Euler(float ey, float ex, float ez)
 {
-    float cy = Math_CosThunk(ey);
-    float sy = Math_SinThunk(ey);
-    float cx = Math_CosThunk(ex);
-    float sx = Math_SinThunk(ex);
-    float cz = Math_CosThunk(ez);
-    float sz = Math_SinThunk(ez);
+    float cy = COS(ey);
+    float sy = SIN(ey);
+    float cx = COS(ex);
+    float sx = SIN(ex);
+    float cz = COS(ez);
+    float sz = SIN(ez);
     float czcy = cz * cy;
     float czsy = cz * sy;
     float szcy = sz * cy;
@@ -238,19 +238,19 @@ static inline M Euler(float ey, float ex, float ez)
     return M(a1, a2, a3, a4, a5, a6, a7, a8, a9);
 }
 
-static inline M Inverse(const M& m) { M t; return M(Mtx_InvertRigid(Mtx_Copy(&t, &m))); }
+static inline M Inverse(const M& m) { M t; return M(cMatrix_InvertRotTrans(cMatrix_ctor_cMatrixR(&t, &m))); }
 
 static inline void Rot2(M* m, const V& ax, float a)
 {
     TM t;
     cMatrix_ctor_void(&t);
-    Mtx_MakeAxisRotation(&t, ax.x, ax.y, ax.z, a);
-    Mtx_Multiply(m, &t);
+    cMatrix_SetWithAxisAngle(&t, ax.x, ax.y, ax.z, a);
+    cMatrix_Rotate(m, &t);
 }
 
 inline Place::Place(M& m) { MtxToQuat(&m, &q); p = m.r(3); }
 static inline void Rot(M* m, const V& ax, float a) { Rot2(m, ax, a); }
-static inline void SetPl(Root* r, const Place& pl) { Root_SetWorldPlacement(r, (Place*)&pl); }
+static inline void SetPl(Root* r, const Place& pl) { cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(r, (Place*)&pl); }
 
 
 /* cvt.w.s+mfc1 asm: a C (int) cast compiles to a different sequence; the dead r=0 matches retail's daddu */
@@ -269,7 +269,7 @@ static inline void SetCol(Fog* g, float r, float gg, float b)
     g->ci[3] = 0x80;
 }
 
-extern "C" void GuiAgentModify_DrawModelCallback(Self* self)
+extern "C" void GuiAgentModify_ManRender(Self* self)
 {
     M view;
     M r2;
@@ -278,7 +278,7 @@ extern "C" void GuiAgentModify_DrawModelCallback(Self* self)
     M mm;
     int saved;
     XLib_ClearZBuffer(g_Video);
-    GuiAgentModify_CameraApproach(self);
+    GuiAgentModify_BlendMenOnOff(self);
     saved = g_DrawMode;
     g_DrawMode = 0x95;
     { long long t = D_004BC1B0;
@@ -287,10 +287,10 @@ extern "C" void GuiAgentModify_DrawModelCallback(Self* self)
     ((Fog*)g_Video)->fogNear = 0.0f;
     ((Fog*)g_Video)->fogFar = 1.0f;
     D_00538C64++;
-    Fog_ComputeTerms(g_Video);
+    XLib_UpdateFogParms(g_Video);
     ((Fog*)g_Video)->zNear = 50.0f;
     ((Fog*)g_Video)->zFar = 80.0f;
-    Fog_ComputeTerms(g_Video);
+    XLib_UpdateFogParms(g_Video);
     SetCol((Fog*)g_Video, 0.25f, 0.25f, 0.25f);
     {
         Cam* c = &SLOT(D_00538C60)->cam;
@@ -333,10 +333,10 @@ extern "C" void GuiAgentModify_DrawModelCallback(Self* self)
         SetPl(r, Place(mm));
         r->x160 = 0;
     }    {
-        float t = Gui_GetScreenStack()->t;
+        float t = Gui_Canvas()->t;
         self->mdl->Tick(t);
-        ActorRender_Update((char*)self->mdl + 0x60, t);
-        World_PhysicsTraversal(t);
+        cMan_ManNextFrame((char*)self->mdl + 0x60, t);
+        cMotionManager_NextFrame(t);
         { Mdl* m = self->mdl; m->x38 = 2.0f; }
         self->mdl->Draw();
     }

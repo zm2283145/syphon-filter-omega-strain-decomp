@@ -27,6 +27,6 @@ void func_001E9060(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-int RelNode_HasChildren(Node* n) {
+int cTreeNode_cSkaSystemPtr_HasChildren(Node* n) {
     return !(n->count == 0);
 }

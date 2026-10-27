@@ -91,7 +91,7 @@ extern "C" V4 D_00535D40;
 extern "C" unsigned char D_00535D60;
 extern "C" unsigned char D_00535D61;
 extern "C" int g_VisionNight;
-extern "C" void Skm_Draw(void* a, void* b, int c, int d, int e, int f);
+extern "C" void cMan_ManRender(void* a, void* b, int c, int d, int e, int f);
 
 static inline int Vec4_Equal_(V4* a, V4* b) {
     int k, fl;
@@ -118,7 +118,7 @@ static inline int Vec4_Equal_(V4* a, V4* b) {
 }
 
 static inline bool Neq(V4* a, V4* b) { return !Vec4_Equal_(a, b); }
-extern "C" void ActorModel_Draw(ActorModel* self) {
+extern "C" void cSKM_GOBJ_Render(ActorModel* self) {
     ActorModelData* d = (ActorModelData*)self;
     V4 pos = self->GetPos();
     if (Neq(&D_00535D40, &pos)) {
@@ -130,9 +130,9 @@ extern "C" void ActorModel_Draw(ActorModel* self) {
         D_00535D61 = 1;
     }
     if (g_VisionNight != 0) {
-        Skm_Draw(d->part60, d->part2E50, d->lod, 0, 0, 1);
+        cMan_ManRender(d->part60, d->part2E50, d->lod, 0, 0, 1);
     } else {
-        Skm_Draw(d->part60, d->part2E50, d->lod, 0, 0, 0);
+        cMan_ManRender(d->part60, d->part2E50, d->lod, 0, 0, 0);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -144,27 +144,27 @@ static inline void merge_flush_func_00392990(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 struct UpdAW { virtual void v00(); virtual void Update(float dt); };
-extern "C" void AnimModel_Update(void* m, float dt);
-extern "C" void Physical_GatherIntegrate(void* p, void* a, float dt);
-extern "C" void ModelCtx_ComputeBounds(void* m);
-extern "C" void ModelCtx_ComputeCentroid(void* m);
-extern "C" void ActorRender_Update(void* r, float dt);
-extern "C" void Actor_BaseWorldUpdate(void* a, float dt);
-extern "C" void Actor_WorldUpdate(char* a, float dt)
+extern "C" void cSkaSystem_NextFrame(void* m, float dt);
+extern "C" void cCollisionSystem_cBox_NextFrame(void* p, void* a, float dt);
+extern "C" void cSkeleton_UpdateBBox(void* m);
+extern "C" void cSkeleton_UpdateCenterOfMass(void* m);
+extern "C" void cMan_ManNextFrame(void* r, float dt);
+extern "C" void cGOBJ_UpdateMotion(void* a, float dt);
+extern "C" void cSKM_GOBJ_UpdateMotion(char* a, float dt)
 {
     UpdAW* o;
-    AnimModel_Update(a + 0x2EC0, dt);
-    Physical_GatherIntegrate(a + 0x2FE0, a, dt);
+    cSkaSystem_NextFrame(a + 0x2EC0, dt);
+    cCollisionSystem_cBox_NextFrame(a + 0x2FE0, a, dt);
     o = *(UpdAW**)(a + 0x3024);
     if (o) {
         o->Update(dt);
     }
     if (*(unsigned char*)(a + 0x2E64)) {
-        ModelCtx_ComputeBounds(a + 0x2E50);
-        ModelCtx_ComputeCentroid(a + 0x2E50);
+        cSkeleton_UpdateBBox(a + 0x2E50);
+        cSkeleton_UpdateCenterOfMass(a + 0x2E50);
     }
-    ActorRender_Update(a + 0x60, dt);
-    Actor_BaseWorldUpdate(a, dt);
+    cMan_ManNextFrame(a + 0x60, dt);
+    cGOBJ_UpdateMotion(a, dt);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00392AA0(void) {}

@@ -39,16 +39,16 @@ typedef struct Quat {
     float x, y, z, w;
 } Quat;
 
-extern float Math_Cos(float); /* Math_Cos */
-extern float Math_Sin(float); /* Math_Sin */
+extern float Libc_Cosf(float); /* Libc_Cosf */
+extern float Libc_Sinf(float); /* Libc_Sinf */
 
 /* Builds a quaternion from an axis (xyz) and angle (w). */
-Quat* Quat_FromYaw(Quat* q, Quat* axisAngle) {
+Quat* cQuaternion_ctor_cAxisAngleR(Quat* q, Quat* axisAngle) {
     float half = 0.5f * axisAngle->w;
     float c;
     float s;
-    c = Math_Cos(half); /* cos */
-    s = Math_Sin(half); /* sin */
+    c = Libc_Cosf(half); /* cos */
+    s = Libc_Sinf(half); /* sin */
     q->w = c;
     q->x = s * axisAngle->x;
     q->y = s * axisAngle->y;

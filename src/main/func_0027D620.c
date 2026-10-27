@@ -16,32 +16,32 @@ typedef float f32; typedef double f64; typedef __int128 s128; typedef unsigned _
 #define M2C_BITWISE(type, x) (*(type*)&(x))
 #define M2C_CARRY 0
 #define NULL 0
-void Curve_Retime1s(f32, int);      /* extern */
-f32 Math_Atan2f(f32, f32);        /* extern */
-f32 Math_Cos(f32);          /* extern */
-f32 Math_CosThunk(f32);                     /* extern */
-f32 Math_Sin(f32);                                  /* extern */
-f32 Math_SinThunk(f32);                             /* extern */
-int Model_GetComponentTransform(int, int, s8);        /* extern */
-void Mtx44_SetRotation(void*, f32, f32, f32, f32, f32, f32, f32, f32, f32);                 /* extern */
-f32* Mtx_ToEuler(void*, void*);            /* extern */
-int Placement_GetIdentity(int, int, int);             /* extern */
-int Placement_GetPosition(int);                   /* extern */
-int PlayerCamera_ComputeSlopePitch(f32, int, int, int); /* extern */
-int Quat_SetIdentity(int);                            /* extern */
-s32 Root_GetWorldPlacement(int);                    /* extern */
-s32 Secondary_RootWeight(int, int);         /* extern */
-int Vec4_SetOrigin(int);                              /* extern */
-f32 VecCurve_SetDuration(f32, int);                /* extern */
-int VecPair_Copy(int, int);                        /* extern */
-s32 Actor_GetSkeleton(int);                         /* extern */
+void cSplinedMotion_cQuaternion_RestartTransition(f32, int);      /* extern */
+f32 Libc_Atan2f(f32, f32);        /* extern */
+f32 Libc_Cosf(f32);          /* extern */
+f32 COS(f32);                     /* extern */
+f32 Libc_Sinf(f32);                                  /* extern */
+f32 SIN(f32);                             /* extern */
+int cSkeleton_GetBoneToWorldMatrix(int, int, s8);        /* extern */
+void cMatrix_Set_ColumnMajorForm(void*, f32, f32, f32, f32, f32, f32, f32, f32, f32);                 /* extern */
+f32* cEulerAngle_T_1_2_ctor_cMatrixR(void*, void*);            /* extern */
+int cQuatVec_ctor_cQuaternionR_cVectorR(int, int, int);             /* extern */
+int cQuatVec_Translation(int);                   /* extern */
+int GetCameraPitchAlongSlope(f32, int, int, int); /* extern */
+int cQuaternion_GetIdentity(int);                            /* extern */
+s32 cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(int);                    /* extern */
+s32 cSkaAnimAnchorList_Find(int, int);         /* extern */
+int cVector_Get0001(int);                              /* extern */
+f32 cSplinedMotion_cVector_RestartTransition(f32, int);                /* extern */
+int cQuatVec_ctor_cQuatVecR(int, int);                        /* extern */
+s32 cSKM_GOBJ_GetSkeleton_void(int);                         /* extern */
 int cGameCamera_GetGlobalOffset(int);                        /* extern */
 int cSafePtr_cGOBJ_GetPtr_void_2(int);          /* extern */
-int PlayerCamera_UpdateR1Pick(int, void*, int);            /* extern */
-s32 PlayerCamera_LookAtLock(int, void*, int, int, int, int);        /* extern */
+int cPlayerCamera_GetTargetLockAngle(int, void*, int);            /* extern */
+s32 cPlayerCamera_GetAngleToTarget(int, void*, int, int, int, int);        /* extern */
 int ModifyCameraTrackingPoint_ForHuman(int, int, s8, int);          /* extern */
 int func_00280470(int, int, int, int);    /* extern */
-int Mtx_ToEulerXYZ(int, int);                        /* extern */
+int cEulerAngle_T_1_2_ctor_cMatrixR_2(int, int);                        /* extern */
 extern int D_00497F00;
 extern s32 g_HumanActorClassKey;
 extern s8 g_HeadNodeCode;
@@ -378,7 +378,7 @@ class VCam { public:
 };
 static inline void V4Init(QuatF* v, const float& x, const float& y, const float& z) { v->x = x; v->y = y; v->z = z; v->w = 0.0f; }
 static inline void AAInit(AxisAng* r, QuatF* ax, float ang) { r->a = ang; r->x = ax->x; r->y = ax->y; r->z = ax->z; }
-static inline void QuatFromAA(QuatF* q, AxisAng* r) { float h = 0.5f * r->a; float c = Math_Cos(h); float s = Math_Sin(h); q->w = c; q->x = s * r->x; q->y = s * r->y; q->z = s * r->z; }
+static inline void QuatFromAA(QuatF* q, AxisAng* r) { float h = 0.5f * r->a; float c = Libc_Cosf(h); float s = Libc_Sinf(h); q->w = c; q->x = s * r->x; q->y = s * r->y; q->z = s * r->z; }
 static inline bool NonNull(int p) { return p != 0; }
 static inline bool IsNull(int p) { return !NonNull(p); }
 static inline bool IEq(int a, int b) { return a == b; }
@@ -393,12 +393,12 @@ static inline void QFromEul(QuatF* qo, const QuatF* e) {
     float hz = half * e->z;
     float ex = e->x;
     float hx = half * ex;
-    float cx = Math_Cos(hx);
-                float cy = Math_Cos(hy);
-                float cz = Math_Cos(hz);
-                float sx = Math_Sin(hx);
-                float sy = Math_Sin(hy);
-                float sz = Math_Sin(hz);
+    float cx = Libc_Cosf(hx);
+                float cy = Libc_Cosf(hy);
+                float cz = Libc_Cosf(hz);
+                float sx = Libc_Sinf(hx);
+                float sy = Libc_Sinf(hy);
+                float sz = Libc_Sinf(hz);
                 float cycz = cy * cz;
                 float sysz = sy * sz;
                 float sycz = sy * cz;
@@ -413,19 +413,19 @@ static inline void MtxFromEuler(void* m, f32* e) {
     f32 ex = e[0];
     f32 ey = e[1];
     f32 ez = e[2];
-    f32 cx = Math_CosThunk(ex);
-    f32 sx = Math_SinThunk(ex);
-    f32 cy = Math_CosThunk(ey);
-    f32 sy = Math_SinThunk(ey);
-    f32 cz = Math_CosThunk(ez);
-    f32 sz = Math_SinThunk(ez);
+    f32 cx = COS(ex);
+    f32 sx = SIN(ex);
+    f32 cy = COS(ey);
+    f32 sy = SIN(ey);
+    f32 cz = COS(ez);
+    f32 sz = SIN(ez);
     f32 szcx = sz * cx;
     f32 szsx = sz * sx;
     f32 czcx = cz * cx;
     f32 czsx = cz * sx;
-    Mtx44_SetRotation(m, cz * cy, czsx * sy - szcx, szsx + czcx * sy, sz * cy, czcx + szsx * sy, szcx * sy - czsx, -sy, cy * sx, cy * cx);
+    cMatrix_Set_ColumnMajorForm(m, cz * cy, czsx * sy - szcx, szsx + czcx * sy, sz * cy, czcx + szsx * sy, szcx * sy - czsx, -sy, cy * sx, cy * cx);
 }
-static inline void InitIdentPl_() { QuatF q; QuatF p; Quat_SetIdentity(((int)&q)); Vec4_SetOrigin(((int)&p)); Placement_GetIdentity(((int)&D_00497F00), ((int)&q), ((int)&p)); }
+static inline void InitIdentPl_() { QuatF q; QuatF p; cQuaternion_GetIdentity(((int)&q)); cVector_Get0001(((int)&p)); cQuatVec_ctor_cQuaternionR_cVectorR(((int)&D_00497F00), ((int)&q), ((int)&p)); }
 static inline void InitIdentPl1() { InitIdentPl_(); }
 static inline void InitIdentPl2() { InitIdentPl1(); }
 static inline void InitIdentPl3() { InitIdentPl2(); }
@@ -445,7 +445,7 @@ static inline float Dot4m(void* a, void* b_) { void* b = b_; int rv0; float ret;
  mtc1 rv0, ret
  } return ret; }
 static inline f32 PlaneZ(QuatF* n, f32 nz, f32 x, f32 y) { f32 d = 0.0f; if (d != nz) { QuatF pt; pt.x = x; pt.y = y; pt.z = d; pt.w = 1.0f; d = -Dot4m(n, &pt) / nz; } else asm { .set reorder } return d; }
-static inline f32 PitchOf(int p) { s128 t; { s128* d = &t; asm { .set noreorder } /* scheduling barrier: keeps the &t addiu ahead of the lq */ s128* q = (s128*)p; s128 v = *q; *d = v; } QuatF* pt = (QuatF*)&t; ((QuatF*)&t)->z = 0.0f; return Math_Atan2f((*(f32*)((char*)(p) + 0x8)), VLen(&t)); }
+static inline f32 PitchOf(int p) { s128 t; { s128* d = &t; asm { .set noreorder } /* scheduling barrier: keeps the &t addiu ahead of the lq */ s128* q = (s128*)p; s128 v = *q; *d = v; } QuatF* pt = (QuatF*)&t; ((QuatF*)&t)->z = 0.0f; return Libc_Atan2f((*(f32*)((char*)(p) + 0x8)), VLen(&t)); }
 static inline void QMulR(void* o, void* a, QuatF* q) { s128 r; QuatMul(&r, a, q); { s128* d = (s128*)o; s128* qq = (s128*)&r; *d = *qq; } }
 static inline void QMulInto(void* a, QuatF* q) { s128 t; QMulR(&t, a, q); { s128* d = (s128*)a; s128* qq = (s128*)&t; *d = *qq; } }
 static inline void QMulW1(void* a, QuatF* q) { QMulInto(a, q); }
@@ -580,16 +580,16 @@ static inline void QuatToMtxE(void* a, void* b_) {
         sqc2 vf10, 0x20(a)
     }
 }
-static inline f32* TE1(void* a, void* b) { return Mtx_ToEuler(a, b); }
-static inline f32* TE2(void* a, void* b_) { void* b = b_; return Mtx_ToEuler(a, b); }
-static inline f32* TE3(void* a_, void* b) { void* a = a_; return Mtx_ToEuler(a, b); }
-static inline f32* TE4(void* a_, void* b_) { void* b = b_; void* a = a_; return Mtx_ToEuler(a, b); }
-static inline f32* TE5(void* a_, void* b_) { void* a = a_; void* b = b_; return Mtx_ToEuler(a, b); }
-static inline void FE1(int a, int b) { Mtx_ToEulerXYZ(a, b); }
-static inline void FE2(int a, int b_) { int b = b_; Mtx_ToEulerXYZ(a, b); }
-static inline void FE3(int a_, int b) { int a = a_; Mtx_ToEulerXYZ(a, b); }
-static inline void FE4(int a_, int b_) { int b = b_; int a = a_; Mtx_ToEulerXYZ(a, b); }
-static inline void FE5(int a_, int b_) { int a = a_; int b = b_; Mtx_ToEulerXYZ(a, b); }
+static inline f32* TE1(void* a, void* b) { return cEulerAngle_T_1_2_ctor_cMatrixR(a, b); }
+static inline f32* TE2(void* a, void* b_) { void* b = b_; return cEulerAngle_T_1_2_ctor_cMatrixR(a, b); }
+static inline f32* TE3(void* a_, void* b) { void* a = a_; return cEulerAngle_T_1_2_ctor_cMatrixR(a, b); }
+static inline f32* TE4(void* a_, void* b_) { void* b = b_; void* a = a_; return cEulerAngle_T_1_2_ctor_cMatrixR(a, b); }
+static inline f32* TE5(void* a_, void* b_) { void* a = a_; void* b = b_; return cEulerAngle_T_1_2_ctor_cMatrixR(a, b); }
+static inline void FE1(int a, int b) { cEulerAngle_T_1_2_ctor_cMatrixR_2(a, b); }
+static inline void FE2(int a, int b_) { int b = b_; cEulerAngle_T_1_2_ctor_cMatrixR_2(a, b); }
+static inline void FE3(int a_, int b) { int a = a_; cEulerAngle_T_1_2_ctor_cMatrixR_2(a, b); }
+static inline void FE4(int a_, int b_) { int b = b_; int a = a_; cEulerAngle_T_1_2_ctor_cMatrixR_2(a, b); }
+static inline void FE5(int a_, int b_) { int a = a_; int b = b_; cEulerAngle_T_1_2_ctor_cMatrixR_2(a, b); }
 static inline void PutD70(int a, f32 v) { f32* p = (f32*)((char*)a + 0xD70); *p = v; }
 static inline void PutD70b(void* a, f32 v) { f32* p = (f32*)((char*)a + 0xD70); *p = v; }
 static inline f32 GetD70(int a) { f32* p = (f32*)((char*)a + 0xD70); return *p; }
@@ -600,7 +600,7 @@ static inline void QMulRB(void* o, void* a, QuatF* q) { s128 r; QuatMulB(&r, a, 
 static inline void QMulIntoB(void* a, QuatF* q) { s128 t; QMulRB(&t, a, q); { s128* d = (s128*)a; s128* qq = (s128*)&t; *d = *qq; } }
 static inline void QMulW1B(void* a, QuatF* q) { QMulIntoB(a, q); }
 static inline void QMulW2B(void* a, QuatF* q) { QMulW1B(a, q); }
-void PlayerCamera_Follow(int arg0, int arg1) {
+void cPlayerCamera_UpdateCameraTrackingPoint(int arg0, int arg1) {
     bool jr2;
     f32 sp54C;
     int sp548;
@@ -767,7 +767,7 @@ void PlayerCamera_Follow(int arg0, int arg1) {
         InitIdentPl();
         D_004E1D80 = 1;
     }
-    VecPair_Copy(((int)&sp520), ((int)&D_00497F00));
+    cQuatVec_ctor_cQuatVecR(((int)&sp520), ((int)&D_00497F00));
     asm { .set noreorder } var_f25 = 0.0f; asm { .set reorder }
     sp54C = 0.0f;
     var_s1 = true; asm { .set reorder }
@@ -810,7 +810,7 @@ void PlayerCamera_Follow(int arg0, int arg1) {
                     float up = 0.25f;
                     QuatF v;
                     Mtx sp410;
-                    Model_GetComponentTransform(((int)&sp410), Actor_GetSkeleton(var_s5), g_HeadNodeCode);
+                    cSkeleton_GetBoneToWorldMatrix(((int)&sp410), cSKM_GOBJ_GetSkeleton_void(var_s5), g_HeadNodeCode);
                     Mtx* pm = &sp410;
                     v.x = 0.0f; v.z = up; v.y = 0.0f; v.w = 1.0f;
                     QuatF* pv = &v;
@@ -900,12 +900,12 @@ block_67:
             float hx = half * (*(f32*)((char*)(arg0) + 0xD70));
             float hy = half * (*(f32*)((char*)(arg0) + 0xD74));
             float hz = half * (*(f32*)((char*)(arg0) + 0xD78));
-            float cx = Math_Cos(hx);
-            float cy = Math_Cos(hy);
-            float cz = Math_Cos(hz);
-            float sx = Math_Sin(hx);
-            float sy = Math_Sin(hy);
-            float sz = Math_Sin(hz);
+            float cx = Libc_Cosf(hx);
+            float cy = Libc_Cosf(hy);
+            float cz = Libc_Cosf(hz);
+            float sx = Libc_Sinf(hx);
+            float sy = Libc_Sinf(hy);
+            float sz = Libc_Sinf(hz);
             float cycz = cy * cz;
             float sysz = sy * sz;
             float sycz = sy * cz;
@@ -959,7 +959,7 @@ block_67:
             *pd78 = TE2(&sp3A0, &sp360)[2];
             }
         }
-        PlayerCamera_ComputeSlopePitch((*(f32*)((char*)(arg0) + 0xD20)), ((int)&sp54C), ((int)&sp520), arg1);
+        GetCameraPitchAlongSlope((*(f32*)((char*)(arg0) + 0xD20)), ((int)&sp54C), ((int)&sp520), arg1);
         if (!PFlag(arg1, 0xDC) && ((*(int*)((char*)(arg1) + 0x320C)) != 1) && (temp_v1_5 = (*(int*)((char*)(arg0) + 0xCF4)), (((temp_v1_5 >> 5) & 1) == 0)) && (!((temp_v1_5 >> 6) & 1))) {
             if ((temp_v1_5 >> 9) & 1) {
                 var_v0_2 = VecIsZero((char*)arg0 + 0xD30);
@@ -1015,7 +1015,7 @@ block_152:
                             ((s8*)&sp548)[i] = v;
                         }
                         }
-                        { int sub = arg1 + 0x2EC0; temp_v0_6 = Placement_GetPosition(Root_GetWorldPlacement(Secondary_RootWeight(sub + 0xB0, ((int)&sp548)))); }
+                        { int sub = arg1 + 0x2EC0; temp_v0_6 = cQuatVec_Translation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(cSkaAnimAnchorList_Find(sub + 0xB0, ((int)&sp548)))); }
                         { f32 one; f32 k; f32 x; f32 y; f32 pz; f32 nz; nz = sp4F0.z; pz = (*(f32*)((char*)(temp_v0_6) + 0x8)); y = (*(f32*)((char*)(temp_v0_6) + 0x4)); x = (*(f32*)((char*)(temp_v0_6) + 0x0)); f32 d = PlaneZ(&sp4F0, nz, x, y); k = 0.25f; one = 1.0f; var_f3 = k * ((pz - d) - hgt); var_f3 = Clamp01P(var_f3, one); }
                     } else {
                         var_f3 = 1.0f;
@@ -1070,7 +1070,7 @@ block_152:
             if ((*(u8*)((char*)(temp_s0_3) + 0x50)) != 0) {
                 ((VCam*)temp_s0_3)->s20();
             }
-            if (PlayerCamera_LookAtLock(arg0, &sp4E0, arg1, 4, temp_s2, temp_s0_3 + 0x40) & 0xFF) {
+            if (cPlayerCamera_GetAngleToTarget(arg0, &sp4E0, arg1, 4, temp_s2, temp_s0_3 + 0x40) & 0xFF) {
                 (*(f32*)((char*)(arg0) + 0xD70)) = sp4E0.x;
                 (*(f32*)((char*)(arg0) + 0xD78)) = sp4E0.z;
             }
@@ -1084,7 +1084,7 @@ block_152:
             { void* dp = &sp520; void* sp = &sp2F0; s128 q; f32* pd = (f32*)((char*)arg0 + 0xD70); __asm__ volatile("lq %0, 0x0(%1)" : "=&r"(q) : "r"(sp) : "memory"); var_f20 = 0.0f; __asm__ volatile("sq %0, 0x0(%1)" : : "r"(q), "r"(dp) : "memory"); var_s1 = true; sp54C = *pd; }
         } else if ((temp_v1_8 >> 1) & 1) {
             Mtx sp270;
-            PlayerCamera_UpdateR1Pick(arg0, &sp520, arg1);
+            cPlayerCamera_GetTargetLockAngle(arg0, &sp520, arg1);
             QuatToMtxB(&sp270, &sp520);
             FE2(((int)&sp4C0), ((int)&sp270));
             {
@@ -1131,11 +1131,11 @@ block_152:
                 QFromEul(&q, &e);
                 QCopy((char*)arg0 + 0x4A0, &q);
             }
-            Curve_Retime1s(var_f20, arg0 + 0x460);
-            Curve_Retime1s(var_f20, arg0 + 0x530);
+            cSplinedMotion_cQuaternion_RestartTransition(var_f20, arg0 + 0x460);
+            cSplinedMotion_cQuaternion_RestartTransition(var_f20, arg0 + 0x530);
         } else {
-            Curve_Retime1s(var_f20, arg0 + 0x460);
-            Curve_Retime1s(var_f20, arg0 + 0x530);
+            cSplinedMotion_cQuaternion_RestartTransition(var_f20, arg0 + 0x460);
+            cSplinedMotion_cQuaternion_RestartTransition(var_f20, arg0 + 0x530);
         }
         {
         QuatF v;
@@ -1144,11 +1144,11 @@ block_152:
         QCopy((char*)arg0 + 0x640, &v);
         }
         QCopy((char*)arg0 + 0x7C0, &sp510);
-        Curve_Retime1s(var_f24, arg0 + 0x210);
-        VecCurve_SetDuration(var_f23, arg0 + 0x2E0);
-        VecCurve_SetDuration(var_f23, arg0 + 0x3A0);
-        Curve_Retime1s(var_f22, arg0 + 0x780);
-        var_f0 = VecCurve_SetDuration(var_f21, arg0 + 0x910);
+        cSplinedMotion_cQuaternion_RestartTransition(var_f24, arg0 + 0x210);
+        cSplinedMotion_cVector_RestartTransition(var_f23, arg0 + 0x2E0);
+        cSplinedMotion_cVector_RestartTransition(var_f23, arg0 + 0x3A0);
+        cSplinedMotion_cQuaternion_RestartTransition(var_f22, arg0 + 0x780);
+        var_f0 = cSplinedMotion_cVector_RestartTransition(var_f21, arg0 + 0x910);
         (*(s8*)((char*)(arg0) + 0xC60)) = 1;
         var_v1_11 = WRGet(arg0 + 0xCFC);
         if (var_v1_11 != NULL) {

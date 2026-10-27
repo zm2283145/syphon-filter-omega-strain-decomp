@@ -16,13 +16,13 @@ void std_list_deleter_voidPtr_end_void(SvcIt_ab50* out, void* list);
 SvcIt_ab50* std_list_cSystemPtr_generic_iterator_ctor(SvcIt_ab50* dst, SvcIt_ab50* src);
 void std_list_cSystemPtr_begin(SvcIt_ab50* out, void* list);
 SvcIt_ab50* cLListIterator_cSystemPtr_ctor(SvcIt_ab50* dst, SvcIt_ab50* src);
-void ActiveList_EraseMatching(void* v, Pred_ab50 p);
+void std_list_imp_voidPtr_remove_if(void* v, Pred_ab50 p);
 }
 struct KeyPred_ab50 { int* k; KeyPred_ab50(int* kk) : k(kk) {} bool operator()(Svc_ab50* s) const { return *s->key == *k; } };
 inline Svc_ab50* Erase_ab50(SvcMgr_ab50* self, Svc_ab50*& svc, SvcIt_ab50 it, SvcNode_ab50* last, Empty_ab50& e) {
     for (; it.p != last; it.p = it.p->next) {
         if (KeyPred_ab50(svc->key)(it.p->svc)) {
-            ActiveList_EraseMatching(&self->list, Pred_ab50(e, &svc));
+            std_list_imp_voidPtr_remove_if(&self->list, Pred_ab50(e, &svc));
             return svc;
         }
     }
@@ -44,7 +44,7 @@ extern "C" Svc_ab50* cSystemContainer_RemoveSystem(SvcMgr_ab50* self, Svc_ab50* 
     cLListIterator_cSystemPtr_ctor(&beg, &b0);
     for (uit = *(ItW_ab50*)&beg; uit.i.p != last; uit.i.p = uit.i.p->next) {
         if (KeyPred_ab50(svc->key)(uit.i.p->svc)) {
-            ActiveList_EraseMatching(&self->list, Pred_ab50(e, &svc));
+            std_list_imp_voidPtr_remove_if(&self->list, Pred_ab50(e, &svc));
             return svc;
         }
     }

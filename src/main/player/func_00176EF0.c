@@ -1,6 +1,6 @@
 #include "types.h"
 
-int ObjHandle_Set(int a0, int a1) {
+int cSafePtr_cGOBJ_opAssign_cGOBJP(int a0, int a1) {
     int loc[1];
     int v0, v1;
     int cond;

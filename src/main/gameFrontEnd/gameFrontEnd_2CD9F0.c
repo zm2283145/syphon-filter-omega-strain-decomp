@@ -73,7 +73,7 @@ List* func_002CDED0(List* l) {
 #pragma cplusplus on
 #include "alloc_guard.h"
 extern "C" {
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void String_Dtor(void* p, int flags);
 extern char D_004AD158[];
 }
@@ -105,7 +105,7 @@ extern "C" void std_list_deleter_MessageBoxEntry_erase_listdeleter_listdeleter(L
         *first = (*first)->next;
         if (n) {
             AllocGuard guard;
-            Mem_Free(0, n, D_004AD158, 0x64);
+            cMemMan_Deallocate(0, n, D_004AD158, 0x64);
         }
         list->count--;
     }
@@ -123,7 +123,7 @@ struct It2CE070 { N2CE070* p; };
 struct L2CE070 { int size; };
 extern "C" {
 void String_Dtor(void* p, int f);
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 }
 static inline void VDtor2CE070(V2CE070* v)
 {
@@ -143,7 +143,7 @@ extern "C" void std_list_deleter_MessageBoxEntry_erase_listdeleter(It2CE070* ret
     VDtor2CE070(&n->val);
     if (n) {
         AllocGuard g;
-        Mem_Free(0, n, D_004AD158, 0x64);
+        cMemMan_Deallocate(0, n, D_004AD158, 0x64);
     }
     l->size--;
     ret->p = pos->p;
@@ -157,11 +157,11 @@ extern "C" void std_list_deleter_MessageBoxEntry_erase_listdeleter(It2CE070* ret
 
 extern "C" {
 extern char D_004AD148[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 }
 
 struct Str_CE1A0 { int w[3]; };
-extern "C" Str_CE1A0* String_CopyCtor(Str_CE1A0* self, const Str_CE1A0* src);
+extern "C" Str_CE1A0* std_basic_string_char_char_traits_char_ctor_basicstringR(Str_CE1A0* self, const Str_CE1A0* src);
 
 struct Val_CE1A0 {
     int a;
@@ -216,7 +216,7 @@ extern "C" int std_list_deleter_MessageBoxEntry_insert(Node_CE1A0** result, List
     Flag_CE1A0 flag;
     {
         AllocGuard guard;
-        n = (Node_CE1A0*)Mem_Alloc(0, 0x30, D_004AD148, 0x5C);
+        n = (Node_CE1A0*)cMemMan_Allocate(0, 0x30, D_004AD148, 0x5C);
     }
     Holder_CE1A0 h;
     h.alloc = alloc;
@@ -225,8 +225,8 @@ extern "C" int std_list_deleter_MessageBoxEntry_insert(Node_CE1A0** result, List
     if (v) {
         v->a = value->a;
         v->b = value->b;
-        String_CopyCtor(&v->s8, &value->s8);
-        String_CopyCtor(&v->s14, &value->s14);
+        std_basic_string_char_char_traits_char_ctor_basicstringR(&v->s8, &value->s8);
+        std_basic_string_char_char_traits_char_ctor_basicstringR(&v->s14, &value->s14);
         v->f20 = value->f20;
         v->f24 = value->f24;
     }

@@ -29,14 +29,14 @@ void cCollisionModel_FaceProperties_dtor(void);
 void __register_global_object(void*, void*, void*);
 char* cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_3(Owner58* owner, int* key);
 int std_vector_cCollisionFace_capacity(TriVec58* v);
-void Vector_Reserve_139920(TriVec58* v, int n);
+void std_vector_imp_cCollisionFace_reserve(TriVec58* v, int n);
 void std_vector_imp_cCollisionFace_resize(TriVec58* v, int n, Tri58* t);
 void* cCollisionModel_GetVertex(int m, unsigned short i);
 float* cVector_W(char* p);
 int cCollisionModel_GetXform(int m);
-void* Transform_GetUpdated(int x);
-void Mtx_Multiply4(void* d, void* m);
-void Vec4_Copy(void* d, void* s);
+void* cXform_GetMatrix(int x);
+void cVector_Transform_cMatrixR(void* d, void* m);
+void cVector_opAssign(void* d, void* s);
 void cCollisionModel_FaceProperties_opAssign(void* d, void* s);
 signed char cCollisionModel_Face_IsCamPassThru(TriDesc58* d);
 signed char cCollisionModel_Face_IsReceiveShadow(TriDesc58* d);
@@ -74,17 +74,17 @@ static inline void Fill58(Tri58* e, TriDesc58* d, int a3, Surf58* s, int m)
     void* mt;
     float f;
     void* x;
-    Vec4_Copy(&e->v[0], cCollisionModel_GetVertex(m, d->v[0]));
-    Vec4_Copy(&e->v[1], cCollisionModel_GetVertex(m, d->v[1]));
-    Vec4_Copy(&e->v[2], cCollisionModel_GetVertex(m, d->v[2]));
+    cVector_opAssign(&e->v[0], cCollisionModel_GetVertex(m, d->v[0]));
+    cVector_opAssign(&e->v[1], cCollisionModel_GetVertex(m, d->v[1]));
+    cVector_opAssign(&e->v[2], cCollisionModel_GetVertex(m, d->v[2]));
     f = d->f0;
     *cVector_W(e->n) = f;
     x = (void*)cCollisionModel_GetXform(m);
     if (x) {
-        mt = Transform_GetUpdated((int)x);
-        Mtx_Multiply4(&e->v[0], mt);
-        Mtx_Multiply4(&e->v[1], mt);
-        Mtx_Multiply4(&e->v[2], mt);
+        mt = cXform_GetMatrix((int)x);
+        cVector_Transform_cMatrixR(&e->v[0], mt);
+        cVector_Transform_cMatrixR(&e->v[1], mt);
+        cVector_Transform_cMatrixR(&e->v[2], mt);
     }
     cCollisionModel_FaceProperties_opAssign(&e->s, s);
     e->f50 = cCollisionModel_Face_IsCamPassThru(d);
@@ -104,7 +104,7 @@ extern "C" void cCollisionFaceCollector_AddFace(Ctx58* self, Owner58* owner, Tri
     {
         TriVec58* v = self->vec;
         if (v->count >= v->cap)
-            Vector_Reserve_139920(self->vec, std_vector_cCollisionFace_capacity(self->vec) * 3 / 2);
+            std_vector_imp_cCollisionFace_reserve(self->vec, std_vector_cCollisionFace_capacity(self->vec) * 3 / 2);
     }
     {
         Tri58 t;

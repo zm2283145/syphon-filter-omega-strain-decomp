@@ -1,6 +1,6 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Vec4 component getters and Node_GetTranslation.
+ * Vec4 component getters and cNode_GetLoc.
  */
 
 #include "types.h"
@@ -23,7 +23,7 @@ float cAxisAngle_X(Vec4* v) {
 }
 
 /* Writes the node translation as a point (w = 1). */
-void Node_GetTranslation(Vec4* out, cNode* node) {
+void cNode_GetLoc(Vec4* out, cNode* node) {
     float z = node->translation.z;
     float y = node->translation.y;
     float x = node->translation.x;

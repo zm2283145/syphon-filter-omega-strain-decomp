@@ -85,25 +85,25 @@ typedef struct Self_2526F0 {
 } Self_2526F0;
 
 extern "C" {
-extern char* Loc_LookupText(char* key);
-extern int Agent_GetSelected(void* list, int idx);
-extern int AgentData_HasUnlock(int agent, int what);
-extern int WeaponInv_SlotOfItem(int id);
-extern void Backpack_CycleItem(Owner_2526F0* o, int id, int which);
-extern bool Backpack_TakeItem(Owner_2526F0* o, int id, int which);
-extern int WeaponInv_HasAmmoText(Inv_2526F0* inv, int id);
-extern bool Backpack_GetItemSlotFlag(Owner_2526F0* o, int id);
-extern void Backpack_QueryAmmo(Owner_2526F0* o, int id, int* a, int* b, int* c);
-extern WeaponDef_2526F0* WeaponDb_Get(int db, int id);
-extern int WeaponInv_GetSpare(Inv_2526F0* inv, int slot);
-extern int WeaponInv_GetClip(Inv_2526F0* inv, int slot);
+extern char* nGlobalization_GetString_charP(char* key);
+extern int cGameSystem_GetAgentData(void* list, int idx);
+extern int cAgentData_HasSpecialBonus(int agent, int what);
+extern int cWeapon_GetWeaponSlot(int id);
+extern void cBackpack_GetNextWeapon(Owner_2526F0* o, int id, int which);
+extern bool cBackpack_TakeWeapon(Owner_2526F0* o, int id, int which);
+extern int cWeapon_HasAmmoCount(Inv_2526F0* inv, int id);
+extern bool cBackpack_SlotIsReplaceable(Owner_2526F0* o, int id);
+extern void cBackpack_GetAmmoCounts(Owner_2526F0* o, int id, int* a, int* b, int* c);
+extern WeaponDef_2526F0* cWeaponDB_GetEntry(int db, int id);
+extern int cWeapon_GetAmmo(Inv_2526F0* inv, int slot);
+extern int cWeapon_GetClipAmmo(Inv_2526F0* inv, int slot);
 extern int cWeapon_AdjustMaxClips(Inv_2526F0* inv, int ammo);
 extern int sprintf(char* buf, const char* fmt, ...);
-extern int ItemInv_Count(void* items, int id);
-extern void IeElement_SetData(void* label, Icon_2526F0* icon);
-extern void IeElement_SetText(void* label, char* text);
-extern void IeElement_PlayRange(void* label, float lo, float hi, unsigned char fl);
-extern void IeElement_Fade(void* label, float v);
+extern int cInventory_GetCount_int(void* items, int id);
+extern void cInterfaceElement_SetGobj(void* label, Icon_2526F0* icon);
+extern void cInterfaceElement_SetText(void* label, char* text);
+extern void cAnimator_StartAnimation(void* label, float lo, float hi, unsigned char fl);
+extern void cAnimator_AnimateTo(void* label, float v);
 
 extern int D_0048AF08;
 extern char D_004A79E0[];
@@ -161,7 +161,7 @@ static inline Target_2526F0* Handle_Get(Owner_2526F0* h) {
     return ok ? t : 0;
 }
 
-extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
+extern "C" int cPickupMenu_Draw(Self_2526F0* self, Ctx_2526F0* ctx) {
     int ammo;
     int clips;
     int reserve;
@@ -187,7 +187,7 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
 
     db = g_WeaponDatabase;
     extra = Owner_Get2E8(self->owner);
-    prefix = Loc_LookupText(D_004A79E0);
+    prefix = nGlobalization_GetString_charP(D_004A79E0);
     inv = ctx->inv;
     useCur = self->x != 0;
     { char* e = D_004A79E8; if (D_0048AF08 == 0) prefix = e; }
@@ -207,7 +207,7 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
             int noSecond;
             WeaponDef_2526F0* wd2;
 
-            slot = WeaponInv_SlotOfItem(it->id);
+            slot = cWeapon_GetWeaponSlot(it->id);
             if (useCur)
                 slot = (signed char)inv->cur;
             uslot = slot;
@@ -219,23 +219,23 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
             same = wid == it->id;
             unlocked = false;
             cond = isSlot0 && !dual && same;
-            if (cond && AgentData_HasUnlock(Agent_GetSelected(g_Game, -1), 1))
+            if (cond && cAgentData_HasSpecialBonus(cGameSystem_GetAgentData(g_Game, -1), 1))
                 unlocked = true;
-            Backpack_CycleItem(self->owner, it->id, 0);
-            Backpack_CycleItem(self->owner, it->id, 1);
-            show = Backpack_TakeItem(self->owner, it->id, 1);
+            cBackpack_GetNextWeapon(self->owner, it->id, 0);
+            cBackpack_GetNextWeapon(self->owner, it->id, 1);
+            show = cBackpack_TakeWeapon(self->owner, it->id, 1);
             isSlot4 = uslot == 4;
-            noAmmo = !WeaponInv_HasAmmoText(inv, it->id);
-            cur = Backpack_GetItemSlotFlag(self->owner, it->id);
-            Backpack_QueryAmmo(self->owner, it->id, &ammo, &clips, &reserve);
+            noAmmo = !cWeapon_HasAmmoCount(inv, it->id);
+            cur = cBackpack_SlotIsReplaceable(self->owner, it->id);
+            cBackpack_GetAmmoCounts(self->owner, it->id, &ammo, &clips, &reserve);
             if (wid > -1) {
                 int spare;
                 WeaponDef_2526F0* wd;
                 int clip;
-                wd = WeaponDb_Get(db, wid);
-                spare = WeaponInv_GetSpare(inv, slot);
+                wd = cWeaponDB_GetEntry(db, wid);
+                spare = cWeapon_GetAmmo(inv, slot);
                 maxSpare = wd->unk70 * cWeapon_AdjustMaxClips(inv, wd->unk74);
-                clip = WeaponInv_GetClip(inv, slot);
+                clip = cWeapon_GetClipAmmo(inv, slot);
                 if (isSlot4) {
                     sprintf(line1, D_004A79F0, spare);
                 } else if (!noAmmo) {
@@ -247,10 +247,10 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
                     }
                     full = D_004A79E8;
                     if (spare == maxSpare)
-                        full = Loc_LookupText(D_004A79F8);
+                        full = nGlobalization_GetString_charP(D_004A79F8);
                     dualText = D_004A79E8;
                     if (dual)
-                        dualText = Loc_LookupText(D_004A7A08);
+                        dualText = nGlobalization_GetString_charP(D_004A7A08);
                     sprintf(line1, D_004A7A18, dualText, clip, spare, full);
                 } else {
                     line1[0] = 0;
@@ -264,7 +264,7 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
                 Icon_SetIM(it->icon, 0, 7);
                 line1[0] = 0;
             }
-            wd2 = WeaponDb_Get(db, it->id);
+            wd2 = cWeaponDB_GetEntry(db, it->id);
             if (!show || (same && cur)) {
                 if (it->icon2) {
                     Icon_SetIM(it->icon2, 0, 7);
@@ -316,7 +316,7 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
             int n;
             void* items = Handle_Get(self->owner) ? Handle_Get2(self->owner)->items : 0;
             image = D_00587FF8[it->id].image;
-            n = ItemInv_Count(items, it->id);
+            n = cInventory_GetCount_int(items, it->id);
             line1[0] = 0;
             line2[0] = 0;
             if (n) {
@@ -330,7 +330,7 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
                     Icon_SetIM(it->icon2, 0, 7);
                 }
             }
-            n = ItemInv_Count(ctx->items, it->id);
+            n = cInventory_GetCount_int(ctx->items, it->id);
             if (n) {
                 Icon_SetIM(it->icon, image, 7);
                 if (n > 1)
@@ -339,18 +339,18 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
                 Icon_SetIM(it->icon, 0, 7);
             }
         }
-        IeElement_SetData(it->label, it->icon);
+        cInterfaceElement_SetGobj(it->label, it->icon);
         if (it->label2)
-            IeElement_SetData(it->label2, it->icon2);
-        IeElement_SetText(it->label, line1);
+            cInterfaceElement_SetGobj(it->label2, it->icon2);
+        cInterfaceElement_SetText(it->label, line1);
         if (it->label2)
-            IeElement_SetText(it->label2, line2);
+            cInterfaceElement_SetText(it->label2, line2);
         if (i == self->sel)
-            IeElement_PlayRange(it->label, 20.0f + self->x, 35.0f + self->x, 1);
+            cAnimator_StartAnimation(it->label, 20.0f + self->x, 35.0f + self->x, 1);
         else
-            IeElement_Fade(it->label, 10.0f + self->x);
+            cAnimator_AnimateTo(it->label, 10.0f + self->x);
         if (it->label2)
-            IeElement_Fade(it->label2, 10.0f + self->x);
+            cAnimator_AnimateTo(it->label2, 10.0f + self->x);
     }
     return self->count > 0;
 }

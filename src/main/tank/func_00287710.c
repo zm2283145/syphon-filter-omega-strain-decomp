@@ -30,13 +30,13 @@ extern char* g_ActorList;
 void* cObjList_cHumanPtr_GetList(char* self);
 void cArray_cHumanPtr_Begin(It* out, void* v);
 void cArray_cHumanPtr_End(It* out, void* v);
-void Combat_HitDirection(Mtx* m, V4* v, V4* out);
+void GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP(Mtx* m, V4* v, V4* out);
 }
 
 static inline void Q4(void* d0, const void* s0) { void* d = d0; __int128 qa, qb; const void* s = s0; __asm__ volatile("lq %0, 0x0(%2); lq %1, 0x10(%2); sq %0, 0x0(%3); lq %0, 0x20(%2); sq %1, 0x10(%3); lq %1, 0x30(%2); sq %0, 0x20(%3); sq %1, 0x30(%3)" : "=&r"(qa), "=&r"(qb) : "r"(s), "r"(d) : "memory"); }
 static inline float Abs(float x) { float r = 0.0f; asm { abs.s r, x } return r; }
 
-extern "C" Tgt* cTurret_FindTarget(Self* self) {
+extern "C" Tgt* cTurret_GetClosestEnemy(Self* self) {
     It it;
     It end;
     Mtx m;
@@ -56,7 +56,7 @@ extern "C" Tgt* cTurret_FindTarget(Self* self) {
             if (t->x58 && t->x58->Active()) ok = 1;
             if (ok) {
                 V4 pos = t->GetPos(-1);
-                Combat_HitDirection(&m, &pos, &hd);
+                GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP(&m, &pos, &hd);
                 
                 if (0.3f + hd.f.x > self->lo && hd.f.x - 0.3f < self->hi) {
                     float d = Abs(hd.f.z);

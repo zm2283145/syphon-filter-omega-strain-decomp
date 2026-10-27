@@ -23,7 +23,7 @@ static inline void write16(int v)
 }
 
 /* cNetCreateTankMsg virtual 4: writes the 32-bit value little-endian, then serializes the tank. */
-void cNetCreateTankMsg_v04(cNetCreateTankMsg* self)
+void cNetCreateTankMsg_Pack(cNetCreateTankMsg* self)
 {
     int value = self->value;
     write16((unsigned short)value);
@@ -44,10 +44,10 @@ static inline void merge_flush_func_00284020(void) {}
 
 
 extern int Global_CreateTank(void* gobj);
-extern void* cNIEventOBJ_Identity(int handle);
+extern void* cNIEventOBJ_SOBJ_convert(int handle);
 
 int Script_CreateTank(TankScriptArg* args) {
-    volatile int tank = Global_CreateTank(cNIEventOBJ_Identity(args[0].i)); /* mirrors the original stack temporary */
+    volatile int tank = Global_CreateTank(cNIEventOBJ_SOBJ_convert(args[0].i)); /* mirrors the original stack temporary */
     return tank;
 }
 /* merge_units: generate this block's code under its own pragmas */

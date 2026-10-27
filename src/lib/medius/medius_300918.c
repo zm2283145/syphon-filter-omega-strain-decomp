@@ -29,7 +29,7 @@ int rt_msg_client_process_memory_poke(int a, int b, int c, unsigned char *buf, u
 typedef struct { unsigned char type; char pad; unsigned short val; } Pfx09C8;
 extern int rt_msg_set_ubyte(unsigned char *dst, unsigned char v);
 extern int rt_msg_set_u2byte(unsigned char *dst, unsigned short v);
-int NetPacket_WritePrefix(unsigned char *dst, Pfx09C8 *p, unsigned short *len)
+int rt_msg_client_set_header(unsigned char *dst, Pfx09C8 *p, unsigned short *len)
 {
     if (dst == 0) return 2;
     if (p == 0) return 2;

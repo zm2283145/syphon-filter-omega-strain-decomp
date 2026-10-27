@@ -15,8 +15,8 @@ struct Self2D6030 {
 };
 extern "C" {
 extern char D_004DE2A0[];
-void cNPC_ctor(Self2D6030* self, Owner2D6030* owner);
-int NpcPath_GetNode(int n);
+void cNPC_ctor_cGOBJP(Self2D6030* self, Owner2D6030* owner);
+int cAIPathData_GetNode(int n);
 }
 static inline int PathNode(Path2D6030* p) { int n = p->f4C; return n >= 0 ? n : p->f54; }
 static inline void ResetFlags(Self2D6030* self, bool v) {
@@ -28,7 +28,7 @@ static inline void ResetFlags(Self2D6030* self, bool v) {
 }
 extern "C" Self2D6030* cNetNPC_ctor(Self2D6030* self, int id, Owner2D6030* owner)
 {
-    cNPC_ctor(self, owner);
+    cNPC_ctor_cGOBJP(self, owner);
     self->vt = D_004DE2A0;
     self->f1E0 = id;
     self->f1E4 = 0;
@@ -51,12 +51,12 @@ extern "C" Self2D6030* cNetNPC_ctor(Self2D6030* self, int id, Owner2D6030* owner
                 node = PathNode(p);
             } else if (p->f50 >= 0) {
                 node = p->f50;
-                self->f210 = NpcPath_GetNode(node);
+                self->f210 = cAIPathData_GetNode(node);
             }
             self->f150 = o->f150;
             self->f141.b2 = o->Slot87();
         }
-        if (node >= 0) self->f1E8 = NpcPath_GetNode(node);
+        if (node >= 0) self->f1E8 = cAIPathData_GetNode(node);
         self->f208 = node;
     } else {
         self->f208 = -1;

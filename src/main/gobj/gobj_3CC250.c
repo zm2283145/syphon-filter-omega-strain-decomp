@@ -15,10 +15,10 @@
  */
 
 
-void SubScript_v0E(void) {
+void SubScript_Init(void) {
 }
 
-void SubScript_v0F(void) {
+void SubScript_Load(void) {
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003CC250(void) {}
@@ -86,19 +86,19 @@ typedef struct { void* vtable; char pad4[0x18]; int flags; char pad20[4]; int ta
 typedef struct { char pad[0x64]; unsigned char busy; } Obj003CC2D0;
 extern char g_cDisableMsgClass[];
 extern char D_004E0860[];
-extern void Event_Construct(Msg003CC2D0* ev, void* desc);
-extern void Event_Send(Msg003CC2D0* ev, void* target, int flags);
+extern void cMessage_ctor_cMessageNameR(Msg003CC2D0* ev, void* desc);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg003CC2D0* ev, void* target, int flags);
 extern void cMessage_dtor(Msg003CC2D0* ev, int flags);
 /* Clear the busy flag and send a message to the object. */
-void SubScript_v18(Obj003CC2D0* obj)
+void SubScript_Disable(Obj003CC2D0* obj)
 {
     Msg003CC2D0 ev;
     obj->busy = 0;
-    Event_Construct(&ev, g_cDisableMsgClass);
+    cMessage_ctor_cMessageNameR(&ev, g_cDisableMsgClass);
     ev.vtable = D_004E0860;
     ev.target = -1;
     ev.flags = 0x40;
-    Event_Send(&ev, obj, 0);
+    QueueMessage_cMessageR_cSystemP_int(&ev, obj, 0);
     ev.vtable = D_004E0860;
     cMessage_dtor(&ev, 0);
 }
@@ -115,14 +115,14 @@ typedef struct { char pad[0x64]; unsigned char flag; } SubScript;
 extern char g_cEnableMsgClass[];
 extern char D_004E0880[];
 #if 0 /* merge_units */
-extern void Event_Construct(Visitor* v, void* arg);
+extern void cMessage_ctor_cMessageNameR(Visitor* v, void* arg);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Event_Send(Visitor* v, void* target, int flags);
+extern void QueueMessage_cMessageR_cSystemP_int(Visitor* v, void* target, int flags);
 #endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((void *)(a0), (a1), (a2))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(Visitor* v, int flags);
@@ -131,20 +131,20 @@ extern void cMessage_dtor(Visitor* v, int flags);
 
 
 /* SubScript virtual 0x17: sets the flag and applies a temporary visitor to self. */
-void SubScript_v17(SubScript* self)
+void SubScript_Enable(SubScript* self)
 {
     Visitor v;
     self->flag = 1;
-    Event_Construct(&v, g_cEnableMsgClass);
+    cMessage_ctor_cMessageNameR(&v, g_cEnableMsgClass);
     v.vtable = D_004E0880;
     v.index = -1;
     v.size = 0x40;
-    Event_Send(&v, self, 0);
+    QueueMessage_cMessageR_cSystemP_int(&v, self, 0);
     v.vtable = D_004E0880;
     cMessage_dtor(&v, 0);
 }
-#undef Event_Construct /* merge_units */
-#undef Event_Send /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003CC350(void) {}
@@ -163,20 +163,20 @@ extern int D_005436B8;   /* cGOBJ script-type key */
 extern int D_00543720;   /* SubScript script-type value */
 extern int D_00543728;   /* SubScript script-type key */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
-extern void ScriptType_SetParent(int type, int base);
+extern int cScriptInterpreter_CallEvent(void* filter, int a0, int a1);
+extern void cScriptBase_declareParent(int type, int base);
 
 /* Registers the SubScript script type under cGOBJ. */
-void ScriptType_SubScript_Init(void) {
-    ScriptType_SetParent(D_00543728, D_005436B8);
+void SubScript_SOBJ_init(void) {
+    cScriptBase_declareParent(D_00543728, D_005436B8);
 }
 
-int SubScript_v0B(void) {
+int SubScript_getSOBJClassId(void) {
     return D_00543720;
 }
 
-int SubScript_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int SubScript_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003CC3D0(void) {}

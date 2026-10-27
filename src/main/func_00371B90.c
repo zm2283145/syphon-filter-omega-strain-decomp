@@ -9,7 +9,7 @@ typedef struct {
     char pade0[0xE0 - 0xE0];
 } LmGroup;
 typedef struct { char pad0[0xC]; LmGroup* groups; char pad10[0xC]; int numGroups; } LightMgr;
-void LightMgr_Unregister(LightMgr* mgr, int key, int id)
+void cLightMan_RemoveSceneLightRef(LightMgr* mgr, int key, int id)
 {
     LmGroup* g = 0;
     int i;

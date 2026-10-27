@@ -13,7 +13,7 @@
 
 /* library prototypes shared by the blocks below (C linkage) */
 #include "SFOLobby_helpers.h"
-int Mem_Free();
+int cMemMan_Deallocate();
 int strlen(const char *);
 
 /* merge_units: begin func_00238990 */
@@ -26,7 +26,7 @@ public:
     float t;
 };
 struct A1_Obj { int a0; unsigned char active; float time; int pad; int count; A1_Item** items; };
-extern "C" bool NiEventList_Advance(A1_Obj* o, float dt) {
+extern "C" bool cNIEventFXTrack_Update(A1_Obj* o, float dt) {
     bool ret = false;
     float t = o->time + dt;
     int i;
@@ -55,10 +55,10 @@ typedef struct Vec_00238A50 { int a; int b; void** data; } Vec_00238A50;
 typedef struct Trk_00238A50 { int owner; unsigned char f4; char pad5[3]; unsigned int f8; Vec_00238A50 vec; } Trk_00238A50;
 typedef struct Cue_00238A50 { void* vt; float f4; int type; float fC; float f10; float f14; float f18; } Cue_00238A50;
 extern "C" {
-void* Mem_Alloc(int heap, int size, char* file, int line);
-void PtrVector_Resize(Vec_00238A50* v, int n, void** fill);
-void* NiEventType4_CtorFromStream(void* p, Pop_00238A50* r, int owner);
-void* NiEventSound_CtorFromStream(void* p, Pop_00238A50* r, int owner);
+void* cMemMan_Allocate(int heap, int size, char* file, int line);
+void std_vector_pod_int_resize(Vec_00238A50* v, int n, void** fill);
+void* cStopSndFXKey_ctor(void* p, Pop_00238A50* r, int owner);
+void* cSoundFXKey_ctor(void* p, Pop_00238A50* r, int owner);
 extern char D_004DC028[];
 extern char D_004DC038[];
 }
@@ -71,18 +71,18 @@ static inline float ReadF_00238A50(Pop_00238A50* r)
 static inline void* Alloc_00238A50(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, "NIEvent.cc", line);
+    return cMemMan_Allocate(0, size, "NIEvent.cc", line);
 }
 #pragma push
 #pragma opt_strength_reduction off
-extern "C" void NiEvent_ReadEvents(Trk_00238A50* self, int owner, Pop_00238A50* r)
+extern "C" void cNIEventFXTrack_Init(Trk_00238A50* self, int owner, Pop_00238A50* r)
 {
     int n = (int)ReadF_00238A50(r);
     void* fill1 = 0;
     void* fill0 = 0;
     int i;
-    PtrVector_Resize(&self->vec, 0, &fill0);
-    PtrVector_Resize(&self->vec, n, &fill1);
+    std_vector_pod_int_resize(&self->vec, 0, &fill0);
+    std_vector_pod_int_resize(&self->vec, n, &fill1);
     for (i = 0; i < n; i++) {
         int type;
         Cue_00238A50* c = 0;
@@ -119,7 +119,7 @@ extern "C" void NiEvent_ReadEvents(Trk_00238A50* self, int owner, Pop_00238A50* 
             {
             Cue_00238A50* p = (Cue_00238A50*)Alloc_00238A50(0x1A0, 0x6CB);
             if (p)
-                p = (Cue_00238A50*)NiEventSound_CtorFromStream(p, r, owner);
+                p = (Cue_00238A50*)cSoundFXKey_ctor(p, r, owner);
             c = p;
             }
             break;
@@ -138,7 +138,7 @@ extern "C" void NiEvent_ReadEvents(Trk_00238A50* self, int owner, Pop_00238A50* 
             {
             Cue_00238A50* p = (Cue_00238A50*)Alloc_00238A50(0x1A0, 0x6D3);
             if (p)
-                p = (Cue_00238A50*)NiEventType4_CtorFromStream(p, r, owner);
+                p = (Cue_00238A50*)cStopSndFXKey_ctor(p, r, owner);
             c = p;
             }
             break;
@@ -170,13 +170,13 @@ extern "C" void cNIEventFXTrack_FreeStringTable(void)
     for (i = 0; i < D_004F7C78; i++) {
         void* p = D_004F7C70[i];
         AllocGuard g;
-        Mem_Free(0, p, D_004A6FA8, 0x69C);
+        cMemMan_Deallocate(0, p, D_004A6FA8, 0x69C);
     }
     void** q = D_004F7C70;
     if (q) {
         {
             AllocGuard g;
-            Mem_Free(0, q, D_004A6FA8, 0x6A0);
+            cMemMan_Deallocate(0, q, D_004A6FA8, 0x6A0);
         }
         D_004F7C70 = 0;
     }
@@ -200,13 +200,13 @@ extern char** D_004F7C70;
 extern int D_004F7C80;
 extern int D_0048AE28;
 #if 0 /* merge_units */
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 #endif /* merge_units */
-#define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
+#define cMemMan_Allocate(a0, a1, a2, a3) (cMemMan_Allocate((a0), (a1), (a2), (a3))) /* merge_units */
 
-int Pop_FindTag(PopReader_2390A0* r, int tag);
+int cPopulation_SeekBlock(PopReader_2390A0* r, int tag);
 }
-extern "C" void NiEvent_ReadSoundNames(PopReader_2390A0* r)
+extern "C" void cNIEventFXTrack_LoadStringTable(PopReader_2390A0* r)
 {
     int mis;
     D_004F7C80 = 0;
@@ -214,7 +214,7 @@ extern "C" void NiEvent_ReadSoundNames(PopReader_2390A0* r)
     mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
     if (mis)
         r->cur += 4 - mis;
-    if ((unsigned char)Pop_FindTag(r, 0x3A53494E)) {
+    if ((unsigned char)cPopulation_SeekBlock(r, 0x3A53494E)) {
         D_004F7C78 = *(int*)r->cur;
         r->cur += 4;
         if (D_004F7C78) {
@@ -224,7 +224,7 @@ extern "C" void NiEvent_ReadSoundNames(PopReader_2390A0* r)
                 {
                     int sz = D_004F7C78 * 4;
                     AllocGuard g;
-                    p = (char**)Mem_Alloc(0, sz, D_004A6FA8, 0x680);
+                    p = (char**)cMemMan_Allocate(0, sz, D_004A6FA8, 0x680);
                 }
                 D_004F7C70 = p;
             }
@@ -239,10 +239,10 @@ extern "C" void NiEvent_ReadSoundNames(PopReader_2390A0* r)
                 {
                     int len = strlen(s) + 1;
                     AllocGuard g;
-                    p = (char*)Mem_Alloc(0, len, D_004A6FA8, 0x686);
+                    p = (char*)cMemMan_Allocate(0, len, D_004A6FA8, 0x686);
                 }
                 D_004F7C70[i] = p;
-                String_Copy(D_004F7C70[i], s);
+                Libc_Strcpy(D_004F7C70[i], s);
                 if (r->version >= 0x43) {
                     int v = *(int*)r->cur;
                     r->cur += 4;
@@ -256,7 +256,7 @@ extern "C" void NiEvent_ReadSoundNames(PopReader_2390A0* r)
     }
 }
 #undef D_004F7C70 /* merge_units */
-#undef Mem_Alloc /* merge_units */
+#undef cMemMan_Allocate /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002390A0(void) {}
 #pragma pop /* merge_units */
@@ -282,7 +282,7 @@ extern "C" Obj_239370* cNIEventFXTrack_dtor(Obj_239370* o, short flag)
             AllocGuard g;
             if (e)
                 e->vt = D_004DC038;
-            Mem_Free(0, e, D_004A6FA8, 0x667);
+            cMemMan_Deallocate(0, e, D_004A6FA8, 0x667);
         }
         o->count = 0;
         Vec_239370* v = &o->vec;

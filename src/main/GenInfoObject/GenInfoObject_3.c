@@ -61,7 +61,7 @@ void func_0043ACB0(int unused, int index)
 
 /* merge_units: begin func_0043ACE0 */
 #pragma push /* merge_units */
-/* cGenInfoObject_Clear: GenInfoObject teardown (free buffer, free+erase 2 lists, free tree values, Map_Clear).
+/* cGenInfoObject_Clear: GenInfoObject teardown (free buffer, free+erase 2 lists, free tree values, std_tree_pair_tGenInfoPtr_value_compare_clear).
  * mw38 MATCH. Slot layout keys: b1/tb declared just before their loops (guards then interleave),
  * erase triples as a level-1 inline, begin/end calls as level-2 inlines (temps allocated breadth-first
  * after main locals), loop-2 iterator "LIt2 it2 __attribute__((aligned(8)))" (pushed to the lowest slot).
@@ -76,9 +76,9 @@ struct TNode { char pad[0xC]; void* data; };
 struct TIt { TNode* node; TIt() {} };
 
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
-void ObjectList_EraseRange(int* out, void* list, LNode** first, LNode** last);
-LIt List_Begin(void* list);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+void std_list_deleter_voidPtr_erase_listdeleter_listdeleter(int* out, void* list, LNode** first, LNode** last);
+LIt std_list_deleter_voidPtr_begin_void(void* list);
 LIt std_list_tGenInfoPtr_begin(void* list);
 LIt std_list_tGenInfoPtr_end(void* list);
 void std_list_tGenInfoPtr_generic_iterator_ctor(LIt* out, const LIt& in);
@@ -86,8 +86,8 @@ void cLListIterator_tGenInfoPtr_ctor(LIt* out, const LIt& in);
 void std_tree_pair_tGenInfoPtr_value_compare_begin(TIt* out, void* tree);
 TIt std_map_tGenInfoPtr_bool_end(void* tree);
 void cAssocArray_tGenInfoPtr_bool_Iterator_ctor(TIt* out, const TIt& in);
-void Tree_Successor(TIt* it);
-void Map_Clear(void* tree);
+void std_red_black_tree_1_increment(TIt* it);
+void std_tree_pair_tGenInfoPtr_value_compare_clear(void* tree);
 extern char D_004BFD60[];
 #if 0 /* merge_units */
 extern void* D_00583888;
@@ -116,7 +116,7 @@ extern unsigned char D_005838A2;
 extern unsigned char D_005838A3;
 }
 
-static inline void LB1(LIt* o, void* L) { std_list_tGenInfoPtr_generic_iterator_ctor(o, List_Begin(L)); }
+static inline void LB1(LIt* o, void* L) { std_list_tGenInfoPtr_generic_iterator_ctor(o, std_list_deleter_voidPtr_begin_void(L)); }
 static inline void LB2(LIt* o, void* L) { cLListIterator_tGenInfoPtr_ctor(o, std_list_tGenInfoPtr_begin(L)); }
 static inline void LE(LIt* o, void* L) { cLListIterator_tGenInfoPtr_ctor(o, std_list_tGenInfoPtr_end(L)); }
 static inline void TE(TIt* o, void* T) { cAssocArray_tGenInfoPtr_bool_Iterator_ctor(o, std_map_tGenInfoPtr_bool_end(T)); }
@@ -124,7 +124,7 @@ static inline void LB1x(LIt* o, void* L) { LB1(o, L); }
 static inline void LB2x(LIt* o, void* L) { LB2(o, L); }
 static inline void LEx(LIt* o, void* L) { LE(o, L); }
 static inline void TEx(TIt* o, void* T) { TE(o, T); }
-static inline void Erase(void* L, void* LH, LNode* LF) { int res; LNode* first; LNode* last; last = (LNode*)LH; first = LF; ObjectList_EraseRange(&res, L, &first, &last); }
+static inline void Erase(void* L, void* LH, LNode* LF) { int res; LNode* first; LNode* last; last = (LNode*)LH; first = LF; std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&res, L, &first, &last); }
 static inline unsigned char Ne(TIt* a, TIt* b) { return !(a->node == b->node); }
 
 extern "C" void cGenInfoObject_Clear(void* self)
@@ -138,7 +138,7 @@ extern "C" void cGenInfoObject_Clear(void* self)
     if (D_00583888 && !D_00583880) {
         void* p = D_00583888;
         AllocGuard g;
-        Mem_Free(0, p, D_004BFD60, 0x2B);
+        cMemMan_Deallocate(0, p, D_004BFD60, 0x2B);
     }
     D_00583880 = 0;
     D_00583888 = 0;
@@ -153,7 +153,7 @@ extern "C" void cGenInfoObject_Clear(void* self)
         void* e = (*(LNode* volatile*)&it1.p)->data;
         {
             AllocGuard g;
-            Mem_Free(0, e, D_004BFD60, 0x38);
+            cMemMan_Deallocate(0, e, D_004BFD60, 0x38);
         }
         it1.p = it1.p->next;
     }
@@ -165,7 +165,7 @@ extern "C" void cGenInfoObject_Clear(void* self)
             void* e = it2.p->data;
             {
                 AllocGuard g;
-                Mem_Free(0, e, D_004BFD60, 0x41);
+                cMemMan_Deallocate(0, e, D_004BFD60, 0x41);
             }
             it2.p = it2.p->next;
         }
@@ -178,11 +178,11 @@ extern "C" void cGenInfoObject_Clear(void* self)
         void* e = it.node->data;
         {
             AllocGuard g;
-            Mem_Free(0, e, D_004BFD60, 0x4C);
+            cMemMan_Deallocate(0, e, D_004BFD60, 0x4C);
         }
-        Tree_Successor(&it);
+        std_red_black_tree_1_increment(&it);
     }
-    Map_Clear(D_00583900);
+    std_tree_pair_tGenInfoPtr_value_compare_clear(D_00583900);
     D_005838A0 = 0;
     D_005838A1 = 0;
     D_005838A2 = 0;

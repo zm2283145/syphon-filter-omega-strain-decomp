@@ -6,12 +6,12 @@
 
 #include "types.h"
 
-void cGenerator_v0E(void) {
+void cGenerator_Init(void) {
 }
 
-void cGenerator_v0F(void) {
+void cGenerator_Load(void) {
 }
 
-int cGenerator_v04(void) {
+int cGenerator_IsNetworked(void) {
     return 1;
 }

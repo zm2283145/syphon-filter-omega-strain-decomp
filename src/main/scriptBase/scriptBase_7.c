@@ -25,7 +25,7 @@ extern int D_00554F38;
 extern int D_00554F40;
 extern int D_00554F48;
 extern int D_00554F50;
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 void cTimerDisable_dtor(G_3D7960* g, int f);
 void cTimerDisable_ctor(G_3D7960* g);
 void FuncDef_dtor(void* p, int f);
@@ -36,14 +36,14 @@ struct G_3D7960 { char c; G_3D7960() { cTimerDisable_ctor(this); } __declspec(we
 static inline void M3_3D7960(void* p) { if (p) std_vector_deleter_EnumField_dtor(p, 0); }
 static inline void M2_3D7960(void* p) { if (p) M3_3D7960(p); }
 static inline void M1_3D7960(void* p) { if (p) M2_3D7960(p); }
-static inline void FreeP_3D7960(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004BD3B0, line); }
+static inline void FreeP_3D7960(void* p, int line) { AllocGuard g; cMemMan_Deallocate(0, p, D_004BD3B0, line); }
 static inline void DtorA_3D7960(A_3D7960* a) { FreeP_3D7960(a->buf, 0x1D8); M1_3D7960(a->m4); }
 static inline void DtorC_3D7960(C_3D7960* c) { FreeP_3D7960(c->buf, 0x1F9); if (c->p14) FreeP_3D7960(c->p14, 0x1FC); }
 
-static inline void DelA_3D7960(A_3D7960* a) { AllocGuard g; if (a) DtorA_3D7960(a); Mem_Free(0, a, D_004BD3B0, 0xF2); }
-static inline void DelC_3D7960(C_3D7960* c) { AllocGuard g; if (c) DtorC_3D7960(c); Mem_Free(0, c, D_004BD3B0, 0xFE); }
-static inline void DelB0_3D7960(void* b) { G_3D7960 g; FuncDef_dtor(b, -1); Mem_Free(0, b, D_004BD3B0, 0xF8); }
-static inline void DelD0_3D7960(void* d) { G_3D7960 g; ClassDef_dtor(d, -1); Mem_Free(0, d, D_004BD3B0, 0x104); }
+static inline void DelA_3D7960(A_3D7960* a) { AllocGuard g; if (a) DtorA_3D7960(a); cMemMan_Deallocate(0, a, D_004BD3B0, 0xF2); }
+static inline void DelC_3D7960(C_3D7960* c) { AllocGuard g; if (c) DtorC_3D7960(c); cMemMan_Deallocate(0, c, D_004BD3B0, 0xFE); }
+static inline void DelB0_3D7960(void* b) { G_3D7960 g; FuncDef_dtor(b, -1); cMemMan_Deallocate(0, b, D_004BD3B0, 0xF8); }
+static inline void DelD0_3D7960(void* d) { G_3D7960 g; ClassDef_dtor(d, -1); cMemMan_Deallocate(0, d, D_004BD3B0, 0x104); }
 /* nested delete helpers (inline depth sets the guard slot order) */
 static inline void DelB1_3D7960(void* b) { DelB0_3D7960(b); }
 static inline void DelB2_3D7960(void* b) { DelB1_3D7960(b); }
@@ -51,7 +51,7 @@ static inline void DelB_3D7960(void* b) { DelB2_3D7960(b); }
 static inline void DelD1_3D7960(void* d) { DelD0_3D7960(d); }
 static inline void DelD2_3D7960(void* d) { DelD1_3D7960(d); }
 static inline void DelD_3D7960(void* d) { DelD2_3D7960(d); }
-extern "C" void Script_TrimSymbolsToMarks(void)
+extern "C" void cScriptBase_FreeScriptSyms(void)
 {
     while (D_00554F30->count > D_00554F50) {
         Pool_3D7960* p = D_00554F30; A_3D7960* a = (A_3D7960*)p->data[p->count - 1];
@@ -106,7 +106,7 @@ extern Node4* D_00554F30;
 
 
 /* Caches the second word of four list heads. */
-void Script_SaveSymbolMarks(void) {
+void cScriptBase_SetGameSymsAdded(void) {
     D_00554F48 = D_00554F28->next;
     D_00554F50 = D_00554F30->next;
     D_00554F40 = D_00554F20->next;

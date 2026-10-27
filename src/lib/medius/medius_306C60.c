@@ -8,7 +8,7 @@ static inline float TicksToMs306(float f)
 {
     return f * 0.0033908419776707889f;
 }
-int Time_UpdateCounter(void)
+int rt_time_platform_update_base(void)
 {
     unsigned int now, d;
     if (!D_00491308[0] && rt_time_platform_init()) return 1;

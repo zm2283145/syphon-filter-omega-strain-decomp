@@ -16,7 +16,7 @@
 
 struct VC003EC130 { char vpad[4]; virtual int v0(...); };
 extern "C" {
-int List_Erase(...);              
+int std_list_deleter_voidPtr_erase_listdeleter(...);              
 extern int D_0055C090;
 typedef struct { int f0; char p4[4]; int f8; } PS0_003EC130;
 }
@@ -37,7 +37,7 @@ extern "C" void cSfxScheduler_ClearItemList(int d0, PS0_003EC130 *arg1) {
             F_(temp_s1, 0xC, signed char) = 0;
             D_0055C090 -= 1;
             sp38 = (char *)(arg1->f8);
-            List_Erase(&sp3C, arg1, &sp38);
+            std_list_deleter_voidPtr_erase_listdeleter(&sp3C, arg1, &sp38);
         } while (arg1->f0 > 0);
     }
 }
@@ -56,20 +56,20 @@ extern "C" void cSfxScheduler_ClearItemList(int d0, PS0_003EC130 *arg1) {
 /* SpecFx vtable */
 extern char D_004E0760[];
 /* vtable installed while the base part is built */
-extern void Effect_Draw();
-extern void Effect_Update();
-void * const D_004E0780[8] = { (void*)0x0, (void*)0x0, (void*)0x0, (void*)Effect_Update, (void*)Effect_Draw, (void*)0x0, (void*)0x0, (void*)0x0 };
-extern int ScalarCollection_Init(void* list);
-extern void SpecFx_Register(SpecFx* fx);
+extern void cSfxScheduler_Render();
+extern void cSfxScheduler_NextFrame();
+void * const D_004E0780[8] = { (void*)0x0, (void*)0x0, (void*)0x0, (void*)cSfxScheduler_NextFrame, (void*)cSfxScheduler_Render, (void*)0x0, (void*)0x0, (void*)0x0 };
+extern int std_list_deleter_voidPtr_ctor_void(void* list);
+extern void nDynamicSfxList_Add(SpecFx* fx);
 
 /* Builds the effect and adds it to the global effect list. */
-SpecFx* SpecFx_Construct(SpecFx* self) {
+SpecFx* cSfxBundle_ctor(SpecFx* self) {
     self->vtable = ((char*)D_004E0780);
-    ScalarCollection_Init(self->list);
+    std_list_deleter_voidPtr_ctor_void(self->list);
     self->unk0C = 0;
     self->unk10 = 0;
     self->vtable = D_004E0760;
-    SpecFx_Register(self);
+    nDynamicSfxList_Add(self);
     return self;
 }
 #pragma pop /* merge_units */
@@ -82,6 +82,6 @@ SpecFx* SpecFx_Construct(SpecFx* self) {
 #include "obj_list_dtor.h"
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(ReceiverList_Dtor_3EC220)
+DEFINE_OBJ_LIST_DTOR(std_list_tItemPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003EC220 */

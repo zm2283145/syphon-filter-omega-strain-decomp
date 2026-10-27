@@ -8,14 +8,14 @@ extern "C" {
 char** std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_begin(int* v);
 char** std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_end(int* v);
 void std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_pointer2iterator(It_1E5120* out, int* v, char*** p);
-char* Root_IdentityAccessor(char* r);
-void Transform_SetOrientation(char* t, void* q);
-void Root_PropagateChildren(char* r);
+char* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(char* r);
+void cQuatVec_opAssign(char* t, void* q);
+void cSkaAnimAnchor_TreeNode_TellChildrenNeedToUpdate(char* r);
 void Physical_SetChildOffsets(O_1E5120* self, void* q);
 }
 static inline int Eq_1E5120(char** a, char** b) { return a == b; }
 static inline int EqI_1E5120(int a, int b) { return a == b; }
-static inline void SetDirty_1E5120(char* c, unsigned char f) { Root_IdentityAccessor(c)[0xA0] = f; }
+static inline void SetDirty_1E5120(char* c, unsigned char f) { cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(c)[0xA0] = f; }
 void Physical_SetChildOffsets(O_1E5120* self, void* q)
 {
     It_1E5120 b;
@@ -36,9 +36,9 @@ void Physical_SetChildOffsets(O_1E5120* self, void* q)
         if (Eq_1E5120(it, *(char** volatile*)&e.p) ^ 1) {
             do {
                 char* c = *it;
-                Transform_SetOrientation(Root_IdentityAccessor(c) + 0x50, q);
+                cQuatVec_opAssign(cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(c) + 0x50, q);
                 SetDirty_1E5120(c, 1);
-                Root_PropagateChildren(c);
+                cSkaAnimAnchor_TreeNode_TellChildrenNeedToUpdate(c);
                 it++;
             } while (Eq_1E5120(it, end) ^ 1);
         }

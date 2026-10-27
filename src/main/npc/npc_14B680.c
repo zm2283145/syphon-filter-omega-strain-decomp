@@ -14,7 +14,7 @@ typedef struct { char pad[0x30]; void* owner; char pad2[0x10D]; NpcBits bits; } 
 
 extern unsigned char g_IsMultiplayer; /* networked game */
 extern unsigned char D_005721C0; /* is host */
-extern void NetEvent_Send(void* owner, int type, int size, unsigned char a, int b, int c, int d);
+extern void cNetNPCMsgs_SendMessage(void* owner, int type, int size, unsigned char a, int b, int c, int d);
 
 static inline int IsAuthority(void)
 {
@@ -22,11 +22,11 @@ static inline int IsAuthority(void)
 }
 
 /* cNPC virtual 0x56: sets flag bit 2 and broadcasts it in network games. */
-void cNPC_v56(cNPC* self, int on)
+void cNPC_DeactivateDead(cNPC* self, int on)
 {
     self->bits.flag = on;
     if (g_IsMultiplayer && IsAuthority())
-        NetEvent_Send(self->owner, 0x18, 4, (unsigned char)on, 0, 0, 0);
+        cNetNPCMsgs_SendMessage(self->owner, 0x18, 4, (unsigned char)on, 0, 0, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014B680(void) {}
@@ -44,7 +44,7 @@ typedef struct cNPC_0014B700 {
 } cNPC_0014B700;
 
 /* vtable slot: sets a range center +- half width when priority >= current. */
-void cNPC_v55(cNPC_0014B700* self, int priority, float center, float width) {
+void cNPC_SetDesiredDistance(cNPC_0014B700* self, int priority, float center, float width) {
     if (priority >= self->rangePriority) {
         float half = 0.5f * width;
         self->rangeMin = center - half;

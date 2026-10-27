@@ -54,8 +54,8 @@ extern char g_Game[];
 extern char g_LosCheckService[];
 extern char g_LosRequestMsgClass[];
 extern char D_004D9180[];
-Svc* Service_Lookup(void* a, void* b);
-void Event_Construct(void* m, void* type);
+Svc* cSystemContainer_GetSystem(void* a, void* b);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
 void cMessage_dtor(void* m, int flags);
 }
 static inline bool IdEq(Tgt* p, Hnd* h) { return p->id == h->id; }
@@ -76,7 +76,7 @@ extern "C" void cBackpack_v10(Bp* self)
                 V dir(0.0f, 0.0f, -5.0f, 1.0f);
                 RayMsg msg;
                 RayMsg* m = &msg;
-                Event_Construct(m, g_LosRequestMsgClass);
+                cMessage_ctor_cMessageNameR(m, g_LosRequestMsgClass);
                 m->vt = D_004D9180;
                 m->f24 = 0;
                 m->f28 = 0;
@@ -89,7 +89,7 @@ extern "C" void cBackpack_v10(Bp* self)
                 m->b5C = 0;
                 m->start.w = 1.0f;
                 m->end.w = 0.0f;
-                Service_Lookup(g_Game, g_LosCheckService)->Send(&msg);
+                cSystemContainer_GetSystem(g_Game, g_LosCheckService)->Send(&msg);
                 if (res.hit) {
                     V d = *(V*)&res.pos - start;
                     self->OnHit(d);
@@ -127,34 +127,34 @@ extern int g_TriggerMsgKey;
 extern char D_005061B0[];
 extern char D_004DCEF0[];
 extern char D_004DCF10[];
-int* Event_GetType(void* ev);
-Obj_00254600* Object_LookupById(int* id);
-void Transport_Send(int target, Msg_00254600* msg, int a, int b);
-void Player_HandlePickupTrigger(Ctl_00254600* c, Bp_00254600* b);
-int Object_HandleMessage(Bp_00254600* b, Ev_00254600* ev);
+int* cMessage_Name(void* ev);
+Obj_00254600* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+void cNetObj_SendMessage_int_cMessageR_int_int(int target, Msg_00254600* msg, int a, int b);
+void cPlayer_BeginPickup(Ctl_00254600* c, Bp_00254600* b);
+int cGOBJ_HandleMessage(Bp_00254600* b, Ev_00254600* ev);
 }
-extern "C" int cBackpack_v01(Bp_00254600* bp, Ev_00254600* ev)
+extern "C" int cBackpack_HandleMessage(Bp_00254600* bp, Ev_00254600* ev)
 {
-    int t = *Event_GetType(ev);
+    int t = *cMessage_Name(ev);
     if (t == g_TriggerMsgKey) {
         int id = ev->id;
-        Ctl_00254600* c = Object_LookupById(&id)->ctl;
+        Ctl_00254600* c = nGobjManager_LookupGOBJ_cObjectIdR(&id)->ctl;
         if (c && c->IsActive() && ((CtlObj_00254600*)c)->b14) {
             int who = c->GetId();
             if (bp->b2F3 || bp->owner == who) {
                 if (bp->f314 < 0.0f) {
-                    Player_HandlePickupTrigger(c, bp);
+                    cPlayer_BeginPickup(c, bp);
                 }
             } else {
                 if (g_IsMultiplayer) {
                     Msg_00254600 m;
-                    Event_Construct(&m, D_005061B0);
+                    cMessage_ctor_cMessageNameR(&m, D_005061B0);
                     m.id = who;
                     m.vtable = D_004DCEF0;
                     m.bp = bp;
                     m.b24 = 2;
                     m.b20 = 4;
-                    Transport_Send(bp->net, &m, -1, bp->owner);
+                    cNetObj_SendMessage_int_cMessageR_int_int(bp->net, &m, -1, bp->owner);
                     m.vtable = D_004DCF10;
                     cMessage_dtor(&m, 0);
                 }
@@ -162,7 +162,7 @@ extern "C" int cBackpack_v01(Bp_00254600* bp, Ev_00254600* ev)
         }
         return 1;
     }
-    return Object_HandleMessage(bp, ev);
+    return cGOBJ_HandleMessage(bp, ev);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00254600(void) {}

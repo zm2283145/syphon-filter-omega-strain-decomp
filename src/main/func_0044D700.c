@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int Lobby_GetTime();                                
+int SFOLobby_GetMillisecs();                                
 int SFOLobby_RequestBuddyList(char * , int);                       
 extern int D_004977B8;
 
@@ -12,7 +12,7 @@ void SFOLobby_ContactUpdateMemberList(PS0_0044D700 *arg0, int arg1) {
     int temp_s0;
 
     temp_s0 = arg0->f257C;
-    temp_a0 = Lobby_GetTime() - temp_s0;
+    temp_a0 = SFOLobby_GetMillisecs() - temp_s0;
     if ((arg1 == 0) && (temp_s0 != 0)) {
         if (D_004977B8 < temp_a0) {
             goto block_4;
@@ -20,6 +20,6 @@ void SFOLobby_ContactUpdateMemberList(PS0_0044D700 *arg0, int arg1) {
     } else {
 block_4:
         SFOLobby_RequestBuddyList(arg0, arg1);
-        arg0->f257C = Lobby_GetTime();
+        arg0->f257C = SFOLobby_GetMillisecs();
     }
 }

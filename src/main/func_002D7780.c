@@ -2,7 +2,7 @@
 #include "types.h"
 #include "alloc_guard.h"
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern char D_004DFD80[];
 extern char D_004DE510[];
 }
@@ -14,7 +14,7 @@ extern "C" Msg2530* cNetPathMsg_Clone(Msg2530* src)
     Msg2530* p;
     {
         AllocGuard guard;
-        p = (Msg2530*)Mem_Alloc(0, 0x44, "NetPathMsg.hh", 0x28);
+        p = (Msg2530*)cMemMan_Allocate(0, 0x44, "NetPathMsg.hh", 0x28);
     }
     if (p) {
         p->vtable = D_004DFD80;

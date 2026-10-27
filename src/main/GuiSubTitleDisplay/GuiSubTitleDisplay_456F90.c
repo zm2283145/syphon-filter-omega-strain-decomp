@@ -10,22 +10,22 @@
 #include "types.h"
 struct V456 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(char*); };
 extern "C" {
-extern void GuiWidget_Init(void*);
-extern V456* GuiWidget_FindChildByName(void*, char*);
+extern void GuiWidget_onAdd(void*);
+extern V456* GuiWidget_FindChild_charP(void*, char*);
 extern char D_004A7520[];
 extern char D_004C1A38[];
 extern char g_Game[];
-extern int Agent_GetSelected(char*, int);
-extern char* AgentData_GetName(int);
+extern int cGameSystem_GetAgentData(char*, int);
+extern char* cAgentData_GetUserName(int);
 extern void GuiTextWidget_SetText(V456*, char*, int);
 }
-extern "C" void GuiStartMenuBackdrop_Init(void* w) {
+extern "C" void GuiStartMenuBackdrop_onAdd(void* w) {
     V456* p;
-    GuiWidget_Init(w);
-    p = GuiWidget_FindChildByName(w, "value_agentname");
+    GuiWidget_onAdd(w);
+    p = GuiWidget_FindChild_charP(w, "value_agentname");
     p = (p && p->v20(D_004A7520)) ? p : 0;
     if (p) {
-        char* s = AgentData_GetName(Agent_GetSelected(g_Game, -1));
+        char* s = cAgentData_GetUserName(cGameSystem_GetAgentData(g_Game, -1));
         GuiTextWidget_SetText(p, s ? s : D_004C1A38, 0);
     }
 }
@@ -36,12 +36,12 @@ extern "C" void GuiStartMenuBackdrop_Init(void* w) {
 #pragma push /* merge_units */
 #include "GuiGameScreen_types.h"
 
-extern void* Gui_GetScreenList(void);
-extern void* GuiManager_FindByName(void* manager, const char* name);
+extern void* Gui_Manager(void);
+extern void* GuiManager_FindOpenGui(void* manager, const char* name);
 #if 0 /* merge_units */
-extern GuiGameChild* GuiWidget_FindChildByName(void* parent, const char* name);
+extern GuiGameChild* GuiWidget_FindChild_charP(void* parent, const char* name);
 #endif /* merge_units */
-#define GuiWidget_FindChildByName(a0, a1) ((GuiGameChild *)GuiWidget_FindChildByName((a0), (char *)(a1))) /* merge_units */
+#define GuiWidget_FindChild_charP(a0, a1) ((GuiGameChild *)GuiWidget_FindChild_charP((a0), (char *)(a1))) /* merge_units */
 
 extern char D_004C1B00[];
 extern char D_004C1B28[];
@@ -62,10 +62,10 @@ static inline void set_active(GuiGameChild* widget, int active)
 /* Toggle the first pair of named widgets when their parent is available. */
 void func_00457040(int active)
 {
-    void* parent = GuiManager_FindByName(Gui_GetScreenList(), D_004C1B00);
+    void* parent = GuiManager_FindOpenGui(Gui_Manager(), D_004C1B00);
     if (parent) {
-        GuiGameChild* first = GuiWidget_FindChildByName(parent, D_004C1B28);
-        GuiGameChild* second = GuiWidget_FindChildByName(parent, D_004C1B38);
+        GuiGameChild* first = GuiWidget_FindChild_charP(parent, D_004C1B28);
+        GuiGameChild* second = GuiWidget_FindChild_charP(parent, D_004C1B38);
         set_active(first, active);
         set_active(second, active);
     }
@@ -74,14 +74,14 @@ void func_00457040(int active)
 /* Toggle the second pair of named widgets when their parent is available. */
 void func_00457110(int active)
 {
-    void* parent = GuiManager_FindByName(Gui_GetScreenList(), D_004C1B00);
+    void* parent = GuiManager_FindOpenGui(Gui_Manager(), D_004C1B00);
     if (parent) {
-        GuiGameChild* first = GuiWidget_FindChildByName(parent, D_004C1B18);
-        GuiGameChild* second = GuiWidget_FindChildByName(parent, D_004C1B20);
+        GuiGameChild* first = GuiWidget_FindChild_charP(parent, D_004C1B18);
+        GuiGameChild* second = GuiWidget_FindChild_charP(parent, D_004C1B20);
         set_active(first, active);
         set_active(second, active);
     }
 }
-#undef GuiWidget_FindChildByName /* merge_units */
+#undef GuiWidget_FindChild_charP /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00457040 */

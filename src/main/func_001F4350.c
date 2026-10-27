@@ -7,10 +7,10 @@
 #include "types.h"
 
 extern int std_list_imp_voidPtr_size(void);
-extern int Vector_Reserve_20A790(int, int);
+extern int std_vector_imp_cSkaBlendSequenceItem_reserve(int, int);
 
-int Vector_Reserve_20A790_Thunk_1F4350(int a0, int a1) {
-    return Vector_Reserve_20A790(a0, a1);
+int std_vector_cSkaBlendSequenceItem_reserve(int a0, int a1) {
+    return std_vector_imp_cSkaBlendSequenceItem_reserve(a0, a1);
 }
 
 int cLList_cSkaBlendSequenceItemPtr_Size(void) {

@@ -23,6 +23,6 @@ void std_swap_vectordeleterR_vectordeleterR_6(PtrVec* a, PtrVec* b) {
 }
 
 /* clear(): count = 0. */
-void List_Clear(PtrVec* v) {
+void std_vector_deleter_cVector_clear(PtrVec* v) {
     v->count = 0;
 }

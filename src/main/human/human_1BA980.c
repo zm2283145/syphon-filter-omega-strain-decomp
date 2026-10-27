@@ -29,7 +29,7 @@ static inline void write32(int v)
 typedef struct { char pad[0x24]; unsigned char type; char pad25[3]; float x; float y; } cNetShockMsg;
 
 /* cNetShockMsg virtual 4: writes the type byte and two floats (raw bits) little-endian. */
-void cNetShockMsg_v04(cNetShockMsg* self)
+void cNetShockMsg_Pack(cNetShockMsg* self)
 {
     float y;
     float x;

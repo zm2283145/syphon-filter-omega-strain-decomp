@@ -16,7 +16,7 @@ typedef struct AIStateInit {
     int unk50;    /* 0x50 */
 } AIStateInit;
 
-void NpcPerception_ResetView(AIStateInit* self) {
+void cAITarget_Activate(AIStateInit* self) {
     self->unk14 = 0x3F490FDB; /* 0.7853982f */
     self->unk10 = *(float*)g_LevelFarDistance;
     self->unk50 = *(int*)g_VideoFrameCounter + 20;

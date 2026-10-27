@@ -49,42 +49,42 @@ extern char D_0048BAA0[][8];
 extern Tbl g_AgentPartCache;
 extern char g_Game[];
 extern char D_004DAE10[];
-extern void GuiWidget_Update(Self*, float);
-extern Ent* PlayerSlots_Get(int);
-extern void Player_HandleLeftGame(Ent*);
+extern void GuiWidget_onAdvanceTime(Self*, float);
+extern Ent* cNetObj_GetPlayer(int);
+extern void cHuman_CheckForDisconnectedNetworkedPlayer(Ent*);
 extern void cHuman_CheckForChangedWeapons(Ent*);
-extern int Appearance_GetBodyKind(void*);
+extern int SKL_FindSex(void*);
 extern void cMan_AddDisguise(void*, int);
-extern void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
+extern void cSndFx_ctor_int_charP_cGOBJP_int(SoundRequest* req, int kind, void* name, int a, int b);
 extern void cPlaySoundMsg_ctor_netPlaySoundMsgR(SoundMsg* msg, SoundRequest* req, Ent* e);
-extern void Event_Send(SoundMsg* msg, void* target, int flags);
+extern void QueueMessage_cMessageR_cSystemP_int(SoundMsg* msg, void* target, int flags);
 #if 0 /* merge_units */
-extern void FileMan_Release(void* part, int flags);
+extern void cFileMan_dtor(void* part, int flags);
 #endif /* merge_units */
-#define FileMan_Release(a0, a1) (FileMan_Release((a0), (a1))) /* merge_units */
+#define cFileMan_dtor(a0, a1) (cFileMan_dtor((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(SoundMsg* msg, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
-extern void Game_NetSendPauseState(void*, int, int);
+extern void cGameSystem_SendAgentData(void*, int, int);
 extern void GuiTextWidget_SetText(Hud*, char*, int);
-extern void DME_SendPlayGameMsg(void);
+extern void cDME_SendPlayGame(void);
 }
 /* Per-frame update: polls the four player slots, tracks the slot-0 state-3 countdown and plays each slot's join sound once. */
-extern "C" void GuiEquipmentModify_Update(Self* self, float dt) {
+extern "C" void GuiEquipmentModify_onAdvanceTime(Self* self, float dt) {
     SoundRequest req;
     SoundMsg msg;
     char buf[0x40];
     Ent* e;
     int i;
-    GuiWidget_Update(self, dt);
+    GuiWidget_onAdvanceTime(self, dt);
     if (!g_IsMultiplayer) return;
     for (i = 0; i < 4; i++) {
-        e = PlayerSlots_Get(i);
+        e = cNetObj_GetPlayer(i);
         if (!e) continue;
-        if (!e->b14) Player_HandleLeftGame(e);
+        if (!e->b14) cHuman_CheckForDisconnectedNetworkedPlayer(e);
         cHuman_CheckForChangedWeapons(e);
         if (e->f78() == 3) {
             D_00506508++;
@@ -98,34 +98,34 @@ extern "C" void GuiEquipmentModify_Update(Self* self, float dt) {
         if (D_00506518[i]) continue;
         D_00506518[i] = 1;
         if (self->x80) {
-            int a = g_AgentPartCache.t[Appearance_GetBodyKind(e->xA0)][i];
+            int a = g_AgentPartCache.t[SKL_FindSex(e->xA0)][i];
             if (a) cMan_AddDisguise(e->x60, a);
         }
         if (i != 0) {
-            SoundRequest_Ctor(&req, 4, D_0048BAA0[i], 0, 0);
+            cSndFx_ctor_int_charP_cGOBJP_int(&req, 4, D_0048BAA0[i], 0, 0);
             cPlaySoundMsg_ctor_netPlaySoundMsgR(&msg, &req, e);
             msg.flag = 1;
-            Event_Send(&msg, g_Game, 0);
+            QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 0);
             msg.vtbl = D_004DAE10;
             SoundMsg* m = &msg;
             if (m->payload) {
-                FileMan_Release(msg.partB, -1);
-                FileMan_Release(msg.partA, -1);
+                cFileMan_dtor(msg.partB, -1);
+                cFileMan_dtor(msg.partA, -1);
             }
             cMessage_dtor(&msg, 0);
-            FileMan_Release(req.partB, -1);
-            FileMan_Release(req.partA, -1);
+            cFileMan_dtor(req.partB, -1);
+            cFileMan_dtor(req.partA, -1);
         }
-        Game_NetSendPauseState(g_Game, 0, 0);
+        cGameSystem_SendAgentData(g_Game, 0, 0);
     }
     if (D_00506508) {
         D_00506510 += dt;
         sprintf(buf, self->fmt, 10 - (int)(D_00506510 / 30.0f));
         if (self->hud) GuiTextWidget_SetText(self->hud, buf, 0);
-        if ((g_IsMultiplayer ? D_005721C0 : 1) && !(D_00506510 <= 300.0f)) DME_SendPlayGameMsg();
+        if ((g_IsMultiplayer ? D_005721C0 : 1) && !(D_00506510 <= 300.0f)) cDME_SendPlayGame();
     }
 }
-#undef FileMan_Release /* merge_units */
+#undef cFileMan_dtor /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002C03C0(void) {}

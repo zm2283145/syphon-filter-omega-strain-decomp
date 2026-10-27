@@ -8,7 +8,7 @@
 #include "types.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00283130 */
 #pragma push /* merge_units */
@@ -19,8 +19,8 @@ struct Tread00283130 { void* f0; Path00283130* f4; char p8[0x1C]; float f24; uns
 struct Tank00283130 { char p[0x68]; Tread00283130* tread; };
 union Arg00283130 { int i; float f; void* p; };
 extern "C" {
-void* cNIEventOBJ_Identity(void* id);
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cNIEventOBJ_SOBJ_convert(void* id);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern char D_004A93D0[];
 }
 extern "C" int Script_cTank_SetRightTread(Arg00283130* args) {
@@ -29,12 +29,12 @@ extern "C" int Script_cTank_SetRightTread(Arg00283130* args) {
     Tread00283130* t;
 Tank00283130* self;
 Tread00283130* old;
-    path = (Path00283130*)cNIEventOBJ_Identity(args[2].p);
-    obj = cNIEventOBJ_Identity(args[1].p);
+    path = (Path00283130*)cNIEventOBJ_SOBJ_convert(args[2].p);
+    obj = cNIEventOBJ_SOBJ_convert(args[1].p);
     self = (Tank00283130*)args[0].p;
     old = self->tread;
-    if (old) { AllocGuard g; Mem_Free(0, old, D_004A93D0, 0x1F9); }
-    { AllocGuard g; t = (Tread00283130*)Mem_Alloc(0, 0x2C, D_004A93D0, 0x1FB); }
+    if (old) { AllocGuard g; cMemMan_Deallocate(0, old, D_004A93D0, 0x1F9); }
+    { AllocGuard g; t = (Tread00283130*)cMemMan_Allocate(0, 0x2C, D_004A93D0, 0x1FB); }
     if (t) {
         t->f4 = path;
         t->f0 = obj;
@@ -64,12 +64,12 @@ extern "C" int Script_cTank_SetLeftTread(Arg002832A0* args) {
     Tread002832A0* t;
 Tank002832A0* self;
 Tread002832A0* old;
-    path = (Path002832A0*)cNIEventOBJ_Identity(args[2].p);
-    obj = cNIEventOBJ_Identity(args[1].p);
+    path = (Path002832A0*)cNIEventOBJ_SOBJ_convert(args[2].p);
+    obj = cNIEventOBJ_SOBJ_convert(args[1].p);
     self = (Tank002832A0*)args[0].p;
     old = self->tread;
-    if (old) { AllocGuard g; Mem_Free(0, old, D_004A93D0, 0x1F1); }
-    { AllocGuard g; t = (Tread002832A0*)Mem_Alloc(0, 0x2C, D_004A93D0, 0x1F3); }
+    if (old) { AllocGuard g; cMemMan_Deallocate(0, old, D_004A93D0, 0x1F1); }
+    { AllocGuard g; t = (Tread002832A0*)cMemMan_Allocate(0, 0x2C, D_004A93D0, 0x1F3); }
     if (t) {
         t->f4 = path;
         t->f0 = obj;
@@ -92,7 +92,7 @@ struct Tur00283410 { char p[0x70]; };
 struct Tank00283410 { char p[0x6C]; Tur00283410* turret; };
 union Arg00283410 { int i; float f; void* p; };
 extern "C" {
-Tur00283410* cTank_SetTurret(Tur00283410* t, void* a, void* b, void* c, void* d, Tank00283410* owner);
+Tur00283410* cTurret_ctor(Tur00283410* t, void* a, void* b, void* c, void* d, Tank00283410* owner);
 }
 extern "C" int Script_cTank_SetTurret_2(Arg00283410* args) {
     void* a;
@@ -101,14 +101,14 @@ extern "C" int Script_cTank_SetTurret_2(Arg00283410* args) {
     Tur00283410* t;
 Tank00283410* self;
 Tur00283410* old;
-    c = cNIEventOBJ_Identity(args[3].p);
-    b = cNIEventOBJ_Identity(args[2].p);
-    a = cNIEventOBJ_Identity(args[1].p);
+    c = cNIEventOBJ_SOBJ_convert(args[3].p);
+    b = cNIEventOBJ_SOBJ_convert(args[2].p);
+    a = cNIEventOBJ_SOBJ_convert(args[1].p);
     self = (Tank00283410*)args[0].p;
     old = self->turret;
-    if (old) { AllocGuard g; Mem_Free(0, old, D_004A93D0, 0x1E8); }
-    { AllocGuard g; t = (Tur00283410*)Mem_Alloc(0, 0x70, D_004A93D0, 0x1EA); }
-    if (t) t = cTank_SetTurret(t, a, b, c, 0, self);
+    if (old) { AllocGuard g; cMemMan_Deallocate(0, old, D_004A93D0, 0x1E8); }
+    { AllocGuard g; t = (Tur00283410*)cMemMan_Allocate(0, 0x70, D_004A93D0, 0x1EA); }
+    if (t) t = cTurret_ctor(t, a, b, c, 0, self);
     self->turret = t;
     return 0;
 }
@@ -126,9 +126,9 @@ struct Tank002835A0 { char p[0x6C]; Tur002835A0* turret; };
 union Arg002835A0 { int i; float f; void* p; };
 extern "C" {
 #if 0 /* merge_units */
-Tur002835A0* cTank_SetTurret(Tur002835A0* t, void* a, void* b, void* c, void* d, Tank002835A0* owner);
+Tur002835A0* cTurret_ctor(Tur002835A0* t, void* a, void* b, void* c, void* d, Tank002835A0* owner);
 #endif /* merge_units */
-#define cTank_SetTurret(a0, a1, a2, a3, a4, a5) ((Tur002835A0 *)cTank_SetTurret((Tur00283410 *)(a0), (a1), (a2), (a3), (a4), (Tank00283410 *)(a5))) /* merge_units */
+#define cTurret_ctor(a0, a1, a2, a3, a4, a5) ((Tur002835A0 *)cTurret_ctor((Tur00283410 *)(a0), (a1), (a2), (a3), (a4), (Tank00283410 *)(a5))) /* merge_units */
 
 }
 extern "C" int Script_cTank_SetTurret(Arg002835A0* args) {
@@ -139,19 +139,19 @@ extern "C" int Script_cTank_SetTurret(Arg002835A0* args) {
     Tur002835A0* t;
 Tank002835A0* self;
 Tur002835A0* old;
-    d = cNIEventOBJ_Identity(args[4].p);
-    c = cNIEventOBJ_Identity(args[3].p);
-    b = cNIEventOBJ_Identity(args[2].p);
-    a = cNIEventOBJ_Identity(args[1].p);
+    d = cNIEventOBJ_SOBJ_convert(args[4].p);
+    c = cNIEventOBJ_SOBJ_convert(args[3].p);
+    b = cNIEventOBJ_SOBJ_convert(args[2].p);
+    a = cNIEventOBJ_SOBJ_convert(args[1].p);
     self = (Tank002835A0*)args[0].p;
     old = self->turret;
-    if (old) { AllocGuard g; Mem_Free(0, old, D_004A93D0, 0x1E8); }
-    { AllocGuard g; t = (Tur002835A0*)Mem_Alloc(0, 0x70, D_004A93D0, 0x1EA); }
-    if (t) t = cTank_SetTurret(t, a, b, c, d, self);
+    if (old) { AllocGuard g; cMemMan_Deallocate(0, old, D_004A93D0, 0x1E8); }
+    { AllocGuard g; t = (Tur002835A0*)cMemMan_Allocate(0, 0x70, D_004A93D0, 0x1EA); }
+    if (t) t = cTurret_ctor(t, a, b, c, d, self);
     self->turret = t;
     return 0;
 }
-#undef cTank_SetTurret /* merge_units */
+#undef cTurret_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002835A0(void) {}
 #pragma pop /* merge_units */

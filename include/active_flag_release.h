@@ -12,7 +12,7 @@ typedef struct ActiveFlagObj {
 } ActiveFlagObj;
 
 extern void GuiMissionLobbyScreen_ExitLobbyScreen(ActiveFlagObj* self);
-extern void* DME_GetLobby(void);
+extern void* cDME_GetLobby(void);
 
 #define DEFINE_ACTIVE_FLAG_RELEASE(name, releaseFn)                           \
     extern void releaseFn(void* p);                                           \
@@ -21,7 +21,7 @@ extern void* DME_GetLobby(void);
         if (self->active) {                                                   \
             void* p;                                                          \
             GuiMissionLobbyScreen_ExitLobbyScreen(self);                                              \
-            p = DME_GetLobby();                                               \
+            p = cDME_GetLobby();                                               \
             if (p)                                                            \
                 releaseFn(p);                                                 \
             self->active = 0;                                                 \

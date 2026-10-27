@@ -30,10 +30,10 @@ extern int D_005721A8;
 extern unsigned char g_IsMultiplayer;
 extern int g_HotboxTracker;
 int cHuman_CanPackBeDeleted(Owner_7A40* o);
-int NetGame_InitLocalSlot(int*, int);
-void Hotbox_RemoveObjectBox(int, void*);
-int Object_Unregister(void*);
-int Object_DeleteLater(void*, float);
+int NetGetMyClientIndex(int*, int);
+void cHotboxMan_RemoveHotbox(int, void*);
+int nGobjManager_RemoveGOBJ(void*);
+int cSystem_ActualScheduleDelete(void*, float);
 }
 
 static inline bool HolderReady(BP_7A40* bp) {
@@ -43,7 +43,7 @@ static inline bool HolderReady(BP_7A40* bp) {
 }
 
 #pragma opt_strength_reduction off
-extern "C" void Backpack_CheckCap(void) {
+extern "C" void cBackpack_GarbageCollect(void) {
     List_7A40* list = g_BackpackList;
     int n;
     int cnt;
@@ -63,7 +63,7 @@ extern "C" void Backpack_CheckCap(void) {
         {
             int a = D_005721A8;
             if (g_IsMultiplayer) {
-                if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
+                if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, a);
                 me = D_00494178;
             } else me = 0;
         }
@@ -94,9 +94,9 @@ extern "C" void Backpack_CheckCap(void) {
             sel->b2F2 = 1;
             sel->timer = 0.0f;
             if (sel->fx) {
-                Hotbox_RemoveObjectBox(g_HotboxTracker, sel->fx);
-                Object_Unregister(sel->fx);
-                Object_DeleteLater(sel->fx, 0.1f);
+                cHotboxMan_RemoveHotbox(g_HotboxTracker, sel->fx);
+                nGobjManager_RemoveGOBJ(sel->fx);
+                cSystem_ActualScheduleDelete(sel->fx, 0.1f);
                 sel->fx = 0;
             }
         }

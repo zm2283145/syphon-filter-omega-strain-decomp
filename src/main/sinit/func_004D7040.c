@@ -10,7 +10,7 @@ extern int D_00571FA0;
 extern int D_00571FA4;
 extern int D_00571FA8;
 extern int D_00571FAC;
-extern char InterfaceMgr_dtor;
+extern char cInterfaceManager_dtor;
 extern char cInterfaceManager_Entry_dtor;
 extern char cInterfaceManager_Entry_ctor;
 
@@ -39,5 +39,5 @@ void StaticInit_interface_manager(void) {
         F_(var_s0, 0x70, int) = 0;
         var_s0 += 0x78;
     } while (var_v1 < 0x14);
-    __register_global_object(&D_00571DC0, &InterfaceMgr_dtor, &D_00571DB0);
+    __register_global_object(&D_00571DC0, &cInterfaceManager_dtor, &D_00571DB0);
 }

@@ -1,4 +1,4 @@
-// Placement_TransformPointConj: rotate point by placement quat, then add (w-scaled) position (VU0). Same idioms as UpperBodyIk_Position.c.
+// cVector_Transform_cQuatVecR: rotate point by placement quat, then add (w-scaled) position (VU0). Same idioms as cBoneIk_LimbPose_CalculateSkelSpacePos.c.
 #pragma cplusplus on
 #include "types.h"
 #pragma always_inline on
@@ -30,7 +30,7 @@ static inline void ScaleTo(V* d, const V* s, float k) { int r; V* dd = d; asm {
     } }
 inline V V::operator*(float k) const { V t; ScaleTo(&t, this, k); return t; }
 struct Plc { V q; V pos; };
-extern "C" V* Placement_TransformPointConj(V* p, Plc* m)
+extern "C" V* cVector_Transform_cQuatVecR(V* p, Plc* m)
 {
     const V& ppos = m->pos;
     p->Rotate(m->q);

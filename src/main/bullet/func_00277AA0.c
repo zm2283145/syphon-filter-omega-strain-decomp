@@ -2,10 +2,10 @@
 #pragma inline_depth(8)
 #include "types.h"
 #include "alloc_guard.h"
-/* Bullet_InitFromRequest: fills a pooled bullet from a fire request (frame,
+/* cBullet_InitBullet: fills a pooled bullet from a fire request (frame,
  * owner/target handles, hit triangle copy, type), creates its tracer when the
  * type has one, and builds the two streak side vectors from the bullet's
- * forward axis. Request layout as in BulletPool_Request (BulletPool_Request.c). */
+ * forward axis. Request layout as in cBulletManager_AddBullet (cBulletManager_AddBullet.c). */
 struct V {
     float x, y, z, w;
     V() {}
@@ -70,13 +70,13 @@ struct Bullet {
 extern "C" {
 extern char D_004A91A0[];
 extern int D_00504038;
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void* Tracer_Create(void* p, int id, Mtx* m, float scale);
-int* SpecFx_GetEffectDef(int id);
-void Vec4_Copy(void* d, const void* s);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void* cParticle_ctor(void* p, int id, Mtx* m, float scale);
+int* nSfxLoader_GetHandle(int id);
+void cVector_opAssign(void* d, const void* s);
 void cCollisionModel_FaceProperties_opAssign(void* d, const void* s);
 void cCollisionModel_FaceLocator_opAssign(void* d, const void* s);
-void Bullet_InitFromRequest(Bullet* b, Req* r);
+void cBullet_InitBullet(Bullet* b, Req* r);
 }
 static inline const int& IdOf(Tracked* p) { if (p) return p->serial; int m = -1; return m; }
 static inline void SetH(H* h, Tracked* p) { h->p = p; h->serial = IdOf(p); }
@@ -87,12 +87,12 @@ static inline void* NewTracer(int line)
     void* p;
     {
         AllocGuard g;
-        p = Mem_Alloc(0, 0x70, D_004A91A0, line);
+        p = cMemMan_Allocate(0, 0x70, D_004A91A0, line);
     }
     return p;
 }
 
-void Bullet_InitFromRequest(Bullet* b, Req* r)
+void cBullet_InitBullet(Bullet* b, Req* r)
 {
     b->m = r->m;
     b->speed = r->f40;
@@ -104,10 +104,10 @@ void Bullet_InitFromRequest(Bullet* b, Req* r)
     b->active = 1;
     b->b115 = 1;
     SetH(&b->h70, r->f4C);
-    Vec4_Copy(&b->tr.v[0], &r->tr.v[0]);
-    Vec4_Copy(&b->tr.v[1], &r->tr.v[1]);
-    Vec4_Copy(&b->tr.v[2], &r->tr.v[2]);
-    Vec4_Copy(&b->tr.v[3], &r->tr.v[3]);
+    cVector_opAssign(&b->tr.v[0], &r->tr.v[0]);
+    cVector_opAssign(&b->tr.v[1], &r->tr.v[1]);
+    cVector_opAssign(&b->tr.v[2], &r->tr.v[2]);
+    cVector_opAssign(&b->tr.v[3], &r->tr.v[3]);
     b->tr.b50 = r->tr.b50;
     cCollisionModel_FaceProperties_opAssign(&b->tr.s40, &r->tr.s40);
     cCollisionModel_FaceLocator_opAssign(&b->tr.s60, &r->tr.s60);
@@ -123,12 +123,12 @@ void Bullet_InitFromRequest(Bullet* b, Req* r)
     b->count = 0;
     if (b->type->tracer > -1) {
         void* p = NewTracer(0xE0);
-        if (p) p = Tracer_Create(p, b->type->tracer, &b->m, r->fE4);
+        if (p) p = cParticle_ctor(p, b->type->tracer, &b->m, r->fE4);
         b->emitter = p;
     } else {
         b->emitter = 0;
     }
-    b->tex = *SpecFx_GetEffectDef(26);
+    b->tex = *nSfxLoader_GetHandle(26);
     {
         V fwd = *(V*)&b->m.r[1];
         b->side0 = Cross(fwd, V(0.0f, 0.0f, 1.0f, 0.0f));

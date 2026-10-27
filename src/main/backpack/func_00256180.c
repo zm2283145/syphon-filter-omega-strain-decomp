@@ -7,12 +7,12 @@
 #include "backpack_types.h"
 
 extern int g_HotboxTracker;
-extern BackpackLink* Hotbox_CreateRuntime(int manager, cBackpack* backpack, int a2, int a3);
+extern BackpackLink* cHotboxMan_CreateInteractBox(int manager, cBackpack* backpack, int a2, int a3);
 
 /* Creates the backpack's link object through manager g_HotboxTracker if it has none. */
-void Backpack_TurnOn(cBackpack* backpack) {
+void cBackpack_MakeInteractBox(cBackpack* backpack) {
     if (backpack->link == 0) {
-        backpack->link = Hotbox_CreateRuntime(g_HotboxTracker, backpack, 0, 1);
+        backpack->link = cHotboxMan_CreateInteractBox(g_HotboxTracker, backpack, 0, 1);
         backpack->link->owner = backpack->unk0C;
     }
 }

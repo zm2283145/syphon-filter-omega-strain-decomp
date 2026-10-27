@@ -1,17 +1,17 @@
 #include "types.h"
 extern char D_004DA410[];
-extern void CameraRig_TranslateFollowCurves();
-extern void Curve_ComputeRates();
-extern void Curve_PreUpdate();
-extern void Curve_Retarget();
-extern void Curve_SetVelocity();
-extern void Curve_VirtualNop();
+extern void cSplinedMotion_cVector_TeleportByDelta();
+extern void cSplinedMotion_cVector_UpdateVelocity();
+extern void cSplinedMotion_cVector_UpdateSplinePoints();
+extern void cSplinedMotion_float_UpdateSplinePoints();
+extern void cSplinedMotion_float_UpdateVelocity();
+extern void cSplinedMotion_float_FixUpResultOfSplineEvaluation();
 extern void cSplinedMotion_cVector_FixUpResultOfSplineEvaluation();
 extern void func_0017ECD0();
 extern void cCollisionSystem_cBox_dtor_void();
 extern void cSplinedMotion_float_TeleportByDelta();
-void * const D_004DA380[12] = { (void*)0x0, (void*)0x0, (void*)func_0017ECD0, (void*)cSplinedMotion_float_TeleportByDelta, (void*)0x0, (void*)0x0, (void*)Curve_Retarget, (void*)Curve_VirtualNop, (void*)Curve_SetVelocity, (void*)0x0, (void*)0x0, (void*)0x0 };
-void * const D_004DA3B0[12] = { (void*)0x0, (void*)0x0, (void*)cCollisionSystem_cBox_dtor_void, (void*)CameraRig_TranslateFollowCurves, (void*)0x0, (void*)0x0, (void*)Curve_PreUpdate, (void*)cSplinedMotion_cVector_FixUpResultOfSplineEvaluation, (void*)Curve_ComputeRates, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004DA380[12] = { (void*)0x0, (void*)0x0, (void*)func_0017ECD0, (void*)cSplinedMotion_float_TeleportByDelta, (void*)0x0, (void*)0x0, (void*)cSplinedMotion_float_UpdateSplinePoints, (void*)cSplinedMotion_float_FixUpResultOfSplineEvaluation, (void*)cSplinedMotion_float_UpdateVelocity, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004DA3B0[12] = { (void*)0x0, (void*)0x0, (void*)cCollisionSystem_cBox_dtor_void, (void*)cSplinedMotion_cVector_TeleportByDelta, (void*)0x0, (void*)0x0, (void*)cSplinedMotion_cVector_UpdateSplinePoints, (void*)cSplinedMotion_cVector_FixUpResultOfSplineEvaluation, (void*)cSplinedMotion_cVector_UpdateVelocity, (void*)0x0, (void*)0x0, (void*)0x0 };
 extern char D_004DA3E0[];
 extern void cSplinedMotion_Scalar_dtor_void(void* p, int f);
 extern void operator_delete(void* p);

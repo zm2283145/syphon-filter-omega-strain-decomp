@@ -7,7 +7,7 @@ static inline int h2count(H2Pack* p) {
     return n;
 }
 /* Upper-cases text into a manifest buffer, dropping separators and padding lines to 16 bytes. */
-void Appearance_PackText(H2Pack* dst, char* src, int len) {
+void SKL_ConvertSKL(H2Pack* dst, char* src, int len) {
     int c;
     char* w = (char*)dst;
     char* lim = (char*)dst + 0x440;

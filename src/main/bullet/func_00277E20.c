@@ -9,16 +9,16 @@ extern char g_LosCheckService[];
 extern char D_00504030[];
 extern float D_0048B348;
 
-void* Service_Lookup(void* a, void* b);
-int LosMgr_TraceBullet(void* mgr, V* a, struct LosHit* b, V* c, V d, int e1, void* e2, int g, unsigned char h, unsigned char i, void* j, unsigned char k);
-void Mtx_Copy(void* d, const void* s);
+void* cSystemContainer_GetSystem(void* a, void* b);
+int cLosManager_cCollisionModelList_Game_PerformImmediateRayIntersectionTest(void* mgr, V* a, struct LosHit* b, V* c, V d, int e1, void* e2, int g, unsigned char h, unsigned char i, void* j, unsigned char k);
+void cMatrix_ctor_cMatrixR(void* d, const void* s);
 void cCollisionFace_ctor_cCollisionFaceR(void* d, const void* s);
-void Vec4_Assign(void* d, const void* s);
-void Vec4_Copy(V* d, const V* s);
+void cVector_ctor_cVectorR(void* d, const void* s);
+void cVector_opAssign(V* d, const V* s);
 void cCollisionModel_FaceProperties_opAssign(void* d, const void* s);
 void cCollisionModel_FaceLocator_opAssign(void* d, const void* s);
-void Bullet_InitFromRequest(struct Bullet* b, struct Req* r);
-struct Bullet* BulletPool_Request(struct Req* req);
+void cBullet_InitBullet(struct Bullet* b, struct Req* r);
+struct Bullet* cBulletManager_AddBullet(struct Req* req);
 }
 // VU0 macro-mode vector op (COP2), not expressible in C
 static inline void ScaleV(V* rp, const V* tp, float k) { __int128 t = 0; __asm__ volatile(".set noreorder; lqc2 $vf1, 0x0(%1); mfc1 %0, %3; qmtc2.ni %0, $vf2; vmulx.xyzw $vf1, $vf1, $vf2x; sqc2 $vf1, 0x0(%2); .set reorder" : "+r"(t) : "r"(tp), "r"(rp), "f"(k) : "memory"); }
@@ -57,8 +57,8 @@ struct LosHit {
     char pad68[0x8];
     LosHit() { LosHit* q = this; VP* i = q->arr; do { i++; } while (i != q->arr + 3); q->b40 = 0; q->b42 = 0; q->x60 = 0; q->x64 = 0; }
 };
-struct Mtx { VP r[4]; Mtx() {} Mtx(const Mtx& o) { Mtx_Copy(this, &o); } };
-struct HV { float x, y, z, w; HV() {} HV(const HV& o) { Vec4_Assign(this, &o); } HV& operator=(const V& o) { *(V*)this = o; return *this; } } __attribute__((aligned(16)));
+struct Mtx { VP r[4]; Mtx() {} Mtx(const Mtx& o) { cMatrix_ctor_cMatrixR(this, &o); } };
+struct HV { float x, y, z, w; HV() {} HV(const HV& o) { cVector_ctor_cVectorR(this, &o); } HV& operator=(const V& o) { *(V*)this = o; return *this; } } __attribute__((aligned(16)));
 struct TrCopy {
     VP v[4];
     Sub40 s40;
@@ -83,29 +83,29 @@ struct Req {
     float fE4;
     Req() {}
 };
-static inline void CopyReq(Req* d, const Req* s) { Mtx_Copy(&d->m, &s->m); d->f40 = s->f40; d->f44 = s->f44; d->f48 = s->f48; d->f4C = s->f4C; cCollisionFace_ctor_cCollisionFaceR(&d->tr, &s->tr); Vec4_Assign(&d->hit, &s->hit); d->fD0 = s->fD0; d->fD4 = s->fD4; d->fD5 = s->fD5; d->fD6 = s->fD6; d->fD8 = s->fD8; d->fDC = s->fDC; d->fE0 = s->fE0; d->fE4 = s->fE4; }
+static inline void CopyReq(Req* d, const Req* s) { cMatrix_ctor_cMatrixR(&d->m, &s->m); d->f40 = s->f40; d->f44 = s->f44; d->f48 = s->f48; d->f4C = s->f4C; cCollisionFace_ctor_cCollisionFaceR(&d->tr, &s->tr); cVector_ctor_cVectorR(&d->hit, &s->hit); d->fD0 = s->fD0; d->fD4 = s->fD4; d->fD5 = s->fD5; d->fD6 = s->fD6; d->fD8 = s->fD8; d->fDC = s->fDC; d->fE0 = s->fE0; d->fE4 = s->fE4; }
 struct BulletReq : Req {};
 struct Bullet { char pad[0x115]; unsigned char active; char pad116[0x150 - 0x116]; };
 extern "C" Bullet D_004FFE60[];
 
 
-Bullet* BulletPool_Request(Req* req)
+Bullet* cBulletManager_AddBullet(Req* req)
 {
-    void* svc = Service_Lookup(g_Game, g_LosCheckService);
+    void* svc = cSystemContainer_GetSystem(g_Game, g_LosCheckService);
     V hit;
     LosHit res;
     V start = *(V*)&req->m.r[3];
     start += (*(V*)&req->m.r[1]) * D_0048B348;
-    unsigned char ok = (unsigned char)LosMgr_TraceBullet(svc, &hit, &res, &start, (*(V*)&req->m.r[1]) * req->fD8, req->f44, 0, 0, 0x10, 0x80, D_00504030, 1);
-    Req r; Req* d = &r; const Req* s = req; Mtx_Copy(&d->m, &s->m); d->f40 = s->f40; d->f44 = s->f44; d->f48 = s->f48; d->f4C = s->f4C; cCollisionFace_ctor_cCollisionFaceR(&d->tr, &s->tr); Vec4_Assign(&d->hit, &s->hit); d->fD0 = s->fD0; d->fD4 = s->fD4; d->fD5 = s->fD5; d->fD6 = s->fD6; d->fD8 = s->fD8; d->fDC = s->fDC; d->fE0 = s->fE0; d->fE4 = s->fE4;
+    unsigned char ok = (unsigned char)cLosManager_cCollisionModelList_Game_PerformImmediateRayIntersectionTest(svc, &hit, &res, &start, (*(V*)&req->m.r[1]) * req->fD8, req->f44, 0, 0, 0x10, 0x80, D_00504030, 1);
+    Req r; Req* d = &r; const Req* s = req; cMatrix_ctor_cMatrixR(&d->m, &s->m); d->f40 = s->f40; d->f44 = s->f44; d->f48 = s->f48; d->f4C = s->f4C; cCollisionFace_ctor_cCollisionFaceR(&d->tr, &s->tr); cVector_ctor_cVectorR(&d->hit, &s->hit); d->fD0 = s->fD0; d->fD4 = s->fD4; d->fD5 = s->fD5; d->fD6 = s->fD6; d->fD8 = s->fD8; d->fDC = s->fDC; d->fE0 = s->fE0; d->fE4 = s->fE4;
     if (ok) {
         V h = hit;
         r.fD8 = Len(h - *(V*)&req->m.r[3]);
         r.f4C = *res.x64;
-        Vec4_Copy((V*)&r.tr.v[0], (V*)&res.arr[0]);
-        Vec4_Copy((V*)&r.tr.v[1], (V*)&res.arr[1]);
-        Vec4_Copy((V*)&r.tr.v[2], (V*)&res.arr[2]);
-        Vec4_Copy((V*)&r.tr.v[3], &res.normal);
+        cVector_opAssign((V*)&r.tr.v[0], (V*)&res.arr[0]);
+        cVector_opAssign((V*)&r.tr.v[1], (V*)&res.arr[1]);
+        cVector_opAssign((V*)&r.tr.v[2], (V*)&res.arr[2]);
+        cVector_opAssign((V*)&r.tr.v[3], &res.normal);
         r.tr.b50 = res.b50;
         cCollisionModel_FaceProperties_opAssign(&r.tr.s40, &res.b40);
         cCollisionModel_FaceLocator_opAssign(&r.tr.s60, &res.x60);
@@ -117,7 +117,7 @@ Bullet* BulletPool_Request(Req* req)
     for (int i = 0; !b && i < 50; i++) {
         if (!D_004FFE60[i].active) {
             b = &D_004FFE60[i];
-            Bullet_InitFromRequest(b, &r);
+            cBullet_InitBullet(b, &r);
         }
     }
     return b;

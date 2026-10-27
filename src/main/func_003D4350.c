@@ -2,9 +2,9 @@
 #include "types.h"
 #pragma always_inline on
 #pragma inline_depth(8)
-/* Shadow_AddProjectorSlot: registers an object as a shadow receiver and gives it a projector looking
+/* cShadowMan_AddProjTex: registers an object as a shadow receiver and gives it a projector looking
  * along dir from pos (pushed back by 3x the size), with a fixed 2/7 perspective scale. VU0 math and
- * quad copies are inline asm (as in Shadow_BuildProjection, Shadow_BuildProjection.c). */
+ * quad copies are inline asm (as in cShadowMan_ProcessCaster, cShadowMan_ProcessCaster.c). */
 struct V {
     float x, y, z, w;
     V() {}
@@ -33,14 +33,14 @@ struct Shadow {
     int nProj;              /* 0x11740 */
 };
 extern "C" {
-float Math_Atan(float);
-int Shadow_AddReceiver(Shadow* sh, Obj* o, int force);
-float Shadow_FogFactor(Renderer* r, const V* p);
-void Shadow_LookAt(V* pos, V* dir, M* m);
-void Shadow_Perspective(M* out, float* a, float* b, float fov, float f13, float f14, float f15, float f16, float n, float f, float f19, float s0, float s8);
+float Libc_Atanf(float);
+int cShadowMan_AddReceiver(Shadow* sh, Obj* o, int force);
+float XLib_GetFogVal(Renderer* r, const V* p);
+void BuildLookatMatrix(V* pos, V* dir, M* m);
+void BuildProjection(M* out, float* a, float* b, float fov, float f13, float f14, float f15, float f16, float n, float f, float f19, float s0, float s8);
 extern char g_Video[];
 extern M D_00539070;
-int Shadow_AddProjectorSlot(Shadow* sh, Obj* o, V* pos, V* dir, int id, float size, float strength);
+int cShadowMan_AddProjTex(Shadow* sh, Obj* o, V* pos, V* dir, int id, float size, float strength);
 }
 static inline void Add(V* r, const V* a, const V* b) { __asm__ volatile("lqc2 vf1, 0x0(%1); lqc2 vf2, 0x0(%2); vadd.xyzw vf1, vf1, vf2; sqc2 vf1, 0x0(%0)" : : "r"(r), "r"(a), "r"(b) : "memory"); }
 static inline void MulS_(V* pr, const V* pv, float k) { int t; __asm__ volatile(".set noreorder; lqc2 vf1, 0x0(%1); mfc1 %0, %3; qmtc2.ni %0, vf2; vmulx.xyzw vf1, vf1, vf2x; sqc2 vf1, 0x0(%2); .set reorder" : "=&r"(t) : "r"(pv), "r"(pr), "f"(k) : "memory"); }
@@ -58,11 +58,11 @@ static inline void GMul2(void* o, const void* a, const void* b) {
 static inline M MulM2(M a, const M& b) { M r; GMul2(&r, &a, &b); return r; }
 static inline M operator*(const M& a, const M& b) { M r; GMul(&r, &a, &b); return r; }
 
-static inline void LookAt(V* pos, V dir, M* m) { Shadow_LookAt(pos, &dir, m); }
-extern "C" int Shadow_AddProjectorSlot(Shadow* sh, Obj* o, V* pos, V* dir, int id, float size, float strength)
+static inline void LookAt(V* pos, V dir, M* m) { BuildLookatMatrix(pos, &dir, m); }
+extern "C" int cShadowMan_AddProjTex(Shadow* sh, Obj* o, V* pos, V* dir, int id, float size, float strength)
 {
     if (sh->nSlots < sh->maxSlots) {
-        int r = Shadow_AddReceiver(sh, o, 1);
+        int r = cShadowMan_AddReceiver(sh, o, 1);
         if (r >= 0) {
             Recv* rc = &sh->recv[r];
             if (rc->nProj < 24 && sh->nProj < 24) {
@@ -76,9 +76,9 @@ extern "C" int Shadow_AddProjectorSlot(Shadow* sh, Obj* o, V* pos, V* dir, int i
                 rc->nProj++;
                 dist = size + back;
                 far = dist + back;
-                fov = Math_Atan(size / dist);
+                fov = Libc_Atanf(size / dist);
                 {
-                    float fog = Shadow_FogFactor((Renderer*)g_Video, pos);
+                    float fog = XLib_GetFogVal((Renderer*)g_Video, pos);
                     p = &sh->proj[sh->nProj];
                     p->actor = 0;
                     p->fov = fov;
@@ -90,7 +90,7 @@ extern "C" int Shadow_AddProjectorSlot(Shadow* sh, Obj* o, V* pos, V* dir, int i
                 }
                 {
                     M persp;
-                    Shadow_Perspective(&persp, &p->x90, p->xA0, p->fov, 0.0f, 1.0f, 0.0f, 1.0f, size, far, 1.0f, 1.0f, 0.0f);
+                    BuildProjection(&persp, &p->x90, p->xA0, p->fov, 0.0f, 1.0f, 0.0f, 1.0f, size, far, 1.0f, 1.0f, 0.0f);
                     persp.m[0][0] *= 1.0f / 3.5f;
                     persp.m[1][1] *= 1.0f / 3.5f;
                     p->x90 *= 3.5f;

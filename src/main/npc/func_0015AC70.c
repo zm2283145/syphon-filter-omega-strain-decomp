@@ -5,7 +5,7 @@
 
 #include "npc_types.h"
 
-extern int NpcAi_RequestMode(void* obj, int a1, int a2);
+extern int cStateMachine_ChangeState(void* obj, int a1, int a2);
 
 /* Three-word record, initialised to {0, -2, -1}. */
 typedef struct NpcTriple {
@@ -41,6 +41,6 @@ void* cAiTargetTransfer_ctor(void* self) {
 NpcTriple* cAiTransfer_ctor(NpcTriple* self) {
     self->unk0 = 0;
     self->unk8 = 0;
-    NpcAi_RequestMode(self, 0, 0);
+    cStateMachine_ChangeState(self, 0, 0);
     return self;
 }

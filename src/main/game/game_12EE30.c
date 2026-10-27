@@ -9,8 +9,8 @@
 
 /* merge_units: begin func_0012EE30 */
 #pragma push /* merge_units */
-char* Agent_GetSelected(int, int);
-int NetGame_InitLocalSlot(int*, int);
+char* cGameSystem_GetAgentData(int, int);
+int NetGetMyClientIndex(int*, int);
 extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char g_IsMultiplayer;
@@ -23,11 +23,11 @@ void Game_ClearOtherAgentsB70(int arg0)
         int v;
         int a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */
         if (g_IsMultiplayer) {
-            if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
+            if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, a);
             v = D_00494178;
         } else v = 0;
         if (i != v) {
-            char* p = Agent_GetSelected(arg0, i);
+            char* p = cGameSystem_GetAgentData(arg0, i);
             if (p) p[0xB70] = 0;
         }
         i++;
@@ -55,11 +55,11 @@ typedef struct {
 extern char D_004EA098[];
 extern char D_004D91A0[];
 extern char D_004DCF10[];
-extern void Event_Construct(Msg_12EEE0* m, void* type);
-extern void Transport_Send(int a, Msg_12EEE0* m, int b, int c);
+extern void cMessage_ctor_cMessageNameR(Msg_12EEE0* m, void* type);
+extern void cNetObj_SendMessage_int_cMessageR_int_int(int a, Msg_12EEE0* m, int b, int c);
 extern void cMessage_dtor(Msg_12EEE0* m, int f);
 
-void Game_NetSendPauseState(int arg0, unsigned char arg1, unsigned char arg2)
+void cGameSystem_SendAgentData(int arg0, unsigned char arg1, unsigned char arg2)
 {
     Msg_12EEE0 m;
     Msg_12EEE0* p;
@@ -67,13 +67,13 @@ void Game_NetSendPauseState(int arg0, unsigned char arg1, unsigned char arg2)
         int id;
         int a = D_005721A8;
         if (g_IsMultiplayer) {
-            if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
+            if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, a);
             id = D_00494178;
         } else id = 0;
         {
-            char* agent = Agent_GetSelected(arg0, -1);
+            char* agent = cGameSystem_GetAgentData(arg0, -1);
             p = &m;
-            Event_Construct(p, D_004EA098);
+            cMessage_ctor_cMessageNameR(p, D_004EA098);
             m.agent = agent;
             m.vt = D_004D91A0;
             m.id = id;
@@ -84,7 +84,7 @@ void Game_NetSendPauseState(int arg0, unsigned char arg1, unsigned char arg2)
                 if (!*f) p->f1C = 0x40;
             }
             p->b2D = arg2;
-            Transport_Send(0, &m, -1, -1);
+            cNetObj_SendMessage_int_cMessageR_int_int(0, &m, -1, -1);
             m.vt = D_004DCF10;
             cMessage_dtor(&m, 0);
         }

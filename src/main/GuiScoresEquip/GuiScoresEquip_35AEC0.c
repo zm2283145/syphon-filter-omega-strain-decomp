@@ -25,12 +25,12 @@ extern char D_004BB4D8[];
 extern char D_004BB530[];
 extern char D_004A9870[];
 extern G_35AEC0* g_Hud;
-W_35AEC0* GuiWidget_FindChildByName(void* self, char* name);
-char* Loc_LookupText(char* key);
+W_35AEC0* GuiWidget_FindChild_charP(void* self, char* name);
+char* nGlobalization_GetString_charP(char* key);
 void GuiTextWidget_SetText(W_35AEC0* w, char* text, int flags);
 void GuiStartMenu_ReturnToMenu(S_35AEC0* o);
-void GuiStartMenu_CloseAll(S_35AEC0* o);
-int GuiScoresEquip_HandleInput(S_35AEC0* o, Ev_35AEC0* ev);
+void GuiStartMenu_PopStartMenu(S_35AEC0* o);
+int GuiScoresEquip_onInput(S_35AEC0* o, Ev_35AEC0* ev);
 }
 static inline W_35AEC0* cast_35AEC0(W_35AEC0* w)
 {
@@ -44,7 +44,7 @@ static inline bool Down2_35AEC0(Ev_35AEC0* e) { return e->type == 1 && e->b2 == 
 static inline bool Btn2_35AEC0(Ev_35AEC0* e, int b) { return Down2_35AEC0(e) && e->btn == b; }
 static inline bool Plain2_35AEC0(Ev_35AEC0* e, int b) { return Btn2_35AEC0(e, b) && e->b6 == 0; }
 static inline bool NoMod2_35AEC0(Ev_35AEC0* e) { return Down2_35AEC0(e) && e->b6 == 0; }
-int GuiScoresEquip_HandleInput(S_35AEC0* o, Ev_35AEC0* ev)
+int GuiScoresEquip_onInput(S_35AEC0* o, Ev_35AEC0* ev)
 {
     if (Plain_35AEC0(ev, 0x10)) {
         W_35AEC0* a;
@@ -55,19 +55,19 @@ int GuiScoresEquip_HandleInput(S_35AEC0* o, Ev_35AEC0* ev)
             return 1;
         }
         o->a224 = 0;
-        a = GuiWidget_FindChildByName(o, D_004BB4D8);
-        b = GuiWidget_FindChildByName(o, "equipment_grp");
+        a = GuiWidget_FindChild_charP(o, D_004BB4D8);
+        b = GuiWidget_FindChild_charP(o, "equipment_grp");
         if (a) a->a14 |= 2;
         if (b) b->a14 &= ~2;
-        c = cast_35AEC0(GuiWidget_FindChildByName(o, "button_equip_score"));
+        c = cast_35AEC0(GuiWidget_FindChild_charP(o, "button_equip_score"));
         if (c) {
-            char* t = Loc_LookupText("ScoresEquipScr0");
+            char* t = nGlobalization_GetString_charP("ScoresEquipScr0");
             GuiTextWidget_SetText(c, t ? t : D_004BB530, 0);
         }
         return 1;
     }
     if (Plain2_35AEC0(ev, 0x800) && g_Hud->b6A8) {
-        GuiStartMenu_CloseAll(o);
+        GuiStartMenu_PopStartMenu(o);
         return 1;
     }
     if (Btn2_35AEC0(ev, 2)) {
@@ -103,23 +103,23 @@ extern char D_004BB500[];
 extern char D_004BB520[];
 extern char D_004BB540[];
 #if 0 /* merge_units */
-void* GuiWidget_FindChildByName(void* self, char* name);
+void* GuiWidget_FindChild_charP(void* self, char* name);
 #endif /* merge_units */
-#define GuiWidget_FindChildByName(a0, a1) ((void *)GuiWidget_FindChildByName((a0), (a1))) /* merge_units */
+#define GuiWidget_FindChild_charP(a0, a1) ((void *)GuiWidget_FindChild_charP((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 void GuiTextWidget_SetText(W_0035B210* w, char* s, int a);
 #endif /* merge_units */
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((W_35AEC0 *)(a0), (a1), (a2))) /* merge_units */
 
-int GuiWidget_OnEvent(void* self, int a, unsigned short b);
+int GuiWidget_onMessage(void* self, int a, unsigned short b);
 }
 static inline W_0035B210* FindAs_0035B210(void* self, char* name, char* type)
 {
-    W_0035B210* w = (W_0035B210*)GuiWidget_FindChildByName(self, name);
+    W_0035B210* w = (W_0035B210*)GuiWidget_FindChild_charP(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
-extern "C" int GuiScoresEquip_HandleEvent(S_0035B210* self, int a, unsigned short b)
+extern "C" int GuiScoresEquip_onMessage(S_0035B210* self, int a, unsigned short b)
 {
     if (b == 2) {
         int on = self->f224 == 0;
@@ -127,8 +127,8 @@ extern "C" int GuiScoresEquip_HandleEvent(S_0035B210* self, int a, unsigned shor
         B_0035B210* b2;
         W_0035B210* w;
         self->f224 = on;
-        b1 = (B_0035B210*)GuiWidget_FindChildByName(self, D_004BB4D8);
-        b2 = (B_0035B210*)GuiWidget_FindChildByName(self, D_004BB4E8);
+        b1 = (B_0035B210*)GuiWidget_FindChild_charP(self, D_004BB4D8);
+        b2 = (B_0035B210*)GuiWidget_FindChild_charP(self, D_004BB4E8);
         if (b1) {
             if (!on)
                 b1->flags |= 2;
@@ -143,14 +143,14 @@ extern "C" int GuiScoresEquip_HandleEvent(S_0035B210* self, int a, unsigned shor
         }
         w = FindAs_0035B210(self, D_004BB500, D_004A9870);
         if (w) {
-            char* t = Loc_LookupText(on == 0 ? D_004BB520 : D_004BB540);
+            char* t = nGlobalization_GetString_charP(on == 0 ? D_004BB520 : D_004BB540);
             GuiTextWidget_SetText(w, t ? t : D_004BB530, 0);
         }
         return 1;
     }
-    return GuiWidget_OnEvent(self, a, b);
+    return GuiWidget_onMessage(self, a, b);
 }
-#undef GuiWidget_FindChildByName /* merge_units */
+#undef GuiWidget_FindChild_charP /* merge_units */
 #undef GuiTextWidget_SetText /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0035B210(void) {}

@@ -10,10 +10,10 @@ extern "C" {
 extern V4 D_004A3FB0;
 extern float D_004A3FC0;
 extern float D_004A3FD8;
-void ColResult_Construct(Res*);
+void cCollisionProbe_SphereSweptRay_ctor(Res*);
 int ColQuery_RequestSweep(Res* r, void* a1, V4* from, V4* to, int t0, Mtx* m, V4* ext, float f12, float f13, float f14, float f15, float f16, float f17);
 int ColQuery_ExecuteSweepThunk(Res* r, int a, int b);
-float Math_Atan(float);
+float Libc_Atanf(float);
 void Camera_ZoomSweep(Cam* self, int unused, void* filter);
 }
 static inline void QToM(Mtx* m, V4* q) {
@@ -46,14 +46,14 @@ static inline float Length(const V4& v)
     }
     return r;
 }
-static inline float FovFor(float x) { return 2.0f * Math_Atan(1.0f / (x * D_004A3FD8)); }
+static inline float FovFor(float x) { return 2.0f * Libc_Atanf(1.0f / (x * D_004A3FD8)); }
 
 #pragma opt_common_subs off
 void Camera_ZoomSweep(Cam* self, int unused, void* filter)
 {
     Res res;
     Mtx m;
-    ColResult_Construct(&res);
+    cCollisionProbe_SphereSweptRay_ctor(&res);
     QToM(&m, &self->q);
     { Mtx* pm = &m; ColQuery_RequestSweep(&res, filter, &self->from, &self->to, 0, pm, &D_004A3FB0, 0.05f, 0.05f, 0.0f, 1.0f, self->zoom, D_004A3FC0); }
     res.b110 = 0;

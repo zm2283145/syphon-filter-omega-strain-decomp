@@ -33,17 +33,17 @@ extern "C" {
 extern char D_004BBC70[];
 extern char D_004BBC80[];
 void* ObjMan_GetService(void);
-int ObjMan_GetTotalCount(void* mgr);
-int ObjectiveMgr_GetFailed(void* mgr, O367D60** out, int max);
-int ObjectiveMgr_GetCompleted(void* mgr, O367D60** out, int max, unsigned char flag);
-int ObjectiveMgr_GetOpenParameters(void* mgr, O367D60** out, int max);
-int ObjectiveMgr_GetOpenObjectives(void* mgr, O367D60** out, int max);
+int cObjectiveMan_GetObjectiveCount(void* mgr);
+int cObjectiveMan_GetFailedObjectives(void* mgr, O367D60** out, int max);
+int cObjectiveMan_GetSucceededObjectives(void* mgr, O367D60** out, int max, unsigned char flag);
+int cObjectiveMan_GetParameters(void* mgr, O367D60** out, int max);
+int cObjectiveMan_GetCurrentObjectives(void* mgr, O367D60** out, int max);
 void GuiTextListWidget_Clear(void* list);
 void GuiTextListWidget_AddItem(void* list, int a, int b, int c);
-int GuiTextListWidget_FindById(void* list, int sel);
-void GuiArrayWidget_Select(void* list, int a, int b);
-void GuiWidget_SetPos(L367D60* w, float x, float y);
-void GuiArrayWidget_SetTable(L367D60* w, int a, int b);
+int GuiTextListWidget_FindItem_int(void* list, int sel);
+void GuiArrayWidget_SetSelected(void* list, int a, int b);
+void GuiWidget_SetPosition(L367D60* w, float x, float y);
+void GuiArrayWidget_SetVisibleSize(L367D60* w, int a, int b);
 int sprintf(char* buf, const char* fmt, ...);
 }
 
@@ -54,7 +54,7 @@ static inline void SetSize(L367D60* w, float ww, float hh)
 }
 
 /* Refresh the object list tabs and resize the list widget to its rows. */
-extern "C" void GuiObjectives_FillList(S367D60* self)
+extern "C" void GuiObjectives_UpdateObjectives(S367D60* self)
 {
     void* mgr;
     char buf[0x20];
@@ -66,10 +66,10 @@ extern "C" void GuiObjectives_FillList(S367D60* self)
     mgr = ObjMan_GetService();
     if (mgr == 0) return;
     {
-        LtrWidget* w = Ltr_Cast(GuiWidget_FindChildByName(self, D_004BBC70));
+        LtrWidget* w = Ltr_Cast(GuiWidget_FindChild_charP(self, D_004BBC70));
         if (w) {
-            int n = ObjectiveMgr_GetCompleted(mgr, tmp, 0x14, 1);
-            sprintf(buf, D_004BBC80, n, ObjMan_GetTotalCount(mgr));
+            int n = cObjectiveMan_GetSucceededObjectives(mgr, tmp, 0x14, 1);
+            sprintf(buf, D_004BBC80, n, cObjectiveMan_GetObjectiveCount(mgr));
             GuiTextWidget_SetText(w, buf, 0);
         }
     }
@@ -79,10 +79,10 @@ extern "C" void GuiObjectives_FillList(S367D60* self)
             int n;
             int j;
             switch (i) {
-            case 0: n = ObjectiveMgr_GetOpenObjectives(mgr, objs, 0x20); break;
-            case 1: n = ObjectiveMgr_GetOpenParameters(mgr, objs, 0x20); break;
-            case 2: n = ObjectiveMgr_GetCompleted(mgr, objs, 0x20, self->b88); break;
-            case 3: n = ObjectiveMgr_GetFailed(mgr, objs, 0x20); break;
+            case 0: n = cObjectiveMan_GetCurrentObjectives(mgr, objs, 0x20); break;
+            case 1: n = cObjectiveMan_GetParameters(mgr, objs, 0x20); break;
+            case 2: n = cObjectiveMan_GetSucceededObjectives(mgr, objs, 0x20, self->b88); break;
+            case 3: n = cObjectiveMan_GetFailedObjectives(mgr, objs, 0x20); break;
             default: return;
             }
             GuiTextListWidget_Clear(self->lists[i]);
@@ -93,8 +93,8 @@ extern "C" void GuiObjectives_FillList(S367D60* self)
         }
     }
     if (self->lists[0] != 0 && sel != -1) {
-        int idx = GuiTextListWidget_FindById(self->lists[0], sel);
-        if (idx != -1) GuiArrayWidget_Select(self->lists[0], 0, idx);
+        int idx = GuiTextListWidget_FindItem_int(self->lists[0], sel);
+        if (idx != -1) GuiArrayWidget_SetSelected(self->lists[0], 0, idx);
     }
     {
         L367D60* l = self->list;
@@ -112,12 +112,12 @@ extern "C" void GuiObjectives_FillList(S367D60* self)
                     total = self->minH;
                     y = self->top;
                 }
-                GuiWidget_SetPos(l, l->x, (float)y);
+                GuiWidget_SetPosition(l, l->x, (float)y);
                 SetSize(self->list, self->list->w, (float)total);
                 if (self->w80 != 0)
-                    GuiWidget_SetPos(self->w80, self->w80->x, (float)(y + self->a84));
+                    GuiWidget_SetPosition(self->w80, self->w80->x, (float)(y + self->a84));
             }
-            GuiArrayWidget_SetTable(self->list, 1, self->list->count);
+            GuiArrayWidget_SetVisibleSize(self->list, 1, self->list->count);
         }
     }
 }

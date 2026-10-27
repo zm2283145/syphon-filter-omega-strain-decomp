@@ -27,13 +27,13 @@ struct It { SNode* p; It() {} It(const It& o) { p = o.p; } It& operator=(const I
 struct SWord { int v; };
 struct AiRec { char p0[0x30]; char list[0x10]; Handle h; };
 extern "C" {
-Obj* ActorRef_Copy(Handle* h);
-Obj* Object_LookupById(int* id);
-void TargetVis_Register(void* mgr, Obj* o);
+Obj* cSafePtr_cGOBJ_opCast_cGOBJPtr(Handle* h);
+Obj* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+void cTargetManager_AddGobj(void* mgr, Obj* o);
 void Alloc_Lock(int);
-void Alloc_Unlock(int);
-void* Mem_Alloc(int, int, void*, int);
-void List_PushBack_16CEE0(void* list, SRec* const* v);
+void EnableIntc(int);
+void* cMemMan_Allocate(int, int, void*, int);
+void std_list_cTargetAwarenessPtr_push_front(void* list, SRec* const* v);
 extern char D_0049C650[];
 extern char g_TargetVisMgr[];
 extern unsigned char g_ProfileLockEnabled;
@@ -80,8 +80,8 @@ static inline SRec* NewRec() {
     void* m;
     if (g_ProfileLockEnabled) Alloc_Lock(9);
     g_ProfileLockDepth++;
-    m = Mem_Alloc(0, 0x40, D_0049C650, 0xF6);
-    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    m = cMemMan_Allocate(0, 0x40, D_0049C650, 0xF6);
+    if (g_ProfileLockEnabled) EnableIntc(9);
     g_ProfileLockDepth--;
     if (m) { SRec* r = (SRec*)m; r->h.id = -2; r->h.object = 0; r->id.v = -1; }
     return (SRec*)m;
@@ -94,10 +94,10 @@ void cAiTargetTransfer_Put(void* src, AiRec* dst, int* hid, SRec* recs)
 {
     QCopy(dst, src, 0x30);
     if (*hid != -1) {
-        Obj* o = Object_LookupById(hid);
+        Obj* o = nGobjManager_LookupGOBJ_cObjectIdR(hid);
         Set(&dst->h, o);
         if (WGet(&dst->h) && !WGet(&dst->h)->ctrl)
-            TargetVis_Register(g_TargetVisMgr, WGet(&dst->h));
+            cTargetManager_AddGobj(g_TargetVisMgr, WGet(&dst->h));
     } else {
         Set(&dst->h, 0);
     }
@@ -107,12 +107,12 @@ void cAiTargetTransfer_Put(void* src, AiRec* dst, int* hid, SRec* recs)
     int* pu = &u;
     for (int i = 0; i < 4; i++) {
         if (recs[i].id.v != -1) {
-            Obj* o = Object_LookupById(&recs[i].id.v);
+            Obj* o = nGobjManager_LookupGOBJ_cObjectIdR(&recs[i].id.v);
             if (o) {
                 e = NewRec();
                 *e = recs[i];
                 Set(&e->h, o);
-                List_PushBack_16CEE0(dst->list, &e);
+                std_list_cTargetAwarenessPtr_push_front(dst->list, &e);
             }
         }
     }

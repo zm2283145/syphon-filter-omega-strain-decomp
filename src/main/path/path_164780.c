@@ -13,7 +13,7 @@ typedef struct LNode { struct LNode* unk0; struct LNode* prev; struct LNode* nex
 typedef struct { char pad[8]; LNode* node; char pad2[0x10]; int count; } LOwner;
 
 /* Unlinks the owner's node from its doubly linked list, decrements the count and returns the node. */
-LNode* NpcRoute_PopOpen(LOwner* self)
+LNode* cPriorityQueue_cPathCell_Pop(LOwner* self)
 {
     LNode* node = self->node;
     LNode* next;
@@ -36,7 +36,7 @@ typedef struct LNode_001647B0 { int unk0; struct LNode_001647B0* next; struct LN
 typedef struct { char pad[8]; LNode_001647B0* node; char pad2[0x10]; int count; } LOwner_001647B0;
 
 /* Unlinks the owner's current node from its doubly linked list and decrements the count. */
-LNode_001647B0* NpcNodeSearch_PopFront(LOwner_001647B0* o)
+LNode_001647B0* cPriorityQueue_cNodeIndex_Pop(LOwner_001647B0* o)
 {
     LNode_001647B0* node = o->node;
     LNode_001647B0* prev;

@@ -15,11 +15,11 @@
 #include "types.h"
 #include "frontCharacter_types.h"
 
-extern int Vector_Insert_22A360(FcVec* v, int* pos, int n, int value);  /* vector insert */
+extern int std_vector_imp_cString4_insert(FcVec* v, int* pos, int n, int value);  /* vector insert */
 
 /* push_back(v, value) */
 int cArray_cString4_PushBackActual(FcVec* v, int value) {
-    return Vector_Insert_22A360(v, v->data + v->count, 1, value);
+    return std_vector_imp_cString4_insert(v, v->data + v->count, 1, value);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0022A200 */
@@ -30,17 +30,17 @@ int cArray_cString4_PushBackActual(FcVec* v, int value) {
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-char * Archive_Open();                   
-int Expression_Init();                                
-int Skf_Register(char *, char * );                        
+char * cHogList_Open();                   
+int cMan_ManInit();                                
+int Monster_LoadFaceHog(char *, char * );                        
 int cMan_LipSyncLoad(char * , char *);                       
-int AgentPartCache_LoadRules(char *, char *);                          
-int TexCache_RegisterNpcTex(char *, char * );                       
-int MeshCache_RegisterNpcSkm(char *, char * );                       
+int Monster_LoadSwapRules(char *, char *);                          
+int Monster_LoadTexHog(char *, char * );                       
+int Monster_LoadParts(char *, char * );                       
 extern char g_AgentPartCache;
 
 typedef struct { char p0[4]; int f4; int f8; int fC; int f10; int f14; } PS0_0022A220;
-void FrontCharacter_Setup(PS0_0022A220 *arg0, int arg1) {
+void CCI_Screen_myTexWads(PS0_0022A220 *arg0, int arg1) {
     char * temp_a0;
     char * temp_a1;
     char * temp_a1_2;
@@ -51,24 +51,24 @@ void FrontCharacter_Setup(PS0_0022A220 *arg0, int arg1) {
     arg0->fC = NULL;
     arg0->f10 = 0;
     arg0->f14 = NULL;
-    AgentPartCache_LoadRules(&g_AgentPartCache, "GAMEDATA\\FRONTEND\\SWAPIT.TBL");
-    arg0->f14 = (int)(Archive_Open(arg1, "GAMEDATA\\FRONTEND\\MANTEX.HOG", 0, 0));
+    Monster_LoadSwapRules(&g_AgentPartCache, "GAMEDATA\\FRONTEND\\SWAPIT.TBL");
+    arg0->f14 = (int)(cHogList_Open(arg1, "GAMEDATA\\FRONTEND\\MANTEX.HOG", 0, 0));
     temp_a1 = (char *)(arg0->f14);
     if (F_(temp_a1, 0x14C, unsigned char) != 0) {
-        TexCache_RegisterNpcTex(&g_AgentPartCache, temp_a1);
+        Monster_LoadTexHog(&g_AgentPartCache, temp_a1);
     }
-    arg0->f4 = (int)(Archive_Open(arg1, "GAMEDATA\\FRONTEND\\MORPH.HOG", 0, 0));
+    arg0->f4 = (int)(cHogList_Open(arg1, "GAMEDATA\\FRONTEND\\MORPH.HOG", 0, 0));
     temp_a1_2 = (char *)(arg0->f4);
     if (F_(temp_a1_2, 0x14C, unsigned char) != 0) {
-        Skf_Register(&g_AgentPartCache, temp_a1_2);
+        Monster_LoadFaceHog(&g_AgentPartCache, temp_a1_2);
     }
-    arg0->f8 = (int)(Archive_Open(arg1, "GAMEDATA\\FRONTEND\\MANSKM.HOG", 0, 0));
+    arg0->f8 = (int)(cHogList_Open(arg1, "GAMEDATA\\FRONTEND\\MANSKM.HOG", 0, 0));
     temp_a1_3 = (char *)(arg0->f8);
     if (F_(temp_a1_3, 0x14C, unsigned char) != 0) {
-        MeshCache_RegisterNpcSkm(&g_AgentPartCache, temp_a1_3);
+        Monster_LoadParts(&g_AgentPartCache, temp_a1_3);
     }
-    Expression_Init();
-    arg0->fC = (int)(Archive_Open(arg1, "GAMEDATA\\FRONTEND\\LIPS.HOG", 0, 0));
+    cMan_ManInit();
+    arg0->fC = (int)(cHogList_Open(arg1, "GAMEDATA\\FRONTEND\\LIPS.HOG", 0, 0));
     temp_a0 = (char *)(arg0->fC);
     if (F_(temp_a0, 0x14C, unsigned char) != 0) {
         cMan_LipSyncLoad(temp_a0, "cdrom0:GAMEDATA\\FRONTEND\\LIPS.BNK");

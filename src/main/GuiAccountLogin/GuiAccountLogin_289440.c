@@ -24,43 +24,43 @@ struct S_00289440 {
 extern "C" {
 extern Mgr_00289440* D_004FFC04;
 extern char D_004A9730[];
-void* DME_GetLobby(void);
-char* GuiScreen_GetLobbyString(S_00289440* self, int a, int b, int c, int d, int e);
-int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_00289440* d, int e);
-char* String_CStr(void* s);
+void* cDME_GetLobby(void);
+char* GuiLobbyScreen_GetLobbyString(S_00289440* self, int a, int b, int c, int d, int e);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, char* c, S_00289440* d, int e);
+char* std_basic_string_char_char_traits_char_c_str(void* s);
 int func_00445A40(void* g, char* a, char* b);
 int strcmp(const char* a, const char* b);
-void String_Copy(char* d, const char* s);
-char* AgentData_GetName(Ag_00289440* ag);
+void Libc_Strcpy(char* d, const char* s);
+char* cAgentData_GetUserName(Ag_00289440* ag);
 void SaveAgentWidget_Rename(S_00289440* self, char* n);
 void GuiSaveAgentWidget_HandleEvent(S_00289440* self);
-void String_CtorCStr_13B480(Str_00289440* s, const char* c);
-void String_AssignString(Str_00289440* d, Str_00289440* s);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_00289440* s, const char* c);
+void std_basic_string_char_char_traits_char_assign_basicstringR(Str_00289440* d, Str_00289440* s);
 void String_Dtor(Str_00289440* s, int flags);
-int SFOLobby_FormatError(void* g, int a);
+int SFOLobby_GetErrorDetails(void* g, int a);
 int FrontEnd_IsRegisterEnabled(void* ui);
-void FrontEnd_ClosePopup(void* ui, int id);
+void cGameFrontEnd_PopMessageBox(void* ui, int id);
 }
 static inline int StrNe_00289440(const char* a, const char* b) { return strcmp(a, b); }
 static inline void Assign_00289440(S_00289440* self, Str_00289440* d, int id)
 {
     Str_00289440 t;
-    String_CtorCStr_13B480(&t, GuiScreen_GetLobbyString(self, id, 0, 0, 0, 0));
-    String_AssignString(d, &t);
+    std_basic_string_char_char_traits_char_ctor_charP(&t, GuiLobbyScreen_GetLobbyString(self, id, 0, 0, 0, 0));
+    std_basic_string_char_char_traits_char_assign_basicstringR(d, &t);
     String_Dtor(&t, 0);
 }
 extern "C" void GuiAccountLogin_LoginAccount(S_00289440* self)
 {
-    void* g = DME_GetLobby();
+    void* g = cDME_GetLobby();
     unsigned char ok;
     char* pw;
     if (!g)
         return;
     {
         void* ui = D_004FFC04;
-        self->fA8 = FrontEnd_OpenPopup(ui, 0, D_004A9730, GuiScreen_GetLobbyString(self, 0x1B, 0, 0, 0, 0), 0, 0);
-        pw = String_CStr(self->p94->s48);
-        ok = func_00445A40(g, String_CStr(self->p8C->s48), pw);
+        self->fA8 = cGameFrontEnd_PushMessageBox(ui, 0, D_004A9730, GuiLobbyScreen_GetLobbyString(self, 0x1B, 0, 0, 0, 0), 0, 0);
+        pw = std_basic_string_char_char_traits_char_c_str(self->p94->s48);
+        ok = func_00445A40(g, std_basic_string_char_char_traits_char_c_str(self->p8C->s48), pw);
     }
     if (ok) {
         unsigned char changed;
@@ -69,13 +69,13 @@ extern "C" void GuiAccountLogin_LoginAccount(S_00289440* self)
         self->bAC = 0;
         changed = 0;
         cur = self->p9C->name;
-        if (StrNe_00289440(String_CStr(self->p94->s48), cur)) {
-            String_Copy(self->p9C->name, String_CStr(self->p94->s48));
+        if (StrNe_00289440(std_basic_string_char_char_traits_char_c_str(self->p94->s48), cur)) {
+            Libc_Strcpy(self->p9C->name, std_basic_string_char_char_traits_char_c_str(self->p94->s48));
             changed = 1;
         }
-        n = String_CStr(self->p8C->s48);
-        if (strcmp(n, AgentData_GetName(self->p9C))) {
-            SaveAgentWidget_Rename(self, String_CStr(self->p8C->s48));
+        n = std_basic_string_char_char_traits_char_c_str(self->p8C->s48);
+        if (strcmp(n, cAgentData_GetUserName(self->p9C))) {
+            SaveAgentWidget_Rename(self, std_basic_string_char_char_traits_char_c_str(self->p8C->s48));
         } else {
             if (D_004FFC04->b265)
                 changed = 1;
@@ -93,9 +93,9 @@ extern "C" void GuiAccountLogin_LoginAccount(S_00289440* self)
         Str_00289440 b;
         int kind;
         int cb;
-        String_CtorCStr_13B480(&a, D_004A9730);
-        String_CtorCStr_13B480(&b, D_004A9730);
-        switch ((unsigned char)SFOLobby_FormatError(g, 0)) {
+        std_basic_string_char_char_traits_char_ctor_charP(&a, D_004A9730);
+        std_basic_string_char_char_traits_char_ctor_charP(&b, D_004A9730);
+        switch ((unsigned char)SFOLobby_GetErrorDetails(g, 0)) {
         case 0x3C:
             Assign_00289440(self, &a, 0x1E);
             Assign_00289440(self, &b, 0x80);
@@ -125,10 +125,10 @@ extern "C" void GuiAccountLogin_LoginAccount(S_00289440* self)
         }
         cb = kind == 4 ? 0x1F : -1;
         {
-            pw = String_CStr(&b);
-            FrontEnd_OpenPopup(D_004FFC04, kind, String_CStr(&a), pw, self, cb);
+            pw = std_basic_string_char_char_traits_char_c_str(&b);
+            cGameFrontEnd_PushMessageBox(D_004FFC04, kind, std_basic_string_char_char_traits_char_c_str(&a), pw, self, cb);
         }
-        FrontEnd_ClosePopup(D_004FFC04, self->fA8);
+        cGameFrontEnd_PopMessageBox(D_004FFC04, self->fA8);
         String_Dtor(&b, 0);
         String_Dtor(&a, 0);
         D_004FFC04->b264 = ok;
@@ -155,14 +155,14 @@ extern char D_00506340[];
 extern char D_00506350[];
 extern unsigned char D_00506360;
 #if 0 /* merge_units */
-int GuiScreen_GetLobbyString(S_00289990* self, int a, int b, int c, int d, int e);
+int GuiLobbyScreen_GetLobbyString(S_00289990* self, int a, int b, int c, int d, int e);
 #endif /* merge_units */
-#define GuiScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) ((int)GuiScreen_GetLobbyString((S_00289440 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define GuiLobbyScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) ((int)GuiLobbyScreen_GetLobbyString((S_00289440 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
-int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_00289990* d, int e);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, int c, S_00289990* d, int e);
 #endif /* merge_units */
-#define FrontEnd_OpenPopup(a0, a1, a2, a3, a4, a5) (FrontEnd_OpenPopup((a0), (a1), (a2), (char *)(a3), (S_00289440 *)(a4), (a5))) /* merge_units */
+#define cGameFrontEnd_PushMessageBox(a0, a1, a2, a3, a4, a5) (cGameFrontEnd_PushMessageBox((a0), (a1), (a2), (char *)(a3), (S_00289440 *)(a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 void GuiAccountLogin_LoginAccount(S_00289990* self);
@@ -170,12 +170,12 @@ void GuiAccountLogin_LoginAccount(S_00289990* self);
 #define GuiAccountLogin_LoginAccount(a0) ((void)GuiAccountLogin_LoginAccount((S_00289440 *)(a0))) /* merge_units */
 
 void GuiAccountLogin_RegisterAccount(S_00289990* self);
-Ui_00289990* Gui_GetScreenStack(void);
+Ui_00289990* Gui_Canvas(void);
 void GuiAccountLogin_EditUserName(S_00289990* self);
 void GuiAccountLogin_EditPassword(S_00289990* self);
 char* strncpy(char* d, const char* s, int n);
-void GuiScreen_Navigate(S_00289990* self, int a);
-int GuiScreen_HandleInput(S_00289990* self, Ev_00289990* ev);
+void GuiLobbyScreen_PushLobbyScreen(S_00289990* self, int a);
+int GuiLobbyScreen_onInput(S_00289990* self, Ev_00289990* ev);
 }
 static inline unsigned char Down_00289990(Ev_00289990* e)
 {
@@ -198,11 +198,11 @@ static inline unsigned char Press_00289990(Ev_00289990* e, unsigned int b)
         r = 1;
     return r;
 }
-extern "C" int GuiAccountLogin_HandleInput(S_00289990* self, Ev_00289990* ev)
+extern "C" int GuiAccountLogin_onInput(S_00289990* self, Ev_00289990* ev)
 {
     if (Press_00289990(ev, 0x10)) {
         void* ui = D_004FFC04;
-        FrontEnd_OpenPopup(ui, 5, D_004A9730, GuiScreen_GetLobbyString(self, 0xE, 0, 0, 0, 0), self, 0x1E);
+        cGameFrontEnd_PushMessageBox(ui, 5, D_004A9730, GuiLobbyScreen_GetLobbyString(self, 0xE, 0, 0, 0, 0), self, 0x1E);
         return 1;
     } else {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x80 && ev->f6 == 0;
@@ -215,11 +215,11 @@ extern "C" int GuiAccountLogin_HandleInput(S_00289990* self, Ev_00289990* ev)
         } else {
             bool c = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x2000 && ev->f6 == 0;
             if (c) {
-                if (Gui_GetScreenStack()->f20 == self->p88) {
+                if (Gui_Canvas()->f20 == self->p88) {
                     GuiAccountLogin_EditUserName(self);
                     return 1;
                 }
-                if (Gui_GetScreenStack()->f20 == self->p90) {
+                if (Gui_Canvas()->f20 == self->p90) {
                     GuiAccountLogin_EditPassword(self);
                     return 1;
                 }
@@ -233,19 +233,19 @@ extern "C" int GuiAccountLogin_HandleInput(S_00289990* self, Ev_00289990* ev)
             D_00506340[0] = 0;
             D_00506360 = self->bA4;
             if (self->p8C && self->p94) {
-                strncpy(D_00506340, String_CStr(self->p94->s48), 0xF);
-                strncpy(D_00506350, String_CStr(self->p8C->s48), 0xF);
+                strncpy(D_00506340, std_basic_string_char_char_traits_char_c_str(self->p94->s48), 0xF);
+                strncpy(D_00506350, std_basic_string_char_char_traits_char_c_str(self->p8C->s48), 0xF);
             }
             D_004FFC04->f268 = 7;
-            GuiScreen_Navigate(self, 5);
+            GuiLobbyScreen_PushLobbyScreen(self, 5);
             return 1;
         }
     }
-    return GuiScreen_HandleInput(self, ev);
+    return GuiLobbyScreen_onInput(self, ev);
 }
 #undef D_004FFC04 /* merge_units */
-#undef GuiScreen_GetLobbyString /* merge_units */
-#undef FrontEnd_OpenPopup /* merge_units */
+#undef GuiLobbyScreen_GetLobbyString /* merge_units */
+#undef cGameFrontEnd_PushMessageBox /* merge_units */
 #undef GuiAccountLogin_LoginAccount /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00289990 */
@@ -272,7 +272,7 @@ extern char D_004A96F8[];
 extern char D_004A9708[];
 extern char D_004A9718[];
 extern char D_004A9720[];
-int GuiScreen_HandleEvent(S_00289C80* self, void* w, int msg, int sub);
+int GuiLobbyScreen_onMessage(S_00289C80* self, void* w, int msg, int sub);
 #if 0 /* merge_units */
 void GuiAccountLogin_EditUserName(S_00289C80* self);
 #endif /* merge_units */
@@ -294,15 +294,15 @@ void GuiAccountLogin_RegisterAccount(S_00289C80* self);
 #define GuiAccountLogin_RegisterAccount(a0) (GuiAccountLogin_RegisterAccount((S_00289990 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void* Gui_GetScreenStack(void);
+void* Gui_Canvas(void);
 #endif /* merge_units */
-#define Gui_GetScreenStack() ((void *)Gui_GetScreenStack()) /* merge_units */
+#define Gui_Canvas() ((void *)Gui_Canvas()) /* merge_units */
 
-void GuiScreen_SetFocus(void* ui, void* w);
+void GuiCanvas_SetFocus(void* ui, void* w);
 #if 0 /* merge_units */
-char* AgentData_GetName(Ag_00289C80* ag);
+char* cAgentData_GetUserName(Ag_00289C80* ag);
 #endif /* merge_units */
-#define AgentData_GetName(a0) (AgentData_GetName((Ag_00289440 *)(a0))) /* merge_units */
+#define cAgentData_GetUserName(a0) (cAgentData_GetUserName((Ag_00289440 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 void SaveAgentWidget_Rename(S_00289C80* self, char* n);
@@ -314,19 +314,19 @@ void GuiSaveAgentWidget_HandleEvent(S_00289C80* self);
 #endif /* merge_units */
 #define GuiSaveAgentWidget_HandleEvent(a0) (GuiSaveAgentWidget_HandleEvent((S_00289440 *)(a0))) /* merge_units */
 
-char* Loc_LookupText(char* key);
+char* nGlobalization_GetString_charP(char* key);
 void GuiTextWidget_SetText(void* w, char* s, int a);
-void FrontEnd_LeaveOnline(void* ui, int a);
-void* Gui_GetScreenList(void);
-void* GuiManager_FindOrLoad(void* a, char* b, char* c);
-void GuiStack_SwapScreens(void* ui, S_00289C80* self, void* pg);
+void cGameFrontEnd_LobbyDestroy(void* ui, int a);
+void* Gui_Manager(void);
+void* GuiManager_OpenGui(void* a, char* b, char* c);
+void GuiCanvas_Transition(void* ui, S_00289C80* self, void* pg);
 }
 static inline int StrNe_00289C80(const char* a, const char* b) { return strcmp(a, b); }
-extern "C" int GuiAccountLogin_HandleEvent(S_00289C80* self, void* w, int msg, int sub, char* text)
+extern "C" int GuiAccountLogin_onMessage(S_00289C80* self, void* w, int msg, int sub, char* text)
 {
     unsigned short m;
     if (D_00506378)
-        return GuiScreen_HandleEvent(self, w, msg, sub);
+        return GuiLobbyScreen_onMessage(self, w, msg, sub);
     m = msg;
     if (m == 2) {
         Txt_00289C80* a = self->p88;
@@ -349,7 +349,7 @@ extern "C" int GuiAccountLogin_HandleEvent(S_00289C80* self, void* w, int msg, i
             if (self->p98)
                 self->p98->flags |= 4;
             self->p8C->flags &= ~4;
-            GuiScreen_SetFocus(Gui_GetScreenStack(), self->p88);
+            GuiCanvas_SetFocus(Gui_Canvas(), self->p88);
         } else if (w == self->p94) {
             if (a)
                 a->flags |= 4;
@@ -358,9 +358,9 @@ extern "C" int GuiAccountLogin_HandleEvent(S_00289C80* self, void* w, int msg, i
             if (self->p98)
                 self->p98->flags |= 4;
             self->p94->flags &= ~4;
-            GuiScreen_SetFocus(Gui_GetScreenStack(), self->p90);
+            GuiCanvas_SetFocus(Gui_Canvas(), self->p90);
         } else {
-            return GuiScreen_HandleEvent(self, w, msg, sub);
+            return GuiLobbyScreen_onMessage(self, w, msg, sub);
         }
         return 1;
     }
@@ -373,13 +373,13 @@ extern "C" int GuiAccountLogin_HandleEvent(S_00289C80* self, void* w, int msg, i
                 self->bAC = 1;
                 changed = 0;
                 cur = self->p9C->name;
-                if (StrNe_00289C80(String_CStr(self->p94->s48), cur)) {
-                    String_Copy(self->p9C->name, String_CStr(self->p94->s48));
+                if (StrNe_00289C80(std_basic_string_char_char_traits_char_c_str(self->p94->s48), cur)) {
+                    Libc_Strcpy(self->p9C->name, std_basic_string_char_char_traits_char_c_str(self->p94->s48));
                     changed = 1;
                 }
-                n = String_CStr(self->p8C->s48);
-                if (strcmp(n, AgentData_GetName(self->p9C))) {
-                    SaveAgentWidget_Rename(self, String_CStr(self->p8C->s48));
+                n = std_basic_string_char_char_traits_char_c_str(self->p8C->s48);
+                if (strcmp(n, cAgentData_GetUserName(self->p9C))) {
+                    SaveAgentWidget_Rename(self, std_basic_string_char_char_traits_char_c_str(self->p8C->s48));
                 } else {
                     unsigned char* f = &D_004FFC04->b265;
                     if (*f)
@@ -390,9 +390,9 @@ extern "C" int GuiAccountLogin_HandleEvent(S_00289C80* self, void* w, int msg, i
                         GuiSaveAgentWidget_HandleEvent(self);
                     } else {
                         if (self->pA0)
-                            GuiTextWidget_SetText(self->pA0, Loc_LookupText(D_004A96F8), 0);
+                            GuiTextWidget_SetText(self->pA0, nGlobalization_GetString_charP(D_004A96F8), 0);
                         if (self->p98)
-                            GuiTextWidget_SetText(self->p98, Loc_LookupText(D_004A9718), 0);
+                            GuiTextWidget_SetText(self->p98, nGlobalization_GetString_charP(D_004A9718), 0);
                         self->bAD = 0;
                     }
                 }
@@ -400,17 +400,17 @@ extern "C" int GuiAccountLogin_HandleEvent(S_00289C80* self, void* w, int msg, i
             }
             if (sub == 0x1F) {
                 if (self->pA0)
-                    GuiTextWidget_SetText(self->pA0, Loc_LookupText(D_004A9708), 0);
+                    GuiTextWidget_SetText(self->pA0, nGlobalization_GetString_charP(D_004A9708), 0);
                 if (self->p98)
-                    GuiTextWidget_SetText(self->p98, Loc_LookupText(D_004A9720), 0);
+                    GuiTextWidget_SetText(self->p98, nGlobalization_GetString_charP(D_004A9720), 0);
                 self->bAD = 1;
                 return 1;
             }
             if (sub == 0x1E) {
                 void* pg;
-                FrontEnd_LeaveOnline(D_004FFC04, 1);
-                pg = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "ONOFFSEL");
-                GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
+                cGameFrontEnd_LobbyDestroy(D_004FFC04, 1);
+                pg = GuiManager_OpenGui(Gui_Manager(), "GuiOnlineOfflineSelect", "ONOFFSEL");
+                GuiCanvas_Transition(Gui_Canvas(), self, pg);
                 return 1;
             }
             if (sub == 0x21) {
@@ -432,15 +432,15 @@ extern "C" int GuiAccountLogin_HandleEvent(S_00289C80* self, void* w, int msg, i
             }
         }
     }
-    return GuiScreen_HandleEvent(self, w, msg, sub);
+    return GuiLobbyScreen_onMessage(self, w, msg, sub);
 }
 #undef D_004FFC04 /* merge_units */
 #undef GuiAccountLogin_EditUserName /* merge_units */
 #undef GuiAccountLogin_EditPassword /* merge_units */
 #undef GuiAccountLogin_LoginAccount /* merge_units */
 #undef GuiAccountLogin_RegisterAccount /* merge_units */
-#undef Gui_GetScreenStack /* merge_units */
-#undef AgentData_GetName /* merge_units */
+#undef Gui_Canvas /* merge_units */
+#undef cAgentData_GetUserName /* merge_units */
 #undef SaveAgentWidget_Rename /* merge_units */
 #undef GuiSaveAgentWidget_HandleEvent /* merge_units */
 #pragma pop /* merge_units */

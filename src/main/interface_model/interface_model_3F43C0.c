@@ -31,7 +31,7 @@ struct B7_Ramp {
     float vel;
     unsigned char pingpong;
 };
-extern "C" void IeElement_UpdateAnimation(B7_Ramp* r, float dt)
+extern "C" void cAnimator_NextFrame(B7_Ramp* r, float dt)
 {
     if (r->vel != 0.0f) {
         r->value += r->vel * dt;
@@ -69,7 +69,7 @@ extern "C" void IeElement_UpdateAnimation(B7_Ramp* r, float dt)
 /* merge_units: begin func_003F44E0 */
 #pragma push /* merge_units */
 typedef struct { int f0; float f4; float f8; float fC; float f10; char b14; } S3F44E0;
-void IeElement_Fade(S3F44E0* s, float x) {
+void cAnimator_AnimateTo(S3F44E0* s, float x) {
     s->f8 = x;
     s->fC = x;
     if (s->f4 <= x) {

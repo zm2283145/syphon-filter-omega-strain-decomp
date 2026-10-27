@@ -18,15 +18,15 @@ typedef struct { void* vt; char p4[0x20]; int amt; Tgt4081E0* tgt; signed char b
 extern "C" {
 extern unsigned char D_005721D0;
 extern char g_MsgLibDamageRequestKey[], D_004E08A0[];
-extern void Event_Construct(Evt4081E0* e, void* type);
-void* Object_LookupById(int*);
-Obj4081E0** NetMap_Lookup(int);
-void MsgQueue_QueueClone(Evt4081E0*, void*, int, int);
+extern void cMessage_ctor_cMessageNameR(Evt4081E0* e, void* type);
+void* nGobjManager_LookupGOBJ_cObjectIdR(int*);
+Obj4081E0** cNetObj_GetNetSystem(int);
+void QueueMessage_cMessageR_cSystemP_int_int(Evt4081E0*, void*, int, int);
 void cMessage_dtor(Evt4081E0*, int);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int cDamageMsg_NetReceive(int a0, int a1, int a2, Pk4081E0* arg) {
+extern "C" int cDamageMsg_DamageCallback(int a0, int a1, int a2, Pk4081E0* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Evt4081E0 e;
@@ -36,18 +36,18 @@ extern "C" int cDamageMsg_NetReceive(int a0, int a1, int a2, Pk4081E0* arg) {
 Tgt4081E0** pt;
 Pk4081E0* a = arg;
 Obj4081E0* o;
-        Event_Construct(p, g_MsgLibDamageRequestKey);
+        cMessage_ctor_cMessageNameR(p, g_MsgLibDamageRequestKey);
         e.vt = D_004E08A0;
         e.tid = a->fC;
-        p->tgt = (Tgt4081E0*)Object_LookupById((int*)((char*)&e + 0x34));
+        p->tgt = (Tgt4081E0*)nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x34));
         p->b2D = a->h10;
         p->amt = a->h14;
         p->b2C = a->h12;
-        look = NetMap_Lookup(a->id);
-        if (!look) { k[0] = a->id; o = (Obj4081E0*)Object_LookupById(k); } else o = *look;
+        look = cNetObj_GetNetSystem(a->id);
+        if (!look) { k[0] = a->id; o = (Obj4081E0*)nGobjManager_LookupGOBJ_cObjectIdR(k); } else o = *look;
         pt = &e.tgt;
         if (o && *pt) {
-            if (a->b8) MsgQueue_QueueClone(&e, o, 0, 0);
+            if (a->b8) QueueMessage_cMessageR_cSystemP_int_int(&e, o, 0, 0);
             else {
                 unsigned char ok = 0;
                 if (o->sub && o->sub->Check()) ok = 1;
@@ -71,7 +71,7 @@ Obj4081E0* o;
 
 #define PACK_BODY(e, b) MP_U(b, 8) = MP_U(e, 0x2E); MP_I(b, 0xC) = MP_I(MP_P(e, 0x28), 0xC); MP_H(b, 0x10) = MP_U(e, 0x2D); MP_H(b, 0x14) = MP_I(e, 0x24); MP_H(b, 0x12) = MP_U(e, 0x2C);
 
-DEFINE_MESSAGE_PACK(cDamageMsg_v02, 0x18, D_005716F8, PACK_BODY)
+DEFINE_MESSAGE_PACK(cDamageMsg_Pack, 0x18, D_005716F8, PACK_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_004083D0 */
 
@@ -79,7 +79,7 @@ DEFINE_MESSAGE_PACK(cDamageMsg_v02, 0x18, D_005716F8, PACK_BODY)
 #pragma push /* merge_units */
 typedef struct { int a; int b; unsigned char ready; } O470;
 extern int cMaterialPropertiesTable_Lookup_charP_ucharR(O470* o, const char* name, unsigned char* out);
-unsigned char MaterialProps_Find(O470* o, const char* name) {
+unsigned char cMaterialPropertiesTable_Lookup_charP(O470* o, const char* name) {
     unsigned char r = 0;
     if (!o->ready || !name || !*name)
         return 0;

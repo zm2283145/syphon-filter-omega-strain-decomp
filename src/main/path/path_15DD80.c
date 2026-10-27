@@ -43,7 +43,7 @@ extern PtrTable* D_004FFBE0;
 extern int D_004EE130;
 
 /* Returns table item i, or &D_004EE130 when no table exists. */
-void* NpcPath_GetNode(int i) {
+void* cAIPathData_GetNode(int i) {
     if (D_004FFBE0 != 0) return D_004FFBE0->items[i];
     return &D_004EE130;
 }

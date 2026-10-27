@@ -13,12 +13,12 @@ typedef struct {
     char pad1E[2];
     int i20;
 } Node24;
-extern void MotionSlider_CopyChildren(Node24* dst, Node24* src);
+extern void cArray_cSkaBlendSequenceItem_ctor_cArrayR(Node24* dst, Node24* src);
 
-/* Copy: base part via MotionSlider_CopyChildren, then the remaining fields; returns dst. */
+/* Copy: base part via cArray_cSkaBlendSequenceItem_ctor_cArrayR, then the remaining fields; returns dst. */
 Node24* cSkaTransBLEND_ctor_cSkaTransBLENDR(Node24* dst, Node24* src)
 {
-    MotionSlider_CopyChildren(dst, src);
+    cArray_cSkaBlendSequenceItem_ctor_cArrayR(dst, src);
     dst->f10 = src->f10;
     dst->f14 = src->f14;
     dst->i18 = src->i18;

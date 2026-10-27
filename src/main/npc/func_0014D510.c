@@ -22,17 +22,17 @@ public:
 extern "C" {
 extern char D_004EE550[];
 extern "C" void Event_PackHeader();
-extern "C" void Message_GetScriptTypeKey();
+extern "C" void cMessage_getSOBJClassId();
 extern "C" void cAIMessage_dtor();
 extern "C" void cAIMessage_Clone();
-void * const D_004D9340[8] = { (void*)0x0, (void*)0x0, (void*)cAIMessage_dtor, (void*)cAIMessage_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
-extern void Event_Construct(AiMsg_f3* m, void* type);
-extern void Event_Send(AiMsg_f3* m, void* target, int immediate);
+void * const D_004D9340[8] = { (void*)0x0, (void*)0x0, (void*)cAIMessage_dtor, (void*)cAIMessage_Clone, (void*)Event_PackHeader, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
+extern void cMessage_ctor_cMessageNameR(AiMsg_f3* m, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int(AiMsg_f3* m, void* target, int immediate);
 extern void cMessage_dtor(AiMsg_f3* m, int flags);
-extern void NpcAi_RequestAction(AiChar_f3* c, int a, int b, float f);
-void NpcAi_SetMovementState(AiChar_f3* c, unsigned char state, int prio);
+extern void cNPC_DoAction(AiChar_f3* c, int a, int b, float f);
+void cNPC_SetMoveMode(AiChar_f3* c, unsigned char state, int prio);
 }
-void NpcAi_SetMovementState(AiChar_f3* c, unsigned char state, int prio)
+void cNPC_SetMoveMode(AiChar_f3* c, unsigned char state, int prio)
 {
     AiMsg_f3 msg;
     if (prio < c->prio) {
@@ -42,11 +42,11 @@ void NpcAi_SetMovementState(AiChar_f3* c, unsigned char state, int prio)
     if (state != c->state) {
         c->state = state;
         if (state == 0) {
-            Event_Construct(&msg, D_004EE550);
+            cMessage_ctor_cMessageNameR(&msg, D_004EE550);
             msg.vtable = ((char*)D_004D9340);
             msg.kind = 5;
             msg.node = -1;
-            Event_Send(&msg, c, 0);
+            QueueMessage_cMessageR_cSystemP_int(&msg, c, 0);
             msg.vtable = ((char*)D_004D9340);
             cMessage_dtor(&msg, 0);
             if (!c->b13D) {
@@ -54,7 +54,7 @@ void NpcAi_SetMovementState(AiChar_f3* c, unsigned char state, int prio)
             }
         } else {
             if ((c->owner->flags >> 3) & 1) {
-                NpcAi_RequestAction(c, 9, 0, 0.0f);
+                cNPC_DoAction(c, 9, 0, 0.0f);
             }
             c->f1C0 = 999999.0f;
             c->f1C4 = 0;

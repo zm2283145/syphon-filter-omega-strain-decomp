@@ -7,7 +7,7 @@
  * packet (lgAud_pkt), calls the IRX through sceSifCallRpc and returns the
  * result the IRX wrote to pkt->ret, or one of the LGAUD_ERR_* codes below.
  * The A* variants (lgAudARead/AWrite/AWriteVag) are asynchronous: they keep
- * the semaphore and release it from their completion callback; lgAudSync
+ * the semaphore and release it from their completion callback; lgAudASync
  * waits for / polls that.
  * Plain C for ee-gcc.
  */
@@ -84,8 +84,8 @@ typedef struct lgAudRpcPkt {
     int unk04;                    /* +0x04 */
     int arg;                      /* +0x08 lgAudOpen: type, lgAudEnumerate: index */
     int device;                   /* +0x0C */
-    unsigned char param0;         /* +0x10 lgAudSetLevel0D/0E */
-    unsigned char param1;         /* +0x11 lgAudSetLevel0D/0E */
+    unsigned char param0;         /* +0x10 lgAudSetPlaybackVolume/0E */
+    unsigned char param1;         /* +0x11 lgAudSetPlaybackVolume/0E */
     unsigned char flag;           /* +0x12 read/write flag */
     char pad13;                   /* +0x13 */
     int unk14[3];                 /* +0x14 */
@@ -105,7 +105,7 @@ typedef struct lgAudRpcPkt {
 typedef struct lgAudAsyncReq {
     void *buf;                    /* +0x00 read: destination, write: source */
     int *len;                     /* +0x04 receives the transferred length */
-    int ret;                      /* +0x08 receives pkt->ret; read by lgAudSync */
+    int ret;                      /* +0x08 receives pkt->ret; read by lgAudASync */
 } lgAudAsyncReq;
 
 /*
@@ -160,12 +160,12 @@ int lgAudAWrite(int device, int flag, void *src, int *len);
 int lgAudAWriteVag(int device, int flag, void *src, int *len);
 int lgAudGetMixer(int device, lgAudMixer *mr);
 int lgAudSetMixer(int device, lgAudMixer *mr);
-int lgAudSetLevel0D(int device, unsigned char a, unsigned char b);
-int lgAudSetLevel0E(int device, unsigned char a, unsigned char b);
+int lgAudSetPlaybackVolume(int device, unsigned char a, unsigned char b);
+int lgAudSetRecordingVolume(int device, unsigned char a, unsigned char b);
 int lgAudGetAvailableRecordingBytes(int device, int *bytes);
 int lgAudGetRemainingPlaybackBytes(int device, int *bytes);
 int lgAudPrepareForReboot(void);
-int lgAudSync(int poll, int *result);
+int lgAudASync(int poll, int *result);
 int lgAudDeInit(void);
 void lgAudAReadCallback(lgAudAsyncReq *req);
 void lgAudAWriteCallback(lgAudAsyncReq *req);

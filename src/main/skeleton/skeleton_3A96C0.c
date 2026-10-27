@@ -33,8 +33,8 @@ static inline V W3(VT3 t, int k, float f) { V* p = &t; (&p->x)[k] = f; return *p
 struct S { char pad[0xC]; Vec<V3> scales; char pad10[4]; unsigned char x14; char pad15[7]; int count; Vec<SNode> nodes; };
 #define BLK3(K, C) { float f = s->scales[i].C;SNode* nd = &s->nodes[i]; V r = W3(*nd->m.Row(K), K, f); nd->m.SetRow(K, r); }
 #define BLK(K, C) { float f = s->scales[i].C;SNode* nd = &s->nodes[i]; V r = WithComp(*nd->m.Row(K), K, f); nd->m.SetRow(K, r); }
-extern "C" void SkelNodes_ApplyScale(S* s);
-void SkelNodes_ApplyScale(S* s)
+extern "C" void cSkeleton_SetupBoneScaleMatrices(S* s);
+void cSkeleton_SetupBoneScaleMatrices(S* s)
 {
     if (s->x14) {
         int n = s->count;

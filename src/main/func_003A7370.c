@@ -33,7 +33,7 @@ static inline int Sync3A7370(int wait)
 }
 #pragma push
 #pragma bool off
-int snd_InitVAGStreaming(int a, int b, int c, int d)
+int snd_InitVAGStreamingEx(int a, int b, int c, int d)
 {
     int buf[4];
     if (D_0053DC00 == 1) return 0;

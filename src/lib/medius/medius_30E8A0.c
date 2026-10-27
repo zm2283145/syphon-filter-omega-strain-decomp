@@ -93,7 +93,7 @@ extern int func_0030ECC0(UpnpEA40 *u);
 #endif /* merge_units */
 #define func_0030ECC0(a0) (func_0030ECC0((UpnpE8A0 *)(a0))) /* merge_units */
 
-extern int Socket_WriteAddressed(int sock, void *addr, unsigned short port, void *data, int len, unsigned short *sent);
+extern int rt_comm_send_to(int sock, void *addr, unsigned short port, void *data, int len, unsigned short *sent);
 extern void func_0030ECF8(UpnpEA40 *u);
 int func_0030EA40(UpnpEA40 *u, const char *host, unsigned short port, void *cb)
 {
@@ -110,7 +110,7 @@ int func_0030EA40(UpnpEA40 *u, const char *host, unsigned short port, void *cb)
     u->flag = 0;
     u->ctx->cb = cb;
     pkt[2] = 0xE4;
-    if (Socket_WriteAddressed(u->sock, u->host, u->port, pkt, 4, &sent) != 0 || sent != 4) {
+    if (rt_comm_send_to(u->sock, u->host, u->port, pkt, 4, &sent) != 0 || sent != 4) {
         func_0030ECF8(u);
         return 8;
     }

@@ -32,12 +32,12 @@ typedef struct {
 extern void std_list_cElementPtr_begin_void_2(ListIt235A00* out, void* list);
 extern void std_list_cElementPtr_end_void_2(ListIt235A00* out, void* list);
 extern ListIt235A00* cLListIterator_cElementPtr_ctor_listR_2(ListIt235A00* dst, ListIt235A00* src);
-extern void ParticleInst_Draw(void* obj, int key, Mtx235A00* m);
+extern void cParticle_Render(void* obj, int key, Mtx235A00* m);
 
 #pragma push
 #pragma opt_rotateloops off
 #pragma opt_loop_invariants off
-void SmokeField_Draw(Fx235A00* self) {
+void cCameraAtmosphericEffect_Render(Fx235A00* self) {
     ListIt235A00 it;
     ListIt235A00 first;
     ListIt235A00 last;
@@ -54,7 +54,7 @@ void SmokeField_Draw(Fx235A00* self) {
         if (v->obj != 0) {
             /* unfolded quad copy idiom */
             VCopyF(&m.r[3], &v->pos);
-            ParticleInst_Draw(v->obj, self->key, &m);
+            cParticle_Render(v->obj, self->key, &m);
         }
         it.node = it.node->next;
     }

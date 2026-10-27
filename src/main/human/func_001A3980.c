@@ -104,69 +104,69 @@ extern int D_0049D040; extern int D_0049D048;
 extern signed char D_0049D023;
 extern float D_004A03E0; extern float g_NegFltMax;
 extern int g_NoneWord;
-void SoundRequest_Ctor(Req_L* r, int a, char* b, int c, int d);
-void SoundEvent_CtorFromPreset(void* e, void* r, void* owner);
-void SoundStopMsg_Ctor(Snd2_L* e, void* r, void* owner);
-void Event_Send(void* m, void* tgt, int n);
-void FileMan_Release(Str_L* s, int flag);
+void cSndFx_ctor_int_charP_cGOBJP_int(Req_L* r, int a, char* b, int c, int d);
+void cPlaySoundMsg_ctor_cSndFxR(void* e, void* r, void* owner);
+void cStopSoundMsg_ctor_cSndFxR_cGOBJP(Snd2_L* e, void* r, void* owner);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* tgt, int n);
+void cFileMan_dtor(Str_L* s, int flag);
 void cMessage_dtor(void* m, int flag);
-void Event_Construct(void* m, void* t);
+void cMessage_ctor_cMessageNameR(void* m, void* t);
 unsigned char AnimPriority_Helper3(void* bits, int index);
 void AnimPriority_Helper2(void* p, int index, int v);
 void AnimPriority_Helper1(void* p);
 void AnimPriority_Helper0(void* p, int index, unsigned char on);
-void Physical_SetModeBit(void* p, int b);
-void Physical_ClearModeBit(void* p, int b);
-void ActorPhysical_QueryWaterHeight(Phys_L* p);
-void World_PopObject(void* w);
-void* Object_LookupById(int* id);
-int* SpecFx_GetEffectDef(int k);
-void* Actor_GetSkeleton(void* o);
-void Effect_SpawnDirectional(int def, void* a, void* b);
-Q_L* Root_GetWorldQuat(Root_L* r);
-void Root_SetWorldOrientation(Root_L* r, const void* q);
-void Root_SetWorldOrientationReset(Root_L* r, const Q_L& q);
-Root_L* Actor_GetFloorRoot(Act_L* a);
-Root_L* Actor_GetEdgeRoot(Act_L* a);
-Q_L Quat_ComposeOffset(Q_L* b, const Q_L* c);
-float Math_Cos(float);
-float Math_Sin(float);
-void WeaponInv_HolsterCurrent(int inv);
-void WeaponInv_RestoreHiddenItem(int inv);
-void WeaponInv_LaunchProjectile(int inv, float a, int* id, void* p);
-void Inventory_ReleaseItem(int inv);
-void ActiveList_RemoveFirst(void* w);
-void* ModelCtx_FindNodeByName(void* s, Name_L* n);
+void cModeSwitch_WithHistory_12_ActivateMode_uint_2(void* p, int b);
+void cModeSwitch_WithHistory_12_DeactivateMode(void* p, int b);
+void cHumanCollisionRoutine_GetWaterDepth(Phys_L* p);
+void cGameSystem_PopWeaponCam(void* w);
+void* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+int* nSfxLoader_GetHandle(int k);
+void* cSKM_GOBJ_GetSkeleton_void(void* o);
+void SfxParticleEffect_int_cVectorR_cVectorR(int def, void* a, void* b);
+Q_L* cSkaAnimAnchor_GetRotation(Root_L* r);
+void cSkaAnimAnchor_TreeNode_SetTransformRotation_WorldSpace(Root_L* r, const void* q);
+void cSkaAnimAnchor_SetRotation(Root_L* r, const Q_L& q);
+Root_L* cHuman_GetFloorAnchor_void(Act_L* a);
+Root_L* cHuman_GetLedgeAnchor_void_2(Act_L* a);
+Q_L cQuaternion_GetRotated(Q_L* b, const Q_L* c);
+float Libc_Cosf(float);
+float Libc_Sinf(float);
+void cWeapon_StoreWeapon_void(int inv);
+void cWeapon_DrawLastWeaponUsed(int inv);
+void cWeapon_Throw(int inv, float a, int* id, void* p);
+void cWeapon_ReloadThrow(int inv);
+void cGameSystem_PopCamera(void* w);
+void* cSkaSystem_GetAnimation(void* s, Name_L* n);
 void* cSkaParams_Skeleton(void* p);
 int cSkeleton_GetSkeletonData(void* p);
-Plc_L Clip_ResolveMotionPlacement(void* node, int k);
-void VecPair_Copy(Plc_L* d, Plc_L* s);
-void Root_BaseConstruct(Plc_L* p);
-void* Root_GetWorldPlacement(Root_L* r);
-Q_L* Placement_GetQuat(void* p);
+Plc_L cSkaAnim_GetLastFrameRootTransform(void* node, int k);
+void cQuatVec_ctor_cQuatVecR(Plc_L* d, Plc_L* s);
+void cQuatVec_GetUnit(Plc_L* p);
+void* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(Root_L* r);
+Q_L* cQuatVec_Rotation(void* p);
 void* cMatrix_GetXAxis(Mtx_L* m);
 void* func_0019D190(Mtx_L* m);
-void Vec4_Assign(Q_L* d, void* s);
-float Vec4_GetZ(Q_L* v);
-float Vec_HeadingFromYX(Q_L* v);
-float Vec_HeadingFromNegXY(Q_L* v);
-void Ladder_ReleaseAlignment(Act_L* a);
-void Actor_SendSoundImmediate(Act_L* a);
-void Root_SetWorldPlacement(Root_L* r, Plc_L* p);
-Plc_L* Root_ResolveWorldPlacement(Root_L* r);
-void AnimChannel_SetDirect(float f, void* ch, int k);
-void* RootCollection_FindByKey_Thunk(void* sys, int* key);
-void Root_ClearChildren(void* r);
-void Root_Attach(void* a, void* b, int f);
+void cVector_ctor_cVectorR(Q_L* d, void* s);
+float cVector_Z_void(Q_L* v);
+float nSFOMath_GetZRotationFromXAxis(Q_L* v);
+float nSFOMath_GetZRotationFromYAxis(Q_L* v);
+void cHuman_LadderClearOneRungOff(Act_L* a);
+void cHuman_HandleLadderStepEvent(Act_L* a);
+void cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(Root_L* r, Plc_L* p);
+Plc_L* cSkaAnimAnchor_GetTransform(Root_L* r);
+void cSkaParams_SetSliderValue_int_float(float f, void* ch, int k);
+void* cSkaSystem_GetAnchor(void* sys, int* key);
+void cSkaAnimAnchor_DetachChildren(void* r);
+void cSkaAnimAnchor_AttachChild(void* a, void* b, int f);
 int cMatrix_GetYAxis(void* p);
 void cArray_cTreeNode_cSkaSystemPtrPtr_Begin_void(int* it, int v);
 void cArray_cTreeNode_cSkaSystemPtrPtr_End_void(int* it, int v);
 int cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opNe(int* a, int* b);
 void cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opInc(int* a);
 int* cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opMul(int* a);
-void** Ptr_IdentityCast(int v);
+void** cTreeNode_cSkaSystemPtr_Data(int v);
 void Actor_EnterDeadState(Act_L* a);
-void Model_GetComponentTransform(Plc3_L* out, void* m, signed char k);
+void cSkeleton_GetBoneToWorldMatrix(Plc3_L* out, void* m, signed char k);
 }
 
 static inline void Prio_L(char* p, signed char k, int v)
@@ -183,27 +183,27 @@ static inline void Prio_L(char* p, signed char k, int v)
     { \
         Req_L req; \
         Snd_L ev; \
-        SoundRequest_Ctor(&req, T, NAME, 0, 0); \
-        SoundEvent_CtorFromPreset(&ev, &req, a); \
+        cSndFx_ctor_int_charP_cGOBJP_int(&req, T, NAME, 0, 0); \
+        cPlaySoundMsg_ctor_cSndFxR(&ev, &req, a); \
         ev.flag = 1; \
-        Event_Send(&ev, g_Game, IMM); \
+        QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, IMM); \
         ev.vt = D_004DAE30; \
-        FileMan_Release(&ev.s114, -1); \
-        FileMan_Release(&ev.s78, -1); \
+        cFileMan_dtor(&ev.s114, -1); \
+        cFileMan_dtor(&ev.s78, -1); \
         cMessage_dtor(&ev, 0); \
-        FileMan_Release(&req.sE4, -1); \
-        FileMan_Release(&req.s48, -1); \
+        cFileMan_dtor(&req.sE4, -1); \
+        cFileMan_dtor(&req.s48, -1); \
     }
 #define SNDP(PRESET) \
     { \
         Snd_L ev; \
         void* pr = PRESET; \
-        SoundEvent_CtorFromPreset(&ev, pr, a); \
+        cPlaySoundMsg_ctor_cSndFxR(&ev, pr, a); \
         ev.flag = 1; \
-        Event_Send(&ev, g_Game, 0); \
+        QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 0); \
         ev.vt = D_004DAE30; \
-        FileMan_Release(&ev.s114, -1); \
-        FileMan_Release(&ev.s78, -1); \
+        cFileMan_dtor(&ev.s114, -1); \
+        cFileMan_dtor(&ev.s78, -1); \
         cMessage_dtor(&ev, 0); \
     }
 
@@ -211,12 +211,12 @@ static inline void SendC_L(Act_L* a, int kind)
 {
     Msg4_L m;
     Msg4_L* p = &m;
-    Event_Construct(p, g_CasEventMsgClass);
+    cMessage_ctor_cMessageNameR(p, g_CasEventMsgClass);
     p->vtable = D_004DA950;
     p->f24 = kind;
     p->f28 = -1;
     p->f2C = 0;
-    Event_Send(p, a->ctl, 0);
+    QueueMessage_cMessageR_cSystemP_int(p, a->ctl, 0);
     m.vtable = D_004DA950;
     cMessage_dtor(&m, 0);
 }
@@ -224,12 +224,12 @@ static inline void SendCI_L(Act_L* a, int kind)
 {
     Msg4_L m;
     Msg4_L* p = &m;
-    Event_Construct(p, g_CasEventMsgClass);
+    cMessage_ctor_cMessageNameR(p, g_CasEventMsgClass);
     p->vtable = D_004DA950;
     p->f24 = kind;
     p->f28 = -1;
     p->f2C = 0;
-    { int one = 1; m.f20 = one; Event_Send(&m, a->ctl, one); }
+    { int one = 1; m.f20 = one; QueueMessage_cMessageR_cSystemP_int(&m, a->ctl, one); }
     m.vtable = D_004DA950;
     cMessage_dtor(&m, 0);
 }
@@ -237,21 +237,21 @@ static inline void SendL_L(Act_L* a, int kind, Act_L* arg)
 {
     Msg4_L m;
     Msg4_L* p = &m;
-    Event_Construct(p, g_CasEventMsgClass);
+    cMessage_ctor_cMessageNameR(p, g_CasEventMsgClass);
     p->vtable = D_004DA950;
     p->f24 = kind;
     p->f28 = -1;
     p->f2C = arg;
-    { int one = 1; m.f20 = one; Event_Send(&m, a->f3474, one); }
+    { int one = 1; m.f20 = one; QueueMessage_cMessageR_cSystemP_int(&m, a->f3474, one); }
     m.vtable = D_004DA950;
     cMessage_dtor(&m, 0);
 }
 struct MsgT_L {
     Msg4_L m;
-    MsgT_L(int kind, void* arg) { Msg4_L* p = &m; Event_Construct(p, g_CasEventMsgClass); p->vtable = D_004DA950; p->f24 = kind; p->f28 = -1; p->f2C = arg; }
-    void SendLnk(Act_L* a) { int one = 1; m.f20 = one; Event_Send(&m, a->f3474, one); }
-    void SendCtl(Act_L* a) { int one = 1; m.f20 = one; Event_Send(&m, a->ctl, one); }
-    void SendCtlN(Act_L* a) { Event_Send(&m, a->ctl, 1); }
+    MsgT_L(int kind, void* arg) { Msg4_L* p = &m; cMessage_ctor_cMessageNameR(p, g_CasEventMsgClass); p->vtable = D_004DA950; p->f24 = kind; p->f28 = -1; p->f2C = arg; }
+    void SendLnk(Act_L* a) { int one = 1; m.f20 = one; QueueMessage_cMessageR_cSystemP_int(&m, a->f3474, one); }
+    void SendCtl(Act_L* a) { int one = 1; m.f20 = one; QueueMessage_cMessageR_cSystemP_int(&m, a->ctl, one); }
+    void SendCtlN(Act_L* a) { QueueMessage_cMessageR_cSystemP_int(&m, a->ctl, 1); }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MsgT_L() { m.vtable = D_004DA950; cMessage_dtor(&m, 0); }
 };
 static inline bool IsPlayer_L(Act_L* a) { unsigned char r = 0; Ctl_L* c = a->ctl; if (c && c->IsPlayer()) r = 1; return r; }
@@ -261,13 +261,13 @@ static inline void CopyQ_L(Q_L* d, const Q_L& s) { V4Copy(d, &s); }
 static inline Q_L* CopyQR_L(Q_L* d, const Q_L& s) { V4Copy(d, &s); return d; }
 static inline void SetIdent_L(Q_L* d) { Q_L t; V4StoreVF0(&t); CopyQR_L(d, t); }
 static inline Q_L QIdent_L() { Q_L t; V4StoreVF0(&t); return t; }
-static inline void Reset_L(Root_L* r, Act_L* a, const Q_L* off) { Root_SetWorldOrientationReset(r, Quat_ComposeOffset(Root_GetWorldQuat(Actor_GetEdgeRoot(a)), off)); }
+static inline void Reset_L(Root_L* r, Act_L* a, const Q_L* off) { cSkaAnimAnchor_SetRotation(r, cQuaternion_GetRotated(cSkaAnimAnchor_GetRotation(cHuman_GetLedgeAnchor_void_2(a)), off)); }
 static inline void Reset3_L(Root_L* r, Act_L* a, const Q_L* off) { Reset_L(r, a, off); }
 static inline void Reset2_L(Root_L* r, Act_L* a, const Q_L* off) { Reset3_L(r, a, off); }
 static inline void EdgeAlign_L(Act_L* a, const Q_L& off)
 {
     const Q_L* o = &off;
-    Reset2_L(Actor_GetFloorRoot(a), a, &off);
+    Reset2_L(cHuman_GetFloorAnchor_void(a), a, &off);
 }
 struct V3_L { float x, y, z, w; V3_L(float a, float b, float c) { x = a; y = b; z = c; w = 0.0f; } } __attribute__((aligned(16)));
 struct AA_L {
@@ -279,8 +279,8 @@ struct QA_L {
     float x, y, z, w;
     QA_L(const AA_L& aa) {
         float h = 0.5f * aa.a;
-        float c = Math_Cos(h);
-        float s = Math_Sin(h);
+        float c = Libc_Cosf(h);
+        float s = Libc_Sinf(h);
         w = c;
         x = s * aa.x;
         y = s * aa.y;
@@ -288,24 +288,24 @@ struct QA_L {
     }
 } __attribute__((aligned(16)));
 struct Act_L;
-static inline void Chan05_L(Act_L* x) { char* sys = x->sys; AnimChannel_SetDirect(0.5f, sys + 0x10, 0xE); }
+static inline void Chan05_L(Act_L* x) { char* sys = x->sys; cSkaParams_SetSliderValue_int_float(0.5f, sys + 0x10, 0xE); }
 
 static inline bool LnkIsA_L(Lnk_L* l, Act_L* a) { return l->fC == a->f347C; }
 static inline bool LinkOk_L(Act_L* a) { return !a->f3478 || LnkIsA_L(a->f3478, a); }
 static inline Lnk_L* Link_L(Act_L* a) { return LinkOk_L(a) ? a->f3478 : 0; }
-static inline void SetOri_L(Root_L* r, const QA_L& q) { Root_SetWorldOrientation(r, &q); }
-static inline void VPC_L(Plc_L* d, const Plc_L& s) { VecPair_Copy(d, (Plc_L*)&s); }
+static inline void SetOri_L(Root_L* r, const QA_L& q) { cSkaAnimAnchor_TreeNode_SetTransformRotation_WorldSpace(r, &q); }
+static inline void VPC_L(Plc_L* d, const Plc_L& s) { cQuatVec_ctor_cQuatVecR(d, (Plc_L*)&s); }
 static inline void NodeQ_L(Q_L* out, Act_L* a)
 {
     char* sys = a->sys;
     Plc_L plc;
     Name_L nm;
     NAME_COPY(nm.c, D_0049DD50)
-    void* nd = ModelCtx_FindNodeByName(sys, &nm);
+    void* nd = cSkaSystem_GetAnimation(sys, &nm);
     if (nd) {
-        VPC_L(&plc, Clip_ResolveMotionPlacement(nd, cSkeleton_GetSkeletonData(cSkaParams_Skeleton(sys + 0x10))));
+        VPC_L(&plc, cSkaAnim_GetLastFrameRootTransform(nd, cSkeleton_GetSkeletonData(cSkaParams_Skeleton(sys + 0x10))));
     } else {
-        Root_BaseConstruct(&plc);
+        cQuatVec_GetUnit(&plc);
     }
     CopyQ_L(out, plc.q);
 }
@@ -348,7 +348,7 @@ static inline void QMulTo_L(Q_L* out, const Q_L* pq, const Q_L& l)
     }
     CopyQ_L(out, t);
 }
-static inline void Rel_L(Q_L* rq, Root_L* r1, const Q_L& lq) { const Q_L* q = Placement_GetQuat(Root_GetWorldPlacement(r1)); QMulTo_L(rq, q, lq); }
+static inline void Rel_L(Q_L* rq, Root_L* r1, const Q_L& lq) { const Q_L* q = cQuatVec_Rotation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(r1)); QMulTo_L(rq, q, lq); }
 static inline float Yaw_L(const Q_L* rp)
 {
     Mtx_L m;
@@ -383,10 +383,10 @@ static inline float Yaw_L(const Q_L* rp)
     {
         Q_L va;
         Q_L vb;
-        Vec4_Assign(&va, cMatrix_GetXAxis(mp));
-        Vec4_Assign(&vb, func_0019D190(mp));
-        if (Vec4_GetZ(&va) < Vec4_GetZ(&vb)) return Vec_HeadingFromYX(&va);
-        return Vec_HeadingFromNegXY(&vb);
+        cVector_ctor_cVectorR(&va, cMatrix_GetXAxis(mp));
+        cVector_ctor_cVectorR(&vb, func_0019D190(mp));
+        if (cVector_Z_void(&va) < cVector_Z_void(&vb)) return nSFOMath_GetZRotationFromXAxis(&va);
+        return nSFOMath_GetZRotationFromYAxis(&vb);
     }
 }
 
@@ -397,14 +397,14 @@ struct NameC_L {
 struct PlcR_L {
     Q_L q;
     Q_L p;
-    PlcR_L() { Root_BaseConstruct((Plc_L*)this); }
-    PlcR_L(const Plc_L& s) { VecPair_Copy((Plc_L*)this, (Plc_L*)&s); }
+    PlcR_L() { cQuatVec_GetUnit((Plc_L*)this); }
+    PlcR_L(const Plc_L& s) { cQuatVec_ctor_cQuatVecR((Plc_L*)this, (Plc_L*)&s); }
     PlcR_L(void* nd, int m) { Set(nd, m); }
-    void Set(void* nd, int m) { VPC_L((Plc_L*)this, Clip_ResolveMotionPlacement(nd, m)); }
+    void Set(void* nd, int m) { VPC_L((Plc_L*)this, cSkaAnim_GetLastFrameRootTransform(nd, m)); }
 };
 static inline PlcR_L NodePlc_L(char* sys, const NameC_L& nm)
 {
-    void* nd = ModelCtx_FindNodeByName(sys, (Name_L*)&nm);
+    void* nd = cSkaSystem_GetAnimation(sys, (Name_L*)&nm);
     if (nd) return PlcR_L(nd, cSkeleton_GetSkeletonData(cSkaParams_Skeleton(sys + 0x10)));
     return PlcR_L();
 }
@@ -446,10 +446,10 @@ struct MtxQ_L {
     {
         Q_L va;
         Q_L vb;
-        Vec4_Assign(&va, cMatrix_GetXAxis((Mtx_L*)this));
-        Vec4_Assign(&vb, func_0019D190((Mtx_L*)this));
-        if (Vec4_GetZ(&va) < Vec4_GetZ(&vb)) return Vec_HeadingFromYX(&va);
-        return Vec_HeadingFromNegXY(&vb);
+        cVector_ctor_cVectorR(&va, cMatrix_GetXAxis((Mtx_L*)this));
+        cVector_ctor_cVectorR(&vb, func_0019D190((Mtx_L*)this));
+        if (cVector_Z_void(&va) < cVector_Z_void(&vb)) return nSFOMath_GetZRotationFromXAxis(&va);
+        return nSFOMath_GetZRotationFromYAxis(&vb);
     }
 } __attribute__((aligned(16)));
 
@@ -473,7 +473,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
             if (PhysOn_L(a)) {
                 Phys_L* p = a->phys;
                 bool mv = p->fE4 != g_NegFltMax;
-                ActorPhysical_QueryWaterHeight(a->phys);
+                cHumanCollisionRoutine_GetWaterDepth(a->phys);
                 if (!mv) {
                     SND(1, ((a->f3248 >> 2) & 1) == 0 ? D_0049E1C8 : D_0049D920, 0)
                 }
@@ -535,19 +535,19 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         if (e->type != 0x97) break;
     case 0x96:
         { Phys_L* p = a->phys; p->b3D0 = 1; }
-        World_PopObject(g_Game);
+        cGameSystem_PopWeaponCam(g_Game);
         a->b33E8 = 0;
         break;
     case 0x98: {
         void* o;
-        if ((o = Object_LookupById(&a->id)) != 0) {
-            int def = *SpecFx_GetEffectDef(0x19);
+        if ((o = nGobjManager_LookupGOBJ_cObjectIdR(&a->id)) != 0) {
+            int def = *nSfxLoader_GetHandle(0x19);
             Q_L dir;
             Plc3_L t;
             Q_L pos;
-            Model_GetComponentTransform(&t, Actor_GetSkeleton(o), D_0049D023);
+            cSkeleton_GetBoneToWorldMatrix(&t, cSKM_GOBJ_GetSkeleton_void(o), D_0049D023);
             V4CopySD(&pos, &t.p);
-            if (def > -1) Effect_SpawnDirectional(def, &dir, &pos);
+            if (def > -1) SfxParticleEffect_int_cVectorR_cVectorR(def, &dir, &pos);
             SNDP(D_004F24B0)
         }
         break;
@@ -559,15 +559,15 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         Prio_L(a->prio, 7, 1);
         Prio_L(a->prio, 6, 1);
         if (a->phys) {
-            Physical_SetModeBit(a->phys->mode, 5);
-            Physical_SetModeBit(a->phys->mode, 1);
+            cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 5);
+            cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 1);
         }
-        Event_Send(&MsgT_L(6, 0).m, a->ctl, 0);
+        QueueMessage_cMessageR_cSystemP_int(&MsgT_L(6, 0).m, a->ctl, 0);
         break;
     case 0x15: {
-        void* q = Root_GetWorldQuat(a->r3294);
+        void* q = cSkaAnimAnchor_GetRotation(a->r3294);
         Root_L* r = a->r3290;
-        Root_SetWorldOrientation(r, q);
+        cSkaAnimAnchor_TreeNode_SetTransformRotation_WorldSpace(r, q);
         r->f160 = 0;
         break;
     }
@@ -576,8 +576,8 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         Prio_L(a->prio, 7, 0);
         Prio_L(a->prio, 6, 0);
         if (a->phys) {
-            Physical_ClearModeBit(a->phys->mode, 5);
-            Physical_ClearModeBit(a->phys->mode, 1);
+            cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 5);
+            cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 1);
         }
         if (e->type != 0x18) break;
     case 0x17:
@@ -586,8 +586,8 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         Prio_L(a->prio, 8, 1);
         Prio_L(a->prio, 6, 1);
         if (a->phys) {
-            Physical_SetModeBit(a->phys->mode, 5);
-            Physical_SetModeBit(a->phys->mode, 1);
+            cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 5);
+            cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 1);
         }
         break;
     case 0x1A:
@@ -595,8 +595,8 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         Prio_L(a->prio, 8, 0);
         Prio_L(a->prio, 6, 0);
         if (a->phys) {
-            Physical_ClearModeBit(a->phys->mode, 5);
-            Physical_ClearModeBit(a->phys->mode, 1);
+            cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 5);
+            cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 1);
         }
         if (e->type != 0x1C) break;
     case 0x1B:
@@ -630,12 +630,12 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
     case 0x3D:
         Prio_L(a->prio, 0x13, 1);
         if (a->phys) {
-            Physical_SetModeBit(a->phys->mode, 5);
-            Physical_SetModeBit(a->phys->mode, 3);
-            Physical_SetModeBit(a->phys->mode, 2);
-            Physical_SetModeBit(a->phys->mode, 0xB);
+            cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 5);
+            cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 3);
+            cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 2);
+            cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 0xB);
         }
-        WeaponInv_HolsterCurrent(a->inv);
+        cWeapon_StoreWeapon_void(a->inv);
         break;
     case 0x29:
     case 0x2E:
@@ -672,7 +672,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
     case 0x39:
     case 0x3E:
     case 0x42:
-        if (a->phys) Physical_ClearModeBit(a->phys->mode, 3);
+        if (a->phys) cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 3);
         switch (e->type) {
         case 0x39:
         case 0x3E:
@@ -739,19 +739,19 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         switch (e->type) {
         case 0x35: case 0x43: case 0x37: case 0x45:
             if (a->phys) {
-                Physical_ClearModeBit(a->phys->mode, 5);
-                Physical_ClearModeBit(a->phys->mode, 2);
-                Physical_ClearModeBit(a->phys->mode, 0xB);
+                cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 5);
+                cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 2);
+                cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 0xB);
             }
             break;
         case 0x3A: case 0x3F: case 0x3C: case 0x41:
             if (a->phys) {
-                Physical_ClearModeBit(a->phys->mode, 2);
-                Physical_ClearModeBit(a->phys->mode, 0xB);
+                cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 2);
+                cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 0xB);
             }
             break;
         case 0x2B: case 0x30: case 0x2D: case 0x32:
-            if (a->phys) Physical_ClearModeBit(a->phys->mode, 5);
+            if (a->phys) cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 5);
             break;
         }
         if (a->f3474) {
@@ -772,7 +772,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         }
         if (a->b326B) {
             if (IsPlayer_L(a) && a->b14) {
-                ActiveList_RemoveFirst(g_Game);
+                cGameSystem_PopCamera(g_Game);
                 a->b326B = 0;
             }
         }
@@ -780,7 +780,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         case 0x2B: case 0x30: case 0x35: case 0x3A: case 0x2D: case 0x32: case 0x37: case 0x3C:
             break;
         case 0x3F: case 0x43: case 0x41: case 0x45:
-            WeaponInv_RestoreHiddenItem(a->inv);
+            cWeapon_DrawLastWeaponUsed(a->inv);
             break;
         }
         if (e->type != 0x2D && e->type != 0x32 && e->type != 0x37 && e->type != 0x3C && e->type != 0x41 && e->type != 0x45) break;
@@ -791,29 +791,29 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
     case 0x40:
     case 0x44:
         a->f3248 &= ~0x10;
-        if (a->phys) Physical_ClearModeBit(a->phys->mode, 3);
+        if (a->phys) cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 3);
         break;
     case 0x63:
     case 0x64:
         Prio_L(a->prio, 0x14, 1);
         if (a->phys) {
-            Physical_SetModeBit(a->phys->mode, 0xB);
+            cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 0xB);
             if (e->type == 0x64) a->phys->f38 |= 8;
         }
-        WeaponInv_HolsterCurrent(a->inv);
+        cWeapon_StoreWeapon_void(a->inv);
         break;
     case 0x67:
         if (a->f3474) MsgT_L(0xE, 0).SendLnk(a);
         break;
     case 0x6B:
         Prio_L(a->prio, 0x11, 1);
-        if (a->phys) Physical_SetModeBit(a->phys->mode, 0xB);
-        WeaponInv_HolsterCurrent(a->inv);
+        if (a->phys) cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 0xB);
+        cWeapon_StoreWeapon_void(a->inv);
         break;
     case 0x6C:
         Prio_L(a->prio, 0x12, 1);
-        if (a->phys) Physical_SetModeBit(a->phys->mode, 0xB);
-        WeaponInv_HolsterCurrent(a->inv);
+        if (a->phys) cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 0xB);
+        cWeapon_StoreWeapon_void(a->inv);
         break;
     case 0x66:
         EdgeAlign_L(a, QIdent_L());
@@ -837,10 +837,10 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         case 0x6E: case 0x70:
             Prio_L(a->prio, 0x11, 0);
             Prio_L(a->prio, 0x12, 0);
-            if (a->phys) Physical_ClearModeBit(a->phys->mode, 5);
+            if (a->phys) cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 5);
             break;
         }
-        if (a->phys) Physical_ClearModeBit(a->phys->mode, 0xB);
+        if (a->phys) cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 0xB);
         switch (e->type) {
         case 0x6E: case 0x70:
             break;
@@ -858,10 +858,10 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
             break;
         }
         if (IsPlayer_L(a) && a->b14 && a->b326B) {
-            ActiveList_RemoveFirst(g_Game);
+            cGameSystem_PopCamera(g_Game);
             a->b326B = 0;
         }
-        WeaponInv_RestoreHiddenItem(a->inv);
+        cWeapon_DrawLastWeaponUsed(a->inv);
         switch (e->type) {
         case 0x6A:
             break;
@@ -870,10 +870,10 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
     case 0x46:
         Prio_L(a->prio, 0x10, 1);
         Prio_L(a->prio, 0xC, 1);
-        if (a->phys) Physical_SetModeBit(a->phys->mode, 9);
+        if (a->phys) cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 9);
         MsgT_L(0xA, 0).SendCtlN(a);
-        WeaponInv_HolsterCurrent(a->inv);
-        Ladder_ReleaseAlignment(a);
+        cWeapon_StoreWeapon_void(a->inv);
+        cHuman_LadderClearOneRungOff(a);
         break;
     case 0x48:
     case 0x4A:
@@ -887,7 +887,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         Prio_L(a->prio, 0x10, 0);
         Prio_L(a->prio, 0xC, 0);
         a->f3248 |= 0x200000;
-        if (a->phys) Physical_ClearModeBit(a->phys->mode, 9);
+        if (a->phys) cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 9);
         if (e->type != 0x4A) break;
     case 0x49:
         a->f3248 &= ~0x200000;
@@ -896,7 +896,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         Prio_L(a->prio, 0x10, 1);
         Prio_L(a->prio, 0xD, 1);
         a->f3248 |= 0x400000;
-        if (a->phys) Physical_SetModeBit(a->phys->mode, 9);
+        if (a->phys) cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 9);
         break;
     case 0x4C:
         a->f3248 &= ~0x400000;
@@ -905,7 +905,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
     case 0x4F:
         Prio_L(a->prio, 0x10, 0);
         Prio_L(a->prio, 0xD, 0);
-        if (a->phys) Physical_ClearModeBit(a->phys->mode, 9);
+        if (a->phys) cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 9);
         if (e->type != 0x4F) break;
     case 0x4E:
         break;
@@ -914,8 +914,8 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         Prio_L(a->prio, 0x10, 1);
         Prio_L(a->prio, 0xE, 1);
         if (a->phys) {
-            Physical_SetModeBit(a->phys->mode, 9);
-            Physical_SetModeBit(a->phys->mode, 8);
+            cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 9);
+            cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 8);
         }
         break;
     case 0x56:
@@ -933,27 +933,27 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         Prio_L(a->prio, 0x10, 0);
         Prio_L(a->prio, 0xE, 0);
         if (a->phys) {
-            Physical_ClearModeBit(a->phys->mode, 9);
-            Physical_ClearModeBit(a->phys->mode, 8);
+            cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 9);
+            cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 8);
         }
         if (e->type == 0x57 || e->type == 0x59) {
             Req_L req;
             Snd2_L ev;
-            SoundRequest_Ctor(&req, 0, D_0049E1E8, 0, 0);
-            SoundStopMsg_Ctor(&ev, &req, a);
+            cSndFx_ctor_int_charP_cGOBJP_int(&req, 0, D_0049E1E8, 0, 0);
+            cStopSoundMsg_ctor_cSndFxR_cGOBJP(&ev, &req, a);
             ev.flag = 1;
-            Event_Send(&ev, g_Game, 1);
+            QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 1);
             ev.vt = D_004DADF0;
-            FileMan_Release(&ev.s114, -1);
-            FileMan_Release(&ev.s78, -1);
+            cFileMan_dtor(&ev.s114, -1);
+            cFileMan_dtor(&ev.s78, -1);
             cMessage_dtor(&ev, 0);
-            FileMan_Release(&req.sE4, -1);
-            FileMan_Release(&req.s48, -1);
+            cFileMan_dtor(&req.sE4, -1);
+            cFileMan_dtor(&req.s48, -1);
         }
         if (e->type != 0x54 && e->type != 0x59) break;
     case 0x53:
     case 0x58:
-        if (e->type == 0x53 || e->type == 0x58) Actor_SendSoundImmediate(a);
+        if (e->type == 0x53 || e->type == 0x58) cHuman_HandleLadderStepEvent(a);
         break;
     case 0x5A:
     case 0x5B:
@@ -964,7 +964,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         }
         break;
     case 0x5C:
-        Actor_SendSoundImmediate(a);
+        cHuman_HandleLadderStepEvent(a);
         break;
     case 0x5D:
     case 0x5E:
@@ -973,11 +973,11 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         Prio_L(a->prio, 0xF, 1);
         if (e->type == 0x62) a->f3248 |= 0x20000000;
         if (a->phys) {
-            Physical_SetModeBit(a->phys->mode, 9);
+            cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 9);
             if (e->type == 0x5D) {
-                Physical_SetModeBit(a->phys->mode, 6);
+                cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 6);
             } else if (e->type == 0x5E) {
-                Physical_ClearModeBit(a->phys->mode, 6);
+                cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 6);
             }
         }
         break;
@@ -990,28 +990,28 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         if (a->phys) {
             int t = e->type;
             if (t == 0x5F) {
-                Physical_SetModeBit(a->phys->mode, 7);
+                cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 7);
             } else if (t == 0x61) {
-                Physical_ClearModeBit(a->phys->mode, 6);
+                cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 6);
             }
         }
         if (e->type != 0x61) break;
     case 0x60:
         a->f3248 &= ~0x10000000;
         if (a->phys) {
-            Physical_ClearModeBit(a->phys->mode, 9);
-            Physical_ClearModeBit(a->phys->mode, 7);
+            cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 9);
+            cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 7);
         }
         break;
     case 0x71:
         Prio_L(a->prio, 0x15, 1);
         a->f324C |= 2;
-        if (a->phys) Physical_SetModeBit(a->phys->mode, 0xA);
+        if (a->phys) cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 0xA);
         break;
     case 0x72: {
         Prio_L(a->prio, 0x15, 1);
         Root_L* r = a->r3290;
-        Root_SetWorldPlacement(r, Root_ResolveWorldPlacement(a->r3294));
+        cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(r, cSkaAnimAnchor_GetTransform(a->r3294));
         r->f160 = 0;
         Chan05_L(a);
         if (Link_L(a)) Chan05_L((Act_L*)Link_L(a));
@@ -1024,12 +1024,12 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
     case 0x76:
         Prio_L(a->prio, 0x15, 0);
         a->f324C |= 4;
-        if (a->phys) Physical_ClearModeBit(a->phys->mode, 0xA);
+        if (a->phys) cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 0xA);
         if (e->type != 0x76) break;
     case 0x75:
         a->f324C &= ~2;
         a->f324C &= ~4;
-        Root_ClearChildren(RootCollection_FindByKey_Thunk(a->sys, &D_0049D048));
+        cSkaAnimAnchor_DetachChildren(cSkaSystem_GetAnchor(a->sys, &D_0049D048));
         break;
     case 0x77: {
         Prio_L(a->prio, 0x15, 1);
@@ -1039,9 +1039,9 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         int end;
         cArray_cTreeNode_cSkaSystemPtrPtr_Begin_void(&it, cMatrix_GetYAxis(sys + 0x100));
         cArray_cTreeNode_cSkaSystemPtrPtr_End_void(&end, cMatrix_GetYAxis(sys + 0x100));
-        void* root = RootCollection_FindByKey_Thunk(sys, &D_0049D040);
+        void* root = cSkaSystem_GetAnchor(sys, &D_0049D040);
         while (cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opNe(&it, &end)) {
-            Root_Attach(root, RootCollection_FindByKey_Thunk(*Ptr_IdentityCast(*cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opMul(&it)), &D_0049D040), 1);
+            cSkaAnimAnchor_AttachChild(root, cSkaSystem_GetAnchor(*cTreeNode_cSkaSystemPtr_Data(*cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opMul(&it)), &D_0049D040), 1);
             cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opInc(&it);
         }
         break;
@@ -1059,25 +1059,25 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
     case 0x7C:
         Prio_L(a->prio, 0x15, 1);
         a->f324C |= 0x10;
-        if (a->phys) Physical_SetModeBit(a->phys->mode, 0xA);
+        if (a->phys) cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 0xA);
         break;
     case 0x7D:
         Prio_L(a->prio, 0x15, 1);
-        Root_ClearChildren(RootCollection_FindByKey_Thunk(a->sys, &D_0049D040));
+        cSkaAnimAnchor_DetachChildren(cSkaSystem_GetAnchor(a->sys, &D_0049D040));
         break;
     case 0x7E:
     case 0x80:
-        if (a->phys) Physical_ClearModeBit(a->phys->mode, 0xA);
+        if (a->phys) cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 0xA);
         if (e->type != 0x80) break;
     case 0x7F:
         Prio_L(a->prio, 0x15, 0);
         a->f324C &= ~0x10;
-        Root_ClearChildren(RootCollection_FindByKey_Thunk(a->sys, &D_0049D048));
+        cSkaAnimAnchor_DetachChildren(cSkaSystem_GetAnchor(a->sys, &D_0049D048));
         break;
     case 0x81:
         Prio_L(a->prio, 0x16, 1);
         a->f324C |= 0x20;
-        if (a->phys) Physical_SetModeBit(a->phys->mode, 0xA);
+        if (a->phys) cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 0xA);
         break;
     case 0x82:
         Prio_L(a->prio, 0x16, 1);
@@ -1088,12 +1088,12 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         if (e->type != 0x85) break;
     case 0x84:
         a->f324C &= ~0x20;
-        if (a->phys) Physical_ClearModeBit(a->phys->mode, 0xA);
+        if (a->phys) cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 0xA);
         break;
     case 0x86:
         Prio_L(a->prio, 0x16, 1);
         a->f324C |= 0x40;
-        if (a->phys) Physical_SetModeBit(a->phys->mode, 0xC);
+        if (a->phys) cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 0xC);
         break;
     case 0x87:
         Prio_L(a->prio, 0x16, 1);
@@ -1104,13 +1104,13 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         if (e->type != 0x8A) break;
     case 0x88:
         a->f324C &= ~0x40;
-        if (a->phys) Physical_ClearModeBit(a->phys->mode, 0xC);
+        if (a->phys) cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 0xC);
         break;
     case 0x8B:
         Prio_L(a->prio, 0x16, 1);
         a->f324C |= 0x80;
         if (a->phys) {
-            Physical_SetModeBit(a->phys->mode, 0xA);
+            cModeSwitch_WithHistory_12_ActivateMode_uint_2(a->phys->mode, 0xA);
             { Phys_L* p = a->phys; p->f14 = 3; }
         }
         break;
@@ -1124,7 +1124,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
     case 0x8E:
         a->f324C &= ~0x80;
         if (a->phys) {
-            Physical_ClearModeBit(a->phys->mode, 0xA);
+            cModeSwitch_WithHistory_12_DeactivateMode(a->phys->mode, 0xA);
             if (!IsPlayer_L(a) || !a->b14) { Phys_L* p = a->phys; p->f14 = 1; }
         }
         break;
@@ -1150,7 +1150,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         break;
     case 0xA0:
         a->f324C &= ~0x200;
-        WeaponInv_LaunchProjectile(a->inv, a->f33E0, &a->id, a->f33D0);
+        cWeapon_Throw(a->inv, a->f33E0, &a->id, a->f33D0);
         a->id = g_NoneWord;
         a->f33E4 = 2;
         break;
@@ -1159,11 +1159,11 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         Prio_L(a->prio, 0x18, 0);
         if ((*(volatile int*)&a->f324C >> 9) & 1) {
             a->f324C &= ~0x200;
-            WeaponInv_LaunchProjectile(a->inv, a->f33E0, &a->id, a->f33D0);
+            cWeapon_Throw(a->inv, a->f33E0, &a->id, a->f33D0);
             a->id = g_NoneWord;
             a->f33E4 = 2;
         }
-        Inventory_ReleaseItem(a->inv);
+        cWeapon_ReloadThrow(a->inv);
         a->f33E4 = 0;
         break;
     case 0x0:

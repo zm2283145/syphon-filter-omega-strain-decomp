@@ -8,15 +8,15 @@
 typedef struct { int type; int f4; int f8; int pad[7]; } UpnpEnt;
 typedef struct { char pad[0x180]; int h180; UpnpEnt *ent; int count; int f18C; int f190; } UpnpObj;
 
-extern int RtUdp_UpdateTransport(int h);
-extern int RtUdp_DrainReceive(UpnpObj *o);
+extern int rt_udp_event_check(int h);
+extern int rt_p2p_receive_messages(UpnpObj *o);
 extern int rt_p2p_complete_connection(UpnpObj *o);
 int rt_p2p_update(UpnpObj *o)
 {
     int ret = 2;
     if (o == 0) return ret;
-    if (RtUdp_UpdateTransport(o->h180) != 0) return 7;
-    ret = RtUdp_DrainReceive(o);
+    if (rt_udp_event_check(o->h180) != 0) return 7;
+    ret = rt_p2p_receive_messages(o);
     if (ret != 0) return ret;
     ret = rt_p2p_complete_connection(o);
     __asm__ __volatile__("");
@@ -34,9 +34,9 @@ typedef struct {
     void (*cb1A4)(int idx, int x);
 } UpnpObj_00303710;
 typedef struct { unsigned int magic; } UpnpMsg;
-extern int RtUdp_SendToPeerEndpoint(UpnpObj_00303710 *o, int peer, unsigned char type, void *data, unsigned short len);
+extern int rt_p2p_isend(UpnpObj_00303710 *o, int peer, unsigned char type, void *data, unsigned short len);
 
-int RtUdp_SendToPeers(UpnpObj_00303710 *o, int peer, unsigned char type, void *data, unsigned short len)
+int rt_p2p_send(UpnpObj_00303710 *o, int peer, unsigned char type, void *data, unsigned short len)
 {
     int rv = 2;
     int ret = 0;
@@ -45,12 +45,12 @@ int RtUdp_SendToPeers(UpnpObj_00303710 *o, int peer, unsigned char type, void *d
         if (peer == -1) {
             for (i = 0; i < o->count; i++) {
                 if (o->ent[i].b10) {
-                    if (o->ent[i].type - 3 < 2u) ret = RtUdp_SendToPeerEndpoint(o, i, type, data, len);
+                    if (o->ent[i].type - 3 < 2u) ret = rt_p2p_isend(o, i, type, data, len);
                     if (ret != 0 && ret != 6) break;
                 }
             }
         } else {
-            if (o->ent[peer].type - 3 < 2u) ret = RtUdp_SendToPeerEndpoint(o, peer, type, data, len);
+            if (o->ent[peer].type - 3 < 2u) ret = rt_p2p_isend(o, peer, type, data, len);
         }
         rv = ret;
     }
@@ -63,9 +63,9 @@ typedef struct { unsigned int state; char pad[0x24]; } Ent3858;
 typedef struct { char pad[0x184]; Ent3858 *ents; int count; char pad2[9]; unsigned char v; } Obj3858;
 typedef struct { int magic; unsigned char v; } Msg3858;
 #if 0 /* merge_units */
-extern int RtUdp_SendToPeerEndpoint(Obj3858 *o, int idx, unsigned char flag, void *data, unsigned short len);
+extern int rt_p2p_isend(Obj3858 *o, int idx, unsigned char flag, void *data, unsigned short len);
 #endif /* merge_units */
-#define RtUdp_SendToPeerEndpoint(a0, a1, a2, a3, a4) (RtUdp_SendToPeerEndpoint((UpnpObj_00303710 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define rt_p2p_isend(a0, a1, a2, a3, a4) (rt_p2p_isend((UpnpObj_00303710 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 int rt_p2p_receive_broadcasts(Obj3858 *o, unsigned char v)
 {
@@ -77,10 +77,10 @@ int rt_p2p_receive_broadcasts(Obj3858 *o, unsigned char v)
     if (o == 0) return 2;
     o->v = v;
     for (i = 0; i < o->count; i++) {
-        if (o->ents[i].state - 3 < 2) r = RtUdp_SendToPeerEndpoint(o, i, 7, &m, 8);
+        if (o->ents[i].state - 3 < 2) r = rt_p2p_isend(o, i, 7, &m, 8);
         if (r != 0 && r != 6) return r;
     }
     return 0;
 }
-#undef RtUdp_SendToPeerEndpoint /* merge_units */
+#undef rt_p2p_isend /* merge_units */
 /* merge_units: end func_00303858 */

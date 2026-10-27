@@ -38,7 +38,7 @@ typedef struct ScriptArray {
     int count;                      /* 0x08 */
 } ScriptArray;
 
-/* Object whose callout record lives behind +0x30 (see Global_ClearCallout_2). */
+/* Object whose callout record lives behind +0x30 (see nScriptUtils_ClearCallout_cNPCP). */
 typedef struct CalloutOwner {
     char pad00[0x30];
     char* callout;                  /* 0x30 passed to the callout clear as callout+0x0C */

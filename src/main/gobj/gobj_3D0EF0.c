@@ -7,15 +7,15 @@ typedef struct {
     float f0, f1;
 } Ent3D;
 typedef struct { int value; } Word;
-extern void String_CtorCStr_13B480(Str3D* s, const char* c);
+extern void std_basic_string_char_char_traits_char_ctor_charP(Str3D* s, const char* c);
 extern void String_Dtor(Str3D* s, int d);
 extern void std_list_deleter_cText_insert(Word* out, void* list, Word* pos, Ent3D* e);
-void TextManager_QueueText(char* o, const char* name, int i, V4_EF0* v, int a, int b)
+void cTextSystem_Print_charP_cFontR_tRGBAR_int_etc(char* o, const char* name, int i, V4_EF0* v, int a, int b)
 {
     Ent3D e;
     Word out;
     Word pos;
-    String_CtorCStr_13B480(&e.name, name);
+    std_basic_string_char_char_traits_char_ctor_charP(&e.name, name);
     e.i = i;
     e.v.x = v->x;
     e.v.y = v->y;

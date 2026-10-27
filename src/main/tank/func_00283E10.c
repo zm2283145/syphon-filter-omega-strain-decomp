@@ -8,31 +8,31 @@ extern "C" {
 #include "tank_obj_init_vt.h"
 extern "C" {
 void cTank_dtor();
-void Object_HandleMessage();
-void GObj_GetID();
-void Object_GetAttachedOrSelf();
+void cGOBJ_HandleMessage();
+void cSystem_ScriptGetObjectId();
+void cGOBJ_ScriptGetRealObj();
 void cGOBJ_IsNetworked();
 void cSystem_SendCreated();
-void cNode_v06();
-void cNode_v07();
+void cGOBJ_NetActivate();
+void cGOBJ_NetDeactivate();
 void cSystem_NetEnable();
 void cSystem_NetDisable();
 void cSystem_IsDeliverable();
-void cTank_v0B();
-void cTank_v0C();
-void cNode_v0D();
+void cTank_getSOBJClassId();
+void cTank_ScriptHandleMessage();
+void cGOBJ_ProcessMessage();
 void cGOBJ_Init();
 void cGOBJ_Load();
-void cTank_v10();
-void Actor_BasePreLogic();
-void Actor_BaseWorldUpdate();
-void Actor_VirtualNop();
-void cNode_v14();
-void Object_Activate();
-void Object_Deactivate();
-void Node_SetFlag2C();
-void Node_ClearFlag2C();
-void Node_GetFlag2C();
+void cTank_NextFrame();
+void cGOBJ_CriticalNextFrame();
+void cGOBJ_UpdateMotion();
+void cGOBJ_CriticalUpdateMotion();
+void cGOBJ_Render();
+void cGOBJ_Activate();
+void cGOBJ_Deactivate();
+void cGOBJ_Enable();
+void cGOBJ_Disable();
+void cGOBJ_IsEnabled();
 void cGOBJ_HasHeadset();
 void cGOBJ_SetStatus();
 void cGOBJ_GetStatus();
@@ -41,57 +41,57 @@ void cGOBJ_GetChildList_void_2();
 void cGOBJ_GetChildList_void();
 void cGOBJ_GetBBox();
 void cGOBJ_ScaleBBox();
-void Object_AttachTransform();
-void Player_GetActiveWeapon();
-void cNode_v24();
-void cNode_v25();
-void cNode_v26();
-void cNode_v27();
-void cNode_v28();
-void cNode_v29();
-void cNode_v2A();
-void cNode_v2B();
+void cGOBJ_CreateXform();
+void cGOBJ_SetTransform();
+void cGOBJ_SetRotation();
+void cGOBJ_SetTranslation();
+void cGOBJ_ApplyTransform();
+void cGOBJ_ApplyLocalRotation();
+void cGOBJ_ApplyTranslation();
+void cGOBJ_SetTransform_ResetPhysics();
+void cGOBJ_SetRotation_ResetPhysics();
+void cGOBJ_SetTranslation_ResetPhysics();
 void cGOBJ_GetTargetPriority();
 void cGOBJ_GetLosPosition();
-void Object_GetEye();
+void cGOBJ_GetTargetPosition();
 void cGOBJ_GetMovementState();
 void func_00140E90();
 void cGOBJ_GetSubTargetAimAdjust();
 void cGOBJ_GetNumSubTargets();
 void cGOBJ_IsAimed();
-void Node_GetWorldMatrix();
+void cGOBJ_GetMatrix();
 void cGOBJ_v35();
-void Node_GetLightRefPoint();
-void PathObj_GetPosition();
-void Node_GetComponentMatrix();
-void cGOBJ_v39();
-void cNode_v3A();
-void GObj_GetWorldMatrix();
+void cGOBJ_GetActivationPoint();
+void cGOBJ_GetCenterOfMass();
+void cGOBJ_GetTransform_ForTeleporting();
+void cGOBJ_GetTransform_ForCameraTracking();
+void cGOBJ_GetCameraCollisionReferencePoint();
+void cGOBJ_GetTransform_ForFloorTravel();
 void cGOBJ_GetFloorPlane();
 void cGOBJ_InitNetwork();
-void Actor_ApplyContactDamage();
+void cGOBJ_ReceiveDamage();
 void cGOBJ_CheckBullet();
-void GObj_GetLifeState();
-void Controller_DeathNotice();
+void cGOBJ_GetHealthState();
+void cGOBJ_Die();
 void* const cTank_vtable[68] = {
-    0, 0, (void*)cTank_dtor, (void*)Object_HandleMessage, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)cGOBJ_IsNetworked, (void*)cSystem_SendCreated, (void*)cNode_v06, (void*)cNode_v07, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cTank_v0B, (void*)cTank_v0C, (void*)cNode_v0D, (void*)cGOBJ_Init, (void*)cGOBJ_Load, (void*)cTank_v10, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cNode_v14, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)cGOBJ_HasHeadset, (void*)cGOBJ_SetStatus, (void*)cGOBJ_GetStatus, (void*)cGOBJ_IsGeneratorCreated, (void*)cGOBJ_GetChildList_void_2, (void*)cGOBJ_GetChildList_void, (void*)cGOBJ_GetBBox, (void*)cGOBJ_ScaleBBox, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)cNode_v24, (void*)cNode_v25, (void*)cNode_v26, (void*)cNode_v27, (void*)cNode_v28, (void*)cNode_v29, (void*)cNode_v2A, (void*)cNode_v2B, (void*)cGOBJ_GetTargetPriority, (void*)cGOBJ_GetLosPosition, (void*)Object_GetEye, (void*)cGOBJ_GetMovementState, (void*)func_00140E90, (void*)cGOBJ_GetSubTargetAimAdjust, (void*)cGOBJ_GetNumSubTargets, (void*)cGOBJ_IsAimed, (void*)Node_GetWorldMatrix, (void*)cGOBJ_v35, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)cGOBJ_v39, (void*)cNode_v3A, (void*)GObj_GetWorldMatrix, (void*)cGOBJ_GetFloorPlane, (void*)cGOBJ_InitNetwork, (void*)Actor_ApplyContactDamage, (void*)cGOBJ_CheckBullet, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice
+    0, 0, (void*)cTank_dtor, (void*)cGOBJ_HandleMessage, (void*)cSystem_ScriptGetObjectId, (void*)cGOBJ_ScriptGetRealObj, (void*)cGOBJ_IsNetworked, (void*)cSystem_SendCreated, (void*)cGOBJ_NetActivate, (void*)cGOBJ_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cTank_getSOBJClassId, (void*)cTank_ScriptHandleMessage, (void*)cGOBJ_ProcessMessage, (void*)cGOBJ_Init, (void*)cGOBJ_Load, (void*)cTank_NextFrame, (void*)cGOBJ_CriticalNextFrame, (void*)cGOBJ_UpdateMotion, (void*)cGOBJ_CriticalUpdateMotion, (void*)cGOBJ_Render, (void*)cGOBJ_Activate, (void*)cGOBJ_Deactivate, (void*)cGOBJ_Enable, (void*)cGOBJ_Disable, (void*)cGOBJ_IsEnabled, (void*)cGOBJ_HasHeadset, (void*)cGOBJ_SetStatus, (void*)cGOBJ_GetStatus, (void*)cGOBJ_IsGeneratorCreated, (void*)cGOBJ_GetChildList_void_2, (void*)cGOBJ_GetChildList_void, (void*)cGOBJ_GetBBox, (void*)cGOBJ_ScaleBBox, (void*)cGOBJ_CreateXform, (void*)cGOBJ_SetTransform, (void*)cGOBJ_SetRotation, (void*)cGOBJ_SetTranslation, (void*)cGOBJ_ApplyTransform, (void*)cGOBJ_ApplyLocalRotation, (void*)cGOBJ_ApplyTranslation, (void*)cGOBJ_SetTransform_ResetPhysics, (void*)cGOBJ_SetRotation_ResetPhysics, (void*)cGOBJ_SetTranslation_ResetPhysics, (void*)cGOBJ_GetTargetPriority, (void*)cGOBJ_GetLosPosition, (void*)cGOBJ_GetTargetPosition, (void*)cGOBJ_GetMovementState, (void*)func_00140E90, (void*)cGOBJ_GetSubTargetAimAdjust, (void*)cGOBJ_GetNumSubTargets, (void*)cGOBJ_IsAimed, (void*)cGOBJ_GetMatrix, (void*)cGOBJ_v35, (void*)cGOBJ_GetActivationPoint, (void*)cGOBJ_GetCenterOfMass, (void*)cGOBJ_GetTransform_ForTeleporting, (void*)cGOBJ_GetTransform_ForCameraTracking, (void*)cGOBJ_GetCameraCollisionReferencePoint, (void*)cGOBJ_GetTransform_ForFloorTravel, (void*)cGOBJ_GetFloorPlane, (void*)cGOBJ_InitNetwork, (void*)cGOBJ_ReceiveDamage, (void*)cGOBJ_CheckBullet, (void*)cGOBJ_GetHealthState, (void*)cGOBJ_Die
 };
 }
 typedef struct { char pad[0x24]; TankObj* obj; char id[4]; } Spawner_3E10;
 extern "C" {
 extern char D_004A93D0[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void Script_ReadU32(void* p);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cNetMsg_GetID(void* p);
 void cGOBJ_ctor(void* p, void* id, int a, int* b);
 void cTank_NetUnpack(TankObj* o);
 }
-extern "C" void cNetCreateTankMsg_Apply(Spawner_3E10* s, int arg)
+extern "C" void cNetCreateTankMsg_UnpackAndProcess(Spawner_3E10* s, int arg)
 {
     TankObj* p;
-    Script_ReadU32(s->id);
+    cNetMsg_GetID(s->id);
     {
         AllocGuard g;
-        p = (TankObj*)Mem_Alloc(0, 0x78, D_004A93D0, 0x305);
+        p = (TankObj*)cMemMan_Allocate(0, 0x78, D_004A93D0, 0x305);
     }
     if (p) {
         int z[1];

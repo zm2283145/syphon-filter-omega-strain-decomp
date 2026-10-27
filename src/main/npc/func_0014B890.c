@@ -5,12 +5,12 @@
 
 #include "npc_types.h"
 
-extern int WeaponInv_Add(NpcWeaponSet* weapons, int weapon, int a2, int a3, int a4, int a5);
+extern int cWeapon_Add(NpcWeaponSet* weapons, int weapon, int a2, int a3, int a4, int a5);
 
 /* vtable slot 0x6C: AddWeapon. */
 int cNPC_AddWeapon(cNPC* self, int weapon) {
     NpcActor* actor;
 
     actor = self->actor;
-    return WeaponInv_Add(actor->weapons, weapon, 1, 0, 0, 0);
+    return cWeapon_Add(actor->weapons, weapon, 1, 0, 0, 0);
 }

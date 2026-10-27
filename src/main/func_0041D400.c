@@ -6,7 +6,7 @@ extern "C" {
 extern TraversalWidget* D_00572138;
 extern TraversalWidget* D_00572140;
 void std_list_deleter_voidPtr_end_void(ChildIterator* result, ChildList* list);
-void List_Begin(ChildIterator* result, ChildList* list);
+void std_list_deleter_voidPtr_begin_void(ChildIterator* result, ChildList* list);
 void std_list_GuiWidgetPtr_begin(ChildIterator* result, ChildList* list);
 void std_list_GuiWidgetPtr_end(ChildIterator* result, ChildList* list);
 void std_list_GuiWidgetPtr_generic_iterator_ctor(ChildIterator* result, const ChildIterator* source);
@@ -29,7 +29,7 @@ static inline unsigned char selectable(TraversalWidget* widget)
 }
 
 /* Search backwards after the boundary, restarting at the edge when requested. */
-extern "C" TraversalWidget* GuiWidget_FocusPrev(TraversalWidget* self, TraversalWidget* boundary, int restart)
+extern "C" TraversalWidget* GuiWidget_FindPrevFocus(TraversalWidget* self, TraversalWidget* boundary, int restart)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -65,7 +65,7 @@ extern "C" TraversalWidget* GuiWidget_FocusPrev(TraversalWidget* self, Traversal
 }
 
 /* Search forwards after the boundary, restarting at the edge when requested. */
-extern "C" TraversalWidget* GuiWidget_FocusNext(TraversalWidget* self, TraversalWidget* boundary, int restart)
+extern "C" TraversalWidget* GuiWidget_FindNextFocus(TraversalWidget* self, TraversalWidget* boundary, int restart)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -78,7 +78,7 @@ extern "C" TraversalWidget* GuiWidget_FocusNext(TraversalWidget* self, Traversal
     if (boundary == self)
         D_00572138 = self;
     TraversalWidget* found = 0;
-    List_Begin(&rawBegin, &self->children);
+    std_list_deleter_voidPtr_begin_void(&rawBegin, &self->children);
     std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
     std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
@@ -101,7 +101,7 @@ extern "C" TraversalWidget* GuiWidget_FocusNext(TraversalWidget* self, Traversal
 }
 
 /* Search the child list backwards, preserving the live end iterator. */
-extern "C" TraversalWidget* GuiWidget_FocusLast(TraversalWidget* self)
+extern "C" TraversalWidget* GuiWidget_FindLastFocus(TraversalWidget* self)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -129,13 +129,13 @@ extern "C" TraversalWidget* GuiWidget_FocusLast(TraversalWidget* self)
 }
 
 /* Search the child list forwards, preserving the live end iterator. */
-extern "C" TraversalWidget* GuiWidget_FocusFirst(TraversalWidget* self)
+extern "C" TraversalWidget* GuiWidget_FindFirstFocus(TraversalWidget* self)
 {
     ChildIterator end;
     ChildIterator begin;
     ChildIterator rawBegin;
     ChildIterator rawEnd;
-    List_Begin(&rawBegin, &self->children);
+    std_list_deleter_voidPtr_begin_void(&rawBegin, &self->children);
     std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
     std_list_GuiWidgetPtr_end(&rawEnd, &self->children);

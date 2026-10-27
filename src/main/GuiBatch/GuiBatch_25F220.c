@@ -9,7 +9,7 @@
 #include "types.h"
 
 /* Returns 2048.0f. */
-float GuiBatch_AddVertexUV(void)
+float tVifFloatToInt_short_4_Bias(void)
 {
     return 2048.0f;
 }
@@ -26,14 +26,14 @@ float GuiBatch_AddVertexUV(void)
 
 #include "loose01_types.h"
 
-extern int VisionFx_DrawGobGlow(int*, int, int);
+extern int cVisionFxMan_DrawLightGlows(int*, int, int);
 
-/* Calls VisionFx_DrawGobGlow(self, a1, 1) when the state is 1 or 2. */
-void VisionFx_DrawVisionGlow(int* self, int a1) {
+/* Calls cVisionFxMan_DrawLightGlows(self, a1, 1) when the state is 1 or 2. */
+void cVisionFxMan_DrawLightSfx(int* self, int a1) {
     int state = *self;
 
     if (state == 1 || state == 2) {
-        VisionFx_DrawGobGlow(self, a1, 1);
+        cVisionFxMan_DrawLightGlows(self, a1, 1);
     }
 }
 #pragma pop /* merge_units */

@@ -33,19 +33,19 @@ extern char D_0049E8B0[];
 extern char g_Game[];
 extern char* g_Hud;
 extern void* g_ActorList;
-char* Loc_LookupText(char*);
-char* Game_GetPlayerNameSlot(char*, int);
+char* nGlobalization_GetString_charP(char*);
+char* cGameSystem_GetClientPlayerName(char*, int);
 int sprintf(char*, const char*, ...);
-void Notify_Insert(char*, char*, Color*, int, int);
-void Actor_BuildVoiceKey(Act*, int);
-Agent* Agent_GetSelected(char*, int);
+void cInfoBar_AddMessage(char*, char*, Color*, int, int);
+void cHuman_PlayQuip(Act*, int);
+Agent* cGameSystem_GetAgentData(char*, int);
 void cNetObj_RemovePlayer_int(int);
 void cAssocArray_int_netSystemField_End(Iter*, char*);
 void cAssocArray_int_netSystemField_Find(Iter*, char*, int*);
 int cAssocArray_int_netSystemField_Iterator_opNe(Iter*, Iter*);
-int ReceiverMap_Erase(char*, Iter*);
-void ActorWorld_RequestRemove(void*, Act*);
-void Object_DeleteLater(Act*, float);
+int cAssocArray_int_netSystemField_Erase(char*, Iter*);
+void cBaseObjList_Remove(void*, Act*);
+void cSystem_ActualScheduleDelete(Act*, float);
 void NetFreeObject(int);
 void func_00257040(int);
 }
@@ -72,7 +72,7 @@ static inline unsigned char Mp()
     if (g_IsMultiplayer) return D_005721C0;
     return 1;
 }
-extern "C" bool Player_HandleLeftGame(Act* a)
+extern "C" bool cHuman_CheckForDisconnectedNetworkedPlayer(Act* a)
 {
     bool ret = 0;
     int idx;
@@ -83,16 +83,16 @@ extern "C" bool Player_HandleLeftGame(Act* a)
             Color c;
             int key;
             int pl = NetIdx(a);
-            char* fmt = Loc_LookupText(D_0049E8B0);
-            sprintf(buf, fmt, Game_GetPlayerNameSlot(g_Game, pl));
+            char* fmt = nGlobalization_GetString_charP(D_0049E8B0);
+            sprintf(buf, fmt, cGameSystem_GetClientPlayerName(g_Game, pl));
             c.r = 1.0f;
             c.g = 0.0f;
             c.b = 0.0f;
             c.a = 1.0f;
-            Notify_Insert(g_Hud + 0x100, buf, &c, 1, 0);
-            Actor_BuildVoiceKey(a, 3);
+            cInfoBar_AddMessage(g_Hud + 0x100, buf, &c, 1, 0);
+            cHuman_PlayQuip(a, 3);
             D_0055C780[idx] = 0;
-            Agent_GetSelected(g_Game, idx)->bB70 = 0;
+            cGameSystem_GetAgentData(g_Game, idx)->bB70 = 0;
             cNetObj_RemovePlayer_int(idx);
             key = a->wC;
             {
@@ -102,11 +102,11 @@ extern "C" bool Player_HandleLeftGame(Act* a)
                 if (cAssocArray_int_netSystemField_Iterator_opNe(&e, &f)) {
                     Iter g;
                     cAssocArray_int_netSystemField_Find(&g, D_0055C7A0, &key);
-                    ReceiverMap_Erase(D_0055C7A0, &g);
+                    cAssocArray_int_netSystemField_Erase(D_0055C7A0, &g);
                 }
             }
-            ActorWorld_RequestRemove(g_ActorList, a);
-            Object_DeleteLater(a, 0.1f);
+            cBaseObjList_Remove(g_ActorList, a);
+            cSystem_ActualScheduleDelete(a, 0.1f);
             a->Fn60(1);
             ret = 1;
             {

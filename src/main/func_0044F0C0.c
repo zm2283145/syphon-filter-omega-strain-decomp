@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int *LobbyArray_At(char * , int);                    
+int *SFOLobbyList_GetSlot(char * , int);                    
 
 int *SFOLobby_FindGameData(char * arg0, int arg1) {
     int *temp_v0;
@@ -14,7 +14,7 @@ int *SFOLobby_FindGameData(char * arg0, int arg1) {
     }
     temp_s1 = F_(arg0, 0x11C, int);
     for (var_s0 = 0; var_s0 < temp_s1; var_s0++) {
-        temp_v0 = LobbyArray_At(arg0 + 0x118, var_s0);
+        temp_v0 = SFOLobbyList_GetSlot(arg0 + 0x118, var_s0);
         if (arg1 == *temp_v0) {
             return temp_v0;
         }

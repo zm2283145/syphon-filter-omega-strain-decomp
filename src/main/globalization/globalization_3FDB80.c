@@ -8,12 +8,12 @@
 #include "types.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003FDB80 */
 #pragma push /* merge_units */
 extern int* D_0055CA78;
-int Loc_GetTextById(int id)
+int nGlobalization_GetString_int(int id)
 {
     return id >= 0 ? D_0055CA78[id] : 0;
 }
@@ -28,8 +28,8 @@ static inline void merge_flush_func_003FDB80(void) {}
 #define NULL 0
 #pragma mpwc_relax on
 int Alloc_Lock(int);                                    
-int Alloc_Unlock(int);                                  
-int PtrVector_Resize(char *, int, int *);                
+int EnableIntc(int);                                  
+int std_vector_pod_int_resize(char *, int, int *);                
 int std_vector_deleter_1_dtor(int, int);                            
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
@@ -52,15 +52,15 @@ void nGlobalization_UnloadLevelStrings(void) {
         if ((temp_s0 != 0) && (temp_s0 != 0) && (temp_s0 != 0)) {
             std_vector_deleter_1_dtor(temp_s0, 0);
         }
-        Mem_Free(0, temp_s0, "globalization.cc", 0x9B);
+        cMemMan_Deallocate(0, temp_s0, "globalization.cc", 0x9B);
         if (g_ProfileLockEnabled != 0) {
-            Alloc_Unlock(9);
+            EnableIntc(9);
         }
         D_0055CA50 = 0;
         g_ProfileLockDepth -= 1;
     }
     sp2C = 0;
-    PtrVector_Resize(&D_0055CA70, D_0055CA80, &sp2C);
+    std_vector_pod_int_resize(&D_0055CA70, D_0055CA80, &sp2C);
     D_0055D460 = D_0055D468;
 }
 /* merge_units: generate this block's code under its own pragmas */

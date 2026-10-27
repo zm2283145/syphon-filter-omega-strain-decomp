@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_004F82F0;
 
-void StaticInit_GameEventMsgName(void) {
+void StaticInit_gameEventMsg(void) {
     D_004F82F0 = "cGameEventMsg";
 }

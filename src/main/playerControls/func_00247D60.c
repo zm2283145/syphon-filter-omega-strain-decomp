@@ -112,32 +112,32 @@ extern char D_004E01A0[];
 extern char D_004E0200[];
 extern char D_004E0140[];
 extern char D_004D9320[];
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, void* target, int immediate);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
-void Targeting_LockTimer(Input* s, float dt);
-void Hud_SetLockMeter(char* hud, float f);
-unsigned char WeaponInv_GetHeldClass(char* inv);
-void Player_AimViewThrownPoint(void* aim, void* cam, Obj* actor);
-Obj* PlayerInput_AimViewLock(Input* s, void* cam, Obj* actor);
-void PlayerInput_AimViewPointAction(Input* s, void* cam, Obj* actor);
-void PlayerInput_LookAtLockAction(Input* s, Obj* o, Obj* actor);
-Obj* Targeting_LockPick(Obj* actor, Obj* cur, void* recent);
-int TargetVis_Test(void* v, Obj* a, Obj* b, int delay, bool force);
-char* Agent_GetSelected(void* list, int idx);
-int AgentData_HasUnlock(char* agent, unsigned char bit);
-Obj* Targeting_AutoPick(Obj* actor, Obj* prev);
+void cPlayerControls_DecrementTargetFrameTimer_AndClearStickyTargetedObjectIfNecessary(Input* s, float dt);
+void cHud_SetAimCursorColor(char* hud, float f);
+unsigned char cWeapon_GetEquipmentType(char* inv);
+void GetGrenadeManualAimTarget(void* aim, void* cam, Obj* actor);
+Obj* cPlayerControls_GetManualAimTarget(Input* s, void* cam, Obj* actor);
+void cPlayerControls_SetManualAimWeaponTargetInHuman(Input* s, void* cam, Obj* actor);
+void cPlayerControls_SetManualAimEyesTargetInHuman(Input* s, Obj* o, Obj* actor);
+Obj* ChooseTarget(Obj* actor, Obj* cur, void* recent);
+int cTargetManager_IsLosBlocked(void* v, Obj* a, Obj* b, int delay, bool force);
+char* cGameSystem_GetAgentData(void* list, int idx);
+int cAgentData_HasSpecialBonus(char* agent, unsigned char bit);
+Obj* ChooseAutoTarget(Obj* actor, Obj* prev);
 void cPlayerControls_NetSetTarget(Input* s, Obj* actor, int a2, int* a3, int t0);
 void cPlayerControls_NetAimWeapon(Input* s, Obj* actor, int* a2, char a3);
 void cPlayerControls_NetSetManualTarget(Input* s, Obj* actor, V* v);
-int Inventory_GetEquipMode(char* inv);
-int Actor_IsFlashlightOn(Obj* actor);
+int cWeapon_GetPoseType(char* inv);
+int cHuman_FlashlightIsOn(Obj* actor);
 int func_00159570(void* p);
-Obj** List_Front(void* p);
-void Hud_OnTargetChanged(char* hud);
-void Hud_ShowTargetLock(char* hud, int* id, int sub);
-void Hud_ClearTargetLock(char* hud);
-void Hud_SetLockProgress(char* hud, float f);
+Obj** cLList_cCAMERA_GOBJPtr_Front(void* p);
+void cHud_ClearTargetNow(char* hud);
+void cHud_SetTarget(char* hud, int* id, int sub);
+void cHud_ClearTarget(char* hud);
+void cHud_SetToHit(char* hud, float f);
 }
 
 extern "C" { extern signed char D_004E1D88; extern int D_004E1D90; extern int D_004E1D94; extern int D_004E1D98; extern int D_004E1D9C; }
@@ -146,8 +146,8 @@ struct MsgB {
     MsgB() {}
     MsgB(int t, unsigned char k) { MsgB* p = this; p->Init(t, k); }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MsgB() { vt = D_004E0840; cMessage_dtor(this, 0); }
-    void Send(Obj* to) { b20 = 1; Event_Send(this, to, 1); }
-    void Init(int t, unsigned char k) { Event_Construct(this, g_ActorActionMsgClass); vt = D_004E0840; type = t; kind = k; }
+    void Send(Obj* to) { b20 = 1; QueueMessage_cMessageR_cSystemP_int(this, to, 1); }
+    void Init(int t, unsigned char k) { cMessage_ctor_cMessageNameR(this, g_ActorActionMsgClass); vt = D_004E0840; type = t; kind = k; }
 };
 struct MsgId : MsgB { int id; MsgId(const int& i) { MsgId* p = this; p->Init(0x3E, 5); p->vt = D_004E01A0; p->id = i; } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MsgId() {} };
 struct MsgFlag : MsgB { unsigned char f; MsgFlag(const unsigned char& b) { MsgFlag* p = this; p->Init(0x39, 1); p->vt = D_004D9320; p->f = b; } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MsgFlag() {} };
@@ -187,11 +187,11 @@ static inline void BitScan(Input* s)
 
 static inline bool IsAlive(Obj* o) { return o->b2D && o->b2C; }
 static inline bool IsTargetable(Obj* o) { bool r = false; if (IsAlive(o) && ((o->b2E != 0) ^ 1)) r = true; return r; }
-static inline bool CanSee(Obj* a, Obj* b, int delay) { return !TargetVis_Test(g_TargetVisMgr, a, b, delay, 0); }
+static inline bool CanSee(Obj* a, Obj* b, int delay) { return !cTargetManager_IsLosBlocked(g_TargetVisMgr, a, b, delay, 0); }
 
 static inline H* NullH(H* t) { t->p = 0; t->serial = -1; HSet(t, 0); return t; }
 
-extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1, float dt, bool l1)
+extern "C" void cPlayerControls_UpdateTarget(Input* self, void* cam, Obj* actor, bool r1, float dt, bool l1)
 {
     int id;
     struct { int v; } none;
@@ -200,20 +200,20 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
     char* hud = g_Hud;
     self->noTarget = 0;
     if (self->mode == 8) {
-        Targeting_LockTimer(self, dt);
+        cPlayerControls_DecrementTargetFrameTimer_AndClearStickyTargetedObjectIfNecessary(self, dt);
         if (HeldId(actor->inv) < 0) {
             HSet(&self->lock, 0);
-            Hud_SetLockMeter(hud, 0.0f);
+            cHud_SetAimCursorColor(hud, 0.0f);
         } else {
-            if (WeaponInv_GetHeldClass(actor->inv) == 1) {
-                Player_AimViewThrownPoint(self->aim, cam, actor);
+            if (cWeapon_GetEquipmentType(actor->inv) == 1) {
+                GetGrenadeManualAimTarget(self->aim, cam, actor);
                 HSet(&self->lock, 0);
             } else {
-                HSet(&self->lock, PlayerInput_AimViewLock(self, cam, actor));
+                HSet(&self->lock, cPlayerControls_GetManualAimTarget(self, cam, actor));
             }
-            PlayerInput_AimViewPointAction(self, cam, actor);
+            cPlayerControls_SetManualAimWeaponTargetInHuman(self, cam, actor);
         }
-        PlayerInput_LookAtLockAction(self, HGet(&self->lock), actor);
+        cPlayerControls_SetManualAimEyesTargetInHuman(self, HGet(&self->lock), actor);
         self->bits[0] &= ~0x20;
         BitScan(self);
         goto tail;
@@ -221,7 +221,7 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
     HGet(&self->pick);
     if (r1 && !self->latch) {
         if (!self->prevR1 || !HGet(&self->pick)) {
-            HSet(&self->pick, Targeting_LockPick(actor, HGet(&self->pick), self->recent));
+            HSet(&self->pick, ChooseTarget(actor, HGet(&self->pick), self->recent));
             self->sub = -1;
         } else if (HGet(&self->pick) && (!IsTargetable(HGet(&self->pick)) || !CanSee(actor, HGet(&self->pick), D_0048AED0))) {
             HSet(&self->pick, 0);
@@ -234,9 +234,9 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
         self->lockTimer = D_004A7550;
     } else {
         if (!r1) self->latch = 0;
-        Targeting_LockTimer(self, dt);
+        cPlayerControls_DecrementTargetFrameTimer_AndClearStickyTargetedObjectIfNecessary(self, dt);
     }
-    if (HGet(&self->pick) && l1 && AgentData_HasUnlock(Agent_GetSelected(g_Game, -1), 2) && CanSee(actor, HGet(&self->pick), 0)) {
+    if (HGet(&self->pick) && l1 && cAgentData_HasSpecialBonus(cGameSystem_GetAgentData(g_Game, -1), 2) && CanSee(actor, HGet(&self->pick), 0)) {
         V d = actor->GetPos() - HGet(&self->pick)->GetPos();
         float lim = D_0048AED8; float l2 = lim * lim;
         if (d.LenSq() < l2) {
@@ -252,7 +252,7 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
         BitScan(self);
     }
     if (!HGet(&self->lock)) {
-        HSet(&self->lock, Targeting_AutoPick(actor, prev));
+        HSet(&self->lock, ChooseAutoTarget(actor, prev));
         autoLock = HGet(&self->lock) != 0;
     }
     id = -1;
@@ -267,8 +267,8 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
     } else {
         bool mode5;
         self->noTarget = 1;
-        mode5 = (unsigned char)Inventory_GetEquipMode(actor->inv) == 5;
-        if (mode5 || Actor_IsFlashlightOn(actor) || self->raise > 0.0f) {
+        mode5 = (unsigned char)cWeapon_GetPoseType(actor->inv) == 5;
+        if (mode5 || cHuman_FlashlightIsOn(actor) || self->raise > 0.0f) {
             float z = (mode5 || self->raise > 0.0f) ? 0.0f : -D_0048AEE0;
             V pt;
             pt = XformR(V(0.0f, 5000.0f, z, 0.0f), actor->GetMtx());
@@ -282,12 +282,12 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
         }
     }
     {
-        Obj* cur = func_00159570(g_CameraObject) ? *List_Front(g_CameraObject) : 0;
+        Obj* cur = func_00159570(g_CameraObject) ? *cLList_cCAMERA_GOBJPtr_Front(g_CameraObject) : 0;
         if (D_004FFC10 != cur) {
-            Hud_OnTargetChanged(hud);
+            cHud_ClearTargetNow(hud);
         } else {
-            if (!autoLock && (none.v = -1, id != none.v)) Hud_ShowTargetLock(hud, &id, self->sub);
-            else Hud_ClearTargetLock(hud);
+            if (!autoLock && (none.v = -1, id != none.v)) cHud_SetTarget(hud, &id, self->sub);
+            else cHud_ClearTarget(hud);
         }
     }
 tail:
@@ -300,7 +300,7 @@ tail:
             H* h = (autoLock || r1) ? &self->lock : NullH(&tmp);
             ctl->SetTarget(HGet(h), HeldId(actor->inv), self->sub);
         }
-        if (!autoLock && HGet(&self->lock) && self->mode != 8) { float b = ctl->f24; float a = ctl->f20; Hud_SetLockProgress(hud, a * b); }
+        if (!autoLock && HGet(&self->lock) && self->mode != 8) { float b = ctl->f24; float a = ctl->f20; cHud_SetToHit(hud, a * b); }
         if (self->noTarget) {
             if (self->mode == 5) self->raise = D_004A7590;
             else { self->raise -= dt; self->raise = FMax(0.0f, self->raise); }

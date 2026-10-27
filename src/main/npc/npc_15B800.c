@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-int NpcAi_GetTeam(Unk001827A0* self) {
+int cAI_Team(Unk001827A0* self) {
     return self->unk54;
 }
 

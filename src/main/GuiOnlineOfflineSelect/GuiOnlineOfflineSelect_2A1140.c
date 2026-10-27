@@ -10,12 +10,12 @@ typedef struct { char pad[0x32]; unsigned char unk32; } G_2A1140;
 typedef struct { int unk0; char name[4]; } Ctl_2A1140;
 typedef struct { char pad[0xDC]; Ctl_2A1140* unkDC; Ctl_2A1140* unkE0; } Obj_2A1140;
 
-extern int String_AssignCStr_1C43A0(void*, const char*);
-extern void GuiScreen_Navigate(Obj_2A1140*, int);
-extern void GuiMissionSetup_BeginMission(Obj_2A1140*);
-extern void GuiMissionSetup_StepNumAgents(Obj_2A1140*, int);
-extern void GuiMissionSetup_StepJoinFilter(Obj_2A1140*, int);
-extern int GuiScreen_HandleEvent(Obj_2A1140*, Ctl_2A1140*, unsigned int, int, int);
+extern int std_basic_string_char_char_traits_char_compare_charP(void*, const char*);
+extern void GuiLobbyScreen_PushLobbyScreen(Obj_2A1140*, int);
+extern void GuiMissionSetup_CreateMission(Obj_2A1140*);
+extern void GuiMissionSetup_CycleNumAgents(Obj_2A1140*, int);
+extern void GuiMissionSetup_CycleJoinFilter(Obj_2A1140*, int);
+extern int GuiLobbyScreen_onMessage(Obj_2A1140*, Ctl_2A1140*, unsigned int, int, int);
 extern const char* D_0048BA40;
 extern const char* D_0048BA48;
 extern const char* D_0048BA60;
@@ -24,25 +24,25 @@ extern unsigned char D_005064A8;
 extern int D_005064B0;
 extern int D_005064B8;
 
-int GuiMissionSetup_HandleEvent(Obj_2A1140* self, Ctl_2A1140* ctl, unsigned int msg, int code, int param)
+int GuiMissionSetup_onMessage(Obj_2A1140* self, Ctl_2A1140* ctl, unsigned int msg, int code, int param)
 {
     unsigned short m = msg;
 
     if ((m == 27 || m == 26) && code == 11) {
-        GuiScreen_Navigate(self, 1);
+        GuiLobbyScreen_PushLobbyScreen(self, 1);
         return 1;
     }
     if (m == 2) {
-        if (String_AssignCStr_1C43A0(ctl->name, D_0048BA60) == 0) {
-            GuiMissionSetup_BeginMission(self);
+        if (std_basic_string_char_char_traits_char_compare_charP(ctl->name, D_0048BA60) == 0) {
+            GuiMissionSetup_CreateMission(self);
             return 1;
         }
-        if (String_AssignCStr_1C43A0(ctl->name, D_0048BA40) == 0) {
-            GuiMissionSetup_StepNumAgents(self, 1);
+        if (std_basic_string_char_char_traits_char_compare_charP(ctl->name, D_0048BA40) == 0) {
+            GuiMissionSetup_CycleNumAgents(self, 1);
             return 1;
         }
-        if (String_AssignCStr_1C43A0(ctl->name, D_0048BA48) == 0) {
-            GuiMissionSetup_StepJoinFilter(self, 1);
+        if (std_basic_string_char_char_traits_char_compare_charP(ctl->name, D_0048BA48) == 0) {
+            GuiMissionSetup_CycleJoinFilter(self, 1);
             return 1;
         }
     }
@@ -55,7 +55,7 @@ int GuiMissionSetup_HandleEvent(Obj_2A1140* self, Ctl_2A1140* ctl, unsigned int 
         D_005064A8 = 1;
         return 1;
     }
-    return GuiScreen_HandleEvent(self, ctl, msg, code, param);
+    return GuiLobbyScreen_onMessage(self, ctl, msg, code, param);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002A1140 */
@@ -77,29 +77,29 @@ struct Ui_002A12F0 {
 struct S_002A12F0 { char pad0[0x20]; void* f20; char pad24[0xDC - 0x24]; void* pDC; void* pE0; };
 extern "C" {
 #if 0 /* merge_units */
-void GuiMissionSetup_StepNumAgents(S_002A12F0* self, int a);
+void GuiMissionSetup_CycleNumAgents(S_002A12F0* self, int a);
 #endif /* merge_units */
-#define GuiMissionSetup_StepNumAgents(a0, a1) (GuiMissionSetup_StepNumAgents((Obj_2A1140 *)(a0), (a1))) /* merge_units */
+#define GuiMissionSetup_CycleNumAgents(a0, a1) (GuiMissionSetup_CycleNumAgents((Obj_2A1140 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void GuiMissionSetup_StepJoinFilter(S_002A12F0* self, int a);
+void GuiMissionSetup_CycleJoinFilter(S_002A12F0* self, int a);
 #endif /* merge_units */
-#define GuiMissionSetup_StepJoinFilter(a0, a1) (GuiMissionSetup_StepJoinFilter((Obj_2A1140 *)(a0), (a1))) /* merge_units */
+#define GuiMissionSetup_CycleJoinFilter(a0, a1) (GuiMissionSetup_CycleJoinFilter((Obj_2A1140 *)(a0), (a1))) /* merge_units */
 
-void* Gui_GetScreenList(void);
-Pg_002A12F0* GuiManager_FindByName(void* a, char* b);
-Ui_002A12F0* Gui_GetScreenStack(void);
+void* Gui_Manager(void);
+Pg_002A12F0* GuiManager_FindOpenGui(void* a, char* b);
+Ui_002A12F0* Gui_Canvas(void);
 #if 0 /* merge_units */
-void GuiScreen_Navigate(S_002A12F0* self, int a);
+void GuiLobbyScreen_PushLobbyScreen(S_002A12F0* self, int a);
 #endif /* merge_units */
-#define GuiScreen_Navigate(a0, a1) (GuiScreen_Navigate((Obj_2A1140 *)(a0), (a1))) /* merge_units */
+#define GuiLobbyScreen_PushLobbyScreen(a0, a1) (GuiLobbyScreen_PushLobbyScreen((Obj_2A1140 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void GuiMissionSetup_BeginMission(S_002A12F0* self);
+void GuiMissionSetup_CreateMission(S_002A12F0* self);
 #endif /* merge_units */
-#define GuiMissionSetup_BeginMission(a0) (GuiMissionSetup_BeginMission((Obj_2A1140 *)(a0))) /* merge_units */
+#define GuiMissionSetup_CreateMission(a0) (GuiMissionSetup_CreateMission((Obj_2A1140 *)(a0))) /* merge_units */
 
-int GuiScreen_HandleInput(S_002A12F0* self, Ev_002A12F0* ev);
+int GuiLobbyScreen_onInput(S_002A12F0* self, Ev_002A12F0* ev);
 }
 static inline unsigned char Down_002A12F0(Ev_002A12F0* e)
 {
@@ -122,43 +122,43 @@ static inline unsigned char Press_002A12F0(Ev_002A12F0* e, int b)
         r = 1;
     return r;
 }
-extern "C" int GuiMissionSetup_HandleInput(S_002A12F0* self, Ev_002A12F0* ev)
+extern "C" int GuiMissionSetup_onInput(S_002A12F0* self, Ev_002A12F0* ev)
 {
     if (Press_002A12F0(ev, 0x8000)) {
         if (self->f20 == self->pDC)
-            GuiMissionSetup_StepNumAgents(self, 0);
+            GuiMissionSetup_CycleNumAgents(self, 0);
         else if (self->f20 == self->pE0)
-            GuiMissionSetup_StepJoinFilter(self, 0);
+            GuiMissionSetup_CycleJoinFilter(self, 0);
     } else {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x2000 && ev->f6 == 0;
         if (b) {
             if (self->f20 == self->pDC)
-                GuiMissionSetup_StepNumAgents(self, 1);
+                GuiMissionSetup_CycleNumAgents(self, 1);
             else if (self->f20 == self->pE0)
-                GuiMissionSetup_StepJoinFilter(self, 1);
+                GuiMissionSetup_CycleJoinFilter(self, 1);
         }
     }
     if (Press_002A12F0(ev, 0x10)) {
-        Pg_002A12F0* p = GuiManager_FindByName(Gui_GetScreenList(), "GuiNetJoinMission");
+        Pg_002A12F0* p = GuiManager_FindOpenGui(Gui_Manager(), "GuiNetJoinMission");
         if (p) {
-            Gui_GetScreenStack()->Hide(self);
+            Gui_Canvas()->Hide(self);
             p->flags |= 2;
         } else {
-            GuiScreen_Navigate(self, 1);
+            GuiLobbyScreen_PushLobbyScreen(self, 1);
         }
         return 1;
     } else {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x80 && ev->f6 == 0;
         if (b) {
-            GuiMissionSetup_BeginMission(self);
+            GuiMissionSetup_CreateMission(self);
             return 1;
         }
     }
-    return GuiScreen_HandleInput(self, ev);
+    return GuiLobbyScreen_onInput(self, ev);
 }
-#undef GuiMissionSetup_StepNumAgents /* merge_units */
-#undef GuiMissionSetup_StepJoinFilter /* merge_units */
-#undef GuiScreen_Navigate /* merge_units */
-#undef GuiMissionSetup_BeginMission /* merge_units */
+#undef GuiMissionSetup_CycleNumAgents /* merge_units */
+#undef GuiMissionSetup_CycleJoinFilter /* merge_units */
+#undef GuiLobbyScreen_PushLobbyScreen /* merge_units */
+#undef GuiMissionSetup_CreateMission /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002A12F0 */

@@ -55,12 +55,12 @@ extern PartCache g_AgentPartCache;
 extern int D_005712F0[];
 extern __int128* D_005712F8[];
 extern char D_004BC318[], D_004BC328[], D_004BC330[];
-extern int MeshCache_FindSlot(PartCache* cache, __int128 name);
+extern int FindPart__7MonsterF1(PartCache* cache, __int128 name);
 extern void Parts_PartInit(PartRec* r, int a, int b, int c, int d);
-extern int Appearance_GetBodyKind(void* a);
-extern void Equip_SwapSlots(ActorModel* m, int a, int b);
+extern int SKL_FindSex(void* a);
+extern void cMan_ChangeGunPlacement(ActorModel* m, int a, int b);
 extern int strcmp(const char* a, const char* b);
-extern int Appearance_FindPairByType(void* a, const char* t);
+extern int SKL_FindPartIndex(void* a, const char* t);
 
 static inline int Eq(__int128 a, __int128 b) {
     __int128 t;
@@ -75,7 +75,7 @@ static inline int Eq(__int128 a, __int128 b) {
 /* Model setup after the part list is filled: resolve each part pair in the agent part cache
  * (copy its two records or reset them), count pairs, body kind, equipment reset, look up
  * the shape index of the model name in the per-body-kind table, STRA_/MOUT_ pairs. */
-void ActorModel_Setup(ActorModel* m)
+void cMan_BuildMan(ActorModel* m)
 {
     __int128* tbl;
     int n;
@@ -85,7 +85,7 @@ void ActorModel_Setup(ActorModel* m)
     for (n = 0; m->pairs[n].a; n++) {
         int slot;
         if (m->h22C0[n] == -1) m->h22C0[n] = 0;
-        slot = MeshCache_FindSlot(&g_AgentPartCache, m->pairs[n].a);
+        slot = FindPart__7MonsterF1(&g_AgentPartCache, m->pairs[n].a);
         if (slot == -1) {
             Parts_PartInit(&m->recs[0][n], 0, 0, 0, 0);
             Parts_PartInit(&m->recs[1][n], 0, 0, 1, 0);
@@ -102,13 +102,13 @@ void ActorModel_Setup(ActorModel* m)
         }
     }
     m->nPairs = n;
-    m->bodyKind = Appearance_GetBodyKind(m->appearance);
+    m->bodyKind = SKL_FindSex(m->appearance);
     for (n = 0; n < m->nPairs; n++) m->x2340[n] = 0;
     m->x23D8 = 0;
     m->x23DC = 0;
     m->x23E8 = 0;
     m->x23EC = 0;
-    Equip_SwapSlots(m, 0, 0);
+    cMan_ChangeGunPlacement(m, 0, 0);
     m->h2BD8 = 255;
     m->b2BDA = 2;
     m->b2BC0 = 1;
@@ -124,8 +124,8 @@ void ActorModel_Setup(ActorModel* m)
     if (strcmp((char*)&m->name, D_004BC318) == 0) m->b2BC0 = 0;
     m->shape = k;
     m->scale = 1.0f;
-    m->stra = Appearance_FindPairByType(m->appearance, D_004BC328);
-    m->mouth = Appearance_FindPairByType(m->appearance, D_004BC330);
+    m->stra = SKL_FindPartIndex(m->appearance, D_004BC328);
+    m->mouth = SKL_FindPartIndex(m->appearance, D_004BC330);
     if (m->mouth != -1) {
         m->recs[1][m->mouth].id = 0;
         m->recs[1][m->mouth].flags = 0;

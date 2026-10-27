@@ -16,7 +16,7 @@ typedef struct {
 } cNPC;
 
 /* cNPC virtual slot 0x4E: when level <= 100, stores v, sets level to 100 and clears flag bit 6 at +0x141. */
-void cNPC_v4E(cNPC* npc, float v)
+void cNPC_SetTravelSpeed(cNPC* npc, float v)
 {
     if (npc->level <= 100) {
         npc->value = v;

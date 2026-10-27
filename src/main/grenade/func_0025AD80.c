@@ -228,50 +228,50 @@ extern char D_004A7C88[];
 extern char D_004A7C98[];
 extern char D_004A7CA8[];
 extern void* g_DecalMgr;
-void Sphere_FromCenter(V* o, V* a, V* b);
-void Vec4_Scale(V* o, V* a, float k);
-void Vec4_Add(V* o, V* a, V* b);
-void Vec4_Copy(V* d, V* s);
-void Vec_SetPositionW1(V* v);
-void Vec4_Assign(V* d, V* s);
-Svc* Service_Lookup(void* a, void* b);
-void Object_Unregister(Projectile* p);
-void Object_DeleteLater(Projectile* p, float t);
-void Vec4_Cross(V* o, V* a, const V& b);
-int Vec4_IsZeroXYZ(V* v);
-void Vec4_NormalizeXYZ_132060(V* o, V* i);
-V* Vec4_NormalizeXYZInPlace(V* v);
-V* Vec4_Set(V* v, float x, float y, float z, float w);
-void Mtx_FromRowsAndTranslation(M* m, V* a, V* b, V* c, const V& t);
-inline M::M(V* a, V* b, V* c, const V& d) { M* t = this; V* pb = b; V* pc = c; Mtx_FromRowsAndTranslation(t, a, pb, pc, d); }
-void Mtx_FrameFromAxis(M* m, V* a);
-void Mtx_SetIdentity(M* m);
-void Projectile_QueryCandidates(Query* q);
-void AiSound_SendFireNoise(void* msg, int* sender, int action, float a, float b);
-void AiSound_SendImpactNoise(void* msg, float a, float b, int* id, V* pos, signed char kind);
-float Math_CosThunk(float);
-float Math_SinThunk(float);
-void Mtx44_SetRotation(M* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
+void cVector_opSub(V* o, V* a, V* b);
+void cVector_opMul(V* o, V* a, float k);
+void cVector_opAdd(V* o, V* a, V* b);
+void cVector_opAssign(V* d, V* s);
+void cVector_WSet1(V* v);
+void cVector_ctor_cVectorR(V* d, V* s);
+Svc* cSystemContainer_GetSystem(void* a, void* b);
+void nGobjManager_RemoveGOBJ(Projectile* p);
+void cSystem_ActualScheduleDelete(Projectile* p, float t);
+void cVector_Cross(V* o, V* a, const V& b);
+int cVector_IsZeroXYZ(V* v);
+void cVector_GetNormalized_void(V* o, V* i);
+V* cVector_Normalize_void(V* v);
+V* cVector_ctor_float_float_float_float(V* v, float x, float y, float z, float w);
+void cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(M* m, V* a, V* b, V* c, const V& t);
+inline M::M(V* a, V* b, V* c, const V& d) { M* t = this; V* pb = b; V* pc = c; cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(t, a, pb, pc, d); }
+void cMatrix_MakeLookAtMatrix_cVectorR(M* m, V* a);
+void cMatrix_SetUnit(M* m);
+void CheckBulletCollisions(Query* q);
+void cAISoundSystemGOBJMessage_ctor_cObjectIdR_eCauseForAwareness_float_float(void* msg, int* sender, int action, float a, float b);
+void cAISoundSystemGOBJPositionMessage_ctor(void* msg, float a, float b, int* id, V* pos, signed char kind);
+float COS(float);
+float SIN(float);
+void cMatrix_Set_ColumnMajorForm(M* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
 void Blast_Prepare(Obj* obj, int dmg, float fdmg, float r0, float r1, unsigned char flag, V* at, unsigned char skipHumans, int quiet);
-void Game_SpawnLight(M* m, float a, float b);
-int* SpecFx_GetEffectDef(int id);
-void DecalMgr_AddBloodDecal(void* r, V* p, int id, int z, float f);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void AreaEffect_Construct(void* self, Obj* o, V pos, Type* t, int f);
-void Effect_CreateInstance(int id, M* m);
+void SfxLightEffect(M* m, float a, float b);
+int* nSfxLoader_GetHandle(int id);
+void cDecalMan_AddProjectedDecal(void* r, V* p, int id, int z, float f);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cAreaEffect_ctor(void* self, Obj* o, V pos, Type* t, int f);
+void SfxParticleEffect_int_cMatrixR(int id, M* m);
 }
 
 struct AiMsg {
     void* vt; char d[0x4C];
-    AiMsg(float a, float b, int* id, V* pos, signed char k) { AiSound_SendImpactNoise(this, a, b, id, pos, k); }
-    void Send(void* to) { Event_Send(this, to, 0); }
+    AiMsg(float a, float b, int* id, V* pos, signed char k) { cAISoundSystemGOBJPositionMessage_ctor(this, a, b, id, pos, k); }
+    void Send(void* to) { QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~AiMsg() { vt = D_004D92A0; cMessage_dtor(this, 0); }
 };
 
 struct FireMsg {
     void* vt; char d[0x34];
-    FireMsg(int* id, int act, float a, float b) { int* i = id; AiSound_SendFireNoise(this, i, act, a, b); }
-    void Send(void* to) { Event_Send(this, to, 0); }
+    FireMsg(int* id, int act, float a, float b) { int* i = id; cAISoundSystemGOBJMessage_ctor_cObjectIdR_eCauseForAwareness_float_float(this, i, act, a, b); }
+    void Send(void* to) { QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~FireMsg() { vt = D_004D92A0; cMessage_dtor(this, 0); }
 };
 
@@ -290,7 +290,7 @@ struct LosMsg {
     {
         LosMsg* m = this;
         const V* fp = &f;
-        Event_Construct(m, g_LosRequestMsgClass);
+        cMessage_ctor_cMessageNameR(m, g_LosRequestMsgClass);
         m->vtable = D_004D9180;
         m->x24 = 0;
         m->x28 = 0;
@@ -308,14 +308,14 @@ struct LosMsg {
 
 struct AreaEffect {
     char d[0xE0];
-    AreaEffect(Obj* o, V p, Type* t, int f) { AreaEffect_Construct(this, o, p, t, f); }
+    AreaEffect(Obj* o, V p, Type* t, int f) { cAreaEffect_ctor(this, o, p, t, f); }
     static void* operator new(unsigned int sz, int line)
     {
         void* p;
         if (g_ProfileLockEnabled) Alloc_Lock(9);
         g_ProfileLockDepth++;
-        p = Mem_Alloc(0, sz, D_004A7C88, line);
-        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        p = cMemMan_Allocate(0, sz, D_004A7C88, line);
+        if (g_ProfileLockEnabled) EnableIntc(9);
         g_ProfileLockDepth--;
         return p;
     }
@@ -324,36 +324,36 @@ struct AreaEffect {
 static inline void Integrate3(Projectile* s, float ratio, float dt2, float inv)
 {
     V nx; V ov; V t3; V t2; V t1; V t4; V v2; V v1; V a2; V a1;
-    Sphere_FromCenter(&t1, &s->pos, &s->prev);
-    Vec4_Scale(&t2, &t1, ratio);
-    Vec4_Add(&t3, &s->pos, &t2);
-    Vec4_Scale(&t4, &s->force, s->invMass * dt2);
-    Vec4_Add(&nx, &t3, &t4);
-    Vec4_Copy(&s->prev, &s->pos);
-    Vec4_Copy(&s->pos, &nx);
-    Vec_SetPositionW1(&s->pos);
-    Vec4_Assign(&ov, &s->vel);
-    Sphere_FromCenter(&v1, &s->pos, &s->prev);
-    Vec4_Scale(&v2, &v1, inv);
-    Vec4_Copy(&s->vel, &v2);
-    Sphere_FromCenter(&a1, &s->vel, &ov);
-    Vec4_Scale(&a2, &a1, inv);
-    Vec4_Copy(&s->accel, &a2);
+    cVector_opSub(&t1, &s->pos, &s->prev);
+    cVector_opMul(&t2, &t1, ratio);
+    cVector_opAdd(&t3, &s->pos, &t2);
+    cVector_opMul(&t4, &s->force, s->invMass * dt2);
+    cVector_opAdd(&nx, &t3, &t4);
+    cVector_opAssign(&s->prev, &s->pos);
+    cVector_opAssign(&s->pos, &nx);
+    cVector_WSet1(&s->pos);
+    cVector_ctor_cVectorR(&ov, &s->vel);
+    cVector_opSub(&v1, &s->pos, &s->prev);
+    cVector_opMul(&v2, &v1, inv);
+    cVector_opAssign(&s->vel, &v2);
+    cVector_opSub(&a1, &s->vel, &ov);
+    cVector_opMul(&a2, &a1, inv);
+    cVector_opAssign(&s->accel, &a2);
 }
 
 static inline void BuildFrame3(M* m, V* d, const V& z)
 {
     V side; V fwd; V a; V up; V t;
-    { const V* pz = &z; Vec4_Cross(&side, d, *pz); }
-    if (!Vec4_IsZeroXYZ(&side)) {
-        Vec4_NormalizeXYZ_132060(&fwd, d);
-        Vec4_Assign(&a, Vec4_NormalizeXYZInPlace(&side));
-        Vec4_Cross(&up, &a, fwd);
-        Mtx_FromRowsAndTranslation(m, &a, &fwd, &up, *Vec4_Set(&t, 0.0f, 0.0f, 0.0f, 1.0f));
-    } else if (!Vec4_IsZeroXYZ(d)) {
-        Mtx_FrameFromAxis(m, d);
+    { const V* pz = &z; cVector_Cross(&side, d, *pz); }
+    if (!cVector_IsZeroXYZ(&side)) {
+        cVector_GetNormalized_void(&fwd, d);
+        cVector_ctor_cVectorR(&a, cVector_Normalize_void(&side));
+        cVector_Cross(&up, &a, fwd);
+        cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(m, &a, &fwd, &up, *cVector_ctor_float_float_float_float(&t, 0.0f, 0.0f, 0.0f, 1.0f));
+    } else if (!cVector_IsZeroXYZ(d)) {
+        cMatrix_MakeLookAtMatrix_cVectorR(m, d);
     } else {
-        Mtx_SetIdentity(m);
+        cMatrix_SetUnit(m);
     }
 }
 
@@ -365,9 +365,9 @@ static inline void BuildFrame(M* m, V* d, const V& z) { BuildFrame2(m, d, z); }
 struct VQ : V { VQ(float a, float b, float c, float d) : V(a, b, c, d) { V* p = this; (void)p; } };
 // 128-bit sq zero store (quadword clear), not expressible in C
 static inline void QZero(V* p) { __asm__ volatile("sq $zero, 0x0(%0)" : : "r"(p) : "memory"); }
-static inline void ReqKill(SoundRequest* r) { FileMan_Release(&r->b, -1); FileMan_Release(&r->a, -1); SoundRequest* p = r; (void)p; }
+static inline void ReqKill(SoundRequest* r) { cFileMan_dtor(&r->b, -1); cFileMan_dtor(&r->a, -1); SoundRequest* p = r; (void)p; }
 
-extern "C" void Projectile_Update(Projectile* s, float dt)
+extern "C" void cGrenade_NextFrame(Projectile* s, float dt)
 {
     V pad;
     if (s->retired) return;
@@ -400,14 +400,14 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
         move = D;
         if (s->rec->cls == 7) g_ThrowGravity -= D_0048AF98;
         if (s->prev.z < D_0048AF88) {
-            Object_Unregister(s);
-            Object_DeleteLater(s, D_0048AF28);
+            nGobjManager_RemoveGOBJ(s);
+            cSystem_ActualScheduleDelete(s, D_0048AF28);
             s->retired = 1;
             return;
         }
         LosRes res;
         LosMsg msg(&res, s->prev, D, s);
-        Service_Lookup(g_Game, g_LosCheckService)->Post(&msg);
+        cSystemContainer_GetSystem(g_Game, g_LosCheckService)->Post(&msg);
         hit = res.hit;
         if (hit) {
             s->stuck = 0;
@@ -432,7 +432,7 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
             q.type = s->rec;
             q.b70 = s->rec->cls != 7;
             q.f78 = 0.4f;
-            Projectile_QueryCandidates(&q);
+            CheckBulletCollisions(&q);
             if (q.hit) {
                 if (s->rec->cls == 7) s->retired = 1;
                 hit = true;
@@ -468,18 +468,18 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
                     s->prev.Set(P0 - D);
                     Integrate(s, ratio, dt2, inv);
                     if (s->age > 0.5f) {
-                        Svc* svc = Service_Lookup(g_Game, D_004EE5C0);
+                        Svc* svc = cSystemContainer_GetSystem(g_Game, D_004EE5C0);
                         FireMsg(&s->serial, 5, 1.0f, 15.0f).Send(svc);
                         SoundRequest req;
                         SoundEventP ev;
-                        SoundRequest_Ctor(&req, 1, s->rec->snd, 0, 0);
-                        SoundEvent_CtorFromPreset(&ev, &req, s);
+                        cSndFx_ctor_int_charP_cGOBJP_int(&req, 1, s->rec->snd, 0, 0);
+                        cPlaySoundMsg_ctor_cSndFxR(&ev, &req, s);
                         ev.kind = 1;
-                        Event_Send(&ev, g_Game, 0);
+                        QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 0);
                         s->age = 0.0f;
                         ev.vtable = D_004DAE30;
-                        FileMan_Release(&ev.req.b, -1);
-                        FileMan_Release(&ev.req.a, -1);
+                        cFileMan_dtor(&ev.req.b, -1);
+                        cFileMan_dtor(&ev.req.a, -1);
                         cMessage_dtor(&ev, 0);
                         ReqKill(&req);
 
@@ -499,11 +499,11 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
             M r;
             {
                 float ay = ang.y; float ax = ang.x; float az = ang.z;
-                float cy = Math_CosThunk(ay); float sy = Math_SinThunk(ay);
-                float cx = Math_CosThunk(ax); float sx = Math_SinThunk(ax);
-                float cz = Math_CosThunk(az); float sz = Math_SinThunk(az);
+                float cy = COS(ay); float sy = SIN(ay);
+                float cx = COS(ax); float sx = SIN(ax);
+                float cz = COS(az); float sz = SIN(az);
                 float czcy = cz * cy; float czsy = cz * sy; float szcy = sz * cy; float szsy = sz * sy;
-                Mtx44_SetRotation(&r, czcy - szsy * sx, -sz * cx, czsy + szcy * sx,
+                cMatrix_Set_ColumnMajorForm(&r, czcy - szsy * sx, -sz * cx, czsy + szcy * sx,
                                   szcy + czsy * sx, cz * cx, szsy - czcy * sx,
                                   -cx * sy, sx, cx * cy);
             }
@@ -530,54 +530,54 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
             if (s->rec->kind == 4) { r8 /= 2; r4 /= 2; }
             V b = ident.r3;
             Blast_Prepare(HGet(&s->owner), s->rec->d64, D_0048AF20, (float)r4, (float)r8, 1, &b, 0, 1);
-            Game_SpawnLight(&ident, 10.0f, 0.5f);
-            int id = *SpecFx_GetEffectDef(0x25);
+            SfxLightEffect(&ident, 10.0f, 0.5f);
+            int id = *nSfxLoader_GetHandle(0x25);
             if (id > -1) {
                 int z = 0;
                 float dist = Len(&move);
                 V d = impact.Sub2(s->prev);
                 V p = s->prev + d * 0.9f;
-                DecalMgr_AddBloodDecal(g_DecalMgr, &p, id, z, D_0048AFA0);
+                cDecalMan_AddProjectedDecal(g_DecalMgr, &p, id, z, D_0048AFA0);
             }
         }
         if (HGet(&s->owner)) {
-            Svc* svc = Service_Lookup(g_Game, D_004EE5C0);
+            Svc* svc = cSystemContainer_GetSystem(g_Game, D_004EE5C0);
             int* id = &HGet(&s->owner)->serial;
             float one = 1.0f;
             AiMsg(one, s->rec->noise, id, &ident.r3, 4).Send(svc);
         }
         switch (s->rec->kind - 3) {
         case 0:
-            { AreaEffect* ae = (AreaEffect*)AreaEffect::operator new(0xE0, 0x1F6); if (ae) AreaEffect_Construct(ae, HGet(&s->owner), ident.r3, s->rec, 1); }
+            { AreaEffect* ae = (AreaEffect*)AreaEffect::operator new(0xE0, 0x1F6); if (ae) cAreaEffect_ctor(ae, HGet(&s->owner), ident.r3, s->rec, 1); }
             break;
         case 1: case 2: case 3: case 4: case 5:
             if (hit) {
                 V d = impact.Sub2(s->prev);
                 V p = s->prev + d * 0.9f;
-                { AreaEffect* ae = (AreaEffect*)AreaEffect::operator new(0xE0, 0x202); if (ae) AreaEffect_Construct(ae, HGet(&s->owner), p, s->rec, 0); }
+                { AreaEffect* ae = (AreaEffect*)AreaEffect::operator new(0xE0, 0x202); if (ae) cAreaEffect_ctor(ae, HGet(&s->owner), p, s->rec, 0); }
             } else {
-                { AreaEffect* ae = (AreaEffect*)AreaEffect::operator new(0xE0, 0x205); if (ae) AreaEffect_Construct(ae, HGet(&s->owner), ident.r3, s->rec, 0); }
+                { AreaEffect* ae = (AreaEffect*)AreaEffect::operator new(0xE0, 0x205); if (ae) cAreaEffect_ctor(ae, HGet(&s->owner), ident.r3, s->rec, 0); }
             }
             break;
         }
-        if (s->rec->fxD8 != -1) Effect_CreateInstance(s->rec->fxD8, &ident);
+        if (s->rec->fxD8 != -1) SfxParticleEffect_int_cMatrixR(s->rec->fxD8, &ident);
         const char* name = D_004A7C98;
         if (s->rec->cls == 7) name = D_004A7CA8;
         else if (s->rec->b30 == 8) name = s->rec->name;
         SoundRequest req;
         SoundEventP ev;
-        SoundRequest_Ctor(&req, 1, name, 0, 0);
-        SoundEvent_CtorFromPreset(&ev, &req, s);
+        cSndFx_ctor_int_charP_cGOBJP_int(&req, 1, name, 0, 0);
+        cPlaySoundMsg_ctor_cSndFxR(&ev, &req, s);
         ev.kind = 1;
-        Event_Send(&ev, g_Game, 0);
-        Object_Unregister(s);
-        Object_DeleteLater(s, D_0048AF28);
+        QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 0);
+        nGobjManager_RemoveGOBJ(s);
+        cSystem_ActualScheduleDelete(s, D_0048AF28);
         s->retired = 1;
         ev.vtable = D_004DAE30;
-        FileMan_Release(&ev.req.b, -1);
-        FileMan_Release(&ev.req.a, -1);
+        cFileMan_dtor(&ev.req.b, -1);
+        cFileMan_dtor(&ev.req.a, -1);
         cMessage_dtor(&ev, 0);
-        FileMan_Release(&req.b, -1);
-        FileMan_Release(&req.a, -1);
+        cFileMan_dtor(&req.b, -1);
+        cFileMan_dtor(&req.a, -1);
     }
 }

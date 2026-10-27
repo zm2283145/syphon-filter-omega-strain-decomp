@@ -19,11 +19,11 @@
 extern char D_0048A158[];
 extern char D_0048A160[];
 extern char D_004DA3E0[]; /* vtable */
-extern int PhysicalBase_Construct(char* self, char*, char*);
+extern int cSplinedMotion_float_ctor_floatR_floatR(char* self, char*, char*);
 
 /* Constructor: base construct, set vtable, clear words +0x38 and +0x3C. */
 char* cCameraShake_cPulsedShakeMagnitude_ctor(char* self) {
-    PhysicalBase_Construct(self, D_0048A158, D_0048A160);
+    cSplinedMotion_float_ctor_floatR_floatR(self, D_0048A158, D_0048A160);
     *(char**)self = D_004DA3E0;
     *(int*)(self + 0x38) = 0;
     *(int*)(self + 0x3C) = 0;
@@ -59,8 +59,8 @@ extern float D_0048A160;
 #endif /* merge_units */
 #define D_0048A160 (*(float*)&D_0048A160) /* merge_units */
 
-extern void Curve_InitConstant(Curve* c, float* lo, float* hi, float value);
-extern void Curve_Bind(CurveBinding* b, Curve* c);
+extern void cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_float(Curve* c, float* lo, float* hi, float value);
+extern void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_ctor(CurveBinding* b, Curve* c);
 
 /* Constructor: default range values, a constant curve and its binding. */
 Obj17F* cSplinedMotion_Scalar_ctor(Obj17F* self)
@@ -71,8 +71,8 @@ Obj17F* cSplinedMotion_Scalar_ctor(Obj17F* self)
     self->max = D_0048A160;
     self->def = D_0048A158;
     self->unk14 = 0;
-    Curve_InitConstant(&self->curve, &D_0048A158, &D_0048A160, 0.0f);
-    Curve_Bind(&self->binding, &self->curve);
+    cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_float(&self->curve, &D_0048A158, &D_0048A160, 0.0f);
+    cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_ctor(&self->binding, &self->curve);
     self->vtable = D_004DA3E0;
     return self;
 }

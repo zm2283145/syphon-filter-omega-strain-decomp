@@ -19,7 +19,7 @@
 typedef struct { int kind; int id; int floor; unsigned char lock; } Pk2115E0;
 extern "C" {
 extern unsigned char D_005721D0;
-void** NetMap_Lookup(int);
+void** cNetObj_GetNetSystem(int);
 void cElevatorGOBJ_LockFloor(void*, int, int);
 void cElevatorGOBJ_UnlockFloor(void*, int, int);
 }
@@ -29,7 +29,7 @@ extern "C" int cNetLockElevatorMsg_NetLockElevatorMsgCallback(int a0, int a1, in
     NetRecvGuard g;
     if (D_005721D0) {
         Pk2115E0* p = arg;
-        void** obj = NetMap_Lookup(p->id);
+        void** obj = cNetObj_GetNetSystem(p->id);
         if (obj) {
             if (p->lock) cElevatorGOBJ_LockFloor(*obj, p->floor, 1);
             else cElevatorGOBJ_UnlockFloor(*obj, p->floor, 1);
@@ -59,32 +59,32 @@ typedef struct { void* vt; char p4[0x14]; int f18; char p1C[8]; int f24; int f28
 struct Obj211700 { VPAD8(a) VPAD2(b) virtual int Accept(Msg211700* m); };
 extern "C" {
 extern char g_TriggerMsgKey[], D_004DAF10[];
-void cMessage_ctor5(Msg211700*, void*, Pk211700*);
-void* Object_LookupById(int*);
-void MsgQueue_QueueClone(Msg211700*, void*, int, int);
+void cMessage_ctor_cMessageNameR_messagebaseR(Msg211700*, void*, Pk211700*);
+void* nGobjManager_LookupGOBJ_cObjectIdR(int*);
+void QueueMessage_cMessageR_cSystemP_int_int(Msg211700*, void*, int, int);
 void cMessage_dtor(Msg211700*, int);
 }
 #pragma push
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" int cGOBJTriggerEventMsg_NetReceive(int a0, int a1, int a2, Pk211700* arg) {
+extern "C" int cGOBJTriggerEventMsg_NetGOBJTriggerEventCallback(int a0, int a1, int a2, Pk211700* arg) {
     NetRecvGuard g;
     Pk211700* p;
     p = arg;
     if (D_005721D0) {
         Msg211700 msg;
         void** obj;
-        cMessage_ctor5(&msg, g_TriggerMsgKey, p);
+        cMessage_ctor_cMessageNameR_messagebaseR(&msg, g_TriggerMsgKey, p);
         msg.vt = D_004DAF10;
         msg.f24 = p->h8;
         msg.f28 = p->fC;
         msg.f2C = p->f14;
         msg.f30 = p->f10;
-        obj = NetMap_Lookup(p->id);
+        obj = cNetObj_GetNetSystem(p->id);
         if (obj) {
             int id = msg.f2C;
-            Obj211700* o = (Obj211700*)Object_LookupById(&id);
-            if (o == 0 || (o != 0 && o->Accept(&msg))) MsgQueue_QueueClone(&msg, *obj, msg.f18, 0);
+            Obj211700* o = (Obj211700*)nGobjManager_LookupGOBJ_cObjectIdR(&id);
+            if (o == 0 || (o != 0 && o->Accept(&msg))) QueueMessage_cMessageR_cSystemP_int_int(&msg, *obj, msg.f18, 0);
         }
         msg.vt = D_004DAF10;
         cMessage_dtor(&msg, 0);

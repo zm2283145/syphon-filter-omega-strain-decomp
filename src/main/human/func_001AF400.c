@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void* SkelNode_GetWeightPtr(char* self) {
+void* cBone_GetSkeletonCenterOfMassContribution(char* self) {
     return self + 368;
 }
 

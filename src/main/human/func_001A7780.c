@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void* Ptr_IdentityCast(void* self) {
+void* cTreeNode_cSkaSystemPtr_Data(void* self) {
     return self;
 }
 

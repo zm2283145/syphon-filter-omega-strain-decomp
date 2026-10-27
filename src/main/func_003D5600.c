@@ -11,7 +11,7 @@ static inline int Min5600(int a, int b) { int r; if (a < b) { r = a; asm { .set 
 #pragma opt_common_subs off
 
 
-void Shadow_AddEntry(S5600* s, Q5600* pos, float dist)
+void cShadowMan_AddPointSource(S5600* s, Q5600* pos, float dist)
 {
     if (g_DrawMode & 0x20) {
         Q5600 zero;

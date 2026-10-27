@@ -14,14 +14,14 @@ extern int D_004F8248;
 extern char Script_SetNVLockColor[];
 extern int D_004F8250;
 extern int __construct_array();
-extern int Script_RegisterVariable();
-extern int Script_RegisterNative_2();
-void StaticInit_RegisterLockColours(void)
+extern int cScriptBase_registerGlobalVar();
+extern int cScriptBase_registerFunc_intPintPint_intP_charP_int_etc();
+void StaticInit_hud_util(void)
 {
     __construct_array(D_004F80F0, LockSetting_ctor, 0, 0x10, 0xa);
     __construct_array(D_004F8190, LockSetting_ctor, 0, 0x10, 0xa);
-    D_004F8238 = Script_RegisterVariable("lockAlpha", (int)D_0048B0A0, D_00493890);
-    D_004F8240 = Script_RegisterVariable("NVlockAlpha", (int)D_0048B0A8, D_00493890);
-    D_004F8248 = Script_RegisterNative_2(Script_SetLockColor, D_00493880, "SetLockColor", 5, D_00493888, D_00493890, D_00493888, D_00493888, D_00493888);
-    D_004F8250 = Script_RegisterNative_2(Script_SetNVLockColor, D_00493880, "SetNVLockColor", 5, D_00493888, D_00493890, D_00493888, D_00493888, D_00493888);
+    D_004F8238 = cScriptBase_registerGlobalVar("lockAlpha", (int)D_0048B0A0, D_00493890);
+    D_004F8240 = cScriptBase_registerGlobalVar("NVlockAlpha", (int)D_0048B0A8, D_00493890);
+    D_004F8248 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_SetLockColor, D_00493880, "SetLockColor", 5, D_00493888, D_00493890, D_00493888, D_00493888, D_00493888);
+    D_004F8250 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_SetNVLockColor, D_00493880, "SetNVLockColor", 5, D_00493888, D_00493890, D_00493888, D_00493888, D_00493888);
 }

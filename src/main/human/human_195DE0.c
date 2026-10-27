@@ -63,7 +63,7 @@ static inline void Q_5DE0(void* d, const void* s) { __int128 t; __asm__ volatile
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-void Placement_ApplyParent(Plc* o, Plc* l, Plc* b) {
+void cQuatVec_Copy_Transform(Plc* o, Plc* l, Plc* b) {
     Plc t;
     Plc* a;
     V4* v;
@@ -88,7 +88,7 @@ static inline void merge_flush_func_00195DE0(void) {}
 #pragma push /* merge_units */
 typedef struct { V4 r0; V4 r1; V4 r2; V4 r3; } Mtx;
 #pragma peephole off
-Plc* Mtx_ToPlacement(Plc* out, Mtx* m) {
+Plc* cQuatVec_ctor_cMatrixR(Plc* out, Mtx* m) {
     int f;
     int t;
     asm {

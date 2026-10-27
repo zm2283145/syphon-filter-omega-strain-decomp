@@ -4,17 +4,17 @@
 /*
  * main/MoviePlayer (MoviePlayer.cc): the movie player keeps ten work buffers
  * at the start of its object (Unk3F9380 in loose04_types.h, built by
- * MoviePlayer_ctor and destroyed by MoviePlayer_Destroy). MoviePlayer_AllocBuffers
+ * cMoviePlayer_ctor and destroyed by cMoviePlayer_dtor). MoviePlayer_AllocBuffers
  * allocates them from heap 1; each entry keeps the raw allocation for
- * Mem_Free and a 64-byte aligned pointer into it for the decoder (the last
- * buffer is used unaligned). MoviePlayer_FreeBuffers releases them.
+ * cMemMan_Deallocate and a 64-byte aligned pointer into it for the decoder (the last
+ * buffer is used unaligned). cMoviePlayer_PurgeBuffers releases them.
  * The roles of the individual buffers are not identified yet; the sizes are
  * MOVIE_BUF_SIZE_0..9 (the aligned ones include 0x40 bytes of slack).
  * C++ (MW).
  */
 typedef struct MovieBuffer {
     char* aligned; /* raw rounded up to 64 bytes (== raw for buffer 9) */
-    char* raw;     /* Mem_Alloc result, passed to Mem_Free */
+    char* raw;     /* cMemMan_Allocate result, passed to cMemMan_Deallocate */
 } MovieBuffer;
 
 #define MOVIE_BUFFER_COUNT 10

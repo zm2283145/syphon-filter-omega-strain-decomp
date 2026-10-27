@@ -26,11 +26,11 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cHotboxPtr_1_dtor)
 #include "types.h"
 #include "loose00_types.h"
 
-extern int PtrVec_Reserve(int, int);
+extern int std_vector_pod_int_reserve(int, int);
 extern int details_compressed_pair_imp_cAllocator_voidPtr_int_1_first(LinkList* list);
 
 int PtrVec_Reserve_Thunk_173900(int a0, int a1) {
-    return PtrVec_Reserve(a0, a1);
+    return std_vector_pod_int_reserve(a0, a1);
 }
 
 Rel* std_vector_cHotboxPtr_ctor(Rel* r) {
@@ -41,7 +41,7 @@ Rel* std_vector_cHotboxPtr_ctor(Rel* r) {
 }
 
 /* List constructor: empty, sentinel node at +4 linked to itself. */
-LinkList* LinkList_Ctor(LinkList* list) {
+LinkList* std_list_cHotboxPtr_ctor(LinkList* list) {
     list->count = 0;
     details_compressed_pair_imp_cAllocator_voidPtr_int_1_first(list);
     list->sentinel.prev = &list->sentinel;

@@ -5,7 +5,7 @@ extern char cArray_cAirTaserPtr_dtor[];
 extern signed char D_004EA0C8;
 extern char* g_LosCheckService;
 extern void std_vector_cAirTaserPtr_ctor(void* p);
-extern void PtrVec_Reserve_Thunk_2674B0(void* p, int n);
+extern void std_vector_cAirTaserPtr_reserve(void* p, int n);
 extern int cArrayCapacity_Int(int* n);
 extern void __register_global_object(void* obj, void* dtor, void* link);
 void StaticInit_taser(void)
@@ -15,7 +15,7 @@ void StaticInit_taser(void)
         Obj_4D0910* o = (Obj_4D0910*)D_004F8350;
         n[0] = 4;
         std_vector_cAirTaserPtr_ctor(o);
-        PtrVec_Reserve_Thunk_2674B0(o, cArrayCapacity_Int(n));
+        std_vector_cAirTaserPtr_reserve(o, cArrayCapacity_Int(n));
         o->ready = 1;
         __register_global_object(o, cArray_cAirTaserPtr_dtor, D_004F8338);
     }

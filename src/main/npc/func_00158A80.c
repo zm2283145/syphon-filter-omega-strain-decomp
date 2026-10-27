@@ -5,8 +5,8 @@ extern int g_MaxActiveNpcCount;
 extern int D_004EA358;
 extern int D_004EA380;
 extern float WorthShootingThreshold;
-int Net_GetClock(int a);
-void NpcAi_ResetFireProgress(void)
+int cDME_GetTime(int a);
+void cNPC_SystemInit(void)
 {
     int i;
     D_004EA358 = 0;
@@ -14,5 +14,5 @@ void NpcAi_ResetFireProgress(void)
     WorthShootingThreshold = 0.5f;
     for (i = 0; i < 16; i++)
         D_004EA1D0[i].used = 0;
-    D_004EA380 = Net_GetClock(1);
+    D_004EA380 = cDME_GetTime(1);
 }

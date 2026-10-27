@@ -1,13 +1,13 @@
 #pragma cplusplus on
 #include "types.h"
 #include "vslot_pad.h"
-/* cNIEventLight_v42 (update): runs the light event's animation (time scaled
+/* cNIEventLight_ProcessNextFrame (update): runs the light event's animation (time scaled
  * by its speed while playing, or once at 0 when it becomes ready), sends the
  * finished message when playback stopped, steps the inner/outer radius
  * tracks, and keeps a point light from the light manager in sync with the
  * owner while the event is active (released otherwise). Light class as in
- * cNIEventLight_v16 (NIEvent_237A20.c); light creation as in
- * SpawnLightEffect_Construct (SpecFxDefs_231F00.c). */
+ * cNIEventLight_Deactivate (NIEvent_237A20.c); light creation as in
+ * cLightBundle_ctor (SpecFxDefs_231F00.c). */
 #pragma always_inline on
 #pragma inline_depth(8)
 typedef struct { float x, y, z, w; } V4_7B90;
@@ -65,23 +65,23 @@ extern char g_LightMgr[];
 extern char D_004F7C30[];
 extern char D_004DBEB0[];
 extern char D_004D9200[];
-void Event_Construct(Msg_7B90* e, void* type);
-void Event_Send(Msg_7B90* e, void* target, int a);
+void cMessage_ctor_cMessageNameR(Msg_7B90* e, void* type);
+void QueueMessage_cMessageR_cSystemP_int(Msg_7B90* e, void* target, int a);
 void cMessage_dtor(Msg_7B90* e, int f);
-void Actor_BaseLogicUpdate(Ev_7B90* self, float dt);
-void NiRotationTrack_Update(float t, Track_7B90* tr);
-Light_7B90* LightMgr_AllocPoint(void* pool, int n);
-V4_7B90* Vec4_SetFromVec3W(V4_7B90* out, float* in, float w);
-void LevelLight_InitPoint(Light_7B90* l, int n, V4_7B90* pos, void* m, int k);
+void cGOBJ_NextFrame(Ev_7B90* self, float dt);
+void cNIEventFloatTrack_Update(float t, Track_7B90* tr);
+Light_7B90* cLightMan_AddLight(void* pool, int n);
+V4_7B90* tRGBA_ctor_tRGBR_float(V4_7B90* out, float* in, float w);
+void cLightSrc_ctor_eLightSrcTypes_tRGBAR_cVectorR_uint(Light_7B90* l, int n, V4_7B90* pos, void* m, int k);
 void LightEffect_SetInner(Light_7B90* l, float f);
 void LightEffect_SetOuter(Light_7B90* l, float f);
-void cNIEventLight_v42(Ev_7B90* self, float dt);
+void cNIEventLight_ProcessNextFrame(Ev_7B90* self, float dt);
 }
 static inline bool Not(unsigned char x) { return !x; }
 static inline bool Ready(Ev_7B90* t) { bool r = false; bool a = false; if (t->b2D && t->b2C) a = true; if (a && Not(t->b2E)) r = true; return r; }
 static inline Owner_7B90* SyncedOwner(Ev_7B90* self) { Owner_7B90* o = self->owner; if (o->dirty) o->Sync(); return o; }
 
-extern "C" void cNIEventLight_v42(Ev_7B90* self, float dt)
+extern "C" void cNIEventLight_ProcessNextFrame(Ev_7B90* self, float dt)
 {
     unsigned char playing = self->playing;
     if (playing || (self->state == 3 && self->active && Ready(self))) {
@@ -89,22 +89,22 @@ extern "C" void cNIEventLight_v42(Ev_7B90* self, float dt)
         self->Play(playing ? t : 0.0f);
         if (playing && !self->playing) {
             Msg_7B90 e;
-            Event_Construct(&e, D_004F7C30);
+            cMessage_ctor_cMessageNameR(&e, D_004F7C30);
             e.vt = D_004DBEB0;
             e.x24 = 0;
-            Event_Send(&e, self, 0);
+            QueueMessage_cMessageR_cSystemP_int(&e, self, 0);
             e.vt = D_004DBEB0;
             cMessage_dtor(&e, 0);
         }
     }
-    Actor_BaseLogicUpdate(self, dt);
+    cGOBJ_NextFrame(self, dt);
     if (self->playing) {
-        NiRotationTrack_Update(dt * self->speed, &self->a);
-        NiRotationTrack_Update(dt * self->speed, &self->b);
+        cNIEventFloatTrack_Update(dt * self->speed, &self->a);
+        cNIEventFloatTrack_Update(dt * self->speed, &self->b);
     }
     if (Ready(self) && self->active) {
         if (!self->light) {
-            Light_7B90* l = LightMgr_AllocPoint(g_LightMgr, 4);
+            Light_7B90* l = cLightMan_AddLight(g_LightMgr, 4);
             if (l) {
                 Owner_7B90* o;
                 float inner, outer;
@@ -112,7 +112,7 @@ extern "C" void cNIEventLight_v42(Ev_7B90* self, float dt)
                 inner = self->a.value;
                 outer = self->b.value;
                 o = SyncedOwner(self);
-                LevelLight_InitPoint(l, 4, Vec4_SetFromVec3W(&v, self->pos, 0.0f), o->mtx, 3);
+                cLightSrc_ctor_eLightSrcTypes_tRGBAR_cVectorR_uint(l, 4, tRGBA_ctor_tRGBR_float(&v, self->pos, 0.0f), o->mtx, 3);
                 *(void**)((char*)l + 4) = D_004D9200;
                 LightEffect_SetInner(l, inner);
                 LightEffect_SetOuter(l, outer);

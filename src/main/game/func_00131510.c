@@ -6,12 +6,12 @@ typedef struct Pending {
     unsigned char pending;
 } Pending;
 
-extern void ActiveList_RemoveObject(Pending*, int);
+extern void cGameSystem_RemoveCamera(Pending*, int);
 
-/* If the pending flag is set, clears it and calls ActiveList_RemoveObject(self, arg). */
-void World_PopObject(Pending* p) {
+/* If the pending flag is set, clears it and calls cGameSystem_RemoveCamera(self, arg). */
+void cGameSystem_PopWeaponCam(Pending* p) {
     if (p->pending) {
         p->pending = 0;
-        ActiveList_RemoveObject(p, p->arg);
+        cGameSystem_RemoveCamera(p, p->arg);
     }
 }

@@ -41,9 +41,9 @@ extern char D_004BEE90[];
 extern char D_004BEE08[];
 extern char D_004BEE30[];
 extern char D_004BEE40[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-char* String_CStr(void* s);
-int String_CompareN(char* a, char* b, int n);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+char* std_basic_string_char_char_traits_char_c_str(void* s);
+int Libc_Strncmp(char* a, char* b, int n);
 int atof(char* s);
 float SoftFloat_DoubleToFloat(int v);
 void func_003FD2D0(char* s);
@@ -67,7 +67,7 @@ static inline char* SkipBlank_40FF20(char* p)
 static inline SubEntry* Alloc_40FF20(int size)
 {
     AllocGuard g;
-    return (SubEntry*)Mem_Alloc(0, size, D_004BEE90, 0x37E);
+    return (SubEntry*)cMemMan_Allocate(0, size, D_004BEE90, 0x37E);
 }
 
 extern "C" void cSubtitleFeed_ParseINISectionFEED(Subs40FF20* self, void* line)
@@ -79,7 +79,7 @@ extern "C" void cSubtitleFeed_ParseINISectionFEED(Subs40FF20* self, void* line)
         self->entries = Alloc_40FF20(size);
         self->num = 0;
     }
-    p = SkipBlank_40FF20(String_CStr(line));
+    p = SkipBlank_40FF20(std_basic_string_char_char_traits_char_c_str(line));
     if (*p == 0) return;
     if (*p != '"') {
         char* fType;
@@ -102,14 +102,14 @@ extern "C" void cSubtitleFeed_ParseINISectionFEED(Subs40FF20* self, void* line)
         int flags = 0;
         int lang;
 
-        if (String_CompareN(fType, D_004BEEA8, 5) == 0) flags |= 1;
-        else if (String_CompareN(fType, D_004BEEB0, 4) == 0) flags |= 8;
-        if (String_CompareN(fAlign, D_004BEEB8, 4) == 0) flags |= 2;
-        else if (String_CompareN(fAlign, D_004BEEC0, 6) == 0) flags |= 4;
+        if (Libc_Strncmp(fType, D_004BEEA8, 5) == 0) flags |= 1;
+        else if (Libc_Strncmp(fType, D_004BEEB0, 4) == 0) flags |= 8;
+        if (Libc_Strncmp(fAlign, D_004BEEB8, 4) == 0) flags |= 2;
+        else if (Libc_Strncmp(fAlign, D_004BEEC0, 6) == 0) flags |= 4;
         lang = 0;
-        if (String_CompareN(fLang, D_004BEE08, 7) == 0) lang = 1;
-        else if (String_CompareN(fLang, D_004BEE30, 8) == 0) lang = 6;
-        else if (String_CompareN(fLang, D_004BEE40, 7) == 0) lang = 7;
+        if (Libc_Strncmp(fLang, D_004BEE08, 7) == 0) lang = 1;
+        else if (Libc_Strncmp(fLang, D_004BEE30, 8) == 0) lang = 6;
+        else if (Libc_Strncmp(fLang, D_004BEE40, 7) == 0) lang = 7;
         if (self->num < self->max) {
             SubEntry* e = &self->entries[self->num++];
             e->start = h1 * 60.0f + m1 + s1 / 100.0f;
@@ -161,11 +161,11 @@ static char D_004BEED0[] = "NumLines";
 static char D_004BEEE0[] = "Color";
 
 extern "C" {
-void String_CtorCStr_13B480(Key_410630* s, const char* c);
+void std_basic_string_char_char_traits_char_ctor_charP(Key_410630* s, const char* c);
 void String_Dtor(Key_410630* s, short f);
 int cString_Find(void* line, Key_410630* key);
-char* String_CStr_189540(void* line);
-int String_Length(Key_410630* key);
+char* cString_CStr(void* line);
+int cString_Length(Key_410630* key);
 int atoi(char* s);
 }
 
@@ -188,11 +188,11 @@ static inline char* Find_410630(void* line, const char* name)
 {
     Key_410630 key;
     char* p;
-    String_CtorCStr_13B480(&key, name);
+    std_basic_string_char_char_traits_char_ctor_charP(&key, name);
     p = 0;
     int r = cString_Find(line, &key);
     if (r > -1) {
-        p = String_CStr_189540(line) + r + String_Length(&key);
+        p = cString_CStr(line) + r + cString_Length(&key);
         while (*p == ' ' || *p == '\t') p++;
     }
     String_Dtor(&key, 0);

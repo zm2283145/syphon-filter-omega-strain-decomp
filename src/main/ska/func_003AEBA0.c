@@ -1,4 +1,4 @@
-/* RootCollection_Reset (ska.cc): reset every root entry's accumulation state.
+/* cSkaAnimAnchorList_ClearAccumulation (ska.cc): reset every root entry's accumulation state.
  * The asm zero stores (VZeroF) keep the iterators in stack slots like retail. */
 #include "types.h"
 #include "vc_copy.h"
@@ -32,7 +32,7 @@ static inline void RSubReset(RSub_3AEBA0* s, float z) {
 }
 #pragma opt_rotateloops off
 #pragma opt_propagation off
-extern "C" void RootCollection_Reset(RColl_3AEBA0* self) {
+extern "C" void cSkaAnimAnchorList_ClearAccumulation(RColl_3AEBA0* self) {
     RIt_3AEBA0 it = RBegin(self);
     RIt_3AEBA0 end = REnd(self);
     for (; it != end; ++it) {

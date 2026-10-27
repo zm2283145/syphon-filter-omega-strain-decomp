@@ -18,7 +18,7 @@ typedef struct { char p0[0x10]; V4 a; V4 b; char p1[0x10]; V4 c; char p2[0x10]; 
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-void CameraRig_TranslateFollowCurves(O_6FF0* o, V4* v) {
+void cSplinedMotion_cVector_TeleportByDelta(O_6FF0* o, V4* v) {
     ADD1(&o->a)
     ADD2(&o->b)
     ADD2(&o->c)
@@ -42,21 +42,21 @@ public:
 };
 struct S_7060 { char pad[0x1A4]; Obj_7060* obj; };
 extern "C" {
-void Object_Unregister(Obj_7060* o);
-void Object_DeleteLater(float t, Obj_7060* o);
-void Object_Register(Obj_7060* o);
+void nGobjManager_RemoveGOBJ(Obj_7060* o);
+void cSystem_ActualScheduleDelete(float t, Obj_7060* o);
+void nGobjManager_AddGOBJ(Obj_7060* o);
 }
-extern "C" void World_SetAtmosphereEffect(S_7060* self, Obj_7060* o)
+extern "C" void cPlayer_AtmosphericParticleEffect(S_7060* self, Obj_7060* o)
 {
     if (self->obj) {
         self->obj->Detach(1);
-        Object_Unregister(self->obj);
-        Object_DeleteLater(0.1f, self->obj);
+        nGobjManager_RemoveGOBJ(self->obj);
+        cSystem_ActualScheduleDelete(0.1f, self->obj);
         self->obj = 0;
     }
     if (o) {
         self->obj = o;
-        Object_Register(o);
+        nGobjManager_AddGOBJ(o);
         o->Attach(1);
     }
 }

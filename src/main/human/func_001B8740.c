@@ -9,12 +9,12 @@
 
 extern unsigned char g_IsMultiplayer;
 
-unsigned char Actor_IsInvulnerable(Actor* actor) {
+unsigned char cHuman_IsInvulnerable(Actor* actor) {
     return actor->unk33A4;
 }
 
 /* Set unk33A4 and mirror it to the linked object when the global gate is on. */
-void Actor_SetInvulnerable(Actor* actor, int value) {
+void cHuman_SetInvulnerable(Actor* actor, int value) {
     ActorLink3584* link;
 
     actor->unk33A4 = value;

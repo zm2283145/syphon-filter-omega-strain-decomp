@@ -16,15 +16,15 @@
 
 struct VC003EC3E0 { char vpad[20]; virtual int v0(...); };
 extern "C" {
-int List_Erase(...);                     
-int List_Begin(...);                          
+int std_list_deleter_voidPtr_erase_listdeleter(...);                     
+int std_list_deleter_voidPtr_begin_void(...);                          
 int std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(...);                      
 int cLListIterator_cSfxSchedulerPtr_ctor(...);                        
 int std_list_cSfxSchedulerPtr_end(...);                          
 int std_list_cSfxSchedulerPtr_generic_iterator_ctor(...);                      
 extern char D_0055C0A8;
 }
-extern "C" void EffectService_ReleaseAll(void) {
+extern "C" void nDynamicSfxList_Clear(void) {
     int sp3C;
     char * sp38;
     char * sp34;
@@ -36,7 +36,7 @@ extern "C" void EffectService_ReleaseAll(void) {
     char * temp_v0;
     char * var_s0;
 
-    List_Begin(&sp28, &D_0055C0A8);
+    std_list_deleter_voidPtr_begin_void(&sp28, &D_0055C0A8);
     std_list_cSfxSchedulerPtr_generic_iterator_ctor(&sp38, &sp28);
     var_s0 = sp38;
     std_list_cSfxSchedulerPtr_end(&sp24, &D_0055C0A8);
@@ -51,7 +51,7 @@ extern "C" void EffectService_ReleaseAll(void) {
             var_s0 = (char *)(F_(var_s0, 0x4, int));
             sp34 = temp_v0;
             std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&sp2C, &sp34);
-            List_Erase(&sp30, &D_0055C0A8, &sp2C);
+            std_list_deleter_voidPtr_erase_listdeleter(&sp30, &D_0055C0A8, &sp2C);
             std_list_cSfxSchedulerPtr_end(&sp24, &D_0055C0A8);
             cLListIterator_cSfxSchedulerPtr_ctor(&sp3C, &sp24);
         } while ((int)(var_s0) != (int)(sp3C));
@@ -68,7 +68,7 @@ extern "C" void EffectService_ReleaseAll(void) {
 struct VC003EC4C0 { char vpad[12]; unsigned char dead; char pad[7]; virtual void v0(int); virtual void v1(float); };
 extern "C" {
 }
-extern "C" void EffectService_UpdateAll(float dt) {
+extern "C" void nDynamicSfxList_NextFrame(float dt) {
     int sp5C;
     char * sp58;
     char * sp54;
@@ -80,7 +80,7 @@ extern "C" void EffectService_UpdateAll(float dt) {
     char * temp_v0;
     char * var_s0;
 
-    List_Begin(&sp48, &D_0055C0A8);
+    std_list_deleter_voidPtr_begin_void(&sp48, &D_0055C0A8);
     std_list_cSfxSchedulerPtr_generic_iterator_ctor(&sp58, &sp48);
     var_s0 = sp58;
     std_list_cSfxSchedulerPtr_end(&sp44, &D_0055C0A8);
@@ -97,7 +97,7 @@ extern "C" void EffectService_UpdateAll(float dt) {
                 var_s0 = (char *)(F_(var_s0, 0x4, int));
                 sp54 = temp_v0;
                 std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&sp4C, &sp54);
-                List_Erase(&sp50, &D_0055C0A8, &sp4C);
+                std_list_deleter_voidPtr_erase_listdeleter(&sp50, &D_0055C0A8, &sp4C);
             } else {
                 var_s0 = (char *)(F_(var_s0, 0x4, int));
             }

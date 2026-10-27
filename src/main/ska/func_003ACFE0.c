@@ -5,7 +5,7 @@ typedef struct Phase {
     float hi;
 } Phase;
 
-int Phase_Overlaps(const Phase* a, const Phase* b) {
+int cSkaAnimCheckpoints_cTimedEvent_IsTimeToTriggerEvent(const Phase* a, const Phase* b) {
     float alo = a->lo;
     float ahi = a->hi;
     if (!(ahi < alo) && !(b->hi < b->lo)) {

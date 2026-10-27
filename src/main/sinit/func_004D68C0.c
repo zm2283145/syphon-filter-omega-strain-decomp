@@ -12,7 +12,7 @@ extern int g_MemCard;
 extern signed char D_0055A834;
 extern int g_CardWaitPollFn;
 extern signed char D_0055A83C;
-extern char MemCard_dtor;
+extern char cMemCard_dtor;
 
 void StaticInit_devices(void) {
     char *var_v1;
@@ -34,5 +34,5 @@ void StaticInit_devices(void) {
     D_0055A83C = 0;
     g_MemCard = 0;
     g_CardWaitPollFn = 0;
-    __register_global_object(&g_MemCard, &MemCard_dtor, &D_0055A820);
+    __register_global_object(&g_MemCard, &cMemCard_dtor, &D_0055A820);
 }

@@ -7,31 +7,31 @@ typedef struct { char pad[0x94]; L2BE* f94; char p98[0x10]; int fa8; char pad2[0
 typedef struct { char pad[0x80]; char name[4]; } WD2BE;
 extern "C" {
 extern void GuiTextListWidget_Clear(L2BE*);
-extern void GuiArrayWidget_SetTable(L2BE*, int, int);
-extern void GuiArrayWidget_Select(L2BE*, int, int);
+extern void GuiArrayWidget_SetVisibleSize(L2BE*, int, int);
+extern void GuiArrayWidget_SetSelected(L2BE*, int, int);
 extern int g_WeaponDatabase;
-extern WD2BE* WeaponDb_Get(int, int);
-extern char* Loc_LookupText(char*);
+extern WD2BE* cWeaponDB_GetEntry(int, int);
+extern char* nGlobalization_GetString_charP(char*);
 extern void GuiTextListWidget_AddItem(L2BE*, char*, int, int);
 }
-extern "C" void GuiEquipmentModify_BuildList(O2BE* o) {
+extern "C" void GuiEquipmentModify_UpdateList(O2BE* o) {
     int i;
     GuiTextListWidget_Clear(o->f94);
     ((V2BE*)o->f94)->v21(1, o->f104 + 1);
-    if (o->f104 >= o->fa8) GuiArrayWidget_SetTable(o->f94, 1, o->fa8);
-    else GuiArrayWidget_SetTable(o->f94, 1, o->f104 + 1);
-    GuiArrayWidget_Select(o->f94, 0, (int)(void*)o->f108);
+    if (o->f104 >= o->fa8) GuiArrayWidget_SetVisibleSize(o->f94, 1, o->fa8);
+    else GuiArrayWidget_SetVisibleSize(o->f94, 1, o->f104 + 1);
+    GuiArrayWidget_SetSelected(o->f94, 0, (int)(void*)o->f108);
     o->f94->b81 = 1;
     o->f94->f88 = o->fcc;
     o->fcc->flags &= ~2;
     for (i = 0; i < o->f104; i++) {
-        WD2BE* w = WeaponDb_Get(g_WeaponDatabase, o->h10c[i]);
-        char* t = Loc_LookupText(w->name);
+        WD2BE* w = cWeaponDB_GetEntry(g_WeaponDatabase, o->h10c[i]);
+        char* t = nGlobalization_GetString_charP(w->name);
         if (t) GuiTextListWidget_AddItem(o->f94, t, i, 0);
         else GuiTextListWidget_AddItem(o->f94, w->name, i, 0);
     }
-    GuiTextListWidget_AddItem(o->f94, Loc_LookupText("NoneOption"), i, 0);
-    GuiArrayWidget_Select(o->f94, 0, (int)(void*)o->f108);
+    GuiTextListWidget_AddItem(o->f94, nGlobalization_GetString_charP("NoneOption"), i, 0);
+    GuiArrayWidget_SetSelected(o->f94, 0, (int)(void*)o->f108);
     o->fcc->flags &= ~0x80;
     o->f94->flags &= ~0x80;
 }

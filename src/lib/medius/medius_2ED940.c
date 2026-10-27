@@ -180,7 +180,7 @@ void GridSetPackHeader(S2EDD08 *s, H2EDD08 *h, int type, int len)
 #define F(p,T,o) (*(T *)((char *)(p) + (o)))
 typedef struct { int a, b, c, time, e; } E2EDD88;
 extern int GetCurrentTimeMs(void);
-extern void Net_AllocZeroed(void *, unsigned long);
+extern void rt_memory_allocate_init_zero(void *, unsigned long);
 extern int rt_memory_free(void *);
 extern void *memset(void *, int, unsigned int);
 int GridExpandConnections(void *s)
@@ -190,7 +190,7 @@ int GridExpandConnections(void *s)
     if (s == 0 || F(s, int, 0x58) != 0) return -1;
     now = GetCurrentTimeMs();
     old = F(s, E2EDD88 *, 0x60);
-    Net_AllocZeroed(&F(s, E2EDD88 *, 0x60), (unsigned int)(F(s, int, 0x5C) * 2 * sizeof(E2EDD88)));
+    rt_memory_allocate_init_zero(&F(s, E2EDD88 *, 0x60), (unsigned int)(F(s, int, 0x5C) * 2 * sizeof(E2EDD88)));
     if (F(s, E2EDD88 *, 0x60) == 0) {
         F(s, E2EDD88 *, 0x60) = old;
         return -1;

@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose01_types.h"
 
-FloatPair* MotionSliderChild_CopyThresholds(FloatPair* dst, FloatPair* src) {
+FloatPair* cSkaBlendSequenceExtents_ctor_cSkaBlendSequenceExtentsR(FloatPair* dst, FloatPair* src) {
     dst->a = src->a;
     dst->b = src->b;
     return dst;

@@ -17,7 +17,7 @@ extern int cArray_cNIEventBasePtr_Size(PtrVec* v);
 extern int* cArray_cNIEventBasePtr_opIndex(PtrVec* v, int i);
 extern int* std_vector_imp_cNIEventBasePtr_1_opIndex(PtrVec* v, int i);
 extern int cGOBJ_IsStreaming(NodeObj* o);
-extern int GameObject_IsCollisionEnabled(NodeObj* o);
+extern int cGOBJ_IsActive(NodeObj* o);
 
 #define COUNTS(o, flag) (!(flag) || (o)->state == 3 || (o)->state == 1 || (o)->state == 6)
 #pragma push
@@ -41,7 +41,7 @@ int cNIEventBase_NumChildrenActive(NodeObj* self, int flag)
             NodeObj* g = *(NodeObj**)std_vector_imp_cNIEventBasePtr_1_opIndex(&c->kids, j);
             int m = 0;
             int k;
-            if (GameObject_IsCollisionEnabled(g)) {
+            if (cGOBJ_IsActive(g)) {
                 if (COUNTS(g, flag)) m++;
             }
             for (k = 0; k < cArray_cNIEventBasePtr_Size(&g->kids); k++) {

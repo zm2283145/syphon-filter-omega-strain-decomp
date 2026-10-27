@@ -11,7 +11,7 @@
 extern int strcmp(const char* a, const char* b); /* strcmp */
 
 /* Returns 1 if name equals the string "GuiTitleScreen". */
-int GuiTitleScreen_IsType(void* self, const char* name)
+int GuiTitleScreen_IsClass(void* self, const char* name)
 {
     return strcmp("GuiTitleScreen", name) == 0;
 }
@@ -23,20 +23,20 @@ int GuiTitleScreen_IsType(void* self, const char* name)
 typedef struct { char pad[0x260]; int f260; } Ui287E00;
 typedef struct { char pad[0x4C]; float t; int h; } Obj287E00;
 typedef struct { int m0; char str[4]; } Msg287E00;
-extern int Loc_LookupText(char*);
-extern int String_AssignCStr_1C43A0(void*, char*);
-extern float SoftFloat_U64ToFloat(int);
-extern void GuiTitleScreen_CheckMemCard(Obj287E00*, int);
+extern int nGlobalization_GetString_charP(char*);
+extern int std_basic_string_char_char_traits_char_compare_charP(void*, char*);
+extern float _f_ulltof(int);
+extern void GuiTitleScreen_VerifyMemCard(Obj287E00*, int);
 extern void FrontEnd_StopSplashThread(Ui287E00*);
 extern void FrontEnd_StartSplashThread(Ui287E00*);
-extern void FrontEnd_ClosePopup(Ui287E00*, int);
-extern int FrontEnd_OpenPopup(Ui287E00*, int, char*, int, int, int);
-extern int Time_GetMilliseconds(void);
-extern int Gui_GetScreenList(void);
-extern int Gui_GetScreenStack(void);
-extern void GuiStack_SwapScreens(int, Obj287E00*, int);
-extern int GuiManager_FindOrLoad(int, char*, char*);
-extern int GuiWidget_OnEvent(Obj287E00*, Msg287E00*, unsigned short, int, int);
+extern void cGameFrontEnd_PopMessageBox(Ui287E00*, int);
+extern int cGameFrontEnd_PushMessageBox(Ui287E00*, int, char*, int, int, int);
+extern int cTimer_GetMillisecondTime(void);
+extern int Gui_Manager(void);
+extern int Gui_Canvas(void);
+extern void GuiCanvas_Transition(int, Obj287E00*, int);
+extern int GuiManager_OpenGui(int, char*, char*);
+extern int GuiWidget_onMessage(Obj287E00*, Msg287E00*, unsigned short, int, int);
 extern char* D_0048B3E8;
 extern char* D_0048B3F0;
 extern char* D_0048B3F8;
@@ -51,9 +51,9 @@ extern char D_004A95E0[];
 extern char D_004FFBB8;
 extern Ui287E00* D_004FFC04;
 
-int GuiTitleScreen_HandleEvent(Obj287E00* self, Msg287E00* msg, unsigned short id, int a3, int a4)
+int GuiTitleScreen_onMessage(Obj287E00* self, Msg287E00* msg, unsigned short id, int a3, int a4)
 {
-    self->t = SoftFloat_U64ToFloat(Time_GetMilliseconds()) / 1000.0f;
+    self->t = _f_ulltof(cTimer_GetMillisecondTime()) / 1000.0f;
     if (id == 0x1A) {
         if (a3 == 1) {
             D_004FFBB8 = 0;
@@ -61,37 +61,37 @@ int GuiTitleScreen_HandleEvent(Obj287E00* self, Msg287E00* msg, unsigned short i
         }
     } else if (id == 0x1B) {
         if (a3 == 1) {
-            FrontEnd_ClosePopup(D_004FFC04, self->h);
-            GuiTitleScreen_CheckMemCard(self, 1);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, self->h);
+            GuiTitleScreen_VerifyMemCard(self, 1);
             return 1;
         }
     }
     if (id == 2) {
         int r = 0;
-        if (String_AssignCStr_1C43A0(msg->str, D_0048B3E8) == 0) {
+        if (std_basic_string_char_char_traits_char_compare_charP(msg->str, D_0048B3E8) == 0) {
             unsigned char open = !D_004FFC04->f260;
             int tok = -2;
             if (open) {
                 Ui287E00* ui;
                 FrontEnd_StartSplashThread(D_004FFC04);
                 ui = D_004FFC04;
-                tok = FrontEnd_OpenPopup(ui, 0, D_004A9578, Loc_LookupText(D_004A9580), 0, 0);
+                tok = cGameFrontEnd_PushMessageBox(ui, 0, D_004A9578, nGlobalization_GetString_charP(D_004A9580), 0, 0);
             }
-            r = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9590, D_004A95A0);
+            r = GuiManager_OpenGui(Gui_Manager(), D_004A9590, D_004A95A0);
             if (open) {
-                FrontEnd_ClosePopup(D_004FFC04, tok);
+                cGameFrontEnd_PopMessageBox(D_004FFC04, tok);
                 FrontEnd_StopSplashThread(D_004FFC04);
             }
-        } else if (String_AssignCStr_1C43A0(msg->str, D_0048B3F0) == 0) {
-            r = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A95B0, D_004A95C0);
-        } else if (String_AssignCStr_1C43A0(msg->str, D_0048B3F8) == 0) {
-            r = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A95D0, D_004A95E0);
+        } else if (std_basic_string_char_char_traits_char_compare_charP(msg->str, D_0048B3F0) == 0) {
+            r = GuiManager_OpenGui(Gui_Manager(), D_004A95B0, D_004A95C0);
+        } else if (std_basic_string_char_char_traits_char_compare_charP(msg->str, D_0048B3F8) == 0) {
+            r = GuiManager_OpenGui(Gui_Manager(), D_004A95D0, D_004A95E0);
         }
         if (r)
-            GuiStack_SwapScreens(Gui_GetScreenStack(), self, r);
+            GuiCanvas_Transition(Gui_Canvas(), self, r);
         return 1;
     }
-    return GuiWidget_OnEvent(self, msg, id, a3, a4);
+    return GuiWidget_onMessage(self, msg, id, a3, a4);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00287E00 */

@@ -11,14 +11,14 @@
 #pragma push /* merge_units */
 typedef struct { char pad[0x40C]; unsigned char type; } EquipItem;
 typedef struct { char pad[0x2410]; EquipItem* slots[8]; } EquipState;
-extern void Equip_Init(EquipState* e, int slot, EquipItem* it);
-void Equip_SetSlot(EquipState* e, int slot, EquipItem* it) {
+extern void cMan_UpdateHandMorphs(EquipState* e, int slot, EquipItem* it);
+void cMan_AddGun(EquipState* e, int slot, EquipItem* it) {
     if (it) {
         int t = it->type;
         if (t < 0 || t >= 8) return;
     }
     e->slots[slot] = it;
-    Equip_Init(e, slot, it);
+    cMan_UpdateHandMorphs(e, slot, it);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0038C7D0(void) {}
@@ -45,7 +45,7 @@ extern "C" {
 extern char g_AgentPartCache[];
 int FindTex__7MonsterF1(char* cache, __int128 name);
 void Monster_FreeTexture(char* cache, int slot);
-int MeshCache_FindSlot(char* cache, __int128 name);
+int FindPart__7MonsterF1(char* cache, __int128 name);
 void Monster_FreePart(char* cache, int slot);
 void DELAY_DELETE_ARRAY(void* p);
 }
@@ -54,7 +54,7 @@ extern "C" void cMan_FreeMan(Self38C820* self)
 {
     int i;
     for (i = 0; i < self->x23C0; i++) {
-        int s = MeshCache_FindSlot(g_AgentPartCache, self->pairs[i].a);
+        int s = FindPart__7MonsterF1(g_AgentPartCache, self->pairs[i].a);
         if (s != -1) {
             Monster_FreePart(g_AgentPartCache, s);
         }

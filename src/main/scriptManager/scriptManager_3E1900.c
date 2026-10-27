@@ -17,7 +17,7 @@
  */
 
 
-extern ListPos* List_InsertBefore(ListPos* result, void* list, ListPos* pos, int value);
+extern ListPos* std_list_deleter_voidPtr_insert(ListPos* result, void* list, ListPos* pos, int value);
 extern OwnedVec* std_vector_imp_SubScriptPtr_1_ctor(OwnedVec* v);
 
 /* push_back on a list whose sentinel node is at +4. */
@@ -26,7 +26,7 @@ ListPos* std_list_SymbolTablePtr_push_back(void* list, int value) {
     ListPos result;
 
     end.node = (char*)list + 4;
-    return List_InsertBefore(&result, list, &end, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &end, value);
 }
 
 OwnedVec* cArray_SubScriptPtr_ctor(OwnedVec* v) {

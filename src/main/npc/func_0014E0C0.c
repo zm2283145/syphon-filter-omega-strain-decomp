@@ -1,4 +1,4 @@
-/* NpcAttack_SelectLookAt 0014E0C0 mw38 - matched by c150lg (slot-loop IsValid2 with SameNV2(Obj*,Hdl*) helper) */
+/* cNPC_UpdateLookAt 0014E0C0 mw38 - matched by c150lg (slot-loop IsValid2 with SameNV2(Obj*,Hdl*) helper) */
 #pragma cplusplus on
 #include "types.h"
 #include "vslot_pad.h"
@@ -59,19 +59,19 @@ LNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_3(voi
 LNode* std_list_deleter_cLookAtListItem_tail(void*);
 void std_list_deleter_cLookAtListItem_generic_iterator_ctor_nodeP(It*, LNode*);
 void std_list_deleter_cLookAtListItem_generic_iterator_ctor_nodebaseP(It*, LNode*);
-int NpcPerception_SightTest(void*, V*, int, int);
-void Event_Construct(void*, void*);
-void Event_Send(void*, void*, int);
+int cAITarget_TestPointInViewCone(void*, V*, int, int);
+void cMessage_ctor_cMessageNameR(void*, void*);
+void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 void cMessage_dtor(void*, int);
-void NetEvent_Send(void*, int, int, int, int, int, int);
-void NpcAttack_SelectLookAt(Npc* self, float dt);
+void cNetNPCMsgs_SendMessage(void*, int, int, int, int, int, int);
+void cNPC_UpdateLookAt(Npc* self, float dt);
 }
 
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
 
 struct MsgB {
     void* vtable; void* type; int pad8[7]; int id; unsigned char kind; char pad29[3];
-    MsgB(void* t) { Event_Construct(this, t); }
+    MsgB(void* t) { cMessage_ctor_cMessageNameR(this, t); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); }
 };
 struct Msg3D : MsgB {
@@ -94,7 +94,7 @@ struct ByteMsg : Msg3D {
     __declspec(weak) __declspec(MSG_DTOR) ~ByteMsg() {}
 };
 
-static inline void Send(const MsgB& m, Owner* o) { Event_Send((void*)&m, o, 0); }
+static inline void Send(const MsgB& m, Owner* o) { QueueMessage_cMessageR_cSystemP_int((void*)&m, o, 0); }
 static inline void Sub(V* r, V* a, V* b) { __asm__ volatile("lqc2 vf1, 0x0(%1); lqc2 vf2, 0x0(%2); vsub.xyzw vf1, vf1, vf2; sqc2 vf1, 0x0(%0)" : : "r"(r), "r"(a), "r"(b) : "memory"); }
 static inline unsigned char IsZero3(V* v) {
     int k, f; int r = 0;
@@ -127,7 +127,7 @@ static inline It Begin0(LNode* n) { It t; std_list_deleter_cLookAtListItem_gener
 static inline It Begin(char* l) { It t; std_list_deleter_cLookAtListItem_generic_iterator_ctor_nodeP(&t, std_list_deleter_cLookAtListItem_tail(l)->next); return t; }
 static inline It End(char* l) { It t; std_list_deleter_cLookAtListItem_generic_iterator_ctor_nodebaseP(&t, std_list_deleter_cLookAtListItem_tail(l)); return t; }
 static inline void SubEq(V* a, const V& b) { Sub(a, a, (V*)&b); }
-static inline int Sight(void* ai, const V& p) { return NpcPerception_SightTest(ai, (V*)&p, 1, 0); }
+static inline int Sight(void* ai, const V& p) { return cAITarget_TestPointInViewCone(ai, (V*)&p, 1, 0); }
 static inline Slot* CurSlot(Npc* self) { unsigned char i = self->cur; Slot* r = 0; if (self->slots[i].on) r = &self->slots[i]; return r; }
 static inline void ClearSlot(Npc* self, unsigned char i, int prio) {
     if (prio >= self->slots[i].prio) { self->slots[i].on = 0; self->slots[i].prio = 0; }
@@ -161,7 +161,7 @@ static inline unsigned char Alive(Obj* o) {
     return r;
 }
 
-void NpcAttack_SelectLookAt(Npc* self, float dt)
+void cNPC_UpdateLookAt(Npc* self, float dt)
 {
     int i;
     self->found = 0;
@@ -220,17 +220,17 @@ void NpcAttack_SelectLookAt(Npc* self, float dt)
                 V p = self->slots[0].h.Get()->GetPos(-1);
                 p.z += 4.5f;
                 Send(PosMsg(p), self->owner);
-                if (g_IsMultiplayer) NetEvent_Send(self->owner, 0xE, 4, *(int*)&p.x, *(int*)&p.y, *(int*)&p.z, 0);
+                if (g_IsMultiplayer) cNetNPCMsgs_SendMessage(self->owner, 0xE, 4, *(int*)&p.x, *(int*)&p.y, *(int*)&p.z, 0);
             } else {
                 Send(SerMsg(&self->slots[0].h.Get()->serial), self->owner);
-                if (g_IsMultiplayer) NetEvent_Send(self->owner, 0xE, 4, self->slots[0].h.Get()->serial, 0, 0, 0);
+                if (g_IsMultiplayer) cNetNPCMsgs_SendMessage(self->owner, 0xE, 4, self->slots[0].h.Get()->serial, 0, 0, 0);
             }
             self->f1A8 = 1;
             self->slots[0].f17D = 0;
         }
     } else if (self->f1A8) {
         Send(ByteMsg(D_00489DE0), self->owner);
-        if (g_IsMultiplayer) NetEvent_Send(self->owner, 0xE, 4, 0, 0, 0, 0);
+        if (g_IsMultiplayer) cNetNPCMsgs_SendMessage(self->owner, 0xE, 4, 0, 0, 0, 0);
         self->f1A8 = 0;
     } else {
         unsigned char g = 0;

@@ -1,5 +1,5 @@
 #include "types.h"
-extern char ScriptType_cGOBJ_Init[];
+extern char cGOBJ_SOBJ_init[];
 extern int D_005436B8;
 extern int D_005436C0;
 extern char Script_IsPlayer[];
@@ -28,32 +28,32 @@ extern char Script_cGOBJ_GetDarkness[];
 extern int D_00543710;
 extern char Script_cGOBJ_ScaleBBox[];
 extern int D_00543718;
-extern char ScriptType_SubScript_Init[];
+extern char SubScript_SOBJ_init[];
 extern int D_00543720;
 extern int D_00543728;
 extern char Script_SubScript_Enable[];
 extern int D_00543730;
 extern char Script_SubScript_Disable[];
 extern int D_00543738;
-extern int Script_RegisterType();
-extern int Script_RegisterNative();
-void StaticInit_RegisterGobj(void)
+extern int cScriptBase_addClass();
+extern int cScriptBase_registerFunc_int_intPintPint_intP_charP_etc();
+void StaticInit_gobj(void)
 {
-    D_005436B8 = Script_RegisterType("cGOBJ", ScriptType_cGOBJ_Init, 0, 1);
+    D_005436B8 = cScriptBase_addClass("cGOBJ", cGOBJ_SOBJ_init, 0, 1);
     D_005436C0 = D_005436B8;
-    D_005436C8 = Script_RegisterNative(D_005436B8, Script_IsPlayer, D_00493878, "IsPlayer", 1, &D_005436B8);
-    D_005436D0 = Script_RegisterNative(D_005436B8, Script_cGOBJ_IsNPC, D_00493878, "IsNPC", 1, &D_005436B8);
-    D_005436D8 = Script_RegisterNative(D_005436B8, Script_cGOBJ_CreateBlast, D_00493880, "CreateBlast", 5, &D_005436B8, D_00493888, D_00493890, D_00493890, D_00493890);
-    D_005436E0 = Script_RegisterNative(D_005436B8, Script_cGOBJ_GetHitpoints, D_00493888, "GetHitpoints", 1, &D_005436B8);
-    D_005436E8 = Script_RegisterNative(D_005436B8, Script_cGOBJ_SetHitpoints, D_00493880, "SetHitpoints", 2, &D_005436B8, D_00493888);
-    D_005436F0 = Script_RegisterNative(D_005436B8, Script_cGOBJ_Team, D_00493888, "Team", 1, &D_005436B8);
-    D_005436F8 = Script_RegisterNative(D_005436B8, Script_cGOBJ_Enemy, D_00493878, "Enemy", 2, &D_005436B8, &D_005436B8);
-    D_00543700 = Script_RegisterNative(D_005436B8, Script_cGOBJ_Enemy_2, D_00493878, "Enemy", 2, &D_005436B8, D_00493888);
-    D_00543708 = Script_RegisterNative(D_005436B8, Script_cGOBJ_SetDarkness, D_00493880, "SetDarkness", 2, &D_005436B8, D_00493888);
-    D_00543710 = Script_RegisterNative(D_005436B8, Script_cGOBJ_GetDarkness, D_00493888, "GetDarkness", 1, &D_005436B8);
-    D_00543718 = Script_RegisterNative(D_005436B8, Script_cGOBJ_ScaleBBox, D_00493880, "ScaleBBox", 2, &D_005436B8, D_00493890);
-    D_00543720 = Script_RegisterType("SubScript", ScriptType_SubScript_Init, 0, 1);
+    D_005436C8 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_005436B8, Script_IsPlayer, D_00493878, "IsPlayer", 1, &D_005436B8);
+    D_005436D0 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_005436B8, Script_cGOBJ_IsNPC, D_00493878, "IsNPC", 1, &D_005436B8);
+    D_005436D8 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_005436B8, Script_cGOBJ_CreateBlast, D_00493880, "CreateBlast", 5, &D_005436B8, D_00493888, D_00493890, D_00493890, D_00493890);
+    D_005436E0 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_005436B8, Script_cGOBJ_GetHitpoints, D_00493888, "GetHitpoints", 1, &D_005436B8);
+    D_005436E8 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_005436B8, Script_cGOBJ_SetHitpoints, D_00493880, "SetHitpoints", 2, &D_005436B8, D_00493888);
+    D_005436F0 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_005436B8, Script_cGOBJ_Team, D_00493888, "Team", 1, &D_005436B8);
+    D_005436F8 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_005436B8, Script_cGOBJ_Enemy, D_00493878, "Enemy", 2, &D_005436B8, &D_005436B8);
+    D_00543700 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_005436B8, Script_cGOBJ_Enemy_2, D_00493878, "Enemy", 2, &D_005436B8, D_00493888);
+    D_00543708 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_005436B8, Script_cGOBJ_SetDarkness, D_00493880, "SetDarkness", 2, &D_005436B8, D_00493888);
+    D_00543710 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_005436B8, Script_cGOBJ_GetDarkness, D_00493888, "GetDarkness", 1, &D_005436B8);
+    D_00543718 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_005436B8, Script_cGOBJ_ScaleBBox, D_00493880, "ScaleBBox", 2, &D_005436B8, D_00493890);
+    D_00543720 = cScriptBase_addClass("SubScript", SubScript_SOBJ_init, 0, 1);
     D_00543728 = D_00543720;
-    D_00543730 = Script_RegisterNative(D_00543720, Script_SubScript_Enable, D_00493880, "Enable", 1, &D_00543720);
-    D_00543738 = Script_RegisterNative(D_00543720, Script_SubScript_Disable, D_00493880, "Disable", 1, &D_00543720);
+    D_00543730 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_00543720, Script_SubScript_Enable, D_00493880, "Enable", 1, &D_00543720);
+    D_00543738 = cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(D_00543720, Script_SubScript_Disable, D_00493880, "Disable", 1, &D_00543720);
 }

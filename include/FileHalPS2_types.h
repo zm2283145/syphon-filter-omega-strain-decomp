@@ -3,7 +3,7 @@
 
 /*
  * PS2 CD file HAL (FileHalPS2.cc). A FileHalFile is opened by name with
- * Cd_SearchFile (Cd_SearchFile) and read asynchronously in 2 KB sectors.
+ * snd_StreamSafeCdSearchFile (snd_StreamSafeCdSearchFile) and read asynchronously in 2 KB sectors.
  */
 
 #define CD_SECTOR_SIZE 2048

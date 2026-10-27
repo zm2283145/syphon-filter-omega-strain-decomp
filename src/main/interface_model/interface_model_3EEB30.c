@@ -8,11 +8,11 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { char pad[0x6E]; unsigned short count; char p1[0x84 - 0x70]; void** list; } T3EEB30;
-extern int String_AssignCStr_1C43A0(void* s, const char* name);
-void* IeNode_FindChild(T3EEB30* t, const char* name) {
+extern int std_basic_string_char_char_traits_char_compare_charP(void* s, const char* name);
+void* cInterfaceModel_GetChild(T3EEB30* t, const char* name) {
     int i;
     for (i = 0; i < t->count; i++) {
-        if (String_AssignCStr_1C43A0(t->list[i], name) == 0) return t->list[i];
+        if (std_basic_string_char_char_traits_char_compare_charP(t->list[i], name) == 0) return t->list[i];
     }
     return 0;
 }
@@ -32,13 +32,13 @@ typedef struct Node_3EEBE0 {
 } Node_3EEBE0;
 
 /* The recursive flag propagation as CodeWarrior inlined it into itself five levels deep. */
-void IeNode_SetShown(Node_3EEBE0 *n, char v, int recurse);
+void cInterfaceModel_Activate(Node_3EEBE0 *n, char v, int recurse);
 
 static inline void L5_3EEBE0(Node_3EEBE0 *n, char v)
 {
     int i;
     n->flag = v;
-    for (i = 0; i < n->count; i++) IeNode_SetShown(n->children[i], v, 1);
+    for (i = 0; i < n->count; i++) cInterfaceModel_Activate(n->children[i], v, 1);
 }
 static inline void L4_3EEBE0(Node_3EEBE0 *n, char v)
 {
@@ -65,7 +65,7 @@ static inline void L1_3EEBE0(Node_3EEBE0 *n, char v)
     for (i = 0; i < n->count; i++) L2_3EEBE0(n->children[i], v);
 }
 
-void IeNode_SetShown(Node_3EEBE0 *n, char v, int recurse)
+void cInterfaceModel_Activate(Node_3EEBE0 *n, char v, int recurse)
 {
     int i;
     n->flag = v;

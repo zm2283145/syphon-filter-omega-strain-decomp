@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Rec* Vec4_ClearW(Rec* r) {
+Rec* cVector_WSet0(Rec* r) {
     r->v = 0;
     return r;
 }

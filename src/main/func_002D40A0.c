@@ -19,24 +19,24 @@ typedef struct Ctl { char p0[0x3524]; void* inv; char p3528[0x3584 - 0x3528]; Tg
 typedef struct Msg { void* vtable; char pad[0x1C]; unsigned char kind; char pad2[3]; unsigned char b24; char pad3[0xB]; char data[0x40]; } Msg;
 extern "C" {
 extern char g_NpcDeadList[], g_TeleportMsgClass[], D_004D9360[];
-extern void NpcThinkList_Add(Obj*);
-extern void NpcAi_AddToDeadList(void*, Self**);
-extern Ctl* AiController_GetActor(Self*);
-extern float Vec4_GetX(V4*);
-extern float Vec4_GetY(V4*);
-extern float Vec4_GetZ(V4*);
-extern void Mtx_MakeAxisRotation(M4*, float, float, float, float);
-extern void Event_Construct(Msg* m, void* type);
-extern int TeleportMsg_IsMode3(Msg* m);
+extern void cNPC_AddToActiveList(Obj*);
+extern void std_list_cNPCPtr_push_back(void*, Self**);
+extern Ctl* cNPC_Human(Self*);
+extern float cVector_X_void(V4*);
+extern float cVector_Y_void(V4*);
+extern float cVector_Z_void(V4*);
+extern void cMatrix_SetWithAxisAngle(M4*, float, float, float, float);
+extern void cMessage_ctor_cMessageNameR(Msg* m, void* type);
+extern int cMoveMsg_Template_1_HasDeltaPosition(Msg* m);
 extern void* func_00133EC0(void* obj);
 extern void cVector_Copy_WSet0(V4* out, void* v);
-extern void Vec4_CopyAsPoint(V4* out, void* v);
-extern void Mtx_SetRotationTranslation(void* data, void* obj, V4* v);
-extern void Event_Send(Msg* m, void* target, int immediate);
+extern void cVector_Copy_WSet1(V4* out, void* v);
+extern void cMatrix_ctor_cMatrixR_cVectorR(void* data, void* obj, V4* v);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg* m, void* target, int immediate);
 extern void cMessage_dtor(Msg* m, int flags);
-extern int WeaponInv_IsFullAuto(void*);
-extern void NpcPerception_ResetView(void*);
-extern void NpcPath_Start(void*);
+extern int cWeapon_IsFullyAutomatic(void*);
+extern void cAITarget_Activate(void*);
+extern void cPathNavigator_Activate(void*);
 extern void func_0014FC60(Self*);
 extern void cPathNavigator_Request_int_int_cVectorP(void*, int, int, void*);
 }
@@ -57,11 +57,11 @@ extern "C" void cNetNPC_Activate(Self* self)
             }
         } else {
             if (self->f44()) {
-                NpcThinkList_Add(self->obj);
+                cNPC_AddToActiveList(self->obj);
             } else {
-                NpcAi_AddToDeadList(g_NpcDeadList, &self);
+                std_list_cNPCPtr_push_back(g_NpcDeadList, &self);
             }
-            if (AiController_GetActor(self) && AiController_GetActor(self)->tgt) {
+            if (cNPC_Human(self) && cNPC_Human(self)->tgt) {
                 V4 pos;
                 float ang;
                 M4 mtx;
@@ -71,43 +71,43 @@ extern "C" void cNetNPC_Activate(Self* self)
                 V4 a2;
                 V4 b2;
                 V4* v;
-                Tgt* t = AiController_GetActor(self)->tgt;
+                Tgt* t = cNPC_Human(self)->tgt;
                 pos.x = t->px;
                 pos.y = t->py;
                 pos.z = t->pz;
-                ang = AiController_GetActor(self)->tgt->ang;
+                ang = cNPC_Human(self)->tgt->ang;
                 axis.x = 0.0f;
                 axis.y = 0.0f;
                 axis.z = 1.0f;
                 axis.w = 1.0f;
-                Mtx_MakeAxisRotation(&mtx, Vec4_GetX(&axis), Vec4_GetY(&axis), Vec4_GetZ(&axis), ang);
+                cMatrix_SetWithAxisAngle(&mtx, cVector_X_void(&axis), cVector_Y_void(&axis), cVector_Z_void(&axis), ang);
                 V4_Copy(&mtx.r[3], &pos);
                 m = &msg;
-                Event_Construct(m, g_TeleportMsgClass);
+                cMessage_ctor_cMessageNameR(m, g_TeleportMsgClass);
                 m->vtable = D_004D9360;
                 m->b24 = 2;
-                if (TeleportMsg_IsMode3(m)) {
+                if (cMoveMsg_Template_1_HasDeltaPosition(m)) {
                     cVector_Copy_WSet0(&a2, func_00133EC0(&mtx));
                     v = &a2;
                 } else {
-                    Vec4_CopyAsPoint(&b2, func_00133EC0(&mtx));
+                    cVector_Copy_WSet1(&b2, func_00133EC0(&mtx));
                     v = &b2;
                 }
-                Mtx_SetRotationTranslation(m->data, &mtx, v);
+                cMatrix_ctor_cMatrixR_cVectorR(m->data, &mtx, v);
                 msg.kind = 1;
-                Event_Send(&msg, self->obj, 1);
+                QueueMessage_cMessageR_cSystemP_int(&msg, self->obj, 1);
                 self->b1EE = 0;
                 msg.vtable = D_004D9360;
                 cMessage_dtor(&msg, 0);
             }
-            if (!WeaponInv_IsFullAuto(AiController_GetActor(self)->inv)) {
+            if (!cWeapon_IsFullyAutomatic(cNPC_Human(self)->inv)) {
                 self->f8C = 0.2f + 0.01f * (float)(unsigned int)(self->obj->hC & 0xF);
             } else {
                 self->f8C = 0.0f;
             }
             self->x84 = 0;
-            NpcPerception_ResetView(self->x1AC);
-            NpcPath_Start(self->x1B0);
+            cAITarget_Activate(self->x1AC);
+            cPathNavigator_Activate(self->x1B0);
             func_0014FC60(self);
             if (self->bf1) {
                 if (self->x20C >= 0) {

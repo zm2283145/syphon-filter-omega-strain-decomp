@@ -13,7 +13,7 @@
 #pragma cplusplus on
 class C3CE810 { public: VPAD16(a) virtual void f(); };
 struct O3CE810 { char pad[0x2D]; unsigned char b2D; char pad2[0x2A]; C3CE810* m; };
-extern "C" void cNode_v06(O3CE810* self)
+extern "C" void cGOBJ_NetActivate(O3CE810* self)
 {
     self->b2D = 1;
     C3CE810* m = self->m;
@@ -44,8 +44,8 @@ public:
     virtual V4_850 GetPos(int);
 };
 extern "C" {
-Obj_850* Player_GetCached(void);
-Obj_850* PlayerSlots_Get(int);
+Obj_850* nGobjManager_GetPlayer(void);
+Obj_850* cNetObj_GetPlayer(int);
 }
 static inline void VSub_850(V4_850* a, V4_850* b) {
     asm {
@@ -71,15 +71,15 @@ static inline float LenSq_850(V4_850* a) {
     }
     return ret;
 }
-extern "C" Obj_850* Object_ClosestPlayerDistSq(Obj_850* self, float* outDist)
+extern "C" Obj_850* cGOBJ_GetClosestPlayer(Obj_850* self, float* outDist)
 {
-    Obj_850* best = Player_GetCached();
+    Obj_850* best = nGobjManager_GetPlayer();
     float bestD = 1e8f;
     int i = 0;
     goto test;
 loop:
     {
-        Obj_850* p = PlayerSlots_Get(i);
+        Obj_850* p = cNetObj_GetPlayer(i);
         if (p) {
             V4_850 a = self->GetPos(-1);
             V4_850 b = p->GetPos(-1);

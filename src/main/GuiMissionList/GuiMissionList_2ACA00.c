@@ -19,11 +19,11 @@ typedef struct {
     int f0; char name[0x20]; int f24; char pad28[0x34 - 0x28]; int f34; int f38; char pad3C[0x44 - 0x3C]; int f44;
 } E_002ACA00;
 extern S_002ACA00* D_005065C0;
-#define LobbyArray_At(a0, a1) ((E_002ACA00 *)LobbyArray_At((a0), (a1))) /* merge_units */
+#define SFOLobbyList_GetSlot(a0, a1) ((E_002ACA00 *)SFOLobbyList_GetSlot((a0), (a1))) /* merge_units */
 int GuiMissionList_Sort_DisplayGames(const void* a, const void* b)
 {
-    E_002ACA00* e1 = LobbyArray_At(D_005065C0->p11C, ((It_002ACA00*)a)->idx);
-    E_002ACA00* e2 = LobbyArray_At(D_005065C0->p11C, ((It_002ACA00*)b)->idx);
+    E_002ACA00* e1 = SFOLobbyList_GetSlot(D_005065C0->p11C, ((It_002ACA00*)a)->idx);
+    E_002ACA00* e2 = SFOLobbyList_GetSlot(D_005065C0->p11C, ((It_002ACA00*)b)->idx);
     int r1;
     int r2;
     if (!e1 || !e2)
@@ -59,7 +59,7 @@ int GuiMissionList_Sort_DisplayGames(const void* a, const void* b)
         return r1 - r2;
     return strcmp(e1->name, e2->name);
 }
-#undef LobbyArray_At /* merge_units */
+#undef SFOLobbyList_GetSlot /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002ACA00(void) {}
 #pragma pop /* merge_units */
@@ -82,10 +82,10 @@ struct S_002ACB70 : W_002ACB70 {
 };
 extern "C" {
 void GuiMissionList_UpdateSelectList(S_002ACB70* self);
-void GuiArrayWidget_Select(S_002ACB70* self, int a, int b);
-int GuiArrayWidget_IsCellVisible(S_002ACB70* self, int a, unsigned int b);
-void GuiArrayWidget_Scroll(S_002ACB70* self, int a, unsigned int b);
-void LobbyArray_SetDirty(void* p, int a);
+void GuiArrayWidget_SetSelected(S_002ACB70* self, int a, int b);
+int GuiArrayWidget_IsVisible(S_002ACB70* self, int a, unsigned int b);
+void GuiArrayWidget_MakeVisible(S_002ACB70* self, int a, unsigned int b);
+void SFOLobbyList_SetUpdateFlag(void* p, int a);
 }
 static inline void Upd_(S_002ACB70* s, int n) { s->SetCount(s->f48, n); }
 #pragma opt_dead_assignments off
@@ -96,7 +96,7 @@ extern "C" void GuiMissionList_UpdateLobbyList(S_002ACB70* self)
         old = self->f54 - self->f7C;
     GuiMissionList_UpdateSelectList(self);
     Upd_(self, self->count);
-    GuiArrayWidget_Select(self, 0, self->fCC);
+    GuiArrayWidget_SetSelected(self, 0, self->fCC);
     if (self->f54 >= self->f7C) {
         unsigned int d = self->f54 - self->f7C;
         if (d != old) {
@@ -111,10 +111,10 @@ extern "C" void GuiMissionList_UpdateLobbyList(S_002ACB70* self)
             self->f7C = v;
         }
     }
-    if (!GuiArrayWidget_IsCellVisible(self, self->f50, self->f54))
-        GuiArrayWidget_Scroll(self, self->f50, self->f54);
+    if (!GuiArrayWidget_IsVisible(self, self->f50, self->f54))
+        GuiArrayWidget_MakeVisible(self, self->f50, self->f54);
     if (self->p11C)
-        LobbyArray_SetDirty(self->p11C, 0);
+        SFOLobbyList_SetUpdateFlag(self->p11C, 0);
 }
 
 

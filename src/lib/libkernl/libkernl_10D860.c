@@ -1,7 +1,7 @@
 extern unsigned int D_00486194;
 extern unsigned int EndOfHeap(void);
 extern int *Newlib_Errno(void);
-unsigned int Newlib_SysSbrk(int incr)
+unsigned int Libc_Sbrk(int incr)
 {
     int s, v;
     unsigned int n, old;

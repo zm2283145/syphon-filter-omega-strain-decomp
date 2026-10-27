@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int Newlib_SysGetpid(void) {
+int Libc_Getpid(void) {
     return 1;
 }

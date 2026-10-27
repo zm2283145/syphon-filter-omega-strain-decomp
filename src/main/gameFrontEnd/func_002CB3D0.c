@@ -64,50 +64,50 @@ extern char D_004DE220[];
 extern char D_004DE200[];
 extern int g_WeaponDatabase;
 extern char D_0055A700[];
-void FrontEnd_ResumeGui(Self3D0* self);
+void cGameFrontEnd_Restore(Self3D0* self);
 void FrontEnd_CreateCanvas(Self3D0* self, unsigned char flag);
-Stk3D0* Gui_GetScreenStack(void);
-int Gui_GetScreenList(void);
+Stk3D0* Gui_Canvas(void);
+int Gui_Manager(void);
 void GuiCanvas_Activate(Stk3D0* s, int x);
-Scr3D0* GuiManager_CreateRoot(int l, char* a, char* b);
-Scr3D0* GuiManager_FindOrLoad(int l, char* a, char* b);
-int DME_GetLobby(void);
+Scr3D0* GuiManager_ConstructGui(int l, char* a, char* b);
+Scr3D0* GuiManager_OpenGui(int l, char* a, char* b);
+int cDME_GetLobby(void);
 void SFOLobby_InitLists(int g);
-void DME_StartThread(void);
-long long Time_GetMilliseconds(void);
+void cDME_StartUpdateThread(void);
+long long cTimer_GetMillisecondTime(void);
 void FrontEnd_SetLoadingScreen(Self3D0* self, int a, int b, int c);
 char* strncpy(char* d, const char* s, int n);
-void* Service_Lookup(void* a, void* b);
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, void* target, int immediate);
+void* cSystemContainer_GetSystem(void* a, void* b);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
-void GuiWidget_SendEvent(Stk3D0* a, Stk3D0* b, int c, int d, int e);
+void GuiWidget_SendMessage(Stk3D0* a, Stk3D0* b, int c, int d, int e);
 void FrontEnd_GetCharacterData(Self3D0* self);
-void FrontEnd_LoadZeusHog(Self3D0* self);
-void WeaponDb_LoadWpnHog(int a);
-void DME_StopThread(void);
+void cGameFrontEnd_OpenZeusHog(Self3D0* self);
+void cWeaponDB_OpenWeaponsHog(int a);
+void cDME_StopUpdateThread(void);
 void func_002CA6F0(Self3D0* self);
-void DME_SetLobbyActive(int a);
+void cDME_ActivateLobby(int a);
 void FrontEnd_FlushMessages(Self3D0* self);
 void SFOLobby_Reset(int g, int a);
-W3D0* App_GetInstance(void);
+W3D0* GetMachine(void);
 void cUSBKeybd_SetKeyMode(void* p);
 }
-extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
+extern "C" void cGameFrontEnd_InitGui(Self3D0* self, unsigned char flag)
 {
     Scr3D0* scr;
     if (self->b28) return;
     if (self->b37) {
-        FrontEnd_ResumeGui(self);
+        cGameFrontEnd_Restore(self);
         return;
     }
     FrontEnd_CreateCanvas(self, flag);
-    { Stk3D0* st = Gui_GetScreenStack(); st->b51 = !flag; }
-    GuiCanvas_Activate(Gui_GetScreenStack(), 0);
-    GuiCanvas_Activate(Gui_GetScreenStack(), 1);
-    Gui_GetScreenStack()->x68 = 0;
-    if (!flag) Gui_GetScreenStack()->x68 |= 0xF000;
-    scr = GuiManager_CreateRoot(Gui_GetScreenList(), D_004ACFE8, D_004ACFF8);
+    { Stk3D0* st = Gui_Canvas(); st->b51 = !flag; }
+    GuiCanvas_Activate(Gui_Canvas(), 0);
+    GuiCanvas_Activate(Gui_Canvas(), 1);
+    Gui_Canvas()->x68 = 0;
+    if (!flag) Gui_Canvas()->x68 |= 0xF000;
+    scr = GuiManager_ConstructGui(Gui_Manager(), D_004ACFE8, D_004ACFF8);
     scr = (scr && scr->IsA(D_004AD1F8)) ? scr : 0;
     self->p258 = scr;
     if (!flag) {
@@ -129,12 +129,12 @@ extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
             s->f2F6 = 1;
         }
         had = 0;
-        if (DME_GetLobby()) {
-            SFOLobby_InitLists(DME_GetLobby());
-            DME_StartThread();
+        if (cDME_GetLobby()) {
+            SFOLobby_InitLists(cDME_GetLobby());
+            cDME_StartUpdateThread();
             had = 1;
         }
-        self->x20 = Time_GetMilliseconds();
+        self->x20 = cTimer_GetMillisecondTime();
         go = 0;
         FrontEnd_SetLoadingScreen(self, 1, 0, 0);
         self->x30C = -1;
@@ -153,50 +153,50 @@ extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
             buf.len = n;
         }
         strncpy(g_LevelDirName, D_004ACF48, 0x80);
-        svc = Service_Lookup(g_Game, D_004F2CC0);
-        Event_Construct(&m1, D_004F5370);
+        svc = cSystemContainer_GetSystem(g_Game, D_004F2CC0);
+        cMessage_ctor_cMessageNameR(&m1, D_004F5370);
         m1.vt = D_004DE220;
-        Event_Send(&m1, svc, 1);
+        QueueMessage_cMessageR_cSystemP_int(&m1, svc, 1);
         m1.vt = D_004DE220;
         cMessage_dtor(&m1, 0);
-        Event_Construct(&m2, D_004F5378);
+        cMessage_ctor_cMessageNameR(&m2, D_004F5378);
         m2.vt = D_004DE200;
-        Event_Send(&m2, svc, 1);
+        QueueMessage_cMessageR_cSystemP_int(&m2, svc, 1);
         m2.vt = D_004DE200;
         cMessage_dtor(&m2, 0);
         strncpy(g_LevelDirName, buf.s, 0x80);
         {
-            Stk3D0* a = Gui_GetScreenStack();
-            GuiWidget_SendEvent(a, Gui_GetScreenStack(), 0x10, 5, 0);
+            Stk3D0* a = Gui_Canvas();
+            GuiWidget_SendMessage(a, Gui_Canvas(), 0x10, 5, 0);
         }
         if (self->b2C) {
-            GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AD000, D_004AD010);
-            GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AD020, D_004AD038);
+            GuiManager_OpenGui(Gui_Manager(), D_004AD000, D_004AD010);
+            GuiManager_OpenGui(Gui_Manager(), D_004AD020, D_004AD038);
             FrontEnd_GetCharacterData(self);
         }
         if (self->b35) {
             self->b35 = 0;
-            next = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AD020, D_004AD038);
+            next = GuiManager_OpenGui(Gui_Manager(), D_004AD020, D_004AD038);
             if (self->b30 && !self->b32) go = 1;
         } else {
-            next = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AD000, D_004AD010);
+            next = GuiManager_OpenGui(Gui_Manager(), D_004AD000, D_004AD010);
         }
-        FrontEnd_LoadZeusHog(self);
-        WeaponDb_LoadWpnHog(g_WeaponDatabase);
+        cGameFrontEnd_OpenZeusHog(self);
+        cWeaponDB_OpenWeaponsHog(g_WeaponDatabase);
         FrontEnd_SetLoadingScreen(self, 0, 0, 0);
-        if (had) DME_StopThread();
-        Gui_GetScreenStack()->Push(next, 0);
-        if (go && !DME_GetLobby()) {
+        if (had) cDME_StopUpdateThread();
+        Gui_Canvas()->Push(next, 0);
+        if (go && !cDME_GetLobby()) {
             func_002CA6F0(self);
-            DME_SetLobbyActive(1);
-            if (DME_GetLobby()) {
+            cDME_ActivateLobby(1);
+            if (cDME_GetLobby()) {
                 FrontEnd_FlushMessages(self);
-                SFOLobby_Reset(DME_GetLobby(), 1);
-                DME_SetLobbyActive(0);
+                SFOLobby_Reset(cDME_GetLobby(), 1);
+                cDME_ActivateLobby(0);
             }
         }
     }
-    App_GetInstance()->b278 = flag;
+    GetMachine()->b278 = flag;
     if (!flag) cUSBKeybd_SetKeyMode(D_0055A700);
     self->b28 = 1;
     self->b36 = flag;

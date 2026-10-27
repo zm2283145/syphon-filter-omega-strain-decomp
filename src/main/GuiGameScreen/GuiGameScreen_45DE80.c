@@ -13,7 +13,7 @@
 #include "net_local_id.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_0045DE80 */
 #pragma push /* merge_units */
@@ -27,16 +27,16 @@ int Mem_Free();
 extern "C" {
 int String_Dtor(int, int);                            
 int ActorModel_Release(int);                               
-int GuiWidget_Deinit();                                  
+int GuiWidget_onRemove();                                  
 extern unsigned char g_ProfileLockEnabled;
 }
-extern "C" void GuiGameScreen_Deinit(char * arg0) {
+extern "C" void GuiGameScreen_onRemove(char * arg0) {
     int temp_a0;
     int temp_a0_2;
     int temp_s1;
     int temp_s1_2;
 
-    GuiWidget_Deinit();
+    GuiWidget_onRemove();
     temp_s1 = F_(arg0, 0x48, int);
     {
         AllocGuard g;
@@ -46,7 +46,7 @@ extern "C" void GuiGameScreen_Deinit(char * arg0) {
             String_Dtor(temp_a0, 0);
         }
     }
-    Mem_Free(0, temp_s1, "GuiGameScreen.cc", 0x152);
+    cMemMan_Deallocate(0, temp_s1, "GuiGameScreen.cc", 0x152);
     }
     temp_a0_2 = F_(arg0, 0xD8, int);
     if (temp_a0_2 != 0) {
@@ -54,7 +54,7 @@ extern "C" void GuiGameScreen_Deinit(char * arg0) {
         temp_s1_2 = F_(arg0, 0xD8, int);
         {
             AllocGuard g;
-        Mem_Free(0, temp_s1_2, "GuiGameScreen.cc", 0x157);
+        cMemMan_Deallocate(0, temp_s1_2, "GuiGameScreen.cc", 0x157);
         }
         F_(arg0, 0xD8, int) = 0;
     }
@@ -96,64 +96,64 @@ extern char D_004C2268[];
 extern char D_004C2430[]; extern char D_004A7520[]; extern char D_004C1D10[]; extern char D_004AA640[];
 extern char g_Game[];
 extern V4_45DFD0 D_00587CA0; extern V4_45DFD0 D_00587CB0;
-void GuiWidget_Init(O_45DFD0* o);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void* Gui_GetScreenList(void);
-void* GuiFont_Find(void* mgr, char* name);
-T_45DFD0* TextObj_Construct(void* p, int a, int b, int c, int d, void* e, char* f);
-W_45DFD0* GuiWidget_FindChildByName(void* o, char* name);
+void GuiWidget_onAdd(O_45DFD0* o);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void* Gui_Manager(void);
+void* GuiManager_GetFont(void* mgr, char* name);
+T_45DFD0* cTextArea_ctor(void* p, int a, int b, int c, int d, void* e, char* f);
+W_45DFD0* GuiWidget_FindChild_charP(void* o, char* name);
 void GuiTextWidget_SetDisableWrap(W_45DFD0* w, int v);
-char* Game_GetPlayerNameSlot(void* p, int id);
+char* cGameSystem_GetClientPlayerName(void* p, int id);
 void GuiTextWidget_SetText(W_45DFD0* w, char* s, int f);
 void GuiGameScreen_InitWeaponSelect(O_45DFD0* o);
-void GuiGameScreen_Init(O_45DFD0* o);
+void GuiGameScreen_onAdd(O_45DFD0* o);
 }
-static inline void* Alloc_45DFD0(int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004C2290, line); }
+static inline void* Alloc_45DFD0(int n, int line) { AllocGuard g; return cMemMan_Allocate(0, n, D_004C2290, line); }
 static inline W_45DFD0* Cast_45DFD0(W_45DFD0* w, void* t) { return w && w->IsA(t) ? w : 0; }
 static inline void SetB0_45DFD0(W_45DFD0* w, V4_45DFD0 c) { w->cB0.x = c.x; w->cB0.y = c.y; w->cB0.z = c.z; w->cB0.w = c.w; }
 static inline void SetE0_45DFD0(W_45DFD0* w, V4_45DFD0 c) { w->cE0.x = c.x; w->cE0.y = c.y; w->cE0.z = c.z; w->cE0.w = c.w; }
 
-void GuiGameScreen_Init(O_45DFD0* o)
+void GuiGameScreen_onAdd(O_45DFD0* o)
 {
     T_45DFD0* t;
-    GuiWidget_Init(o);
+    GuiWidget_onAdd(o);
     t = (T_45DFD0*)Alloc_45DFD0(0x60, 0x107);
-    if (t) t = TextObj_Construct(t, 0, 0, 10, 10, GuiFont_Find(Gui_GetScreenList(), "callout"), D_00587D80);
+    if (t) t = cTextArea_ctor(t, 0, 0, 10, 10, GuiManager_GetFont(Gui_Manager(), "callout"), D_00587D80);
     o->f48 = t;
     o->f48->b10 = 2;
     o->f48->b11 = 1;
-    o->f4C = Cast_45DFD0(GuiWidget_FindChildByName(o, "quickchat"), D_004C2430);
-    o->f50 = Cast_45DFD0(GuiWidget_FindChildByName(o, "interact"), D_004A7520);
-    o->f68 = Cast_45DFD0(GuiWidget_FindChildByName(o, "subtitles"), D_004C1D10);
-    o->fE0 = GuiWidget_FindChildByName(o, "choosemenu");
+    o->f4C = Cast_45DFD0(GuiWidget_FindChild_charP(o, "quickchat"), D_004C2430);
+    o->f50 = Cast_45DFD0(GuiWidget_FindChild_charP(o, "interact"), D_004A7520);
+    o->f68 = Cast_45DFD0(GuiWidget_FindChild_charP(o, "subtitles"), D_004C1D10);
+    o->fE0 = GuiWidget_FindChild_charP(o, "choosemenu");
     if (o->fE0) {
-        o->fE4 = Cast_45DFD0(GuiWidget_FindChildByName(o->fE0, "title"), D_004A7520);
+        o->fE4 = Cast_45DFD0(GuiWidget_FindChild_charP(o->fE0, "title"), D_004A7520);
         GuiTextWidget_SetDisableWrap(o->fE4, 1);
-        o->fE8 = Cast_45DFD0(GuiWidget_FindChildByName(o->fE0, "choices"), D_004AA640);
+        o->fE8 = Cast_45DFD0(GuiWidget_FindChild_charP(o->fE0, "choices"), D_004AA640);
         SetB0_45DFD0(o->fE8, D_00587CA0);
         SetE0_45DFD0(o->fE8, D_00587CB0);
         o->fE8->bF0 = 1;
     }
     if (!o->fE0 || !o->fE4 || !o->fE8) o->fE0 = 0;
-    o->f114 = Cast_45DFD0(GuiWidget_FindChildByName(o, "value_codename"), D_004A7520);
+    o->f114 = Cast_45DFD0(GuiWidget_FindChild_charP(o, "value_codename"), D_004A7520);
     if (o->f114) {
         if (g_IsMultiplayer) {
-            char* s = Game_GetPlayerNameSlot(g_Game, NetLocalId());
+            char* s = cGameSystem_GetClientPlayerName(g_Game, NetLocalId());
             GuiTextWidget_SetText(o->f114, s ? s : D_004C2268, 0);
             o->f114->flags |= 2;
         } else {
             o->f114->flags &= ~2;
         }
     }
-    o->f118 = Cast_45DFD0(GuiWidget_FindChildByName(o, "value_timer_description"), D_004A7520);
-    o->f11C = Cast_45DFD0(GuiWidget_FindChildByName(o, "value_timer"), D_004A7520);
+    o->f118 = Cast_45DFD0(GuiWidget_FindChild_charP(o, "value_timer_description"), D_004A7520);
+    o->f11C = Cast_45DFD0(GuiWidget_FindChild_charP(o, "value_timer"), D_004A7520);
     o->f118->flags &= ~2;
     o->f11C->flags &= ~2;
-    o->f120 = Cast_45DFD0(GuiWidget_FindChildByName(o, "headset_playing"), D_004A7520);
-    o->f124 = GuiWidget_FindChildByName(o, "label_talking");
-    o->f6C = GuiWidget_FindChildByName(o, "weaponselect");
-    o->fA4 = GuiWidget_FindChildByName(o, "lines_arrows");
-    o->fA0 = GuiWidget_FindChildByName(o, "brackets");
+    o->f120 = Cast_45DFD0(GuiWidget_FindChild_charP(o, "headset_playing"), D_004A7520);
+    o->f124 = GuiWidget_FindChild_charP(o, "label_talking");
+    o->f6C = GuiWidget_FindChild_charP(o, "weaponselect");
+    o->fA4 = GuiWidget_FindChild_charP(o, "lines_arrows");
+    o->fA0 = GuiWidget_FindChild_charP(o, "brackets");
     GuiGameScreen_InitWeaponSelect(o);
 }
 /* merge_units: generate this block's code under its own pragmas */

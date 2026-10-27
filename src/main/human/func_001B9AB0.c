@@ -5,7 +5,7 @@ extern "C" char D_0049D8D0[];
 extern "C" char D_004DFD80[];
 extern "C" char D_004DCF10[];
 extern "C" char D_004DA8D0[];
-MSG_CLONE_BEGIN(cNetThrowStarMsg_v01, 0x40, D_0049D8D0, 0x331C)
+MSG_CLONE_BEGIN(cNetThrowStarMsg_Clone, 0x40, D_0049D8D0, 0x331C)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

@@ -8,7 +8,7 @@
 #include "types.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00215F50 */
 #pragma push /* merge_units */
@@ -20,7 +20,7 @@ extern char D_004A4550[];
 extern unsigned char g_IsMultiplayer;
 void NetFreeObject(int a);
 void** std_vector_charPtr_opIndex_uint(void* v, int i);
-void FileMan_Release(void* p, int flag);
+void cFileMan_dtor(void* p, int flag);
 void std_vector_cHotboxPtr_dtor(void* p, int flag);
 void func_0013A040(void* p, int flag);
 void std_vector_charPtr_dtor_void(void* p, int flag);
@@ -47,8 +47,8 @@ struct cElevatorGOBJ {
     ElevSnd snd[4];
 };
 #pragma opt_strength_reduction off
-static inline void Free_215F50(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004A4550, line); }
-static inline void SndDtor(ElevSnd* s) { if (s) { FileMan_Release(s->b, -1); FileMan_Release(s->a, -1); } }
+static inline void Free_215F50(void* p, int line) { AllocGuard g; cMemMan_Deallocate(0, p, D_004A4550, line); }
+static inline void SndDtor(ElevSnd* s) { if (s) { cFileMan_dtor(s->b, -1); cFileMan_dtor(s->a, -1); } }
 extern "C" cElevatorGOBJ* cElevatorGOBJ_dtor(cElevatorGOBJ* self, short flag)
 {
     if (self) {
@@ -138,11 +138,11 @@ struct cInteractGOBJ {
 struct Notice { char pad[0x30]; int who; };
 static inline float Fabs(float x) { float r; asm { abs.s r, x } return r; }
 extern "C" {
-extern Obj* Object_LookupById(int* id);
-extern int ObjectAction_SendKind7(Obj* obj, int action, cInteractGOBJ* target, int arg, float time);
-void cInteractGOBJ_BuddyClimbPairing(cInteractGOBJ* self, Notice* msg);
+extern Obj* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+extern int nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(Obj* obj, int action, cInteractGOBJ* target, int arg, float time);
+void cInteractGOBJ_HandleBuddyClimb(cInteractGOBJ* self, Notice* msg);
 }
-void cInteractGOBJ_BuddyClimbPairing(cInteractGOBJ* self, Notice* msg)
+void cInteractGOBJ_HandleBuddyClimb(cInteractGOBJ* self, Notice* msg)
 {
     int id;
     Obj* o;
@@ -151,13 +151,13 @@ void cInteractGOBJ_BuddyClimbPairing(cInteractGOBJ* self, Notice* msg)
     float d1;
     if (self->xB0) return;
     id = msg->who;
-    o = Object_LookupById(&id);
+    o = nGobjManager_LookupGOBJ_cObjectIdR(&id);
     if (self->riders[0] == o) {
         self->riders[0] = 0;
         if (self->x94) {
-            ObjectAction_SendKind7(o, 0x36, self, 0, -1.0f);
+            nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(o, 0x36, self, 0, -1.0f);
         } else {
-            ObjectAction_SendKind7(o, 0x32, self, 0, -1.0f);
+            nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(o, 0x32, self, 0, -1.0f);
         }
         self->x94 = 0;
         return;
@@ -175,10 +175,10 @@ void cInteractGOBJ_BuddyClimbPairing(cInteractGOBJ* self, Notice* msg)
         self->riders[0] = o;
         if (Fabs(d) < 5.0f) {
             self->x94 = 1;
-            ObjectAction_SendKind7(o, 0x35, self, 0, -1.0f);
+            nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(o, 0x35, self, 0, -1.0f);
             return;
         } else {
-            ObjectAction_SendKind7(o, 0x31, self, 0, -1.0f);
+            nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(o, 0x31, self, 0, -1.0f);
             return;
         }
     }
@@ -195,18 +195,18 @@ void cInteractGOBJ_BuddyClimbPairing(cInteractGOBJ* self, Notice* msg)
     self->xB0 = 1;
     self->riders[1] = o;
     if (Fabs(d1) < 5.0f) {
-        ObjectAction_SendKind7(o, 0x38, self, 0, -1.0f);
-        ObjectAction_SendKind7(self->riders[0], 0x37, self, 0, -1.0f);
+        nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(o, 0x38, self, 0, -1.0f);
+        nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(self->riders[0], 0x37, self, 0, -1.0f);
         return;
     }
     if (self->x94) {
-        ObjectAction_SendKind7(self->riders[0], 0x38, self, 0, -1.0f);
-        ObjectAction_SendKind7(o, 0x37, self, 0, -1.0f);
+        nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(self->riders[0], 0x38, self, 0, -1.0f);
+        nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(o, 0x37, self, 0, -1.0f);
         self->x94 = 0;
         return;
     }
-    ObjectAction_SendKind7(o, 0x34, self, 0, -1.0f);
-    ObjectAction_SendKind7(self->riders[0], 0x33, self, 0, -1.0f);
+    nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(o, 0x34, self, 0, -1.0f);
+    nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(self->riders[0], 0x33, self, 0, -1.0f);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00216230(void) {}
@@ -254,27 +254,27 @@ extern unsigned char D_005721C0;
 extern int g_TriggerMsgKey;
 extern int g_CasEventMsgClass;
 extern char D_004DAF10[];
-int* Event_GetType(void* ev);
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, void* target, int immediate);
+int* cMessage_Name(void* ev);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 #if 0 /* merge_units */
-Obj_216580* Object_LookupById(int* id);
+Obj_216580* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
 #endif /* merge_units */
-#define Object_LookupById(a0) ((Obj_216580 *)Object_LookupById((a0))) /* merge_units */
+#define nGobjManager_LookupGOBJ_cObjectIdR(a0) ((Obj_216580 *)nGobjManager_LookupGOBJ_cObjectIdR((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-int ObjectAction_SendKind7(Obj_216580* obj, int action, cInteractGOBJ_216580* target, int arg, float time);
+int nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(Obj_216580* obj, int action, cInteractGOBJ_216580* target, int arg, float time);
 #endif /* merge_units */
-#define ObjectAction_SendKind7(a0, a1, a2, a3, a4) (ObjectAction_SendKind7((Obj *)(a0), (a1), (cInteractGOBJ *)(a2), (a3), (a4))) /* merge_units */
+#define nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(a0, a1, a2, a3, a4) (nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc((Obj *)(a0), (a1), (cInteractGOBJ *)(a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
-void cInteractGOBJ_BuddyClimbPairing(cInteractGOBJ_216580* self, In_216580* msg);
+void cInteractGOBJ_HandleBuddyClimb(cInteractGOBJ_216580* self, In_216580* msg);
 #endif /* merge_units */
-#define cInteractGOBJ_BuddyClimbPairing(a0, a1) (cInteractGOBJ_BuddyClimbPairing((cInteractGOBJ *)(a0), (Notice *)(a1))) /* merge_units */
+#define cInteractGOBJ_HandleBuddyClimb(a0, a1) (cInteractGOBJ_HandleBuddyClimb((cInteractGOBJ *)(a0), (Notice *)(a1))) /* merge_units */
 
 void func_003E6690(Obj_216580* o, int f);
-int Object_HandleMessage(cInteractGOBJ_216580* self, void* ev);
+int cGOBJ_HandleMessage(cInteractGOBJ_216580* self, void* ev);
 }
 static inline void* At_216580(Rel_216580* r, unsigned int i) { return r->c[i]; }
 static inline int IsAuth_216580(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
@@ -283,26 +283,26 @@ static inline void Free_216580(Msg_216580* p, int line)
 {
     AllocGuard g;
     p->Destroy(-1);
-    Mem_Free(0, p, D_004A4550, line);
+    cMemMan_Deallocate(0, p, D_004A4550, line);
 }
-extern "C" int cInteractGOBJ_v01(cInteractGOBJ_216580* self, In_216580* m)
+extern "C" int cInteractGOBJ_HandleMessage(cInteractGOBJ_216580* self, In_216580* m)
 {
-    int t = *Event_GetType(m);
+    int t = *cMessage_Name(m);
     if (t == g_TriggerMsgKey) {
         if (!self->xBC) {
             int id = m->id;
-            Obj_216580* o = Object_LookupById(&id);
+            Obj_216580* o = nGobjManager_LookupGOBJ_cObjectIdR(&id);
             int k = m->kind;
             if (o) {
                 switch (k) {
                 case 7:
-                    cInteractGOBJ_BuddyClimbPairing(self, m);
+                    cInteractGOBJ_HandleBuddyClimb(self, m);
                     break;
                 case 3:
                 case 2:
                     break;
                 default:
-                    ObjectAction_SendKind7(o, 0x25, self, 0, -1.0f);
+                    nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc(o, 0x25, self, 0, -1.0f);
                     self->xBC = ((Msg_216580*)m)->Clone();
                     break;
                 }
@@ -310,7 +310,7 @@ extern "C" int cInteractGOBJ_v01(cInteractGOBJ_216580* self, In_216580* m)
         }
         return 1;
     }
-    t = *Event_GetType(m);
+    t = *cMessage_Name(m);
     if (t == g_CasEventMsgClass) {
         In2_216580* m2 = (In2_216580*)m;
         switch (m2->kind) {
@@ -318,7 +318,7 @@ extern "C" int cInteractGOBJ_v01(cInteractGOBJ_216580* self, In_216580* m)
             if (self->xBC) {
                 int i;
                 for (i = 0; i < self->x98.n; i++)
-                    Event_Send(self->xBC, At_216580(&self->x98, i), 0);
+                    QueueMessage_cMessageR_cSystemP_int(self->xBC, At_216580(&self->x98, i), 0);
                 Free_216580(self->xBC, 0x4ED);
                 self->xBC = 0;
             }
@@ -342,14 +342,14 @@ extern "C" int cInteractGOBJ_v01(cInteractGOBJ_216580* self, In_216580* m)
                 LiftMsg_216580 msg;
                 Obj_216580* w = m2->who;
                 LiftMsg_216580* p = &msg;
-                Event_Construct(p, &g_TriggerMsgKey);
+                cMessage_ctor_cMessageNameR(p, &g_TriggerMsgKey);
                 msg.floor = 0;
                 msg.vtable = D_004DAF10;
                 msg.kind = 3;
                 p->to = ObjId_216580(w);
                 p->from = ObjId_216580(0);
                 msg.b20 = 1;
-                Event_Send(&msg, self, 0);
+                QueueMessage_cMessageR_cSystemP_int(&msg, self, 0);
                 msg.vtable = D_004DAF10;
                 cMessage_dtor(&msg, 0);
             }
@@ -378,14 +378,14 @@ extern "C" int cInteractGOBJ_v01(cInteractGOBJ_216580* self, In_216580* m)
                 LiftMsg_216580 msg;
                 Obj_216580* w = m2->who;
                 LiftMsg_216580* p = &msg;
-                Event_Construct(p, &g_TriggerMsgKey);
+                cMessage_ctor_cMessageNameR(p, &g_TriggerMsgKey);
                 msg.floor = 0;
                 msg.vtable = D_004DAF10;
                 msg.kind = 2;
                 p->to = ObjId_216580(w);
                 p->from = ObjId_216580(0);
                 msg.b20 = 1;
-                Event_Send(&msg, self, 0);
+                QueueMessage_cMessageR_cSystemP_int(&msg, self, 0);
                 msg.vtable = D_004DAF10;
                 cMessage_dtor(&msg, 0);
             }
@@ -394,11 +394,11 @@ extern "C" int cInteractGOBJ_v01(cInteractGOBJ_216580* self, In_216580* m)
         }
         return 1;
     }
-    return Object_HandleMessage(self, m);
+    return cGOBJ_HandleMessage(self, m);
 }
-#undef Object_LookupById /* merge_units */
-#undef ObjectAction_SendKind7 /* merge_units */
-#undef cInteractGOBJ_BuddyClimbPairing /* merge_units */
+#undef nGobjManager_LookupGOBJ_cObjectIdR /* merge_units */
+#undef nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_float_etc /* merge_units */
+#undef cInteractGOBJ_HandleBuddyClimb /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00216580(void) {}
 #pragma pop /* merge_units */
@@ -449,7 +449,7 @@ struct cInteractGOBJ_00216AE0 {
 extern "C" {
 extern void cGameGOBJ_ctor(cInteractGOBJ_00216AE0* self, void* a1, void* a2, int kind);
 extern Rel_00216AE0* std_vector_cGameGOBJPtr_ctor(Rel_00216AE0* r);
-extern void PtrVector_Resize(Rel_00216AE0* v, int n, int* fill);
+extern void std_vector_pod_int_resize(Rel_00216AE0* v, int n, int* fill);
 extern char D_004DB160[];
 cInteractGOBJ_00216AE0* cInteractGOBJ_ctor(cInteractGOBJ_00216AE0* self, void* a1, void* a2);
 }
@@ -466,7 +466,7 @@ cInteractGOBJ_00216AE0* cInteractGOBJ_ctor(cInteractGOBJ_00216AE0* self, void* a
     if (self->x70) {
         {
             int fill = 0;
-            PtrVector_Resize(&self->x98.rel, self->x70 - 2, &fill);
+            std_vector_pod_int_resize(&self->x98.rel, self->x70 - 2, &fill);
         }
         self->xA8 = self->x74.at(self->x70 - 2);
         self->xAC = self->x74.at(self->x70 - 1);
@@ -480,7 +480,7 @@ cInteractGOBJ_00216AE0* cInteractGOBJ_ctor(cInteractGOBJ_00216AE0* self, void* a
         }
         {
             int fill = 0;
-            PtrVector_Resize(&self->x74, 0, &fill);
+            std_vector_pod_int_resize(&self->x74, 0, &fill);
         }
         self->x70 = 0;
     }

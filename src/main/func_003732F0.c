@@ -1,5 +1,5 @@
 #include "types.h"
-void Dma_StartToSpr(int sadr, int madr, int qwc)
+void FASTDMA_ToSPR(int sadr, int madr, int qwc)
 {
     *(volatile int*)0x1000D420 = qwc;
     *(volatile int*)0x1000D480 = sadr;

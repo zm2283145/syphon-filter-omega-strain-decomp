@@ -11,7 +11,7 @@
 /* merge_units: begin func_003DFF80 */
 #pragma push /* merge_units */
 /* Script native placeholder for invalid argument lists; does nothing. */
-void Script_InvalidArgNop(int a, int b, ...)
+void cScriptInterpreter_error(int a, int b, ...)
 {
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -27,27 +27,27 @@ static inline void merge_flush_func_003DFF80(void) {}
  */
 
 
-extern void ScriptStack_Push(ScriptManager* self, int value);
-extern int ScriptStack_Pop(ScriptManager* self);
+extern void cScriptInterpreter_pushInt(ScriptManager* self, int value);
+extern int cScriptInterpreter_popInt(ScriptManager* self);
 
 /* Pops a float. volatile mirrors the original stack temporary. */
-float ScriptStack_PopFloat(ScriptManager* self) {
-    volatile int bits = ScriptStack_Pop(self);
+float cScriptInterpreter_popFloat(ScriptManager* self) {
+    volatile int bits = cScriptInterpreter_popInt(self);
     return *(float*)&bits;
 }
 
 /* Pops an int word. */
-int ScriptStack_Pop(ScriptManager* self) {
+int cScriptInterpreter_popInt(ScriptManager* self) {
     return *self->sp++;
 }
 
 /* Pushes a float. volatile mirrors the original stack temporary. */
-void ScriptStack_PushFloat(ScriptManager* self, float value) {
+void cScriptInterpreter_pushFloat(ScriptManager* self, float value) {
     volatile float bits = value;
-    ScriptStack_Push(self, *(int*)&bits);
+    cScriptInterpreter_pushInt(self, *(int*)&bits);
 }
 
-void ScriptStack_Push(ScriptManager* self, int value) {
+void cScriptInterpreter_pushInt(ScriptManager* self, int value) {
     self->sp = self->sp - 1;
     *self->sp = value;
 }

@@ -4,22 +4,22 @@
 #define VC_(p) ((int (*)())(p))
 typedef __int128 Q128;
 #pragma mpwc_relax on
-int String_PushBack(char *, int);                          
-int String_Reserve(char *);                              
+int std_basic_string_char_char_traits_char_opAddAssign(char *, int);                          
+int std_basic_string_char_char_traits_char_reserve(char *);                              
 int String_Dtor(char *, int);                            
-int String_CStr(char *);                             
-int TextObj_SetText(int, int);                          
+int std_basic_string_char_char_traits_char_c_str(char *);                             
+int cTextArea_SetText(int, int);                          
 
-void GuiTextEditWidget_MaskText(int arg0, int arg1) {
+void MaskTextArea(int arg0, int arg1) {
     Q128 sp40[1];
     int var_s0;
 
     if (arg0 != 0) {
-        { int *sp_ = (int *)sp40; sp_[0] = 0; sp_[1] = 0; sp_[2] = 0; String_Reserve((char *)sp_); }
+        { int *sp_ = (int *)sp40; sp_[0] = 0; sp_[1] = 0; sp_[2] = 0; std_basic_string_char_char_traits_char_reserve((char *)sp_); }
         for (var_s0 = 0; var_s0 < arg1; var_s0++) {
-                String_PushBack(&sp40, 0x23);
+                std_basic_string_char_char_traits_char_opAddAssign(&sp40, 0x23);
         }
-        TextObj_SetText(arg0, String_CStr(&sp40));
+        cTextArea_SetText(arg0, std_basic_string_char_char_traits_char_c_str(&sp40));
         String_Dtor(&sp40, 0);
     }
 }

@@ -36,7 +36,7 @@ static inline void merge_flush_func_00336D80(void) {}
 
 /* merge_units: begin func_00336DC0 */
 #pragma push /* merge_units */
-extern int PtrVec_Reserve(int, int);
+extern int std_vector_pod_int_reserve(int, int);
 extern Rel* std_vector_imp_tAchievement_ctor(Rel* r);
 
 Rel* std_vector_imp_eRequirementState_1_ctor(Rel* r) {
@@ -47,7 +47,7 @@ Rel* std_vector_imp_eRequirementState_1_ctor(Rel* r) {
 }
 
 int std_vector_charPtr_reserve(int a0, int a1) {
-    return PtrVec_Reserve(a0, a1);
+    return std_vector_pod_int_reserve(a0, a1);
 }
 
 Rel* std_vector_eAchievementState_ctor(Rel* r) {

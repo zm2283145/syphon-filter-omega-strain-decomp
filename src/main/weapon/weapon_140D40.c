@@ -30,7 +30,7 @@ DEFINE_VTABLE_BASE_DTOR(cCharActionMsg_dtor, D_004E0840, cMessage_dtor)
 /* Two-level destructor: restore vtables, run base destructor, optionally delete. */
 extern "C" {
 extern "C" void Event_PackHeader();
-extern "C" void Message_GetScriptTypeKey();
+extern "C" void cMessage_getSOBJClassId();
 extern "C" void cAISoundSystemGOBJMessage_Clone();
 extern void * const D_004D92C0[];
 extern char D_004D92A0[];
@@ -49,7 +49,7 @@ extern "C" Vtable2Object* cAISoundSystemGOBJMessage_dtor(Vtable2Object* self, sh
     }
     return self;
 }
-void * const D_004D92C0[8] = { (void*)0x0, (void*)0x0, (void*)cAISoundSystemGOBJMessage_dtor, (void*)cAISoundSystemGOBJMessage_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+void * const D_004D92C0[8] = { (void*)0x0, (void*)0x0, (void*)cAISoundSystemGOBJMessage_dtor, (void*)cAISoundSystemGOBJMessage_Clone, (void*)Event_PackHeader, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00140DA0(void) {}
 #pragma pop /* merge_units */

@@ -9,7 +9,7 @@
 
 extern "C" {
 /*fc*/
-int *Mem_Alloc(...);                     
+int *cMemMan_Allocate(...);                     
 int Libc_Abort(...);                                  
 int Libc_Fprintf(...);                          
 unsigned int _cdeque_deleter_common_int_max_size(...);                                
@@ -30,7 +30,7 @@ extern "C" void _cdeque_deleter_int_1_init(char * arg0, unsigned int arg1, int *
         }
         {
             AllocGuard g;
-        temp_s0 = (int *)((Mem_Alloc(0, (var_s2 + 1) * 4, &D_0049AE50, 0x5C)));
+        temp_s0 = (int *)((cMemMan_Allocate(0, (var_s2 + 1) * 4, &D_0049AE50, 0x5C)));
         }
         F_(arg0, 0xC, int) = (int)(temp_s0);
         F_(arg0, 0x0, int) = (int) (var_s2 + 1);

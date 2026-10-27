@@ -24,7 +24,7 @@ DEFINE_OBJ_LIST_DTOR(std_list_cEnvSettingsPtr_dtor)
 #pragma cplusplus on
 struct O_001379A0 { void* vt; char pad[0x24]; char m[4]; };
 extern "C" {
-extern "C" void GObj_GetID();
+extern "C" void cSystem_ScriptGetObjectId();
 extern "C" void cSystem_ScriptGetRealObj();
 extern "C" void cSystem_SendCreated();
 extern "C" void cSystem_NetActivate();
@@ -33,29 +33,29 @@ extern "C" void cSystem_NetEnable();
 extern "C" void cSystem_NetDisable();
 extern "C" void cSystem_IsDeliverable();
 extern "C" void cSystem_IsNetworked();
-extern "C" void HotboxTracker_HandleMessage();
-extern "C" void Receiver_GetScriptTypeKey();
-extern "C" void Receiver_ScriptDispatch();
+extern "C" void cHotboxMan_HandleMessage();
+extern "C" void cSystem_getSOBJClassId();
+extern "C" void cSystem_ScriptHandleMessage();
 extern void * const D_004D9960[];
 void std_list_cHotboxPtr_dtor(void* m, short f);
-void Receiver_Destruct(void* p, short f);
+void cSystem_dtor(void* p, short f);
 #if 0 /* merge_units */
 void operator_delete(void* p);
 #endif /* merge_units */
 #define operator_delete(a0) (operator_delete((a0))) /* merge_units */
 
 }
-extern "C" O_001379A0* HotboxTracker_dtor(O_001379A0* self, short del)
+extern "C" O_001379A0* cHotboxMan_dtor(O_001379A0* self, short del)
 {
     if (self) {
         self->vt = ((char*)D_004D9960);
         if (self->m) std_list_cHotboxPtr_dtor(self->m, 0);
-        Receiver_Destruct(self, 0);
+        cSystem_dtor(self, 0);
         if (del > 0) operator_delete(self);
     }
     return self;
 }
-void * const D_004D9960[16] = { (void*)0x0, (void*)0x0, (void*)HotboxTracker_dtor, (void*)HotboxTracker_HandleMessage, (void*)GObj_GetID, (void*)cSystem_ScriptGetRealObj, (void*)cSystem_IsNetworked, (void*)cSystem_SendCreated, (void*)cSystem_NetActivate, (void*)cSystem_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };
+void * const D_004D9960[16] = { (void*)0x0, (void*)0x0, (void*)cHotboxMan_dtor, (void*)cHotboxMan_HandleMessage, (void*)cSystem_ScriptGetObjectId, (void*)cSystem_ScriptGetRealObj, (void*)cSystem_IsNetworked, (void*)cSystem_SendCreated, (void*)cSystem_NetActivate, (void*)cSystem_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cSystem_getSOBJClassId, (void*)cSystem_ScriptHandleMessage, (void*)0x0 };
 #undef operator_delete /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001379A0(void) {}

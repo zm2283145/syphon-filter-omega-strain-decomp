@@ -7,24 +7,24 @@
 #include "types.h"
 #include "MovieSubtitles_types.h"
 
-extern void Renderer_RefreshCamera(SubtitleEntry* entry);
-extern float Renderer_UpdateCameraMatrices(SubtitleOwner* owner);
+extern void cXViewport_Validate(SubtitleEntry* entry);
+extern float XLib_UpdateCompMat(SubtitleOwner* owner);
 
 char* XLib_GetCompMat(SubtitleOwner* owner) {
-    Renderer_UpdateCameraMatrices(owner);
+    XLib_UpdateCompMat(owner);
     return owner->unkEC0;
 }
 
 /* Updates the current entry and returns its block at +0xA0. */
-char* SubtitleOverlay_GetGsOffset(SubtitleOwner* owner) {
+char* XLib_GetVPOffset(SubtitleOwner* owner) {
     SubtitleEntry* entry = &owner->entries[owner->current];
-    Renderer_RefreshCamera(entry);
+    cXViewport_Validate(entry);
     return entry->unk0A0;
 }
 
 /* Updates the current entry and returns its block at +0x90. */
-char* SubtitleOverlay_GetGsScale(SubtitleOwner* owner) {
+char* XLib_GetVPScale(SubtitleOwner* owner) {
     SubtitleEntry* entry = &owner->entries[owner->current];
-    Renderer_RefreshCamera(entry);
+    cXViewport_Validate(entry);
     return entry->unk090;
 }

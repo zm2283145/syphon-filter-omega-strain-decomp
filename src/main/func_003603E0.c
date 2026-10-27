@@ -13,9 +13,9 @@ typedef struct Alloc {
     char pad[3];
 } Alloc;
 
-extern void String_Replace(StrHdr* str, int start, int len, int a, int b, char alloc);
+extern void std_basic_string_char_char_traits_char_do_replace(StrHdr* str, int start, int len, int a, int b, char alloc);
 
-/* Forwards the whole string (start 0, current length) to String_Replace. */
+/* Forwards the whole string (start 0, current length) to std_basic_string_char_char_traits_char_do_replace. */
 void func_003603E0(StrHdr* str, int a, int b) {
     volatile Alloc alloc;
     int len;
@@ -24,5 +24,5 @@ void func_003603E0(StrHdr* str, int a, int b) {
     } else {
         len = (unsigned char)str->shortLen;
     }
-    String_Replace(str, 0, len, a, b, alloc.unused);
+    std_basic_string_char_char_traits_char_do_replace(str, 0, len, a, b, alloc.unused);
 }

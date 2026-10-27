@@ -1,4 +1,4 @@
-/* Motion_GetStartPlacement: placement (rotation, position) at the start of a clip - the clip's stored
+/* cSkaAnim_GetFirstFrameRootTransform: placement (rotation, position) at the start of a clip - the clip's stored
    start placement for a full forward clip, otherwise the root sample at the clip's start time. */
 #pragma cplusplus on
 
@@ -32,10 +32,10 @@ struct Clip {
 };
 
 struct Sample;
-extern "C" Sample* Anim_CopySample(Sample* d, Sample* s);
+extern "C" Sample* cSkaAnimDataSample_ctor_cSkaAnimDataSampleR(Sample* d, Sample* s);
 struct Sample {
     Sample() {}
-    Sample(const Sample& o) { Anim_CopySample(this, (Sample*)&o); }
+    Sample(const Sample& o) { cSkaAnimDataSample_ctor_cSkaAnimDataSampleR(this, (Sample*)&o); }
     signed char active;
     V v10;
     V v20;
@@ -78,37 +78,37 @@ struct Cursor {
 };
 
 extern "C" {
-void Clip_AdvanceCursor(Cursor* c, float t);
+void cSkaAnimDataIterator_GotoAnimFrame(Cursor* c, float t);
 Sample* cSkaAnimDataSample_ctor_void(Sample* s);
 signed char* cSkaAnimDataSample_IsEndOfData(Sample* s);
 unsigned int cSkeletonData_GetBoneCount(int* out);
 char* cSkeletonData_GetBoneData(int* out, int i);
 int cSkaAnimData_BoneHasTranslation(ClipData* d, int i);
-int RootClip_TranslationEnabled(ClipData* d);
+int cSkaAnimData_RootHasDeltaTranslation(ClipData* d);
 int cSkaAnimData_BoneHasRotation(ClipData* d, int i);
-int RootClip_IsEnabled(ClipData* d);
-V* Vec4_Set(V* v, float x, float y, float z, float w);
+int cSkaAnimData_RootHasDeltaRotation(ClipData* d);
+V* cVector_ctor_float_float_float_float(V* v, float x, float y, float z, float w);
 V* cSkaAnimDataSample_DeltaTranslation(Sample* s);
 V* cSkaAnimDataSample_Translation(Sample* s);
 V* cSkaAnimDataSample_DeltaRotation(Sample* s);
 V* cSkaAnimDataSample_Rotation(Sample* s);
-V Vec3_LerpKeepW_190950(V* a, V* b, float s);
-V Anim_ApproachTarget(V* a, V* b, float s);
-void Vec4_Copy(V* d, const V& s);
+V LerpXYZ(V* a, V* b, float s);
+V LerpAndNormalize(V* a, V* b, float s);
+void cVector_opAssign(V* d, const V& s);
 V* cAxisAngle_ctor_eCoordinateAxis_float(V* v, unsigned char axis, float w);
-V* Quat_FromYaw(V* q, V* axisAngle);
-V* Quat_Assign(V* d, const V& s);
+V* cQuaternion_ctor_cAxisAngleR(V* q, V* axisAngle);
+V* cQuaternion_opAssign(V* d, const V& s);
 V* cQuaternion_ctor_floatP(V* d, float* s);
 static inline void SetApproach(V* dst, V* a, V* b, Cursor& c)
 {
-    Quat_Assign(dst, Anim_ApproachTarget(a, b, c.frac));
+    cQuaternion_opAssign(dst, LerpAndNormalize(a, b, c.frac));
 }
 
 static inline void SetYaw(V* dst, float ang)
 {
     V q;
     V axis;
-    Quat_Assign(dst, *Quat_FromYaw(&q, cAxisAngle_ctor_eCoordinateAxis_float(&axis, 2, ang)));
+    cQuaternion_opAssign(dst, *cQuaternion_ctor_cAxisAngleR(&q, cAxisAngle_ctor_eCoordinateAxis_float(&axis, 2, ang)));
 }
 
 /* sample position as a point (w = 1) */
@@ -130,25 +130,25 @@ static inline Sample SampleNext(Cursor& cur)
     if (cur.i < cSkeletonData_GetBoneCount(cur.out)) {
         cSkeletonData_GetBoneData(cur.out, cur.i);
         if (cSkaAnimData_BoneHasTranslation(cPointer_cSkaAnimData_opArrow(&cur), cur.i)) {
-            if (cur.i == 0 && RootClip_TranslationEnabled(cPointer_cSkaAnimData_opArrow(&cur))) {
+            if (cur.i == 0 && cSkaAnimData_RootHasDeltaTranslation(cPointer_cSkaAnimData_opArrow(&cur))) {
                 V a0, a1, b0, b1;
-                Vec4_Set(&a0, cur.a[0], cur.a[1], 0.0f, 0.0f);
-                Vec4_Set(&a1, 0.0f, 0.0f, cur.a[2], 0.0f);
-                Vec4_Set(&b0, cur.b[0], cur.b[1], 0.0f, 0.0f);
-                Vec4_Set(&b1, 0.0f, 0.0f, cur.b[2], 0.0f);
-                Vec4_Copy(cSkaAnimDataSample_DeltaTranslation(&s), Vec3_LerpKeepW_190950(&a0, &b0, cur.frac));
-                Vec4_Copy(cSkaAnimDataSample_Translation(&s), Vec3_LerpKeepW_190950(&a1, &b1, cur.frac));
+                cVector_ctor_float_float_float_float(&a0, cur.a[0], cur.a[1], 0.0f, 0.0f);
+                cVector_ctor_float_float_float_float(&a1, 0.0f, 0.0f, cur.a[2], 0.0f);
+                cVector_ctor_float_float_float_float(&b0, cur.b[0], cur.b[1], 0.0f, 0.0f);
+                cVector_ctor_float_float_float_float(&b1, 0.0f, 0.0f, cur.b[2], 0.0f);
+                cVector_opAssign(cSkaAnimDataSample_DeltaTranslation(&s), LerpXYZ(&a0, &b0, cur.frac));
+                cVector_opAssign(cSkaAnimDataSample_Translation(&s), LerpXYZ(&a1, &b1, cur.frac));
             } else {
                 V a, b;
-                Vec4_Set(&a, cur.a[0], cur.a[1], cur.a[2], 0.0f);
-                Vec4_Set(&b, cur.b[0], cur.b[1], cur.b[2], 0.0f);
-                Vec4_Copy(cSkaAnimDataSample_Translation(&s), Vec3_LerpKeepW_190950(&a, &b, cur.frac));
+                cVector_ctor_float_float_float_float(&a, cur.a[0], cur.a[1], cur.a[2], 0.0f);
+                cVector_ctor_float_float_float_float(&b, cur.b[0], cur.b[1], cur.b[2], 0.0f);
+                cVector_opAssign(cSkaAnimDataSample_Translation(&s), LerpXYZ(&a, &b, cur.frac));
             }
             cur.a += 4;
             cur.b += 4;
         }
         if (cSkaAnimData_BoneHasRotation(cPointer_cSkaAnimData_opArrow(&cur), cur.i)) {
-            if (cur.i == 0 && RootClip_IsEnabled(cPointer_cSkaAnimData_opArrow(&cur))) {
+            if (cur.i == 0 && cSkaAnimData_RootHasDeltaRotation(cPointer_cSkaAnimData_opArrow(&cur))) {
                 float f = cur.frac;
                 SetYaw(cSkaAnimDataSample_DeltaRotation(&s), (1.0f - f) * cur.a[0] + f * cur.b[0]);
                 cur.a += 4;
@@ -169,7 +169,7 @@ static inline Sample SampleNext(Cursor& cur)
     return s;
 }
 
-int Motion_GetStartPlacement(Placement* res_out, Clip* clip, int* out)
+int cSkaAnim_GetFirstFrameRootTransform(Placement* res_out, Clip* clip, int* out)
 {
     int r; /* the early path returns without setting v0, as retail does */
     if (clip->pos == 0.0f) {
@@ -185,7 +185,7 @@ int Motion_GetStartPlacement(Placement* res_out, Clip* clip, int* out)
     Cursor cur(clip->d, out);
     float t = clip->pos;
     t = t != 0.0f ? t : (clip->reverse ? clip->to : clip->from);
-    Clip_AdvanceCursor(&cur, t * cSkaAnimData_GetFrameCount(cPointer_cSkaAnimData_opArrow(&cur)));
+    cSkaAnimDataIterator_GotoAnimFrame(&cur, t * cSkaAnimData_GetFrameCount(cPointer_cSkaAnimData_opArrow(&cur)));
     Sample res = SampleNext(cur);
     V ret;
     V p;

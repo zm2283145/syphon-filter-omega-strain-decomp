@@ -10,9 +10,9 @@
 /* merge_units: begin func_002553E0 */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int WeaponInv_SlotOfItem(int);                             
+int cWeapon_GetWeaponSlot(int);                             
 
-int Backpack_ListItems(int self, int *output, char * table) {
+int cBackpack_GetWeaponDbs(int self, int *output, char * table) {
     char *slot;
     int count;
     int deferred;
@@ -27,7 +27,7 @@ int Backpack_ListItems(int self, int *output, char * table) {
     do {
         if (F_(slot, 0xCC, int) != 0) {
             item = F_(slot, 0x24, int);
-            if ((WeaponInv_SlotOfItem(item) & 0xFF) == 6) {
+            if ((cWeapon_GetWeaponSlot(item) & 0xFF) == 6) {
                 deferred = item;
             } else {
                 *output = item;
@@ -70,9 +70,9 @@ static inline void merge_flush_func_002553E0(void) {}
 typedef struct AmmoEntry{int primary[4];int secondary[4];int item,count;}AmmoEntry;
 typedef struct AmmoSlot{unsigned char kind;char pad[3];AmmoEntry entries[5];int count;unsigned char active;char padD1[3];}AmmoSlot;
 typedef struct BackpackQuery{char pad[0x64];AmmoSlot slots[3];}BackpackQuery;
-void Backpack_QueryAmmo(BackpackQuery*self,int item,int*lastPrimary,int*lastSecondary,int*total){
+void cBackpack_GetAmmoCounts(BackpackQuery*self,int item,int*lastPrimary,int*lastSecondary,int*total){
  AmmoSlot*slot;int i;AmmoEntry*entry;int j;int k;int kind;
- kind=WeaponInv_SlotOfItem(item);slot=self->slots;i=0;kind=(unsigned char)kind;goto outer_test;
+ kind=cWeapon_GetWeaponSlot(item);slot=self->slots;i=0;kind=(unsigned char)kind;goto outer_test;
  outer_body:
  if(slot->kind==kind){entry=slot->entries;for(j=0;j<slot->count;j++,entry++){
   if(entry->item==item){*total=0;*lastPrimary=entry->primary[entry->count-1];*lastSecondary=entry->secondary[entry->count-1];k=0;if(k<entry->count){int*p=entry->primary;do{*total+=p[0];if(kind!=4)*total+=p[4];k++;p++;}while(k<entry->count);}}

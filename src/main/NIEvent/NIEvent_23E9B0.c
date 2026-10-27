@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Call slot 16 unless the object is active. */
-DEFINE_GOBJ_FLAG_SLOT16(NiEvent_PreLogic)
+DEFINE_GOBJ_FLAG_SLOT16(cNIEventBase_CriticalNextFrame)
 #pragma pop /* merge_units */
 /* merge_units: end func_0023E9B0 */
 
@@ -53,10 +53,10 @@ struct Obj {
 extern "C" {
 extern char D_004F7C30[];
 extern char D_004DBEB0[];
-void Event_Construct(Msg*, void*);
-void Event_Send(Msg*, void*, int);
+void cMessage_ctor_cMessageNameR(Msg*, void*);
+void QueueMessage_cMessageR_cSystemP_int(Msg*, void*, int);
 void cMessage_dtor(Msg*, int);
-void Actor_BaseLogicUpdate(Obj*, float);
+void cGOBJ_NextFrame(Obj*, float);
 }
 /* Active flags: the && chain must materialise as a bool (sltu/xori), hence the inline. */
 static inline bool Act(Obj* o) { return o->f2D && o->f2C && !o->f2E; }
@@ -67,15 +67,15 @@ extern "C" void cNIEventBase_ProcessNextFrame(Obj* o, float dt)
         float x = dt * o->f134; o->v75(b ? x : 0.0f);
         if (b && !o->b130) {
             Msg m;
-            Event_Construct(&m, D_004F7C30);
+            cMessage_ctor_cMessageNameR(&m, D_004F7C30);
             m.vt = D_004DBEB0;
             m.i24 = 0;
-            Event_Send(&m, o, 0);
+            QueueMessage_cMessageR_cSystemP_int(&m, o, 0);
             m.vt = D_004DBEB0;
             cMessage_dtor(&m, 0);
         }
     }
-    Actor_BaseLogicUpdate(o, dt);
+    cGOBJ_NextFrame(o, dt);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0023EA50(void) {}

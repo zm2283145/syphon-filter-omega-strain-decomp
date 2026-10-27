@@ -6,5 +6,5 @@
 #include "npc_types.h"
 
 /* vtable slot 0x4A (no-op). */
-void cNPC_v4A(void) {
+void cNPC_RequestLookAt_cVector_float_int(void) {
 }

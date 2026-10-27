@@ -31,24 +31,24 @@ struct Obj { char pad[0x50]; Sub* sub; };
 extern "C" {
 extern char g_CameraObject[];
 int func_00159570(void*);
-Obj** List_Front(void*);
-void Mtx_FromRowsAndTranslation(Mtx* m, V* a, V* b, V* c, V* t);
-Mtx NiEvent_ComputeWorld(void* node);
+Obj** cLList_cCAMERA_GOBJPtr_Front(void*);
+void cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(Mtx* m, V* a, V* b, V* c, V* t);
+Mtx cNIEventBase_ParentXform(void* node);
 }
-static inline Obj* GetCam() { return func_00159570(g_CameraObject) ? *List_Front(g_CameraObject) : 0; }
+static inline Obj* GetCam() { return func_00159570(g_CameraObject) ? *cLList_cCAMERA_GOBJPtr_Front(g_CameraObject) : 0; }
 static inline const V& SubPos(Sub* o) { if (o->f50) o->Sync(); return o->m.t; }
 
 struct Ev_3E180 { char pad[0x94]; void* node; char pad98[0xE0 - 0x98]; V pos; };
 static inline void MulM(V* v, Mtx* m) { __asm__ volatile("lqc2 vf8, 0x0(%0); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; sqc2 vf12, 0x0(%0)" : : "r"(v), "r"(m) : "memory"); }
 static inline V Xform0(const V& p, Mtx& m0) { V t = p; Mtx* mp = &m0; V* tp = &t; MulM(tp, mp); return *tp; }
 static inline V Xform(const V& p, Mtx m) { return Xform0(p, m); }
-extern "C" Mtx NiEvent_BillboardWorld(Ev_3E180* ev)
+extern "C" Mtx cNIEventBase_MakeFacingMat(Ev_3E180* ev)
 {
     Obj* c = GetCam();
     if (c) {
         V cam = SubPos(c->sub);
         V me;
-        if (ev->node) me = Xform(ev->pos, NiEvent_ComputeWorld(ev->node));
+        if (ev->node) me = Xform(ev->pos, cNIEventBase_ParentXform(ev->node));
         else me = ev->pos;
         V dir = cam - me;
         Unit(dir);
@@ -56,7 +56,7 @@ extern "C" Mtx NiEvent_BillboardWorld(Ev_3E180* ev)
         V right = Cross(dir, up);
         up = Cross(right, dir);
         Mtx m;
-        Mtx_FromRowsAndTranslation(&m, &right, &dir, &up, &me);
+        cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(&m, &right, &dir, &up, &me);
         return m;
     }
 }

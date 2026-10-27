@@ -8,7 +8,7 @@
 #include "GuiGameScreen_types.h"
 
 /* True when the screen's menu child exists and has flag bit 1 set. */
-int GuiGameScreen_IsChooseMenuVisible(GuiGameScreen* self) {
+int GuiGameScreen_IsChooseMenuActive(GuiGameScreen* self) {
     GuiGameChild* menu = self->menu;
 
     if (menu != 0) {

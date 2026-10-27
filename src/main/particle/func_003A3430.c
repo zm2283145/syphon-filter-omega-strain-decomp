@@ -31,7 +31,7 @@ extern void std_list_cParticleDefinitionPtr_begin_void(It3430* out, void* list);
 extern void std_list_cParticleDefinitionPtr_end_void(It3430* out, void* list);
 extern It3430* cConstLListIterator_cParticleDefinitionPtr_ctor(It3430* dst, It3430* src);
 
-int ParticleDefs_FindByName(Mgr3430* m, Key3430* key)
+int GetEffectID__15cParticleSystemCFRC1(Mgr3430* m, Key3430* key)
 {
     It3430 it;
     It3430 cb;

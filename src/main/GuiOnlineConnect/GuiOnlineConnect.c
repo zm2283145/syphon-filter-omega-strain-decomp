@@ -10,8 +10,8 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int Service_Lookup(char *, char *);                       
-int SoundMgr_UnloadLevel(int);                               
+int cSystemContainer_GetSystem(char *, char *);                       
+int cGameSound_Unload(int);                               
 int sceMc2End();                                  
 int sceMc2DeleteSocket(int);                               
 int Renderer_Teardown(char *);                               
@@ -26,9 +26,9 @@ void ShutdownForLaunchExec(void) {
     int var_a0;
 
     Renderer_Teardown(&g_Video);
-    temp_v0 = Service_Lookup(&g_Game, &D_004F2CC0);
+    temp_v0 = cSystemContainer_GetSystem(&g_Game, &D_004F2CC0);
     if (temp_v0 != 0) {
-        SoundMgr_UnloadLevel(temp_v0);
+        cGameSound_Unload(temp_v0);
     }
     var_a0 = g_MemCard ? *g_MemCard : -1;
     if (var_a0 != -1) {
@@ -50,23 +50,23 @@ void ShutdownForLaunchExec(void) {
 #include "loose02_types.h"
 
 extern GameMachine* D_004FFC04;
-extern int FrontEnd_ClosePopup(GameMachine* machine, int arg);
+extern int cGameFrontEnd_PopMessageBox(GameMachine* machine, int arg);
 extern void GuiScreen_Sleep(GuiScreen* self);
-extern GuiManager* Gui_GetScreenStack(void);
-extern int LobbyArray_Free(GuiSlot* slot);
+extern GuiManager* Gui_Canvas(void);
+extern int SFOLobbyList_ClearAndCompactList(GuiSlot* slot);
 
 /* GuiOnlineConnect vtable slot 6: base call, reset the three slots, clear manager flags 0x0C. */
-int GuiOnlineConnect_Sleep(GuiOnlineConnect* self) {
+int GuiOnlineConnect_onSleep(GuiOnlineConnect* self) {
     GuiManager* mgr;
 
     GuiScreen_Sleep(&self->base);
-    LobbyArray_Free(&self->slots[0]);
-    LobbyArray_Free(&self->slots[1]);
-    LobbyArray_Free(&self->slots[2]);
+    SFOLobbyList_ClearAndCompactList(&self->slots[0]);
+    SFOLobbyList_ClearAndCompactList(&self->slots[1]);
+    SFOLobbyList_ClearAndCompactList(&self->slots[2]);
     D_004FFC04->unk2A = 1;
-    mgr = Gui_GetScreenStack();
+    mgr = Gui_Canvas();
     mgr->flags &= ~0xC;
-    return FrontEnd_ClosePopup(D_004FFC04, self->base.base.unk48);
+    return cGameFrontEnd_PopMessageBox(D_004FFC04, self->base.base.unk48);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0029ECD0 */
@@ -102,26 +102,26 @@ extern char g_MemCard[];
 
 
 void GuiScreen_Wake(void);
-void MemCard_WaitIdle(void* p);
+void cMemCard_WaitUntilNotBusy(void* p);
 void GuiOnlineConnect_ShowGroup(S_0029ED40* self, int a);
-char* GuiScreen_GetLobbyString(S_0029ED40* self, int a, int b, int c, int d, int e);
-int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_0029ED40* d, int e);
-Ag_0029ED40* Agent_GetSelected(void* mgr, int idx);
-void String_CtorCStr_13B480(Str_0029ED40* s, const char* c);
-char* String_CStr(Str_0029ED40* s);
+char* GuiLobbyScreen_GetLobbyString(S_0029ED40* self, int a, int b, int c, int d, int e);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, char* c, S_0029ED40* d, int e);
+Ag_0029ED40* cGameSystem_GetAgentData(void* mgr, int idx);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_0029ED40* s, const char* c);
+char* std_basic_string_char_char_traits_char_c_str(Str_0029ED40* s);
 void String_Dtor(Str_0029ED40* s, int flags);
 #if 0 /* merge_units */
-G_0029ED40* Gui_GetScreenStack(void);
+G_0029ED40* Gui_Canvas(void);
 #endif /* merge_units */
-#define Gui_GetScreenStack() ((G_0029ED40 *)Gui_GetScreenStack()) /* merge_units */
+#define Gui_Canvas() ((G_0029ED40 *)Gui_Canvas()) /* merge_units */
 
 
 }
-extern "C" void GuiOnlineConnect_Wake(S_0029ED40* self)
+extern "C" void GuiOnlineConnect_onWake(S_0029ED40* self)
 {
     GuiScreen_Wake();
     D_004FFC04->b2A = 0;
-    MemCard_WaitIdle(g_MemCard);
+    cMemCard_WaitUntilNotBusy(g_MemCard);
     self->b94 = 0;
     GuiOnlineConnect_ShowGroup(self, 4);
     if (self->f10 == 1)
@@ -130,18 +130,18 @@ extern "C" void GuiOnlineConnect_Wake(S_0029ED40* self)
         self->f88 = 0;
     if (self->f88 == 0) {
         void* ui = D_004FFC04;
-        self->f48 = FrontEnd_OpenPopup(ui, 0, D_004AABF0, GuiScreen_GetLobbyString(self, 0, 0, 0, 0, 0), 0, 0);
+        self->f48 = cGameFrontEnd_PushMessageBox(ui, 0, D_004AABF0, GuiLobbyScreen_GetLobbyString(self, 0, 0, 0, 0, 0), 0, 0);
         self->f8C = 15.0f;
         GuiOnlineConnect_ShowGroup(self, 4);
-        D_004FFC04->b265 = Agent_GetSelected(g_Game, -1)->f9A0 == -1;
-    } else if (Agent_GetSelected(g_Game, -1)->f9A0 == -1) {
+        D_004FFC04->b265 = cGameSystem_GetAgentData(g_Game, -1)->f9A0 == -1;
+    } else if (cGameSystem_GetAgentData(g_Game, -1)->f9A0 == -1) {
         Str_0029ED40 a;
         Str_0029ED40 b;
-        String_CtorCStr_13B480(&a, GuiScreen_GetLobbyString(self, 3, 0, 0, 0, 0));
-        String_CtorCStr_13B480(&b, GuiScreen_GetLobbyString(self, 0x84, 0, 0, 0, 0));
+        std_basic_string_char_char_traits_char_ctor_charP(&a, GuiLobbyScreen_GetLobbyString(self, 3, 0, 0, 0, 0));
+        std_basic_string_char_char_traits_char_ctor_charP(&b, GuiLobbyScreen_GetLobbyString(self, 0x84, 0, 0, 0, 0));
         {
-            char* tb = String_CStr(&b);
-            FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, self, 0);
+            char* tb = std_basic_string_char_char_traits_char_c_str(&b);
+            cGameFrontEnd_PushMessageBox(D_004FFC04, 2, std_basic_string_char_char_traits_char_c_str(&a), tb, self, 0);
         }
         self->f88 = 4;
         String_Dtor(&b, 0);
@@ -149,29 +149,29 @@ extern "C" void GuiOnlineConnect_Wake(S_0029ED40* self)
     } else {
         self->f88 = 7;
     }
-    Gui_GetScreenStack()->f68 |= 0xC;
+    Gui_Canvas()->f68 |= 0xC;
 }
 #undef D_004FFC04 /* merge_units */
 #undef g_Game /* merge_units */
 #undef g_MemCard /* merge_units */
-#undef Gui_GetScreenStack /* merge_units */
+#undef Gui_Canvas /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0029ED40 */
 
 /* merge_units: begin func_0029EF30 */
 #pragma push /* merge_units */
-extern void* Gui_GetScreenList(void);
-extern int GuiManager_UnloadRoot(void* mgr, int resource, int arg);
-extern int GuiWidget_Deinit(GuiWidget* self);
+extern void* Gui_Manager(void);
+extern int GuiManager_DestroyWidget(void* mgr, int resource, int arg);
+extern int GuiWidget_onRemove(GuiWidget* self);
 
 /* GuiOnlineConnect vtable slot 2: base call, then release the held resource. */
-void GuiOnlineConnect_Deinit(GuiOnlineConnect* self) {
+void GuiOnlineConnect_onRemove(GuiOnlineConnect* self) {
     int resource;
 
-    GuiWidget_Deinit(&self->base.base.base);
+    GuiWidget_onRemove(&self->base.base.base);
     resource = self->resource;
     if (resource != 0) {
-        GuiManager_UnloadRoot(Gui_GetScreenList(), resource, 0);
+        GuiManager_DestroyWidget(Gui_Manager(), resource, 0);
         self->resource = 0;
     }
 }
@@ -212,37 +212,37 @@ extern char D_004AA640[];
 extern char D_004A7520[];
 extern char D_004AAE20[];
 extern char D_004AAE00[];
-void GuiScreen_Init(Self_0029EF90* self);
-void* GuiWidget_FindChildByName(Self_0029EF90* self, char* name);
-void GuiArrayWidget_SetTable(W_0029EF90* w, int a, int b);
+void GuiLobbyScreen_onAdd(Self_0029EF90* self);
+void* GuiWidget_FindChild_charP(Self_0029EF90* self, char* name);
+void GuiArrayWidget_SetVisibleSize(W_0029EF90* w, int a, int b);
 void GuiTextListWidget_SetF1(W_0029EF90* w, int a);
 void MLTextWidget_SetFont(W_0029EF90* w, char* s);
-void* Gui_GetScreenList(void);
-Page_0029EF90* GuiManager_FindOrLoad(void* a, char* b, char* c);
+void* Gui_Manager(void);
+Page_0029EF90* GuiManager_OpenGui(void* a, char* b, char* c);
 }
 static inline W_0029EF90* FindAs_0029EF90(Self_0029EF90* self, char* name, char* type)
 {
-    W_0029EF90* w = (W_0029EF90*)GuiWidget_FindChildByName(self, name);
+    W_0029EF90* w = (W_0029EF90*)GuiWidget_FindChild_charP(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
-extern "C" void GuiOnlineConnect_Init(Self_0029EF90* self)
+extern "C" void GuiOnlineConnect_onAdd(Self_0029EF90* self)
 {
-    GuiScreen_Init(self);
-    self->f10C = GuiWidget_FindChildByName(self, D_0048B920);
-    self->f110 = GuiWidget_FindChildByName(self, D_0048B938);
-    self->f114 = GuiWidget_FindChildByName(self, D_0048B968);
+    GuiLobbyScreen_onAdd(self);
+    self->f10C = GuiWidget_FindChild_charP(self, D_0048B920);
+    self->f110 = GuiWidget_FindChild_charP(self, D_0048B938);
+    self->f114 = GuiWidget_FindChild_charP(self, D_0048B968);
     self->fEC = FindAs_0029EF90(self, D_0048B928, D_004AA640);
     if (self->fEC) {
-        GuiArrayWidget_SetTable(self->fEC, 1, 10);
-        self->fEC->f88 = GuiWidget_FindChildByName(self, D_0048B930);
+        GuiArrayWidget_SetVisibleSize(self->fEC, 1, 10);
+        self->fEC->f88 = GuiWidget_FindChild_charP(self, D_0048B930);
         GuiTextListWidget_SetF1(self->fEC, 1);
     }
     self->fF0 = FindAs_0029EF90(self, D_0048B940, D_004A7520);
     self->fF4 = FindAs_0029EF90(self, D_0048B948, D_004AAE20);
-    self->fF8 = GuiWidget_FindChildByName(self, D_0048B950);
-    self->fFC = GuiWidget_FindChildByName(self, D_0048B958);
+    self->fF8 = GuiWidget_FindChild_charP(self, D_0048B950);
+    self->fFC = GuiWidget_FindChild_charP(self, D_0048B958);
     self->f100 = FindAs_0029EF90(self, D_0048B970, D_004AAE20);
-    self->f104 = GuiWidget_FindChildByName(self, D_0048B978);
+    self->f104 = GuiWidget_FindChild_charP(self, D_0048B978);
     if (self->fF4) {
         self->fF4->f7C = FindAs_0029EF90(self, D_0048B960, D_004AAE00);
         MLTextWidget_SetFont(self->fF4, "callout");
@@ -253,7 +253,7 @@ extern "C" void GuiOnlineConnect_Init(Self_0029EF90* self)
         MLTextWidget_SetFont(self->f100, "callout");
         self->f100->f60 = 0;
     }
-    self->f108 = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiWidget", "DNASLOGO");
+    self->f108 = GuiManager_OpenGui(Gui_Manager(), "GuiWidget", "DNASLOGO");
     self->f108->flags &= ~0x20;
 }
 #pragma pop /* merge_units */
@@ -262,16 +262,16 @@ extern "C" void GuiOnlineConnect_Init(Self_0029EF90* self)
 /* merge_units: begin GuiOnlineConnect_29F2A0 */
 #pragma push /* merge_units */
 extern char GuiOnlineConnect_vtable[];   /* GuiOnlineConnect vtable */
-extern GuiScreen* GuiScreen_ctor(GuiScreen* self);
-extern GuiSlot* LobbyArray_ctor(GuiSlot* slot);
+extern GuiScreen* GuiLobbyScreen_ctor(GuiScreen* self);
+extern GuiSlot* SFOLobbyList_ctor(GuiSlot* slot);
 
 /* GuiOnlineConnect constructor. */
 GuiOnlineConnect* GuiOnlineConnect_ctor(GuiOnlineConnect* self) {
-    GuiScreen_ctor(&self->base);
+    GuiLobbyScreen_ctor(&self->base);
     self->base.base.base.vtable = GuiOnlineConnect_vtable;
-    LobbyArray_ctor(&self->slots[0]);
-    LobbyArray_ctor(&self->slots[1]);
-    LobbyArray_ctor(&self->slots[2]);
+    SFOLobbyList_ctor(&self->slots[0]);
+    SFOLobbyList_ctor(&self->slots[1]);
+    SFOLobbyList_ctor(&self->slots[2]);
     self->base.screenId = 0;
     self->unk94 = 0;
     self->unk88 = 0;

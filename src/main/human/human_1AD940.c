@@ -12,7 +12,7 @@
 #pragma opt_strength_reduction off
 
 typedef struct { int pad0; int count; int* data; } PtrVec_1AD940;
-extern void PtrVector_Resize(PtrVec_1AD940* v, int n, int* fill);
+extern void std_vector_pod_int_resize(PtrVec_1AD940* v, int n, int* fill);
 
 void cArray_cTreeNode_cSkaSystemPtrPtr_Remove_OrderNotPreserved(PtrVec_1AD940* v, int* value)
 {
@@ -27,7 +27,7 @@ void cArray_cTreeNode_cSkaSystemPtrPtr_Remove_OrderNotPreserved(PtrVec_1AD940* v
         }
     }
     fill = 0;
-    PtrVector_Resize(v, last + 1, &fill);
+    std_vector_pod_int_resize(v, last + 1, &fill);
 }
 #pragma opt_strength_reduction reset
 /* merge_units: generate this block's code under its own pragmas */
@@ -40,23 +40,23 @@ static inline void merge_flush_func_001AD940(void) {}
 typedef struct { Q a; Q b; } VP_1AD9C0;
 typedef struct { char pad[0x50]; VP_1AD9C0 orient; char pad70[0x30]; unsigned char dirty; } Id_1AD9C0;
 typedef struct { char pad[0x160]; int x160; } R_1AD9C0;
-extern Id_1AD9C0* Root_IdentityAccessor(R_1AD9C0* self);
-extern void Transform_SetOrientation(VP_1AD9C0* d, VP_1AD9C0* s);
+extern Id_1AD9C0* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(R_1AD9C0* self);
+extern void cQuatVec_opAssign(VP_1AD9C0* d, VP_1AD9C0* s);
 extern int cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(R_1AD9C0* self);
 extern void cQuatVec_ctor_void(VP_1AD9C0* p);
-extern VP_1AD9C0* Root_GetParentInverse(R_1AD9C0* self, VP_1AD9C0* tmp);
-extern void Placement_Compose(VP_1AD9C0* d, VP_1AD9C0* s);
-extern void Root_PropagateChildren(R_1AD9C0* self);
-void RootAttachments_Attach(R_1AD9C0* self, VP_1AD9C0* o)
+extern VP_1AD9C0* cSkaAnimAnchor_TreeNode_GetParentInverseTransform(R_1AD9C0* self, VP_1AD9C0* tmp);
+extern void cQuatVec_Transform(VP_1AD9C0* d, VP_1AD9C0* s);
+extern void cSkaAnimAnchor_TreeNode_TellChildrenNeedToUpdate(R_1AD9C0* self);
+void cSkaAnimAnchor_SetTransform(R_1AD9C0* self, VP_1AD9C0* o)
 {
-    Transform_SetOrientation(&Root_IdentityAccessor(self)->orient, o);
+    cQuatVec_opAssign(&cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(self)->orient, o);
     if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(self)) {
         VP_1AD9C0 tmp;
         cQuatVec_ctor_void(&tmp);
-        Placement_Compose(&Root_IdentityAccessor(self)->orient, Root_GetParentInverse(self, &tmp));
+        cQuatVec_Transform(&cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(self)->orient, cSkaAnimAnchor_TreeNode_GetParentInverseTransform(self, &tmp));
     }
-    Root_IdentityAccessor(self)->dirty = 1;
-    Root_PropagateChildren(self);
+    cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(self)->dirty = 1;
+    cSkaAnimAnchor_TreeNode_TellChildrenNeedToUpdate(self);
     self->x160 = 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

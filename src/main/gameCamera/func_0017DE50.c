@@ -10,17 +10,17 @@ typedef struct Float3 {
     float x, y, z;
 } Float3;
 
-extern int Random_Next(void);
+extern int Libc_Rand(void);
 
-Float3* Camera_ShakeMatrix(Float3* v, float x, float y, float z) {
+Float3* cEulerAngle_T_1_2_ctor_float_float_float(Float3* v, float x, float y, float z) {
     v->x = x;
     v->y = y;
     v->z = z;
     return v;
 }
 
-int Random_Next_Thunk(void) {
-    return Random_Next();
+int RAND(void) {
+    return Libc_Rand();
 }
 
 float cCameraShake_cPulsedShakeMagnitude_GetCurrVal(char* self) {

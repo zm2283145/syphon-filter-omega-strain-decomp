@@ -5,10 +5,10 @@ typedef struct { int key; int val; int x8; } Ent_B060;
 typedef struct N_B060 { struct N_B060* prev; struct N_B060* next; Ent_B060* e; } N_B060;
 typedef struct { int a; int b; } It2_B060;
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern char D_0049B670[];
 extern char D_004EA1B0[];
-void List_Begin(N_B060** out, void* list);
+void std_list_deleter_voidPtr_begin_void(N_B060** out, void* list);
 void func_0015AD60(N_B060** out, N_B060** in);
 void func_0015AD50(N_B060** out, void* list);
 void func_0015AD40(N_B060** out, N_B060** in);
@@ -16,7 +16,7 @@ void std_list_cEnabledListItemPtr_push_back(void* list, Ent_B060** e);
 }
 typedef struct { char pad[0xC]; int id; } Ctl_B060;
 typedef struct { char pad[0x30]; Ctl_B060* ctl; } NPC_B060;
-static inline void Begin(N_B060** out) { N_B060* t; List_Begin(&t, D_004EA1B0); func_0015AD60(out, &t); }
+static inline void Begin(N_B060** out) { N_B060* t; std_list_deleter_voidPtr_begin_void(&t, D_004EA1B0); func_0015AD60(out, &t); }
 static inline N_B060* End(N_B060** out) { N_B060* t; func_0015AD50(&t, D_004EA1B0); func_0015AD40(out, &t); return *out; }
 static inline void Ent_Init(Ent_B060* p, Ctl_B060* c) { p->key = -1; p->key = c->id; p->val = 0; p->x8 = 0; }
 extern "C" int cNPC_GetEnabled(NPC_B060* self)
@@ -37,7 +37,7 @@ extern "C" int cNPC_GetEnabled(NPC_B060* self)
         Ent_B060* p;
         {
             AllocGuard g;
-            p = (Ent_B060*)Mem_Alloc(0, 0xC, D_0049B670, 0xFF);
+            p = (Ent_B060*)cMemMan_Allocate(0, 0xC, D_0049B670, 0xFF);
         }
         if (p)
             Ent_Init(p, self->ctl);

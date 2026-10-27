@@ -10,7 +10,7 @@
 
 /* merge_units: begin func_00269070 */
 #pragma push /* merge_units */
-void* ScriptArray_Cast(void* self); /* gsynth: defined below */
+void* Array_SOBJ_convert(void* self); /* gsynth: defined below */
 /*
  * Matched functions (byte-identical with the retail executable).
  * Original translation unit not identified yet; functions are named by address
@@ -20,12 +20,12 @@ void* ScriptArray_Cast(void* self); /* gsynth: defined below */
 
 extern int Array_SOBJ_toInt(int value);
 #if 0 /* merge_units */
-extern void* ScriptArray_Cast(void* obj);
+extern void* Array_SOBJ_convert(void* obj);
 #endif /* merge_units */
-#define ScriptArray_Cast(a0) (ScriptArray_Cast((a0))) /* merge_units */
+#define Array_SOBJ_convert(a0) (Array_SOBJ_convert((a0))) /* merge_units */
 
 
-void ScriptType_Array_Init(void) {
+void Array_SOBJ_init(void) {
 }
 
 int func_00269080(int value) {
@@ -39,9 +39,9 @@ int Array_SOBJ_toInt(int value) {
 }
 
 void* ScriptArray_Cast_Thunk(void* obj) {
-    return ScriptArray_Cast(obj);
+    return Array_SOBJ_convert(obj);
 }
-#undef ScriptArray_Cast /* merge_units */
+#undef Array_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00269070(void) {}
 #pragma pop /* merge_units */
@@ -53,7 +53,7 @@ extern int D_004F8488;  /* script array type key */
 extern int* Array_SOBJ_getClassId(void);
 
 /* Cast from script object to array (identity). */
-void* ScriptArray_Cast(void* self) {
+void* Array_SOBJ_convert(void* self) {
     return self;
 }
 

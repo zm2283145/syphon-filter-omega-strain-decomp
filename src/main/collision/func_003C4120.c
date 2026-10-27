@@ -2,7 +2,7 @@
 #pragma always_inline on
 #pragma inline_depth(8)
 #include "types.h"
-/* cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_2: Los_TraceWaterSurfaces' twin that flips back faces only for double-sided
+/* cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_2: cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_4' twin that flips back faces only for double-sided
  * candidates (otherwise a back face is rejected): intersects the trace segment (origin q->org,
  * direction q->dir) with candidate triangle c, the plane hit point must lie inside the segment,
  * and the barycentric test is done in the plane of the two smallest normal components; hits are
@@ -55,13 +55,13 @@ public:
 };
 struct LosQ { char pad0[0x40]; V dir; V org; char pad60[4]; Sink* sink; };
 extern "C" {
-V* ColCandidate_GetNormal(Cand* c);
-float Vec4_GetX(V* v);
-float Vec4_GetY(V* v);
-float Vec4_GetZ(V* v);
+V* cCollisionFace_UnitNormal(Cand* c);
+float cVector_X_void(V* v);
+float cVector_Y_void(V* v);
+float cVector_Z_void(V* v);
 float Math_Fabs(float f);
-V* Array16_At(Cand* c, int i);
-V Sphere_FromCenter(const V* a, const V* b);
+V* cCollisionFace_Vertex(Cand* c, int i);
+V cVector_opSub(const V* a, const V* b);
 int cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_2(LosQ* q, Cand* c);
 }
 
@@ -70,9 +70,9 @@ static inline bool InTri(float u, float v) { return (u >= 0.0f && v >= 0.0f) && 
 static inline void Inside(LosQ* q, Cand* c, const V& hit)
 {
     int axis;
-    float ax = Math_Fabs(Vec4_GetX(ColCandidate_GetNormal(c)));
-    float ay = Math_Fabs(Vec4_GetY(ColCandidate_GetNormal(c)));
-    float az = Math_Fabs(Vec4_GetZ(ColCandidate_GetNormal(c)));
+    float ax = Math_Fabs(cVector_X_void(cCollisionFace_UnitNormal(c)));
+    float ay = Math_Fabs(cVector_Y_void(cCollisionFace_UnitNormal(c)));
+    float az = Math_Fabs(cVector_Z_void(cCollisionFace_UnitNormal(c)));
     if (ax > ay) {
         if (az > ax)
             axis = 2;
@@ -85,9 +85,9 @@ static inline void Inside(LosQ* q, Cand* c, const V& hit)
             axis = 2;
     }
     float u, v;
-    V e1 = Sphere_FromCenter(Array16_At(c, 1), Array16_At(c, 0));
-    V e2 = Sphere_FromCenter(Array16_At(c, 2), Array16_At(c, 0));
-    V e3 = Sphere_FromCenter(&hit, Array16_At(c, 0));
+    V e1 = cVector_opSub(cCollisionFace_Vertex(c, 1), cCollisionFace_Vertex(c, 0));
+    V e2 = cVector_opSub(cCollisionFace_Vertex(c, 2), cCollisionFace_Vertex(c, 0));
+    V e3 = cVector_opSub(&hit, cCollisionFace_Vertex(c, 0));
     switch ((unsigned char)axis) {
     case 0: {
         float det = e1.y * e2.z - e1.z * e2.y;

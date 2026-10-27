@@ -40,7 +40,7 @@ typedef struct { unsigned char pad[0x14]; int count; } Arr_396620;
 
 extern "C" {
 void std_deque_deleter_common_cSkaSystem_Request_make_iterator(Iter_396620* out, Arr_396620* a, int index);
-void Array_DestroyRange(Arr_396620* a, Iter_396620* first, Iter_396620* last);
+void std_deque_deleter_cSkaSystem_Request_destroy(Arr_396620* a, Iter_396620* first, Iter_396620* last);
 void* std_deque_deleter_common_cSkaSystem_Request_dtor(Arr_396620* a, short deleteFlag);
 void operator_delete(void* allocation);
 }
@@ -52,7 +52,7 @@ extern "C" Arr_396620* std_deque_deleter_cSkaSystem_Request_dtor(Arr_396620* sel
         Iter_396620 last;
         std_deque_deleter_common_cSkaSystem_Request_make_iterator(&last, self, self->count);
         std_deque_deleter_common_cSkaSystem_Request_make_iterator(&first, self, 0);
-        Array_DestroyRange(self, &first, &last);
+        std_deque_deleter_cSkaSystem_Request_destroy(self, &first, &last);
         std_deque_deleter_common_cSkaSystem_Request_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);

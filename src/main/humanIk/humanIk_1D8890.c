@@ -29,11 +29,11 @@ int Alloc_Lock(int);
 #define Alloc_Lock(a0) (Alloc_Lock((a0))) /* merge_units */
                                     
 #if 0 /* merge_units */
-int Alloc_Unlock(int);
+int EnableIntc(int);
 #endif /* merge_units */
-#define Alloc_Unlock(a0) (Alloc_Unlock((a0))) /* merge_units */
+#define EnableIntc(a0) (EnableIntc((a0))) /* merge_units */
                                   
-int Mem_Alloc(int, int, char *, int);                        
+int cMemMan_Allocate(int, int, char *, int);                        
 int cArray_FixedCapacity_cIkTarget_LeftRight_6_ctor(int);                               
 int cDrawAndHolsterWeapon_ActionManager_InitWeaponSlotTransitionTable();                                  
 int cDrawAndHolsterWeapon_ActionManager_InitWeaponSlotIkTargetTable();                                  
@@ -54,9 +54,9 @@ void cDrawAndHolsterWeapon_ActionManager_InitStatics(void) {
             Alloc_Lock(9);
         }
         g_ProfileLockDepth += 1;
-        temp_s0 = Mem_Alloc(0, 0x250, &D_004A0170, 0x271);
+        temp_s0 = cMemMan_Allocate(0, 0x250, &D_004A0170, 0x271);
         if (g_ProfileLockEnabled != 0) {
-            Alloc_Unlock(9);
+            EnableIntc(9);
         }
         g_ProfileLockDepth -= 1;
         if (temp_s0 != 0) {
@@ -70,9 +70,9 @@ void cDrawAndHolsterWeapon_ActionManager_InitStatics(void) {
             Alloc_Lock(9);
         }
         g_ProfileLockDepth += 1;
-        temp_s0_2 = Mem_Alloc(0, 0x10, &D_004A0170, 0x275);
+        temp_s0_2 = cMemMan_Allocate(0, 0x10, &D_004A0170, 0x275);
         if (g_ProfileLockEnabled != 0) {
-            Alloc_Unlock(9);
+            EnableIntc(9);
         }
         g_ProfileLockDepth -= 1;
         if (temp_s0_2 != 0) {
@@ -83,7 +83,7 @@ void cDrawAndHolsterWeapon_ActionManager_InitStatics(void) {
     cDrawAndHolsterWeapon_ActionManager_InitWeaponSlotTransitionTable();
 }
 #undef Alloc_Lock /* merge_units */
-#undef Alloc_Unlock /* merge_units */
+#undef EnableIntc /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001D8900(void) {}
 #pragma pop /* merge_units */

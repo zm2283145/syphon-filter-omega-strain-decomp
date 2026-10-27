@@ -16,7 +16,7 @@ extern "C" {
 extern unsigned char D_005721D0;
 extern int D_005061D8;
 extern unsigned char* D_005061D0;
-void** NetMap_Lookup(int);
+void** cNetObj_GetNetSystem(int);
 Vec2822F0* cNetMsg_GetFuncList(void);
 }
 #pragma push
@@ -25,7 +25,7 @@ extern "C" int cNetMsg_Callback(int a0, int a1, int a2, Pk2822F0* arg) {
     NetRecvGuard g;
     Pk2822F0* p = arg;
     if (D_005721D0) {
-        void** e = NetMap_Lookup(p->id);
+        void** e = cNetObj_GetNetSystem(p->id);
         void* obj;
         short idx;
         obj = 0; if (e) obj = *e;
@@ -95,8 +95,8 @@ b->len = n;
 
 #include "loose01_types.h"
 
-extern int PtrVec_Insert(PtrVec*, int*, int, int*);
-extern int PtrVec_PushBack_282530(PtrVec*, int*);
+extern int std_vector_pod_int_insert(PtrVec*, int*, int, int*);
+extern int std_vector_void_cSystem_push_back(PtrVec*, int*);
 #if 0 /* merge_units */
 extern PtrVec* cNetMsg_GetFuncList(void);
 #endif /* merge_units */
@@ -104,19 +104,19 @@ extern PtrVec* cNetMsg_GetFuncList(void);
 
 
 /* Appends a value to the list from cNetMsg_GetFuncList and hands out the next id from D_005061D8. */
-int NetMsgTable_Add(int value, int* outId) {
+int cNetMsg_RegisterMsg(int value, int* outId) {
     int tmp;
 
     tmp = value;
-    PtrVec_PushBack_282530(cNetMsg_GetFuncList(), &tmp);
+    std_vector_void_cSystem_push_back(cNetMsg_GetFuncList(), &tmp);
     *outId = D_005061D8;
     D_005061D8 = D_005061D8 + 1;
     return *outId;
 }
 
 /* push_back */
-int PtrVec_PushBack_282530(PtrVec* v, int* value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+int std_vector_void_cSystem_push_back(PtrVec* v, int* value) {
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 #undef cNetMsg_GetFuncList /* merge_units */
 #pragma pop /* merge_units */

@@ -1,5 +1,5 @@
 #include "types.h"
-int HumanColMask_Equals(const int* a, const int* b)
+int cBitArray_19_opEq(const int* a, const int* b)
 {
     int i;
     for (i = 0; i < 1; i++) {

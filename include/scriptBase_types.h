@@ -19,7 +19,7 @@ typedef struct OwnedVec {
 /* Registered script object type (ids start at 100 in the type table D_00554F28). */
 typedef struct ScriptType {
     char pad00[0x40];
-    int unk40;                      /* 0x40 set by ScriptType_SetParent (native type key) */
+    int unk40;                      /* 0x40 set by cScriptBase_declareParent (native type key) */
 } ScriptType;
 
 #endif

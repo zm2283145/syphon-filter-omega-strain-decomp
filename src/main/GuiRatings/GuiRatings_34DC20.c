@@ -25,22 +25,22 @@ struct S34DC20 { char pad[0xDC]; R34DC20* aDC; };
 extern "C" {
 extern char D_004BA880[];
 extern char D_00587C80[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void GuiPersonnelScreen_Wake(S34DC20* o);
-void* Gui_GetScreenList(void);
-void* GuiFont_Find(void* mgr, char* name);
-R34DC20* TextObj_Construct(void* p, int a, int b, int c, int d, void* e, char* f);
-void GuiRatings_Wake(S34DC20* o);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void GuiPersonnelScreen_onWake(S34DC20* o);
+void* Gui_Manager(void);
+void* GuiManager_GetFont(void* mgr, char* name);
+R34DC20* cTextArea_ctor(void* p, int a, int b, int c, int d, void* e, char* f);
+void GuiRatings_onWake(S34DC20* o);
 }
-void GuiRatings_Wake(S34DC20* o)
+void GuiRatings_onWake(S34DC20* o)
 {
     void* p;
-    GuiPersonnelScreen_Wake(o);
+    GuiPersonnelScreen_onWake(o);
     {
         AllocGuard guard;
-        p = Mem_Alloc(0, 0x60, D_004BA880, 0x83);
+        p = cMemMan_Allocate(0, 0x60, D_004BA880, 0x83);
     }
-    if (p) p = TextObj_Construct(p, 0, 0, 10, 10, GuiFont_Find(Gui_GetScreenList(), "callout"), D_00587C80);
+    if (p) p = cTextArea_ctor(p, 0, 0, 10, 10, GuiManager_GetFont(Gui_Manager(), "callout"), D_00587C80);
     o->aDC = (R34DC20*)p;
     o->aDC->a10 = 2;
     o->aDC->a12 = 1;
@@ -80,35 +80,35 @@ extern char *D_00492BB8;
 extern char D_004B88F0[];
 extern char g_Game[];
 extern G *D_004FFC04;
-void GuiPersonnelScreen_Init(Self *self);
+void GuiPersonnelScreen_onAdd(Self *self);
 void std_vector_deleter_tAchievementInfo_clear(void *p);
-int Agent_GetSelected(void *a, int i);
-void AgentData_GetRatings(int agent, void *p);
-W *GuiWidget_FindChildByName(void *self, char *name);
-void GuiBitmapWidget_SetImage(W *w, char *s, int f);
+int cGameSystem_GetAgentData(void *a, int i);
+void cAgentData_GetRatings(int agent, void *p);
+W *GuiWidget_FindChild_charP(void *self, char *name);
+void GuiBitmapWidget_SetBitmap(W *w, char *s, int f);
 }
 static inline W *Cast(W *w, char *type) { return (w && w->IsA(type)) ? w : 0; }
 static inline float Alpha(RList *l, int n) { float a = 1.0f; if (n < l->Count()) a = (*l)[n].used ? 1.0f : 0.3f; return a; }
-extern "C" void GuiRatings_Init(Self *self)
+extern "C" void GuiRatings_onAdd(Self *self)
 {
     W *grp;
     int i;
     char name[16];
     char text[64];
 
-    GuiPersonnelScreen_Init(self);
+    GuiPersonnelScreen_onAdd(self);
     std_vector_deleter_tAchievementInfo_clear(&self->list);
-    AgentData_GetRatings(Agent_GetSelected(g_Game, -1), &self->list);
-    grp = GuiWidget_FindChildByName(self, D_00492BB8);
+    cAgentData_GetRatings(cGameSystem_GetAgentData(g_Game, -1), &self->list);
+    grp = GuiWidget_FindChild_charP(self, D_00492BB8);
     if (grp == 0)
         return;
     for (i = 0; i < 24; i++) {
         sprintf(name, "%2.2d", i + 1);
-        self->items[i] = Cast(GuiWidget_FindChildByName(grp, name), D_004B88F0);
+        self->items[i] = Cast(GuiWidget_FindChild_charP(grp, name), D_004B88F0);
         if (self->items[i]) {
             float alpha;
             sprintf(text, "0_%d_%ds.tdx", self->f64, i + 1);
-            GuiBitmapWidget_SetImage(self->items[i], text, D_004FFC04->f25C);
+            GuiBitmapWidget_SetBitmap(self->items[i], text, D_004FFC04->f25C);
             self->items[i]->idx = i;
             self->items[i]->flags |= 0x80;
             alpha = Alpha(&self->list, i);

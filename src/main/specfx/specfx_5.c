@@ -22,14 +22,14 @@ struct NC710 { int m0; NC710* next; SC710* data; };
 struct HC710 { char pad[0x10]; float f10; };
 extern int D_0055C090;
 extern "C" {
-void List_Begin(int* out, void* list);
+void std_list_deleter_voidPtr_begin_void(int* out, void* list);
 void std_list_tItemPtr_generic_iterator_ctor(NC710** out, int* in);
 void std_list_tItemPtr_end(int* out, void* list);
 void cLListIterator_tItemPtr_ctor(NC710** out, int* in);
 void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(int* out, NC710** in);
-void List_Erase(int* out, void* list, int* in);
+void std_list_deleter_voidPtr_erase_listdeleter(int* out, void* list, int* in);
 }
-extern "C" void Effect_UpdateSlots(HC710* self, void* list, float dt)
+extern "C" void cSfxScheduler_UpdateItemList(HC710* self, void* list, float dt)
 {
     NC710* e;
     NC710* it;
@@ -40,7 +40,7 @@ extern "C" void Effect_UpdateSlots(HC710* self, void* list, float dt)
     int t2;
     SC710* s;
     NC710* n;
-    List_Begin(&t1, list);
+    std_list_deleter_voidPtr_begin_void(&t1, list);
     std_list_tItemPtr_generic_iterator_ctor(&it, &t1);
     for (n = it; std_list_tItemPtr_end(&t2, list), cLListIterator_tItemPtr_ctor(&e, &t2), n != e; ) {
         s = n->data;
@@ -61,7 +61,7 @@ extern "C" void Effect_UpdateSlots(HC710* self, void* list, float dt)
             old = cur;
             D_0055C090--;
             std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&t3, &old);
-            List_Erase(&t4, list, &t3);
+            std_list_deleter_voidPtr_erase_listdeleter(&t4, list, &t3);
         } else {
             n = n->next;
         }
@@ -74,14 +74,14 @@ extern "C" void Effect_UpdateSlots(HC710* self, void* list, float dt)
 #pragma push /* merge_units */
 typedef struct { char pad[0x14]; void* vt; } TC8E0;
 extern char D_004E0780[];
-extern void ReceiverList_Dtor_3EC220(void* self, short del);
+extern void std_list_tItemPtr_dtor(void* self, short del);
 extern void operator_delete(void* p);
 TC8E0* cSfxScheduler_dtor(TC8E0* self, short del)
 {
     if (self) {
         self->vt = D_004E0780;
         if (self)
-            ReceiverList_Dtor_3EC220(self, 0);
+            std_list_tItemPtr_dtor(self, 0);
         if (del > 0)
             operator_delete(self);
     }
@@ -94,11 +94,11 @@ TC8E0* cSfxScheduler_dtor(TC8E0* self, short del)
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "alloc_guard.h"
-extern "C" { extern char D_004BE020[]; void Mem_Free(int pool, void* p, char* file, int line); }
+extern "C" { extern char D_004BE020[]; void cMemMan_Deallocate(int pool, void* p, char* file, int line); }
 extern "C" void cSpecFx_opDelete(void* node)
 {
     AllocGuard guard;
-    Mem_Free(0, node, D_004BE020, 0x18);
+    cMemMan_Deallocate(0, node, D_004BE020, 0x18);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003EC950 */
@@ -106,11 +106,11 @@ extern "C" void cSpecFx_opDelete(void* node)
 /* merge_units: begin func_003EC9F0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-extern "C" { void* Mem_Alloc(int pool, int size, char* file, int line); }
-extern "C" void* EffectComponent_Alloc(int size)
+extern "C" { void* cMemMan_Allocate(int pool, int size, char* file, int line); }
+extern "C" void* cSpecFx_opNew(int size)
 {
     AllocGuard guard;
-    return Mem_Alloc(0, size, D_004BE020, 0x12);
+    return cMemMan_Allocate(0, size, D_004BE020, 0x12);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003EC9F0 */

@@ -6,12 +6,12 @@
 extern "C" {
 extern char D_004BF790[];
 void GuiTextArrayWidget_DestroyTextArray(guiTextArrayWidget* self);
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 void std_vector_tTextElement_ctor(TextArrayRow* row);
-void String_CtorEmpty(void* string);
+void cString_ctor_void(void* string);
 void tRGBA_ctor_void(Vec4* color);
 Vec4* tRGBA_ctor_float_float_float_float(Vec4* color, float x, float y, float z, float w);
-void SubtitleTrack_LoadCue(Vec4* destination, const Vec4* source);
+void tRGBA_opAssign(Vec4* destination, const Vec4* source);
 void std_vector_imp_tTextElement_resize(TextArrayRow* row, unsigned int columns, const TextArrayCell* value);
 void String_Dtor(void* string, int flags);
 void std_vector_cArray_tTextElementPtr_push_back(TextArrayStore* store, TextArrayRow** row);
@@ -20,7 +20,7 @@ void operator_delete(void* allocation);
 }
 
 /* Return an existing cell only when both row and column are in range. */
-extern "C" TextArrayCell* GuiTextArrayWidget_GetCell(guiTextArrayWidget* self,
+extern "C" TextArrayCell* GuiTextArrayWidget_GetTextElement(guiTextArrayWidget* self,
                                      unsigned int column, unsigned int row)
 {
     if (row >= (unsigned int)self->store.unk04)
@@ -36,7 +36,7 @@ static inline TextArrayRow* create_row(void)
     TextArrayRow* allocation;
     {
         AllocGuard guard;
-        allocation = (TextArrayRow*)Mem_Alloc(0, sizeof(TextArrayRow), D_004BF790, 0x2B);
+        allocation = (TextArrayRow*)cMemMan_Allocate(0, sizeof(TextArrayRow), D_004BF790, 0x2B);
     }
     if (allocation) {
         std_vector_tTextElement_ctor(allocation);
@@ -46,7 +46,7 @@ static inline TextArrayRow* create_row(void)
 }
 
 /* Rebuild the requested rows with default cells and independently owned storage. */
-extern "C" void TextArrayCell_InitDefaults(guiTextArrayWidget* self, unsigned int columns, unsigned int rows)
+extern "C" void GuiTextArrayWidget_CreateTextArray(guiTextArrayWidget* self, unsigned int columns, unsigned int rows)
 {
     GuiTextArrayWidget_DestroyTextArray(self);
     if (!columns || !rows)
@@ -56,12 +56,12 @@ extern "C" void TextArrayCell_InitDefaults(guiTextArrayWidget* self, unsigned in
         TextArrayCell cell;
         Vec4 white;
         row = create_row();
-        String_CtorEmpty(cell.string);
+        cString_ctor_void(cell.string);
         tRGBA_ctor_void(&cell.color);
         cell.flags = 0;
         cell.attribute = 0;
         cell.text = 0;
-        SubtitleTrack_LoadCue(&cell.color, tRGBA_ctor_float_float_float_float(&white, 1.0f, 1.0f, 1.0f, 1.0f));
+        tRGBA_opAssign(&cell.color, tRGBA_ctor_float_float_float_float(&white, 1.0f, 1.0f, 1.0f, 1.0f));
         std_vector_imp_tTextElement_resize(row, columns, &cell);
         String_Dtor(cell.string, 0);
         std_vector_cArray_tTextElementPtr_push_back(&self->store, &row);

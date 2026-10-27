@@ -20,12 +20,12 @@ DEFINE_GUARDED_RELEASE(opDelete_nodeP_int_bool_charP_etc)
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "alloc_guard.h"
-extern "C" { extern char D_0049B030[]; void Mem_Free(int pool, void* p, char* file, int line); }
+extern "C" { extern char D_0049B030[]; void cMemMan_Deallocate(int pool, void* p, char* file, int line); }
 extern "C" void cAllocator_node_deallocate_nodeP_uint(void* tree, void* node)
 {
     if (node) {
         AllocGuard guard;
-        Mem_Free(0, node, D_0049B030, 0x64);
+        cMemMan_Deallocate(0, node, D_0049B030, 0x64);
     }
 }
 #pragma pop /* merge_units */
@@ -55,11 +55,11 @@ void* std_tree_pair_float_value_compare_alloc(void* self) {
 
 /* merge_units: begin func_0013F770 */
 #pragma push /* merge_units */
-/* float-keyed tree: find insert position, then insert via Tree_Insert_13F820 */
+/* float-keyed tree: find insert position, then insert via std_tree_pair_float_value_compare_insert_node_at */
 typedef struct C3FtNode { struct C3FtNode* left; struct C3FtNode* right; int pad; float key; } C3FtNode;
 typedef struct { int pad; C3FtNode* root; } C3FtTree;
-extern C3FtNode* Tree_Insert_13F820(C3FtTree* t, C3FtNode* parent, unsigned char left, unsigned char leftmost, float* key);
-void SceneDrawMap_Insert(C3FtNode** out, C3FtTree* t, float* key)
+extern C3FtNode* std_tree_pair_float_value_compare_insert_node_at(C3FtTree* t, C3FtNode* parent, unsigned char left, unsigned char leftmost, float* key);
+void std_tree_pair_float_value_compare_insert_multi(C3FtNode** out, C3FtTree* t, float* key)
 {
     C3FtNode* parent = (C3FtNode*)&t->root;
     C3FtNode* n = t->root;
@@ -76,7 +76,7 @@ void SceneDrawMap_Insert(C3FtNode** out, C3FtTree* t, float* key)
             leftmost = 0;
         }
     }
-    *out = Tree_Insert_13F820(t, parent, left, leftmost, key);
+    *out = std_tree_pair_float_value_compare_insert_node_at(t, parent, left, leftmost, key);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0013F770 */

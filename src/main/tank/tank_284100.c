@@ -17,7 +17,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00284100 */
 #pragma push /* merge_units */
@@ -26,18 +26,18 @@ int Mem_Free();
 extern "C" {}typedef struct { int a; } Id_4100;
 extern "C" {
 extern char D_004A93D0[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void IdMgr_Allocate(Id_4100* out, int kind);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void nGobjManager_GetNextId(Id_4100* out, int kind);
 void cGOBJ_ctor(void* p, Id_4100* id, int a, int* b);
 }
 extern "C" TankObj* Global_CreateTank(int arg)
 {
     TankObj* p;
-{ AllocGuard g; p = (TankObj*)Mem_Alloc(0, 0x78, D_004A93D0, 0x2F2); }
+{ AllocGuard g; p = (TankObj*)cMemMan_Allocate(0, 0x78, D_004A93D0, 0x2F2); }
     if (p) {
 Id_4100 id; int z[1];
         z[0] = 0;
-        IdMgr_Allocate(&id, 0xF9);
+        nGobjManager_GetNextId(&id, 0xF9);
         cGOBJ_ctor(p, &id, 0, z);
         TankObj_Init(p, arg);
     }
@@ -55,12 +55,12 @@ static inline void merge_flush_func_00284100(void) {}
 extern "C" {
 extern char* D_005061D0;
 #if 0 /* merge_units */
-void* Mem_Alloc(int heap, int size, char* file, int line);
+void* cMemMan_Allocate(int heap, int size, char* file, int line);
 #endif /* merge_units */
-#define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
+#define cMemMan_Allocate(a0, a1, a2, a3) (cMemMan_Allocate((a0), (a1), (a2), (a3))) /* merge_units */
 
-void NetStream_ReadObject(void* out);
-void* cTank_SetTurret(void* mem, void* a, void* b, void* c, int d, void* t);
+void cNetMsg_GetGOBJ(void* out);
+void* cTurret_ctor(void* mem, void* a, void* b, void* c, int d, void* t);
 void cTurret_NetUnpack(void* t);
 }
 typedef struct { char pad[0x144]; float f; } O_002842F0;
@@ -68,10 +68,10 @@ inline void* operator new(unsigned int, void* p) { return p; }
 struct Seg_002842F0 { void* a; O_002842F0* b; char pad8[0x1C]; float f; unsigned char flag;
     Seg_002842F0(void* a_, O_002842F0* b_) { b = b_; a = a_; f = b->f; flag = 0; } };
 typedef struct { char pad[0x64]; struct Seg_002842F0* s0; Seg_002842F0* s1; void* turret; unsigned char b70; } T_002842F0;
-static inline void* RO_002842F0(void** x) { NetStream_ReadObject(x); return *x; }
+static inline void* RO_002842F0(void** x) { cNetMsg_GetGOBJ(x); return *x; }
 static inline char R8_002842F0(void) { return *D_005061D0++; }
-static inline void* New_002842F0(int size, int line) { AllocGuard g; return Mem_Alloc(0, size, D_004A93D0, line); }
-static inline void Del_002842F0(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004A93D0, line); }
+static inline void* New_002842F0(int size, int line) { AllocGuard g; return cMemMan_Allocate(0, size, D_004A93D0, line); }
+static inline void Del_002842F0(void* p, int line) { AllocGuard g; cMemMan_Deallocate(0, p, D_004A93D0, line); }
 #pragma opt_propagation off
 extern "C" void cTank_NetUnpack(T_002842F0* t) {
     void* x0; void* x1; void* x2; void* x3; void* x4; void* x5; void* x6;
@@ -95,12 +95,12 @@ extern "C" void cTank_NetUnpack(T_002842F0* t) {
         void* m;
         if (t->turret) Del_002842F0(t->turret, 0x1E8);
         m = New_002842F0(0x70, 0x1EA);
-        if (m) m = cTank_SetTurret(m, a, b, c, 0, t);
+        if (m) m = cTurret_ctor(m, a, b, c, 0, t);
         t->turret = m;
         cTurret_NetUnpack(t->turret);
     }
 }
-#undef Mem_Alloc /* merge_units */
+#undef cMemMan_Allocate /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002842F0(void) {}
 #pragma pop /* merge_units */

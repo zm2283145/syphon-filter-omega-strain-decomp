@@ -10,7 +10,7 @@ int cArray_cGOBJPtr_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-Iter* Iter_Advance4(Iter* it) {
+Iter* cArray_cGOBJPtr_Iterator_opInc(Iter* it) {
     it->p++;
     return it;
 }

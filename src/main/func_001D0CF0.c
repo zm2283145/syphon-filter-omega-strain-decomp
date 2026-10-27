@@ -26,7 +26,7 @@ static inline void Conj(V4* p) { __asm__ volatile("lqc2 vf1, 0x0(%0)\n vsub.xyz 
 static inline void QMul(V4* o, const V4* b, const V4* c) {
     __asm__ volatile("lqc2 vf1, 0x0(%1)\n lqc2 vf2, 0x0(%2)\n vmul.xyzw vf3, vf1, vf2\n vopmula.xyz ACC, vf1, vf2\n vmaddaw.xyz ACC, vf1, vf2w\n vmaddaw.xyz ACC, vf2, vf1w\n vopmsub.xyz vf4, vf2, vf1\n vsubaz.w ACC, vf3, vf3z\n vmsubay.w ACC, vf0, vf3y\n vmsubx.w vf4, vf0, vf3x\n sqc2 vf4, 0x0(%0)" : : "r"(o), "r"(b), "r"(c) : "memory");
 }
-extern "C" void UpperBody_FootRotation(void* self, const V4* q, int idx, int flag)
+extern "C" void cHumanIkRoutine_OrientFoot_AfterPositionLeg(void* self, const V4* q, int idx, int flag)
 {
     Slot* s = &UpperBodyNodeTable[idx];
     Src* src = s->src;

@@ -97,7 +97,7 @@ void func_00397400(T_397170* p, int flags);
 static inline const int& imin_397170(const int& a, const int& b) { return b < a ? b : a; }
 static inline const unsigned int& umin_397170(const unsigned int& a, const unsigned int& b) { return b < a ? b : a; }
 
-extern "C" void Array_DestroyRange(void* self, It_397170* first, It_397170* last)
+extern "C" void std_deque_deleter_cSkaSystem_Request_destroy(void* self, It_397170* first, It_397170* last)
 {
     if (first->cur != last->cur) {
         unsigned int n;

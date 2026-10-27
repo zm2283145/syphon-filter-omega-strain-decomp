@@ -16,7 +16,7 @@ extern int _make_path(int, char *, char *);
 extern int strcmp(const char *, const char *);
 extern unsigned int strlen(const char *);
 extern char *strrchr(const char *, int);
-extern char *String_Copy(char *, const char *);
+extern char *Libc_Strcpy(char *, const char *);
 extern int _sceMcFatSearchFile(int, char *, MCDirInfo *, int *, int *);
 extern int _GetEntryByPos(int, MCEnt *, int, int);
 extern int func_002BB2D0(int, void *, int, int);
@@ -38,9 +38,9 @@ int _sceMcFatGetDir(int dev, char *path, int start, int max, MCDirOut *out, int 
     if (!func_002BC788(dev)) return 0x81010013;
     if (D_00513514[dev].x == 0) return 0x8101006F;
     if (!_make_path(dev, path, buf) || !strcmp(buf, D_004AC1C8)) return 0x81010016;
-    String_Copy(dir, buf);
+    Libc_Strcpy(dir, buf);
     *strrchr(dir, '/') = 0;
-    String_Copy(pat, dir + strlen(dir) + 1);
+    Libc_Strcpy(pat, dir + strlen(dir) + 1);
     if (strlen(dir) == 0) {
         err = _sceMcFatSearchFile(dev, D_004AC1C8, &st, 0, 0);
         if (err != 0x81010011) return err;
@@ -84,7 +84,7 @@ int _sceMcFatGetDir(int dev, char *path, int start, int max, MCDirOut *out, int 
                     out->modified = ent.modified;
                     out->size = ent.size;
                     out->mode = ent.mode;
-                    String_Copy(out->name, ent.name);
+                    Libc_Strcpy(out->name, ent.name);
                     out++;
                 }
                 n++;

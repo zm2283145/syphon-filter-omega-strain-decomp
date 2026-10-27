@@ -2,7 +2,7 @@
 #pragma inline_depth(8)
 #include "types.h"
 #include "vslot_pad.h"
-/* Backpack_Place: drop the backpack, pick its LOS region, ray-test downward and register it with the hit object */
+/* cBackpack_SetBodyLoc: drop the backpack, pick its LOS region, ray-test downward and register it with the hit object */
 static inline void Q16(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
 struct V { float x, y, z, w; V() {} V(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; } V(const V& o) { V* d = this; Q16(d, &o); } V& operator=(const V& o) { V* d = this; Q16(d, &o); return *this; } } __attribute__((aligned(16)));
 struct VP { float x, y, z, w; } __attribute__((aligned(16)));
@@ -25,26 +25,26 @@ extern char D_004D9180[], g_Game[], g_LosRequestMsgClass[], g_LosCheckService[];
 extern void* g_GameGobjClassWord;
 extern Holder_61D0* g_LocalPlayer;
 extern void* g_HotboxTracker;
-void Event_Construct(void*, void*);
+void cMessage_ctor_cMessageNameR(void*, void*);
 void cMessage_dtor(void*, int);
-Svc* Service_Lookup(void*, void*);
+Svc* cSystemContainer_GetSystem(void*, void*);
 void* GetSceneManager(void);
 void* cSceneManager_GetSceneBelongingTo(void* a, void* w);
-Region_61D0* World_GetPlayerZone(void* r, V* p);
-Region_61D0* LosRegion_FindGlobal(V* p);
-Ref_61D0* WeakRef_Capture(Ref_61D0* r, Pack_61D0* o);
-void HandleVec_FindResolved(It_61D0* out, void* v, Ref_61D0* ref);
+Region_61D0* cScene_FindBestSectorInActivation(void* r, V* p);
+Region_61D0* nActivation_GetClosestTerrainPiece(V* p);
+Ref_61D0* cSafePtr_cGOBJ_ctor_cGOBJP(Ref_61D0* r, Pack_61D0* o);
+void cArray_cSafePtr_cGOBJ_Find(It_61D0* out, void* v, Ref_61D0* ref);
 void cArray_cSafePtr_cGOBJ_End(It_61D0* out, void* v);
 int func_002564C0(It_61D0* a, It_61D0* b);
-void HandleVec_PushBack(void* v, Ref_61D0* ref);
-void HotboxWorld_UpdateBoxBounds(void* mgr, void* hb, Pack_61D0* p, int a);
-void Backpack_Place(Pack_61D0* p, Mtx_61D0* m, int drop);
+void cArray_cSafePtr_cGOBJ_PushBackActual(void* v, Ref_61D0* ref);
+void cHotboxMan_SetupInteractBoxDimensionsAndLocation(void* mgr, void* hb, Pack_61D0* p, int a);
+void cBackpack_SetBodyLoc(Pack_61D0* p, Mtx_61D0* m, int drop);
 }
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
 struct MsgB {
     void* vtable; void* type; int pad8[5]; int flags; unsigned char kind; char pad21[3];
     MsgB() {}
-    MsgB(void* t) { Event_Construct(this, t); }
+    MsgB(void* t) { cMessage_ctor_cMessageNameR(this, t); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); }
 };
 struct MsgRay : MsgB {
@@ -54,7 +54,7 @@ struct MsgRay : MsgB {
     __declspec(weak) __declspec(MSG_DTOR) ~MsgRay() { vtable = D_004D9180; }
 } __attribute__((aligned(16)));
 static inline bool Clear(Region_61D0* g) { return !(g->b2E != 0); }
-void Backpack_Place(Pack_61D0* p, Mtx_61D0* m, int drop)
+void cBackpack_SetBodyLoc(Pack_61D0* p, Mtx_61D0* m, int drop)
 {
     p->link->Detach();
     if (drop) {
@@ -62,8 +62,8 @@ void Backpack_Place(Pack_61D0* p, Mtx_61D0* m, int drop)
         void* r = cSceneManager_GetSceneBelongingTo(GetSceneManager(), w);
         {
             V pos; { const V* s = &m->r3; V* d = &pos; Q16(d, s); }
-            p->region = World_GetPlayerZone(r, &pos);
-            if (!p->region) p->region = LosRegion_FindGlobal(&pos);
+            p->region = cScene_FindBestSectorInActivation(r, &pos);
+            if (!p->region) p->region = nActivation_GetClosestTerrainPiece(&pos);
         }
         {
             Region_61D0* g = p->region;
@@ -80,23 +80,23 @@ void Backpack_Place(Pack_61D0* p, Mtx_61D0* m, int drop)
             V dir(0.0f, 0.0f, -3.0f, 1.0f);
             {
                 MsgRay msg(&hi, from, dir, p, 0);
-                Service_Lookup(g_Game, g_LosCheckService)->Post(&msg);
+                cSystemContainer_GetSystem(g_Game, g_LosCheckService)->Post(&msg);
                 if (hi.hit) {
                     Obj_61D0* o = *hi.s.obj;
                     if (o->cls == g_GameGobjClassWord && o->kind == 3) {
                         Ref_61D0 r1;
                         It_61D0 it;
                         It_61D0 end;
-                        HandleVec_FindResolved(&it, o->packs, WeakRef_Capture(&r1, p));
+                        cArray_cSafePtr_cGOBJ_Find(&it, o->packs, cSafePtr_cGOBJ_ctor_cGOBJP(&r1, p));
                         cArray_cSafePtr_cGOBJ_End(&end, o->packs);
                         if (func_002564C0(&it, &end)) {
                             Ref_61D0 r2;
-                            HandleVec_PushBack(o->packs, WeakRef_Capture(&r2, p));
+                            cArray_cSafePtr_cGOBJ_PushBackActual(o->packs, cSafePtr_cGOBJ_ctor_cGOBJP(&r2, p));
                         }
                     }
                 }
             }
         }
     }
-    if (p->hotbox) HotboxWorld_UpdateBoxBounds(g_HotboxTracker, p->hotbox, p, 0);
+    if (p->hotbox) cHotboxMan_SetupInteractBoxDimensionsAndLocation(g_HotboxTracker, p->hotbox, p, 0);
 }

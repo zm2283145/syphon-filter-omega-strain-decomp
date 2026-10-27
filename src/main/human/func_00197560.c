@@ -21,8 +21,8 @@ extern "C" {
 extern char D_00542B60[]; extern char D_004DA930[];
 extern char D_004EEED0[]; extern char D_004DA8D0[]; extern char D_004DCF10[];
 extern char D_0049E000[]; extern char D_00504068[]; extern char D_004DCDC0[]; extern unsigned char g_IsMultiplayer;
-void Event_Construct(void* m, void* t);
-void Event_Send(void* m, void* t, int f);
+void cMessage_ctor_cMessageNameR(void* m, void* t);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* t, int f);
 void cMessage_dtor(void* m, int f);
 unsigned char Secondary_RequestOneShot(Ob2_S7* o, Name_S7* n, unsigned char kind, AEv_S7* p);
 }
@@ -43,7 +43,7 @@ unsigned char Secondary_RequestOneShot(Ob2_S7* o, Name_S7* n, unsigned char kind
 static inline void QCp_S7(Q_S7* d, const Q_S7* s) { __int128 q; asm volatile { lq q, 0(s)
  sq q, 0(d) } }
 
-extern "C" void Actor_StartGrenadeThrow(SA_S7* a, int* id, Q_S7* pos, float f)
+extern "C" void cHuman_ThrowGrenade(SA_S7* a, int* id, Q_S7* pos, float f)
 {
     if ((a->f3210 >> 24) & 1) {
         if (a->b14) return;
@@ -55,7 +55,7 @@ extern "C" void Actor_StartGrenadeThrow(SA_S7* a, int* id, Q_S7* pos, float f)
         AEv_S7 e;
         unsigned char ok;
         AEv_S7* pe = &e;
-        Event_Construct(pe, D_00542B60);
+        cMessage_ctor_cMessageNameR(pe, D_00542B60);
         pe->vtable = D_004DA930;
         pe->f24 = 2;
         pe->f28 = 0;
@@ -74,7 +74,7 @@ extern "C" void Actor_StartGrenadeThrow(SA_S7* a, int* id, Q_S7* pos, float f)
             { Sub3524_S7* sp = a->f3524; sp->bEF = 1; }
             if (g_IsMultiplayer && a->b14) {
                 MsgT_S7* pm = &m;
-                Event_Construct(pm, D_00504068);
+                cMessage_ctor_cMessageNameR(pm, D_00504068);
                 pm->vtable = D_004DCF10;
                 pm->vtable = D_004DCDC0;
                 pm->id = -1;
@@ -82,7 +82,7 @@ extern "C" void Actor_StartGrenadeThrow(SA_S7* a, int* id, Q_S7* pos, float f)
                 QCp_S7(&pm->pos, pos);
                 pm->f40 = f;
                 m.f20 = 4;
-                Event_Send(&m, a, 0);
+                QueueMessage_cMessageR_cSystemP_int(&m, a, 0);
                 m.vtable = D_004DCF10;
                 cMessage_dtor(pm, 0);
             }

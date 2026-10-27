@@ -17,7 +17,7 @@ struct Ev0023A250 {
     char padDD[0x140 - 0xDD];
     Tgt0023A250* target;
 };
-extern "C" int cNIEventOBJ_v20(Ev0023A250* self)
+extern "C" int cNIEventOBJ_GetBBox(Ev0023A250* self)
 {
     Tgt0023A250* t;
     return (self->enabled && (t = self->target) != 0 && !(self->b2D == 0) && self->b2C && !self->b2E)

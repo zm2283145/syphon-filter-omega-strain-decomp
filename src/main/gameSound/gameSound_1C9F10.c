@@ -14,16 +14,16 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-void FileMan_Release(void* member, int flags);
+void cFileMan_dtor(void* member, int flags);
 void operator_delete(void* p);
 }
 struct P1C9F10 { char pad[0x20]; char payload[0x48]; char memberA[0x9C]; char memberB[4]; };
-extern "C" P1C9F10* SoundSlot_Dtor(P1C9F10* self, short deleteFlag)
+extern "C" P1C9F10* cGameSound_tSndFxPlayList_dtor(P1C9F10* self, short deleteFlag)
 {
     if (self) {
         if (self->payload) {
-            FileMan_Release(self->memberB, -1);
-            FileMan_Release(self->memberA, -1);
+            cFileMan_dtor(self->memberB, -1);
+            cFileMan_dtor(self->memberA, -1);
         }
         if (deleteFlag > 0) operator_delete(self);
     }
@@ -53,18 +53,18 @@ struct P1C9F80 {
     short h184;
     unsigned char b186;
 };
-extern "C" void Resource_Construct(void* m);
+extern "C" void cFileMan_ctor_void(void* m);
 /* constructor: reset two members, ids, mask, handle (copied through a stack temp) */
 #pragma push
 #pragma opt_propagation off
-extern "C" char* SoundSlot_Ctor(char* self)
+extern "C" char* cGameSound_tSndFxPlayList_ctor(char* self)
 {
     P1C9F80* p;
     *(int*)(self + 0x44) = -2;
     *(int*)(self + 0x40) = 0;
     p = (P1C9F80*)(self + 0x20);
-    Resource_Construct(p->memberA);
-    Resource_Construct(p->memberB);
+    cFileMan_ctor_void(p->memberA);
+    cFileMan_ctor_void(p->memberB);
     p->id = -1;
     p->mask = -1;
     p->w20 = 0;
@@ -131,7 +131,7 @@ static inline void MemClearA010(void* d0, int n0) { int n = n0; void* dst = d0;
     done:
     }
 }
-void SoundAction_CtorVoice(SoundActionA010* p, int type, const char* name, VoiceA010* voice, int x180) {
+void cSndFx_SetSndFx(SoundActionA010* p, int type, const char* name, VoiceA010* voice, int x180) {
     int tmp;
     int* r;
     p->type = type;
@@ -149,7 +149,7 @@ void SoundAction_CtorVoice(SoundActionA010* p, int type, const char* name, Voice
     p->x180 = x180;
     p->x184 = -1;
     MemClearA010(p->name, 0x10);
-    String_Copy(p->name, name);
+    Libc_Strcpy(p->name, name);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001CA010(void) {}

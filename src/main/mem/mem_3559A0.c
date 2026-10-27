@@ -12,7 +12,7 @@
 
 extern "C" { char D_004BB100[] = "basic_string: out_of_range"; }
 extern "C" { char D_004BB120[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_003559A0, D_004BB100, D_004BB120, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00492C70, D_00492C78, Libc_Memmove, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_003559A0, D_004BB100, D_004BB120, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00492C70, D_00492C78, Libc_Memmove, std_basic_string_char_char_traits_char_assign_charP_charP_intP)
 #pragma pop /* merge_units */
 /* merge_units: end func_003559A0 */
 

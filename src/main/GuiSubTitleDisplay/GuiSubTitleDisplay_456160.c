@@ -11,11 +11,11 @@
 struct V4561 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(); virtual int v21(); virtual int v22(); virtual void v23(void*, int); virtual void v24(void*); };
 typedef struct { char pad[0x10]; int f10; unsigned short flags; short h16; } W4561;
 extern "C" {
-extern int Gui_GetScreenList(void);
-extern W4561* GuiManager_FindOrLoad(int, char*, char*);
-extern void* GuiManager_FindByName(int, char*);
-extern W4561* GuiWidget_FindChildByName(void*, char*);
-extern V4561* Gui_GetScreenStack(void);
+extern int Gui_Manager(void);
+extern W4561* GuiManager_OpenGui(int, char*, char*);
+extern void* GuiManager_FindOpenGui(int, char*);
+extern W4561* GuiWidget_FindChild_charP(void*, char*);
+extern V4561* Gui_Canvas(void);
 extern char D_004C1AD8[];
 extern char D_004C1B00[];
 extern char D_004C1B18[];
@@ -24,26 +24,26 @@ extern char D_004C1B28[];
 extern char D_004C1B38[];
 }
 extern "C" void GuiStartMenu_ReturnToMenu(W4561* g) {
-    W4561* w = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1AD8, "INGAMENU");
+    W4561* w = GuiManager_OpenGui(Gui_Manager(), D_004C1AD8, "INGAMENU");
     void* p;
     if (!w) return;
     w->f10 = g->f10;
     {
         int z = g->h16;
-        Gui_GetScreenStack()->v24(g);
-        Gui_GetScreenStack()->v23(w, z);
+        Gui_Canvas()->v24(g);
+        Gui_Canvas()->v23(w, z);
     }
-    p = GuiManager_FindByName(Gui_GetScreenList(), D_004C1B00);
+    p = GuiManager_FindOpenGui(Gui_Manager(), D_004C1B00);
     if (p) {
-        W4561* a = GuiWidget_FindChildByName(p, D_004C1B18);
-        W4561* b = GuiWidget_FindChildByName(p, D_004C1B20);
+        W4561* a = GuiWidget_FindChild_charP(p, D_004C1B18);
+        W4561* b = GuiWidget_FindChild_charP(p, D_004C1B20);
         if (a) a->flags |= 2;
         if (b) b->flags |= 2;
     }
-    p = GuiManager_FindByName(Gui_GetScreenList(), D_004C1B00);
+    p = GuiManager_FindOpenGui(Gui_Manager(), D_004C1B00);
     if (p) {
-        W4561* a = GuiWidget_FindChildByName(p, D_004C1B28);
-        W4561* b = GuiWidget_FindChildByName(p, D_004C1B38);
+        W4561* a = GuiWidget_FindChild_charP(p, D_004C1B28);
+        W4561* b = GuiWidget_FindChild_charP(p, D_004C1B38);
         if (a) a->flags |= 2;
         if (b) b->flags |= 2;
     }
@@ -68,32 +68,32 @@ extern "C" {
 extern void* D_004FFC04;
 extern unsigned char g_GameState;
 extern unsigned char g_IsMultiplayer;
-char* Loc_LookupText(char* key);
-int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, Self_4562E0* d, int e);
+char* nGlobalization_GetString_charP(char* key);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, char* c, Self_4562E0* d, int e);
 #if 0 /* merge_units */
-void* Gui_GetScreenList(void);
+void* Gui_Manager(void);
 #endif /* merge_units */
-#define Gui_GetScreenList() ((void *)Gui_GetScreenList()) /* merge_units */
+#define Gui_Manager() ((void *)Gui_Manager()) /* merge_units */
 
 #if 0 /* merge_units */
-Pg_4562E0* GuiManager_FindOrLoad(void* a, char* b, char* c);
+Pg_4562E0* GuiManager_OpenGui(void* a, char* b, char* c);
 #endif /* merge_units */
-#define GuiManager_FindOrLoad(a0, a1, a2) ((Pg_4562E0 *)GuiManager_FindOrLoad((int)(a0), (a1), (a2))) /* merge_units */
+#define GuiManager_OpenGui(a0, a1, a2) ((Pg_4562E0 *)GuiManager_OpenGui((int)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-Pg_4562E0* GuiManager_FindByName(void* a, char* b);
+Pg_4562E0* GuiManager_FindOpenGui(void* a, char* b);
 #endif /* merge_units */
-#define GuiManager_FindByName(a0, a1) ((Pg_4562E0 *)GuiManager_FindByName((int)(a0), (a1))) /* merge_units */
+#define GuiManager_FindOpenGui(a0, a1) ((Pg_4562E0 *)GuiManager_FindOpenGui((int)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-Pg_4562E0* GuiWidget_FindChildByName(Pg_4562E0* a, char* b);
+Pg_4562E0* GuiWidget_FindChild_charP(Pg_4562E0* a, char* b);
 #endif /* merge_units */
-#define GuiWidget_FindChildByName(a0, a1) ((Pg_4562E0 *)GuiWidget_FindChildByName((void *)(a0), (a1))) /* merge_units */
+#define GuiWidget_FindChild_charP(a0, a1) ((Pg_4562E0 *)GuiWidget_FindChild_charP((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-Ui_4562E0* Gui_GetScreenStack(void);
+Ui_4562E0* Gui_Canvas(void);
 #endif /* merge_units */
-#define Gui_GetScreenStack() ((Ui_4562E0 *)Gui_GetScreenStack()) /* merge_units */
+#define Gui_Canvas() ((Ui_4562E0 *)Gui_Canvas()) /* merge_units */
 
 }
 
@@ -121,10 +121,10 @@ char D_004C1C28[] = "QuitMessage";
 }
 static inline void ShowButtons(char* a, char* b)
 {
-    Pg_4562E0* bd = GuiManager_FindByName(Gui_GetScreenList(), D_004C1B00);
+    Pg_4562E0* bd = GuiManager_FindOpenGui(Gui_Manager(), D_004C1B00);
     if (bd) {
-        Pg_4562E0* x = GuiWidget_FindChildByName(bd, a);
-        Pg_4562E0* y = GuiWidget_FindChildByName(bd, b);
+        Pg_4562E0* x = GuiWidget_FindChild_charP(bd, a);
+        Pg_4562E0* y = GuiWidget_FindChild_charP(bd, b);
         if (x) {
             x->flags &= ~2;
         }
@@ -134,40 +134,40 @@ static inline void ShowButtons(char* a, char* b)
     }
 }
 
-extern "C" void GuiStartMenu_SelectButton(Self_4562E0* self, int which)
+extern "C" void GuiStartMenu_ActivateOption(Self_4562E0* self, int which)
 {
     Pg_4562E0* pg = 0;
     switch (which) {
     case 0:
-        pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1B48, D_004C1B58);
+        pg = GuiManager_OpenGui(Gui_Manager(), D_004C1B48, D_004C1B58);
         break;
     case 1:
-        pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1B68, D_004C1B78);
+        pg = GuiManager_OpenGui(Gui_Manager(), D_004C1B68, D_004C1B78);
         break;
     case 2:
-        pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1B90, D_004C1BA0);
+        pg = GuiManager_OpenGui(Gui_Manager(), D_004C1B90, D_004C1BA0);
         ShowButtons(D_004C1B18, D_004C1B20);
         break;
     case 3:
-        pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1BB0, D_004C1BC8);
+        pg = GuiManager_OpenGui(Gui_Manager(), D_004C1BB0, D_004C1BC8);
         break;
     case 4:
         if (g_IsMultiplayer) {
-            pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1BD0, D_004C1BE0);
+            pg = GuiManager_OpenGui(Gui_Manager(), D_004C1BD0, D_004C1BE0);
         } else {
-            pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1BD0, D_004C1BE8);
+            pg = GuiManager_OpenGui(Gui_Manager(), D_004C1BD0, D_004C1BE8);
         }
         ShowButtons(D_004C1B28, D_004C1B38);
         break;
     case 5:
-        pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1BF8, D_004C1C08);
+        pg = GuiManager_OpenGui(Gui_Manager(), D_004C1BF8, D_004C1C08);
         break;
     case 6:
         if (g_GameState != 0x13 && g_GameState != 0x14) {
-            char* t = Loc_LookupText(D_004C1C18);
-            char* m = Loc_LookupText(D_004C1C28);
+            char* t = nGlobalization_GetString_charP(D_004C1C18);
+            char* m = nGlobalization_GetString_charP(D_004C1C28);
             if (t && m) {
-                FrontEnd_OpenPopup(D_004FFC04, 5, t, m, self, 0);
+                cGameFrontEnd_PushMessageBox(D_004FFC04, 5, t, m, self, 0);
             }
         }
         break;
@@ -177,14 +177,14 @@ extern "C" void GuiStartMenu_SelectButton(Self_4562E0* self, int which)
         pg->f10 = which;
         pg->flags |= 0x80;
         prev = self->f16;
-        Gui_GetScreenStack()->Hide(self);
-        Gui_GetScreenStack()->Show(pg, prev);
+        Gui_Canvas()->Hide(self);
+        Gui_Canvas()->Show(pg, prev);
     }
 }
-#undef Gui_GetScreenList /* merge_units */
-#undef GuiManager_FindOrLoad /* merge_units */
-#undef GuiManager_FindByName /* merge_units */
-#undef GuiWidget_FindChildByName /* merge_units */
-#undef Gui_GetScreenStack /* merge_units */
+#undef Gui_Manager /* merge_units */
+#undef GuiManager_OpenGui /* merge_units */
+#undef GuiManager_FindOpenGui /* merge_units */
+#undef GuiWidget_FindChild_charP /* merge_units */
+#undef Gui_Canvas /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_004562E0 */

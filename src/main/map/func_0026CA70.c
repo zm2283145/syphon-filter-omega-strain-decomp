@@ -1,4 +1,4 @@
-/* HudMap_Draw: HUD map draw: push the map transform, draw the map objects sorted by depth through a
+/* cMap_Render: HUD map draw: push the map transform, draw the map objects sorted by depth through a
  * scene draw map, then draw the map screen with a scaled matrix and restore the camera clip planes. */
 #pragma cplusplus on
 #include "types.h"
@@ -32,19 +32,19 @@ extern float D_0048B2B0;
 extern Mtx D_0055C0C0;
 extern char D_0055C100;
 int func_00159570(void* l);
-void* List_Front(void* l);
+void* cLList_cCAMERA_GOBJPtr_Front(void* l);
 void XLib_ClearZBuffer(char* r);
-void HudMap_Cull(void* v);
+void ProcessVisibility(void* v);
 DbObj** std_vector_cVUM_GOBJPtr_opIndex_uint(void* v, int i);
-void IeScreen_Draw(Ctx* c);
+void cInterface_Render(Ctx* c);
 void std_tree_pair_float_value_compare_ctor(DbMap* m, void* cmp, void* alloc);
 void std_pair_float_cGOBJPtr_ctor(DbPair* p, float* f, DbObj** o);
-void SceneDrawMap_Insert(DbIt* out, DbMap* m, DbPair* kv);
+void std_tree_pair_float_value_compare_insert_multi(DbIt* out, DbMap* m, DbPair* kv);
 void cAssocMultiArray_float_cGOBJPtr_Begin(DbIt* out, DbMap* m);
 void cAssocMultiArray_float_cGOBJPtr_End(DbIt* out, DbMap* m);
 int cAssocMultiArray_float_cGOBJPtr_Iterator_opNe(DbIt* a, DbIt* b);
 DbObj** cAssocMultiArray_float_cGOBJPtr_Iterator_opMul(DbIt* it);
-void TreeIter_Increment(DbIt* it);
+void cAssocMultiArray_float_cGOBJPtr_Iterator_opInc(DbIt* it);
 void cAssocMultiArray_float_cGOBJPtr_dtor(DbMap* m, short del);
 }
 
@@ -56,12 +56,12 @@ static inline void MM(void* d, void* a, void* b)
 {
     __asm__ volatile("lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); lqc2 vf8, 0x0(%2); lqc2 vf9, 0x10(%2); lqc2 vf10, 0x20(%2); lqc2 vf11, 0x30(%2); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; vmulax.xyzw ACC, vf4, vf9x; vmadday.xyzw ACC, vf5, vf9y; vmaddaz.xyzw ACC, vf6, vf9z; vmaddw.xyzw vf13, vf7, vf9w; vmulax.xyzw ACC, vf4, vf10x; vmadday.xyzw ACC, vf5, vf10y; vmaddaz.xyzw ACC, vf6, vf10z; vmaddw.xyzw vf14, vf7, vf10w; vmulax.xyzw ACC, vf4, vf11x; vmadday.xyzw ACC, vf5, vf11y; vmaddaz.xyzw ACC, vf6, vf11z; vmaddw.xyzw vf15, vf7, vf11w; sqc2 vf12, 0x0(%0); sqc2 vf13, 0x10(%0); sqc2 vf14, 0x20(%0); sqc2 vf15, 0x30(%0)" : : "r"(d), "r"(a), "r"(b) : "memory");
 }
-static inline void* Front(char* l) { return func_00159570(l) ? List_Front(l) : 0; }
+static inline void* Front(char* l) { return func_00159570(l) ? cLList_cCAMERA_GOBJPtr_Front(l) : 0; }
 static inline float GetNear(Slot* s) { return s->b104 ? s->fF0 : s->fF4; }
 static inline float GetFar(Slot* s) { return s->b104 ? s->fF8 : s->fFC; }
 static inline void SetClip(Slot* s, float z, float n, float f) { s->f100 = z; s->fF4 = n; s->fFC = f; s->b106 = 1; s->b104 = 0; }
 
-extern "C" void HudMap_Draw(HSelf* self)
+extern "C" void cMap_Render(HSelf* self)
 {
     DbIt res;
     char cmp[4];
@@ -91,7 +91,7 @@ extern "C" void HudMap_Draw(HSelf* self)
     g_DrawMode = 1;
     XLib_ClearZBuffer(g_Video);
     D_005382E4 = 2;
-    HudMap_Cull(self->cull);
+    ProcessVisibility(self->cull);
     std_tree_pair_float_value_compare_ctor(&map, cmp, alloc);
     for (i = 0; i < self->count; i++) {
         if (self->objs[i]->kind == 128)
@@ -103,9 +103,9 @@ extern "C" void HudMap_Draw(HSelf* self)
         std_pair_float_cGOBJPtr_ctor(&tmp, &f, &o);
         kv.f = tmp.f;
         kv.o = tmp.o;
-        SceneDrawMap_Insert(&res, &map, &kv);
+        std_tree_pair_float_value_compare_insert_multi(&res, &map, &kv);
     }
-    for (cAssocMultiArray_float_cGOBJPtr_Begin(&it, &map); cAssocMultiArray_float_cGOBJPtr_End(&e, &map), cAssocMultiArray_float_cGOBJPtr_Iterator_opNe(&it, &e); TreeIter_Increment(&it)) {
+    for (cAssocMultiArray_float_cGOBJPtr_Begin(&it, &map); cAssocMultiArray_float_cGOBJPtr_End(&e, &map), cAssocMultiArray_float_cGOBJPtr_Iterator_opNe(&it, &e); cAssocMultiArray_float_cGOBJPtr_Iterator_opInc(&it)) {
         DbObj* d = *cAssocMultiArray_float_cGOBJPtr_Iterator_opMul(&it);
         d->Draw();
     }
@@ -129,7 +129,7 @@ extern "C" void HudMap_Draw(HSelf* self)
     m144 = m80;
     *(M4*)&D_0055C0C0 = m144;
     D_0055C100 = 1;
-    IeScreen_Draw(self->ctx);
+    cInterface_Render(self->ctx);
     UM(&D_0055C0C0);
     D_005382E4 = 2;
     D_0055C100 = 0;

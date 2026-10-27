@@ -45,7 +45,7 @@ static inline void merge_flush_func_00396B80(void) {}
 extern "C" {
 char D_004BC4C0[] = "allocator.hh";
 }
-DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00396C10, MotionGroup_ClearContributions, D_004BC4C0)
+DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00396C10, std_vector_deleter_cSkaPlaybackItem_clear, D_004BC4C0)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00396C10(void) {}
 #pragma pop /* merge_units */
@@ -131,18 +131,18 @@ struct VP_396DF0 { V4_396DF0 a, b; };
 
 extern "C" {
 int cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(Root_396DF0* r);
-VP_396DF0* Root_GetWorldPlacement(Root_396DF0* r);
-V4_396DF0* Root_GetWorldMotion(Root_396DF0* r);
-VP_396DF0* SceneRoot_GetPoseCache(Root_396DF0* r);
-void VecPair_Copy(VP_396DF0* dst, VP_396DF0* src);
-void Vec4_Assign(V4_396DF0* dst, V4_396DF0* src);
+VP_396DF0* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(Root_396DF0* r);
+V4_396DF0* cSkaAnimAnchor_TreeNode_GetDeltaPos_WorldSpace(Root_396DF0* r);
+VP_396DF0* cSkaAnimAnchor_TreeNode_GetSkeletonTarget_WorldSpace(Root_396DF0* r);
+void cQuatVec_ctor_cQuatVecR(VP_396DF0* dst, VP_396DF0* src);
+void cVector_ctor_cVectorR(V4_396DF0* dst, V4_396DF0* src);
 void cTreeNode_cSkaAnimAnchor_TreeNodeData_DetachParent(Root_396DF0* r);
-void Root_SetWorldPlacement(Root_396DF0* r, VP_396DF0* p);
+void cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(Root_396DF0* r, VP_396DF0* p);
 void cSkaAnimAnchor_TreeNode_SetDeltaPos_WorldSpace(Root_396DF0* r, V4_396DF0* m);
 void cSkaAnimAnchor_TreeNode_SetSkeletonTarget_WorldSpace(Root_396DF0* r, VP_396DF0* p);
 void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(Root_396DF0* r);
 int cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Empty(void* v);
-int* PtrVec_Back(void* v);
+int* cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Back(void* v);
 void cSkaAnimAnchor_TreeNode_DetachChild(Root_396DF0* r, int child);
 void cTreeNode_cSkaAnimAnchor_TreeNodeData_DetachChildren(Root_396DF0* r);
 void* cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_dtor(void* p, short deleteFlag);
@@ -156,16 +156,16 @@ extern "C" Root_396DF0* cSkaAnimAnchor_TreeNode_dtor(Root_396DF0* self, short de
             VP_396DF0 place;
             V4_396DF0 motion;
             VP_396DF0 other;
-            VecPair_Copy(&place, Root_GetWorldPlacement(self));
-            Vec4_Assign(&motion, Root_GetWorldMotion(self));
-            VecPair_Copy(&other, SceneRoot_GetPoseCache(self));
+            cQuatVec_ctor_cQuatVecR(&place, cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(self));
+            cVector_ctor_cVectorR(&motion, cSkaAnimAnchor_TreeNode_GetDeltaPos_WorldSpace(self));
+            cQuatVec_ctor_cQuatVecR(&other, cSkaAnimAnchor_TreeNode_GetSkeletonTarget_WorldSpace(self));
             cTreeNode_cSkaAnimAnchor_TreeNodeData_DetachParent(self);
-            Root_SetWorldPlacement(self, &place);
+            cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(self, &place);
             cSkaAnimAnchor_TreeNode_SetDeltaPos_WorldSpace(self, &motion);
             cSkaAnimAnchor_TreeNode_SetSkeletonTarget_WorldSpace(self, &other);
         }
         while (!cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Empty(cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(self)))
-            cSkaAnimAnchor_TreeNode_DetachChild(self, *PtrVec_Back(cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(self)));
+            cSkaAnimAnchor_TreeNode_DetachChild(self, *cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Back(cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(self)));
         if (self) {
             cTreeNode_cSkaAnimAnchor_TreeNodeData_DetachParent(self);
             cTreeNode_cSkaAnimAnchor_TreeNodeData_DetachChildren(self);

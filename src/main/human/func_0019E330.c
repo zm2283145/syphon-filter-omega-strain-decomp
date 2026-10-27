@@ -1,4 +1,4 @@
-/* Actor_NetPoseCorrection: in multiplayer, for a networked actor that is not
+/* cHuman_PreventRemotePlayerFromFallingThroughDeactivatedTerrain: in multiplayer, for a networked actor that is not
  * held/attached, if its root sits more than a margin below the ground plane
  * stored at +0x3570, snap it down onto the plane (offset by a slope-dependent
  * height) and push the plane normal to the attached body. */
@@ -34,15 +34,15 @@ extern unsigned char g_IsMultiplayer;
 extern float D_0049CFF8;
 extern float D_0049D000;
 extern float D_0049D008;
-void* Root_GetWorldPlacement(void* r);
-V* Placement_GetQuat(void* p);
-V* Placement_GetPosition(void* p);
-void Quat_Assign(V* d, V* s);
-void Vec4_Copy(V* d, V* s);
-V* Vec4_Assign(V* d, const V* s);
+void* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void* r);
+V* cQuatVec_Rotation(void* p);
+V* cQuatVec_Translation(void* p);
+void cQuaternion_opAssign(V* d, V* s);
+void cVector_opAssign(V* d, V* s);
+V* cVector_ctor_cVectorR(V* d, const V* s);
 V* cVector_SetW(V* v, float w);
 void NpcAi_GroundActor(Actor* a, int b, int c, float z);
-void Actor_NetPoseCorrection(Actor* self);
+void cHuman_PreventRemotePlayerFromFallingThroughDeactivatedTerrain(Actor* self);
 }
 static inline float Dot(const V& a_, const V& b_) {
     const V* a = &a_; const V* b = &b_;
@@ -81,9 +81,9 @@ static inline float GroundZ(const V& n, float x, float y) { float h = 0.0f; if (
 static inline void SetN(Body* b, const V& v) { b->n = v; }
 static inline float Abs(float x) { float r = 0.0f; asm { abs.s r, x } return r; }
 static inline float Clamp(float v, float lo, float hi) { float r = 0.0f; asm { max.s r, v, lo; min.s r, r, hi } return r; }
-static inline V AsDir(const V& v) { V t; V* r = cVector_SetW(Vec4_Assign(&t, &v), 0.0f); return *r; }
+static inline V AsDir(const V& v) { V t; V* r = cVector_SetW(cVector_ctor_cVectorR(&t, &v), 0.0f); return *r; }
 
-void Actor_NetPoseCorrection(Actor* self)
+void cHuman_PreventRemotePlayerFromFallingThroughDeactivatedTerrain(Actor* self)
 {
     if (g_IsMultiplayer) {
         bool linked = false;
@@ -101,8 +101,8 @@ void Actor_NetPoseCorrection(Actor* self)
                 V q;
                 V pos;
                 V tmp;
-                Quat_Assign(&q, Placement_GetQuat(Root_GetWorldPlacement(root)));
-                Vec4_Copy(&pos, Placement_GetPosition(Root_GetWorldPlacement(root)));
+                cQuaternion_opAssign(&q, cQuatVec_Rotation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(root)));
+                cVector_opAssign(&pos, cQuatVec_Translation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(root)));
                 if (Z(self->plane.x) && Z(self->plane.y) && Z(self->plane.z) && Z(self->plane.w))
                     return;
                 {

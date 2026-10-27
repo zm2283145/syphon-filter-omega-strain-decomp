@@ -35,7 +35,7 @@ static inline void merge_flush_func_003AE5E0(void) {}
 #pragma bool off
 
 extern "C" C6Ent_3AE5E0** func_003AE740(C6Coll_3AE5E0*);
-extern "C" void* Secondary_RootWeight(C6Coll_3AE5E0* self, int* key) {
+extern "C" void* cSkaAnimAnchorList_Find(C6Coll_3AE5E0* self, int* key) {
     C6Ent_3AE5E0* it = *func_003AE740(self);
     C6Ent_3AE5E0* end = *func_003AE740(self) + self->count;
     for (; C6Eq(it, end) ^ 1; it++) {

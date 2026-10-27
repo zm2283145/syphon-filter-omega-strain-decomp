@@ -18,27 +18,27 @@ typedef struct ObjF4 {
 
 extern int g_Game;
 extern int D_004DADF0;
-extern void SoundEvent_Ctor(EventMsg*, void*, int);
-extern void Event_Send(EventMsg*, void*, int);
-extern void FileMan_Release(void*, int);
+extern void cStopSoundMsg_ctor_cSndFxR_bool(EventMsg*, void*, int);
+extern void QueueMessage_cMessageR_cSystemP_int(EventMsg*, void*, int);
+extern void cFileMan_dtor(void*, int);
 extern void cMessage_dtor(EventMsg*, int);
-extern void GuiWidget_BaseSleep(ObjF4*);
-extern void* Fstream_GetLoader(void);
-extern void FStream_CancelRequests(void*);
-extern void Heap_ReleaseSlot(int);
+extern void GuiWidget_onSleep(ObjF4*);
+extern void* GetFileStreamMan(void);
+extern void cFileStreamMan_Purge(void*);
+extern void cMemMan_ReleaseBin(int);
 
 /* Shutdown: base cleanup, sends an immediate event for the target, then notifies the singleton. */
-void GuiPersonnelMenu_Sleep(ObjF4* o) {
+void GuiPersonnelMenu_onSleep(ObjF4* o) {
     EventMsg msg;
-    GuiWidget_BaseSleep(o);
+    GuiWidget_onSleep(o);
     o->pending = 0;
-    SoundEvent_Ctor(&msg, o->target, 0);
+    cStopSoundMsg_ctor_cSndFxR_bool(&msg, o->target, 0);
     msg.immediate = 1;
-    Event_Send(&msg, &g_Game, 1);
+    QueueMessage_cMessageR_cSystemP_int(&msg, &g_Game, 1);
     msg.vtable = &D_004DADF0;
-    FileMan_Release(msg.partB, -1);
-    FileMan_Release(msg.partA, -1);
+    cFileMan_dtor(msg.partB, -1);
+    cFileMan_dtor(msg.partA, -1);
     cMessage_dtor(&msg, 0);
-    FStream_CancelRequests(Fstream_GetLoader());
-    Heap_ReleaseSlot(1);
+    cFileStreamMan_Purge(GetFileStreamMan());
+    cMemMan_ReleaseBin(1);
 }

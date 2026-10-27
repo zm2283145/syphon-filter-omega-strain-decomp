@@ -7,7 +7,7 @@ struct R1DF650 { N1DF650* node; unsigned char inserted; };
 extern "C" {
 static const unsigned int dat_0048A958[2] = { 0x1, 0x0 };
 static const unsigned int dat_0048A960[2] = { 0 };
-N1DF650* Tree_Insert_1DF7A0(T1DF650* t, N1DF650* parent, bool left, bool leftmost, const K1DF650* k); }
+N1DF650* std_tree_pair_cWeaponSlotPair_value_compare_insert_node_at(T1DF650* t, N1DF650* parent, bool left, bool leftmost, const K1DF650* k); }
 static inline bool K1DF650_less(const K1DF650& x, const K1DF650& y)
 {
     return x.a < y.a || (x.a == y.a && x.b < y.b);
@@ -32,7 +32,7 @@ extern "C" void std_tree_pair_cWeaponSlotPair_value_compare_insert_one(R1DF650* 
         }
     }
     if (j == 0 || K1DF650_less(j->key, *k)) {
-        out->node = Tree_Insert_1DF7A0(t, y, left, leftmost, k);
+        out->node = std_tree_pair_cWeaponSlotPair_value_compare_insert_node_at(t, y, left, leftmost, k);
         out->inserted = (*(unsigned char*)dat_0048A958);
     } else {
         out->node = j;

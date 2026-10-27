@@ -133,41 +133,41 @@ extern TabP_E10 D_00492A02[16];
 extern GDef_E10 D_0056F9B0;
 void GuiWidget_ctor(Self_E10* self);
 void FrontEnd_GetCharacterData(int a);
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void cGOBJ_ctor(void* p, int* a, int b, int* c);
-void Object_AttachTransform(void* p, void* t, int a);
-Model_E10* DisplayActor_Construct(void* p, int* idx);
-float Math_SinThunk(float a);
-float Math_CosThunk(float a);
-void Mtx44_SetRotation(M4_E10* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
-unsigned short Appearance_GetPairCount(void* app);
-unsigned short AgentPacking_AddBlankPairs(void* app, unsigned short n);
-void Appearance_ReorderParts(Man_E10* m);
-int Appearance_GetBodyKind(void* app);
-int Appearance_GetToneDigit(void* app);
-void cVUM_GOBJ_InitModel(Model_E10* m, char* name);
+void cGOBJ_CreateXform(void* p, void* t, int a);
+Model_E10* cSKM_GOBJ_ctor_cObjectIdR(void* p, int* idx);
+float SIN(float a);
+float COS(float a);
+void cMatrix_Set_ColumnMajorForm(M4_E10* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
+unsigned short SKL_CountAttribs(void* app);
+unsigned short SKL_AddBlankParts(void* app, unsigned short n);
+void cMan_SortParts(Man_E10* m);
+int SKL_FindSex(void* app);
+int SKL_FindRace(void* app);
+void cSKM_GOBJ_ResetSkeleton(Model_E10* m, char* name);
 void cArrayCapacity_ctor(Word_E10* w, int n);
 void cArray_cSkeletonBBoxContributionPtr_ctor(SVec_E10* v, Word_E10* w, unsigned char f);
-V4_E10* Vec4_Set(V4_E10* v, float x, float y, float z, float w);
+V4_E10* cVector_ctor_float_float_float_float(V4_E10* v, float x, float y, float z, float w);
 void cSkeletonBBoxContribution_ctor(Sph_E10* s, int bone, float r, V4_E10* off);
 void cArray_cSkeletonBBoxContributionPtr_PushBackActual(SVec_E10* v, Sph_E10** p);
 void cSkeletonBBoxContribution_dtor(Sph_E10* s, int f);
 void* cSKM_GOBJ_GetSkeleton_void_2(Model_E10* m);
-void FrontEnd_SetNodeSpheres(void* n, SVec_E10* v);
+void cSkeleton_ResetBBoxContributors(void* n, SVec_E10* v);
 void cArray_cSkeletonBBoxContributionPtr_dtor(SVec_E10* v, int f);
-void Model_Attach(void* a, void* b);
-void AnimModel_InitAnim(void* a);
-void Model_HardMeshAttachPoints(Man_E10* m);
+void cSkaParams_HandleNewAnimationSet(void* a, void* b);
+void cSkaSystem_SetInitialAnimation(void* a);
+void cMan_SetGunOffsets(Man_E10* m);
 void cMan_GetTextureIDs(Man_E10* m);
-void ActorModel_Setup(Man_E10* m, int flag);
-void Skel_ApplyScalePreset(Man_E10* m, int a);
-int AgentPartCache_FindMesh(void* db, __int128 key);
-int AgentPartCache_FindTexture(void* db, __int128 key);
-void GuiAgentModify_Refresh(Self_E10* self);
+void cMan_BuildMan(Man_E10* m, int flag);
+void cMan_SetBoneSet(Man_E10* m, int a);
+int FindPartNumber__7MonsterF1(void* db, __int128 key);
+int FindTextureNumber__7MonsterF1(void* db, __int128 key);
+void GuiAgentModify_CountSelections(Self_E10* self);
 void std_vector_charPtr_ctor_void_2(Aw_E10* a);
-void* Agent_GetSelected(void* p, int n);
-void AgentData_FilterAwards(void* ag, Aw_E10* a);
-void AgentPartCache_Lock(void* db, Aw_E10* a);
+void* cGameSystem_GetAgentData(void* p, int n);
+void cAgentData_GetLockedParts_cArrayP(void* ag, Aw_E10* a);
+void Monster_HideLockedPartsTex(void* db, Aw_E10* a);
 void std_vector_charPtr_dtor_void_2(Aw_E10* a, int flags);
 Self_E10* GuiAgentModify_ctor(Self_E10* self);
 }
@@ -195,7 +195,7 @@ static inline long KeyR_E10(__int128 m, __int128 a, __int128 b) {
     }
     return (long)o;
 }
-static inline void* Alloc_E10(int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004BA0A0, line); }
+static inline void* Alloc_E10(int n, int line) { AllocGuard g; return cMemMan_Allocate(0, n, D_004BA0A0, line); }
 static inline int Eq5_E10(const char* a, const char* b) {
     int k;
     for (k = 0; k < 5; k++) {
@@ -207,7 +207,7 @@ static inline int Eq5_E10(const char* a, const char* b) {
 static inline Man_E10* MANP_E10(Model_E10* m) { return &m->man; }
 static inline char* APP_E10(Man_E10* m) { return m->app; }
 static inline char* NAME_E10(Man_E10* m) { return m->name; }
-static inline V4_E10* Splat_E10(V4_E10* t, float) { float z = 0.0f; return Vec4_Set(t, z, z, z, z); }
+static inline V4_E10* Splat_E10(V4_E10* t, float) { float z = 0.0f; return cVector_ctor_float_float_float_float(t, z, z, z, z); }
 static inline void Spheres_E10(Model_E10* md)
 {
             Word_E10 w;
@@ -245,7 +245,7 @@ static inline void Spheres_E10(Model_E10* md)
                 cSkeletonBBoxContribution_dtor(&arr[2], -1);
                 cSkeletonBBoxContribution_dtor(&arr[1], -1);
                 cSkeletonBBoxContribution_dtor(&arr[0], -1);
-                FrontEnd_SetNodeSpheres(cSKM_GOBJ_GetSkeleton_void_2(md), &vec);
+                cSkeleton_ResetBBoxContributors(cSKM_GOBJ_GetSkeleton_void_2(md), &vec);
                 cArray_cSkeletonBBoxContributionPtr_dtor(&vec, -1);
             }
 }
@@ -267,14 +267,14 @@ static inline void Tail_E10(Self_E10* self, V4_E10& v)
                 void** an;
                 void* a = D_004F77A0;
                 an = (void**)((char*)self->model + 0x2EC0);
-                Model_Attach(an + 4, a);
+                cSkaParams_HandleNewAnimationSet(an + 4, a);
                 *an = a;
-                AnimModel_InitAnim(an);
+                cSkaSystem_SetInitialAnimation(an);
             }
             {
                 SetF_E10(self->model, 1.0f);
                 self->model->man.f23F4 = 0.0f;
-                Model_HardMeshAttachPoints(&self->model->man);
+                cMan_SetGunOffsets(&self->model->man);
             }
             {
                 Man_E10* m;
@@ -289,9 +289,9 @@ static inline void Tail_E10(Self_E10* self, V4_E10& v)
                 int c;
                 Model_E10* m;
                 c = 1; m = self->model; m->man.f2BD0 = c;
-                ActorModel_Setup(&self->model->man, 1);
+                cMan_BuildMan(&self->model->man, 1);
             }
-            Skel_ApplyScalePreset(&self->model->man, -1);
+            cMan_SetBoneSet(&self->model->man, -1);
             {
                 SetS_E10(self->model, 0);
                 SetB_E10(self->model, 1);
@@ -319,7 +319,7 @@ extern "C" Self_E10* GuiAgentModify_ctor(Self_E10* p0)
             *(char**)p = D_004DA470;
             ((int*)p)[0x60 / 4] = 0;
             ((int*)p)[0x64 / 4] = 0;
-            Object_AttachTransform(p, g_IdentityMatrix, 0);
+            cGOBJ_CreateXform(p, g_IdentityMatrix, 0);
             ((int*)p)[0x30 / 4] = 0;
         }
         self->f90 = p;
@@ -329,7 +329,7 @@ extern "C" Self_E10* GuiAgentModify_ctor(Self_E10* p0)
         p = (Model_E10*)Alloc_E10(0x3030, 0x11D);
         if (p) {
             int x[1]; x[0] = 0;
-            p = DisplayActor_Construct(p, x);
+            p = cSKM_GOBJ_ctor_cObjectIdR(p, x);
         }
         self->model = p;
     }
@@ -361,29 +361,29 @@ extern "C" Self_E10* GuiAgentModify_ctor(Self_E10* p0)
         {
             Xf_E10* xf = self->model->xf;
             M4_E10 rot;
-            float s = Math_SinThunk(0.0f);
-            float c = Math_CosThunk(0.0f);
-            { M4_E10* pr = &rot; float z = 0.0f; Mtx44_SetRotation(pr, c, -s, z, s, c, z, z, z, 1.0f); }
+            float s = SIN(0.0f);
+            float c = COS(0.0f);
+            { M4_E10* pr = &rot; float z = 0.0f; cMatrix_Set_ColumnMajorForm(pr, c, -s, z, s, c, z, z, z, 1.0f); }
             { M4_E10* pr = &rot; xf->SetMtx(pr); }
         }
         if (D_00493A60 == -1) D_00493A60 = 0;
         { int n = 0x44; int j = D_00493A60; Model_E10* m = self->model; Man_E10* mn = MANP_E10(m); QCopy_E10(APP_E10(mn), &D_0055D510[j], n); }
         {
             Man_E10* m = &self->model->man;
-            m->cnt = Appearance_GetPairCount(m->app);
+            m->cnt = SKL_CountAttribs(m->app);
         }
         {
             Man_E10* m = &self->model->man;
-            m->cnt = AgentPacking_AddBlankPairs(m->app, m->cnt);
+            m->cnt = SKL_AddBlankParts(m->app, m->cnt);
         }
-        Appearance_ReorderParts(&self->model->man);
-        self->fF8 = Appearance_GetBodyKind(APP_E10(&self->model->man));
-        self->fFC = (signed char)Appearance_GetToneDigit(APP_E10(&self->model->man));
+        cMan_SortParts(&self->model->man);
+        self->fF8 = SKL_FindSex(APP_E10(&self->model->man));
+        self->fFC = (signed char)SKL_FindRace(APP_E10(&self->model->man));
         { Model_E10* m = self->model; m->man.b2C0D = self->fFC; }
         {
             char* nm; if (self->fF8 == 0) nm = D_004BA0B8; else { nm = D_004BA0C8; asm { .set reorder } }
-            cVUM_GOBJ_InitModel(self->model, nm);
-            String_Copy(NAME_E10(&self->model->man), nm);
+            cSKM_GOBJ_ResetSkeleton(self->model, nm);
+            Libc_Strcpy(NAME_E10(&self->model->man), nm);
         }
         self->model->Init(1);
         { V4_E10 v; Tail_E10(self, v); }
@@ -413,7 +413,7 @@ extern "C" Self_E10* GuiAgentModify_ctor(Self_E10* p0)
         __int128 mask;
         { long v = 0xFFFFFFFF00; asm { pcpyld mask, $zero, v } }
         union { __int128 q; char s[16]; } key;
-        String_Copy(key.s, D_004B9F80);
+        Libc_Strcpy(key.s, D_004B9F80);
         {
             int k;
             for (k = 0; k < self->model->man.cnt; k++) {
@@ -426,9 +426,9 @@ extern "C" Self_E10* GuiAgentModify_ctor(Self_E10* p0)
     }
     self->f10D = D_00492A01[self->f10F].slot;
     self->f10E = D_00492A00[self->f10F].mode;
-    self->f100 = AgentPartCache_FindMesh(g_AgentPartCache, MANP_E10(self->model)->e[self->f10D].a);
-    self->f104 = AgentPartCache_FindTexture(g_AgentPartCache, MANP_E10(self->model)->e[self->f10D].b);
-    GuiAgentModify_Refresh(self);
+    self->f100 = FindPartNumber__7MonsterF1(g_AgentPartCache, MANP_E10(self->model)->e[self->f10D].a);
+    self->f104 = FindTextureNumber__7MonsterF1(g_AgentPartCache, MANP_E10(self->model)->e[self->f10D].b);
+    GuiAgentModify_CountSelections(self);
     self->fE0 = 0;
     self->name = D_0056F9B0.name;
     self->fB0 = D_0056F9B0.i;
@@ -443,8 +443,8 @@ extern "C" Self_E10* GuiAgentModify_ctor(Self_E10* p0)
         Aw_E10* pa = &a;
         std_vector_charPtr_ctor_void_2(pa);
         pa->bC = 1;
-        AgentData_FilterAwards(Agent_GetSelected(g_Game, -1), pa);
-        AgentPartCache_Lock(g_AgentPartCache, pa);
+        cAgentData_GetLockedParts_cArrayP(cGameSystem_GetAgentData(g_Game, -1), pa);
+        Monster_HideLockedPartsTex(g_AgentPartCache, pa);
         std_vector_charPtr_dtor_void_2(pa, -1);
     }
     return self;

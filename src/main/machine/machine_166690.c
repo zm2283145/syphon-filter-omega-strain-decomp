@@ -11,8 +11,8 @@
 #pragma push /* merge_units */
 #pragma mpwc_relax on
 int Alloc_Lock(int);
-int Alloc_Unlock(int);
-int Mem_Alloc(int, int, char *, int);
+int EnableIntc(int);
+int cMemMan_Allocate(int, int, char *, int);
 int CreateThread(void *);
 int StartThread(int, int);
 int ChangeThreadPriority(int, int);
@@ -42,7 +42,7 @@ typedef struct {
     int pad30[4];
 } TP_00166690;
 
-void LoadingScreen_StartThread(void *fn) {
+void RegisterVBLANKThread(void *fn) {
     TP_00166690 tp;
     int size;
     int mem;
@@ -52,9 +52,9 @@ void LoadingScreen_StartThread(void *fn) {
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    mem = Mem_Alloc(0, size, &D_0049C390, 0x770);
+    mem = cMemMan_Allocate(0, size, &D_0049C390, 0x770);
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     D_004EE4E8 = mem;
     g_ProfileLockDepth -= 1;
@@ -82,7 +82,7 @@ extern int D_004EE4C8;
 extern int D_004EE4F8;
 int iWakeupThread(int);
 
-int LoadingScreen_VblankHandler(int cause) {
+int VBLANKInterruptHandler(int cause) {
     D_004EE4C8 += 1;
     if (D_0048A030 != -1) {
         if (D_004EE4F8 == 0) {

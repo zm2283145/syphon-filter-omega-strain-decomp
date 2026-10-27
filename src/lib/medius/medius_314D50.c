@@ -10,7 +10,7 @@ extern short D_00491432;
 extern unsigned char D_00491430;
 extern Obj4D50 *D_0052AC98[];
 extern int NetIsValidConnectionIndex(int id);
-extern int Net_AllocZeroed(void *pp, unsigned long size);
+extern int rt_memory_allocate_init_zero(void *pp, unsigned long size);
 extern void rt_memory_free(void *pp);
 int NetStreamMediaCreateInfo(int idx, unsigned int n)
 {
@@ -25,13 +25,13 @@ int NetStreamMediaCreateInfo(int idx, unsigned int n)
     if (n > 256) return 0x17;
     if (n == 0) return 0x17;
     if (D_0052AC98[idx] == 0) {
-        if (Net_AllocZeroed(&D_0052AC98[idx], 0x228) != 0) return 0x29;
+        if (rt_memory_allocate_init_zero(&D_0052AC98[idx], 0x228) != 0) return 0x29;
     }
     pp = &D_0052AC98[idx];
     o = *pp;
     if (o == 0) return 0x29;
     if (o->buf) rt_memory_free(&o->buf);
-    r = Net_AllocZeroed(&o->buf, n * 8);
+    r = rt_memory_allocate_init_zero(&o->buf, n * 8);
     if (r != 0) {
         rt_memory_free(pp);
         *pp = 0;

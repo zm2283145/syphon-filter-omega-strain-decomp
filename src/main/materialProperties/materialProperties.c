@@ -36,7 +36,7 @@ T8D80* std_map_cString_int_dtor(T8D80* t, short del)
 
 #include "loose04_types.h"
 
-extern int String_CopyCtor(L4Elem124Vec*, int);
+extern int std_basic_string_char_char_traits_char_ctor_basicstringR(L4Elem124Vec*, int);
 
 void std_vector_cMaterialProperties_pointer2iterator(Iter* out, void* self, Iter* src) {
     out->p = src->p;
@@ -48,7 +48,7 @@ L4Elem124* std_vector_imp_cMaterialProperties_end(L4Elem124Vec* v) {
 }
 
 int std_make_pair_cString_int(L4Elem124Vec* v, int a1, int value) {
-    int ret = String_CopyCtor(v, a1);
+    int ret = std_basic_string_char_char_traits_char_ctor_basicstringR(v, a1);
 
     v->unk0C = value;
     return ret;
@@ -77,7 +77,7 @@ T8FB0* cAssocArray_cString_char_dtor(T8FB0* t, short del); /* gsynth: defined be
 #define NULL 0
 #pragma mpwc_relax on
 int Alloc_Lock(int);                                    
-int Alloc_Unlock(int);                                  
+int EnableIntc(int);                                  
 int cTimerDisable_dtor(char *, int);                            
 int cTimerDisable_ctor(char *);                               
 #if 0 /* merge_units */
@@ -100,7 +100,7 @@ void cMaterialPropertiesTable_Reset(PS0_00408EA0 *arg0) {
         temp_s1 = arg0->f0;
         cTimerDisable_ctor(sp38);
         cAssocArray_cString_char_dtor(temp_s1, -1);
-        Mem_Free(0, temp_s1, "materialProperties.cc", 0x75);
+        cMemMan_Deallocate(0, temp_s1, "materialProperties.cc", 0x75);
         cTimerDisable_dtor(sp38, -1);
         arg0->f0 = 0;
         temp_s1_2 = arg0->f4;
@@ -111,9 +111,9 @@ void cMaterialPropertiesTable_Reset(PS0_00408EA0 *arg0) {
         if ((temp_s1_2 != 0) && (temp_s1_2 != 0) && (temp_s1_2 != 0)) {
             std_vector_deleter_cMaterialProperties_dtor(temp_s1_2, 0);
         }
-        Mem_Free(0, temp_s1_2, "materialProperties.cc", 0x78);
+        cMemMan_Deallocate(0, temp_s1_2, "materialProperties.cc", 0x78);
         if (g_ProfileLockEnabled != 0) {
-            Alloc_Unlock(9);
+            EnableIntc(9);
         }
         g_ProfileLockDepth -= 1;
         arg0->f4 = 0;

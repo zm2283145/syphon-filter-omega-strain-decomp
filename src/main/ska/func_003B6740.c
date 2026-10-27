@@ -2,7 +2,7 @@
 #include "types.h"
 #include "alloc_guard.h"
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern char D_004DFD80[];
 extern char D_004DFBD0[];
 }
@@ -12,7 +12,7 @@ extern "C" M1EEDC0* cSkaAnimEventMessage_Clone(M1EEDC0* self)
     M1EEDC0* p;
     {
         AllocGuard guard;
-        p = (M1EEDC0*)Mem_Alloc(0, 0x28, "ska.hh", 0xCC2);
+        p = (M1EEDC0*)cMemMan_Allocate(0, 0x28, "ska.hh", 0xCC2);
     }
     if (p) {
         p->vtable = D_004DFD80;

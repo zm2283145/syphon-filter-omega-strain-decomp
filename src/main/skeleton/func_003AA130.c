@@ -7,7 +7,7 @@
 #include "types.h"
 #include "skeleton_types.h"
 
-extern SkelListPos* List_InsertBefore(SkelListPos* result, void* list, SkelListPos* pos, int value);
+extern SkelListPos* std_list_deleter_voidPtr_insert(SkelListPos* result, void* list, SkelListPos* pos, int value);
 
 /* push_back on a list whose sentinel node is at +4. */
 SkelListPos* std_list_cSkeletonDataBankEntryPtr_push_back(void* list, int value) {
@@ -15,5 +15,5 @@ SkelListPos* std_list_cSkeletonDataBankEntryPtr_push_back(void* list, int value)
     SkelListPos result;
 
     end.node = (char*)list + 4;
-    return List_InsertBefore(&result, list, &end, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &end, value);
 }

@@ -35,7 +35,7 @@ static inline unsigned char Blk_Valid(Blk* b)
     return 1;
 }
 
-char* Mem_HeapAlloc(Heap* h, unsigned int size, char* file, int line)
+char* cMemBin_Allocate(Heap* h, unsigned int size, char* file, int line)
 {
     char buf[0x80];
     Blk* bin;

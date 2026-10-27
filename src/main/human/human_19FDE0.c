@@ -30,13 +30,13 @@ typedef struct RootB0 {
 } RootB0;
 
 extern int cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(RootB0* root);
-extern void* Root_GetWorldPlacement(RootB0* root);
-extern void VecPair_Copy(VecPair* dst, void* src);
-extern void* Root_GetWorldMotion(RootB0* root);
-extern void Vec4_Assign(Q* dst, void* src);
-extern void* SceneRoot_GetPoseCache(RootB0* root);
+extern void* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(RootB0* root);
+extern void cQuatVec_ctor_cQuatVecR(VecPair* dst, void* src);
+extern void* cSkaAnimAnchor_TreeNode_GetDeltaPos_WorldSpace(RootB0* root);
+extern void cVector_ctor_cVectorR(Q* dst, void* src);
+extern void* cSkaAnimAnchor_TreeNode_GetSkeletonTarget_WorldSpace(RootB0* root);
 extern void cTreeNode_cSkaAnimAnchor_TreeNodeData_DetachParent(RootB0* root);
-extern void Root_SetWorldPlacement(RootB0* root, VecPair* placement);
+extern void cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(RootB0* root, VecPair* placement);
 extern void cSkaAnimAnchor_TreeNode_SetDeltaPos_WorldSpace(RootB0* root, Q* motion);
 extern void cSkaAnimAnchor_TreeNode_SetSkeletonTarget_WorldSpace(RootB0* root, VecPair* pair);
 
@@ -46,11 +46,11 @@ void cSkaAnimAnchor_TreeNode_DetachChild(void* owner, RootB0* root) {
     Q motion;
     VecPair placement;
     if (root->owner == owner && cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(root)) {
-        VecPair_Copy(&placement, Root_GetWorldPlacement(root));
-        Vec4_Assign(&motion, Root_GetWorldMotion(root));
-        VecPair_Copy(&saved, SceneRoot_GetPoseCache(root));
+        cQuatVec_ctor_cQuatVecR(&placement, cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(root));
+        cVector_ctor_cVectorR(&motion, cSkaAnimAnchor_TreeNode_GetDeltaPos_WorldSpace(root));
+        cQuatVec_ctor_cQuatVecR(&saved, cSkaAnimAnchor_TreeNode_GetSkeletonTarget_WorldSpace(root));
         cTreeNode_cSkaAnimAnchor_TreeNodeData_DetachParent(root);
-        Root_SetWorldPlacement(root, &placement);
+        cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(root, &placement);
         cSkaAnimAnchor_TreeNode_SetDeltaPos_WorldSpace(root, &motion);
         cSkaAnimAnchor_TreeNode_SetSkeletonTarget_WorldSpace(root, &saved);
     }

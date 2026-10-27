@@ -11,33 +11,33 @@ typedef struct {
 typedef struct { char pad[0xC]; int id; char pad2[0x4C - 0x10]; int kind; } Plr_SB;
 typedef struct { char pad[0xC]; int id; char pad2[0x30 - 0x10]; Plr_SB* ctl; } GObj_SB;
 extern char D_004F80B8[];
-extern void Message_GetScriptTypeKey();
+extern void cMessage_getSOBJClassId();
 extern void cSwitchBodiesMsg_dtor();
 extern void cSwitchBodiesMsg_Clone();
-extern void cSwitchBodiesMsg_Serialize();
-void * const D_004DC7F0[8] = { (void*)0x0, (void*)0x0, (void*)cSwitchBodiesMsg_dtor, (void*)cSwitchBodiesMsg_Clone, (void*)cSwitchBodiesMsg_Serialize, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+extern void cSwitchBodiesMsg_Pack();
+void * const D_004DC7F0[8] = { (void*)0x0, (void*)0x0, (void*)cSwitchBodiesMsg_dtor, (void*)cSwitchBodiesMsg_Clone, (void*)cSwitchBodiesMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
 extern int g_HumanActorClassKey;
-extern void Event_Construct(Msg_SB* msg, void* name);
-extern void Event_Send(Msg_SB* msg, void* target, int flags);
+extern void cMessage_ctor_cMessageNameR(Msg_SB* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg_SB* msg, void* target, int flags);
 extern void cMessage_dtor(Msg_SB* msg, int flags);
-extern GObj_SB* NpcScript_GetReceiver(void* o);
-extern GObj_SB* GObj_IdentityB(void* o);int Script_SwitchBodies_2(void** args)
+extern GObj_SB* cNPC_SOBJ_convert(void* o);
+extern GObj_SB* cGOBJ_SOBJ_convert(void* o);int Script_SwitchBodies_2(void** args)
 {
     Plr_SB* a;
     Plr_SB* bp;
     GObj_SB* b;
-    b = NpcScript_GetReceiver(args[1]);
-    a = (Plr_SB*)GObj_IdentityB(args[0]);
+    b = cNPC_SOBJ_convert(args[1]);
+    a = (Plr_SB*)cGOBJ_SOBJ_convert(args[0]);
     bp = b->ctl;
     if (a->kind == g_HumanActorClassKey && bp->kind == g_HumanActorClassKey) {
         Msg_SB msg;
-        Event_Construct(&msg, D_004F80B8);
+        cMessage_ctor_cMessageNameR(&msg, D_004F80B8);
         msg.vtable = ((char*)D_004DC7F0);
         msg.a = a->id;
         msg.b = b->ctl->id;
         msg.kind = 0x15;
         msg.x1C = 0x40;
-        Event_Send(&msg, a, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, a, 0);
         msg.vtable = ((char*)D_004DC7F0);
         cMessage_dtor(&msg, 0);
     }

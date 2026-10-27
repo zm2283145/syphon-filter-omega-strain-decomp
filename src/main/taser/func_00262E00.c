@@ -10,7 +10,7 @@ extern "C" void cAirTaser_PointsToLocal(A2S262* s, void* b);
 extern "C" void cAirTaser_AddWhipAction(A2S262* s, float dt);
 extern "C" void cAirTaser_PointsToWorld(A2S262* s, void* b);
 extern "C" void cAirTaser_SmoothLine(A2S262* s, float f, int x);
-extern "C" void HeldItem_UpdateReelIn(A2S262* s, float dt) {
+extern "C" void cAirTaser_UpdateRetract(A2S262* s, float dt) {
     int n = s->n14;
     int i = 0;
     int* po;

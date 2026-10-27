@@ -13,24 +13,24 @@ extern char D_004D92C0[];
 extern char D_004D9810[];
 /* action message with sender and target vtable */
 extern void Event_PackHeader();
-extern void Message_GetScriptTypeKey();
+extern void cMessage_getSOBJClassId();
 extern void cAISoundSystemGobjToGobjMessage_dtor();
 extern void cAISoundSystemGobjToGobjMessage_Clone();
-void * const D_004D9870[8] = { (void*)0x0, (void*)0x0, (void*)cAISoundSystemGobjToGobjMessage_dtor, (void*)cAISoundSystemGobjToGobjMessage_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+void * const D_004D9870[8] = { (void*)0x0, (void*)0x0, (void*)cAISoundSystemGobjToGobjMessage_dtor, (void*)cAISoundSystemGobjToGobjMessage_Clone, (void*)Event_PackHeader, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
 extern char D_004EE5C0[];
 extern char D_004EE5C8[];
-extern int Event_Construct(cActionMsg*, int);
-extern int Receiver_Construct(void*, int);
+extern int cMessage_ctor_cMessageNameR(cActionMsg*, int);
+extern int cSystem_ctor(void*, int);
 
 void* cAISoundSystem_ctor(void* self) {
-    Receiver_Construct(self, (int)D_004EE5C0);
+    cSystem_ctor(self, (int)D_004EE5C0);
     *(int*)self = (int)D_004D9810;
     return self;
 }
 
 /* Builds an action message carrying sender and target identities (event byte ends as 2). */
 cActionMsg* cAISoundSystemGobjToGobjMessage_ctor(cActionMsg* msg, int* sender, int* target, int action) {
-    Event_Construct(msg, (int)D_004EE5C8);
+    cMessage_ctor_cMessageNameR(msg, (int)D_004EE5C8);
     msg->base.vtable = D_004D92A0;
     msg->event = 0;
     msg->action = action;

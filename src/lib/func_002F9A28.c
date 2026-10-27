@@ -1,5 +1,5 @@
 typedef struct { int x0, x4, x8, xC, x10, x14, x18, x1C, x20, x24, x28, x2C; } P2F9A28;
-extern void Sha1_Digest(char *buf, int len, unsigned int *out, int n);
+extern void KM_SHA1(char *buf, int len, unsigned int *out, int n);
 /* same-unit callee stub: weak, in a section the link discards; restores retail branch-likely choices */
 int __attribute__((weak, section(".dtors_drop"))) IsNullRCKey(int a) { return 0; }
 /* same-unit callee stub: weak, in a section the link discards; restores retail branch-likely choices */
@@ -15,7 +15,7 @@ unsigned int KM_Encrypt2(P2F9A28 *p, P2F9A28 *q, char *buf, int len)
     unsigned int hdr = 0;
     unsigned int r = 0;
     if (len && buf) {
-        Sha1_Digest(buf, len, &hdr, 4);
+        KM_SHA1(buf, len, &hdr, 4);
         hdr &= 0x1FFFFFFF;
     } else {
         len = 0;

@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int String_Copy(char *, char *);                            
+int Libc_Strcpy(char *, char *);                            
 int memset(char *, int, int);                                
 static const unsigned int dat_004C0B48[2] = { 0x0, 0x0 };
 extern char D_00584220;
@@ -34,7 +34,7 @@ extern short D_00584390;
 
 int SFOMGCL_Initialize_Module(short arg0, short arg1, short arg2, short arg3) {
     memset(&D_00584220, 0, 0x2F8);
-    String_Copy(&D_00584220, &(*(char*)dat_004C0B48));
+    Libc_Strcpy(&D_00584220, &(*(char*)dat_004C0B48));
     D_0058438A = arg0;
     D_005842C4 = -1;
     D_0058438C = arg1;

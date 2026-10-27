@@ -16,8 +16,8 @@
 #pragma cplusplus on
 
 /* Clear flag 2 on every other child and hide its renderer. */
-extern "C" void GuiAgentModify_GroupHide(void* self, ChildWidget* o);
-void GuiAgentModify_GroupHide(void* self, ChildWidget* o)
+extern "C" void GuiAgentModify_MakeChildrenInvisible(void* self, ChildWidget* o);
+void GuiAgentModify_MakeChildrenInvisible(void* self, ChildWidget* o)
 {
     ChildIter e;
     void* l;
@@ -42,8 +42,8 @@ static inline void merge_flush_func_00341170(void) {}
 #pragma cplusplus on
 
 /* Set flag 2 on every other child, show its renderer, set flag 4, clear flag 0x80. */
-extern "C" void GuiAgentModify_GroupShow(void* self, ChildWidget* o);
-void GuiAgentModify_GroupShow(void* self, ChildWidget* o)
+extern "C" void GuiAgentModify_MakeChildrenVisible(void* self, ChildWidget* o);
+void GuiAgentModify_MakeChildrenVisible(void* self, ChildWidget* o)
 {
     ChildIter e;
     void* l;

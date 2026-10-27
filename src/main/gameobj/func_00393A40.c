@@ -10,13 +10,13 @@ typedef struct RgT2 { char p[0x8]; } RgT2;
 static const float dat_00493470[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 extern void cSkaCrossFadeDuration_ctor_void(void*);
 extern void func_00393CE0(void*);
-extern void ScalarCollection_Init(void*);
+extern void std_list_deleter_voidPtr_ctor_void(void*);
 extern void cArray_cSkaSliderValue_ctor(void*);
 extern void std_vector_cSkaSwitchValue_ctor(void*);
 extern void cSkaAnimAnchorList_ctor_void(void*);
 extern void func_00393C60(void*, void*);
 extern void* cSkaAnimationSet_AnimAnchorNameList(void*);
-extern void RootCollection_InitFromModel(void*, void*);
+extern void cSkaAnimAnchorList_Reset(void*, void*);
 extern void cSkaSliderValue_ctor_float(RgT1*, float);
 extern void* cSkaAnimationSet_SliderParamCount(void*);
 extern void cArray_cSkaSliderValue_ResizeActual(void*, void*, RgT1*);
@@ -41,7 +41,7 @@ RgObj* cSkaParams_ctor(RgObj* o, int arg, void* model)
     cSkaCrossFadeDuration_ctor_void(sub->a);
     func_00393CE0(sub->b);
     func_00393CE0(sub->c);
-    ScalarCollection_Init(o->col6c);
+    std_list_deleter_voidPtr_ctor_void(o->col6c);
     cArray_cSkaSliderValue_ctor(o->col78);
     fl = (RgFlag*)o->p88;
     std_vector_cSkaSwitchValue_ctor(fl);
@@ -49,7 +49,7 @@ RgObj* cSkaParams_ctor(RgObj* o, int arg, void* model)
     cSkaAnimAnchorList_ctor_void(o->rootA0);
     if (model) {
         func_00393C60(&o->model, model);
-        RootCollection_InitFromModel(o->rootA0, cSkaAnimationSet_AnimAnchorNameList(model));
+        cSkaAnimAnchorList_Reset(o->rootA0, cSkaAnimationSet_AnimAnchorNameList(model));
         {
             RgT1 t1;
             cSkaSliderValue_ctor_float(&t1, 0.0f);

@@ -5,7 +5,7 @@
 
 /* Two-level destructor: restore vtables, run base destructor, optionally delete. */
 extern "C" {
-extern "C" void Message_GetScriptTypeKey();
+extern "C" void cMessage_getSOBJClassId();
 extern "C" void cActivateBodyTossMsg_v01();
 extern "C" void cActivateBodyTossMsg_v04();
 extern "C" void cActivateBodyTossMsg_v05();
@@ -27,4 +27,4 @@ extern "C" Vtable2Object* cActivateBodyTossMsg_dtor(Vtable2Object* self, short d
     }
     return self;
 }
-void * const D_004E1AE0[8] = { (void*)0x0, (void*)0x0, (void*)cActivateBodyTossMsg_dtor, (void*)cActivateBodyTossMsg_v01, (void*)cNetMsg_Pack, (void*)Message_GetScriptTypeKey, (void*)cActivateBodyTossMsg_v04, (void*)cActivateBodyTossMsg_v05 };
+void * const D_004E1AE0[8] = { (void*)0x0, (void*)0x0, (void*)cActivateBodyTossMsg_dtor, (void*)cActivateBodyTossMsg_v01, (void*)cNetMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)cActivateBodyTossMsg_v04, (void*)cActivateBodyTossMsg_v05 };

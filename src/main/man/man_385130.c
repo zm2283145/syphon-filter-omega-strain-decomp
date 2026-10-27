@@ -44,7 +44,7 @@ struct V {
 } __attribute__((aligned(16)));
 struct Muzzle { char pad[0x180]; V v; };
 struct Weapon { char pad[0x2410]; Muzzle* muzzle; };
-extern "C" V ManModel_GetGunRotation(Weapon* w)
+extern "C" V cMan_GetGun2ndHandOrient(Weapon* w)
 {
     V v;
     if (w->muzzle) {
@@ -76,7 +76,7 @@ static inline void Add3_(V4* a, V4* d, V4* b) {
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_propagation off
-V4 ManModel_GetGunPosition(S_3851C0* s) {
+V4 cMan_GetGun2ndHand(S_3851C0* s) {
     V4 r;
     O_3851C0* o = s->o;
     if (o) {

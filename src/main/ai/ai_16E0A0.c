@@ -27,27 +27,27 @@ typedef struct {
     int unk48;
     int unk4C;
 } Obj;
-extern void ScalarCollection_Init(void* coll);
-extern void NpcPerception_SetTarget(Obj* self, int a, int b);
-extern void NpcPerception_Clear(Obj* self);
+extern void std_list_deleter_voidPtr_ctor_void(void* coll);
+extern void cAITarget_SetTarget(Obj* self, int a, int b);
+extern void cAITarget_dtor(Obj* self);
 
 /* Constructor: initialises the collection, ids and flag bits, then resets state. */
-Obj* NpcPerception_Construct(Obj* self, int owner)
+Obj* cAITarget_ctor(Obj* self, int owner)
 {
     unsigned char off = 0;
-    ScalarCollection_Init(self->coll);
+    std_list_deleter_voidPtr_ctor_void(self->coll);
     self->owner = owner;
     self->unk44 = -2;
     self->unk40 = 0;
     self->unk4C = -2;
     self->unk48 = 0;
     self->unk1C = -1;
-    NpcPerception_SetTarget(self, 0, 0);
+    cAITarget_SetTarget(self, 0, 0);
     self->f4 = off;
     self->f5 = off;
     self->f0 = off;
     self->unk18 = -1;
-    NpcPerception_Clear(self);
+    cAITarget_dtor(self);
     return self;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -68,7 +68,7 @@ typedef struct WordPair {
     int second;
 } WordPair;
 
-void NpcAi_ApplyModeRequest(WordPair* p) {
+void cStateMachine_ExitStateMessageReceived(WordPair* p) {
     p->first = p->second;
 }
 /* merge_units: generate this block's code under its own pragmas */

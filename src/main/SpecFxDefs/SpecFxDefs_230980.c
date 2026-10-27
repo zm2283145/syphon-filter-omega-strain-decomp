@@ -15,10 +15,10 @@ static inline int R32_00230980(void) { unsigned short lo = R16_00230980(); retur
 static inline float RF_00230980(void) { int i = R32_00230980(); return *(float*)&i; }
 static inline char R8_00230980(void) { return *D_005061D0++; }
 typedef struct { char pad[0x24]; void* obj; float a; float b; } M_00230980;
-extern void NetStream_ReadObject(void* out);
+extern void cNetMsg_GetGOBJ(void* out);
 extern void Global_SpawnLight(void* obj, int z, float a, float b);
-void cNetSpawnLightMsg_Apply(M_00230980* m) {
-    NetStream_ReadObject(&m->obj);
+void cNetSpawnLightMsg_UnpackAndProcess(M_00230980* m) {
+    cNetMsg_GetGOBJ(&m->obj);
     m->a = RF_00230980();
     m->b = RF_00230980();
     Global_SpawnLight(m->obj, 0, m->a, m->b);
@@ -35,7 +35,7 @@ static inline void W32_00230B00(int v) { W16_00230B00((unsigned short)v); W16_00
 static inline void WF_00230B00(float f) { W32_00230B00(*(int*)&f); }
 typedef struct { char pad[0x24]; void* obj; float a; float b; } M_00230B00;
 extern void cNetMsg_PutGOBJ(void* o);
-void cNetSpawnLightMsg_v04(M_00230B00* m) {
+void cNetSpawnLightMsg_Pack(M_00230B00* m) {
     cNetMsg_PutGOBJ(m->obj);
     WF_00230B00(m->a);
     WF_00230B00(m->b);

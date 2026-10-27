@@ -32,7 +32,7 @@ typedef struct LinkList {
 
 /*
  * Object reached through the global at g_Hud (world +0xDC); receives the
- * global timer requests (Hud_StartGlobalTimer).
+ * global timer requests (cHud_StartGlobalTimer).
  */
 typedef struct GameTimerService {
     char pad0[0x6DC];

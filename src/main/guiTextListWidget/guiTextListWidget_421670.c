@@ -15,12 +15,12 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00421670 */
 #pragma push /* merge_units */
 /* Copy the state byte to the optional child widget. */
-void GuiTextListWidget_SetA4(TextListWidget* self, unsigned char state)
+void GuiTextListWidget_SetTextFormat(TextListWidget* self, unsigned char state)
 {
     self->state = state;
     if (self->child)
@@ -39,21 +39,21 @@ extern "C" {
 extern char D_0049AF00[];
 extern char D_004E0C80[];
 extern char D_004E0D20[];
-void* Gui_GetScreenList(void);
-void* GuiFont_Find(void* manager, const char* name);
-unsigned int Font_GetLineHeight(void* resource);
-void GuiArrayWidget_RowHeight(TextRenderWidget* self, unsigned int height);
-void GuiArrayWidget_Sleep(TextRenderWidget* self);
-void GuiArrayWidget_OnWake(TextRenderWidget* self);
-void GuiArrayWidget_Init(TextRenderWidget* self);
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* Gui_Manager(void);
+void* GuiManager_GetFont(void* manager, const char* name);
+unsigned int cFont_GetCharH(void* resource);
+void GuiArrayWidget_SetRowHeight(TextRenderWidget* self, unsigned int height);
+void GuiArrayWidget_onSleep(TextRenderWidget* self);
+void GuiArrayWidget_onWake(TextRenderWidget* self);
+void GuiArrayWidget_onAdd(TextRenderWidget* self);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 void String_Dtor(void* string, int flags);
-TextRenderChild* TextObj_Construct(TextRenderChild* self, int x, int y,
+TextRenderChild* cTextArea_ctor(TextRenderChild* self, int x, int y,
                              int width, int height, void* resource,
                              TextRenderStyle* style);
 void std_vector_deleter_Item_dtor(TextListEntryVec* entries, int flags);
 void cArray_int_dtor(void* state, int flags);
-void GuiWidget_Destroy(TextRenderWidget* self, int flags);
+void GuiWidget_dtor(TextRenderWidget* self, int flags);
 void std_vector_imp_int_1_dtor(TextListEntryVec* entries, int flags);
 void operator_delete(void* allocation);
 }
@@ -74,7 +74,7 @@ static inline void release_child(TextRenderChild* child, int line)
 {
     AllocGuard guard;
     destroy_child(child);
-    Mem_Free(0, child, "guiTextListWidget.cc", line);
+    cMemMan_Deallocate(0, child, "guiTextListWidget.cc", line);
 }
 
 static inline void destroy_entry_storage(TextListEntryVec* entries)
@@ -100,22 +100,22 @@ static inline void destroy_widget_base(TextRenderWidget* self)
     if (self) {
         self->vtable = D_004E0D20;
         cArray_int_dtor(self->baseState, -1);
-        GuiWidget_Destroy(self, 0);
+        GuiWidget_dtor(self, 0);
     }
 }
 
 /* Resolve the named text resource and apply its padded row height when available. */
 extern "C" void GuiTextListWidget_SetFont(TextRenderWidget* self, const char* name)
 {
-    self->resource = GuiFont_Find(Gui_GetScreenList(), name);
+    self->resource = GuiManager_GetFont(Gui_Manager(), name);
     if (self->resource)
-        GuiArrayWidget_RowHeight(self, Font_GetLineHeight(self->resource) + 4);
+        GuiArrayWidget_SetRowHeight(self, cFont_GetCharH(self->resource) + 4);
 }
 
 /* Release the optional text child after the base widget is deactivated. */
-extern "C" void GuiTextListWidget_OnSleep(TextRenderWidget* self)
+extern "C" void GuiTextListWidget_onSleep(TextRenderWidget* self)
 {
-    GuiArrayWidget_Sleep(self);
+    GuiArrayWidget_onSleep(self);
     TextRenderChild* child = self->child;
     if (child) {
         release_child(child, 0x45);
@@ -124,18 +124,18 @@ extern "C" void GuiTextListWidget_OnSleep(TextRenderWidget* self)
 }
 
 /* Lazily construct the text child and synchronize its active state. */
-extern "C" void GuiTextListWidget_OnWake(TextRenderWidget* self)
+extern "C" void GuiTextListWidget_onWake(TextRenderWidget* self)
 {
-    GuiArrayWidget_OnWake(self);
+    GuiArrayWidget_onWake(self);
     if (!self->child) {
         TextRenderChild* child;
         {
             AllocGuard guard;
-            child = (TextRenderChild*)Mem_Alloc(0, sizeof(TextRenderChild),
+            child = (TextRenderChild*)cMemMan_Allocate(0, sizeof(TextRenderChild),
                                               "guiTextListWidget.cc", 0x37);
         }
         if (child)
-            child = TextObj_Construct(child, 0, 0, (int)self->width, (int)self->height,
+            child = cTextArea_ctor(child, 0, 0, (int)self->width, (int)self->height,
                                  self->resource, &self->styles[0]);
         self->child = child;
     }
@@ -146,12 +146,12 @@ extern "C" void GuiTextListWidget_OnWake(TextRenderWidget* self)
 }
 
 /* Restore the default resource after the base widget reset. */
-extern "C" void GuiTextListWidget_Init(TextRenderWidget* self)
+extern "C" void GuiTextListWidget_onAdd(TextRenderWidget* self)
 {
-    GuiArrayWidget_Init(self);
-    self->resource = GuiFont_Find(Gui_GetScreenList(), 0);
+    GuiArrayWidget_onAdd(self);
+    self->resource = GuiManager_GetFont(Gui_Manager(), 0);
     if (self->resource)
-        GuiArrayWidget_RowHeight(self, Font_GetLineHeight(self->resource) + 4);
+        GuiArrayWidget_SetRowHeight(self, cFont_GetCharH(self->resource) + 4);
 }
 
 /* Destroy the owned text child, entries and base widget before optional deletion. */
@@ -194,7 +194,7 @@ static inline void free_entry_buffer(TextListEntry* data)
 {
     if (data) {
         AllocGuard guard;
-        Mem_Free(0, data, D_0049AF00, 0x64);
+        cMemMan_Deallocate(0, data, D_0049AF00, 0x64);
     }
 }
 

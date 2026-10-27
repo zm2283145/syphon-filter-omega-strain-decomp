@@ -40,21 +40,21 @@ typedef struct {
 } ModelL;
 extern "C" {
 extern char g_LightMgr[];
-extern void FileMan_FindMember(void* f);
-extern void FileMan_LoadMemberSync(void* f, ModelL* m, int z);
+extern void cFileMan_Open(void* f);
+extern void cFileMan_Read_charPP_int(void* f, ModelL* m, int z);
 extern void cFileMan_Close(void* f);
-extern void Model_BindTextures(ModelL* m, void* t);
-extern void Model_FoldMaterialFlags(ModelL* m);
-extern void Model_PatchMscal(ModelL* m);
-extern void Model_SetupExtraTable(ModelL* m);
-extern void Model_SetupMaterialFx(ModelL* m);
-extern void LightMgr_Register(void* mgr, int id, ModelL* m, int i);
+extern void cVU1Model_LoadTextures(ModelL* m, void* t);
+extern void cVU1Model_PatchMaterials(ModelL* m);
+extern void cVU1Model_PatchMeshes(ModelL* m);
+extern void cVU1Model_PatchLights(ModelL* m);
+extern void cVU1Model_BuildTex01Patchup(ModelL* m);
+extern void cLightMan_AddSceneLightRef(void* mgr, int id, ModelL* m, int i);
 }
 /* Relocates a freshly read model header in place, then counts triangles, binds textures,
    registers lights and sizes the draw list. */
-extern "C" void Model_Load(ModelL* m, void* f, void* tex) {
-    FileMan_FindMember(f);
-    FileMan_LoadMemberSync(f, m, 0);
+extern "C" void cVU1Model_Load(ModelL* m, void* f, void* tex) {
+    cFileMan_Open(f);
+    cFileMan_Read_charPP_int(f, m, 0);
     cFileMan_Close(f);
     m->hdr = (HdrL*)m->base;
     if (!m->hdr->loaded) {
@@ -74,14 +74,14 @@ extern "C" void Model_Load(ModelL* m, void* f, void* tex) {
     for (int i = 0; i < m->hdr->nMesh; i++) {
         m->tris += m->hdr->meshes[i].count * 2;
     }
-    Model_BindTextures(m, tex);
+    cVU1Model_LoadTextures(m, tex);
     if (!m->hdr->loaded) {
-        Model_FoldMaterialFlags(m);
-        Model_PatchMscal(m);
-        Model_SetupExtraTable(m);
+        cVU1Model_PatchMaterials(m);
+        cVU1Model_PatchMeshes(m);
+        cVU1Model_PatchLights(m);
     }
     for (int j = 0; j < m->hdr->nLight; j++) {
-        LightMgr_Register(g_LightMgr, m->hdr->lights[j].id, m, j);
+        cLightMan_AddSceneLightRef(g_LightMgr, m->hdr->lights[j].id, m, j);
     }
     m->cnt = 0;
     for (int i = 0; i < m->hdr->nMesh; i++) {
@@ -93,7 +93,7 @@ extern "C" void Model_Load(ModelL* m, void* f, void* tex) {
             m->cnt += me->count * n;
         }
     }
-    Model_SetupMaterialFx(m);
+    cVU1Model_BuildTex01Patchup(m);
     m->hdr->loaded = 1;
 }
 #pragma pop /* merge_units */
@@ -104,7 +104,7 @@ extern "C" void Model_Load(ModelL* m, void* f, void* tex) {
 #pragma cplusplus on
 #include "self_call_dtor.h"
 
-DEFINE_SELF_CALL_DTOR(cVU1Model_dtor, Model_Unload)
+DEFINE_SELF_CALL_DTOR(cVU1Model_dtor, cVU1Model_Unload)
 #pragma pop /* merge_units */
 /* merge_units: end func_00377BD0 */
 

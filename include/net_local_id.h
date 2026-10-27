@@ -7,7 +7,7 @@ extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char D_005721C0;
 extern unsigned char g_IsMultiplayer;
-int NetGame_InitLocalSlot(int*, int);
+int NetGetMyClientIndex(int*, int);
 int NetGetPeerToPeerHostClientIndex(int, int*);
 
 static inline int NetLocalId(void)
@@ -15,7 +15,7 @@ static inline int NetLocalId(void)
     int r;
     int a = D_005721A8;
     if (g_IsMultiplayer) {
-        if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
+        if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, a);
         r = D_00494178;
     } else r = 0;
     return r;

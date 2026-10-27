@@ -13,7 +13,7 @@
 extern "C" { char D_0049AE80[] = "allocator.hh"; }
 
 /* Erase a range of nodes from a linked list. */
-DEFINE_OBJECT_LIST_ERASE_RANGE(ObjectList_EraseRange)
+DEFINE_OBJECT_LIST_ERASE_RANGE(std_list_deleter_voidPtr_erase_listdeleter_listdeleter)
 #pragma pop /* merge_units */
 /* merge_units: end func_00138C60 */
 
@@ -23,6 +23,6 @@ DEFINE_OBJECT_LIST_ERASE_RANGE(ObjectList_EraseRange)
 #include "object_list_erase_one.h"
 
 /* Erase one node from a linked list. */
-DEFINE_OBJECT_LIST_ERASE_ONE(List_Erase)
+DEFINE_OBJECT_LIST_ERASE_ONE(std_list_deleter_voidPtr_erase_listdeleter)
 #pragma pop /* merge_units */
 /* merge_units: end func_00138DA0 */

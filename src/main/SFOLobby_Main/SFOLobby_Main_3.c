@@ -7,10 +7,10 @@
 /* merge_units: begin func_004526D0 */
 #pragma push /* merge_units */
 #include "types.h"
-int String_Copy(char*, char*);
-int Lobby_GetTime(void);
-int* SFOLobby_AllocZeroed(int);
-void SFOLobby_Free(int*);
+int Libc_Strcpy(char*, char*);
+int SFOLobby_GetMillisecs(void);
+int* SFOLobby_MemAlloc(int);
+void SFOLobby_MemFree(int*);
 int MediusFindWorldByName(void*, void*);
 void func_00454010(char*);
 int sprintf(char*, const char*, ...);
@@ -64,7 +64,7 @@ static inline void SetErr_4526D0(Lobby_4526D0* self, unsigned char code, char* f
 
 static inline void Free_4526D0(Lobby_4526D0* self)
 {
-    SFOLobby_Free(self->f248);
+    SFOLobby_MemFree(self->f248);
     self->f248 = 0;
 }
 
@@ -79,13 +79,13 @@ int func_004526D0(Lobby_4526D0* self, char* room)
     int id;
 
     memset(&req, 0, sizeof(req));
-    String_Copy(req.name, D_004C0FA8);
-    String_Copy(req.ip.c, self->ip.c);
-    String_Copy(req.room, room);
+    Libc_Strcpy(req.name, D_004C0FA8);
+    Libc_Strcpy(req.ip.c, self->ip.c);
+    Libc_Strcpy(req.room, room);
     req.f68 = 1;
     self->f244 = 0;
-    self->f2410 = Lobby_GetTime();
-    self->f248 = SFOLobby_AllocZeroed(D_00585F90 * 4);
+    self->f2410 = SFOLobby_GetMillisecs();
+    self->f248 = SFOLobby_MemAlloc(D_00585F90 * 4);
     for (i = 0; i < D_00585F90; i++)
         self->f248[i] = -1;
     self->f24C = MediusFindWorldByName(&req, &func_00452A70);
@@ -106,7 +106,7 @@ int func_004526D0(Lobby_4526D0* self, char* room)
         }
     }
     func_00454010(info);
-    String_Copy(pass, D_004C0FA8);
+    Libc_Strcpy(pass, D_004C0FA8);
     for (j = 0; j < D_00585F90; j++) {
         id = self->f248[j];
         if (id != -1) {
@@ -129,7 +129,7 @@ int func_004526D0(Lobby_4526D0* self, char* room)
                 return 0;
             }
             self->f1EB4 = self->f1B38;
-            String_Copy(self->f1EB8, name);
+            Libc_Strcpy(self->f1EB8, name);
             Free_4526D0(self);
             return 1;
         }

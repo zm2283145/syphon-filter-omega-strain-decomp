@@ -7,11 +7,11 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern int PtrVec_Insert(PtrVec*, int*, int, int*);
+extern int std_vector_pod_int_insert(PtrVec*, int*, int, int*);
 
 /* push_back */
 int std_vector_cAirTaserPtr_push_back(PtrVec* v, int* value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 
 Rel* std_vector_TaserPoint_ctor(Rel* r) {

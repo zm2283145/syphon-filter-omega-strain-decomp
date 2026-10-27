@@ -13,7 +13,7 @@ typedef struct {
     unsigned char found;
 } SoapParse0598;
 
-extern int String_CompareN(const char *, const char *, unsigned int);
+extern int Libc_Strncmp(const char *, const char *, unsigned int);
 extern char *strstr(const char *searchee, const char *lookfor);
 extern int func_0030EFD0(char *a, char *b, char *tag);
 extern char *strncpy(char *, const char *, unsigned int);
@@ -35,23 +35,23 @@ void func_00310598(char *tag, char **attrs, SoapParse0598 *c)
     if (func_0030EFD0(c->buf108, c->buf208, tag) == 0) c->found = 1;
     p = tag;
     while (*p != ':') p++;
-    if (String_CompareN(D_004B0D58, p + 1, 0x100) == 0) {
+    if (Libc_Strncmp(D_004B0D58, p + 1, 0x100) == 0) {
         for (i = 0; attrs[i] != 0; i++) {
             switch (i) {
             case 0:
-                if (String_CompareN(D_004B0820, attrs[i], 5)) c->found = 1;
+                if (Libc_Strncmp(D_004B0820, attrs[i], 5)) c->found = 1;
                 break;
             case 1:
-                if (String_CompareN(D_004913BC, attrs[1], 0x100)) c->found = 1;
+                if (Libc_Strncmp(D_004913BC, attrs[1], 0x100)) c->found = 1;
                 break;
             case 2:
                 p = attrs[2];
                 while (*p != ':') p++;
                 p++;
-                if (String_CompareN(D_004B0D68, p, 0x100)) c->found = 1;
+                if (Libc_Strncmp(D_004B0D68, p, 0x100)) c->found = 1;
                 break;
             case 3:
-                if (String_CompareN(D_004913C0, attrs[3], 0x100)) c->found = 1;
+                if (Libc_Strncmp(D_004913C0, attrs[3], 0x100)) c->found = 1;
                 break;
             }
         }
@@ -60,10 +60,10 @@ void func_00310598(char *tag, char **attrs, SoapParse0598 *c)
         for (j = 0; attrs[j] != 0; j++) {
             switch (j) {
             case 1:
-                if (String_CompareN(D_004B0820, attrs[1], 5)) c->found = 1;
+                if (Libc_Strncmp(D_004B0820, attrs[1], 5)) c->found = 1;
                 break;
             case 2:
-                if (String_CompareN(D_004913C4, attrs[2], strlen(D_004913C4))) c->found = 1;
+                if (Libc_Strncmp(D_004913C4, attrs[2], strlen(D_004913C4))) c->found = 1;
                 break;
             }
         }

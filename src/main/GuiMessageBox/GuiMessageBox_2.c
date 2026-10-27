@@ -27,23 +27,23 @@ extern char D_004A7520[];
 extern char D_004A9880[];
 extern char D_004A9870[];
 int sprintf(char* buf, const char* fmt, ...);
-void* GuiWidget_FindChildBySubstring(Self_002A8410* self, char* name);
-void* GuiWidget_FindChildByName(Self_002A8410* self, char* name);
-void GuiTextWidget_SetB74(W_002A8410* w, int a);
-void GuiWidget_Init(Self_002A8410* self);
+void* GuiWidget_FindChildPartial(Self_002A8410* self, char* name);
+void* GuiWidget_FindChild_charP(Self_002A8410* self, char* name);
+void GuiTextWidget_SetVerticleJustify(W_002A8410* w, int a);
+void GuiWidget_onAdd(Self_002A8410* self);
 }
 static inline W_002A8410* FindAs_002A8410(Self_002A8410* self, char* name, char* type)
 {
-    W_002A8410* w = (W_002A8410*)GuiWidget_FindChildByName(self, name);
+    W_002A8410* w = (W_002A8410*)GuiWidget_FindChild_charP(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
-extern "C" void GuiMessageBox_Init(Self_002A8410* self)
+extern "C" void GuiMessageBox_onAdd(Self_002A8410* self)
 {
     char buf[0x80];
     int i;
     for (i = 0; i < 3; i++) {
         sprintf(buf, "%s%d", D_0048BB58, i);
-        self->rows[i].text = GuiWidget_FindChildBySubstring(self, buf);
+        self->rows[i].text = GuiWidget_FindChildPartial(self, buf);
         sprintf(buf, "%s%d", D_0048BB60, i);
         self->rows[i].a = FindAs_002A8410(self, buf, D_004A7520);
         if (i == 2) {
@@ -54,28 +54,28 @@ extern "C" void GuiMessageBox_Init(Self_002A8410* self)
             self->rows[i].b = FindAs_002A8410(self, buf, D_004A7520);
         }
         if (i == 1 && self->rows[i].b)
-            GuiTextWidget_SetB74(self->rows[i].b, 0);
+            GuiTextWidget_SetVerticleJustify(self->rows[i].b, 0);
         sprintf(buf, "%s%d", D_0048BB70, i);
         self->rows[i].c = FindAs_002A8410(self, buf, D_004A9870);
         sprintf(buf, "%s%d", D_0048BB78, i);
         self->rows[i].d = FindAs_002A8410(self, buf, D_004A9870);
     }
-    GuiWidget_Init(self);
+    GuiWidget_onAdd(self);
 }
 #pragma pop /* merge_units */
 /* merge_units: end GuiMessageBox_2A8410 */
 
 /* merge_units: begin func_002A86A0 */
 #pragma push /* merge_units */
-extern void GuiWidget_BaseSleep(void* self);
-extern int Gui_GetScreenStack(void);
-extern void GuiWidget_SendEvent(void* self, int a, int b, int c, int d);
+extern void GuiWidget_onSleep(void* self);
+extern int Gui_Canvas(void);
+extern void GuiWidget_SendMessage(void* self, int a, int b, int c, int d);
 
-/* Runs the base setup, then calls GuiWidget_SendEvent with Gui_GetScreenStack's result and constants 0x10, 3, 0. */
-void GuiMessageBox_Sleep(void* self)
+/* Runs the base setup, then calls GuiWidget_SendMessage with Gui_Canvas's result and constants 0x10, 3, 0. */
+void GuiMessageBox_onSleep(void* self)
 {
-    GuiWidget_BaseSleep(self);
-    GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 3, 0);
+    GuiWidget_onSleep(self);
+    GuiWidget_SendMessage(self, Gui_Canvas(), 0x10, 3, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002A86A0 */
@@ -98,11 +98,11 @@ typedef struct Selector {
     Entry20 entries[1];
 } Selector;
 
-extern void GuiWidget_BaseWake(Selector* self);
+extern void GuiWidget_onWake(Selector* self);
 
 /* Updates the base, then in state 5 copies the selected entry's value to current. */
-void GuiMessageBox_Wake(Selector* self) {
-    GuiWidget_BaseWake(self);
+void GuiMessageBox_onWake(Selector* self) {
+    GuiWidget_onWake(self);
     if (self->state == 5) {
         self->current = self->entries[self->index].value;
     }
@@ -163,30 +163,30 @@ GuiMessageBox* GuiMessageBox_ctor(GuiMessageBox* self) {
 #pragma push /* merge_units */
 typedef struct { char p0[0x14]; char set[1]; } Mgr2A8800;
 #if 0 /* merge_units */
-extern void* Gui_GetScreenStack(void);
+extern void* Gui_Canvas(void);
 #endif /* merge_units */
-#define Gui_GetScreenStack() ((void *)Gui_GetScreenStack()) /* merge_units */
+#define Gui_Canvas() ((void *)Gui_Canvas()) /* merge_units */
 
 
-extern Mgr2A8800* Gui_GetScreenList(void);
+extern Mgr2A8800* Gui_Manager(void);
 extern void cLList_GuiWidgetPtr_Find(int* it, void* set, int* key);
 extern void cLList_GuiWidgetPtr_End(int* it, void* set);
 extern int opNe_cLListIteratorR_cLListIteratorR_6(int* a, int* b);
 /* Returns o when it is the root widget or is registered with the manager, else 0. */
-void* GuiMessageBox_ValidateTarget(void* o)
+void* ValidateWidget_GuiWidgetP(void* o)
 {
     Mgr2A8800* m;
 int key[1];
 int it[1];
 int end[1];
     if (!o) return 0;
-    if (o == Gui_GetScreenStack()) return o;
+    if (o == Gui_Canvas()) return o;
     key[0] = (int)o;
-    m = Gui_GetScreenList();
+    m = Gui_Manager();
     cLList_GuiWidgetPtr_Find(it, m->set, key);
     cLList_GuiWidgetPtr_End(end, m->set);
     return opNe_cLListIteratorR_cLListIteratorR_6(it, end) ? o : 0;
 }
-#undef Gui_GetScreenStack /* merge_units */
+#undef Gui_Canvas /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002A8800 */

@@ -6,7 +6,7 @@ extern "C" {
 char* std_vector_imp_cCollisionEdgePtr_1_begin(void* v);
 char* std_vector_imp_cCollisionEdgePtr_1_end(void* v);
 void std_vector_cCollisionEdgePtr_pointer2iterator(It1E1480* out, void* v, char** p);
-int ColEdge_AreConnected(E1E1480* a, E1E1480* b, float x, float y, float z);
+int cCollisionEdge_CanBeConnected(E1E1480* a, E1E1480* b, float x, float y, float z);
 static const float dat_004A0360[2] = { 0.707f, 0.0f };
 extern float D_004A0368;
 extern float D_004A0370;
@@ -32,7 +32,7 @@ extern "C" bool cEdgeGroup_DoesEdgeBelong(void* v, E1E1480* k)
     if (It1E1480_ne(p, *(char* volatile*)&end.p)) {
         do {
             E1E1480* x = *(E1E1480**)p;
-            if ((x->kind & ~0x80) == (k->kind & ~0x80) && ColEdge_AreConnected(x, k, (*(float*)dat_004A0360), D_004A0368, D_004A0370)) return true;
+            if ((x->kind & ~0x80) == (k->kind & ~0x80) && cCollisionEdge_CanBeConnected(x, k, (*(float*)dat_004A0360), D_004A0368, D_004A0370)) return true;
             p += 4;
         } while (It1E1480_ne(p, e));
     }

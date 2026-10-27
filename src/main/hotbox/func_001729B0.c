@@ -14,11 +14,11 @@ extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 }
 struct T_29B0 { int id; bool operator==(const T_29B0& o) const { return id == o.id; } };
-extern "C" { extern T_29B0 g_TriggerMsgKey; T_29B0* Event_GetType(Ev_29B0* e); }
-extern "C" int cHotbox_v0A(O_29B0* self, Ev_29B0* e)
+extern "C" { extern T_29B0 g_TriggerMsgKey; T_29B0* cMessage_Name(Ev_29B0* e); }
+extern "C" int cHotbox_IsDeliverable(O_29B0* self, Ev_29B0* e)
 {
     int ok = g_IsMultiplayer ? D_005721C0 : 1;
-    if (ok && self->state == 8 && *Event_GetType(e) == g_TriggerMsgKey && e->kind == 4)
+    if (ok && self->state == 8 && *cMessage_Name(e) == g_TriggerMsgKey && e->kind == 4)
         return self->Handle();
     return 1;
 }

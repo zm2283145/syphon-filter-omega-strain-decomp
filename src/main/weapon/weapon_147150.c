@@ -22,16 +22,16 @@ int strlen(const char *);
 extern "C" {
 extern char D_0049B1D0[];
 extern char D_0049B308[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 char* strrchr(const char* s, int c);
-void Hog_Register(void* h, char* name, int x, int f);
-int FileMan_FindMember(void* h);
-int WeaponDb_GetShellRecord(void* self, int x);
-void ManModel_ctor(void* o, char* name, int idx, int x, int a, int b, int c, int d);
+void cFileMan_EncodeFilename_charP_cHogFileR_bool(void* h, char* name, int x, int f);
+int cFileMan_Open(void* h);
+int cWeaponDB_GetShellCasing(void* self, int x);
+void gunList_LoadGunInit(void* o, char* name, int idx, int x, int a, int b, int c, int d);
 void WeaponDb_CloneModel(void* self, char* name, void* o);
-int Fstream_GetLoader(void);
-void AsyncLoader_QueueLoad(int q, void* h, void* cb, void* o, int a, int b, int c);
-void WeaponDb_LoadCallback(void);
+int GetFileStreamMan(void);
+void cFileStreamMan_StreamRequest(int q, void* h, void* cb, void* o, int a, int b, int c);
+void cWeaponDB_GunStreamReturn(void);
 }
 inline void* operator new(unsigned int, void* p) { return p; }
 struct E7150 { E7150() {} char pad[0x20]; };
@@ -53,28 +53,28 @@ struct S7150 { char pad0[0x14]; R7150* recs; char pad18[4]; char hog[0xB4 - 0x1C
 static inline void* SD_Alloc(int n, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, n, D_0049B1D0, line);
+    return cMemMan_Allocate(0, n, D_0049B1D0, line);
 }
-extern "C" void WeaponDb_LoadModel(S7150* self, char* name, O7150** out, int idx, int a, int b, int c)
+extern "C" void cWeaponDB_LoadGun(S7150* self, char* name, O7150** out, int idx, int a, int b, int c)
 {
     char buf[0x100];
     char* p;
     int x;
     *out = 0;
-    String_Copy(buf, name);
+    Libc_Strcpy(buf, name);
     p = strrchr(buf, '.');
     if (!p) p = &buf[strlen(buf)];
-    String_Copy(p, D_0049B308);
-    Hog_Register(self->hog, buf, self->xB4, 1);
-    if ((unsigned char)FileMan_FindMember(self->hog)) return;
+    Libc_Strcpy(p, D_0049B308);
+    cFileMan_EncodeFilename_charP_cHogFileR_bool(self->hog, buf, self->xB4, 1);
+    if ((unsigned char)cFileMan_Open(self->hog)) return;
     x = 0;
-    if (idx >= 0) x = WeaponDb_GetShellRecord(self, ((R7150*)((char*)self->recs + idx * 0x140))->x10C);
+    if (idx >= 0) x = cWeaponDB_GetShellCasing(self, ((R7150*)((char*)self->recs + idx * 0x140))->x10C);
     {
         *out = new (SD_Alloc(sizeof(O7150), 0x153)) O7150;
     }
-    ManModel_ctor(*out, buf, idx, x, a, 1, b, c);
+    gunList_LoadGunInit(*out, buf, idx, x, a, 1, b, c);
     WeaponDb_CloneModel(self, buf, *out);
-    AsyncLoader_QueueLoad(Fstream_GetLoader(), self->hog, (void*)WeaponDb_LoadCallback, *out, 0, 1, 1);
+    cFileStreamMan_StreamRequest(GetFileStreamMan(), self->hog, (void*)cWeaponDB_GunStreamReturn, *out, 0, 1, 1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00147150(void) {}
@@ -83,15 +83,15 @@ static inline void merge_flush_func_00147150(void) {}
 
 /* merge_units: begin func_00147390 */
 #pragma push /* merge_units */
-extern void WeaponDb_LoadResources(void* self);
-extern void FileMan_Release(void* p, int flag);
+extern void cWeaponDB_UnloadLevelSpecific(void* self);
+extern void cFileMan_dtor(void* p, int flag);
 extern void cDB_dtor(void* self, int flag);
 extern void operator_delete(void* p);
 void* cWeaponDB_dtor(char* self, short flag)
 {
     if (self) {
-        WeaponDb_LoadResources(self);
-        FileMan_Release(self + 0x1C, -1);
+        cWeaponDB_UnloadLevelSpecific(self);
+        cFileMan_dtor(self + 0x1C, -1);
         cDB_dtor(self, 0);
         if (flag > 0)
             operator_delete(self);

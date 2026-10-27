@@ -12,14 +12,14 @@
 #pragma push /* merge_units */
 typedef struct { char pad[0x6A4]; void* hud; } Game0045ECA0;
 extern Game0045ECA0* g_Hud;
-extern int Loc_LookupText(int id);
+extern int nGlobalization_GetString_charP(int id);
 extern void GuiGameScreen_ShowInteract(void* hud, int text, int b, int c);
 /* Show a localized message on the HUD if one exists. */
-void GameScreen_DisplayInteractLocal(int id, int b)
+void DisplayInteractLabel(int id, int b)
 {
     void* hud;
     if (g_Hud && (hud = g_Hud->hud) != 0) {
-        GuiGameScreen_ShowInteract(hud, Loc_LookupText(id), b, 1);
+        GuiGameScreen_ShowInteract(hud, nGlobalization_GetString_charP(id), b, 1);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -46,7 +46,7 @@ extern void GuiGameScreen_ShowInteract(void* display, int a, int b, int show);
 
 
 /* Shows the interact prompt on the current display, if any. */
-void Global_DisplayInteract(int a, int b) {
+void DisplayInteract_charP_eJoystickButton(int a, int b) {
     if (g_Hud && g_Hud->display) {
         GuiGameScreen_ShowInteract(g_Hud->display, a, b, 1);
     }

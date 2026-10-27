@@ -6,13 +6,13 @@ extern V4_4D54C0 D_0053B670;
 extern struct { int n; float v[0x103]; } D_0053B6A0;
 extern char D_0053B544[], D_0053B540[], D_0053B528[];
 extern char cParticleSystem_dtor[];
-extern void ScalarCollection_Init(void* p);
+extern void std_list_deleter_voidPtr_ctor_void(void* p);
 extern void __register_global_object(void* obj, void* dtor, void* link);
-extern int Random_Next(void);
-void StaticInit_ParticleRandomTable(void)
+extern int Libc_Rand(void);
+void StaticInit_particle(void)
 {
     int i;
-    ScalarCollection_Init(D_0053B544);
+    std_list_deleter_voidPtr_ctor_void(D_0053B544);
     __register_global_object(D_0053B540, cParticleSystem_dtor, D_0053B528);
     D_004BC550.x = 0.0f;
     D_004BC550.y = 0.0f;
@@ -28,7 +28,7 @@ void StaticInit_ParticleRandomTable(void)
     D_0053B670.z = -3.4028234663852886e38f;
     D_0053B6A0.n = 0;
     for (i = 0; i < 0x103; i++) {
-        D_0053B6A0.v[i] = (float)Random_Next();
+        D_0053B6A0.v[i] = (float)Libc_Rand();
         D_0053B6A0.v[i] = D_0053B6A0.v[i] * 4.656612873077393e-10f;
     }
 }

@@ -13,15 +13,15 @@
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int WeaponDb_Get(int, int);
-int WeaponInv_GetHeldItem(int);
-int WeaponInv_HolsterCurrent(int, int);
-int WeaponInv_SlotOfItem(int, int);
-int Player_EquipItem(char * , int);
+int cWeaponDB_GetEntry(int, int);
+int cWeapon_GetWeaponEntry(int);
+int cWeapon_StoreWeapon_void(int, int);
+int cWeapon_GetWeaponSlot(int, int);
+int cPlayer_SelectWeapon(char * , int);
 extern char * g_LocalPlayer;
 extern int g_WeaponDatabase;
 
-void GuiGameScreen_EquipSelected(char * arg0) {
+void GuiGameScreen_SelectCurrentWeapon(char * arg0) {
     int temp_a1;
     int temp_s2;
     int temp_a1_2;
@@ -34,14 +34,14 @@ void GuiGameScreen_EquipSelected(char * arg0) {
         temp_s2 = *(int *)((char *)F_(arg0, 0x78, int) + temp_a1_2);
         temp_s1 = (char *)(F_(g_LocalPlayer, 0x30, int));
         if (temp_s2 != -2) {
-            if ((WeaponInv_SlotOfItem(temp_s2, temp_a1_2) & 0xFF) < 6) {
-                temp_v0 = WeaponDb_Get(g_WeaponDatabase, temp_s2);
-                if ((temp_v0 != 0) && (temp_v0 != WeaponInv_GetHeldItem(F_(temp_s1, 0x3524, int)))) {
-                    Player_EquipItem(g_LocalPlayer, temp_s2);
+            if ((cWeapon_GetWeaponSlot(temp_s2, temp_a1_2) & 0xFF) < 6) {
+                temp_v0 = cWeaponDB_GetEntry(g_WeaponDatabase, temp_s2);
+                if ((temp_v0 != 0) && (temp_v0 != cWeapon_GetWeaponEntry(F_(temp_s1, 0x3524, int)))) {
+                    cPlayer_SelectWeapon(g_LocalPlayer, temp_s2);
                 }
             }
         } else {
-            WeaponInv_HolsterCurrent(F_(temp_s1, 0x3524, int), temp_a1_2);
+            cWeapon_StoreWeapon_void(F_(temp_s1, 0x3524, int), temp_a1_2);
         }
     }
 }
@@ -53,10 +53,10 @@ static inline void merge_flush_func_0045C480(void) {}
 /* merge_units: begin func_0045C540 */
 #pragma push /* merge_units */
 typedef struct { char p[0x6C]; void* f6C; char p70[4]; int count; char p78[0x18]; int sel; char p94[8]; unsigned char b9C; } W45C540;
-extern void GuiGameScreen_FillWeaponPanels(W45C540* w);
-extern void* Gui_GetScreenStack(void);
-extern void GuiWidget_SendEvent(void* w, void* src, int kind, int a, int b);
-void GuiGameScreen_StepWeaponSelect(W45C540* w, int dir)
+extern void GuiGameScreen_UpdateWeaponPanels(W45C540* w);
+extern void* Gui_Canvas(void);
+extern void GuiWidget_SendMessage(void* w, void* src, int kind, int a, int b);
+void GuiGameScreen_CycleWeaponSelect(W45C540* w, int dir)
 {
     int i;
     if (w->count <= 1) return;
@@ -64,8 +64,8 @@ void GuiGameScreen_StepWeaponSelect(W45C540* w, int dir)
     i = w->sel + (dir ? 1 : -1);
     if (i < 0) i = w->count - 1; else if (!(i < w->count)) i = 0;
     w->sel = i;
-    GuiGameScreen_FillWeaponPanels(w);
-    GuiWidget_SendEvent(w->f6C, Gui_GetScreenStack(), 0x10, 0, 0);
+    GuiGameScreen_UpdateWeaponPanels(w);
+    GuiWidget_SendMessage(w->f6C, Gui_Canvas(), 0x10, 0, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0045C540(void) {}

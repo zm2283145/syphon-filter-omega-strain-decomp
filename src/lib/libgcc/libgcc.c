@@ -256,7 +256,7 @@ extern fp_number_type D_00499270;
 static __inline__ int fp_isinf(fp_number_type *x) { return x->class == CLASS_INFINITY; }
 static __inline__ int fp_iszero_0011BF48(fp_number_type *x) { return x->class == CLASS_ZERO; }
 #define LSHIFT(X) X = ((X) & 1) | ((X) >> 1)
-fp_number_type *SoftFloat_AddParts(fp_number_type *a, fp_number_type *b, fp_number_type *tmp)
+fp_number_type *_fpadd_parts(fp_number_type *a, fp_number_type *b, fp_number_type *tmp)
 {
     intfrac tfraction;
     int a_normal_exp;
@@ -346,7 +346,7 @@ extern void SoftFloat_UnpackDouble(FLO_union_type_0011C1A8* src, fp_number_type*
 
 
 extern DFtype SoftFloat_PackDouble(fp_number_type* src);
-extern fp_number_type* SoftFloat_AddParts(fp_number_type* a, fp_number_type* b, fp_number_type* tmp);
+extern fp_number_type* _fpadd_parts(fp_number_type* a, fp_number_type* b, fp_number_type* tmp);
 DFtype SoftFloat_DoubleAdd(DFtype arg_a, DFtype arg_b)
 {
     fp_number_type a;
@@ -358,7 +358,7 @@ DFtype SoftFloat_DoubleAdd(DFtype arg_a, DFtype arg_b)
     bu.value = arg_b;
     SoftFloat_UnpackDouble(&au, &a);
     SoftFloat_UnpackDouble(&bu, &b);
-    res = SoftFloat_AddParts(&a, &b, &tmp);
+    res = _fpadd_parts(&a, &b, &tmp);
     return SoftFloat_PackDouble(res);
 }
 #undef SoftFloat_UnpackDouble /* merge_units */
@@ -384,7 +384,7 @@ DFtype SoftFloat_DoubleSub(DFtype arg_a, DFtype arg_b)
     SoftFloat_UnpackDouble(&au, &a);
     SoftFloat_UnpackDouble(&bu, &b);
     b.sign ^= 1;
-    res = SoftFloat_AddParts(&a, &b, &tmp);
+    res = _fpadd_parts(&a, &b, &tmp);
     return SoftFloat_PackDouble(res);
 }
 #undef SoftFloat_UnpackDouble /* merge_units */

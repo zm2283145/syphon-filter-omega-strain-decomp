@@ -7,12 +7,12 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int LosRegion_FindLocal(void* position, int cachedRegion);
+extern int nActivation_FindBestSectorInActivation(void* position, int cachedRegion);
 
 /* Find the region containing position, starting from the cached region (+0x08). */
-int World_GetPlayerZone(RegionCache* self, void* position) {
+int cScene_FindBestSectorInActivation(RegionCache* self, void* position) {
     int cached;
 
     cached = self->region;
-    return LosRegion_FindLocal(position, cached);
+    return nActivation_FindBestSectorInActivation(position, cached);
 }

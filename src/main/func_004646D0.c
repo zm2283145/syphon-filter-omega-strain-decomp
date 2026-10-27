@@ -3,9 +3,9 @@
 #include "alloc_guard.h"
 extern "C" {
 extern char D_004E1840[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void GuiScoresEquip_BuildActor(void* self);
-void VoiceQueue_Construct(void* p);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void GuiScoresEquip_ctor(void* self);
+void cQuipList_ctor(void* p);
 }
 struct G004646D0 { void* vtable; };
 #define GW(off) (*(int*)((char*)p + (off)))
@@ -16,11 +16,11 @@ extern "C" G004646D0* GuiEndGameStatistics_Create(void)
     G004646D0* p;
     {
         AllocGuard guard;
-        p = (G004646D0*)Mem_Alloc(0, 0x420, "guiWidget.hh", 0x2A);
+        p = (G004646D0*)cMemMan_Allocate(0, 0x420, "guiWidget.hh", 0x2A);
     }
     if (p) {
-        GuiScoresEquip_BuildActor(p);
-        p->vtable = D_004E1840; VoiceQueue_Construct((char*)p + 0x260); GB(0x60) = 0;
+        GuiScoresEquip_ctor(p);
+        p->vtable = D_004E1840; cQuipList_ctor((char*)p + 0x260); GB(0x60) = 0;
     }
     return p;
 }

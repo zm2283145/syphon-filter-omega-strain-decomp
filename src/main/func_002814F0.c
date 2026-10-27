@@ -8,6 +8,6 @@
 
 extern int D_005061B8;
 
-int cNetBackpackMsg_v05(void) {
+int cNetBackpackMsg_GetMsgId(void) {
     return D_005061B8;
 }

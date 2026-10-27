@@ -21,9 +21,9 @@ struct Obj_63E0 {
 };
 extern "C" {
 extern char g_TargetVisMgr[];
-void TargetVis_Register(void* list);
-void Object_Register(Obj_63E0* o);
-int NetMap_BindReceiver(int id, int owner, Obj_63E0* o);
+void cTargetManager_AddGobj(void* list);
+void nGobjManager_AddGOBJ(Obj_63E0* o);
+int cNetObj_AddSystem(int id, int owner, Obj_63E0* o);
 }
 static inline int NetHostOk_63E0(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 extern "C" void cTank_init(Obj_63E0* o, int arg1)
@@ -33,8 +33,8 @@ extern "C" void cTank_init(Obj_63E0* o, int arg1)
     o->f68 = 0;
     o->f64 = 0;
     o->b70 = 1;
-    TargetVis_Register(g_TargetVisMgr);
-    Object_Register(o);
+    cTargetManager_AddGobj(g_TargetVisMgr);
+    nGobjManager_AddGOBJ(o);
     o->activate(1);
     o->f74 = 0;
     if (g_IsMultiplayer) {
@@ -42,7 +42,7 @@ extern "C" void cTank_init(Obj_63E0* o, int arg1)
         if (!NetHostOk_63E0()) o->b14 = 0;
         {
             int t = o->id10;
-            NetMap_BindReceiver(t, NetObjId(), o);
+            cNetObj_AddSystem(t, NetObjId(), o);
         }
     }
 }

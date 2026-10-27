@@ -5,7 +5,7 @@ extern int D_00506B68;
 extern int WaitSema(int);
 extern int PollSema(int);
 
-int func_002B5EA8(int poll, int *op, int *res)
+int sceMc2Sync2(int poll, int *op, int *res)
 {
     RQ *r = &D_00506640;
     if (r->op == 0) return -1;

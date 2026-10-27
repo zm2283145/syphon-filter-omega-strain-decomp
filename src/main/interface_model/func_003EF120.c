@@ -10,11 +10,11 @@ struct Self_3EF120;
 extern "C" {
 extern char D_004BE030[];
 extern int g_TextureMgr;
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 It_3EF120 std_list_cInterfaceElementPtr_end(void* l);
 void cLListIterator_cInterfaceElementPtr_ctor(It_3EF120* out, It_3EF120* in);
 It_3EF120 std_list_cInterfaceElementPtr_begin(void* l);
-void Tex_Release(int a, int b, int c);
+void cTexMan_RemoveTexture(int a, int b, int c);
 void ReceiverList_Dtor_3EF5E0(void* p, int f);
 void String_Dtor(void* p, int f);
 void operator_delete(void* p);
@@ -31,9 +31,9 @@ static inline ItE_3EF120 E0_3EF120(void* l) { return ItE_3EF120(std_list_cInterf
 static inline ItE_3EF120 BeginE_3EF120(void* l) { return B0_3EF120(l); }
 static inline ItE_3EF120 End_3EF120(void* l) { return E0_3EF120(l); }
 static inline bool Ne_3EF120(const It_3EF120& a, const ItE_3EF120& b) { return a.n != b.n; }
-static inline void FreeV_3EF120(VObj_3EF120* o, int line) { AllocGuard g; o->dtor(-1); Mem_Free(0, o, D_004BE030, line); }
-static inline void FreeS_3EF120(Self_3EF120* o, int line) { AllocGuard g; cInterfaceModel_dtor(o, -1); Mem_Free(0, o, D_004BE030, line); }
-static inline void FreeP_3EF120(void* o, int line) { AllocGuard g; Mem_Free(0, o, D_004BE030, line); }
+static inline void FreeV_3EF120(VObj_3EF120* o, int line) { AllocGuard g; o->dtor(-1); cMemMan_Deallocate(0, o, D_004BE030, line); }
+static inline void FreeS_3EF120(Self_3EF120* o, int line) { AllocGuard g; cInterfaceModel_dtor(o, -1); cMemMan_Deallocate(0, o, D_004BE030, line); }
+static inline void FreeP_3EF120(void* o, int line) { AllocGuard g; cMemMan_Deallocate(0, o, D_004BE030, line); }
 
 extern "C" Self_3EF120* cInterfaceModel_dtor(Self_3EF120* self, short f)
 {
@@ -45,7 +45,7 @@ extern "C" Self_3EF120* cInterfaceModel_dtor(Self_3EF120* self, short f)
         }
         { int i; for (i = 0; i < self->n6E; i++) FreeS_3EF120(self->a84[i], 0x1EB); }
         { int j; for (j = 0; j < self->n6C; j++) FreeV_3EF120(self->a80[j], 0x1EE); }
-        if (self->h18 >= 0) Tex_Release(g_TextureMgr, self->h18, 1);
+        if (self->h18 >= 0) cTexMan_RemoveTexture(g_TextureMgr, self->h18, 1);
         if (self->pD0) FreeP_3EF120(self->pD0, 0x1F7);
         if (self->pD4) FreeP_3EF120(self->pD4, 0x1FB);
         if (self->p88) FreeP_3EF120(self->p88, 0x1FE);

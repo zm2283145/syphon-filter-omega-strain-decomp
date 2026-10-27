@@ -2,9 +2,9 @@ typedef struct { short a, b, c; unsigned short port; } C2FE958;
 extern unsigned char D_004908EC;
 extern int rt_msg_client_is_valid_channel(C2FE958 *);
 extern int rt_msg_client_calc_connect_msg_size(int, unsigned short *);
-extern int Net_AllocZeroed(void **, int);
+extern int rt_memory_allocate_init_zero(void **, int);
 extern int rt_msg_client_store_connect_msg_in_buf(void *, int, int, int, int, int, int);
-extern int NetConn_BufferMessage(void *, int, int, void *, int, int);
+extern int rt_msg_client_store_msg_in_send_buf(void *, int, int, void *, int, int);
 extern void rt_memory_free(void *);
 int rt_msg_client_store_connect_msg_in_send_buf(unsigned int kind, C2FE958 *c, unsigned short flags, int data, unsigned short len)
 {
@@ -20,10 +20,10 @@ int rt_msg_client_store_connect_msg_in_send_buf(unsigned int kind, C2FE958 *c, u
     if (kind >= 2) return 2;
     r = rt_msg_client_calc_connect_msg_size(len, &sz);
     if (r != 0) return r;
-    if (Net_AllocZeroed(&buf, sz) != 0) return 8;
+    if (rt_memory_allocate_init_zero(&buf, sz) != 0) return 8;
     r = rt_msg_client_store_connect_msg_in_buf(buf, sz, kind, c->port, flags, data, len);
     if (r == 0)
-        r = NetConn_BufferMessage(c, kind ? 0x15 : 0, 0xFFFF, buf, sz, 1);
+        r = rt_msg_client_store_msg_in_send_buf(c, kind ? 0x15 : 0, 0xFFFF, buf, sz, 1);
     if (buf) rt_memory_free(&buf);
     return r;
 }

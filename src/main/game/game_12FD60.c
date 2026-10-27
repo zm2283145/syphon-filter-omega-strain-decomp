@@ -13,19 +13,19 @@
 
 /* library prototypes shared by the blocks below (C linkage) */
 #include "SFOLobby_helpers.h"
-int Mem_Free();
+int cMemMan_Deallocate();
 int sprintf(void *, const void *, ...);
 
 /* merge_units: begin func_0012FD60 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-float World_GetElapsedTime(void);
-int MoviePlayer_Update(void*, float);
-void MoviePlayer_Destroy(void*, int);
-void Heap_ReleaseSlot(int);
-void* Service_Lookup(void*, void*);
-void SoundMgr_SetChannelVolume(void*, int, int);
+float cGameSystem_UpdateTimeStep(void);
+int cMoviePlayer_NextFrame(void*, float);
+void cMoviePlayer_dtor(void*, int);
+void cMemMan_ReleaseBin(int);
+void* cSystemContainer_GetSystem(void*, void*);
+void cGameSound_SetMasterVolume(void*, int, int);
 void GameFlow_StartMovie(void*, void*, int);
 extern char D_0049A890;
 extern char D_004F2CC0[];
@@ -53,20 +53,20 @@ typedef struct {
 } S_12FD60;
 
 #pragma opt_common_subs off
-extern "C" void Game_UpdateMovieQueue(S_12FD60* self)
+extern "C" void cGameSystem_UpdateMovie(S_12FD60* self)
 {
     if (self->b0) {
-        bool done = !MoviePlayer_Update(self->b0, World_GetElapsedTime());
+        bool done = !cMoviePlayer_NextFrame(self->b0, cGameSystem_UpdateTimeStep());
         if (done) {
             void* p = self->b0;
             {
                 AllocGuard g;
-                MoviePlayer_Destroy(p, -1);
-                Mem_Free(0, p, &D_0049A890, 0xAE2);
+                cMoviePlayer_dtor(p, -1);
+                cMemMan_Deallocate(0, p, &D_0049A890, 0xAE2);
             }
             self->b0 = 0;
-            Heap_ReleaseSlot(1);
-            SoundMgr_SetChannelVolume(Service_Lookup(self, D_004F2CC0), 2, D_004EA048);
+            cMemMan_ReleaseBin(1);
+            cGameSound_SetMasterVolume(cSystemContainer_GetSystem(self, D_004F2CC0), 2, D_004EA048);
         }
     }
     if (!self->b0) {
@@ -77,7 +77,7 @@ extern "C" void Game_UpdateMovieQueue(S_12FD60* self)
             } else {
                 {
                     AllocGuard g;
-                    Mem_Free(0, q, &D_0049A890, 0xAF7);
+                    cMemMan_Deallocate(0, q, &D_0049A890, 0xAF7);
                 }
                 self->q = 0;
             }
@@ -146,7 +146,7 @@ typedef struct Obj12FF80 {
     char name[0x20];
 } Obj12FF80;
 
-extern void *Agent_GetSelected(void *, int);
+extern void *cGameSystem_GetAgentData(void *, int);
 extern int String_CompareNoCase(const char *, const char *);
 #if 0 /* merge_units */
 extern int Game_PickAttractMovie(Obj12FF80 *, char *);
@@ -158,15 +158,15 @@ extern void GameFlow_StartMovie(Obj12FF80 *, char *, int);
 #endif /* merge_units */
 #define GameFlow_StartMovie(a0, a1, a2) (GameFlow_StartMovie((void *)(a0), (void *)(a1), (a2))) /* merge_units */
 
-extern void GameFlow_QueueMovie(Obj12FF80 *, char *);
-extern void Game_GetEolMovieName(void *);
-extern void AgentData_AddLevelProgress(void *, int, int, int);
-extern void AgentData_SetLevelFlag(void *, int, int, int, int);
+extern void cGameSystem_QueueMovie(Obj12FF80 *, char *);
+extern void cGameFrontEnd_BuildFinalMovie(void *);
+extern void cAgentData_UnlockZeus(void *, int, int, int);
+extern void cAgentData_SetZeusItemSeen(void *, int, int, int, int);
 extern void *D_004FFC04;
 extern signed char g_GameState;
 extern signed char g_PrevGameState;
 
-void Game_RequestEolMovie(Obj12FF80 *o)
+void cGameSystem_PlayMovie_void(Obj12FF80 *o)
 {
     char out[0x80];
     char sel[0x90];
@@ -203,17 +203,17 @@ void Game_RequestEolMovie(Obj12FF80 *o)
             id = in->sub.id;
             sub = &in->sub;
             if (id != -1 && id != 0x11) {
-                AgentData_AddLevelProgress(Agent_GetSelected(o, -1), id + 1, 6, 2);
-                AgentData_SetLevelFlag(Agent_GetSelected(o, -1), sub->id + 1, 5, 1, 1);
+                cAgentData_UnlockZeus(cGameSystem_GetAgentData(o, -1), id + 1, 6, 2);
+                cAgentData_SetZeusItemSeen(cGameSystem_GetAgentData(o, -1), sub->id + 1, 5, 1, 1);
             }
             if (String_CompareNoCase(a, "UKRAINE") == 0) {
-                Game_GetEolMovieName(o->info);
+                cGameFrontEnd_BuildFinalMovie(o->info);
                 o->prev = *(signed char *)&o->state;
                 o->state = 8;
-                Game_RequestEolMovie(o);
+                cGameSystem_PlayMovie_void(o);
                 return;
             }
-            Game_GetEolMovieName(D_004FFC04);
+            cGameFrontEnd_BuildFinalMovie(D_004FFC04);
             b = "_EOL";
             g_PrevGameState = g_GameState;
             g_GameState = 8;
@@ -227,7 +227,7 @@ void Game_RequestEolMovie(Obj12FF80 *o)
     } else {
         for (i = 0; i < o->info->count; i++) {
             sprintf(buf, "%s.PSS", o->info->ents[i].name);
-            GameFlow_QueueMovie(o, buf);
+            cGameSystem_QueueMovie(o, buf);
         }
     }
 }
@@ -267,7 +267,7 @@ int Game_PickAttractMovie(void *o, char *out)
     }
     D_004EA050 = r;
     if (r == 0)
-        String_Copy(buf, D_0049A908);
+        Libc_Strcpy(buf, D_0049A908);
     else
         sprintf(buf, "DEMO%2.2d", r);
     d = out + 1;
@@ -296,9 +296,9 @@ static inline void merge_flush_func_001301D0(void) {}
 #define NULL 0
 #pragma mpwc_relax on
 /*fc*/
-char * Archive_Open(int, char *, int, int);                 
-int Hog_FindFileNoCase();                  
-int ArchiveList_CloseNamed();                       
+char * cHogList_Open(int, char *, int, int);                 
+int cHogFile_GetBlockIndex();                  
+int cHogList_Close();                       
 extern int D_00489BE0;
 
 int Game_CountAttractMovies(int arg0) {
@@ -310,17 +310,17 @@ int Game_CountAttractMovies(int arg0) {
         return D_00489BE0;
     }
     sprintf(sp50, "ZMEDIA\\ZMOVIES.HOG");
-    temp_v0 = (char *)(Archive_Open(arg0 + 0x3C, sp50, 1, 0));
+    temp_v0 = (char *)(cHogList_Open(arg0 + 0x3C, sp50, 1, 0));
     if (F_(temp_v0, 0x14C, unsigned char) != 0) {
         D_00489BE0 = 0;
 loop_5:
         sprintf(sp30, "DEMO%2.2d.PSS", D_00489BE0 + 1);
-        if (Hog_FindFileNoCase(temp_v0, sp30, 1) != -1) {
+        if (cHogFile_GetBlockIndex(temp_v0, sp30, 1) != -1) {
             D_00489BE0 += 1;
             goto loop_5;
         }
     }
-    ArchiveList_CloseNamed(arg0 + 0x3C, temp_v0);
+    cHogList_Close(arg0 + 0x3C, temp_v0);
     D_00489BE0 += 1;
     return D_00489BE0;
 }

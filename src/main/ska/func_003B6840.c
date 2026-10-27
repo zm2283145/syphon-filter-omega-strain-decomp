@@ -9,10 +9,10 @@ extern "C" {
 extern Err_6840* D_00489738;
 extern char D_004BC4E0[];
 extern char D_004BCFB8[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 void Libc_Abort(void);
 void Libc_Fprintf(void* s, char* msg);
-void* Mem_PlacementNew(unsigned int size, void* p);
+void* opNew_uint_voidP(unsigned int size, void* p);
 void cSkaAnimAnchorListEntry_ctor(void* d, E_6840* s);
 void cString4_opAssign(void* d, E_6840* s);
 void cSkaAnimAnchor_opAssign(void* d, void* s);
@@ -22,7 +22,7 @@ void opDelete_cSkaAnimAnchorListEntryP_int_bool_charP_etc(void* p, int a, int b,
 }
 
 static inline const unsigned int& Min_6840(const unsigned int& a, const unsigned int& b) { return (b < a) ? b : a; }
-static inline E_6840* Alloc_6840(unsigned int n) { AllocGuard g; return (E_6840*)Mem_Alloc(0, n * sizeof(E_6840), D_004BCFB8, 0x5C); }
+static inline E_6840* Alloc_6840(unsigned int n) { AllocGuard g; return (E_6840*)cMemMan_Allocate(0, n * sizeof(E_6840), D_004BCFB8, 0x5C); }
 
 extern "C" void std_vector_imp_cSkaAnimAnchorListEntry_do_assign(V_6840* v, E_6840* first, E_6840* last)
 {
@@ -40,7 +40,7 @@ extern "C" void std_vector_imp_cSkaAnimAnchorListEntry_do_assign(V_6840* v, E_68
             v->count = n;
         } else if (v->count < n) {
             for (; first != last; first++, p++) {
-                void* o = Mem_PlacementNew(sizeof(E_6840), p);
+                void* o = opNew_uint_voidP(sizeof(E_6840), p);
                 if (o) cSkaAnimAnchorListEntry_ctor(o, first);
                 v->count++;
             }
@@ -64,7 +64,7 @@ extern "C" void std_vector_imp_cSkaAnimAnchorListEntry_do_assign(V_6840* v, E_68
         {
             E_6840* p = v->data;
             for (; first != last; first++, p++) {
-                void* o = Mem_PlacementNew(sizeof(E_6840), p);
+                void* o = opNew_uint_voidP(sizeof(E_6840), p);
                 if (o) cSkaAnimAnchorListEntry_ctor(o, first);
                 v->count++;
             }

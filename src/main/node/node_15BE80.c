@@ -16,14 +16,14 @@
  */
 
 
-extern int ActorObj_BuildNodeMatrix(void* a0, cNode* node);
+extern int cNode_GetNodeMatrix(void* a0, cNode* node);
 
 int cNode_v34(void* a0, cNode* node) {
-    return ActorObj_BuildNodeMatrix(a0, node);
+    return cNode_GetNodeMatrix(a0, node);
 }
 
 /* v35..v37: write the node translation as a point (w = 1). */
-void cNode_v35(Vec4* out, cNode* node) {
+void cNode_GetTranslation(Vec4* out, cNode* node) {
     float z = node->translation.z;
     float y = node->translation.y;
     float x = node->translation.x;
@@ -33,7 +33,7 @@ void cNode_v35(Vec4* out, cNode* node) {
     out->w = 1.0f;
 }
 
-void cNode_v36(Vec4* out, cNode* node) {
+void cNode_GetActivationPoint(Vec4* out, cNode* node) {
     float z = node->translation.z;
     float y = node->translation.y;
     float x = node->translation.x;
@@ -43,7 +43,7 @@ void cNode_v36(Vec4* out, cNode* node) {
     out->w = 1.0f;
 }
 
-void cNode_v37(Vec4* out, cNode* node) {
+void cNode_GetCenterOfMass(Vec4* out, cNode* node) {
     float z = node->translation.z;
     float y = node->translation.y;
     float x = node->translation.x;
@@ -54,35 +54,35 @@ void cNode_v37(Vec4* out, cNode* node) {
 }
 
 int cNode_v38(void* a0, cNode* node) {
-    return ActorObj_BuildNodeMatrix(a0, node);
+    return cNode_GetNodeMatrix(a0, node);
 }
 
 int cNode_v39(void* a0, cNode* node) {
-    return ActorObj_BuildNodeMatrix(a0, node);
+    return cNode_GetNodeMatrix(a0, node);
 }
 
 int cNode_v3B(void* a0, cNode* node) {
-    return ActorObj_BuildNodeMatrix(a0, node);
+    return cNode_GetNodeMatrix(a0, node);
 }
 
-void cNode_v0E(void) {
+void cNode_Init(void) {
 }
 
-void cNode_v0F(void) {
+void cNode_Load(void) {
 }
 
-void Actor_VirtualNop(void) {
+void cGOBJ_CriticalUpdateMotion(void) {
 }
 
-void Node_SetFlag2C(cNode* self) {
+void cGOBJ_Enable(cNode* self) {
     self->flag2C = 1;
 }
 
-void Node_ClearFlag2C(cNode* self) {
+void cGOBJ_Disable(cNode* self) {
     self->flag2C = 0;
 }
 
-unsigned char Node_GetFlag2C(cNode* self) {
+unsigned char cGOBJ_IsEnabled(cNode* self) {
     return self->flag2C;
 }
 
@@ -158,7 +158,7 @@ static inline void merge_flush_func_0015C040(void) {}
 typedef struct Object { char pad[0x58]; struct Object* attached; } Object;
 
 /* Returns the object's attached object, or the object itself when none. */
-Object* Object_GetAttachedOrSelf(Object* o)
+Object* cGOBJ_ScriptGetRealObj(Object* o)
 {
     if (o->attached)
         return o->attached;
@@ -180,9 +180,9 @@ static inline void merge_flush_func_0015C060(void) {}
 extern int D_004EA778; /* cNode script type key */
 extern int D_004EA780; /* cNode script type id */
 extern char D_00555070[]; /* global script filter */
-extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
-extern int* cGOBJ_GetScriptTypeKeyPtr(void); /* address of the cGObj type key */
-extern void ScriptType_SetParent(int type, int parentType);
+extern int cScriptInterpreter_CallEvent(void* filter, int a1, int a2);
+extern int* cGOBJ_SOBJ_getClassId(void); /* address of the cGObj type key */
+extern void cScriptBase_declareParent(int type, int parentType);
 
 void cGOBJ_InitNetwork(void) {
 }
@@ -202,18 +202,18 @@ int Script_cNode_IsType(NodeScriptArg* args) {
 }
 
 /* cNode derives from cGObj. */
-void ScriptType_cNode_Init(void) {
-    int* parent = cGOBJ_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004EA780, *parent);
+void cNode_SOBJ_init(void) {
+    int* parent = cGOBJ_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004EA780, *parent);
 }
 
 /* volatile mirrors the original stack temporary. */
-int cNode_Identity(int value) {
+int cNode_SOBJ_toInt(int value) {
     volatile int tmp = value;
     return tmp;
 }
 
-void* ScriptNode_Identity(void* self) {
+void* cNode_SOBJ_convert(void* self) {
     return self;
 }
 
@@ -221,12 +221,12 @@ int* cNode_SOBJ_getClassId(void) {
     return &D_004EA778;
 }
 
-int cNode_v0B(void) {
+int cNode_getSOBJClassId(void) {
     return D_004EA778;
 }
 
-int cNode_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cNode_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0015C080(void) {}

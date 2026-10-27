@@ -5,7 +5,7 @@
  * cAgentData_Has* lookups: find the localised key in a global definition
  * table (count/table globals, 24-byte entries), refresh the matching
  * 20-byte record of the agent (record array pointer at recsOffset) with
- * AgentData_StepAwardElement(self, rec, def, 0), and return the record's done flag.
+ * cAgentData_UpdateAchievement(self, rec, def, 0), and return the record's done flag.
  * Wrap the macro in #pragma opt_strength_reduction off / reset.
  * C++ only (#pragma cplusplus on before including).
  */
@@ -13,8 +13,8 @@ struct AgentRecordDef { int id; int pad[5]; };
 struct AgentRecord { unsigned char done; char pad[19]; };
 
 extern "C" {
-int Loc_FindKeyThunk(const char* key);
-void AgentData_StepAwardElement(void* self, AgentRecord* r, AgentRecordDef* e, int f);
+int nGlobalization_GetStringIndex(const char* key);
+void cAgentData_UpdateAchievement(void* self, AgentRecord* r, AgentRecordDef* e, int f);
 }
 
 #define DEFINE_AGENT_RECORD_HAS(name, countSym, tableSym, recsOffset)          \
@@ -27,7 +27,7 @@ void AgentData_StepAwardElement(void* self, AgentRecord* r, AgentRecordDef* e, i
             AgentRecordDef* e = &tableSym[i];                                 \
             if (e->id == k) {                                                 \
                 AgentRecord* r = &(*(AgentRecord**)(self + (recsOffset)))[i]; \
-                AgentData_StepAwardElement(self, r, e, 0);                                 \
+                cAgentData_UpdateAchievement(self, r, e, 0);                                 \
                 return r;                                                     \
             }                                                                 \
         }                                                                     \
@@ -35,7 +35,7 @@ void AgentData_StepAwardElement(void* self, AgentRecord* r, AgentRecordDef* e, i
     }                                                                         \
     extern "C" bool name(char* self, const char* key)                         \
     {                                                                         \
-        AgentRecord* r = name##_get(self, Loc_FindKeyThunk(key));             \
+        AgentRecord* r = name##_get(self, nGlobalization_GetStringIndex(key));             \
         return (r ? (int)(r->done != 0) : 0) != 0;                            \
     }
 

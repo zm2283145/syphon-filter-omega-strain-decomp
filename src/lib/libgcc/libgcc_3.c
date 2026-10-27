@@ -13,7 +13,7 @@ extern double func_0011EDD0(double x, double y);
 extern double func_0011FBF8(double x, double y, int iy);
 extern int func_0011CA20(double x, double *y);
 
-double Math_CosDouble(double x)
+double Libc_Cos(double x)
 {
 	double y[2],z=0.0;
 	int n,ix;
@@ -173,7 +173,7 @@ double scalbn(double x, int n)
 __asm__(".set nomove\n"
         "dpsub = SoftFloat_DoubleSub\n");
 
-double Math_SinDouble(double x)
+double Libc_Sin(double x)
 {
 	double y[2],z=0.0;
 	int n,ix;
@@ -223,8 +223,8 @@ static const float aT[] = {
  -3.6531571299e-02,
   1.6285819933e-02,
 };
-extern float Math_Fabsf(float x);
-float Math_Atan(float x)
+extern float Libc_Fabsf(float x);
+float Libc_Atanf(float x)
 {
 	const float one   = 1.0, huge   = 1.0e30;
 	float w,s1,s2,z;
@@ -241,7 +241,7 @@ float Math_Atan(float x)
 	    }
 	    id = -1;
 	} else {
-	x = Math_Fabsf(x);
+	x = Libc_Fabsf(x);
 	if (ix < 0x3f980000) {
 	    if (ix < 0x3f300000) {
 		id = 0; x = ((float)2.0*x-one)/((float)2.0+x);
@@ -316,7 +316,7 @@ float func_00121648(float x, float y)
 extern float Math_CosKernel(float x, float y);
 extern float Math_SinKernel(float x, float y, int iy);
 extern int Math_RemPio2(float x, float* y);
-float Math_Cos(float x) {
+float Libc_Cosf(float x) {
     float y[2], z = 0.0f;
     int n, ix;
     do { ieee_float_shape_type gf_u; gf_u.value = (x); (ix) = gf_u.word; } while (0);
@@ -336,7 +336,7 @@ float Math_Cos(float x) {
 /* merge_units: end libgcc_121688 */
 
 /* merge_units: begin func_00121760 */
-float Math_Fabsf(float x)
+float Libc_Fabsf(float x)
 {
 	unsigned int ix;
 	GET_FLOAT_WORD(ix,x);
@@ -346,7 +346,7 @@ float Math_Fabsf(float x)
 /* merge_units: end func_00121760 */
 
 /* merge_units: begin func_00121788 */
-float Math_Floorf(float x)
+float Libc_Floorf(float x)
 {
     int i0, j0;
     unsigned int i, ix;

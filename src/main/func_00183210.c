@@ -12,6 +12,6 @@ char* cCollisionModel_BoundingSphere_LocalSpace(NodeRef* self) {
     return self->node + 16;
 }
 
-int Object_GetRootNode(Unk00183220* self) {
+int cGOBJ_GetXform_void_2(Unk00183220* self) {
     return self->unk50;
 }

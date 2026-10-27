@@ -10,7 +10,7 @@
         NetMsgHeader* p;                                                      \
         {                                                                     \
             AllocGuard guard;                                                 \
-            p = (NetMsgHeader*)Mem_Alloc(0, (size), fileSym, (line));         \
+            p = (NetMsgHeader*)cMemMan_Allocate(0, (size), fileSym, (line));         \
         }                                                                     \
         if (p) {                                                              \
             p->vtable = D_004DFD80;                                           \
@@ -28,4 +28,4 @@
         return p;                                                             \
     }
 extern "C" { char D_0049EE00[] = "ska.hh"; }
-DEFINE_NET_MSG_CLONE1(AnimEvent_Clone, 0x38, D_0049EE00, 0xC8A, D_004DA930, NMC_W(0x24); NMC_B(0x28); NMC_W(0x2C); NMC_UB(0x30); NMC_F(0x34))
+DEFINE_NET_MSG_CLONE1(cSkaAnimEndedMessage_Clone, 0x38, D_0049EE00, 0xC8A, D_004DA930, NMC_W(0x24); NMC_B(0x28); NMC_W(0x2C); NMC_UB(0x30); NMC_F(0x34))

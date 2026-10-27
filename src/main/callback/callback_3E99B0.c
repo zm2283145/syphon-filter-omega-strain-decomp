@@ -19,24 +19,24 @@ struct Obj {
 };
 
 extern char D_004E05A0[];
-extern "C" void IdMgr_Allocate(int* name, int id);
+extern "C" void nGobjManager_GetNextId(int* name, int id);
 extern "C" void cGOBJ_ctor(Obj* self, int* name, int type, int* extra);
-extern "C" void Object_Register(Obj* self);
+extern "C" void nGobjManager_AddGOBJ(Obj* self);
 
-/* Constructor: base construct (cGOBJ_ctor, type 0xD with name 0xF3), vtable D_004E05A0, stores owner/value fields, then Object_Register and virtual +0x5C(0). */
-extern "C" Obj* HudTracker_Construct(Obj* self, void* owner, int* value)
+/* Constructor: base construct (cGOBJ_ctor, type 0xD with name 0xF3), vtable D_004E05A0, stores owner/value fields, then nGobjManager_AddGOBJ and virtual +0x5C(0). */
+extern "C" Obj* cIE_GOBJ_ctor(Obj* self, void* owner, int* value)
 {
     int extra;
     int name;
     extra = 0;
-    IdMgr_Allocate(&name, 0xF3);
+    nGobjManager_GetNextId(&name, 0xF3);
     cGOBJ_ctor(self, &name, 0xD, &extra);
     *(void**)self = D_004E05A0;
     self->owner = owner;
     self->unk64 = 1;
     self->value = *value;
     self->unk84 = 0;
-    Object_Register(self);
+    nGobjManager_AddGOBJ(self);
     self->Method5C(0);
     self->unk2F = 1;
     return self;

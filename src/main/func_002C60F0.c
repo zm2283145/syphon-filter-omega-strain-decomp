@@ -31,7 +31,7 @@ typedef struct Src {
 
 extern char D_0051EE58[];
 extern char D_004DE110[];
-extern void Event_Construct(Msg* m, void* type);
+extern void cMessage_ctor_cMessageNameR(Msg* m, void* type);
 extern void cNpcTransfer_ctor(void*);
 extern void cAiTransfer_ctor(void*);
 extern void cAiTargetTransfer_ctor(void*);
@@ -45,10 +45,10 @@ extern void cPathNavigatorTransfer_opAssign(void*, void*);
 extern void cPathTransfer_opAssign(void*, void*);
 extern void cTargetAwareness_opAssign(void*, void*);
 
-Msg* cNetCopyMsg_Apply(Msg* m, Src* s) {
+Msg* cNetCopyMsg_ctor(Msg* m, Src* s) {
     char* p;
     char* q;
-    Event_Construct(m, D_0051EE58);
+    cMessage_ctor_cMessageNameR(m, D_0051EE58);
     p = (char*)&m->p;
     m->vtable = D_004DE110;
     cNpcTransfer_ctor(p);

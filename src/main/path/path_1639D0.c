@@ -80,16 +80,16 @@ extern "C" {
 extern unsigned char D_004ED9D0;
 extern int g_VideoFrameCounter;
 extern int g_NpcRegionTable[];
-unsigned char NpcRoute_Search(CxRuReq*);
-unsigned char NpcRoute_ScoreNodes(CxRuReq*);
-void List_Erase(CxRuIt*,CxRuList*,CxRuIt*);
-void NpcRouteMgr_FreeRequest(CxRuManager*,CxRuReq*);
-CxRuActor* PlayerSlots_Get(int);
-int NpcRoute_RegionAt(const CxRuV4*,int);
+unsigned char cPathRequest_Update(CxRuReq*);
+unsigned char cNodeRequest_Update(CxRuReq*);
+void std_list_deleter_voidPtr_erase_listdeleter(CxRuIt*,CxRuList*,CxRuIt*);
+void cPathSystem_FreeRequest(CxRuManager*,CxRuReq*);
+CxRuActor* cNetObj_GetPlayer(int);
+int cAIPathData_GetGroupIndex(const CxRuV4*,int);
 }
 static inline CxRuActor* CxRu_Get(CxRuReq* req){ bool isNull;bool ok;CxRuActor* actor;actor=req->actor;isNull=!actor;ok=true;if(!isNull)if(actor->serial!=req->serial)ok=false;return ok ? actor:0;}
 
-extern "C" void NpcRoute_Update(CxRuManager* self){
+extern "C" void cPathSystem_NextFrame(CxRuManager* self){
     if(self->queue.count && !D_004ED9D0){
         CxRuReq* req;
         CxRuLink** head;
@@ -98,21 +98,21 @@ extern "C" void NpcRoute_Update(CxRuManager* self){
         unsigned char done=1;
         if(CxRu_Get(req)){
             if(req->type==1){
-                if(req->buffer && req->buffer->nodes)done=NpcRoute_Search(req);
-            }else done=NpcRoute_ScoreNodes(req);
+                if(req->buffer && req->buffer->nodes)done=cPathRequest_Update(req);
+            }else done=cNodeRequest_Update(req);
         }
         if(done){
             CxRuIt out; CxRuIt it;
             it.link=*head;
-            List_Erase(&out,&self->queue,&it);
-            NpcRouteMgr_FreeRequest(self,req);
+            std_list_deleter_voidPtr_erase_listdeleter(&out,&self->queue,&it);
+            cPathSystem_FreeRequest(self,req);
         }
     }
     int slot=g_VideoFrameCounter&3;
-    if(slot<4 && PlayerSlots_Get(slot)){
-        const CxRuV4* pos=PlayerSlots_Get(slot)->Matrix().Pos();
+    if(slot<4 && cNetObj_GetPlayer(slot)){
+        const CxRuV4* pos=cNetObj_GetPlayer(slot)->Matrix().Pos();
         int* region=&g_NpcRegionTable[slot];
-        int id=NpcRoute_RegionAt(pos,*region);
+        int id=cAIPathData_GetGroupIndex(pos,*region);
         if(id>=0)*region=id;
     }
 }
@@ -138,11 +138,11 @@ void std_list_cPathSystemRequestPtr_begin_void(CxRelIt*,CxRelList*);
 void cLListIterator_cPathSystemRequestPtr_ctor(CxRelIt*,CxRelIt*);
 void std_list_cPathSystemRequestPtr_end_void(CxRelIt*,CxRelList*);
 #if 0 /* merge_units */
-void NpcRouteMgr_FreeRequest(CxRelManager*,CxRelReq*);
+void cPathSystem_FreeRequest(CxRelManager*,CxRelReq*);
 #endif /* merge_units */
-#define NpcRouteMgr_FreeRequest(a0, a1) (NpcRouteMgr_FreeRequest((CxRuManager *)(a0), (CxRuReq *)(a1))) /* merge_units */
+#define cPathSystem_FreeRequest(a0, a1) (cPathSystem_FreeRequest((CxRuManager *)(a0), (CxRuReq *)(a1))) /* merge_units */
 
-void ActiveList_EraseMatching(CxRelList*,CxRelPredicate);
+void std_list_imp_voidPtr_remove_if(CxRelList*,CxRelPredicate);
 }
 static inline CxRelActor* CxRel_Get(CxRelReq* req){bool isNull;bool ok;CxRelActor* actor;actor=req->actor;isNull=!actor;ok=true;if(!isNull)if(actor->serial!=req->serial)ok=false;return ok ? actor:0;}
 static inline void CxRel_First0(CxRelIt*out,CxRelList*l){CxRelIt tmp;std_list_cPathSystemRequestPtr_begin_void(&tmp,l);cLListIterator_cPathSystemRequestPtr_ctor(out,&tmp);}
@@ -152,10 +152,10 @@ static inline CxRelIt CxRel_Begin(CxRelList*l){CxRelIt out;CxRelIt converted;CxR
 static inline void CxRel_End0(CxRelIt*out,CxRelList*l){CxRelIt tmp;std_list_cPathSystemRequestPtr_end_void(&tmp,l);cLListIterator_cPathSystemRequestPtr_ctor(out,&tmp);}
 static inline void CxRel_End00(CxRelIt*out,CxRelList*l){CxRel_End0(out,l);}
 static inline CxRelLink* CxRel_End(CxRelList*l){CxRelIt out;CxRel_End00(&out,l);return out.link;}
-static inline void CxRel_Erase(CxRelList*l,const CxRelTag& tag,CxRelReq**req){CxRelPredicate p(tag,req);ActiveList_EraseMatching(l,p);}
+static inline void CxRel_Erase(CxRelList*l,const CxRelTag& tag,CxRelReq**req){CxRelPredicate p(tag,req);std_list_imp_voidPtr_remove_if(l,p);}
 static inline void CxRel_Erase0(CxRelList*l,CxRelReq**req){CxRelTag tag;CxRel_Erase(l,tag,req);}
 static inline void ErWrap(CxRelList*l,CxRelReq**r){CxRel_Erase0(l,r);}
-extern "C" void NpcRoute_Release(CxRelManager*self,CxRelActor*actor){
+extern "C" void cPathSystem_ClearRequests(CxRelManager*self,CxRelActor*actor){
     bool removed;
     CxRelLink*first=CxRel_First(&self->queue);
     do{
@@ -165,7 +165,7 @@ extern "C" void NpcRoute_Release(CxRelManager*self,CxRelActor*actor){
             if(actor){int*serial=&actor->serial;int id=CxRel_Get(cur.link->req)->serial;if(id!=*serial)continue;}
             {
                 if(cur.link==first && D_004ED9D0==1)D_004ED9D0=2;
-                NpcRouteMgr_FreeRequest(self,cur.link->req);
+                cPathSystem_FreeRequest(self,cur.link->req);
                 ErWrap(&self->queue,&cur.link->req);
                 removed=true;
                 break;
@@ -174,7 +174,7 @@ extern "C" void NpcRoute_Release(CxRelManager*self,CxRelActor*actor){
         }
     }while(removed);
 }
-#undef NpcRouteMgr_FreeRequest /* merge_units */
+#undef cPathSystem_FreeRequest /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00163C50(void) {}
 #pragma pop /* merge_units */
@@ -197,7 +197,7 @@ static inline void CxIq_Begin0(CxIqIt*out,CxIqList*l){CxIqIt temp;std_list_cPath
 static inline CxIqIt CxIq_Begin(CxIqList* l){CxIqIt converted;CxIq_Begin0(&converted,l);return converted;}
 static inline void CxIq_End0(CxIqIt*out,CxIqList*l){CxIqIt temp;std_list_cPathSystemRequestPtr_end_void_2(&temp,l);cConstLListIterator_cPathSystemRequestPtr_ctor(out,&temp);}
 static inline CxIqLink* CxIq_End(CxIqList*l){CxIqIt out;CxIq_End0(&out,l);return out.link;}
-extern "C" CxIqReq* NpcRoute_IsQueued(CxIqManager* self,CxIqActor* actor,int mask){
+extern "C" CxIqReq* cPathSystem_GetRequestPending(CxIqManager* self,CxIqActor* actor,int mask){
     CxIqReq* result=0;
     if(actor){
         CxIqIt cur=CxIq_Begin(&self->queue);

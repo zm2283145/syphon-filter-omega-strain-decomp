@@ -27,11 +27,11 @@ extern float D_004A7DE0[9][4];
 extern char g_Video[];
 extern int D_004A7E70[];
 extern float D_004A7EA0[];
-void LightMgr_CollectCoronas(void* m, int a, int b, int c);
-void Corona_Draw(void* a, float* pos, float (*col)[4], int* tex, int* t0, float* t1, int n, float size, int flag, int vflag);
+void cLightMan_AquireSourcesByProperty(void* m, int a, int b, int c);
+void XLib_DrawLensFlares(void* a, float* pos, float (*col)[4], int* tex, int* t0, float* t1, int n, float size, int flag, int vflag);
 }
 
-extern "C" void VisionFx_DrawCorona(VisionFx_F4C0* fx) {
+extern "C" void cVisionFxMan_DrawLensFlares(VisionFx_F4C0* fx) {
     float cols[9][4];
     int b = 0;
     int a = 0;
@@ -60,7 +60,7 @@ extern "C" void VisionFx_DrawCorona(VisionFx_F4C0* fx) {
         alpha = 0.7f;
         break;
     }
-    LightMgr_CollectCoronas(g_LightMgr, a, b, c);
+    cLightMan_AquireSourcesByProperty(g_LightMgr, a, b, c);
     for (i = 0; i < D_00535D70; i++) {
         l = D_00535D74->e[i].light;
         if (l != fx->skip) {
@@ -78,7 +78,7 @@ extern "C" void VisionFx_DrawCorona(VisionFx_F4C0* fx) {
             flag = (l->aux & 0x10) > 0;
             vflag = l->Flag();
             if (flag) size *= l->SizeFactor();
-            Corona_Draw(g_Video, pos, cols, fx->tex, D_004A7E70, D_004A7EA0, n, size, flag, vflag);
+            XLib_DrawLensFlares(g_Video, pos, cols, fx->tex, D_004A7E70, D_004A7EA0, n, size, flag, vflag);
         }
     }
 }

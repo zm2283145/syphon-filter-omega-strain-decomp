@@ -14,7 +14,7 @@
 #include "net_local_id.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00433160 */
 #pragma push /* merge_units */
@@ -57,7 +57,7 @@ struct Reent_433160 {
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Reent_433160() { D_005723C8 = 0; }
 };
 static inline unsigned char IsHost_433160() { if (g_IsMultiplayer) return D_005721C0; return 1; }
-static inline void Free_433160(Ent_433160* p, int line) { AllocGuard g; Mem_Free(0, p, D_004BFCA0, line); }
+static inline void Free_433160(Ent_433160* p, int line) { AllocGuard g; cMemMan_Deallocate(0, p, D_004BFCA0, line); }
 
 extern "C" void cNPCInfoObject_NPCInfoCreationCallback(void* self, int key)
 {
@@ -128,7 +128,7 @@ static inline void Reset_335F0(NpcInfoRec* r)
     for (j = 0; j < 4; j++) { r->a6[j] = 0; r->aA[j] = 1; }
 }
 
-unsigned char NpcInfo_RegisterNetType(void)
+unsigned char cNPCInfoObject_InitNet(void)
 {
     int db;
     Prm_335F0 prm;
@@ -215,35 +215,35 @@ extern "C" void cNPCInfoObject_DestroyNPCInfoStruct(void) {
         if (temp_s0 != 0) {
             {
                 AllocGuard g;
-            Mem_Free(0, temp_s0, &D_004BFCA0, 0x5AA);
+            cMemMan_Deallocate(0, temp_s0, &D_004BFCA0, 0x5AA);
             }
         }
         temp_s0_2 = D_005827F8;
         if (temp_s0_2 != 0) {
             {
                 AllocGuard g;
-            Mem_Free(0, temp_s0_2, &D_004BFCA0, 0x5AD);
+            cMemMan_Deallocate(0, temp_s0_2, &D_004BFCA0, 0x5AD);
             }
         }
         temp_s0_3 = D_00582800;
         if (temp_s0_3 != 0) {
             {
                 AllocGuard g;
-            Mem_Free(0, temp_s0_3, &D_004BFCA0, 0x5B0);
+            cMemMan_Deallocate(0, temp_s0_3, &D_004BFCA0, 0x5B0);
             }
         }
         temp_s0_4 = D_00582808;
         if (temp_s0_4 != 0) {
             {
                 AllocGuard g;
-            Mem_Free(0, temp_s0_4, &D_004BFCA0, 0x5B3);
+            cMemMan_Deallocate(0, temp_s0_4, &D_004BFCA0, 0x5B3);
             }
         }
         temp_s0_5 = D_00582810;
         if (temp_s0_5 != 0) {
             {
                 AllocGuard g;
-            Mem_Free(0, temp_s0_5, &D_004BFCA0, 0x5B6);
+            cMemMan_Deallocate(0, temp_s0_5, &D_004BFCA0, 0x5B6);
             }
         }
         D_005827F0 = 0;
@@ -400,9 +400,9 @@ static inline void merge_flush_func_00433F20(void) {}
 
 /* merge_units: begin func_004340C0 */
 #pragma push /* merge_units */
-#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 #pragma mpwc_relax on
-int NetGame_InitLocalSlot(int *, int);                        
+int NetGetMyClientIndex(int *, int);                        
 #if 0 /* merge_units */
 int cNPCInfoObject_Find(int, int);
 #endif /* merge_units */

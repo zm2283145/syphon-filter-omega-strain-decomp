@@ -7,8 +7,8 @@
 /* merge_units: begin func_00451D70 */
 #pragma push /* merge_units */
 #include "types.h"
-int String_Copy(char*, char*);
-int Lobby_GetTime(void);
+int Libc_Strcpy(char*, char*);
+int SFOLobby_GetMillisecs(void);
 int MediusGetChannelInfo(void*, void*);
 void* memset(void*, int, int);
 extern int D_00497890;
@@ -53,11 +53,11 @@ int SFOLobby_ChannelInfoRequest(Lobby_451D70* self, int id)
     struct { char name[0x15]; char ip[0x13]; int f28; } req;
 
     memset(&req, 0, sizeof(req));
-    String_Copy(req.name, D_004C0FA8);
-    String_Copy(req.ip, self->ip.c);
+    Libc_Strcpy(req.name, D_004C0FA8);
+    Libc_Strcpy(req.ip, self->ip.c);
     req.f28 = id;
     self->f200 = 0;
-    self->f2410 = Lobby_GetTime();
+    self->f2410 = SFOLobby_GetMillisecs();
     self->f24C = MediusGetChannelInfo(&req, &SFOLobby_Callback_ChannelInfo);
     while (self->f200 == 0) {
         self->f2409 = 1;
@@ -130,12 +130,12 @@ int SFOLobby_FindChannel(Lobby_451ED0* self, char* room)
 
     memset(&req, 0, sizeof(req));
     memset(self->f1B3C, 0, 0x90);
-    String_Copy(req.name, D_004C0FA8);
-    String_Copy(req.ip.c, self->ip.c);
-    String_Copy(req.room, room);
+    Libc_Strcpy(req.name, D_004C0FA8);
+    Libc_Strcpy(req.ip.c, self->ip.c);
+    Libc_Strcpy(req.room, room);
     req.f68 = 1;
     self->f1FC = 0;
-    self->f2410 = Lobby_GetTime();
+    self->f2410 = SFOLobby_GetMillisecs();
     self->f24C = MediusFindWorldByName(&req, &SFOLobby_Callback_FindChannel);
     while (self->f1BC8 != 1) {
         self->f2409 = 1;
@@ -205,7 +205,7 @@ int SFOLobby_Poll(Lobby_452050*, int, int, int);
 #endif /* merge_units */
 #define SFOLobby_Poll(a0, a1, a2, a3) (SFOLobby_Poll((Lobby_451D70 *)(a0), (a1), (a2), (a3))) /* merge_units */
 
-int SFOLobby_DisconnectAuthServer(Lobby_452050*);
+int SFOLobby_MediusDisconnectMAS(Lobby_452050*);
 int SFOLobby_UpdateClientState(Lobby_452050*, int);
 #if 0 /* merge_units */
 int SFOLobby_ChannelInfoRequest(Lobby_452050*, int);
@@ -242,12 +242,12 @@ int SFOLobby_JoinChannel(Lobby_452050* self, int id, int unused)
     memset(&buf, 0, sizeof(buf));
     memset(tail, 0, 8);
     memset(&req, 0, sizeof(req));
-    String_Copy(req.name, D_004C0FC8);
+    Libc_Strcpy(req.name, D_004C0FC8);
     req.ip = self->ip;
     req.f28 = id;
-    String_Copy(req.name2, D_004C0FA8);
+    Libc_Strcpy(req.name2, D_004C0FA8);
     self->f1C0 = 0;
-    self->f2410 = Lobby_GetTime();
+    self->f2410 = SFOLobby_GetMillisecs();
     for (j = 0; j < D_00497910 && self->f1C0 == 0; ) {
         j++;
         self->f24C = MediusJoinChannel(&req, &SFOLobby_Callback_JoinChannel);
@@ -269,7 +269,7 @@ int SFOLobby_JoinChannel(Lobby_452050* self, int id, int unused)
         SetErr_452050(self, 0x16, D_004C0FB0, 0x594);
         return 0;
     }
-    if (!SFOLobby_DisconnectAuthServer(self))
+    if (!SFOLobby_MediusDisconnectMAS(self))
         return 0;
     memcpy(&buf, self->f9CC, 0x9C);
     buf.fA0 = 0;
@@ -286,7 +286,7 @@ int SFOLobby_JoinChannel(Lobby_452050* self, int id, int unused)
             continue;
         }
         self->f184 = 0;
-        self->f2410 = Lobby_GetTime();
+        self->f2410 = SFOLobby_GetMillisecs();
         while (self->f184 == 0) {
             Pump_452050(self);
             if (!SFOLobby_Poll(self, self->f2410, D_00497890, 0)) {
@@ -367,14 +367,14 @@ int SFOLobby_CreateChannel(Lobby_4524C0* self, char* user, char* pass)
     memset(buf, 0, 0x100);
     memset(tail, 0, 8);
     memset(&sl, 0, 0x94);
-    String_Copy(sl.name, D_004C0FC8);
+    Libc_Strcpy(sl.name, D_004C0FC8);
     sl.ip = self->ip;
     sl.f68 = KM_GetSoftwareID();
     sl.f6C = D_00497758;
-    String_Copy(sl.user, user);
-    String_Copy(sl.pass, pass);
+    Libc_Strcpy(sl.user, user);
+    Libc_Strcpy(sl.pass, pass);
     self->f1F8 = 0;
-    self->f2410 = Lobby_GetTime();
+    self->f2410 = SFOLobby_GetMillisecs();
     self->f24C = MediusCreateChannel(&sl, &SFOLobby_Callback_CreateChannel);
     while (self->f1F8 == 0) {
         self->f2409 = 1;

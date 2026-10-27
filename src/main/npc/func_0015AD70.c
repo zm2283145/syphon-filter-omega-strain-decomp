@@ -13,14 +13,14 @@ struct E_AD70 { int a; E_AD70() {} };
 extern "C" {
 extern char g_NpcThinkList[];
 extern char D_0049B670[];
-void Mem_Free(int pool, void* allocation, char* file, int line);
-void List_Begin(void*, void*);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
+void std_list_deleter_voidPtr_begin_void(void*, void*);
 void std_list_cActiveListItemPtr_generic_iterator_ctor(void*, void*);
 void std_list_cActiveListItemPtr_end_void(void*, void*);
 void cLListIterator_cActiveListItemPtr_ctor(void*, void*);
 void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(void*, void*);
 void std_list_cActiveListItemPtr_generic_iterator_opCast(void*, void*);
-void List_Erase(void*, void*, void*);
+void std_list_deleter_voidPtr_erase_listdeleter(void*, void*, void*);
 }
 static inline int NonNull_AD70(Obj_AD70* p) { return p != 0; }
 static inline Obj_AD70* Get_AD70(Handle_AD70* h) {
@@ -28,13 +28,13 @@ static inline Obj_AD70* Get_AD70(Handle_AD70* h) {
     if ((NonNull_AD70(h->obj) ^ 1) == 0 && h->obj->serial != h->serial) ok = false;
     return ok ? h->obj : 0;
 }
-static inline void Er2(void* a, Raw_AD70* t) { char y[4], x[4]; std_list_cActiveListItemPtr_generic_iterator_opCast(x, a); List_Erase(y, g_NpcThinkList, x); std_list_cActiveListItemPtr_generic_iterator_ctor(t, y); }
+static inline void Er2(void* a, Raw_AD70* t) { char y[4], x[4]; std_list_cActiveListItemPtr_generic_iterator_opCast(x, a); std_list_deleter_voidPtr_erase_listdeleter(y, g_NpcThinkList, x); std_list_cActiveListItemPtr_generic_iterator_ctor(t, y); }
 static inline void Er1(It_AD70* it, It_AD70* r) { Raw_AD70 t; char a[4]; std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(a, it); Er2(a, &t); r->n = t.n; }
-static inline void Bg2(It_AD70* b) { void* s; List_Begin(&s, g_NpcThinkList); std_list_cActiveListItemPtr_generic_iterator_ctor(b, &s); }
+static inline void Bg2(It_AD70* b) { void* s; std_list_deleter_voidPtr_begin_void(&s, g_NpcThinkList); std_list_cActiveListItemPtr_generic_iterator_ctor(b, &s); }
 static inline void Bg1(It_AD70* b) { Bg2(b); }
 static inline void En2(It_AD70* e) { void* s; std_list_cActiveListItemPtr_end_void(&s, g_NpcThinkList); cLListIterator_cActiveListItemPtr_ctor(e, &s); }
 static inline void En1(It_AD70* e) { En2(e); }
-extern "C" void NpcThinkList_RemoveActor(Obj_AD70* actor)
+extern "C" void cNPC_RemoveFromActiveList(Obj_AD70* actor)
 {
     It_AD70 it, r1, e, b;
     Bg1(&b);
@@ -43,7 +43,7 @@ extern "C" void NpcThinkList_RemoveActor(Obj_AD70* actor)
         if (Get_AD70(h) == actor) {
             {
                 AllocGuard g;
-                Mem_Free(0, h, D_0049B670, 0x128);
+                cMemMan_Deallocate(0, h, D_0049B670, 0x128);
             }
             Er1(&it, &r1);
             it = r1;

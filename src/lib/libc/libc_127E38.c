@@ -6,13 +6,13 @@
 
 /* merge_units: begin func_00127E38 */
 extern int D_0058805C;
-extern int Newlib_SysRead(int fd, void* buf, unsigned int cnt);
+extern int Libc_Read(int fd, void* buf, unsigned int cnt);
 struct reent_00127E38 { int _errno; };
 long Newlib_ReadR(struct reent_00127E38* ptr, int fd, void* buf, unsigned int cnt)
 {
     long ret;
     D_0058805C = 0;
-    if ((ret = Newlib_SysRead(fd, buf, cnt)) == -1 && D_0058805C != 0)
+    if ((ret = Libc_Read(fd, buf, cnt)) == -1 && D_0058805C != 0)
         ptr->_errno = D_0058805C;
     return ret;
 }

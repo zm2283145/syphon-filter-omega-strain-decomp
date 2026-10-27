@@ -18,13 +18,13 @@ int cArray_cXformNodePtr_ConstIterator_opNe(It* a, It* b);
 void** cArray_cXformNodePtr_ConstIterator_opMul(It* it);
 void cXformNode_SetNeedsUpdate(void* p);
 void cArray_cXformNodePtr_ConstIterator_opInc(It* it);
-M* Mtx_Transpose3x3(M* m);
-int Mtx_IsTranslationZero(M* m);
+M* cMatrix_InvertRot(M* m);
+int cMatrix_IsZeroTranslation(M* m);
 V* func_00133EC0(M* m);
-void Vec4_Assign(V* d, V* s);
-V* Vec3_Negate(V* a);
-V* Mtx_TransformByTranspose(V* a, M* b);
-void Mtx_SetTranslation(M* m, V* v);
+void cVector_ctor_cVectorR(V* d, V* s);
+V* cVector_NegateXYZ(V* a);
+V* cVector_Rotate_cMatrixR(V* a, M* b);
+void cMatrix_SetTranslation(M* m, V* v);
 }
 struct Xform {
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual void Update();
@@ -37,7 +37,7 @@ struct Xform {
     M GetWorld() { if (dirty) Update(); const M& w = world; return w; }
     int lA4[3];
 };
-extern "C" void Xform_SetTranslation(Xform* x, V* t)
+extern "C" void cXformNode_SetTranslation(Xform* x, V* t)
 {
     It b;
     It e;
@@ -47,12 +47,12 @@ extern "C" void Xform_SetTranslation(Xform* x, V* t)
         V v;
         V tmp;
         v = *t;
-        Mtx_Transpose3x3(&m);
-        if (!Mtx_IsTranslationZero(&m)) {
-            Vec4_Assign(&tmp, func_00133EC0(&m));
-            Vec3_Negate(&tmp);
-            Mtx_TransformByTranspose(&tmp, &m);
-            Mtx_SetTranslation(&m, &tmp);
+        cMatrix_InvertRot(&m);
+        if (!cMatrix_IsZeroTranslation(&m)) {
+            cVector_ctor_cVectorR(&tmp, func_00133EC0(&m));
+            cVector_NegateXYZ(&tmp);
+            cVector_Rotate_cMatrixR(&tmp, &m);
+            cMatrix_SetTranslation(&m, &tmp);
         }
         GMV(&v, &m, &v);
         { void* xx = &x->pos; }

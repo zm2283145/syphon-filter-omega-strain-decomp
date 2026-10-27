@@ -37,14 +37,14 @@ extern "C" {
 void GuiWidget_ctor(void*);
 extern void* const D_004E11A0[];
 char D_004C03D8[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 }
 
-extern "C" Obj4411F0* GuiWeaponDisplay_Create(void) {
+extern "C" Obj4411F0* ConcreteWidgetClassRep_GuiWeaponDisplay_Create(void) {
     Obj4411F0* self;
     {
         AllocGuard guard;
-        self = (Obj4411F0*)Mem_Alloc(0, 0xB0, D_004C03D8, 0x2A);
+        self = (Obj4411F0*)cMemMan_Allocate(0, 0xB0, D_004C03D8, 0x2A);
     }
     if (self) {
         GuiWidget_ctor(self);

@@ -12,12 +12,12 @@
 typedef struct CdReadMode { unsigned char retries; unsigned char speed; unsigned char pattern; unsigned char pad; } CdReadMode;
 extern int g_FrameCounter;
 extern int g_CdReadStatus;                              /* read status: -1 busy, else callback reason */
-extern int Cd_Sync(int mode);                 /* Cd_Sync: nonzero while busy */
-extern int Cd_Read(int lsn, int sectors, void* buf, CdReadMode* mode); /* Cd_Read */
-extern void Cd_SetCallback(void* cb);                /* Cd_SetCallback */
-extern void FileHal_CdCallback(int reason);
+extern int snd_StreamSafeCdSync(int mode);                 /* snd_StreamSafeCdSync: nonzero while busy */
+extern int snd_StreamSafeCdRead(int lsn, int sectors, void* buf, CdReadMode* mode); /* snd_StreamSafeCdRead */
+extern void snd_StreamSafeCdCallback(void* cb);                /* snd_StreamSafeCdCallback */
+extern void CdCallback(int reason);
 /* Issue an async read of bufSize bytes at byte offset pos into buf. */
-int FileHal_StartRead(FileHalFile* o, int pos)
+int cFileIO_ReadFile(FileHalFile* o, int pos)
 {
     CdReadMode mode;
     int sector;
@@ -27,13 +27,13 @@ int FileHal_StartRead(FileHalFile* o, int pos)
     sector = pos / CD_SECTOR_SIZE;
     mode.speed = 1;
     i = 0;
-    while (Cd_Sync(0) && i++ < 10000) ;
-    Cd_Read(o->info.lsn + sector, o->bufSize / CD_SECTOR_SIZE, o->buf, &mode);
-    Cd_SetCallback(FileHal_CdCallback);
+    while (snd_StreamSafeCdSync(0) && i++ < 10000) ;
+    snd_StreamSafeCdRead(o->info.lsn + sector, o->bufSize / CD_SECTOR_SIZE, o->buf, &mode);
+    snd_StreamSafeCdCallback(CdCallback);
     o->startFrame = o->pollFrame = g_FrameCounter;
     o->timeoutFrames = FILEHAL_TIMEOUT_FRAMES;
     g_CdReadStatus = -1;
-    if (o->mode != FILEHAL_MODE_DIRECT) Cd_Sync(0);
+    if (o->mode != FILEHAL_MODE_DIRECT) snd_StreamSafeCdSync(0);
     return o->bufSize;
 }
 #pragma pop /* merge_units */
@@ -44,9 +44,9 @@ int FileHal_StartRead(FileHalFile* o, int pos)
 extern int sprintf(char*, const char*, ...);
 extern char Libc_Toupper(int);                     /* toupper */
 extern int sceCdDiskReady(int);                      /* disk ready: 2 when ready */
-extern int Cd_SearchFile(FileHalCdInfo*, char*);    /* Cd_SearchFile */
+extern int snd_StreamSafeCdSearchFile(FileHalCdInfo*, char*);    /* snd_StreamSafeCdSearchFile */
 /* Look up "\NAME;1" on the disc; returns 1 when found. */
-int FileHal_Open(FileHalFile* f, char* name, int mode) {
+int cFileIO_OpenFile(FileHalFile* f, char* name, int mode) {
     int i, r;
     f->mode = mode;
     f->buf = 0;
@@ -57,7 +57,7 @@ int FileHal_Open(FileHalFile* f, char* name, int mode) {
     i = 0;
     r = 0;
     while (i++ < 0xFF && r != 2) r = sceCdDiskReady(0);
-    f->handle = Cd_SearchFile(&f->info, f->path);
+    f->handle = snd_StreamSafeCdSearchFile(&f->info, f->path);
     f->size = f->info.size;
     if (!f->handle) f->handle = -1;
     if (f->handle < 0) {
@@ -74,18 +74,18 @@ int FileHal_Open(FileHalFile* f, char* name, int mode) {
 char D_004BBDE8[] = "CD Timeout";
 char D_004BBDF8[] __attribute__((aligned(8))) = "%s\n"; /* 8-aligned in the original data */
 char D_004BBE00[] = "CD ERROR: 0%x";
-extern int Cd_GetError(void);                     /* Cd_GetError */
-extern void Cd_Break(void);                    /* Cd_Break */
+extern int snd_StreamSafeCdGetError(void);                     /* snd_StreamSafeCdGetError */
+extern void snd_StreamSafeCdBreak(void);                    /* snd_StreamSafeCdBreak */
 extern int sprintf(char* buf, const char* fmt, ...);
 extern void printf(char* tag, char* msg);
 /* Poll the current read: 1 done, 0 still busy, -1 error or timeout (read aborted). */
-int FileHal_PollRead(FileHalFile* o)
+int cFileIO_IsReadDone(FileHalFile* o)
 {
     char msg2[128];
     char msg1[128];
     int r = 1;
-    int err = Cd_GetError();
-    int busy = Cd_Sync(r);
+    int err = snd_StreamSafeCdGetError();
+    int busy = snd_StreamSafeCdSync(r);
     o->pollFrame = g_FrameCounter;
     if (busy) {
         if (g_FrameCounter - o->startFrame > o->timeoutFrames) {
@@ -101,8 +101,8 @@ int FileHal_PollRead(FileHalFile* o)
         r = -1;
     }
     if (r == -1) {
-        Cd_Break();
-        Cd_Sync(0);
+        snd_StreamSafeCdBreak();
+        snd_StreamSafeCdSync(0);
     }
     if (r) g_CdReadStatus = 0;
     return r;
@@ -117,8 +117,8 @@ int FileHal_PollRead(FileHalFile* o)
 #pragma cplusplus on
 #include "alloc_guard.h"
 extern "C" {
-void* Mem_Alloc(int, int, char*, int);
-void Mem_Free(int, void*, char*, int);
+void* cMemMan_Allocate(int, int, char*, int);
+void cMemMan_Deallocate(int, void*, char*, int);
 extern char D_004BBDD0[];                           /* "FileHalPS2.cc" */
 }
 
@@ -187,10 +187,10 @@ static inline int FileHal_ReadInline(FileHalFile* o, void* dst, int size, int po
         {
             int n = o->bufSize;
             AllocGuard g;
-            p = Mem_Alloc(0, n, D_004BBDD0, 0xAA);
+            p = cMemMan_Allocate(0, n, D_004BBDD0, 0xAA);
         }
         o->buf = p;
-        ret = FileHal_StartRead(o, pos);
+        ret = cFileIO_ReadFile(o, pos);
         if (ret) {
             FileHal_Copy(dst, o->buf, size);
             ret = size;
@@ -198,19 +198,19 @@ static inline int FileHal_ReadInline(FileHalFile* o, void* dst, int size, int po
         {
             void* q = o->buf;
             AllocGuard g;
-            Mem_Free(0, q, D_004BBDD0, 0xB3);
+            cMemMan_Deallocate(0, q, D_004BBDD0, 0xB3);
         }
         o->bufSize = 0;
     } else {
         o->bufSize = size;
         o->buf = dst;
-        ret = FileHal_StartRead(o, pos);
+        ret = cFileIO_ReadFile(o, pos);
     }
     return ret;
 }
 
 /* Read size bytes at pos into dst. */
-extern "C" int FileHal_Read(FileHalFile* o, void* dst, int size, int pos)
+extern "C" int cFileIO_Read_charP_int_int(FileHalFile* o, void* dst, int size, int pos)
 {
     int ret = FileHal_ReadInline(o, dst, size, pos);
     o->ownsBuf = 0;
@@ -223,9 +223,9 @@ extern "C" int FileHal_Read(FileHalFile* o, void* dst, int size, int pos)
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-extern "C" int FileHal_ReadAll(FileHalFile* o);
+extern "C" int cFileIO_Read_void(FileHalFile* o);
 /* Allocate a buffer for the whole file (rounded up to a sector) and start reading it. */
-int FileHal_ReadAll(FileHalFile* o)
+int cFileIO_Read_void(FileHalFile* o)
 {
     void* p;
     int cap;
@@ -234,11 +234,11 @@ int FileHal_ReadAll(FileHalFile* o)
         cap = o->bufSize;
         {
             AllocGuard guard;
-            p = Mem_Alloc(0, cap, D_004BBDD0, 0x87);
+            p = cMemMan_Allocate(0, cap, D_004BBDD0, 0x87);
         }
         o->buf = p;
         o->ownsBuf = 1;
-        return FileHal_StartRead(o, 0);
+        return cFileIO_ReadFile(o, 0);
     }
     return 0;
 }
@@ -249,7 +249,7 @@ int FileHal_ReadAll(FileHalFile* o)
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 
 void operator_delete(void* p);
 }
@@ -257,13 +257,13 @@ void operator_delete(void* p);
 static inline void FileHal_CloseInline(FileHalFile* s)
 {
     if (s->handle >= 0) {
-        Cd_Break(); /* sceCdBreak takes no arguments (block FileHal_PollRead declares it) */
+        snd_StreamSafeCdBreak(); /* sceCdBreak takes no arguments (block cFileIO_IsReadDone declares it) */
         if (s->ownsBuf) {
             void* p = s->buf;
             if (p) {
                 {
                     AllocGuard g;
-                    Mem_Free(0, p, D_004BBDD0, 0x1DD);
+                    cMemMan_Deallocate(0, p, D_004BBDD0, 0x1DD);
                 }
                 s->bufSize = 0;
             }
@@ -277,7 +277,7 @@ static inline void FileHal_CloseInline(FileHalFile* s)
     }
 }
 /* Close the file. */
-extern "C" void FileHal_Close(FileHalFile* s)
+extern "C" void cFileIO_Close(FileHalFile* s)
 {
     FileHal_CloseInline(s);
 }
@@ -286,10 +286,10 @@ extern "C" void FileHal_Close(FileHalFile* s)
 
 /* merge_units: begin func_003696B0 */
 #pragma push /* merge_units */
-int FileHal_Open(FileHalFile* f, char* name, int mode);
+int cFileIO_OpenFile(FileHalFile* f, char* name, int mode);
 
 /* Open name unless already open (then only the mode changes); returns 1 on success. */
-int FileHal_Reopen(FileHalFile* f, char* name, int mode) {
+int cFileIO_Open(FileHalFile* f, char* name, int mode) {
     int ret;
     int closed;
 
@@ -300,7 +300,7 @@ int FileHal_Reopen(FileHalFile* f, char* name, int mode) {
     f->mode = mode;
     goto already_open;
 open:;
-    ret = FileHal_Open(f, name, mode);
+    ret = cFileIO_OpenFile(f, name, mode);
     goto done;
 already_open:;
     ret = 0 + 1;
@@ -316,7 +316,7 @@ out:
 #pragma push /* merge_units */
 #pragma cplusplus on
 /* Destructor: close, then delete when del > 0. */
-extern "C" FileHalFile* FileHal_Dtor(FileHalFile* self, short del)
+extern "C" FileHalFile* cFileIO_dtor(FileHalFile* self, short del)
 {
     if (self) {
         FileHal_CloseInline(self);
@@ -331,19 +331,19 @@ extern "C" FileHalFile* FileHal_Dtor(FileHalFile* self, short del)
 /* merge_units: begin func_00369820 */
 #pragma push /* merge_units */
 /* Construct a closed handle, then open name with mode. */
-FileHalFile* FileHal_Ctor(FileHalFile* file, char* name, int mode) {
+FileHalFile* cFileIO_ctor_charP_int(FileHalFile* file, char* name, int mode) {
     file->handle = -1;
     file->mode = 0;
     file->buf = 0;
     file->path[0] = 0;
     file->ownsBuf = 0;
     file->bufSize = 0;
-    FileHal_Open(file, name, mode);
+    cFileIO_OpenFile(file, name, mode);
     return file;
 }
 
 /* Default constructor: closed handle with cleared state. */
-FileHalFile* FileHal_CtorDefault(FileHalFile* file) {
+FileHalFile* cFileIO_ctor_void(FileHalFile* file) {
     file->handle = -1;
     file->mode = 0;
     file->buf = 0;
@@ -353,8 +353,8 @@ FileHalFile* FileHal_CtorDefault(FileHalFile* file) {
     return file;
 }
 
-/* Cd_SetCallback hook: records the completion reason. */
-void FileHal_CdCallback(int reason) {
+/* snd_StreamSafeCdCallback hook: records the completion reason. */
+void CdCallback(int reason) {
     g_CdReadStatus = reason;
 }
 #pragma pop /* merge_units */
@@ -370,7 +370,7 @@ long long SoftFloat_DoubleToInt(int v);
 extern int D_00572538;
 
 /* Soft-float double helper chain on D_00572538 (constant 0x3FB0000000000000 = 0.0625). */
-long long Time_GetMilliseconds(void) {
+long long cTimer_GetMillisecondTime(void) {
     int v = D_00572538;
     int n = SoftFloat_IntToDouble(v);
     return (long long)(SoftFloat_DoubleToInt(SoftFloat_DoubleSub(n, SoftFloat_DoubleMultiply((long long)0x3FB00000 << 0x20, SoftFloat_FloatToDouble((float)v)))) << 0x20) >> 0x20;
@@ -388,7 +388,7 @@ typedef struct Dev100 {
 extern void sceVibSetActParam(void* port, int count, unsigned char* cmd, int len, unsigned char* data);
 
 /* Sends command 3 with two data bytes built from the flags. */
-void Pad_SetVibration(Dev100* dev, int on, int mode) {
+void cJoyPad_SetVibration(Dev100* dev, int on, int mode) {
     unsigned char data[3];
     unsigned char cmd;
     cmd = 3;

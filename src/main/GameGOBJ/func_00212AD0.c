@@ -4,5 +4,5 @@
 
 #include "gobj_types.h"
 
-void cSoundGOBJ_v10(void) {
+void cSoundGOBJ_NextFrame(void) {
 }

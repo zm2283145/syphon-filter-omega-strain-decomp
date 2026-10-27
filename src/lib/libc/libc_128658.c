@@ -7,13 +7,13 @@
 /* merge_units: begin func_00128658 */
 #include "types.h"
 extern int D_0058805C;
-extern int Newlib_SysSbrk(int fd);
+extern int Libc_Sbrk(int fd);
 struct reent_00121E20 { int _errno; };
 int Newlib_SbrkR(struct reent_00121E20* ptr, int fd)
 {
     int ret;
     D_0058805C = 0;
-    if ((ret = Newlib_SysSbrk(fd)) == -1 && D_0058805C != 0)
+    if ((ret = Libc_Sbrk(fd)) == -1 && D_0058805C != 0)
         ptr->_errno = D_0058805C;
     return ret;
 }

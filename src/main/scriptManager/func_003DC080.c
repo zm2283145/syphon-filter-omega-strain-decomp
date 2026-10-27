@@ -7,22 +7,22 @@ extern char D_004BDC28[];
 char D_004BDC38[] = "scriptFile.hh";
 char D_004BDC48[] = "scriptFile.hh";
 char D_004BDC58[] = "scriptFile.hh";
-void* Mem_Alloc(int heap, int size, char* file, int line);
-void Mem_Free(int heap, void* p, char* file, int line);
-void FileHal_Dtor(void* p, int flag);
-int* FileHal_Ctor(void* p, char* name, int mode);
+void* cMemMan_Allocate(int heap, int size, char* file, int line);
+void cMemMan_Deallocate(int heap, void* p, char* file, int line);
+void cFileIO_dtor(void* p, int flag);
+int* cFileIO_ctor_charP_int(void* p, char* name, int mode);
 void cFileMan_Close(void* h);
-int FileMan_FindMember(void* h);
+int cFileMan_Open(void* h);
 void cFileMan_EncodeFilename_charP_cFileIOP_bool(void* h, char* name, int* f, int a);
-void Hog_Register(void* h, char* name, int size, int a);
+void cFileMan_EncodeFilename_charP_cHogFileR_bool(void* h, char* name, int size, int a);
 char* strrchr(const char* s, int c);
 }
 struct S_003DC080 { int* file; int size; char hog[0xA4 - 8]; void* pA4; int a8; int ac; int b0; int b4; unsigned char b8; };
-static inline void* New_003DC080(int size, char* f, int line) { AllocGuard g; return Mem_Alloc(0, size, f, line); }
-static inline void DelF_003DC080(int* p, char* f, int line) { if (p) { AllocGuard g; FileHal_Dtor(p, -1); Mem_Free(0, p, f, line); } }
-static inline void DelG_003DC080(int* p, char* f, int line) { AllocGuard g; FileHal_Dtor(p, -1); Mem_Free(0, p, f, line); }
-static inline void Del_003DC080(void* p, char* f, int line) { if (p) { AllocGuard g; Mem_Free(0, p, f, line); } }
-extern "C" void FileMan_Open(S_003DC080* s, char* name, int mode)
+static inline void* New_003DC080(int size, char* f, int line) { AllocGuard g; return cMemMan_Allocate(0, size, f, line); }
+static inline void DelF_003DC080(int* p, char* f, int line) { if (p) { AllocGuard g; cFileIO_dtor(p, -1); cMemMan_Deallocate(0, p, f, line); } }
+static inline void DelG_003DC080(int* p, char* f, int line) { AllocGuard g; cFileIO_dtor(p, -1); cMemMan_Deallocate(0, p, f, line); }
+static inline void Del_003DC080(void* p, char* f, int line) { if (p) { AllocGuard g; cMemMan_Deallocate(0, p, f, line); } }
+extern "C" void ScriptFileBuff_open(S_003DC080* s, char* name, int mode)
 {
     int* f;
     s->pA4 = 0;
@@ -46,7 +46,7 @@ extern "C" void FileMan_Open(S_003DC080* s, char* name, int mode)
     if (mode == 0) {
         if (s->size == 0) {
             f = (int*)New_003DC080(0xC8, D_004BDC58, 0x6E);
-            if (f) f = FileHal_Ctor(f, name, 1);
+            if (f) f = cFileIO_ctor_charP_int(f, name, 1);
             s->file = f;
             if (*s->file >= 0) {
                 cFileMan_EncodeFilename_charP_cFileIOP_bool(s->hog, name, s->file, 0);
@@ -58,13 +58,13 @@ extern "C" void FileMan_Open(S_003DC080* s, char* name, int mode)
         if (!s->file && s->size) {
             char* p = strrchr(name, '\\');
             name = p ? p + 1 : name;
-            Hog_Register(s->hog, name, s->size, 0);
-            s->b8 = (unsigned char)FileMan_FindMember(s->hog) == 0;
+            cFileMan_EncodeFilename_charP_cHogFileR_bool(s->hog, name, s->size, 0);
+            s->b8 = (unsigned char)cFileMan_Open(s->hog) == 0;
             return;
         }
     } else if (mode == 1) {
         f = (int*)New_003DC080(0xC8, D_004BDC38, 0x84);
-        if (f) f = FileHal_Ctor(f, name, 0x202);
+        if (f) f = cFileIO_ctor_charP_int(f, name, 0x202);
         s->file = f;
     } else {
         s->file = 0;

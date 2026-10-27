@@ -61,13 +61,13 @@ struct WidgetChild {
 
 typedef struct GuiWidget_00416B30 { int unk0; WidgetChild* child; } GuiWidget_00416B30;
 
-extern "C" void GuiInterfaceDecorator_FireEvent(GuiWidget_00416B30* self, const char* name);
+extern "C" void GuiInterfaceDecorator_StartAnimation(GuiWidget_00416B30* self, const char* name);
 
 /* Wakes the child widget (virtual at +0x1C), then posts the "onWake" event to self. */
-extern "C" void GuiWidget_OnWake(GuiWidget_00416B30* self)
+extern "C" void GuiInterfaceDecorator_onWake(GuiWidget_00416B30* self)
 {
     self->child->Wake();
-    GuiInterfaceDecorator_FireEvent(self, "onWake");
+    GuiInterfaceDecorator_StartAnimation(self, "onWake");
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00416B30 */
@@ -86,18 +86,18 @@ struct WidgetChild_00416B80 {
 typedef struct GuiWidget_00416B80 { int unk0; WidgetChild_00416B80* child; } GuiWidget_00416B80;
 
 #if 0 /* merge_units */
-extern "C" void GuiInterfaceDecorator_FireEvent(GuiWidget_00416B80* self, const char* name);
+extern "C" void GuiInterfaceDecorator_StartAnimation(GuiWidget_00416B80* self, const char* name);
 #endif /* merge_units */
-#define GuiInterfaceDecorator_FireEvent(a0, a1) (GuiInterfaceDecorator_FireEvent((GuiWidget_00416B30 *)(a0), (a1))) /* merge_units */
+#define GuiInterfaceDecorator_StartAnimation(a0, a1) (GuiInterfaceDecorator_StartAnimation((GuiWidget_00416B30 *)(a0), (a1))) /* merge_units */
 
 
 /* Forwards Sleep to the child widget (virtual +0x20), then posts the "onSleep" event to self. */
-extern "C" void GuiWidget_OnSleep(GuiWidget_00416B80* self)
+extern "C" void GuiInterfaceDecorator_onSleep(GuiWidget_00416B80* self)
 {
     self->child->Sleep();
-    GuiInterfaceDecorator_FireEvent(self, "onSleep");
+    GuiInterfaceDecorator_StartAnimation(self, "onSleep");
 }
-#undef GuiInterfaceDecorator_FireEvent /* merge_units */
+#undef GuiInterfaceDecorator_StartAnimation /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00416B80 */
 
@@ -115,18 +115,18 @@ struct WidgetChild_00416BD0 {
 typedef struct GuiWidget_00416BD0 { int unk0; WidgetChild_00416BD0* child; } GuiWidget_00416BD0;
 
 #if 0 /* merge_units */
-extern "C" void GuiInterfaceDecorator_FireEvent(GuiWidget_00416BD0* self, const char* name);
+extern "C" void GuiInterfaceDecorator_StartAnimation(GuiWidget_00416BD0* self, const char* name);
 #endif /* merge_units */
-#define GuiInterfaceDecorator_FireEvent(a0, a1) (GuiInterfaceDecorator_FireEvent((GuiWidget_00416B30 *)(a0), (a1))) /* merge_units */
+#define GuiInterfaceDecorator_StartAnimation(a0, a1) (GuiInterfaceDecorator_StartAnimation((GuiWidget_00416B30 *)(a0), (a1))) /* merge_units */
 
 
 /* Notifies the child widget (virtual +0x24), then posts the "onGainFocus" event to self. */
-extern "C" void GuiWidget_OnGainFocus(GuiWidget_00416BD0* self)
+extern "C" void GuiInterfaceDecorator_onGainFocus(GuiWidget_00416BD0* self)
 {
     self->child->GainFocus();
-    GuiInterfaceDecorator_FireEvent(self, "onGainFocus");
+    GuiInterfaceDecorator_StartAnimation(self, "onGainFocus");
 }
-#undef GuiInterfaceDecorator_FireEvent /* merge_units */
+#undef GuiInterfaceDecorator_StartAnimation /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00416BD0 */
 
@@ -145,18 +145,18 @@ struct WidgetChild_00416C20 {
 typedef struct GuiWidget_00416C20 { int unk0; WidgetChild_00416C20* child; } GuiWidget_00416C20;
 
 #if 0 /* merge_units */
-extern "C" void GuiInterfaceDecorator_FireEvent(GuiWidget_00416C20* self, const char* name);
+extern "C" void GuiInterfaceDecorator_StartAnimation(GuiWidget_00416C20* self, const char* name);
 #endif /* merge_units */
-#define GuiInterfaceDecorator_FireEvent(a0, a1) (GuiInterfaceDecorator_FireEvent((GuiWidget_00416B30 *)(a0), (a1))) /* merge_units */
+#define GuiInterfaceDecorator_StartAnimation(a0, a1) (GuiInterfaceDecorator_StartAnimation((GuiWidget_00416B30 *)(a0), (a1))) /* merge_units */
 
 
 /* Forwards LoseFocus to the child widget (virtual +0x28), then posts the "onLoseFocus" event to self. */
-extern "C" void GuiWidget_OnLoseFocus(GuiWidget_00416C20* self)
+extern "C" void GuiInterfaceDecorator_onLoseFocus(GuiWidget_00416C20* self)
 {
     self->child->LoseFocus();
-    GuiInterfaceDecorator_FireEvent(self, "onLoseFocus");
+    GuiInterfaceDecorator_StartAnimation(self, "onLoseFocus");
 }
-#undef GuiInterfaceDecorator_FireEvent /* merge_units */
+#undef GuiInterfaceDecorator_StartAnimation /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00416C20 */
 
@@ -173,18 +173,18 @@ struct WidgetChild_00416C70 {
 typedef struct GuiWidget_00416C70 { int unk0; WidgetChild_00416C70* child; } GuiWidget_00416C70;
 
 #if 0 /* merge_units */
-extern "C" void GuiInterfaceDecorator_FireEvent(GuiWidget_00416C70* self, const char* name);
+extern "C" void GuiInterfaceDecorator_StartAnimation(GuiWidget_00416C70* self, const char* name);
 #endif /* merge_units */
-#define GuiInterfaceDecorator_FireEvent(a0, a1) (GuiInterfaceDecorator_FireEvent((GuiWidget_00416B30 *)(a0), (a1))) /* merge_units */
+#define GuiInterfaceDecorator_StartAnimation(a0, a1) (GuiInterfaceDecorator_StartAnimation((GuiWidget_00416B30 *)(a0), (a1))) /* merge_units */
 
 
 /* Notifies the child widget (virtual +0x14), then posts the "onActivate" event to self. */
-extern "C" void GuiWidget_OnActivate(GuiWidget_00416C70* self)
+extern "C" void GuiInterfaceDecorator_onActivate(GuiWidget_00416C70* self)
 {
     self->child->Activate();
-    GuiInterfaceDecorator_FireEvent(self, "onActivate");
+    GuiInterfaceDecorator_StartAnimation(self, "onActivate");
 }
-#undef GuiInterfaceDecorator_FireEvent /* merge_units */
+#undef GuiInterfaceDecorator_StartAnimation /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00416C70 */
 
@@ -202,17 +202,17 @@ struct WidgetChild_00416CC0 {
 typedef struct GuiWidget_00416CC0 { int unk0; WidgetChild_00416CC0* child; } GuiWidget_00416CC0;
 
 #if 0 /* merge_units */
-extern "C" void GuiInterfaceDecorator_FireEvent(GuiWidget_00416CC0* self, const char* name);
+extern "C" void GuiInterfaceDecorator_StartAnimation(GuiWidget_00416CC0* self, const char* name);
 #endif /* merge_units */
-#define GuiInterfaceDecorator_FireEvent(a0, a1) (GuiInterfaceDecorator_FireEvent((GuiWidget_00416B30 *)(a0), (a1))) /* merge_units */
+#define GuiInterfaceDecorator_StartAnimation(a0, a1) (GuiInterfaceDecorator_StartAnimation((GuiWidget_00416B30 *)(a0), (a1))) /* merge_units */
 
 
 /* Forwards Deactivate to the child widget (virtual +0x18), then posts the "onDeactivate" event to self. */
-extern "C" void GuiWidget_OnDeactivate(GuiWidget_00416CC0* self)
+extern "C" void GuiInterfaceDecorator_onDeactivate(GuiWidget_00416CC0* self)
 {
     self->child->Deactivate();
-    GuiInterfaceDecorator_FireEvent(self, "onDeactivate");
+    GuiInterfaceDecorator_StartAnimation(self, "onDeactivate");
 }
-#undef GuiInterfaceDecorator_FireEvent /* merge_units */
+#undef GuiInterfaceDecorator_StartAnimation /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00416CC0 */

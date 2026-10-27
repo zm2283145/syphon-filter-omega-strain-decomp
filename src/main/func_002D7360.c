@@ -6,14 +6,14 @@ typedef struct { void* vt; int a[7]; signed char b; char pad21[3]; Blk9G5 d; } O
 extern "C" {
 extern char D_004DFD80[];
 extern char D_004DE4F0[];
-void* Mem_Alloc(int, int, char*, int);
+void* cMemMan_Allocate(int, int, char*, int);
 }
 static inline void* AllocL_G5(int size, char* file, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, file, line);
+    return cMemMan_Allocate(0, size, file, line);
 }
-extern "C" ObjEvG5* ObjectiveEvent_Clone(ObjEvG5* self)
+extern "C" ObjEvG5* cNetObjectiveMsg_Clone(ObjEvG5* self)
 {
     ObjEvG5* p = (ObjEvG5*)AllocL_G5(0x48, "NetObjectiveMsg.hh", 0x28);
     if (p) {

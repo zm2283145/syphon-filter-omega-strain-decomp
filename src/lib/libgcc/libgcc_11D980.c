@@ -241,7 +241,7 @@ dp_h[] = { 0.0, 5.84960938e-01,},
 dp_l[] = { 0.0, 1.56322085e-06,};
 extern const float D_004995FC;
 extern float Math_Sqrtf(float x);
-extern float Math_Fabsf(float x);
+extern float Libc_Fabsf(float x);
 extern float scalbnf(float x, int n);
 float Math_PowfKernel(float x, float y)
 {
@@ -302,7 +302,7 @@ float Math_PowfKernel(float x, float y)
 	    return Math_Sqrtf(x);
 	}
 
-	ax   = Math_Fabsf(x);
+	ax   = Libc_Fabsf(x);
 	if(ix < 0x00800000L||ix==0x3f800000){
 	    z = ax;
 	    if(hy<0) z = one/z;

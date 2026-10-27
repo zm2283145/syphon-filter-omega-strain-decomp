@@ -2,7 +2,7 @@
 #include "types.h"
 typedef struct { int a0; int id; int x; int y; } E3D60;
 typedef struct { int pad; E3D60 e[2]; } S3D60;
-void WeaponInv_DualShare(char* self)
+void cWeapon_EqualizeDualWieldAmmo(char* self)
 {
     E3D60* b = (E3D60*)(self + 0x14);
     E3D60* a = (E3D60*)(self + 0x4);

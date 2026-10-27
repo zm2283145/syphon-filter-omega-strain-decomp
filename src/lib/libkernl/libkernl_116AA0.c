@@ -13,7 +13,7 @@ extern void SetT2_COUNT(int);
 extern void SetT2_MODE(unsigned int);
 extern void SetT2_COMP(int);
 extern int Alloc_Lock(int);
-extern int Alloc_Unlock(int);
+extern int EnableIntc(int);
 int InitTimer(unsigned int mode)
 {
     int i, id, s;
@@ -39,7 +39,7 @@ int InitTimer(unsigned int mode)
         SetT2_COMP(0xFFFF);
     }
     SetT2_MODE(v);
-    Alloc_Unlock(11);
+    EnableIntc(11);
     if (s) EIntr();
     return 0;
 }

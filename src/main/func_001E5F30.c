@@ -3,14 +3,14 @@ typedef struct { __int128 q; } V_5F30;
 typedef struct { V_5F30 rows[4]; char part40[0x10]; unsigned char flag50; unsigned char flag51; unsigned char flag52; char pad53[0xD]; int part60[2]; char pad68[8]; } Tri_5F30;
 typedef struct { unsigned char hit; char p1[0x57]; float f58; char p5C[4]; char src[0xB0]; unsigned char b110; char p111[0xCF]; } Res_5F30;
 typedef struct { char p0[0xE4]; float fE4; char pE8[0x170 - 0xE8]; Tri_5F30 tri; } Act_5F30;
-void ColResult_Construct(Res_5F30*);
-void ColQuery_InitSphere(Res_5F30*, void*, V_5F30*, V_5F30*, float, float, float, float, float, int);
+void cCollisionProbe_SphereSweptRay_ctor(Res_5F30*);
+void cCollisionProbe_SphereSweptRay_Reset_cArrayR_float_float_float_etc(Res_5F30*, void*, V_5F30*, V_5F30*, float, float, float, float, float, int);
 int ColQuery_ExecuteThunk(Res_5F30*, int, int);
-void Ptr_Identity(void*);
+void cVector_ctor_void(void*);
 void cCollisionModel_FaceProperties_ctor(void*);
 void cCollisionModel_FaceLocator_ctor(void*);
-void Col_ReconstructSourceTriangle(Tri_5F30*, void*);
-void Vec4_Copy(void*, void*);
+void cCollisionFace_Set_cCollisionModelFaceLocatorR(Tri_5F30*, void*);
+void cVector_opAssign(void*, void*);
 void cCollisionModel_FaceProperties_opAssign(void*, void*);
 void cCollisionModel_FaceLocator_opAssign(void*, void*);
 static inline V_5F30 Sub_5F30(V_5F30* a, V_5F30* b) {
@@ -22,12 +22,12 @@ static inline V_5F30 Sub_5F30(V_5F30* a, V_5F30* b) {
 #pragma opt_common_subs off
 #pragma opt_loop_invariants off
 #pragma opt_propagation off
-void ActorPhys_WaterProbe(Act_5F30* a, void* p1, V_5F30* p2, V_5F30* p3) {
+void cHumanCollisionRoutine_DetectForWater(Act_5F30* a, void* p1, V_5F30* p2, V_5F30* p3) {
     Res_5F30 res;
     V_5F30 dir;
-    ColResult_Construct(&res);
+    cCollisionProbe_SphereSweptRay_ctor(&res);
     dir = Sub_5F30(p3, p2);
-    ColQuery_InitSphere(&res, p1, p2, &dir, 0.1f, 0.05f, 0.05f, 0.0f, 0.1f, 0);
+    cCollisionProbe_SphereSweptRay_Reset_cArrayR_float_float_float_etc(&res, p1, p2, &dir, 0.1f, 0.05f, 0.05f, 0.0f, 0.1f, 0);
     res.b110 = 0;
     ColQuery_ExecuteThunk(&res, 0x80, 0);
     if (res.hit) {
@@ -35,15 +35,15 @@ void ActorPhys_WaterProbe(Act_5F30* a, void* p1, V_5F30* p2, V_5F30* p3) {
         Tri_5F30* t = &tri;
         V_5F30* v = t->rows;
         V_5F30* e;
-        do { Ptr_Identity(v); v++; } while (v != (e = t->rows + 3));
-        Ptr_Identity(e);
+        do { cVector_ctor_void(v); v++; } while (v != (e = t->rows + 3));
+        cVector_ctor_void(e);
         cCollisionModel_FaceProperties_ctor(t->part40);
         cCollisionModel_FaceLocator_ctor(t->part60);
-        Col_ReconstructSourceTriangle(t, res.src);
-        Vec4_Copy(&a->tri.rows[0], &tri.rows[0]);
-        Vec4_Copy(&a->tri.rows[1], &tri.rows[1]);
-        Vec4_Copy(&a->tri.rows[2], &tri.rows[2]);
-        Vec4_Copy(&a->tri.rows[3], &tri.rows[3]);
+        cCollisionFace_Set_cCollisionModelFaceLocatorR(t, res.src);
+        cVector_opAssign(&a->tri.rows[0], &tri.rows[0]);
+        cVector_opAssign(&a->tri.rows[1], &tri.rows[1]);
+        cVector_opAssign(&a->tri.rows[2], &tri.rows[2]);
+        cVector_opAssign(&a->tri.rows[3], &tri.rows[3]);
         a->tri.flag50 = tri.flag50;
         cCollisionModel_FaceProperties_opAssign(a->tri.part40, tri.part40);
         cCollisionModel_FaceLocator_opAssign(a->tri.part60, tri.part60);

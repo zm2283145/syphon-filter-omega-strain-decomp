@@ -19,7 +19,7 @@ extern char D_004B09F8[];
 /* same-unit callee stub: weak, in a section the link discards; restores retail delay-slot choices */
 /* same-unit callee stub: weak, in a section the link discards; restores retail delay-slot choices */
 char * __attribute__((weak, section(".dtors_drop"))) func_0030F0E8(char *buf, int len) { return 0; }
-extern int String_CompareN(const char *a, const char *b, int n);
+extern int Libc_Strncmp(const char *a, const char *b, int n);
 extern void func_0030FF20(Xml_30FD80 *p, const char *s, int len);
 
 void func_0030FD80(const char *s, int len, Xml_30FD80 *p)
@@ -32,19 +32,19 @@ void func_0030FD80(const char *s, int len, Xml_30FD80 *p)
     if (len == 0) return;
     if (isspace(*s)) return;
     e = func_0030F0E8(p->buf, p->bufLen);
-    while (tags.p[i] && String_CompareN(tags.p[i], e, 0x100))
+    while (tags.p[i] && Libc_Strncmp(tags.p[i], e, 0x100))
         i++;
     switch (i) {
     case 0:
-        if (String_CompareN(D_004B0828, p->name, 0x100) || *s != '1')
+        if (Libc_Strncmp(D_004B0828, p->name, 0x100) || *s != '1')
             p->stop = 1;
         break;
     case 1:
-        if (String_CompareN(D_004B0828, p->name, 0x100) || *s != '0')
+        if (Libc_Strncmp(D_004B0828, p->name, 0x100) || *s != '0')
             p->stop = 1;
         break;
     case 2:
-        if (String_CompareN(D_004B09F8, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_004B09F8, p->name, 0x100) == 0) {
             func_0030FF20(p, s, len);
             p->name[0] = 0;
         }

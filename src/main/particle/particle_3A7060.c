@@ -25,7 +25,7 @@ static inline int Check3A7060(int w) {
 }
 #pragma push
 #pragma bool off
-int Cd_Read(int a, int b, int c)
+int snd_StreamSafeCdRead(int a, int b, int c)
 {
     int buf[3];
     if (D_0053DC00 == 0) return sceCdRead(a, b, c);

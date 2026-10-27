@@ -11,7 +11,7 @@ extern char D_004BC160[];
 extern void sceDmaReset(int);
 extern void* memset(void*, int, unsigned int);
 extern void FlushCache(int);
-extern void* Mem_Alloc(int, int, char*, int);
+extern void* cMemMan_Allocate(int, int, char*, int);
 extern void cDmaMan_Reset(S375E50*);
 }
 static inline void SetupBuf(B375E50* b)
@@ -27,7 +27,7 @@ static inline void SetupBuf(B375E50* b)
 static inline void* AllocBuf(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004BC160, line);
+    return cMemMan_Allocate(0, size, D_004BC160, line);
 }
 extern "C" void cDmaMan_Init(S375E50* o, int sz0, int sz1, int sz2)
 {

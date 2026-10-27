@@ -30,7 +30,7 @@ extern int rt_list_buf_get_head(int *list, void **node);
 extern int rt_udp_get_packet_header(void *pkt, Hdr9e70 *out);
 extern int rt_udp_set_packet_header(void *pkt, Hdr9e70 *in);
 extern int rt_udp_send_reset(Mgr9e70 *m, Ent9e70 *e);
-extern int RtUdp_QueueAck(Mgr9e70 *m, Ent9e70 *e, Pkt9e70 *p);
+extern int rt_udp_send_ack(Mgr9e70 *m, Ent9e70 *e, Pkt9e70 *p);
 
 int rt_udp_process_connect(Mgr9e70 *m, Pkt9e70 *p, int idx)
 {
@@ -63,7 +63,7 @@ int rt_udp_process_connect(Mgr9e70 *m, Pkt9e70 *p, int idx)
     case 11:
     case 12:
         if (e->ack == 0) e->ack = p->ack;
-        ret = RtUdp_QueueAck(m, e, p);
+        ret = rt_udp_send_ack(m, e, p);
         break;
     default:
         e->state = 1;

@@ -2,7 +2,7 @@
 #include "types.h"
 #include "alloc_guard.h"
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 }
 class O3E56F0 { public: virtual void Destroy(int flags); };
 extern "C" O3E56F0* D_0055A228;
@@ -13,7 +13,7 @@ extern "C" void cCharActionMsg_DestinationParams_ClearPrevMsg(void)
         {
             AllocGuard g;
             p->Destroy(-1);
-            Mem_Free(0, p, "character.cc", 0x37B);
+            cMemMan_Deallocate(0, p, "character.cc", 0x37B);
         }
         D_0055A228 = 0;
     }

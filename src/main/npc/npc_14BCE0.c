@@ -44,16 +44,16 @@ typedef struct cNPC_35 {
     void* brain;             /* 0x1B0 */
 } cNPC_35;
 
-extern void NpcAi_RequestMode(void* state, int kind, int value);
-extern void NpcRoute_RequestToNode(void* brain, int id);
+extern void cStateMachine_ChangeState(void* state, int kind, int value);
+extern void cPathNavigator_Request_int(void* brain, int id);
 
 /* cNPC virtual 0x35: records an event kind (< 7) and forwards the target. */
-void cNPC_v35(cNPC_35* self, int kind, Target78* target) {
+void cNPC_SetMode(cNPC_35* self, int kind, Target78* target) {
     if ((unsigned char)kind < 7) {
-        NpcAi_RequestMode(self->state44, (unsigned char)kind, 100);
+        cStateMachine_ChangeState(self->state44, (unsigned char)kind, 100);
         if (target) {
             self->kind = kind;
-            NpcRoute_RequestToNode(self->brain, target->id);
+            cPathNavigator_Request_int(self->brain, target->id);
         }
     }
 }

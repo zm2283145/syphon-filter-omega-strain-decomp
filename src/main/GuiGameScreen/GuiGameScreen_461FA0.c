@@ -32,7 +32,7 @@ void func_00461FB0(Word4* self) {
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004C2538[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(GuiEndGameAwards_Create, 0x510, D_004C2538, GuiEndGameAwards_ctor)
+DEFINE_GUARDED_NEW_CTOR(ConcreteWidgetClassRep_GuiEndGameAwards_Create_void_2, 0x510, D_004C2538, GuiEndGameAwards_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00461FC0 */
 
@@ -42,18 +42,18 @@ DEFINE_GUARDED_NEW_CTOR(GuiEndGameAwards_Create, 0x510, D_004C2538, GuiEndGameAw
 #include "alloc_guard.h"
 extern "C" {
 extern char D_004E1220[]; extern char D_004E16D0[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void GuiWidget_ctor(void* self);
 }
 struct G00462070 { void* vtable; };
 #define GW(off) (*(int*)((char*)p + (off)))
 #define GB(off) (*(char*)((char*)p + (off)))
-extern "C" G00462070* GuiAutoSaver_Create(void)
+extern "C" G00462070* ConcreteWidgetClassRep_GuiAutoSaver_Create(void)
 {
     G00462070* p;
     {
         AllocGuard guard;
-        p = (G00462070*)Mem_Alloc(0, 0x78, "guiWidget.hh", 0x2A);
+        p = (G00462070*)cMemMan_Allocate(0, 0x78, "guiWidget.hh", 0x2A);
     }
     if (p) {
         GuiWidget_ctor(p);
@@ -70,6 +70,6 @@ extern "C" G00462070* GuiAutoSaver_Create(void)
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_00462140, D_004E1220, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(func_00462140, D_004E1220, GuiWidget_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00462140 */

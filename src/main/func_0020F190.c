@@ -19,20 +19,20 @@ static inline void Req_Init(SoundRequest* p, int type, __int128 name, Voice_F190
 static inline void Req_Default(SoundRequest* p) {
     p->voiceId = -2;
     p->voice = 0;
-    Resource_Construct(&p->a);
-    Resource_Construct(&p->b);
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
 }
 SoundEvent* cPlaySoundMsg_ctor_netPlaySoundMsgR(SoundEvent* ev, Src_F190* src, Voice_F190* voice) {
     SoundRequest* p;
-    Event_Construct(ev, D_004F53C8);
+    cMessage_ctor_cMessageNameR(ev, D_004F53C8);
     ev->vtable = D_004DAE10;
     p = &ev->req;
     p->voiceId = -2;
     p->voice = 0;
-    Resource_Construct(&p->a);
-    Resource_Construct(&p->b);
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
     Req_Init(&ev->req, src->type, src->name, voice, src->x180);

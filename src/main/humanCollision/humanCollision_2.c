@@ -15,22 +15,22 @@
 #include "types.h"
 #include "humanCollision_types.h"
 
-extern int Vector_Reserve_1EF6C0(int, int);  /* vector reserve (buffer B) */
+extern int std_vector_imp_cCollisionEdge_reserve(int, int);  /* vector reserve (buffer B) */
 
 /* Empty vector (buffer A). */
-HumanColVec* HumanColBufA_Init(HumanColVec* v) {
+HumanColVec* std_vector_imp_cEdgeGroup_ctor(HumanColVec* v) {
     v->capacity = 0;
     v->count = 0;
     v->data = 0;
     return v;
 }
 
-int HumanColBufB_Reserve(int v, int n) {
-    return Vector_Reserve_1EF6C0(v, n);
+int std_vector_cCollisionEdge_reserve(int v, int n) {
+    return std_vector_imp_cCollisionEdge_reserve(v, n);
 }
 
 /* Empty vector (buffer B). */
-HumanColVec* HumanColBufB_Init(HumanColVec* v) {
+HumanColVec* std_vector_cCollisionEdge_ctor(HumanColVec* v) {
     v->capacity = 0;
     v->count = 0;
     v->data = 0;
@@ -42,18 +42,18 @@ HumanColVec* HumanColBufB_Init(HumanColVec* v) {
 /* merge_units: begin func_001EB8A0 */
 #pragma push /* merge_units */
 #define FLT_MAX 3.4028235e38f
-extern void HumanColMask_Ctor(HumanColMask* m, int all);
-extern void HumanColQueryMask_Ctor(HumanColMask* m, int all);
+extern void cBitArray_19_ctor_bool(HumanColMask* m, int all);
+extern void cBitArray_5_ctor_bool(HumanColMask* m, int all);
 /* Constructor: clears the masks and sets unbounded ranges. */
-HumanColPreset* HumanColPreset_Ctor(HumanColPreset* p)
+HumanColPreset* cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_ctor_void(HumanColPreset* p)
 {
     HumanColMask* masks;
     p->selector = -1;
     masks = p->masks;
-    HumanColMask_Ctor(&masks[0], 0);
-    HumanColMask_Ctor(&masks[1], 0);
-    HumanColQueryMask_Ctor(&masks[2], 0);
-    HumanColQueryMask_Ctor(&masks[3], 0);
+    cBitArray_19_ctor_bool(&masks[0], 0);
+    cBitArray_19_ctor_bool(&masks[1], 0);
+    cBitArray_5_ctor_bool(&masks[2], 0);
+    cBitArray_5_ctor_bool(&masks[3], 0);
     p->cfg.range0Min = -FLT_MAX;
     p->cfg.range0Max = FLT_MAX;
     p->cfg.range1Min = -FLT_MAX;

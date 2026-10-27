@@ -9,7 +9,7 @@ typedef struct { int a; } C;
 extern unsigned char D_004908EC;
 extern int rt_msg_client_is_valid_channel(C *);
 extern int rt_msg_set_u2byte(void *, unsigned short);
-extern int NetConn_BufferMessage(C *, int, int, void *, int, int);
+extern int rt_msg_client_store_msg_in_send_buf(C *, int, int, void *, int, int);
 int rt_msg_client_store_flush_msg_in_send_buf(C *c, unsigned short id)
 {
     unsigned char buf[2];
@@ -28,7 +28,7 @@ int rt_msg_client_store_flush_msg_in_send_buf(C *c, unsigned short id)
             p = buf;
             n = 2;
         }
-        r = NetConn_BufferMessage(c, type, 0xFFFF, p, n, 0);
+        r = rt_msg_client_store_msg_in_send_buf(c, type, 0xFFFF, p, n, 0);
         if (r) return r;
     }
     return 0;
@@ -60,9 +60,9 @@ extern int rt_msg_set_u2byte(unsigned char *, unsigned short);
 extern void rt_msg_set_u4byte(unsigned char *, unsigned int);
 extern unsigned int KM_GetSoftwareID(void);
 #if 0 /* merge_units */
-extern int NetConn_BufferMessage(S *, int, int, unsigned char *, int, int);
+extern int rt_msg_client_store_msg_in_send_buf(S *, int, int, unsigned char *, int, int);
 #endif /* merge_units */
-#define NetConn_BufferMessage(a0, a1, a2, a3, a4, a5) (NetConn_BufferMessage((C *)(a0), (a1), (a2), (void *)(a3), (a4), (a5))) /* merge_units */
+#define rt_msg_client_store_msg_in_send_buf(a0, a1, a2, a3, a4, a5) (rt_msg_client_store_msg_in_send_buf((C *)(a0), (a1), (a2), (void *)(a3), (a4), (a5))) /* merge_units */
 
 extern int rt_time_start(void *);
 int rt_msg_client_store_connect_aux_udp(O *o, S *s)
@@ -97,12 +97,12 @@ int rt_msg_client_store_connect_aux_udp(O *o, S *s)
     p += 2;
     if (rt_msg_set_u2byte(p, o->f58)) return 7;
     p += 2;
-    r = NetConn_BufferMessage(s, 0x16, 0xFFFF, p - 0x1D, 0x1D, 1);
+    r = rt_msg_client_store_msg_in_send_buf(s, 0x16, 0xFFFF, p - 0x1D, 0x1D, 1);
     if (r) return r;
     if (rt_time_start(o->f70)) return 0x18;
     return 0;
 }
 #undef rt_msg_client_is_valid_channel /* merge_units */
 #undef rt_msg_set_u2byte /* merge_units */
-#undef NetConn_BufferMessage /* merge_units */
+#undef rt_msg_client_store_msg_in_send_buf /* merge_units */
 /* merge_units: end func_002FEE78 */

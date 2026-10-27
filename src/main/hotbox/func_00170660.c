@@ -8,9 +8,9 @@ union TrackerIter { HotboxListNode* p; };
 struct HotMsg { CMSG_HEADER; int action; int code; int value; int who; };
 struct HotboxV { VPAD32(a) VPAD32(b) VPAD2(c) virtual int Test(void*); };
 extern "C" {
-void List_Erase(void*,void*,void*);
+void std_list_deleter_voidPtr_erase_listdeleter(void*,void*,void*);
 void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(void*,void*);
-void HotboxTracker_LinkBox(void*,void*);
+void std_list_cHotboxPtr_push_back(void*,void*);
 void cLListIterator_cHotboxPtr_ctor_cLListIteratorR(void*,void*);
 int opNe_cLListIteratorR_cLListIteratorR_2(void*,void*);
 void cLList_cHotboxPtr_End(void*,void*);
@@ -31,7 +31,7 @@ extern unsigned char D_005721C0,g_IsMultiplayer;
 #pragma bool off
 static inline int Active(SfGameObject* p){return p->activated && p->enabled && !p->removed;}
 #pragma pop
-extern "C" void Hotbox_UpdateTracker(HotboxReceiver* arg0, void* arg1, void* arg2) {
+extern "C" void cHotboxMan_Update(HotboxReceiver* arg0, void* arg1, void* arg2) {
     TrackerIter sp17C;
     TrackerIter sp178;
     cHotbox* sp174;
@@ -118,7 +118,7 @@ block_19:
                 }
                 temp_s1 = arg0->unk20;
                 temp_s0 = temp_s2->type;
-                Event_Construct(&spE0, &D_004EE698);
+                cMessage_ctor_cMessageNameR(&spE0, &D_004EE698);
                 spE0.vtable = D_004D9940;
                 spE0.action = 2;
                 spE0.code = temp_s0;
@@ -131,12 +131,12 @@ block_19:
                     spE0.kind = 2;
                 }
                 spE0.flags = 0x40;
-                Event_Send(&spE0, temp_s2, 0);
+                QueueMessage_cMessageR_cSystemP_int(&spE0, temp_s2, 0);
                 spE0.vtable = D_004D9940;
                 cMessage_dtor(&spE0, 0);
                 std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&sp144, &sp17C);
                 std_list_cHotboxPtr_generic_iterator_opCast(&sp130, &sp144);
-                List_Erase(&sp134, arg2, &sp130);
+                std_list_deleter_voidPtr_erase_listdeleter(&sp134, arg2, &sp130);
                 std_list_cHotboxPtr_generic_iterator_ctor(&sp148, &sp134);
                 sp160.p = sp148;
                 sp17C = sp160;
@@ -194,10 +194,10 @@ block_49:
                             occupied->occupants = 3;
                         }
                     }
-                    HotboxTracker_LinkBox(arg2, &sp174);
+                    std_list_cHotboxPtr_push_back(arg2, &sp174);
                     temp_s2_2 = arg0->unk20;
                     temp_s1_2 = sp174->type;
-                    Event_Construct(&spA0, &D_004EE698);
+                    cMessage_ctor_cMessageNameR(&spA0, &D_004EE698);
                     spA0.vtable = D_004D9940;
                     spA0.action = 0;
                     spA0.code = temp_s1_2;
@@ -210,7 +210,7 @@ block_49:
                         spA0.kind=2;
                     }
                     spA0.flags = 0x40;
-                    Event_Send(&spA0, sp174, 0);
+                    QueueMessage_cMessageR_cSystemP_int(&spA0, sp174, 0);
                     spA0.vtable = D_004D9940;
                     cMessage_dtor(&spA0, 0);
                 }

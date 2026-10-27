@@ -6,10 +6,10 @@
 #include "types.h"
 #include "path_types.h"
 
-extern int NpcPath_HoldAtRouteNode(void* a0, int a1);
-extern void NpcPath_HoldNode(void* a0, int a1);
+extern int cPathNavigator_ResolvePathAfterTeleport(void* a0, int a1);
+extern void cPathNavigator_SetNodeIndex(void* a0, int a1);
 
-void NpcPath_RelocateStuck(void* a0, int a1) {
-    NpcPath_HoldAtRouteNode(a0, a1);
-    NpcPath_HoldNode(a0, a1);
+void cPathNavigator_AdjustPathForTeleport(void* a0, int a1) {
+    cPathNavigator_ResolvePathAfterTeleport(a0, a1);
+    cPathNavigator_SetNodeIndex(a0, a1);
 }

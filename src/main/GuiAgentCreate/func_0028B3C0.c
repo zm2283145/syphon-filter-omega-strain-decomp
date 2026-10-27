@@ -21,22 +21,22 @@ extern char D_004A98F0[];
 extern char D_004A9900[];
 extern char D_004A9910[];
 extern char D_004A9920[];
-void Appearance_RemoveBlankPairs(Blk_0028B3C0* b);
-void* Agent_GetSelected(void* a, int b);
-char* AgentData_GetName(void* ag);
-void GuiAgentCreate_Save(Self_0028B3C0* self);
-void* Gui_GetScreenList(void);
-void* GuiManager_FindOrLoad(void* a, char* b, char* c);
-char* Loc_LookupText(char* key);
-void GuiKeyboard_Open(void* pg, char* title, char* text, Self_0028B3C0* self, int a, int b, int c);
-void* Gui_GetScreenStack(void);
-void GuiStack_SwapScreens(void* a, void* b, void* c);
-void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
+void SKL_RemoveBlanks(Blk_0028B3C0* b);
+void* cGameSystem_GetAgentData(void* a, int b);
+char* cAgentData_GetUserName(void* ag);
+void GuiAgentCreate_NextScreen(Self_0028B3C0* self);
+void* Gui_Manager(void);
+void* GuiManager_OpenGui(void* a, char* b, char* c);
+char* nGlobalization_GetString_charP(char* key);
+void GuiKeyboard_Display(void* pg, char* title, char* text, Self_0028B3C0* self, int a, int b, int c);
+void* Gui_Canvas(void);
+void GuiCanvas_Transition(void* a, void* b, void* c);
+void GuiWidget_SendMessage(void* a, void* b, int kind, int v, int f);
 void RecurseChildrenFocusable(void* p);
 void RecurseChildrenNotFocusable(void* p);
-void GuiScreen_SetFocus(void* ui, void* w);
-void GuiAgentCreate_StepOption(Self_0028B3C0* self, int a, int b);
-int GuiAgentCreate_HandleInput(Self_0028B3C0* self, Ev_0028B3C0* ev);
+void GuiCanvas_SetFocus(void* ui, void* w);
+void GuiAgentCreate_UserInterface(Self_0028B3C0* self, int a, int b);
+int GuiAgentCreate_onInput(Self_0028B3C0* self, Ev_0028B3C0* ev);
 }
 
 static inline void QCopy_0028B3C0(void* d0, void* s0, int n0) { int n = n0; void* d = d0; void* s = s0;
@@ -57,7 +57,7 @@ static inline unsigned char Down_0028B3C0(Ev_0028B3C0* e) { unsigned char r = 0;
 static inline unsigned char Btn_0028B3C0(Ev_0028B3C0* e, int b) { unsigned char r = 0; if (Down_0028B3C0(e) != 0 && e->btn == b) r = 1; return r; }
 static inline unsigned char Plain_0028B3C0(Ev_0028B3C0* e, int b) { unsigned char r = 0; if (Btn_0028B3C0(e, b) != 0 && e->b6 == 0) r = 1; return r; }
 
-extern "C" int GuiAgentCreate_HandleInput(Self_0028B3C0* self, Ev_0028B3C0* ev)
+extern "C" int GuiAgentCreate_onInput(Self_0028B3C0* self, Ev_0028B3C0* ev)
 {
     if (Plain_0028B3C0(ev, 0x40)) {
     }
@@ -68,61 +68,61 @@ extern "C" int GuiAgentCreate_HandleInput(Self_0028B3C0* self, Ev_0028B3C0* ev)
         if (D_00493A60 == -1)
             D_00493A60 = 0;
         QCopy_0028B3C0(&D_0055D510[D_00493A60], App_0028B3C0(self->f70->sub60), 0x44);
-        Appearance_RemoveBlankPairs(&D_0055D510[D_00493A60]);
-        ag = Agent_GetSelected(g_Game, -1);
-        n = AgentData_GetName(ag);
+        SKL_RemoveBlanks(&D_0055D510[D_00493A60]);
+        ag = cGameSystem_GetAgentData(g_Game, -1);
+        n = cAgentData_GetUserName(ag);
         if (!n || !*n) {
-            pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A98E0, D_004A98F0);
+            pg = GuiManager_OpenGui(Gui_Manager(), D_004A98E0, D_004A98F0);
             if (pg) {
-                char* t = Loc_LookupText(D_004A9900);
-                GuiKeyboard_Open(pg, t, AgentData_GetName(ag), self, 0xF, 2, 1);
+                char* t = nGlobalization_GetString_charP(D_004A9900);
+                GuiKeyboard_Display(pg, t, cAgentData_GetUserName(ag), self, 0xF, 2, 1);
             }
             return 1;
         }
-        GuiAgentCreate_Save(self);
+        GuiAgentCreate_NextScreen(self);
         return 1;
     }
     if (Plain_0028B3C0(ev, 0x10)) {
-        void* pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9910, D_004A9920);
-        GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
+        void* pg = GuiManager_OpenGui(Gui_Manager(), D_004A9910, D_004A9920);
+        GuiCanvas_Transition(Gui_Canvas(), self, pg);
         return 1;
     }
     if (Plain_0028B3C0(ev, 0x2000) && self->fD0) {
         if (self->fCC != 0 && self->fCC != 1)
-            GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 0, 0);
+            GuiWidget_SendMessage(self, Gui_Canvas(), 0x10, 0, 0);
         if (self->fCC == 2) {
             RecurseChildrenFocusable(self->f4C);
             RecurseChildrenNotFocusable(self->f48);
-            GuiScreen_SetFocus(Gui_GetScreenStack(), self->GetFocus());
+            GuiCanvas_SetFocus(Gui_Canvas(), self->GetFocus());
         } else if (self->fCC == 3) {
             RecurseChildrenFocusable(self->f50);
             RecurseChildrenNotFocusable(self->f48);
             if (!self->fD8 && self->f54)
                 self->f54->flags &= ~2;
-            GuiScreen_SetFocus(Gui_GetScreenStack(), self->GetFocus());
+            GuiCanvas_SetFocus(Gui_Canvas(), self->GetFocus());
         } else if (self->fCC == 4) {
-            void* ag = Agent_GetSelected(g_Game, -1);
-            void* pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A98E0, D_004A98F0);
+            void* ag = cGameSystem_GetAgentData(g_Game, -1);
+            void* pg = GuiManager_OpenGui(Gui_Manager(), D_004A98E0, D_004A98F0);
             if (pg) {
-                char* t = Loc_LookupText(D_004A9900);
-                GuiKeyboard_Open(pg, t, AgentData_GetName(ag), self, 0xF, 1, 1);
+                char* t = nGlobalization_GetString_charP(D_004A9900);
+                GuiKeyboard_Display(pg, t, cAgentData_GetUserName(ag), self, 0xF, 1, 1);
             }
         }
     }
     if (Plain_0028B3C0(ev, 0x8000) && !self->fD0) {
-        GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 0, 0);
+        GuiWidget_SendMessage(self, Gui_Canvas(), 0x10, 0, 0);
         RecurseChildrenFocusable(self->f48);
         if (self->fCC == 2) {
             RecurseChildrenNotFocusable(self->f4C);
-            GuiScreen_SetFocus(Gui_GetScreenStack(), self->f4C);
+            GuiCanvas_SetFocus(Gui_Canvas(), self->f4C);
         } else {
             RecurseChildrenNotFocusable(self->f50);
-            GuiScreen_SetFocus(Gui_GetScreenStack(), self->f50);
+            GuiCanvas_SetFocus(Gui_Canvas(), self->f50);
         }
     }
     if (Plain_0028B3C0(ev, 4))
-        GuiAgentCreate_StepOption(self, 1, 0);
+        GuiAgentCreate_UserInterface(self, 1, 0);
     if (Plain_0028B3C0(ev, 8))
-        GuiAgentCreate_StepOption(self, 0, 1);
+        GuiAgentCreate_UserInterface(self, 0, 1);
     return 0;
 }

@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 
-extern "C" void Appearance_RegistryKey(char* dst, int n, char* src);
+extern "C" void strCpyPad(char* dst, int n, char* src);
 
 struct V4_D530 {
  float x, y, z, w;
@@ -61,10 +61,10 @@ static inline void FinJ_D530(V4_D530* a, V4_D530* pv0, V4_D530* b)
     __asm__ volatile("lqc2 vf1, 0x0(%0); lqc2 vf2, 0x0(%1); lqc2 vf3, 0x0(%2); vmini.xyz vf1, vf1, vf3; vmax.xyz vf2, vf2, vf3; sqc2 vf1, 0x0(%0); sqc2 vf2, 0x0(%1)" : : "r"(a), "r"(pv0), "r"(b) : "memory");
 }
 
-extern "C" void ManModel_ctor(Obj_D530* self, char* name, int idx, Id_D530* id,
+extern "C" void gunList_LoadGunInit(Obj_D530* self, char* name, int idx, Id_D530* id,
                               int a, int b, int c, int d)
 {
-    Appearance_RegistryKey(self->name, 0x1F, name);
+    strCpyPad(self->name, 0x1F, name);
     self->x400 = 0;
     self->x40D = c;
     self->x40E = d;

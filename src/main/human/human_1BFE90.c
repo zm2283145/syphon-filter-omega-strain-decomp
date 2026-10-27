@@ -66,22 +66,22 @@ typedef struct { char d[0xA0]; } __attribute__((aligned(16))) File_1BFF40;
 extern int SkaRegistry_AllModelsHaveKey(void* mgr, char* name);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern void* cHogList_Get(void* fs, char* path);
-extern void String_CtorCStr_13B480(Str_1BFF40* s, char* c);
+extern void std_basic_string_char_char_traits_char_ctor_charP(Str_1BFF40* s, char* c);
 extern void opAdd_cStringR_charP(Str_1BFF40* out, Str_1BFF40* a, char* b);
-extern char* String_CStr(Str_1BFF40* s);
+extern char* std_basic_string_char_char_traits_char_c_str(Str_1BFF40* s);
 extern void cFileMan_ctor_charP_cHogFileR_bool(File_1BFF40* f, char* name, void* h, int x);
 extern void String_Dtor(Str_1BFF40* s, int f);
 extern void* cLoader_AllocateAndFillAnimationBuffer(void* mgr, File_1BFF40* f);
 extern void std_tree_pair_cString_value_compare_begin(It_1BFF40* out, void* tree);
 extern void std_tree_pair_cString_value_compare_end(It_1BFF40* out, void* tree);
-extern void Skas_AppendAnimation(void* anim, Str_1BFF40* name, void* r);
-extern void Tree_Successor(It_1BFF40* it);
-extern void FileMan_Release(File_1BFF40* f, int x);
+extern void cSkaAnimationSet_AddAnimation_cStringR_cSkaAnimDataR(void* anim, Str_1BFF40* name, void* r);
+extern void std_red_black_tree_1_increment(It_1BFF40* it);
+extern void cFileMan_dtor(File_1BFF40* f, int x);
 extern char D_0048B2F8[];
 extern char D_004FFB8C[];
 extern char D_004FFBC0[];
 static inline int Eq_1BFF40(void* a, void* b) { return a == b; }
-void SkaRegistry_LoadAnimation(void* mgr, char* name)
+void cLoader_LoadSingleAnimation_FromHogWithLevelSpecificAnimations(void* mgr, char* name)
 {
     It_1BFF40 it;
     It_1BFF40 b;
@@ -97,9 +97,9 @@ void SkaRegistry_LoadAnimation(void* mgr, char* name)
     sprintf(buf, "%s\\COMMON\\SKALEVEL.HOG", D_0048B2F8);
     h = cHogList_Get(D_004FFB8C, buf);
     if (!h) return;
-    String_CtorCStr_13B480(&s1, name);
+    std_basic_string_char_char_traits_char_ctor_charP(&s1, name);
     opAdd_cStringR_charP(&s2, &s1, ".ska");
-    cFileMan_ctor_charP_cHogFileR_bool(&file, String_CStr(&s2), h, 0);
+    cFileMan_ctor_charP_cHogFileR_bool(&file, std_basic_string_char_char_traits_char_c_str(&s2), h, 0);
     String_Dtor(&s2, 0);
     String_Dtor(&s1, 0);
     r = cLoader_AllocateAndFillAnimationBuffer(mgr, &file);
@@ -109,13 +109,13 @@ void SkaRegistry_LoadAnimation(void* mgr, char* name)
         std_tree_pair_cString_value_compare_end(&e, D_004FFBC0);
         h = e.n;
         while (Eq_1BFF40(it.n, h) ^ 1) {
-            String_CtorCStr_13B480(&s3, name);
-            Skas_AppendAnimation(it.n->anim, &s3, r);
+            std_basic_string_char_char_traits_char_ctor_charP(&s3, name);
+            cSkaAnimationSet_AddAnimation_cStringR_cSkaAnimDataR(it.n->anim, &s3, r);
             String_Dtor(&s3, 0);
-            Tree_Successor(&it);
+            std_red_black_tree_1_increment(&it);
         }
     }
-    FileMan_Release(&file, -1);
+    cFileMan_dtor(&file, -1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_001BFF40 */

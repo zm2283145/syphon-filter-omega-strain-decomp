@@ -18,43 +18,43 @@ extern int D_00497BE8;
 extern int D_004FFC04;
 extern G465* g_Hud;
 extern char g_Game[];
-extern int FrontEnd_FindPopup(int, int);
-extern char* Loc_LookupText(char*);
-extern void String_CtorCStr_13B480(S465*, char*);
-extern char* String_CStr(S465*);
-extern int FrontEnd_OpenPopup(int, int, char*, char*, int, int);
-extern void Game_SetPaused(char*, int);
+extern int cGameFrontEnd_FindMessageBox(int, int);
+extern char* nGlobalization_GetString_charP(char*);
+extern void std_basic_string_char_char_traits_char_ctor_charP(S465*, char*);
+extern char* std_basic_string_char_char_traits_char_c_str(S465*);
+extern int cGameFrontEnd_PushMessageBox(int, int, char*, char*, int, int);
+extern void cGameSystem_PauseGame(char*, int);
 extern void String_Dtor(S465*, int);
-extern void FrontEnd_ClosePopup(int, int);
-extern void GuiCanvas_UpdateStack(W465*, float);
+extern void cGameFrontEnd_PopMessageBox(int, int);
+extern void GuiCanvas_NextFrame(W465*, float);
 static inline int st465(X465* x) { return x->f1ec; }
-void GuiCanvas_CheckControllers(W465* w, float t) {
+void GuiCommonCanvas_NextFrame(W465* w, float t) {
     if (w->flags & 4) {
         X465* x = &D_0055A300;
         int ok = g_Pad0State == 0 || x->f1ec == 3;
         if (ok) D_00587B20++;
         else D_00587B20 = 0;
         if (D_00587B20 >= 3) {
-            if (D_00497BE8 == -1 || !FrontEnd_FindPopup(D_004FFC04, D_00497BE8)) {
+            if (D_00497BE8 == -1 || !cGameFrontEnd_FindMessageBox(D_004FFC04, D_00497BE8)) {
                 S465 a;
                 S465 b;
-                String_CtorCStr_13B480(&a, Loc_LookupText("NoCtrlTitle"));
-                String_CtorCStr_13B480(&b, Loc_LookupText("NoCtrlMessage"));
+                std_basic_string_char_char_traits_char_ctor_charP(&a, nGlobalization_GetString_charP("NoCtrlTitle"));
+                std_basic_string_char_char_traits_char_ctor_charP(&b, nGlobalization_GetString_charP("NoCtrlMessage"));
                 {
-                    char* tb = String_CStr(&b);
-                    D_00497BE8 = FrontEnd_OpenPopup(D_004FFC04, 1, String_CStr(&a), tb, 0, 0);
+                    char* tb = std_basic_string_char_char_traits_char_c_str(&b);
+                    D_00497BE8 = cGameFrontEnd_PushMessageBox(D_004FFC04, 1, std_basic_string_char_char_traits_char_c_str(&a), tb, 0, 0);
                 }
-                Game_SetPaused(g_Game, 1);
+                cGameSystem_PauseGame(g_Game, 1);
                 String_Dtor(&b, 0);
                 String_Dtor(&a, 0);
             }
         } else if (D_00497BE8 != -1) {
-            FrontEnd_ClosePopup(D_004FFC04, D_00497BE8);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, D_00497BE8);
             D_00497BE8 = -1;
-            if (!g_Hud || !g_Hud->b6a8) Game_SetPaused(g_Game, 0);
+            if (!g_Hud || !g_Hud->b6a8) cGameSystem_PauseGame(g_Game, 0);
         }
     }
-    GuiCanvas_UpdateStack(w, t);
+    GuiCanvas_NextFrame(w, t);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00465870 */
@@ -68,10 +68,10 @@ void GuiCanvas_CheckControllers(W465* w, float t) {
  */
 
 
-extern int GuiCanvas_DispatchInput(int, int);
+extern int GuiCanvas_ProcessInputEvent(int, int);
 
 int func_00465A40(int a0, int a1) {
-    return GuiCanvas_DispatchInput(a0, a1);
+    return GuiCanvas_ProcessInputEvent(a0, a1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00465A40 */
@@ -79,9 +79,9 @@ int func_00465A40(int a0, int a1) {
 /* merge_units: begin func_00465A50 */
 #pragma push /* merge_units */
 extern char D_00586610[], D_005867B0[], D_005862D0[], D_00586470[], D_00586950[];
-extern int GuiSound_Play(void*, void*);
-extern int GuiSound_Stop(void*, void*);
-extern int GuiCanvas_FinishDeferredPop(void*, void*, unsigned short, int, int);
+extern int PlayGuiSound(void*, void*);
+extern int StopGuiSound(void*, void*);
+extern int GuiCanvas_onMessage(void*, void*, unsigned short, int, int);
 int GuiCommonCanvas_onMessage(void* self, void* b, unsigned short type, int idx, int e)
 {
     if (type == 0x10 || type == 0x11) {
@@ -95,12 +95,12 @@ int GuiCommonCanvas_onMessage(void* self, void* b, unsigned short type, int idx,
         }
         if (t) {
             int r;
-            if (type == 0x10) r = GuiSound_Play(b, t);
-            else r = GuiSound_Stop(b, t);
+            if (type == 0x10) r = PlayGuiSound(b, t);
+            else r = StopGuiSound(b, t);
             return r;
         }
     }
-    return GuiCanvas_FinishDeferredPop(self, b, type, idx, e);
+    return GuiCanvas_onMessage(self, b, type, idx, e);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00465A50 */

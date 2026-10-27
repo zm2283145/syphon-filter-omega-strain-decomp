@@ -12,8 +12,8 @@ extern V4_A8F0 D_004BF1B0;
 extern float D_004BF1C0;
 extern float D_00572100;
 extern V4_A8F0 D_005720E0;
-extern void GuiWidget_Update(void* self, float dt);
-extern float Math_FMod(float x, float y);
+extern void GuiWidget_onAdvanceTime(void* self, float dt);
+extern float Libc_Fmodf(float x, float y);
 static inline float Abs_A8F0(float x) { float r; asm { abs.s r, x } return r; }
 static inline void Set(V4_A8F0* o, float x, float y, float z, float w) { o->x = x; o->y = y; o->z = z; o->w = w; }
 static inline void Lerp(V4_A8F0* out, V4_A8F0* a, V4_A8F0* b, float t)
@@ -21,12 +21,12 @@ static inline void Lerp(V4_A8F0* out, V4_A8F0* a, V4_A8F0* b, float t)
     float aw = a->w, az = a->z, ay = a->y, ax = a->x;
     Set(out, ax + t * (b->x - ax), ay + t * (b->y - ay), az + t * (b->z - az), aw + t * (b->w - aw));
 }
-void GuiTextEditWidget_Update(void* self, float dt)
+void GuiTextEditWidget_onAdvanceTime(void* self, float dt)
 {
     float t;
     float m;
-    GuiWidget_Update(self, dt);
-    m = Math_FMod(D_00572100 += 33.333332f * dt, D_004BF1C0);
+    GuiWidget_onAdvanceTime(self, dt);
+    m = Libc_Fmodf(D_00572100 += 33.333332f * dt, D_004BF1C0);
     D_00572100 = m;
     t = Abs_A8F0(1.0f - 2.0f * m / D_004BF1C0);
     Lerp(&D_005720E0, &D_004BF1A0, &D_004BF1B0, t);
@@ -47,8 +47,8 @@ typedef struct SsoString {
 } SsoString;
 typedef struct { char pad[0x48]; SsoString text; char pad2[0x24]; void* view; char pad3[4]; unsigned char active; char pad4[0xB]; int mode; } TextBox;
 extern void GuiTextWidget_UpdateText(TextBox* t);
-extern void GuiTextEditWidget_MaskText(void* view, int len);
-extern void GuiTextEditWidget_ClampCursor(TextBox* t, int mode);
+extern void MaskTextArea(void* view, int len);
+extern void GuiTextEditWidget_SetCursorPos(TextBox* t, int mode);
 /* Refreshes the text box, updating the view with the text length when active. */
 void GuiTextEditWidget_UpdateText(TextBox* t)
 {
@@ -59,9 +59,9 @@ void GuiTextEditWidget_UpdateText(TextBox* t)
             len = (unsigned char)t->text.h.s.shortLen;
         else
             len = t->text.longLen;
-        GuiTextEditWidget_MaskText(t->view, len);
+        MaskTextArea(t->view, len);
     }
-    GuiTextEditWidget_ClampCursor(t, t->mode);
+    GuiTextEditWidget_SetCursorPos(t, t->mode);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0041AA10 */
@@ -97,21 +97,21 @@ struct Ev_AA80 {
     unsigned char ch;
 };
 struct G_AA80 { char pad[0x52]; unsigned char alt; };
-extern "C" G_AA80* Gui_GetScreenStack(void);
-extern "C" int GuiTextEditWidget_Delete(O_AA80* o, bool fwd);
-extern "C" int GuiTextEditWidget_Insert(O_AA80* o, char* text);
+extern "C" G_AA80* Gui_Canvas(void);
+extern "C" int GuiTextEditWidget_RemoveCharAtCursor(O_AA80* o, bool fwd);
+extern "C" int GuiTextEditWidget_InsertAtCursor(O_AA80* o, char* text);
 
 static inline bool Is3(Ev_AA80* e, unsigned short t, unsigned short m, unsigned short m2) { return e->type == t && e->mod == m && e->mod2 == m2; }
 static inline bool Is4(Ev_AA80* e, unsigned short t, unsigned short m, unsigned short k, unsigned short m2) { return e->type == t && e->mod == m && e->key == k && e->mod2 == m2; }
-extern "C" int GuiTextEditWidget_OnInput(O_AA80* self, Ev_AA80* e)
+extern "C" int GuiTextEditWidget_onInput(O_AA80* self, Ev_AA80* e)
 {
     if (Is3(e, 2, 0, 0)) {
-        if ((Gui_GetScreenStack()->alt && e->key == 0x2A) || e->key == 0x4C ||
-            (!Gui_GetScreenStack()->alt && e->key == 8) || e->key == 0x804C) {
-            GuiTextEditWidget_Delete(self, e->key == 0x4C || e->key == 0x804C);
+        if ((Gui_Canvas()->alt && e->key == 0x2A) || e->key == 0x4C ||
+            (!Gui_Canvas()->alt && e->key == 8) || e->key == 0x804C) {
+            GuiTextEditWidget_RemoveCharAtCursor(self, e->key == 0x4C || e->key == 0x804C);
             return 1;
         }
-        if ((Gui_GetScreenStack()->alt && e->key == 0x28) || (!Gui_GetScreenStack()->alt && e->key == 0xA)) {
+        if ((Gui_Canvas()->alt && e->key == 0x28) || (!Gui_Canvas()->alt && e->key == 0xA)) {
             self->target->Activate();
             return 1;
         }
@@ -120,7 +120,7 @@ extern "C" int GuiTextEditWidget_OnInput(O_AA80* self, Ev_AA80* e)
                 char buf[2];
                 buf[0] = e->ch;
                 buf[1] = 0;
-                GuiTextEditWidget_Insert(self, buf);
+                GuiTextEditWidget_InsertAtCursor(self, buf);
                 return 1;
             }
         }
@@ -162,15 +162,15 @@ typedef struct { unsigned char isLong : 1; unsigned char len : 7; } ShortHdr;
 typedef struct { union { unsigned int word; ShortHdr s; } hdr; int longLen; char* longData; } SsoString_0041AD60;
 typedef struct { char pad[0x48]; SsoString_0041AD60 text; char pad2[0x24]; void* label; char pad3[4]; unsigned char showLength; } Widget41A;
 
-extern void GuiTextWidget_OnWake(Widget41A* self);
-extern void GuiTextEditWidget_MaskText(void* label, int length);
+extern void GuiTextWidget_onWake(Widget41A* self);
+extern void MaskTextArea(void* label, int length);
 
 /* Refreshes the widget and, if enabled, passes its text length to the label. */
-void GuiTextEditWidget_OnWake(Widget41A* self)
+void GuiTextEditWidget_onWake(Widget41A* self)
 {
-    GuiTextWidget_OnWake(self);
+    GuiTextWidget_onWake(self);
     if (self->showLength)
-        GuiTextEditWidget_MaskText(self->label, (self->text.hdr.word & 1) ? self->text.longLen : (unsigned char)self->text.hdr.s.len);
+        MaskTextArea(self->label, (self->text.hdr.word & 1) ? self->text.longLen : (unsigned char)self->text.hdr.s.len);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0041AD60 */
@@ -188,7 +188,7 @@ extern char D_004E0A40[];         /* Unk41ADC0 vtable */
 extern Unk41ADC0* GuiTextWidget_ctor(Unk41ADC0*);
 
 /* Constructor: runs the parent constructor, then sets flag bit 7. */
-Unk41ADC0* GuiTextEditWidget_Construct(Unk41ADC0* self) {
+Unk41ADC0* GuiTextEditWidget_ctor_2(Unk41ADC0* self) {
     unsigned int flags;
 
     GuiTextWidget_ctor(self);

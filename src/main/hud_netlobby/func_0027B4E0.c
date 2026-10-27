@@ -2,12 +2,12 @@
 #include "types.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 
-void List_Begin(void* out, void* list);
+void std_list_deleter_voidPtr_begin_void(void* out, void* list);
 void std_list_GameInfoPtr_generic_iterator_ctor(void* out, void* in);
 void cLListIterator_GameInfoPtr_ctor(void* out, void* in);
 void std_list_GameInfoPtr_end(void* out, void* list);
-void IeElement_Fade(int h, float a);
-void IeElement_PlayRange(int h, int b, float a, float c);
+void cAnimator_AnimateTo(int h, float a);
+void cAnimator_StartAnimation(int h, int b, float a, float c);
 
 #pragma opt_loop_invariants off
 void cHudNetLobby_SetActive(char* arg0) {
@@ -26,15 +26,15 @@ void cHudNetLobby_SetActive(char* arg0) {
         arr[1] = F_(arg0, 0x8, int);
         for (i = 0, q = arr; i < 2; i++, q++) {
             if (i == F_(arg0, 0x38, int)) {
-                IeElement_PlayRange(*q, 1, 0.0f, 8.0f);
+                cAnimator_StartAnimation(*q, 1, 0.0f, 8.0f);
             } else {
-                IeElement_Fade(*q, 0.0f);
+                cAnimator_AnimateTo(*q, 0.0f);
             }
         }
     } else if (F_(arg0, 0x3C, int) == 1) {
         int j = 0;
         char* n;
-        List_Begin(&sp54, arg0 + 0x2C);
+        std_list_deleter_voidPtr_begin_void(&sp54, arg0 + 0x2C);
         std_list_GameInfoPtr_generic_iterator_ctor(&sp58, &sp54);
         n = sp58;
         std_list_GameInfoPtr_end(&sp50, arg0 + 0x2C);
@@ -42,9 +42,9 @@ void cHudNetLobby_SetActive(char* arg0) {
         if ((int)n != sp5C) {
             do {
                 if (j == F_(arg0, 0x38, int)) {
-                    IeElement_PlayRange(F_(F_(n, 0x8, int), 0x14, int), 1, 0.0f, 8.0f);
+                    cAnimator_StartAnimation(F_(F_(n, 0x8, int), 0x14, int), 1, 0.0f, 8.0f);
                 } else {
-                    IeElement_Fade(F_(F_(n, 0x8, int), 0x14, int), 0.0f);
+                    cAnimator_AnimateTo(F_(F_(n, 0x8, int), 0x14, int), 0.0f);
                 }
                 n = F_(n, 0x4, char*);
                 j++;

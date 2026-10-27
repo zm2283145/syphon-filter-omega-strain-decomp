@@ -11,11 +11,11 @@ struct Evt2D1290 { void* vt; char p4[0x2C]; V4 v30; V4 v40; int a50, a54, a58, a
 extern "C" {
 extern char D_0051F058[];
 extern char D_004DE240[];
-void Event_Construct(Evt2D1290* e, void* type);
+void cMessage_ctor_cMessageNameR(Evt2D1290* e, void* type);
 Evt2D1290* cNetGeneratorCreateMsg_ctor(Evt2D1290* self, Src2D1290* s);
 }
 extern "C" Evt2D1290* cNetGeneratorCreateMsg_ctor(Evt2D1290* self, Src2D1290* s) {
-    Event_Construct(self, D_0051F058);
+    cMessage_ctor_cMessageNameR(self, D_0051F058);
     self->vt = D_004DE240;
     self->a50 = s->a;
     self->a54 = s->b;

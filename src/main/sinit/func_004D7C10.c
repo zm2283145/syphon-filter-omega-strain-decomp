@@ -1,5 +1,5 @@
 #include "types.h"
-int Script_RegisterVariable();
+int cScriptBase_registerGlobalVar();
 extern char D_00493890;
 extern char FlashDist;
 extern char FlashShortDist;
@@ -29,19 +29,19 @@ extern int D_00586120;
 extern int D_00586128;
 extern int D_00586130;
 extern int D_00586138;
-void Flashlight_RegisterEngineVars(void) {
-    D_005860D0 = Script_RegisterVariable("FlashDist", (int)&FlashDist, &D_00493890);
-    D_005860D8 = Script_RegisterVariable("FlashShortDist", (int)&FlashShortDist, &D_00493890);
-    D_005860E0 = Script_RegisterVariable("FlashHitRad", (int)&FlashHitRad, &D_00493890);
-    D_005860E8 = Script_RegisterVariable("FlashAdjusty", (int)&FlashAdjusty, &D_00493890);
-    D_005860F0 = Script_RegisterVariable("FlashMinOuter", (int)&FlashMinOuter, &D_00493890);
-    D_005860F8 = Script_RegisterVariable("FlashMinInner", (int)&FlashMinInner, &D_00493890);
-    D_00586100 = Script_RegisterVariable("FlashMaxOuter", (int)&FlashMaxOuter, &D_00493890);
-    D_00586108 = Script_RegisterVariable("FlashMaxInner", (int)&FlashMaxInner, &D_00493890);
-    D_00586110 = Script_RegisterVariable("FlashMinRG", (int)&FlashMinRG, &D_00493890);
-    D_00586118 = Script_RegisterVariable("FlashMinB", (int)&FlashMinB, &D_00493890);
-    D_00586120 = Script_RegisterVariable("FlashVel", (int)&FlashVel, &D_00493890);
-    D_00586128 = Script_RegisterVariable("FlashAcc", (int)&FlashAcc, &D_00493890);
-    D_00586130 = Script_RegisterVariable("FlashDazzleSize", (int)&FlashDazzleSize, &D_00493890);
-    D_00586138 = Script_RegisterVariable("FlashSqueeze", (int)&FlashSqueeze, &D_00493890);
+void StaticInit_flashlight(void) {
+    D_005860D0 = cScriptBase_registerGlobalVar("FlashDist", (int)&FlashDist, &D_00493890);
+    D_005860D8 = cScriptBase_registerGlobalVar("FlashShortDist", (int)&FlashShortDist, &D_00493890);
+    D_005860E0 = cScriptBase_registerGlobalVar("FlashHitRad", (int)&FlashHitRad, &D_00493890);
+    D_005860E8 = cScriptBase_registerGlobalVar("FlashAdjusty", (int)&FlashAdjusty, &D_00493890);
+    D_005860F0 = cScriptBase_registerGlobalVar("FlashMinOuter", (int)&FlashMinOuter, &D_00493890);
+    D_005860F8 = cScriptBase_registerGlobalVar("FlashMinInner", (int)&FlashMinInner, &D_00493890);
+    D_00586100 = cScriptBase_registerGlobalVar("FlashMaxOuter", (int)&FlashMaxOuter, &D_00493890);
+    D_00586108 = cScriptBase_registerGlobalVar("FlashMaxInner", (int)&FlashMaxInner, &D_00493890);
+    D_00586110 = cScriptBase_registerGlobalVar("FlashMinRG", (int)&FlashMinRG, &D_00493890);
+    D_00586118 = cScriptBase_registerGlobalVar("FlashMinB", (int)&FlashMinB, &D_00493890);
+    D_00586120 = cScriptBase_registerGlobalVar("FlashVel", (int)&FlashVel, &D_00493890);
+    D_00586128 = cScriptBase_registerGlobalVar("FlashAcc", (int)&FlashAcc, &D_00493890);
+    D_00586130 = cScriptBase_registerGlobalVar("FlashDazzleSize", (int)&FlashDazzleSize, &D_00493890);
+    D_00586138 = cScriptBase_registerGlobalVar("FlashSqueeze", (int)&FlashSqueeze, &D_00493890);
 }

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* MotionChildArr_GetData(char* self) {
+void* std_vector_deleter_cSkaBlendSequenceItem_data_void_2(char* self) {
     return self + 8;
 }

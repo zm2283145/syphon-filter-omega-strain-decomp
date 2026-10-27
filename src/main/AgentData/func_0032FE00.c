@@ -8,13 +8,13 @@ extern char g_UnlockRows[];
 E_32FE00* std_vector_imp_Record_begin(void* t);
 E_32FE00* std_vector_imp_Record_end(void* t);
 void std_vector_Record_pointer2iterator(E_32FE00** out, void* t, E_32FE00** raw);
-int Loc_FindKeyThunk(const char* key);
-int Loc_LookupText(int id);
+int nGlobalization_GetStringIndex(const char* key);
+int nGlobalization_GetString_charP(int id);
 }
 static inline bool Neq_32FE00(E_32FE00* a, E_32FE00* b) { return !(a == b); }
 static inline int Find_32FE00(const char* key)
 {
-    int k = Loc_FindKeyThunk(key);
+    int k = nGlobalization_GetStringIndex(key);
     if (k > -1) {
         E_32FE00* b;
         E_32FE00* e;
@@ -32,9 +32,9 @@ static inline int Find_32FE00(const char* key)
     }
     return -1;
 }
-extern "C" O_32FE00* RatingRow_Construct(O_32FE00* self, const char* name, int id, char flag, int a, int b, const char* key)
+extern "C" O_32FE00* cAgentData_RatingRecord_ctor_charP_int_eScoreTypes_int_etc_2(O_32FE00* self, const char* name, int id, char flag, int a, int b, const char* key)
 {
-    self->key = Loc_FindKeyThunk(name);
+    self->key = nGlobalization_GetStringIndex(name);
     self->id = id;
     self->flag = flag;
     self->a = a;

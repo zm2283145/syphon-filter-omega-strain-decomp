@@ -12,11 +12,11 @@ extern char D_004BF9B8[]; /* "F_TO_CONNECT" */
 int Net_ConnectGame(void);
 int Net_CreateGame(void);
 void NetGetTime(int* out);
-int Gui_GetScreenStack(void);
-void GuiWidget_SendEvent(int a, int b, int c, int d, char* msg);
+int Gui_Canvas(void);
+void GuiWidget_SendMessage(int a, int b, int c, int d, char* msg);
 
 /* Joins (join != 0) or hosts a game; shows an error screen on failure. */
-void Net_StartSession(int join)
+void cDME_ConnectToGame(int join)
 {
     int ok;
     D_005723B0 = 0;
@@ -34,8 +34,8 @@ void Net_StartSession(int join)
         NetGetTime(&netTime);
         return;
     }
-    if (Gui_GetScreenStack()) {
-        GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, join ? D_004BF9B8 : D_004BFA30);
+    if (Gui_Canvas()) {
+        GuiWidget_SendMessage(Gui_Canvas(), Gui_Canvas(), 0x1E, 0, join ? D_004BF9B8 : D_004BFA30);
     }
     g_DmeConnectRetries = 0;
     g_DmeConnectMaxRetries = 0;

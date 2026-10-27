@@ -29,20 +29,20 @@ extern int D_005721A8;
 extern unsigned char g_IsMultiplayer;
 extern int D_00494178;
 
-extern unsigned int Net_GetClock(int clock);
+extern unsigned int cDME_GetTime(int clock);
 extern int NetRequestObjectPrivateOwnership(void* key);
 extern int NetGetObject(NetSessionEntry** entry, void* key);
-extern int NetGame_InitLocalSlot(int* id, int session);
+extern int NetGetMyClientIndex(int* id, int session);
 extern void cNPCInfoObject_NPCInfoUpdateCallback(int peer, void* key, int mode);
 
 static inline void service_slot(unsigned int* deadline, unsigned char* pending,
                                 void** key, unsigned int interval)
 {
     unsigned int previous = *deadline;
-    if (previous < Net_GetClock(1)) {
+    if (previous < cDME_GetTime(1)) {
         if (*pending && !NetRequestObjectPrivateOwnership(*key))
             *pending = 0;
-        *deadline = Net_GetClock(1) + interval;
+        *deadline = cDME_GetTime(1) + interval;
     }
 }
 
@@ -51,7 +51,7 @@ static inline int current_peer(void)
     int session = D_005721A8;
     if (g_IsMultiplayer) {
         if (D_00494178 == -1)
-            NetGame_InitLocalSlot(&D_00494178, session);
+            NetGetMyClientIndex(&D_00494178, session);
         return D_00494178;
     }
     return 0;
@@ -98,8 +98,8 @@ static inline void merge_flush_func_00434740(void) {}
 #define NULL 0
 #pragma mpwc_relax on
 int Alloc_Lock(int);                                    
-int Alloc_Unlock(int);                                  
-char * Mem_Alloc(int, int, char *, int);                      
+int EnableIntc(int);                                  
+char * cMemMan_Allocate(int, int, char *, int);                      
 int std_list_tNPCInfoPtr_push_back(char *, void **);                      
 extern char D_004BFCA0;
 extern unsigned char g_ProfileLockEnabled;
@@ -114,9 +114,9 @@ void cNPCInfoObject_AddPendingAdd(int d0, char * arg1) {
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    temp_s0 = Mem_Alloc(0, 0x14, &D_004BFCA0, 0x30B);
+    temp_s0 = cMemMan_Allocate(0, 0x14, &D_004BFCA0, 0x30B);
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     g_ProfileLockDepth -= 1;
     if (temp_s0 != NULL) {

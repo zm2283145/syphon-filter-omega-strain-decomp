@@ -60,10 +60,10 @@ typedef struct OutVec4C0 {
 
 extern RangeTable4C0 D_00532A70[5];
 extern void std_vector_deleter_tAchievementInfo_clear(OutVec4C0* v);
-extern int Loc_GetTextById(int id);
+extern int nGlobalization_GetString_int(int id);
 extern int std_vector_imp_tAchievementInfo_insert(OutVec4C0* v, Out4C0* pos, int n, Out4C0* value);
 
-void AgentData_GetAwardRows(Agent4C0* self, unsigned char type, OutVec4C0* out)
+void cAgentData_GetAchievements(Agent4C0* self, unsigned char type, OutVec4C0* out)
 {
     RangeRecVec4C0* recs = &self->recs[type];
     int i;
@@ -77,7 +77,7 @@ void AgentData_GetAwardRows(Agent4C0* self, unsigned char type, OutVec4C0* out)
         value = d->value;
         key = d->key;
         flag = recs->data[i].flag;
-        e.text = Loc_GetTextById(key);
+        e.text = nGlobalization_GetString_int(key);
         e.key = key;
         e.flag = flag;
         e.value = value;
@@ -142,7 +142,7 @@ extern int std_vector_imp_tAchievementInfo_insert(OutVec600* v, Out600* pos, int
 #define std_vector_imp_tAchievementInfo_insert(a0, a1, a2, a3) (std_vector_imp_tAchievementInfo_insert((void *)(a0), (void *)(a1), (a2), (void *)(a3))) /* merge_units */
 
 
-void AgentData_GetRatings(Agent600* self, OutVec600* out)
+void cAgentData_GetRatings(Agent600* self, OutVec600* out)
 {
     int i;
     std_vector_deleter_tAchievementInfo_clear(out);
@@ -164,7 +164,7 @@ void AgentData_GetRatings(Agent600* self, OutVec600* out)
         value = r->value;
         flag = *std_vector_eAchievementState_opIndex(&self->stats[700], i);
         key = r->key;
-        e.text = Loc_GetTextById(key);
+        e.text = nGlobalization_GetString_int(key);
         e.key = key;
         e.flag = flag;
         e.value = value;

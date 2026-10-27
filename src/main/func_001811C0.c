@@ -3,12 +3,12 @@
 struct IntegPG { virtual void v00(); virtual void Gather(void* st); virtual void Integrate(float dt, void* a, int b, int c); };
 struct PhysPG { int body; char pad[0xC]; char state[0x20]; int f30; IntegPG* integ; };
 extern "C" int D_004EA0C0;
-extern "C" void Collision_GatherSceneThunk(int body, int b, void* st, int c);
-extern "C" void Physical_GatherIntegrate(PhysPG* p, void* a, float dt)
+extern "C" void cCollisionModelList_CollectFaces_cArrayR_cBoxR_int(int body, int b, void* st, int c);
+extern "C" void cCollisionSystem_cBox_NextFrame(PhysPG* p, void* a, float dt)
 {
     if (p->body && p->integ) {
         p->integ->Gather(p->state);
-        Collision_GatherSceneThunk(p->body, D_004EA0C0, p->state, p->f30);
+        cCollisionModelList_CollectFaces_cArrayR_cBoxR_int(p->body, D_004EA0C0, p->state, p->f30);
         p->integ->Integrate(dt, a, D_004EA0C0, p->body);
     }
 }

@@ -5,7 +5,7 @@
 
 #include "gobj_types.h"
 
-extern int PathObj_ResetAndTrigger(Mover* obj);
+extern int cPathedGOBJ_ResetAndTrigger(Mover* obj);
 
 /* GetPos(mover): current path index (first word of the path state at +0xD0). */
 int Script_Mover_GetPos(Args* a) {
@@ -14,6 +14,6 @@ int Script_Mover_GetPos(Args* a) {
 }
 
 int PathObj_ScriptResetAndTrigger(Args* a) {
-    PathObj_ResetAndTrigger(a->obj);
+    cPathedGOBJ_ResetAndTrigger(a->obj);
     return 0;
 }

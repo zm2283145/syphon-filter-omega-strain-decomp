@@ -35,7 +35,7 @@ static inline void merge_flush_func_003C0F10(void) {}
 
 
 /* Vertex index i of a raw triangle. */
-int ColTri_GetVertIndex(ColTri* tri, int i) {
+int cCollisionModel_Face_GetIndexIntoVertexBlockOfCollisionModel(ColTri* tri, int i) {
     return tri->vert[i];
 }
 
@@ -48,7 +48,7 @@ void* std_vector_deleter_cCollisionEdge_data(char* self) {
 }
 
 /* Address of the three edge flag bytes. */
-unsigned char* ColTri_GetEdgeFlags(ColTri* tri) {
+unsigned char* cCollisionModel_Face_GetEdgeFlags(ColTri* tri) {
     return tri->edgeFlags;
 }
 /* merge_units: generate this block's code under its own pragmas */

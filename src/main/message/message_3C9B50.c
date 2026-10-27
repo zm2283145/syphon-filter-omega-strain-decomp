@@ -61,7 +61,7 @@ int func_003C9C10(void) {
     return D_005435C0;
 }
 
-int Event_GetType(Word* self) {
+int cMessage_Name(Word* self) {
     return self[1].value;
 }
 #undef D_005435C0 /* merge_units */
@@ -71,7 +71,7 @@ int Event_GetType(Word* self) {
 /* merge_units: begin func_003C9C30 */
 #pragma push /* merge_units */
 extern int NetMessageField(void* hdr, void* dst, int size, int count);
-unsigned char Event_UnpackHeader(char* s) {
+unsigned char cMessage_RegisterFields(char* s) {
     unsigned char ok = 0;
     if (NetMessageField(s, s, 4, 1) != 0) goto out;
     if (NetMessageField(s, s + 4, 4, 1) != 0) goto out;
@@ -88,7 +88,7 @@ typedef struct HdrBitsEP { unsigned int type : 2; unsigned int time : 30; } HdrB
 typedef union HdrEP { HdrBitsEP b; unsigned int raw; } HdrEP;
 typedef struct PacketEP { unsigned int hdr; int data; } PacketEP;
 typedef struct EventEP { char pad[0x18]; int type; } EventEP;
-extern unsigned int Net_GetClock(int a);
+extern unsigned int cDME_GetTime(int a);
 int Event_PackHeader(EventEP* e, int data, int a2, int a3, int a4, unsigned int size, void* buf)
 {
     HdrEP h;
@@ -99,7 +99,7 @@ int Event_PackHeader(EventEP* e, int data, int a2, int a3, int a4, unsigned int 
         } else {
             h.b.type = 3;
         }
-        h.b.time = Net_GetClock(0);
+        h.b.time = cDME_GetTime(0);
         out->hdr = h.raw;
         out->data = data;
     }
@@ -145,10 +145,10 @@ extern char D_004DFD80[];
 #endif /* merge_units */
 #define D_004DFD80 ((char*)&D_004DFD80) /* merge_units */
 
-extern void DME_AddLatencySample(unsigned int dt);
+extern void cDME_AddToAvgLatency(unsigned int dt);
 
 /* cMessage constructor (type 5). */
-cMessage* cMessage_ctor5(cMessage* self, int sender, MsgInfo* info)
+cMessage* cMessage_ctor_cMessageNameR_messagebaseR(cMessage* self, int sender, MsgInfo* info)
 {
     MsgStamp stamp;
     self->vtable = D_004DFD80;
@@ -159,7 +159,7 @@ cMessage* cMessage_ctor5(cMessage* self, int sender, MsgInfo* info)
     *(int*)&stamp = *(int*)&info->stamp;
     self->time = stamp.time;
     self->kind = stamp.kind;
-    DME_AddLatencySample(Net_GetClock(0) - self->time);
+    cDME_AddToAvgLatency(cDME_GetTime(0) - self->time);
     return self;
 }
 #undef D_004DFD80 /* merge_units */
@@ -176,12 +176,12 @@ extern char D_004DFD80[];
 extern char g_IsMultiplayer[];
 extern char D_005721D0[];
 #if 0 /* merge_units */
-extern int Net_GetClock(int);
+extern int cDME_GetTime(int);
 #endif /* merge_units */
-#define Net_GetClock(a0) ((int)Net_GetClock((a0))) /* merge_units */
+#define cDME_GetTime(a0) ((int)cDME_GetTime((a0))) /* merge_units */
 
 
-int Event_Construct(int a0, int a1) {
+int cMessage_ctor_cMessageNameR(int a0, int a1) {
     int s0, v0, v1;
     int cond;
 
@@ -200,7 +200,7 @@ int Event_Construct(int a0, int a1) {
     cond = v0 == 0;
     a0 = 0;
     if (cond) goto L003C9E88;
-    v0 = Net_GetClock(a0);
+    v0 = cDME_GetTime(a0);
     *(int*)((char*)s0 + 12) = v0;
 L003C9E88:;
     v0 = s0;
@@ -209,7 +209,7 @@ ret:
     return v0;
 }
 #undef D_004DFD80 /* merge_units */
-#undef Net_GetClock /* merge_units */
+#undef cDME_GetTime /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003C9E30 */
 
@@ -219,7 +219,7 @@ ret:
 #include "object_list_erase_file.h"
 
 extern "C" { char D_004BD198[] = "allocator.hh"; }
-DEFINE_OBJECT_LIST_ERASE_RANGE_FILE(ObjectList_EraseRange_3C9EA0, D_004BD198)
+DEFINE_OBJECT_LIST_ERASE_RANGE_FILE(std_list_deleter_tQueuedMessage_erase, D_004BD198)
 #pragma pop /* merge_units */
 /* merge_units: end func_003C9EA0 */
 

@@ -16,8 +16,8 @@ typedef struct StrObj {
 } StrObj;
 
 extern int strlen(const char* s); /* strlen */
-extern void String_Reserve(StrObj* str, int capacity);
-extern void String_Replace(StrObj* str, int pos, int count, const char* first, const char* last, char alloc);
+extern void std_basic_string_char_char_traits_char_reserve(StrObj* str, int capacity);
+extern void std_basic_string_char_char_traits_char_do_replace(StrObj* str, int pos, int count, const char* first, const char* last, char alloc);
 
 /* String constructor from a C string. */
 StrObj* String_CtorCStr_422020(StrObj* self, const char* cstr) {
@@ -27,8 +27,8 @@ StrObj* String_CtorCStr_422020(StrObj* self, const char* cstr) {
     self->w1 = 0;
     self->w2 = 0;
     len = strlen(cstr);
-    String_Reserve(self, len);
-    String_Replace(self, 0, 0, cstr, cstr + len, alloc[0]);
+    std_basic_string_char_char_traits_char_reserve(self, len);
+    std_basic_string_char_char_traits_char_do_replace(self, 0, 0, cstr, cstr + len, alloc[0]);
     return self;
 }
 #pragma pop /* merge_units */
@@ -41,7 +41,7 @@ StrObj* String_CtorCStr_422020(StrObj* self, const char* cstr) {
 
 extern "C" { char D_004BF550[] = "basic_string: out_of_range"; }
 extern "C" { char D_004BF570[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_004220A0, D_004BF550, D_004BF570, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00494130, D_00494138, Libc_Memmove, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_004220A0, D_004BF550, D_004BF570, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00494130, D_00494138, Libc_Memmove, std_basic_string_char_char_traits_char_assign_charP_charP_intP)
 #pragma pop /* merge_units */
 /* merge_units: end func_004220A0 */
 
@@ -84,7 +84,7 @@ DEFINE_STREAM_STRING_DTOR(String_Dtor_422960)
 #include "tstr_types.h"
 
 extern "C" {
-void String_CopyCtor(void* d, const void* s);
+void std_basic_string_char_char_traits_char_ctor_basicstringR(void* d, const void* s);
 extern char D_004BF5C0[];
 extern char D_004BF618[];
 void std_fill_n_Item_int_fill_n(TextListEntry* d, unsigned int n, const TextListEntry* v);
@@ -105,7 +105,7 @@ void std_vector_deleter_Item_dtor(Vec22* v, int flag);
 static inline void construct(TextListEntry* p, const TextListEntry* v)
 {
     if (p) {
-        String_CopyCtor(p, v);
+        std_basic_string_char_char_traits_char_ctor_basicstringR(p, v);
         p->unk0C = v->unk0C;
         p->unk10 = v->unk10;
     }

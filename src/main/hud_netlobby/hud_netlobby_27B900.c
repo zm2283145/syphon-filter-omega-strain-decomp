@@ -17,16 +17,16 @@
 
 extern char D_00504040;
 extern int D_00504058;
-extern void ScalarCollection_Init(ScalarCollection*);
-extern int* LoadingScreen_BuildIeScreen(int, int);
-extern int IeNode_SetShown(int, int, int);
+extern void std_list_deleter_voidPtr_ctor_void(ScalarCollection*);
+extern int* LoadInterface_charP_cHogFileR(int, int);
+extern int cInterfaceModel_Activate(int, int, int);
 
 /* Constructor: init embedded collection, acquire a handle and clear all fields. */
 Unk27B900* cHudNetLobby_ctor(Unk27B900* self, int a1, int a2) {
-    ScalarCollection_Init(&self->list);
+    std_list_deleter_voidPtr_ctor_void(&self->list);
     self->unk50 = 3658;
-    self->handle = LoadingScreen_BuildIeScreen(a2, a1);
-    IeNode_SetShown(*self->handle, 0, 1);
+    self->handle = LoadInterface_charP_cHogFileR(a2, a1);
+    cInterfaceModel_Activate(*self->handle, 0, 1);
     self->unk38 = 0;
     self->unk3C = 0;
     self->unk04 = 0;
@@ -43,7 +43,7 @@ Unk27B900* cHudNetLobby_ctor(Unk27B900* self, int a1, int a2) {
     return self;
 }
 
-int cNetTaserMsg_v05(void) {
+int cNetTaserMsg_GetMsgId(void) {
     return D_00504058;
 }
 #pragma pop /* merge_units */
@@ -58,7 +58,7 @@ int cNetTaserMsg_v05(void) {
 /* Clone a network message (payload ends with a 16-byte vector at 0x40). */
 #define NMC_UB(off) (*(unsigned char*)((char*)p + (off)) = *(unsigned char*)((char*)self + (off)))
 extern "C" { char D_004A92A8[] = "netTaserMsg.hh"; }
-DEFINE_NET_MSG_CLONE(cNetTaserMsg_v01, 0x50, D_004A92A8, 0x22, D_004DCDA0,
+DEFINE_NET_MSG_CLONE(cNetTaserMsg_Clone, 0x50, D_004A92A8, 0x22, D_004DCDA0,
                      NMC_B(0x24); NMC_W(0x28); NMC_W(0x2C); NMC_UB(0x30); NMC_W(0x34);
                      { char* d = (char*)p + 0x40; char* s = (char*)self + 0x40; V4Copy(d, s); })
 #pragma pop /* merge_units */

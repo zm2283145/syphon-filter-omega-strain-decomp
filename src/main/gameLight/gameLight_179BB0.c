@@ -21,12 +21,12 @@ struct Light : LightBase {
 
 typedef struct cGameLight { char pad[0x60]; Light* light; /* +0x60 */ } cGameLight;
 
-extern "C" void Object_Activate(cGameLight* self, void* arg);
+extern "C" void cGOBJ_Activate(cGameLight* self, void* arg);
 
-/* Object_Activate then light object (+0x60) virtual slot +0x2C. */
-extern "C" void cGameSceneLight_Activate(cGameLight* self, void* arg)
+/* cGOBJ_Activate then light object (+0x60) virtual slot +0x2C. */
+extern "C" void cGameLight_Activate(cGameLight* self, void* arg)
 {
-    Object_Activate(self, arg);
+    cGOBJ_Activate(self, arg);
     self->light->Method2C();
 }
 /* merge_units: generate this block's code under its own pragmas */

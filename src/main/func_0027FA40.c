@@ -57,8 +57,8 @@ struct Cam {
     int GetX50() const { return Get() ? Get()->x50 : 0; }
 };
 extern "C" {
-extern void PlayerCamera_LookAtLock(Cam*, Vec3f*, int, int, int, Quat*);
-extern void Mtx_ToEuler(Vec3f*, float*);
+extern void cPlayerCamera_GetAngleToTarget(Cam*, Vec3f*, int, int, int, Quat*);
+extern void cEulerAngle_T_1_2_ctor_cMatrixR(Vec3f*, float*);
 extern float cEulerAngle_T_1_2_X_void(Vec3f*);
 extern float* cEulerAngle_T_1_2_X_void_2(Vec3f*);
 extern Vec3f* cEulerAngle_T_1_2_ctor_void(Vec3f*);
@@ -67,9 +67,9 @@ extern float* cEulerAngle_T_1_2_Z_void_2(Vec3f*);
 extern float cEulerAngle_T_1_2_Y_void(Vec3f*);
 extern float* cEulerAngle_T_1_2_Y_void_2(Vec3f*);
 extern Vec3f* cEulerAngle_T_1_2_ctor_cEulerAngleTR(Vec3f*, Vec3f*);
-extern float Math_WrapAnglePi(float);
-extern float Math_Cos(float);
-extern float Math_Sin(float);
+extern float nSFOMath_ExpressAngleAsValueBetweenNegAndPos180_float(float);
+extern float Libc_Cosf(float);
+extern float Libc_Sinf(float);
 extern float fabsf(float);
 }
 static inline float Abs(float x) { float r = 0.0f; asm { abs.s r, x } return r; }
@@ -78,12 +78,12 @@ static inline void Wrap(Vec3f* t, Vec3f& d)
 {
     Vec3f r;
     cEulerAngle_T_1_2_ctor_void(&r);
-    *cEulerAngle_T_1_2_X_void_2(&r) = Math_WrapAnglePi(cEulerAngle_T_1_2_X_void(&d));
-    *cEulerAngle_T_1_2_Y_void_2(&r) = Math_WrapAnglePi(cEulerAngle_T_1_2_Y_void(&d));
-    *cEulerAngle_T_1_2_Z_void_2(&r) = Math_WrapAnglePi(cEulerAngle_T_1_2_Z_void(&d));
+    *cEulerAngle_T_1_2_X_void_2(&r) = nSFOMath_ExpressAngleAsValueBetweenNegAndPos180_float(cEulerAngle_T_1_2_X_void(&d));
+    *cEulerAngle_T_1_2_Y_void_2(&r) = nSFOMath_ExpressAngleAsValueBetweenNegAndPos180_float(cEulerAngle_T_1_2_Y_void(&d));
+    *cEulerAngle_T_1_2_Z_void_2(&r) = nSFOMath_ExpressAngleAsValueBetweenNegAndPos180_float(cEulerAngle_T_1_2_Z_void(&d));
     cEulerAngle_T_1_2_ctor_cEulerAngleTR(t, &r);
 }
-extern "C" void PlayerCamera_UpdateR1Pick(Cam* self, Quat* out)
+extern "C" void cPlayerCamera_GetTargetLockAngle(Cam* self, Quat* out)
 {
     if (self->GetX50()) {
         if (self->Get()->Ready()) {
@@ -97,10 +97,10 @@ extern "C" void PlayerCamera_UpdateR1Pick(Cam* self, Quat* out)
             int a2;
             q2 = Quat(true);
             { void* yy = &q2; }
-            PlayerCamera_LookAtLock(self, &tgt, a2, 10, 0, &q2);
+            cPlayerCamera_GetAngleToTarget(self, &tgt, a2, 10, 0, &q2);
             n = self->x50;
             if (n->b50) n->Refresh();
-            Mtx_ToEuler(&e, n->m10);
+            cEulerAngle_T_1_2_ctor_cMatrixR(&e, n->m10);
             Sub(&d, tgt, e);
             Wrap(&t, d);
             d = t;
@@ -121,12 +121,12 @@ extern "C" void PlayerCamera_UpdateR1Pick(Cam* self, Quat* out)
                 float hx = 0.5f * s.x;
                 float hy = 0.5f * s.y;
                 float hz = 0.5f * s.z;
-                float cx = Math_Cos(hx);
-                float cy = Math_Cos(hy);
-                float cz = Math_Cos(hz);
-                float sx = Math_Sin(hx);
-                float sy = Math_Sin(hy);
-                float sz = Math_Sin(hz);
+                float cx = Libc_Cosf(hx);
+                float cy = Libc_Cosf(hy);
+                float cz = Libc_Cosf(hz);
+                float sx = Libc_Sinf(hx);
+                float sy = Libc_Sinf(hy);
+                float sz = Libc_Sinf(hz);
                 float cycz = cy * cz;
                 float sysz = sy * sz;
                 float sycz = sy * cz;

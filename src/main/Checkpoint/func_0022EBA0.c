@@ -8,28 +8,28 @@
 
 extern "C" {
 /*fc*/
-int Mem_Free(...);                         
+int cMemMan_Deallocate(...);                         
 int cGOBJ_dtor(...);                            
 int operator_delete(...);                          
 extern char D_004A6698;
-extern "C" void Actor_ApplyContactDamage();
-extern "C" void Actor_BasePreLogic();
-extern "C" void Actor_BaseWorldUpdate();
-extern "C" void Actor_VirtualNop();
-extern "C" void Controller_DeathNotice();
-extern "C" void Node_ClearFlag2C();
-extern "C" void Node_GetFlag2C();
-extern "C" void Node_SetFlag2C();
-extern "C" void Object_Activate();
-extern "C" void Object_AttachTransform();
-extern "C" void Object_GetAttachedOrSelf();
-extern "C" void cCheckpoint_v01();
-extern "C" void cCheckpoint_v0B();
-extern "C" void cCheckpoint_v0C();
-extern "C" void cCheckpoint_v0E();
-extern "C" void cCheckpoint_v0F();
-extern "C" void cCheckpoint_v10();
-extern "C" void GObj_GetID();
+extern "C" void cGOBJ_ReceiveDamage();
+extern "C" void cGOBJ_CriticalNextFrame();
+extern "C" void cGOBJ_UpdateMotion();
+extern "C" void cGOBJ_CriticalUpdateMotion();
+extern "C" void cGOBJ_Die();
+extern "C" void cGOBJ_Disable();
+extern "C" void cGOBJ_IsEnabled();
+extern "C" void cGOBJ_Enable();
+extern "C" void cGOBJ_Activate();
+extern "C" void cGOBJ_CreateXform();
+extern "C" void cGOBJ_ScriptGetRealObj();
+extern "C" void cCheckpoint_HandleMessage();
+extern "C" void cCheckpoint_getSOBJClassId();
+extern "C" void cCheckpoint_ScriptHandleMessage();
+extern "C" void cCheckpoint_Init();
+extern "C" void cCheckpoint_Load();
+extern "C" void cCheckpoint_NextFrame();
+extern "C" void cSystem_ScriptGetObjectId();
 extern "C" void cSystem_SendCreated();
 extern "C" void cSystem_NetEnable();
 extern "C" void cSystem_NetDisable();
@@ -37,9 +37,9 @@ extern "C" void cSystem_IsDeliverable();
 extern "C" void cGOBJ_GetFloorPlane();
 extern "C" void cGOBJ_GetBBox();
 extern "C" void func_00140E90();
-extern "C" void GObj_GetLifeState();
+extern "C" void cGOBJ_GetHealthState();
 extern "C" void cGOBJ_IsGeneratorCreated();
-extern "C" void Object_GetEye();
+extern "C" void cGOBJ_GetTargetPosition();
 extern "C" void cGOBJ_GetLosPosition();
 extern "C" void cGOBJ_HasHeadset();
 extern "C" void cGOBJ_SetStatus();
@@ -55,28 +55,28 @@ extern "C" void cGOBJ_IsAimed();
 extern "C" void cGOBJ_InitNetwork();
 extern "C" void cGOBJ_IsNetworked();
 extern "C" void cGOBJ_CheckBullet();
-extern "C" void GObj_GetWorldMatrix();
-extern "C" void cNode_v3A();
-extern "C" void cGOBJ_v39();
-extern "C" void Node_GetComponentMatrix();
-extern "C" void PathObj_GetPosition();
-extern "C" void Node_GetLightRefPoint();
+extern "C" void cGOBJ_GetTransform_ForFloorTravel();
+extern "C" void cGOBJ_GetCameraCollisionReferencePoint();
+extern "C" void cGOBJ_GetTransform_ForCameraTracking();
+extern "C" void cGOBJ_GetTransform_ForTeleporting();
+extern "C" void cGOBJ_GetCenterOfMass();
+extern "C" void cGOBJ_GetActivationPoint();
 extern "C" void cGOBJ_v35();
-extern "C" void Node_GetWorldMatrix();
-extern "C" void cNode_v2B();
-extern "C" void cNode_v2A();
-extern "C" void cNode_v29();
-extern "C" void cNode_v28();
-extern "C" void cNode_v27();
-extern "C" void cNode_v26();
-extern "C" void cNode_v25();
-extern "C" void cNode_v24();
-extern "C" void Player_GetActiveWeapon();
-extern "C" void Object_Deactivate();
-extern "C" void cNode_v07();
-extern "C" void cNode_v06();
-extern "C" void cNode_v14();
-extern "C" void cNode_v0D();
+extern "C" void cGOBJ_GetMatrix();
+extern "C" void cGOBJ_SetTranslation_ResetPhysics();
+extern "C" void cGOBJ_SetRotation_ResetPhysics();
+extern "C" void cGOBJ_SetTransform_ResetPhysics();
+extern "C" void cGOBJ_ApplyTranslation();
+extern "C" void cGOBJ_ApplyLocalRotation();
+extern "C" void cGOBJ_ApplyTransform();
+extern "C" void cGOBJ_SetTranslation();
+extern "C" void cGOBJ_SetRotation();
+extern "C" void cGOBJ_SetTransform();
+extern "C" void cGOBJ_Deactivate();
+extern "C" void cGOBJ_NetDeactivate();
+extern "C" void cGOBJ_NetActivate();
+extern "C" void cGOBJ_Render();
+extern "C" void cGOBJ_ProcessMessage();
 extern void * const D_004DB8F0[];
 extern unsigned char g_ProfileLockEnabled;
 }
@@ -89,7 +89,7 @@ extern "C" char * cCheckpoint_dtor(char * arg0, long long arg1) {
         if (temp_s2 != 0) {
             {
                 AllocGuard g;
-            Mem_Free(0, temp_s2, &D_004A6698, 0x38);
+            cMemMan_Deallocate(0, temp_s2, &D_004A6698, 0x38);
             }
         }
         cGOBJ_dtor(arg0, 0);
@@ -99,4 +99,4 @@ extern "C" char * cCheckpoint_dtor(char * arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004DB8F0[68] = { (void*)0x0, (void*)0x0, (void*)cCheckpoint_dtor, (void*)cCheckpoint_v01, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)cGOBJ_IsNetworked, (void*)cSystem_SendCreated, (void*)cNode_v06, (void*)cNode_v07, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cCheckpoint_v0B, (void*)cCheckpoint_v0C, (void*)cNode_v0D, (void*)cCheckpoint_v0E, (void*)cCheckpoint_v0F, (void*)cCheckpoint_v10, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cNode_v14, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)cGOBJ_HasHeadset, (void*)cGOBJ_SetStatus, (void*)cGOBJ_GetStatus, (void*)cGOBJ_IsGeneratorCreated, (void*)cGOBJ_GetChildList_void_2, (void*)cGOBJ_GetChildList_void, (void*)cGOBJ_GetBBox, (void*)cGOBJ_ScaleBBox, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)cNode_v24, (void*)cNode_v25, (void*)cNode_v26, (void*)cNode_v27, (void*)cNode_v28, (void*)cNode_v29, (void*)cNode_v2A, (void*)cNode_v2B, (void*)cGOBJ_GetTargetPriority, (void*)cGOBJ_GetLosPosition, (void*)Object_GetEye, (void*)cGOBJ_GetMovementState, (void*)func_00140E90, (void*)cGOBJ_GetSubTargetAimAdjust, (void*)cGOBJ_GetNumSubTargets, (void*)cGOBJ_IsAimed, (void*)Node_GetWorldMatrix, (void*)cGOBJ_v35, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)cGOBJ_v39, (void*)cNode_v3A, (void*)GObj_GetWorldMatrix, (void*)cGOBJ_GetFloorPlane, (void*)cGOBJ_InitNetwork, (void*)Actor_ApplyContactDamage, (void*)cGOBJ_CheckBullet, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice };
+void * const D_004DB8F0[68] = { (void*)0x0, (void*)0x0, (void*)cCheckpoint_dtor, (void*)cCheckpoint_HandleMessage, (void*)cSystem_ScriptGetObjectId, (void*)cGOBJ_ScriptGetRealObj, (void*)cGOBJ_IsNetworked, (void*)cSystem_SendCreated, (void*)cGOBJ_NetActivate, (void*)cGOBJ_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cCheckpoint_getSOBJClassId, (void*)cCheckpoint_ScriptHandleMessage, (void*)cGOBJ_ProcessMessage, (void*)cCheckpoint_Init, (void*)cCheckpoint_Load, (void*)cCheckpoint_NextFrame, (void*)cGOBJ_CriticalNextFrame, (void*)cGOBJ_UpdateMotion, (void*)cGOBJ_CriticalUpdateMotion, (void*)cGOBJ_Render, (void*)cGOBJ_Activate, (void*)cGOBJ_Deactivate, (void*)cGOBJ_Enable, (void*)cGOBJ_Disable, (void*)cGOBJ_IsEnabled, (void*)cGOBJ_HasHeadset, (void*)cGOBJ_SetStatus, (void*)cGOBJ_GetStatus, (void*)cGOBJ_IsGeneratorCreated, (void*)cGOBJ_GetChildList_void_2, (void*)cGOBJ_GetChildList_void, (void*)cGOBJ_GetBBox, (void*)cGOBJ_ScaleBBox, (void*)cGOBJ_CreateXform, (void*)cGOBJ_SetTransform, (void*)cGOBJ_SetRotation, (void*)cGOBJ_SetTranslation, (void*)cGOBJ_ApplyTransform, (void*)cGOBJ_ApplyLocalRotation, (void*)cGOBJ_ApplyTranslation, (void*)cGOBJ_SetTransform_ResetPhysics, (void*)cGOBJ_SetRotation_ResetPhysics, (void*)cGOBJ_SetTranslation_ResetPhysics, (void*)cGOBJ_GetTargetPriority, (void*)cGOBJ_GetLosPosition, (void*)cGOBJ_GetTargetPosition, (void*)cGOBJ_GetMovementState, (void*)func_00140E90, (void*)cGOBJ_GetSubTargetAimAdjust, (void*)cGOBJ_GetNumSubTargets, (void*)cGOBJ_IsAimed, (void*)cGOBJ_GetMatrix, (void*)cGOBJ_v35, (void*)cGOBJ_GetActivationPoint, (void*)cGOBJ_GetCenterOfMass, (void*)cGOBJ_GetTransform_ForTeleporting, (void*)cGOBJ_GetTransform_ForCameraTracking, (void*)cGOBJ_GetCameraCollisionReferencePoint, (void*)cGOBJ_GetTransform_ForFloorTravel, (void*)cGOBJ_GetFloorPlane, (void*)cGOBJ_InitNetwork, (void*)cGOBJ_ReceiveDamage, (void*)cGOBJ_CheckBullet, (void*)cGOBJ_GetHealthState, (void*)cGOBJ_Die };

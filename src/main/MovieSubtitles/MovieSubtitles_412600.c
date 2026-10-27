@@ -72,13 +72,13 @@ extern int D_00538C60;
 extern int D_00538C64;
 extern char D_00538C68;
 extern IdList* g_TextureMgr;
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 void FlushCache(int);
-void Font_ctor(VBig*);
-void Font_LoadFnt(VBig*, int*, const char*);
+void cFont_ctor(VBig*);
+void cFont_Load(VBig*, int*, const char*);
 void cTexMan_EndBatch(IdList*);
-void Video_BeginFrame(void*);
-void MovieSubtitles_ParseFeed(Subs* self, void* file, int lang);
+void XLib_NextFrame(void*);
+void cSubtitleFeed_LoadINI(Subs* self, void* file, int lang);
 }
 /* retail's hand-written memclear (addi + sq zero), inlined from a shared helper */
 static inline void MemClear(void* dst, int n) {
@@ -112,7 +112,7 @@ static inline void MemClear(void* dst, int n) {
         .set reorder
     }
 }
-static inline void* Alloc(unsigned int size, int line) { AllocGuard g; return Mem_Alloc(0, size, D_004BEE90, line); }
+static inline void* Alloc(unsigned int size, int line) { AllocGuard g; return cMemMan_Allocate(0, size, D_004BEE90, line); }
 
 static inline Subs* NewSubs(void) {
     Subs* s = (Subs*)Alloc(sizeof(Subs), 0x74);
@@ -128,7 +128,7 @@ static inline Subs* NewSubs(void) {
 static inline VBig* NewVBig(void) {
     VBig* v = (VBig*)Alloc(sizeof(VBig), 0xB4);
     if (v) {
-        Font_ctor(v);
+        cFont_ctor(v);
         v->vtbl = D_004E08B8;
     }
     return v;
@@ -147,7 +147,7 @@ static inline Mtx* MtxAt(int i) { return &((Render*)g_Video)->mtx[i]; }
 static inline void GQR(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 static inline void UM(void* p) { int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
 
-extern "C" void MovieSubtitles_Load(Self* self, void* file, int lang)
+extern "C" void cMovieSubtitles_Init(Self* self, void* file, int lang)
 {
     int i;
     for (i = 0; i < 3; i++) {
@@ -176,19 +176,19 @@ extern "C" void MovieSubtitles_Load(Self* self, void* file, int lang)
     self->fB4 = 0;
     self->fB0 = 0;
     self->p50 = NewSubs();
-    MovieSubtitles_ParseFeed(self->p50, file, lang);
+    cSubtitleFeed_LoadINI(self->p50, file, lang);
     {
         const char* name = self->p50->text;
         if (*name != 0) asm { .set reorder } /* empty scheduling barrier: keeps the retail b/nop branch shape */ else name = 0;
         if (self->p54 == 0) {
             if (name == 0) name = D_004BEEE8;
             self->p54 = NewVBig();
-            Font_LoadFnt(self->p54, &D_0055C5D0, name);
+            cFont_Load(self->p54, &D_0055C5D0, name);
             { IdList* l = g_TextureMgr; l->n = 0; l->f16 = 0; }
             AddId(g_TextureMgr, *(int*)self->p54);
             cTexMan_EndBatch(g_TextureMgr);
-            Video_BeginFrame(&g_Video);
-            Video_BeginFrame(&g_Video);
+            XLib_NextFrame(&g_Video);
+            XLib_NextFrame(&g_Video);
         }
     }
     self->rect.r = 20.0f; self->rect.g = 20.0f; self->rect.b = 600.0f; self->rect.a = 440.0f;
@@ -241,7 +241,7 @@ static inline void merge_flush_func_00412BF0(void) {}
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int String_CtorCStr_13B480(char *, int);                 
+int std_basic_string_char_char_traits_char_ctor_charP(char *, int);                 
 int String_Dtor(char *, int);                            
 int std_basic_string_char_char_traits_char_find_basicstringR_uint(int, char *, int);                     
 extern char D_004BEDF8[];
@@ -265,7 +265,7 @@ int nSubtitles_GetLanguageId(int arg0) {
     var_s3 = 0;
     var_s1 = &(*(char*)dat_004BEE50);
 loop_1:
-    String_CtorCStr_13B480(sp60, F_(var_s1, 0x0, int));
+    std_basic_string_char_char_traits_char_ctor_charP(sp60, F_(var_s1, 0x0, int));
     temp_s2 = ~std_basic_string_char_char_traits_char_find_basicstringR_uint(arg0, sp60, 0) != 0;
     String_Dtor(sp60, 0);
     if (temp_s2 != 0) {

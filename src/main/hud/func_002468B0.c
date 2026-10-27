@@ -5,7 +5,7 @@ extern "C" char D_004DC310[];
 extern "C" char D_004DCF10[];
 extern "C" char D_004DFD80[];
 struct Chars16 { char c[16]; };
-MSG_CLONE_BEGIN(cNetTimerMsg_v01, 0x38, D_004A7210, 0x1FF)
+MSG_CLONE_BEGIN(cNetTimerMsg_Clone, 0x38, D_004A7210, 0x1FF)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

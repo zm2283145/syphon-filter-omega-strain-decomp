@@ -5,6 +5,6 @@ typedef struct { char pad[0x30]; void* net; char pad2[0x10D]; Bits31B0 bits; } N
 void cNetNPC_DeactivateDead(Npc31B0* o, unsigned char v)
 {
     if (NpcAuth_IsLocal())
-        NetEvent_Send(o->net, 0x18, 4, v, 0, 0, 0);
+        cNetNPCMsgs_SendMessage(o->net, 0x18, 4, v, 0, 0, 0);
     o->bits.f2 = v;
 }

@@ -47,8 +47,8 @@ static inline void merge_flush_func_001B79C0(void) {}
 
 /* merge_units: begin func_001B7A20 */
 #pragma push /* merge_units */
-extern int Curve_Bind(void* binding, CurveSegment* segment);
-extern int Curve_InitConstant(CurveSegment*, int, int, float);
+extern int cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_ctor(void* binding, CurveSegment* segment);
+extern int cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_float(CurveSegment*, int, int, float);
 static const float dat_0048A1B8[2] = { 0.0f, 0.0f };
 static const float dat_0048A1C0[2] = { 0.0f, 0.0f };
 extern char D_004DA380[];   /* CurveChannel base vtable */
@@ -62,15 +62,15 @@ Rel* std_vector_cTargetZRotationStackSlot_ctor(Rel* r) {
 }
 
 /* Scalar angle curve constructor (actor member +0x3050). */
-CurveChannel* AngleCurve_Construct(CurveChannel* self) {
+CurveChannel* cSplinedMotion_Angle_ctor(CurveChannel* self) {
     self->vtable = D_004DA380;
     self->previous = (*(float*)dat_0048A1B8);
     self->current = (*(float*)dat_0048A1B8);
     self->target = (*(float*)dat_0048A1C0);
     self->rate = (*(float*)dat_0048A1B8);
     self->damping = 0.0f;
-    Curve_InitConstant(&self->segment, (int)&(*(float*)dat_0048A1B8), (int)&(*(float*)dat_0048A1C0), 0.0f);
-    Curve_Bind(self->binding, &self->segment);
+    cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_float(&self->segment, (int)&(*(float*)dat_0048A1B8), (int)&(*(float*)dat_0048A1C0), 0.0f);
+    cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_ctor(self->binding, &self->segment);
     self->vtable = D_004DA7D0;
     return self;
 }

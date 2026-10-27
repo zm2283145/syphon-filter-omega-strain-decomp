@@ -7,5 +7,5 @@ void cNetNPC_ResumeAIFiring(Npc34C0* o)
         o->b13E = 1;
         o->i118 = 0;
     }
-    NetEvent_Send(o->net, 0xD, 8, 0, 0, 0, 0);
+    cNetNPCMsgs_SendMessage(o->net, 0xD, 8, 0, 0, 0, 0);
 }

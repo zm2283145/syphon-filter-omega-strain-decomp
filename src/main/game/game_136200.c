@@ -19,23 +19,23 @@ extern int g_ProfileLockDepth;
 extern F1Los136* D_004EA0B8;
 extern char D_004DA2F0[];
 extern void Alloc_Lock(int);
-extern void Alloc_Unlock(int);
-extern void* Mem_Alloc(int, int, char*, int);
+extern void EnableIntc(int);
+extern void* cMemMan_Allocate(int, int, char*, int);
 extern void cCollisionModelList_ctor(F1Los136* p, int* a, int* b);
-extern Vec4* Vec4_GetZero(void);
-extern void Vec4_Assign(Vec4* d, Vec4* s);
+extern Vec4* cVector_GetZero(void);
+extern void cVector_ctor_cVectorR(Vec4* d, Vec4* s);
 extern void cActivationTracker_ctor(void* p);
 static inline void* f1_Alloc136(int size, char* file, int line)
 {
     void* p;
     if (g_ProfileLockEnabled) Alloc_Lock(9);
     g_ProfileLockDepth++;
-    p = Mem_Alloc(0, size, file, line);
-    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    p = cMemMan_Allocate(0, size, file, line);
+    if (g_ProfileLockEnabled) EnableIntc(9);
     g_ProfileLockDepth--;
     return p;
 }
-void LosProvider_Create(int arg)
+void cLosRequest_cCollisionModelList_Game_InitStatics(int arg)
 {
     if (D_004EA0B8 == 0) {
         F1Los136* p = f1_Alloc136(0x70, "los.hh", 0xAE);
@@ -47,7 +47,7 @@ void LosProvider_Create(int arg)
             cCollisionModelList_ctor(p, a, b);
             p->vt = D_004DA2F0;
             p->x20 = 0;
-            Vec4_Assign(&p->v30, Vec4_GetZero());
+            cVector_ctor_cVectorR(&p->v30, cVector_GetZero());
             cActivationTracker_ctor(p->st40);
             p->x60 = 0;
         }

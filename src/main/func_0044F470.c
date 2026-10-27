@@ -1,9 +1,9 @@
 #include "types.h"
-int SFOLobby_Free(int);
-int SFOLobby_AllocZeroed(int);
+int SFOLobby_MemFree(int);
+int SFOLobby_MemAlloc(int);
 int memcpy(int, int, int);
-int Name_Compare48(int, int, int);
-void LobbyArray_RemoveAt(void *, int);
+int Libc_Memcmp(int, int, int);
+void SFOLobbyList_DeleteSlot(void *, int);
 extern int D_00585E58;
 
 typedef struct {
@@ -29,7 +29,7 @@ static inline void Arr_Set(Arr *a, int i, int elem) {
     if (elem != 0) {
         p = Arr_At(a, i);
         if (p != 0) {
-            if (Name_Compare48(p, elem, a->size) != 0) {
+            if (Libc_Memcmp(p, elem, a->size) != 0) {
                 a->dirty = 1;
             }
             memcpy(p, elem, a->size);
@@ -37,7 +37,7 @@ static inline void Arr_Set(Arr *a, int i, int elem) {
     }
 }
 
-void LobbyArray_Append(Arr *a, int elem) {
+void SFOLobbyList_Append(Arr *a, int elem) {
     int i;
     int newcap;
     int p;
@@ -47,19 +47,19 @@ void LobbyArray_Append(Arr *a, int elem) {
     if (a->unique) {
         for (i = 0; i < a->count; i++) {
             p = Arr_At(a, i);
-            if (p != 0 && Name_Compare48(p, elem, a->size) == 0) return;
+            if (p != 0 && Libc_Memcmp(p, elem, a->size) == 0) return;
         }
     }
     if (a->cap < a->count + 1) {
         if (a->grow <= 0) {
-            LobbyArray_RemoveAt(a, 0);
+            SFOLobbyList_DeleteSlot(a, 0);
         } else {
             newcap = a->cap + a->grow;
-            p = SFOLobby_AllocZeroed(newcap * a->size);
+            p = SFOLobby_MemAlloc(newcap * a->size);
             D_00585E58 += newcap * a->size;
             if (p == 0) return;
             memcpy(p, a->data, a->cap * a->size);
-            SFOLobby_Free(a->data);
+            SFOLobby_MemFree(a->data);
             D_00585E58 -= a->cap * a->size;
             a->cap = newcap;
             a->data = p;

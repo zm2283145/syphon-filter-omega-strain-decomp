@@ -2,20 +2,20 @@
 
 typedef struct { char pad[0x40]; char timer[0x2380]; unsigned short ticks; } Obj390;
 
-extern void ActorModel_SwitchBodyPacking(Obj390* self);
-extern void Appearance_RemoveBlankPairs(void* timer);
-extern unsigned short Appearance_GetPairCount(void* timer);
-extern void Appearance_ReorderParts(Obj390* self);
+extern void cMan_MergeSKLs(Obj390* self);
+extern void SKL_RemoveBlanks(void* timer);
+extern unsigned short SKL_CountAttribs(void* timer);
+extern void cMan_SortParts(Obj390* self);
 extern void cMan_GetTextureIDs(Obj390* self);
-extern void ActorModel_Setup(Obj390* self, int flag);
+extern void cMan_BuildMan(Obj390* self, int flag);
 
 /* Resets the object, restarts its timer and caches the tick count. */
-void ActorModel_SwitchBodies(Obj390* self)
+void cMan_AddCostume(Obj390* self)
 {
-    ActorModel_SwitchBodyPacking(self);
-    Appearance_RemoveBlankPairs(self->timer);
-    self->ticks = Appearance_GetPairCount(self->timer);
-    Appearance_ReorderParts(self);
+    cMan_MergeSKLs(self);
+    SKL_RemoveBlanks(self->timer);
+    self->ticks = SKL_CountAttribs(self->timer);
+    cMan_SortParts(self);
     cMan_GetTextureIDs(self);
-    ActorModel_Setup(self, 1);
+    cMan_BuildMan(self, 1);
 }

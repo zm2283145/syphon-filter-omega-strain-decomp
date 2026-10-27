@@ -1,8 +1,8 @@
 #pragma cplusplus on
 #pragma always_inline on
 #include "types.h"
-/* Unit 0x391B30 (built with CodeWarrior 3.0 build 50, like Lpd_Init): cMan_LipSyncLoad registers the
- * lip-sync tracks of an archive, Actor_UpdateGaze drives the look-at face channels.
+/* Unit 0x391B30 (built with CodeWarrior 3.0 build 50, like cMan_LipSyncPlay): cMan_LipSyncLoad registers the
+ * lip-sync tracks of an archive, cMan_EyeTracking drives the look-at face channels.
  * VU0 macro-mode ops, lq/sq quad copies and the VU0 flag test are inline asm (no C spelling). */
 
 typedef struct { char pad[4]; int count; } HogHdr_391B30;
@@ -14,11 +14,11 @@ extern char D_0053B370[][16];
 extern LpdTab_391B30 D_0053B470;
 extern unsigned char D_0053B4B0;
 extern int D_0053B4B8;
-char* Archive_GetMemberName(Arc_391B30* a, int i);
-int* Hog_GetMemberInPlace(Arc_391B30* a, int i);
+char* cHogFile_GetBlockName(Arc_391B30* a, int i);
+int* cHogFile_GetBlock_int(Arc_391B30* a, int i);
 char* strrchr(const char* s, int c);
 int strcmp(const char* a, const char* b);
-void Appearance_RegistryKey(char* dst, int n, const char* src);
+void strCpyPad(char* dst, int n, const char* src);
 int snd_BankLoad(const char* name, int flags);
 void cMan_LipSyncLoad(Arc_391B30* a, const char* bank);
 }
@@ -31,17 +31,17 @@ extern "C" void cMan_LipSyncLoad(Arc_391B30* a, const char* bank)
     n = a->hdr->count;
     for (i = 0; i < n; i++) {
         char* ext;
-        name = Archive_GetMemberName(a, i);
+        name = cHogFile_GetBlockName(a, i);
         ext = strrchr(name, '.');
         if (!ext) ext = name;
         off = 0;
         if (strcmp(ext, D_004BC420) == 0) {
             int* base;
             int k;
-            Appearance_RegistryKey(D_0053B370[D_0053B4B0], 15, name);
-            D_0053B470.data[D_0053B4B0] = Hog_GetMemberInPlace(a, i);
-            p = Hog_GetMemberInPlace(a, i);
-            base = Hog_GetMemberInPlace(a, i);
+            strCpyPad(D_0053B370[D_0053B4B0], 15, name);
+            D_0053B470.data[D_0053B4B0] = cHogFile_GetBlock_int(a, i);
+            p = cHogFile_GetBlock_int(a, i);
+            base = cHogFile_GetBlock_int(a, i);
             for (k = 0; k <= 21; k++) {
                 off += *p++;
                 D_0053B470.data[D_0053B4B0][k] = (int)(base + off);
@@ -52,7 +52,7 @@ extern "C" void cMan_LipSyncLoad(Arc_391B30* a, const char* bank)
     D_0053B4B8 = snd_BankLoad(bank, 0);
 }
 
-/* Actor_UpdateGaze: turns the gaze target (the looked-at object's position, else the stored
+/* cMan_EyeTracking: turns the gaze target (the looked-at object's position, else the stored
  * default) into the head frame, flattens it to the upper half, scales it and writes the
  * horizontal / vertical look amounts into the face blend channels. */
 struct V {
@@ -89,17 +89,17 @@ struct GazeActor {
     V gaze;
 };
 extern "C" {
-void* Skeleton_NodeAt(void* v, int i);
+void* cArray_cBone_opIndex_int(void* v, int i);
 void* cBone_Xform(void* n);
-M* Transform_GetUpdated(void* x);
-void Actor_ShotFrameNodeWorld(M* out, M* in, M* m);
-void Mtx_Copy(M* d, M* s);
-void Mtx_InvertRigid_13ECA0(M* out, M* in);
-void Mtx_Multiply4(V* v, M* m);
-void Actor_UpdateGaze(GazeActor* a);
+M* cXform_GetMatrix(void* x);
+void cMatrix_GetTransformed(M* out, M* in, M* m);
+void cMatrix_ctor_cMatrixR(M* d, M* s);
+void cMatrix_Copy_InvertRotTrans(M* out, M* in);
+void cVector_Transform_cMatrixR(V* v, M* m);
+void cMan_EyeTracking(GazeActor* a);
 }
-static inline void ToLocal(V* d, M* f) { M inv; Mtx_InvertRigid_13ECA0(&inv, f); Mtx_Multiply4(d, &inv); }
-/* weak-handle check (idiom of src/main/human/Actor_HandleCombatEvent.c) */
+static inline void ToLocal(V* d, M* f) { M inv; cMatrix_Copy_InvertRotTrans(&inv, f); cVector_Transform_cMatrixR(d, &inv); }
+/* weak-handle check (idiom of src/main/human/cHuman_ReceiveDamage.c) */
 static inline int IsNullNV(void* p) { return (p != 0) ^ 1; }
 static inline int DiffNV(int a, int b) { return a ^ b; }
 static inline int SameNV(int a, int b) { return (unsigned)DiffNV(a, b) < 1; }
@@ -146,17 +146,17 @@ static inline void Scale(V* v, float s) { int t; __asm__ volatile(".set noreorde
 
 /* the first normalize goes through this wrapper: its dead xx is retail's duplicated addiu */
 static inline void NormalizeW(V* v) { void* xx = v; /* dead on purpose: retail keeps this addiu */ Normalize3(v); }
-extern "C" void Actor_UpdateGaze(GazeActor* a)
+extern "C" void cMan_EyeTracking(GazeActor* a)
 {
     V dir;
     M frame;
     GazeRig* r = a->rig;
     int n; int idx; int j;
     if (r->flag14) {
-        M* t = Transform_GetUpdated(cBone_Xform(Skeleton_NodeAt(r->nodes, 14)));
-        Actor_ShotFrameNodeWorld(&frame, t, Transform_GetUpdated(r->xform));
+        M* t = cXform_GetMatrix(cBone_Xform(cArray_cBone_opIndex_int(r->nodes, 14)));
+        cMatrix_GetTransformed(&frame, t, cXform_GetMatrix(r->xform));
     } else {
-        Mtx_Copy(&frame, Transform_GetUpdated(r->xform));
+        cMatrix_ctor_cMatrixR(&frame, cXform_GetMatrix(r->xform));
     }
     if (GetTarget(a)) {
         dir = GetTarget(a)->GetPosition();

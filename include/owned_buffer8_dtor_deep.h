@@ -20,7 +20,7 @@
                 if (p) {                                                      \
                     if (p) {                                                  \
                         AllocGuard guard;                                     \
-                        Mem_Free(0, p, fileSym, 0x64);                        \
+                        cMemMan_Deallocate(0, p, fileSym, 0x64);                        \
                     }                                                         \
                 }                                                             \
             }                                                                 \
@@ -41,7 +41,7 @@
                     if (p) {                                                  \
                         if (p) {                                              \
                             AllocGuard guard;                                 \
-                            Mem_Free(0, p, fileSym, 0x64);                    \
+                            cMemMan_Deallocate(0, p, fileSym, 0x64);                    \
                         }                                                     \
                     }                                                         \
                 }                                                             \

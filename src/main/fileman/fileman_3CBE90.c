@@ -10,12 +10,12 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int String_Reserve(char *, int);                           
-int FileMan_LoadMemberSync(char *, int *, int);                     
+int std_basic_string_char_char_traits_char_reserve(char *, int);                           
+int cFileMan_Read_charPP_int(char *, int *, int);                     
 char * func_0036DD80(char *);                           
 int cFileMan_Close(char *);                               
-int FileMan_FindMember(char *);                             
-int FileMan_Release(char *, int);                            
+int cFileMan_Open(char *);                             
+int cFileMan_dtor(char *, int);                            
 int cFileMan_ctor_charP_cFileIOP_bool(char *, int, int, int);                    
 extern int D_00543658;
 extern int D_00543660;
@@ -28,18 +28,18 @@ int cSFOini_Load(int arg0) {
 
     if (D_00543668 == 0) {
         cFileMan_ctor_charP_cFileIOP_bool(sp10, arg0, 0, 0);
-        if (!(FileMan_FindMember(sp10) & 0xFF)) {
+        if (!(cFileMan_Open(sp10) & 0xFF)) {
             D_00543660 = F_(func_0036DD80(sp10), 0x2C, int);
             D_00543658 = 0;
-            FileMan_LoadMemberSync(sp10, &D_00543658, 0);
+            cFileMan_Read_charPP_int(sp10, &D_00543658, 0);
             cFileMan_Close(sp10);
             D_00543668 = 1;
-            String_Reserve(&D_00543680, 0x40);
-            String_Reserve(&D_005436A0, 0x40);
-            FileMan_Release(sp10, -1);
+            std_basic_string_char_char_traits_char_reserve(&D_00543680, 0x40);
+            std_basic_string_char_char_traits_char_reserve(&D_005436A0, 0x40);
+            cFileMan_dtor(sp10, -1);
             return 1;
         }
-        FileMan_Release(sp10, -1);
+        cFileMan_dtor(sp10, -1);
         goto block_5;
     }
 block_5:
@@ -110,27 +110,27 @@ int std_basic_string_char_char_traits_char_find_charP_uint_uint(const SBF70* sel
 #pragma push /* merge_units */
 typedef struct { unsigned char m0; int m4; int m8; int mC; } TC060;
 #if 0 /* merge_units */
-extern int FileMan_FindMember(void* src);
+extern int cFileMan_Open(void* src);
 #endif /* merge_units */
-#define FileMan_FindMember(a0) (FileMan_FindMember((char *)(a0))) /* merge_units */
+#define cFileMan_Open(a0) (cFileMan_Open((char *)(a0))) /* merge_units */
 
-extern int FileMan_GetSize(void* src);
+extern int cFileMan_GetSize(void* src);
 #if 0 /* merge_units */
-extern void FileMan_LoadMemberSync(void* src, int* out, int z);
+extern void cFileMan_Read_charPP_int(void* src, int* out, int z);
 #endif /* merge_units */
-#define FileMan_LoadMemberSync(a0, a1, a2) ((void)FileMan_LoadMemberSync((char *)(a0), (a1), (a2))) /* merge_units */
+#define cFileMan_Read_charPP_int(a0, a1, a2) ((void)cFileMan_Read_charPP_int((char *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cFileMan_Close(void* src);
 #endif /* merge_units */
 #define cFileMan_Close(a0) ((void)cFileMan_Close((char *)(a0))) /* merge_units */
 
-unsigned char FileMan_LoadFile(TC060* self, void* src)
+unsigned char cDB_LoadDB(TC060* self, void* src)
 {
-    if (!(unsigned char)FileMan_FindMember(src)) {
-        self->mC = FileMan_GetSize(src);
+    if (!(unsigned char)cFileMan_Open(src)) {
+        self->mC = cFileMan_GetSize(src);
         self->m8 = 0;
-        FileMan_LoadMemberSync(src, &self->m8, 0);
+        cFileMan_Read_charPP_int(src, &self->m8, 0);
         cFileMan_Close(src);
         self->m4 = self->m8;
         self->m0 = 1;
@@ -138,8 +138,8 @@ unsigned char FileMan_LoadFile(TC060* self, void* src)
     }
     return 0;
 }
-#undef FileMan_FindMember /* merge_units */
-#undef FileMan_LoadMemberSync /* merge_units */
+#undef cFileMan_Open /* merge_units */
+#undef cFileMan_Read_charPP_int /* merge_units */
 #undef cFileMan_Close /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003CC060 */

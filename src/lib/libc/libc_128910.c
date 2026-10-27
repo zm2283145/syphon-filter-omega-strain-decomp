@@ -53,7 +53,7 @@ int Newlib_Sigtramp(int a0) {
 
 /* merge_units: begin func_00128998 */
 extern char D_0058805C[];
-extern int Newlib_SysKill(int, int);
+extern int Libc_Kill(int, int);
 
 int Newlib_KillR(int a0, int a1, int a2) {
     int s0, s1, v0, v1;
@@ -63,7 +63,7 @@ int Newlib_KillR(int a0, int a1, int a2) {
     a0 = a1;
     a1 = a2;
     *(int*)(char*)s1 = 0;
-    v0 = Newlib_SysKill(a0, a1);
+    v0 = Libc_Kill(a0, a1);
     v1 = v0;
     a0 = 0 + -1;
     if (v1 != a0) {
@@ -83,9 +83,9 @@ ret:
 /* merge_units: end func_00128998 */
 
 /* merge_units: begin func_001289F8 */
-extern int Newlib_SysGetpid(void);
+extern int Libc_Getpid(void);
 
 int Newlib_GetpidR(void) {
-    return Newlib_SysGetpid();
+    return Libc_Getpid();
 }
 /* merge_units: end func_001289F8 */

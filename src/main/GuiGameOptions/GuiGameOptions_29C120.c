@@ -25,7 +25,7 @@ char D_004AA9A0[] = "basic_string: out_of_range";
 extern "C" {
 char D_004AA9C0[] = "basic_string: length_error";
 }
-DEFINE_STRING_REPLACE_RANGE_XD(String_Replace_29C120, D_004AA9A0, D_004AA9C0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_0048B910, D_0048B918, Libc_Memmove, String_Assign, String_Dtor)
+DEFINE_STRING_REPLACE_RANGE_XD(String_Replace_29C120, D_004AA9A0, D_004AA9C0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_0048B910, D_0048B918, Libc_Memmove, std_basic_string_char_char_traits_char_assign_charP_charP_intP, String_Dtor)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0029C120(void) {}
 #pragma pop /* merge_units */

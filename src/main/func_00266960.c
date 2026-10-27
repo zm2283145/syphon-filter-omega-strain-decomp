@@ -6,8 +6,8 @@
 extern "C" {
 extern char D_004A8270[];
 extern char D_004A8280[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 }
 inline void* operator new(unsigned int, void* p) { return p; }
 struct M_66960 {
@@ -36,13 +36,13 @@ struct Holder_66960 {
             Node_66960* p = node;
             if (p) {
                 AllocGuard guard;
-                Mem_Free(0, p, D_004A8280, 0x64);
+                cMemMan_Deallocate(0, p, D_004A8280, 0x64);
             }
         }
     }
 };
 
-static inline Node_66960* NewNode() { AllocGuard guard; return (Node_66960*)Mem_Alloc(0, 0x60, D_004A8270, 0x5C); }
+static inline Node_66960* NewNode() { AllocGuard guard; return (Node_66960*)cMemMan_Allocate(0, 0x60, D_004A8270, 0x5C); }
 #pragma push
 #pragma opt_propagation off
 extern "C" int std_list_deleter_TaserPulse_insert(Node_66960** result, List_66960* list, Node_66960** pos, const Val_66960* value)

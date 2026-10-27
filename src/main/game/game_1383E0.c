@@ -40,7 +40,7 @@ extern char D_004D9100[];
 extern char D_004D90A0[];
 void std_vector_deleter_cLosRequest_cCollisionModelList_Game_dtor(void* m, short f);
 void func_00135FB0(void* m, short f);
-void Receiver_Destruct(void* p, short f);
+void cSystem_dtor(void* p, short f);
 void operator_delete(void* p);
 }
 extern "C" O_001384E0* func_001384E0(O_001384E0* self, short del)
@@ -52,7 +52,7 @@ extern "C" O_001384E0* func_001384E0(O_001384E0* self, short del)
             std_vector_deleter_cLosRequest_cCollisionModelList_Game_dtor(self->m3C, -1);
             std_vector_deleter_cLosRequest_cCollisionModelList_Game_dtor(self->m30, -1);
             func_00135FB0(self->m20, -1);
-            Receiver_Destruct(self, 0);
+            cSystem_dtor(self, 0);
         }
         if (del > 0) operator_delete(self);
     }

@@ -21,7 +21,7 @@ typedef struct SsoString {
 typedef struct { char unused; } Allocator; /* empty allocator object passed by value */
 
 /* Replaces count characters at pos with the range [first, last). */
-extern void* String_Replace(SsoString* str, int pos, int count, const char* first, const char* last, Allocator alloc);
+extern void* std_basic_string_char_char_traits_char_do_replace(SsoString* str, int pos, int count, const char* first, const char* last, Allocator alloc);
 
 /* Assigns the range [first, last) to the string (replaces the whole contents). */
 void* func_00356590(SsoString* str, const char* first, const char* last)
@@ -32,7 +32,7 @@ void* func_00356590(SsoString* str, const char* first, const char* last)
         len = (unsigned char)str->h.s.shortLen;
     else
         len = str->longLen;
-    return String_Replace(str, 0, len, first, last, alloc);
+    return std_basic_string_char_char_traits_char_do_replace(str, 0, len, first, last, alloc);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00356590 */
@@ -64,25 +64,25 @@ void func_003565F0(char* self) {
 /* Factory: allocate a 0x250-byte personnel screen and construct it inline (two strings, one payload). */
 extern "C" {
 extern char D_004DF020[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void GuiPersonnelScreen_ctor(void* self);
-void String_CtorEmpty(void* str);
-void GuiPersonnelMenu_ctor(void* payload);
+void cString_ctor_void(void* str);
+void cSndFx_ctor_void(void* payload);
 }
 struct O356600 { void* vtable; char pad4[0x68]; char s6C[0xC]; char s78[0xC]; char pad84[0x2C]; char pB0[0x1A0]; };
-extern "C" O356600* GuiPersonnelMenu_Create(void)
+extern "C" O356600* ConcreteWidgetClassRep_GuiPersonnelMenu_Create(void)
 {
     O356600* p;
     {
         AllocGuard guard;
-        p = (O356600*)Mem_Alloc(0, 0x250, "guiWidget.hh", 0x2A);
+        p = (O356600*)cMemMan_Allocate(0, 0x250, "guiWidget.hh", 0x2A);
     }
     if (p) {
         GuiPersonnelScreen_ctor(p);
         p->vtable = D_004DF020;
-        String_CtorEmpty(p->s6C);
-        String_CtorEmpty(p->s78);
-        GuiPersonnelMenu_ctor(p->pB0);
+        cString_ctor_void(p->s6C);
+        cString_ctor_void(p->s78);
+        cSndFx_ctor_void(p->pB0);
     }
     return p;
 }
@@ -95,6 +95,6 @@ extern "C" O356600* GuiPersonnelMenu_Create(void)
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(GuiPersonnelScreen_dtor_3566D0, D_004DF0B0, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(GuiPersonnelScreen_dtor_3566D0, D_004DF0B0, GuiWidget_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003566D0 */

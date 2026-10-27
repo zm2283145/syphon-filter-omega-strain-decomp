@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern int sceCdSearchFile(int, int, int);
+extern int sceCdLayerSearchFile(int, int, int);
 
-int sceCdSearchFile_Thunk(int a0, int a1) {
+int sceCdSearchFile_2(int a0, int a1) {
     int tmp0;
 
-    tmp0 = sceCdSearchFile(a0, a1, 0);
+    tmp0 = sceCdLayerSearchFile(a0, a1, 0);
     return tmp0;
 }

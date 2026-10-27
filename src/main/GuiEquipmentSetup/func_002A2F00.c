@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 #include "gui_widget_vslots.h"
-extern "C" void FileMan_Release(void* part, int flags);
+extern "C" void cFileMan_dtor(void* part, int flags);
 
 typedef struct SoundRequest {
     char pad000[0x48];
@@ -85,44 +85,44 @@ extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005723F8;
 extern unsigned char D_00582B88;
 extern int D_00582CF0;
-int Net_GetTalkerName(int a);
+int HeadsetSemaphore_GetOwner(int a);
 void func_002A3A10(S_2A2F00* self);
 void GuiTextWidget_SetDisableWrap(void* w, int a);
 void func_0041C0D0(void* w, int a);
-Pl_2A2F00* PlayerSlots_Get(int i);
-int Appearance_GetBodyKind(void* a);
+Pl_2A2F00* cNetObj_GetPlayer(int i);
+int SKL_FindSex(void* a);
 void cMan_AddDisguise(void* skel, int snd);
-void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
+void cSndFx_ctor_int_charP_cGOBJP_int(SoundRequest* req, int kind, void* name, int a, int b);
 void cPlaySoundMsg_ctor_netPlaySoundMsgR(EffectMsg* msg, SoundRequest* req, void* p);
-void Event_Send(EffectMsg* msg, void* target, int flags);
-void FileMan_Release(void* part, int flags);
+void QueueMessage_cMessageR_cSystemP_int(EffectMsg* msg, void* target, int flags);
+void cFileMan_dtor(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
-void Game_NetSendPauseState(void* a, int b, int c);
-void Skel_Rebind(Skel_2A2F00* s, void* src);
-Bk_2A2F00* Player_GetAgentData(Pl_2A2F00* p);
-char* AgentData_GetName(Bk_2A2F00* b);
+void cGameSystem_SendAgentData(void* a, int b, int c);
+void cSKM_GOBJ_CloneMan(Skel_2A2F00* s, void* src);
+Bk_2A2F00* cHuman_GetAgentData(Pl_2A2F00* p);
+char* cAgentData_GetUserName(Bk_2A2F00* b);
 char* AgentData_GetRankText(Bk_2A2F00* b);
 void GuiTextWidget_SetText(void* w, char* s, int a);
-char* Loc_LookupText(char* key);
-void GuiWidget_SendEvent(void* self, void* w, int a, int b, int c);
-void Player_HandleLeftGame(Pl_2A2F00* p);
+char* nGlobalization_GetString_charP(char* key);
+void GuiWidget_SendMessage(void* self, void* w, int a, int b, int c);
+void cHuman_CheckForDisconnectedNetworkedPlayer(Pl_2A2F00* p);
 void cHuman_CheckForChangedWeapons(Pl_2A2F00* p);
 int sprintf(void*, const void*, ...);
-void DME_SendPlayGameMsg(void);
-Stack_2A2F00* Gui_GetScreenStack(void);
-void GuiWidget_Update(S_2A2F00* self, float dt);
+void cDME_SendPlayGame(void);
+Stack_2A2F00* Gui_Canvas(void);
+void GuiWidget_onAdvanceTime(S_2A2F00* self, float dt);
 }
 
 static inline W_2A2F00* FindAs(void* self, char* n, char* t)
 {
-    W_2A2F00* w = (W_2A2F00*)GuiWidget_FindChildByName(self, n);
+    W_2A2F00* w = (W_2A2F00*)GuiWidget_FindChild_charP(self, n);
     unsigned char ok = 0;
     if (w && w->IsA(t)) ok = 1;
     return ok ? w : 0;
 }
 #define FIND(n, t) FindAs(self, n, t)
 
-extern "C" void GuiEquipmentSetup_Update(S_2A2F00* self, float dt)
+extern "C" void GuiEquipmentSetup_onAdvanceTime(S_2A2F00* self, float dt)
 {
     char name[17] = "1value_agentname";
     char rank[12] = "1value_rank";
@@ -136,7 +136,7 @@ extern "C" void GuiEquipmentSetup_Update(S_2A2F00* self, float dt)
     char* t;
 
     D_00506578++;
-    me = Net_GetTalkerName(D_00582CF0);
+    me = HeadsetSemaphore_GetOwner(D_00582CF0);
     func_002A3A10(self);
     for (i = 0; i < 4; i++) {
         W_2A2F00* wName;
@@ -159,7 +159,7 @@ extern "C" void GuiEquipmentSetup_Update(S_2A2F00* self, float dt)
         wRank = FIND(rank, D_004A7520);
         wStatus = FIND(status, D_004A7520);
         wIcon = FIND(icon, D_004A9C40);
-        p = PlayerSlots_Get(i);
+        p = cNetObj_GetPlayer(i);
         if (p) {
             int k = ((p->team & 0x7F000000) >> 24) - 1;
             unsigned char st;
@@ -168,34 +168,34 @@ extern "C" void GuiEquipmentSetup_Update(S_2A2F00* self, float dt)
             if (!D_00506518[k]) {
                 D_00506518[k] = 1;
                 if (self->cc) {
-                    int snd = g_AgentPartCache[Appearance_GetBodyKind(p->appearance)][k + 0x3E];
+                    int snd = g_AgentPartCache[SKL_FindSex(p->appearance)][k + 0x3E];
                     if (snd)
                         cMan_AddDisguise(p->skel, snd);
                 }
                 if (k) {
-                    SoundRequest_Ctor(&req, 4, D_0048BAA0[k], 0, 0);
+                    cSndFx_ctor_int_charP_cGOBJP_int(&req, 4, D_0048BAA0[k], 0, 0);
                     cPlaySoundMsg_ctor_netPlaySoundMsgR(&msg, &req, p);
                     msg.flag = 1;
-                    Event_Send(&msg, g_Game, 0);
+                    QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 0);
                     msg.vtbl = D_004DAE10;
                     EffectMsg* m = &msg;
                     if (m->sub30) {
-                        FileMan_Release(msg.partB, -1);
-                        FileMan_Release(msg.partA, -1);
+                        cFileMan_dtor(msg.partB, -1);
+                        cFileMan_dtor(msg.partA, -1);
                     }
                     cMessage_dtor(&msg, 0);
-                    FileMan_Release(req.partB, -1);
-                    FileMan_Release(req.partA, -1);
+                    cFileMan_dtor(req.partB, -1);
+                    cFileMan_dtor(req.partA, -1);
                 }
-                Game_NetSendPauseState(g_Game, 0, 0);
+                cGameSystem_SendAgentData(g_Game, 0, 0);
             }
-            Skel_Rebind(self->skel[k], p->skel);
+            cSKM_GOBJ_CloneMan(self->skel[k], p->skel);
             self->skel[k]->b2C71 = 1;
-            if (Player_GetAgentData(p) && Player_GetAgentData(p)->bB70) {
+            if (cHuman_GetAgentData(p) && cHuman_GetAgentData(p)->bB70) {
                 long long* c = &D_00506520[k];
                 if (*c > 10) {
-                    GuiTextWidget_SetText(wName, AgentData_GetName(Player_GetAgentData(p)), 0);
-                    GuiTextWidget_SetText(wRank, AgentData_GetRankText(Player_GetAgentData(p)), 0);
+                    GuiTextWidget_SetText(wName, cAgentData_GetUserName(cHuman_GetAgentData(p)), 0);
+                    GuiTextWidget_SetText(wRank, AgentData_GetRankText(cHuman_GetAgentData(p)), 0);
                 } else {
                     GuiTextWidget_SetText(wName, D_004AB160, 0);
                     GuiTextWidget_SetText(wRank, D_004AB160, 0);
@@ -207,16 +207,16 @@ extern "C" void GuiEquipmentSetup_Update(S_2A2F00* self, float dt)
             }
             st = p->GetState();
             if (st == 0) {
-                t = Loc_LookupText(D_004AB168);
+                t = nGlobalization_GetString_charP(D_004AB168);
                 self->ready = 0;
             } else if (st == 1) {
-                t = Loc_LookupText(D_004AB168);
+                t = nGlobalization_GetString_charP(D_004AB168);
                 if (self->ready > 1)
                     self->ready = 1;
             } else if (st == 2) {
-                t = Loc_LookupText(D_004AB178);
+                t = nGlobalization_GetString_charP(D_004AB178);
             } else {
-                t = Loc_LookupText(D_004AB190);
+                t = nGlobalization_GetString_charP(D_004AB190);
             }
             if (st == 3) {
                 if (self->ready) {
@@ -244,11 +244,11 @@ extern "C" void GuiEquipmentSetup_Update(S_2A2F00* self, float dt)
                 wIcon->flags |= 2;
                 if (i == me) {
                     if (p->local)
-                        GuiWidget_SendEvent(self, wIcon, 10, 1, 0);
+                        GuiWidget_SendMessage(self, wIcon, 10, 1, 0);
                     else
-                        GuiWidget_SendEvent(self, wIcon, 10, 2, 0);
+                        GuiWidget_SendMessage(self, wIcon, 10, 2, 0);
                 } else {
-                    GuiWidget_SendEvent(self, wIcon, 10, 0, 0);
+                    GuiWidget_SendMessage(self, wIcon, 10, 0, 0);
                 }
             } else {
                 wIcon->flags &= ~2;
@@ -256,7 +256,7 @@ extern "C" void GuiEquipmentSetup_Update(S_2A2F00* self, float dt)
             if (p->local)
                 D_00506500 = i;
             else
-                Player_HandleLeftGame(p);
+                cHuman_CheckForDisconnectedNetworkedPlayer(p);
             cHuman_CheckForChangedWeapons(p);
         } else {
             self->skel[i]->b2C3A = -1;
@@ -279,7 +279,7 @@ extern "C" void GuiEquipmentSetup_Update(S_2A2F00* self, float dt)
             else
                 ok = 1;
             if (ok && D_00506510 > 300.0f)
-                DME_SendPlayGameMsg();
+                cDME_SendPlayGame();
         } else {
             D_00506510 = 0.0f;
         }
@@ -294,17 +294,17 @@ extern "C" void GuiEquipmentSetup_Update(S_2A2F00* self, float dt)
             W_2A2F00* w;
             self->readyShown = self->ready;
             if (self->ready == 0)
-                t = Loc_LookupText(D_004AB100);
+                t = nGlobalization_GetString_charP(D_004AB100);
             else if (self->ready >= 3)
-                t = Loc_LookupText(D_004AB100);
+                t = nGlobalization_GetString_charP(D_004AB100);
             else
-                t = Loc_LookupText(D_004AB1A0);
+                t = nGlobalization_GetString_charP(D_004AB1A0);
             w = FIND(D_004AB0B0, D_004A9870);
             if (t && w)
                 GuiTextWidget_SetText(w, t, 0);
         }
     }
-    if (!Gui_GetScreenStack()->n28 || Gui_GetScreenStack()->p2C->top != self) {
+    if (!Gui_Canvas()->n28 || Gui_Canvas()->p2C->top != self) {
         self->spin = 0.0f;
     } else {
         const float pi = 3.1415927f;
@@ -315,5 +315,5 @@ extern "C" void GuiEquipmentSetup_Update(S_2A2F00* self, float dt)
         else if (self->angle < -pi)
             self->angle += 6.2831855f;
     }
-    GuiWidget_Update(self, dt);
+    GuiWidget_onAdvanceTime(self, dt);
 }

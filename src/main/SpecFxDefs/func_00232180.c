@@ -33,14 +33,14 @@ static inline V Cross(const V& a, const V& b) { VX c; Crs_(&c, &a, &b); return c
 static inline V Normalized(V v) { v.Normalize(); return v; }
 struct M;
 extern "C" {
-void Mtx_Transpose3x3(M* m);
-int Mtx_IsTranslationZero(M* m);
+void cMatrix_InvertRot(M* m);
+int cMatrix_IsZeroTranslation(M* m);
 V* func_00133EC0(M* m);
-void Vec4_Assign(V* d, V* s);
-void Vec3_Negate(V* v);
-void Mtx_TransformByTranspose(V* v, M* m);
-void Mtx_SetTranslation(M* m, V* t);
-void Effect_CreateInstance(int id, M* m);
+void cVector_ctor_cVectorR(V* d, V* s);
+void cVector_NegateXYZ(V* v);
+void cVector_Rotate_cMatrixR(V* v, M* m);
+void cMatrix_SetTranslation(M* m, V* t);
+void SfxParticleEffect_int_cMatrixR(int id, M* m);
 }
 struct M {
     V r0, r1, r2, t;
@@ -48,17 +48,17 @@ struct M {
     void Invert() { InvertJ(); }
     void InvertJ() { InvertI(); }
     void InvertI() {
-        Mtx_Transpose3x3(this);
-        if (!Mtx_IsTranslationZero(this)) {
+        cMatrix_InvertRot(this);
+        if (!cMatrix_IsZeroTranslation(this)) {
             V tr;
-            Vec4_Assign(&tr, func_00133EC0(this));
-            Vec3_Negate(&tr);
-            Mtx_TransformByTranspose(&tr, this);
-            Mtx_SetTranslation(this, &tr);
+            cVector_ctor_cVectorR(&tr, func_00133EC0(this));
+            cVector_NegateXYZ(&tr);
+            cVector_Rotate_cMatrixR(&tr, this);
+            cMatrix_SetTranslation(this, &tr);
         }
     }
 } __attribute__((aligned(16)));
-extern "C" void Effect_SpawnDirectional(int id, V* pos, V* dir)
+extern "C" void SfxParticleEffect_int_cVectorR_cVectorR(int id, V* pos, V* dir)
 {
     M m;
     V p(pos);
@@ -80,7 +80,7 @@ extern "C" void Effect_SpawnDirectional(int id, V* pos, V* dir)
         m.r2 = c;
     }
     m.t = p;
-    Effect_CreateInstance(id, &m);
+    SfxParticleEffect_int_cMatrixR(id, &m);
 }
 
 

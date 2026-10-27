@@ -28,7 +28,7 @@ typedef struct Owner {
 } Owner;
 
 /* Clears the active flag and calls the attachment's virtual +0x4C, if any. */
-extern "C" void Object_Deactivate(Owner* self)
+extern "C" void cGOBJ_Deactivate(Owner* self)
 {
     self->active = 0;
     if (self->attachment)
@@ -46,7 +46,7 @@ static inline void merge_flush_func_003CE790(void) {}
 
 
 /* Clears the active flag and calls its virtual at vtable+0x4C, if any. */
-extern "C" void cNode_v07(Owner* self)
+extern "C" void cGOBJ_NetDeactivate(Owner* self)
 {
     self->active = 0;
     if (self->attachment)

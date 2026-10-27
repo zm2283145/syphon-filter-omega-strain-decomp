@@ -7,6 +7,6 @@
 #include "types.h"
 
 /* Sets the float at +0x2C to 1.0f. */
-void Curve_ForceWOne(char* self) {
+void cSplinedMotion_Vector_FixUpResultOfSplineEvaluation(char* self) {
     *(float*)(self + 44) = 1.0f;
 }

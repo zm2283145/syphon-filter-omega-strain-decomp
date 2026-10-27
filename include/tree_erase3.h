@@ -6,7 +6,7 @@
  * itself three levels deep: grandchildren are destroyed through
  * destroyFn(getValAlloc(t), &value) and deallocFn(getNodeAlloc(t), node, 1),
  * children through freeFn(node, 0, 0, file, line) after calling both
- * getters, and the node itself with an inline Mem_Free under the allocator
+ * getters, and the node itself with an inline cMemMan_Deallocate under the allocator
  * guard. C++ only (#pragma cplusplus on before including).
  */
 #include "tstr_types.h"

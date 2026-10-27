@@ -42,7 +42,7 @@ void *RequestEncoder(S *s, int id, int lim)
 /* merge_units: begin func_002F3CD0 */
 typedef struct N2F3CD0 { struct N2F3CD0 *next; struct N2F3CD0 *prev; int a; int val; } N2F3CD0;
 typedef struct { int owner; int max; char pad8[0x10]; int used; int nfree; int pad20; N2F3CD0 *used_l; N2F3CD0 *free_l; } P2F3CD0;
-extern int Net_AllocZeroed(void *, int);
+extern int rt_memory_allocate_init_zero(void *, int);
 #if 0 /* merge_units */
 extern int CreateCodec(int, int, int);
 #endif /* merge_units */
@@ -95,7 +95,7 @@ int RequestDecoder(P2F3CD0 *q, int key)
             rt_memory_free(&e);
         }
         if (q->used < q->max) {
-            Net_AllocZeroed(&n, 0x10);
+            rt_memory_allocate_init_zero(&n, 0x10);
             if (n != 0) {
                 n->val = CreateCodec(q->owner, key, 2);
                 if (n->val == 0)
@@ -173,7 +173,7 @@ int RequestSequencer(P2F4030 *q)
     int r = 0;
     if (q->free_l == 0) {
         if (q->used < q->max) {
-            Net_AllocZeroed(&n, 0x10);
+            rt_memory_allocate_init_zero(&n, 0x10);
             if (n != 0) {
                 n->val = CreateSequence();
                 if (n->val == 0) {

@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0051F0A8;
 
-void StaticInit_NetNpcMsgsName(void) {
+void StaticInit_NetNPCMsgs(void) {
     D_0051F0A8 = "NET_NPCMSGS_REQUEST";
 }

@@ -10,8 +10,8 @@
 typedef struct { char unused; } Alloc0029F530; /* empty allocator object passed by value */
 typedef struct { int w0, w4, w8; } Str0029F530;
 extern int strlen(const char* s);
-extern void String_Reserve(Str0029F530* str, int n);
-extern void String_Replace(Str0029F530* str, int pos, int count, const char* first, const char* last, Alloc0029F530 alloc);
+extern void std_basic_string_char_char_traits_char_reserve(Str0029F530* str, int n);
+extern void std_basic_string_char_char_traits_char_do_replace(Str0029F530* str, int pos, int count, const char* first, const char* last, Alloc0029F530 alloc);
 /* Construct a string from a C string. */
 Str0029F530* func_0029F530(Str0029F530* str, const char* s)
 {
@@ -21,8 +21,8 @@ Str0029F530* func_0029F530(Str0029F530* str, const char* s)
     str->w4 = 0;
     str->w8 = 0;
     n = strlen(s);
-    String_Reserve(str, n);
-    String_Replace(str, 0, 0, s, s + n, alloc);
+    std_basic_string_char_char_traits_char_reserve(str, n);
+    std_basic_string_char_char_traits_char_do_replace(str, 0, 0, s, s + n, alloc);
     return str;
 }
 #pragma pop /* merge_units */
@@ -66,6 +66,6 @@ void func_0029F5B0(String* str, int arg) {
 
 extern "C" { char D_004AAD00[] = "basic_string: out_of_range"; }
 extern "C" { char D_004AAD20[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_0029F5E0, D_004AAD00, D_004AAD20, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_0048BA18, D_0048BA20, Libc_Memmove, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_0029F5E0, D_004AAD00, D_004AAD20, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_0048BA18, D_0048BA20, Libc_Memmove, std_basic_string_char_char_traits_char_assign_charP_charP_intP)
 #pragma pop /* merge_units */
 /* merge_units: end func_0029F5E0 */

@@ -105,11 +105,11 @@ struct Cam310 {
 
 extern "C" {
 void cHermiteSplineWithScaledDuration_float_dtor(void* p, int f);
-void* Mem_PlacementNew(int size, void* p);
+void* opNew_uint_voidP(int size, void* p);
 void cHermiteSplineWithScaledDuration_cQuaternion_ctor(void* p, V* a, V* b, V* c, V* d, float t);
 }
 
-extern "C" void QuatCurve_PreUpdate(Cam310* c)
+extern "C" void cSplinedMotion_QuaternionLERP_1_UpdateSplinePoints(Cam310* c)
 {
     Ref* r = c->ref; bool go = 0; float f = r->f40; bool eq = c->fB4 == f; if (eq && !(c->sp.t <= 0.0f)) go = 1;
     if (go) {
@@ -120,7 +120,7 @@ extern "C" void QuatCurve_PreUpdate(Cam310* c)
         }
         VX z = ZeroX();
         cHermiteSplineWithScaledDuration_float_dtor(&c->sp, -1);
-        void* p = Mem_PlacementNew(0x50, &c->sp);
+        void* p = opNew_uint_voidP(0x50, &c->sp);
         if (p)
             cHermiteSplineWithScaledDuration_cQuaternion_ctor(p, &c->p20, &c->p30, &c->p40, &z, c->sp.t);
     } else {
@@ -144,7 +144,7 @@ static inline void merge_flush_func_00180310(void) {}
 
 /* merge_units: begin func_00180550 */
 #pragma push /* merge_units */
-void QuatCurve_Normalize4(V4* a) {
+void cSplinedMotion_QuaternionLERP_1_FixUpResultOfSplineEvaluation(V4* a) {
     char* pv1 = (char*)a + 0x20;
     asm {
         lqc2 vf1, 0x0(pv1)

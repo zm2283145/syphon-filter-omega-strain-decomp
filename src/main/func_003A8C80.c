@@ -64,11 +64,11 @@ static inline float Sqrt(float x) { float r = 0.0f; __asm__ volatile("sqrt.s %0,
 static inline float MaxF(float a, float b) { float r = 0.0f; __asm__ volatile("max.s %0, %1, %2" : "=f"(r) : "f"(a), "f"(b)); return r; }
 static inline float Clamp(float x, float lo, float hi) { float r = 0.0f; __asm__ volatile("max.s %0, %1, %2; min.s %0, %0, %3" : "+f"(r) : "f"(x), "f"(lo), "f"(hi)); return r; }
 
-extern "C" float Math_Atan2f(float y, float x);
-extern "C" float Math_Tan(float x);
-extern "C" void Projectile_SolveBallistic(V* out, const V* from, const V* to, V* extra, float g, float k, float minAng);
+extern "C" float Libc_Atan2f(float y, float x);
+extern "C" float Libc_Tanf(float x);
+extern "C" void nPhysics_CalculateInitialVelocityForTrajectory(V* out, const V* from, const V* to, V* extra, float g, float k, float minAng);
 
-void Projectile_SolveBallistic(V* out, const V* from, const V* to, V* extra, float g, float k, float minAng)
+void nPhysics_CalculateInitialVelocityForTrajectory(V* out, const V* from, const V* to, V* extra, float g, float k, float minAng)
 {
     V e = *to - *from;
     V dh;
@@ -89,7 +89,7 @@ void Projectile_SolveBallistic(V* out, const V* from, const V* to, V* extra, flo
     dh.z = 0.0f;
     dh.y = e.z;
     if (dh.x != 0.0f) {
-        float a = Math_Atan2f(dh.y, dh.x);
+        float a = Libc_Atan2f(dh.y, dh.x);
         float t;
         if (a > 0.0f) t = k * (1.5707964f - a);
         else { float hp = 1.5707964f; t = k * hp; }
@@ -98,7 +98,7 @@ void Projectile_SolveBallistic(V* out, const V* from, const V* to, V* extra, flo
         a = MaxF(minAng, a);
         a = Clamp(a, -1.5707946f, 1.5707946f);
         if (a) {
-            float tn = Math_Tan(a);
+            float tn = Libc_Tanf(a);
             float num = g * Sq(dh.x) * Sq(tn);
             float den = 2.0f * (dh.y - tn * dh.x);
             if (!(den < 0.0f)) den = -1.1754944e-38f;

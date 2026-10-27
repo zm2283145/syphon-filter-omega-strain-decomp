@@ -6,10 +6,10 @@ extern char D_004AACB8[];
 extern char D_004AACC8[];
 extern char D_004AACD8[];
 extern char D_004AACE8[];
-extern char* Loc_LookupText(char* key);
-extern void String_Copy(char* d, char* s);
+extern char* nGlobalization_GetString_charP(char* key);
+extern void Libc_Strcpy(char* d, char* s);
 extern int sprintf(char* d, const char* f, ...);
-void GuiOnlineConnect_GetDnasText(int err, char* title, char* body, char* extra)
+void GetDNASErrorStrings(int err, char* title, char* body, char* extra)
 {
     char buf[16];
     int code = 0;
@@ -26,18 +26,18 @@ void GuiOnlineConnect_GetDnasText(int err, char* title, char* body, char* extra)
         }
     }
     if (code != -1) {
-        t = (err != -701 && err != -703) ? Loc_LookupText(D_004AACB8) : Loc_LookupText(D_004AACC8);
-        if (t) String_Copy(title, t);
+        t = (err != -701 && err != -703) ? nGlobalization_GetString_charP(D_004AACB8) : nGlobalization_GetString_charP(D_004AACC8);
+        if (t) Libc_Strcpy(title, t);
     }
     if (a != -1) {
         if (a == 0 && !(err < -699) && err < -600) a = 15;
         sprintf(buf, D_004AACD8, a);
-        t = Loc_LookupText(buf);
+        t = nGlobalization_GetString_charP(buf);
         if (t) sprintf(body, t, err);
     }
     if (b != -1) {
         sprintf(buf, D_004AACE8, b);
-        t = Loc_LookupText(buf);
-        if (t) String_Copy(extra, t);
+        t = nGlobalization_GetString_charP(buf);
+        if (t) Libc_Strcpy(extra, t);
     }
 }

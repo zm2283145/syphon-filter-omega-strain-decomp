@@ -54,6 +54,6 @@ DEFINE_CLEAR_BUFFER_DTOR(std_vector_deleter_SelectElem_dtor_void_2, D_004ABA60)
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004ABA50[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(GuiMissionList_Create, 0x124, D_004ABA50, GuiMissionList_ctor)
+DEFINE_GUARDED_NEW_CTOR(ConcreteWidgetClassRep_GuiMissionList_Create, 0x124, D_004ABA50, GuiMissionList_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002AD870 */

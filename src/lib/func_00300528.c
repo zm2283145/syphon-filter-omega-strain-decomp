@@ -7,15 +7,15 @@ extern void rt_msg_get_u4byte(unsigned char *src, void *dst);
 extern void rt_msg_set_ubyte(unsigned char *dst, unsigned char v);
 extern int rt_msg_set_u4byte(unsigned char *dst, unsigned int v);
 extern void *memcpy(void *, const void *, unsigned int);
-extern int Sha1_Digest(unsigned char *a, unsigned int b, unsigned char *c, int d);
-extern int Md5_Digest(unsigned char *a, unsigned int b, unsigned char *c);
-extern int Sha1_Digest2(unsigned char *a, unsigned int b, unsigned char *c, unsigned int d, unsigned char *e, int f);
-extern int Md5_Digest2(unsigned char *a, unsigned int b, unsigned char *c, unsigned int d, unsigned char *e);
+extern int KM_SHA1(unsigned char *a, unsigned int b, unsigned char *c, int d);
+extern int KM_MD5(unsigned char *a, unsigned int b, unsigned char *c);
+extern int KM_Salted_SHA1(unsigned char *a, unsigned int b, unsigned char *c, unsigned int d, unsigned char *e, int f);
+extern int KM_Salted_MD5(unsigned char *a, unsigned int b, unsigned char *c, unsigned int d, unsigned char *e);
 extern int rt_thread_count_get_active_count(unsigned int *out);
 extern int rt_thread_count_get_remenant_count(unsigned int *out);
 extern int rt_intc_get_total_interrupt_handlers(unsigned int *out);
 extern int rt_thread_count_get_thread_info(unsigned char *a, unsigned char *b, int n, unsigned int *out);
-extern int NetConn_BufferMessage(void *conn, int type, int id, unsigned char *buf, unsigned short len, int flags);
+extern int rt_msg_client_store_msg_in_send_buf(void *conn, int type, int id, unsigned char *buf, unsigned short len, int flags);
 
 int rt_msg_client_process_cheat_query(void *unused0, void *conn, void *unused2, unsigned char *pkt, unsigned int pktlen)
 {
@@ -55,12 +55,12 @@ int rt_msg_client_process_cheat_query(void *unused0, void *conn, void *unused2, 
     case 1:
         rt_msg_set_u4byte(p, 16);
         len = 0x1D;
-        Sha1_Digest(b, c, p + 4, 16);
+        KM_SHA1(b, c, p + 4, 16);
         break;
     case 2:
         rt_msg_set_u4byte(p, 16);
         len = 0x1D;
-        Md5_Digest(b, c, p + 4);
+        KM_MD5(b, c, p + 4);
         break;
     case 3:
         tmp = 0;
@@ -81,12 +81,12 @@ int rt_msg_client_process_cheat_query(void *unused0, void *conn, void *unused2, 
     case 5:
         rt_msg_set_u4byte(p, 16);
         len = 0x1D;
-        Sha1_Digest2(pkt + 13, pktlen - 13, b, c, p + 4, 16);
+        KM_Salted_SHA1(pkt + 13, pktlen - 13, b, c, p + 4, 16);
         break;
     case 6:
         rt_msg_set_u4byte(p, 16);
         len = 0x1D;
-        Md5_Digest2(pkt + 13, pktlen - 13, b, c, p + 4);
+        KM_Salted_MD5(pkt + 13, pktlen - 13, b, c, p + 4);
         break;
     case 8:
         rt_msg_set_u4byte(p, 4);
@@ -150,6 +150,6 @@ int rt_msg_client_process_cheat_query(void *unused0, void *conn, void *unused2, 
         len = 13;
         break;
     }
-    NetConn_BufferMessage(conn, 0x1D, 0xFFFF, buf, len, 0);
+    rt_msg_client_store_msg_in_send_buf(conn, 0x1D, 0xFFFF, buf, len, 0);
     return 0;
 }

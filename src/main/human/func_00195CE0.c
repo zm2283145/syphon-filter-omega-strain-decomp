@@ -4,7 +4,7 @@ static inline unsigned char E7PTest(E7Phys* p, int n)
 {
     return ((p->bits[n / 32] >> (n & 31)) & 1) != 0;
 }
-void Physical_SetModeBit(E7Phys* p, int bit)
+void cModeSwitch_WithHistory_12_ActivateMode_uint_2(E7Phys* p, int bit)
 {
     int i;
     p->bits[bit / 32] |= 1 << (bit & 31);

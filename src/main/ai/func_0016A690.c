@@ -11,7 +11,7 @@ extern void cTeam_TeamUpdateCallback(void);
 extern void cTeam_TeamDeleteCallback(void);
 
 /* Initialises the service: creates its worker and handle and installs the callbacks; returns 1 on success. */
-unsigned char cTeamDataStruct_NetRegister(int a)
+unsigned char cTeam_InitNet(int a)
 {
     unsigned char result;
     ThreadParams params;

@@ -6,30 +6,30 @@ extern char D_004D9340[];
 extern char g_ScriptAITimeElapsedMsgKey[];
 extern void Event_PackHeader();
 extern void cAITimeElapsedMsg_dtor();
-extern void cAITimeElapsedMsg_v01();
-extern void cAITimeElapsedMsg_v03();
-void * const D_004DCC10[8] = { (void*)0x0, (void*)0x0, (void*)cAITimeElapsedMsg_dtor, (void*)cAITimeElapsedMsg_v01, (void*)Event_PackHeader, (void*)cAITimeElapsedMsg_v03, (void*)0x0, (void*)0x0 };
-void Event_Construct(Ev_F2D0* e, void* type);
-void Event_Send(Ev_F2D0* e, void* target, int a);
+extern void cAITimeElapsedMsg_Clone();
+extern void cAITimeElapsedMsg_getSOBJClassId();
+void * const D_004DCC10[8] = { (void*)0x0, (void*)0x0, (void*)cAITimeElapsedMsg_dtor, (void*)cAITimeElapsedMsg_Clone, (void*)Event_PackHeader, (void*)cAITimeElapsedMsg_getSOBJClassId, (void*)0x0, (void*)0x0 };
+void cMessage_ctor_cMessageNameR(Ev_F2D0* e, void* type);
+void QueueMessage_cMessageR_cSystemP_int(Ev_F2D0* e, void* target, int a);
 void cMessage_dtor(Ev_F2D0* e, int f);
-void cAI_v0E(S_F2D0* self, float dt)
+void cAI_NextFrame(S_F2D0* self, float dt)
 {
     Ev_F2D0 c;
     Ev_F2D0 a;
     Ev_F2D0 b;
     if (self->pending) {
         if (self->pending) {
-            Event_Construct(&a, D_004EE550);
+            cMessage_ctor_cMessageNameR(&a, D_004EE550);
             a.vt = D_004D9340;
             a.on = 1;
             a.target = -1;
-            Event_Construct(&b, D_004EE550);
+            cMessage_ctor_cMessageNameR(&b, D_004EE550);
             b.on = 0;
             b.vt = D_004D9340;
             b.target = -1;
             self->pending = 0;
-            Event_Send(&a, self, 1);
-            Event_Send(&b, self, 1);
+            QueueMessage_cMessageR_cSystemP_int(&a, self, 1);
+            QueueMessage_cMessageR_cSystemP_int(&b, self, 1);
             b.vt = D_004D9340;
             cMessage_dtor(&b, 0);
             a.vt = D_004D9340;
@@ -39,9 +39,9 @@ void cAI_v0E(S_F2D0* self, float dt)
     if (!(self->timer < 0.0f)) {
         self->timer -= dt;
         if (self->timer < 0.0f) {
-            Event_Construct(&c, g_ScriptAITimeElapsedMsgKey);
+            cMessage_ctor_cMessageNameR(&c, g_ScriptAITimeElapsedMsgKey);
             c.vt = ((char*)D_004DCC10);
-            Event_Send(&c, self, 0);
+            QueueMessage_cMessageR_cSystemP_int(&c, self, 0);
             c.vt = ((char*)D_004DCC10);
             cMessage_dtor(&c, 0);
         }

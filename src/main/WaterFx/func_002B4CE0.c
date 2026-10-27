@@ -12,7 +12,7 @@ WaterListLink* details_compressed_pair_imp_cAllocator_node_compressed_pair_numbe
 }
 
 /* Initializes an empty list. */
-WaterList* List_Init(WaterList* list) {
+WaterList* std_list_deleter_tNode_ctor(WaterList* list) {
     list->count = 0;
     list->head.prev = &list->head;
     list->head.next = &list->head;

@@ -10,7 +10,7 @@
 
 extern char D_00554F28[];
 
-int ScriptType_GetRecord(int a0) {
+int cScriptBase_getClass(int a0) {
     int v0, v1;
     int cond;
 
@@ -45,7 +45,7 @@ ret:
 extern PtrVec* D_00554F30;  /* global enum table, ids start at 10 */
 
 /* Returns the global enum descriptor for enum id 'id'. */
-int ScriptEnum_GetById(int id) {
+int cScriptBase_getEnum(int id) {
     int i = id - 10;
 
     return D_00554F30->data[i];
@@ -59,16 +59,16 @@ int ScriptEnum_GetById(int id) {
 #include "alloc_guard.h"
 extern "C" {
 extern char D_004BD3B0[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 int strlen(const char* s);
 void* memcpy(void* d, const void* s, int n);
 }
 static inline void* SD_Alloc(int n)
 {
     AllocGuard g;
-    return Mem_Alloc(0, n, D_004BD3B0, 0x130);
+    return cMemMan_Allocate(0, n, D_004BD3B0, 0x130);
 }
-extern "C" char* Str_Duplicate(char* s)
+extern "C" char* cScriptBase_myStrdup(char* s)
 {
     char* p = 0;
     if (s) {
@@ -87,7 +87,7 @@ extern "C" char* Str_Duplicate(char* s)
 #pragma cplusplus on
 #pragma inline_depth(10)
 extern "C" {
-void PtrVector_Resize(void* v, int n, int* val);
+void std_vector_pod_int_resize(void* v, int n, int* val);
 }
 typedef struct { int pad0; int count; int* data; } V76D0;
 typedef struct { int pad0; int x4; V76D0 vec; char pad14[0x38 - 0x14]; int x38; } O76D0;
@@ -100,7 +100,7 @@ static inline int* At(V76D0* v, unsigned int i) { return &v->data[i]; }
 static inline void* SD_Alloc_003D76D0(int n, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, n, D_004BD3B0, line);
+    return cMemMan_Allocate(0, n, D_004BD3B0, line);
 }
 extern "C" void cScriptBase_addGameFunc(char* name, int a, int x4, int n, int* src, signed char f)
 {
@@ -113,7 +113,7 @@ extern "C" void cScriptBase_addGameFunc(char* name, int a, int x4, int n, int* s
     ((O76D0*)m)->x4 = x4;
     o->x38 = 1;
     zero = 0;
-    PtrVector_Resize(&o->vec, n, &zero);
+    std_vector_pod_int_resize(&o->vec, n, &zero);
     for (i = 0; i < n; i++) *At(&o->vec, i) = src[i];
     std_vector_FuncDefPtr_push_back(D_00554F20, &o);
 }

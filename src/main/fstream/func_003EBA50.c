@@ -10,14 +10,14 @@ typedef struct Singleton {
 extern signed char D_0055A850;
 extern int D_0055A858;
 extern Singleton D_0055A870;
-extern void ScalarCollection_Init(Singleton*);
+extern void std_list_deleter_voidPtr_ctor_void(Singleton*);
 extern void cFileStreamMan_dtor(void);
 extern void __register_global_object(void*, void*, void*);
 
 /* Returns the lazily constructed singleton at D_0055A870. */
-Singleton* Fstream_GetLoader(void) {
+Singleton* GetFileStreamMan(void) {
     if (D_0055A850 == 0) {
-        ScalarCollection_Init(&D_0055A870);
+        std_list_deleter_voidPtr_ctor_void(&D_0055A870);
         D_0055A870.unkC = 0;
         D_0055A870.unk10 = 0;
         D_0055A870.unk14 = 0;

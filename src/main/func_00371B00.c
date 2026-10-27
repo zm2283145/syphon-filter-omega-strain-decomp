@@ -10,13 +10,13 @@ typedef struct {
     E4Slot slots[16];
 } E4Obj;
 extern unsigned char g_LevelLightsDirty;
-extern void Model_SetPatchBit(void* a, int b, int c);
-void PntLight_Enable(E4Obj* o)
+extern void cVU1Model_UpdateLighting(void* a, int b, int c);
+void cSceneLight_Activate(E4Obj* o)
 {
     int i;
     if (!o->b58 && o->n5C) {
         for (i = 0; i < 16; i++) {
-            E4Slot* p = &o->slots[i]; if (p->a) Model_SetPatchBit(p->a, p->b, 1);
+            E4Slot* p = &o->slots[i]; if (p->a) cVU1Model_UpdateLighting(p->a, p->b, 1);
         }
         o->b58 = 1;
     }

@@ -29,7 +29,7 @@ const char* GuiAchievementScreen_GetClassName(void) {
 extern void* strcmp(void* key);
 
 /* Returns whether the lookup of "GuiAchievementScreen" yields null. */
-int GuiAchievementScreen_IsType(void) {
+int GuiAchievementScreen_IsClass(void) {
     return strcmp("GuiAchievementScreen") == 0;
 }
 #pragma pop /* merge_units */

@@ -9,15 +9,15 @@ static inline float RF_0027C070(void) { int i = R32_0027C070(); return *(float*)
 typedef struct { char pad[0x4C]; int kind; } T_0027C070;
 typedef struct { char pad[0x24]; int id; char p28[8]; float pos[4]; float f; } M_0027C070;
 extern int g_HumanActorClassKey;
-extern void Script_ReadU32(int* p);
-extern float Script_ReadFloat(void);
-extern void Actor_StartGrenadeThrow(float f, T_0027C070* t, int* id, float* pos);
-void cNetGrenadeMsg_Apply(M_0027C070* m, T_0027C070* t) {
-    Script_ReadU32(&m->id);
-    m->pos[0] = Script_ReadFloat();
-    m->pos[1] = Script_ReadFloat();
-    m->pos[2] = Script_ReadFloat();
+extern void cNetMsg_GetID(int* p);
+extern float cNetMsg_GetFloat_void(void);
+extern void cHuman_ThrowGrenade(float f, T_0027C070* t, int* id, float* pos);
+void cNetGrenadeMsg_UnpackAndProcess(M_0027C070* m, T_0027C070* t) {
+    cNetMsg_GetID(&m->id);
+    m->pos[0] = cNetMsg_GetFloat_void();
+    m->pos[1] = cNetMsg_GetFloat_void();
+    m->pos[2] = cNetMsg_GetFloat_void();
     m->pos[3] = 1.0f;
     m->f = RF_0027C070();
-    if (t && t->kind == g_HumanActorClassKey) Actor_StartGrenadeThrow(m->f, t, &m->id, m->pos);
+    if (t && t->kind == g_HumanActorClassKey) cHuman_ThrowGrenade(m->f, t, &m->id, m->pos);
 }

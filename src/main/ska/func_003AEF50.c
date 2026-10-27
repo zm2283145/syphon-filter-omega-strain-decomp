@@ -38,11 +38,11 @@ struct AnimRoot {
     int f160;
     int f164;
 };
-extern "C" Base* AnimRoot_ConstructBase(Base* b);
-extern "C" void AnimRoot_Copy(AnimRoot* d, Base* s);
-static inline void InitB(AnimRoot* self) { Base t; AnimRoot_Copy(self, AnimRoot_ConstructBase(&t)); }
+extern "C" Base* cSkaAnimAnchor_TreeNodeData_ctor_void(Base* b);
+extern "C" void cTreeNode_cSkaAnimAnchor_TreeNodeData_ctor(AnimRoot* d, Base* s);
+static inline void InitB(AnimRoot* self) { Base t; cTreeNode_cSkaAnimAnchor_TreeNodeData_ctor(self, cSkaAnimAnchor_TreeNodeData_ctor_void(&t)); }
 static inline void InitB2(AnimRoot* self) { InitB(self); }
-extern "C" AnimRoot* AnimRoot_Construct(AnimRoot* self)
+extern "C" AnimRoot* cSkaAnimAnchor_ctor(AnimRoot* self)
 {
     InitB2(self);
     self->d0 = 0.0f;

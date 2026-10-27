@@ -49,7 +49,7 @@ int strlen(const char *s);
 void FrontEnd_FlushMessages(void *p);
 int cBitArray_224_NumChunks(void);
 int AgentFile_EncodeName(const char *in, char *out, int digit, unsigned int max);
-int MemCardWrap_Write(Mc4110 *mc, char *name, void *buf, int size, int flag);
+int cMemCard_SaveFile(Mc4110 *mc, char *name, void *buf, int size, int flag);
 }
 static inline bool Idle4110(Mc4110 *m) { return !m->busy; }
 static inline void WInt4110(int v) { *(int *)D_0052FDF0 = v; D_0052FDF0 += 4; }
@@ -122,7 +122,7 @@ extern "C" int AgentData_Save(A4110 *self)
                 }
             }
             n = ((int *)D_0052FDF0 - D_0052AFD0) * 4;
-            r = MemCardWrap_Write(mc, AgentFile_EncodeName(self->name8AC, D_005329A0, self->i4, 0x20) ? D_005329A0 : D_004B92B0,
+            r = cMemCard_SaveFile(mc, AgentFile_EncodeName(self->name8AC, D_005329A0, self->i4, 0x20) ? D_005329A0 : D_004B92B0,
                                   start, n, 1) != 0;
             self->bB72 = 0;
             self->bB73 = 0;

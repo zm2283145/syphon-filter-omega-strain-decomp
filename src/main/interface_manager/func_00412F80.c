@@ -23,22 +23,22 @@ extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 extern char D_004BEF30[], D_004BEF48[];
 void Alloc_Lock(int id);
-void Alloc_Unlock(int id);
-void* Mem_Alloc(int heap, int size, const char* file, int line);
-int String_AssignCStr_1C43A0(Str* s, const char* t);
+void EnableIntc(int id);
+void* cMemMan_Allocate(int heap, int size, const char* file, int line);
+int std_basic_string_char_char_traits_char_compare_charP(Str* s, const char* t);
 int cInterfaceManager_FindHogFile(Self* self, Str* path, const char* name, unsigned char* flag);
 void String_Dtor(Str* s, int f);
-char* String_CStr(Str* s);
+char* std_basic_string_char_char_traits_char_c_str(Str* s);
 void* cHogList_OpenFromHog(void* files, char* path, int mode);
-void* Archive_Open(void* files, char* path, int a, int b);
+void* cHogList_Open(void* files, char* path, int a, int b);
 int sprintf(char* buf, const char* fmt, ...);
-void Resource_Construct(Hog* h);
-void Hog_Register(Hog* h, char* name, void* arc, int z);
-void* Interface_Ctor(void* p, Hog* h);
-void String_CtorCStr_13B480(Str* s, const char* t);
-void String_AssignString(Str* d, Str* s);
-void FileMan_Release(Hog* h, int flags);
-int GuiManager_FindInterface(Self* self, const char* name);
+void cFileMan_ctor_void(Hog* h);
+void cFileMan_EncodeFilename_charP_cHogFileR_bool(Hog* h, char* name, void* arc, int z);
+void* cInterface_ctor(void* p, Hog* h);
+void std_basic_string_char_char_traits_char_ctor_charP(Str* s, const char* t);
+void std_basic_string_char_char_traits_char_assign_basicstringR(Str* d, Str* s);
+void cFileMan_dtor(Hog* h, int flags);
+int cInterfaceManager_AddInterface(Self* self, const char* name);
 }
 
 static inline void Copy(PStr* buf, char* t, const char* s)
@@ -83,7 +83,7 @@ static inline int Find(Self* self, const char* key)
     i = 0;
     e = self->e;
     do {
-        if (e->ref && String_AssignCStr_1C43A0(&e->name, key) == 0) return i;
+        if (e->ref && std_basic_string_char_char_traits_char_compare_charP(&e->name, key) == 0) return i;
         i++;
         e++;
     } while (i < 20);
@@ -91,11 +91,11 @@ static inline int Find(Self* self, const char* key)
 }
 
 #pragma push
-/* like GuiResource_Find (same unit family): keeps the &path zeroing through the argument register */
+/* like cInterfaceManager_OpenHogFile (same unit family): keeps the &path zeroing through the argument register */
 #pragma opt_propagation off
 /* Finds (upper-cased name) or loads an interface into a free slot: opens the archive
  * (pak or plain), registers its .IE hog, creates the Interface and records it. */
-extern "C" int GuiManager_FindInterface(Self* self, const char* name)
+extern "C" int cInterfaceManager_AddInterface(Self* self, const char* name)
 {
     unsigned char flag;
     Str path;
@@ -128,28 +128,28 @@ extern "C" int GuiManager_FindInterface(Self* self, const char* name)
             return -1;
         }
         if (flag) {
-            arc = cHogList_OpenFromHog(self->files, String_CStr(&path), self->mode);
+            arc = cHogList_OpenFromHog(self->files, std_basic_string_char_char_traits_char_c_str(&path), self->mode);
         } else {
-            arc = Archive_Open(self->files, String_CStr(&path), 0, 0);
+            arc = cHogList_Open(self->files, std_basic_string_char_char_traits_char_c_str(&path), 0, 0);
             asm { .set reorder } /* barrier: keeps the then-arm's own move (retail does not merge the tails) */
         }
         sprintf(buf, D_004BEF48, name);
-        Resource_Construct(&hog);
-        Hog_Register(&hog, buf, arc, 0);
+        cFileMan_ctor_void(&hog);
+        cFileMan_EncodeFilename_charP_cHogFileR_bool(&hog, buf, arc, 0);
         if (g_ProfileLockEnabled) Alloc_Lock(9);
         g_ProfileLockDepth++;
-        p = Mem_Alloc(0, 8, D_004BEF30, 0x133);
-        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        p = cMemMan_Allocate(0, 8, D_004BEF30, 0x133);
+        if (g_ProfileLockEnabled) EnableIntc(9);
         g_ProfileLockDepth--;
-        if (p) p = Interface_Ctor(p, &hog);
+        if (p) p = cInterface_ctor(p, &hog);
         { char* t = up2.text; Copy(&up2, t, name); Upper(&up2, t); }
-        String_CtorCStr_13B480(&t, up2.text);
-        String_AssignString(&self->e[i].name, &t);
+        std_basic_string_char_char_traits_char_ctor_charP(&t, up2.text);
+        std_basic_string_char_char_traits_char_assign_basicstringR(&self->e[i].name, &t);
         String_Dtor(&t, 0);
         self->e[i].data = p;
         self->e[i].ref = 1;
         self->e[i].arc = arc;
-        FileMan_Release(&hog, -1);
+        cFileMan_dtor(&hog, -1);
         String_Dtor(&path, 0);
     }
     return i;

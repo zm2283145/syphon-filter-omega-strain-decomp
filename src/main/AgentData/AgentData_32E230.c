@@ -36,13 +36,13 @@ extern char g_UnlockRows[];
 E_32E260* std_vector_imp_Record_begin(void* t);
 E_32E260* std_vector_imp_Record_end(void* t);
 void std_vector_Record_pointer2iterator(E_32E260** out, void* t, E_32E260** raw);
-int Loc_FindKeyThunk(const char* key);
-int Loc_LookupText(int id);
+int nGlobalization_GetStringIndex(const char* key);
+int nGlobalization_GetString_charP(int id);
 }
 static inline bool Neq_32E260(E_32E260* a, E_32E260* b) { return !(a == b); }
 static inline int Find_32E260(const char* key)
 {
-    int k = Loc_FindKeyThunk(key);
+    int k = nGlobalization_GetStringIndex(key);
     if (k > -1) {
         E_32E260* b;
         E_32E260* e;
@@ -60,9 +60,9 @@ static inline int Find_32E260(const char* key)
     }
     return -1;
 }
-extern "C" O_32E260* OmegaReqRow_Construct(O_32E260* self, int id, char flag, const char* key, int a, int b, int c)
+extern "C" O_32E260* cAgentData_tRequirementInfo_ctor(O_32E260* self, int id, char flag, const char* key, int a, int b, int c)
 {
-    self->text = Loc_LookupText(id);
+    self->text = nGlobalization_GetString_charP(id);
     self->id = id;
     self->flag = flag;
     self->val = key ? Find_32E260(key) : -1;

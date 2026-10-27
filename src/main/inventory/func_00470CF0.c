@@ -4,7 +4,7 @@ extern "C" char D_004C3348[];
 extern "C" char D_004DCF10[];
 extern "C" char D_004DFD80[];
 extern "C" char D_004E1AC0[];
-MSG_CLONE_BEGIN(cNetInventoryMsg_v01, 0x28, D_004C3348, 0x36)
+MSG_CLONE_BEGIN(cNetInventoryMsg_Clone, 0x28, D_004C3348, 0x36)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

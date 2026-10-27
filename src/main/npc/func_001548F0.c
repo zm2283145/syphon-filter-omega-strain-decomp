@@ -2,7 +2,7 @@
 #pragma inline_depth(8)
 #include "types.h"
 #include "vslot_pad.h"
-/* NpcAi_ModeFlee: flee-mode message handler - start a node search away from the current position,
+/* cNPC_Flee: flee-mode message handler - start a node search away from the current position,
    retarget on hits, and resume the flee timer. */
 struct V4 { __int128 q; V4() {} };
 struct Mat { V4 r[4]; Mat() {} };
@@ -37,13 +37,13 @@ extern int D_004EE550;
 extern int D_004ED9B8;
 extern char g_Game[];
 extern char g_NpcRouteMgr[];
-int* Event_GetType(Ev_548F0* ev);
-void* Service_Lookup(void* a, void* b);
-int NpcRoute_IsHeadPending(void* svc, GObj* id);
-int NpcRoute_StartRegion(int r);
-unsigned char NpcRoute_NodeSearch(float d, void* svc, GObj* obj, void* e0, V4* pos, V4* tgt, int reg, int n, int k, long m);
-void NpcNodeSearch_SetQuery(float a, float b, void* out, int k);
-unsigned char NpcAi_ModeFlee(Self_548F0* self, Ev_548F0* ev);
+int* cMessage_Name(Ev_548F0* ev);
+void* cSystemContainer_GetSystem(void* a, void* b);
+int cPathSystem_IsRequestBeingProcessed(void* svc, GObj* id);
+int cPathNavigator_GetGroupIndexForPatrolPath(int r);
+unsigned char cPathSystem_RequestNodeIndexFromGroup(float d, void* svc, GObj* obj, void* e0, V4* pos, V4* tgt, int reg, int n, int k, long m);
+void cNodePickerParameters_ctor_float_float_bool(float a, float b, void* out, int k);
+unsigned char cNPC_Flee(Self_548F0* self, Ev_548F0* ev);
 }
 
 /* quadword copy (lq/sq), the retail V4 copy */
@@ -70,25 +70,25 @@ static inline void Run(Self_548F0* self, void* svc, char* e0)
     { Mat m = self->obj->GetMatrix(); Mat* pm = &m; QC(&pos, &pm->r[3]); }
     CopyOr(&tgt, self, (V4*)0);
     o = self->obj;
-    NpcRoute_NodeSearch(10000.0f, svc, o, e0, &pos, &tgt, NpcRoute_StartRegion(self->f1B0), 6, 2, -1);
+    cPathSystem_RequestNodeIndexFromGroup(10000.0f, svc, o, e0, &pos, &tgt, cPathNavigator_GetGroupIndexForPatrolPath(self->f1B0), 6, 2, -1);
 }
 static inline void Search(Self_548F0* self, void* svc)
 {
     char e0[0x10];
-    NpcNodeSearch_SetQuery(0.0f, -10000.0f, e0, 0);
+    cNodePickerParameters_ctor_float_float_bool(0.0f, -10000.0f, e0, 0);
     Run(self, svc, e0);
     self->f13F = 2;
 }
 
-unsigned char NpcAi_ModeFlee(Self_548F0* self, Ev_548F0* ev)
+unsigned char cNPC_Flee(Self_548F0* self, Ev_548F0* ev)
 {
     unsigned char handled = 0;
-    int t = *Event_GetType(ev);
+    int t = *cMessage_Name(ev);
     if (t == D_004EE550) {
         if ((unsigned char)ev->kind == 3) {
             if (!(unsigned char)self->Busy() && Reached(self->target)) {
-                void* svc = Service_Lookup(g_Game, g_NpcRouteMgr);
-                if (!NpcRoute_IsHeadPending(svc, self->obj))
+                void* svc = cSystemContainer_GetSystem(g_Game, g_NpcRouteMgr);
+                if (!cPathSystem_IsRequestBeingProcessed(svc, self->obj))
                     Search(self, svc);
             }
             self->fE8 = 60;
@@ -98,15 +98,15 @@ unsigned char NpcAi_ModeFlee(Self_548F0* self, Ev_548F0* ev)
             self->SetMovement(0, 20);
             self->fE0 = -1;
             self->fE4 = -1;
-            svc = Service_Lookup(g_Game, g_NpcRouteMgr);
-            if (!NpcRoute_IsHeadPending(svc, self->obj))
+            svc = cSystemContainer_GetSystem(g_Game, g_NpcRouteMgr);
+            if (!cPathSystem_IsRequestBeingProcessed(svc, self->obj))
                 Search(self, svc);
             handled = 1;
         } else if ((unsigned char)ev->kind == 1) {
             self->SetMovement(1, 20);
         }
     } else {
-      int t2 = *Event_GetType(ev);
+      int t2 = *cMessage_Name(ev);
       if (t2 == D_004ED9B8) {
         if ((unsigned char)ev->kind == 7) {
             if (ev->f28 == 10 && Get(self->target) && self->CanSee(Get(self->target)) && !Reached(self->target))

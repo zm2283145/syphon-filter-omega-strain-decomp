@@ -52,6 +52,6 @@ static inline void merge_flush_func_00336EC0(void) {}
 /* merge_units: begin func_00336F70 */
 #pragma push /* merge_units */
 /* Serialize the 32-bit message field. */
-DEFINE_NET_WRITE_ONE_WORD(cNetAddObjectiveMsg_v04)
+DEFINE_NET_WRITE_ONE_WORD(cNetAddObjectiveMsg_Pack)
 #pragma pop /* merge_units */
 /* merge_units: end func_00336F70 */

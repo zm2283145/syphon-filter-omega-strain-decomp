@@ -1,10 +1,10 @@
 #include "types.h"
-extern void FreeList_Push(void*);
+extern void AbstractWidgetClassRep_AddClassRep(void*);
 extern char D_004DD690;
 extern void* D_00506468;
 extern void* D_00506470;
-void StaticInit_GuiOnlineConnectFactory(void) {
+void StaticInit_GuiOnlineConnect(void) {
     D_00506470 = &D_004DD690;
     D_00506468 = "GuiOnlineConnect";
-    FreeList_Push(&D_00506468);
+    AbstractWidgetClassRep_AddClassRep(&D_00506468);
 }

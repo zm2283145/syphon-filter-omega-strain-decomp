@@ -68,9 +68,9 @@ struct TNode { char pad[0xC]; void* data; };
 struct TIt { TNode* node; TIt() {} };
 
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
-void ObjectList_EraseRange(int* out, void* list, LNode** first, LNode** last);
-LIt List_Begin(void* list);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+void std_list_deleter_voidPtr_erase_listdeleter_listdeleter(int* out, void* list, LNode** first, LNode** last);
+LIt std_list_deleter_voidPtr_begin_void(void* list);
 void std_list_tNPCInfoPtr_generic_iterator_ctor(LIt* out, const LIt& in);
 LIt std_list_tNPCInfoPtr_end(void* list);
 void cLListIterator_tNPCInfoPtr_ctor(LIt* out, const LIt& in);
@@ -78,7 +78,7 @@ LIt std_list_tNPCInfoPtr_begin(void* list);
 void std_tree_pair_tNPCInfoPtr_value_compare_begin(TIt* out, void* tree);
 TIt std_map_tNPCInfoPtr_bool_end(void* tree);
 void cAssocArray_tNPCInfoPtr_bool_Iterator_ctor(TIt* out, const TIt& in);
-void Tree_Successor(TIt* it);
+void std_red_black_tree_1_increment(TIt* it);
 void std_tree_pair_tNPCInfoPtr_value_compare_clear(void* tree);
 void cNPCInfoObject_DestroyNPCInfoStruct(void* self);
 extern char D_004BFCA0[];
@@ -135,7 +135,7 @@ extern int D_00582B78;
 extern int D_00582B80;
 }
 
-static inline void LB1(LIt* o, void* L) { std_list_tNPCInfoPtr_generic_iterator_ctor(o, List_Begin(L)); }
+static inline void LB1(LIt* o, void* L) { std_list_tNPCInfoPtr_generic_iterator_ctor(o, std_list_deleter_voidPtr_begin_void(L)); }
 static inline void LB2(LIt* o, void* L) { cLListIterator_tNPCInfoPtr_ctor(o, std_list_tNPCInfoPtr_begin(L)); }
 static inline void LE(LIt* o, void* L) { cLListIterator_tNPCInfoPtr_ctor(o, std_list_tNPCInfoPtr_end(L)); }
 static inline void TE(TIt* o, void* T) { cAssocArray_tNPCInfoPtr_bool_Iterator_ctor(o, std_map_tNPCInfoPtr_bool_end(T)); }
@@ -143,7 +143,7 @@ static inline void LB1x(LIt* o, void* L) { LB1(o, L); }
 static inline void LB2x(LIt* o, void* L) { LB2(o, L); }
 static inline void LEx(LIt* o, void* L) { LE(o, L); }
 static inline void TEx(TIt* o, void* T) { TE(o, T); }
-static inline void Erase(void* L, void* LH, LNode* LF) { int res; LNode* first; LNode* last; last = (LNode*)LH; first = LF; ObjectList_EraseRange(&res, L, &first, &last); }
+static inline void Erase(void* L, void* LH, LNode* LF) { int res; LNode* first; LNode* last; last = (LNode*)LH; first = LF; std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&res, L, &first, &last); }
 static inline unsigned char Ne(TIt* a, TIt* b) { return !(a->node == b->node); }
 
 extern "C" void cNPCInfoObject_Clear(void* self)
@@ -162,7 +162,7 @@ extern "C" void cNPCInfoObject_Clear(void* self)
         void* e = itx.p->data;
         {
             AllocGuard g;
-            Mem_Free(0, e, D_004BFCA0, 0x7B);
+            cMemMan_Deallocate(0, e, D_004BFCA0, 0x7B);
         }
         itx.p = itx.p->next;
     }
@@ -174,7 +174,7 @@ extern "C" void cNPCInfoObject_Clear(void* self)
             void* e = itx.p->data;
             {
                 AllocGuard g;
-                Mem_Free(0, e, D_004BFCA0, 0x86);
+                cMemMan_Deallocate(0, e, D_004BFCA0, 0x86);
             }
             itx.p = itx.p->next;
         }
@@ -187,7 +187,7 @@ extern "C" void cNPCInfoObject_Clear(void* self)
             void* e = itx.p->data;
             {
                 AllocGuard g;
-                Mem_Free(0, e, D_004BFCA0, 0x91);
+                cMemMan_Deallocate(0, e, D_004BFCA0, 0x91);
             }
             itx.p = itx.p->next;
         }
@@ -200,9 +200,9 @@ extern "C" void cNPCInfoObject_Clear(void* self)
         void* e = it.node->data;
         {
             AllocGuard g;
-            Mem_Free(0, e, D_004BFCA0, 0x9C);
+            cMemMan_Deallocate(0, e, D_004BFCA0, 0x9C);
         }
-        Tree_Successor(&it);
+        std_red_black_tree_1_increment(&it);
     }
     std_tree_pair_tNPCInfoPtr_value_compare_clear(D_00582B50);
     LB2x((LIt*)&bE, D_00582B30);
@@ -212,7 +212,7 @@ extern "C" void cNPCInfoObject_Clear(void* self)
             void* e = itx.p->data;
             {
                 AllocGuard g;
-                Mem_Free(0, e, D_004BFCA0, 0xA7);
+                cMemMan_Deallocate(0, e, D_004BFCA0, 0xA7);
             }
             itx.p = itx.p->next;
         }
@@ -225,7 +225,7 @@ extern "C" void cNPCInfoObject_Clear(void* self)
             void* e = itx.p->data;
             {
                 AllocGuard g;
-                Mem_Free(0, e, D_004BFCA0, 0xB1);
+                cMemMan_Deallocate(0, e, D_004BFCA0, 0xB1);
             }
             itx.p = itx.p->next;
         }

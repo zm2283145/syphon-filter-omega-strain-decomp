@@ -7,7 +7,7 @@ extern char *g_TeleportMsgClass;
 extern signed char D_0055D4E8;
 extern signed char D_0055D4F0;
 
-void StaticInit_MoveMsgNames(void) {
+void StaticInit_moveMsg(void) {
     if (D_0055D4E8 == 0) {
         D_0055D4D8 = "Move Message";
         D_0055D4E8 = 1;

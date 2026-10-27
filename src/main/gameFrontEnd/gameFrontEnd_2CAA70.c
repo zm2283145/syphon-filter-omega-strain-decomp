@@ -15,13 +15,13 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-void* Mem_Alloc(int pool, void* p, char* file, int line);
+void* cMemMan_Allocate(int pool, void* p, char* file, int line);
 }
 extern "C" void* Sfo_Malloc(void* p)
 {
     AllocGuard g;
     char f[] = "sfo_malloc: should only be used in rtime lib";
-    return Mem_Alloc(2, p, f, 0);
+    return cMemMan_Allocate(2, p, f, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002CAA70(void) {}

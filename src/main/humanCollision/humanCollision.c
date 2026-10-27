@@ -16,7 +16,7 @@
 #include "humanCollision_types.h"
 
 /* Copy-assign of a preset configuration. */
-HumanColPresetCfg* HumanColPreset_Copy(HumanColPresetCfg* dst, HumanColPresetCfg* src) {
+HumanColPresetCfg* cHumanCollisionRoutine_cLedgeSearchLimits_ctor(HumanColPresetCfg* dst, HumanColPresetCfg* src) {
     dst->range0Min = src->range0Min;
     dst->range0Max = src->range0Max;
     dst->range1Min = src->range1Min;
@@ -48,18 +48,18 @@ Word* cBitArray_19_ctor_cBitArrayR(Word* dst, Word* src) {
 
 
 extern "C" {
-int Mem_Free(int, int, char *, int);
+int cMemMan_Deallocate(int, int, char *, int);
 int __destroy_array(int, char *, int, int);
-int HumanColBufA_Dtor(int, int); /* buffer A dtor */
-int HumanColBufB_Dtor(int, int); /* buffer B dtor */
+int std_vector_deleter_cEdgeGroup_dtor(int, int); /* buffer A dtor */
+int std_vector_deleter_cCollisionEdge_dtor(int, int); /* buffer B dtor */
 extern int g_HumanColPresetMgr; /* HumanColPresetMgr* */
 extern int g_HumanColBufB; /* HumanColVec* (buffer B) */
 extern int g_HumanColBufA; /* HumanColVec* (buffer A) */
 extern unsigned char g_ProfileLockEnabled;
-extern char HumanColPreset_Dtor;
+extern char cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_dtor;
 }
 /* Destroy and free the preset manager and both buffers. */
-extern "C" void HumanCol_Shutdown(void) {
+extern "C" void cHumanCollisionRoutine_UnInitStatics(void) {
     int mgr;
     int bufB;
     int bufA;
@@ -69,9 +69,9 @@ extern "C" void HumanCol_Shutdown(void) {
         {
             AllocGuard g;
         if ((mgr != 0) && (mgr != 0)) {
-            __destroy_array(mgr + 0x10, &HumanColPreset_Dtor, sizeof(HumanColPreset), HUMANCOL_PRESET_COUNT);
+            __destroy_array(mgr + 0x10, &cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_dtor, sizeof(HumanColPreset), HUMANCOL_PRESET_COUNT);
         }
-        Mem_Free(0, mgr, "humanCollision.cc", 0x3F6);
+        cMemMan_Deallocate(0, mgr, "humanCollision.cc", 0x3F6);
         }
         g_HumanColPresetMgr = 0;
     }
@@ -80,9 +80,9 @@ extern "C" void HumanCol_Shutdown(void) {
         {
             AllocGuard g;
         if ((bufB != 0) && (bufB != 0) && (bufB != 0)) {
-            HumanColBufB_Dtor(bufB, 0);
+            std_vector_deleter_cCollisionEdge_dtor(bufB, 0);
         }
-        Mem_Free(0, bufB, "humanCollision.cc", 0x3FE);
+        cMemMan_Deallocate(0, bufB, "humanCollision.cc", 0x3FE);
         }
         g_HumanColBufB = 0;
     }
@@ -91,9 +91,9 @@ extern "C" void HumanCol_Shutdown(void) {
         {
             AllocGuard g;
         if ((bufA != 0) && (bufA != 0) && (bufA != 0) && (bufA != 0)) {
-            HumanColBufA_Dtor(bufA, 0);
+            std_vector_deleter_cEdgeGroup_dtor(bufA, 0);
         }
-        Mem_Free(0, bufA, "humanCollision.cc", 0x406);
+        cMemMan_Deallocate(0, bufA, "humanCollision.cc", 0x406);
         }
         g_HumanColBufA = 0;
     }
@@ -108,13 +108,13 @@ extern "C" void HumanCol_Shutdown(void) {
 
 
 extern "C" {
-int HumanCol_InstallPresets(...);                        
-int *Mem_Alloc(...);                       
+int cHumanCollisionRoutine_InitLedgeSearchWorkSpace(...);                        
+int *cMemMan_Allocate(...);                       
 int __construct_array(...);            
 int cArrayCapacity_Int(...);                     /* returns *p */
-int HumanColBufA_Ctor(...);
-int HumanColBufB_Reserve(...);
-int HumanColBufB_Init(...);
+int cArray_cEdgeGroup_ctor(...);
+int std_vector_cCollisionEdge_reserve(...);
+int std_vector_cCollisionEdge_ctor(...);
 extern char D_004A04A0;                     /* "humanCollision.cc" */
 #if 0 /* merge_units */
 extern int *g_HumanColPresetMgr;
@@ -131,10 +131,10 @@ extern int *g_HumanColBufA;
 #endif /* merge_units */
 #define g_HumanColBufA (*(int **)&g_HumanColBufA) /* merge_units */
 
-extern char HumanColPreset_Ctor;
+extern char cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_ctor_void;
 }
 /* Allocate the preset manager (then install the presets) and both buffers. */
-extern "C" void HumanCol_Init(void) {
+extern "C" void cHumanCollisionRoutine_InitStatics(void) {
     int capB;
     int capA;
     int *mgr;
@@ -144,24 +144,24 @@ extern "C" void HumanCol_Init(void) {
     if (g_HumanColPresetMgr == NULL) {
         {
             AllocGuard g;
-        mgr = Mem_Alloc(0, sizeof(HumanColPresetMgr), &D_004A04A0, 0x3DC);
+        mgr = cMemMan_Allocate(0, sizeof(HumanColPresetMgr), &D_004A04A0, 0x3DC);
         }
         if (mgr != NULL) {
             ((HumanColPresetMgr *)mgr)->count = 0;
-            __construct_array((char *)mgr + 0x10, &HumanColPreset_Ctor, &HumanColPreset_Dtor, sizeof(HumanColPreset), HUMANCOL_PRESET_COUNT);
+            __construct_array((char *)mgr + 0x10, &cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_ctor_void, &cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_dtor, sizeof(HumanColPreset), HUMANCOL_PRESET_COUNT);
         }
         g_HumanColPresetMgr = mgr;
-        HumanCol_InstallPresets();
+        cHumanCollisionRoutine_InitLedgeSearchWorkSpace();
     }
     if (g_HumanColBufB == NULL) {
         {
             AllocGuard g;
-        bufB = Mem_Alloc(0, sizeof(HumanColVec), &D_004A04A0, 0x3E4);
+        bufB = cMemMan_Allocate(0, sizeof(HumanColVec), &D_004A04A0, 0x3E4);
         }
         if (bufB != NULL) {
             capB = HUMANCOL_VEC_RESERVE;
-            HumanColBufB_Init(bufB);
-            HumanColBufB_Reserve(bufB, cArrayCapacity_Int(&capB));
+            std_vector_cCollisionEdge_ctor(bufB);
+            std_vector_cCollisionEdge_reserve(bufB, cArrayCapacity_Int(&capB));
             ((HumanColVec *)bufB)->flag0C = 1;
         }
         g_HumanColBufB = bufB;
@@ -169,11 +169,11 @@ extern "C" void HumanCol_Init(void) {
     if (g_HumanColBufA == NULL) {
         {
             AllocGuard g;
-        bufA = Mem_Alloc(0, sizeof(HumanColVec), &D_004A04A0, 0x3EB);
+        bufA = cMemMan_Allocate(0, sizeof(HumanColVec), &D_004A04A0, 0x3EB);
         }
         if (bufA != NULL) {
             capA = HUMANCOL_VEC_RESERVE;
-            HumanColBufA_Ctor(bufA, &capA, 1);
+            cArray_cEdgeGroup_ctor(bufA, &capA, 1);
         }
         g_HumanColBufA = bufA;
     }

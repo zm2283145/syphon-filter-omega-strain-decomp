@@ -3,7 +3,7 @@
 extern "C" {
 extern unsigned char D_005723C8;
 int NetGetObject(void* out);
-void* Object_LookupById(int*);
+void* nGobjManager_LookupGOBJ_cObjectIdR(int*);
 }
 #pragma define_section GUARD_DTOR ".dtors_drop" far_absolute RX
 struct Guard210780 {
@@ -16,7 +16,7 @@ extern "C" void func_00210780(void) {
     R210780* r;
     if (NetGetObject(&r) == 0) {
         int id = *r->ids;
-        char* o = (char*)Object_LookupById(&id);
+        char* o = (char*)nGobjManager_LookupGOBJ_cObjectIdR(&id);
         if (o) *(int*)(o + 0x790) = 0;
     }
 }

@@ -39,18 +39,18 @@ struct Owner_2397F0 { char pad[0xC]; unsigned int flags; };
 extern "C" {
 extern char D_004DC038[];
 extern void * const D_004DC018[];
-void NiEventSound_Fire();
+void cSoundFXKey_Execute();
 extern char** D_004F7C70;
 extern int D_004F7C78;
 extern int D_004F7C80;
 extern int D_0048AE28;
-void Resource_Construct(void* m);
-void SoundAction_CtorVoice(void* action, int kind, char* name, Owner_2397F0* owner, int x);
+void cFileMan_ctor_void(void* m);
+void cSndFx_SetSndFx(void* action, int kind, char* name, Owner_2397F0* owner, int x);
 }
 static inline float RdF(Reader_2397F0* r){ float t = *(float*)r->cur; r->cur += 4; return t; }
 #pragma push
 #pragma opt_propagation off
-extern "C" Track_2397F0* NiEventSound_CtorFromStream(Track_2397F0* self, Reader_2397F0* r, Owner_2397F0* o)
+extern "C" Track_2397F0* cSoundFXKey_ctor(Track_2397F0* self, Reader_2397F0* r, Owner_2397F0* o)
 {
     P_2397F0* p;
     int id;
@@ -62,8 +62,8 @@ extern "C" Track_2397F0* NiEventSound_CtorFromStream(Track_2397F0* self, Reader_
     *(int*)((char*)self + 0x34) = -2;
     *(int*)((char*)self + 0x30) = 0;
     p = &self->snd;
-    Resource_Construct(p->memberA);
-    Resource_Construct(p->memberB);
+    cFileMan_ctor_void(p->memberA);
+    cFileMan_ctor_void(p->memberB);
     p->id = -1;
     p->mask = -1;
     p->w20 = 0;
@@ -82,12 +82,12 @@ extern "C" Track_2397F0* NiEventSound_CtorFromStream(Track_2397F0* self, Reader_
     {
         int k = (int)*(float*)r->cur;
         r->cur += 4;
-        SoundAction_CtorVoice(&self->snd, k, name, o, 0);
+        cSndFx_SetSndFx(&self->snd, k, name, o, 0);
     }
     return self;
 }
 #pragma pop
-extern "C" void * const D_004DC018[3] = { (void*)0x0, (void*)0x0, (void*)NiEventSound_Fire };
+extern "C" void * const D_004DC018[3] = { (void*)0x0, (void*)0x0, (void*)cSoundFXKey_Execute };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002397F0(void) {}
 #pragma pop /* merge_units */
@@ -97,7 +97,7 @@ static inline void merge_flush_func_002397F0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0xC]; float c; float d; float a; float b; } S239960;
 extern void Blast_Prepare(int, int, int, int, int, int, float, float, float);
-void NiEventBlast_Fire(S239960* s, int x)
+void cBlastFXKey_Execute(S239960* s, int x)
 {
     Blast_Prepare(x, (int)s->a, 1, 0, 0, 0, s->b, s->c, s->d);
 }
@@ -115,29 +115,29 @@ struct Ev2399A0 { char p[8]; int kind; };
 extern "C" {
 extern char D_004F7C30[];
 extern char D_004DBEB0[];
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, void* target, int immediate);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 }
-extern "C" void cNINotice_Send(Ev2399A0* ev, Obj2399A0* o) {
+extern "C" void cFXKey_Execute(Ev2399A0* ev, Obj2399A0* o) {
     switch (ev->kind) {
     case 0: {
         Msg2399A0 m;
         o->Enable(0);
-        Event_Construct(&m, D_004F7C30);
+        cMessage_ctor_cMessageNameR(&m, D_004F7C30);
         m.vtable = D_004DBEB0;
         m.f24 = 1;
-        Event_Send(&m, o, 0);
+        QueueMessage_cMessageR_cSystemP_int(&m, o, 0);
         m.vtable = D_004DBEB0;
         cMessage_dtor(&m, 0);
         break;
     }
     case 3: {
         Msg2399A0 m;
-        Event_Construct(&m, D_004F7C30);
+        cMessage_ctor_cMessageNameR(&m, D_004F7C30);
         m.vtable = D_004DBEB0;
         m.f24 = 0;
-        Event_Send(&m, o, 0);
+        QueueMessage_cMessageR_cSystemP_int(&m, o, 0);
         m.vtable = D_004DBEB0;
         cMessage_dtor(&m, 0);
         break;

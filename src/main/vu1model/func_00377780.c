@@ -8,17 +8,17 @@ extern "C" {
 extern char D_004BC170[];
 extern char g_LightMgr[];
 extern void* g_TextureMgr;
-void LightMgr_Unregister(void* mgr, void* light, void* owner);
-void Tex_Release(void* mgr, int id, int f);
+void cLightMan_RemoveSceneLightRef(void* mgr, void* light, void* owner);
+void cTexMan_RemoveTexture(void* mgr, int id, int f);
 void func_00376930(M377780* m);
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 }
 static inline void Rel377780(void* p, int line)
 {
     AllocGuard g;
-    Mem_Free(0, p, D_004BC170, line);
+    cMemMan_Deallocate(0, p, D_004BC170, line);
 }
-extern "C" void Model_Unload(M377780* m)
+extern "C" void cVU1Model_Unload(M377780* m)
 {
     int i;
     if (!m->loaded)
@@ -29,11 +29,11 @@ extern "C" void Model_Unload(M377780* m)
         return;
     }
     for (i = 0; i < m->h->nLights; i++)
-        LightMgr_Unregister(g_LightMgr, m->h->lights[i].light, m);
+        cLightMan_RemoveSceneLightRef(g_LightMgr, m->h->lights[i].light, m);
     {
         int j;
         for (j = 0; j < m->h->nIds; j++)
-            Tex_Release(g_TextureMgr, m->ids[j], 1);
+            cTexMan_RemoveTexture(g_TextureMgr, m->ids[j], 1);
     }
     if (m->ids) {
         Rel377780(m->ids, 0x122);

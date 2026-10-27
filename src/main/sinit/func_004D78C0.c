@@ -1,10 +1,10 @@
 #include "types.h"
-extern void FreeList_Push(void*);
+extern void AbstractWidgetClassRep_AddClassRep(void*);
 extern char D_004E1020;
 extern void* D_00583938;
 extern void* D_00583940;
-void StaticInit_GuiBitmapWidgetFactory(void) {
+void StaticInit_guiBitmapWidget(void) {
     D_00583940 = &D_004E1020;
     D_00583938 = "GuiBitmapWidget";
-    FreeList_Push(&D_00583938);
+    AbstractWidgetClassRep_AddClassRep(&D_00583938);
 }

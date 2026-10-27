@@ -97,13 +97,13 @@ void* Newlib_CallocR(void* reent, unsigned int n, unsigned int elem_size)
 
 /* merge_units: begin func_00121E20 */
 extern int D_0058805C;
-extern int Newlib_SysClose(int fd);
+extern int Libc_Close(int fd);
 struct reent_00121E20 { int _errno; };
 int Newlib_CloseR(struct reent_00121E20* ptr, int fd)
 {
     int ret;
     D_0058805C = 0;
-    if ((ret = Newlib_SysClose(fd)) == -1 && D_0058805C != 0)
+    if ((ret = Libc_Close(fd)) == -1 && D_0058805C != 0)
         ptr->_errno = D_0058805C;
     return ret;
 }

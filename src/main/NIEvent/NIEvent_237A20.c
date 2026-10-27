@@ -14,17 +14,17 @@
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int NiRotationTrack_Update(float, char * );                       
+int cNIEventFloatTrack_Update(float, char * );                       
 int cNIEventBase_SetEndState(char * );                            
 
-void cNIEventLight_v48(char * arg0) {
+void cNIEventLight_SetEndState(char * arg0) {
     F_(arg0, 0x18C, signed char) = 1;
     if (F_(arg0, 0x184, int) == -1) {
-        NiRotationTrack_Update(*(float *)((char *)F_(arg0, 0x17C, int) + ((F_(arg0, 0x178, int) - 1) * 0x10)) - F_(arg0, 0x188, float), arg0 + 0x170);
+        cNIEventFloatTrack_Update(*(float *)((char *)F_(arg0, 0x17C, int) + ((F_(arg0, 0x178, int) - 1) * 0x10)) - F_(arg0, 0x188, float), arg0 + 0x170);
     }
     F_(arg0, 0x1AC, signed char) = 1;
     if (F_(arg0, 0x1A4, int) == -1) {
-        NiRotationTrack_Update(*(float *)((char *)F_(arg0, 0x19C, int) + ((F_(arg0, 0x198, int) - 1) * 0x10)) - F_(arg0, 0x1A8, float), arg0 + 0x190);
+        cNIEventFloatTrack_Update(*(float *)((char *)F_(arg0, 0x19C, int) + ((F_(arg0, 0x198, int) - 1) * 0x10)) - F_(arg0, 0x1A8, float), arg0 + 0x190);
     }
     cNIEventBase_SetEndState(arg0);
 }
@@ -44,10 +44,10 @@ public:
     virtual void stop();
 };
 struct Ev00237AD0 { char pad[0x140]; Light00237AD0* light; };
-extern "C" void Object_Deactivate(Ev00237AD0* self);
-extern "C" void cNIEventLight_v16(Ev00237AD0* self)
+extern "C" void cGOBJ_Deactivate(Ev00237AD0* self);
+extern "C" void cNIEventLight_Deactivate(Ev00237AD0* self)
 {
-    Object_Deactivate(self);
+    cGOBJ_Deactivate(self);
     if (self->light) {
         self->light->stop();
         if (self->light)

@@ -11,7 +11,7 @@ extern char D_004DA930[];   /* AnimEvent vtable */
 extern char D_004DFD80[];   /* Message base vtable */
 
 /* AnimEvent copy constructor. */
-AnimEvent* AnimEvent_Copy(AnimEvent* self, AnimEvent* src) {
+AnimEvent* cSkaAnimEndedMessage_ctor_cSkaAnimEndedMessageR(AnimEvent* self, AnimEvent* src) {
     self->base.vtable = D_004DFD80;
     self->base.unk04 = src->base.unk04;
     self->base.unk08 = src->base.unk08;
@@ -36,7 +36,7 @@ int* cPointer_cSkaNode_ctor_cSkaNodeP(int* self, int value) {
 }
 
 /* Store a Vec4 at +0x08 and set the "valid" byte at +0x05. */
-char* Actor_SetMotionOverride(char* self, Vec4* v) {
+char* cSkaRequestStream_opShl(char* self, Vec4* v) {
     Vec4* dst = (Vec4*)(self + 8);
 
     dst->x = v->x;

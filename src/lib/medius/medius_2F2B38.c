@@ -5,37 +5,37 @@
  */
 
 /* merge_units: begin func_002F2B38 */
-extern void Md5_Init(char *);
-extern void Md5_Update(char *, int, int);
-extern void Md5_Final(int, char *);
-void Md5_Digest(int a, int b, int c)
+extern void md5Init(char *);
+extern void md5Update(char *, int, int);
+extern void md5Final(int, char *);
+void KM_MD5(int a, int b, int c)
 {
     char ctx[0x60];
-    Md5_Init(ctx);
-    Md5_Update(ctx, a, b);
-    Md5_Final(c, ctx);
+    md5Init(ctx);
+    md5Update(ctx, a, b);
+    md5Final(c, ctx);
 }
 /* merge_units: end func_002F2B38 */
 
 /* merge_units: begin func_002F2B98 */
 #if 0 /* merge_units */
-extern void Md5_Update(char *, char *, char *);
+extern void md5Update(char *, char *, char *);
 #endif /* merge_units */
-#define Md5_Update(a0, a1, a2) (Md5_Update((a0), (int)(a1), (int)(a2))) /* merge_units */
+#define md5Update(a0, a1, a2) (md5Update((a0), (int)(a1), (int)(a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Md5_Final(char *, char *);
+extern void md5Final(char *, char *);
 #endif /* merge_units */
-#define Md5_Final(a0, a1) (Md5_Final((int)(a0), (a1))) /* merge_units */
+#define md5Final(a0, a1) (md5Final((int)(a0), (a1))) /* merge_units */
 
-void Md5_Digest2(char *a, char *b, char *c, char *d, char *e)
+void KM_Salted_MD5(char *a, char *b, char *c, char *d, char *e)
 {
     char ctx[0x60];
-    Md5_Init(ctx);
-    if (a && b) Md5_Update(ctx, a, b);
-    Md5_Update(ctx, c, d);
-    Md5_Final(e, ctx);
+    md5Init(ctx);
+    if (a && b) md5Update(ctx, a, b);
+    md5Update(ctx, c, d);
+    md5Final(e, ctx);
 }
-#undef Md5_Update /* merge_units */
-#undef Md5_Final /* merge_units */
+#undef md5Update /* merge_units */
+#undef md5Final /* merge_units */
 /* merge_units: end func_002F2B98 */

@@ -36,9 +36,9 @@ struct Mgr3DD790 {
 };
 
 extern "C" {
-void* Mem_Alloc(int, int, char*, int);
+void* cMemMan_Allocate(int, int, char*, int);
 Var3DD790* cScriptInterpreter_findVar(Mgr3DD790*, char*, int);
-void Script_PrintWarning(char*, char*);
+void cScriptBase_sm_printf(char*, char*);
 Var3DD790* VarDef_ctor(void*, char*, int*, int*, int);
 void std_vector_VarDefPtr_push_back(int, Var3DD790**);
 extern char D_004BD4C0[];
@@ -56,7 +56,7 @@ extern "C" Var3DD790* cScriptInterpreter_considerVar(Mgr3DD790* m, char* name, i
     has = out != 0;
     if (r) {
         if (r->active && has && !t2)
-            Script_PrintWarning(D_004BD4F0, name);
+            cScriptBase_sm_printf(D_004BD4F0, name);
         if (!r->active || (t2 && has)) {
             r->b18 = has && t0 != 0;
             if (r->active && t2 && has) {
@@ -72,7 +72,7 @@ extern "C" Var3DD790* cScriptInterpreter_considerVar(Mgr3DD790* m, char* name, i
             *out = 0;
         {
             AllocGuard g;
-            p = (Var3DD790*)Mem_Alloc(0, 0x20, D_004BD4C0, 0xAB3);
+            p = (Var3DD790*)cMemMan_Allocate(0, 0x20, D_004BD4C0, 0xAB3);
         }
         if (p) {
             if ((unsigned int)m->count < 5000) {
@@ -121,11 +121,11 @@ struct Mgr3DD { int pad0; int count; };
 extern "C" {
 extern Mgr3DD* D_00554F28;
 #if 0 /* merge_units */
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 #endif /* merge_units */
-#define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
+#define cMemMan_Allocate(a0, a1, a2, a3) (cMemMan_Allocate((a0), (a1), (a2), (a3))) /* merge_units */
 
-char* Str_Duplicate(char*);
+char* cScriptBase_myStrdup(char*);
 Al3DD* cArrayCapacity_ctor(Al3DD*, int);
 void cArray_FieldDefPtr_ctor(void*, Al3DD*, int);
 void cArray_MemberFuncPtr_ctor(void*, Al3DD*, int);
@@ -145,10 +145,10 @@ extern "C" Scr3DD* cScriptInterpreter_considerClass(int ctx, char* name, int noI
         Scr3DD* n;
         {
             AllocGuard g;
-            n = (Scr3DD*)Mem_Alloc(0, 0x50, D_004BD4C0, 0xA84);
+            n = (Scr3DD*)cMemMan_Allocate(0, 0x50, D_004BD4C0, 0xA84);
         }
         if (n) {
-            char* nm = Str_Duplicate(name);
+            char* nm = cScriptBase_myStrdup(name);
             Al3DD t1;
             cArray_FieldDefPtr_ctor(n->m4, cArrayCapacity_ctor(&t1, 5), 1);
             Al3DD t2;
@@ -173,7 +173,7 @@ extern "C" Scr3DD* cScriptInterpreter_considerClass(int ctx, char* name, int noI
     }
     return s;
 }
-#undef Mem_Alloc /* merge_units */
+#undef cMemMan_Allocate /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003DD9F0(void) {}
 #pragma pop /* merge_units */
@@ -218,7 +218,7 @@ static inline void Writer_PutString(Writer* w, char* s)
     ScriptFileBuff_put(w, size);
     words = ScriptFileBuff_charsToInts(w, size);
     ScriptFileBuff_expand(w, words);
-    String_Copy((char*)w->cursor, s);
+    Libc_Strcpy((char*)w->cursor, s);
     w->cursor += words;
 }
 void cScriptInterpreter_exportData(void* self, Writer* w)

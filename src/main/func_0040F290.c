@@ -36,7 +36,7 @@ static T40F290 D_00494020[] = {
     { 0x8150, '~' }
 };
 extern int strlen(const char*);
-void MemCard_TitleToSjis(unsigned short* dst, char* src, int max) {
+void ConvertToSJIS(unsigned short* dst, char* src, int max) {
     int len = strlen(src);
     int i;
     if (max < len)

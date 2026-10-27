@@ -1,4 +1,4 @@
-/* FireEffectObj_Update (c211nm). */
+/* cHumanParticleGroup_NextFrame (c211nm). */
 #pragma cplusplus on
 #pragma always_inline on
 #pragma inline_depth(8)
@@ -40,20 +40,20 @@ struct Self5F60 {
 extern "C" {
 extern char D_004A6E38[];
 extern char D_0053B540[];
-void* Mem_Alloc(int a, int size, char* file, int line);
-void Mem_Free(int a, void* p, char* file, int line);
-void FireEffectObj_RecordMatrix(Self5F60* self, int i, M4* m);
-int ParticleLib_FindId(char* lib, int id);
-Obj5F60* Tracer_Create(void* p, int id, M4* m, float rate);
-void ParticleInst_Kill(Obj5F60* o, int a);
-void ParticleInst_Update(Obj5F60* o, float dt, M4* m, V* vel);
-void ParticleEmitter_SetRate(Obj5F60* o, float r);
-void FireEffectObj_Update(Self5F60* self, float dt);
+void* cMemMan_Allocate(int a, int size, char* file, int line);
+void cMemMan_Deallocate(int a, void* p, char* file, int line);
+void cHumanParticleGroup_SetMatrix(Self5F60* self, int i, M4* m);
+int cParticleSystem_GetEffectID(char* lib, int id);
+Obj5F60* cParticle_ctor(void* p, int id, M4* m, float rate);
+void cParticle_dtor(Obj5F60* o, int a);
+void cParticle_NextFrame(Obj5F60* o, float dt, M4* m, V* vel);
+void cParticle_SetScale(Obj5F60* o, float r);
+void cHumanParticleGroup_NextFrame(Self5F60* self, float dt);
 }
 
 static inline float Max5F60(float a, float b) { float r = 0.0f; asm { max.s r, a, b } return r; }
 
-extern "C" void FireEffectObj_Update(Self5F60* self, float dt)
+extern "C" void cHumanParticleGroup_NextFrame(Self5F60* self, float dt)
 {
     int i;
     float total = 0.0f;
@@ -63,14 +63,14 @@ extern "C" void FireEffectObj_Update(Self5F60* self, float dt)
         M4 m;
         Def5F60* def = &self->x78[i];
         Ent5F60* e = self->x7C[i];
-        FireEffectObj_RecordMatrix(self, i, &m);
+        cHumanParticleGroup_SetMatrix(self, i, &m);
         if (!e->obj) {
             Obj5F60* p;
             {
                 AllocGuard g;
-                p = (Obj5F60*)Mem_Alloc(0, 0x70, D_004A6E38, 0x1E6);
+                p = (Obj5F60*)cMemMan_Allocate(0, 0x70, D_004A6E38, 0x1E6);
             }
-            if (p) p = Tracer_Create(p, ParticleLib_FindId(D_0053B540, def->id), &m, def->rate);
+            if (p) p = cParticle_ctor(p, cParticleSystem_GetEffectID(D_0053B540, def->id), &m, def->rate);
             e->obj = p;
             { const V* s = &m.t; e->pos = *s; }
         }
@@ -85,8 +85,8 @@ extern "C" void FireEffectObj_Update(Self5F60* self, float dt)
                 Obj5F60* o = e->obj;
                 {
                     AllocGuard g;
-                    ParticleInst_Kill(o, -1);
-                    Mem_Free(0, o, D_004A6E38, 0x1F9);
+                    cParticle_dtor(o, -1);
+                    cMemMan_Deallocate(0, o, D_004A6E38, 0x1F9);
                 }
                 e->obj = 0;
             } else if (e->life < 0.2f) {
@@ -101,8 +101,8 @@ extern "C" void FireEffectObj_Update(Self5F60* self, float dt)
             vel.x = vel.y = vel.z = 0.0f;
         }
         if (e->obj) {
-            ParticleInst_Update(e->obj, dt, &m, &vel);
-            ParticleEmitter_SetRate(e->obj, def->scaleRate ? e->life * def->rate : def->rate);
+            cParticle_NextFrame(e->obj, dt, &m, &vel);
+            cParticle_SetScale(e->obj, def->scaleRate ? e->life * def->rate : def->rate);
             e->obj->f5C = Max5F60(def->minv, e->life);
             acc += e->life * def->rate;
         }

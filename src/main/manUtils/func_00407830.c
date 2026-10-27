@@ -20,26 +20,26 @@ extern BodyTab g_AgentPartCache;
 extern char D_004BE7F0[];
 extern char D_004BE970[];
 extern char D_004BE978[];
-void Resource_Construct(FObj* o);
-FObj* FileMan_Release(FObj* o, short del);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-char* Archive_GetMemberName(Arc* a, int i);
-void Appearance_RegistryKey(char* dst, int n, char* src);
-void* Hog_GetMemberInPlace(Arc* a, int i);
-int Hog_GetEntrySize(Arc* a, int i);
-void Appearance_PackText(H2Pack* dst, void* text, int len);
-int String_CompareN(char* a, char* b, int n);
-int Appearance_GetBodyKind(H2Pack* p);
-void SklRegistry_AddArchive(H2Registry* reg, Arc* arc);
+void cFileMan_ctor_void(FObj* o);
+FObj* cFileMan_dtor(FObj* o, short del);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+char* cHogFile_GetBlockName(Arc* a, int i);
+void strCpyPad(char* dst, int n, char* src);
+void* cHogFile_GetBlock_int(Arc* a, int i);
+int cHogFile_GetBlockSize(Arc* a, int i);
+void SKL_ConvertSKL(H2Pack* dst, void* text, int len);
+int Libc_Strncmp(char* a, char* b, int n);
+int SKL_FindSex(H2Pack* p);
+void SKLHog_LoadSKLHog(H2Registry* reg, Arc* arc);
 }
 
 static inline void* SAlloc(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004BE7F0, line);
+    return cMemMan_Allocate(0, size, D_004BE7F0, line);
 }
 
-void SklRegistry_AddArchive(H2Registry* reg, Arc* arc)
+void SKLHog_LoadSKLHog(H2Registry* reg, Arc* arc)
 {
     FObj fo;
     char* name;
@@ -47,7 +47,7 @@ void SklRegistry_AddArchive(H2Registry* reg, Arc* arc)
     int nB = 0;
     int i;
     int n;
-    Resource_Construct(&fo);
+    cFileMan_ctor_void(&fo);
     D_0055DE94 = 0;
     reg->count = 0;
     g_AgentPartCache.a[0] = 0;
@@ -59,20 +59,20 @@ void SklRegistry_AddArchive(H2Registry* reg, Arc* arc)
     g_AgentPartCache.a[3] = 0;
     g_AgentPartCache.b[3] = 0;
     if (!arc->loaded) {
-        FileMan_Release(&fo, -1);
+        cFileMan_dtor(&fo, -1);
         return;
     }
     n = arc->list->n;
     reg->keys = (H2Key*)SAlloc(n * 32, 0xCE);
     reg->packs = (H2Pack*)SAlloc(n * 0x440, 0xCF);
     for (i = 0; i < n; i++) {
-        name = Archive_GetMemberName(arc, i);
-        Appearance_RegistryKey(reg->keys[i].s, 0x1F, name);
-        Appearance_PackText(&reg->packs[i], Hog_GetMemberInPlace(arc, i), Hog_GetEntrySize(arc, i));
-        String_CompareN(name, D_004BE970, 3);
-        if (String_CompareN(name, D_004BE978, 8) == 0) {
+        name = cHogFile_GetBlockName(arc, i);
+        strCpyPad(reg->keys[i].s, 0x1F, name);
+        SKL_ConvertSKL(&reg->packs[i], cHogFile_GetBlock_int(arc, i), cHogFile_GetBlockSize(arc, i));
+        Libc_Strncmp(name, D_004BE970, 3);
+        if (Libc_Strncmp(name, D_004BE978, 8) == 0) {
             D_0055DE94++;
-            if (Appearance_GetBodyKind(&reg->packs[i]) == 0) {
+            if (SKL_FindSex(&reg->packs[i]) == 0) {
                 if (nA < 4)
                     g_AgentPartCache.a[nA] = &reg->packs[i];
                 nA++;
@@ -96,5 +96,5 @@ void SklRegistry_AddArchive(H2Registry* reg, Arc* arc)
         } while (++i < 4);
     }
     reg->count = n;
-    FileMan_Release(&fo, -1);
+    cFileMan_dtor(&fo, -1);
 }

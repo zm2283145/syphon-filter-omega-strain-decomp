@@ -33,8 +33,8 @@ extern void GuiOnlineOptions_ExitScreen(S2A97F0* s, int f);
 #endif /* merge_units */
 #define GuiOnlineOptions_ExitScreen(a0, a1) ((void)GuiOnlineOptions_ExitScreen((int)(a0), (a1))) /* merge_units */
 
-extern int GuiScreen_HandleEvent(S2A97F0* s, int a, unsigned short b, int c, int d);
-int GuiOnlineOptions_HandleEvent(S2A97F0* s, int a, unsigned short b, int c, int d)
+extern int GuiLobbyScreen_onMessage(S2A97F0* s, int a, unsigned short b, int c, int d);
+int GuiOnlineOptions_onMessage(S2A97F0* s, int a, unsigned short b, int c, int d)
 {
     if (s->x90 == a && b == 0x13) {
         s->x9C = GuiTextListWidget_GetItemId(s->x90, d);
@@ -45,7 +45,7 @@ int GuiOnlineOptions_HandleEvent(S2A97F0* s, int a, unsigned short b, int c, int
         GuiOnlineOptions_ExitScreen(s, 0);
         return 1;
     }
-    return GuiScreen_HandleEvent(s, a, b, c, d);
+    return GuiLobbyScreen_onMessage(s, a, b, c, d);
 }
 #undef GuiOnlineOptions_ExitScreen /* merge_units */
 #pragma pop /* merge_units */
@@ -63,7 +63,7 @@ void GuiOnlineOptions_ExitScreen(S_002A98D0* self, int a);
 #define GuiOnlineOptions_ExitScreen(a0, a1) ((void)GuiOnlineOptions_ExitScreen((int)(a0), (a1))) /* merge_units */
 
 void GuiOnlineOptions_ApplyChanges(S_002A98D0* self);
-int GuiScreen_HandleInput(S_002A98D0* self, Ev_002A98D0* ev);
+int GuiLobbyScreen_onInput(S_002A98D0* self, Ev_002A98D0* ev);
 }
 static inline unsigned char Down_002A98D0(Ev_002A98D0* e)
 {
@@ -104,7 +104,7 @@ extern "C" int GuiOnlineOptions_HandleInput(S_002A98D0* self, Ev_002A98D0* ev)
             return 1;
         }
     }
-    return GuiScreen_HandleInput(self, ev);
+    return GuiLobbyScreen_onInput(self, ev);
 }
 #undef GuiOnlineOptions_ExitScreen /* merge_units */
 #pragma pop /* merge_units */

@@ -137,8 +137,8 @@ struct Obj_0EA0 {
 #define V30(s) (*(V_0EA0*)((char*)(s) + 0x30))
 #define V40(s) (*(V_0EA0*)((char*)(s) + 0x40))
 
-extern "C" Obj_0EA0* ParticleEmitterBase_Construct(Obj_0EA0* self, Obj_0EA0* parent, Def_0EA0* def, float f);
-extern "C" void ParticleEmitter_BuildBezier(Obj_0EA0* self, V_0EA0* pts, V_0EA0* out);
+extern "C" Obj_0EA0* cParticleBase_ctor(Obj_0EA0* self, Obj_0EA0* parent, Def_0EA0* def, float f);
+extern "C" void cParticleSpline_ComputeBezierFactors(Obj_0EA0* self, V_0EA0* pts, V_0EA0* out);
 extern void* const D_004DFB30[];
 extern W_0EA0 D_00538350;
 
@@ -156,12 +156,12 @@ static inline void Compose3_0EA0(Obj_0EA0* self, Obj_0EA0* parent, M_0EA0* m, M_
 static inline void Compose2_0EA0(Obj_0EA0* self, Obj_0EA0* parent, M_0EA0* m, M_0EA0& r) { Compose3_0EA0(self, parent, m, r); }
 static inline void Compose_0EA0(Obj_0EA0* self, Obj_0EA0* parent, M_0EA0* m, M_0EA0& r) { Compose2_0EA0(self, parent, m, r); }
 
-extern "C" Obj_0EA0* ParticleEmitter_Construct(Obj_0EA0* self, Obj_0EA0* parent, Def_0EA0* def, float f, M_0EA0* m)
+extern "C" Obj_0EA0* cParticleSpline_ctor(Obj_0EA0* self, Obj_0EA0* parent, Def_0EA0* def, float f, M_0EA0* m)
 {
     V_0EA0 p[3];
     M_0EA0 r;
     W_0EA0 c;
-    ParticleEmitterBase_Construct(self, parent, def, f);
+    cParticleBase_ctor(self, parent, def, f);
     self->vt = (void*)D_004DFB30;
     {
         V_0EA0* q = self->a;
@@ -204,6 +204,6 @@ extern "C" Obj_0EA0* ParticleEmitter_Construct(Obj_0EA0* self, Obj_0EA0* parent,
     self->len[0] = Len_0EA0(&p[0]);
     self->len[1] = Dist_0EA0(p[1], p[0]);
     self->len[2] = Dist_0EA0(p[2], p[1]);
-    ParticleEmitter_BuildBezier(self, p, self->a + 4);
+    cParticleSpline_ComputeBezierFactors(self, p, self->a + 4);
     return self;
 }

@@ -63,17 +63,17 @@ static inline void merge_flush_func_001A9160(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x10]; float pos[4]; char pad2[0x30]; } PlaceD4;
 typedef struct { PlaceD4 world; PlaceD4 base; } RootIdD4;
-extern void* Root_GetParent(void* r);
-extern void Root_RefreshWorldCache(void* r);
-extern RootIdD4* Root_Identity(void* r);
-float* Root_GetWorldBasePlacement(void* r)
+extern void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(void* r);
+extern void cSkaAnimAnchor_TreeNode_UpdateTransform(void* r);
+extern RootIdD4* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(void* r);
+float* cSkaAnimAnchor_GetPosition(void* r)
 {
     PlaceD4* p;
-    if (Root_GetParent(r)) {
-        Root_RefreshWorldCache(r);
-        p = &Root_Identity(r)->world;
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(r)) {
+        cSkaAnimAnchor_TreeNode_UpdateTransform(r);
+        p = &cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r)->world;
     } else {
-        p = &Root_Identity(r)->base;
+        p = &cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r)->base;
     }
     return p->pos;
 }

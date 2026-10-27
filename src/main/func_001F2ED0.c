@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern void List_End_13D890(Word*, int);
+extern void std_list_deleter_voidPtr_end_void_2(Word*, int);
 extern Word* std_list_cSkaSwitchItemPtr_generic_iterator_1_ctor_listdeleter(Word*, int);
 
 Word* std_list_deleter_voidPtr_generic_iterator_1_ctor(Word* dst, Word* src) {
@@ -18,6 +18,6 @@ Word* std_list_deleter_voidPtr_generic_iterator_1_ctor(Word* dst, Word* src) {
 void std_list_cSkaSwitchItemPtr_end(Word* self, int a1) {
     Word tmp;
 
-    List_End_13D890(&tmp, a1);
+    std_list_deleter_voidPtr_end_void_2(&tmp, a1);
     std_list_cSkaSwitchItemPtr_generic_iterator_1_ctor_listdeleter(self, tmp.value);
 }

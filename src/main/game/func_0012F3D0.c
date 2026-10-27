@@ -8,9 +8,9 @@
 #pragma opt_common_subs off
 
 extern "C" {
-int Mem_Alloc(int, int, char *, int);                      
-int Mem_Free(int, int, char *, int);                         
-int String_Copy(int, int);                            
+int cMemMan_Allocate(int, int, char *, int);                      
+int cMemMan_Deallocate(int, int, char *, int);                         
+int Libc_Strcpy(int, int);                            
 int strlen(int);                                    
 extern unsigned char g_ProfileLockEnabled;
 }
@@ -23,7 +23,7 @@ extern "C" void cGameSystem_SetPlayerFilename(char * arg0, int arg1) {
     if (temp_s2 != 0) {
         {
             AllocGuard g;
-        Mem_Free(0, temp_s2, "game.cc", 0xC1A);
+        cMemMan_Deallocate(0, temp_s2, "game.cc", 0xC1A);
         }
         F_(arg0, 0x1C0, int) = 0;
     }
@@ -31,9 +31,9 @@ extern "C" void cGameSystem_SetPlayerFilename(char * arg0, int arg1) {
         temp_s2_2 = strlen(arg1) + 1;
         {
             AllocGuard g;
-        temp_s2_3 = Mem_Alloc(0, temp_s2_2, "game.cc", 0xC20);
+        temp_s2_3 = cMemMan_Allocate(0, temp_s2_2, "game.cc", 0xC20);
         }
         F_(arg0, 0x1C0, int) = temp_s2_3;
-        String_Copy(F_(arg0, 0x1C0, int), arg1);
+        Libc_Strcpy(F_(arg0, 0x1C0, int), arg1);
     }
 }

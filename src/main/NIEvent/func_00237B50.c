@@ -4,4 +4,4 @@
 #include "nievent_v10.h"
 
 /* Event virtual 10: call slot 66 while inactive. */
-DEFINE_NIEVENT_V10(cNIEventLight_v10)
+DEFINE_NIEVENT_V10(cNIEventLight_NextFrame)

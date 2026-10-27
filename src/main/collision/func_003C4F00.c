@@ -1,4 +1,4 @@
-/* Los_GatherCandidates */
+/* cCollisionModelList_CollectFaces_MainCode_cArrayR_cRayMatrixR_int */
 #pragma cplusplus on
 #include "types.h"
 #pragma opt_propagation off
@@ -32,24 +32,24 @@ void std_vector_cCollisionFace_clear(Scene*);
 void std_vector_cGOBJPtr_rbegin(It*, Lst*);
 void cArray_cGOBJPtr_ConstReverseIterator_ctor(It*, It*);
 void std_vector_cGOBJPtr_rend(It*, Lst*);
-Xf* Object_GetRootNode(Actor*);
-int GameObject_IsCollisionEnabled(Actor*);
-int* InlinePtrArray_Find(PA*, Actor**);
-int* InlinePtrArray_End(PA*);
+Xf* cGOBJ_GetXform_void_2(Actor*);
+int cGOBJ_IsActive(Actor*);
+int* cArray_FixedCapacity_cGOBJPtr_2_Find(PA*, Actor**);
+int* cArray_FixedCapacity_cGOBJPtr_2_End(PA*);
 void cRayMatrix_ctor_void(Q70*);
 void nCollision_GetTransformedCollectorObject_RelativeToObjectWithXform_cRayMatrixR_cRayMatrixR_cGOBJP_cXformP(Q70*, Box*, Actor*, Xf*);
 void cCollisionModel_GetNearFaces_cCollisionFaceCollector_cRayMatrixR(Shape*, void*, void*);
-void PtrVec_Begin(It*, void*);
-void PtrVec_End(It*, void*);
+void cArray_cGOBJPtr_Begin(It*, void*);
+void cArray_cGOBJPtr_End(It*, void*);
 int cArray_cGOBJPtr_Iterator_opNe(It*, It*);
 Actor** cArray_cGOBJPtr_Iterator_opMul(It*);
 void cCollisionModelList_CollectFaces_cCollisionFaceCollectorR_cGOBJP_cRayMatrixR_cSphereR(Gath*, void*, Actor*, Box*, Sph*);
-It* Iter_Advance4(It*);
-void ColGather_ComputeNormals(Gath*, Scene*);
-void Los_GatherCandidates(Gath* self, Scene* scene, Box* box, int a3);
+It* cArray_cGOBJPtr_Iterator_opInc(It*);
+void cCollisionModelList_CalculateFaceNormals(Gath*, Scene*);
+void cCollisionModelList_CollectFaces_MainCode_cArrayR_cRayMatrixR_int(Gath* self, Scene* scene, Box* box, int a3);
 }
 
-void Los_GatherCandidates(Gath* self, Scene* scene, Box* box, int a3)
+void cCollisionModelList_CollectFaces_MainCode_cArrayR_cRayMatrixR_int(Gath* self, Scene* scene, Box* box, int a3)
 {
     It rit;
     It rend;
@@ -80,17 +80,17 @@ void Los_GatherCandidates(Gath* self, Scene* scene, Box* box, int a3)
             act = p;
             Shape* sh = act->GetShape();
             if (sh != 0) {
-                Xf* xf = Object_GetRootNode(act);
+                Xf* xf = cGOBJ_GetXform_void_2(act);
                 if (xf != 0) {
-                    if (GameObject_IsCollisionEnabled(act)
-                        && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
+                    if (cGOBJ_IsActive(act)
+                        && cArray_FixedCapacity_cGOBJPtr_2_Find(&self->list, &act) == cArray_FixedCapacity_cGOBJPtr_2_End(&self->list)) {
                         cRayMatrix_ctor_void(&q);
                         nCollision_GetTransformedCollectorObject_RelativeToObjectWithXform_cRayMatrixR_cRayMatrixR_cGOBJP_cXformP(&q, box, act, xf);
                         cCollisionModel_GetNearFaces_cCollisionFaceCollector_cRayMatrixR(sh, (void*)0x70000000, &q);
                     }
                 } else {
-                    if (GameObject_IsCollisionEnabled(act)
-                        && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
+                    if (cGOBJ_IsActive(act)
+                        && cArray_FixedCapacity_cGOBJPtr_2_Find(&self->list, &act) == cArray_FixedCapacity_cGOBJPtr_2_End(&self->list)) {
                         cCollisionModel_GetNearFaces_cCollisionFaceCollector_cRayMatrixR(sh, (void*)0x70000000, box);
                     }
                 }
@@ -98,16 +98,16 @@ void Los_GatherCandidates(Gath* self, Scene* scene, Box* box, int a3)
             {
                 void* ch = act->Children();
                 if (ch != 0) {
-                    PtrVec_Begin(&it1, ch);
-                    PtrVec_End(&it2, ch);
+                    cArray_cGOBJPtr_Begin(&it1, ch);
+                    cArray_cGOBJPtr_End(&it2, ch);
                     while (cArray_cGOBJPtr_Iterator_opNe(&it1, &it2)) {
                         cCollisionModelList_CollectFaces_cCollisionFaceCollectorR_cGOBJP_cRayMatrixR_cSphereR(self, (void*)0x70000000, *cArray_cGOBJPtr_Iterator_opMul(&it1), box, &e0);
-                        Iter_Advance4(&it1);
+                        cArray_cGOBJPtr_Iterator_opInc(&it1);
                     }
                 }
             }
         }
         rit.p--;
     }
-    ColGather_ComputeNormals(self, scene);
+    cCollisionModelList_CalculateFaceNormals(self, scene);
 }

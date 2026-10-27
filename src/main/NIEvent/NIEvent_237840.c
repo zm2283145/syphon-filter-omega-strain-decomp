@@ -17,14 +17,14 @@
  */
 
 
-extern void cNIEventOBJ_SetSpeedRecursive(void* obj, float speed);
+extern void cNIEventBase_SetSpeed(void* obj, float speed);
 
 /* SetSpeed(object, speed): float argument is passed through a stack slot. */
 int Script_cNIEventOBJ_SetSpeed(NIEventScriptArg* args) {
     NIEventScriptArg speed[1];
 
     speed[0].i = args[1].i;
-    cNIEventOBJ_SetSpeedRecursive(args[0].p, speed[0].f);
+    cNIEventBase_SetSpeed(args[0].p, speed[0].f);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -233,19 +233,19 @@ extern int D_004F7CA0; /* cNIEventOBJ script type key */
 extern int D_004F7CA8; /* cNIEventOBJ script type id */
 extern int D_004F7D20; /* cNINotice script type key */
 extern char D_00555070[]; /* global script filter */
-extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
-extern int* cGOBJ_GetScriptTypeKeyPtr(void); /* address of the cGObj type key */
-extern int ScriptType_AddAccepted(int type, int acceptedType);
-extern void ScriptType_SetParent(int type, int parentType);
+extern int cScriptInterpreter_CallEvent(void* filter, int a1, int a2);
+extern int* cGOBJ_SOBJ_getClassId(void); /* address of the cGObj type key */
+extern int cScriptBase_declareMsgUse(int type, int acceptedType);
+extern void cScriptBase_declareParent(int type, int parentType);
 
 /* cNIEventOBJ derives from cGObj and accepts cNINotice messages. */
-int ScriptType_cNIEventOBJ_Init(void) {
-    int* parent = cGOBJ_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F7CA8, *parent);
-    return ScriptType_AddAccepted(D_004F7CA8, D_004F7D20);
+int cNIEventOBJ_SOBJ_init(void) {
+    int* parent = cGOBJ_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F7CA8, *parent);
+    return cScriptBase_declareMsgUse(D_004F7CA8, D_004F7D20);
 }
 
-void* cNIEventOBJ_Identity(void* self) {
+void* cNIEventOBJ_SOBJ_convert(void* self) {
     return self;
 }
 
@@ -253,12 +253,12 @@ int* cNIEventOBJ_SOBJ_getClassId(void) {
     return &D_004F7CA0;
 }
 
-int cNIEventOBJ_v0B(void) {
+int cNIEventOBJ_getSOBJClassId(void) {
     return D_004F7CA0;
 }
 
-int cNIEventOBJ_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cNIEventOBJ_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00237990(void) {}

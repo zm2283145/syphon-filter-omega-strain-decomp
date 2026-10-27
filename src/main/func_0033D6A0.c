@@ -1,11 +1,11 @@
 #pragma cplusplus on
 typedef struct { char* begin; char* end; char* cap; } String;
 extern "C" {
-void String_CtorCStr_13B480(String* s, const char* text);
-void String_AssignString(void* list, String* s);
+void std_basic_string_char_char_traits_char_ctor_charP(String* s, const char* text);
+void std_basic_string_char_char_traits_char_assign_basicstringR(void* list, String* s);
 void String_Dtor(String* s, int flags);
 
-void Lobby_FormatString(void* self, const char* fmt, const char* a0, const char* a1, const char* a2, const char* a3) {
+void FormatString(void* self, const char* fmt, const char* a0, const char* a1, const char* a2, const char* a3) {
     String s;
     const char* args[4] = {0};
     char buf[0x400];
@@ -35,8 +35,8 @@ void Lobby_FormatString(void* self, const char* fmt, const char* a0, const char*
         }
     }
     buf[n] = 0;
-    String_CtorCStr_13B480(&s, buf);
-    String_AssignString(self, &s);
+    std_basic_string_char_char_traits_char_ctor_charP(&s, buf);
+    std_basic_string_char_char_traits_char_assign_basicstringR(self, &s);
     String_Dtor(&s, 0);
 }
 }

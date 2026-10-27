@@ -16,24 +16,24 @@ extern char* D_00491550;
 extern char* D_00491558;
 extern char D_004B88F0[];
 extern char D_004A7520[];
-void GuiWidget_Init(S327FD0* self);
-W327FD0* GuiWidget_FindChildByName(S327FD0* a, char* b);
+void GuiWidget_onAdd(S327FD0* self);
+W327FD0* GuiWidget_FindChild_charP(S327FD0* a, char* b);
 void GuiTextWidget_SetDisableWrap(W327FD0* w, int a);
 }
-extern "C" void GuiSlideShow_Init(S327FD0* self)
+extern "C" void GuiSlideShow_onAdd(S327FD0* self)
 {
     W327FD0* p;
-    GuiWidget_Init(self);
-    p = GuiWidget_FindChildByName(self, D_00491548);
+    GuiWidget_onAdd(self);
+    p = GuiWidget_FindChild_charP(self, D_00491548);
     self->w5C = (p && p->IsA(D_004B88F0)) ? p : 0;
     if (self->w5C)
         ((F327FD0*)self->w5C)->flags &= ~2;
-    p = GuiWidget_FindChildByName(self, D_00491540);
+    p = GuiWidget_FindChild_charP(self, D_00491540);
     self->w60 = (p && p->IsA(D_004A7520)) ? p : 0;
     if (self->w60)
         GuiTextWidget_SetDisableWrap(self->w60, 1);
-    p = GuiWidget_FindChildByName(self, D_00491550);
+    p = GuiWidget_FindChild_charP(self, D_00491550);
     self->w64 = (p && p->IsA(D_004A7520)) ? p : 0;
-    p = GuiWidget_FindChildByName(self, D_00491558);
+    p = GuiWidget_FindChild_charP(self, D_00491558);
     self->w68 = (p && p->IsA(D_004A7520)) ? p : 0;
 }

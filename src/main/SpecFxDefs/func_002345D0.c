@@ -7,9 +7,9 @@ extern char D_004A6F38[];
 extern char SnowField_vtable[];
 extern char D_004DF860[];
 void cGOBJ_dtor(void* p, int flag);
-void ParticleInst_Kill(void* p, int flag);
+void cParticle_dtor(void* p, int flag);
 void operator_delete(void* p);
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 }
 struct E_345D0 { void* a; };
 struct LNode_345D0 { LNode_345D0* prev; LNode_345D0* next; E_345D0* value; };
@@ -19,7 +19,7 @@ extern "C" {
 void std_list_cElementPtr_end_void(It_345D0* out, List_345D0* list);
 It_345D0* cLListIterator_cElementPtr_ctor_listR(It_345D0* dst, It_345D0* src);
 void std_list_cElementPtr_begin_void(It_345D0* out, List_345D0* list);
-void ObjectList_EraseRange(It_345D0* out, List_345D0* list, LNode_345D0** first, int** last);
+void std_list_deleter_voidPtr_erase_listdeleter_listdeleter(It_345D0* out, List_345D0* list, LNode_345D0** first, int** last);
 void std_list_cElementPtr_dtor_void(List_345D0* l, int flag);
 }
 struct S_345D0 {
@@ -34,8 +34,8 @@ static inline void Beg1(It_345D0* out, List_345D0* l) { It_345D0 t; std_list_cEl
 static inline void End1(It_345D0* out, List_345D0* l) { It_345D0 t; std_list_cElementPtr_end_void(&t, l); cLListIterator_cElementPtr_ctor_listR(out, &t); }
 static inline void Beg2(It_345D0* out, List_345D0* l) { Beg1(out, l); }
 static inline void End2(It_345D0* out, List_345D0* l) { End1(out, l); }
-static inline void Kill2(E_345D0* e) { void* q = e->a; if (q) { AllocGuard g2; ParticleInst_Kill(q, -1); Mem_Free(0, q, D_004A6F38, 0x14F); } }
-extern "C" S_345D0* SnowField_dtor(S_345D0* self, short flag)
+static inline void Kill2(E_345D0* e) { void* q = e->a; if (q) { AllocGuard g2; cParticle_dtor(q, -1); cMemMan_Deallocate(0, q, D_004A6F38, 0x14F); } }
+extern "C" S_345D0* cSnowEffect_dtor(S_345D0* self, short flag)
 {
     if (self) {
         *(char**)self = SnowField_vtable;
@@ -51,14 +51,14 @@ extern "C" S_345D0* SnowField_dtor(S_345D0* self, short flag)
                 if (e) {
                     Kill2(e);
                 }
-                Mem_Free(0, e, D_004A6E38, 0x382);
+                cMemMan_Deallocate(0, e, D_004A6E38, 0x382);
             }
         }
         {
             It_345D0 r; LNode_345D0* first; int* last;
             last = &self->list.x4;
             first = self->list.x8;
-            ObjectList_EraseRange(&r, &self->list, &first, &last);
+            std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&r, &self->list, &first, &last);
         }
         {
             List_345D0* l = &self->list;

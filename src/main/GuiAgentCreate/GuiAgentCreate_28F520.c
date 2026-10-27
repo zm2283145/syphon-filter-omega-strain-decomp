@@ -18,7 +18,7 @@
 
 /* library prototypes shared by the blocks below (C linkage) */
 #include "SFOLobby_helpers.h"
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_0028F520 */
 #pragma push /* merge_units */
@@ -28,9 +28,9 @@ struct O28F520 { void* vt; char pad[0x5C]; V28F520* items[4]; char pad70[4]; V28
 extern "C" {
 extern char D_004DD1B0[];
 extern char g_AgentPartCache[];
-void AgentPartCache_Unlock(void* p);
-void World_ClearPendingIfLoaded(void);
-void GuiWidget_Destroy(void* p, int f);
+void Monster_RestoreLockedPartsTex(void* p);
+void cMotionManager_FlushUpdateList(void);
+void GuiWidget_dtor(void* p, int f);
 #if 0 /* merge_units */
 void operator_delete(void* p);
 #endif /* merge_units */
@@ -41,7 +41,7 @@ static inline void Del28F520(V28F520* o, int line)
 {
     AllocGuard g;
     o->v0(-1);
-    Mem_Free(0, o, "GuiAgentCreate.cc", line);
+    cMemMan_Deallocate(0, o, "GuiAgentCreate.cc", line);
 }
 extern "C" O28F520* GuiAgentCreate_dtor(O28F520* self, short del)
 {
@@ -53,9 +53,9 @@ extern "C" O28F520* GuiAgentCreate_dtor(O28F520* self, short del)
             self->items[i]->v22(1);
             Del28F520(self->items[i], 0x16D);
         }
-        AgentPartCache_Unlock(g_AgentPartCache);
-        World_ClearPendingIfLoaded();
-        GuiWidget_Destroy(self, 0);
+        Monster_RestoreLockedPartsTex(g_AgentPartCache);
+        cMotionManager_FlushUpdateList();
+        GuiWidget_dtor(self, 0);
         if (del > 0)
             operator_delete(self);
     }
@@ -195,38 +195,38 @@ extern Tab_F760 D_0048B500[2][11];
 extern GDef_F760 D_0056F9B0;
 void GuiWidget_ctor(Self_F760* self);
 void FrontEnd_GetCharacterData(int a);
-void Skl_Load(void* a, char* b, char* c);
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void Monster_LoadMenSKLs(void* a, char* b, char* c);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void cGOBJ_ctor(void* p, int* a, int b, int* c);
-void Object_AttachTransform(void* p, void* t, int a);
-Model_F760* DisplayActor_Construct(void* p, int* idx);
-float Math_SinThunk(float a);
-float Math_CosThunk(float a);
-void Mtx44_SetRotation(M4_F760* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
-unsigned short Appearance_GetPairCount(void* app);
-unsigned short AgentPacking_AddBlankPairs(void* app, unsigned short n);
-void Appearance_ReorderParts(Man_F760* m);
-int Appearance_GetBodyKind(void* app);
-int Appearance_GetToneDigit(void* app);
-void cVUM_GOBJ_InitModel(Model_F760* m, char* name);
+void cGOBJ_CreateXform(void* p, void* t, int a);
+Model_F760* cSKM_GOBJ_ctor_cObjectIdR(void* p, int* idx);
+float SIN(float a);
+float COS(float a);
+void cMatrix_Set_ColumnMajorForm(M4_F760* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
+unsigned short SKL_CountAttribs(void* app);
+unsigned short SKL_AddBlankParts(void* app, unsigned short n);
+void cMan_SortParts(Man_F760* m);
+int SKL_FindSex(void* app);
+int SKL_FindRace(void* app);
+void cSKM_GOBJ_ResetSkeleton(Model_F760* m, char* name);
 void cArrayCapacity_ctor(Word_F760* w, int n);
 void cArray_cSkeletonBBoxContributionPtr_ctor(SVec_F760* v, Word_F760* w, unsigned char f);
-V4_F760* Vec4_Set(V4_F760* v, float x, float y, float z, float w);
+V4_F760* cVector_ctor_float_float_float_float(V4_F760* v, float x, float y, float z, float w);
 void cSkeletonBBoxContribution_ctor(Sph_F760* s, int bone, float r, V4_F760* off);
 void cArray_cSkeletonBBoxContributionPtr_PushBackActual(SVec_F760* v, Sph_F760** p);
 void cSkeletonBBoxContribution_dtor(Sph_F760* s, int f);
 void* cSKM_GOBJ_GetSkeleton_void_2(Model_F760* m);
-void FrontEnd_SetNodeSpheres(void* n, SVec_F760* v);
+void cSkeleton_ResetBBoxContributors(void* n, SVec_F760* v);
 void cArray_cSkeletonBBoxContributionPtr_dtor(SVec_F760* v, int f);
-void Model_Attach(void* a, void* b);
-void AnimModel_InitAnim(void* a);
-void Model_HardMeshAttachPoints(Man_F760* m);
+void cSkaParams_HandleNewAnimationSet(void* a, void* b);
+void cSkaSystem_SetInitialAnimation(void* a);
+void cMan_SetGunOffsets(Man_F760* m);
 void cMan_GetTextureIDs(Man_F760* m);
-void ActorModel_Setup(Man_F760* m, int flag);
-void Skel_ApplyScalePreset(Man_F760* m, int a);
-int AgentPartCache_FindMesh(void* db, __int128 key);
-int AgentPartCache_FindTexture(void* db, __int128 key);
-void GuiAgentCreate_UpdateCount(Self_F760* self);
+void cMan_BuildMan(Man_F760* m, int flag);
+void cMan_SetBoneSet(Man_F760* m, int a);
+int FindPartNumber__7MonsterF1(void* db, __int128 key);
+int FindTextureNumber__7MonsterF1(void* db, __int128 key);
+void GuiAgentCreate_CountSelections(Self_F760* self);
 Self_F760* GuiAgentCreate_ctor(Self_F760* self);
 }
 
@@ -265,7 +265,7 @@ static inline long KeyR_F760(__int128 m, __int128 a, __int128 b) {
     return (long)o;
 }
 static inline __int128 KeyMask_F760(__int128 v) { __int128 r; asm { pcpyld r, $zero, v } return r; }
-static inline void* Alloc_F760(int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004A9AA0, line); }
+static inline void* Alloc_F760(int n, int line) { AllocGuard g; return cMemMan_Allocate(0, n, D_004A9AA0, line); }
 static inline int Eq4_F760(const char* a, const char* b) {
     int k;
     for (k = 0; k < 4; k++) {
@@ -277,7 +277,7 @@ static inline int Eq4_F760(const char* a, const char* b) {
 static inline Man_F760* MANP_F760(Model_F760* m) { return &m->man; }
 static inline char* APP_F760(Man_F760* m) { return m->app; }
 static inline char* NAME_F760(Man_F760* m) { return m->name; }
-static inline V4_F760* Splat_F760(V4_F760* t, float) { float z = 0.0f; return Vec4_Set(t, z, z, z, z); }
+static inline V4_F760* Splat_F760(V4_F760* t, float) { float z = 0.0f; return cVector_ctor_float_float_float_float(t, z, z, z, z); }
 static inline void Spheres_F760(Model_F760* md)
 {
             Word_F760 w;
@@ -315,7 +315,7 @@ static inline void Spheres_F760(Model_F760* md)
                 cSkeletonBBoxContribution_dtor(&arr[2], -1);
                 cSkeletonBBoxContribution_dtor(&arr[1], -1);
                 cSkeletonBBoxContribution_dtor(&arr[0], -1);
-                FrontEnd_SetNodeSpheres(cSKM_GOBJ_GetSkeleton_void_2(md), &vec);
+                cSkeleton_ResetBBoxContributors(cSKM_GOBJ_GetSkeleton_void_2(md), &vec);
                 cArray_cSkeletonBBoxContributionPtr_dtor(&vec, -1);
             }
 }
@@ -337,15 +337,15 @@ static inline void Tail_F760(Self_F760* self, int i, V4_F760& v)
             {
                 void* a = D_004F77A0;
                 void** an = (void**)((char*)self->models[i] + 0x2EC0);
-                Model_Attach(an + 4, a);
+                cSkaParams_HandleNewAnimationSet(an + 4, a);
                 *an = a;
-                AnimModel_InitAnim(an);
+                cSkaSystem_SetInitialAnimation(an);
             }
             {
                 Model_F760** pm = (Model_F760**)(i * 4 + (char*)self->models);
                 SetF_F760(*pm, 1.0f);
                 (*pm)->man.f23F4 = 0.0f;
-                Model_HardMeshAttachPoints(&(*pm)->man);
+                cMan_SetGunOffsets(&(*pm)->man);
             }
             {
                 Man_F760* m;
@@ -361,9 +361,9 @@ static inline void Tail_F760(Self_F760* self, int i, V4_F760& v)
                 Model_F760* m;
                 Model_F760** pm = (Model_F760**)(i * 4 + (char*)self->models);
                 c = 1; m = *pm; m->man.f2BD0 = c;
-                ActorModel_Setup(&(*pm)->man, 1);
+                cMan_BuildMan(&(*pm)->man, 1);
             }
-            Skel_ApplyScalePreset(&self->models[i]->man, -1);
+            cMan_SetBoneSet(&self->models[i]->man, -1);
             {
                 Model_F760** pm = (Model_F760**)(i * 4 + (char*)self->models);
                 SetS_F760(*pm, 0);
@@ -381,7 +381,7 @@ extern "C" Self_F760* GuiAgentCreate_ctor(Self_F760* p0)
     self->fD0 = 1;
     FrontEnd_GetCharacterData(D_004FFC04);
     D_00493A60 = -1;
-    Skl_Load(g_AgentPartCache, D_004A9AC0, D_004A9AE0);
+    Monster_LoadMenSKLs(g_AgentPartCache, D_004A9AC0, D_004A9AE0);
     {
         void* p;
         p = Alloc_F760(0x68, 0xFB);
@@ -390,7 +390,7 @@ extern "C" Self_F760* GuiAgentCreate_ctor(Self_F760* p0)
             *(char**)p = D_004DA470;
             ((int*)p)[0x60 / 4] = 0;
             ((int*)p)[0x64 / 4] = 0;
-            Object_AttachTransform(p, g_IdentityMatrix, 0);
+            cGOBJ_CreateXform(p, g_IdentityMatrix, 0);
             ((int*)p)[0x30 / 4] = 0;
         }
         self->f74 = p;
@@ -422,7 +422,7 @@ extern "C" Self_F760* GuiAgentCreate_ctor(Self_F760* p0)
             p = (Model_F760*)Alloc_F760(0x3030, 0x10A);
             if (p) {
                 int x[1]; x[0] = i;
-                p = DisplayActor_Construct(p, x);
+                p = cSKM_GOBJ_ctor_cObjectIdR(p, x);
             }
             {
                 Model_F760* m;
@@ -435,35 +435,35 @@ extern "C" Self_F760* GuiAgentCreate_ctor(Self_F760* p0)
             {
                 Xf_F760* xf = self->models[i]->xf;
                 M4_F760 rot;
-                float s = Math_SinThunk(0.0f);
-                float c = Math_CosThunk(0.0f);
-                { M4_F760* pr = &rot; float z = 0.0f; Mtx44_SetRotation(pr, c, -s, z, s, c, z, z, z, 1.0f); }
+                float s = SIN(0.0f);
+                float c = COS(0.0f);
+                { M4_F760* pr = &rot; float z = 0.0f; cMatrix_Set_ColumnMajorForm(pr, c, -s, z, s, c, z, z, z, 1.0f); }
                 { M4_F760* pr = &rot; xf->SetMtx(pr); }
             }
             QCopy_F760(APP_F760(&self->models[i]->man), &D_0055D510[i & 1], 0x44);
             {
                 Man_F760* m = &self->models[i]->man;
-                m->cnt = Appearance_GetPairCount(m->app);
+                m->cnt = SKL_CountAttribs(m->app);
             }
             {
                 Man_F760* m = &self->models[i]->man;
-                m->cnt = AgentPacking_AddBlankPairs(m->app, m->cnt);
+                m->cnt = SKL_AddBlankParts(m->app, m->cnt);
             }
-            Appearance_ReorderParts(&self->models[i]->man);
-            self->fD8 = Appearance_GetBodyKind(APP_F760(&self->models[i]->man));
+            cMan_SortParts(&self->models[i]->man);
+            self->fD8 = SKL_FindSex(APP_F760(&self->models[i]->man));
             {
                 char* nm; if (self->fD8 == 0) nm = D_004A9B00; else { nm = D_004A9B10; asm { .set reorder } }
-                cVUM_GOBJ_InitModel(self->models[i], nm);
-                String_Copy(NAME_F760(&self->models[i]->man), nm);
+                cSKM_GOBJ_ResetSkeleton(self->models[i], nm);
+                Libc_Strcpy(NAME_F760(&self->models[i]->man), nm);
             }
             self->models[i]->Init(1);
             { V4_F760 v; Tail_F760(self, i, v); }
         }
     }
     self->f70 = self->models[0];
-    self->fD8 = Appearance_GetBodyKind(APP_F760(&self->models[0]->man));
-    self->fDC = (signed char)Appearance_GetToneDigit(APP_F760(&self->models[0]->man));
-    Appearance_GetBodyKind(APP_F760(&self->models[1]->man));
+    self->fD8 = SKL_FindSex(APP_F760(&self->models[0]->man));
+    self->fDC = (signed char)SKL_FindRace(APP_F760(&self->models[0]->man));
+    SKL_FindSex(APP_F760(&self->models[1]->man));
     {
         int n;
         int j;
@@ -501,7 +501,7 @@ extern "C" Self_F760* GuiAgentCreate_ctor(Self_F760* p0)
         __int128 mask;
         { long v = 0xFFFFFFFF00; asm { pcpyld mask, $zero, v } }
         union { __int128 q; char s[16]; } key;
-        String_Copy(key.s, D_004A9A28);
+        Libc_Strcpy(key.s, D_004A9A28);
         {
             int k;
             for (k = 0; k < self->f70->man.cnt; k++) {
@@ -514,9 +514,9 @@ extern "C" Self_F760* GuiAgentCreate_ctor(Self_F760* p0)
     }
     self->fED = D_0048B500[self->fD8][self->fEF].slot;
     self->fEE = D_0048B500[self->fD8][self->fEF].mode;
-    self->fE0 = AgentPartCache_FindMesh(g_AgentPartCache, MANP_F760(self->f70)->e[(signed char)self->fED].a);
-    self->fE4 = AgentPartCache_FindTexture(g_AgentPartCache, MANP_F760(self->f70)->e[(signed char)self->fED].b);
-    GuiAgentCreate_UpdateCount(self);
+    self->fE0 = FindPartNumber__7MonsterF1(g_AgentPartCache, MANP_F760(self->f70)->e[(signed char)self->fED].a);
+    self->fE4 = FindTextureNumber__7MonsterF1(g_AgentPartCache, MANP_F760(self->f70)->e[(signed char)self->fED].b);
+    GuiAgentCreate_CountSelections(self);
     self->fC0 = 0;
     self->name = D_0056F9B0.name;
     self->f90 = D_0056F9B0.i;

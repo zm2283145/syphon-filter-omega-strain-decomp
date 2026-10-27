@@ -27,32 +27,32 @@ extern "C" {
 extern char D_004BB978[]; extern char D_004BB988[]; extern char D_004BB998[]; extern char D_004BB9A8[];
 extern char D_004BB9B8[]; extern char D_004BB9C8[];extern char D_004A7520[]; extern char D_004ABAB0[]; extern char D_004A9870[]; extern char D_004B88F0[]; extern char D_004BBBB0[];
 extern void* D_004FFC04;
-void GuiScreen_Init(O_361AA0* o);
-W_361AA0* GuiWidget_FindChildByName(void* o, char* name);
+void GuiLobbyScreen_onAdd(O_361AA0* o);
+W_361AA0* GuiWidget_FindChild_charP(void* o, char* name);
 void func_0041C0D0(W_361AA0* w, int v);
-void GuiArrayWidget_RowHeight(W_361AA0* w, int v);
+void GuiArrayWidget_SetRowHeight(W_361AA0* w, int v);
 void FrontEnd_GetCharacterData(void* p);
-void GuiAgentInfo_Init(O_361AA0* o);
+void GuiAgentInfo_onAdd(O_361AA0* o);
 }
 static inline W_361AA0* Cast_361AA0(W_361AA0* w, void* t) { return w && w->IsA(t) ? w : 0; }
 
-void GuiAgentInfo_Init(O_361AA0* o)
+void GuiAgentInfo_onAdd(O_361AA0* o)
 {
-    GuiScreen_Init(o);
-    o->f100 = Cast_361AA0(GuiWidget_FindChildByName(o, D_004BB978), D_004A7520);
-    o->f104 = Cast_361AA0(GuiWidget_FindChildByName(o, D_004BB988), D_004A7520);
-    o->f108 = Cast_361AA0(GuiWidget_FindChildByName(o, D_004BB998), D_004A7520);
+    GuiLobbyScreen_onAdd(o);
+    o->f100 = Cast_361AA0(GuiWidget_FindChild_charP(o, D_004BB978), D_004A7520);
+    o->f104 = Cast_361AA0(GuiWidget_FindChild_charP(o, D_004BB988), D_004A7520);
+    o->f108 = Cast_361AA0(GuiWidget_FindChild_charP(o, D_004BB998), D_004A7520);
     if (o->f108) func_0041C0D0(o->f108, 1);
-    o->f10C = Cast_361AA0(GuiWidget_FindChildByName(o, D_004BB9A8), D_004ABAB0);
-    o->f110 = Cast_361AA0(GuiWidget_FindChildByName(o, D_004BB9B8), D_004ABAB0);
-    o->f114 = Cast_361AA0(GuiWidget_FindChildByName(o, D_004BB9C8), D_004A9870);
-    o->f118 = Cast_361AA0(GuiWidget_FindChildByName(o, "02"), D_004A9870);
-    o->f11C = Cast_361AA0(GuiWidget_FindChildByName(o, "thumbnail"), D_004B88F0);
-    o->f120 = Cast_361AA0(GuiWidget_FindChildByName(o, "playercharacter"), D_004BBBB0);
+    o->f10C = Cast_361AA0(GuiWidget_FindChild_charP(o, D_004BB9A8), D_004ABAB0);
+    o->f110 = Cast_361AA0(GuiWidget_FindChild_charP(o, D_004BB9B8), D_004ABAB0);
+    o->f114 = Cast_361AA0(GuiWidget_FindChild_charP(o, D_004BB9C8), D_004A9870);
+    o->f118 = Cast_361AA0(GuiWidget_FindChild_charP(o, "02"), D_004A9870);
+    o->f11C = Cast_361AA0(GuiWidget_FindChild_charP(o, "thumbnail"), D_004B88F0);
+    o->f120 = Cast_361AA0(GuiWidget_FindChild_charP(o, "playercharacter"), D_004BBBB0);
     o->f10C->flags &= ~0x80;
     o->f110->flags &= ~0x80;
-    GuiArrayWidget_RowHeight(o->f110, o->f110->f5C - 2);
-    GuiArrayWidget_RowHeight(o->f10C, o->f10C->f5C - 4);
+    GuiArrayWidget_SetRowHeight(o->f110, o->f110->f5C - 2);
+    GuiArrayWidget_SetRowHeight(o->f10C, o->f10C->f5C - 4);
     FrontEnd_GetCharacterData(D_004FFC04);
 }
 #pragma pop /* merge_units */
@@ -63,24 +63,24 @@ void GuiAgentInfo_Init(O_361AA0* o)
 /*
  * Matched functions (byte-identical with the retail executable).
  * GuiAgentInfo constructor (vtable GuiAgentInfo_vtable); derives from the screen base
- * built by GuiScreen_ctor (GuiLobbyScreen.cc range).
+ * built by GuiLobbyScreen_ctor (GuiLobbyScreen.cc range).
  */
 
 #include "loose03_types.h"
 
 extern char GuiAgentInfo_vtable[];       /* GuiAgentInfo vtable */
-extern int String_CtorEmpty(void*);
-extern int GuiScreen_ctor(GuiAgentInfo*);
+extern int cString_ctor_void(void*);
+extern int GuiLobbyScreen_ctor(GuiAgentInfo*);
 
 /* GuiAgentInfo constructor. */
 GuiAgentInfo* GuiAgentInfo_ctor(GuiAgentInfo* self) {
     GuiAgentInfoMember88* member;
 
-    GuiScreen_ctor(self);
+    GuiLobbyScreen_ctor(self);
     member = &self->unk88;
     self->base.vtable = GuiAgentInfo_vtable;
-    String_CtorEmpty(member->unk30);
-    String_CtorEmpty(member->unk3C);
+    cString_ctor_void(member->unk30);
+    cString_ctor_void(member->unk3C);
     self->base.screenId = 8;
     self->unkFC = 0;
     return self;

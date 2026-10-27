@@ -27,7 +27,7 @@ struct AnimSlot {
 typedef struct AnimChannel_0018D0F0 { char pad[0x80]; AnimSlot* slots; } AnimChannel_0018D0F0;
 
 /* Sets slot i directly to v (start/current/target) and re-evaluates its value. */
-extern "C" void AnimChannel_SetDirect(AnimChannel_0018D0F0* self, int i, float v)
+extern "C" void cSkaParams_SetSliderValue_int_float(AnimChannel_0018D0F0* self, int i, float v)
 {
     AnimSlot* slot = &self->slots[i];
     slot->target = v;
@@ -52,7 +52,7 @@ static inline void merge_flush_func_0018D0F0(void) {}
 extern void cHumanIkRoutine_StopUpperBodyAnimation(void*);
 
 /* Release the secondary component if flagged (bit 8 of flags324C), then clear the flag. */
-void Actor_ReleaseSecondary(Actor* actor) {
+void cHuman_UnCoverEyes(Actor* actor) {
     void* secondary = actor->secondary;
 
     if (secondary != 0 && ((actor->flags324C >> 8) & 1) != 0) {

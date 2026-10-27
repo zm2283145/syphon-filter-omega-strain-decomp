@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int Newlib_SysLseek(void) {
+int Libc_Lseek(void) {
     return -1;
 }

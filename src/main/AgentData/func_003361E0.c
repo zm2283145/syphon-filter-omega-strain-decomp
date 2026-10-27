@@ -35,9 +35,9 @@ typedef struct {
 extern int g_LevelRowCount;
 int cArray_eRequirementState_Size(BV_61E0* v);
 char* cArray_eRequirementState_opIndex(BV_61E0* v, int i);
-void AgentLevelVec_Resize(LvlVec_61E0* v, unsigned int n, const Lvl_61E0* value);
+void std_vector_imp_tMissionStats_resize(LvlVec_61E0* v, unsigned int n, const Lvl_61E0* value);
 
-void AgentData_Reset(Agent_61E0* a)
+void cAgentData_Reset(Agent_61E0* a)
 {
     int i;
     int k;
@@ -76,8 +76,8 @@ void AgentData_Reset(Agent_61E0* a)
     e0.w[2] = 0;
     e0.w[4] = -1;
     e0.w[5] = -1;
-    AgentLevelVec_Resize(&a->levels, 0, &e0);
-    AgentLevelVec_Resize(&a->levels, n, &e1);
+    std_vector_imp_tMissionStats_resize(&a->levels, 0, &e0);
+    std_vector_imp_tMissionStats_resize(&a->levels, n, &e1);
     a->unkB72 = 0;
     a->unkB74 = 0;
     a->unkB6C = -1;

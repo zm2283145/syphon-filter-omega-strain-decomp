@@ -8,13 +8,13 @@
 
 extern char D_004D96C0[]; /* PathReceiver vtable */
 extern char g_NpcRouteMgr[]; /* receiver registration data */
-extern void* Receiver_Construct(void* self, void* info);
-extern PathList* ScalarCollection_Init(PathList* list);
+extern void* cSystem_ctor(void* self, void* info);
+extern PathList* std_list_deleter_voidPtr_ctor_void(PathList* list);
 
-PathReceiver* NpcRouteMgr_Construct(PathReceiver* self) {
-    Receiver_Construct(self, g_NpcRouteMgr);
+PathReceiver* cPathSystem_ctor(PathReceiver* self) {
+    cSystem_ctor(self, g_NpcRouteMgr);
     self->vtable = D_004D96C0;
-    ScalarCollection_Init(&self->listA);
-    ScalarCollection_Init(&self->listB);
+    std_list_deleter_voidPtr_ctor_void(&self->listA);
+    std_list_deleter_voidPtr_ctor_void(&self->listB);
     return self;
 }

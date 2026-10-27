@@ -8,9 +8,9 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { char pad[8]; char* data; unsigned int len; unsigned int pos; } Buf_8240;
-int Net_GetClock(int);
+int cDME_GetTime(int);
 int cNellyMoser_nmsAddBlockToBuffer(int, char*);
-int NetGame_InitLocalSlot(int*, int);
+int NetGetMyClientIndex(int*, int);
 extern int D_00494178;
 extern int D_00497550;
 extern int D_005721A8;
@@ -19,14 +19,14 @@ extern unsigned char D_00582B88;
 extern int D_00582D30;
 void cHeadSet_AudioPlayCallback(Buf_8240* b)
 {
-    int t0 = Net_GetClock(1);
+    int t0 = cDME_GetTime(1);
     if (D_00582B88 && b && b->len) {
         unsigned int n;
         char* p = b->data;
         int a = D_00497550;
         n = 0;
         if (a == -1) a = D_005721A8;
-        if (g_IsMultiplayer && D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
+        if (g_IsMultiplayer && D_00494178 == -1) NetGetMyClientIndex(&D_00494178, a);
         if (n < b->len) {
             do {
                 int k = cNellyMoser_nmsAddBlockToBuffer(1, p + n);
@@ -36,7 +36,7 @@ void cHeadSet_AudioPlayCallback(Buf_8240* b)
         }
         b->pos = n;
     }
-    D_00582D30 = Net_GetClock(1) - t0;
+    D_00582D30 = cDME_GetTime(1) - t0;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00438240 */
@@ -53,7 +53,7 @@ extern char D_004BFD20[];
 extern unsigned char D_00497568;
 extern int D_00497548;
 extern unsigned char D_00582B90;
-extern char sfo_malloc_2CA9B0;
+extern char sfo_free;
 extern char Sfo_Malloc;
 int NetCreateObject(int* key, int a, int b, int c, int d, int e, int f, int g, char* h, int i);
 int NetGetObject(P_438340** out, int key);
@@ -83,7 +83,7 @@ unsigned char func_00438340(void)
         D_00497568 = 0;
         D_00497548 = -1;
         D_00582B88 = 0;
-        if (!lgAudInit(&Sfo_Malloc, &sfo_malloc_2CA9B0)) D_00582B90 = 1;
+        if (!lgAudInit(&Sfo_Malloc, &sfo_free)) D_00582B90 = 1;
     }
     if (D_00582B90) {
         lgAudEnumHint(&hint);
@@ -127,15 +127,15 @@ void NetGetObject(P_4384C0** out, void* s);
 void NetReleaseObjectPrivateOwnership(void* s);
 int lgAudStopRecording(int h);
 #if 0 /* merge_units */
-int Net_GetClock(int v);
+int cDME_GetTime(int v);
 #endif /* merge_units */
-#define Net_GetClock(a0) (Net_GetClock((a0))) /* merge_units */
+#define cDME_GetTime(a0) (cDME_GetTime((a0))) /* merge_units */
 
 int lgAudEnumerate(int a, char* b);
 int lgAudOpen(int a, Cfg_4384C0* c, int* h);
-void lgAudSetLevel0D(int h, int a, int b);
-void lgAudSetLevel0E(int h, int a, int b);
-void NellyWrap_Init(void);
+void lgAudSetPlaybackVolume(int h, int a, int b);
+void lgAudSetRecordingVolume(int h, int a, int b);
+void cNellyMoser_nmsCreate(void);
 void lgAudStartPlayback(int h);
 void lgAudStopPlayback(int h);
 void lgAudClose(int h);
@@ -153,7 +153,7 @@ static inline void Stop_4384C0(void)
 {
     if (D_00582B88) {
         if (lgAudStopRecording(D_00497548) == 0x80000006) D_00582B88 = 0;
-        D_00582D08 = Net_GetClock(1) + 2000;
+        D_00582D08 = cDME_GetTime(1) + 2000;
     }
 }
 static inline void Free_4384C0(int a, int b) { NetStreamMediaQuitChannel(a, b); }
@@ -183,9 +183,9 @@ unsigned char cHeadSet_DetectAndSetupUSB(void)
         c.f = 200;
         c.e = 8000;
         if (lgAudOpen(0, &c, &D_00497548) == 0) {
-            lgAudSetLevel0D(D_00497548, 0, 0x58);
-            lgAudSetLevel0E(D_00497548, 0, 0x15);
-            NellyWrap_Init();
+            lgAudSetPlaybackVolume(D_00497548, 0, 0x58);
+            lgAudSetRecordingVolume(D_00497548, 0, 0x15);
+            cNellyMoser_nmsCreate();
             if (D_00582B88) lgAudStartPlayback(D_00497548);
             D_00582B88 = 1;
             ok = 1;
@@ -211,7 +211,7 @@ unsigned char cHeadSet_DetectAndSetupUSB(void)
 }
 #undef D_00583870 /* merge_units */
 #undef NetGetObject /* merge_units */
-#undef Net_GetClock /* merge_units */
+#undef cDME_GetTime /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_004384C0 */
 
@@ -223,7 +223,7 @@ extern int func_00438340(void);
 #define func_00438340() ((int)func_00438340()) /* merge_units */
 
 extern int NetStreamMediaJoinChannel(int, int);
-extern int Net_GetClock(int);
+extern int cDME_GetTime(int);
 extern int cNellyMoser_nmsMultiDecode(void*);
 extern void cHeadSet_AudioOutput(void*, int);
 extern unsigned char D_00582D20;
@@ -247,7 +247,7 @@ void cHeadSet_NextFrame(int force)
         D_00497550 = D_005721A8;
     }
     if (!D_00582D00) return;
-    now = Net_GetClock(1);
+    now = cDME_GetTime(1);
     acc = D_00582D18 + (now - D_00582D10);
     if (acc < 20) return;
     D_00582D18 = acc % 20;

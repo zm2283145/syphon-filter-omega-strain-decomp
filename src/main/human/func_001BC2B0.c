@@ -8,7 +8,7 @@
 #include "human_types.h"
 
 /* Build a 4x4 matrix from a 3x4 block; last row becomes (0, 0, 0, 1). */
-void Mtx44_FromMtx34(Mtx44* dst, Mtx34* src) {
+void cMatrix_GetRotation(Mtx44* dst, Mtx34* src) {
     float m23, m22, m21, m20;
     float m13, m12, m11, m10;
     float m03, m02, m01, m00;

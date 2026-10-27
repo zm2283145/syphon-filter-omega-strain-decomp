@@ -1,22 +1,22 @@
 #include "types.h"
 typedef struct { float x, y, z; } Vec3_0017DD20;
-extern float Math_Cos(float a);
-extern float Math_Sin(float a);
-/* Mtx_FromEuler_17DD20: rotation matrix from Euler angles (x, y, z), the
- * y-first variant of Mtx_FromEuler. */
-Mtx44* Mtx_FromEuler_17DD20(Mtx44* m, Vec3_0017DD20* angles)
+extern float Libc_Cosf(float a);
+extern float Libc_Sinf(float a);
+/* cMatrix_ctor_cEulerAngleTR: rotation matrix from Euler angles (x, y, z), the
+ * y-first variant of cMatrix_ctor_cEulerAngleTR_2. */
+Mtx44* cMatrix_ctor_cEulerAngleTR(Mtx44* m, Vec3_0017DD20* angles)
 {
     /* declaration order sets the saved FPR of each value (retail's f20-f24) */
     float czcy, cy, y, sz, szsy, z, sy, x, sx, cx, cz, czsy, szcy;
     y = angles->y;
     x = angles->x;
     z = angles->z;
-    cy = Math_Cos(y);
-    sy = Math_Sin(y);
-    cx = Math_Cos(x);
-    sx = Math_Sin(x);
-    cz = Math_Cos(z);
-    sz = Math_Sin(z);
+    cy = Libc_Cosf(y);
+    sy = Libc_Sinf(y);
+    cx = Libc_Cosf(x);
+    sx = Libc_Sinf(x);
+    cz = Libc_Cosf(z);
+    sz = Libc_Sinf(z);
     czsy = cz * sy;
     szcy = sz * cy;
     czcy = cz * cy;

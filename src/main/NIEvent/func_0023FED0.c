@@ -19,7 +19,7 @@ struct Ev0023FED0 {
     char padDD[0x140 - 0xDD];
     Tgt0023FED0* target;
 };
-extern "C" int cNIEventOBJ_v2C(Ev0023FED0* self)
+extern "C" int cNIEventOBJ_GetCollisionModel(Ev0023FED0* self)
 {
     Tgt0023FED0* t;
     return (self->enabled && (t = self->target) != 0 && !(self->b2D == 0) && self->b2C && !self->b2E)

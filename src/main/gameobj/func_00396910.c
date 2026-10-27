@@ -8,8 +8,8 @@
 
 extern "C" {
 /*fc*/
-int Mem_Free(...);                         
-int List_Begin(...);                          
+int cMemMan_Deallocate(...);                         
+int std_list_deleter_voidPtr_begin_void(...);                          
 int func_00396A90(...);                            
 int cLListIterator_cSkaPlaybackGroupPtr_ctor(...);                        
 int std_list_cSkaPlaybackGroupPtr_end(...);                          
@@ -19,7 +19,7 @@ int operator_delete(...);
 extern unsigned char g_ProfileLockEnabled;
 }
 #pragma inline_depth(10)
-static inline void itb_(char **o, char *l) { int r; List_Begin(&r, l); std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(o, &r); }
+static inline void itb_(char **o, char *l) { int r; std_list_deleter_voidPtr_begin_void(&r, l); std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(o, &r); }
 static inline void ite_(char **o, char *l) { int r; std_list_cSkaPlaybackGroupPtr_end(&r, l); cLListIterator_cSkaPlaybackGroupPtr_ctor(o, &r); }
 extern "C" int func_00396910(int arg0, long long arg1) {
     int sp6C;
@@ -43,7 +43,7 @@ extern "C" int func_00396910(int arg0, long long arg1) {
                         func_00396C10(temp_a0, 0);
                     }
                 }
-                Mem_Free(0, temp_s1, "ska.icc", 0xCD);
+                cMemMan_Deallocate(0, temp_s1, "ska.icc", 0xCD);
                 }
                 var_s0 = (char *)(F_(var_s0, 0x4, int));
         }

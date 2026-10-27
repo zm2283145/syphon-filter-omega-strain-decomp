@@ -10,7 +10,7 @@
 extern int std_tree_pair_cString_value_compare_destroy_nodeP(Map* m, int root);
 
 /* Map clear: destroy all nodes and reset to empty. */
-void Map_Clear_13A420(Map* m) {
+void std_tree_pair_cString_value_compare_clear(Map* m) {
     int root;
 
     root = m->head;
@@ -23,7 +23,7 @@ void Map_Clear_13A420(Map* m) {
 }
 
 /* Map constructor with a comparator byte. */
-Map* Map_Ctor(Map* m, unsigned char* cmp) {
+Map* std_tree_pair_cString_value_compare_ctor_valuecompareR_cAllocatorR(Map* m, unsigned char* cmp) {
     m->count = 0;
     m->head = 0;
     m->cmp = *cmp;

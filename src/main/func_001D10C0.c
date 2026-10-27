@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-V4* Vec4_NormalizeXYZ_1D10C0(V4* v, float* len) {
+V4* cVector_Normalize_floatR(V4* v, float* len) {
     int t;
     asm {
         lqc2 vf1, 0(v)

@@ -1,6 +1,6 @@
 #pragma cplusplus on
 #include "types.h"
-/* AgentData_GetAwardItems: fills `out` with the award items of group `idx` of award type
+/* cAgentData_GetRequirements: fills `out` with the award items of group `idx` of award type
  * `type`: for type 4 the shared item table entries (with the group's states), otherwise one
  * item per element built from its localisation key; type 4 also appends the closing item once
  * the agent's award element completes. */
@@ -17,17 +17,17 @@ extern Item* D_00532BB8;
 extern int D_00532BB4;
 extern void* D_00532AB8;
 void func_00299500(IV* v);
-void* Loc_GetStoredKey(void* name);
-char* Loc_LookupText(void* name);
-int Loc_FindKeyThunk(int k);
-int Awards_ResolveUnlock(int k);
+void* nGlobalization_GetStringTag(void* name);
+char* nGlobalization_GetString_charP(void* name);
+int nGlobalization_GetStringIndex(int k);
+int cAgentData_GetWpnIndex(int k);
 void std_vector_imp_tRequirementInfo_insert(IV* v, Item* pos, int n, Item* val);
-void AgentData_StepAwardElement(void* self, AwardP* p, void* q, int force);
-void AgentData_GetAwardItems(AgentAw* a, unsigned char type, int idx, IV* out);
+void cAgentData_UpdateAchievement(void* self, AwardP* p, void* q, int force);
+void cAgentData_GetRequirements(AgentAw* a, unsigned char type, int idx, IV* out);
 }
 #pragma opt_strength_reduction off
 static inline bool IsDone(AwardP* p) { bool r = false; if (p) r = p->done != 0; return r; }
-extern "C" void AgentData_GetAwardItems(AgentAw* a, unsigned char type, int idx, IV* out)
+extern "C" void cAgentData_GetRequirements(AgentAw* a, unsigned char type, int idx, IV* out)
 {
     Grp* g;
     int i;
@@ -43,12 +43,12 @@ extern "C" void AgentData_GetAwardItems(AgentAw* a, unsigned char type, int idx,
             void* name;
             int off = idx * sizeof(TEnt);
             char st = g->states[i];
-            name = Loc_GetStoredKey(((TEnt*)((char*)D_00532A70[type].ents + off))->names + i);
-            item.text = Loc_LookupText(name);
+            name = nGlobalization_GetStringTag(((TEnt*)((char*)D_00532A70[type].ents + off))->names + i);
+            item.text = nGlobalization_GetString_charP(name);
             item.name = name;
             item.state = st;
             void* k = 0;
-            item.agent = k ? Awards_ResolveUnlock(Loc_FindKeyThunk(0)) : -1;
+            item.agent = k ? cAgentData_GetWpnIndex(nGlobalization_GetStringIndex(0)) : -1;
             item.a = 0;
             item.b = 0;
             item.c = 0;
@@ -58,7 +58,7 @@ extern "C" void AgentData_GetAwardItems(AgentAw* a, unsigned char type, int idx,
     }
     if (type == 4) {
         AwardP* p = a->elem;
-        AgentData_StepAwardElement(a, p, D_00532AB8, 0);
+        cAgentData_UpdateAchievement(a, p, D_00532AB8, 0);
         if (IsDone(p)) {
             Item* it = &D_00532BB8[D_00532BB4 - 1];
             it->state = 2;

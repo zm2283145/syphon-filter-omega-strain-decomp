@@ -10,47 +10,47 @@ typedef struct { char pad[0x25C]; int f25c; } G34E5;
 extern "C" {
 extern int GuiTextListWidget_GetItemId(void*);
 extern char g_Game[];
-extern A34E5* Agent_GetSelected(char*, int);
-extern int Gui_GetScreenStack(void);
-extern void GuiWidget_SendEvent(O34E5*, int, int, int, int);
-extern int Gui_GetScreenList(void);
-extern void* GuiManager_FindOrLoad(int, char*, char*);
-extern char* String_CStr(void*);
-extern void GuiSlideShow_SetReturn(void*, int, char*, int);
+extern A34E5* cGameSystem_GetAgentData(char*, int);
+extern int Gui_Canvas(void);
+extern void GuiWidget_SendMessage(O34E5*, int, int, int, int);
+extern int Gui_Manager(void);
+extern void* GuiManager_OpenGui(int, char*, char*);
+extern char* std_basic_string_char_char_traits_char_c_str(void*);
+extern void GuiSlideShow_SetInfo(void*, int, char*, int);
 extern void GuiSlideShow_Clear(void*);
 extern int GuiTextListWidget_GetItemText(void*, int);
-extern int GuiSlideShow_AddCategory(void*, int);
+extern int GuiSlideShow_AddSection(void*, int);
 extern int sprintf(char*, const char*, ...);
 extern T34E5* cAgentData_GetRanks(void);
 extern G34E5* D_004FFC04;
 extern void GuiSlideShow_AddSlide(void*, int, char*, int, char*);
-extern void GuiStack_SwapScreens(int, O34E5*, void*);
+extern void GuiCanvas_Transition(int, O34E5*, void*);
 }
-extern "C" void GuiRanks_Select(O34E5* o, int idx) {
+extern "C" void GuiRanks_ItemAction(O34E5* o, int idx) {
     char buf[0x20];
     int sel = GuiTextListWidget_GetItemId(o->f48);
     void* w;
     int x;
     if (sel == -1) return;
-    if (!(Agent_GetSelected(g_Game, -1)->fb50->f4 < sel)) {
-    GuiWidget_SendEvent(o, Gui_GetScreenStack(), 0x10, 1, 0);
-    w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiSlideShow", "ZEUSHELL");
+    if (!(cGameSystem_GetAgentData(g_Game, -1)->fb50->f4 < sel)) {
+    GuiWidget_SendMessage(o, Gui_Canvas(), 0x10, 1, 0);
+    w = GuiManager_OpenGui(Gui_Manager(), "GuiSlideShow", "ZEUSHELL");
     if (!w) return;
     {
-        char* t = String_CStr(o->f4);
-        GuiSlideShow_SetReturn(w, ((V34E5*)o)->v19(), t, idx);
+        char* t = std_basic_string_char_char_traits_char_c_str(o->f4);
+        GuiSlideShow_SetInfo(w, ((V34E5*)o)->v19(), t, idx);
     }
     GuiSlideShow_Clear(w);
-    x = GuiSlideShow_AddCategory(w, GuiTextListWidget_GetItemText(o->f48, idx));
+    x = GuiSlideShow_AddSection(w, GuiTextListWidget_GetItemText(o->f48, idx));
     sprintf(buf, "0_%d_%d.tdx", o->f64, sel + 1);
     {
         T34E5* tab;
-        Agent_GetSelected(g_Game, -1);
+        cGameSystem_GetAgentData(g_Game, -1);
         tab = cAgentData_GetRanks();
         GuiSlideShow_AddSlide(w, x, buf, D_004FFC04->f25c, tab->f8[sel].f10);
     }
-    GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
+    GuiCanvas_Transition(Gui_Canvas(), o, w);
     } else {
-        GuiWidget_SendEvent(o, Gui_GetScreenStack(), 0x10, 4, 0);
+        GuiWidget_SendMessage(o, Gui_Canvas(), 0x10, 4, 0);
     }
 }

@@ -54,7 +54,7 @@ extern __int128 D_0055DDE0;
 extern __int128 D_0055DE00;
 extern __int128 D_0055DE10;
 extern int D_0055DE8C;
-void Appearance_ReorderParts(Self390570* self);
+void cMan_SortParts(Self390570* self);
 }
 
 static inline bool Eq390570(__int128 a, __int128 b) {
@@ -77,7 +77,7 @@ static inline __int128 From390570(__int128 v) {
     return r;
 }
 
-extern "C" void Appearance_ReorderParts(Self390570* self)
+extern "C" void cMan_SortParts(Self390570* self)
 {
     int which[0x20];
     int score[0x20];
@@ -163,7 +163,7 @@ static inline void merge_flush_func_00390570(void) {}
 
 /* merge_units: begin func_00390940 */
 #pragma push /* merge_units */
-/* ActorModel_SwitchBodyPacking (main/man): merge a new appearance into the man's current one
+/* cMan_MergeSKLs (main/man): merge a new appearance into the man's current one
  * (release attached meshes, back up the old appearance, swap body-kind tags,
  * fix up the head/hair pairs, reload changed meshes, append new pairs).
  * Compiler: mwcc 3.0b38 (also matches b50). The odd lvalue forms
@@ -221,16 +221,16 @@ extern char D_004BC3E0[];
 extern char D_004BC3E8[];
 
 void DELAY_DELETE_ARRAY(void* p);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-int Appearance_GetBodyKind(App390940* app);
-int Appearance_GetToneDigit(App390940* app);
-int Appearance_GetPairCount(App390940* app);
-int Appearance_FindPairByType(App390940* app, char* type);
-int String_CompareN(char* a, char* b, int n);
-int MeshCache_FindSlot(char* cache, __int128 name);
-void MeshCache_Load(char* cache, __int128 name, char* ctx, char* arg);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+int SKL_FindSex(App390940* app);
+int SKL_FindRace(App390940* app);
+int SKL_CountAttribs(App390940* app);
+int SKL_FindPartIndex(App390940* app, char* type);
+int Libc_Strncmp(char* a, char* b, int n);
+int FindPart__7MonsterF1(char* cache, __int128 name);
+void Monster_LoadAPart(char* cache, __int128 name, char* ctx, char* arg);
 void SwapPartDependencies__7MonsterFR3SKLR8ManParts11UiUi(char* cache, App390940* app, char* x, __int128 a, __int128 b, int kind, int tone);
-void ActorModel_SwitchBodyPacking(Self390940* self, App390940* src);
+void cMan_MergeSKLs(Self390940* self, App390940* src);
 }
 
 static inline void QMove_390940(void* d0, void* s, int n0) {
@@ -305,13 +305,13 @@ static inline void Swap390940(__int128* p, __int128 from, __int128 to) {
     }
 }
 static inline void MeshP390940(Self390940* self, __int128* name) {
-    if (MeshCache_FindSlot(g_AgentPartCache, *name) == -1) {
+    if (FindPart__7MonsterF1(g_AgentPartCache, *name) == -1) {
         self->x2BDB = 1;
-        MeshCache_Load(g_AgentPartCache, *name, D_0057124C, self->x20);
+        Monster_LoadAPart(g_AgentPartCache, *name, D_0057124C, self->x20);
     }
 }
 
-extern "C" void ActorModel_SwitchBodyPacking(Self390940* self, App390940* src)
+extern "C" void cMan_MergeSKLs(Self390940* self, App390940* src)
 {
     int i = 0;
     int s5;
@@ -335,15 +335,15 @@ extern "C" void ActorModel_SwitchBodyPacking(Self390940* self, App390940* src)
         App390940* a;
         {
             AllocGuard g;
-            a = (App390940*)Mem_Alloc(0, 0x440, D_004BC310, 0x313);
+            a = (App390940*)cMemMan_Allocate(0, 0x440, D_004BC310, 0x313);
         }
         self->x2C14 = a;
         QMove2_390940(self->x2C14, &self->app, 0x44);
     }
-    self->x2C0C = Appearance_GetBodyKind(&self->app);
-    self->x2C0D = Appearance_GetToneDigit(&self->app);
-    self->x23C0 = Appearance_GetPairCount(&self->app);
-    s3 = Appearance_GetBodyKind(src);
+    self->x2C0C = SKL_FindSex(&self->app);
+    self->x2C0D = SKL_FindRace(&self->app);
+    self->x23C0 = SKL_CountAttribs(&self->app);
+    s3 = SKL_FindSex(src);
     if (self->x2C0C != s3) {
         __int128 from;
         __int128 to;
@@ -360,35 +360,35 @@ extern "C" void ActorModel_SwitchBodyPacking(Self390940* self, App390940* src)
         }
         Swap390940(&src->q20, from, to);
     }
-    s5 = Appearance_FindPairByType(&self->app, D_004BC3C8);
+    s5 = SKL_FindPartIndex(&self->app, D_004BC3C8);
     if (s5 != -1) {
-        j = Appearance_FindPairByType(src, D_004BC3C8);
+        j = SKL_FindPartIndex(src, D_004BC3C8);
         if (j != -1) {
             ((__int128*)self->app.pairs)[s5 * 2] = src->pairs[j].a;
             SwapPartDependencies__7MonsterFR3SKLR8ManParts11UiUi(g_AgentPartCache, &self->app, self->x1EC0, self->app.pairs[s5].a, src->pairs[j].a,
                           self->x2C0C, self->x2C0D);
         } else {
-            j = Appearance_FindPairByType(src, D_004BC3D0);
+            j = SKL_FindPartIndex(src, D_004BC3D0);
             if (j != -1) {
-                s4 = Appearance_FindPairByType(&self->app, D_004BC3D0);
+                s4 = SKL_FindPartIndex(&self->app, D_004BC3D0);
                 t = (char*)&src->pairs[j];
-                s3 = String_CompareN(t + 6, D_004BC3D8, 3);
+                s3 = Libc_Strncmp(t + 6, D_004BC3D8, 3);
                 tmp = ((__int128*)self->app.pairs)[s5 << 1];
                 t = (char*)&tmp;
                 if (s4 != -1) {
                     p = &self->app.pairs[s4];
-                    if (!String_CompareN((char*)p + 0xA, D_004BC3E0, 4)) {
+                    if (!Libc_Strncmp((char*)p + 0xA, D_004BC3E0, 4)) {
                         s4 = -1;
                     }
                 }
                 if (s4 == -1 && s3) {
-                    String_Copy(t + 0xA, D_004BC3E8);
+                    Libc_Strcpy(t + 0xA, D_004BC3E8);
                     MeshP390940(self, &tmp);
                     ((__int128*)self->app.pairs)[s5 * 2] = tmp;
                     SwapPartDependencies__7MonsterFR3SKLR8ManParts11UiUi(g_AgentPartCache, &self->app, self->x1EC0, self->app.pairs[s5].a, tmp,
                                   self->x2C0C, self->x2C0D);
                 } else if (s4 != -1 && !s3) {
-                    String_Copy(t + 0xA, D_004BC3E0);
+                    Libc_Strcpy(t + 0xA, D_004BC3E0);
                     MeshP390940(self, &tmp);
                     ((__int128*)self->app.pairs)[s5 * 2] = tmp;
                     SwapPartDependencies__7MonsterFR3SKLR8ManParts11UiUi(g_AgentPartCache, &self->app, self->x1EC0, self->app.pairs[s5].a, tmp,

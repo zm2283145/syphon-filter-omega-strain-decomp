@@ -28,16 +28,16 @@ extern char D_00538080[];
 extern char D_0053B6A0[];
 extern unsigned char D_0053B540;
 extern unsigned int* D_005381C8;
-unsigned int* DmaPacket_Open(void* q, int a, int b, int c, int d);
-void DmaPacket_Close(void* q, int a, void* end);
+unsigned int* cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_bool(void* q, int a, int b, int c, int d);
+void cDmaMan_EndChain_int_ulongP(void* q, int a, void* end);
 int XLib_GetTexMan(void* r);
 void* cTexMan_GetHalTexture(int reg, int tex);
-u64_t* Gs_MakeTex1(void* t);
+u64_t* cTexture_GetTEX1_1(void* t);
 u64_t* cTexture_GetTEX0_1(void* t);
 void MEMCPY16(void* d, void* s, int n);
-Q_0050* ParticleRandom_QwordAt(void* tbl, int i);
+Q_0050* cRandomVector_Vector(void* tbl, int i);
 unsigned int cVU1Man_GetMSCAL(void* q, int n);
-float Math_Powf(float x, float y);
+float Libc_Powf(float x, float y);
 }
 
 static inline unsigned int Unpack_0050(unsigned int a, unsigned int n) { return (0x6C000000 | ((n) << 16) | (a)); }
@@ -107,7 +107,7 @@ static inline void Vif_PadTo(unsigned int m)
     }
 }
 
-extern "C" void PhysEmitter_Draw(char* e, float t, float a, float b, float c)
+extern "C" void cParticleSpray_Render(char* e, float t, float a, float b, float c)
 {
     float u;
     float v;
@@ -142,12 +142,12 @@ extern "C" void PhysEmitter_Draw(char* e, float t, float a, float b, float c)
         int left;
         int lim;
         u64_t* p;
-        float pw = Math_Powf(u, F_(F_(e, 0x120, char*), 0x9A8, float));
+        float pw = Libc_Powf(u, F_(F_(e, 0x120, char*), 0x9A8, float));
         float pk = pw * F_(F_(e, 0x120, char*), 0x9AC, float);
         *(V4_0050*)(e + 0xC0) = V4_0050(el, u, z, w);
         F_(F_(e, 0x120, char*), 0x920, float) = pw;
         F_(F_(e, 0x120, char*), 0x930, float) = pk;
-        D_005381C8 = DmaPacket_Open(D_00537F80, 1, 1, 0, 0);
+        D_005381C8 = cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_bool(D_00537F80, 1, 1, 0, 0);
         Vif_PutV(0x11000000);
         Vif_Put(0);
         Vif_PadTo(0xC);
@@ -162,14 +162,14 @@ extern "C" void PhysEmitter_Draw(char* e, float t, float a, float b, float c)
         }
         D_005381C8 += 0x24;
         Vif_PadTo(0);
-        DmaPacket_Close(D_00537F80, 1, D_005381C8);
+        cDmaMan_EndChain_int_ulongP(D_00537F80, 1, D_005381C8);
         s3 = F_(e, 0x120, char*);
         s7 = F_(e, 0x70, char*);
         left = F_(e, 0x6C, int);
         u -= v;
         z += F_(s3, 0x44, float);
         w += F_(s3, 0x48, float);
-        F_(s3, 0xB0, u64_t) = *Gs_MakeTex1(cTexMan_GetHalTexture(XLib_GetTexMan(g_Video), F_(s3, 0x74, int)));
+        F_(s3, 0xB0, u64_t) = *cTexture_GetTEX1_1(cTexMan_GetHalTexture(XLib_GetTexMan(g_Video), F_(s3, 0x74, int)));
         F_(s3, 0xC0, u64_t) = *cTexture_GetTEX0_1(cTexMan_GetHalTexture(XLib_GetTexMan(g_Video), F_(s3, 0x74, int)));
         lim = 0x21;
         if (F_(s3, 0x64, unsigned char)) {
@@ -179,7 +179,7 @@ extern "C" void PhysEmitter_Draw(char* e, float t, float a, float b, float c)
             F_(s3, 0xD0, u64_t) = 1 | ((u64_t)0x612F4000 << 32);
             F_(s3, 0xD8, u64_t) = 1 | ((u64_t)0x602F4000 << 32);
         }
-        p = (u64_t*)DmaPacket_Open(D_00537F80, 1, 1, 0, 1);
+        p = (u64_t*)cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_bool(D_00537F80, 1, 1, 0, 1);
         *p = 0;
         p++;
         while (left > 0) {
@@ -191,7 +191,7 @@ extern "C" void PhysEmitter_Draw(char* e, float t, float a, float b, float c)
             p++;
             MEMCPY16(p, s3 + 0x80, 0xC);
             p += 0x18;
-            *(Q_0050*)p = *ParticleRandom_QwordAt(D_0053B6A0, (int)(s7 + left));
+            *(Q_0050*)p = *cRandomVector_Vector(D_0053B6A0, (int)(s7 + left));
             p += 2;
             *p = cVU1Man_GetMSCAL(D_00538080, 0x16);
             p++;
@@ -199,7 +199,7 @@ extern "C" void PhysEmitter_Draw(char* e, float t, float a, float b, float c)
             p++;
             left -= n;
         }
-        DmaPacket_Close(D_00537F80, 1, p);
+        cDmaMan_EndChain_int_ulongP(D_00537F80, 1, p);
         if (u < 0.0f) u = u; /* no-op on purpose: retail keeps this compare (its body was compiled out) */
     }
 }

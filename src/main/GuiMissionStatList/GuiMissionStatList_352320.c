@@ -53,7 +53,7 @@ extern char D_004BAC88[];
 extern char D_004BACC8[];
 void std_vector_pod_StatType_opAssign(TStr* d, const TStr* s);
 void MissionStats_StatsRequirement_dtor(E2460* p, int f);
-void* Mem_PlacementNew(unsigned int size, void* p);
+void* opNew_uint_voidP(unsigned int size, void* p);
 #if 0 /* merge_units */
 void MissionStats_StatsRequirement_ctor(void* d, const E2460* s);
 #endif /* merge_units */
@@ -63,7 +63,7 @@ void std_vector_deleter_StatsRequirement_clear(V2460* v);
 void opDelete_StatsRequirementP_int_bool_charP_etc(void* allocation, int pool, int destroy, char* file, int line);
 }
 static inline const unsigned int& Min2460(const unsigned int& a, const unsigned int& b) { return b < a ? b : a; }
-static inline E2460* Alloc2460(unsigned int n) { AllocGuard g; return (E2460*)Mem_Alloc(0, n * sizeof(E2460), D_004BAC88, 0x5C); }
+static inline E2460* Alloc2460(unsigned int n) { AllocGuard g; return (E2460*)cMemMan_Allocate(0, n * sizeof(E2460), D_004BAC88, 0x5C); }
 
 extern "C" void std_vector_imp_StatsRequirement_do_assign(V2460* v, const E2460* first, const E2460* last)
 {
@@ -84,7 +84,7 @@ extern "C" void std_vector_imp_StatsRequirement_do_assign(V2460* v, const E2460*
             v->count = n;
         } else if (v->count < n) {
             for (; first != last; first++, p++) {
-                void* m = Mem_PlacementNew(sizeof(E2460), p);
+                void* m = opNew_uint_voidP(sizeof(E2460), p);
                 if (m)
                     MissionStats_StatsRequirement_ctor(m, first);
                 v->count++;
@@ -110,7 +110,7 @@ extern "C" void std_vector_imp_StatsRequirement_do_assign(V2460* v, const E2460*
         {
             E2460* p = v->data;
             for (; first != last; first++, p++) {
-                void* m = Mem_PlacementNew(sizeof(E2460), p);
+                void* m = opNew_uint_voidP(sizeof(E2460), p);
                 if (m)
                     MissionStats_StatsRequirement_ctor(m, first);
                 v->count++;

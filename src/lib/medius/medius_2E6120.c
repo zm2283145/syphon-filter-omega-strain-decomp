@@ -164,13 +164,13 @@ extern int rt_p2p_get_peer_address(int, int, int, char *, unsigned short *);
 #define rt_p2p_get_peer_address(a0, a1, a2, a3, a4) (rt_p2p_get_peer_address((unsigned int)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 extern int NetGetMyWorldID(void);
-extern void Net_DispatchRecv(int, int, int, int, unsigned short);
+extern void ParseMessageList(int, int, int, int, unsigned short);
 void p2p_incoming_data_cb(int a, int b, unsigned short c)
 {
     int st = -1;
     if (rt_p2p_get_current_address_type(D_0048C4B0, a, &st)) return;
     if (rt_p2p_get_peer_address(D_0048C4B0, a, st, D_005880A0, &D_0058D178)) return;
-    Net_DispatchRecv(NetGetMyWorldID(), 0, (unsigned short)a, b, c);
+    ParseMessageList(NetGetMyWorldID(), 0, (unsigned short)a, b, c);
 }
 #undef D_0048C4B0 /* merge_units */
 #undef rt_p2p_get_current_address_type /* merge_units */
@@ -182,7 +182,7 @@ void p2p_unconnected_data_cb(const char *name, unsigned short port, int c, unsig
 {
     strncpy(D_005880A0, name, 0x10);
     D_0058D178 = port;
-    Net_DispatchRecv(NetGetMyWorldID(), 0xFFFF, 0x100, c, d);
+    ParseMessageList(NetGetMyWorldID(), 0xFFFF, 0x100, c, d);
 }
 /* merge_units: end func_002E6590 */
 

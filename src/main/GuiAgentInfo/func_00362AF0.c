@@ -37,26 +37,26 @@ static inline void VAdd3(V4* s, V4* d) {
 static inline void QC(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
 struct Nd { Plc world; char pad20[0x30]; Plc local; char pad70[0x30]; unsigned char dirty; char padA1[0xF]; Nd* parent; };
 extern "C" {
-Nd* Root_GetParent(Nd* n);
-void Root_RefreshWorldCache(Nd* n);
-Nd* Root_Identity(Nd* n);
-void Quat_Assign(V4* d, V4* s);
-void Vec4_Copy(V4* d, V4* s);
-V4* Placement_GetQuat(Plc* p);
-V4* Placement_GetPosition(Plc* p);
+Nd* cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(Nd* n);
+void cSkaAnimAnchor_TreeNode_UpdateTransform(Nd* n);
+Nd* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(Nd* n);
+void cQuaternion_opAssign(V4* d, V4* s);
+void cVector_opAssign(V4* d, V4* s);
+V4* cQuatVec_Rotation(Plc* p);
+V4* cQuatVec_Translation(Plc* p);
 void cQuatVec_Rotate(Plc* p, V4* q);
 void cQuatVec_Translate(Plc* p, V4* v);
 void cQuaternion_ctor_void(V4* q);
-void Quat_Multiply(V4* a, V4* b, V4* c);
+void cQuaternion_VU0Multiply(V4* a, V4* b, V4* c);
 void cQuaternion_ctor_cQuaternionR(V4* d, V4* s);
 }
 static inline Plc* WorldX(Nd* n)
 {
-    if (Root_GetParent(n)) {
-        Root_RefreshWorldCache(n);
-        return &Root_Identity(n)->world;
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(n)) {
+        cSkaAnimAnchor_TreeNode_UpdateTransform(n);
+        return &cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(n)->world;
     }
-    return &Root_Identity(n)->local;
+    return &cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(n)->local;
 }
 static inline void Refresh(Nd* n)
 {
@@ -64,13 +64,13 @@ static inline void Refresh(Nd* n)
     if (gp && n->dirty) {
         Plc* gw = WorldX(gp);
         Plc* w;
-        Plc* l = &Root_Identity(n)->local;
-        w = &Root_Identity(n)->world;
-        Quat_Assign(&w->rot, &l->rot);
-        Vec4_Copy(&w->pos, &l->pos);
-        Plc* w2 = &Root_Identity(n)->world;
-        cQuatVec_Rotate(w2, Placement_GetQuat(gw));
-        cQuatVec_Translate(w2, Placement_GetPosition(gw));
+        Plc* l = &cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(n)->local;
+        w = &cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(n)->world;
+        cQuaternion_opAssign(&w->rot, &l->rot);
+        cVector_opAssign(&w->pos, &l->pos);
+        Plc* w2 = &cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(n)->world;
+        cQuatVec_Rotate(w2, cQuatVec_Rotation(gw));
+        cQuatVec_Translate(w2, cQuatVec_Translation(gw));
         n->dirty = 0;
     }
 }
@@ -91,7 +91,7 @@ extern "C" void Root_RefreshWorldCache_362AF0(Nd* self)
         V4 r;
         V4 m;
         cQuaternion_ctor_void(&m);
-        Quat_Multiply(&m, &pw->rot, &self->world.rot);
+        cQuaternion_VU0Multiply(&m, &pw->rot, &self->world.rot);
         cQuaternion_ctor_cQuaternionR(&r, &m);
         { void* xx = &r; /* dead on purpose: retail keeps this addiu */ }
         V4* v = &self->world.pos;

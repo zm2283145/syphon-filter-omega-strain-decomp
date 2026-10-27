@@ -35,7 +35,7 @@ static inline void merge_flush_func_002A3B80(void) {}
  */
 
 
-extern int GuiWidget_BaseWake(GuiEquipmentSetup* self);
+extern int GuiWidget_onWake(GuiEquipmentSetup* self);
 
 int func_002A3BA0(char* self) {
     return *(int*)(self + 0);
@@ -43,7 +43,7 @@ int func_002A3BA0(char* self) {
 
 /* Calls the base handler, then resets +0xDC and the view angle to pi. */
 int GuiEquipmentSetup_Wake(GuiEquipmentSetup* self) {
-    int result = GuiWidget_BaseWake(self);
+    int result = GuiWidget_onWake(self);
 
     self->unkDC = 0;
     self->angle = 3.14159265f;

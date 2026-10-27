@@ -96,7 +96,7 @@ int func_002FB2D8(void **out, long sz)
 /* merge_units: begin func_002FB350 */
 extern int func_002FB2D8(void **out, long sz);
 extern void *memset(void *, int, unsigned int);
-int Net_AllocZeroed(void **out, long sz)
+int rt_memory_allocate_init_zero(void **out, long sz)
 {
     int r;
     if (out == 0) return 1;

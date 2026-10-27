@@ -35,7 +35,7 @@ struct V2 : V { V2(const V& o) { void* xx = this; V* d = this; const V* s = &o; 
 static inline V XformPt2(const V& v, M* mm) { const V* sv = &v; V2 p(*sv); V* pp = &p; MulM(pp, mm); return *pp; }
 static inline V XformPt(const V& v, M* m) { M* mm = m; return XformPt2(v, mm); }
 static inline int HasModel(Obj* o) { return o->x68->x0 ? 1 : 0; }
-extern "C" int Shadow_AddReceiver(Shadow* sh, Obj* o, int force)
+extern "C" int cShadowMan_AddReceiver(Shadow* sh, Obj* o, int force)
 {
     int idx = -1;
     if ((g_DrawMode & 0x60) || force) {

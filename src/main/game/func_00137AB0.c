@@ -6,25 +6,25 @@ extern "C" {
 extern char D_004D9060[];
 extern char D_0049A890[];
 extern char D_0049AB60[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void ListReceiver_Ctor(void* p);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cSystemContainer_ctor_void(void* p);
 void std_vector_tVUMNamePairPtr_ctor(void* p);
 void std_list_deleter_cHogFile_ctor(void* p);
-void Map_Ctor(void* p, void* a, void* b);
-void ScalarCollection_Init(void* p);
-void String_Copy(void* s, char* src);
+void std_tree_pair_cString_value_compare_ctor_valuecompareR_cAllocatorR(void* p, void* a, void* b);
+void std_list_deleter_voidPtr_ctor_void(void* p);
+void Libc_Strcpy(void* s, char* src);
 void* cVisionFxMan_ctor(void* p);
-void* WaterFx_Construct(void* p);
-void* NpcRouteMgr_Construct(void* p);
-void* SoundMgr_Construct(void* p);
+void* cWaterFx_ctor(void* p);
+void* cPathSystem_ctor(void* p);
+void* cGameSound_ctor(void* p);
 void* cAISoundSystem_ctor(void* p);
-void* ObjMan_Ctor(void* p);
-void* HotboxTracker_Construct(void* p, int a);
-void* Options_SetDefaults(void* p);
-void* FrontEnd_ctor(void* p);
+void* cObjectiveMan_ctor(void* p);
+void* cHotboxMan_ctor(void* p, int a);
+void* cGameOptions_ctor(void* p);
+void* cGameFrontEnd_ctor(void* p);
 void* cWeaponDB_ctor(void* p);
-void Script_AddChild(void* w, void* p);
-void PtrVec_Reserve(void* p, int n);
+void cSystemContainer_AddSystem(void* w, void* p);
+void std_vector_pod_int_reserve(void* p, int n);
 }
 
 struct Sub2C_WC { char pad[0xC]; unsigned char bC; };
@@ -98,16 +98,16 @@ struct World_WC {
 
 #include "alloc_guard.h"
 /* allocation under the scoped allocator lock (each guard keeps a 16-byte frame slot) */
-static inline void* WcAlloc(int sz, int line) { AllocGuard g; return Mem_Alloc(0, sz, D_0049A890, line); }
+static inline void* WcAlloc(int sz, int line) { AllocGuard g; return cMemMan_Allocate(0, sz, D_0049A890, line); }
 #define WC_ALLOC(p, T, sz, line) p = (T)WcAlloc(sz, line);
 
 /* map member ctor with comparator/allocator temporaries; two inline levels put them below the guards */
-static inline void MapInitB(void* m) { int cmp; int alc; Map_Ctor(m, &cmp, &alc); }
+static inline void MapInitB(void* m) { int cmp; int alc; std_tree_pair_cString_value_compare_ctor_valuecompareR_cAllocatorR(m, &cmp, &alc); }
 static inline void MapInitA(void* m) { MapInitB(m); }
 
 extern "C" World_WC* World_Construct(World_WC* w)
 {
-    ListReceiver_Ctor(w);
+    cSystemContainer_ctor_void(w);
     w->vtbl = D_004D9060;
     {
         Sub2C_WC* m = &w->m2C;
@@ -127,11 +127,11 @@ extern "C" World_WC* World_Construct(World_WC* w)
     w->b64 = 0;
     w->b65 = 1;
     MapInitA(w->m70);
-    ScalarCollection_Init(w->m9C);
+    std_list_deleter_voidPtr_ctor_void(w->m9C);
     w->fAC = 0;
     w->fB0 = 0;
     w->fB8 = 0;
-    ScalarCollection_Init(w->mC4);
+    std_list_deleter_voidPtr_ctor_void(w->mC4);
     w->bD9 = 0;
     w->fDC = 0;
     w->fE0 = 0;
@@ -139,7 +139,7 @@ extern "C" World_WC* World_Construct(World_WC* w)
     w->fE8 = 0;
     w->fEC = 0;
     w->f1E8 = 0;
-    String_Copy(w->s140, D_0049AB60);
+    Libc_Strcpy(w->s140, D_0049AB60);
     {
         void* p;
         WC_ALLOC(p, void*, 0x200, 0x93);
@@ -149,7 +149,7 @@ extern "C" World_WC* World_Construct(World_WC* w)
     {
         void* p;
         WC_ALLOC(p, void*, 0x460, 0x94);
-        if (p) p = WaterFx_Construct(p);
+        if (p) p = cWaterFx_ctor(p);
         w->fE4 = p;
     }
     {
@@ -166,31 +166,31 @@ extern "C" World_WC* World_Construct(World_WC* w)
     {
         void* p;
         WC_ALLOC(p, void*, 0x7C, 0x97);
-        if (p) p = NpcRouteMgr_Construct(p);
-        Script_AddChild(w, p);
+        if (p) p = cPathSystem_ctor(p);
+        cSystemContainer_AddSystem(w, p);
     }
     {
         void* p;
         WC_ALLOC(p, void*, 0x54C0, 0x98);
-        if (p) p = SoundMgr_Construct(p);
-        Script_AddChild(w, p);
+        if (p) p = cGameSound_ctor(p);
+        cSystemContainer_AddSystem(w, p);
     }
     {
         void* p;
         WC_ALLOC(p, void*, 0x20, 0x99);
         if (p) p = cAISoundSystem_ctor(p);
-        Script_AddChild(w, p);
+        cSystemContainer_AddSystem(w, p);
     }
     {
         void* p;
         WC_ALLOC(p, void*, 0x11B4, 0x9A);
-        if (p) p = ObjMan_Ctor(p);
-        Script_AddChild(w, p);
+        if (p) p = cObjectiveMan_ctor(p);
+        cSystemContainer_AddSystem(w, p);
     }
     {
         void* p;
         WC_ALLOC(p, void*, 0x34, 0x9C);
-        if (p) p = HotboxTracker_Construct(p, 0);
+        if (p) p = cHotboxMan_ctor(p, 0);
         w->f80 = p;
     }
     {
@@ -203,7 +203,7 @@ extern "C" World_WC* World_Construct(World_WC* w)
         Blk70_WC* p;
         WC_ALLOC(p, Blk70_WC*, 0x70, 0x9E);
         if (p) {
-            ScalarCollection_Init(p);
+            std_list_deleter_voidPtr_ctor_void(p);
             p->b10 = 0;
             p->fC = 0;
         }
@@ -213,17 +213,17 @@ extern "C" World_WC* World_Construct(World_WC* w)
     {
         void* p;
         WC_ALLOC(p, void*, 0x24, 0xA0);
-        if (p) p = Options_SetDefaults(p);
+        if (p) p = cGameOptions_ctor(p);
         w->f1DC = p;
     }
     {
         void* p;
         WC_ALLOC(p, void*, 0x318, 0xA3);
-        if (p) p = FrontEnd_ctor(p);
+        if (p) p = cGameFrontEnd_ctor(p);
         w->fB4 = p;
     }
-    Script_AddChild(w, w->fB4);
-    PtrVec_Reserve(&w->m2C, 0x100);
+    cSystemContainer_AddSystem(w, w->fB4);
+    std_vector_pod_int_reserve(&w->m2C, 0x100);
     w->f98 = 0;
     w->f90 = 0;
     w->f10 = 0;

@@ -29,7 +29,7 @@ const char* GuiAgentInfo_GetClassName(void) {
 extern int strcmp(const char* a, const char* b); /* strcmp */
 
 /* Returns 1 if name equals the string "GuiAgentInfo". */
-int GuiAgentInfo_IsType(void* self, const char* name)
+int GuiAgentInfo_IsClass(void* self, const char* name)
 {
     return strcmp("GuiAgentInfo", name) == 0;
 }

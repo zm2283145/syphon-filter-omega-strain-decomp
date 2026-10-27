@@ -120,7 +120,7 @@ static inline void SetX(Pal* o, Mtx_9D40* a, Mtx_9D40* b) {
 static inline Node_9D40* World(Node_9D40* n) { if (n->b50) n->Refresh(); return n; }
 #pragma opt_rotateloops off
 #pragma opt_propagation off
-extern "C" void Skm_BuildPalette(HitVolumes_9D40* self, Pal* out, Pal* m)
+extern "C" void cSkeleton_GetMeshToSkeletonSpaceMatrices_WithScale(HitVolumes_9D40* self, Pal* out, Pal* m)
 {
     Coll_9D40* c = &self->coll;
     It_9D40 it = HBegin(c);

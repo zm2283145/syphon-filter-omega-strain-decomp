@@ -23,7 +23,7 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00344AA0)
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_00344B90, D_004E1220, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(func_00344B90, D_004E1220, GuiWidget_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00344B90 */
 
@@ -82,7 +82,7 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00344D60)
 
 #include "loose03_types.h"
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int count, int* value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int count, int* value);
 
 /* end() */
 int* func_00344E50(PtrVec* v) {
@@ -104,7 +104,7 @@ int** func_00344E90(PtrVec* v) {
 
 /* push_back */
 int func_00344EA0(PtrVec* v, int* value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00344E50 */
@@ -113,13 +113,13 @@ int func_00344EA0(PtrVec* v, int* value) {
 #pragma push /* merge_units */
 typedef struct { char pad[0xC]; unsigned char flag; } Obj0C;
 extern void std_vector_imp_cSkeletonBBoxContributionPtr_1_ctor(Obj0C* self, int* src, unsigned char flag);
-extern void PtrVec_Reserve(Obj0C* self, int value);
+extern void std_vector_pod_int_reserve(Obj0C* self, int value);
 
 /* Initializes self from src, sets the value *src and stores flag at +0xC; returns self. */
 Obj0C* func_00344EC0(Obj0C* self, int* src, unsigned char flag)
 {
     std_vector_imp_cSkeletonBBoxContributionPtr_1_ctor(self, src, flag);
-    PtrVec_Reserve(self, *src);
+    std_vector_pod_int_reserve(self, *src);
     self->flag = flag;
     return self;
 }
@@ -138,7 +138,7 @@ DEFINE_BUF_HOLDER_DTOR(func_00344F10)
 /* merge_units: begin func_00345000 */
 #pragma push /* merge_units */
 extern int D_005331D0;
-extern int GuiAgentModify_DrawModelCallback(int);
+extern int GuiAgentModify_ManRender(int);
 
 Rel* func_00345000(Rel* r) {
     r->a = 0;
@@ -148,7 +148,7 @@ Rel* func_00345000(Rel* r) {
 }
 
 int AgentRenderWrapper(void) {
-    return GuiAgentModify_DrawModelCallback(D_005331D0);
+    return GuiAgentModify_ManRender(D_005331D0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00345000 */
@@ -186,8 +186,8 @@ struct Sub345090 { char pad[0x10]; Q345090 pos; };
 struct T345090 { V345090 v; char pad4[0xC]; Sub345090 sub; char pad40[0x20]; unsigned char b50; };
 struct A345090 { char pad[0x50]; T345090* t; char pad54[0x10]; float heading; };
 extern "C" {
-float Math_Atan2f(float y, float x);
-void Actor_BaseLogicUpdate(A345090* a, float dt);
+float Libc_Atan2f(float y, float x);
+void cGOBJ_NextFrame(A345090* a, float dt);
 }
 extern "C" void func_00345090(A345090* a, float dt)
 {
@@ -197,8 +197,8 @@ extern "C" void func_00345090(A345090* a, float dt)
         t->v.v20();
     Sub345090* s = (Sub345090*)((char*)t + 0x10);
     V4Copy(&p, &s->pos);
-    a->heading = Math_Atan2f(p.f.x, *(volatile float*)&p.f.y);
-    Actor_BaseLogicUpdate(a, dt);
+    a->heading = Libc_Atan2f(p.f.x, *(volatile float*)&p.f.y);
+    cGOBJ_NextFrame(a, dt);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00345090 */

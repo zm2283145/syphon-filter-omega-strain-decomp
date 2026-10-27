@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003DC5A0 */
 #pragma push /* merge_units */
@@ -24,7 +24,7 @@ int Mem_Free();
 
 
 extern "C" {
-int *Mem_Alloc(...);                     
+int *cMemMan_Allocate(...);                     
 int ClassDef_findField(...);                   
 int cScriptInterpreter_considerClass(...);                           
 extern int D_004BD4C0;
@@ -47,7 +47,7 @@ int temp_s5;
     if (temp_s5 != 0) {
         {
             AllocGuard g;
-        var_s1 = Mem_Alloc(0, temp_s5 * 4, &D_004BD4C0, 0xB76);
+        var_s1 = cMemMan_Allocate(0, temp_s5 * 4, &D_004BD4C0, 0xB76);
         }
     } else {
         var_s1 = NULL;
@@ -78,19 +78,19 @@ extern char D_00555070[];
 #endif /* merge_units */
 #define D_00555070 ((char*)&D_00555070) /* merge_units */
 
-extern int Script_ResolveType(F1Ctx3DC* ctx, int type);
-extern int Script_LinkDefinition(void* tab, F1Def3DC* def, F1Ctx3DC* ctx);
+extern int cScriptInterpreter_SymbolTable_remapType(F1Ctx3DC* ctx, int type);
+extern int cScriptInterpreter_considerFunc(void* tab, F1Def3DC* def, F1Ctx3DC* ctx);
 int cScriptInterpreter_SymbolTable_addFunc(F1Ctx3DC* ctx, F1Def3DC* def, int idx)
 {
     int i;
     int r;
-    def->type = Script_ResolveType(ctx, def->type);
+    def->type = cScriptInterpreter_SymbolTable_remapType(ctx, def->type);
     for (i = 0; i < def->count; i++) {
-        def->args[i] = Script_ResolveType(ctx, def->args[i]);
+        def->args[i] = cScriptInterpreter_SymbolTable_remapType(ctx, def->args[i]);
     }
     r = 0;
     if (def->type >= 0) {
-        r = Script_LinkDefinition(D_00555070, def, def->linked ? ctx : 0);
+        r = cScriptInterpreter_considerFunc(D_00555070, def, def->linked ? ctx : 0);
     }
     ctx->defs[idx] = r;
     return r;
@@ -110,15 +110,15 @@ extern char D_00555070[];
 #define D_00555070 ((char*)&D_00555070) /* merge_units */
 
 #if 0 /* merge_units */
-extern int Script_ResolveType(Ctx3DC7* ctx, int type);
+extern int cScriptInterpreter_SymbolTable_remapType(Ctx3DC7* ctx, int type);
 #endif /* merge_units */
-#define Script_ResolveType(a0, a1) (Script_ResolveType((void *)(a0), (a1))) /* merge_units */
+#define cScriptInterpreter_SymbolTable_remapType(a0, a1) (cScriptInterpreter_SymbolTable_remapType((void *)(a0), (a1))) /* merge_units */
 
 extern int cScriptInterpreter_considerVar(void* tab, int a, int type, int b, int c, Ctx3DC7* ctx, int d);
 void cScriptInterpreter_SymbolTable_addVar(Ctx3DC7* ctx, int a, int type, int b, int c, int d, int idx)
 {
     int r;
-    int t = Script_ResolveType(ctx, type);
+    int t = cScriptInterpreter_SymbolTable_remapType(ctx, type);
     r = 0;
     if (t >= 0) {
         r = cScriptInterpreter_considerVar(D_00555070, a, t, b, c, ctx, d);
@@ -126,7 +126,7 @@ void cScriptInterpreter_SymbolTable_addVar(Ctx3DC7* ctx, int a, int type, int b,
     ctx->defs[idx] = r;
 }
 #undef D_00555070 /* merge_units */
-#undef Script_ResolveType /* merge_units */
+#undef cScriptInterpreter_SymbolTable_remapType /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003DC7F0(void) {}
 #pragma pop /* merge_units */
@@ -162,8 +162,8 @@ void** std_vector_intPtr_opIndex(void* v, int i);
 void std_vector_SubScriptPtr_dtor(void* p, int f);
 void operator_delete(void* p);
 }
-static inline void Free_3DC8A0(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004BD4C0, line); }
-static inline void FreeV_3DC8A0(VObj_3DC8A0* o, int line) { AllocGuard g; o->dtor(-1); Mem_Free(0, o, D_004BD4C0, line); }
+static inline void Free_3DC8A0(void* p, int line) { AllocGuard g; cMemMan_Deallocate(0, p, D_004BD4C0, line); }
+static inline void FreeV_3DC8A0(VObj_3DC8A0* o, int line) { AllocGuard g; o->dtor(-1); cMemMan_Deallocate(0, o, D_004BD4C0, line); }
 
 #pragma opt_strength_reduction off
 extern "C" Self_3DC8A0* cScriptInterpreter_SymbolTable_dtor(Self_3DC8A0* self, short f)

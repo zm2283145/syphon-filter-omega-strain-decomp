@@ -12,7 +12,7 @@ extern int strcmp(const char* a, const char* b); /* strcmp */
 char D_004C0220[] = "GuiSliderWidget"; /* "GuiSliderWidget" */
 
 /* GuiSliderWidget type check: true when name equals the class name "GuiSliderWidget". */
-int GuiSliderWidget_IsType(void* self, const char* name) {
+int GuiSliderWidget_IsClass(void* self, const char* name) {
     return strcmp(D_004C0220, name) == 0;
 }
 #pragma pop /* merge_units */
@@ -21,7 +21,7 @@ int GuiSliderWidget_IsType(void* self, const char* name) {
 /* merge_units: begin func_0043EF00 */
 #pragma push /* merge_units */
 typedef struct { char p[0x48]; int sel; unsigned char vis[4]; int x0[2]; int x1[2]; char p60[4]; int v; int lo; int hi; } W43EF00;
-extern void GuiWidget_BroadcastEvent(W43EF00* w, int kind, int pos, int z);
+extern void GuiWidget_SendChildrenMessage(W43EF00* w, int kind, int pos, int z);
 #pragma push
 static inline float Mul43EF00(float a, float b) { return a * b; }
 static inline int Lerp43EF00(int a, int b, float t) { return a + (int)Mul43EF00(t, (float)(b - a)); }
@@ -31,7 +31,7 @@ void GuiSliderWidget_SetState(W43EF00* w, int sel)
     if (w->vis[w->sel]) {
         int lo = w->lo;
 int x0 = w->x0[w->sel];
-        GuiWidget_BroadcastEvent(w, 10, Lerp43EF00(x0, w->x1[w->sel], (float)(w->v - lo) / (float)(w->hi - lo)), 0);
+        GuiWidget_SendChildrenMessage(w, 10, Lerp43EF00(x0, w->x1[w->sel], (float)(w->v - lo) / (float)(w->hi - lo)), 0);
     }
 }
 #pragma pop
@@ -41,11 +41,11 @@ int x0 = w->x0[w->sel];
 /* merge_units: begin func_0043EFA0 */
 #pragma push /* merge_units */
 typedef struct { char p[0x48]; int sel; unsigned char vis[4]; int x0[2]; int x1[2]; char p60[4]; int v; int lo; int hi; } W43EFA0;
-extern void GuiWidget_SendEventUp(void* w, int kind, int v, int z);
+extern void GuiWidget_SendParentsMessage(void* w, int kind, int v, int z);
 #if 0 /* merge_units */
-extern void GuiWidget_BroadcastEvent(W43EFA0* w, int kind, int pos, int z);
+extern void GuiWidget_SendChildrenMessage(W43EFA0* w, int kind, int pos, int z);
 #endif /* merge_units */
-#define GuiWidget_BroadcastEvent(a0, a1, a2, a3) (GuiWidget_BroadcastEvent((W43EF00 *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define GuiWidget_SendChildrenMessage(a0, a1, a2, a3) (GuiWidget_SendChildrenMessage((W43EF00 *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 #pragma push
 static inline float Mul43EFA0(float a, float b) { return a * b; }
@@ -55,12 +55,12 @@ void GuiSliderWidget_UpdateSlider(W43EFA0* w, int notify)
     if (w->vis[w->sel]) {
         int lo = w->lo;
 int x0 = w->x0[w->sel];
-        GuiWidget_BroadcastEvent(w, 10, Lerp43EFA0(x0, w->x1[w->sel], (float)(w->v - lo) / (float)(w->hi - lo)), 0);
-        if (notify) GuiWidget_SendEventUp(w, 0x1D, w->v, 0);
+        GuiWidget_SendChildrenMessage(w, 10, Lerp43EFA0(x0, w->x1[w->sel], (float)(w->v - lo) / (float)(w->hi - lo)), 0);
+        if (notify) GuiWidget_SendParentsMessage(w, 0x1D, w->v, 0);
     }
 }
 #pragma pop
-#undef GuiWidget_BroadcastEvent /* merge_units */
+#undef GuiWidget_SendChildrenMessage /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043EFA0 */
 
@@ -68,9 +68,9 @@ int x0 = w->x0[w->sel];
 #pragma push /* merge_units */
 typedef struct { char p[0x48]; int sel; unsigned char vis[4]; int x0[2]; int x1[2]; char p60[4]; int v; int lo; int hi; } W43F070;
 #if 0 /* merge_units */
-extern void GuiWidget_BroadcastEvent(W43F070* w, int kind, int pos, int z);
+extern void GuiWidget_SendChildrenMessage(W43F070* w, int kind, int pos, int z);
 #endif /* merge_units */
-#define GuiWidget_BroadcastEvent(a0, a1, a2, a3) (GuiWidget_BroadcastEvent((W43EF00 *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define GuiWidget_SendChildrenMessage(a0, a1, a2, a3) (GuiWidget_SendChildrenMessage((W43EF00 *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 #pragma push
 static inline float Mul43F070(float a, float b) { return a * b; }
@@ -81,12 +81,12 @@ void GuiSliderWidget_SetValue(W43F070* w, int v)
     if (w->vis[w->sel]) {
         int lo = w->lo;
 int x0 = w->x0[w->sel];
-        GuiWidget_BroadcastEvent(w, 10, Lerp43F070(x0, w->x1[w->sel], (float)(w->v - lo) / (float)(w->hi - lo)), 0);
-        GuiWidget_SendEventUp(w, 0x1D, w->v, 0);
+        GuiWidget_SendChildrenMessage(w, 10, Lerp43F070(x0, w->x1[w->sel], (float)(w->v - lo) / (float)(w->hi - lo)), 0);
+        GuiWidget_SendParentsMessage(w, 0x1D, w->v, 0);
     }
 }
 #pragma pop
-#undef GuiWidget_BroadcastEvent /* merge_units */
+#undef GuiWidget_SendChildrenMessage /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043F070 */
 
@@ -94,14 +94,14 @@ int x0 = w->x0[w->sel];
 #pragma push /* merge_units */
 typedef struct { char p[0x48]; int sel; unsigned char vis[4]; int x0[2]; int x1[2]; unsigned char b60; char p61[3]; int v; int lo; int hi; int f70; } W43F150;
 #if 0 /* merge_units */
-extern void GuiWidget_BroadcastEvent(W43F150* w, int kind, int pos, int z);
+extern void GuiWidget_SendChildrenMessage(W43F150* w, int kind, int pos, int z);
 #endif /* merge_units */
-#define GuiWidget_BroadcastEvent(a0, a1, a2, a3) (GuiWidget_BroadcastEvent((W43EF00 *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define GuiWidget_SendChildrenMessage(a0, a1, a2, a3) (GuiWidget_SendChildrenMessage((W43EF00 *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 #pragma push
 static inline float Mul43F150(float a, float b) { return a * b; }
 static inline int Lerp43F150(int a, int b, float t) { return a + (int)Mul43F150(t, (float)(b - a)); }
-void GuiSliderWidget_Set(W43F150* w, unsigned char b, int v, int lo, int hi, int f70)
+void GuiSliderWidget_SetValues(W43F150* w, unsigned char b, int v, int lo, int hi, int f70)
 {
     w->b60 = b;
     w->v = v;
@@ -111,11 +111,11 @@ void GuiSliderWidget_Set(W43F150* w, unsigned char b, int v, int lo, int hi, int
     if (w->vis[w->sel]) {
         int lo2 = w->lo;
 int x0 = w->x0[w->sel];
-        GuiWidget_BroadcastEvent(w, 10, Lerp43F150(x0, w->x1[w->sel], (float)(w->v - lo2) / (float)(w->hi - lo2)), 0);
+        GuiWidget_SendChildrenMessage(w, 10, Lerp43F150(x0, w->x1[w->sel], (float)(w->v - lo2) / (float)(w->hi - lo2)), 0);
     }
 }
 #pragma pop
-#undef GuiWidget_BroadcastEvent /* merge_units */
+#undef GuiWidget_SendChildrenMessage /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043F150 */
 
@@ -125,11 +125,11 @@ int x0 = w->x0[w->sel];
 typedef struct { char p[0x48]; int sel; unsigned char vis[4]; int x0[2]; int x1[2]; unsigned char b60; char p61[3]; int v; int lo; int hi; int f70; } W43F200;
 typedef struct { unsigned short type; unsigned short dev; unsigned short b4; unsigned short action; unsigned short key; } Ev43F200;
 extern "C" {
-void GuiWidget_SendEventUp(void* w, int kind, int v, int z);
+void GuiWidget_SendParentsMessage(void* w, int kind, int v, int z);
 #if 0 /* merge_units */
-void GuiWidget_BroadcastEvent(W43F200* w, int kind, int pos, int z);
+void GuiWidget_SendChildrenMessage(W43F200* w, int kind, int pos, int z);
 #endif /* merge_units */
-#define GuiWidget_BroadcastEvent(a0, a1, a2, a3) (GuiWidget_BroadcastEvent((W43EF00 *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define GuiWidget_SendChildrenMessage(a0, a1, a2, a3) (GuiWidget_SendChildrenMessage((W43EF00 *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 }
 static inline float Mul43F200(float a, float b) { return a * b; }
@@ -140,8 +140,8 @@ static inline void Set43F200(W43F200* w, int v)
     if (w->vis[w->sel]) {
         int lo = w->lo;
 int x0 = w->x0[w->sel];
-        GuiWidget_BroadcastEvent(w, 10, Lerp43F200(x0, w->x1[w->sel], (float)(w->v - lo) / (float)(w->hi - lo)), 0);
-        GuiWidget_SendEventUp(w, 0x1D, w->v, 0);
+        GuiWidget_SendChildrenMessage(w, 10, Lerp43F200(x0, w->x1[w->sel], (float)(w->v - lo) / (float)(w->hi - lo)), 0);
+        GuiWidget_SendParentsMessage(w, 0x1D, w->v, 0);
     }
 }
 static inline unsigned char IsBtn43F200(Ev43F200* e)
@@ -169,7 +169,7 @@ static inline bool Pressed2_43F200(Ev43F200* e, unsigned short k)
 {
     return e->type == 1 && e->dev == 0 && e->key == k && e->action == 0;
 }
-extern "C" int GuiSliderWidget_OnInput(W43F200* w, Ev43F200* e)
+extern "C" int GuiSliderWidget_onInput(W43F200* w, Ev43F200* e)
 {
     if (w->b60 == 1) {
         if (Pressed43F200(e, 0x1000)) {
@@ -192,6 +192,6 @@ extern "C" int GuiSliderWidget_OnInput(W43F200* w, Ev43F200* e)
     }
     return 0;
 }
-#undef GuiWidget_BroadcastEvent /* merge_units */
+#undef GuiWidget_SendChildrenMessage /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043F200 */

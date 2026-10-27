@@ -10,7 +10,7 @@
  */
 #include "alloc_guard.h"
 
-extern "C" void Mem_Free(int pool, void* allocation, char* file, int line);
+extern "C" void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 
 struct EraseFileNode {
     EraseFileNode* prev;
@@ -40,7 +40,7 @@ struct EraseFileList {
             *first = (*first)->next;                                          \
             if (n) {                                                          \
                 AllocGuard guard;                                             \
-                Mem_Free(0, n, fileSym, 0x64);                                \
+                cMemMan_Deallocate(0, n, fileSym, 0x64);                                \
             }                                                                 \
             list->count--;                                                    \
         }                                                                     \
@@ -58,7 +58,7 @@ struct EraseFileList {
         n->next->prev = n->prev;                                              \
         if (n) {                                                              \
             AllocGuard guard;                                                 \
-            Mem_Free(0, n, fileSym, 0x64);                                    \
+            cMemMan_Deallocate(0, n, fileSym, 0x64);                                    \
         }                                                                     \
         list->count--;                                                        \
         *result = *pos;                                                       \

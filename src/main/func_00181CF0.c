@@ -6,14 +6,14 @@ extern N_181CF0* cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_
 extern int cBox_Intersects(N_181CF0* n, void* b);
 extern int cCollisionModel_TreeLink_opNe(int* c, int f);
 extern void cCollisionModel_TreeLink_ctor(H_181CF0* out, int* c);
-extern unsigned char ColTree_IsLeaf(T_181CF0* t, H_181CF0* h);
+extern unsigned char cCollisionModel_Data_IsTreeLeaf(T_181CF0* t, H_181CF0* h);
 extern void cCollisionModel_TreeLink_dtor(H_181CF0* h, int f);
 extern void* cCollisionModel_Data_GetTreeNode(T_181CF0* t, H_181CF0* h);
 extern void* cCollisionModel_Data_GetTreeLeaf(T_181CF0* t, H_181CF0* h);
 extern void* cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress(T_181CF0* t, H_181CF0* h);
-extern void ColTree_VisitNode(T_181CF0* t, void* a, void* n, void* b);
-extern void ColTree_VisitLeaf(T_181CF0* t, void* a, void* n, void* b);
-void ColTree_VisitRootNode(T_181CF0* t, void* a, void* b)
+extern void cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeNodeR_cBoxR(T_181CF0* t, void* a, void* n, void* b);
+extern void cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeLeafR_cBoxR(T_181CF0* t, void* a, void* n, void* b);
+void cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cBoxR(T_181CF0* t, void* a, void* b)
 {
     H_181CF0 h8C;
     H_181CF0 h88;
@@ -32,15 +32,15 @@ void ColTree_VisitRootNode(T_181CF0* t, void* a, void* b)
                 if (cCollisionModel_TreeLink_opNe(c, 0)) {
                     unsigned char leaf;
                     cCollisionModel_TreeLink_ctor(&h84, c);
-                    leaf = ColTree_IsLeaf(t, &h84);
+                    leaf = cCollisionModel_Data_IsTreeLeaf(t, &h84);
                     cCollisionModel_TreeLink_dtor(&h84, -1);
                     if (!leaf) {
                         cCollisionModel_TreeLink_ctor(&h80, c);
-                        ColTree_VisitNode(t, a, cCollisionModel_Data_GetTreeNode(t, &h80), b);
+                        cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeNodeR_cBoxR(t, a, cCollisionModel_Data_GetTreeNode(t, &h80), b);
                         cCollisionModel_TreeLink_dtor(&h80, -1);
                     } else {
                         cCollisionModel_TreeLink_ctor(&h7C, c);
-                        ColTree_VisitLeaf(t, a, cCollisionModel_Data_GetTreeLeaf(t, &h7C), b);
+                        cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeLeafR_cBoxR(t, a, cCollisionModel_Data_GetTreeLeaf(t, &h7C), b);
                         cCollisionModel_TreeLink_dtor(&h7C, -1);
                     }
                 }
@@ -48,6 +48,6 @@ void ColTree_VisitRootNode(T_181CF0* t, void* a, void* b)
         }
     } else {
         h88.h = t->leaf;
-        ColTree_VisitLeaf(t, a, cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress(t, &h88), b);
+        cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeLeafR_cBoxR(t, a, cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress(t, &h88), b);
     }
 }

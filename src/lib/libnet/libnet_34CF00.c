@@ -5,7 +5,7 @@
  */
 
 /* merge_units: begin func_0034CF00 */
-extern int IopRing_Send(int a, void *b, int c, int d, int e, int g, int *h, int *err);
+extern int libnetb_send_to(int a, void *b, int c, int d, int e, int g, int *h, int *err);
 int libnetb_send_echo(int a, unsigned short v, int c, int *out, int *err)
 {
     unsigned short s = v;
@@ -16,7 +16,7 @@ int libnetb_send_echo(int a, unsigned short v, int c, int *out, int *err)
     if (c == 0) return ret;
     if (err == 0) return ret;
     if (a == 0) return ret;
-    ret = IopRing_Send(a, &s, 2, 0, c, 0, &l4, err);
+    ret = libnetb_send_to(a, &s, 2, 0, c, 0, &l4, err);
     if (l4 == 2) *out = 1;
     return ret;
 }

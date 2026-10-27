@@ -8,7 +8,7 @@
 
 extern int D_004F56D8;      /* NPC message base script type key */
 
-void ScriptType_cGeneratorMessageBase_Init(void) {
+void cGeneratorMessageBase_SOBJ_init(void) {
 }
 
 int cGeneratorMessageBase_getSOBJClassId(void) {

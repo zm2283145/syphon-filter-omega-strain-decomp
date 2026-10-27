@@ -28,7 +28,7 @@ static inline bool NotEmpty2(Vec* v) { return !(std_vector_cTreeNode_cSkaAnimAnc
 static inline bool NotEnd(It* a, It* b) { return !(std_opEq_wrapiteratorR_wrapiteratorR(a, b) != 0); }
 static inline bool Neq(RNode** a, RNode** b) { return !(a == b); }
 /* Marks each child (and each grandchild's subtree) dirty. */
-extern "C" void Root_PropagateChildren(RNode* self)
+extern "C" void cSkaAnimAnchor_TreeNode_TellChildrenNeedToUpdate(RNode* self)
 {
     if (NotEmpty(&self->kids)) {
         RNode* n;

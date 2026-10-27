@@ -41,7 +41,7 @@ void std_map_cString_cConsCommandPtr_begin(Iter* out, Tree* t) {
 
 extern "C" {
 extern RbTree D_00582720;
-void ObjMap_Find_42EF70(TransferTimerIterator* result, RbTree* tree, const GobjId* id);
+void std_tree_pair_int_value_compare_find_uintR_3(TransferTimerIterator* result, RbTree* tree, const GobjId* id);
 #if 0 /* merge_units */
 void std_map_cString_cConsCommandPtr_end_void_2(TransferTimerIterator* result, RbTree* tree);
 #endif /* merge_units */
@@ -66,7 +66,7 @@ extern "C" void NetObjectMgr_RemoveTransferTimer(const GobjId* id)
     TransferTimerIterator position;
     TransferTimerIterator rawEnd;
     key.word = id->word;
-    ObjMap_Find_42EF70(&found, &D_00582720, &key);
+    std_tree_pair_int_value_compare_find_uintR_3(&found, &D_00582720, &key);
     TransferTimerNode* node = found.node;
     printf("RemoveTransferTimer timer for %.8X\n", id->word);
     std_map_cString_cConsCommandPtr_end_void_2(&rawEnd, &D_00582720);
@@ -87,7 +87,7 @@ extern "C" void NetObjectMgr_AddTransferTimer(const GobjId* id)
     TransferInsertResult result;
     TransferTimerValue value;
     key.word = id->word;
-    ObjMap_Find_42EF70(&found, &D_00582720, &key);
+    std_tree_pair_int_value_compare_find_uintR_3(&found, &D_00582720, &key);
     TransferTimerNode* node = found.node;
     printf("Adding transfer timer for %.8X\n", id->word);
     std_map_cString_cConsCommandPtr_end_void_2(&rawEnd, &D_00582720);

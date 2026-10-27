@@ -16,7 +16,7 @@
 void cEnvSettings_v0E(void) {
 }
 
-void cEnvSettings_v0F(void) {
+void cEnvSettings_Load(void) {
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001780A0(void) {}
@@ -90,21 +90,21 @@ static inline void merge_flush_func_00178100(void) {}
 extern int D_004EE860;      /* cEnvSettings script type key */
 extern int D_004EE868;      /* cEnvSettings script type id */
 extern char D_00555070[];   /* global script filter */
-extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
-extern int* cGOBJ_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int type, int parentType);
+extern int cScriptInterpreter_CallEvent(void* filter, int a1, int a2);
+extern int* cGOBJ_SOBJ_getClassId(void);
+extern void cScriptBase_declareParent(int type, int parentType);
 
 /* cEnvSettings derives from cGObj. */
-void ScriptType_cEnvSettings_Init(void) {
-    ScriptType_SetParent(D_004EE868, *cGOBJ_GetScriptTypeKeyPtr());
+void cEnvSettings_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004EE868, *cGOBJ_SOBJ_getClassId());
 }
 
-int cEnvSettings_v0B(void) {
+int cEnvSettings_getSOBJClassId(void) {
     return D_004EE860;
 }
 
-int cEnvSettings_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cEnvSettings_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00178140(void) {}
@@ -115,7 +115,7 @@ static inline void merge_flush_func_00178140(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
-/* EnvController_ActivateFirst: switch to a new environment, capturing the old/new fog and colour settings for the blend */
+/* cEnvMan_SetCurrent: switch to a new environment, capturing the old/new fog and colour settings for the blend */
 struct EV3 { float x, y, z; };
 struct EnvObj {
     virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03(); virtual void v04(); virtual void v05();
@@ -157,14 +157,14 @@ extern "C" {
 extern char g_LightMgr[];
 extern float D_00554ED4;
 EV3* tRGB_opAssign(EV3* dst, EV3* src);
-Light_* LightMgr_FindByTypeAndId(void* mgr, int type, int id);
-void EnvController_ActivateFirst(EnvCtl* c, Env* e);
+Light_* cLightMan_GetLightSource(void* mgr, int type, int id);
+void cEnvMan_SetCurrent(EnvCtl* c, Env* e);
 }
 // VU0 macro-mode squared length (COP2), not expressible in C
 static inline float LenSq(const V4E* a) { int t; float r = 0.0f; __asm__ ("lqc2 $vf1, 0x0(%2); vaddw.x $vf3, $vf0, $vf0w; vmul.xyz $vf2, $vf1, $vf1; vmulax.x $ACC, $vf3, $vf2x; vmadday.x $ACC, $vf3, $vf2y; vmaddz.x $vf4, $vf3, $vf2z; qmfc2.ni %1, $vf4; mtc1 %1, %0" : "+f"(r), "=&r"(t) : "r"(a) : "memory"); return r; }
 /* blend-rate scale (kept as a call-site multiply by 1, as retail) */
 static inline float Mul1(float a, float k) { return a * k; }
-void EnvController_ActivateFirst(EnvCtl* c, Env* e)
+void cEnvMan_SetCurrent(EnvCtl* c, Env* e)
 {
     int i;
     int j;
@@ -200,7 +200,7 @@ void EnvController_ActivateFirst(EnvCtl* c, Env* e)
         if (o) o->SetOn(1);
     }
     {
-        Light_* l = LightMgr_FindByTypeAndId(g_LightMgr, 1, 1);
+        Light_* l = cLightMan_GetLightSource(g_LightMgr, 1, 1);
         if (l) {
             V4E d;
             EV3* v = &c->cur->c84;

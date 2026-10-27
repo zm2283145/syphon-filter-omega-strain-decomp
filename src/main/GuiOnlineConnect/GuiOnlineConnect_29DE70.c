@@ -9,35 +9,35 @@
 #include "types.h"
 typedef struct { int a[4]; } S29D;
 typedef struct { char pad[0x94]; unsigned char b94; } O29D;
-extern int Gui_GetScreenList(void);
-extern void* GuiManager_FindOrLoad(int, char*, char*);
-extern int Gui_GetScreenStack(void);
-extern void GuiStack_SwapScreens(int, O29D*, void*);
-extern int DME_GetLobby(void);
-extern void SFOLobby_LeaveNetworkState(int);
+extern int Gui_Manager(void);
+extern void* GuiManager_OpenGui(int, char*, char*);
+extern int Gui_Canvas(void);
+extern void GuiCanvas_Transition(int, O29D*, void*);
+extern int cDME_GetLobby(void);
+extern void SFOLobby_ConfigScreenExit(int);
 extern int D_004FFC04;
-extern void FrontEnd_LeaveOnline(int, int);
-extern char* GuiScreen_GetLobbyString(O29D*, int, int, int, int, int);
-extern void String_CtorCStr_13B480(S29D*, char*);
-extern char* String_CStr(S29D*);
-extern void FrontEnd_OpenPopup(int, int, char*, char*, int, int);
+extern void cGameFrontEnd_LobbyDestroy(int, int);
+extern char* GuiLobbyScreen_GetLobbyString(O29D*, int, int, int, int, int);
+extern void std_basic_string_char_char_traits_char_ctor_charP(S29D*, char*);
+extern char* std_basic_string_char_char_traits_char_c_str(S29D*);
+extern void cGameFrontEnd_PushMessageBox(int, int, char*, char*, int, int);
 extern void String_Dtor(S29D*, int);
 void GuiOnlineConnect_Back(O29D* o, int show) {
-    void* w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "ONOFFSEL");
-    GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
+    void* w = GuiManager_OpenGui(Gui_Manager(), "GuiOnlineOfflineSelect", "ONOFFSEL");
+    GuiCanvas_Transition(Gui_Canvas(), o, w);
     if (o->b94) {
-        if (DME_GetLobby()) SFOLobby_LeaveNetworkState(DME_GetLobby());
+        if (cDME_GetLobby()) SFOLobby_ConfigScreenExit(cDME_GetLobby());
         o->b94 = 0;
     }
-    FrontEnd_LeaveOnline(D_004FFC04, 1);
+    cGameFrontEnd_LobbyDestroy(D_004FFC04, 1);
     if (show) {
         S29D a;
         S29D b;
-        String_CtorCStr_13B480(&a, GuiScreen_GetLobbyString(o, 0xB, 0, 0, 0, 0));
-        String_CtorCStr_13B480(&b, GuiScreen_GetLobbyString(o, 0x84, 0, 0, 0, 0));
+        std_basic_string_char_char_traits_char_ctor_charP(&a, GuiLobbyScreen_GetLobbyString(o, 0xB, 0, 0, 0, 0));
+        std_basic_string_char_char_traits_char_ctor_charP(&b, GuiLobbyScreen_GetLobbyString(o, 0x84, 0, 0, 0, 0));
         {
-            char* tb = String_CStr(&b);
-            FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, 0, 0);
+            char* tb = std_basic_string_char_char_traits_char_c_str(&b);
+            cGameFrontEnd_PushMessageBox(D_004FFC04, 2, std_basic_string_char_char_traits_char_c_str(&a), tb, 0, 0);
         }
         String_Dtor(&b, 0);
         String_Dtor(&a, 0);
@@ -66,28 +66,28 @@ extern char D_004AAC70[];
 extern char D_004AAC80[];
 void GuiOnlineConnect_ShowGroup(S_0029DFC0* self, unsigned char sel);
 #if 0 /* merge_units */
-void* Gui_GetScreenList(void);
+void* Gui_Manager(void);
 #endif /* merge_units */
-#define Gui_GetScreenList() ((void *)Gui_GetScreenList()) /* merge_units */
+#define Gui_Manager() ((void *)Gui_Manager()) /* merge_units */
 
 #if 0 /* merge_units */
-void* Gui_GetScreenStack(void);
+void* Gui_Canvas(void);
 #endif /* merge_units */
-#define Gui_GetScreenStack() ((void *)Gui_GetScreenStack()) /* merge_units */
+#define Gui_Canvas() ((void *)Gui_Canvas()) /* merge_units */
 
 #if 0 /* merge_units */
-void* GuiManager_FindOrLoad(void* a, char* b, char* c);
+void* GuiManager_OpenGui(void* a, char* b, char* c);
 #endif /* merge_units */
-#define GuiManager_FindOrLoad(a0, a1, a2) (GuiManager_FindOrLoad((int)(a0), (a1), (a2))) /* merge_units */
+#define GuiManager_OpenGui(a0, a1, a2) (GuiManager_OpenGui((int)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-void GuiStack_SwapScreens(void* ui, S_0029DFC0* self, void* pg);
+void GuiCanvas_Transition(void* ui, S_0029DFC0* self, void* pg);
 #endif /* merge_units */
-#define GuiStack_SwapScreens(a0, a1, a2) (GuiStack_SwapScreens((int)(a0), (O29D *)(a1), (a2))) /* merge_units */
+#define GuiCanvas_Transition(a0, a1, a2) (GuiCanvas_Transition((int)(a0), (O29D *)(a1), (a2))) /* merge_units */
 
 int FrontEnd_IsRegisterEnabled(void* ui);
 void GuiAccountLogin_SetMode(void* pg, int a);
-char* Agent_GetSelected(void* a, int b);
+char* cGameSystem_GetAgentData(void* a, int b);
 int strlen(const char* s);
 }
 static inline bool HasText_DFC0(const char* s) { return strlen(s) != 0; }
@@ -116,23 +116,23 @@ extern "C" void GuiOnlineConnect_Advance(S_0029DFC0* self)
     if (go) {
         void* pg;
         GuiOnlineConnect_ShowGroup(self, 4);
-        pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AAC70, D_004AAC80);
+        pg = GuiManager_OpenGui(Gui_Manager(), D_004AAC70, D_004AAC80);
         if (pg) {
             unsigned char ok = 1;
-            if (!D_004FFC04->f265 && !IsEmpty_DFC0(Agent_GetSelected(g_Game, -1) + 0x8CC))
+            if (!D_004FFC04->f265 && !IsEmpty_DFC0(cGameSystem_GetAgentData(g_Game, -1) + 0x8CC))
                 ok = 0;
             if (ok && FrontEnd_IsRegisterEnabled(D_004FFC04))
                 GuiAccountLogin_SetMode(pg, 1);
             else
                 GuiAccountLogin_SetMode(pg, 0);
-            GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
+            GuiCanvas_Transition(Gui_Canvas(), self, pg);
         }
     }
 }
 #undef D_004FFC04 /* merge_units */
-#undef Gui_GetScreenList /* merge_units */
-#undef Gui_GetScreenStack /* merge_units */
-#undef GuiManager_FindOrLoad /* merge_units */
-#undef GuiStack_SwapScreens /* merge_units */
+#undef Gui_Manager /* merge_units */
+#undef Gui_Canvas /* merge_units */
+#undef GuiManager_OpenGui /* merge_units */
+#undef GuiCanvas_Transition /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0029DFC0 */

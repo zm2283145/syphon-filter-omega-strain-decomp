@@ -25,21 +25,21 @@ struct O_41A180 {
     char pad54[0x38];
     int cursor;
 };
-extern "C" void GuiTextEditWidget_ClampCursor(O_41A180* o, int c);
-extern "C" void String_Replace(Str_41A180* s, int pos, int count, const char* first, const char* last, Alloc_41A180 a);
+extern "C" void GuiTextEditWidget_SetCursorPos(O_41A180* o, int c);
+extern "C" void std_basic_string_char_char_traits_char_do_replace(Str_41A180* s, int pos, int count, const char* first, const char* last, Alloc_41A180 a);
 
-extern "C" int GuiTextEditWidget_Delete(O_41A180* o, int fwd)
+extern "C" int GuiTextEditWidget_RemoveCharAtCursor(O_41A180* o, int fwd)
 {
-    GuiTextEditWidget_ClampCursor(o, o->cursor);
+    GuiTextEditWidget_SetCursorPos(o, o->cursor);
     if (o->str.Size() == 0) return 0;
     if (fwd) {
         if (o->cursor == o->str.Size()) return 0;
         Alloc_41A180 a;
-        String_Replace(&o->str, o->cursor, 1, 0, 0, a);
+        std_basic_string_char_char_traits_char_do_replace(&o->str, o->cursor, 1, 0, 0, a);
     } else {
         if (o->cursor == 0) return 0;
         Alloc_41A180 a;
-        String_Replace(&o->str, o->cursor - 1, 1, 0, 0, a);
+        std_basic_string_char_char_traits_char_do_replace(&o->str, o->cursor - 1, 1, 0, 0, a);
         o->cursor--;
     }
     o->Changed();
@@ -68,24 +68,24 @@ struct O_41A2C0 {
     int cursor;
 };
 extern "C" {
-void String_CtorCStr_13B480(Str_41A2C0* s, char* c);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_41A2C0* s, char* c);
 void String_Dtor(Str_41A2C0* s, int f);
 void cString_Substr(Str_41A2C0* out, Str_41A2C0* s, int a, int b);
 void opAdd_cStringR_cStringR(Str_41A2C0* out, Str_41A2C0* a, Str_41A2C0* b);
-void String_AssignString(Str_41A2C0* d, Str_41A2C0* s);
+void std_basic_string_char_char_traits_char_assign_basicstringR(Str_41A2C0* d, Str_41A2C0* s);
 #if 0 /* merge_units */
-void GuiTextEditWidget_ClampCursor(O_41A2C0* o, int c);
+void GuiTextEditWidget_SetCursorPos(O_41A2C0* o, int c);
 #endif /* merge_units */
-#define GuiTextEditWidget_ClampCursor(a0, a1) ((void)GuiTextEditWidget_ClampCursor((O_41A180 *)(a0), (a1))) /* merge_units */
+#define GuiTextEditWidget_SetCursorPos(a0, a1) ((void)GuiTextEditWidget_SetCursorPos((O_41A180 *)(a0), (a1))) /* merge_units */
 
 }
 
-extern "C" int GuiTextEditWidget_Insert(O_41A2C0* o, char* text)
+extern "C" int GuiTextEditWidget_InsertAtCursor(O_41A2C0* o, char* text)
 {
     Str_41A2C0 s;
     Str_41A2C0 left;
     Str_41A2C0 right;
-    String_CtorCStr_13B480(&s, text);
+    std_basic_string_char_char_traits_char_ctor_charP(&s, text);
     if (o->maxLen > 0 && s.Size() + o->str.Size() >= o->maxLen) {
         String_Dtor(&s, 0);
         return 0;
@@ -97,18 +97,18 @@ extern "C" int GuiTextEditWidget_Insert(O_41A2C0* o, char* text)
         Str_41A2C0 t2;
         opAdd_cStringR_cStringR(&t1, &left, &s);
         opAdd_cStringR_cStringR(&t2, &t1, &right);
-        String_AssignString(&o->str, &t2);
+        std_basic_string_char_char_traits_char_assign_basicstringR(&o->str, &t2);
         String_Dtor(&t2, 0);
         String_Dtor(&t1, 0);
     }
-    GuiTextEditWidget_ClampCursor(o, o->cursor + s.Size());
+    GuiTextEditWidget_SetCursorPos(o, o->cursor + s.Size());
     o->Changed();
     String_Dtor(&right, 0);
     String_Dtor(&left, 0);
     String_Dtor(&s, 0);
     return 1;
 }
-#undef GuiTextEditWidget_ClampCursor /* merge_units */
+#undef GuiTextEditWidget_SetCursorPos /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0041A2C0 */
 
@@ -149,13 +149,13 @@ extern int D_0053923C;
 extern int g_DrawMode;
 void XLib_NewStrip(char* r);
 void XLib_NextBatchVert(char* r);
-void Vec4_Copy(void* d, V4* s);
-int* GuiBatch_AddVertexColor(void* out, V4* in);
+void cVector_opAssign(void* d, V4* s);
+int* tIRGBA_opAssign_tRGBAR(void* out, V4* in);
 void XLib_DrawLines(char* r);
-void GuiTextWidget_Draw(Self* self);
-Scr* Gui_GetScreenStack(void);
-int IeText_GetCursorPos(int a, float* x, float* y, int d);
-int Font_GetLineHeight(int a);
+void GuiTextWidget_onRender(Self* self);
+Scr* Gui_Canvas(void);
+int cTextArea_Render(int a, float* x, float* y, int d);
+int cFont_GetCharH(int a);
 extern V4 D_005720E0;
 }
 
@@ -171,20 +171,20 @@ static inline void Vertex(V4* p, V4* c) {
     Ent* e;
     XLib_NextBatchVert(g_Video);
     e = EntAt(D_00539210);
-    Vec4_Copy(e->pos + (D_00539224 - 1) * 16, p);
-    GuiBatch_AddVertexColor(e->c30 + (D_00539224 - 1) * 16, c);
+    cVector_opAssign(e->pos + (D_00539224 - 1) * 16, p);
+    tIRGBA_opAssign_tRGBAR(e->c30 + (D_00539224 - 1) * 16, c);
     D_005381F8 = 0x200000000LL;
 }
 
-extern "C" void GuiTextEditWidget_Draw(Self* self)
+extern "C" void GuiTextEditWidget_onRender(Self* self)
 {
-    GuiTextWidget_Draw(self);
+    GuiTextWidget_onRender(self);
     if (self->f78 == 0) return;
-    if (self->f88 == 0 && Gui_GetScreenStack()->top != self) return;
+    if (self->f88 == 0 && Gui_Canvas()->top != self) return;
     float x = 0;
     float y = 0;
-    if (!IeText_GetCursorPos(self->f78, &x, &y, self->f8C)) return;
-    float h = Font_GetLineHeight(self->f54);
+    if (!cTextArea_Render(self->f78, &x, &y, self->f8C)) return;
+    float h = cFont_GetCharH(self->f54);
     int save = g_DrawMode;
     { int i = D_00538C64; GQR(MtxAt(i + 1), MtxAt(i)); }
     D_00538C64++;

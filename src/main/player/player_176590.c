@@ -22,9 +22,9 @@ static inline void merge_flush_func_00176590(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x30]; char* obj; char pad2[0x1A8 - 0x34]; float maxv; } S1765B0;
 extern int g_Hud;
-extern char* Loc_LookupText(char* key);
-extern void Hud_ShowCallout(int a, char* b, char* c, int d, int e, int f, float g, float h);
-void cPlayer_v26(S1765B0* p, int a1, int a2, int flag, float v)
+extern char* nGlobalization_GetString_charP(char* key);
+extern void cHud_SetCallout(int a, char* b, char* c, int d, int e, int f, float g, float h);
+void cPlayer_NoticeThreat_cGobjControllerP_int_float_int(S1765B0* p, int a1, int a2, int flag, float v)
 {
     if (v > p->maxv) {
         p->maxv = v;
@@ -34,7 +34,7 @@ void cPlayer_v26(S1765B0* p, int a1, int a2, int flag, float v)
         int d;
         d = g_Hud;
         s = p->obj + 0xC;
-        Hud_ShowCallout(d, s, Loc_LookupText("headshot"), 0, 0, 0, 0.1f, 1.0f);
+        cHud_SetCallout(d, s, nGlobalization_GetString_charP("headshot"), 0, 0, 0, 0.1f, 1.0f);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -80,12 +80,12 @@ extern void* g_Fader;
 extern char D_004D9DE0[];
 extern char D_004D9DC0[];
 extern char D_0049CAE8[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void EventQueue_Admit(Q_76660* q);
-void ActorFader_Start(float, void*, int);
-int ObjHandle_Set(void*, int);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void nCallback_SetCallback(Q_76660* q);
+void cScreenFader_StartFade(float, void*, int);
+int cSafePtr_cGOBJ_opAssign_cGOBJP(void*, int);
 void cLList_cSafePtr_cGOBJ_Clear(void*);
-void PlayerInput_ClearPendingBit11(void*);
+void cPlayerControls_HandleRespawn(void*);
 }
 static inline void Init_76660(Q_76660* q, void* obj)
 {
@@ -96,7 +96,7 @@ static inline void Init_76660(Q_76660* q, void* obj)
     q->vt = D_004D9DC0;
     q->obj = obj;
 }
-extern "C" int PlayerComp_HandleMessage(PC_76660* self, Msg_76660* msg)
+extern "C" int cPlayer_HandleCASEvent(PC_76660* self, Msg_76660* msg)
 {
     switch (msg->id) {
     case 2:
@@ -131,20 +131,20 @@ extern "C" int PlayerComp_HandleMessage(PC_76660* self, Msg_76660* msg)
         break;
     case 16: {
         Q_76660* q;
-        ActorFader_Start(1.0f, g_Fader, 2);
+        cScreenFader_StartFade(1.0f, g_Fader, 2);
         {
             AllocGuard guard;
-            q = (Q_76660*)Mem_Alloc(0, 0x10, D_0049CAE8, 0x204);
+            q = (Q_76660*)cMemMan_Allocate(0, 0x10, D_0049CAE8, 0x204);
         }
         if (q)
             Init_76660(q, self);
-        EventQueue_Admit(q);
-        ObjHandle_Set(self->h110, ObjHandle_Set(self->h118, 0));
+        nCallback_SetCallback(q);
+        cSafePtr_cGOBJ_opAssign_cGOBJP(self->h110, cSafePtr_cGOBJ_opAssign_cGOBJP(self->h118, 0));
         cLList_cSafePtr_cGOBJ_Clear(self->f13C);
         break;
     }
     case 17:
-        PlayerInput_ClearPendingBit11(self->input);
+        cPlayerControls_HandleRespawn(self->input);
         break;
     default:
         return 0;

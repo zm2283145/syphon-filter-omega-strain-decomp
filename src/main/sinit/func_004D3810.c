@@ -1,10 +1,10 @@
 #include "types.h"
-extern void FreeList_Push(void*);
+extern void AbstractWidgetClassRep_AddClassRep(void*);
 extern char D_004DE7F0;
 extern void* D_0052AF48;
 extern void* D_0052AF50;
-void StaticInit_GuiKeyboardFactory(void) {
+void StaticInit_GuiKeyboard(void) {
     D_0052AF50 = &D_004DE7F0;
     D_0052AF48 = "GuiKeyboard";
-    FreeList_Push(&D_0052AF48);
+    AbstractWidgetClassRep_AddClassRep(&D_0052AF48);
 }

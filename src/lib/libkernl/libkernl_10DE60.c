@@ -58,7 +58,7 @@ extern int DeleteSema(int);
 extern int StartThread(int, void *);
 extern int GetThreadId(void);
 extern int ChangeThreadPriority(int, int);
-int func_0010DF38(void)
+int InitThread(void)
 {
     ThreadParamDF38 tp;
     SemaParamDF38 sp;
@@ -146,7 +146,7 @@ extern QE128 D_004E2408;
 #endif /* merge_units */
 #define D_004E2408 (*(QE128*)&D_004E2408) /* merge_units */
 
-extern int iSuspendThread(int);
+extern int _iSuspendThread(int);
 int iSuspendThread_2(int tid)
 {
     register int v0 __asm__("$2");
@@ -155,7 +155,7 @@ int iSuspendThread_2(int tid)
     /* inline syscall: $v1 = syscall number */
     __asm__ volatile("li $3, -0x2F\n\tsyscall" : "=r"(v0) : : "$3");
     t = v0;
-    if (t != tid) return iSuspendThread(tid);
+    if (t != tid) return _iSuspendThread(tid);
     if (t >= 0x100 || D_00486198 == 0) return -1;
     i = D_004E2408.x4 & 0x1FF;
     D_004E2408.x4 = i + 1;

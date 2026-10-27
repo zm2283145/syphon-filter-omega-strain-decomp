@@ -12,7 +12,7 @@ void * const D_004932C0[8] = { (void*)D_00477AF0, (void*)D_0047BA70, (void*)D_00
 void * const D_004932E0[8] = { (void*)D_0047BA70, (void*)D_0047DB00, (void*)D_00481030, (void*)D_00482BC0, (void*)D_00485E50, (void*)0x0, (void*)0x0, (void*)0x0 };
 extern char D_00537F80[];
 extern void cDmaMan_InsertChain(void* dma, int n, int start, int end);
-void Vu1_UploadMicrocode(D2_Vu1Ctx* c, int slot) {
+void cVU1Man_RequestProg(D2_Vu1Ctx* c, int slot) {
     int p = c->prog[slot];
     if (p != c->cur) {
         cDmaMan_InsertChain(D_00537F80, 1, ((int*)D_004932C0)[p], ((int*)D_004932E0)[p]);

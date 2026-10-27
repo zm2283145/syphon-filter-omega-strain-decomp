@@ -42,8 +42,8 @@ extern int D_0053923C;
 extern int g_DrawMode;
 void XLib_NewStrip(char* r);
 void XLib_NextBatchVert(char* r);
-void Vec4_Copy(void* d, V4* s);
-int* GuiBatch_AddVertexColor(void* out, V4* in);
+void cVector_opAssign(void* d, V4* s);
+int* tIRGBA_opAssign_tRGBAR(void* out, V4* in);
 void XLib_DrawLines(char* r);
 }
 
@@ -59,12 +59,12 @@ static inline void Vertex(V4* p, V4* c) {
     Ent* e;
     XLib_NextBatchVert(g_Video);
     e = EntAt(D_00539210);
-    Vec4_Copy(e->pos + (D_00539224 - 1) * 16, p);
-    GuiBatch_AddVertexColor(e->c30 + (D_00539224 - 1) * 16, c);
+    cVector_opAssign(e->pos + (D_00539224 - 1) * 16, p);
+    tIRGBA_opAssign_tRGBAR(e->c30 + (D_00539224 - 1) * 16, c);
     D_005381F8 = 0x200000000LL;
 }
 
-extern "C" void GuiWidget_DrawFocusHighlight(Widget* self, V4* colorp)
+extern "C" void GuiWidget_RenderFrame(Widget* self, V4* colorp)
 {
     V4 color = *colorp;
     int save = g_DrawMode;
@@ -148,7 +148,7 @@ Quad* func_0041EB70(Quad* d, Quad* s) {
 struct W41EBA0;
 struct H41EBA0 { VPAD8(a) VPAD4(b) VPAD1(c) virtual void OnEvent(W41EBA0* w, int kind, int x, int y); };
 struct W41EBA0 { char pad[0x34]; float x; float y; char p3C[8]; H41EBA0* handler; };
-extern "C" void GuiWidget_SetPos(W41EBA0* w, float x, float y)
+extern "C" void GuiWidget_SetPosition(W41EBA0* w, float x, float y)
 {
     w->x = x;
     w->y = y;
@@ -164,11 +164,11 @@ extern "C" void GuiWidget_SetPos(W41EBA0* w, float x, float y)
 #include "gui_traversal_types.h"
 
 extern "C" {
-void List_Begin(ChildIterator* result, ChildList* list);
+void std_list_deleter_voidPtr_begin_void(ChildIterator* result, ChildList* list);
 void std_list_GuiWidgetPtr_generic_iterator_ctor(ChildIterator* result, const ChildIterator* source);
 void std_list_GuiWidgetPtr_end(ChildIterator* result, ChildList* list);
 void cLListIterator_GuiWidgetPtr_ctor_listR(ChildIterator* result, const ChildIterator* source);
-void GuiWidget_CheckSleep(TraversalWidget* self);
+void GuiWidget_CheckSleepStatus(TraversalWidget* self);
 }
 
 static inline unsigned char notify(TraversalWidget* receiver, TraversalWidget* sender,
@@ -180,7 +180,7 @@ static inline unsigned char notify(TraversalWidget* receiver, TraversalWidget* s
 }
 
 /* Propagate the requested state to children, then check for completion. */
-extern "C" void GuiWidget_BaseSleep(TraversalWidget* self)
+extern "C" void GuiWidget_onSleep(TraversalWidget* self)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -193,7 +193,7 @@ extern "C" void GuiWidget_BaseSleep(TraversalWidget* self)
             self->flags |= 8;
         else
             self->flags &= ~8;
-        List_Begin(&rawBegin, &self->children);
+        std_list_deleter_voidPtr_begin_void(&rawBegin, &self->children);
         std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
         ChildNode* node = begin.node;
         std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
@@ -204,7 +204,7 @@ extern "C" void GuiWidget_BaseSleep(TraversalWidget* self)
             std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
             cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
         }
-        GuiWidget_CheckSleep(self);
+        GuiWidget_CheckSleepStatus(self);
     }
 }
 #pragma pop /* merge_units */
@@ -220,14 +220,14 @@ extern "C" {
 }
 
 /* Once every child accepts the completion message, clear pending and notify the parent. */
-extern "C" void GuiWidget_CheckSleep(TraversalWidget* self)
+extern "C" void GuiWidget_CheckSleepStatus(TraversalWidget* self)
 {
     ChildIterator end;
     ChildIterator begin;
     ChildIterator rawBegin;
     ChildIterator rawEnd;
     if ((self->flags & 0x10) && !(self->flags & 8)) {
-        List_Begin(&rawBegin, &self->children);
+        std_list_deleter_voidPtr_begin_void(&rawBegin, &self->children);
         std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
         ChildNode* node = begin.node;
         std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
@@ -252,12 +252,12 @@ extern "C" void GuiWidget_CheckSleep(TraversalWidget* self)
 #pragma cplusplus on
 
 extern "C" {
-void* Gui_GetScreenList(void);
-void GuiManager_ReleaseRoot(void* manager, TraversalWidget* widget);
+void* Gui_Manager(void);
+void GuiManager_CloseGui(void* manager, TraversalWidget* widget);
 }
 
 /* Clear pending and requested state throughout the live child hierarchy. */
-extern "C" void GuiWidget_ClearAwake(TraversalWidget* self)
+extern "C" void GuiWidget_ClearSleepStatus(TraversalWidget* self)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -265,13 +265,13 @@ extern "C" void GuiWidget_ClearAwake(TraversalWidget* self)
     ChildIterator rawEnd;
     self->flags &= ~0x10;
     self->flags &= ~8;
-    List_Begin(&rawBegin, &self->children);
+    std_list_deleter_voidPtr_begin_void(&rawBegin, &self->children);
     std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
     std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
     cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     while (node != end.node) {
-        GuiWidget_ClearAwake(node->widget);
+        GuiWidget_ClearSleepStatus(node->widget);
         node = node->next;
         std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
         cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
@@ -279,7 +279,7 @@ extern "C" void GuiWidget_ClearAwake(TraversalWidget* self)
 }
 
 /* Handle state completion and flagged removal requests; reject other messages. */
-extern "C" int GuiWidget_OnEvent(TraversalWidget* self, TraversalWidget* sender, int message)
+extern "C" int GuiWidget_onMessage(TraversalWidget* self, TraversalWidget* sender, int message)
 {
     switch ((unsigned short)message) {
     case 15:
@@ -287,7 +287,7 @@ extern "C" int GuiWidget_OnEvent(TraversalWidget* self, TraversalWidget* sender,
         return 1;
     case 25:
         if (self->flags & 0x20) {
-            GuiManager_ReleaseRoot(Gui_GetScreenList(), self);
+            GuiManager_CloseGui(Gui_Manager(), self);
             return 1;
         }
         break;
@@ -296,7 +296,7 @@ extern "C" int GuiWidget_OnEvent(TraversalWidget* self, TraversalWidget* sender,
 }
 
 /* Request state on every child only when the parent was not already requested. */
-extern "C" void GuiWidget_BaseWake(TraversalWidget* self)
+extern "C" void GuiWidget_onWake(TraversalWidget* self)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -304,7 +304,7 @@ extern "C" void GuiWidget_BaseWake(TraversalWidget* self)
     ChildIterator rawEnd;
     if (!(self->flags & 8)) {
         self->flags |= 8;
-        List_Begin(&rawBegin, &self->children);
+        std_list_deleter_voidPtr_begin_void(&rawBegin, &self->children);
         std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
         ChildNode* node = begin.node;
         std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
@@ -325,7 +325,7 @@ extern "C" void GuiWidget_BaseWake(TraversalWidget* self)
 #include "loose04_types.h"
 
 /* Clears GuiWidget flag bit 2. */
-void GuiWidget_ClearFlag4(GuiWidget* self) {
+void GuiWidget_onDeactivate(GuiWidget* self) {
     unsigned int flags;
 
     flags = self->flags; /* zero-extended load keeps the match */
@@ -333,7 +333,7 @@ void GuiWidget_ClearFlag4(GuiWidget* self) {
 }
 
 /* Sets GuiWidget flag bit 2. */
-void GuiWidget_SetFlag4(GuiWidget* self) {
+void GuiWidget_onActivate(GuiWidget* self) {
     unsigned int flags;
 
     flags = self->flags;
@@ -350,14 +350,14 @@ extern "C" {
 }
 
 /* Clear the registration flag and notify every child in live list order. */
-extern "C" void GuiWidget_Deinit(TraversalWidget* self)
+extern "C" void GuiWidget_onRemove(TraversalWidget* self)
 {
     ChildIterator end;
     ChildIterator begin;
     ChildIterator rawBegin;
     ChildIterator rawEnd;
     self->flags &= ~1;
-    List_Begin(&rawBegin, &self->children);
+    std_list_deleter_voidPtr_begin_void(&rawBegin, &self->children);
     std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
     std_list_GuiWidgetPtr_end(&rawEnd, &self->children);

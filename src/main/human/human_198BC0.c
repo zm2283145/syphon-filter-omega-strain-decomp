@@ -78,7 +78,7 @@ extern float cSkaPlaybackGroup_Weight(void* entry);
 
 
 /* Looks up key in the object's table and returns the entry's value, or 0. */
-float Actor_GetGaitPhase(Obj198* self, int key)
+float cSkaParams_GetPlaybackWeight(Obj198* self, int key)
 {
     void* entry = cSkaPlaybackList_FindPlaybackGroup(Deque_Back(self->ref)->map, key);
     if (entry)

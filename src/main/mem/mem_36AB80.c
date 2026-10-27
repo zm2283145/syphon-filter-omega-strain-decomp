@@ -30,14 +30,14 @@ typedef struct {
     char fBE1[1];
 } ObjAB80;
 extern int g_TextureMgr;
-extern void Resource_Construct(FileMan* f);
-extern void Hog_Register(FileMan* f, char* name, int a, int b);
-extern void FileMan_FindMember(FileMan* f);
-extern int FileMan_GetSize(FileMan* f);
-extern int FileMan_LoadMemberSync(FileMan* f, unsigned char** out, int size);
+extern void cFileMan_ctor_void(FileMan* f);
+extern void cFileMan_EncodeFilename_charP_cHogFileR_bool(FileMan* f, char* name, int a, int b);
+extern void cFileMan_Open(FileMan* f);
+extern int cFileMan_GetSize(FileMan* f);
+extern int cFileMan_Read_charPP_int(FileMan* f, unsigned char** out, int size);
 extern void cFileMan_Close(FileMan* f);
-extern void FileMan_Release(FileMan* f, int flag);
-extern int TexMan_FindOrLoad(int mgr, FileMan* f);
+extern void cFileMan_dtor(FileMan* f, int flag);
+extern int cTexMan_AddTextureFromFile_cFileManR(int mgr, FileMan* f);
 extern void* memcpy(void* d, const void* s, unsigned int n);
 extern long long SoftFloat_FloatToDouble(float f);
 extern long long SoftFloat_DoubleMultiply(long long a, long long b);
@@ -63,7 +63,7 @@ static inline void Copy(PStr* buf, char* t, const char* s)
 }
 
 static inline unsigned char Rd(unsigned char** pp) { return *(*pp)++; }
-void Font_LoadFnt(ObjAB80* obj, int arg1, char* name)
+void cFont_Load(ObjAB80* obj, int arg1, char* name)
 {
     FileMan fm;
     PStr s;
@@ -76,14 +76,14 @@ void Font_LoadFnt(ObjAB80* obj, int arg1, char* name)
     int i;
     char* t;
 
-    Resource_Construct(&fm);
+    cFileMan_ctor_void(&fm);
     t = s.text;
     s.len = 0;
     Copy(&s, t, name);
-    Hog_Register(&fm, (char*)&s + 1, arg1, 0);
-    FileMan_FindMember(&fm);
+    cFileMan_EncodeFilename_charP_cHogFileR_bool(&fm, (char*)&s + 1, arg1, 0);
+    cFileMan_Open(&fm);
     data = 0;
-    FileMan_LoadMemberSync(&fm, &data, FileMan_GetSize(&fm));
+    cFileMan_Read_charPP_int(&fm, &data, cFileMan_GetSize(&fm));
     cFileMan_Close(&fm);
     p = data;
     ver = p[0];
@@ -105,7 +105,7 @@ void Font_LoadFnt(ObjAB80* obj, int arg1, char* name)
         obj->f9C = 0x8E;
     }
     if (obj->f9C > 0xB4) {
-        FileMan_Release(&fm, -1);
+        cFileMan_dtor(&fm, -1);
         return;
     }
     memcpy(obj->fA0, p, obj->f9C << 4);
@@ -123,11 +123,11 @@ void Font_LoadFnt(ObjAB80* obj, int arg1, char* name)
     } else {
         obj->fBE0 = 0;
     }
-    Resource_Construct(&fm2);
-    Hog_Register(&fm2, (char*)&s + 1, arg1, 0);
-    obj->f0 = TexMan_FindOrLoad(g_TextureMgr, &fm2);
-    FileMan_Release(&fm2, -1);
-    FileMan_Release(&fm, -1);
+    cFileMan_ctor_void(&fm2);
+    cFileMan_EncodeFilename_charP_cHogFileR_bool(&fm2, (char*)&s + 1, arg1, 0);
+    obj->f0 = cTexMan_AddTextureFromFile_cFileManR(g_TextureMgr, &fm2);
+    cFileMan_dtor(&fm2, -1);
+    cFileMan_dtor(&fm, -1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0036AB80 */
@@ -140,14 +140,14 @@ void Font_LoadFnt(ObjAB80* obj, int arg1, char* name)
 extern "C" {
 extern void * const D_004DF630[];
 void operator_delete(void* allocation);
-void Tex_Release(int mgr, int handle, int flags);
+void cTexMan_RemoveTexture(int mgr, int handle, int flags);
 }
 struct O36AF40 { int handle; char pad[0x8A70]; void* vtable; };
 extern "C" O36AF40* cFont_dtor(O36AF40* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DF630);
-        Tex_Release(g_TextureMgr, self->handle, 0);
+        cTexMan_RemoveTexture(g_TextureMgr, self->handle, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
@@ -180,7 +180,7 @@ extern char D_004DF630[]; /* vtable */
 
 
 /* Constructor: sets the vtable, eight (0.5, 0.5, 0.5, 1) entries, enabled = 1. */
-Obj36A* Font_ctor(Obj36A* self) {
+Obj36A* cFont_ctor(Obj36A* self) {
     int i;
     self->vtable = D_004DF630;
     for (i = 0; i < 8; i++) {

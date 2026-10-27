@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_0041C6A0 */
 #pragma push /* merge_units */
@@ -25,30 +25,30 @@ int Mem_Free();
 extern "C" {
 /*fc*/
 int String_Dtor(...);                         
-int GuiWidget_Destroy(...);                         
+int GuiWidget_dtor(...);                         
 int operator_delete(...);                          
 extern char D_004BF2D0;
-extern "C" void GuiTextWidget_IsType();
+extern "C" void GuiTextWidget_IsClass();
 extern "C" void GuiWidget_onInput();
 extern "C" void GuiTextWidget_GetClassName();
 extern "C" void GuiTextWidget_UpdateText();
-extern "C" void GuiTextWidget_Draw();
-extern "C" void GuiTextWidget_OnSleep();
-extern "C" void GuiTextWidget_OnWake();
+extern "C" void GuiTextWidget_onRender();
+extern "C" void GuiTextWidget_onSleep();
+extern "C" void GuiTextWidget_onWake();
 extern "C" void GuiTextWidget_Load();
-extern "C" void GuiWidget_FocusPrev();
-extern "C" void GuiWidget_FocusNext();
-extern "C" void GuiWidget_FocusLast();
-extern "C" void GuiWidget_FocusFirst();
-extern "C" void GuiWidget_BubbleActivate();
-extern "C" void GuiWidget_BubbleType1();
-extern "C" void GuiWidget_BubbleType0();
-extern "C" void GuiWidget_Update();
-extern "C" void GuiWidget_OnEvent();
-extern "C" void GuiWidget_ClearFlag4();
-extern "C" void GuiWidget_SetFlag4();
-extern "C" void GuiWidget_Deinit();
-extern "C" void GuiWidget_Init();
+extern "C" void GuiWidget_FindPrevFocus();
+extern "C" void GuiWidget_FindNextFocus();
+extern "C" void GuiWidget_FindLastFocus();
+extern "C" void GuiWidget_FindFirstFocus();
+extern "C" void GuiWidget_onAction();
+extern "C" void GuiWidget_onLoseFocus();
+extern "C" void GuiWidget_onGainFocus();
+extern "C" void GuiWidget_onAdvanceTime();
+extern "C" void GuiWidget_onMessage();
+extern "C" void GuiWidget_onDeactivate();
+extern "C" void GuiWidget_onActivate();
+extern "C" void GuiWidget_onRemove();
+extern "C" void GuiWidget_onAdd();
 extern void * const D_004E0AC0[];
 extern unsigned char g_ProfileLockEnabled;
 }
@@ -69,21 +69,21 @@ extern "C" char * GuiTextWidget_dtor(char * arg0, long long arg1) {
                     String_Dtor(temp_a0, 0);
                 }
             }
-            Mem_Free(0, temp_s2, &D_004BF2D0, 0x23);
+            cMemMan_Deallocate(0, temp_s2, &D_004BF2D0, 0x23);
             }
         }
         temp_a0_2 = arg0 + 0x48;
         if (temp_a0_2 != NULL) {
             String_Dtor(temp_a0_2, 0);
         }
-        GuiWidget_Destroy(arg0, 0);
+        GuiWidget_dtor(arg0, 0);
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
             operator_delete(arg0);
         }
     }
     return arg0;
 }
-void * const D_004E0AC0[24] = { (void*)0x0, (void*)0x0, (void*)GuiTextWidget_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextWidget_OnWake, (void*)GuiTextWidget_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiWidget_onInput, (void*)GuiTextWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiTextWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiTextWidget_GetClassName, (void*)GuiTextWidget_IsType, (void*)GuiTextWidget_UpdateText };
+void * const D_004E0AC0[24] = { (void*)0x0, (void*)0x0, (void*)GuiTextWidget_dtor, (void*)GuiWidget_onAdd, (void*)GuiWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiWidget_onDeactivate, (void*)GuiTextWidget_onWake, (void*)GuiTextWidget_onSleep, (void*)GuiWidget_onGainFocus, (void*)GuiWidget_onLoseFocus, (void*)GuiWidget_onInput, (void*)GuiTextWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiWidget_onAdvanceTime, (void*)GuiWidget_onMessage, (void*)GuiTextWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiTextWidget_GetClassName, (void*)GuiTextWidget_IsClass, (void*)GuiTextWidget_UpdateText };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0041C6A0(void) {}
 #pragma pop /* merge_units */

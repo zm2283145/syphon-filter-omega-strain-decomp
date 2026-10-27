@@ -15,9 +15,9 @@ extern int randomNoneZero(void);
 extern int rt_time_start(int *timer);
 extern int rt_list_buf_create(int *list, int pool);
 extern int rt_udp_send_reset(ScfSock *s, ScfPeer *e);
-extern int RtUdp_BuildHeader(ScfSock *s, ScfPeer *e, int kind, ScfHdr *hd);
-extern int RtUdp_CopyPacket(ScfPeer *e, ScfHdr *hd, void *data, int len);
-extern int RtUdp_QueueAck(ScfSock *s, ScfPeer *e, ScfInfo *info);
+extern int rt_udp_setup_packet_header(ScfSock *s, ScfPeer *e, int kind, ScfHdr *hd);
+extern int rt_udp_buffer_data_for_send(ScfPeer *e, ScfHdr *hd, void *data, int len);
+extern int rt_udp_send_ack(ScfSock *s, ScfPeer *e, ScfInfo *info);
 
 int rt_udp_process_new_connect(ScfSock *s, ScfInfo *info, char *name, unsigned short port)
 {
@@ -56,7 +56,7 @@ int rt_udp_process_new_connect(ScfSock *s, ScfInfo *info, char *name, unsigned s
             break;
         }
         e->type = 9;
-        ret = RtUdp_BuildHeader(s, e, 4, &hd);
+        ret = rt_udp_setup_packet_header(s, e, 4, &hd);
         if (ret != 0) {
 fail:
             e->type = 1;
@@ -64,15 +64,15 @@ fail:
             return ret;
         }
         hd.flags |= 0x40;
-        ret = RtUdp_CopyPacket(e, &hd, 0, 0);
+        ret = rt_udp_buffer_data_for_send(e, &hd, 0, 0);
         if (ret != 0) goto fail;
-        ret = RtUdp_QueueAck(s, e, info);
+        ret = rt_udp_send_ack(s, e, info);
         break;
     case 8:
     case 9:
     case 11:
     case 12:
-        ret = RtUdp_QueueAck(s, e, info);
+        ret = rt_udp_send_ack(s, e, info);
         break;
     default:
         e->type = 1;
@@ -86,11 +86,11 @@ fail:
 /* merge_units: begin func_0030A218 */
 typedef struct { unsigned int type; char pad[0x8C]; } ScfPeer_0030A218;
 typedef struct { int sock; ScfPeer_0030A218 *ents; } ScfSock_0030A218;
-extern int RtUdp_CheckDuplicate(ScfSock_0030A218 *s, ScfPeer_0030A218 *e, void *p, unsigned char *dup);
+extern int rt_udp_is_duplicate_packet(ScfSock_0030A218 *s, ScfPeer_0030A218 *e, void *p, unsigned char *dup);
 #if 0 /* merge_units */
-extern int RtUdp_QueueAck(ScfSock_0030A218 *s, ScfPeer_0030A218 *e, void *p);
+extern int rt_udp_send_ack(ScfSock_0030A218 *s, ScfPeer_0030A218 *e, void *p);
 #endif /* merge_units */
-#define RtUdp_QueueAck(a0, a1, a2) (RtUdp_QueueAck((ScfSock *)(a0), (ScfPeer *)(a1), (ScfInfo *)(a2))) /* merge_units */
+#define rt_udp_send_ack(a0, a1, a2) (rt_udp_send_ack((ScfSock *)(a0), (ScfPeer *)(a1), (ScfInfo *)(a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int rt_udp_send_reset(ScfSock_0030A218 *s, ScfPeer_0030A218 *e);
@@ -104,22 +104,22 @@ int rt_udp_process_disconnect(ScfSock_0030A218 *s, void *p, int idx)
     unsigned char dup = 0;
     if (idx == -1) return 7;
     e = &s->ents[idx];
-    RtUdp_CheckDuplicate(s, e, p, &dup);
+    rt_udp_is_duplicate_packet(s, e, p, &dup);
     if (!dup) {
         if (e->type == 12) {
             e->type = 3;
-            return RtUdp_QueueAck(s, e, p);
+            return rt_udp_send_ack(s, e, p);
         } else if (e->type - 4 < 2) {
-            return RtUdp_QueueAck(s, e, p);
+            return rt_udp_send_ack(s, e, p);
         } else {
             e->type = 1;
             return rt_udp_send_reset(s, e);
         }
     } else {
-        return RtUdp_QueueAck(s, e, p);
+        return rt_udp_send_ack(s, e, p);
     }
 }
-#undef RtUdp_QueueAck /* merge_units */
+#undef rt_udp_send_ack /* merge_units */
 #undef rt_udp_send_reset /* merge_units */
 /* merge_units: end func_0030A218 */
 
@@ -148,7 +148,7 @@ typedef struct { unsigned char kind; unsigned char id; unsigned short len; int v
 typedef struct { int type; char pad[0x48]; int f4C; char pad2[0x24]; int f74; char pad3[0x18]; } ScfPeer_0030A368;
 typedef struct { int sock; ScfPeer_0030A368 *ents; char pad[0x40]; unsigned char b48; } ScfSock_0030A368;
 extern void *memset(void *d, int c, unsigned int n);
-extern int Name_Compare48(const void *a, const void *b, int n);
+extern int Libc_Memcmp(const void *a, const void *b, int n);
 extern void rt_time_get_time_stamp(int *t);
 
 int rt_udp_process_heartbeat(ScfSock_0030A368 *s, void *key, int idx)
@@ -161,7 +161,7 @@ int rt_udp_process_heartbeat(ScfSock_0030A368 *s, void *key, int idx)
     memset(&hdr, 0, 12);
     hdr.val = e->f74;
     hdr.id = s->b48;
-    if (Name_Compare48(&hdr, key, 12) == 0 && e->type == 12) {
+    if (Libc_Memcmp(&hdr, key, 12) == 0 && e->type == 12) {
         rt_time_get_time_stamp(&e->f4C);
     } else {
         ret = 4;
@@ -178,7 +178,7 @@ typedef struct { unsigned char flags; int seq; } ScfAck;
 typedef struct { unsigned int type; char pad[0x18]; int list; char pad2[0x2C]; int timer[2]; char pad3[0x3C]; } ScfPeer_0030A440;
 typedef struct { int sock; ScfPeer_0030A440 *ents; } ScfSock_0030A440;
 extern void *memcpy(void *d, const void *s, unsigned int n);
-extern int RtUdp_UpdateRtt(ScfSock_0030A440 *s, ScfPeer_0030A440 *e, unsigned char flags, int seq);
+extern int rt_udp_calculate_rto(ScfSock_0030A440 *s, ScfPeer_0030A440 *e, unsigned char flags, int seq);
 extern int rt_list_buf_get_head(int *list, void **node);
 extern unsigned int rt_list_buf_get_data_size(void *node);
 extern int rt_udp_get_packet_header(void *node, ScfHdr *out);
@@ -190,7 +190,7 @@ extern void rt_time_get_time_stamp(int *timer);
 #define rt_time_get_time_stamp(a0) (rt_time_get_time_stamp((a0))) /* merge_units */
 
 
-int RtUdp_HandleAck(ScfSock_0030A440 *s, int idx, ScfAckIn *in)
+int rt_udp_process_acknowlege(ScfSock_0030A440 *s, int idx, ScfAckIn *in)
 {
     ScfHdr hd;
     unsigned char aflags;
@@ -204,7 +204,7 @@ int RtUdp_HandleAck(ScfSock_0030A440 *s, int idx, ScfAckIn *in)
     e = &s->ents[idx];
     memcpy(&aflags, &in->flags, 1);
     memcpy(&aseq, &in->seq, 4);
-    ret = RtUdp_UpdateRtt(s, e, aflags, aseq);
+    ret = rt_udp_calculate_rto(s, e, aflags, aseq);
     if (rt_list_buf_get_head(&e->list, &node) != 0) return 10;
     while (node != 0) {
         if (rt_list_buf_get_data_size(node) != 0) {
@@ -239,21 +239,21 @@ extern void rt_time_get_time_stamp(int *timer);
 #define rt_time_get_time_stamp(a0) (rt_time_get_time_stamp((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int RtUdp_CheckDuplicate(ScfSock_0030A5C8 *s, ScfPeer_0030A5C8 *e, ScfHdr_0030A5C8 *p, unsigned char *dup);
+extern int rt_udp_is_duplicate_packet(ScfSock_0030A5C8 *s, ScfPeer_0030A5C8 *e, ScfHdr_0030A5C8 *p, unsigned char *dup);
 #endif /* merge_units */
-#define RtUdp_CheckDuplicate(a0, a1, a2, a3) (RtUdp_CheckDuplicate((ScfSock_0030A218 *)(a0), (ScfPeer_0030A218 *)(a1), (void *)(a2), (a3))) /* merge_units */
+#define rt_udp_is_duplicate_packet(a0, a1, a2, a3) (rt_udp_is_duplicate_packet((ScfSock_0030A218 *)(a0), (ScfPeer_0030A218 *)(a1), (void *)(a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int RtUdp_QueueAck(ScfSock_0030A5C8 *s, ScfPeer_0030A5C8 *e, ScfHdr_0030A5C8 *p);
+extern int rt_udp_send_ack(ScfSock_0030A5C8 *s, ScfPeer_0030A5C8 *e, ScfHdr_0030A5C8 *p);
 #endif /* merge_units */
-#define RtUdp_QueueAck(a0, a1, a2) (RtUdp_QueueAck((ScfSock *)(a0), (ScfPeer *)(a1), (ScfInfo *)(a2))) /* merge_units */
+#define rt_udp_send_ack(a0, a1, a2) (rt_udp_send_ack((ScfSock *)(a0), (ScfPeer *)(a1), (ScfInfo *)(a2))) /* merge_units */
 
 extern char *rt_list_buf_get_data_ptr(void *node);
 extern int rt_list_buf_get_tail(int *list, void **node);
 extern int rt_list_buf_insert(int *list, void *node, void *data, int len);
 extern int rt_list_buf_set_new_head(int *list, void *data, int len);
 
-int RtUdp_ReceiveData(ScfSock_0030A5C8 *s, ScfHdr_0030A5C8 *p, int idx)
+int rt_udp_process_data(ScfSock_0030A5C8 *s, ScfHdr_0030A5C8 *p, int idx)
 {
     ScfHdr_0030A5C8 hd;
     void *node = 0;
@@ -265,7 +265,7 @@ int RtUdp_ReceiveData(ScfSock_0030A5C8 *s, ScfHdr_0030A5C8 *p, int idx)
     if (idx == -1) return 7;
     e = &s->ents[idx];
     rt_time_get_time_stamp(e->timer);
-    ret = RtUdp_CheckDuplicate(s, e, p, &dup);
+    ret = rt_udp_is_duplicate_packet(s, e, p, &dup);
     if (!dup) {
         if ((p->u.w & 6) == 6 || (p->u.f.flags & 4)) {
             int *list = &e->recvlist;
@@ -296,7 +296,7 @@ older:
                 if (rt_list_buf_get_tail(list, &node) != 0) return 10;
                 if (rt_list_buf_insert(list, node, s->buf, p->u.f.len + 12) != 0) return 10;
             }
-            ret = RtUdp_QueueAck(s, e, p);
+            ret = rt_udp_send_ack(s, e, p);
         } else {
             int *list;
             if (p->u.f.flags & 2) e->f80 = p->seq;
@@ -305,13 +305,13 @@ older:
             if (rt_list_buf_insert(list, node, s->buf, p->u.f.len + 12) != 0) return 10;
         }
     } else if (p->u.f.flags & 4) {
-        ret = RtUdp_QueueAck(s, e, p);
+        ret = rt_udp_send_ack(s, e, p);
     }
     return ret;
 }
 #undef rt_time_get_time_stamp /* merge_units */
-#undef RtUdp_CheckDuplicate /* merge_units */
-#undef RtUdp_QueueAck /* merge_units */
+#undef rt_udp_is_duplicate_packet /* merge_units */
+#undef rt_udp_send_ack /* merge_units */
 /* merge_units: end func_0030A5C8 */
 
 /* merge_units: begin func_0030A880 */
@@ -380,7 +380,7 @@ int rt_udp_process_unconnected_data(Obj_a880 *o, void *key, const char *name, un
 typedef struct { unsigned int type; int f4; char name[16]; unsigned short port; char pad[0x5A]; int f74; char pad3[0x18]; } ScfPeer_0030A9D8;
 typedef struct { int sock; ScfPeer_0030A9D8 *ents; char pad[0x24]; unsigned int count; } ScfSock_0030A9D8;
 typedef struct { int f0; int f4; } ScfPkt;
-extern int String_CompareN(const char *a, const char *b, int n);
+extern int Libc_Strncmp(const char *a, const char *b, int n);
 
 int rt_udp_find_connection(ScfSock_0030A9D8 *s, ScfPkt *p, const char *name, unsigned short port, int *out)
 {
@@ -397,7 +397,7 @@ int rt_udp_find_connection(ScfSock_0030A9D8 *s, ScfPkt *p, const char *name, uns
     for (i = 0; i < s->count; i++) {
         e = &s->ents[i];
         if (e->type == 0) continue;
-        if (String_CompareN(name, e->name, 16) != 0) continue;
+        if (Libc_Strncmp(name, e->name, 16) != 0) continue;
         if (port != e->port) continue;
         if (p->f4 == e->f74) {
             *out = i;

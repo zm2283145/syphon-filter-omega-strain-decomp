@@ -23,7 +23,7 @@ void std_list_deleter_tQueuedMessage_end(Iter* out, Tree* t) {
 /* merge_units: begin func_003CA3F0 */
 #pragma push /* merge_units */
 typedef struct { int m0; int m4; int m8; } TA3F0;
-extern void ObjectList_EraseRange_3C9EA0(int* out, TA3F0* self, int* first, int* last);
+extern void std_list_deleter_tQueuedMessage_erase(int* out, TA3F0* self, int* first, int* last);
 extern void operator_delete(void* p);
 TA3F0* std_list_deleter_tQueuedMessage_dtor(TA3F0* self, short del)
 {
@@ -33,7 +33,7 @@ TA3F0* std_list_deleter_tQueuedMessage_dtor(TA3F0* self, short del)
         int last;
         last = (int)&self->m4;
         first = self->m8;
-        ObjectList_EraseRange_3C9EA0(&r, self, &first, &last);
+        std_list_deleter_tQueuedMessage_erase(&r, self, &first, &last);
         if (del > 0)
             operator_delete(self);
     }

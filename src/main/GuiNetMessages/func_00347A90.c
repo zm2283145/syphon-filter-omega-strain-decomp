@@ -10,7 +10,7 @@ public:
 };
 extern "C" {
 extern void GuiArrayWidget_GetSelected(S347A90*, int*, unsigned int*);
-extern void GuiArrayWidget_Select(S347A90*, int, unsigned int);
+extern void GuiArrayWidget_SetSelected(S347A90*, int, unsigned int);
 void GuiNetMessageArray_UpdateSize(S347A90* o);
 }
 void GuiNetMessageArray_UpdateSize(S347A90* o)
@@ -22,5 +22,5 @@ void GuiNetMessageArray_UpdateSize(S347A90* o)
     if (b >= o->a4C && o->a4C != 0) b = o->a4C - 1;
     else if (b >= o->a4C) b = 0;
     o->a54 = 100000;
-    GuiArrayWidget_Select(o, a, b);
+    GuiArrayWidget_SetSelected(o, a, b);
 }

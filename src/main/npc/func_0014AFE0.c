@@ -65,44 +65,44 @@ extern "C" {
 extern char g_TeleportMsgClass[];
 extern char D_004D9360[];
 extern unsigned char g_IsMultiplayer;
-void Node_GetTranslation(Vec4* out, void* node);
-void Event_Construct(Msg* m, void* type);
-void* Mtx_GetIdentity(void);
-void Vec4_CopyAsPoint(Vec4* out, void* v);
-void Mtx_SetRotationTranslation(void* data, void* obj, Vec4* v);
-void Event_Send(Msg* m, void* target, int immediate);
+void cNode_GetLoc(Vec4* out, void* node);
+void cMessage_ctor_cMessageNameR(Msg* m, void* type);
+void* cMatrix_GetUnit(void);
+void cVector_Copy_WSet1(Vec4* out, void* v);
+void cMatrix_ctor_cMatrixR_cVectorR(void* data, void* obj, Vec4* v);
+void QueueMessage_cMessageR_cSystemP_int(Msg* m, void* target, int immediate);
 void cMessage_dtor(Msg* m, int flags);
-void NpcPath_RelocateStuck(void* path, int id);
-void NpcAi_SetMovementState(NPC_AFE0* self, int a, int b);
-void NetEvent_Send(void* target, int a, int b, unsigned int c, int d, int e, int f);
+void cPathNavigator_AdjustPathForTeleport(void* path, int id);
+void cNPC_SetMoveMode(NPC_AFE0* self, int a, int b);
+void cNetNPCMsgs_SendMessage(void* target, int a, int b, unsigned int c, int d, int e, int f);
 }
-extern "C" void cNPC_v41(NPC_AFE0* self, Arg_AFE0* node)
+extern "C" void cNPC_Teleport(NPC_AFE0* self, Arg_AFE0* node)
 {
     Vec4 t;
     Msg msg;
     Vec4 p;
     Msg* m;
     void* id;
-    Node_GetTranslation(&t, node);
+    cNode_GetLoc(&t, node);
     m = &msg;
-    Event_Construct(m, g_TeleportMsgClass);
+    cMessage_ctor_cMessageNameR(m, g_TeleportMsgClass);
     msg.kind = 0;
     msg.vtable = D_004D9360;
-    id = Mtx_GetIdentity();
-    Vec4_CopyAsPoint(&p, &t);
+    id = cMatrix_GetUnit();
+    cVector_Copy_WSet1(&p, &t);
     {
         void* data = m->data;
         /* Preserve message-data address construction before the identity argument. */
         asm { .set reorder }
-        Mtx_SetRotationTranslation(data, id, &p);
+        cMatrix_ctor_cMatrixR_cVectorR(data, id, &p);
     }
-    Event_Send(m, self->target, 1);
+    QueueMessage_cMessageR_cSystemP_int(m, self->target, 1);
     msg.vtable = D_004D9360;
     cMessage_dtor(m, 0);
-    NpcPath_RelocateStuck(self->path, node->id);
+    cPathNavigator_AdjustPathForTeleport(self->path, node->id);
     self->Reset();
     self->a0 = 0;
-    NpcAi_SetMovementState(self, 0, 0);
+    cNPC_SetMoveMode(self, 0, 0);
     if (g_IsMultiplayer)
-        NetEvent_Send(self->target, 7, 4, node->id, 0, 0, 0);
+        cNetNPCMsgs_SendMessage(self->target, 7, 4, node->id, 0, 0, 0);
 }

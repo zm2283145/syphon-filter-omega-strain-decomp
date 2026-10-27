@@ -16,14 +16,14 @@ LNode* std_list_deleter_cSafePtr_cGOBJ_tail(void* l);
 LNode** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(LNode** it, LNode* n);
 void cGenInfoObject_ctor(void* ctx);
 int cGenInfoObject_IsOwner(void* ctx, void* key);
-int Net_GetClock(int);
-int NpcAi_CountThinking(void);
-unsigned char Generator_SpawnTest(Gen* g, Gen* s);
-void Generator_Spawn(Gen* g, Gen* s, int i);
+int cDME_GetTime(int);
+int cNPC_GetActiveNpcCount(void);
+unsigned char cGenerator_CheckSpawnNode(Gen* g, Gen* s);
+void cGenerator_Spawn(Gen* g, Gen* s, int i);
 extern int g_MaxActiveNpcCount;
 extern int D_004F56B8;
 extern unsigned char g_IsMultiplayer;
-void cGenerator_v10(Gen* self, float dt);
+void cGenerator_NextFrame(Gen* self, float dt);
 }
 struct Gen {
     V5(a) V5(b) V5(c) V5(d) V5(e)
@@ -37,7 +37,7 @@ static inline bool Valid(Hnd* h) {
 static inline Tgt* HGet(Hnd* h) {
     return Valid(h) ? h->p : 0;
 }
-void cGenerator_v10(Gen* self, float dt)
+void cGenerator_NextFrame(Gen* self, float dt)
 {
     char ctx[4];
     LNode* end;
@@ -56,9 +56,9 @@ void cGenerator_v10(Gen* self, float dt)
     if (self->bD1) return;
     if (g_IsMultiplayer) {
         if (!cGenInfoObject_IsOwner(ctx, self->key)) return;
-        if (!(D_004F56B8 < Net_GetClock(1))) return;
+        if (!(D_004F56B8 < cDME_GetTime(1))) return;
     }
-    if (!(g_MaxActiveNpcCount > NpcAi_CountThinking())) return;
+    if (!(g_MaxActiveNpcCount > cNPC_GetActiveNpcCount())) return;
     if (!self->CanSpawn()) return;
     if (!(self->nC0 < self->n8C)) return;
     if (self->fBC <= self->f84) return;
@@ -75,10 +75,10 @@ void cGenerator_v10(Gen* self, float dt)
         }
         s = self->arr[self->nC4];
     }
-    unsigned char r = Generator_SpawnTest(self, s);
+    unsigned char r = cGenerator_CheckSpawnNode(self, s);
     if (r == 1) {
-        Generator_Spawn(self, s, self->n78 ? self->nC4 : -1);
-        D_004F56B8 = Net_GetClock(1) + 250;
+        cGenerator_Spawn(self, s, self->n78 ? self->nC4 : -1);
+        D_004F56B8 = cDME_GetTime(1) + 250;
     } else if (r == 0) {
         if (self->nC8 == self->nC4) self->fBC = self->f84 - 1.0f;
     }

@@ -12,11 +12,11 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003C26D0 */
 #pragma push /* merge_units */
-/* Los_TraceImmediate */
+/* nCollision_DetectForIntersectionBetweenRayAndFaces */
 #pragma opt_propagation off
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 typedef struct { char pad[0x60]; } __attribute__((aligned(16))) Bnd26;
@@ -49,20 +49,20 @@ extern int D_00542D1C;
 extern int D_004937C0[];
 extern int D_004937D0[];
 extern void std_vector_deleter_cCollisionFace_clear(int s);
-extern void Los_BuildSegmentBound(float r, Bnd26* b, V4* from, V4* to);
-extern void Los_GatherCandidates(int g, int s, Bnd26* b, int a3);
-extern V4* Vec4_GetZero(void);
-extern void Vec4_Assign(V4* d, V4* s);
-extern void Vec4_SetOrigin(V4* d);
-extern void Vec4_Copy(V4* d, V4* s);
+extern void cRayMatrix_ctor_cVectorR_cVectorR_float(float r, Bnd26* b, V4* from, V4* to);
+extern void cCollisionModelList_CollectFaces_MainCode_cArrayR_cRayMatrixR_int(int g, int s, Bnd26* b, int a3);
+extern V4* cVector_GetZero(void);
+extern void cVector_ctor_cVectorR(V4* d, V4* s);
+extern void cVector_Get0001(V4* d);
+extern void cVector_opAssign(V4* d, V4* s);
 extern void cCollisionModel_FaceLocator_ctor(void* p);
 extern void cCollisionModel_FaceProperties_ctor(void* p);
-extern void Los_TraceWithWater(Q26* q, int s);
+extern void cCollisionProbe_Ray_DetectForCollision_cArrayR_4(Q26* q, int s);
 extern void cCollisionProbe_Ray_DetectForCollision_cArrayR_3(Q26* q, int s);
-extern void Los_TraceTriangles(Q26* q, int s);
-extern void Col_TraceFloorTriangles(Q26* q, int s);
-extern void* Ptr_Identity(void* p);
-extern void Col_ReconstructSourceTriangle(Tri26* t, void* p);
+extern void cCollisionProbe_Ray_DetectForCollision_cArrayR_2(Q26* q, int s);
+extern void cCollisionProbe_Ray_DetectForCollision_cArrayR(Q26* q, int s);
+extern void* cVector_ctor_void(void* p);
+extern void cCollisionFace_Set_cCollisionModelFaceLocatorR(Tri26* t, void* p);
 extern void cCollisionModel_FaceProperties_opAssign(void* d, void* s);
 extern void cCollisionModel_FaceLocator_opAssign(void* d, void* s);
 
@@ -70,10 +70,10 @@ static inline void Tri_Init(Tri26* t) {
     V4* p;
     p = t->v;
     do {
-        Ptr_Identity(p);
+        cVector_ctor_void(p);
         p++;
     } while (p != t->v + 3);
-    Ptr_Identity(&t->n);
+    cVector_ctor_void(&t->n);
     cCollisionModel_FaceProperties_ctor(t->part40);
     cCollisionModel_FaceLocator_ctor(t->part60);
 }
@@ -90,18 +90,18 @@ static inline void SetMpg26(int a) {
 static inline void Q_Init(Q26* q, V4* to, V4* from) {
     V4 org;
     q->hit = 0;
-    Vec4_Assign(&q->a, Vec4_GetZero());
-    Vec4_SetOrigin(&org);
-    Vec4_Assign(&q->b, &org);
+    cVector_ctor_cVectorR(&q->a, cVector_GetZero());
+    cVector_Get0001(&org);
+    cVector_ctor_cVectorR(&q->b, &org);
     cCollisionModel_FaceLocator_ctor(q->part30);
-    Vec4_Assign(&q->to, to);
-    Vec4_Assign(&q->from, from);
+    cVector_ctor_cVectorR(&q->to, to);
+    cVector_ctor_cVectorR(&q->from, from);
     q->b60 = 0;
     q->b61 = 0;
     q->b62 = 0;
     q->p64 = 0;
 }
-unsigned char Los_TraceImmediate(V4* out, Tri26* tri, V4* from, V4* to, int g, unsigned char m0, unsigned char m1, unsigned char m2, void* ctx, unsigned char under)
+unsigned char nCollision_DetectForIntersectionBetweenRayAndFaces(V4* out, Tri26* tri, V4* from, V4* to, int g, unsigned char m0, unsigned char m1, unsigned char m2, void* ctx, unsigned char under)
 {
     int s;
     Bnd26 bnd;
@@ -135,7 +135,7 @@ unsigned char Los_TraceImmediate(V4* out, Tri26* tri, V4* from, V4* to, int g, u
     }
     s = D_00542CC8;
     std_vector_deleter_cCollisionFace_clear(s);
-    Los_BuildSegmentBound(0.01f, &bnd, from, to);
+    cRayMatrix_ctor_cVectorR_cVectorR_float(0.01f, &bnd, from, to);
     if (D_00542D38 != D_00542D48) {
         int i = D_00542D38;
         int e = D_004937D0[i];
@@ -159,7 +159,7 @@ unsigned char Los_TraceImmediate(V4* out, Tri26* tri, V4* from, V4* to, int g, u
         asm __volatile__("vnop");
         asm __volatile__("sync");
     }
-    Los_GatherCandidates(g, s, &bnd, m1);
+    cCollisionModelList_CollectFaces_MainCode_cArrayR_cRayMatrixR_int(g, s, &bnd, m1);
     qp = &q;
     Q_Init(qp, to, from);
     q.b60 = m0;
@@ -169,21 +169,21 @@ unsigned char Los_TraceImmediate(V4* out, Tri26* tri, V4* from, V4* to, int g, u
         q.p64 = *(void* volatile*)&ctx; /* retail reloads the stack argument */
     }
     if (HasCtx(&q)) {
-        if (under) Los_TraceWithWater(&q, s);
+        if (under) cCollisionProbe_Ray_DetectForCollision_cArrayR_4(&q, s);
         else cCollisionProbe_Ray_DetectForCollision_cArrayR_3(&q, s);
     } else {
-        if (under) Los_TraceTriangles(&q, s);
-        else Col_TraceFloorTriangles(&q, s);
+        if (under) cCollisionProbe_Ray_DetectForCollision_cArrayR_2(&q, s);
+        else cCollisionProbe_Ray_DetectForCollision_cArrayR(&q, s);
     }
     if (q.hit) {
         *out = q.b;
         tp = &t;
         Tri_Init(tp);
-        Col_ReconstructSourceTriangle(tp, q.part30);
-        Vec4_Copy(&tri->v[0], &t.v[0]);
-        Vec4_Copy(&tri->v[1], &t.v[1]);
-        Vec4_Copy(&tri->v[2], &t.v[2]);
-        Vec4_Copy(&tri->n, &t.n);
+        cCollisionFace_Set_cCollisionModelFaceLocatorR(tp, q.part30);
+        cVector_opAssign(&tri->v[0], &t.v[0]);
+        cVector_opAssign(&tri->v[1], &t.v[1]);
+        cVector_opAssign(&tri->v[2], &t.v[2]);
+        cVector_opAssign(&tri->n, &t.n);
         tri->flag50 = t.flag50;
         cCollisionModel_FaceProperties_opAssign(tri->part40, t.part40);
         cCollisionModel_FaceLocator_opAssign(tri->part60, t.part60);
@@ -218,12 +218,12 @@ extern VObj_3C2A80* D_00542CE0;
 extern void* D_00542D00;
 void func_00139DF0(void* p, int f);
 void std_vector_deleter_cVector_dtor(void* p, int f);
-void HumanColBufB_Dtor(void* p, int f);
+void std_vector_deleter_cCollisionEdge_dtor(void* p, int f);
 }
 static inline void A3_3C2A80(void* p) { if (p) func_00139DF0(p, 0); }
 static inline void A2_3C2A80(void* p) { if (p) A3_3C2A80(p); }
 static inline void A1_3C2A80(void* p) { if (p) A2_3C2A80(p); }
-static inline void B3_3C2A80(void* p) { if (p) HumanColBufB_Dtor(p, 0); }
+static inline void B3_3C2A80(void* p) { if (p) std_vector_deleter_cCollisionEdge_dtor(p, 0); }
 static inline void B2_3C2A80(void* p) { if (p) B3_3C2A80(p); }
 static inline void B1_3C2A80(void* p) { if (p) B2_3C2A80(p); }
 static inline void C3_3C2A80(void* p) { if (p) std_vector_deleter_cVector_dtor(p, 0); }
@@ -233,11 +233,11 @@ static inline void C1_3C2A80(void* p) { if (p) C2_3C2A80(p); }
 extern "C" void nCollision_UnInitStatics(void)
 {
     void* p;
-    if ((p = D_00542CC8) != 0) { { AllocGuard g; A1_3C2A80(p); Mem_Free(0, p, D_004BD0A0, 0x41); } D_00542CC8 = 0; }
-    if ((p = D_00542CD0) != 0) { { AllocGuard g; A1_3C2A80(p); Mem_Free(0, p, D_004BD0A0, 0x47); } D_00542CD0 = 0; }
-    if ((p = D_00542CD8) != 0) { { AllocGuard g; B1_3C2A80(p); Mem_Free(0, p, D_004BD0A0, 0x4D); } D_00542CD8 = 0; }
-    { VObj_3C2A80* v; if ((v = D_00542CE0) != 0) { { AllocGuard g; v->dtor(-1); Mem_Free(0, v, D_004BD0A0, 0x53); } D_00542CE0 = 0; } }
-    if ((p = D_00542D00) != 0) { { AllocGuard g; C1_3C2A80(p); Mem_Free(0, p, D_004BD0A0, 0x68E); } D_00542D00 = 0; }
+    if ((p = D_00542CC8) != 0) { { AllocGuard g; A1_3C2A80(p); cMemMan_Deallocate(0, p, D_004BD0A0, 0x41); } D_00542CC8 = 0; }
+    if ((p = D_00542CD0) != 0) { { AllocGuard g; A1_3C2A80(p); cMemMan_Deallocate(0, p, D_004BD0A0, 0x47); } D_00542CD0 = 0; }
+    if ((p = D_00542CD8) != 0) { { AllocGuard g; B1_3C2A80(p); cMemMan_Deallocate(0, p, D_004BD0A0, 0x4D); } D_00542CD8 = 0; }
+    { VObj_3C2A80* v; if ((v = D_00542CE0) != 0) { { AllocGuard g; v->dtor(-1); cMemMan_Deallocate(0, v, D_004BD0A0, 0x53); } D_00542CE0 = 0; } }
+    if ((p = D_00542D00) != 0) { { AllocGuard g; C1_3C2A80(p); cMemMan_Deallocate(0, p, D_004BD0A0, 0x68E); } D_00542D00 = 0; }
 }
 #undef D_00542CC8 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -250,12 +250,12 @@ static inline void merge_flush_func_003C2A80(void) {}
 #pragma cplusplus on
 extern "C" {
 extern char D_004D9140[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void std_vector_cCollisionFace_ctor(void* p);
 int cArrayCapacity_Int(int* n);
-void Vector_Reserve_139920_Thunk(void* p, int n);
-void HumanColBufB_Init(void* p);
-void HumanColBufB_Reserve(void* p, int n);
+void std_vector_cCollisionFace_reserve(void* p, int n);
+void std_vector_cCollisionEdge_ctor(void* p);
+void std_vector_cCollisionEdge_reserve(void* p, int n);
 void cArray_cGOBJPtr_ctor(void* p, int* n, int k);
 void cArray_FixedCapacity_cGOBJPtr_2_ctor(void* p);
 void cCollisionProbe_SphereSweptRay_InitStatics(int a);
@@ -284,15 +284,15 @@ extern "C" ScrB* D_00542CE0;
 
 static inline void* AllocL(int size, int line) {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004BD0A0, line);
+    return cMemMan_Allocate(0, size, D_004BD0A0, line);
 }
-extern "C" void ColScratch_Init(int a0, int a1, int a2, int a3) {
+extern "C" void nCollision_InitStatics(int a0, int a1, int a2, int a3) {
     if (!D_00542CC8) {
         ScrA* p = (ScrA*)AllocL(0x10, 0x2E);
         if (p) {
             int n = a0;
             std_vector_cCollisionFace_ctor(p);
-            Vector_Reserve_139920_Thunk(p, cArrayCapacity_Int(&n));
+            std_vector_cCollisionFace_reserve(p, cArrayCapacity_Int(&n));
             p->bC = 1;
         }
         D_00542CC8 = p;
@@ -302,7 +302,7 @@ extern "C" void ColScratch_Init(int a0, int a1, int a2, int a3) {
         if (p) {
             int n = a0;
             std_vector_cCollisionFace_ctor(p);
-            Vector_Reserve_139920_Thunk(p, cArrayCapacity_Int(&n));
+            std_vector_cCollisionFace_reserve(p, cArrayCapacity_Int(&n));
             p->bC = 1;
         }
         D_00542CD0 = p;
@@ -311,8 +311,8 @@ extern "C" void ColScratch_Init(int a0, int a1, int a2, int a3) {
         ScrA* p = (ScrA*)AllocL(0x10, 0x34);
         if (p) {
             int n = a1;
-            HumanColBufB_Init(p);
-            HumanColBufB_Reserve(p, cArrayCapacity_Int(&n));
+            std_vector_cCollisionEdge_ctor(p);
+            std_vector_cCollisionEdge_reserve(p, cArrayCapacity_Int(&n));
             p->bC = 1;
         }
         D_00542CD8 = p;

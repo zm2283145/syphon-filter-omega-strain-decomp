@@ -8,7 +8,7 @@
 
 
 extern "C" {
-int Mem_Free(...);                     
+int cMemMan_Deallocate(...);                     
 int cHogFile_dtor(...);                         
 extern char D_0049AE60;
 extern unsigned char g_ProfileLockEnabled;
@@ -24,7 +24,7 @@ extern "C" void std_list_deleter_cHogFile_erase_listdeleter(void ***arg0, int *a
     if (temp_s0 != NULL) {
         {
             AllocGuard g;
-        Mem_Free(0, temp_s0, &D_0049AE60, 0x64);
+        cMemMan_Deallocate(0, temp_s0, &D_0049AE60, 0x64);
         }
     }
     *arg1 -= 1;

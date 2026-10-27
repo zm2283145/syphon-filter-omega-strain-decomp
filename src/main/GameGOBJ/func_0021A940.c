@@ -33,8 +33,8 @@ typedef struct { char p0[0x10]; int target; char p14[0x2C - 0x14]; unsigned char
 extern "C" unsigned char g_IsMultiplayer;
 extern "C" char g_cDisableMsgClass[];
 extern "C" char D_004E0860[];
-extern "C" void Event_Construct(C1Msg_21A9* m, void* type);
-extern "C" void NetMsg_Send(C1Msg_21A9* m, int target, int x);
+extern "C" void cMessage_ctor_cMessageNameR(C1Msg_21A9* m, void* type);
+extern "C" void cDisableMsg_SendDisabled(C1Msg_21A9* m, int target, int x);
 extern "C" void cMessage_dtor(C1Msg_21A9* m, int flags);
 #pragma opt_strength_reduction off
 extern "C" void cGameGOBJ_Disable(C1Obj_21A9* o)
@@ -42,11 +42,11 @@ extern "C" void cGameGOBJ_Disable(C1Obj_21A9* o)
     int i;
     if (g_IsMultiplayer) {
         C1Msg_21A9 msg;
-        Event_Construct(&msg, g_cDisableMsgClass);
+        cMessage_ctor_cMessageNameR(&msg, g_cDisableMsgClass);
         msg.vtbl = D_004E0860;
         msg.id = -1;
         msg.size = 0x40;
-        NetMsg_Send(&msg, o->target, -1);
+        cDisableMsg_SendDisabled(&msg, o->target, -1);
         msg.vtbl = D_004E0860;
         cMessage_dtor(&msg, 0);
     }

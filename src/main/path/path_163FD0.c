@@ -25,7 +25,7 @@ static inline int Pending0(CxHpList*l){CxHpIt temp;temp.link=l->head;return Pend
 /* Nested iterator conversion preserves separate temporary lifetimes. */
 static inline void Conv0(CxHpIt*out,CxHpList*l){CxHp_Conv(out,l);}
 static inline void Conv1(CxHpIt*out,CxHpList*l){Conv0(out,l);}
-extern "C" int NpcRoute_IsHeadPending(CxHpManager* self,CxHpActor* actor){
+extern "C" int cPathSystem_IsRequestBeingProcessed(CxHpManager* self,CxHpActor* actor){
     int result=0;
     if(self->queue.count>0){
         int* serial=&actor->serial;

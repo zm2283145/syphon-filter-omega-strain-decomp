@@ -54,11 +54,11 @@ struct SkelNode {
     struct S150 { unsigned char b150, b151; float f154; V v160; float f170; } s150;
     V v180, v190, v1A0, v1B0, v1C0;
 };
-extern "C" void Xform_Construct(SkelNode* x);
-extern "C" SkelNode* SkelNode_Assign(SkelNode* d, SkelNode* s);
-SkelNode* SkelNode_Assign(SkelNode* d, SkelNode* s)
+extern "C" void cXformNode_ctor_void(SkelNode* x);
+extern "C" SkelNode* cBone_ctor_cBoneR(SkelNode* d, SkelNode* s);
+SkelNode* cBone_ctor_cBoneR(SkelNode* d, SkelNode* s)
 {
-    Xform_Construct(d);
+    cXformNode_ctor_void(d);
     d->fC0 = s->fC0;
     d->mD0 = s->mD0;
     d->m110 = s->m110;

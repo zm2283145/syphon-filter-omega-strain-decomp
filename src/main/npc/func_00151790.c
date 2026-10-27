@@ -2,7 +2,7 @@
 #pragma inline_depth(8)
 #include "types.h"
 #include "vslot_pad.h"
-/* NpcAi_LosCheckFromDestination: line-of-sight request from the route destination back to the NPC */
+/* cNPC_CheckLOSDestinationFromTarget: line-of-sight request from the route destination back to the NPC */
 static inline void Q16(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
 struct V { float x, y, z, w; V() {} V(const V& o) { V* d = this; Q16(d, &o); } V& operator=(const V& o) { V* d = this; Q16(d, &o); return *this; } } __attribute__((aligned(16)));
 static inline void VSub(V* r, V* a, V* b) { __asm__ volatile("lqc2 vf1, 0x0(%1); lqc2 vf2, 0x0(%2); vsub.xyzw vf1, vf1, vf2; sqc2 vf1, 0x0(%0)" : : "r"(r), "r"(a), "r"(b) : "memory"); }
@@ -12,17 +12,17 @@ struct Route_1790 { char pad0[0x58]; int node; char pad5C[0x74 - 0x5C]; V* dest;
 struct Npc_1790 { char pad0[0x68]; unsigned int flags; char pad6C[0x1AC - 0x6C]; V* pos; Route_1790* route; };
 extern "C" {
 extern char D_004D9180[], g_Game[], g_LosRequestMsgClass[], g_LosCheckService[];
-void Event_Construct(void*, void*);
+void cMessage_ctor_cMessageNameR(void*, void*);
 void cMessage_dtor(void*, int);
-Svc* Service_Lookup(void*, void*);
-PathNode_1790* NpcPath_GetNode(int i);
-unsigned char NpcAi_LosCheckFromDestination(Npc_1790* n);
+Svc* cSystemContainer_GetSystem(void*, void*);
+PathNode_1790* cAIPathData_GetNode(int i);
+unsigned char cNPC_CheckLOSDestinationFromTarget(Npc_1790* n);
 }
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
 struct MsgB {
     void* vtable; void* type; int pad8[5]; int flags; unsigned char kind; char pad21[3];
     MsgB() {}
-    MsgB(void* t) { Event_Construct(this, t); }
+    MsgB(void* t) { cMessage_ctor_cMessageNameR(this, t); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); }
 };
 struct MsgLos : MsgB {
@@ -56,7 +56,7 @@ static inline int IsZeroXYZ(const V* v)
 }
 static inline void Q16b(void* d, const void* s) { __int128 q; asm volatile { lq q, 0(s); sq q, 0(d) } }
 static inline V* DestOf(Route_1790* r) { return r->dest ? r->dest : 0; }
-unsigned char NpcAi_LosCheckFromDestination(Npc_1790* n)
+unsigned char cNPC_CheckLOSDestinationFromTarget(Npc_1790* n)
 {
     unsigned char ok = 0;
     V from = *n->pos;
@@ -64,9 +64,9 @@ unsigned char NpcAi_LosCheckFromDestination(Npc_1790* n)
     Q16b(&d, DestOf(n->route));
     VSub(&d, &d, &from);
     from.z += 4.5f;
-    if (n->route->node >= 0 && (NpcPath_GetNode(n->route->node)->flags & 4)) d.z -= 3.0f;
+    if (n->route->node >= 0 && (cAIPathData_GetNode(n->route->node)->flags & 4)) d.z -= 3.0f;
     if (!IsZeroXYZ(&d)) {
-        Svc* svc = Service_Lookup(g_Game, g_LosCheckService);
+        Svc* svc = cSystemContainer_GetSystem(g_Game, g_LosCheckService);
         {
             MsgLos m(n, 0, from, d);
             ok = svc->Post(&m);

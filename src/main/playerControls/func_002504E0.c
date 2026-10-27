@@ -6,8 +6,8 @@ extern "C" {
 extern signed char D_004E1D88;
 extern V4 D_004E1D90;
 extern float D_004A7570[2];
-void PrioritySet_Init(void* p, int v);
-void Selector_Init(void* p, int v);
+void cModeSwitch_12_ctor_uint_2(void* p, int v);
+void cModeSwitch_2_ctor(void* p, int v);
 void std_list_deleter_cSafePtr_cGOBJ_ctor(void* l);
 }
 static inline V4* Vec4_Zero(void) {
@@ -68,7 +68,7 @@ struct InputState {
 };
 
 
-extern "C" InputState* InputState_Ctor(InputState* self)
+extern "C" InputState* cPlayerControls_ctor(InputState* self)
 {
     int i;
     self->b0 = 0;
@@ -82,8 +82,8 @@ extern "C" InputState* InputState_Ctor(InputState* self)
     self->b24 = 0; self->b25 = 0; self->b26 = 0; self->b27 = 0;
     { volatile int none = -1; self->w28 = none; }
     self->b2C = 0; self->b2D = 0;
-    { PS* p = self->ps; PrioritySet_Init(p, 0); PrioritySet_Init(p + 1, 0); PrioritySet_Init(p + 2, 0); }
-    { SL* p = self->sl; Selector_Init(p, 0); Selector_Init(p + 1, 0); Selector_Init(p + 2, 0); }
+    { PS* p = self->ps; cModeSwitch_12_ctor_uint_2(p, 0); cModeSwitch_12_ctor_uint_2(p + 1, 0); cModeSwitch_12_ctor_uint_2(p + 2, 0); }
+    { SL* p = self->sl; cModeSwitch_2_ctor(p, 0); cModeSwitch_2_ctor(p + 1, 0); cModeSwitch_2_ctor(p + 2, 0); }
     self->v60 = *Vec4_Zero();
     self->v70 = *Vec4_Zero();
     self->f80 = 0.0f;

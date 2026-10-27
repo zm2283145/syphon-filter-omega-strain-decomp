@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-extern int String_CStr(int);
+extern int std_basic_string_char_char_traits_char_c_str(int);
 
-int String_CStr_Thunk(int a0) {
-    return String_CStr(a0);
+int cString_opCast_constcharPtr(int a0) {
+    return std_basic_string_char_char_traits_char_c_str(a0);
 }
 
 void* details_compressed_pair_imp_rep_s_2_first_void(void* self) {

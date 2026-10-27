@@ -62,14 +62,14 @@ typedef struct T2ED680 {
     int f58; int f5C; E2ED680 *arr; int f64; int f68; int now; int f70; int f74; int f78[3];
 } T2ED680;
 typedef struct { char p[0x50]; int f50; int f54; } X2ED680;
-extern void Net_AllocZeroed(void *, unsigned long);
+extern void rt_memory_allocate_init_zero(void *, unsigned long);
 extern void *memset(void *, int, unsigned int);
 T2ED680 *CreateGrid(int a, T2ED680 *list, int b, int cap)
 {
     T2ED680 *p = 0;
     int now;
     int i;
-    Net_AllocZeroed(&p, 0x84);
+    rt_memory_allocate_init_zero(&p, 0x84);
     if (p != 0) {
     now = GetCurrentTimeMs();
     p->a = a;
@@ -84,7 +84,7 @@ T2ED680 *CreateGrid(int a, T2ED680 *list, int b, int cap)
     p->c = 0;
     p->f58 = cap;
     p->f5C = p->f58 ? p->f58 : 0x20;
-    Net_AllocZeroed(&p->arr, (unsigned int)(p->f5C * sizeof(E2ED680)));
+    rt_memory_allocate_init_zero(&p->arr, (unsigned int)(p->f5C * sizeof(E2ED680)));
     for (i = 0; i < p->f5C; i++)
         p->arr[i].time = now;
     memset(p->f78, 0, 12);

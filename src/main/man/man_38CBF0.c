@@ -22,7 +22,7 @@ typedef struct {
     short x2d96;
 } F38CBF0;
 extern void DELAY_DELETE_ARRAY(void*);
-void ActorModel_Deactivate(F38CBF0* p)
+void cMan_UnDead(F38CBF0* p)
 {
     int i;
     p->x2c08 = 0;
@@ -43,9 +43,9 @@ static inline void merge_flush_func_0038CBF0(void) {}
 #pragma push /* merge_units */
 #include "fileman_entry.h"
 extern void* cFileMan_EncodeFilename_charP_cFileIOP_bool(void* entry, const char* name, int a, int b);
-extern int Fstream_GetLoader(void);
-extern int Fstream_ReleaseNoCallback(int mgr, void* entry, int flag);
-extern void Tex_Release(int mgr, int handle, int flags);
+extern int GetFileStreamMan(void);
+extern int cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(int mgr, void* entry, int flag);
+extern void cTexMan_RemoveTexture(int mgr, int handle, int flags);
 extern int g_TextureMgr;
 typedef struct {
     char name[0x3C0];
@@ -62,12 +62,12 @@ void ActorModel_Release(Cc70Obj* self)
     if (self->dirty) {
         FileManEntry e;
         char path[0x100];
-        Resource_Construct(&e);
+        cFileMan_ctor_void(&e);
         sprintf(path, "%s.HOG", self);
         cFileMan_EncodeFilename_charP_cFileIOP_bool(&e, path, 0, 0);
-        Fstream_ReleaseNoCallback(Fstream_GetLoader(), &e, 1);
+        cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(GetFileStreamMan(), &e, 1);
         self->dirty = 0;
-        FileMan_Release(&e, -1);
+        cFileMan_dtor(&e, -1);
     }
     if (self->state < 0) {
         self->state = -2;
@@ -75,8 +75,8 @@ void ActorModel_Release(Cc70Obj* self)
         int mgr = g_TextureMgr;
         int i;
         for (i = 0; i < self->count; i++) {
-            if (self->cur[i] != self->prev[i]) Tex_Release(mgr, self->prev[i], 0);
-            Tex_Release(mgr, self->cur[i], 0);
+            if (self->cur[i] != self->prev[i]) cTexMan_RemoveTexture(mgr, self->prev[i], 0);
+            cTexMan_RemoveTexture(mgr, self->cur[i], 0);
         }
         self->state = -3;
     }

@@ -82,9 +82,9 @@ static const float dat_00499B18[20] = { 1.5703125f, 0.00045776368f, 2.5987624e-5
 #define init_jk ((const int*)dat_00499B08)
 #define PIo2 ((const float*)dat_00499B18)
 extern float scalbnf(float x, int n);
-extern float Math_Floorf(float x);
+extern float Libc_Floorf(float x);
 #define scalbnf scalbnf
-#define floorf Math_Floorf
+#define floorf Libc_Floorf
 int Math_RemPio2Kernel(float *x, float *y, int e0, int nx, int prec, const int *ipio2)
 {
 	const float
@@ -271,7 +271,7 @@ static const float T[] = {
 	-1.8558636e-5f,
 	2.5907306e-5f,
 };
-extern float Math_Fabsf(float x);
+extern float Libc_Fabsf(float x);
 float Math_TanKernel(float x, float y, int iy)
 {
 	const float
@@ -284,7 +284,7 @@ float Math_TanKernel(float x, float y, int iy)
 	ix = hx&0x7fffffff;
 	if(ix<0x31800000)
 	    {if((int)x==0) {
-		if((ix|(iy+1))==0) return one/Math_Fabsf(x);
+		if((ix|(iy+1))==0) return one/Libc_Fabsf(x);
 		else return (iy==1)? x: -one/x;
 	    }
 	    }

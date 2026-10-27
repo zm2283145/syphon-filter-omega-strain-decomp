@@ -7,8 +7,8 @@ typedef struct String3 {
 } String3;
 
 extern int strlen(const char* s); /* strlen */
-extern void String_Reserve(String3* str, int len);
-extern void String_Replace(String3* str, int a, int b, const char* first, const char* last, signed char tag);
+extern void std_basic_string_char_char_traits_char_reserve(String3* str, int len);
+extern void std_basic_string_char_char_traits_char_do_replace(String3* str, int a, int b, const char* first, const char* last, signed char tag);
 
 /* String constructor from a C string. */
 String3* func_002A7070(String3* str, const char* s) {
@@ -18,7 +18,7 @@ String3* func_002A7070(String3* str, const char* s) {
     str->end = 0;
     str->cap = 0;
     len = strlen(s);
-    String_Reserve(str, len);
-    String_Replace(str, 0, 0, s, s + len, tag[0]);
+    std_basic_string_char_char_traits_char_reserve(str, len);
+    std_basic_string_char_char_traits_char_do_replace(str, 0, 0, s, s + len, tag[0]);
     return str;
 }

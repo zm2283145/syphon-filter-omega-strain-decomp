@@ -49,9 +49,9 @@ struct A_1977F0 {
 };
 
 extern "C" {
-int Inventory_GetEquipMode(Inv_1977F0* inv);
-unsigned char WeaponInv_GetHeldClass(Inv_1977F0* inv);
-void Actor_ApplySecondaryMode(void* s, int mode);
+int cWeapon_GetPoseType(Inv_1977F0* inv);
+unsigned char cWeapon_GetEquipmentType(Inv_1977F0* inv);
+void cHumanIkRoutine_SetAimWeaponMode(void* s, int mode);
 }
 
 static inline unsigned char CtlBit9_1977F0(A_1977F0* a)
@@ -88,7 +88,7 @@ static inline bool Loaded_1977F0(Inv_1977F0* w)
     return !(w->v18 == -1) && w->b84 == 0;
 }
 
-extern "C" void Actor_ChooseSecondaryMode(A_1977F0* a, unsigned char want)
+extern "C" void cHuman_AimWeapon(A_1977F0* a, unsigned char want)
 {
     bool melee;
     unsigned char swimAim;
@@ -101,8 +101,8 @@ extern "C" void Actor_ChooseSecondaryMode(A_1977F0* a, unsigned char want)
     bool hold;
     int mode;
     unsigned char k;
-    eq = Inventory_GetEquipMode(a->inv);
-    melee = WeaponInv_GetHeldClass(a->inv) == 1;
+    eq = cWeapon_GetPoseType(a->inv);
+    melee = cWeapon_GetEquipmentType(a->inv) == 1;
     water = a->state == 8 || a->state == 0x10;
     swimAim = 0;
     if (Swim9_1977F0(a) && (a->flags3204 & 1)) swimAim = 1;
@@ -178,7 +178,7 @@ extern "C" void Actor_ChooseSecondaryMode(A_1977F0* a, unsigned char want)
         } else if (water) {
             mode = 1;
         } else {
-            switch (WeaponInv_GetHeldClass(a->inv)) {
+            switch (cWeapon_GetEquipmentType(a->inv)) {
             case 3: mode = 0x11; break;
             case 4: mode = 0x12; break;
             case 10: mode = 0x13; break;
@@ -200,7 +200,7 @@ extern "C" void Actor_ChooseSecondaryMode(A_1977F0* a, unsigned char want)
     }
 done:
 
-    if (a->secondary) Actor_ApplySecondaryMode(a->secondary, mode);
+    if (a->secondary) cHumanIkRoutine_SetAimWeaponMode(a->secondary, mode);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001977F0(void) {}

@@ -4,8 +4,8 @@
 
 #include "gobj_types.h"
 
-extern int PathObj_CreateInfoObject(Mover* obj);
+extern int cPathedGOBJ_CreatePathedGobjInfo(Mover* obj);
 
-int cPathedGOBJ_v3D(Mover* obj) {
-    return PathObj_CreateInfoObject(obj);
+int cPathedGOBJ_InitNetwork(Mover* obj) {
+    return cPathedGOBJ_CreatePathedGobjInfo(obj);
 }

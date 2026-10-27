@@ -3,7 +3,7 @@ typedef struct { unsigned char m; unsigned char t; unsigned char f; unsigned cha
 typedef struct { int v; int z; } Cor;
 typedef struct { Light l[256]; Cor c[1]; } Big;
 typedef struct { char pad[0x4C]; int n; int nc; char* buf; char pad58[8]; char d[1]; } LightMgr;
-static inline void Dma_StartToSpr(int sadr, int madr, int qwc)
+static inline void FASTDMA_ToSPR(int sadr, int madr, int qwc)
 {
     *(volatile int*)0x1000D420 = qwc;
     *(volatile int*)0x1000D480 = sadr;
@@ -11,17 +11,17 @@ static inline void Dma_StartToSpr(int sadr, int madr, int qwc)
     *(volatile int*)0x1000D400 = 0x100;
     __asm__ volatile ("sync");
 }
-static inline void Dma_WaitToSpr(void)
+static inline void FASTDMA_Wait_ToSPR(void)
 {
     while (*(volatile int*)0x1000D400 & 0x100)
         ;
 }
-void LightMgr_CollectCoronas(LightMgr* m, int a, int b, int c)
+void cLightMan_AquireSourcesByProperty(LightMgr* m, int a, int b, int c)
 {
     int i;
     Light* l;
-    Dma_StartToSpr((int)m->buf, (int)m->d, m->n * 2);
-    Dma_WaitToSpr();
+    FASTDMA_ToSPR((int)m->buf, (int)m->d, m->n * 2);
+    FASTDMA_Wait_ToSPR();
     m->nc = 0;
     for (i = 0; i < m->n; i++) {
         l = (Light*)(m->buf + i * 32);

@@ -17,11 +17,11 @@
 
 
 extern void* g_WeaponDatabase; /* weapon definition table */
-extern int Actor_SetHealth(void* gobj, int hitpoints, int unk);
+extern int cGOBJ_SetHitpoints(void* gobj, int hitpoints, int unk);
 
 /* Sets the hitpoints of the tank's game object. */
 int cTank_SetHitpoints(cTank* tank, int hitpoints) {
-    return Actor_SetHealth(tank->gobj, hitpoints, 0);
+    return cGOBJ_SetHitpoints(tank->gobj, hitpoints, 0);
 }
 
 /* Selects the turret weapon (no-op without a turret). */
@@ -32,7 +32,7 @@ void cTank_SetWeapon(cTank* tank, int weaponId) {
         void* table = g_WeaponDatabase;
 
         turret->weaponId = weaponId;
-        turret->weaponDef = WeaponDb_Get(table, weaponId);
+        turret->weaponDef = cWeaponDB_GetEntry(table, weaponId);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

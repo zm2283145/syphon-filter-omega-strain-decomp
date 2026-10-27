@@ -9,8 +9,8 @@ extern int rt_udp_get_send_header(ScfNode *node, ScfHdr *out);
 extern int rt_udp_get_packet_header(ScfNode *node, ScfHdr *out);
 extern int rt_udp_get_packet_data(ScfNode *node, ScfBlk64 **data, int *size);
 extern int rt_udp_set_packet_seed(ScfNode *node, int v);
-extern int RtUdp_BuildHeader(ScfSock *s, ScfPeer *e, int kind, ScfHdr *hd);
-extern int RtUdp_CopyPacket(ScfPeer *e, ScfHdr *hd, ScfBlk64 *data, int len);
+extern int rt_udp_setup_packet_header(ScfSock *s, ScfPeer *e, int kind, ScfHdr *hd);
+extern int rt_udp_buffer_data_for_send(ScfPeer *e, ScfHdr *hd, ScfBlk64 *data, int len);
 
 int rt_udp_send_peerkey(ScfSock *s, ScfPeer *e, ScfBlk64 *data)
 {
@@ -34,12 +34,12 @@ int rt_udp_send_peerkey(ScfSock *s, ScfPeer *e, ScfBlk64 *data)
         *dst = *data;
         return 0;
     }
-    if (RtUdp_BuildHeader(s, e, 4, &hd) != 0) {
+    if (rt_udp_setup_packet_header(s, e, 4, &hd) != 0) {
         e->type = 6;
         return 7;
     }
     hd.flags |= 0x40;
     hd.id |= 0x80;
     hd.len = 0x40;
-    return RtUdp_CopyPacket(e, &hd, data, 0x40);
+    return rt_udp_buffer_data_for_send(e, &hd, data, 0x40);
 }

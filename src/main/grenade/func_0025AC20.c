@@ -10,7 +10,7 @@
 extern char D_005716C0[];   /* default resource */
 
 /* Vtable slot +0x88: resource for the projectile, or the default one. */
-char* ThrownProjectile_GetBounds(Grenade* self) {
+char* cGrenade_GetBBox(Grenade* self) {
     char* res = self->def->unk13C;
 
     if (res != 0) {

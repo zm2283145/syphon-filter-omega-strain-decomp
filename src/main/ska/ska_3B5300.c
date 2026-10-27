@@ -18,7 +18,7 @@ static inline void merge_flush_func_003B5300(void) {}
 
 /* merge_units: begin func_003B5310 */
 #pragma push /* merge_units */
-void Skas_AppendAnimation(int a, void* str, unsigned int* desc); /* gsynth: defined below */
+void cSkaAnimationSet_AddAnimation_cStringR_cSkaAnimDataR(int a, void* str, unsigned int* desc); /* gsynth: defined below */
 #pragma cplusplus on
 #include "alloc_guard.h"
 typedef struct { unsigned int word; unsigned int length; char* data; } Str_5310;
@@ -26,17 +26,17 @@ struct Buf_5310 { char* p; };
 typedef struct { int a; char name[1]; } File_5310;
 typedef struct { char pad[0x14]; char list[1]; } Self_5310;
 extern "C" {
-int FileMan_FindMember(File_5310* f);
-int FileMan_GetSize(File_5310* f);
-int FileMan_LoadMemberSync(File_5310* f, char** buf, int size);
+int cFileMan_Open(File_5310* f);
+int cFileMan_GetSize(File_5310* f);
+int cFileMan_Read_charPP_int(File_5310* f, char** buf, int size);
 void cFileMan_Close(File_5310* f);
-void* Mem_Alloc(int a, int size, char* file, int line);
-void String_CtorCStr_13B480(Str_5310* s, char* c);
+void* cMemMan_Allocate(int a, int size, char* file, int line);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_5310* s, char* c);
 void String_Dtor(Str_5310* s, int f);
 #if 0 /* merge_units */
-void Skas_AppendAnimation(Self_5310* self, Str_5310* s, char* buf);
+void cSkaAnimationSet_AddAnimation_cStringR_cSkaAnimDataR(Self_5310* self, Str_5310* s, char* buf);
 #endif /* merge_units */
-#define Skas_AppendAnimation(a0, a1, a2) (Skas_AppendAnimation((int)(a0), (void *)(a1), (unsigned int *)(a2))) /* merge_units */
+#define cSkaAnimationSet_AddAnimation_cStringR_cSkaAnimDataR(a0, a1, a2) (cSkaAnimationSet_AddAnimation_cStringR_cSkaAnimDataR((int)(a0), (void *)(a1), (unsigned int *)(a2))) /* merge_units */
 
 void std_vector_charPtr_push_back_charPR(void* list, struct Buf_5310* buf);
 extern char D_004BCD70;
@@ -83,24 +83,24 @@ extern "C" void cSkaAnimationSet_AddAnimation_cFileManR(Self_5310* self, File_53
     Buf_5310 tmp;
     int size;
     int r;
-    if (FileMan_FindMember(f) & 0xFF) return;
-    size = FileMan_GetSize(f);
-    { char* p; { AllocGuard g; p = (char*)Mem_Alloc(0, size, &D_004BCD70, 0x1A3); } buf.p = p; }
+    if (cFileMan_Open(f) & 0xFF) return;
+    size = cFileMan_GetSize(f);
+    { char* p; { AllocGuard g; p = (char*)cMemMan_Allocate(0, size, &D_004BCD70, 0x1A3); } buf.p = p; }
     if (!buf.p) return;
     tmp = buf;
-    r = FileMan_LoadMemberSync(f, &tmp.p, size);
+    r = cFileMan_Read_charPP_int(f, &tmp.p, size);
     cFileMan_Close(f);
     if (r & 0xFF) return;
     { char* dst; char* src = tmp.p; dst = buf.p; if (src != dst) MemCopy_5310(dst, src, size); }
     {
         Str_5310 s;
-        String_CtorCStr_13B480(&s, f->name);
-        Skas_AppendAnimation(self, &s, buf.p);
+        std_basic_string_char_char_traits_char_ctor_charP(&s, f->name);
+        cSkaAnimationSet_AddAnimation_cStringR_cSkaAnimDataR(self, &s, buf.p);
         String_Dtor(&s, 0);
     }
     std_vector_charPtr_push_back_charPR(self->list, &buf);
 }
-#undef Skas_AppendAnimation /* merge_units */
+#undef cSkaAnimationSet_AddAnimation_cStringR_cSkaAnimDataR /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B5310(void) {}
 #pragma pop /* merge_units */
@@ -108,11 +108,11 @@ static inline void merge_flush_func_003B5310(void) {}
 
 /* merge_units: begin func_003B54C0 */
 #pragma push /* merge_units */
-extern int String_Length(void* s);
-extern char* String_CStr_Thunk(void* s);
-extern void Skas_RegisterClip(int* out, int a, char* name, unsigned int* desc);
+extern int cString_Length(void* s);
+extern char* cString_opCast_constcharPtr(void* s);
+extern void cSkaAnimationSet_CreateNode_cString16NR_cSkaAnimDataR(int* out, int a, char* name, unsigned int* desc);
 
-void Skas_AppendAnimation(int a, void* str, unsigned int* desc)
+void cSkaAnimationSet_AddAnimation_cStringR_cSkaAnimDataR(int a, void* str, unsigned int* desc)
 {
     int out;
     char buf[0x30];
@@ -120,11 +120,11 @@ void Skas_AppendAnimation(int a, void* str, unsigned int* desc)
         int i;
         for (i = 0; i < 0x2F; i++) {
             char c;
-            if (i < String_Length(str)) c = String_CStr_Thunk(str)[i]; else c = 0;
+            if (i < cString_Length(str)) c = cString_opCast_constcharPtr(str)[i]; else c = 0;
             buf[i] = c;
         }
         buf[i] = 0;
-        Skas_RegisterClip(&out, a, buf, desc);
+        cSkaAnimationSet_CreateNode_cString16NR_cSkaAnimDataR(&out, a, buf, desc);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -147,50 +147,50 @@ typedef struct { Src_5580* s; unsigned int pos; unsigned char empty; } Tok_5580;
 typedef struct { unsigned int cap; unsigned int count; int* data; } Vec_5580;
 typedef struct { float f0; Vec_5580 keys; char pad10[0x24]; Vec_5580 clips; } Skas_5580;
 #if 0 /* merge_units */
-extern void String_CtorCStr_13B480(StrP_5580* s, char* c);
+extern void std_basic_string_char_char_traits_char_ctor_charP(StrP_5580* s, char* c);
 #endif /* merge_units */
-#define String_CtorCStr_13B480(a0, a1) (String_CtorCStr_13B480((Str_5310 *)(a0), (a1))) /* merge_units */
+#define std_basic_string_char_char_traits_char_ctor_charP(a0, a1) (std_basic_string_char_char_traits_char_ctor_charP((Str_5310 *)(a0), (a1))) /* merge_units */
 
-extern void String_AssignString(StrP_5580* d, StrP_5580* s);
+extern void std_basic_string_char_char_traits_char_assign_basicstringR(StrP_5580* d, StrP_5580* s);
 #if 0 /* merge_units */
 extern void String_Dtor(StrP_5580* s, int f);
 #endif /* merge_units */
 #define String_Dtor(a0, a1) (String_Dtor((Str_5310 *)(a0), (a1))) /* merge_units */
 
-extern void String_PushBack(StrP_5580* s, char c);
-extern int String_AssignCStr_1C43A0(StrP_5580* s, char* c);
-extern void String_CtorEmpty(Str2_5580* s);
+extern void std_basic_string_char_char_traits_char_opAddAssign(StrP_5580* s, char c);
+extern int std_basic_string_char_char_traits_char_compare_charP(StrP_5580* s, char* c);
+extern void cString_ctor_void(Str2_5580* s);
 extern void String_Dtor_138350(Str2_5580* s, int f);
 #if 0 /* merge_units */
 extern Tok_5580* cSkaAnimationSet_cMyIStream_opShr(Tok_5580* self, Str2_5580* out);
 #endif /* merge_units */
 #define cSkaAnimationSet_cMyIStream_opShr(a0, a1) ((Tok_5580 *)cSkaAnimationSet_cMyIStream_opShr((Tok_6150 *)(a0), (Str_6150 *)(a1))) /* merge_units */
 
-extern char* String_CStr_189540(Str2_5580* s);
+extern char* cString_CStr(Str2_5580* s);
 extern int atoi(char* s);
 extern long long atof(char* s);
 extern float SoftFloat_DoubleToFloat(long long a);
 #if 0 /* merge_units */
-extern int String_Length(StrP_5580* s);
+extern int cString_Length(StrP_5580* s);
 #endif /* merge_units */
-#define String_Length(a0) (String_Length((void *)(a0))) /* merge_units */
+#define cString_Length(a0) (cString_Length((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern char* String_CStr_Thunk(StrP_5580* s);
+extern char* cString_opCast_constcharPtr(StrP_5580* s);
 #endif /* merge_units */
-#define String_CStr_Thunk(a0) (String_CStr_Thunk((void *)(a0))) /* merge_units */
+#define cString_opCast_constcharPtr(a0) (cString_opCast_constcharPtr((void *)(a0))) /* merge_units */
 
-extern int Vector_Insert_22A360(Vec_5580* v, int* pos, int n, char* value);
+extern int std_vector_imp_cString4_insert(Vec_5580* v, int* pos, int n, char* value);
 extern void opAdd_cStringR_charP(StrP_5580* out, StrP_5580* a, char* b);
-extern char* String_CStr(StrP_5580* s);
+extern char* std_basic_string_char_char_traits_char_c_str(StrP_5580* s);
 extern unsigned int* cHogFile_GetBlock_charP_bool(void* o, char* name, int n);
 #if 0 /* merge_units */
-extern void Skas_RegisterClip(int* out, void* self, char* name, unsigned int* clip);
+extern void cSkaAnimationSet_CreateNode_cString16NR_cSkaAnimDataR(int* out, void* self, char* name, unsigned int* clip);
 #endif /* merge_units */
-#define Skas_RegisterClip(a0, a1, a2, a3) (Skas_RegisterClip((a0), (int)(a1), (a2), (a3))) /* merge_units */
+#define cSkaAnimationSet_CreateNode_cString16NR_cSkaAnimDataR(a0, a1, a2, a3) (cSkaAnimationSet_CreateNode_cString16NR_cSkaAnimDataR((a0), (int)(a1), (a2), (a3))) /* merge_units */
 
-extern void AnchorKeys_Reserve(Vec_5580* v, unsigned int n);
-extern void PtrVec_Reserve(Vec_5580* v, int n);
+extern void std_vector_imp_cString4_reserve(Vec_5580* v, unsigned int n);
+extern void std_vector_pod_int_reserve(Vec_5580* v, int n);
 extern char D_004BD008[];
 extern char D_00499C70[];
 extern char D_004BCD78[];
@@ -210,8 +210,8 @@ static inline void ReadToken(Tok_5580* self, StrP_5580* out)
     int started;
     {
         StrP_5580 t;
-        String_CtorCStr_13B480(&t, D_004BD008);
-        String_AssignString(out, &t);
+        std_basic_string_char_char_traits_char_ctor_charP(&t, D_004BD008);
+        std_basic_string_char_char_traits_char_assign_basicstringR(out, &t);
         String_Dtor(&t, 0);
     }
     started = 0;
@@ -222,7 +222,7 @@ static inline void ReadToken(Tok_5580* self, StrP_5580* out)
             if (!(unsigned char)started && !sp) started = 1;
             if ((unsigned char)started == 1) {
                 if (sp) break;
-                String_PushBack(out, c);
+                std_basic_string_char_char_traits_char_opAddAssign(out, c);
             }
         }
     }
@@ -233,9 +233,9 @@ static inline int ReadInt0(Tok_5580* tok)
 {
     int r;
     Str2_5580 t;
-    String_CtorEmpty(&t);
+    cString_ctor_void(&t);
     cSkaAnimationSet_cMyIStream_opShr(tok, &t);
-    r = atoi(String_CStr_189540(&t));
+    r = atoi(cString_CStr(&t));
     String_Dtor_138350(&t, -1);
     return r;
 }
@@ -243,9 +243,9 @@ static inline int ReadInt0(Tok_5580* tok)
 static inline void ReadFloat0(Tok_5580* tok, float* out)
 {
     Str2_5580 t;
-    String_CtorEmpty(&t);
+    cString_ctor_void(&t);
     cSkaAnimationSet_cMyIStream_opShr(tok, &t);
-    *out = SoftFloat_DoubleToFloat(atof(String_CStr_189540(&t)));
+    *out = SoftFloat_DoubleToFloat(atof(cString_CStr(&t)));
     String_Dtor_138350(&t, -1);
 }
 
@@ -254,7 +254,7 @@ static inline void ReadFloat(Tok_5580* tok, float* out) { ReadFloat0(tok, out); 
 
 #define RET return
 
-extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
+extern "C" void cSkaAnimationSet_InitWithSkasFile(Skas_5580* self, Tok_5580* tok, void* list)
 {
     char key[4];
     int clipRes;
@@ -274,18 +274,18 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
             switch (state) {
             case 0:
                 if (!tok->empty) {
-                    if (String_AssignCStr_1C43A0(&a, D_004BCD80) == 0) {
+                    if (std_basic_string_char_char_traits_char_compare_charP(&a, D_004BCD80) == 0) {
                         ReadToken(tok, &a);
-                        if (!tok->empty && String_AssignCStr_1C43A0(&a, D_004BCD90) == 0) state++;
+                        if (!tok->empty && std_basic_string_char_char_traits_char_compare_charP(&a, D_004BCD90) == 0) state++;
                         else RET;
                     } else {
-                        if (String_AssignCStr_1C43A0(&a, D_004BCDA0) == 0 || String_AssignCStr_1C43A0(&a, D_004BCDC0) == 0) RET;
+                        if (std_basic_string_char_char_traits_char_compare_charP(&a, D_004BCDA0) == 0 || std_basic_string_char_char_traits_char_compare_charP(&a, D_004BCDC0) == 0) RET;
                     }
                 } else RET;
                 break;
             case 1:
                 if (!tok->empty) {
-                    if (String_AssignCStr_1C43A0(&a, D_004BCDD0) == 0) {
+                    if (std_basic_string_char_char_traits_char_compare_charP(&a, D_004BCDD0) == 0) {
                         count = ReadInt(tok);
                         if (!tok->empty) {
                             state++;
@@ -294,21 +294,21 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
                         break;
                     }
                 } else RET;
-                if (String_AssignCStr_1C43A0(&a, D_004BCDA0) != 0) break;
+                if (std_basic_string_char_char_traits_char_compare_charP(&a, D_004BCDA0) != 0) break;
                 state++;            case 2:
                 if (!tok->empty) {
-                    if (String_AssignCStr_1C43A0(&a, D_004BCDA0) == 0) {
+                    if (std_basic_string_char_char_traits_char_compare_charP(&a, D_004BCDA0) == 0) {
                         ReadFloat(tok, &self->f0);
                         if (!tok->empty) state++;
                         else RET;
                     } else {
-                        if (String_AssignCStr_1C43A0(&a, D_004BCDC0) == 0) RET;
+                        if (std_basic_string_char_char_traits_char_compare_charP(&a, D_004BCDC0) == 0) RET;
                     }
                 } else RET;
                 break;
             case 3:
                 if (!tok->empty) {
-                    if (String_AssignCStr_1C43A0(&a, D_004BCDE0) == 0) {
+                    if (std_basic_string_char_char_traits_char_compare_charP(&a, D_004BCDE0) == 0) {
                         ReadToken(tok, &a);
                         if (!tok->empty) {
                             switch (pass) {
@@ -318,13 +318,13 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
                             case 1: {
                                 int i;
                                 for (i = 0; i < sizeof(key); i++)
-                                    key[i] = (i < String_Length(&a)) ? String_CStr_Thunk(&a)[i] : 0;
-                                Vector_Insert_22A360(&self->keys, self->keys.data + self->keys.count, 1, key);
+                                    key[i] = (i < cString_Length(&a)) ? cString_opCast_constcharPtr(&a)[i] : 0;
+                                std_vector_imp_cString4_insert(&self->keys, self->keys.data + self->keys.count, 1, key);
                                 break;
                             }
                             }
                         } else RET;
-                    } else if (String_AssignCStr_1C43A0(&a, D_004BCDC0) == 0) {
+                    } else if (std_basic_string_char_char_traits_char_compare_charP(&a, D_004BCDC0) == 0) {
                         ReadToken(tok, &a);
                         if (!tok->empty) {
                             switch (pass) {
@@ -334,28 +334,28 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
                             case 1: {
                                 unsigned int* clip;
                                 if (count > 0) {
-                                    String_AssignString(&c, &a);
+                                    std_basic_string_char_char_traits_char_assign_basicstringR(&c, &a);
                                     ReadToken(tok, &a);
                                 }
                                 opAdd_cStringR_charP(&tmp, &a, D_004BCD78);
-                                String_AssignString(&b, &tmp);
+                                std_basic_string_char_char_traits_char_assign_basicstringR(&b, &tmp);
                                 String_Dtor(&tmp, 0);
-                                clip = cHogFile_GetBlock_charP_bool(list, String_CStr(&b), 0);
+                                clip = cHogFile_GetBlock_charP_bool(list, std_basic_string_char_char_traits_char_c_str(&b), 0);
                                 if (!clip) RET;
                                 if (*clip > 3) RET;
                                 if (count > 0) {
                                     char name[0x30];
                                     int i;
                                     for (i = 0; i < 0x2F; i++)
-                                        name[i] = (i < String_Length(&c)) ? String_CStr_Thunk(&c)[i] : 0;
+                                        name[i] = (i < cString_Length(&c)) ? cString_opCast_constcharPtr(&c)[i] : 0;
                                     name[i] = 0;
-                                    Skas_RegisterClip(&clipRes, self, name, clip);
+                                    cSkaAnimationSet_CreateNode_cString16NR_cSkaAnimDataR(&clipRes, self, name, clip);
                                 }
                                 break;
                             }
                             }
                         } else RET;
-                    } else if (String_AssignCStr_1C43A0(&a, D_004BCD80) == 0 || String_AssignCStr_1C43A0(&a, D_004BCDA0) == 0) {
+                    } else if (std_basic_string_char_char_traits_char_compare_charP(&a, D_004BCD80) == 0 || std_basic_string_char_char_traits_char_compare_charP(&a, D_004BCDA0) == 0) {
                         RET;
                     }
                 }
@@ -363,19 +363,19 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
             }
         }
         if (pass == 0) {
-            AnchorKeys_Reserve(&self->keys, nKeys);
-            PtrVec_Reserve(&self->clips, nClips);
+            std_vector_imp_cString4_reserve(&self->keys, nKeys);
+            std_vector_pod_int_reserve(&self->clips, nClips);
             tok->pos = 0;
             tok->empty = 0;
         }
     }
 }
-#undef String_CtorCStr_13B480 /* merge_units */
+#undef std_basic_string_char_char_traits_char_ctor_charP /* merge_units */
 #undef String_Dtor /* merge_units */
 #undef cSkaAnimationSet_cMyIStream_opShr /* merge_units */
-#undef String_Length /* merge_units */
-#undef String_CStr_Thunk /* merge_units */
-#undef Skas_RegisterClip /* merge_units */
+#undef cString_Length /* merge_units */
+#undef cString_opCast_constcharPtr /* merge_units */
+#undef cSkaAnimationSet_CreateNode_cString16NR_cSkaAnimDataR /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B5580(void) {}
 #pragma pop /* merge_units */
@@ -384,14 +384,14 @@ static inline void merge_flush_func_003B5580(void) {}
 /* merge_units: begin func_003B6150 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern void String_CtorCStr_13B480(Str_6150* s, char* c);
+extern void std_basic_string_char_char_traits_char_ctor_charP(Str_6150* s, char* c);
 #endif /* merge_units */
-#define String_CtorCStr_13B480(a0, a1) (String_CtorCStr_13B480((void *)(a0), (a1))) /* merge_units */
+#define std_basic_string_char_char_traits_char_ctor_charP(a0, a1) (std_basic_string_char_char_traits_char_ctor_charP((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void String_AssignString(Str_6150* d, Str_6150* s);
+extern void std_basic_string_char_char_traits_char_assign_basicstringR(Str_6150* d, Str_6150* s);
 #endif /* merge_units */
-#define String_AssignString(a0, a1) (String_AssignString((void *)(a0), (void *)(a1))) /* merge_units */
+#define std_basic_string_char_char_traits_char_assign_basicstringR(a0, a1) (std_basic_string_char_char_traits_char_assign_basicstringR((void *)(a0), (void *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void String_Dtor(Str_6150* s, int f);
@@ -399,17 +399,17 @@ extern void String_Dtor(Str_6150* s, int f);
 #define String_Dtor(a0, a1) (String_Dtor((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void String_PushBack(Str_6150* s, char c);
+extern void std_basic_string_char_char_traits_char_opAddAssign(Str_6150* s, char c);
 #endif /* merge_units */
-#define String_PushBack(a0, a1) (String_PushBack((void *)(a0), (a1))) /* merge_units */
+#define std_basic_string_char_char_traits_char_opAddAssign(a0, a1) (std_basic_string_char_char_traits_char_opAddAssign((void *)(a0), (a1))) /* merge_units */
 
 Tok_6150* cSkaAnimationSet_cMyIStream_opShr(Tok_6150* self, Str_6150* out)
 {
     int started;
     {
         Str_6150 t;
-        String_CtorCStr_13B480(&t, D_004BD008);
-        String_AssignString(out, &t);
+        std_basic_string_char_char_traits_char_ctor_charP(&t, D_004BD008);
+        std_basic_string_char_char_traits_char_assign_basicstringR(out, &t);
         String_Dtor(&t, 0);
     }
     started = 0;
@@ -420,17 +420,17 @@ Tok_6150* cSkaAnimationSet_cMyIStream_opShr(Tok_6150* self, Str_6150* out)
             if (!(unsigned char)started && !sp) started = 1;
             if ((unsigned char)started == 1) {
                 if (sp) break;
-                String_PushBack(out, c);
+                std_basic_string_char_char_traits_char_opAddAssign(out, c);
             }
         }
     }
     self->empty = (unsigned char)started == 0;
     return self;
 }
-#undef String_CtorCStr_13B480 /* merge_units */
-#undef String_AssignString /* merge_units */
+#undef std_basic_string_char_char_traits_char_ctor_charP /* merge_units */
+#undef std_basic_string_char_char_traits_char_assign_basicstringR /* merge_units */
 #undef String_Dtor /* merge_units */
-#undef String_PushBack /* merge_units */
+#undef std_basic_string_char_char_traits_char_opAddAssign /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B6150(void) {}
 #pragma pop /* merge_units */
@@ -446,9 +446,9 @@ struct Desc_3B6270 { Key_3B6270* key; int n; unsigned char flag; };
 
 extern "C" {
 #if 0 /* merge_units */
-void Skas_Load(void* self, Desc_3B6270* d, void* arg);
+void cSkaAnimationSet_InitWithSkasFile(void* self, Desc_3B6270* d, void* arg);
 #endif /* merge_units */
-#define Skas_Load(a0, a1, a2) (Skas_Load((Skas_5580 *)(a0), (Tok_5580 *)(a1), (a2))) /* merge_units */
+#define cSkaAnimationSet_InitWithSkasFile(a0, a1, a2) (cSkaAnimationSet_InitWithSkasFile((Skas_5580 *)(a0), (Tok_5580 *)(a1), (a2))) /* merge_units */
 
 void cSkaAnimationSet_AddAllAnimationsFromSkaHog(void* self, void* arg);
 }
@@ -463,10 +463,10 @@ extern "C" void cSkaAnimationSet_InitWithSkasFile_And_AddAllAnimationsFromSkaHog
     d.key = &key;
     d.n = 0;
     d.flag = 0;
-    Skas_Load(self, &d, arg);
+    cSkaAnimationSet_InitWithSkasFile(self, &d, arg);
     cSkaAnimationSet_AddAllAnimationsFromSkaHog(self, arg);
 }
-#undef Skas_Load /* merge_units */
+#undef cSkaAnimationSet_InitWithSkasFile /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B6270(void) {}
 #pragma pop /* merge_units */

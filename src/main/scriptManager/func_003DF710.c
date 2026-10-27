@@ -7,7 +7,7 @@
 
 #include "types.h"
 #include "alloc_guard.h"
-/* ScriptEvent_Replay */
+/* cScriptInterpreter_callScheduledFunction */
 struct Pt2_ArgType { int type; };
 struct Pt2_Handler { char* name; char pad4[0xC]; Pt2_ArgType** argTypes; };
 struct Pt2_Interp { char pad[0x4EA0]; int ctx; };
@@ -15,25 +15,25 @@ struct Pt2_TInfo { char pad[0x45]; unsigned char owned; char pad46[6]; unsigned 
 struct Pt2_RObj { virtual void Destroy(int); };
 extern "C" {
 extern char D_004BD4C0[];
-void Script_InvalidArgNop(Pt2_Interp*, char*, char*);
-Pt2_TInfo* ScriptType_GetRecord(int);
-int ScriptFilter_ArgIsId(Pt2_Interp*, Pt2_Handler*, Pt2_TInfo*);
-int Script_LookupObjectById(int);
-int Script_CallHandler(Pt2_Interp*, Pt2_Handler*, int*, int);
-void Mem_Free(int, void*, char*, int);
+void cScriptInterpreter_error(Pt2_Interp*, char*, char*);
+Pt2_TInfo* cScriptBase_getClass(int);
+int cScriptInterpreter_UseIdInsteadOfPointer(Pt2_Interp*, Pt2_Handler*, Pt2_TInfo*);
+int cScriptInterpreter_getObjPtr(int);
+int cScriptInterpreter_callFunction(Pt2_Interp*, Pt2_Handler*, int*, int);
+void cMemMan_Deallocate(int, void*, char*, int);
 }
 static inline void Pt2_FreeObj(Pt2_RObj* o) {
     AllocGuard g;
     o->Destroy(-1);
-    Mem_Free(0, o, D_004BD4C0, 0x752);
+    cMemMan_Deallocate(0, o, D_004BD4C0, 0x752);
 }
 #pragma opt_strength_reduction off
-extern "C" int ScriptEvent_Replay(Pt2_Interp* in, Pt2_Handler* h, int* args, int n, int ctx) {
+extern "C" int cScriptInterpreter_callScheduledFunction(Pt2_Interp* in, Pt2_Handler* h, int* args, int n, int ctx) {
     int ret = 0;
     int j;
     int i;
     if (ctx >= 0 && ctx != in->ctx) {
-        Script_InvalidArgNop(in, "ignoring scheduled %s call (scheduled before reload)", h->name);
+        cScriptInterpreter_error(in, "ignoring scheduled %s call (scheduled before reload)", h->name);
     } else {
         i = 0;
         if (i < n) {
@@ -41,21 +41,21 @@ extern "C" int ScriptEvent_Replay(Pt2_Interp* in, Pt2_Handler* h, int* args, int
             do {
                 int t = h->argTypes[i]->type;
                 if (t >= 100) {
-                    Pt2_TInfo* ti = ScriptType_GetRecord(t);
-                    if (ti && ti->isObj && !ScriptFilter_ArgIsId(in, h, ti)) *a = Script_LookupObjectById(*a);
+                    Pt2_TInfo* ti = cScriptBase_getClass(t);
+                    if (ti && ti->isObj && !cScriptInterpreter_UseIdInsteadOfPointer(in, h, ti)) *a = cScriptInterpreter_getObjPtr(*a);
                 }
                 i++;
                 a++;
             } while (i < n);
         }
-        ret = Script_CallHandler(in, h, args, n);
+        ret = cScriptInterpreter_callFunction(in, h, args, n);
         j = 0;
         if (j < n) {
             
             do {
                 int t = h->argTypes[j]->type;
                 if (t >= 100) {
-                    Pt2_TInfo* ti = ScriptType_GetRecord(t);
+                    Pt2_TInfo* ti = cScriptBase_getClass(t);
                     if (ti && ti->owned) Pt2_FreeObj((Pt2_RObj*)*args);
                 }
                 j++;

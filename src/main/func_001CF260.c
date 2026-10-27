@@ -1,7 +1,7 @@
 #include "types.h"
 
 /* Sets all 16 matrix elements (row-major) and returns the matrix. */
-Mtx44* Mtx44_Set(Mtx44* m, float m00, float m01, float m02, float m03,
+Mtx44* cMatrix_ctor_float_float_float_float_etc(Mtx44* m, float m00, float m01, float m02, float m03,
                      float m10, float m11, float m12, float m13,
                      float m20, float m21, float m22, float m23,
                      float m30, float m31, float m32, float m33)

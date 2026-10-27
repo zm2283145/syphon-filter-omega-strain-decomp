@@ -6,12 +6,12 @@
 
 /* merge_units: begin func_0046AE58 */
 int D_00497E34 = 0;
-extern int Medius_TerminateString(char *, int);
+extern int iTerminateString_void_2(char *, int);
 extern int iCreateAndAllocateMessageID(char *, int, int, char *);
 int MediusCreateMessageID(char *a, int b, char *c)
 {
-    Medius_TerminateString(a, 0x11);
-    Medius_TerminateString(c, 0x15);
+    iTerminateString_void_2(a, 0x11);
+    iTerminateString_void_2(c, 0x15);
     iCreateAndAllocateMessageID(a, D_00497E34, b, c);
     if (D_00497E34 >= 0x3E7) D_00497E34 = 0;
     else D_00497E34 = D_00497E34 + 1;

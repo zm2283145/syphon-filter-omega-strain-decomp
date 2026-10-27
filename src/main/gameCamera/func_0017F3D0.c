@@ -12,7 +12,7 @@ typedef struct CurveBinding {
 } CurveBinding;
 
 /* Binds a curve and clears the second word. */
-CurveBinding* Curve_Bind(CurveBinding* b, int curve) {
+CurveBinding* cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_ctor(CurveBinding* b, int curve) {
     b->curve = curve;
     b->unk4 = 0;
     return b;

@@ -6,7 +6,7 @@
 
 /* merge_units: begin func_00319E00 */
 extern float D_004E1BCC;
-extern float Math_Cos(float x);
+extern float Libc_Cosf(float x);
 void WindowKernel(float *buf, int n, float a, float b)
 {
     int half = n >> 1;
@@ -15,7 +15,7 @@ void WindowKernel(float *buf, int n, float a, float b)
     float p2 = b;
     float k, p1, t, w;
     int i;
-    k = Math_Cos(D_004E1BCC / (float)(n - 1));
+    k = Libc_Cosf(D_004E1BCC / (float)(n - 1));
     p1 = k * b;
     k = k + k;
     w = a - b;

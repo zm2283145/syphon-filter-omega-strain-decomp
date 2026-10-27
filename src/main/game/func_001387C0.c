@@ -10,7 +10,7 @@
 extern char D_004DFD80[]; /* cMessage vtable */
 
 /* Copy constructor: sets the vtable and copies the payload fields from src. */
-cMessage* cMessage_ctor(cMessage* self, cMessage* src) {
+cMessage* cMessage_ctor_cMessageR(cMessage* self, cMessage* src) {
     self->vtable = D_004DFD80;
     self->args[0] = src->args[0];
     self->args[1] = src->args[1];

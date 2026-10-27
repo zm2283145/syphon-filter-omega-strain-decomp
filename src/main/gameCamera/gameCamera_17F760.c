@@ -83,7 +83,7 @@ ZERO_QUAD_STORE(cQuaternion_GetZero)
 #pragma push /* merge_units */
 #pragma push
 #pragma opt_common_subs off
-V4 Quat_SetIdentity(void) {
+V4 cQuaternion_GetIdentity(void) {
     V4 l0;
     V4* q1;
     q1 = &l0;

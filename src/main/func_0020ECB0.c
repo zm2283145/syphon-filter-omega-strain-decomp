@@ -11,7 +11,7 @@ typedef struct {
 } SoundEv_ECB0;
 extern char D_004F53D8[];
 extern char D_004DADF0[];
-extern Voice_ECB0* ActorRef_Copy(void* ref);
+extern Voice_ECB0* cSafePtr_cGOBJ_opCast_cGOBJPtr(void* ref);
 static inline void Req_Init(SoundRequest* p, int type, __int128 name, Voice_ECB0* voice, int x180) {
     int tmp; int* r;
     p->type = type;
@@ -23,18 +23,18 @@ static inline void Req_Init(SoundRequest* p, int type, __int128 name, Voice_ECB0
     p->x184 = -1;
     p->x180 = x180;
 }
-SoundEv_ECB0* SoundEvent_Ctor(SoundEv_ECB0* ev, Act_ECB0* act, unsigned char flags) {
+SoundEv_ECB0* cStopSoundMsg_ctor_cSndFxR_bool(SoundEv_ECB0* ev, Act_ECB0* act, unsigned char flags) {
     SoundRequest* p;
-    Event_Construct(ev, D_004F53D8);
+    cMessage_ctor_cMessageNameR(ev, D_004F53D8);
     ev->vtable = D_004DADF0;
     p = &ev->req;
     p->voiceId = -2;
     p->voice = 0;
-    Resource_Construct(&p->a);
-    Resource_Construct(&p->b);
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
     ev->evflags = flags;
-    Req_Init(&ev->req, act->type, act->name, ActorRef_Copy(act->ref), 0);
+    Req_Init(&ev->req, act->type, act->name, cSafePtr_cGOBJ_opCast_cGOBJPtr(act->ref), 0);
     return ev;
 }

@@ -43,13 +43,13 @@ extern char** D_004F7C70;
 extern int D_004F7C78;
 extern int D_004F7C80;
 extern int D_0048AE28;
-void Resource_Construct(void* m);
-void SoundAction_CtorVoice(void* action, int kind, char* name, Owner_239610* owner, int x);
+void cFileMan_ctor_void(void* m);
+void cSndFx_SetSndFx(void* action, int kind, char* name, Owner_239610* owner, int x);
 }
 static inline float RdF(Reader_239610* r){ float t = *(float*)r->cur; r->cur += 4; return t; }
 #pragma push
 #pragma opt_propagation off
-extern "C" Track_239610* NiEventType4_CtorFromStream(Track_239610* self, Reader_239610* r, Owner_239610* o)
+extern "C" Track_239610* cStopSndFXKey_ctor(Track_239610* self, Reader_239610* r, Owner_239610* o)
 {
     P_239610* p;
     int id;
@@ -61,8 +61,8 @@ extern "C" Track_239610* NiEventType4_CtorFromStream(Track_239610* self, Reader_
     *(int*)((char*)self + 0x34) = -2;
     *(int*)((char*)self + 0x30) = 0;
     p = &self->snd;
-    Resource_Construct(p->memberA);
-    Resource_Construct(p->memberB);
+    cFileMan_ctor_void(p->memberA);
+    cFileMan_ctor_void(p->memberB);
     p->id = -1;
     p->mask = -1;
     p->w20 = 0;
@@ -81,7 +81,7 @@ extern "C" Track_239610* NiEventType4_CtorFromStream(Track_239610* self, Reader_
     {
         int k = (int)*(float*)r->cur;
         r->cur += 4;
-        SoundAction_CtorVoice(&self->snd, k, name, o, 0);
+        cSndFx_SetSndFx(&self->snd, k, name, o, 0);
     }
     return self;
 }
@@ -104,19 +104,19 @@ typedef struct {
 } Msg00239780;
 extern char g_Game[];
 extern char D_004DAE30[];
-extern void SoundEvent_CtorFromPreset(Msg00239780* m, void* preset, void* a);
-extern void Event_Send(Msg00239780* m, void* target, int a);
-extern void FileMan_Release(void* member, int flags);
+extern void cPlaySoundMsg_ctor_cSndFxR(Msg00239780* m, void* preset, void* a);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg00239780* m, void* target, int a);
+extern void cFileMan_dtor(void* member, int flags);
 extern void cMessage_dtor(Msg00239780* m, int flags);
-void NiEventSound_Fire(char* self, void* a)
+void cSoundFXKey_Execute(char* self, void* a)
 {
     Msg00239780 m;
-    SoundEvent_CtorFromPreset(&m, self + 0x10, a);
+    cPlaySoundMsg_ctor_cSndFxR(&m, self + 0x10, a);
     m.b20 = 1;
-    Event_Send(&m, g_Game, 1);
+    QueueMessage_cMessageR_cSystemP_int(&m, g_Game, 1);
     m.vtable = D_004DAE30;
-    FileMan_Release(m.memberB, -1);
-    FileMan_Release(m.memberA, -1);
+    cFileMan_dtor(m.memberB, -1);
+    cFileMan_dtor(m.memberA, -1);
     cMessage_dtor(&m, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */

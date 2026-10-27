@@ -27,10 +27,10 @@ struct Obj { char pad[0x50]; Sub* sub; };
 extern "C" {
 extern char g_CameraObject[];
 int func_00159570(void*);
-Obj** List_Front(void*);
-void Mtx_FromRowsAndTranslation(Mtx* m, V* a, V* b, V* c, V* t);
+Obj** cLList_cCAMERA_GOBJPtr_Front(void*);
+void cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(Mtx* m, V* a, V* b, V* c, V* t);
 }
-static inline Obj* GetCam() { return func_00159570(g_CameraObject) ? *List_Front(g_CameraObject) : 0; }
+static inline Obj* GetCam() { return func_00159570(g_CameraObject) ? *cLList_cCAMERA_GOBJPtr_Front(g_CameraObject) : 0; }
 static inline const V& SubPos(Sub* o) { if (o->f50) o->Sync(); return o->m.t; }
 
 extern "C" void cFacingGOBJ_NextFrame(Obj* self)
@@ -43,6 +43,6 @@ extern "C" void cFacingGOBJ_NextFrame(Obj* self)
     V right = Cross(dir, up);
     up = Cross(right, dir);
     Mtx m;
-    Mtx_FromRowsAndTranslation(&m, &right, &dir, &up, &me);
+    cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(&m, &right, &dir, &up, &me);
     self->sub->SetMtx(&m);
 }

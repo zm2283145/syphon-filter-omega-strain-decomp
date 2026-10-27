@@ -51,8 +51,8 @@ Obj_328660* GuiSlideShow_ctor(Obj_328660* o)
     p = &o->req;
     p->voiceId = -2;
     p->voice = 0;
-    Resource_Construct(&p->a);
-    Resource_Construct(&p->b);
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
     Req_Init_328660(p, -1, -1, 0, 0);
     p->x186 = 0;
     std_vector_deleter_Section_clear(pa);

@@ -36,7 +36,7 @@ extern int D_0048C358;
 extern void* g_SplashThreadStack;
 extern char D_004ACF10[];
 extern char D_004E9B70[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void FrontEnd_SplashThreadMain(void);
 int FrontEnd_SplashVblankHandler(void);
 int GetThreadId(void);
@@ -54,7 +54,7 @@ extern "C" void FrontEnd_StartSplashThread(Obj82F0* o)
         int size = (*(int*)dat_0048C340) + 0x10;
         {
             AllocGuard guard;
-            p = Mem_Alloc(0, size, D_004ACF10, 0x862);
+            p = cMemMan_Allocate(0, size, D_004ACF10, 0x862);
         }
         tp.status = 0x10;
         g_SplashThreadStack = p;
@@ -70,7 +70,7 @@ extern "C" void FrontEnd_StartSplashThread(Obj82F0* o)
         D_0048C350 = CreateThread(&tp);
         StartThread(D_0048C350, o);
         D_0048C358 = AddIntcHandler(2, (void*)FrontEnd_SplashVblankHandler, 0);
-        Alloc_Unlock(2);
+        EnableIntc(2);
         o->active = 1;
     }
 }

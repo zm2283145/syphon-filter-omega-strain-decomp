@@ -7,7 +7,7 @@ typedef struct {
 
 extern int g_DrawMode;
 
-unsigned long* Gs_MakeTex1(Obj003BB620* self)
+unsigned long* cTexture_GetTEX1_1(Obj003BB620* self)
 {
     unsigned int enable;
     unsigned int mode;

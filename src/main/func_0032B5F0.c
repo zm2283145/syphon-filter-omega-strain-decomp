@@ -29,8 +29,8 @@ int GuiKeyboard_GetModifierIndex(Self* self, Item* it);
 int CharMap_Lookup(unsigned short key);
 void GuiTextWidget_SetText(Wid* w, char* text, int flags);
 /* the out pointer is declared int: passed as (int)&e retail keeps &e in a saved register */
-int GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
-void IeElement_SetColour(void* e, const Col& c);
+int GuiWidget_SendMessage(void* a, void* b, int kind, int v, int f);
+void cInterfaceElement_SetFilterColor(void* e, const Col& c);
 void GuiKeyboard_Relabel(Self* self, unsigned int flags);
 }
 
@@ -64,9 +64,9 @@ extern "C" void GuiKeyboard_Relabel(Self* self, unsigned int flags)
             buf[1] = 0;
             GuiTextWidget_SetText(*(Wid**)((char*)self->keys + i * sizeof(Wid*)), buf, 0);
             e = 0;
-            if (GuiWidget_SendEvent(self, *(Wid**)((char*)self->keys + i * sizeof(Wid*)), 5, (int)&e, 0) && e) {
+            if (GuiWidget_SendMessage(self, *(Wid**)((char*)self->keys + i * sizeof(Wid*)), 5, (int)&e, 0) && e) {
                 if (ch == 0xFF) {
-                    IeElement_SetColour(e, Col(0.75f, 0.75f, 0.75f, 1.0f));
+                    cInterfaceElement_SetFilterColor(e, Col(0.75f, 0.75f, 0.75f, 1.0f));
                 } else {
                     bool dead = false;
                     if (self->curEntry) {
@@ -83,18 +83,18 @@ extern "C" void GuiKeyboard_Relabel(Self* self, unsigned int flags)
                     }
                     int k = GuiKeyboard_GetModifierIndex(self, it);
                     if (it->flags & (4 << k)) {
-                        IeElement_SetColour(e, dead ? Col(0.0f, 0.75f, 0.0f, 1.0f) : Col(0.0f, 1.0f, 0.0f, 1.0f));
+                        cInterfaceElement_SetFilterColor(e, dead ? Col(0.0f, 0.75f, 0.0f, 1.0f) : Col(0.0f, 1.0f, 0.0f, 1.0f));
                     } else {
-                        IeElement_SetColour(e, dead ? Col(0.5f, 0.5f, 0.5f, 1.0f) : Col(1.0f, 1.0f, 1.0f, 1.0f));
+                        cInterfaceElement_SetFilterColor(e, dead ? Col(0.5f, 0.5f, 0.5f, 1.0f) : Col(1.0f, 1.0f, 1.0f, 1.0f));
                     }
                 }
             }
         }
         if (*(int*)((char*)self->codes + i * sizeof(int)) == 1004) {
             void* e = 0;
-            if (GuiWidget_SendEvent(self, *(Wid**)((char*)self->keys + i * sizeof(Wid*)), 5, (int)&e, 0) && e) {
-                if (self->caps) IeElement_SetColour(e, Col(1.0f, 1.0f, 1.0f, 1.0f));
-                else IeElement_SetColour(e, Col(0.75f, 0.75f, 0.75f, 1.0f));
+            if (GuiWidget_SendMessage(self, *(Wid**)((char*)self->keys + i * sizeof(Wid*)), 5, (int)&e, 0) && e) {
+                if (self->caps) cInterfaceElement_SetFilterColor(e, Col(1.0f, 1.0f, 1.0f, 1.0f));
+                else cInterfaceElement_SetFilterColor(e, Col(0.75f, 0.75f, 0.75f, 1.0f));
             }
         }
     }

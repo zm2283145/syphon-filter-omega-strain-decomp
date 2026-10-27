@@ -9,8 +9,8 @@
 
 /* merge_units: begin func_001B8790 */
 #pragma push /* merge_units */
-extern int WeaponInv_Equip(int, int);
-extern void WeaponInv_HolsterCurrent(int);
+extern int cWeapon_DrawWeapon_eWpnSlot(int, int);
+extern void cWeapon_StoreWeapon_void(int);
 
 void cHuman_cDrawAndHolsterWeaponCallback_Trigger(int a0, int a1, int a2) {
     int v0;
@@ -21,11 +21,11 @@ void cHuman_cDrawAndHolsterWeaponCallback_Trigger(int a0, int a1, int a2) {
     if (cond) goto L001B87C8;
     cond = a1 == 0;
     if (cond) goto L001B87C0;
-    WeaponInv_HolsterCurrent(a0);
+    cWeapon_StoreWeapon_void(a0);
     goto L001B87C8;
 L001B87C0:;
     a1 = a2;
-    v0 = WeaponInv_Equip(a0, a1);
+    v0 = cWeapon_DrawWeapon_eWpnSlot(a0, a1);
 L001B87C8:;
     goto ret;
 ret:;

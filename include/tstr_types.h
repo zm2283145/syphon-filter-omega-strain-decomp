@@ -47,8 +47,8 @@ extern "C" {
 extern TStrErr* D_00489738;
 void Libc_Fprintf(int stream, const char* msg);
 void Libc_Abort(void);
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void Mem_Free(int pool, void* p, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 void* memcpy(void* d, const void* s, unsigned int n);
 }
 
@@ -60,13 +60,13 @@ static inline unsigned char TStr_ShortLen(const TStr* s)
 static inline char* TStr_Alloc(unsigned int n, char* file, int line)
 {
     AllocGuard g;
-    return (char*)Mem_Alloc(0, n, file, line);
+    return (char*)cMemMan_Allocate(0, n, file, line);
 }
 
 static inline void TStr_Free(char* p, char* file, int line)
 {
     AllocGuard g;
-    Mem_Free(0, p, file, line);
+    cMemMan_Deallocate(0, p, file, line);
 }
 
 #endif /* TSTR_TYPES_H */

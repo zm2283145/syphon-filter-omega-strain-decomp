@@ -17,6 +17,6 @@ typedef struct Flashlight {
     void *litSpot;        /* +0x18 0x60-byte world object at the beam's end point */
 } Flashlight; /* 0x1C */
 
-#define FLASHLIGHT_LITSPOT_ID_CATEGORY 0xE7 /* IdMgr_Allocate category of the lit spot */
+#define FLASHLIGHT_LITSPOT_ID_CATEGORY 0xE7 /* nGobjManager_GetNextId category of the lit spot */
 
 #endif /* FLASHLIGHT_H */

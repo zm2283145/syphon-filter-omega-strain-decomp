@@ -21,7 +21,7 @@ typedef struct ScriptEvent {
 
 extern char D_00555070[];
 extern char D_0055A0F0[];
-extern void ScriptEvent_Replay(void* sched, int script, int a, int b, int c);
+extern void cScriptInterpreter_callScheduledFunction(void* sched, int script, int a, int b, int c);
 extern void std_tree_pair_int_value_compare_find_intR_2(int* outIt, void* map, int* key);
 #if 0 /* merge_units */
 extern void std_map_int_SchedCallbackPtr_end(int* outEnd, void* map);
@@ -36,13 +36,13 @@ extern void cAssocArray_int_SchedCallbackPtr_Iterator_ctor(int* out, int* end);
 extern void std_tree_pair_int_value_compare_erase_tree_2(void* map, int* it);
 
 /* Runs the event and removes it from the pending-event map. */
-void ScriptEvent_Execute(ScriptEvent* ev) {
+void SchedCallback_Call(ScriptEvent* ev) {
     int endRaw;
     int eraseIt;
     int found;
     int end;
     int it;
-    ScriptEvent_Replay(D_00555070, ev->script, ev->a, ev->b, ev->c);
+    cScriptInterpreter_callScheduledFunction(D_00555070, ev->script, ev->a, ev->b, ev->c);
     std_tree_pair_int_value_compare_find_intR_2(&found, D_0055A0F0, &ev->key);
     it = found;
     std_map_int_SchedCallbackPtr_end(&endRaw, D_0055A0F0);

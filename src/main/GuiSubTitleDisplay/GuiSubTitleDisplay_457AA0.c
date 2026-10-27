@@ -33,7 +33,7 @@ static inline void merge_flush_func_00457AA0(void) {}
 char D_004C1FB0[] = "GuiSubTitleDisplay"; /* "GuiSubTitleDisplay" */
 
 /* GuiSubTitleDisplay type check: true when name equals the class name "GuiSubTitleDisplay". */
-int GuiSubTitleDisplay_IsType(void* self, const char* name) {
+int GuiSubTitleDisplay_IsClass(void* self, const char* name) {
     return strcmp(D_004C1FB0, name) == 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

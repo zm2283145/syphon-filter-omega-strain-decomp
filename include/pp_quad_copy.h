@@ -10,7 +10,7 @@ typedef union PPMtx { __int128 q[4]; float f[16]; } PPMtx;
     (d)->q[1] = ppqb_; ppqb_ = (s)->q[3]; \
     (d)->q[2] = ppqa_; \
     (d)->q[3] = ppqb_; }
-/* Matrix transpose of the 3x3 part through a stack copy (Mtx_Transpose3x3 inlined).
+/* Matrix transpose of the 3x3 part through a stack copy (cMatrix_InvertRot inlined).
    Needs peephole, opt_propagation and opt_common_subs off. */
 #define PP_TRANSPOSE33_COPY(d, s) { PPMtx pptmp_; PPMtx* ppt_; PPMtx* ppp_; float ppx_; \
     ppt_ = &pptmp_; ppp_ = &pptmp_; \

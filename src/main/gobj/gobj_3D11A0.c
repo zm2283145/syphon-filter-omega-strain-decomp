@@ -11,9 +11,9 @@
 #include "types.h"
 #include "alloc_guard.h"
 
-/* Allocator release(ptr, pool, destroy, file, line): destroy the element's member at +4, then Mem_Free under the guard. */
+/* Allocator release(ptr, pool, destroy, file, line): destroy the element's member at +4, then cMemMan_Deallocate under the guard. */
 extern "C" {
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void* cText_dtor(void* self, short flags);
 void opDelete_nodeP_int_bool_charP_etc_5(void* allocation, int pool, int destroy, char* file, int line);
 }
@@ -24,7 +24,7 @@ void opDelete_nodeP_int_bool_charP_etc_5(void* allocation, int pool, int destroy
         if (allocation)
             cText_dtor((char*)allocation + 16, -1);
     }
-    Mem_Free(pool, allocation, file, line);
+    cMemMan_Deallocate(pool, allocation, file, line);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003D11A0 */
@@ -34,8 +34,8 @@ void opDelete_nodeP_int_bool_charP_etc_5(void* allocation, int pool, int destroy
 #pragma cplusplus on
 extern "C" {
 extern char D_004BD318[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void* Mem_PlacementNew(int size, void* p);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void* opNew_uint_voidP(int size, void* p);
 }
 struct Node1280 {
     Node1280* prev;
@@ -76,12 +76,12 @@ extern "C" int std_list_deleter_cText_insert(Node1280** result, List1280* list, 
     Flag1280 flag;
     {
         AllocGuard guard;
-        n = (Node1280*)Mem_Alloc(0, 0x40, D_004BD318, 0x5C);
+        n = (Node1280*)cMemMan_Allocate(0, 0x40, D_004BD318, 0x5C);
     }
     Holder1280 h;
     h.alloc = alloc;
     h.node = n;
-    void* v = Mem_PlacementNew(0x30, h.node->value);
+    void* v = opNew_uint_voidP(0x30, h.node->value);
     if (v)
         cText_ctor(v, value);
     Node1280* p;

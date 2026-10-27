@@ -26,17 +26,17 @@ struct Loader_EAE60 {
 extern "C" {
 extern unsigned char D_00493990;
 extern char D_004BE010;
-void* Mem_Alloc(int a, int size, char* file, int line);
-int FileMan_PollRead(char* f);
-void Fstream_PurgeRequests(Loader_EAE60* l, int a);
-Req_EAE60* Fstream_FindRequest(Loader_EAE60* l, char* name, int kind);
-void List_PushBack_3EB310(Loader_EAE60* l, Req_EAE60** r);
-char* Resource_Construct(void* p);
+void* cMemMan_Allocate(int a, int size, char* file, int line);
+int cFileMan_IsReadDone(char* f);
+void cFileStreamMan_FlushAllStreamData(Loader_EAE60* l, int a);
+Req_EAE60* cFileStreamMan_FindStreamData(Loader_EAE60* l, char* name, int kind);
+void std_list_cFSDataPtr_push_back(Loader_EAE60* l, Req_EAE60** r);
+char* cFileMan_ctor_void(void* p);
 void cFileMan_EncodeFilename_charP_cFileManR(char* f, char* a, char* b);
-void FileMan_FindMember(char* f);
-int FileMan_GetSize(char* f);
-int FStream_AllocBlock(Sub_EAE60* s, int size);
-void FileMan_LoadMemberSync(char* f, int* buf, int size);
+void cFileMan_Open(char* f);
+int cFileMan_GetSize(char* f);
+int cFSHandle_AllocateMem(Sub_EAE60* s, int size);
+void cFileMan_Read_charPP_int(char* f, int* buf, int size);
 }
 
 static inline bool ReqCheck_EAE60(Req_EAE60* r)
@@ -44,7 +44,7 @@ static inline bool ReqCheck_EAE60(Req_EAE60* r)
     unsigned char s = r->state;
     if (s == 3 || s == 6) return true;
     if (r->file) {
-        int v = FileMan_PollRead(r->file);
+        int v = cFileMan_IsReadDone(r->file);
         if (v) {
             if (v == -1) r->state = 4;
             else if (r->state != 2) r->state = 3;
@@ -79,7 +79,7 @@ static inline int SubData_EAE60(Sub_EAE60* s)
     return s->n8 ? s->n8 : s->n0;
 }
 
-extern "C" int AsyncLoader_QueueLoad(Loader_EAE60* ldr, char* name, void (*cb)(Sub_EAE60*, int, int), int user,
+extern "C" int cFileStreamMan_StreamRequest(Loader_EAE60* ldr, char* name, void (*cb)(Sub_EAE60*, int, int), int user,
                                      unsigned char mode, int stream, int noReuse)
 {
     bool force = false;
@@ -92,15 +92,15 @@ extern "C" int AsyncLoader_QueueLoad(Loader_EAE60* ldr, char* name, void (*cb)(S
             ldr->cur = 0;
             D_00493990 = 0;
         }
-        Fstream_PurgeRequests(ldr, 1);
+        cFileStreamMan_FlushAllStreamData(ldr, 1);
     }
     if (!noReuse) {
-        req = Fstream_FindRequest(ldr, name, 0);
+        req = cFileStreamMan_FindStreamData(ldr, name, 0);
         if (req) return 0;
     }
-    req = Fstream_FindRequest(ldr, name, 5);
+    req = cFileStreamMan_FindStreamData(ldr, name, 5);
     if (!req) {
-        req = Fstream_FindRequest(ldr, name, 3);
+        req = cFileStreamMan_FindStreamData(ldr, name, 3);
     } else if (ReqSub_EAE60(req)->bC) {
         force = true;
     }
@@ -108,8 +108,8 @@ extern "C" int AsyncLoader_QueueLoad(Loader_EAE60* ldr, char* name, void (*cb)(S
         Req_EAE60* n;
         if (g_ProfileLockEnabled) Alloc_Lock(9);
         g_ProfileLockDepth++;
-        n = (Req_EAE60*)Mem_Alloc(0, 0x18, &D_004BE010, 0x24D);
-        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        n = (Req_EAE60*)cMemMan_Allocate(0, 0x18, &D_004BE010, 0x24D);
+        if (g_ProfileLockEnabled) EnableIntc(9);
         g_ProfileLockDepth--;
         if (n) {
             n->cb = 0;
@@ -121,14 +121,14 @@ extern "C" int AsyncLoader_QueueLoad(Loader_EAE60* ldr, char* name, void (*cb)(S
             n->state = 0;
         }
         req = n;
-        List_PushBack_3EB310(ldr, &req);
+        std_list_cFSDataPtr_push_back(ldr, &req);
     }
     {
         Req_EAE60* r = req;
         if (stream) {
             char* f;
-            { AllocGuard g; f = (char*)Mem_Alloc(0, 0x9C, &D_004BE010, 0x89); }
-            if (f) f = Resource_Construct(f);
+            { AllocGuard g; f = (char*)cMemMan_Allocate(0, 0x9C, &D_004BE010, 0x89); }
+            if (f) f = cFileMan_ctor_void(f);
             r->file = f;
             cFileMan_EncodeFilename_charP_cFileManR(r->file, name + 4, name);
             r->owned = 1;
@@ -144,14 +144,14 @@ extern "C" int AsyncLoader_QueueLoad(Loader_EAE60* ldr, char* name, void (*cb)(S
         Sub_EAE60* s = ReqSub_EAE60(q);
         int buf;
         int size;
-        FileMan_FindMember(q->file);
+        cFileMan_Open(q->file);
         buf = 0;
-        size = FileMan_GetSize(q->file);
-        if (FStream_AllocBlock(s, size)) {
+        size = cFileMan_GetSize(q->file);
+        if (cFSHandle_AllocateMem(s, size)) {
             q->state = 1;
             if (!s->bC) {
                 buf = SubData_EAE60(s);
-                FileMan_LoadMemberSync(q->file, &buf, size);
+                cFileMan_Read_charPP_int(q->file, &buf, size);
             }
             if (q->state == 1 || q->state == 3) {
                 Sub_EAE60* t = ReqSub_EAE60(q);

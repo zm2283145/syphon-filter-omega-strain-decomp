@@ -23,7 +23,7 @@ static inline void GQ(void* d, const void* s) { __int128 q; __asm__ volatile("lq
 extern "C" int GuiGameScreen_CloseChooseMenu(Scr* s);
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" void GuiGameScreen_SetChooseMenuTrack(Scr* s, V4* p)
+extern "C" void GuiGameScreen_UpdateMenuPosition(Scr* s, V4* p)
 {
     if (!s->have) {
         GQ(&s->last, p);
@@ -69,8 +69,8 @@ static inline void merge_flush_func_0045BD30(void) {}
 #define NULL 0
 #pragma mpwc_relax on
 /*fc*/
-int Event_Construct();                       
-int Event_Send();                         
+int cMessage_ctor_cMessageNameR();                       
+int QueueMessage_cMessageR_cSystemP_int();                         
 int cMessage_dtor();                           
 int GuiGameScreen_CloseChooseMenu();                            
 extern char D_004DC330;
@@ -78,7 +78,7 @@ extern char D_004F7E48;
 
 #pragma push
 #pragma opt_common_subs off
-void GuiGameScreen_ChooseConfirm(char * arg0) {
+void GuiGameScreen_AcceptChooseMenu(char * arg0) {
     struct { char * f40[9]; int f64; unsigned int f68[2]; } sl;
     int temp_s2;
     unsigned int temp_s0;
@@ -89,11 +89,11 @@ void GuiGameScreen_ChooseConfirm(char * arg0) {
         temp_s0 = F_(temp_v0, 0x54, int);
         if ((temp_s0 < (unsigned int) (F_(temp_v0, 0x94, int) - 1)) && (F_(arg0, 0xEC, int) != 0)) {
             temp_s2 = F_(arg0, 0xF0, int);
-            Event_Construct(sl.f40, &D_004F7E48);
+            cMessage_ctor_cMessageNameR(sl.f40, &D_004F7E48);
             sl.f64 = temp_s2;
             sl.f68[0] = temp_s0;
             sl.f40[0] = &D_004DC330;
-            Event_Send(sl.f40, F_(arg0, 0xEC, int), 0);
+            QueueMessage_cMessageR_cSystemP_int(sl.f40, F_(arg0, 0xEC, int), 0);
             sl.f40[0] = &D_004DC330;
             cMessage_dtor(sl.f40, 0);
         }

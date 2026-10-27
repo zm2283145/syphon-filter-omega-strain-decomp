@@ -17,8 +17,8 @@ extern int D_00542D48;
 extern int D_00542D10;
 extern int D_004937C0[];
 extern int D_004937D0[];
-extern void Renderer_UpdateCameraMatrices(void* p);
-void Culler_Setup(void)
+extern void XLib_UpdateCompMat(void* p);
+void cBBoxMan_InitSingleVisibilityTest(void)
 {
     I4* vu = (I4*)0x11004000;
     I4 v;
@@ -33,7 +33,7 @@ void Culler_Setup(void)
     vu->b = v.b;
     vu->c = v.c;
     vu->d = v.d;
-    Renderer_UpdateCameraMatrices(g_Video);
+    XLib_UpdateCompMat(g_Video);
     {
 void* s = D_005390F0; __int128 t; void* d = vu + 1;
         asm {
@@ -92,11 +92,11 @@ extern int D_00543610;          /* Message script type key */
 void cMessage_SOBJ_init(void) {
 }
 
-int* Message_GetScriptTypeKeyPtr(void) {
+int* cMessage_SOBJ_getClassId(void) {
     return &D_00543610;
 }
 
-int Message_GetScriptTypeKey(void) {
+int cMessage_getSOBJClassId(void) {
     return D_00543610;
 }
 #pragma pop /* merge_units */

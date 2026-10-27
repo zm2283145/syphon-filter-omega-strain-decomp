@@ -12,16 +12,16 @@
  *   NETREG_END(typeSym, factory)
  */
 extern int NetRegisterMessageStart(void* reg);
-extern int Event_UnpackHeader(void* desc);
+extern int cMessage_RegisterFields(void* desc);
 extern int NetMessageField(void* desc, void* field, int size, int count);
-extern int NetMsg_RegisterType(void* type, int version, void* factory);
+extern int NetRegisterMessage(void* type, int version, void* factory);
 
 #define NETREG_BEGIN(name, Proto)                                             \
     unsigned char name(void* reg)                                             \
     {                                                                         \
         struct { long long file; Proto p; } L;                                \
         unsigned char ok = 0;                                                 \
-        if (NetRegisterMessageStart(reg) == 0 && Event_UnpackHeader(&L.file) != 0
+        if (NetRegisterMessageStart(reg) == 0 && cMessage_RegisterFields(&L.file) != 0
 
 #define NETREG_BEGIN_KEEP(name, Proto)                                        \
     unsigned char name(void* reg)                                             \
@@ -30,13 +30,13 @@ extern int NetMsg_RegisterType(void* type, int version, void* factory);
         int base;                                                             \
         unsigned char ok = 0;                                                 \
         base = NetRegisterMessageStart(reg);                                            \
-        if (base == 0 && Event_UnpackHeader(&L.file) != 0 && base == 0
+        if (base == 0 && cMessage_RegisterFields(&L.file) != 0 && base == 0
 
 #define NETREG_FIELD(member, size, count)                                     \
         && NetMessageField(&L.file, &L.p.member, (size), (count)) == 0
 
 #define NETREG_END(typeSym, factory)                                          \
-        && NetMsg_RegisterType(typeSym, 2, factory) == 0)                     \
+        && NetRegisterMessage(typeSym, 2, factory) == 0)                     \
             ok = 1;                                                           \
         return ok;                                                            \
     }

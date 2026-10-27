@@ -6,15 +6,15 @@
 #include "types.h"
 #include "hotbox_types.h"
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int* value);
-extern int PtrVec_PushBack_171C70(PtrVec* v, int* value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int* value);
+extern int std_vector_cGOBJPtr_push_back(PtrVec* v, int* value);
 
 /* Appends value to the vector at +0x60. */
 void cHotbox_AddTarget(cHotbox* self, int value) {
-    PtrVec_PushBack_171C70(&self->unk60, &value);
+    std_vector_cGOBJPtr_push_back(&self->unk60, &value);
 }
 
 /* push_back on a pointer vector. */
-int PtrVec_PushBack_171C70(PtrVec* v, int* value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+int std_vector_cGOBJPtr_push_back(PtrVec* v, int* value) {
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }

@@ -27,7 +27,7 @@ extern "C" {
 extern float D_0048A1B0;
 extern char D_0048A1A8;
 extern void func_0017CA90(void*, int);
-extern void* Mem_PlacementNew(int, void*);
+extern void* opNew_uint_voidP(int, void*);
 extern void cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(void*, float*, float*, float*, void*, float);
 }
 static inline bool Gt(float a, float b) { return a > b; }
@@ -43,7 +43,7 @@ static inline float WrapPi(float a)
     return a;
 }
 
-extern "C" void AngleCurve_PreUpdate(AC* c)
+extern "C" void cSplinedMotion_Angle_UpdateSplinePoints(AC* c)
 {
     bool go = 0;
     if (c->f34 == c->p30->f10 && c->f28 > 0.0f) go = 1;
@@ -51,7 +51,7 @@ extern "C" void AngleCurve_PreUpdate(AC* c)
         void* v;
         c->f10 = c->f8 + WrapPi(c->f10 - c->f8);
         func_0017CA90(c->a18, -1);
-        v = Mem_PlacementNew(0x18, c->a18);
+        v = opNew_uint_voidP(0x18, c->a18);
         if (v) cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(v, &c->f8, &c->fC, &c->f10, &D_0048A1A8, c->f28);
     } else {
         bool ne = !Eq(0.0f, c->f34);
@@ -90,7 +90,7 @@ static inline float AC_Max(float a, float b) {
     asm { max.s r, a, b }
     return r;
 }
-void AngleCurve_UpdateRate(AC_t* p, float dt, float k) {
+void cSplinedMotion_Angle_UpdateVelocity(AC_t* p, float dt, float k) {
     float d = p->b - p->a;
     while (1) {
         if (d > 3.1415927f) d += -6.2831855f;
@@ -154,7 +154,7 @@ struct Phys { char p0[0x10]; V4 axis; };
 #pragma opt_propagation off
 #pragma opt_common_subs off
 #pragma opt_dead_assignments off
-extern "C" void Physical_RejectMotionAxis(Phys* p, V4* v) {
+extern "C" void cHumanCollision_DeltaPosModificationFunction_Floor_Execute(Phys* p, V4* v) {
     float w = v->w; float d; V4* axis = &p->axis;
     d = Dot3(v, axis); *v -= *axis * d;
     v->w = w;
@@ -215,8 +215,8 @@ static inline void Scale3(V* v, float k) {
         .set reorder
     }
 }
-extern "C" void Physical_RetainMotionAxis(Phys_001B8D30* p, V* b);
-void Physical_RetainMotionAxis(Phys_001B8D30* p, V* b)
+extern "C" void cHumanCollision_DeltaPosModificationFunction_Ledge_Execute(Phys_001B8D30* p, V* b);
+void cHumanCollision_DeltaPosModificationFunction_Ledge_Execute(Phys_001B8D30* p, V* b)
 {
     p = (Phys_001B8D30*)&p->axis; V* ax = (V*)p;
     float d = Dot3_001B8D30(b, ax);
@@ -251,7 +251,7 @@ DEFINE_VTABLE_CHAIN_DTOR1(cIkRoutine_dtor_void, D_004DA830)
 #pragma push /* merge_units */
 #pragma opt_common_subs off
 #pragma opt_propagation off
-extern float Math_FMod(float, float);
+extern float Libc_Fmodf(float, float);
 static inline float clamp_(float a, float lo, float hi) { asm { max.s lo, a, lo
  min.s lo, lo, hi } return lo; }
 typedef struct {
@@ -277,7 +277,7 @@ static inline float Clamp(Ch* c, float x)
     if (!c->b38) {
         v = clamp_(x, 0.0f, 1.0f);
     } else {
-        v = Math_FMod(x, 1.0f);
+        v = Libc_Fmodf(x, 1.0f);
         if (v < 0.0f) v += 1.0f;
     }
     return v;
@@ -289,7 +289,7 @@ static inline float Wrap(Ch* p, float d)
     if (!p->b38) {
         return d;
     }
-    r = Math_FMod(d, 1.0f);
+    r = Libc_Fmodf(d, 1.0f);
     h = 0.5f;
     if (r < h) {
         r += 1.0f;
@@ -299,7 +299,7 @@ static inline float Wrap(Ch* p, float d)
     return r;
 }
 
-void AnimChannel_AddOffset(Ch* c, float* dt)
+void cSplinedMotion_Scalar0To1_TeleportByDelta(Ch* c, float* dt)
 {
     void* v;
     c->f4 += *dt;
@@ -311,7 +311,7 @@ void AnimChannel_AddOffset(Ch* c, float* dt)
     c->f8 = Clamp(c, c->f8);
     c->f10 = c->f8 + Wrap(c, c->f10 - c->f8);
     func_0017CA90(&c->f18, -1);
-    v = Mem_PlacementNew(0x18, &c->f18);
+    v = opNew_uint_voidP(0x18, &c->f18);
     if (v) cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(v, &c->f8, &c->fC, &c->f10, &D_0048A190, c->f28);
 }
 #pragma pop /* merge_units */

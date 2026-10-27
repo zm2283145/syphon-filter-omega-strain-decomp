@@ -13,15 +13,15 @@ typedef struct {
     char sub[0xC];          /* +0xB4 */
     unsigned char flag;     /* +0xC0 */
 } RecC0;
-extern void AnimRoot_CopyRegion_3B6F10(Part50* dst, Part50* src);
+extern void cSkaAnimAnchor_TreeNodeData_tData_opAssign(Part50* dst, Part50* src);
 extern void std_vector_pod_int_opAssign(void* dst, void* src);
 
 /* Copy: both parts, three bytes, a word, the sub-object and the flag; returns dst. */
 RecC0* cTreeNode_cSkaAnimAnchor_TreeNodeData_opAssign(RecC0* dst, RecC0* src)
 {
     unsigned char c0, c1, c2;
-    AnimRoot_CopyRegion_3B6F10(&dst->a, &src->a);
-    AnimRoot_CopyRegion_3B6F10(&dst->b, &src->b);
+    cSkaAnimAnchor_TreeNodeData_tData_opAssign(&dst->a, &src->a);
+    cSkaAnimAnchor_TreeNodeData_tData_opAssign(&dst->b, &src->b);
     c0 = src->c[0];
     c1 = src->c[1];
     c2 = src->c[2];

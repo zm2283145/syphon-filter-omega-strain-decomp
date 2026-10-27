@@ -41,16 +41,16 @@ extern M D_004F82B0;
 extern float D_0048B0C8;
 extern int D_0048B0C0;
 extern float D_0048B0D0;
-Obj* Object_LookupById(int* ref);
-void IeElement_SetPosition(void* e, V* p);
-void IeElement_SetRotation(void* e, V3* r);
-float Math_Atan2f(float y, float x);
+Obj* nGobjManager_LookupGOBJ_cObjectIdR(int* ref);
+void cInterfaceElement_SetLocation(void* e, V* p);
+void cInterfaceElement_SetRotation(void* e, V3* r);
+float Libc_Atan2f(float y, float x);
 void HudBlip_Place(Blip* b);
 }
 void HudBlip_Place(Blip* b)
 {
     if (b->elem) {
-        Obj* o = Object_LookupById(&b->ref);
+        Obj* o = nGobjManager_LookupGOBJ_cObjectIdR(&b->ref);
         if (o) {
             V p = o->GetPos();
             Apply(&p, &D_004F82B0, &p);
@@ -59,10 +59,10 @@ void HudBlip_Place(Blip* b)
             if (!(d <= D_0048B0C8)) s = (float)D_0048B0C0 / d;
             else s = (float)D_0048B0C0 * D_0048B0D0 / (D_0048B0C8 + d * (D_0048B0D0 - 1.0f));
             b->pos = V(p.x * s, 0.0f, p.y * s, 1.0f);
-            IeElement_SetPosition(b->elem, &b->pos);
+            cInterfaceElement_SetLocation(b->elem, &b->pos);
             V dir = o->GetMtx().Row1();
             Rotate(&dir, &D_004F82B0, &dir);
-            IeElement_SetRotation(b->elem, &V3(0.0f, -Math_Atan2f(-dir.x, dir.y), 0.0f));
+            cInterfaceElement_SetRotation(b->elem, &V3(0.0f, -Libc_Atan2f(-dir.x, dir.y), 0.0f));
         }
     }
 }

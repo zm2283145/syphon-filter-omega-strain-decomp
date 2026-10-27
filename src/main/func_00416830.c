@@ -19,79 +19,79 @@ extern "C" void GuiDecorator_onAdd(GuiVHolder* h)
 }
 
 /* Forwards to virtual +0x10 of the object at +4. */
-extern "C" void func_00416850(GuiVHolder* h)
+extern "C" void GuiDecorator_onRemove(GuiVHolder* h)
 {
     h->obj->V10();
 }
 
 /* Forwards to virtual +0x1C of the object at +4. */
-extern "C" void func_00416870(GuiVHolder* h)
+extern "C" void GuiDecorator_onWake(GuiVHolder* h)
 {
     h->obj->V1C();
 }
 
 /* Forwards to virtual +0x20 of the object at +4. */
-extern "C" void func_00416890(GuiVHolder* h)
+extern "C" void GuiDecorator_onSleep(GuiVHolder* h)
 {
     h->obj->V20();
 }
 
 /* Forwards to virtual +0x14 of the object at +4. */
-extern "C" void func_004168B0(GuiVHolder* h)
+extern "C" void GuiDecorator_onActivate(GuiVHolder* h)
 {
     h->obj->V14();
 }
 
 /* Forwards to virtual +0x18 of the object at +4. */
-extern "C" void func_004168D0(GuiVHolder* h)
+extern "C" void GuiDecorator_onDeactivate(GuiVHolder* h)
 {
     h->obj->V18();
 }
 
 /* Forwards to virtual +0x24 of the object at +4. */
-extern "C" void func_004168F0(GuiVHolder* h)
+extern "C" void GuiDecorator_onGainFocus(GuiVHolder* h)
 {
     h->obj->V24();
 }
 
 /* Forwards to virtual +0x28 of the object at +4. */
-extern "C" void func_00416910(GuiVHolder* h)
+extern "C" void GuiDecorator_onLoseFocus(GuiVHolder* h)
 {
     h->obj->V28();
 }
 
 /* Forwards to virtual +0x2C of the object at +4. */
-extern "C" void func_00416930(GuiVHolder* h)
+extern "C" void GuiDecorator_onInput(GuiVHolder* h)
 {
     h->obj->V2C();
 }
 
 /* Forwards to virtual +0x30 of the object at +4. */
-extern "C" void func_00416950(GuiVHolder* h)
+extern "C" void GuiDecorator_onRender(GuiVHolder* h)
 {
     h->obj->V30();
 }
 
 /* Forwards to virtual +0x34 of the object at +4. */
-extern "C" void func_00416970(GuiVHolder* h)
+extern "C" void GuiDecorator_onAction(GuiVHolder* h)
 {
     h->obj->V34();
 }
 
 /* Forwards to virtual +0x3C of the object at +4. */
-extern "C" void func_00416990(GuiVHolder* h)
+extern "C" void GuiDecorator_onMessage(GuiVHolder* h)
 {
     h->obj->V3C();
 }
 
 /* Forwards to virtual +0x38 of the object at +4. */
-extern "C" void func_004169B0(GuiVHolder* h)
+extern "C" void GuiDecorator_onAdvanceTime(GuiVHolder* h)
 {
     h->obj->V38();
 }
 
 /* Replaces the object at +4, pointing the old and new objects' +0x44 back-links. */
-extern "C" void func_004169D0(GuiVHolder* h, GuiVHolder* o)
+extern "C" void GuiDecorator_Decorate(GuiVHolder* h, GuiVHolder* o)
 {
     if (h->obj) ((GuiVHolder*)h->obj)->owner = (GuiVHolder*)h->obj;
     h->obj = (GuiVObj*)o;

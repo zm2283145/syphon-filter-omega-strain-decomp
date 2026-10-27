@@ -10,14 +10,14 @@ extern "C" {
 extern void* D_004DC970[];
 extern int D_004F8308[];
 extern int D_0048B0E0;
-void IdMgr_Allocate(int* out, int kind);
+void nGobjManager_GetNextId(int* out, int kind);
 void cGOBJ_ctor(void* p, int* id, int a, int* b);
-void Object_Register(Fire24* p);
+void nGobjManager_AddGOBJ(Fire24* p);
 }
-extern "C" Fire24* cFireObj_ctor(Fire24* s, Own24* o, float r, float t)
+extern "C" Fire24* cFireObj_ctor_cGOBJP_float_float(Fire24* s, Own24* o, float r, float t)
 {
     int id;
-    IdMgr_Allocate(&id, 0xF8);
+    nGobjManager_GetNextId(&id, 0xF8);
     cGOBJ_ctor(s, &id, 0x12, D_004F8308);
     s->vt = D_004DC970;
     s->ownerId = -2;
@@ -31,7 +31,7 @@ extern "C" Fire24* cFireObj_ctor(Fire24* s, Own24* o, float r, float t)
     s->x84 = r;
     s->x80 = r;
     s->x60 = (int)((float)D_0048B0E0 * t / 100.0f);
-    Object_Register(s);
+    nGobjManager_AddGOBJ(s);
     ((VF24*)s)->f5C(1);
     return s;
 }

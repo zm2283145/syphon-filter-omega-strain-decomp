@@ -8,14 +8,14 @@
 #include "hud_types.h"
 
 extern int D_004F7DB8;
-extern void HudRadar_SetPlayerId(int* p);
+extern void cRADAR_GOBJ_SetRelative(int* p);
 
 Word* cLListIterator_tCalloutPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void CalloutList_End(Iter* out, Tree* t) {
+void std_list_tCalloutPtr_end_void(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
@@ -25,7 +25,7 @@ Word* std_list_tCalloutPtr_generic_iterator_ctor(Word* dst, Word* src) {
 }
 
 /* Stores *p into the global at 0x004F7DB8, then forwards p. */
-void Hud_SetPlayerId(int* p) {
+void cHud_SetOwner(int* p) {
     D_004F7DB8 = *p;
-    HudRadar_SetPlayerId(p);
+    cRADAR_GOBJ_SetRelative(p);
 }

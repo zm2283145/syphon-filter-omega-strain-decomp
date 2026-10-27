@@ -78,10 +78,10 @@ static inline void SetPos2(V4* d, V4* v) { V4* dd = d; QC(dd, v); }
 struct Nd { char pad[0x50]; Plc p; char pad70[0x30]; unsigned char dirty; char padA1[0xF]; int bB0; };
 typedef struct { int w[1]; } It;
 extern "C" {
-void* Root_GetParent(Nd* n);
-Plc* Root_GetWorldPlacement(void* r);
-void Transform_SetOrientation(Plc* d, Plc* s);
-void Placement_Invert(Plc* p);
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(Nd* n);
+Plc* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void* r);
+void cQuatVec_opAssign(Plc* d, Plc* s);
+void cQuatVec_InvertAssumingUnitQuat(Plc* p);
 int cTreeNode_cSkaAnimAnchor_TreeNodeData_HasChildren(Nd* n);
 void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(Nd* n);
 void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Begin(It* out, void* vec);
@@ -92,13 +92,13 @@ void cSkaAnimAnchor_TreeNode_TellNeedToUpdate(Nd* n);
 void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc(It* it);
 }
 #pragma opt_propagation off
-extern "C" void Root_SetBasePosition(Nd* self, V4* pos)
+extern "C" void cSkaAnimAnchor_TreeNode_SetTransformPosition_WorldSpace(Nd* self, V4* pos)
 {
     { Plc* d = &self->p; V4* dd = &d->pos; QC(dd, pos); }
     if (self->bB0) {
         Plc inv; Plc* ip; Plc* p; V4* ipos; V4* v;
-        Transform_SetOrientation(&inv, Root_GetWorldPlacement(Root_GetParent(self)));
-        Placement_Invert(&inv);
+        cQuatVec_opAssign(&inv, cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(self)));
+        cQuatVec_InvertAssumingUnitQuat(&inv);
         p = &self->p;
         ip = &inv;
         v = &p->pos;

@@ -7,8 +7,8 @@ extern "C" {
 extern unsigned char D_005721D0;
 extern unsigned char g_GameState;
 extern char D_0051F0A8[], D_004DE4D0[];
-extern void Event_Construct(Msg2D7190* e, void* type);
-extern void** NetMap_Lookup(int);
+extern void cMessage_ctor_cMessageNameR(Msg2D7190* e, void* type);
+extern void** cNetObj_GetNetSystem(int);
 extern void cNetNPCMsgs_DoNPCMethod(void*, int, int, int, int);
 extern void cMessage_dtor(Msg2D7190*, int);
 }
@@ -20,7 +20,7 @@ extern "C" int cNetNPCMsgs_NetNPCMsgsCallback(int a0, int a1, int a2, Pk2D7190* 
         Msg2D7190 msg;
         void** obj;
         Pk2D7190* p = arg;
-        Event_Construct(&msg, D_0051F0A8);
+        cMessage_ctor_cMessageNameR(&msg, D_0051F0A8);
         msg.vt = D_004DE4D0;
         msg.f24 = p->f0;
         msg.f28 = p->f4;
@@ -28,7 +28,7 @@ extern "C" int cNetNPCMsgs_NetNPCMsgsCallback(int a0, int a1, int a2, Pk2D7190* 
         msg.f30 = p->fC;
         msg.f34 = p->f10;
         msg.f38 = p->f14;
-        obj = NetMap_Lookup(p->f4);
+        obj = cNetObj_GetNetSystem(p->f4);
         if (obj && *obj) cNetNPCMsgs_DoNPCMethod(*obj, p->f8, p->fC, p->f10, p->f14);
         msg.vt = D_004DE4D0;
         cMessage_dtor(&msg, 0);

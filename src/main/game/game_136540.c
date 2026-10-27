@@ -9,19 +9,19 @@
 
 /* merge_units: begin func_00136540 */
 #pragma push /* merge_units */
-Rel* PtrVec_InitEmpty(Rel* r); /* gsynth: defined below */int PtrVec_Reserve_Thunk(int a0, int a1); /* gsynth: defined below */typedef struct { char pad[0xC]; unsigned char flag; } Sub00136540;
+Rel* std_vector_cGOBJPtr_ctor_void(Rel* r); /* gsynth: defined below */int std_vector_cGOBJPtr_reserve(int a0, int a1); /* gsynth: defined below */typedef struct { char pad[0xC]; unsigned char flag; } Sub00136540;
 typedef struct { void* vtable; Sub00136540 sub; char pad[0x14 - 4 - sizeof(Sub00136540)]; int unk14; } Obj00136540;
 extern char D_004D9140[];
 #if 0 /* merge_units */
-extern void PtrVec_InitEmpty(Sub00136540* sub);
+extern void std_vector_cGOBJPtr_ctor_void(Sub00136540* sub);
 #endif /* merge_units */
-#define PtrVec_InitEmpty(a0) ((void)PtrVec_InitEmpty((void *)(a0))) /* merge_units */
+#define std_vector_cGOBJPtr_ctor_void(a0) ((void)std_vector_cGOBJPtr_ctor_void((void *)(a0))) /* merge_units */
 
 extern int cArrayCapacity_Int(void* src);
 #if 0 /* merge_units */
-extern int PtrVec_Reserve_Thunk(Sub00136540* sub, int value);
+extern int std_vector_cGOBJPtr_reserve(Sub00136540* sub, int value);
 #endif /* merge_units */
-#define PtrVec_Reserve_Thunk(a0, a1) (PtrVec_Reserve_Thunk((int)(a0), (a1))) /* merge_units */
+#define std_vector_cGOBJPtr_reserve(a0, a1) (std_vector_cGOBJPtr_reserve((int)(a0), (a1))) /* merge_units */
 
 /* Constructor. */
 Obj00136540* cCollisionModelList_ctor(Obj00136540* obj, void* src)
@@ -29,14 +29,14 @@ Obj00136540* cCollisionModelList_ctor(Obj00136540* obj, void* src)
     Sub00136540* sub;
     obj->vtable = D_004D9140;
     sub = &obj->sub;
-    PtrVec_InitEmpty(sub);
-    PtrVec_Reserve_Thunk(sub, cArrayCapacity_Int(src));
+    std_vector_cGOBJPtr_ctor_void(sub);
+    std_vector_cGOBJPtr_reserve(sub, cArrayCapacity_Int(src));
     sub->flag = 1;
     obj->unk14 = 0;
     return obj;
 }
-#undef PtrVec_InitEmpty /* merge_units */
-#undef PtrVec_Reserve_Thunk /* merge_units */
+#undef std_vector_cGOBJPtr_ctor_void /* merge_units */
+#undef std_vector_cGOBJPtr_reserve /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00136540(void) {}
 #pragma pop /* merge_units */
@@ -51,13 +51,13 @@ static inline void merge_flush_func_00136540(void) {}
  */
 
 
-extern int PtrVec_Reserve(int, int);
+extern int std_vector_pod_int_reserve(int, int);
 
-int PtrVec_Reserve_Thunk(int a0, int a1) {
-    return PtrVec_Reserve(a0, a1);
+int std_vector_cGOBJPtr_reserve(int a0, int a1) {
+    return std_vector_pod_int_reserve(a0, a1);
 }
 
-Rel* PtrVec_InitEmpty(Rel* r) {
+Rel* std_vector_cGOBJPtr_ctor_void(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

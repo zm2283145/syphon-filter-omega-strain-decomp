@@ -14,7 +14,7 @@
 /* merge_units: begin func_0016E170 */
 #pragma push /* merge_units */
 typedef struct { int x0; int x4; int x8; unsigned char xC; } Req16E170;
-unsigned char NpcAi_RequestMode(Req16E170* p, int v, int pri) {
+unsigned char cStateMachine_ChangeState(Req16E170* p, int v, int pri) {
     unsigned char r = 0;
     if (pri >= p->x8) {
         p->x4 = v;
@@ -36,13 +36,13 @@ union NextIter {HotboxListNode* p;};
 struct ObjectV { VPAD32(a) VPAD32(b) virtual int Life(); };
 struct ControllerV { VPAD16(a) VPAD2(b) VPAD1(c) virtual int IsPlayer(); VPAD4(d) VPAD2(e) virtual int Enemy(SfGameObject*); VPAD4(f) VPAD1(g) virtual int Kind(); };
 extern "C" {
-    SfAwarenessRecord* NpcPerception_SensedRecord(SfAiPerception*,SfGameObject*);
-    SfGameObject* PlayerSlots_Get(int);
+    SfAwarenessRecord* cAITarget_GetAwareness(SfAiPerception*,SfGameObject*);
+    SfGameObject* cNetObj_GetPlayer(int);
     void std_list_cActiveListItemPtr_end_void_2(void*,void*);
     void cConstLListIterator_cActiveListItemPtr_ctor(void*,void*);
     void std_list_cActiveListItemPtr_begin_void_2(void*,void*);
     void std_list_cActiveListItemPtr_generic_iterator_1_ctor(void*,int);
-    void List_Begin_16E880(void*,void*);
+    void std_list_deleter_voidPtr_begin_void_2(void*,void*);
     extern void* g_HumanActorClassKey;
     extern char g_NpcThinkList[];
     extern SfAiComponent* g_LocalPlayer;
@@ -54,7 +54,7 @@ static inline int Active(SfGameObject* p) { return p->activated && p->enabled &&
 #pragma pop
 #pragma push
 #pragma opt_common_subs off
-extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGameObject* arg1) {
+extern "C" SfGameObject* cAITarget_GetNextNpcToTest(SfAiPerception* arg0, SfGameObject* arg1) {
     NextIter spCC;
     HotboxListNode* spC8;
     HotboxListNode* spC4;
@@ -107,7 +107,7 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
 
     container = g_NpcThinkList;
     var_s3 = 0;
-    List_Begin_16E880(&spA8, container);
+    std_list_deleter_voidPtr_begin_void_2(&spA8, container);
     std_list_cActiveListItemPtr_generic_iterator_1_ctor(&spAC, spA8);
     spCC.p = spAC;
     if (arg1 != 0) {
@@ -145,7 +145,7 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
                 if(temp_a0_3->IsPlayer()) {
                     var_s1=0;var_s6=0;
                     do {
-                        temp_v0=PlayerSlots_Get(var_s6);
+                        temp_v0=cNetObj_GetPlayer(var_s6);
                         if(temp_v0) {
                             if(temp_v0->id == arg1->id) var_s1=1;
                             else if(var_s1 && ((ControllerV*)arg0->component)->Enemy(temp_v0)) {
@@ -184,7 +184,7 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
                     if (var_v0_2 != 0) {
                         var_v0_2 = ((SfActor*)temp_s0_2)->pickupable != 0;
                     }
-                    if ((var_v0_2 != 0) && ((temp_v0_2 = NpcPerception_SensedRecord(arg0, temp_s0_2), (temp_v0_2 == 0)) || (temp_v0_2->deadBodyNoticeSent == 0))) {
+                    if ((var_v0_2 != 0) && ((temp_v0_2 = cAITarget_GetAwareness(arg0, temp_s0_2), (temp_v0_2 == 0)) || (temp_v0_2->deadBodyNoticeSent == 0))) {
                         var_s3 = temp_s0_2;
                     } else {
                         goto block_56;
@@ -210,7 +210,7 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
             if (g_IsMultiplayer != 0) {
                 var_s1_2 = 0;
             loop_62:
-                temp_v0_3 = PlayerSlots_Get(var_s1_2);
+                temp_v0_3 = cNetObj_GetPlayer(var_s1_2);
                 if ((temp_v0_3 != 0) && ((temp_a0_6 = (ControllerV*)arg0->component, (temp_a0_6->Enemy(temp_v0_3) != 0)) || (arg0->flags2 & 1))) {
                     var_s3 = temp_v0_3;
                 } else {
@@ -261,7 +261,7 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
                             if (var_v0_3 != 0) {
                                 var_v0_3 = ((SfActor*)temp_s0_4)->pickupable != 0;
                             }
-                            if ((var_v0_3 != 0) && ((temp_v0_4 = NpcPerception_SensedRecord(arg0, temp_s0_4), (temp_v0_4 == 0)) || (temp_v0_4->deadBodyNoticeSent == 0))) {
+                            if ((var_v0_3 != 0) && ((temp_v0_4 = cAITarget_GetAwareness(arg0, temp_s0_4), (temp_v0_4 == 0)) || (temp_v0_4->deadBodyNoticeSent == 0))) {
                                 var_s3 = temp_s0_4;
                             } else {
                                 goto block_93;

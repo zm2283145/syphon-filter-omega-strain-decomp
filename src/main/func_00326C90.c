@@ -11,7 +11,7 @@
 extern unsigned char* D_005061D0;
 
 /* Serialize: write the payload byte. */
-void cEnableSuperJumpMsg_v04(EnableSuperJumpMsg* msg) {
+void cEnableSuperJumpMsg_Pack(EnableSuperJumpMsg* msg) {
     *D_005061D0 = msg->enable;
     D_005061D0 = D_005061D0 + 1;
 }

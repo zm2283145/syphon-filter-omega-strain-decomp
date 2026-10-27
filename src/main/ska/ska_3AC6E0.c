@@ -58,11 +58,11 @@ struct Dq {
 extern "C" {
 extern char D_00542B68[];
 extern char D_004DFBD0[];
-void Event_Construct(NMsg* m, void* type);
-void Event_Send(void* m, int target, int immediate);
+void cMessage_ctor_cMessageNameR(NMsg* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, int target, int immediate);
 void cMessage_dtor(NMsg* m, int flags);
-int TransitionReq_SameKey(void* a, void* b);
-void AnimBlend_Evaluate(float w, Slot* s, unsigned char* a, float* nw, unsigned char* b, void* p, unsigned char* f, float t);
+int cDequeue_cSkaSystem_Request_ReverseIterator_opEq(void* a, void* b);
+void cSkaSystem_Request_Process(float w, Slot* s, unsigned char* a, float* nw, unsigned char* b, void* p, unsigned char* f, float t);
 int cSkaAnimCheckpoints_HasScheduledEvents(NNotify* n);
 int cSkaPlaybackGroupId_IsValid(int* p);
 int func_003AD1E0(int* g, int* p);
@@ -81,7 +81,7 @@ static inline void MsgSend(AMsg* m, unsigned char kind, float value)
     if (m->target && !m->sent) {
         m->kind = kind;
         m->value = value;
-        Event_Send(m, m->target, 1);
+        QueueMessage_cMessageR_cSystemP_int(m, m->target, 1);
     }
     if (kind == 4 || kind == 5) {
         m->sent = 1;
@@ -96,10 +96,10 @@ static inline void NotifySend(NNotify* h, int idx, unsigned char clear)
         if (LinkValid(p)) {
             NMsg msg;
             int tok = p->id;
-            Event_Construct(&msg, D_00542B68);
+            cMessage_ctor_cMessageNameR(&msg, D_00542B68);
             msg.value = tok;
             msg.vtable = D_004DFBD0;
-            Event_Send(&msg, p->target, 1);
+            QueueMessage_cMessageR_cSystemP_int(&msg, p->target, 1);
             msg.vtable = D_004DFBD0;
             cMessage_dtor(&msg, 0);
             if ((signed char)idx >= 5) h->active = 0;
@@ -107,14 +107,14 @@ static inline void NotifySend(NNotify* h, int idx, unsigned char clear)
         }
     }
 }
-static inline bool Differs(void* q, void* r) { return !TransitionReq_SameKey(q, r); }
+static inline bool Differs(void* q, void* r) { return !cDequeue_cSkaSystem_Request_ReverseIterator_opEq(q, r); }
 static inline bool Slot_Done(Slot* s)
 {
     if (s->cur != -1.0f) return s->cur == s->end;
     return AnimGroup_IsComplete(&s->grp, cSkaSystem_Request_PlaybackGroupId(s));
 }
 
-extern "C" void AnimCtl_Evaluate(void* a0, void* a1, Dq* q, void* req, unsigned char flag, float w, float t)
+extern "C" void cSkaRequestStream_ProcessCurrentlyPlayingItems(void* a0, void* a1, Dq* q, void* req, unsigned char flag, float w, float t)
 {
     if (!(w <= 0.0f) && Differs(q, req)) {
         Slot* s;
@@ -127,10 +127,10 @@ extern "C" void AnimCtl_Evaluate(void* a0, void* a1, Dq* q, void* req, unsigned 
         q->pop_back();
         started = s->IsActive();
         wasDone = s->IsDone();
-        AnimBlend_Evaluate(w, s, &nflag, &nw, &ended, a1, &flag, t);
+        cSkaSystem_Request_Process(w, s, &nflag, &nw, &ended, a1, &flag, t);
         s->active = 0;
         s->done = 0;
-        AnimCtl_Evaluate(a0, a1, q, req, nflag, nw, t);
+        cSkaRequestStream_ProcessCurrentlyPlayingItems(a0, a1, q, req, nflag, nw, t);
         if (cSkaAnimCheckpoints_HasScheduledEvents(&s->notify) && cSkaPlaybackGroupId_IsValid(s->x1C)) {
             cSkaAnimCheckpoints_TriggerScheduledEvents(&s->notify, func_003AD1E0(&s->grp, s->x1C));
         }

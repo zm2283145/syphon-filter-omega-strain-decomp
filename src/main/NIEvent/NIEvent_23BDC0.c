@@ -21,22 +21,22 @@ struct Obj_23BDC0 {
 };
 extern "C" {
 extern unsigned char g_IsMultiplayer;
-void Event_Construct(Msg_23BDC0* msg, void* type);
+void cMessage_ctor_cMessageNameR(Msg_23BDC0* msg, void* type);
 void cMessage_dtor(Msg_23BDC0* msg, int flags);
 extern char g_cDisableMsgClass[];
 extern char D_004E0860[];
-void NetMsg_Send(Msg_23BDC0* msg, int id, int x);
+void cDisableMsg_SendDisabled(Msg_23BDC0* msg, int id, int x);
 }
-extern "C" void cNIEventOBJ_v18(Obj_23BDC0* self)
+extern "C" void cNIEventOBJ_Disable(Obj_23BDC0* self)
 {
     self->Toggle(-1);
     if (g_IsMultiplayer) {
         Msg_23BDC0 msg;
-        Event_Construct(&msg, g_cDisableMsgClass);
+        cMessage_ctor_cMessageNameR(&msg, g_cDisableMsgClass);
         msg.vtable = D_004E0860;
         msg.target = -1;
         msg.size = 0x40;
-        NetMsg_Send(&msg, self->id, -1);
+        cDisableMsg_SendDisabled(&msg, self->id, -1);
         msg.vtable = D_004E0860;
         cMessage_dtor(&msg, 0);
     }
@@ -59,9 +59,9 @@ struct Obj_23BE50 {
 };
 extern "C" {
 #if 0 /* merge_units */
-void Event_Construct(Msg_23BE50* msg, void* type);
+void cMessage_ctor_cMessageNameR(Msg_23BE50* msg, void* type);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((Msg_23BDC0 *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((Msg_23BDC0 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 void cMessage_dtor(Msg_23BE50* msg, int flags);
@@ -72,12 +72,12 @@ extern char g_cEnableMsgClass[];
 extern char D_004E0880[];
 void cEnableMsg_SendEnabled(Msg_23BE50* msg, int id);
 }
-extern "C" void cNIEventOBJ_v17(Obj_23BE50* self)
+extern "C" void cNIEventOBJ_Enable(Obj_23BE50* self)
 {
     self->Toggle(-1);
     if (g_IsMultiplayer) {
         Msg_23BE50 msg;
-        Event_Construct(&msg, g_cEnableMsgClass);
+        cMessage_ctor_cMessageNameR(&msg, g_cEnableMsgClass);
         msg.vtable = D_004E0880;
         msg.target = -1;
         msg.size = 0x40;
@@ -86,7 +86,7 @@ extern "C" void cNIEventOBJ_v17(Obj_23BE50* self)
         cMessage_dtor(&msg, 0);
     }
 }
-#undef Event_Construct /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0023BE50(void) {}
@@ -113,7 +113,7 @@ extern "C" {
 extern int D_004F7C60;
 int* std_vector_cNIEventBasePtr_opIndex(PtrVec* v, int i);
 void cNIEventOBJ_DeactivateChildren(Node_23BEE0* self, int arg);
-void Object_Deactivate(Node_23BEE0* self, int arg);
+void cGOBJ_Deactivate(Node_23BEE0* self, int arg);
 }
 #pragma push
 #pragma opt_strength_reduction off
@@ -129,7 +129,7 @@ extern "C" void cNIEventOBJ_DeactivateChildren(Node_23BEE0* self, int arg)
         else
             ((Target_23BEE0*)self->children.data[i])->slot22(arg);
     }
-    Object_Deactivate(self, arg);
+    cGOBJ_Deactivate(self, arg);
 }
 #pragma pop
 /* merge_units: generate this block's code under its own pragmas */

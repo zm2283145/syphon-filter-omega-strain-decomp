@@ -2,7 +2,7 @@
 extern void cTimerDisable_ctor(void* g);
 extern void cTimerDisable_dtor(void* g, int flags);
 extern void cSkaSwitchItem_dtor(void* p, int flags);
-extern void Mem_Free(void* a, void* b, void* c, int d);
+extern void cMemMan_Deallocate(void* a, void* b, void* c, int d);
 #pragma optimization_level 1
 void opDelete_cSkaSwitchItemP_int_bool_charP_etc(void* p, void* pool, int destroy, void* file, int line)
 {
@@ -10,7 +10,7 @@ void opDelete_cSkaSwitchItemP_int_bool_charP_etc(void* p, void* pool, int destro
     cTimerDisable_ctor(g);
     if (destroy)
         cSkaSwitchItem_dtor(p, -1);
-    Mem_Free(pool, p, file, line);
+    cMemMan_Deallocate(pool, p, file, line);
     cTimerDisable_dtor(g, -1);
 }
 #pragma optimization_level reset

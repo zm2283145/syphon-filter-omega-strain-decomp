@@ -23,7 +23,7 @@ int Alloc_Lock(int a)
 
 /* merge_units: begin func_0010DCA8 */
 extern int _EnableIntc(int);
-int Alloc_Unlock(int a)
+int EnableIntc(int a)
 {
     int s, r;
     __asm__ volatile("mfc0 %0, $12" : "=r"(s));

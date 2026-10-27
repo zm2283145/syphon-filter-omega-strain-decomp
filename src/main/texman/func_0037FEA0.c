@@ -20,33 +20,33 @@ typedef struct {
 extern "C" {
 extern char D_004BC2B8[], D_004BC300[];
 extern char StreamedTextureCallback[];
-int FileMan_FindMember(int* f);
-unsigned int FileMan_GetSize(int* f);
+int cFileMan_Open(int* f);
+unsigned int cFileMan_GetSize(int* f);
 int cFileMan_IsClientMemAllocated(int* f);
-void* Tdx_Read(Obj_37FEA0* o, int* f, int* flags);
-void List_Erase_383560(It_37FEA0* result, void* list, It_37FEA0* pos);
+void* cTexMan_PatchupTDX_cFileManR_intR(Obj_37FEA0* o, int* f, int* flags);
+void std_list_deleter_int_erase_listdeleter(It_37FEA0* result, void* list, It_37FEA0* pos);
 int cTexture_GetRefCount(void* t);
-void Tex_DestroyRecord(void* t, int a, int b, char* file, int line);
+void opDelete_cTextureP_int_bool_charP_etc(void* t, int a, int b, char* file, int line);
 void cTexMan_EraseDeletedTID(Obj_37FEA0* o, int v);
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 void* cTexture_ctor(void* t);
-int Fstream_GetLoader(void);
-void AsyncLoader_QueueLoad(int q, int* f, void* cb, void* t, int a, int b, int c);
-void Tex_BuildGsRegisters(void* t, int a, void* data, int flags);
+int GetFileStreamMan(void);
+void cFileStreamMan_StreamRequest(int q, int* f, void* cb, void* t, int a, int b, int c);
+void cTexture_Init_charP_tTDXHeaderP_uint(void* t, int a, void* data, int flags);
 }
 
-static inline void Erase(It_37FEA0* out, List_37FEA0* l, It_37FEA0* b) { It_37FEA0 result; It_37FEA0 value; value = *b; List_Erase_383560(&result, l, &value); *out = result; }
+static inline void Erase(It_37FEA0* out, List_37FEA0* l, It_37FEA0* b) { It_37FEA0 result; It_37FEA0 value; value = *b; std_list_deleter_int_erase_listdeleter(&result, l, &value); *out = result; }
 
-extern "C" int TexMan_LoadNewTexture(Obj_37FEA0* o, int* file, int arg2)
+extern "C" int cTexMan_AddTextureTDX(Obj_37FEA0* o, int* file, int arg2)
 {
     int flags;
     void* data;
     int idx;
     void* t;
-    if ((unsigned char)FileMan_FindMember(file)) {
+    if ((unsigned char)cFileMan_Open(file)) {
         return -1;
     }
-    if (FileMan_GetSize(file) > 0x100040) {
+    if (cFileMan_GetSize(file) > 0x100040) {
         return -1;
     }
     flags = 0;
@@ -54,7 +54,7 @@ extern "C" int TexMan_LoadNewTexture(Obj_37FEA0* o, int* file, int arg2)
         flags |= 0x1000;
     }
     if (!(*file & 4)) {
-        data = Tdx_Read(o, file, &flags);
+        data = cTexMan_PatchupTDX_cFileManR_intR(o, file, &flags);
         if (!data) {
             return -1;
         }
@@ -77,13 +77,13 @@ extern "C" int TexMan_LoadNewTexture(Obj_37FEA0* o, int* file, int arg2)
         idx = o->next++;
     }
     if (o->tex[idx] && cTexture_GetRefCount(o->tex[idx]) <= 0) {
-        Tex_DestroyRecord(o->tex[idx], 0, 1, D_004BC300, 0x39E);
+        opDelete_cTextureP_int_bool_charP_etc(o->tex[idx], 0, 1, D_004BC300, 0x39E);
         o->tex[idx] = 0;
         cTexMan_EraseDeletedTID(o, idx);
     }
     {
         AllocGuard guard;
-        t = Mem_Alloc(0, 0x70, D_004BC2B8, 0x4D8);
+        t = cMemMan_Allocate(0, 0x70, D_004BC2B8, 0x4D8);
     }
     if (t) {
         t = cTexture_ctor(t);
@@ -91,10 +91,10 @@ extern "C" int TexMan_LoadNewTexture(Obj_37FEA0* o, int* file, int arg2)
     o->tex[idx] = t;
     if (*file & 4) {
         data = o->data;
-        AsyncLoader_QueueLoad(Fstream_GetLoader(), file, StreamedTextureCallback, o->tex[idx], 0, 1, 1);
+        cFileStreamMan_StreamRequest(GetFileStreamMan(), file, StreamedTextureCallback, o->tex[idx], 0, 1, 1);
         flags |= 0x2000;
     }
-    Tex_BuildGsRegisters(o->tex[idx], arg2, data, flags);
+    cTexture_Init_charP_tTDXHeaderP_uint(o->tex[idx], arg2, data, flags);
     return idx;
 }
 

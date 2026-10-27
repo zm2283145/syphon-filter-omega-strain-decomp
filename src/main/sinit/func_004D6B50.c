@@ -11,8 +11,8 @@ extern void std_vector_charPtr_reserve(void* p, int n);
 extern int cArrayCapacity_Int(int* n);
 extern void func_0043FDD0(void* p);
 extern void __register_global_object(void* obj, void* dtor, void* link);
-extern int Script_RegisterNative_2(void* fn, void* name, void* desc, int n, ...);
-void StaticInit_RegisterGlobalization(void)
+extern int cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(void* fn, void* name, void* desc, int n, ...);
+void StaticInit_globalization(void)
 {
     {
         int n[1];
@@ -33,5 +33,5 @@ void StaticInit_RegisterGlobalization(void)
         __register_global_object(o, cArray_charPtr_dtor_void_2, D_0055CA58);
     }
     func_0043FDD0(D_0055CA90);
-    D_0055D478 = Script_RegisterNative_2(Script_GetString, D_00493898, "GetString", 1, D_004938A0);
+    D_0055D478 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_GetString, D_00493898, "GetString", 1, D_004938A0);
 }

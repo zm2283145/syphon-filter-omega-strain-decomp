@@ -1,6 +1,6 @@
 #pragma cplusplus on
 #include "types.h"
-/* cNetHuman_NetRegister: describe the cNetHuman replicated fields to the net
+/* cNetHuman_InitNet: describe the cNetHuman replicated fields to the net
  * object database and register the class with its create/update/destroy
  * handlers. */
 typedef struct {
@@ -38,10 +38,10 @@ void cNetHuman_NetHumanUpdateCallback(void);
 void cNetHuman_NetHumanDeleteCallback(void);
 extern char D_004AD588[]; /* "cNetHuman", shared with cNetHuman_CreateNetHuman */
 extern int D_0051F078;
-unsigned char cNetHuman_NetRegister(void);
+unsigned char cNetHuman_InitNet(void);
 }
 #define OFS(f) ((char*)&o.f - base)
-extern "C" unsigned char cNetHuman_NetRegister(void)
+extern "C" unsigned char cNetHuman_InitNet(void)
 {
     int db;
     int h;

@@ -10,9 +10,9 @@
 typedef union { long long q[4]; char s[32]; __int128 v[2]; } H2Key;
 typedef struct { char b[0x440]; } H2Pack;
 typedef struct { H2Key* keys; H2Pack* packs; int count; } H2Registry;
-extern void Appearance_RegistryKey(char* dst, int n, char* src);
+extern void strCpyPad(char* dst, int n, char* src);
 /* Finds the registry packing whose key equals the upper-cased stem of name. */
-H2Pack* SklRegistry_Find(H2Registry* reg, char* name) {
+H2Pack* SKLHog_FindSKL(H2Registry* reg, char* name) {
     int n;
     char* p;
     int i;
@@ -20,7 +20,7 @@ H2Pack* SklRegistry_Find(H2Registry* reg, char* name) {
     if (name == 0)
         return 0;
     n = reg->count;
-    Appearance_RegistryKey(p = key.s, 0x1f, name);
+    strCpyPad(p = key.s, 0x1f, name);
     while (*p != 0) {
         int c = *(volatile char*)p;
         if (c >= 'a' && c <= 'z')
@@ -40,7 +40,7 @@ H2Pack* SklRegistry_Find(H2Registry* reg, char* name) {
 /* merge_units: begin func_00407EC0 */
 #pragma push /* merge_units */
 /* Copies the stem of a file name (up to '.') into a zero-padded key. */
-void Appearance_RegistryKey(char* dst, int n, char* src) {
+void strCpyPad(char* dst, int n, char* src) {
     int i = 0;
     char c;
     while (!!(c = *src) && i < n) {
@@ -65,7 +65,7 @@ void Appearance_RegistryKey(char* dst, int n, char* src) {
 #include "msg_clone.h"
 extern "C" char D_004DFD80[];
 extern "C" char D_004E08A0[];
-MSG_CLONE_BEGIN(cDamageMsg_v01, 0x30, "DamageMsg.hh", 0x20)
+MSG_CLONE_BEGIN(cDamageMsg_Clone, 0x30, "DamageMsg.hh", 0x20)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);
@@ -97,9 +97,9 @@ MSG_CLONE_END
 
 extern int D_00571700;
 extern int D_00571708;
-extern int GObj_IdentityA(int who);
-extern int* Message_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int type, int baseType);
+extern int cGOBJ_SOBJ_toInt(int who);
+extern int* cMessage_SOBJ_getClassId(void);
+extern void cScriptBase_declareParent(int type, int baseType);
 
 int Script_cDamageMsg_Type(cDamageMsg** msg) {
     return (*msg)->type;
@@ -110,7 +110,7 @@ int Script_cDamageMsg_Where(cDamageMsg** msg) {
 }
 
 int Script_cDamageMsg_Attacker(cDamageMsg** msg) {
-    return GObj_IdentityA((*msg)->attacker);
+    return cGOBJ_SOBJ_toInt((*msg)->attacker);
 }
 
 /* Returns the float damage value as its raw bits. */
@@ -121,16 +121,16 @@ int Script_cDamageMsg_Damage(cDamageMsg** msg) {
     return *(int*)loc;
 }
 
-void ScriptType_cDamageMsg_Init(void) {
-    int* base = Message_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_00571708, *base);
+void cDamageMsg_SOBJ_init(void) {
+    int* base = cMessage_SOBJ_getClassId();
+    cScriptBase_declareParent(D_00571708, *base);
 }
 
 int cDamageMsg_SOBJ_getClassId(void) {
     return (int)&D_00571700;
 }
 
-int cDamageMsg_v03(void) {
+int cDamageMsg_getSOBJClassId(void) {
     return D_00571700;
 }
 #pragma pop /* merge_units */
@@ -139,23 +139,23 @@ int cDamageMsg_v03(void) {
 /* merge_units: begin func_00408100 */
 #pragma push /* merge_units */
 extern int NetRegisterMessageStart(void* reg);
-extern int Event_UnpackHeader(void* desc);
+extern int cMessage_RegisterFields(void* desc);
 
 extern int NetMessageField(void* desc, void* field, int size, int count);
-extern int NetMsg_RegisterType(void* t, int id, void* fn);
+extern int NetRegisterMessage(void* t, int id, void* fn);
 extern int D_005716F8;
-extern void cDamageMsg_NetReceive(void);
-unsigned char cDamageMsg_NetRegister(void* reg)
+extern void cDamageMsg_DamageCallback(void);
+unsigned char cDamageMsg_InitNet(void* reg)
 {
     struct { long long file; char f8; char padC[3]; int fC; short f10; short f12; short f14; } L;
     unsigned char ok = 0;
-    if (NetRegisterMessageStart(reg) == 0 && Event_UnpackHeader(&L.file) != 0
+    if (NetRegisterMessageStart(reg) == 0 && cMessage_RegisterFields(&L.file) != 0
         && NetMessageField(&L.file, &L.f8, 1, 1) == 0
         && NetMessageField(&L.file, &L.fC, 4, 1) == 0
         && NetMessageField(&L.file, &L.f10, 2, 1) == 0
         && NetMessageField(&L.file, &L.f14, 2, 1) == 0
         && NetMessageField(&L.file, &L.f12, 2, 1) == 0
-        && NetMsg_RegisterType(&D_005716F8, 2, cDamageMsg_NetReceive) == 0)
+        && NetRegisterMessage(&D_005716F8, 2, cDamageMsg_DamageCallback) == 0)
         ok = 1;
     return ok;
 }

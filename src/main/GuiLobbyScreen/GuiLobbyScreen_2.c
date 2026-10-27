@@ -14,11 +14,11 @@ public:
     virtual void Slot22();
 };
 extern "C" unsigned char D_00532FE8;
-extern "C" void GuiWidget_Update(C3D310* self);
+extern "C" void GuiWidget_onAdvanceTime(C3D310* self);
 extern "C" void func_0033D0C0(C3D310* self);
-extern "C" void GuiScreen_Update(C3D310* self)
+extern "C" void GuiLobbyScreen_onAdvanceTime(C3D310* self)
 {
-    GuiWidget_Update(self);
+    GuiWidget_onAdvanceTime(self);
     self->Slot22();
     if (D_00532FE8)
         func_0033D0C0(self);
@@ -40,12 +40,12 @@ struct Object {
     virtual void Method68(); /* +0x68 */
 };
 
-extern "C" void GuiWidget_BaseSleep(Object* self);
+extern "C" void GuiWidget_onSleep(Object* self);
 
-/* Calls GuiWidget_BaseSleep then virtual slot +0x68. */
+/* Calls GuiWidget_onSleep then virtual slot +0x68. */
 extern "C" void GuiScreen_Sleep(Object* self)
 {
-    GuiWidget_BaseSleep(self);
+    GuiWidget_onSleep(self);
     self->Method68();
 }
 #pragma pop /* merge_units */
@@ -62,10 +62,10 @@ public:
     char pad[0x78];
     Sub3D3A0* sub;
 };
-extern "C" void GuiWidget_BaseWake(C3D3A0* self);
+extern "C" void GuiWidget_onWake(C3D3A0* self);
 extern "C" void GuiScreen_Wake(C3D3A0* self)
 {
-    GuiWidget_BaseWake(self);
+    GuiWidget_onWake(self);
     self->Slot23();
     if (self->sub)
         self->sub->state = -1;
@@ -84,12 +84,12 @@ extern "C" void GuiScreen_Wake(C3D3A0* self)
 
 extern char D_004B99C8[];
 static void * const dat_004928A8[2] = { (void*)D_004B99C8, (void*)0x0 };
-extern int GuiWidget_FindChildByName(void* self, int a1);
-extern int GuiWidget_Init(void* self);
+extern int GuiWidget_FindChild_charP(void* self, int a1);
+extern int GuiWidget_onAdd(void* self);
 
-void GuiScreen_Init(char* self) {
-    GuiWidget_Init(self);
-    *(int*)(self + 124) = GuiWidget_FindChildByName(self, (*(int*)dat_004928A8));
+void GuiLobbyScreen_onAdd(char* self) {
+    GuiWidget_onAdd(self);
+    *(int*)(self + 124) = GuiWidget_FindChild_charP(self, (*(int*)dat_004928A8));
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0033D3F0 */

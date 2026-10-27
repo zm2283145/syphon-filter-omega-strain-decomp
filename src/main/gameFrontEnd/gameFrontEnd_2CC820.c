@@ -18,10 +18,10 @@ static const unsigned int dat_004ACB60[20] = { 0x0, 0x1, 0x2, 0xFFFFFFFF, 0x3, 0
 static const unsigned int dat_004ACBB0[8] = { 0x1000000, 0x10000, 0x10000, 0x1000000, 0x0, 0x0, 0x0, 0x0 };
 static const unsigned int dat_004ACBD0[6] = { 0x1000000, 0x10000, 0x10000, 0x1000000, 0x0, 0x0 };
 extern int D_00494198;
-void LevelSelect_SetLevel(LevelC820* o, int i)
+void MissionSelectData_SelectMission(LevelC820* o, int i)
 {
     if (i >= 0 && i < 0x12) {
-        String_Copy(o->name, D_0048C160[i]);
+        Libc_Strcpy(o->name, D_0048C160[i]);
         o->text = ((int*)dat_004ACB60)[i];
         o->index = i;
         o->a = ((unsigned char*)dat_004ACBB0)[i];
@@ -44,22 +44,22 @@ static inline void merge_flush_func_002CC820(void) {}
 #pragma push /* merge_units */
 extern int String_CompareNoCase(const char* a, const char* b);
 #if 0 /* merge_units */
-extern void LevelSelect_SetLevel(void* o, int i);
+extern void MissionSelectData_SelectMission(void* o, int i);
 #endif /* merge_units */
-#define LevelSelect_SetLevel(a0, a1) (LevelSelect_SetLevel((void *)(a0), (a1))) /* merge_units */
+#define MissionSelectData_SelectMission(a0, a1) (MissionSelectData_SelectMission((void *)(a0), (a1))) /* merge_units */
 
-void LevelSelect_FindByName(void* o, const char* name)
+void MissionSelectData_SelectMissionByName(void* o, const char* name)
 {
     int i;
     for (i = 0; i < 0x12; i++) {
         if (String_CompareNoCase(D_0048C160[i], name) == 0) {
-            LevelSelect_SetLevel(o, i);
+            MissionSelectData_SelectMission(o, i);
             return;
         }
     }
-    LevelSelect_SetLevel(o, -1);
+    MissionSelectData_SelectMission(o, -1);
 }
-#undef LevelSelect_SetLevel /* merge_units */
+#undef MissionSelectData_SelectMission /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002CC8E0(void) {}
 #pragma pop /* merge_units */

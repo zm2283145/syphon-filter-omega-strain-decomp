@@ -26,13 +26,13 @@ struct cElevatorGOBJ {
     Door* door; /* +0x64 */
 };
 
-extern "C" void Object_Activate(cElevatorGOBJ* self, void* arg);
+extern "C" void cGOBJ_Activate(cElevatorGOBJ* self, void* arg);
 
 /* Lift virtual 0x15: notifies the door (if any), runs the base handler with arg, then virtual +0xC4. */
-extern "C" void cElevatorGOBJ_v15(cElevatorGOBJ* self, void* arg)
+extern "C" void cElevatorGOBJ_Activate(cElevatorGOBJ* self, void* arg)
 {
     if (self->door)
         self->door->Method5C();
-    Object_Activate(self, arg);
+    cGOBJ_Activate(self, arg);
     self->MethodC4();
 }

@@ -18,7 +18,7 @@ struct Object {
 };
 
 /* Returns 1 unless virtual slot +0x108 (state) returns 3. */
-extern "C" int cGameGOBJ_v2F(Object* self)
+extern "C" int cGameGOBJ_GetTargetPriority(Object* self)
 {
     bool is3 = self->GetState() == 3;
     return is3 ? 0 : 1;

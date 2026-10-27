@@ -37,7 +37,7 @@ struct Msg_0021C830 : ClonedMessageBase {
 #define CLONE_BODY(p, s) p->vtable = D_004E0840; p->a24 = s->a24; p->b28 = s->b28;
 
 extern "C" { char D_004BE550[] = "charActionMsg.hh"; }
-DEFINE_MESSAGE_CLONE(cCharActionMsg_v01, Msg_0021C830, 0x2C, D_004BE550, 0x98, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cCharActionMsg_Clone, Msg_0021C830, 0x2C, D_004BE550, 0x98, CLONE_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_003FF030 */
 
@@ -50,9 +50,9 @@ typedef struct PkFF140 { int kind, id; unsigned char action, on; } PkFF140;
 typedef struct MsgFF140 { void* vt; char p4[0x20]; int action; unsigned char on; char p29[3]; } MsgFF140;
 extern unsigned char D_005723C8, D_005721D0;
 extern char g_ActorActionMsgClass[], D_004E0840[];
-void cMessage_ctor5(MsgFF140*, void*, PkFF140*);
-void** NetMap_Lookup(int);
-void MsgQueue_QueueClone(MsgFF140*, void*, int, int);
+void cMessage_ctor_cMessageNameR_messagebaseR(MsgFF140*, void*, PkFF140*);
+void** cNetObj_GetNetSystem(int);
+void QueueMessage_cMessageR_cSystemP_int_int(MsgFF140*, void*, int, int);
 void cMessage_dtor(MsgFF140*, int);
 int cCharActionMsg_NetCharActionReq(int a, int b, int c, PkFF140* p0) {
     MsgFF140 msg;
@@ -61,12 +61,12 @@ int cCharActionMsg_NetCharActionReq(int a, int b, int c, PkFF140* p0) {
     p = p0;
     if (D_005721D0) {
         void** obj;
-        cMessage_ctor5(&msg, g_ActorActionMsgClass, p);
+        cMessage_ctor_cMessageNameR_messagebaseR(&msg, g_ActorActionMsgClass, p);
         msg.vt = D_004E0840;
         msg.action = p->action;
         msg.on = p->on;
-        obj = NetMap_Lookup(p->id);
-        if (obj) MsgQueue_QueueClone(&msg, *obj, 0, 0);
+        obj = cNetObj_GetNetSystem(p->id);
+        if (obj) QueueMessage_cMessageR_cSystemP_int_int(&msg, *obj, 0, 0);
         msg.vt = D_004E0840;
         cMessage_dtor(&msg, 0);
     }

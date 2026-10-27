@@ -16,7 +16,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003961E0 */
 #pragma push /* merge_units */
@@ -40,7 +40,7 @@ extern "C" void* cSkaAnimAnchor_dtor(void* self, short deleteFlag); /* gsynth: d
 #pragma pop
 #pragma cplusplus on
 
-/* Allocator release(ptr, pool, destroy, file, line): destroy the element's member at +4, then Mem_Free under the guard. */
+/* Allocator release(ptr, pool, destroy, file, line): destroy the element's member at +4, then cMemMan_Deallocate under the guard. */
 extern "C" {
 #if 0 /* merge_units */
 void* cSkaAnimAnchor_dtor(void* self, short flags);
@@ -56,7 +56,7 @@ void opDelete_cSkaAnimAnchorListEntryP_int_bool_charP_etc(void* allocation, int 
         if (allocation)
             cSkaAnimAnchor_dtor((char*)allocation + 16, -1);
     }
-    Mem_Free(pool, allocation, file, line);
+    cMemMan_Deallocate(pool, allocation, file, line);
 }
 #undef cSkaAnimAnchor_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

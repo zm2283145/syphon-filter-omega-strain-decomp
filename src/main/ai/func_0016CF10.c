@@ -24,27 +24,27 @@ struct ARec {
 union AIt { HotboxListNode* p; };
 struct Raw { HotboxListNode* p; };
 extern "C" {
-AObj* ActorRef_Copy(SfWeakHandle*);
+AObj* cSafePtr_cGOBJ_opCast_cGOBJPtr(SfWeakHandle*);
 void Alloc_Lock(int);
-void Alloc_Unlock(int);
-AObj* Controller_GetAimTarget(void*);
-void Event_Construct(void*, void*);
-void Event_Send(void*, void*, int);
-void Mem_Free(int, void*, void*, int);
-void NpcPerception_AddAwareness(SfAiPerception*, AObj*, int, float);
-void NpcPerception_SetLastKnown(SfAiPerception*, AObj*, const V&, int);
-AObj* PlayerSlots_Get(int);
-float Weapon_GetHeldRange(void*);
+void EnableIntc(int);
+AObj* cGobjController_GetTarget(void*);
+void cMessage_ctor_cMessageNameR(void*, void*);
+void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
+void cMemMan_Deallocate(int, void*, void*, int);
+void cAITarget_AddAwareness(SfAiPerception*, AObj*, int, float);
+void cAITarget_SetTargetPositionLastSeen(SfAiPerception*, AObj*, const V&, int);
+AObj* cNetObj_GetPlayer(int);
+float cWeapon_GetMaxRange(void*);
 void __register_global_object(void*, void*, void*);
 void cMessage_dtor(void*, int);
-void List_Erase(void*, void*, void*);
+void std_list_deleter_voidPtr_erase_listdeleter(void*, void*, void*);
 void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(void*, void*);
 void std_list_cTargetAwarenessPtr_end_void(void*, void*);
 void cLListIterator_cTargetAwarenessPtr_ctor(void*, void*);
 void std_list_cTargetAwarenessPtr_begin(void*, void*);
 void std_list_cTargetAwarenessPtr_generic_iterator_ctor(void*, void*);
 void std_list_cTargetAwarenessPtr_generic_iterator_opCast(void*, void*);
-void StaticInit_FloorContactVecs(void*, int);
+void cPlane_dtor(void*, int);
 extern char D_0049C650[];
 extern int g_HumanActorClassKey;
 extern char D_004D9340[], D_004DCC90[], D_004DCD70[], D_004EE550[], D_004EE568[], D_004EE580[];
@@ -55,15 +55,15 @@ extern char g_ScriptAINewAwarenessMsgKey[];
 }
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
 struct MsgB { void* vt;
-    MsgB(void* k) { Event_Construct(this, k); }
+    MsgB(void* k) { cMessage_ctor_cMessageNameR(this, k); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); } };
 struct Msg7 : MsgB { char p04[0x20]; unsigned char kind; char p25[3]; int id; int cause;
     Msg7(int i, int c) : MsgB(D_004EE550) { vt = D_004D9340; kind = 7; id = i; cause = c; }
-    void Send(void* to) { Event_Send(this, to, 0); }
+    void Send(void* to) { QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
     __declspec(weak) __declspec(MSG_DTOR) ~Msg7() { vt = D_004D9340; } };
 struct MsgNew : MsgB { char p04[0x1C]; unsigned char kind; char p21[3]; AObj* obj; signed char cause; char p29[7];
     MsgNew(AObj* o, signed char c) : MsgB(g_ScriptAINewAwarenessMsgKey) { vt = D_004DCD70; obj = o; kind = 2; vt = D_004DCC90; cause = c; }
-    void Send(void* to) { Event_Send(this, to, 0); }
+    void Send(void* to) { QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgNew() { vt = D_004DCD70; } };
 static inline bool Active(AObj* p) { return p->activated && p->enabled && !p->removed; }
 static inline bool Player(void* c) { bool yes = false; if (c) if (((CtlV*)c)->IsPlayer()) yes = true; return yes; }
@@ -78,7 +78,7 @@ static inline const V& T(const M& m) { return m.r[3]; }
 static inline bool Human(AObj* o) { bool r = false; bool a = Active(o); if (a && o->human) r = true; return r; }
 static inline int Key0() { int* p = &g_HumanActorClassKey; return *p; }
 static inline bool Keep(AObj* o) { bool r = false; if (Active(o) && o->team == Key0()) r = Human(o); return r; }
-static inline bool Aimed(void* c, AObj* o) { return Controller_GetAimTarget(c) == o; }
+static inline bool Aimed(void* c, AObj* o) { return cGobjController_GetTarget(c) == o; }
 static inline float MaxA(float a, float b) { float r; asm { max.s r, a, b } return r; }
 static inline float MinA(float a, float b) { float r; asm { min.s r, a, b } return r; }
 static inline float MaxF(float a, float b) { float r = 0.0f; __asm__ volatile("max.s %0, %1, %2" : "=f"(r) : "f"(a), "f"(b)); return r; }
@@ -129,18 +129,18 @@ static inline float Len(V* a) {
 static inline void FreeRec(ARec* r, int line) {
     if (g_ProfileLockEnabled) Alloc_Lock(9);
     g_ProfileLockDepth++;
-    Mem_Free(0, r, D_0049C650, line);
-    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    cMemMan_Deallocate(0, r, D_0049C650, line);
+    if (g_ProfileLockEnabled) EnableIntc(9);
     g_ProfileLockDepth--;
 }
-static inline void Er2(void* recs, void* a, Raw* t) { char y[4], x[4]; void* pa = a; std_list_cTargetAwarenessPtr_generic_iterator_opCast(x, pa); List_Erase(y, recs, x); std_list_cTargetAwarenessPtr_generic_iterator_ctor(t, y); }
+static inline void Er2(void* recs, void* a, Raw* t) { char y[4], x[4]; void* pa = a; std_list_cTargetAwarenessPtr_generic_iterator_opCast(x, pa); std_list_deleter_voidPtr_erase_listdeleter(y, recs, x); std_list_cTargetAwarenessPtr_generic_iterator_ctor(t, y); }
 static inline void Er1(void* recs, AIt* it, AIt* r) { Raw t; char a[4]; std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(a, it); Er2(recs, a, &t); r->p = t.p; }
 static inline void Bg2(void* recs, AIt* b) { void* s; std_list_cTargetAwarenessPtr_begin(&s, recs); cLListIterator_cTargetAwarenessPtr_ctor(b, &s); }
 /* Retail reserves two unused depth-1 iterator slots above the erase temps; dead address-taken locals reproduce them. */
 static inline void Bg1(void* recs, AIt* b) { AIt u1, u2; void* q1 = &u1; void* q2 = &u2; Bg2(recs, b); }
 static inline void En2(void* recs, AIt* e) { void* s; std_list_cTargetAwarenessPtr_end_void(&s, recs); cLListIterator_cTargetAwarenessPtr_ctor(e, &s); }
 static inline void En1(void* recs, AIt* e) { En2(recs, e); }
-extern "C" void NpcPerception_UpdateRecords(SfAiPerception* p, float dt) {
+extern "C" void cAITarget_UpdateAwareness(SfAiPerception* p, float dt) {
     SfAiPerception* self = p;
     ARec* rec; AObj* obj;
     int i; int id; int seen; int cause; unsigned char done; AObj* pl; signed char cause2;
@@ -182,12 +182,12 @@ extern "C" void NpcPerception_UpdateRecords(SfAiPerception* p, float dt) {
                 if (!WGet(&self->target)) {
                     if (((CtlV*)self->component)->Enemy(obj)) {
 
-                        NpcPerception_SetLastKnown(self, obj, ((ObjV*)obj)->Mtx().T(), 0);
+                        cAITarget_SetTargetPositionLastSeen(self, obj, ((ObjV*)obj)->Mtx().T(), 0);
                     }
-                } else if (SameObj(obj, ActorRef_Copy(&self->target))) {
+                } else if (SameObj(obj, cSafePtr_cGOBJ_opCast_cGOBJPtr(&self->target))) {
                     seen = (rec->lineClear & rec->inView) != 0;
 
-                    { const V& t = ((ObjV*)obj)->Mtx().T(); NpcPerception_SetLastKnown(self, WGet(&self->target), t, seen); }
+                    { const V& t = ((ObjV*)obj)->Mtx().T(); cAITarget_SetTargetPositionLastSeen(self, WGet(&self->target), t, seen); }
                 }
                 if (!rec->sent || !(rec->since7 <= 1.0f)) {
                     Msg7(obj->id, rec->cause).Send(self->component);
@@ -195,14 +195,14 @@ extern "C" void NpcPerception_UpdateRecords(SfAiPerception* p, float dt) {
                     if (!rec->sent) {
                         done = 1;
                         if (D_004EE560 == 0) {
-                            __register_global_object(D_004EE580, (void*)&StaticInit_FloorContactVecs, D_004EE568);
+                            __register_global_object(D_004EE580, (void*)&cPlane_dtor, D_004EE568);
                             D_004EE560 = 1;
                         }
                         if (Player(obj->ctrl)) done = (unsigned char)((ObjV*)obj)->Type(D_004EE580);
                         if (!done) {
                             for (i = 0; i < 4; i++) {
-                                pl = PlayerSlots_Get(i);
-                                if (pl && ((ObjV*)pl)->Type(D_004EE580)) NpcPerception_AddAwareness(self, pl, 9, 0.0f);
+                                pl = cNetObj_GetPlayer(i);
+                                if (pl && ((ObjV*)pl)->Type(D_004EE580)) cAITarget_AddAwareness(self, pl, 9, 0.0f);
                             }
                         }
                     }
@@ -235,7 +235,7 @@ extern "C" void NpcPerception_UpdateRecords(SfAiPerception* p, float dt) {
                 if (((AComp*)self->component)->owner->solo == 1) n = 0;
                 if (n > 0) vis *= (100.0f - (float)(n >> 1)) / 100.0f;
                 float thr = self->viewRadius;
-                if (obj->team == Key0() && obj->weapon[0x84] != 6) { float w = Weapon_GetHeldRange(obj->weapon); MinA(thr, MaxA(w, 30.0f)); }
+                if (obj->team == Key0() && obj->weapon[0x84] != 6) { float w = cWeapon_GetMaxRange(obj->weapon); MinA(thr, MaxA(w, 30.0f)); }
                 thr = dist / range;
                 if (thr > 1.0f) thr = 1.0f;
                 thr = 1.0f - thr;

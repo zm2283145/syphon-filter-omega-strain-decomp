@@ -11,7 +11,7 @@
 #include "obj_list_dtor.h"
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(ReceiverList_Dtor_3D2850)
+DEFINE_OBJ_LIST_DTOR(std_list_cAnimTexturePtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003D2850 */
 
@@ -27,11 +27,11 @@ DEFINE_OBJ_LIST_DTOR(ReceiverList_Dtor_3D2850)
 #include "loose04_types.h"
 
 extern char D_004E00A8[];         /* Unk3D28D0 vtable */
-extern int ScalarCollection_Init(L4ScalarCollection*);
+extern int std_list_deleter_voidPtr_ctor_void(L4ScalarCollection*);
 
-Unk3D28D0* ListenerList_Ctor(Unk3D28D0* self) {
+Unk3D28D0* cAnimTexMan_ctor(Unk3D28D0* self) {
     self->vtable = D_004E00A8;
-    ScalarCollection_Init(&self->coll);
+    std_list_deleter_voidPtr_ctor_void(&self->coll);
     self->unk0C = 0;
     return self;
 }

@@ -1,10 +1,10 @@
 #pragma cplusplus on
 #include "types.h"
 #pragma inline_depth(8)
-/* NiEvent_ComputeWorld: world matrix of an event node: billboarded for
+/* cNIEventBase_ParentXform: world matrix of an event node: billboarded for
  * type-3 nodes, otherwise parent world (recursively, or the parent's
  * billboard) times the local matrix at +0xF0. Types follow
- * NiEvent_BillboardWorld (NiEvent_BillboardWorld.c) and NiEvent_MulParentMatrix. */
+ * cNIEventBase_MakeFacingMat (cNIEventBase_MakeFacingMat.c) and cMatrix_opMul_cMatrixR. */
 struct V {
     float x, y, z, w;
     V() {}
@@ -28,19 +28,19 @@ struct NiEv {
     Mtx local;
 };
 extern "C" {
-Mtx NiEvent_BillboardWorld(NiEv* ev);
-Mtx NiEvent_ComputeWorld(NiEv* ev);
-void NiEvent_MulParentMatrix(Mtx* out, Mtx* a, Mtx* b);
+Mtx cNIEventBase_MakeFacingMat(NiEv* ev);
+Mtx cNIEventBase_ParentXform(NiEv* ev);
+void cMatrix_opMul_cMatrixR(Mtx* out, Mtx* a, Mtx* b);
 void cMatrix_ctor_void(Mtx* m);
-void Mtx_Copy_23E150(Mtx* d, Mtx* s);
-void Mtx_Copy(Mtx* d, Mtx* s);
-int GameObject_IsCollisionEnabled(NiEv* ev);
+void cMatrix_opAssign(Mtx* d, Mtx* s);
+void cMatrix_ctor_cMatrixR(Mtx* d, Mtx* s);
+int cGOBJ_IsActive(NiEv* ev);
 }
 static inline bool Not(unsigned char x) { return !x; }
 static inline bool Ready(NiEv* t) { bool r = false; bool a = false; if (t->b2D && t->b2C) a = true; if (a && Not(t->b2E)) r = true; return r; }
-/* matrix class whose copy constructor is the out-of-line Mtx_Copy (retail copies
+/* matrix class whose copy constructor is the out-of-line cMatrix_ctor_cMatrixR (retail copies
  * the parent world into MulM's by-value parameter with it) */
-struct MP : Mtx { MP() {} MP(const MP& o) { Mtx_Copy(this, (Mtx*)&o); } };
+struct MP : Mtx { MP() {} MP(const MP& o) { cMatrix_ctor_cMatrixR(this, (Mtx*)&o); } };
 static inline Mtx MulM(MP a, const Mtx& b)
 {
     const Mtx* pa = &a;
@@ -63,27 +63,27 @@ static inline MP ParentWorld(NiEv* p)
     MP m;
     cMatrix_ctor_void(&m);
     if (p->type == 3) {
-        if (GameObject_IsCollisionEnabled(p)) {
-            Mtx t = NiEvent_BillboardWorld(p);
-            Mtx_Copy_23E150(&m, &t);
+        if (cGOBJ_IsActive(p)) {
+            Mtx t = cNIEventBase_MakeFacingMat(p);
+            cMatrix_opAssign(&m, &t);
         }
     } else if (p->parent) {
         Mtx t2;
-        Mtx w = NiEvent_ComputeWorld(p->parent);
-        NiEvent_MulParentMatrix(&t2, &w, &p->local);
-        Mtx_Copy_23E150(&m, &t2);
+        Mtx w = cNIEventBase_ParentXform(p->parent);
+        cMatrix_opMul_cMatrixR(&t2, &w, &p->local);
+        cMatrix_opAssign(&m, &t2);
     } else {
-        Mtx_Copy_23E150(&m, &p->local);
+        cMatrix_opAssign(&m, &p->local);
     }
     return m;
 }
 
-extern "C" Mtx NiEvent_ComputeWorld(NiEv* ev)
+extern "C" Mtx cNIEventBase_ParentXform(NiEv* ev)
 {
     Mtx r;
     if (ev->type == 3) {
         if (Ready(ev)) {
-            Mtx b = NiEvent_BillboardWorld(ev);
+            Mtx b = cNIEventBase_MakeFacingMat(ev);
             r = b;
         }
     } else {

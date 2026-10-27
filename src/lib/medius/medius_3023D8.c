@@ -1,7 +1,7 @@
 typedef struct { unsigned char init; char pad[3]; int count; int owner; } Lock23D8;
 extern int rt_mutex_platform_get_thread_id(int *tid);
 extern int rt_mutex_platform_unlock(Lock23D8 *l);
-int RecursiveLock_Release(Lock23D8 *l, int *left)
+int rt_mutex_unlock(Lock23D8 *l, int *left)
 {
     int tid;
     int r;

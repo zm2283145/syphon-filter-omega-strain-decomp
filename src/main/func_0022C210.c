@@ -43,18 +43,18 @@ struct WL { int x0; int list; };
 extern "C" {
 extern World* g_Hud;
 extern char D_004F78DC[];
-WNode* WorldObjList_Get(void* l);
-int HudTargets_Add(void* mgr, int* key, int f);
-void HudTargets_DropLock(Player* p, Tgt* t);
-int ObjMarkerMgr_Remove(void* mgr, int* key, int f);
+WNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_2(void* l);
+int cHudTargetManager_Add(void* mgr, int* key, int f);
+void cPlayerControls_Untarget(Player* p, Tgt* t);
+int cHudTargetManager_Remove(void* mgr, int* key, int f);
 }
 
-extern "C" void HudTargets_UpdateMarkers(Tgt* self, Player* pl)
+extern "C" void SeedPlayerLos(Tgt* self, Player* pl)
 {
     void* mgr;
     WL* wl = (WL*)D_004F78DC;
-    WNode* it = WorldObjList_Get(&wl->list)->next;
-    WNode* end = WorldObjList_Get(&wl->list);
+    WNode* it = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_2(&wl->list)->next;
+    WNode* end = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_2(&wl->list);
     mgr = g_Hud->markers;
     for (; it != end; it = it->next) {
         Hnd* h = &it->h;
@@ -63,17 +63,17 @@ extern "C" void HudTargets_UpdateMarkers(Tgt* self, Player* pl)
         bool active = false;
         if (t->x58 && t->x58->Active()) active = true;
         if (active) {
-            HudTargets_Add(mgr, &t->id, 0);
+            cHudTargetManager_Add(mgr, &t->id, 0);
         } else if (HGet2(&pl->lock) == t || t->Kind() == 2) {
             if (t->Alive()) {
-                HudTargets_Add(mgr, &t->id, 0);
+                cHudTargetManager_Add(mgr, &t->id, 0);
             } else {
-                HudTargets_DropLock(pl, t);
-                ObjMarkerMgr_Remove(mgr, &t->id, 0);
+                cPlayerControls_Untarget(pl, t);
+                cHudTargetManager_Remove(mgr, &t->id, 0);
             }
         } else if ((unsigned char)t->Kind() == 0) {
-            HudTargets_DropLock(pl, t);
-            ObjMarkerMgr_Remove(mgr, &t->id, 0);
+            cPlayerControls_Untarget(pl, t);
+            cHudTargetManager_Remove(mgr, &t->id, 0);
         }
     }
 }

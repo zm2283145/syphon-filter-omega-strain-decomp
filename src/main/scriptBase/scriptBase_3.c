@@ -13,8 +13,8 @@
 extern "C" {
 extern char D_004BD418[];
 extern char D_004BD428[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void Mem_Free(int pool, void* p, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 void* memcpy(void* d, const void* s, unsigned int n);
 }
 
@@ -30,7 +30,7 @@ struct ScriptWriter {
 static inline void* GuardedAlloc(unsigned int size, char* file, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, file, line);
+    return cMemMan_Allocate(0, size, file, line);
 }
 
 extern "C" void ScriptFileBuff_expand(ScriptWriter* w, int words)
@@ -46,7 +46,7 @@ extern "C" void ScriptFileBuff_expand(ScriptWriter* w, int words)
         if (w->data) {
             void* old = w->data;
             AllocGuard g;
-            Mem_Free(0, old, D_004BD418, 0xD3);
+            cMemMan_Deallocate(0, old, D_004BD418, 0xD3);
         }
         w->data = nb;
     }

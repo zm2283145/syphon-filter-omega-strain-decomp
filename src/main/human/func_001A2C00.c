@@ -1,4 +1,4 @@
-/* Actor_UpdateJumpApex (001A2C00). Volatile reads keep retail's reloads of f3248/ledge with CSE on;
+/* cHuman_JumpFallLand_NextFrame (001A2C00). Volatile reads keep retail's reloads of f3248/ledge with CSE on;
    the class-typed ternary with a cast temporary reproduces the unaligned else-arm. */
 #pragma cplusplus on
 #include "vslot_pad.h"
@@ -54,14 +54,14 @@ struct Act : ActorV {
 };
 
 extern "C" {
-void Actor_ComputeJumpTarget(Act* a);
-void Actor_CatchLedgeInAir(Act* a);
-void Actor_LandFromAir(Act* a, int f);
-void Actor_StartFall(Act* a);
-void Actor_UpdateFallState(Act* a, bool f);
+void cHuman_JumpLaunchApplyForce(Act* a);
+void cHuman_GrabLedge(Act* a);
+void cHuman_Land(Act* a, int f);
+void cHuman_Fall(Act* a);
+void cHuman_DetectForAndHandleHarmfulFalls(Act* a, bool f);
 void Actor_LandDead(Act* a, int f);
-V4* Vec4_Assign(V4* d, V4* s);
-V4* Vec4_GetZero(void);
+V4* cVector_ctor_cVectorR(V4* d, V4* s);
+V4* cVector_GetZero(void);
 
 extern float D_0049CEE0;
 extern float D_0049CEE8;
@@ -104,15 +104,15 @@ static inline bool LedgeDC(Act* a)
     return r;
 }
 
-struct VT { float x, y, z, w; VT() {} VT(const VT& o) { Vec4_Assign((V4*)this, (V4*)&o); } };
+struct VT { float x, y, z, w; VT() {} VT(const VT& o) { cVector_ctor_cVectorR((V4*)this, (V4*)&o); } };
 extern "C" VT cHumanCollisionRoutine_PredictNextVelocity(Ledge* l, float dt);
 
-extern "C" void Actor_UpdateJumpApex(Act* a, float dt)
+extern "C" void cHuman_JumpFallLand_NextFrame(Act* a, float dt)
 {
     if (a->ledge == 0) return;
     if ((*(volatile int*)&a->f3248 >> 14) & 1) {
         a->f3248 &= ~0x4000;
-        if ((a->f3210 >> 4) & 1) Actor_ComputeJumpTarget(a);
+        if ((a->f3210 >> 4) & 1) cHuman_JumpLaunchApplyForce(a);
     }
     {
         int g;unsigned char skip; skip = (a->f3210 >> 4) & 1;
@@ -124,21 +124,21 @@ extern "C" void Actor_UpdateJumpApex(Act* a, float dt)
                     if (!skip) {
                         float h;
                         Ledge* l = a->ledge;
-                        VT t70 = l ? cHumanCollisionRoutine_PredictNextVelocity(l, dt) : *(VT*)Vec4_Assign((V4*)&(const VT&)VT(), Vec4_GetZero());
+                        VT t70 = l ? cHumanCollisionRoutine_PredictNextVelocity(l, dt) : *(VT*)cVector_ctor_cVectorR((V4*)&(const VT&)VT(), cVector_GetZero());
                         h = t70.z;
                         V4 t60 = a->GetE4();
-                        if (h <= a->f34D8) Actor_CatchLedgeInAir(a);
+                        if (h <= a->f34D8) cHuman_GrabLedge(a);
                     }
                 } else if (((g >> 11) & 1) || ((g >> 12) & 1)) {
                     if (!skip) {
                         if (LedgeVel(a)->z <= 0.0f) {
-                            if (LedgeDD(a)) Actor_LandFromAir(a, 1);
-                            else Actor_StartFall(a);
+                            if (LedgeDD(a)) cHuman_Land(a, 1);
+                            else cHuman_Fall(a);
                         }
                     }
                 }
             } else if ((a->f3210 >> 10) & 1) {
-                if (LedgeDD(a)) Actor_LandFromAir(a, 1);
+                if (LedgeDD(a)) cHuman_Land(a, 1);
             } else {
                 
                 if (a->state != 0) {
@@ -150,7 +150,7 @@ extern "C" void Actor_UpdateJumpApex(Act* a, float dt)
                     }
                 }
                 if (((a->f3210 >> 9) & 1) && LedgeDD(a)) {
-                    Actor_LandFromAir(a, 1);
+                    cHuman_Land(a, 1);
                 } else if (!(a->f30A0 <= D_0049CEE0) && !(a->ledge->f2C4 <= D_0049CEE8)) {
                     float lim = (a->state == 0x1B || a->state == 0x1F) ? (a->state == 0x1F ? D_0049CF28 : D_0049CF30) : D_0049CF20;
                     if (LedgeVel(a)->z < lim) {
@@ -158,7 +158,7 @@ extern "C" void Actor_UpdateJumpApex(Act* a, float dt)
                         a->f3248 &= ~0x800;
                         a->f3248 &= ~0x1000;
                         a->f3248 &= ~0x2000;
-                        Actor_StartFall(a);
+                        cHuman_Fall(a);
                     }
                 }
             }
@@ -175,7 +175,7 @@ done:
             a->f30A0 = 0.0f;
             on = false;
         }
-        Actor_UpdateFallState(a, on);
+        cHuman_DetectForAndHandleHarmfulFalls(a, on);
     }
     Actor_LandDead(a, 0);
     if (!a->b14) {

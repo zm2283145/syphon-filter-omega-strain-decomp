@@ -9,22 +9,22 @@ typedef struct Msg {
 extern char D_00572400;
 extern char D_00582740[]; /* message type key "NetPlayGameMsg" */
 /* NetPlayGameMsg vtable */
-extern void Message_GetScriptTypeKey();
+extern void cMessage_getSOBJClassId();
 extern void cNetPlayGameMsg_dtor();
-extern void cNetPlayGameMsg_v01();
-extern void cNetPlayGameMsg_v02();
-void * const D_004E0EC0[8] = { (void*)0x0, (void*)0x0, (void*)cNetPlayGameMsg_dtor, (void*)cNetPlayGameMsg_v01, (void*)cNetPlayGameMsg_v02, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
-extern void Event_Construct(Msg* msg, void* name);
-extern void Transport_Send(int target, Msg* msg, int a, int b);
+extern void cNetPlayGameMsg_Clone();
+extern void cNetPlayGameMsg_Pack();
+void * const D_004E0EC0[8] = { (void*)0x0, (void*)0x0, (void*)cNetPlayGameMsg_dtor, (void*)cNetPlayGameMsg_Clone, (void*)cNetPlayGameMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
+extern void cMessage_ctor_cMessageNameR(Msg* msg, void* name);
+extern void cNetObj_SendMessage_int_cMessageR_int_int(int target, Msg* msg, int a, int b);
 extern void cMessage_dtor(Msg* msg, int flags);
 
 /* Sets the D_00572400 flag and broadcasts a NetPlayGameMsg to all machines. */
-void DME_SendPlayGameMsg(void) {
+void cDME_SendPlayGame(void) {
     Msg msg;
     D_00572400 = 1;
-    Event_Construct(&msg, D_00582740);
+    cMessage_ctor_cMessageNameR(&msg, D_00582740);
     msg.vtable = ((char*)D_004E0EC0);
-    Transport_Send(0, &msg, -1, -1);
+    cNetObj_SendMessage_int_cMessageR_int_int(0, &msg, -1, -1);
     msg.vtable = ((char*)D_004E0EC0);
     cMessage_dtor(&msg, 0);
 }

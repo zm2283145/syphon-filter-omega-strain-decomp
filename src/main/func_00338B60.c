@@ -2,7 +2,7 @@
 #include "types.h"
 #include "tstr_types.h"
 /* std_vector_imp_tRankInfo_insert: vector<DosEntry>::insert(pos, n, value) for the 36-byte dossier entries
- * (Global_cAgentData__RegisterDossier pushes through it); vector_insert_fill_t.h body with the end/after
+ * (cAgentData_RegisterDossier pushes through it); vector_insert_fill_t.h body with the end/after
  * declarations split (declaring after first gives retail's register order). */
 struct E_00338B60 { int m0; int m1; int m2; int m3; char s[16]; int key; };
 struct std_vector_imp_tRankInfo_insert_V { unsigned int cap; unsigned int count; E_00338B60* data; };

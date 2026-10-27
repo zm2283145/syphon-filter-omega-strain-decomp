@@ -10,7 +10,7 @@ extern int func_00358158(void);
 extern int GetThreadId(void);
 extern int sceLibnetInitialize(void *, unsigned int, int, int);
 
-N81E0 *Insck_GetThreadContext(int flag)
+N81E0 *thread_enter(int flag)
 {
     int tid = GetThreadId();
     N81E0 *n;

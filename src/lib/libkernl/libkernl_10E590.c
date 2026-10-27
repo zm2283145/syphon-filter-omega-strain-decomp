@@ -113,7 +113,7 @@ extern Ctx_0010E8A0 D_004E2950;
 #endif /* merge_units */
 #define D_004E2950 (*(Ctx_0010E8A0*)&D_004E2950) /* merge_units */
 
-extern void ByteRing_Pop(Ring *);
+extern void QueuePeekReadDone(Ring *);
 int sceTtyRead(char *buf, int n)
 {
     int i;
@@ -121,7 +121,7 @@ int sceTtyRead(char *buf, int n)
         while (D_004E2950.x18->count == 0)
             ;
         buf[i] = *D_004E2950.x18->rd;
-        ByteRing_Pop(D_004E2950.x18);
+        QueuePeekReadDone(D_004E2950.x18);
         if (buf[i] == '\n' || buf[i] == '\r')
             return i + 1;
     }

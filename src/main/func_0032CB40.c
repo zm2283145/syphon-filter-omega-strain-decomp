@@ -1,4 +1,4 @@
-/* GuiKeyboard_Init: build the on-screen keyboard: collect the key widgets of the five rows, then fill the
+/* GuiKeyboard_onAdd: build the on-screen keyboard: collect the key widgets of the five rows, then fill the
  * up/down/left/right neighbour tables and the label table for every key. */
 #pragma cplusplus on
 #include "types.h"
@@ -39,9 +39,9 @@ struct KSelf {
 };
 
 extern "C" {
-void GuiWidget_Init(KSelf* self);
-KW* GuiWidget_FindChildByName(KSelf* self, char* name);
-void List_Begin(ChildIterator* result, ChildList* list);
+void GuiWidget_onAdd(KSelf* self);
+KW* GuiWidget_FindChild_charP(KSelf* self, char* name);
+void std_list_deleter_voidPtr_begin_void(ChildIterator* result, ChildList* list);
 void std_list_GuiWidgetPtr_generic_iterator_ctor(ChildIterator* result, const ChildIterator* source);
 void std_list_GuiWidgetPtr_end(ChildIterator* result, ChildList* list);
 void cLListIterator_GuiWidgetPtr_ctor_listR(ChildIterator* result, const ChildIterator* source);
@@ -50,7 +50,7 @@ KW** func_0032D0A0(PVec* v);
 void func_0032D090(PIt* out, PVec* v, KW*** p);
 void func_0032D050(PIt* out, PVec* v);
 void func_0032D040(PIt* out, PIt* in);
-void PtrVec_PushBack_1C1080(IVec* v, int* value);
+void std_vector_int_push_back(IVec* v, int* value);
 int Loc_GetLanguage(void);
 void GuiKeyboard_ApplyLayout(KSelf* self, int lang);
 extern char* D_00492650;
@@ -67,7 +67,7 @@ extern int* D_004926A0[5];
 
 static inline bool Ne(KW** a, PIt* b) { return !(a == b->p); }
 
-extern "C" void GuiKeyboard_Init(KSelf* self)
+extern "C" void GuiKeyboard_onAdd(KSelf* self)
 {
     ChildIterator end2, end;
     int t1, t2, t3, t4;
@@ -78,10 +78,10 @@ extern "C" void GuiKeyboard_Init(KSelf* self)
     KW** first;
     PIt rawEnd3;
     int start[5];
-    GuiWidget_Init(self);
+    GuiWidget_onAdd(self);
     self->x54 = 0;
     self->x58 = 0;
-    KW* kb = GuiWidget_FindChildByName(self, D_00492650);
+    KW* kb = GuiWidget_FindChild_charP(self, D_00492650);
     if (!kb)
         return;
     {
@@ -94,7 +94,7 @@ extern "C" void GuiKeyboard_Init(KSelf* self)
         int ri;
         if (rows->count != 5)
             return;
-        List_Begin(&rawBegin, rows);
+        std_list_deleter_voidPtr_begin_void(&rawBegin, rows);
         std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
         row = begin.node;
         std_list_GuiWidgetPtr_end(&rawEnd, rows);
@@ -106,7 +106,7 @@ extern "C" void GuiKeyboard_Init(KSelf* self)
             keys = &rw->children;
             if (n != rw->children.count)
                 return;
-            List_Begin(&rawBegin2, keys);
+            std_list_deleter_voidPtr_begin_void(&rawBegin2, keys);
             std_list_GuiWidgetPtr_generic_iterator_ctor(&begin2, &rawBegin2);
             key = begin2.node;
             std_list_GuiWidgetPtr_end(&rawEnd2, keys);
@@ -151,17 +151,17 @@ extern "C" void GuiKeyboard_Init(KSelf* self)
                 x = D_004926A0[row][col];
                 y = D_00492680[row][col];
                 t1 = y + start[u];
-                PtrVec_PushBack_1C1080(&self->up, &t1);
+                std_vector_int_push_back(&self->up, &t1);
                 t2 = x + start[d];
-                PtrVec_PushBack_1C1080(&self->down, &t2);
+                std_vector_int_push_back(&self->down, &t2);
                 l = col == 0 ? D_004B8970[row] - 1 : col - 1;
                 r = col == D_004B8970[row] - 1 ? 0 : col + 1;
                 t3 = l + start[row];
-                PtrVec_PushBack_1C1080(&self->left, &t3);
+                std_vector_int_push_back(&self->left, &t3);
                 t4 = r + start[row];
-                PtrVec_PushBack_1C1080(&self->right, &t4);
+                std_vector_int_push_back(&self->right, &t4);
                 (*p)->index = col + start[row];
-                PtrVec_PushBack_1C1080(&self->labels, &D_00492660[row][col]);
+                std_vector_int_push_back(&self->labels, &D_00492660[row][col]);
                 col++;
                 if (col == D_004B8970[row]) {
                     col = 0;
@@ -175,7 +175,7 @@ extern "C" void GuiKeyboard_Init(KSelf* self)
     }
     GuiKeyboard_ApplyLayout(self, Loc_GetLanguage());
     {
-        KW* w = GuiWidget_FindChildByName(self, D_00492648);
+        KW* w = GuiWidget_FindChild_charP(self, D_00492648);
         w = (w && w->IsA(D_004A9880)) ? w : 0;
         self->w4C = w;
     }
@@ -184,7 +184,7 @@ extern "C" void GuiKeyboard_Init(KSelf* self)
         self->w4C->b88 = 1;
     }
     {
-        KW* w = GuiWidget_FindChildByName(self, D_00492640);
+        KW* w = GuiWidget_FindChild_charP(self, D_00492640);
         w = (w && w->IsA(D_004A7520)) ? w : 0;
         self->w48 = w;
     }

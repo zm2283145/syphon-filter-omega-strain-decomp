@@ -60,10 +60,10 @@ extern Pt2_TexTbl* g_TextureMgr;
 #define g_TextureMgr (*(Pt2_TexTbl **)&g_TextureMgr) /* merge_units */
 
 extern char g_Video[];
-extern void Renderer_ClearRect(void*, int, int, int, int, int);
-void RenderTarget_Clear(int* id, int arg1) {
+extern void XLib_ClearActiveBuffer(void*, int, int, int, int, int);
+void cUserFrameEnv_Clear(int* id, int arg1) {
     Pt2_Dim* d = (*(Pt2_Tex**)((int)g_TextureMgr->tex + *id * 4))->dim;
-    Renderer_ClearRect(g_Video, d->w, d->h, arg1, 1, 0);
+    XLib_ClearActiveBuffer(g_Video, d->w, d->h, arg1, 1, 0);
 }
 #undef g_TextureMgr /* merge_units */
 #pragma pop /* merge_units */
@@ -77,15 +77,15 @@ extern void* g_TextureMgr;
 #endif /* merge_units */
 #define g_TextureMgr (*(void **)&g_TextureMgr) /* merge_units */
 
-extern void String_Copy(char* dst, char* src);
+extern void Libc_Strcpy(char* dst, char* src);
 extern void Libc_Strcat(char* dst, char* src);
 extern int cTexMan_AddTexture(void* mgr, char* name, int w, int h, int fmt);
-void RenderTarget_Create(F1RT3BB* rt, char* name, int w, int h, int fmt, int depth)
+void cUserFrameEnv_Init(F1RT3BB* rt, char* name, int w, int h, int fmt, int depth)
 {
     char cname[0x40];
     char dname[0x40];
-    String_Copy(cname, name);
-    String_Copy(dname, name);
+    Libc_Strcpy(cname, name);
+    Libc_Strcpy(dname, name);
     Libc_Strcat(dname, "_zbuf");
     rt->colorFmt = fmt == 16 ? 2 : fmt == 24;
     rt->depthFmt = depth == 16 ? 0x3A : depth == 24 ? 0x31 : 0x30;

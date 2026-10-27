@@ -3,11 +3,11 @@
 #define NULL 0
 #pragma mpwc_relax on
 int Alloc_Lock(int);                                    
-int Alloc_Unlock(int);                                  
-int Event_Construct(char **, char *);                       
-int Event_Send(char **, int, int);                         
-int Mem_Alloc(int, int, char *, int);                      
-int String_Copy(int, int);                              
+int EnableIntc(int);                                  
+int cMessage_ctor_cMessageNameR(char **, char *);                       
+int QueueMessage_cMessageR_cSystemP_int(char **, int, int);                         
+int cMemMan_Allocate(int, int, char *, int);                      
+int Libc_Strcpy(int, int);                              
 int cMessage_dtor(char **, int);                           
 int strlen(int);                                      
 extern char D_004A6698;
@@ -26,17 +26,17 @@ void Global_SetCheckpoint(char * arg0, int arg1, int arg2) {
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    temp_s0_2 = Mem_Alloc(0, temp_s0, &D_004A6698, 0x1D6);
+    temp_s0_2 = cMemMan_Allocate(0, temp_s0, &D_004A6698, 0x1D6);
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     g_ProfileLockDepth -= 1;
-    String_Copy(temp_s0_2, arg2);
-    Event_Construct(sl.f50, &D_004F7930);
+    Libc_Strcpy(temp_s0_2, arg2);
+    cMessage_ctor_cMessageNameR(sl.f50, &D_004F7930);
     sl.f74 = arg1;
     sl.f78[0] = temp_s0_2;
     sl.f50[0] = &D_004DB8D0;
-    Event_Send(sl.f50, F_(arg0, 0x30, int), 0);
+    QueueMessage_cMessageR_cSystemP_int(sl.f50, F_(arg0, 0x30, int), 0);
     sl.f50[0] = &D_004DB8D0;
     cMessage_dtor(sl.f50, 0);
 }

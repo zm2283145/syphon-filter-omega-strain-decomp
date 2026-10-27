@@ -32,14 +32,14 @@ struct SubDisp {
 };
 
 extern "C" {
-void *Mem_Alloc(int, unsigned int, char *, int);
-void Mem_Free(int, void *, char *, int);
+void *cMemMan_Allocate(int, unsigned int, char *, int);
+void cMemMan_Deallocate(int, void *, char *, int);
 int Libc_Sscanf(char *, char *, ...);
 void cTimerDisable_ctor(int *);
 void cTimerDisable_dtor(int *, int);
-int Font_GetLineHeight(int);
-int Font_GetStringWidth(int, char *, int);
-void GuiSubTitleDisplay_ComputeTimings(SubDisp *);
+int cFont_GetCharH(int);
+int cFont_GetStringWidth(int, char *, int);
+void GuiSubTitleDisplay_CalcLineTimes(SubDisp *);
 void cLList_TextAtom_dtor(SubList *, int);
 int std_vector_cLList_TextAtomPtr_push_back(int *, SubList **);
 void GuiSubTitleDisplay_DestroyTextLines(SubDisp *);
@@ -52,7 +52,7 @@ extern float D_00587D70;
 extern float D_00587D74;
 extern float D_00587D78;
 extern float D_00587D7C;
-int GuiSubTitleDisplay_Parse(SubDisp *self);
+int GuiSubTitleDisplay_Atomize(SubDisp *self);
 }
 
 static inline void Push(SubList *l, SubVal *v)
@@ -67,11 +67,11 @@ static inline void FreeList(SubList *l)
     int guard;
     cTimerDisable_ctor(&guard);
     cLList_TextAtom_dtor(l, -1);
-    Mem_Free(0, l, D_004C1EB0, 0x124);
+    cMemMan_Deallocate(0, l, D_004C1EB0, 0x124);
     cTimerDisable_dtor(&guard, -1);
 }
 
-int GuiSubTitleDisplay_Parse(SubDisp *self)
+int GuiSubTitleDisplay_Atomize(SubDisp *self)
 {
     SubList *list;
     float pf;
@@ -104,7 +104,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
         SubList *nl;
         {
             AllocGuard guard;
-            nl = (SubList *)Mem_Alloc(0, 0xC, D_004C1EB0, 0x67);
+            nl = (SubList *)cMemMan_Allocate(0, 0xC, D_004C1EB0, 0x67);
         }
         if (nl)
             std_list_deleter_TextAtom_ctor(nl);
@@ -140,7 +140,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
                     return 0;
                 if (val.i != 0) {
                     Push(list, &val);
-                    width += Font_GetStringWidth(self->font, self->text + val.h, val.i);
+                    width += cFont_GetStringWidth(self->font, self->text + val.h, val.i);
                     val.f = width;
                     val.i = 0;
                 }
@@ -165,7 +165,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
                 }
                 if (val.i != 0) {
                     Push(list, &val);
-                    width += Font_GetStringWidth(self->font, self->text + val.h, val.i);
+                    width += cFont_GetStringWidth(self->font, self->text + val.h, val.i);
                     val.f = width;
                     val.i = 0;
                     val.a = 0;
@@ -186,7 +186,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
                     SubList *nl;
                     {
                         AllocGuard guard;
-                        nl = (SubList *)Mem_Alloc(0, 0xC, D_004C1EB0, 0xD9);
+                        nl = (SubList *)cMemMan_Allocate(0, 0xC, D_004C1EB0, 0xD9);
                     }
                     if (nl)
                         std_list_deleter_TextAtom_ctor(nl);
@@ -194,7 +194,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
                 }
                 val.f = 0;
                 width = 0;
-                val.g += Font_GetLineHeight(self->font);
+                val.g += cFont_GetCharH(self->font);
                 val.a = nf;
                 val.h = p - self->text;
                 val.i = 0;
@@ -204,7 +204,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
             char *s;
             val.i++;
             s = self->text + val.h;
-            if (maxw < width + Font_GetStringWidth(self->font, s, val.i)) {
+            if (maxw < width + cFont_GetStringWidth(self->font, s, val.i)) {
                 int len = val.i;
                 int k;
                 bool found = false;
@@ -228,7 +228,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
                     SubList *nl;
                     {
                         AllocGuard guard;
-                        nl = (SubList *)Mem_Alloc(0, 0xC, D_004C1EB0, 0x111);
+                        nl = (SubList *)cMemMan_Allocate(0, 0xC, D_004C1EB0, 0x111);
                     }
                     if (nl)
                         std_list_deleter_TextAtom_ctor(nl);
@@ -236,7 +236,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
                 }
                 val.f = 0;
                 width = 0;
-                val.g += Font_GetLineHeight(self->font);
+                val.g += cFont_GetCharH(self->font);
                 val.a = 0;
             }
             p++;
@@ -249,6 +249,6 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
     } else {
         FreeList(list);
     }
-    GuiSubTitleDisplay_ComputeTimings(self);
+    GuiSubTitleDisplay_CalcLineTimes(self);
     return 1;
 }

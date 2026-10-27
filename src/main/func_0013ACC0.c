@@ -9,7 +9,7 @@
 
 extern void* D_004EA0B8; /* LOS collision provider (research LOS_QUERY_NATIVE.md) */
 
-void* LosProvider_Get(void) {
+void* cLosRequest_cCollisionModelList_Game_GetCollisionModelList(void) {
     void* provider;
 
     provider = D_004EA0B8;

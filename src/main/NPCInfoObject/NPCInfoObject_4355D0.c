@@ -14,7 +14,7 @@
 #include "npc_info_rec.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_004355D0 */
 #pragma push /* merge_units */
@@ -27,7 +27,7 @@ extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721D0;
 extern unsigned char D_00582778;
 extern unsigned char D_00582780;
-void* Mem_Alloc(int heap, int size, char* file, int line);
+void* cMemMan_Allocate(int heap, int size, char* file, int line);
 void cNPCInfoObject_CreateNPCInfoStruct(int a);
 void cNPCInfoObject_CheckForScheduledRequest(int a);
 }
@@ -47,8 +47,8 @@ extern E_004355D0* D_00582808;
 extern E_004355D0* D_00582810;
 }
 inline void* operator new(unsigned int, void* p) { return p; }
-static inline void* New_004355D0(int size, int line) { AllocGuard g; return Mem_Alloc(0, size, D_004BFCA0, line); }
-static inline void Del_004355D0(void* p, int line) { if (p) { AllocGuard g; Mem_Free(0, p, D_004BFCA0, line); } }
+static inline void* New_004355D0(int size, int line) { AllocGuard g; return cMemMan_Allocate(0, size, D_004BFCA0, line); }
+static inline void Del_004355D0(void* p, int line) { if (p) { AllocGuard g; cMemMan_Deallocate(0, p, D_004BFCA0, line); } }
 #define NEWARR(dst, line) { E_004355D0* p = (E_004355D0*)New_004355D0(sizeof(E_004355D0) * 29, line); if (p) { E_004355D0* q = p; do { q->Init(); q++; } while (q != p + 29); } dst = p; }
 extern "C" void cNPCInfoObject_Setup(int arg)
 {
@@ -95,14 +95,14 @@ void Alloc_Lock(int);
 #define Alloc_Lock(a0) (Alloc_Lock((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void Alloc_Unlock(int);
+void EnableIntc(int);
 #endif /* merge_units */
-#define Alloc_Unlock(a0) (Alloc_Unlock((a0))) /* merge_units */
+#define EnableIntc(a0) (EnableIntc((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void* Mem_Alloc(int, int, char*, int);
+void* cMemMan_Allocate(int, int, char*, int);
 #endif /* merge_units */
-#define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
+#define cMemMan_Allocate(a0, a1, a2, a3) (cMemMan_Allocate((a0), (a1), (a2), (a3))) /* merge_units */
 
 void std_list_tNPCInfoPtr_push_back(char*, NpcInfoMsg**);
 extern unsigned char g_ProfileLockEnabled;
@@ -120,8 +120,8 @@ void cNPCInfoObject_DisconnectOwner(int self, int key, unsigned char v)
             NpcInfoMsg* t;
             if (g_ProfileLockEnabled) Alloc_Lock(9);
             g_ProfileLockDepth++;
-            t = (NpcInfoMsg*)Mem_Alloc(0, 0x14, D_004BFCA0, 0x20E);
-            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            t = (NpcInfoMsg*)cMemMan_Allocate(0, 0x14, D_004BFCA0, 0x20E);
+            if (g_ProfileLockEnabled) EnableIntc(9);
             g_ProfileLockDepth--;
             if (t) NPC_INFO_COPY(*t, r)
             m = t;
@@ -139,8 +139,8 @@ void cNPCInfoObject_DisconnectOwner(int self, int key, unsigned char v)
     }
 }
 #undef Alloc_Lock /* merge_units */
-#undef Alloc_Unlock /* merge_units */
-#undef Mem_Alloc /* merge_units */
+#undef EnableIntc /* merge_units */
+#undef cMemMan_Allocate /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00435D80(void) {}
 #pragma pop /* merge_units */

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int FrontEnd_v01(void) {
+int cGameFrontEnd_HandleMessage(void) {
     return 0;
 }

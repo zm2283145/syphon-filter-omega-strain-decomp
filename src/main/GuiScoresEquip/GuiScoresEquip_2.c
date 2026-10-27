@@ -26,10 +26,10 @@ DEFINE_VECTOR_ARRAY_MEMBER_DTOR(func_0035DE90)
 
 
 extern void* D_00533760;
-extern int GuiScoresEquip_UpdateFigures(void* p);
+extern int GuiScoresEquip_ManRender(void* p);
 
-int GuiScoresEquip_FigureCallback(void) {
-    return GuiScoresEquip_UpdateFigures(D_00533760);
+int SE_ManRenderWrapper(void) {
+    return GuiScoresEquip_ManRender(D_00533760);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0035DF30(void) {}
@@ -43,7 +43,7 @@ typedef struct { FlagByte b[16]; } FlagRow;
 extern FlagRow* D_004EE620;
 
 /* Clears flag bit 0 of byte [col] in row [row] of the global flag table. */
-void TeamTable_ClearEnemy(int row, int col)
+void TeamDelEnemy_int_int_2(int row, int col)
 {
     D_004EE620[row].b[col].flag = 0;
 }
@@ -67,7 +67,7 @@ extern char* D_004EE620; /* table of 16-byte rows of flag bytes */
 
 
 /* Sets flag bit 0 of byte `col` in row `row` of the D_004EE620 table. */
-void TeamTable_SetBit0(int row, int col) {
+void TeamSetEnemy_int_int_2(int row, int col) {
     SlotFlags* flags = (SlotFlags*)(D_004EE620 + row * 16 + col);
     flags->set = 1;
 }

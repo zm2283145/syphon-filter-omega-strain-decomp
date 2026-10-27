@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-int* LosCache_End(PtrVec* v) {
+int* std_vector_imp_cGOBJPtr_1_end_void_2(PtrVec* v) {
     return v->data + v->count;
 }
 
-void CachedCollection_End(Iter* out, void* self, Iter* src) {
+void std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR_2(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }

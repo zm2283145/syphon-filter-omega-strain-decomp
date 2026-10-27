@@ -41,9 +41,9 @@ typedef struct {
     void* w28;
     List27A items;
 } Panel27A;
-extern void IeElement_SetShown(void* widget, int visible);
-extern void IeElement_EvaluateAt(void* widget, float alpha);
-extern void List_Begin(Iter27A* out, List27A* list);
+extern void cInterfaceElement_Activate(void* widget, int visible);
+extern void viBufGetTs(void* widget, float alpha);
+extern void std_list_deleter_voidPtr_begin_void(Iter27A* out, List27A* list);
 extern void std_list_GameInfoPtr_generic_iterator_ctor(Iter27A* out, Iter27A* in);
 #if 0 /* merge_units */
 extern void std_list_GameInfoPtr_end(Iter27A* out, List27A* list);
@@ -56,7 +56,7 @@ extern void cLListIterator_GameInfoPtr_ctor(Iter27A* out, Iter27A* in);
 #define cLListIterator_GameInfoPtr_ctor(a0, a1) ((void)cLListIterator_GameInfoPtr_ctor((Word *)(a0), (Word *)(a1))) /* merge_units */
 
 
-static inline ListNode27A* List_End(List27A* list, Iter27A* raw, Iter27A* end)
+static inline ListNode27A* std_list_cCBDataPtr_push_back(List27A* list, Iter27A* raw, Iter27A* end)
 {
     std_list_GameInfoPtr_end(raw, list);
     cLListIterator_GameInfoPtr_ctor(end, raw);
@@ -71,22 +71,22 @@ void cHudNetLobby_DeactivateControls(Panel27A* p)
     Iter27A it;
     Iter27A end;
     ListNode27A* node;
-    IeElement_SetShown(p->w4, 0);
-    IeElement_SetShown(p->wC, 0);
-    IeElement_SetShown(p->w8, 0);
-    IeElement_EvaluateAt(p->w8, 0.0f);
-    IeElement_SetShown(p->w10, 0);
-    IeElement_EvaluateAt(p->w10, 0.0f);
-    IeElement_SetShown(p->w28, 0);
-    List_Begin(&beginRaw, &p->items);
+    cInterfaceElement_Activate(p->w4, 0);
+    cInterfaceElement_Activate(p->wC, 0);
+    cInterfaceElement_Activate(p->w8, 0);
+    viBufGetTs(p->w8, 0.0f);
+    cInterfaceElement_Activate(p->w10, 0);
+    viBufGetTs(p->w10, 0.0f);
+    cInterfaceElement_Activate(p->w28, 0);
+    std_list_deleter_voidPtr_begin_void(&beginRaw, &p->items);
     std_list_GameInfoPtr_generic_iterator_ctor(&it, &beginRaw);
     node = it.node;
-    if (node != List_End(&p->items, &endRaw, &end)) {
+    if (node != std_list_cCBDataPtr_push_back(&p->items, &endRaw, &end)) {
         do {
-            IeElement_SetShown(node->item->widget, 0);
-            IeElement_EvaluateAt(node->item->widget, 0.0f);
+            cInterfaceElement_Activate(node->item->widget, 0);
+            viBufGetTs(node->item->widget, 0.0f);
             node = node->next;
-        } while (node != List_End(&p->items, &endRaw, &end));
+        } while (node != std_list_cCBDataPtr_push_back(&p->items, &endRaw, &end));
     }
 }
 #undef std_list_GameInfoPtr_end /* merge_units */

@@ -36,7 +36,7 @@ typedef struct TdxMgr {
 extern int g_DrawMode;
 extern int D_00539250;
 
-void Renderer_BindTexture(TdxMgr* m, int idx)
+void cTexMan_SetActive(TdxMgr* m, int idx)
 {
     TexE* e = m->ents[idx];
     if (g_DrawMode & 4) {

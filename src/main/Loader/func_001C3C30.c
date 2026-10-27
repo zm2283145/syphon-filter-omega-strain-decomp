@@ -6,6 +6,6 @@
 #include "types.h"
 
 /* v.back(): address of the last element. */
-int* PtrVec_Back_1C3C30(PtrVec* v) {
+int* std_vector_charPtr_back(PtrVec* v) {
     return v->data + v->count - 1;
 }

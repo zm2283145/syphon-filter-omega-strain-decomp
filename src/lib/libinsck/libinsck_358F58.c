@@ -6,22 +6,22 @@
 
 /* merge_units: begin func_00358F58 */
 #define FIELD(p,o,T) (*(T *)((char *)(p)+(o)))
-extern void *Insck_GetThreadContext(int),*Insck_FindSocket(int);
-extern int Insck_SetErrno(void *,int),conv_port_to_inet(int),Insck_MapLibnetError(int);
+extern void *thread_enter(int),*socket_info(int);
+extern int thread_leave(void *,int),conv_port_to_inet(int),conv_errno(int);
 extern void conv_addr_to_inet(void *,void *),unblock(void);
 extern int func_00358158(void);
 extern int sceInetCreate(void *,int,void *),sceInetOpen(void *,int,int,int);
 static inline int finish8F58(void *ctx,int err){
- int r=Insck_SetErrno(ctx,err);
+ int r=thread_leave(ctx,err);
  /* The retail wrapper returns after publishing the socket error. */
  __asm__ volatile("" ::: "memory");
  return r;
 }
-int Insck_Connect(int fd,void *addr,int size){
- void *ctx=Insck_GetThreadContext(0),*sock,*lock;
+int sceInsockConnect(int fd,void *addr,int size){
+ void *ctx=thread_enter(0),*sock,*lock;
  int r;
  if(!ctx)return -1;
- sock=Insck_FindSocket(fd);
+ sock=socket_info(fd);
  if(!sock)return finish8F58(ctx,9);
  if(size!=16)return finish8F58(ctx,22);
  if(FIELD(addr,1,unsigned char)!=2)return finish8F58(ctx,106);
@@ -32,12 +32,12 @@ int Insck_Connect(int fd,void *addr,int size){
  unblock();
  r=sceInetCreate(lock,FIELD(ctx,84,int),(char *)sock+16);
  if(func_00358158()<0)return finish8F58(ctx,-1);
- if(r<=0)return finish8F58(ctx,Insck_MapLibnetError(r));
+ if(r<=0)return finish8F58(ctx,conv_errno(r));
  FIELD(sock,12,int)=r;
  unblock();
  r=sceInetOpen(lock,FIELD(ctx,84,int),FIELD(sock,12,int),-1);
  if(func_00358158()<0)return finish8F58(ctx,-1);
- if(r<0)return finish8F58(ctx,Insck_MapLibnetError(r));
+ if(r<0)return finish8F58(ctx,conv_errno(r));
  return finish8F58(ctx,0);
 }
 /* merge_units: end func_00358F58 */
@@ -50,7 +50,7 @@ extern void *my_malloc(int);
 extern void my_free(void *);
 extern void *memset(void *, int, unsigned int);
 extern void unblock(void);
-extern int Insck_MapLibnetError(int);
+extern int conv_errno(int);
 extern int sceInetCreate(void *, int, void *);
 extern int sceInetOpen(void *, int, int, int);
 
@@ -89,27 +89,27 @@ int add_listen(void *ctx, void *s)
     if (func_00358158() < 0) return -1;
     if (r < 0 && r != -500) {
     err:
-        return Insck_MapLibnetError(r);
+        return conv_errno(r);
     }
     return 0;
 }
 /* merge_units: end func_003590C0 */
 
 /* merge_units: begin func_003592A8 */
-extern int func_00358158(void),Insck_SetErrno(void *,int),Insck_MapLibnetError(int),add_listen(void *,void *);
+extern int func_00358158(void),thread_leave(void *,int),conv_errno(int),add_listen(void *,void *);
 extern int sceInetControl(void *,int,int,int,void *,int);
 static inline int finish92A8(void *ctx,int err,int site){
- int r=Insck_SetErrno(ctx,err);
+ int r=thread_leave(ctx,err);
  /* Keep distinct error boundaries; this compiler barrier emits no code. */
  __asm__ volatile("" :: "i"(site) : "memory");
  return r;
 }
-int Insck_Listen(int fd,int count){
+int sceInsockListen(int fd,int count){
  int info[19];
- void *ctx=Insck_GetThreadContext(0),*sock;
+ void *ctx=thread_enter(0),*sock;
  int i,r;
  if(!ctx)return -1;
- sock=Insck_FindSocket(fd);
+ sock=socket_info(fd);
  if(!sock)return finish92A8(ctx,9,0);
  if(F(sock,16,int)!=1)return finish92A8(ctx,95,0);
  F(sock,16,int)=2;
@@ -121,7 +121,7 @@ int Insck_Listen(int fd,int count){
    unblock();
    r=sceInetControl((char *)ctx+20,F(ctx,84,int),F(F(sock,80,void *),12,int),1,info,76);
    if(func_00358158()<0)return finish92A8(ctx,-1,2);
-   if(r<0)return finish92A8(ctx,Insck_MapLibnetError(r),3);
+   if(r<0)return finish92A8(ctx,conv_errno(r),3);
    F(sock,20,int)=info[8];
   }
  }
@@ -137,18 +137,18 @@ struct Req;
 extern struct Req *D_00492CD8;
 extern struct Req *D_00492CDC;
 
-int Insck_Accept(int fd, char *addr, unsigned int *len)
+int sceInsockAccept(int fd, char *addr, unsigned int *len)
 {
     int info[19];
-    void *ctx = Insck_GetThreadContext(0), *sock, *n, *t;
+    void *ctx = thread_enter(0), *sock, *n, *t;
     int r;
     if (!ctx) return -1;
-    if (*len < 16) return Insck_SetErrno(ctx, 0x16);
-    sock = Insck_FindSocket(fd);
-    if (!sock) return Insck_SetErrno(ctx, 9);
-    if (F(sock,16,int) != 2) return Insck_SetErrno(ctx, 0x5F);
+    if (*len < 16) return thread_leave(ctx, 0x16);
+    sock = socket_info(fd);
+    if (!sock) return thread_leave(ctx, 9);
+    if (F(sock,16,int) != 2) return thread_leave(ctx, 0x5F);
     n = F(sock,0x50,void *);
-    if (!n) return Insck_SetErrno(ctx, -1);
+    if (!n) return thread_leave(ctx, -1);
     if ((F(sock,0x50,void *) = F(n,0,void *)) != 0) F(F(n,0,void *),4,void *) = 0;
     else F(sock,0x54,void *) = 0;
     t = F(sock,0x58,void *);
@@ -164,7 +164,7 @@ int Insck_Accept(int fd, char *addr, unsigned int *len)
         goto unlinkA;
     }
     if (r < 0 && r != -0x1FB) {
-        r = Insck_MapLibnetError(r);
+        r = conv_errno(r);
         goto unlinkA;
     }
     if (F(n,4,void *)) F(F(n,4,void *),0,void *) = F(n,0,void *);
@@ -186,14 +186,14 @@ int Insck_Accept(int fd, char *addr, unsigned int *len)
         goto unlinkB;
     }
     if (r < 0) {
-        r = Insck_MapLibnetError(r);
+        r = conv_errno(r);
         goto unlinkB;
     }
     addr[1] = 2;
     conv_addr_from_inet(addr + 4, (char *)info + 0x24);
     F(addr,2,short) = conv_port_from_inet(info[13]);
     *len = 0x10;
-    Insck_SetErrno(ctx, 0);
+    thread_leave(ctx, 0);
     return F(n,8,int);
 unlinkA:
     if (F(n,4,void *)) F(F(n,4,void *),0,void *) = F(n,0,void *);
@@ -202,7 +202,7 @@ unlinkA:
     else F(sock,0x5C,void *) = F(n,4,void *);
     sceInetClose((char *)ctx + 0x14, F(ctx,0x54,int), F(n,0xC,int), 0);
     my_free(n);
-    return Insck_SetErrno(ctx, r);
+    return thread_leave(ctx, r);
 unlinkB:
     {
     void *p = F(n,4,void *), *x = F(n,0,void *);
@@ -216,7 +216,7 @@ unlinkB:
     }
     sceInetClose((char *)ctx + 0x14, F(ctx,0x54,int), F(n,0xC,int), 0);
     my_free(n);
-    return Insck_SetErrno(ctx, r);
+    return thread_leave(ctx, r);
 }
 /* merge_units: end func_00359430 */
 
@@ -238,7 +238,7 @@ int connect_check(Sock9728 *s, Req9728 *r)
         n = sceInetOpen(s->x14, (int)s->x54, n, -1);
         if (n >= 0) goto ok;
     }
-    return Insck_MapLibnetError(n);
+    return conv_errno(n);
 ok:
     return 0;
 }

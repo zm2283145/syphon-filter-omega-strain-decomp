@@ -55,7 +55,7 @@ static inline void tx_queue(TxManager* m,int id){
         if(n==0||m->queue[n-1]!=id)m->queue[m->count++]=id;
     }
 }
-extern "C" long long ManModel_BindLodTexture(TxModel* self,int which,int override,unsigned char flag){
+extern "C" long long cMan_ManRequestTextures(TxModel* self,int which,int override,unsigned char flag){
     long long result=0;
     int count=self->count;
     TxManager* mgr=g_TextureMgr;

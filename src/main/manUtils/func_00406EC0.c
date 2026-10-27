@@ -11,9 +11,9 @@ extern __int128* D_005712F8[];
 extern int D_005712F0[];
 extern char D_004BE950[];
 extern char D_004BE960[];
-extern void Appearance_RegistryKey(H2E_Pack* p, int n, char* name);
-extern void String_Copy(void* d, char* s);
-extern int Appearance_GetBodyKind(H2E_Pack* p);
+extern void strCpyPad(H2E_Pack* p, int n, char* name);
+extern void Libc_Strcpy(void* d, char* s);
+extern int SKL_FindSex(H2E_Pack* p);
 /* inline-asm block copy (hand-written in the original) */
 static inline void H2E_Copy(void* d0, void* s0, int n0)
 {
@@ -85,7 +85,7 @@ void SKL_UncompressSKL(H2E_Pack* dst, short* p)
         raw += 0x10;
     } else {
         if ((unsigned int)c >= D_00571300.count) c = 0;
-        Appearance_RegistryKey(dst, 0xF, D_00571300.e[c].name);
+        strCpyPad(dst, 0xF, D_00571300.e[c].name);
     }
     c1 = *p++;
     if (c1 == -1) {
@@ -105,8 +105,8 @@ void SKL_UncompressSKL(H2E_Pack* dst, short* p)
         raw += 0x10;
     } else {
         dst->q30 = D_005716E0;
-        if (c == 1) String_Copy(&dst->q30, D_004BE950);
-        else String_Copy(&dst->q30, D_004BE960);
+        if (c == 1) Libc_Strcpy(&dst->q30, D_004BE950);
+        else Libc_Strcpy(&dst->q30, D_004BE960);
     }
     for (i = 0; i <= n; i++) {
         c = *p++;
@@ -126,7 +126,7 @@ void SKL_UncompressSKL(H2E_Pack* dst, short* p)
     }
     H2E_QZero(&dst->pairs[i], 2);
     if (c1 != -1) {
-        int k = Appearance_GetBodyKind(dst);
+        int k = SKL_FindSex(dst);
         __int128* tbl = D_005712F8[k];
         if (c1 >= D_005712F0[k]) c1 = 0;
         dst->slot1 = tbl[c1];

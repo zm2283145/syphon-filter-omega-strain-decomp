@@ -94,7 +94,7 @@ typedef struct Tag {
     signed char unused;
 } Tag;
 
-extern void Array_CopyRange20(Vec14*, Rec14*, Rec14*, Tag);
+extern void std_vector_imp_cTimedEvent_init(Vec14*, Rec14*, Rec14*, Tag);
 
 /* Copy-constructs a vector of 20-byte records. */
 Vec14* func_0018A810(Vec14* self, Vec14* other) {
@@ -102,7 +102,7 @@ Vec14* func_0018A810(Vec14* self, Vec14* other) {
     self->unk0 = 0;
     self->count = 0;
     self->data = 0;
-    Array_CopyRange20(self, other->data, other->data + other->count, tag);
+    std_vector_imp_cTimedEvent_init(self, other->data, other->data + other->count, tag);
     return self;
 }
 /* merge_units: generate this block's code under its own pragmas */

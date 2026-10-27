@@ -20,7 +20,7 @@ void* cSkaAnimDataSample_DeltaRotation(char* self) {
     return self + 64;
 }
 
-int RootClip_IsEnabled(G18* s) {
+int cSkaAnimData_RootHasDeltaRotation(G18* s) {
     return s->v != 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

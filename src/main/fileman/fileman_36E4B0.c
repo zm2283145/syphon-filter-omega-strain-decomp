@@ -46,7 +46,7 @@ NamedEntry36E4B0* cFileMan_ctor_charP_cHogFileR_bool(NamedEntry36E4B0* self, con
 }
 
 /* Default constructor. */
-NamedEntry36E4B0* Resource_Construct(NamedEntry36E4B0* self) {
+NamedEntry36E4B0* cFileMan_ctor_void(NamedEntry36E4B0* self) {
     cFSHandle_ctor(self->unk88);
     self->flags = 0;
     return self;
@@ -68,7 +68,7 @@ void std_vector_cXformNodePtr_dtor(void* p, int f);
 void operator_delete(void* p);
 }
 static inline void Base36E600(Obj36E600* p) { if (p) *(void**)p = D_004DF6A0; }
-extern "C" Obj36E600* Xform_dtor(Obj36E600* self, short del)
+extern "C" Obj36E600* cXformNode_dtor(Obj36E600* self, short del)
 {
     if (self) {
         *(void**)self = D_004DF640;

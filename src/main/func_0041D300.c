@@ -12,7 +12,7 @@ typedef struct SsoString {
     char* longData;             /* 0x08 */
 } SsoString;
 
-extern void String_Replace(SsoString* str, int pos, int count, const char* first, const char* last, signed char tag);
+extern void std_basic_string_char_char_traits_char_do_replace(SsoString* str, int pos, int count, const char* first, const char* last, signed char tag);
 
 /* Assigns the range [first, last) to the string, replacing its whole contents. */
 void func_0041D300(SsoString* str, const char* first, const char* last) {
@@ -23,5 +23,5 @@ void func_0041D300(SsoString* str, const char* first, const char* last) {
     } else {
         len = (unsigned char)str->mode.bits.shortLen;
     }
-    String_Replace(str, 0, len, first, last, tag[0]);
+    std_basic_string_char_char_traits_char_do_replace(str, 0, len, first, last, tag[0]);
 }

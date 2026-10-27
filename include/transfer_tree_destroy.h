@@ -12,7 +12,7 @@ struct TransferTreeNode {
     GobjId id;
 };
 
-extern "C" void Mem_Free(int pool, void* allocation, char* file, int line);
+extern "C" void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 
 /* Retail expands two descendant levels, with progressively inlined deallocation. */
 template <
@@ -54,7 +54,7 @@ template <
             destroy_child(tree, node->right);
         if (node) {
             AllocGuard guard;
-            Mem_Free(0, node, File, 0x64);
+            cMemMan_Deallocate(0, node, File, 0x64);
         }
     }
 };

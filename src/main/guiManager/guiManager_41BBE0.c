@@ -9,7 +9,7 @@ typedef union Str {
 typedef struct Alloc { char unused; } Alloc;
 
 extern "C" {
-Str* String_Replace(Str* s, unsigned int pos, unsigned int n, const char* first, const char* last, Alloc a);
+Str* std_basic_string_char_char_traits_char_do_replace(Str* s, unsigned int pos, unsigned int n, const char* first, const char* last, Alloc a);
 void Libc_Fprintf(int, const char*);
 void Libc_Abort(void);
 extern char* D_00489738;
@@ -37,7 +37,7 @@ extern "C" Str* func_0041BBE0(Str* self, unsigned int pos, unsigned int n1, cons
     }
     data += pos2;
     rem = len - pos2; n2 = Min(n2, rem);
-    return String_Replace(self, pos, n1, data, data + n2, a);
+    return std_basic_string_char_char_traits_char_do_replace(self, pos, n1, data, data + n2, a);
 }
 
 

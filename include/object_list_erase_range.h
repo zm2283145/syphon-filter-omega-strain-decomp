@@ -12,7 +12,7 @@
 
 extern "C" {
 extern char D_0049AE80[];
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 }
 
 struct EraseListNode {
@@ -42,7 +42,7 @@ struct EraseList {
             *first = (*first)->next;                                          \
             if (n) {                                                          \
                 AllocGuard guard;                                             \
-                Mem_Free(0, n, D_0049AE80, 0x64);                             \
+                cMemMan_Deallocate(0, n, D_0049AE80, 0x64);                             \
             }                                                                 \
             list->count--;                                                    \
         }                                                                     \

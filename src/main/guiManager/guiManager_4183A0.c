@@ -29,7 +29,7 @@ typedef struct { char* p; } It_418420;
 typedef struct { char pad[0x18]; int value; } Node_418420;
 typedef struct { Node_418420* n; } MIt_418420;
 typedef struct { char pad[0x10]; int def; } O_418420;
-extern void String_CtorCStr_13B480(Str_418420* s, char* c);
+extern void std_basic_string_char_char_traits_char_ctor_charP(Str_418420* s, char* c);
 extern void String_Dtor(Str_418420* s, int f);
 extern void std_basic_string_char_char_traits_char_begin(It_418420* out, Str_418420* s);
 extern void std_basic_string_char_char_traits_char_end(It_418420* out, Str_418420* s);
@@ -43,7 +43,7 @@ extern void cAssocArray_cString_cFontPtr_Iterator_ctor(MIt_418420* out, MIt_4184
 #pragma bool off
 static inline int Ne_418420(Node_418420* a, Node_418420* b) { return (a == b) ^ 1; }
 
-int GuiFont_Find(O_418420* o, char* name)
+int GuiManager_GetFont(O_418420* o, char* name)
 {
     if (name == 0 || *name == 0) return o->def;
     {
@@ -54,7 +54,7 @@ int GuiFont_Find(O_418420* o, char* name)
         It_418420 end;
         MIt_418420 tmp;
         Node_418420* n;
-        String_CtorCStr_13B480(&s, name);
+        std_basic_string_char_char_traits_char_ctor_charP(&s, name);
         std_basic_string_char_char_traits_char_begin(&it, &s);
         std_basic_string_char_char_traits_char_end(&end, &s);
         while (std_opNe_wrapiteratorR_wrapiteratorR(&it, &end)) {

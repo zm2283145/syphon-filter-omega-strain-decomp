@@ -21,7 +21,7 @@ static inline void Construct1C49F0(E1C49F0* p, const E1C49F0* src)
         { std_vector_pod_int_ctor(p, src); p->b = src->b; }
 }
 
-extern "C" void Vector_Insert_1C49F0(V1C49F0* v, E1C49F0* pos, unsigned int n, const E1C49F0* value)
+extern "C" void std_vector_imp_cArray_int_insert(V1C49F0* v, E1C49F0* pos, unsigned int n, const E1C49F0* value)
 {
     if (n == 0)
         return;

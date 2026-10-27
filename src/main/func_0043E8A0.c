@@ -4,4 +4,4 @@
 #include "object_list_erase_range.h"
 
 /* Erase a range of nodes from a linked list. */
-DEFINE_OBJECT_LIST_ERASE_RANGE(ObjectList_EraseRange_43E8A0)
+DEFINE_OBJECT_LIST_ERASE_RANGE(std_list_deleter_tActivatedStruct_erase)

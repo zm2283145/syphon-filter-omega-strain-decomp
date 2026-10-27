@@ -20,7 +20,7 @@ typedef struct Xf_920 { void* vt; char pad[0xC]; char m[0x40]; unsigned char dir
 extern "C" { extern signed char D_004E1D88; extern V4_920 D_004E1D90; }
 struct Obj_920 { char pad[0x50]; Xf_920* xf; Node_920* node; Recv_920* recv; };
 
-extern "C" void cNode_v2A(Obj_920* o)
+extern "C" void cGOBJ_SetRotation_ResetPhysics(Obj_920* o)
 {
     if (o->xf) {
         ((VSlots67*)o->xf)->slot2();

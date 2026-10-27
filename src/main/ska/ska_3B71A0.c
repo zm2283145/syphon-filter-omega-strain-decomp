@@ -16,7 +16,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003B71A0 */
 #pragma push /* merge_units */
@@ -40,18 +40,18 @@ extern "C" {
 extern Err_3B7270* D_00489738;
 extern char D_0049F388[];
 extern char D_004A6460[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 void Libc_Abort(void);
 void Libc_Fprintf(void* s, char* msg);
 void std_swap_vectordeleterR_vectordeleterR_18(Vec_3B7270* a, Vec_3B7270* b);
 void std_vector_deleter_cString4_clear(Vec_3B7270* a);
 }
 
-static inline E_3B7270* Alloc_3B7270(unsigned int n) { AllocGuard g; return (E_3B7270*)Mem_Alloc(0, n * sizeof(E_3B7270), D_004A6460, 0x5C); }
+static inline E_3B7270* Alloc_3B7270(unsigned int n) { AllocGuard g; return (E_3B7270*)cMemMan_Allocate(0, n * sizeof(E_3B7270), D_004A6460, 0x5C); }
 #pragma push
 #pragma peephole off
 #pragma opt_propagation off
-extern "C" void AnchorKeys_Reserve(Vec_3B7270* v0, unsigned int n0)
+extern "C" void std_vector_imp_cString4_reserve(Vec_3B7270* v0, unsigned int n0)
 {
     Vec_3B7270* v = v0;
     unsigned int n = n0;
@@ -78,7 +78,7 @@ extern "C" void AnchorKeys_Reserve(Vec_3B7270* v0, unsigned int n0)
             std_vector_deleter_cString4_clear(&tmp);
             {
                 E_3B7270* p = tmp.data;
-                if (p) { if (p) { AllocGuard g; Mem_Free(0, p, D_0049F388, 0x64); } }
+                if (p) { if (p) { AllocGuard g; cMemMan_Deallocate(0, p, D_0049F388, 0x64); } }
             }
         }
     }

@@ -25,18 +25,18 @@ public:
 
 struct Str;
 extern "C" {
-Mgr* Gui_GetScreenStack(void);
+Mgr* Gui_Canvas(void);
 void* func_002CAC70(void* p);
 void* func_002CAC60(void* p);
 void func_002CAC50(void** it, void* n);
-int String_CStr(Str* p);
-void GuiMessageBox_Setup(void* o, int a, int b, int c, int d, int e);
-void String_CtorEmpty(Str* s);
-void String_CtorCStr_13B480(Str* s, const char* c);
-void String_AssignString(Str* d, Str* s);
+int std_basic_string_char_char_traits_char_c_str(Str* p);
+void GuiMessageBox_SetInfo(void* o, int a, int b, int c, int d, int e);
+void cString_ctor_void(Str* s);
+void std_basic_string_char_char_traits_char_ctor_charP(Str* s, const char* c);
+void std_basic_string_char_char_traits_char_assign_basicstringR(Str* d, Str* s);
 void String_Dtor(Str* s, int f);
 void std_list_deleter_MessageBoxEntry_insert(void* ret, void* list, void** it, void* ent);
-void GuiWidget_SendEvent(Mgr* a, Mgr* b, int c, int d, int e);
+void GuiWidget_SendMessage(Mgr* a, Mgr* b, int c, int d, int e);
 extern char D_004ACFE0[];
 }
 
@@ -46,10 +46,10 @@ struct Str {
     int w;
     int l;
     char* d;
-    Str() { String_CtorEmpty(this); }
-    Str(const char* s) { Str* p = this; String_CtorCStr_13B480(p, s ? s : D_004ACFE0); }
+    Str() { cString_ctor_void(this); }
+    Str(const char* s) { Str* p = this; std_basic_string_char_char_traits_char_ctor_charP(p, s ? s : D_004ACFE0); }
     __declspec(weak) __declspec(DROPDTOR) ~Str() { String_Dtor(this, 0); }
-    Str& operator=(const Str& o) { String_AssignString(this, (Str*)&o); return *this; }
+    Str& operator=(const Str& o) { std_basic_string_char_char_traits_char_assign_basicstringR(this, (Str*)&o); return *this; }
 };
 
 struct Ent {
@@ -85,7 +85,7 @@ struct SelfCAE30 {
     int counter;
 };
 
-extern "C" int FrontEnd_OpenPopup(SelfCAE30* self, int a4, const char* n1, const char* n2, int a20, int a24)
+extern "C" int cGameFrontEnd_PushMessageBox(SelfCAE30* self, int a4, const char* n1, const char* n2, int a20, int a24)
 {
     if (!self->obj)
         return -1;
@@ -121,14 +121,14 @@ extern "C" int FrontEnd_OpenPopup(SelfCAE30* self, int a4, const char* n1, const
             std_list_deleter_MessageBoxEntry_insert(ret2, &self->list, &tmp2, &e);
         }
         if (first) {
-            int c = String_CStr(&e.s14);
-            GuiMessageBox_Setup(self->obj, e.a4, String_CStr(&e.s8), c, e.a20, e.a24);
+            int c = std_basic_string_char_char_traits_char_c_str(&e.s14);
+            GuiMessageBox_SetInfo(self->obj, e.a4, std_basic_string_char_char_traits_char_c_str(&e.s8), c, e.a20, e.a24);
             self->obj->id = e.id;
             {
                 Obj258* o = self->obj;
                 if (!(o->flags & 8)) {
-                    Gui_GetScreenStack()->Add(o, 1000);
-                    GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x10, 2, 0);
+                    Gui_Canvas()->Add(o, 1000);
+                    GuiWidget_SendMessage(Gui_Canvas(), Gui_Canvas(), 0x10, 2, 0);
                 }
             }
         }

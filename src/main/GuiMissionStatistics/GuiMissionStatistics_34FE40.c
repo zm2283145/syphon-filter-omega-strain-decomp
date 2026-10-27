@@ -42,9 +42,9 @@ typedef struct { char pad[0xC0]; T34FEC0* tab; } S34FEC0;
 extern char D_00587BA0[];
 extern char D_00587BB0[];
 extern char D_00587BC0[];
-extern void TextArrayCell_SetColour(S34FEC0*, char*);
-extern void GuiTextArrayWidget_DrawCell(S34FEC0*, unsigned int, unsigned int, int);
-void GuiMissionStatList_Draw(S34FEC0* self, unsigned int kind, unsigned int idx, int arg) {
+extern void GuiTextArrayWidget_SetTextColor(S34FEC0*, char*);
+extern void GuiTextArrayWidget_onElementRender(S34FEC0*, unsigned int, unsigned int, int);
+void GuiMissionStatList_onElementRender(S34FEC0* self, unsigned int kind, unsigned int idx, int arg) {
     T34FEC0* t = self->tab;
     E34FEC0* e;
     char* s;
@@ -73,8 +73,8 @@ void GuiMissionStatList_Draw(S34FEC0* self, unsigned int kind, unsigned int idx,
         if (e->b40) s = D_00587BA0;
         break;
     }
-    TextArrayCell_SetColour(self, s);
-    GuiTextArrayWidget_DrawCell(self, kind, idx, arg);
+    GuiTextArrayWidget_SetTextColor(self, s);
+    GuiTextArrayWidget_onElementRender(self, kind, idx, arg);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0034FEC0 */

@@ -1,10 +1,10 @@
 #include "types.h"
-extern void Corona_Draw(void* a, void* b, void* c, int* d, int* zero, float* one, int flag, int e, int f);
-/* Calls Corona_Draw with default zero / 1.0 parameters and the flag set. */
-void Corona_DrawUnitScale(void* a, void* b, void* c, int d, int e, int f)
+extern void XLib_DrawLensFlares(void* a, void* b, void* c, int* d, int* zero, float* one, int flag, int e, int f);
+/* Calls XLib_DrawLensFlares with default zero / 1.0 parameters and the flag set. */
+void XLib_DrawLensFlare(void* a, void* b, void* c, int d, int e, int f)
 {
     int dv = d;
     float one = 1.0f;
     int zero = 0;
-    Corona_Draw(a, b, c, &dv, &zero, &one, 1, e, f);
+    XLib_DrawLensFlares(a, b, c, &dv, &zero, &one, 1, e, f);
 }

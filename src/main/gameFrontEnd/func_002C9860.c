@@ -1,12 +1,12 @@
 
-extern void* Service_Lookup(void* a, void* b);
-extern void WeaponDb_UnloadWpnHog(int);
-extern char* App_GetInstance(void);
-extern void SoundMgr_UnloadLevel(void*);
+extern void* cSystemContainer_GetSystem(void* a, void* b);
+extern void cWeaponDB_CloseWeaponsHog(int);
+extern char* GetMachine(void);
+extern void cGameSound_Unload(void*);
 extern void cGameFrontEnd_CloseCharacter(void*, int);
-extern void FrontEnd_UnloadZeusHog(void*);
+extern void cGameFrontEnd_CloseZeusHog(void*);
 extern void cUSBKeybd_SetAsciiMode(void*);
-extern unsigned char* DME_GetLobby(void);
+extern unsigned char* cDME_GetLobby(void);
 extern char* strncpy(char*, const char*, int);
 extern char D_004ACF48[];
 extern char D_004F2CC0[];
@@ -48,24 +48,24 @@ static inline void Copy(PStr* buf, const char* s)
     buf->len = n;
 }
 
-void FrontEnd_SuspendGui(Obj9860* self, unsigned char mode)
+void cGameFrontEnd_Suspend(Obj9860* self, unsigned char mode)
 {
     if (self->f37 == 0) {
-        { char* q = App_GetInstance(); q[0x278] = 1; }
+        { char* q = GetMachine(); q[0x278] = 1; }
         cUSBKeybd_SetAsciiMode(D_0055A700);
         switch (mode) {
         case 0: {
             void* svc;
             D_0051EF68 = 0;
-            svc = Service_Lookup(g_Game, D_004F2CC0);
+            svc = cSystemContainer_GetSystem(g_Game, D_004F2CC0);
             if (svc) {
                 PStr save;
                 unsigned char* g;
                 Copy(&save, g_LevelDirName);
                 strncpy(g_LevelDirName, D_004ACF48, 0x80);
-                SoundMgr_UnloadLevel(svc);
+                cGameSound_Unload(svc);
                 strncpy(g_LevelDirName, save.text, 0x80);
-                g = DME_GetLobby();
+                g = cDME_GetLobby();
                 if (g && g[0x2409] == 0) {
                     D_0051EF68 = 1;
                     g[0x2409] = 1;
@@ -77,8 +77,8 @@ void FrontEnd_SuspendGui(Obj9860* self, unsigned char mode)
             break;
         }
 
-        FrontEnd_UnloadZeusHog(self);
-        WeaponDb_UnloadWpnHog(g_WeaponDatabase);
+        cGameFrontEnd_CloseZeusHog(self);
+        cWeaponDB_CloseWeaponsHog(g_WeaponDatabase);
         cGameFrontEnd_CloseCharacter(self, 1);
         self->f37 = 1;
         self->f28 = 0;

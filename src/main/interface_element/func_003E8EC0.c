@@ -9,23 +9,23 @@ extern "C" {
 extern char D_004E0220[];
 extern char D_004E0800[];
 extern char D_004BDFB0[];
-void ActiveList_EraseMatching(void* list, Pred_8EC0 p);
-char* TextManager_Get(void);
+void std_list_imp_voidPtr_remove_if(void* list, Pred_8EC0 p);
+char* GetTextSystem(void);
 void String_Dtor(Str_8EC0*, int);
-void Mem_Free(int, void*, char*, int);
+void cMemMan_Deallocate(int, void*, char*, int);
 void operator_delete(void*);
 }
 static inline Pred_8EC0 MakePred_8EC0(int* p) { Eq_8EC0 c; return Pred_8EC0(c, p); }
 struct O_8EC0 { void* vt; char pad[0x70]; Item_8EC0* id; };
-extern "C" O_8EC0* IeElement_Destroy(O_8EC0* self, short del)
+extern "C" O_8EC0* cInterfaceElement_dtor(O_8EC0* self, short del)
 {
     if (self) {
         self->vt = D_004E0220;
         if (self->id) {
             int id = (int)self->id;
             Eq_8EC0 e;
-            char* x = TextManager_Get();
-            ActiveList_EraseMatching(x + 0x10, MakePred_8EC0(&id));
+            char* x = GetTextSystem();
+            std_list_imp_voidPtr_remove_if(x + 0x10, MakePred_8EC0(&id));
             {
                 Item_8EC0* p = self->id;
                 AllocGuard g;
@@ -33,7 +33,7 @@ extern "C" O_8EC0* IeElement_Destroy(O_8EC0* self, short del)
                     Str_8EC0* s = &p->str;
                     if (s) String_Dtor(s, 0);
                 }
-                Mem_Free(0, p, D_004BDFB0, 0x41);
+                cMemMan_Deallocate(0, p, D_004BDFB0, 0x41);
             }
         }
         if (self) self->vt = D_004E0800;

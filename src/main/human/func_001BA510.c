@@ -13,7 +13,7 @@ extern int D_004EF010;
 extern void cNetMsg_PutGOBJ(int);
 
 /* Serialize: write the word argument, then two bytes. */
-void cNetUpdateStatsMsg_v04(ArgMsg* msg) {
+void cNetUpdateStatsMsg_Pack(ArgMsg* msg) {
     cNetMsg_PutGOBJ(msg->arg0);
     *D_005061D0 = msg->arg1;
     D_005061D0 = D_005061D0 + 1;

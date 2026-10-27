@@ -5,9 +5,9 @@
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 typedef struct { V4 r[4]; } M4;
 typedef unsigned char u8;
-extern "C" { void Ptr_Identity(void*); V4* Vec4_Assign(V4*, V4*); }
+extern "C" { void cVector_ctor_void(void*); V4* cVector_ctor_cVectorR(V4*, V4*); }
 static inline void Q1D_L(void* d0, const void* s0) { const void* xx = s0; __int128 q; const void* s = s0; void* d = d0; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
-class VV { public: float x, y, z, w; VV() { Ptr_Identity(this); } VV(const VV& o) { Vec4_Assign((V4*)this, (V4*)&o); } VV& operator=(const VV& o) { Q1D_L(this, &o); return *this; } } __attribute__((aligned(16)));
+class VV { public: float x, y, z, w; VV() { cVector_ctor_void(this); } VV(const VV& o) { cVector_ctor_cVectorR((V4*)this, (V4*)&o); } VV& operator=(const VV& o) { Q1D_L(this, &o); return *this; } } __attribute__((aligned(16)));
 #define AV(v) (*(VV*)&(v))
 class Obj58 { public: virtual void F0(); virtual void F1(); virtual void F2(); virtual void F3(); virtual void F4(); virtual void F5(); virtual void F6(); virtual void F7(); virtual void F8(); virtual void F9(); virtual void F10(); virtual void F11(); virtual void F12(); virtual void F13(); virtual void F14(); virtual void F15(); virtual void F16(); virtual void F17(); virtual void F18(); virtual int IsPlayer(); };
 typedef struct { char pad0[0x30]; char s30[8]; int i38; char pad3C[0xDC - 0x3C]; u8 bDC; u8 bDD; char padDE[0xE4 - 0xDE]; float fE4; char padE8[0x2C8 - 0xE8]; float f2C8; char pad2CC[0x3D1 - 0x2CC]; u8 b3D1; u8 b3D2; } Ctl;
@@ -91,58 +91,58 @@ extern char D_004EE5C0[];
 extern char g_Game[];
 extern char g_CasEventMsgClass[];
 void Actor_SetPendingFlag(void* f, u8 bit, int on);
-void Actor_PrepareNavigation(Actor* a, float dt);
-int Inventory_GetEquipMode(Inv* inv);
-int Inventory_HasAnyItem(Inv* inv);
-float Math_Atan2f(float y, float x);
-float Math_Sin(float);
-float Math_SinThunk(float);
-float Math_CosThunk(float);
-void AnimChannel_SetTarget(void* a, int idx, unsigned int n, float target, float dur, float damping);
-void AnimChannel_Approach(void* a, int idx, unsigned int n, float target, float rate);
-void AnimChannel_SetDirect(void* a, int idx, float v);
-float AnimChannel_GetCurrent(void* a, int idx);
+void cHuman_DeriveMotionParamsFromDestinationParams(Actor* a, float dt);
+int cWeapon_GetPoseType(Inv* inv);
+int cWeapon_HasAnyWeapons(Inv* inv);
+float Libc_Atan2f(float y, float x);
+float Libc_Sinf(float);
+float SIN(float);
+float COS(float);
+void cSkaParams_SetSliderValue_UsingSplineForInterpolation(void* a, int idx, unsigned int n, float target, float dur, float damping);
+void cSkaParams_SetSliderValue_int_float_float_bool(void* a, int idx, unsigned int n, float target, float rate);
+void cSkaParams_SetSliderValue_int_float(void* a, int idx, float v);
+float cSkaParams_GetSliderValue(void* a, int idx);
 float AnimChannel_GetCurrentValue(void* a, int idx);
-float AnimChannel_GetTarget(void* a, int idx);
+float cSkaSystem_GetSliderValue(void* a, int idx);
 int BitArray_Test(void* a, int bit);
-void Event_Construct(Msg* m, void* d);
-void Event_Send(Msg* m, void* to, int f);
+void cMessage_ctor_cMessageNameR(Msg* m, void* d);
+void QueueMessage_cMessageR_cSystemP_int(Msg* m, void* to, int f);
 void cMessage_dtor(Msg* m, int f);
-void* Service_Lookup(void* a, void* b);
-void AiSound_SendFireNoise(Msg* m, int* sender, int action, float amp, float f);
+void* cSystemContainer_GetSystem(void* a, void* b);
+void cAISoundSystemGOBJMessage_ctor_cObjectIdR_eCauseForAwareness_float_float(Msg* m, int* sender, int action, float amp, float f);
 void cHuman_Hang_NextFrame(Actor* a, float dt);
-void Ladder_Update(Actor* a, float dt);
-void Actor_UpdatePairChannels(Actor* a, float dt);
-void Actor_PrepareNeutralChannels(Actor* a, int b, int c, int d, int e);
+void cHuman_LadderMotion_NextFrame(Actor* a, float dt);
+void cHuman_CarryBody_NextFrame(Actor* a, float dt);
+void cHuman_ClearMotionSettings(Actor* a, int b, int c, int d, int e);
 void func_0019D6E0(void* p, int a, int b);
 void cSkaParams_SetSwitchNextGoalState(void* p, int a, int b);
-float ActorPhysical_QueryWaterHeight(Ctl* c);
-void Mtx44_SetRotation(M4* m, float, float, float, float, float, float, float, float, float);
-V4* Root_GetWorldQuat(void* r);
-void Root_SetWorldOrientation(Root* r, V4* q);
-void* Root_ResolveWorldPlacement(Root* r);
-M4* Placement_ToMatrix(M4* m, void* p);
+float cHumanCollisionRoutine_GetWaterDepth(Ctl* c);
+void cMatrix_Set_ColumnMajorForm(M4* m, float, float, float, float, float, float, float, float, float);
+V4* cSkaAnimAnchor_GetRotation(void* r);
+void cSkaAnimAnchor_TreeNode_SetTransformRotation_WorldSpace(Root* r, V4* q);
+void* cSkaAnimAnchor_GetTransform(Root* r);
+M4* cMatrix_ctor_cQuatVecR(M4* m, void* p);
 float Mtx_GetHeading(M4* m);
-float* History_At(char* h, int i);
-void ActorHeading_RetargetLast(char* h, float f);
-void* Actor_GetEdgeRoot2(Actor* a);
-float* Mtx_ToEuler(V4* e, M4* m);
-V4* Quat_FromYaw(V4* q, V4* aa);
+float* cArray_cTargetZRotationStackSlot_opIndex(char* h, int i);
+void cHumanMotionParams_UpdateTargetZRotation_AfterChangeInStack_AndSetNewTransitionDuration(char* h, float f);
+void* cHuman_GetLedgeAnchor_void(Actor* a);
+float* cEulerAngle_T_1_2_ctor_cMatrixR(V4* e, M4* m);
+V4* cQuaternion_ctor_cAxisAngleR(V4* q, V4* aa);
 int std_vector_imp_cTargetZRotationStackSlot_size(char* h);
 char** std_vector_deleter_cTargetZRotationStackSlot_data(char* h);
-int Root_GetParent(Root* r);
-void Root_RefreshWorldCache(Root* r);
-char* Root_Identity(Root* r);
-V4* Placement_GetPosition(void* p);
-V4* Placement_GetQuat(void* p);
-M4* Quat_ToMatrix(M4* m, V4* q);
+int cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(Root* r);
+void cSkaAnimAnchor_TreeNode_UpdateTransform(Root* r);
+char* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(Root* r);
+V4* cQuatVec_Translation(void* p);
+V4* cQuatVec_Rotation(void* p);
+M4* cMatrix_ctor_cQuaternionR(M4* m, V4* q);
 void Mtx34_Copy(M4* d, M4* s);
-void Mtx_SetTranslation(M4* m, V4* p);
+void cMatrix_SetTranslation(M4* m, V4* p);
 V4* cMatrix_GetXAxis(M4* m);
 V4* func_0019D190(M4* m);
-float Vec4_GetZ(V4* v);
-float Vec_HeadingFromYX(V4* v);
-float Vec_HeadingFromNegXY(V4* v);
+float cVector_Z_void(V4* v);
+float nSFOMath_GetZRotationFromXAxis(V4* v);
+float nSFOMath_GetZRotationFromYAxis(V4* v);
 }
 static inline float MinZ(float a, float b) { float r = 0.0f; asm { min.s r, a, b } return r; }
 static inline float MinK(float a, float x) { float k; float b; k = 0.0f; a = 1.0f; k = 1.5f; b = k * x; asm { min.s k, a, b } return k; }
@@ -240,16 +240,16 @@ static inline void SendMsg(Actor* a, int id)
 {
     Msg m;
     Msg* p = &m;
-    Event_Construct(p, g_CasEventMsgClass);
+    cMessage_ctor_cMessageNameR(p, g_CasEventMsgClass);
     p->vt = D_004DA950;
     p->i24 = id;
     p->i28 = -1;
     p->i2C = 0;
-    Event_Send(p, a->p58, 1);
+    QueueMessage_cMessageR_cSystemP_int(p, a->p58, 1);
     m.vt = D_004DA950;
     cMessage_dtor(p, 0);
 }
-static inline float AngA(float x, float y) { float r = Math_Atan2f(x, y); r += 3.1415927f; return r; }
+static inline float AngA(float x, float y) { float r = Libc_Atan2f(x, y); r += 3.1415927f; return r; }
 static inline float MulF(float a, float b) { return a * b; }
 static inline float HalfWrap(float c) { if (c > 0.5f) return c - 0.5f; return 0.5f + c; }
 static inline bool BT(int* p, int i) { return BitArray_Test(p, i); }
@@ -298,14 +298,14 @@ static inline void UpdateLean(Actor* a, AnimBlk* blk)
     float t, c;
     float dur;
     t = Ramp(&a->in.y, &a->v3040.y);
-    c = AnimChannel_GetCurrent(blk->anim, 5);
+    c = cSkaParams_GetSliderValue(blk->anim, 5);
     if ((c < 0.5f && t > 0.5f) || (c > 0.5f && t < 0.5f)) dur = D_0049CFE8; else dur = D_0049CFE0;
-    if (ok) AnimChannel_SetTarget(blk->anim, 0, 0, t, dur, 3.0f);
+    if (ok) cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 0, 0, t, dur, 3.0f);
     ok = 1;
     t = Ramp(&a->in.x, &a->v3040.x);
-    c = AnimChannel_GetCurrent(blk->anim, 6);
+    c = cSkaParams_GetSliderValue(blk->anim, 6);
     if ((c < 0.5f && t > 0.5f) || (c > 0.5f && t < 0.5f)) dur = D_0049CFE8; else dur = D_0049CFE0;
-    if (ok) AnimChannel_SetTarget(blk->anim, 1, 0, t, dur, 3.0f);
+    if (ok) cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 1, 0, t, dur, 3.0f);
 }
 static inline void UpdateLean2(Actor* a, AnimBlk* blk)
 {
@@ -313,14 +313,14 @@ static inline void UpdateLean2(Actor* a, AnimBlk* blk)
     float t, c;
     float dur;
     t = Ramp2(&a->in.y, &a->v3040.y);
-    c = AnimChannel_GetCurrent(blk->anim, 5);
+    c = cSkaParams_GetSliderValue(blk->anim, 5);
     if ((c < 0.5f && t > 0.5f) || (c > 0.5f && t < 0.5f)) dur = D_0049CFE8; else dur = D_0049CFE0;
-    if (ok) AnimChannel_SetTarget(blk->anim, 0, 0, t, dur, 3.0f);
+    if (ok) cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 0, 0, t, dur, 3.0f);
     ok = 1;
     t = Ramp2(&a->in.x, &a->v3040.x);
-    c = AnimChannel_GetCurrent(blk->anim, 6);
+    c = cSkaParams_GetSliderValue(blk->anim, 6);
     if ((c < 0.5f && t > 0.5f) || (c > 0.5f && t < 0.5f)) dur = D_0049CFE8; else dur = D_0049CFE0;
-    if (ok) AnimChannel_SetTarget(blk->anim, 1, 0, t, dur, 3.0f);
+    if (ok) cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 1, 0, t, dur, 3.0f);
 }
 static inline void SmoothInput(Actor* a, float k)
 {
@@ -335,9 +335,9 @@ static inline void SmoothInput(Actor* a, float k)
 static inline void HeadingFromRoot(Actor* a)
 {
     M4 m;
-    float h = Mtx_GetHeading(Placement_ToMatrix(&m, Root_ResolveWorldPlacement(a->p3290)));
-    History_At(a->hist, a->i3098)[1] = h;
-    ActorHeading_RetargetLast(a->heading, -1.0f);
+    float h = Mtx_GetHeading(cMatrix_ctor_cQuatVecR(&m, cSkaAnimAnchor_GetTransform(a->p3290)));
+    cArray_cTargetZRotationStackSlot_opIndex(a->hist, a->i3098)[1] = h;
+    cHumanMotionParams_UpdateTargetZRotation_AfterChangeInStack_AndSetNewTransitionDuration(a->heading, -1.0f);
 }
 static inline void OrientYaw(Actor* a, float yaw)
 {
@@ -347,30 +347,30 @@ static inline void OrientYaw(Actor* a, float yaw)
     aa.y = 0.0f;
     aa.z = 1.0f;
     aa.w = yaw;
-    { V4* pa = &aa; Quat_FromYaw(&q, pa); }
+    { V4* pa = &aa; cQuaternion_ctor_cAxisAngleR(&q, pa); }
     Root* r = a->p3290;
-    Root_SetWorldOrientation(r, &q);
+    cSkaAnimAnchor_TreeNode_SetTransformRotation_WorldSpace(r, &q);
     r->i160 = 0;
 }
 static inline void HistRest(Actor* a)
 {
     int i = std_vector_imp_cTargetZRotationStackSlot_size(a->hist) - 1;
     float h = ((float*)(*std_vector_deleter_cTargetZRotationStackSlot_data(a->hist) + i * 8))[1];
-    History_At(a->hist, a->i3098)[1] = h;
-    ActorHeading_RetargetLast(a->heading, -1.0f);
+    cArray_cTargetZRotationStackSlot_opIndex(a->hist, a->i3098)[1] = h;
+    cHumanMotionParams_UpdateTargetZRotation_AfterChangeInStack_AndSetNewTransitionDuration(a->heading, -1.0f);
 }
 static inline char* GetWorld(Root* r)
 {
-    if (Root_GetParent(r)) {
-        Root_RefreshWorldCache(r);
-        return Root_Identity(r);
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(r)) {
+        cSkaAnimAnchor_TreeNode_UpdateTransform(r);
+        return cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r);
     }
-    return Root_Identity(r) + 0x50;
+    return cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r) + 0x50;
 }
 static inline void DurTarget(Actor* a, AnimBlk* blk, int busy, int idx, float t, const float& hi, const float& lo)
 {
-    float c = AnimChannel_GetCurrent(blk->anim, idx);
-    float g4 = AnimChannel_GetCurrent(blk->anim, 4);
+    float c = cSkaParams_GetSliderValue(blk->anim, idx);
+    float g4 = cSkaParams_GetSliderValue(blk->anim, 4);
     float dur;
     if (!busy && g4 == 0.0f) {
         dur = 0.0f;
@@ -379,22 +379,22 @@ static inline void DurTarget(Actor* a, AnimBlk* blk, int busy, int idx, float t,
     } else {
         dur = hi;
     }
-    AnimChannel_SetTarget(blk->anim, idx, 0, t, dur, 3.0f);
+    cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, idx, 0, t, dur, 3.0f);
 }
 
 static inline void RotIn(Actor* a, float c, float s)
 {
     M4 m;
-    Mtx44_SetRotation(&m, c, -s, 0.0f, s, c, 0.0f, 0.0f, 0.0f, 1.0f);
+    cMatrix_Set_ColumnMajorForm(&m, c, -s, 0.0f, s, c, 0.0f, 0.0f, 0.0f, 1.0f);
     MulVec(&a->in, &a->in, &m);
 }
 typedef struct { Msg m; int x[4]; } NMsg;
 static inline void FireNoise(Actor* a)
 {
     NMsg m;
-    void* svc = Service_Lookup(g_Game, D_004EE5C0);
-    { int* p = (int*)a->c0C; AiSound_SendFireNoise((Msg*)&m, p, 3, 1.0f, a->f31F8); }
-    Event_Send((Msg*)&m, svc, 0);
+    void* svc = cSystemContainer_GetSystem(g_Game, D_004EE5C0);
+    { int* p = (int*)a->c0C; cAISoundSystemGOBJMessage_ctor_cObjectIdR_eCauseForAwareness_float_float((Msg*)&m, p, 3, 1.0f, a->f31F8); }
+    QueueMessage_cMessageR_cSystemP_int((Msg*)&m, svc, 0);
     m.m.vt = D_004D92A0;
     cMessage_dtor((Msg*)&m, 0);
 }
@@ -402,30 +402,30 @@ static inline void EdgeHeading(Actor* a)
 {
     V4 e;
     M4 m;
-    QuatToMtx(&m, Root_GetWorldQuat(Actor_GetEdgeRoot2(a)));
+    QuatToMtx(&m, cSkaAnimAnchor_GetRotation(cHuman_GetLedgeAnchor_void(a)));
     M4* pm = &m;
-    float h = Mtx_ToEuler(&e, pm)[2];
-    History_At(a->hist, a->i3098)[1] = h;
-    ActorHeading_RetargetLast(a->heading, 0.5f);
+    float h = cEulerAngle_T_1_2_ctor_cMatrixR(&e, pm)[2];
+    cArray_cTargetZRotationStackSlot_opIndex(a->hist, a->i3098)[1] = h;
+    cHumanMotionParams_UpdateTargetZRotation_AfterChangeInStack_AndSetNewTransitionDuration(a->heading, 0.5f);
 }
-struct M4Q { V4 r[4]; M4Q(V4* q) { Quat_ToMatrix((M4*)this, q); } };
+struct M4Q { V4 r[4]; M4Q(V4* q) { cMatrix_ctor_cQuaternionR((M4*)this, q); } };
 static inline void CopyM(M4* d, const M4Q& s) { Mtx34_Copy(d, (M4*)&s); }
 static inline VV V1A0(M4* m) { return *(VV*)cMatrix_GetXAxis(m); }
 static inline VV V190(M4* m) { return *(VV*)func_0019D190(m); }
-static inline float PickH(const VV& a, const VV& b) { if (Vec4_GetZ((V4*)&a) < Vec4_GetZ((V4*)&b)) return Vec_HeadingFromYX((V4*)&a); return Vec_HeadingFromNegXY((V4*)&b); }
-static inline void WorldM(M4* m, char* w) { M4 rot; Quat_ToMatrix(&rot, Placement_GetQuat(w)); Mtx34_Copy(m, &rot); }
-static inline float PickH2(M4* m) { V4 va; V4 vb; Vec4_Assign(&va, cMatrix_GetXAxis(m)); Vec4_Assign(&vb, func_0019D190(m)); if (Vec4_GetZ(&va) < Vec4_GetZ(&vb)) return Vec_HeadingFromYX(&va); return Vec_HeadingFromNegXY(&vb); }
+static inline float PickH(const VV& a, const VV& b) { if (cVector_Z_void((V4*)&a) < cVector_Z_void((V4*)&b)) return nSFOMath_GetZRotationFromXAxis((V4*)&a); return nSFOMath_GetZRotationFromYAxis((V4*)&b); }
+static inline void WorldM(M4* m, char* w) { M4 rot; cMatrix_ctor_cQuaternionR(&rot, cQuatVec_Rotation(w)); Mtx34_Copy(m, &rot); }
+static inline float PickH2(M4* m) { V4 va; V4 vb; cVector_ctor_cVectorR(&va, cMatrix_GetXAxis(m)); cVector_ctor_cVectorR(&vb, func_0019D190(m)); if (cVector_Z_void(&va) < cVector_Z_void(&vb)) return nSFOMath_GetZRotationFromXAxis(&va); return nSFOMath_GetZRotationFromYAxis(&vb); }
 static inline void WorldMW(M4* m, char* w) { WorldM(m, w); }
 static inline float PickHW(M4* m) { return PickH2(m); }
 static inline float HeadingFromWorld(Actor* a, float dt)
 {
     Root* root = a->p3290;
     char* w = GetWorld(root);
-    V4* pos = Placement_GetPosition(w);
+    V4* pos = cQuatVec_Translation(w);
     M4 m;
     float h;
     WorldMW(&m, w);
-    Mtx_SetTranslation(&m, pos);
+    cMatrix_SetTranslation(&m, pos);
     h = PickHW(&m);
     h = h + a->f31D4 * dt;
     for (;;) {
@@ -433,8 +433,8 @@ static inline float HeadingFromWorld(Actor* a, float dt)
         if (h < -3.1415927f) { h += 6.2831855f; continue; }
         break;
     }
-    History_At(a->hist, a->i3098)[1] = h;
-    ActorHeading_RetargetLast(a->heading, -1.0f);
+    cArray_cTargetZRotationStackSlot_opIndex(a->hist, a->i3098)[1] = h;
+    cHumanMotionParams_UpdateTargetZRotation_AfterChangeInStack_AndSetNewTransitionDuration(a->heading, -1.0f);
     return h;
 }
 
@@ -459,34 +459,34 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
         Actor_SetPendingFlag(&a->i3200, 5, 1);
     }
     if ((g_IsMultiplayer && !a->b14) || !Vt54(a)) {
-        Actor_PrepareNavigation(a, dt);
+        cHuman_DeriveMotionParamsFromDestinationParams(a, dt);
     }
     busy = C6(a);
     blk = &a->blk;
     a->rate = 1.875f * dt;
     f20 = 5.625f * dt;
     f23 = 0.28125f * dt;
-    eq = Inventory_GetEquipMode(a->inv);
+    eq = cWeapon_GetPoseType(a->inv);
     {
         u8 flag;
         if (Vt54(a)) {
             u8 r = 0;
-            if (Inventory_HasAnyItem(a->inv) && (u8)eq != 6) r = 1;
+            if (cWeapon_HasAnyWeapons(a->inv) && (u8)eq != 6) r = 1;
             flag = r;
         } else {
             u8 r = 0;
             if (InvArmed(a->inv) && (u8)eq != 6) r = 1;
             flag = r;
         }
-        AnimChannel_Approach(blk->anim, 12, 0, flag ? 1.0f : 0.0f, f20);
-        AnimChannel_Approach(blk->anim, 13, 0, (u8)eq == 6 ? 1.0f : 0.0f, f20);
+        cSkaParams_SetSliderValue_int_float_float_bool(blk->anim, 12, 0, flag ? 1.0f : 0.0f, f20);
+        cSkaParams_SetSliderValue_int_float_float_bool(blk->anim, 13, 0, (u8)eq == 6 ? 1.0f : 0.0f, f20);
     }
     if (!busy) {
         float c5, c6;
         f22 = MulF(AngA(a->in.x, a->in.y), 0.15915494f); f22 = Clamp01(f22);
         f21 = HalfWrap(f22);
-        c5 = AnimChannel_GetCurrent(blk->anim, 5);
-        c6 = AnimChannel_GetCurrent(blk->anim, 6);
+        c5 = cSkaParams_GetSliderValue(blk->anim, 5);
+        c6 = cSkaParams_GetSliderValue(blk->anim, 6);
         if (f22 < 0.1f && c5 < 0.5f && a->b31DC == 1) {
             f22 = 1.0f;
         } else if (f22 > 0.9f && c5 < 0.5f && a->b31DC == 0) {
@@ -499,23 +499,23 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
         }
         if ((a->st.flags >> 2) & 1) {
             if (a->f31D0 > 0.0f) {
-                AnimChannel_Approach(blk->anim, 15, 0, f22, f23);
-                AnimChannel_Approach(blk->anim, 16, 0, f21, f23);
+                cSkaParams_SetSliderValue_int_float_float_bool(blk->anim, 15, 0, f22, f23);
+                cSkaParams_SetSliderValue_int_float_float_bool(blk->anim, 16, 0, f21, f23);
             } else {
-                AnimChannel_SetDirect(blk->anim, 15, AnimChannel_GetCurrentValue(blk, 15));
-                AnimChannel_SetDirect(blk->anim, 16, AnimChannel_GetCurrentValue(blk, 16));
+                cSkaParams_SetSliderValue_int_float(blk->anim, 15, AnimChannel_GetCurrentValue(blk, 15));
+                cSkaParams_SetSliderValue_int_float(blk->anim, 16, AnimChannel_GetCurrentValue(blk, 16));
             }
         } else {
             if (a->f31D0 == 0.0f) {
                 f22 = 0.5f;
                 f21 = 0.0f;
             }
-            AnimChannel_SetDirect(blk->anim, 15, f22);
-            AnimChannel_SetDirect(blk->anim, 16, f21);
+            cSkaParams_SetSliderValue_int_float(blk->anim, 15, f22);
+            cSkaParams_SetSliderValue_int_float(blk->anim, 16, f21);
         }
     } else {
-        AnimChannel_SetDirect(blk->anim, 15, AnimChannel_GetCurrentValue(blk, 15));
-        AnimChannel_SetDirect(blk->anim, 16, AnimChannel_GetCurrentValue(blk, 16));
+        cSkaParams_SetSliderValue_int_float(blk->anim, 15, AnimChannel_GetCurrentValue(blk, 15));
+        cSkaParams_SetSliderValue_int_float(blk->anim, 16, AnimChannel_GetCurrentValue(blk, 16));
     }
     if (a->ctl && a->b14 && Vt54(a)) {
         a->ctl->b3D1 = 1;
@@ -561,14 +561,14 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
         if (s == 8 || s == 7) {
             cHuman_Hang_NextFrame(a, dt);
         } else if (s == 16) {
-            Ladder_Update(a, dt);
+            cHuman_LadderMotion_NextFrame(a, dt);
         } else if (((a->i324C >> 3) & 1) || ((a->i324C >> 6) & 1)) {
-            Actor_UpdatePairChannels(a, dt);
+            cHuman_CarryBody_NextFrame(a, dt);
         } else if (s != 0 && s != 2 && !((st->flags >> 27) & 1) && !((st->flags >> 5) & 1)) {
             if (s != 1 && !((st->flags >> 5) & 1)) {
                 Actor_SetPendingFlag(&a->i3200, 0, 1);
             }
-            Actor_PrepareNeutralChannels(a, 0, 0, 0, 0);
+            cHuman_ClearMotionSettings(a, 0, 0, 0, 0);
         } else if (a->f31D0 == 0.0f) {
             float g, g2, dur;
             if (!((a->i3204 >> 5) & 1) && !((a->i3204 >> 6) & 1) && !((a->i3204 >> 7) & 1)) {
@@ -578,83 +578,83 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
                 func_0019D6E0(a->ctl->s30, 0, 1);
             }
             cSkaParams_SetSwitchNextGoalState(blk->anim, 3, 0);
-            g = AnimChannel_GetCurrent(blk->anim, 4);
+            g = cSkaParams_GetSliderValue(blk->anim, 4);
             g2 = g * g;
             dur = MulF(1.0f + 1.5f * (g2 * g2), 0.16f);
             if (!busy || ((a->i3248 >> 15) & 1)) {
-                AnimChannel_SetTarget(blk->anim, 4, 0, 0.0f, dur, 3.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 4, 0, 0.0f, dur, 3.0f);
             }
             if ((a->i3204 >> 3) & 1) {
-                AnimChannel_SetTarget(blk->anim, 10, 0, 1.0f, D_0049CF90, 5.5f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 10, 0, 1.0f, D_0049CF90, 5.5f);
             } else {
-                AnimChannel_SetTarget(blk->anim, 10, 0, 0.0f, D_0049CF90, 5.5f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 10, 0, 0.0f, D_0049CF90, 5.5f);
             }
             if ((a->i3204 >> 4) & 1) {
-                AnimChannel_Approach(blk->anim, 11, 0, 1.0f, a->rate);
+                cSkaParams_SetSliderValue_int_float_float_bool(blk->anim, 11, 0, 1.0f, a->rate);
             } else {
-                AnimChannel_Approach(blk->anim, 11, 0, 0.0f, a->rate);
+                cSkaParams_SetSliderValue_int_float_float_bool(blk->anim, 11, 0, 0.0f, a->rate);
             }
-            if (!busy && AnimChannel_GetCurrent(blk->anim, 4) == 0.0f) {
+            if (!busy && cSkaParams_GetSliderValue(blk->anim, 4) == 0.0f) {
                 float d;
-                AnimChannel_SetTarget(blk->anim, 5, 0, 0.5f, D_0049CF68, 3.0f);
-                AnimChannel_SetTarget(blk->anim, 6, 0, 0.5f, D_0049CF58, 3.0f);
-                { float cur = AnimChannel_GetCurrent(blk->anim, 4); float k = D_0049CFC0; d = MulF(cur, k); }
-                AnimChannel_SetTarget(blk->anim, 7, 0, 0.0f, d, 3.0f);
-                AnimChannel_SetTarget(blk->anim, 8, 0, 0.0f, d, 3.0f);
-                AnimChannel_SetTarget(blk->anim, 9, 0, AnimChannel_GetTarget(blk, 6), D_0049CF58, 3.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 5, 0, 0.5f, D_0049CF68, 3.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 6, 0, 0.5f, D_0049CF58, 3.0f);
+                { float cur = cSkaParams_GetSliderValue(blk->anim, 4); float k = D_0049CFC0; d = MulF(cur, k); }
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 7, 0, 0.0f, d, 3.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 8, 0, 0.0f, d, 3.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 9, 0, cSkaSystem_GetSliderValue(blk, 6), D_0049CF58, 3.0f);
             } else if (busy) {
-                AnimChannel_SetTarget(blk->anim, 3, 0, AnimChannel_GetCurrentValue(blk, 3), -1.0f, 0.0f);
-                AnimChannel_SetTarget(blk->anim, 5, 0, AnimChannel_GetCurrentValue(blk, 5), -1.0f, 0.0f);
-                AnimChannel_SetTarget(blk->anim, 6, 0, AnimChannel_GetCurrentValue(blk, 6), -1.0f, 0.0f);
-                AnimChannel_SetTarget(blk->anim, 7, 0, AnimChannel_GetCurrentValue(blk, 7), -1.0f, 0.0f);
-                AnimChannel_SetTarget(blk->anim, 8, 0, AnimChannel_GetCurrentValue(blk, 8), -1.0f, 0.0f);
-                AnimChannel_SetTarget(blk->anim, 9, 0, AnimChannel_GetCurrentValue(blk, 9), -1.0f, 0.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 3, 0, AnimChannel_GetCurrentValue(blk, 3), -1.0f, 0.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 5, 0, AnimChannel_GetCurrentValue(blk, 5), -1.0f, 0.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 6, 0, AnimChannel_GetCurrentValue(blk, 6), -1.0f, 0.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 7, 0, AnimChannel_GetCurrentValue(blk, 7), -1.0f, 0.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 8, 0, AnimChannel_GetCurrentValue(blk, 8), -1.0f, 0.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 9, 0, AnimChannel_GetCurrentValue(blk, 9), -1.0f, 0.0f);
             } else {
-                AnimChannel_SetTarget(blk->anim, 7, 0, AnimChannel_GetCurrentValue(blk, 7), -1.0f, 0.0f);
-                AnimChannel_SetTarget(blk->anim, 8, 0, AnimChannel_GetCurrentValue(blk, 8), -1.0f, 0.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 7, 0, AnimChannel_GetCurrentValue(blk, 7), -1.0f, 0.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 8, 0, AnimChannel_GetCurrentValue(blk, 8), -1.0f, 0.0f);
             }
             if (a->b31B7 && HasCtlDD(a) && !((a->i3248 >> 4) & 1)) {
-                AnimChannel_SetTarget(blk->anim, 14, 0, Clamp01(0.5f - a->f31D4 * MulF(1.0f, 0.22207667f)), D_0049CFB8, 6.5f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 14, 0, Clamp01(0.5f - a->f31D4 * MulF(1.0f, 0.22207667f)), D_0049CFB8, 6.5f);
             } else {
-                AnimChannel_SetTarget(blk->anim, 14, 0, 0.5f, D_0049CFB8, 6.5f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 14, 0, 0.5f, D_0049CFB8, 6.5f);
             }
             {
-                if ((a->i3248 >> 30) & 1) AnimChannel_Approach(blk->anim, 17, 0, 0.0f, a->rate);
-                else if ((a->i3248 >> 31) & 1) AnimChannel_Approach(blk->anim, 17, 0, 1.0f, a->rate);
-                else AnimChannel_Approach(blk->anim, 17, 0, 0.5f, a->rate);
+                if ((a->i3248 >> 30) & 1) cSkaParams_SetSliderValue_int_float_float_bool(blk->anim, 17, 0, 0.0f, a->rate);
+                else if ((a->i3248 >> 31) & 1) cSkaParams_SetSliderValue_int_float_float_bool(blk->anim, 17, 0, 1.0f, a->rate);
+                else cSkaParams_SetSliderValue_int_float_float_bool(blk->anim, 17, 0, 0.5f, a->rate);
             }
-            if (AnimChannel_GetCurrent(blk->anim, 4) == 0.0f) {
-                AnimChannel_SetTarget(blk->anim, 2, 0, 0.0f, D_0049CF50, 3.0f);
+            if (cSkaParams_GetSliderValue(blk->anim, 4) == 0.0f) {
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 2, 0, 0.0f, D_0049CF50, 3.0f);
             } else {
-                AnimChannel_SetTarget(blk->anim, 2, 0, AnimChannel_GetCurrent(blk->anim, 2), -1.0f, 0.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 2, 0, cSkaParams_GetSliderValue(blk->anim, 2), -1.0f, 0.0f);
             }
             UpdateLean(a, blk);
             SmoothInput(a, MinZ(1.0f, MulF(dt, 1.5f)));
         } else {
             cSkaParams_SetSwitchNextGoalState(blk->anim, 3, 0);
-            if (a->b31B3 && a->in.y > 0.0f && AnimChannel_GetCurrent(blk->anim, 4) == 1.0f) {
+            if (a->b31B3 && a->in.y > 0.0f && cSkaParams_GetSliderValue(blk->anim, 4) == 1.0f) {
                 float k, A, ang, s, c;
                 if (a->b31B3) k = 0.31666666f * a->f31D4; else k = 0.0f;
                 A = 1.2217305f;
                 VF v(-AbsR(a->in.x), AbsR(a->in.y), 0.0f, 0.0f);
-                ang = Math_Atan2f(-v.x, v.y);
+                ang = Libc_Atan2f(-v.x, v.y);
                 f22 = Clamp01Q((1.0f / A) * (A - ang));
-                s = Math_SinThunk(k * f22);
-                c = Math_CosThunk(k * f22);
+                s = SIN(k * f22);
+                c = COS(k * f22);
                 RotIn(a, c, s);
             }
             if ((a->i3204 >> 3) & 1) {
-                AnimChannel_SetTarget(blk->anim, 10, 0, 1.0f, D_0049CF98, 5.5f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 10, 0, 1.0f, D_0049CF98, 5.5f);
             } else {
-                AnimChannel_SetTarget(blk->anim, 10, 0, 0.0f, D_0049CFA0, 5.5f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 10, 0, 0.0f, D_0049CFA0, 5.5f);
             }
             if ((a->i3204 >> 4) & 1) {
-                AnimChannel_Approach(blk->anim, 11, 0, 1.0f, a->rate);
+                cSkaParams_SetSliderValue_int_float_float_bool(blk->anim, 11, 0, 1.0f, a->rate);
             } else {
-                AnimChannel_Approach(blk->anim, 11, 0, 0.0f, a->rate);
+                cSkaParams_SetSliderValue_int_float_float_bool(blk->anim, 11, 0, 0.0f, a->rate);
             }
             if (a->in.y < 0.0f) {
-                f21 = LerpF(0.0f, 0.5f, AnimChannel_GetCurrent(blk->anim, 7) * AnimChannel_GetCurrent(blk->anim, 3));
+                f21 = LerpF(0.0f, 0.5f, cSkaParams_GetSliderValue(blk->anim, 7) * cSkaParams_GetSliderValue(blk->anim, 3));
             } else if (a->in.y > 0.0f) {
                 f21 = 1.0f;
             } else if (a->in.x == 0.0f) {
@@ -669,7 +669,7 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
             } else if (a->in.x > 0.0f) {
                 f21 = 1.0f;
                 a->b31DC = 1;
-            } else if (AnimChannel_GetCurrent(blk->anim, 7) > 0.0f) {
+            } else if (cSkaParams_GetSliderValue(blk->anim, 7) > 0.0f) {
                 if (!a->b31DC) f21 = 0.0f; else f21 = 1.0f;
             } else {
                 f21 = 0.5f;
@@ -678,15 +678,15 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
             {
                 float ay = AbsR(a->in.y);
                 float ax = AbsR(a->in.x);
-                float ang = Math_Atan2f(ax, ay);
+                float ang = Libc_Atan2f(ax, ay);
                 float c3, g4, d5, d6, w, hi, lo, h2, dur;
                 u8 up;
-                { float s1 = Math_Sin(ang); float s2 = Math_Sin(2.3561945f - ang);
+                { float s1 = Libc_Sinf(ang); float s2 = Libc_Sinf(2.3561945f - ang);
                 f22 = Clamp01H(s1 / s2 / SqrtZ(2.0f)); }
-                c3 = AnimChannel_GetCurrent(blk->anim, 3);
-                g4 = AnimChannel_GetCurrent(blk->anim, 4);
-                d5 = 2.0f * AbsZ(AnimChannel_GetCurrent(blk->anim, 5) - 0.5f);
-                d6 = 2.0f * AbsZ(AnimChannel_GetCurrent(blk->anim, 6) - 0.5f);
+                c3 = cSkaParams_GetSliderValue(blk->anim, 3);
+                g4 = cSkaParams_GetSliderValue(blk->anim, 4);
+                d5 = 2.0f * AbsZ(cSkaParams_GetSliderValue(blk->anim, 5) - 0.5f);
+                d6 = 2.0f * AbsZ(cSkaParams_GetSliderValue(blk->anim, 6) - 0.5f);
                 w = d5 + f22 * (d6 - d5);
                 up = f22 >= c3;
                 lo = D_0049CF88;
@@ -699,42 +699,42 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
                 } else {
                     dur = h2;
                 }
-                AnimChannel_SetTarget(blk->anim, 3, 0, f22, dur, 3.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 3, 0, f22, dur, 3.0f);
             }
             if (!HasCtlI(a)) {
                 if (!HasCtlDD(a)) {
-                    AnimChannel_SetTarget(blk->anim, 7, 0, 0.0f, D_0049CFC0, 3.0f);
-                    AnimChannel_SetTarget(blk->anim, 8, 0, 0.0f, D_0049CFC0, 3.0f);
+                    cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 7, 0, 0.0f, D_0049CFC0, 3.0f);
+                    cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 8, 0, 0.0f, D_0049CFC0, 3.0f);
                 } else if (!(a->f309C < 1.0f) && a->p3314 && a->p3314->b311 == 0x16) {
-                    AnimChannel_SetTarget(blk->anim, 7, 0, 0.0f, D_0049CFD0, 3.0f);
-                    AnimChannel_SetTarget(blk->anim, 8, 0, 0.0f, D_0049CFD0, 3.0f);
+                    cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 7, 0, 0.0f, D_0049CFD0, 3.0f);
+                    cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 8, 0, 0.0f, D_0049CFD0, 3.0f);
                 } else if (!(a->f309C < 1.0f) && !((a->i3204 >> 3) & 1) && !((a->i3204 >> 4) & 1)) {
                     if (a->in.y < 0.0f) {
                         float d = D_0049CFC8;
-                        AnimChannel_SetTarget(blk->anim, 7, 0, 1.0f, d, 3.0f);
-                        AnimChannel_SetTarget(blk->anim, 8, 0, 1.0f, d, 3.0f);
+                        cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 7, 0, 1.0f, d, 3.0f);
+                        cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 8, 0, 1.0f, d, 3.0f);
                     } else {
-                        float c = AnimChannel_GetCurrent(blk->anim, 3);
-                        AnimChannel_SetTarget(blk->anim, 7, 0, 0.0f, D_0049CFC0, 3.0f);
-                        AnimChannel_SetTarget(blk->anim, 8, 0, c, D_0049CFC0, 3.0f);
+                        float c = cSkaParams_GetSliderValue(blk->anim, 3);
+                        cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 7, 0, 0.0f, D_0049CFC0, 3.0f);
+                        cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 8, 0, c, D_0049CFC0, 3.0f);
                     }
                 } else {
                     float g, d;
-                    if ((busy != 0) ^ 1) g = AnimChannel_GetCurrent(blk->anim, 4); else g = 1.0f;
+                    if ((busy != 0) ^ 1) g = cSkaParams_GetSliderValue(blk->anim, 4); else g = 1.0f;
                     int b3 = ((a->i3204 >> 3) & 1) != 0;
                     d = g * (b3 ? D_0049CFD8 : D_0049CFC0);
-                    AnimChannel_SetTarget(blk->anim, 7, 0, 0.0f, d, 3.0f);
-                    AnimChannel_SetTarget(blk->anim, 8, 0, 0.0f, d, 3.0f);
+                    cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 7, 0, 0.0f, d, 3.0f);
+                    cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 8, 0, 0.0f, d, 3.0f);
                 }
             }
-            if (AnimChannel_GetCurrent(blk->anim, 7) <= 0.0f || a->in.y <= 0.0f) {
-                AnimChannel_SetTarget(blk->anim, 9, 0, AnimChannel_GetTarget(blk, 6), D_0049CF58, 3.0f);
+            if (cSkaParams_GetSliderValue(blk->anim, 7) <= 0.0f || a->in.y <= 0.0f) {
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 9, 0, cSkaSystem_GetSliderValue(blk, 6), D_0049CF58, 3.0f);
             }
             {
                 float g11;
                 u8 aim, mid, s5, s4, fast;
                 f20 = Clamp01L(a->f31D0);
-                g11 = AnimChannel_GetCurrent(blk->anim, 11);
+                g11 = cSkaParams_GetSliderValue(blk->anim, 11);
                 aim = AimF(a);
                 mid = MidF(g11);
                 s5 = ((a->i3248 >> 28) & 1) != 0;
@@ -753,13 +753,13 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
                     if (a->ctl && a->ctl->fE4 != g_NegFltMax) {
                         float r;
                         f21 = 2.25f;
-                        r = ActorPhysical_QueryWaterHeight(a->ctl);
+                        r = cHumanCollisionRoutine_GetWaterDepth(a->ctl);
                         { float v = 0.5f + (0.5f / f21) * (f21 - r); v = Clamp01L(v); f20 = MinZ(v, f20); }
                     }
                     if (s5 || s4) f20 = MinZ(0.5f, f20);
-                    f20 *= MinM(AnimChannel_GetCurrent(blk->anim, 4));
+                    f20 *= MinM(cSkaParams_GetSliderValue(blk->anim, 4));
                 }
-                AnimChannel_SetTarget(blk->anim, 2, 0, f20, fast ? D_0049CF50 : D_0049CF48, 3.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 2, 0, f20, fast ? D_0049CF50 : D_0049CF48, 3.0f);
             }
             if (f20 > 0.5f && ((a->i3204 >> 1) & 1) && !(g_VideoFrameCounter & 0xF)) {
                 FireNoise(a);
@@ -767,24 +767,24 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
             UpdateLean2(a, blk);
             {
                 float g;
-                if ((busy != 0) ^ 1) g = AnimChannel_GetCurrent(blk->anim, 4); else g = 1.0f;
+                if ((busy != 0) ^ 1) g = cSkaParams_GetSliderValue(blk->anim, 4); else g = 1.0f;
                 SmoothInput(a, MinZ(1.0f, MulF(dt, MulF(1.0f - 0.95f * g, 30.0f))));
             }
-            AnimChannel_SetTarget(blk->anim, 14, 0, 0.5f, D_0049CFB8, 6.5f);
-            AnimChannel_Approach(blk->anim, 17, 0, 0.5f, a->rate);
+            cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 14, 0, 0.5f, D_0049CFB8, 6.5f);
+            cSkaParams_SetSliderValue_int_float_float_bool(blk->anim, 17, 0, 0.5f, a->rate);
             if (!((a->i3204 >> 3) & 1) && !((a->i3204 >> 4) & 1)) {
-                if (AnimChannel_GetCurrent(blk->anim, 2) > 0.8f) {
+                if (cSkaParams_GetSliderValue(blk->anim, 2) > 0.8f) {
                     Actor_SetPendingFlag(&a->i3200, 1, 1);
-                } else if (!(AnimChannel_GetCurrent(blk->anim, 2) < 0.5f)) {
+                } else if (!(cSkaParams_GetSliderValue(blk->anim, 2) < 0.5f)) {
                     Actor_SetPendingFlag(&a->i3200, 2, 1);
                 }
             }
             if ((a->i3204 >> 4) & 1) {
-                AnimChannel_SetTarget(blk->anim, 4, 0, 1.0f, D_0049CFA8, 3.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 4, 0, 1.0f, D_0049CFA8, 3.0f);
             } else if ((a->i3204 >> 3) & 1) {
-                AnimChannel_SetTarget(blk->anim, 4, 0, 1.0f, D_0049CFA8, 3.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 4, 0, 1.0f, D_0049CFA8, 3.0f);
             } else {
-                AnimChannel_SetTarget(blk->anim, 4, 0, 1.0f, D_0049CFA8, 3.0f);
+                cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 4, 0, 1.0f, D_0049CFA8, 3.0f);
             }
         }
     }
@@ -804,9 +804,9 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
         if (a->st.mode == 16) {
             if (!((st->flags >> 12) & 1)) {
                 Root* r;
-                V4* q = Root_GetWorldQuat(a->p3294);
+                V4* q = cSkaAnimAnchor_GetRotation(a->p3294);
                 r = a->p3290;
-                Root_SetWorldOrientation(r, q);
+                cSkaAnimAnchor_TreeNode_SetTransformRotation_WorldSpace(r, q);
                 r->i160 = 0;
                 HeadingFromRoot(a);
             }

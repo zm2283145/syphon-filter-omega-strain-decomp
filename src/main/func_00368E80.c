@@ -6,19 +6,19 @@
 /* Factory: allocate a 0x8C-byte GuiWidget-derived object and construct it inline. */
 extern "C" {
 extern char D_004DF5C0[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void GuiWidget_ctor(void* self);
 }
 struct O368E80 {
     void* vtable; char pad4[0x54]; int a58; int a5C; char pad60[0x18];
     int a78; int a7C; int pad80; int a84; unsigned char a88; unsigned char a89;
 };
-extern "C" O368E80* GuiObjectives_Create(void)
+extern "C" O368E80* ConcreteWidgetClassRep_GuiObjectives_Create(void)
 {
     O368E80* p;
     {
         AllocGuard guard;
-        p = (O368E80*)Mem_Alloc(0, 0x8C, "guiWidget.hh", 0x2A);
+        p = (O368E80*)cMemMan_Allocate(0, 0x8C, "guiWidget.hh", 0x2A);
     }
     if (p) {
         GuiWidget_ctor(p);

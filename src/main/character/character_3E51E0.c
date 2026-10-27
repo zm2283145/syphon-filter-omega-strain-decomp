@@ -31,7 +31,7 @@ unsigned char cCharActionMsg_MotionParams_InitNet(void* reg)
 
 /* merge_units: begin func_003E52A0 */
 #pragma push /* merge_units */
-extern int Event_UnpackHeader(void* desc);
+extern int cMessage_RegisterFields(void* desc);
 extern int NetRegisterApplicationMessage(void* t, void* fn);
 extern int D_0055A200;
 extern void cCharActionMsg_ObjectId_Int_Scalar_Bool_NetCharActionNetObjectIdIntScalarBoolReq(void);

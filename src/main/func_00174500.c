@@ -27,15 +27,15 @@ extern "C" {
 extern char D_004EE780[];
 extern char D_004D9BE0[];
 extern char D_0049CA58[];
-void cVUM_GOBJ_ctor(Terrain_74500* o, int* desc, char* info);
+void cVUM_GOBJ_ctor_cObjectIdR_cSubclassIdR(Terrain_74500* o, int* desc, char* info);
 void std_vector_cGOBJPtr_ctor_uint_cGOBJPR(Vec_74500* v, int a, int* b);
 void std_vector_cObjectId_ctor_uint_cObjectIdR(Vec_74500* v, int a, int* b);
-void PtrVec_InitEmpty(Vec_74500* v);
+void std_vector_cGOBJPtr_ctor_void(Vec_74500* v);
 char* strchr(const char* s, int c);
-void String_Copy(char* d, const char* s);
-int Hog_Register(void* h, const char* name, int arg, int opt);
-unsigned char FileMan_FindMember(void* e);
-Terrain_74500* Terrain_Construct(Terrain_74500* self, Reader_74500* r, int a, int b);
+void Libc_Strcpy(char* d, const char* s);
+int cFileMan_EncodeFilename_charP_cHogFileR_bool(void* h, const char* name, int arg, int opt);
+unsigned char cFileMan_Open(void* e);
+Terrain_74500* cTerrain_ctor(Terrain_74500* self, Reader_74500* r, int a, int b);
 }
 static inline void ReadInt_74500(Reader_74500* r, int* out) { *out = *(int*)r->cur; r->cur += 4; }
 static inline void Align_74500(Reader_74500* r)
@@ -45,7 +45,7 @@ static inline void Align_74500(Reader_74500* r)
     rem = (int)((unsigned long long)(unsigned int)ptr & 3);
     if (rem) r->cur = ptr + (4 - rem);
 }
-Terrain_74500* Terrain_Construct(Terrain_74500* self, Reader_74500* r, int a, int b)
+Terrain_74500* cTerrain_ctor(Terrain_74500* self, Reader_74500* r, int a, int b)
 {
     int gid;
     FileManEntry e1;
@@ -55,7 +55,7 @@ Terrain_74500* Terrain_Construct(Terrain_74500* self, Reader_74500* r, int a, in
     int lo;
     char* s;
     gid = -1;
-    cVUM_GOBJ_ctor(self, &gid, D_004EE780);
+    cVUM_GOBJ_ctor_cObjectIdR_cSubclassIdR(self, &gid, D_004EE780);
     *(void**)self = D_004D9BE0;
     {
         Vec_74500* v = &self->v1F4;
@@ -71,7 +71,7 @@ Terrain_74500* Terrain_Construct(Terrain_74500* self, Reader_74500* r, int a, in
     }
     {
         Vec_74500* v = &self->v214;
-        PtrVec_InitEmpty(v);
+        std_vector_cGOBJPtr_ctor_void(v);
         v->flag = 1;
     }
     self->lo[0] = 0x7F7FFFFF;
@@ -82,18 +82,18 @@ Terrain_74500* Terrain_Construct(Terrain_74500* self, Reader_74500* r, int a, in
     self->hi[1] = 0xFF7FFFFF;
     self->hi[2] = 0xFF7FFFFF;
     self->hi[3] = 0x3F800000;
-    Resource_Construct(&e1);
-    Resource_Construct(&e2);
+    cFileMan_ctor_void(&e1);
+    cFileMan_ctor_void(&e2);
     self->b250 = 0;
     ReadInt_74500(r, &hi);
     ReadInt_74500(r, &lo);
     s = r->cur;
     while (*r->cur++) ;
-    String_Copy(strchr(s, '.'), D_0049CA58);
-    Hog_Register(&e1, s, a, 1);
-    Hog_Register(&e2, s, b, 0);
+    Libc_Strcpy(strchr(s, '.'), D_0049CA58);
+    cFileMan_EncodeFilename_charP_cHogFileR_bool(&e1, s, a, 1);
+    cFileMan_EncodeFilename_charP_cHogFileR_bool(&e2, s, b, 0);
     Align_74500(r);
-    if (FileMan_FindMember(&e1) == 0) {
+    if (cFileMan_Open(&e1) == 0) {
         ld.a = &e1;
         ld.b = &e2;
         ld.c = 0;
@@ -104,7 +104,7 @@ Terrain_74500* Terrain_Construct(Terrain_74500* self, Reader_74500* r, int a, in
         self->Load2(&ld);
         self->SetActive(1);
     }
-    FileMan_Release(&e2, -1);
-    FileMan_Release(&e1, -1);
+    cFileMan_dtor(&e2, -1);
+    cFileMan_dtor(&e1, -1);
     return self;
 }

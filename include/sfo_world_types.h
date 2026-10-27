@@ -22,7 +22,7 @@
 #define SF_LIGHT_SPOT 0x10
 #define SF_LIGHT_FLASHLIGHT 0x40
 
-/* Delayed blast damage event (virtual +0x10 = Blast_DamageCall 0021B890). Vtable position and size unverified. */
+/* Delayed blast damage event (virtual +0x10 = cDamageCallback_Call 0021B890). Vtable position and size unverified. */
 typedef struct SfExplosionEvent {
     float delay; /* +0x0 ? due when <= 0 (scheduled by 0021A820(event, delay, 1, 0)) */
     unsigned char countDown; /* +0x4 ? 1 = count down on the game clock */
@@ -34,7 +34,7 @@ typedef struct SfExplosionEvent {
     SfVec4 point; /* +0x30 */
 } SfExplosionEvent; /* size 0x40 */
 
-/* Lingering area effect (AreaEffect_Construct 0025A2D0, update 00259880). */
+/* Lingering area effect (cAreaEffect_ctor 0025A2D0, update 00259880). */
 typedef struct SfAreaEffect {
     SfGameObject base; /* +0x0 */
     float age; /* +0x60 */
@@ -50,7 +50,7 @@ typedef struct SfAreaEffect {
     unsigned char particles; /* +0xD6 record +0xDC */
 } SfAreaEffect; /* size unknown (>= 0xD7); prefix only */
 
-/* Thrown/launched projectile (Projectile_Construct 0025D730, Projectile_Update 0025AD80). */
+/* Thrown/launched projectile (cGrenade_ctor 0025D730, cGrenade_NextFrame 0025AD80). */
 typedef struct SfThrownProjectile {
     SfGameObject base; /* +0x0 +0xC id, +0x50 transform node */
     float mass; /* +0x60 */
@@ -99,7 +99,7 @@ typedef struct SfLevelLight {
     float coneInner; /* +0x54 1.0 disables the cone */
 } SfLevelLight; /* size 0x58 */
 
-/* Per-frame light table entry (LightMgr_BuildTable). */
+/* Per-frame light table entry (cLightMan_TestVisibleLight). */
 typedef struct SfLightTableEntry {
     unsigned char type; /* +0x0 */
     unsigned char aux; /* +0x1 */
@@ -151,7 +151,7 @@ typedef struct SfCameraRecord {
     char pad0107[0x9];
 } SfCameraRecord; /* size 0x110 */
 
-/* cHotbox (record version 70, cHotbox_ctor 00172AE0). Extends include/hotbox_types.h cHotbox. */
+/* cHotbox (record version 70, cHotbox_ctor_cPopulationR_int 00172AE0). Extends include/hotbox_types.h cHotbox. */
 typedef struct SfHotbox {
     SfGameObject base; /* +0x0 +0xC id, +0x2C enabled, +0x2D activated, +0x2E removed, +0x49 = 8 */
     SfPtrVec links; /* +0x60 resolved link targets */
@@ -195,7 +195,7 @@ typedef struct SfItemTableEntry {
     void* resourceObject; /* +0x28 */
 } SfItemTableEntry; /* size unknown (>= 0x2C); prefix only */
 
-/* Script event handler descriptor as read by ScriptFilter_RunPass 003E0510. */
+/* Script event handler descriptor as read by cScriptInterpreter_callEvent_cSystemP_cMessageP_charP_int_etc 003E0510. */
 typedef struct SfScriptHandler {
     char pad0000[0x24];
     void* activationContext; /* +0x24 byte +0x64 must be nonzero */

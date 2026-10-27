@@ -8,14 +8,14 @@
 #include "loose02_types.h"
 
 extern char D_004DDAF0[];   /* GuiOnlineOptions vtable */
-extern GuiScreen* GuiScreen_ctor(GuiScreen* self);
-extern GuiSlot* LobbyArray_ctor(GuiSlot* slot);
+extern GuiScreen* GuiLobbyScreen_ctor(GuiScreen* self);
+extern GuiSlot* SFOLobbyList_ctor(GuiSlot* slot);
 
 /* GuiOnlineOptions constructor. */
 GuiOnlineOptions* GuiOnlineOptions_ctor(GuiOnlineOptions* self) {
-    GuiScreen_ctor(&self->base);
+    GuiLobbyScreen_ctor(&self->base);
     self->base.base.base.vtable = D_004DDAF0;
-    LobbyArray_ctor(&self->slot);
+    SFOLobbyList_ctor(&self->slot);
     self->base.screenId = 5;
     self->unk88 = 0;
     self->unk90 = 0;

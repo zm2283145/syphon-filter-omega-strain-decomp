@@ -20,21 +20,21 @@ typedef struct S295090 {
 } S295090;
 extern Ui295090* D_004FFC04;
 extern int D_005063D0[];
-extern void GuiCommandCenter_OpenPanel(S295090* s, int a);
-extern void GuiCommandCenter_SetTexts(S295090* s);
-extern void GuiCommandCenter_ShowBonus(S295090* s, int a);
-extern void GuiWidget_SendEvent(void* a, void* b, int c, int d, int e);
+extern void GuiCommandCenter_ActivateGroup(S295090* s, int a);
+extern void GuiCommandCenter_SetTitleText(S295090* s);
+extern void GuiCommandCenter_DisplayBonusMissionInfo(S295090* s, int a);
+extern void GuiWidget_SendMessage(void* a, void* b, int c, int d, int e);
 
-void GuiCommandCenter_Select(S295090* s, int i, int f)
+void GuiCommandCenter_ActivateButton(S295090* s, int i, int f)
 {
     if (s->focus) {
         if (s->b178[s->cur]) {
             if ((s->cur <= 0x10 && s->bF8[s->cur]) || (s->cur == 0x14 && s->b109))
-                GuiWidget_SendEvent(s, s->focus, 6, (int)"onStateOn", 0);
+                GuiWidget_SendMessage(s, s->focus, 6, (int)"onStateOn", 0);
             else
-                GuiWidget_SendEvent(s, s->focus, 6, (int)"onLoseFocus", 0);
+                GuiWidget_SendMessage(s, s->focus, 6, (int)"onLoseFocus", 0);
         } else {
-            GuiWidget_SendEvent(s, s->focus, 6, (int)"onStateOff", 0);
+            GuiWidget_SendMessage(s, s->focus, 6, (int)"onStateOff", 0);
         }
         s->cur = -1;
         s->focus = 0;
@@ -47,18 +47,18 @@ void GuiCommandCenter_Select(S295090* s, int i, int f)
             return;
     }
     if (f)
-        GuiCommandCenter_OpenPanel(s, 0);
+        GuiCommandCenter_ActivateGroup(s, 0);
     s->focus = s->items[i];
     s->cur = i;
     if (s->b178[s->cur])
-        GuiWidget_SendEvent(s, s->focus, 6, (int)"onGainFocus", 0);
+        GuiWidget_SendMessage(s, s->focus, 6, (int)"onGainFocus", 0);
     else
-        GuiWidget_SendEvent(s, s->focus, 6, (int)"onDeactivate", 0);
-    GuiCommandCenter_SetTexts(s);
+        GuiWidget_SendMessage(s, s->focus, 6, (int)"onDeactivate", 0);
+    GuiCommandCenter_SetTitleText(s);
     if (i > 0x10 || s->b178[s->cur] || D_004FFC04->b30)
-        GuiCommandCenter_ShowBonus(s, -1);
+        GuiCommandCenter_DisplayBonusMissionInfo(s, -1);
     else
-        GuiCommandCenter_ShowBonus(s, D_005063D0[i]);
+        GuiCommandCenter_DisplayBonusMissionInfo(s, D_005063D0[i]);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00295090 */
@@ -76,17 +76,17 @@ typedef struct {
 } Self_52C0;
 extern char g_Game;
 extern char* D_0048C160[];
-int Agent_GetSelected(void*, int);
-int AgentData_IsLevelDone(int, __int128);
-__int128 StringPool_MakeKey(char*);
+int cGameSystem_GetAgentData(void*, int);
+int HasBonusLevel__10cAgentDataF1(int, __int128);
+__int128 nGlobalization_MakeTag(char*);
 
-int GuiCommandCenter_GetDefaultSlot(Self_52C0* self) {
+int GuiCommandCenter_GetDefaultButton(Self_52C0* self) {
     int idx;
     int k;
     int i;
     idx = -1;
     for (k = 0; k < 0x11; k++) {
-        if (AgentData_IsLevelDone(Agent_GetSelected(&g_Game, -1), StringPool_MakeKey(D_0048C160[k]))) idx = k;
+        if (HasBonusLevel__10cAgentDataF1(cGameSystem_GetAgentData(&g_Game, -1), nGlobalization_MakeTag(D_0048C160[k]))) idx = k;
     }
     if (idx == 0 || self->f1CC == -1) return 0x16;
     if (idx != -1) return idx;
@@ -116,37 +116,37 @@ extern G295* D_004FFC04;
 #define D_004FFC04 (*(G295 **)&D_004FFC04) /* merge_units */
 
 extern char D_004AA288[];
-extern int Gui_GetScreenList(void);
-extern void* GuiManager_FindOrLoad(int, char*, char*);
-extern char* GuiScreen_GetLobbyString(O295*, int, int, int, int, int);
-extern int FrontEnd_OpenPopup(G295*, int, char*, char*, int, int);
-extern void FrontEnd_LeaveOnline(G295*, int);
-extern void FrontEnd_ClosePopup(G295*, int);
-extern int Gui_GetScreenStack(void);
-extern void GuiStack_SwapScreens(int, O295*, void*);
-extern void GuiCommandCenter_ClearState(O295*);
-void GuiCommandCenter_Leave(O295* o) {
+extern int Gui_Manager(void);
+extern void* GuiManager_OpenGui(int, char*, char*);
+extern char* GuiLobbyScreen_GetLobbyString(O295*, int, int, int, int, int);
+extern int cGameFrontEnd_PushMessageBox(G295*, int, char*, char*, int, int);
+extern void cGameFrontEnd_LobbyDestroy(G295*, int);
+extern void cGameFrontEnd_PopMessageBox(G295*, int);
+extern int Gui_Canvas(void);
+extern void GuiCanvas_Transition(int, O295*, void*);
+extern void GuiCommandCenter_ResetGuiState(O295*);
+void GuiCommandCenter_SaveDone(O295* o) {
     void* w;
     G295* g;
     if (!o->b2f4) return;
     g = D_004FFC04;
     if (g->b30 && !g->b32) {
         int h;
-        w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "ONOFFSEL");
+        w = GuiManager_OpenGui(Gui_Manager(), "GuiOnlineOfflineSelect", "ONOFFSEL");
         {
             G295* m = D_004FFC04;
-            h = FrontEnd_OpenPopup(m, 0, D_004AA288, GuiScreen_GetLobbyString(o, 0x77, 0, 0, 0, 0), 0, 0);
+            h = cGameFrontEnd_PushMessageBox(m, 0, D_004AA288, GuiLobbyScreen_GetLobbyString(o, 0x77, 0, 0, 0, 0), 0, 0);
         }
-        FrontEnd_LeaveOnline(D_004FFC04, 1);
-        FrontEnd_ClosePopup(D_004FFC04, h);
+        cGameFrontEnd_LobbyDestroy(D_004FFC04, 1);
+        cGameFrontEnd_PopMessageBox(D_004FFC04, h);
     } else if (g->b2e) {
-        w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiTitleScreen", "TITLESCR");
+        w = GuiManager_OpenGui(Gui_Manager(), "GuiTitleScreen", "TITLESCR");
     } else {
-        w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "ONOFFSEL");
+        w = GuiManager_OpenGui(Gui_Manager(), "GuiOnlineOfflineSelect", "ONOFFSEL");
     }
     if (w) {
-        GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
-        GuiCommandCenter_ClearState(o);
+        GuiCanvas_Transition(Gui_Canvas(), o, w);
+        GuiCommandCenter_ResetGuiState(o);
     }
     o->b2f4 = 0;
 }

@@ -22,6 +22,6 @@ void _cdeque_deleter_common_int_begin(WordCursor* out, WordBuf* buf) {
     out->limit = out->begin + buf->capacity;
 }
 
-void MotionGroup_ClearContributions(char* self) {
+void std_vector_deleter_cSkaPlaybackItem_clear(char* self) {
     *(int*)(self + 4) = 0;
 }

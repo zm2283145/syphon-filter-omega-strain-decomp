@@ -16,7 +16,7 @@ extern "C" {
 extern Buf3A6DA0 D_00542940;
 static Buf3A6DA0* D_00493500 = &D_00542940;
 extern int D_0053DC00;
-extern int sceCdSearchFile_Thunk(Info3A6DA0* out, char* name);
+extern int sceCdSearchFile_2(Info3A6DA0* out, char* name);
 extern char* strncpy(char* d, const char* s, int n);
 extern void SyncDCache(void* p, char* k);
 extern void InvalidDCache(void* p, char* k);
@@ -24,12 +24,12 @@ extern int snd_SendIOPCommandAndWait(int cmd, int size, void* req);
 }
 #pragma push
 #pragma opt_unroll_count 2
-extern "C" int Cd_SearchFile(Info3A6DA0* out, char* name)
+extern "C" int snd_StreamSafeCdSearchFile(Info3A6DA0* out, char* name)
 {
     struct { Buf3A6DA0* buf; char path[0xFC]; } req;
     int r;
     char* k;
-    if (D_0053DC00 == 0) return sceCdSearchFile_Thunk(out, name);
+    if (D_0053DC00 == 0) return sceCdSearchFile_2(out, name);
     req.buf = D_00493500;
     strncpy(req.path, name, 0xFC);
     req.path[0xFB] = 0;
@@ -51,7 +51,7 @@ extern "C" int Cd_SearchFile(Info3A6DA0* out, char* name)
 extern int D_00542810;
 extern int sceCdGetError(void);
 /* Return the cached value when enabled, otherwise query it. */
-int Cd_GetError(void)
+int snd_StreamSafeCdGetError(void)
 {
     if (D_0053DC00) {
         return D_00542810;
@@ -68,7 +68,7 @@ int Cd_GetError(void)
 extern int sceCdBreak(void);
 extern void snd_SendIOPCommandNoWait(int cmd, int size, void* data, int a3, int t0);
 
-int Cd_Break(void)
+int snd_StreamSafeCdBreak(void)
 {
     if (D_0053DC00 == 0)
         return sceCdBreak();
@@ -100,7 +100,7 @@ static inline int Poll3A6F70(char* k) {
 }
 #pragma push
 #pragma bool off
-int Cd_Sync(int wait)
+int snd_StreamSafeCdSync(int wait)
 {
     char* k;
     if (D_0053DC00 == 0) return sceCdSync();

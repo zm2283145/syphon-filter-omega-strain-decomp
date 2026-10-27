@@ -96,29 +96,29 @@ void SFOLobby_AudioStartup(SFOLobby* self) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-void FileMan_Release(void* member, int flags);
-void GuiWidget_Destroy(void* self, int flags);
+void cFileMan_dtor(void* member, int flags);
+void GuiWidget_dtor(void* self, int flags);
 void operator_delete(void* allocation);
-extern "C" void GuiWidget_FocusPrev();
-extern "C" void GuiWidget_FocusNext();
-extern "C" void GuiWidget_FocusLast();
-extern "C" void GuiWidget_FocusFirst();
-extern "C" void GuiWidget_BubbleActivate();
-extern "C" void GuiWidget_BubbleType1();
-extern "C" void GuiWidget_BubbleType0();
-extern "C" void GuiWidget_Draw();
-extern "C" void GuiWidget_BaseWake();
-extern "C" void GuiWidget_SetFlag4();
-extern "C" void GuiWidget_Deinit();
+extern "C" void GuiWidget_FindPrevFocus();
+extern "C" void GuiWidget_FindNextFocus();
+extern "C" void GuiWidget_FindLastFocus();
+extern "C" void GuiWidget_FindFirstFocus();
+extern "C" void GuiWidget_onAction();
+extern "C" void GuiWidget_onLoseFocus();
+extern "C" void GuiWidget_onGainFocus();
+extern "C" void GuiWidget_onRender();
+extern "C" void GuiWidget_onWake();
+extern "C" void GuiWidget_onActivate();
+extern "C" void GuiWidget_onRemove();
 extern "C" void GuiWidget_Load();
 extern "C" void GuiRadioLog_GetClassName();
-extern "C" void GuiRadioLog_IsType();
-extern "C" void GuiRadioLog_HandleInput();
-extern "C" void GuiRadioLog_Update();
+extern "C" void GuiRadioLog_IsClass();
+extern "C" void GuiRadioLog_onInput();
+extern "C" void GuiRadioLog_onAdvanceTime();
 extern "C" void GuiRadioLog_HandleEvent();
-extern "C" void GuiRadioLog_ClearFlag4();
-extern "C" void GuiRadioLog_Init();
-extern "C" void GuiRadioLog_Sleep();
+extern "C" void GuiRadioLog_onDeactivate();
+extern "C" void GuiRadioLog_onAdd();
+extern "C" void GuiRadioLog_onSleep();
 extern void * const D_004E1290[];
 }
 struct TM454080 { void* vtable; char base[0x4C]; char payload[0x48]; char memberA[0x9C]; char memberB[4]; };
@@ -127,15 +127,15 @@ extern "C" TM454080* GuiRadioLog_dtor(TM454080* self, short deleteFlag)
     if (self) {
         self->vtable = ((char*)D_004E1290);
         if (self->payload) {
-            FileMan_Release(self->memberB, -1);
-            FileMan_Release(self->memberA, -1);
+            cFileMan_dtor(self->memberB, -1);
+            cFileMan_dtor(self->memberA, -1);
         }
-        GuiWidget_Destroy(self, 0);
+        GuiWidget_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004E1290[24] = { (void*)0x0, (void*)0x0, (void*)GuiRadioLog_dtor, (void*)GuiRadioLog_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiRadioLog_ClearFlag4, (void*)GuiWidget_BaseWake, (void*)GuiRadioLog_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiRadioLog_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiRadioLog_Update, (void*)GuiRadioLog_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiRadioLog_GetClassName, (void*)GuiRadioLog_IsType, (void*)0x0 };
+void * const D_004E1290[24] = { (void*)0x0, (void*)0x0, (void*)GuiRadioLog_dtor, (void*)GuiRadioLog_onAdd, (void*)GuiWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiRadioLog_onDeactivate, (void*)GuiWidget_onWake, (void*)GuiRadioLog_onSleep, (void*)GuiWidget_onGainFocus, (void*)GuiWidget_onLoseFocus, (void*)GuiRadioLog_onInput, (void*)GuiWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiRadioLog_onAdvanceTime, (void*)GuiRadioLog_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiRadioLog_GetClassName, (void*)GuiRadioLog_IsClass, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_00454080 */

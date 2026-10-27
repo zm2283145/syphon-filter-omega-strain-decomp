@@ -13,7 +13,7 @@ extern void SetT2_COUNT(int);
 extern void SetT2_MODE(unsigned int);
 extern void SetT2_COMP(int);
 extern int Alloc_Lock(int);
-extern int Alloc_Unlock(int);
+extern int EnableIntc(int);
 int EndTimer(void)
 {
     int s;

@@ -12,7 +12,7 @@
 
 extern "C" { char D_004C29B0[] = "basic_string: out_of_range"; }
 extern "C" { char D_004C29D0[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE_XD(func_00465FA0, D_004C29B0, D_004C29D0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00497BF8, D_00497C00, Libc_Memmove, String_Assign, String_Dtor)
+DEFINE_STRING_REPLACE_RANGE_XD(func_00465FA0, D_004C29B0, D_004C29D0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00497BF8, D_00497C00, Libc_Memmove, std_basic_string_char_char_traits_char_assign_charP_charP_intP, String_Dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00465FA0 */
 
@@ -52,9 +52,9 @@ typedef struct Alloc {
     char pad[3];
 } Alloc;
 
-extern void String_Replace(StrHdr* str, int start, int len, int a, int b, char alloc);
+extern void std_basic_string_char_char_traits_char_do_replace(StrHdr* str, int start, int len, int a, int b, char alloc);
 
-/* Forwards the whole string (start 0, current length) to String_Replace. */
+/* Forwards the whole string (start 0, current length) to std_basic_string_char_char_traits_char_do_replace. */
 void func_00466840(StrHdr* str, int a, int b) {
     volatile Alloc alloc;
     int len;
@@ -63,7 +63,7 @@ void func_00466840(StrHdr* str, int a, int b) {
     } else {
         len = (unsigned char)str->shortLen;
     }
-    String_Replace(str, 0, len, a, b, alloc.unused);
+    std_basic_string_char_char_traits_char_do_replace(str, 0, len, a, b, alloc.unused);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00466840 */

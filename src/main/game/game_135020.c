@@ -16,7 +16,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 int sprintf(void *, const void *, ...);
 
 /* merge_units: begin func_00135020 */
@@ -33,7 +33,7 @@ extern "C" void cCollisionSystem_cBox_UnInitStatics(void)
         {
             AllocGuard g;
             if (p) { if (p) { if (p) func_00139DF0(p, 0); } }
-            Mem_Free(0, p, "collision.hh", 0xAF2);
+            cMemMan_Deallocate(0, p, "collision.hh", 0xAF2);
         }
         D_004EA0C0 = 0;
     }
@@ -50,7 +50,7 @@ extern "C" {
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
-void Alloc_Unlock(int id);
+void EnableIntc(int id);
 }struct Cfg_1350E0 { char pad[0xC4]; int fC4; };
 struct Sub_1350E0 { char pad[0x188]; Cfg_1350E0 f188; };
 struct Desc_1350E0 { int a; unsigned char b4; unsigned char b5; unsigned char b6; unsigned char b7; };
@@ -116,66 +116,66 @@ extern char D_0053B540[];
 extern char D_0053BB90[];
 extern char D_00543790[];
 extern char D_00555070[];
-void* Agent_GetSelected(World_1350E0* w, int i);
-int Archive_Open(void* a, char* name, int b, int c);
-void Awards_Init(World_1350E0* w);
-void ColScratch_Init(int a, int b, int c, int d);
+void* cGameSystem_GetAgentData(World_1350E0* w, int i);
+int cHogList_Open(void* a, char* name, int b, int c);
+void cGameSystem_InitAgentData(World_1350E0* w);
+void nCollision_InitStatics(int a, int b, int c, int d);
 void EffectMsg_WrapRequest(EMsg_1350E0* m, Req_1350E0* r);
-int IArcade_Init(void* p);
-void IdMgr_Init(void);
-void Loader_LoadLevelData(int a, void* b);
-void Loc_LoadMissionPool(char* a, char* b);
-char* Loc_LookupText(char* s);
-void LosProvider_Create(int n);
+int OpenScriptHog(void* p);
+void nGobjManager_InitIDs(void);
+void cLoader_LoadPop(int a, void* b);
+void nGlobalization_LoadLevelStrings(char* a, char* b);
+char* nGlobalization_GetString_charP(char* s);
+void cLosRequest_cCollisionModelList_Game_InitStatics(int n);
 void LosReceiver_Construct(Los_1350E0* p, int n);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void NameSlot_SetName(World_1350E0* w, int i, char* s);
-void ScalarCollection_Init(void* p);
-void ScriptMgr_CallFunction(void* m, char* name, int a);
-void ScriptMgr_LoadScript(void* m, char* name, int a);
-void Script_StartLevel(void* m);
-void* Service_Lookup(void* a, void* b);
-void ShadowMgr_Construct(void* p);
-void SkaLevel_CloseArchive(int a, void* b);
-void SkaLevel_OpenArchive(int a, void* b);
-void Skel_LoadCommonModels(int a, void* b);
-void SoundRequest_Ctor(Req_1350E0* r, int kind, char* name, int a, int b);
-void* World_GetActorArray(void);
-void World_SetupView(World_1350E0* w);
-void World_UpdateZoneTrackers(void* z);
-void Game_AllocStreamBuffer(World_1350E0* w);
-void Game_CreateHud(World_1350E0* w);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cGameSystem_SetClientPlayerName(World_1350E0* w, int i, char* s);
+void std_list_deleter_voidPtr_ctor_void(void* p);
+void cScriptInterpreter_CallFunction(void* m, char* name, int a);
+void cScriptInterpreter_LoadScript(void* m, char* name, int a);
+void cScriptInterpreter_ExecInitScript(void* m);
+void* cSystemContainer_GetSystem(void* a, void* b);
+void cShadowMan_Init(void* p);
+void cLoader_CloseHogWithLevelSpecificAnimations(int a, void* b);
+void cLoader_OpenHogWithLevelSpecificAnimations_ForAccessByInitScript(int a, void* b);
+void cLoader_LoadSkeletons(int a, void* b);
+void cSndFx_ctor_int_charP_cGOBJP_int(Req_1350E0* r, int kind, char* name, int a, int b);
+void* nGobjManager_GetGOBJList(void);
+void cGameSystem_CreatePlayerCameraAndScene(World_1350E0* w);
+void cSceneManager_UpdateActivation(void* z);
+void cGameSystem_InitMEM(World_1350E0* w);
+void cGameSystem_LoadHud(World_1350E0* w);
 void cCollisionSystem_cBox_InitStatics(int n);
 void std_vector_cNodePtr_ctor(void* p);
 void std_vector_cArray_int_ctor(void* p);
-void Game_LoadParResources(void* p);
+void LoadRequestedParticles(void* p);
 Zone_1350E0* cSceneManager_GetSceneBelongingTo(void* z, int id);
 void* GetSceneManager(void);
-void LoadingScreen_Start(void* a, int b, char* c);
-Snd_1350E0* App_GetInstance(void);
+void cMachine_SetLoadingScreen(void* a, int b, char* c);
+Snd_1350E0* GetMachine(void);
 void cAI_SystemInit(void);
-void Human_InitStatics(void);
-void Level_LoadSkas(int a, void* b);
-void SoundMgr_LoadLevel(void* p);
-void SoundMgr_Init(void* p);
+void cHuman_InitStatics(void);
+void cLoader_LoadCoreAnimations(int a, void* b);
+void cGameSound_Load(void* p);
+void cGameSound_Init(void* p);
 void cBackpack_InitLevel(void);
-void Pad_EnableVibration(unsigned char b);
-void* DecalMgr_ctor(void* p, int a, int b);
-void LevelSelect_FindByName(void* a, void* b);
-void AgentData_StartLevel(void* a, int b);
-int FileMan_FindMember(Path_1350E0* p);
-void FileMan_Release(void* p, int f);
+void nRumbleManager_SetEnabled(unsigned char b);
+void* cDecalMan_ctor(void* p, int a, int b);
+void MissionSelectData_SelectMissionByName(void* a, void* b);
+void cAgentData_StartLevel(void* a, int b);
+int cFileMan_Open(Path_1350E0* p);
+void cFileMan_dtor(void* p, int f);
 void cFileMan_ctor_charP_cFileIOP_bool(Path_1350E0* p, char* name, int a, int b);
-void ParticleSystem_Construct(void* p, int n);
-void Script_AddChild(World_1350E0* w, void* p);
+void cParticleSystem_Init(void* p, int n);
+void cSystemContainer_AddSystem(World_1350E0* w, void* p);
 void cScriptInterpreter_SetHog(void* m, int a);
-void MaterialProps_ResolveEffects(void* a, int b);
-void GobjScopeBase_Ctor(void* p, int n, void* arr);
-void MotionManager_Init(void);
-void ItemTable_LoadModels(void);
+void cMaterialPropertiesTable_Init_cHogFileR(void* a, int b);
+void cBaseObjList_ctor(void* p, int n, void* arr);
+void cMotionManager_InitStatics(void);
+void cInventory_LoadShapes(void);
 }
 
-extern "C" void World_Setup(World_1350E0* w)
+extern "C" void cGameSystem_Init(World_1350E0* w)
 {
     char name[0x30];
     char path[0x80];
@@ -189,37 +189,37 @@ extern "C" void World_Setup(World_1350E0* w)
 
     {
         Cfg_1350E0* c = &w->fB4->f188;
-        if (c->fC4 == -1) LevelSelect_FindByName(c, w->f140);
+        if (c->fC4 == -1) MissionSelectData_SelectMissionByName(c, w->f140);
     }
-    Game_AllocStreamBuffer(w);
-    cScriptInterpreter_SetHog(D_00555070, IArcade_Init(w->f3C));
-    Awards_Init(w);
+    cGameSystem_InitMEM(w);
+    cScriptInterpreter_SetHog(D_00555070, OpenScriptHog(w->f3C));
+    cGameSystem_InitAgentData(w);
     for (i = 0; i < 4; i++) {
         if (D_00489BA8) {
             sprintf(name, D_0049AA60, i);
-            NameSlot_SetName(w, i, Loc_LookupText(name));
+            cGameSystem_SetClientPlayerName(w, i, nGlobalization_GetString_charP(name));
         }
     }
-    AgentData_StartLevel(Agent_GetSelected(w, -1), 1);
-    Skel_LoadCommonModels(w->f88, w->f3C);
-    IdMgr_Init();
+    cAgentData_StartLevel(cGameSystem_GetAgentData(w, -1), 1);
+    cLoader_LoadSkeletons(w->f88, w->f3C);
+    nGobjManager_InitIDs();
     {
         void* p;
-        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = Mem_Alloc(0, 0x24, D_0049A890, 0x1E3); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
-        if (p) GobjScopeBase_Ctor(p, 0x82, World_GetActorArray());
+        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = cMemMan_Allocate(0, 0x24, D_0049A890, 0x1E3); if (g_ProfileLockEnabled) EnableIntc(9); g_ProfileLockDepth--; }
+        if (p) cBaseObjList_ctor(p, 0x82, nGobjManager_GetGOBJList());
         w->f1F4 = p;
     }
     {
         void* p;
-        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = Mem_Alloc(0, 0x24, D_0049A890, 0x1E4); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
-        if (p) GobjScopeBase_Ctor(p, 0x3E8, World_GetActorArray());
+        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = cMemMan_Allocate(0, 0x24, D_0049A890, 0x1E4); if (g_ProfileLockEnabled) EnableIntc(9); g_ProfileLockDepth--; }
+        if (p) cBaseObjList_ctor(p, 0x3E8, nGobjManager_GetGOBJList());
         w->f1F8 = p;
     }
     cBackpack_InitLevel();
-    App_GetInstance();
+    GetMachine();
     if (w->f98 == 0) {
         Coll_1350E0* p;
-        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = (Coll_1350E0*)Mem_Alloc(0, 0x10, D_0049A890, 0x1EC); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
+        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = (Coll_1350E0*)cMemMan_Allocate(0, 0x10, D_0049A890, 0x1EC); if (g_ProfileLockEnabled) EnableIntc(9); g_ProfileLockDepth--; }
         if (p) {
             std_vector_cArray_int_ctor(p);
             p->bC = 1;
@@ -228,103 +228,103 @@ extern "C" void World_Setup(World_1350E0* w)
     }
     if (w->f90 == 0) {
         Coll_1350E0* p;
-        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = (Coll_1350E0*)Mem_Alloc(0, 0x10, D_0049A890, 0x1EF); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
+        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = (Coll_1350E0*)cMemMan_Allocate(0, 0x10, D_0049A890, 0x1EF); if (g_ProfileLockEnabled) EnableIntc(9); g_ProfileLockDepth--; }
         if (p) {
             std_vector_cNodePtr_ctor(p);
             p->bC = 1;
         }
         w->f90 = p;
     }
-    Loc_LoadMissionPool(D_0048B2F8, g_LevelDirName);
+    nGlobalization_LoadLevelStrings(D_0048B2F8, g_LevelDirName);
     sprintf(path, D_0049AA70, D_0048B2F8, g_LevelDirName);
     cFileMan_ctor_charP_cFileIOP_bool(&pf, path, 0, 0);
-    if ((unsigned char)FileMan_FindMember(&pf)) {
+    if ((unsigned char)cFileMan_Open(&pf)) {
         sprintf(path, D_0049AA90, D_0048B2F8);
     }
-    LoadingScreen_Start(App_GetInstance(), 0, path);
-    ParticleSystem_Construct(D_0053B540, 0x1388);
+    cMachine_SetLoadingScreen(GetMachine(), 0, path);
+    cParticleSystem_Init(D_0053B540, 0x1388);
     {
         void* p;
-        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = Mem_Alloc(0, 0x230, D_0049A890, 0x20C); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
-        if (p) p = DecalMgr_ctor(p, 0x64, 0x14);
+        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = cMemMan_Allocate(0, 0x230, D_0049A890, 0x20C); if (g_ProfileLockEnabled) EnableIntc(9); g_ProfileLockDepth--; }
+        if (p) p = cDecalMan_ctor(p, 0x64, 0x14);
         w->fEC = p;
     }
     {
         void* p;
-        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = Mem_Alloc(0, 0xC, D_0049A890, 0x20F); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
-        if (p) ScalarCollection_Init(p);
+        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = cMemMan_Allocate(0, 0xC, D_0049A890, 0x20F); if (g_ProfileLockEnabled) EnableIntc(9); g_ProfileLockDepth--; }
+        if (p) std_list_deleter_voidPtr_ctor_void(p);
         w->f8C = p;
     }
     cAI_SystemInit();
-    ScriptMgr_LoadScript(D_00555070, D_0049AAA8, 0);
-    ScriptMgr_CallFunction(D_00555070, D_0049AAB0, 0);
-    ColScratch_Init(0x96, 0, 0, 0);
-    LosProvider_Create(0x12C);
-    MotionManager_Init();
-    Human_InitStatics();
-    ColScratch_Init(0, 0, 0, 0);
+    cScriptInterpreter_LoadScript(D_00555070, D_0049AAA8, 0);
+    cScriptInterpreter_CallFunction(D_00555070, D_0049AAB0, 0);
+    nCollision_InitStatics(0x96, 0, 0, 0);
+    cLosRequest_cCollisionModelList_Game_InitStatics(0x12C);
+    cMotionManager_InitStatics();
+    cHuman_InitStatics();
+    nCollision_InitStatics(0, 0, 0, 0);
     cCollisionSystem_cBox_InitStatics(0x320);
-    Pad_EnableVibration(w->f1DC->b5);
+    nRumbleManager_SetEnabled(w->f1DC->b5);
     {
         Los_1350E0* p;
-        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = (Los_1350E0*)Mem_Alloc(0, 0x4C, D_0049A890, 0x22E); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
+        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = (Los_1350E0*)cMemMan_Allocate(0, 0x4C, D_0049A890, 0x22E); if (g_ProfileLockEnabled) EnableIntc(9); g_ProfileLockDepth--; }
         if (p) {
             LosReceiver_Construct(p, 0x1E);
             p->vtbl = D_004D9100;
         }
-        Script_AddChild(w, p);
+        cSystemContainer_AddSystem(w, p);
     }
-    svc = Service_Lookup(w, D_004F2CC0);
-    if (D_00489BA8) SoundMgr_Init(svc);
-    SoundMgr_LoadLevel(svc);
-    SoundRequest_Ctor(&req, 5, D_0049A908, 0, 0);
+    svc = cSystemContainer_GetSystem(w, D_004F2CC0);
+    if (D_00489BA8) cGameSound_Init(svc);
+    cGameSound_Load(svc);
+    cSndFx_ctor_int_charP_cGOBJP_int(&req, 5, D_0049A908, 0, 0);
     EffectMsg_WrapRequest(&m, &req);
-    FileMan_Release(req.partB, -1);
-    FileMan_Release(req.partA, -1);
+    cFileMan_dtor(req.partB, -1);
+    cFileMan_dtor(req.partA, -1);
     m.flag = 1;
-    Event_Send(&m, g_Game, 0);
-    Level_LoadSkas(w->f88, w->f3C);
-    Loader_LoadLevelData(w->f88, w->f3C);
+    QueueMessage_cMessageR_cSystemP_int(&m, g_Game, 0);
+    cLoader_LoadCoreAnimations(w->f88, w->f3C);
+    cLoader_LoadPop(w->f88, w->f3C);
     sprintf(arc, D_0049AAC0, D_0048B2F8);
-    MaterialProps_ResolveEffects(D_0053BB90, Archive_Open(w->f3C, arc, 0, 0));
-    Game_LoadParResources(w->f3C);
-    World_SetupView(w);
-    Game_CreateHud(w);
-    Event_Construct(&cm, D_004F53F0);
+    cMaterialPropertiesTable_Init_cHogFileR(D_0053BB90, cHogList_Open(w->f3C, arc, 0, 0));
+    LoadRequestedParticles(w->f3C);
+    cGameSystem_CreatePlayerCameraAndScene(w);
+    cGameSystem_LoadHud(w);
+    cMessage_ctor_cMessageNameR(&cm, D_004F53F0);
     cm.vtable = D_004D90E0;
-    Event_Send(&cm, w->fBC, 1);
+    QueueMessage_cMessageR_cSystemP_int(&cm, w->fBC, 1);
     cm.vtable = D_004D90E0;
     cMessage_dtor(&cm, 0);
     w->fBC->b174 = w->f1DC->b4;
     w->fBC->b175 = w->f1DC->b6;
     w->fBC->b176 = w->f1DC->b7;
     w->f80->f20 = w->fBC->f30;
-    SkaLevel_OpenArchive(w->f88, w->f3C);
-    Script_StartLevel(D_00555070);
-    ItemTable_LoadModels();
-    SkaLevel_CloseArchive(w->f88, w->f3C);
-    ShadowMgr_Construct(D_00543790);
+    cLoader_OpenHogWithLevelSpecificAnimations_ForAccessByInitScript(w->f88, w->f3C);
+    cScriptInterpreter_ExecInitScript(D_00555070);
+    cInventory_LoadShapes();
+    cLoader_CloseHogWithLevelSpecificAnimations(w->f88, w->f3C);
+    cShadowMan_Init(D_00543790);
     D_0053924C->bC = 1;
     {
         Zone_1350E0* z = cSceneManager_GetSceneBelongingTo(GetSceneManager(), w->fBC->f30);
         z->b4 = 1;
     }
-    World_UpdateZoneTrackers(GetSceneManager());
+    cSceneManager_UpdateActivation(GetSceneManager());
     D_00489BA8 = 0;
     w->b1C4 = 0;
     w->b1C5 = 0;
     w->b1C6 = 0;
     w->b1C7 = 0;
     {
-        Snd_1350E0* s = App_GetInstance();
+        Snd_1350E0* s = GetMachine();
         s->b278 = 1;
     }
     w->f1F0 = 0;
     m.vtbl = D_004DAE30;
-    FileMan_Release(m.partB, -1);
-    FileMan_Release(m.partA, -1);
+    cFileMan_dtor(m.partB, -1);
+    cFileMan_dtor(m.partA, -1);
     cMessage_dtor(&m, 0);
-    FileMan_Release(&pf, -1);
+    cFileMan_dtor(&pf, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001350E0(void) {}

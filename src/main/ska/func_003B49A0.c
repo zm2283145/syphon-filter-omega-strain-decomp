@@ -1,4 +1,4 @@
-/* MotionSlider_RegisterNode: clone a motion node by kind (clip / timed clip / slider / blend),
+/* cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR: clone a motion node by kind (clip / timed clip / slider / blend),
  * register it under its name and drop it again if the name was already taken. */
 #pragma cplusplus on
 #include "types.h"
@@ -28,29 +28,29 @@ struct V4_3B49A0 {
 static inline V4_3B49A0 ZeroV_3B49A0() { V4_3B49A0 r; { V4_3B49A0* p = &r; __asm__ volatile("sqc2 vf0, 0x0(%0)" : : "r"(p) : "memory"); } return r; }
 struct Owner_3B49A0 { char pad[0x54]; int n54; int n58; };
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void Mem_Free(int pool, void* p, char* file, int line);
-void ModelNames_Insert(int* out, Owner_3B49A0* self, void* name, Node_3B49A0* value);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+void cSkaAnimationSet_AddNode(int* out, Owner_3B49A0* self, void* name, Node_3B49A0* value);
 Node_3B49A0* cSkaAnim_ctor_cSkaAnimR_eModifier(Node_3B49A0* self, Node_3B49A0* o, unsigned char mode);
-Node_3B49A0* MotionNode_BaseCopy(Node_3B49A0* self, Node_3B49A0* src, V4_3B49A0* offset);
-void MotionSlider_CopyChildren(void* d, void* s);
+Node_3B49A0* cSkaNode_ctor_cSkaNodeR_cQuaternionR(Node_3B49A0* self, Node_3B49A0* src, V4_3B49A0* offset);
+void cArray_cSkaBlendSequenceItem_ctor_cArrayR(void* d, void* s);
 void cArray_cSkaSwitchItem_ctor_cArrayR(void* d, void* s);
 extern int D_004BCD60;
 extern char D_004BCD70[];
 extern char D_004DFC10[];
 extern char D_004DFBF0[];
 extern char D_004DFBB0[];
-void MotionSlider_RegisterNode(int* out, Owner_3B49A0* owner, void* name, Node_3B49A0* src);
+void cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(int* out, Owner_3B49A0* owner, void* name, Node_3B49A0* src);
 }
 
 static inline void* AllocL_3B49A0(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004BCD70, line);
+    return cMemMan_Allocate(0, size, D_004BCD70, line);
 }
 static inline int Max_3B49A0(int a, int b) { return a < b ? b : a; }
 
-extern "C" void MotionSlider_RegisterNode(int* out, Owner_3B49A0* owner, void* name, Node_3B49A0* src)
+extern "C" void cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(int* out, Owner_3B49A0* owner, void* name, Node_3B49A0* src)
 {
     int res;
     Node_3B49A0* n = 0;
@@ -78,10 +78,10 @@ extern "C" void MotionSlider_RegisterNode(int* out, Owner_3B49A0* owner, void* n
         n = (Node_3B49A0*)AllocL_3B49A0(0x40, 0x23B);
         if (n) {
             V4_3B49A0 c(ZeroV_3B49A0());
-            MotionNode_BaseCopy(n, src, &c);
+            cSkaNode_ctor_cSkaNodeR_cQuaternionR(n, src, &c);
             n->vt = D_004DFBF0;
             n->x20 = src->x20;
-            MotionSlider_CopyChildren(n->c24, src->c24);
+            cArray_cSkaBlendSequenceItem_ctor_cArrayR(n->c24, src->c24);
             n->b34 = src->b34;
             n->b35 = src->b35;
         }
@@ -91,7 +91,7 @@ extern "C" void MotionSlider_RegisterNode(int* out, Owner_3B49A0* owner, void* n
         n = (Node_3B49A0*)AllocL_3B49A0(0x40, 0x245);
         if (n) {
             V4_3B49A0 c(ZeroV_3B49A0());
-            MotionNode_BaseCopy(n, src, &c);
+            cSkaNode_ctor_cSkaNodeR_cQuaternionR(n, src, &c);
             n->vt = D_004DFBB0;
             n->x20 = src->x20;
             cArray_cSkaSwitchItem_ctor_cArrayR(n->c24, src->c24);
@@ -99,11 +99,11 @@ extern "C" void MotionSlider_RegisterNode(int* out, Owner_3B49A0* owner, void* n
         owner->n58 = Max_3B49A0(n->x20 + 1, owner->n58);
         break;
     }
-    ModelNames_Insert(&res, owner, name, n);
+    cSkaAnimationSet_AddNode(&res, owner, name, n);
     if (res == D_004BCD60 && n) {
         AllocGuard g;
         ((VC_003B49A0*)n)->v0(-1);
-        Mem_Free(0, n, D_004BCD70, 0x258);
+        cMemMan_Deallocate(0, n, D_004BCD70, 0x258);
     }
     *out = res;
 }

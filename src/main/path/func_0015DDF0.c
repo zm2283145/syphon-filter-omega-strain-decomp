@@ -14,8 +14,8 @@ struct V {
 struct PNode;
 struct Cfg { float lo; float hi; unsigned char flag; };
 extern "C" {
-V Node_GetTranslation(PNode* node);
-float NpcRoute_ScoreCandidate(Cfg* c, PNode* node, int idx, V* from, V* to);
+V cNode_GetLoc(PNode* node);
+float cNodePickerParameters_Evaluate(Cfg* c, PNode* node, int idx, V* from, V* to);
 }
 
 static inline int IsZero(const V* v)
@@ -57,11 +57,11 @@ static inline float Dot(V* a, V* b)
     __asm__ volatile("lqc2 $vf1, 0x0(%2); lqc2 $vf2, 0x0(%3); vmul.xyzw $vf3, $vf1, $vf2; mtsah $0, 6; vmulax.w $ACC, $vf0, $vf3x; vmadday.w $ACC, $vf0, $vf3y; vmaddz.w $vf4, $vf0, $vf3z; qmfc2.ni %1, $vf4; qfsrv %1, %1, %1; mtc1 %1, %0" : "+f"(r), "=&r"(t) : "r"(a), "r"(b) : "memory");
     return r;
 }
-float NpcRoute_ScoreCandidate(Cfg* c, PNode* node, int idx, V* from, V* to)
+float cNodePickerParameters_Evaluate(Cfg* c, PNode* node, int idx, V* from, V* to)
 {
     float len = 0.0f;
-    V d1 = *from - Node_GetTranslation(node);
-    V d2 = Node_GetTranslation(node) - *to;
+    V d1 = *from - cNode_GetLoc(node);
+    V d2 = cNode_GetLoc(node) - *to;
     V d3 = *from - *to;
     float dot = 0.0f;
     unsigned char z3 = 1;

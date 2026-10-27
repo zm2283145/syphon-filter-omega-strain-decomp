@@ -8,7 +8,7 @@
 
 extern int Newlib_Errno(void);
 
-int Newlib_SysOpen(void) {
+int Libc_Open(void) {
     int tmp0;
 
     tmp0 = Newlib_Errno();
@@ -16,6 +16,6 @@ int Newlib_SysOpen(void) {
     return -1;
 }
 
-int Newlib_SysClose(void) {
+int Libc_Close(void) {
     return -1;
 }

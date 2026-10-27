@@ -11,9 +11,9 @@
 /* merge_units: begin func_00336170 */
 #pragma push /* merge_units */
 extern void* D_004FFC04;
-extern void* App_GetAgentNameGate(void*);
+extern void* cGameFrontEnd_GetPlayerLevelName(void*);
 /* Returns the global lookup result if set, else the object's embedded member at +0x8AC. */
-void* AgentData_GetName(char* p) { void* r = App_GetAgentNameGate(D_004FFC04); if (r) return r; return p + 0x8AC; }
+void* cAgentData_GetUserName(char* p) { void* r = cGameFrontEnd_GetPlayerLevelName(D_004FFC04); if (r) return r; return p + 0x8AC; }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00336170(void) {}
 #pragma pop /* merge_units */
@@ -27,11 +27,11 @@ static inline void merge_flush_func_00336170(void) {}
  */
 
 
-extern int AgentData_Reset(cAgentData* agent);
+extern int cAgentData_Reset(cAgentData* agent);
 
 /* Full reset plus three additional flag bytes. */
-int AgentData_ResetProfileNames(cAgentData* agent) {
-    int result = AgentData_Reset(agent);
+int cAgentData_Clear(cAgentData* agent) {
+    int result = cAgentData_Reset(agent);
     agent->unk8AC = 0;
     agent->unk8BC = 0;
     agent->unk8CC = 0;

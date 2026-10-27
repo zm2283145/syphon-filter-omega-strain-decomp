@@ -11,11 +11,11 @@ public:
     float f20;
     float f24;
 };
-extern "C" int Random_Next(void);
+extern "C" int Libc_Rand(void);
 extern "C" { float D_00493988 = 0.9f; }
-extern "C" bool Weapon_HitRoll(B4Obj4* p) {
+extern "C" bool cGobjController_ShouldHitTarget(B4Obj4* p) {
     float chance;
     if (!p->IsForced() && p->f20 < D_00493988) return 0;
     chance = p->f20 * p->f24;
-    return (float)Random_Next() / 2147483648.0f < chance;
+    return (float)Libc_Rand() / 2147483648.0f < chance;
 }

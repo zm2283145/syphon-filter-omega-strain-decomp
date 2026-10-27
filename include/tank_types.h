@@ -42,6 +42,6 @@ typedef struct TankLink {
 } TankLink;
 
 /* Weapon definition table (global at g_WeaponDatabase) lookup by weapon id. */
-extern void* WeaponDb_Get(void* table, int id);
+extern void* cWeaponDB_GetEntry(void* table, int id);
 
 #endif

@@ -38,8 +38,8 @@ struct Sub35E020 { char pad[0x10]; Q35E020 pos; };
 struct T35E020 { V35E020 v; char pad4[0xC]; Sub35E020 sub; char pad40[0x20]; unsigned char b50; };
 struct A35E020 { char pad[0x50]; T35E020* t; char pad54[0x10]; float heading; };
 extern "C" {
-float Math_Atan2f(float y, float x);
-void Actor_BaseLogicUpdate(A35E020* a, float dt);
+float Libc_Atan2f(float y, float x);
+void cGOBJ_NextFrame(A35E020* a, float dt);
 }
 extern "C" void func_0035E020(A35E020* a, float dt)
 {
@@ -49,8 +49,8 @@ extern "C" void func_0035E020(A35E020* a, float dt)
         t->v.v20();
     Sub35E020* s = (Sub35E020*)((char*)t + 0x10);
     V4Copy(&p, &s->pos);
-    a->heading = Math_Atan2f(p.f.x, *(volatile float*)&p.f.y);
-    Actor_BaseLogicUpdate(a, dt);
+    a->heading = Libc_Atan2f(p.f.x, *(volatile float*)&p.f.y);
+    cGOBJ_NextFrame(a, dt);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0035E020(void) {}
@@ -96,7 +96,7 @@ DEFINE_TREE_FIND(func_0035E350, std_basic_string_char_char_traits_char_compare_b
 /* Resize a vector of 60-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem60, 60)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(ChannelVector_Resize_35E420, Elem60, AnimChannelVec_Grow, std_vector_imp_cSkaSliderValue_erase)
+DEFINE_VECTOR_RESIZE(ChannelVector_Resize_35E420, Elem60, std_vector_imp_cSkaSliderValue_insert, std_vector_imp_cSkaSliderValue_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_0035E420 */
@@ -108,7 +108,7 @@ DEFINE_VECTOR_RESIZE(ChannelVector_Resize_35E420, Elem60, AnimChannelVec_Grow, s
 /* Resize a vector of 8-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem8, 8)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_0035E4B0, Elem8, Vector_Insert_1BF5A0, std_vector_imp_cSkaSwitchValue_erase)
+DEFINE_VECTOR_RESIZE(func_0035E4B0, Elem8, std_vector_imp_cSkaSwitchValue_insert, std_vector_imp_cSkaSwitchValue_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_0035E4B0 */

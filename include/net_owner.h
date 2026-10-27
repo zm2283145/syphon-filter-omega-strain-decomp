@@ -5,13 +5,13 @@
 typedef struct { char pad[4]; int owner; } NetOwnerHdl;
 extern int D_005721A8;
 extern int D_00494178;
-extern void NetGame_InitLocalSlot(int* id, int session);
+extern void NetGetMyClientIndex(int* id, int session);
 extern int NetGetObject(NetOwnerHdl** out, int id);
 static inline int NetOwner_LocalId(int session)
 {
     if (g_IsMultiplayer) {
         if (D_00494178 == -1)
-            NetGame_InitLocalSlot(&D_00494178, session);
+            NetGetMyClientIndex(&D_00494178, session);
         return D_00494178;
     }
     return 0;

@@ -6,10 +6,10 @@
 
 /* merge_units: begin func_00269250 */
 #pragma push /* merge_units */
-extern int Random_Next(void);
-float Global_RandomInt(float lo, float hi)
+extern int Libc_Rand(void);
+float RandomInt_float_float(float lo, float hi)
 {
-    float r = (float)Random_Next() / 2147483648.0f;
+    float r = (float)Libc_Rand() / 2147483648.0f;
     float d = (float)((int)hi - (int)lo);
     return (float)(int)((float)(int)lo + d * r);
 }
@@ -20,9 +20,9 @@ static inline void merge_flush_func_00269250(void) {}
 
 /* merge_units: begin func_002692D0 */
 #pragma push /* merge_units */
-float Script_RandomIntCore(float max)
+float RandomInt_float(float max)
 {
-    return (float)(int)((float)(int)max * ((float)Random_Next() / 2147483648.0f));
+    return (float)(int)((float)(int)max * ((float)Libc_Rand() / 2147483648.0f));
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002692D0(void) {}
@@ -32,8 +32,8 @@ static inline void merge_flush_func_002692D0(void) {}
 /* merge_units: begin func_00269320 */
 #pragma push /* merge_units */
 /* Returns a random float in [lo, hi). */
-float Global_Random_2(float lo, float hi) {
-    float t = (float)Random_Next() / 2147483648.0f;
+float Random_float_float(float lo, float hi) {
+    float t = (float)Libc_Rand() / 2147483648.0f;
     float range = hi - lo;
     return lo + range * t;
 }
@@ -45,7 +45,7 @@ static inline void merge_flush_func_00269320(void) {}
 /* merge_units: begin func_00269380 */
 #pragma push /* merge_units */
 /* Returns a random float in [0, range). */
-float Global_Random(float range) { return range * ((float)Random_Next() / 2147483648.0f); }
+float Random_float(float range) { return range * ((float)Libc_Rand() / 2147483648.0f); }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00269380(void) {}
 #pragma pop /* merge_units */

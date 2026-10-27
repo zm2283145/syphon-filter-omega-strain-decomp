@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { float a; float b; float dir; char flag; } F25E6E0_t;
-void ActorFader_Start(F25E6E0_t* p, unsigned char mode, float t) {
+void cScreenFader_StartFade(F25E6E0_t* p, unsigned char mode, float t) {
     if (t > 0.0f) {
         p->flag = 0;
         switch (mode) {

@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003E00E0 */
 #pragma push /* merge_units */
@@ -20,17 +20,17 @@ int Mem_Free();
 typedef struct { void* buf; } S3E00;
 typedef struct { char pad[0x18]; char vec[4]; int n; S3E00** items; } M3E00;
 extern "C" {
-extern void PtrVector_Resize(char*, int, int*);
+extern void std_vector_pod_int_resize(char*, int, int*);
 extern char D_004BD4C0[];
 }
 #pragma opt_strength_reduction off
-extern "C" void ScriptStr_Release(M3E00* m, S3E00* s) {
+extern "C" void cScriptInterpreter_removeString(M3E00* m, S3E00* s) {
     int z[1];
     void* buf = s->buf;
     int i, n;
     if (buf) {
         AllocGuard g;
-        Mem_Free(0, buf, "scriptManager.hh", 0x90);
+        cMemMan_Deallocate(0, buf, "scriptManager.hh", 0x90);
     }
     n = m->n - 1;
     for (i = 0; n >= i; i++) {
@@ -40,10 +40,10 @@ extern "C" void ScriptStr_Release(M3E00* m, S3E00* s) {
         }
     }
     z[0] = 0;
-    PtrVector_Resize(m->vec, n + 1, z);
+    std_vector_pod_int_resize(m->vec, n + 1, z);
     {
         AllocGuard g;
-        Mem_Free(0, s, D_004BD4C0, 0x683);
+        cMemMan_Deallocate(0, s, D_004BD4C0, 0x683);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -87,13 +87,13 @@ int Alloc_Lock(int);
 #define Alloc_Lock(a0) (Alloc_Lock((a0))) /* merge_units */
                                     
 #if 0 /* merge_units */
-int Alloc_Unlock(int);
+int EnableIntc(int);
 #endif /* merge_units */
-#define Alloc_Unlock(a0) (Alloc_Unlock((a0))) /* merge_units */
+#define EnableIntc(a0) (EnableIntc((a0))) /* merge_units */
                                   
-int *Mem_Alloc(int, int, char *, int);                       
-int ScriptStr_AppendTracking(char * , int **);         
-int Str_Duplicate(int);                               
+int *cMemMan_Allocate(int, int, char *, int);                       
+int std_vector_StringPtr_push_back(char * , int **);         
+int cScriptBase_myStrdup(int);                               
 #if 0 /* merge_units */
 extern char D_004BD4C0;
 #endif /* merge_units */
@@ -102,7 +102,7 @@ extern char D_004BD4C0;
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 
-int ScriptStr_CopyTracked(char * arg0, int arg1) {
+int cScriptInterpreter_allocString(char * arg0, int arg1) {
     int temp_s0;
     int *sp4C;
     int *temp_s2;
@@ -111,23 +111,23 @@ int ScriptStr_CopyTracked(char * arg0, int arg1) {
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    temp_s2 = Mem_Alloc(0, 0xC, &D_004BD4C0, 0x66E);
+    temp_s2 = cMemMan_Allocate(0, 0xC, &D_004BD4C0, 0x66E);
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     g_ProfileLockDepth -= 1;
     if (temp_s2 != NULL) {
         temp_s0 = F_(arg0, 0x4E7C, int);
-        F_(temp_s2, 0x0, int) = Str_Duplicate(arg1);
+        F_(temp_s2, 0x0, int) = cScriptBase_myStrdup(arg1);
         F_(temp_s2, 0x4, int) = 0;
         F_(temp_s2, 0x8, int) = temp_s0;
     }
     sp4C = temp_s2;
-    ScriptStr_AppendTracking(arg0 + 0x18, &sp4C);
+    std_vector_StringPtr_push_back(arg0 + 0x18, &sp4C);
     return *sp4C;
 }
 #undef Alloc_Lock /* merge_units */
-#undef Alloc_Unlock /* merge_units */
+#undef EnableIntc /* merge_units */
 #undef D_004BD4C0 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003E02F0(void) {}

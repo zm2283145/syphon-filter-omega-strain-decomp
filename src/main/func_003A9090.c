@@ -1,4 +1,4 @@
-/* ModelCtx_ComputeCentroid: weighted mean of the node positions (sibling of ModelCtx_ComputeBounds, ModelCtx_ComputeBounds.c) */
+/* cSkeleton_UpdateCenterOfMass: weighted mean of the node positions (sibling of cSkeleton_UpdateBBox, cSkeleton_UpdateBBox.c) */
 #pragma cplusplus on
 #include "types.h"
 #pragma always_inline on
@@ -28,14 +28,14 @@ extern "C" {
 MNode* std_vector_imp_cBone_begin(NVec* v);
 MNode* std_vector_imp_cBone_end(NVec* v);
 void std_vector_cBone_pointer2iterator(NIt* out, NVec* v, MNode* const& p);
-void Ptr_Identity(V* v);
-V* Vec4_Copy(V* d, const V* s);
-void Mtx_Multiply4(V* v, M* m);
+void cVector_ctor_void(V* v);
+V* cVector_opAssign(V* d, const V* s);
+void cVector_Transform_cMatrixR(V* v, M* m);
 V* func_00133EC0(M* m);
-void Vec4_Set(V* d, float x, float y, float z, float w);
-void Sphere_FromCenter(V* d, const V* c, const V* r);
-void Box_ExtendXYZ(Box* b, const V* v);
-void Vec4_Add(V* d, const V* a, const V* b);
+void cVector_ctor_float_float_float_float(V* d, float x, float y, float z, float w);
+void cVector_opSub(V* d, const V* c, const V* r);
+void cBox_Include(Box* b, const V* v);
+void cVector_opAdd(V* d, const V* a, const V* b);
 }
 static inline void Mk(NIt* r, NVec* v, MNode* p) { MNode* const& q = p; std_vector_cBone_pointer2iterator(r, v, q); }
 struct NVec {
@@ -54,8 +54,8 @@ static inline void AddV(V* d, const V* a, const V* b) { __asm__ volatile("lqc2 $
 static inline void QZero(V* p) { __asm__ volatile("sq $zero, 0x0(%0)" : : "r"(p) : "memory"); }
 static inline V Scaled(const V& v, float k) { V r; ScaleV(&r, &v, k); return r; }
 static inline void AddTo(V& d, V o) { AddV(&d, &d, &o); }
-extern "C" void ModelCtx_ComputeCentroid(Ctx* c);
-void ModelCtx_ComputeCentroid(Ctx* c)
+extern "C" void cSkeleton_UpdateCenterOfMass(Ctx* c);
+void cSkeleton_UpdateCenterOfMass(Ctx* c)
 {
     NIt it; NIt e;
     float total;

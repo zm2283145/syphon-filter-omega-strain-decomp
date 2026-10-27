@@ -10,7 +10,7 @@ extern void** cArray_cXformNodePtr_ConstIterator_opMul(It_F160* it);
 extern void cXformNode_SetNeedsUpdate(void* p);
 extern void cArray_cXformNodePtr_ConstIterator_opInc(It_F160* it);
 #pragma opt_rotateloops off
-void Bone_SetLocalTranslation(S_F160* o, V_F160* src)
+void cXformNode_SetTranslation_ParentRelative(S_F160* o, V_F160* src)
 {
     It_F160 b;
     It_F160 e;

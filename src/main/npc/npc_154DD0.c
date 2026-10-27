@@ -9,7 +9,7 @@
 
 /* merge_units: begin func_00154DD0 */
 #pragma push /* merge_units */
-/* NpcAi_ModeSearch: search-mode message handler (look around, walk the search route, resume) */
+/* cNPC_SearchLook: search-mode message handler (look around, walk the search route, resume) */
 #pragma cplusplus on
 struct Bits60 { unsigned char b0 : 1; unsigned char b1 : 1; unsigned char b2 : 1; unsigned char b3 : 1; unsigned char hi : 4; };
 struct Route_S { char pad[0x4C]; int f4C; char pad50[0xC]; int f5C; Bits60 bits60; };
@@ -47,16 +47,16 @@ extern int D_004ED9B8;
 extern int D_004EA770;
 extern char g_Game[];
 extern char g_NpcRouteMgr[];
-int* Event_GetType(Ev_S* ev);
-void* Service_Lookup(void* a, void* b);
-int NpcRoute_IsHeadPending(void* svc, int id);
-void NpcPath_RequestRoute(Route_S* r, Target_S* t, int node);
-void NpcAi_ApproachSearch(Self_S* self);
-void NpcAi_RequestMode(void* brain, int mode, int arg);
-void NpcAi_SetMovementState(Self_S* self, int a, int b);
-Obj_S* NpcLook_FindFacingObject(Self_S* self);
-void NpcLook_Begin(Self_S* self, int a, int b, int c);
-void NpcLook_AddNodePoints(Self_S* self, int node, int a, int b, float t);
+int* cMessage_Name(Ev_S* ev);
+void* cSystemContainer_GetSystem(void* a, void* b);
+int cPathSystem_IsRequestBeingProcessed(void* svc, int id);
+void cPathNavigator_Request_cVectorR_int(Route_S* r, Target_S* t, int node);
+void cNPC_MoveToAttackNode(Self_S* self);
+void cStateMachine_ChangeState(void* brain, int mode, int arg);
+void cNPC_SetMoveMode(Self_S* self, int a, int b);
+Obj_S* cNPC_GetMostDenseLookAtGobj(Self_S* self);
+void cNPC_NewLookAtList(Self_S* self, int a, int b, int c);
+void cNPC_AddLinkedNodesToLookAt(Self_S* self, int node, int a, int b, float t);
 }
 
 static inline bool Idle(Self_S* self) { return !self->b166; }
@@ -69,10 +69,10 @@ static inline bool Visited(Self_S* self, int i)
     return r;
 }
 
-extern "C" unsigned char NpcAi_ModeSearch(Self_S* self, Ev_S* ev)
+extern "C" unsigned char cNPC_SearchLook(Self_S* self, Ev_S* ev)
 {
     unsigned char handled = 0;
-    int t = *Event_GetType(ev);
+    int t = *cMessage_Name(ev);
     if (t == D_004EE550) {
         unsigned char k = ev->kind;
         if (k == 3) {
@@ -85,10 +85,10 @@ extern "C" unsigned char NpcAi_ModeSearch(Self_S* self, Ev_S* ev)
                         if (self->route->bits60.b3) {
                             Obj_S* o;
                             self->facing = 0;
-                            o = NpcLook_FindFacingObject(self);
+                            o = cNPC_GetMostDenseLookAtGobj(self);
                             if (o && o->f4C == D_004EA770)
                                 self->facing = o;
-                            NpcAi_RequestMode(self->brain, 0, 0);
+                            cStateMachine_ChangeState(self->brain, 0, 0);
                         } else {
                             self->Resume();
                         }
@@ -97,20 +97,20 @@ extern "C" unsigned char NpcAi_ModeSearch(Self_S* self, Ev_S* ev)
             }
         } else if (k == 4) {
             if (Reached(self->target)) {
-                NpcAi_SetMovementState(self, 0, 20);
+                cNPC_SetMoveMode(self, 0, 20);
                 if (self->aggression < 0.9f)
-                    NpcAi_RequestMode(self->brain, 3, 0);
+                    cStateMachine_ChangeState(self->brain, 3, 0);
                 else
-                    NpcAi_RequestMode(self->brain, 4, 0);
+                    cStateMachine_ChangeState(self->brain, 4, 0);
             }
         } else if (k == 7) {
-            NpcAi_RequestMode(self->brain, 1, 0);
+            cStateMachine_ChangeState(self->brain, 1, 0);
         } else if (k == 0) {
             if (Reached(self->target)) {
                 if (self->aggression < 0.9f)
-                    NpcAi_RequestMode(self->brain, 3, 0);
+                    cStateMachine_ChangeState(self->brain, 3, 0);
                 else
-                    NpcAi_RequestMode(self->brain, 4, 0);
+                    cStateMachine_ChangeState(self->brain, 4, 0);
             } else {
                 self->fE8 = -1;
                 self->fEC = 0;
@@ -122,12 +122,12 @@ extern "C" unsigned char NpcAi_ModeSearch(Self_S* self, Ev_S* ev)
                     node = t->f18;
                     if (Visited(self, node)) {
                         if (self->b158) {
-                            void* svc = Service_Lookup(g_Game, g_NpcRouteMgr);
-                            if (node >= 0 && !NpcRoute_IsHeadPending(svc, self->f30))
-                                NpcPath_RequestRoute(self->route, t, node);
+                            void* svc = cSystemContainer_GetSystem(g_Game, g_NpcRouteMgr);
+                            if (node >= 0 && !cPathSystem_IsRequestBeingProcessed(svc, self->f30))
+                                cPathNavigator_Request_cVectorR_int(self->route, t, node);
                         }
                     } else {
-                        NpcAi_ApproachSearch(self);
+                        cNPC_MoveToAttackNode(self);
                     }
                 }
             }
@@ -146,14 +146,14 @@ extern "C" unsigned char NpcAi_ModeSearch(Self_S* self, Ev_S* ev)
             }
         }
     } else {
-      int t2 = *Event_GetType(ev);
+      int t2 = *cMessage_Name(ev);
       if (t2 == D_004ED9B8) {
         unsigned char k = ev->kind;
         if (k == 6) {
             self->fE8 = 1;
             self->fEC = 2;
-            NpcLook_Begin(self, 1, 1, 20);
-            NpcLook_AddNodePoints(self, self->route->f5C, -1, -1, 3.0f);
+            cNPC_NewLookAtList(self, 1, 1, 20);
+            cNPC_AddLinkedNodesToLookAt(self, self->route->f5C, -1, -1, 3.0f);
         } else if (k == 5) {
             if (self->fEC == 1) {
                 int n = self->route->f4C;
@@ -161,8 +161,8 @@ extern "C" unsigned char NpcAi_ModeSearch(Self_S* self, Ev_S* ev)
                     self->fE8 = 1;
                     self->fEC = 2;
                     self->LookFor(10.0f, 10);
-                    NpcLook_Begin(self, 1, 1, 20);
-                    NpcLook_AddNodePoints(self, self->route->f5C, n, -1, 2.0f);
+                    cNPC_NewLookAtList(self, 1, 1, 20);
+                    cNPC_AddLinkedNodesToLookAt(self, self->route->f5C, n, -1, 2.0f);
                 } else {
                     self->fEC = 0;
                 }
@@ -187,8 +187,8 @@ typedef struct { Tgt_552B0* target; int serial; } Hdl_552B0;
 typedef struct { char pad[0x40]; Hdl_552B0 h; } Ai_552B0;
 typedef struct { char pad[0x158]; unsigned char f158; char pad159[0x53]; Ai_552B0* ai; } Npc_552B0;
 extern int g_HumanActorClassKey;
-extern Tgt_552B0* ActorRef_Copy(Hdl_552B0* h);
-unsigned char NpcAlert_SearchAllowed(Npc_552B0* self)
+extern Tgt_552B0* cSafePtr_cGOBJ_opCast_cGOBJPtr(Hdl_552B0* h);
+unsigned char cNPC_SearchAvailable(Npc_552B0* self)
 {
     unsigned char r = 1;
     unsigned char ok;
@@ -205,7 +205,7 @@ unsigned char NpcAlert_SearchAllowed(Npc_552B0* self)
         if (t->serial != ai->h.serial)
             ok = 0;
     if (ok ? t : 0) {
-        Tgt_552B0* p = ActorRef_Copy(&ai->h);
+        Tgt_552B0* p = cSafePtr_cGOBJ_opCast_cGOBJPtr(&ai->h);
         if (p->type != g_HumanActorClassKey)
             r = 0;
     }

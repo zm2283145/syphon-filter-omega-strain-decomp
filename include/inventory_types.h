@@ -1,7 +1,7 @@
 #ifndef INVENTORY_TYPES_H
 #define INVENTORY_TYPES_H
 
-/* Network inventory message (serialized by cNetInventoryMsg_v04). */
+/* Network inventory message (serialized by cNetInventoryMsg_Pack). */
 typedef struct cNetInventoryMsg {
     char pad00[0x24];
     short unk24;                    /* 0x24 written little-endian */

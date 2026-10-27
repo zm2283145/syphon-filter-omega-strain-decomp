@@ -9,6 +9,6 @@ public:
     virtual void PreLogic();
 };
 struct C4Act3CE { char pad[0x58]; C4C3CE* ctl; };
-extern "C" void Actor_BasePreLogic(C4Act3CE* a) {
+extern "C" void cGOBJ_CriticalNextFrame(C4Act3CE* a) {
     if (a->ctl) a->ctl->PreLogic();
 }

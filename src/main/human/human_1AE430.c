@@ -15,7 +15,7 @@
 /* merge_units: begin func_001AE430 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x187]; char c; char pad2[8]; __int128 q; float x; float y; } XE430;
-void Actor_ApplyControlInput(XE430* t, __int128* q, char c, float x, float y) {
+void cHumanMotionParams_RequestMotion_cVectorR_float_float_bool(XE430* t, __int128* q, char c, float x, float y) {
     __int128* d = &t->q; __int128 v;
     __asm__ volatile("lq %0,0(%1)" : "=r"(v) : "r"(q));
     asm { sq v, 0(d) }
@@ -52,13 +52,13 @@ extern char D_0049D8D0[];
 extern unsigned char g_IsMultiplayer;
 extern int StartingArmor;
 
-void* Mem_Alloc(int, int, char*, int);
-void Node_ReleaseComponent58(Act*);
+void* cMemMan_Allocate(int, int, char*, int);
+void cGOBJ_DeleteController(Act*);
 void cNetObj_AddPlayer(Act*);
-void Actor_AttachComponent(Act*, void*);
-void* PlayerComponent_Construct(void*);
-void* AiComponent_Construct(void*, Act*, int, int);
-void* AiComponent_ConstructAlt(void*, Act*);
+void cGOBJ_AttachController(Act*, void*);
+void* cPlayer_ctor(void*);
+void* cNPC_ctor_cGOBJR_cObjectIdR_int(void*, Act*, int, int);
+void* cNPC_ctor_cGOBJR(void*, Act*);
 }
 static inline bool Ready(Act* a)
 {
@@ -67,16 +67,16 @@ static inline bool Ready(Act* a)
 static inline void Detach(Act* a)
 {
     if (a->b31FC) {
-        Node_ReleaseComponent58(a);
+        cGOBJ_DeleteController(a);
         a->b31FC = 0;
     }
 }
 static inline void* Alloc(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_0049D8D0, line);
+    return cMemMan_Allocate(0, size, D_0049D8D0, line);
 }
-extern "C" void Actor_InitComponents(Act* a, unsigned char kind, int* ai, void* comp)
+extern "C" void cHuman_CreateGobjController(Act* a, unsigned char kind, int* ai, void* comp)
 {
     if (g_IsMultiplayer && a->p58) {
         if (Ready(a)) {
@@ -91,7 +91,7 @@ extern "C" void Actor_InitComponents(Act* a, unsigned char kind, int* ai, void* 
     case 0:
     case 3:
         if (comp) {
-            Actor_AttachComponent(a, comp);
+            cGOBJ_AttachController(a, comp);
             a->b31FC = 1;
             cNetObj_AddPlayer(a);
         }
@@ -104,8 +104,8 @@ extern "C" void Actor_InitComponents(Act* a, unsigned char kind, int* ai, void* 
     case 1:
         {
             void* m = Alloc(0x1D0, 0xBCE);
-            if (m) m = PlayerComponent_Construct(m);
-            Actor_AttachComponent(a, m);
+            if (m) m = cPlayer_ctor(m);
+            cGOBJ_AttachController(a, m);
             a->b31FC = 1;
             a->b2C3D = 1;
             {
@@ -119,18 +119,18 @@ extern "C" void Actor_InitComponents(Act* a, unsigned char kind, int* ai, void* 
     case 2:
         if (ai) {
             void* m = Alloc(0x1E0, 0xBD8);
-            if (m) m = AiComponent_Construct(m, a, ai[0], ai[1]);
-            Actor_AttachComponent(a, m);
+            if (m) m = cNPC_ctor_cGOBJR_cObjectIdR_int(m, a, ai[0], ai[1]);
+            cGOBJ_AttachController(a, m);
         } else {
             void* m = Alloc(0x1E0, 0xBDE);
-            if (m) m = AiComponent_ConstructAlt(m, a);
-            Actor_AttachComponent(a, m);
+            if (m) m = cNPC_ctor_cGOBJR(m, a);
+            cGOBJ_AttachController(a, m);
         }
         a->b31FC = 1;
         break;
     case 4:
         if (comp) {
-            Actor_AttachComponent(a, comp);
+            cGOBJ_AttachController(a, comp);
             a->b31FC = 1;
         }
         break;
@@ -180,9 +180,9 @@ void cAssocArray_cString_cSkaAnimationSetPtr_Find(NIt*, char*, char*);
 void cAssocArray_cString_cSkaAnimationSetPtr_End(NIt*, char*);
 int cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opNe(NIt*, NIt*);
 Model** cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opMul(NIt*);
-void Model_Attach(void*, Model*);
-void AnimModel_InitAnim(Root*);
-void NamedRootMap_Find(NIt*, void*, Name32*);
+void cSkaParams_HandleNewAnimationSet(void*, Model*);
+void cSkaSystem_SetInitialAnimation(Root*);
+void std_tree_pair_cString16N_value_compare_cAllocator_pair_find_cString16NR_2(NIt*, void*, Name32*);
 void* RootCollection_FindByKey(void*, Key4*);
 }
 
@@ -229,7 +229,7 @@ static inline void Find(NIt* out, Model* m, Name32* n)
 {
     Name32* nn = n;
     NIt f;
-    NamedRootMap_Find(&f, m->tree, nn);
+    std_tree_pair_cString16N_value_compare_cAllocator_pair_find_cString16NR_2(&f, m->tree, nn);
     *out = f;
 }
 
@@ -257,7 +257,7 @@ static inline Model* Lookup3(char* name)
 static inline Model* Lookup2(char* name) { return Lookup3(name); }
 static inline Model* Lookup(char* name) { return Lookup2(name); }
 
-extern "C" Model* Npc_SetupModel(Act_001AE7D0* a)
+extern "C" Model* cHuman_InitAnimationSet(Act_001AE7D0* a)
 {
     Key4 k1;
     Key4 k2;
@@ -280,9 +280,9 @@ extern "C" Model* Npc_SetupModel(Act_001AE7D0* a)
     if (m) {
     {
         Root* r = &a->root;
-        Model_Attach(r->attach, m);
+        cSkaParams_HandleNewAnimationSet(r->attach, m);
         r->model = m;
-        AnimModel_InitAnim(r);
+        cSkaSystem_SetInitialAnimation(r);
     }
     N32(&n1, D_0049E7A0); a->motion[0] = Motion(m, &n1);
     N32(&n2, D_0049E7B0); a->motion[1] = Motion(m, &n2);

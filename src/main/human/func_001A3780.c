@@ -22,10 +22,10 @@ void AnimPriority_Helper0(void* p, int index, unsigned char on);
 void AnimPriority_Helper1(void* p);
 void AnimPriority_Helper2(void* p, int index, int v);
 unsigned char AnimPriority_Helper3(void* bits, int index);
-void WeaponInv_ReleaseHeldObject(void* w);
-void Npc_DeadStateDrop(char* a);
-void Event_Construct(void* e, char* t);
-void Event_Send(void* e, char* t, int f);
+void cWeapon_RetractTaser(void* w);
+void cHuman_SetupWeaponPickup(char* a);
+void cMessage_ctor_cMessageNameR(void* e, char* t);
+void QueueMessage_cMessageR_cSystemP_int(void* e, char* t, int f);
 void cMessage_dtor(void* e, int f);
 void Actor_EnterDeadState(char* a);
 }
@@ -71,20 +71,20 @@ void Actor_EnterDeadState(char* a)
     APri(a, 27, 0);
     if (FTest(PI(a, 0x3210), 31)) return;
     APri2(a, 31, 1);
-    WeaponInv_ReleaseHeldObject(AP(0x3524));
-    if (!((VO*)AP(0x58))->IsHeld()) Npc_DeadStateDrop(a);
+    cWeapon_RetractTaser(AP(0x3524));
+    if (!((VO*)AP(0x58))->IsHeld()) cHuman_SetupWeaponPickup(a);
     GV(a + 0x31C0, &Zero());
     SetF(a + 0x31D0, 0.0f); SetF(a + 0x31D4, 0.0f);
     PB(a, 0x31B7) = 0;
     {
         Ev30 e;
         char* p = e.c;
-        Event_Construct(p, g_CasEventMsgClass);
+        cMessage_ctor_cMessageNameR(p, g_CasEventMsgClass);
         PP(p, 0) = D_004DA950;
         PI(p, 0x24) = 16;
         PI(p, 0x28) = -1;
         PI(p, 0x2C) = 0;
-        Event_Send(p, AP(0x58), 0);
+        QueueMessage_cMessageR_cSystemP_int(p, AP(0x58), 0);
         PP(&e, 0) = D_004DA950;
         cMessage_dtor(p, 0);
     }

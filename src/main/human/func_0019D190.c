@@ -40,6 +40,6 @@ int std_vector_imp_cTargetZRotationStackSlot_size(char* self) {
     return *(int*)(self + 4);
 }
 
-void* Actor_GetEdgeRoot2(Actor* actor) {
+void* cHuman_GetLedgeAnchor_void(Actor* actor) {
     return actor->edgeRoot;
 }

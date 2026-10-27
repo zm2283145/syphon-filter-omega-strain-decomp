@@ -12,8 +12,8 @@ typedef struct {
     long scissor;
 } Vp374;
 extern char g_Video[];
-extern void Renderer_LevelCameraProjection(Vp374*);
-extern void Renderer_OrthoCameraProjection(Vp374*);
+extern void cXViewport_BuildPersp(Vp374*);
+extern void cXViewport_BuildOrtho(Vp374*);
 extern float XLib_GetZBuffMin(char*);
 extern float XLib_GetZBuffMax(char*);
 extern float XLib_GetGuardBandScaleY(char*);
@@ -27,18 +27,18 @@ extern float XLib_GetDisplaySclY(char*);
 extern float XLib_GetFrameBuffSclY(char*);
 extern float XLib_GetDisplaySclX(char*);
 extern float XLib_GetFrameBuffSclX(char*);
-extern int Math_TruncFloatSat(float);
+extern int nSFO_Macros_FTOI(float);
 
-void Renderer_RefreshCamera(Vp374* self) {
+void cXViewport_Validate(Vp374* self) {
     float sx, sy, ox, oy, w, h;
     float a, b, c, half, hw, hh;
     float l, t, r, bt;
     int x0, x1, y0, y1;
     if (self->dirty == 0) return;
     if (self->ortho == 0)
-        Renderer_LevelCameraProjection(self);
+        cXViewport_BuildPersp(self);
     else
-        Renderer_OrthoCameraProjection(self);
+        cXViewport_BuildOrtho(self);
     sx = self->useView ? XLib_GetFrameBuffSclX(g_Video) * XLib_GetDisplaySclX(g_Video) : 1.0f;
     sy = self->useView ? XLib_GetFrameBuffSclY(g_Video) * XLib_GetDisplaySclY(g_Video) : 1.0f;
     ox = self->useView ? XLib_GetFrameBuffOffX(g_Video) + XLib_GetDisplayOffX(g_Video) : 0.0f;
@@ -67,10 +67,10 @@ void Renderer_RefreshCamera(Vp374* self) {
     t = oy + self->y * sy;
     r = ox + (l + self->w * sx);
     bt = oy + (t + self->h * sy);
-    x0 = Math_TruncFloatSat(l);
-    x1 = Math_TruncFloatSat(r) - 1;
-    y0 = Math_TruncFloatSat(t);
-    y1 = Math_TruncFloatSat(bt) - 1;
+    x0 = nSFO_Macros_FTOI(l);
+    x1 = nSFO_Macros_FTOI(r) - 1;
+    y0 = nSFO_Macros_FTOI(t);
+    y1 = nSFO_Macros_FTOI(bt) - 1;
     self->scissor = ((long)y1 << 48) | (((long)y0 << 32) | ((long)x0 | ((long)x1 << 16)));
     self->dirty = 0;
 }

@@ -9,7 +9,7 @@ extern char D_004DF970[];   /* cVUM_GOBJ vtable */
 extern cGOBJ* cGOBJ_ctor(cGOBJ* self, int* desc, int a2, int* a3);
 extern int cHogFile_ctor(int* p);
 
-cVUM_GOBJ* cVUM_GOBJ_ctor(cVUM_GOBJ* self, int* desc, int* a2) {
+cVUM_GOBJ* cVUM_GOBJ_ctor_cObjectIdR_cSubclassIdR(cVUM_GOBJ* self, int* desc, int* a2) {
     cGOBJ_ctor(&self->base, desc, 1, a2);
     self->base.vtable = D_004DF970;
     self->self = self;
@@ -23,8 +23,8 @@ cVUM_GOBJ* cVUM_GOBJ_ctor(cVUM_GOBJ* self, int* desc, int* a2) {
     return self;
 }
 
-/* Same as cVUM_GOBJ_ctor with a zero third constructor argument; desc is passed through. */
-cVUM_GOBJ* cVUM_GOBJ_ctor2(cVUM_GOBJ* self, int* desc) {
+/* Same as cVUM_GOBJ_ctor_cObjectIdR_cSubclassIdR with a zero third constructor argument; desc is passed through. */
+cVUM_GOBJ* cVUM_GOBJ_ctor_cObjectIdR(cVUM_GOBJ* self, int* desc) {
     int zero = 0;
 
     cGOBJ_ctor(&self->base, desc, 1, &zero);

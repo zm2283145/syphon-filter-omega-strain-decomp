@@ -11,7 +11,7 @@ extern char D_005721E0[];
 extern char D_005721F0;
 extern char g_Game[];
 char* strncpy(char*, const char*, unsigned int);
-void Game_EndLevel(void*, int);
+void cGameSystem_Restart(void*, int);
 }
 #pragma push
 #pragma opt_propagation off
@@ -26,7 +26,7 @@ extern "C" int cEndLevelMsg_NetEndLevelCallback(int a0, int a1, int a2, Pk20E350
                 strncpy(D_005721E0, "HOST_LEFTGAME", 0x10);
                 D_005721F0 = 0;
             }
-            Game_EndLevel(g_Game, p->b8);
+            cGameSystem_Restart(g_Game, p->b8);
         }
     }
     return 0x10;

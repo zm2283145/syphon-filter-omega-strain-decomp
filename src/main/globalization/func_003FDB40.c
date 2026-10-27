@@ -5,14 +5,14 @@
 
 #include "types.h"
 
-extern int Loc_FindKey(int key);
-extern int Loc_GetTextById(int id);
+extern int GetIndexFromLabel(int key);
+extern int nGlobalization_GetString_int(int id);
 
-int Loc_FindKeyThunk(int key) {
-    return Loc_FindKey(key);
+int nGlobalization_GetStringIndex(int key) {
+    return GetIndexFromLabel(key);
 }
 
 /* Resolve a key to a string id, then to its text. */
-int Loc_LookupText(int key) {
-    return Loc_GetTextById(Loc_FindKey(key));
+int nGlobalization_GetString_charP(int key) {
+    return nGlobalization_GetString_int(GetIndexFromLabel(key));
 }

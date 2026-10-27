@@ -16,11 +16,11 @@
  */
 
 
-void cFireObj_v08(cFireObj* self) {
+void cFireObj_NetEnable(cFireObj* self) {
     self->lit = 1;
 }
 
-void cFireObj_v09(cFireObj* self) {
+void cFireObj_NetDisable(cFireObj* self) {
     self->lit = 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -94,23 +94,23 @@ static inline void merge_flush_func_00261D60(void) {}
 extern int D_004F8310;   /* cFireObj class type id */
 extern int D_004F8318;   /* cFireObj script type */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
-extern int* cGOBJ_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int type, int parentType);
+extern int cScriptInterpreter_CallEvent(void* filter, int a0, int a1);
+extern int* cGOBJ_SOBJ_getClassId(void);
+extern void cScriptBase_declareParent(int type, int parentType);
 
 /* Registers the cFireObj script type under its parent type. */
-void ScriptType_cFireObj_Init(void) {
-    int* parent = cGOBJ_GetScriptTypeKeyPtr();
+void cFireObj_SOBJ_init(void) {
+    int* parent = cGOBJ_SOBJ_getClassId();
 
-    ScriptType_SetParent(D_004F8318, *parent);
+    cScriptBase_declareParent(D_004F8318, *parent);
 }
 
-int cFireObj_v0B(void) {
+int cFireObj_getSOBJClassId(void) {
     return D_004F8310;
 }
 
-int cFireObj_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cFireObj_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00261D90(void) {}

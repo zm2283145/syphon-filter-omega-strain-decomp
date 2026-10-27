@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00211DB0 */
 #pragma push /* merge_units */
@@ -53,9 +53,9 @@ extern char D_004A4550[];
 int NetGetObject(Seg_00211DE0** o, int h);
 int func_00211DA0(void);
 void NetFreeObject(int a);
-Self_00211DE0* Object_LookupById(int* id);
+Self_00211DE0* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
 void cPathedGOBJ_TeleportToPathPoint(Self_00211DE0* o, int v);
-void NetMap_BindReceiver(int a, int b, void* c);
+void cNetObj_AddSystem(int a, int b, void* c);
 }
 #pragma define_section DROPDTOR ".dtors_drop" far_absolute RX
 struct Busy_00211DE0 {
@@ -70,7 +70,7 @@ static inline void ReleaseD0_00211DE0(Self_00211DE0* self)
             NetFreeObject(func_00211DA0());
         } else {
             AllocGuard g;
-            Mem_Free(0, p, D_004A4550, 0xB83);
+            cMemMan_Deallocate(0, p, D_004A4550, 0xB83);
         }
         self->pD0 = 0;
     }
@@ -85,13 +85,13 @@ extern "C" void cElevatorGOBJ_ElevatorCreationCallback(void* unused, int h)
     if (!NetGetObject(&seg, h)) {
         p = seg->p1C;
         id[0] = p->h10 | (p->hE << 16);
-        o = Object_LookupById(id);
+        o = nGobjManager_LookupGOBJ_cObjectIdR(id);
         if (o) {
             {
                 Shm_00211DE0* old = o->p128;
                 if (old && p) {
                     AllocGuard g;
-                    Mem_Free(0, old, "gamegobj.hh", 0x247);
+                    cMemMan_Deallocate(0, old, "gamegobj.hh", 0x247);
                 }
             }
             o->p128 = p;
@@ -107,7 +107,7 @@ extern "C" void cElevatorGOBJ_ElevatorCreationCallback(void* unused, int h)
             o->p128->bC = 1;
             o->b14 = 0;
             o->f10 = p->f18;
-            NetMap_BindReceiver(p->f18, p->f14, o);
+            cNetObj_AddSystem(p->f18, p->f14, o);
         }
     }
 }

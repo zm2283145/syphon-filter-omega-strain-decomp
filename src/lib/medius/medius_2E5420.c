@@ -88,7 +88,7 @@ extern E2E55A0 D_0058D188[];
 extern char D_005880A0[];
 extern short D_0058D178;
 extern int rt_time_get_local(int *);
-extern void Net_IpToString(void *, E2E55A0 *);
+extern void NetIIpBinaryToString(void *, E2E55A0 *);
 int NetCheckForPingTimeouts(void)
 {
     T2E55A0 tmp;
@@ -98,8 +98,8 @@ int NetCheckForPingTimeouts(void)
     for (i = 0; i < 127; i++) {
         if (D_0058D188[i].cb == 0) continue;
         if (now - D_0058D188[i].time - 30000 <= 0) continue;
-        Net_IpToString(&tmp, &D_0058D188[i]);
-        Net_IpToString(D_005880A0, &D_0058D188[i]);
+        NetIIpBinaryToString(&tmp, &D_0058D188[i]);
+        NetIIpBinaryToString(D_005880A0, &D_0058D188[i]);
         D_0058D178 = D_0058D188[i].id;
         if (D_0058D188[i].type == 1)
             D_0058D188[i].cb(0xE, &tmp, 0, 0, D_0058D188[i].x, D_0058D188[i].y);
@@ -139,14 +139,14 @@ int NetIsPeerToPeerHost(unsigned char *out)
 /* merge_units: begin func_002E5770 */
 typedef struct { unsigned char state; char name[0x11]; unsigned short port; int x14[2]; int x1C[2]; } E2E5770;
 extern E2E5770 D_00520358[];
-extern int String_CompareN(char *, char *, int);
+extern int Libc_Strncmp(char *, char *, int);
 extern void rt_time_elapsed(int *, int *);
 void EchoRequestCallback(char *name, unsigned short port)
 {
     unsigned int i;
     if (name == 0 || name[0] == 0) return;
     for (i = 0; i < 0x100; i++) {
-        if (String_CompareN(name, D_00520358[i].name, 0x10) == 0 && D_00520358[i].state == 2 && port == D_00520358[i].port) {
+        if (Libc_Strncmp(name, D_00520358[i].name, 0x10) == 0 && D_00520358[i].state == 2 && port == D_00520358[i].port) {
             rt_time_elapsed(D_00520358[i].x14, D_00520358[i].x1C);
             D_00520358[i].state = 3;
             return;

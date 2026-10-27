@@ -3,7 +3,7 @@
 #include "types.h"
 
 typedef struct { int head; int value; } ListHead;
-extern void ObjectList_EraseRange_383420(int* out, void* list, int* value, ListHead** head);
+extern void std_list_deleter_int_erase_listdeleter_listdeleter(int* out, void* list, int* value, ListHead** head);
 extern void std_list_deleter_int_insert(int* out, void* list, ListHead** pos, int* value);
 
 typedef struct { int a, b, c; char pad[0x130 - 0xC]; } SMElemA;
@@ -22,7 +22,7 @@ typedef struct ShadowMgr {
     ListHead head;
 } ShadowMgr;
 
-void ShadowMgr_Construct(ShadowMgr* self)
+void cShadowMan_Init(ShadowMgr* self)
 {
     int i;
     int result;
@@ -54,7 +54,7 @@ void ShadowMgr_Construct(ShadowMgr* self)
     head = &self->head;
     headp = head;
     value = head->value;
-    ObjectList_EraseRange_383420(&result, &self->list, &value, &headp);
+    std_list_deleter_int_erase_listdeleter_listdeleter(&result, &self->list, &value, &headp);
     i = 0;
     goto tramp;
 body:

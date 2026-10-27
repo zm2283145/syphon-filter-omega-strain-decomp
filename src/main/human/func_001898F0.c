@@ -48,26 +48,26 @@ extern char D_004D9DE0[]; extern char D_004DA970[];
 extern char D_0049D8D0[];
 extern unsigned char g_IsMultiplayer;
 extern float D_004A03E0;
-void MotionTokens_Init(void* p);
+void cArray_FixedSize_cSkaAnimEvent_7_ctor_void(void* p);
 void cArray_cTimedEvent_ctor_void(void* p);
 void cString16N_3_ctor_void(void* p);
 void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(void* d, void* s);
 void cSkaPlaybackGroupId_ctor_int(void* p, int v);
-void Actor_ResolveMotionSelection(Sel_898F0* sel, int* out, Y_898F0* y, void* model);
-float Model_GetFirstFloat(void* m);
-Vec4_898F0* AnimRate_Init(Vec4_898F0* p, float f);
-Vec4_898F0* Vec4_Copy_18A350(Vec4_898F0* d, Vec4_898F0* s);
-void AnimEvent_Construct(Ev_898F0* e);
-signed char MotionRequest_GetMode(Sel_898F0* s);
+void cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(Sel_898F0* sel, int* out, Y_898F0* y, void* model);
+float cSkaAnimationSet_DefaultCrossFadeDuration(void* m);
+Vec4_898F0* cSkaCrossFadeDuration_ctor_float(Vec4_898F0* p, float f);
+Vec4_898F0* cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(Vec4_898F0* d, Vec4_898F0* s);
+void cSkaAnimEndedMessage_ctor_void(Ev_898F0* e);
+signed char cSkaRequestStream_AnimationPacket_GetInstruction(Sel_898F0* s);
 void* cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(Sel_898F0* s);
 float cSkaRequestStream_AnimationPacket_GetDuration(Sel_898F0* s);
 float func_0018A2C0(Sel_898F0* s);
-void AnimCtl_InstallMotion(void* ctl, int id, signed char mode, Vec4_898F0* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
-void AnimEvent_dtor(void* p, int f);
+void cSkaRequestStream_AddRequest(void* ctl, int id, signed char mode, Vec4_898F0* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
+void cSkaAnimEndedMessage_dtor(void* p, int f);
 void func_001BE5A0(void* p, int f);
 void __destroy_array(void* p, void* dtor, int size, int n);
 void func_0018A210(void);
-void Actor_ResetAnimChannels(Act_898F0* a);
+void cHuman_ResetAnimationSliderValuesToDefaults(Act_898F0* a);
 unsigned char AnimPriority_Helper3(void* bits, int index);
 void AnimPriority_Helper2(void* p, int index, int v);
 void AnimPriority_Helper1(void* p);
@@ -75,14 +75,14 @@ void AnimPriority_Helper0(void* p, int index, unsigned char on);
 void Actor_EnterDeadState(Act_898F0* a);
 void ActionPriority_Reset(void* p, int v);
 void ActionFlags_Clear(void* p);
-void ActorModel_Deactivate(void* p);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void EventQueue_Admit(void* p);
-void* Object_GetRootNode(void* p);
-void* Transform_GetUpdated(void* p);
-void Actor_RequestTeleport(Act_898F0* a, void* t);
+void cMan_UnDead(void* p);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void nCallback_SetCallback(void* p);
+void* cGOBJ_GetXform_void_2(void* p);
+void* cXform_GetMatrix(void* p);
+void cHuman_TeleportAndResetPhysics(Act_898F0* a, void* t);
 void Actor_Ignite(float f, Act_898F0* a, int b, int c, int d, int e);
-void Actor_SetHealth(Act_898F0* a, int h, int f);
+void cGOBJ_SetHitpoints(Act_898F0* a, int h, int f);
 void cWeapon_SetAmmoPlayerDeath(int p);
 }
 
@@ -90,7 +90,7 @@ static inline void D3_898F0(void* p) { if (p) func_001BE5A0(p, 0); }
 static inline void D2_898F0(void* p) { if (p) D3_898F0(p); }
 static inline void D1_898F0(void* p) { if (p) D2_898F0(p); }
 static inline void PD_898F0(void* p) { if (p) __destroy_array(p, (void*)func_0018A210, 8, 7); }
-static inline void XInit_898F0(X_898F0* x) { x->kind = 0; MotionTokens_Init(x->pairs); cArray_cTimedEvent_ctor_void(x->tail); }
+static inline void XInit_898F0(X_898F0* x) { x->kind = 0; cArray_FixedSize_cSkaAnimEvent_7_ctor_void(x->pairs); cArray_cTimedEvent_ctor_void(x->tail); }
 static inline void XDtor_898F0(X_898F0* p) {
     if (p) {
         void* t = p->tail;
@@ -131,12 +131,12 @@ extern "C" void Actor_Revive(Act_898F0* self)
     Ev_898F0 e2;
     Anim_898F0* an;
 
-    Event_Construct(&m1, g_ActorActionMsgClass);
+    cMessage_ctor_cMessageNameR(&m1, g_ActorActionMsgClass);
     m1.vtable = D_004E0840;
     m1.kind = 1;
     m1.f24 = 0xA;
     m1.b28 = 0;
-    Event_Send(&m1, self, 1);
+    QueueMessage_cMessageR_cSystemP_int(&m1, self, 1);
     m1.vtable = D_004E0840;
     cMessage_dtor(&m1, 0);
 
@@ -144,27 +144,27 @@ extern "C" void Actor_Revive(Act_898F0* self)
     SelInit_898F0(&sel, self->f326C, &x);
     an = &self->anim;
     cSkaPlaybackGroupId_ctor_int(&y, -1);
-    Actor_ResolveMotionSelection(&sel, &out, &y, an->model);
+    cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(&sel, &out, &y, an->model);
     if (out) {
         Vec4_898F0* r;
         if (an->b5)
             r = &an->v;
         else
-            r = AnimRate_Init(&rate, Model_GetFirstFloat(an->model));
-        Vec4_Copy_18A350(&vec, r);
+            r = cSkaCrossFadeDuration_ctor_float(&rate, cSkaAnimationSet_DefaultCrossFadeDuration(an->model));
+        cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(&vec, r);
         an->b5 = 0;
-        AnimEvent_Construct(&e1);
-        AnimEvent_Construct(&e2);
-        AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(&sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(&sel), cSkaRequestStream_AnimationPacket_GetDuration(&sel), func_0018A2C0(&sel));
-        AnimEvent_dtor(&e2, -1);
-        AnimEvent_dtor(&e1, -1);
+        cSkaAnimEndedMessage_ctor_void(&e1);
+        cSkaAnimEndedMessage_ctor_void(&e2);
+        cSkaRequestStream_AddRequest(an, out, cSkaRequestStream_AnimationPacket_GetInstruction(&sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(&sel), cSkaRequestStream_AnimationPacket_GetDuration(&sel), func_0018A2C0(&sel));
+        cSkaAnimEndedMessage_dtor(&e2, -1);
+        cSkaAnimEndedMessage_dtor(&e1, -1);
     }
     /* spelled differently from &sel.x so the address is not kept in a saved register */
     XDtor_898F0((X_898F0*)((char*)&sel + 0x4C));
     D1_898F0(x.tail);
     PD_898F0(x.pairs);
 
-    Actor_ResetAnimChannels(self);
+    cHuman_ResetAnimationSliderValuesToDefaults(self);
     if (self->s3310) self->s3310->b11 = 1;
     if (self->s3310) self->s3310->b9C0 = 0;
     Prio_898F0(self->prio, 0x1A);
@@ -173,7 +173,7 @@ extern "C" void Actor_Revive(Act_898F0* self)
     ActionPriority_Reset(self->prio, 0);
     ActionFlags_Clear(self->f3248);
     if (self->s3310) self->s3310->f374 = D_004A03E0;
-    ActorModel_Deactivate(self->f60);
+    cMan_UnDead(self->f60);
     {
         unsigned char r = 0;
         Ctl_898F0* c = self->ctl;
@@ -186,7 +186,7 @@ extern "C" void Actor_Revive(Act_898F0* self)
                 self->s3584->b34 = 1;
             {
                 AllocGuard guard;
-                o = (Obj_898F0*)Mem_Alloc(0, 0x14, D_0049D8D0, 0x3E38);
+                o = (Obj_898F0*)cMemMan_Allocate(0, 0x14, D_0049D8D0, 0x3E38);
             }
             if (o) {
                 o->vt = D_004D9DE0;
@@ -197,29 +197,29 @@ extern "C" void Actor_Revive(Act_898F0* self)
                 o->fC = self;
                 o->b10 = 0;
             }
-            EventQueue_Admit(o);
+            nCallback_SetCallback(o);
             self->b3269 = 1;
         }
     }
-    Actor_RequestTeleport(self, Transform_GetUpdated(Object_GetRootNode(self->f33F0)));
+    cHuman_TeleportAndResetPhysics(self, cXform_GetMatrix(cGOBJ_GetXform_void_2(self->f33F0)));
     self->b30AC = 0;
     self->f33B0 = 0;
     Actor_Ignite(-1.0f, self, 0, 0, 0, 0);
-    Actor_SetHealth(self, self->f3398, 1);
+    cGOBJ_SetHitpoints(self, self->f3398, 1);
     self->f33A0 = self->f339C;
     cWeapon_SetAmmoPlayerDeath(self->f3524);
     self->f33A8 = 0;
     self->f33AC = 0;
     self->b33A5 = 0;
-    Event_Construct(&m3, g_NotifyCheckpointMsgClass);
+    cMessage_ctor_cMessageNameR(&m3, g_NotifyCheckpointMsgClass);
     m3.vtable = D_004DB8B0;
-    Event_Send(&m3, self->ctl, 0);
-    Event_Construct(&m4, g_CasEventMsgClass);
+    QueueMessage_cMessageR_cSystemP_int(&m3, self->ctl, 0);
+    cMessage_ctor_cMessageNameR(&m4, g_CasEventMsgClass);
     m4.vtable = D_004DA950;
     m4.f2C = 0;
     m4.f24 = 0x11;
     m4.f28 = -1;
-    Event_Send(&m4, self->ctl, 0);
+    QueueMessage_cMessageR_cSystemP_int(&m4, self->ctl, 0);
     m4.vtable = D_004DA950;
     cMessage_dtor(&m4, 0);
     m3.vtable = D_004DB8B0;

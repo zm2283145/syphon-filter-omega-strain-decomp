@@ -2,37 +2,37 @@
 #include "vtable_base_dtor.h"
 
 extern "C" {
-extern "C" void GuiSliderWidget_IsType();
-extern "C" void GuiWidget_FocusPrev();
-extern "C" void GuiWidget_FocusNext();
-extern "C" void GuiWidget_FocusLast();
-extern "C" void GuiWidget_FocusFirst();
-extern "C" void GuiWidget_BubbleActivate();
-extern "C" void GuiWidget_Update();
-extern "C" void GuiWidget_Draw();
-extern "C" void GuiWidget_BaseSleep();
-extern "C" void GuiWidget_OnEvent();
-extern "C" void GuiWidget_BaseWake();
-extern "C" void GuiWidget_ClearFlag4();
-extern "C" void GuiWidget_SetFlag4();
-extern "C" void GuiWidget_Deinit();
+extern "C" void GuiSliderWidget_IsClass();
+extern "C" void GuiWidget_FindPrevFocus();
+extern "C" void GuiWidget_FindNextFocus();
+extern "C" void GuiWidget_FindLastFocus();
+extern "C" void GuiWidget_FindFirstFocus();
+extern "C" void GuiWidget_onAction();
+extern "C" void GuiWidget_onAdvanceTime();
+extern "C" void GuiWidget_onRender();
+extern "C" void GuiWidget_onSleep();
+extern "C" void GuiWidget_onMessage();
+extern "C" void GuiWidget_onWake();
+extern "C" void GuiWidget_onDeactivate();
+extern "C" void GuiWidget_onActivate();
+extern "C" void GuiWidget_onRemove();
 extern "C" void GuiWidget_Load();
-extern "C" void GuiSliderWidget_ctor();
-extern "C" void GuiSliderWidget_OnInput();
-extern "C" void GuiSliderWidget_OnLoseFocus();
-extern "C" void GuiSliderWidget_OnGainFocus();
-extern "C" void GuiSliderWidget_Init();
+extern "C" void GuiSliderWidget_GetClassName();
+extern "C" void GuiSliderWidget_onInput();
+extern "C" void GuiSliderWidget_onLoseFocus();
+extern "C" void GuiSliderWidget_onGainFocus();
+extern "C" void GuiSliderWidget_onAdd();
 extern void * const D_004E10C0[];
-void* GuiWidget_Destroy(void* self, short deleteFlag);
+void* GuiWidget_dtor(void* self, short deleteFlag);
 }
 extern "C" VtableObject* GuiSliderWidget_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004E10C0);
-        GuiWidget_Destroy(self, 0);
+        GuiWidget_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004E10C0[24] = { (void*)0x0, (void*)0x0, (void*)GuiSliderWidget_dtor, (void*)GuiSliderWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiWidget_BaseWake, (void*)GuiWidget_BaseSleep, (void*)GuiSliderWidget_OnGainFocus, (void*)GuiSliderWidget_OnLoseFocus, (void*)GuiSliderWidget_OnInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiSliderWidget_ctor, (void*)GuiSliderWidget_IsType, (void*)0x0 };
+void * const D_004E10C0[24] = { (void*)0x0, (void*)0x0, (void*)GuiSliderWidget_dtor, (void*)GuiSliderWidget_onAdd, (void*)GuiWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiWidget_onDeactivate, (void*)GuiWidget_onWake, (void*)GuiWidget_onSleep, (void*)GuiSliderWidget_onGainFocus, (void*)GuiSliderWidget_onLoseFocus, (void*)GuiSliderWidget_onInput, (void*)GuiWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiWidget_onAdvanceTime, (void*)GuiWidget_onMessage, (void*)GuiWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiSliderWidget_GetClassName, (void*)GuiSliderWidget_IsClass, (void*)0x0 };

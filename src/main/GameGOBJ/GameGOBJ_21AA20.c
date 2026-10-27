@@ -50,7 +50,7 @@ typedef struct { char p0[0x10]; int target; char p14[0x2C - 0x14]; unsigned char
 extern "C" unsigned char g_IsMultiplayer;
 extern "C" char g_cEnableMsgClass[];
 extern "C" char D_004E0880[];
-extern "C" void Event_Construct(C1Msg_21A9* m, void* type);
+extern "C" void cMessage_ctor_cMessageNameR(C1Msg_21A9* m, void* type);
 extern "C" void cEnableMsg_SendEnabled(C1Msg_21A9* m, int target);
 extern "C" void cMessage_dtor(C1Msg_21A9* m, int flags);
 #pragma opt_strength_reduction off
@@ -59,7 +59,7 @@ extern "C" void cGameGOBJ_Enable(C1Obj_21A9* o)
     int i;
     if (g_IsMultiplayer) {
         C1Msg_21A9 msg;
-        Event_Construct(&msg, g_cEnableMsgClass);
+        cMessage_ctor_cMessageNameR(&msg, g_cEnableMsgClass);
         msg.vtbl = D_004E0880;
         msg.id = -1;
         msg.size = 0x40;
@@ -81,7 +81,7 @@ static inline void merge_flush_func_0021AA20(void) {}
 #pragma cplusplus on
 
 /* GOBJ virtual 7: notify attached object, update, register. */
-DEFINE_GOBJ_V07_REGISTER(cGameGOBJ_DeactivateWithPart)
+DEFINE_GOBJ_V07_REGISTER(cGameGOBJ_NetDeactivate)
 #pragma pop /* merge_units */
 /* merge_units: end func_0021AB00 */
 
@@ -90,6 +90,6 @@ DEFINE_GOBJ_V07_REGISTER(cGameGOBJ_DeactivateWithPart)
 #pragma cplusplus on
 
 /* GOBJ virtual 6: notify attached object, update, call slot 47. */
-DEFINE_GOBJ_V06_UPDATE(cGameGOBJ_ActivateWithPart)
+DEFINE_GOBJ_V06_UPDATE(cGameGOBJ_NetActivate)
 #pragma pop /* merge_units */
 /* merge_units: end func_0021AB60 */

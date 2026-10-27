@@ -21,19 +21,19 @@ char *strncpy(void *, const void *, int);
 /* Lower-cased base name (no directory, no extension, max 16 chars) of a path. */
 extern char* strchr(const char* s, int c);
 extern char* strrchr(const char* s, int c);
-extern int String_ToLower(int c);
+extern int Libc_Tolower(int c);
 #define strlen(a0) ((unsigned int)strlen((a0))) /* merge_units */
 
 static inline unsigned int Min_3A5550(unsigned int a, unsigned int b) { return a < b ? a : b; }
 
-void ParticleLib_NormalizeName(char* out, const char* path, unsigned int n)
+void cParticleSystem_CopyEffectName(char* out, const char* path, unsigned int n)
 {
     char* p;
     char buf[0x80];
     unsigned int i;
     char* name;
     if (n == 0) {
-        String_Copy(buf, path);
+        Libc_Strcpy(buf, path);
     } else {
         strncpy(buf, path, n);
         buf[n] = 0;
@@ -47,7 +47,7 @@ void ParticleLib_NormalizeName(char* out, const char* path, unsigned int n)
     else
         name++;
     for (i = 0; i < Min_3A5550(strlen(name) + 1, 16); i++)
-        *out++ = String_ToLower(name[i]);
+        *out++ = Libc_Tolower(name[i]);
 }
 #undef strlen /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -62,8 +62,8 @@ static inline void merge_flush_func_003A5550(void) {}
 #pragma opt_propagation off
 
 extern "C" {
-void* Mem_Alloc(int, int, char*, int);
-void* Ptr_Identity(void*);
+void* cMemMan_Allocate(int, int, char*, int);
+void* cVector_ctor_void(void*);
 int strtod(char*, char**);
 float SoftFloat_DoubleToFloat(int);
 #if 0 /* merge_units */
@@ -72,8 +72,8 @@ char* strchr(const char*, int);
 #define strchr(a0, a1) (strchr((a0), (a1))) /* merge_units */
 
 int strtoul(char*, char**, int);
-void ParticleDef_ParseType1(void*);
-void ParticleDef_ParseCommon(void*, float, char*, int);
+void cParticleDefinition_ctor(void*);
+void cParticleDefinition_Load(void*, float, char*, int);
 extern char D_004BC5D0[];
 extern char D_004DFB90[];
 extern char D_004DFB70[];
@@ -93,25 +93,25 @@ struct Obj3A5630 {
 inline void* Alloc3A5630(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004BC5D0, line);
+    return cMemMan_Allocate(0, size, D_004BC5D0, line);
 }
 
 inline Obj3A5630* Ctor3A5630(Obj3A5630* r, char* vt, int end)
 {
     if (r) {
         Elem3A5630* e;
-        ParticleDef_ParseType1(r);
+        cParticleDefinition_ctor(r);
         r->vt = vt;
         e = r->e;
         do {
-            Ptr_Identity(e);
+            cVector_ctor_void(e);
             e++;
         } while (e != (Elem3A5630*)((char*)r + end));
     }
     return r;
 }
 
-extern "C" Obj3A5630* ParticleDef_Parse(void* self, char* str, int arg, Obj3A5630* obj)
+extern "C" Obj3A5630* cParticleSystem_Load_charP_charP_cParticleDefinitionP(void* self, char* str, int arg, Obj3A5630* obj)
 {
     char* s = str;
     Obj3A5630* r = 0;
@@ -131,7 +131,7 @@ extern "C" Obj3A5630* ParticleDef_Parse(void* self, char* str, int arg, Obj3A563
             r = Ctor3A5630((Obj3A5630*)Alloc3A5630(0xA70, 0x1AF), D_004DFB70, 0xA20);
         }
         r->type = type;
-        ParticleDef_ParseCommon(r, ver, s, arg);
+        cParticleDefinition_Load(r, ver, s, arg);
     }
     return r;
 }

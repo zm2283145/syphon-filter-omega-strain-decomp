@@ -2,11 +2,11 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int String_Copy(char * , int);
+int Libc_Strcpy(char * , int);
 int atoi(int);
 int String_CompareNoCase(int, char *);
 
-void SFOLobby_ParseServerSetting(char * arg0, int arg1, int arg2) {
+void SFOLobby_ParseConfigValue(char * arg0, int arg1, int arg2) {
     signed char temp_s1;
     int var_v0;
 
@@ -17,7 +17,7 @@ void SFOLobby_ParseServerSetting(char * arg0, int arg1, int arg2) {
     }
     temp_s1 = var_v0 != 0;
     if (String_CompareNoCase(arg1, "MAS_IP") == 0) {
-        String_Copy(arg0 + 0x1FFC, arg2);
+        Libc_Strcpy(arg0 + 0x1FFC, arg2);
         return;
     }
     if (String_CompareNoCase(arg1, "MAS_PORT") == 0) {
@@ -25,15 +25,15 @@ void SFOLobby_ParseServerSetting(char * arg0, int arg1, int arg2) {
         return;
     }
     if (String_CompareNoCase(arg1, "MUIS_IP") == 0) {
-        String_Copy(arg0 + 0x2100, arg2);
+        Libc_Strcpy(arg0 + 0x2100, arg2);
         return;
     }
     if (String_CompareNoCase(arg1, "MUIS_DNS") == 0) {
-        String_Copy(arg0 + 0x2080, arg2);
+        Libc_Strcpy(arg0 + 0x2080, arg2);
         return;
     }
     if (String_CompareNoCase(arg1, "MAS_DNS") == 0) {
-        String_Copy(arg0 + 0x1F7C, arg2);
+        Libc_Strcpy(arg0 + 0x1F7C, arg2);
         return;
     }
     if (String_CompareNoCase(arg1, "MUIS_PORT") == 0) {
@@ -55,7 +55,7 @@ void SFOLobby_ParseServerSetting(char * arg0, int arg1, int arg2) {
             return;
         }
         if (String_CompareNoCase(arg1, "DEFAULT_LOBBY_NAME") == 0) {
-            String_Copy(arg0 + 0x23B5, arg2);
+            Libc_Strcpy(arg0 + 0x23B5, arg2);
             return;
         }
         if (String_CompareNoCase(arg1, "LOBBY_DISABLE_HEADSETS") == 0) {

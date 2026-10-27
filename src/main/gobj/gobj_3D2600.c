@@ -35,7 +35,7 @@ Word* std_list_cAnimTexturePtr_generic_iterator_ctor(Word* dst, Word* src) {
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int List_Erase(char *, int, char *);                     
+int std_list_deleter_voidPtr_erase_listdeleter(char *, int, char *);                     
 int std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(char *, int *);                        
 int cLList_cAnimTexturePtr_End(char *, int);                          
 int cLList_cAnimTexturePtr_Begin(char *, int);                          
@@ -67,7 +67,7 @@ void cAnimTexMan_Remove(int arg0, int arg1) {
     cLListIterator_cAnimTexturePtr_ctor_cLListIteratorR(&sp4C, &sp3C);
     sp48 = sp4C;
     std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&sp40, &sp48);
-    List_Erase(&sp44, arg0, &sp40);
+    std_list_deleter_voidPtr_erase_listdeleter(&sp44, arg0, &sp40);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003D2630 */

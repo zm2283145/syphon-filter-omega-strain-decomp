@@ -8,13 +8,13 @@
 
 extern char D_004D9960[];  /* class table */
 extern char D_004EE6C0[];
-extern void Receiver_Construct(void* self, void* type);
-extern void ScalarCollection_Init(void* self);
+extern void cSystem_ctor(void* self, void* type);
+extern void std_list_deleter_voidPtr_ctor_void(void* self);
 
-HotboxReceiver* HotboxTracker_Construct(HotboxReceiver* self, int unk20) {
-    Receiver_Construct(self, D_004EE6C0);
+HotboxReceiver* cHotboxMan_ctor(HotboxReceiver* self, int unk20) {
+    cSystem_ctor(self, D_004EE6C0);
     self->vtable = D_004D9960;
-    ScalarCollection_Init(self->unk28);
+    std_list_deleter_voidPtr_ctor_void(self->unk28);
     self->unk20 = unk20;
     self->unk24 = 0;
     return self;

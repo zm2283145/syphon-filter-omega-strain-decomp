@@ -2,7 +2,7 @@
 #define ALLOC_GUARD_H
 
 /*
- * AllocGuard: the scoped allocator lock used around Mem_Alloc/Mem_Free.
+ * AllocGuard: the scoped allocator lock used around cMemMan_Allocate/cMemMan_Deallocate.
  *
  * The original code wraps allocator calls in a small C++ object whose
  * constructor takes the allocator lock and whose destructor releases it.
@@ -25,7 +25,7 @@ extern "C" {
 extern unsigned char g_ProfileLockEnabled; /* allocator locking enabled */
 extern int g_ProfileLockDepth;           /* allocator lock depth */
 void Alloc_Lock(int id);
-void Alloc_Unlock(int id);
+void EnableIntc(int id);
 }
 
 #pragma define_section ALLOC_GUARD_DTOR ".dtors_drop" far_absolute RX
@@ -37,7 +37,7 @@ struct AllocGuard {
     }
     /* order matters: weak first, then the section */
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~AllocGuard() {
-        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        if (g_ProfileLockEnabled) EnableIntc(9);
         g_ProfileLockDepth--;
     }
 };

@@ -27,7 +27,7 @@ struct VRElem20 { float a; float b; unsigned char c; int d; int e; };
 extern "C" {
 char D_0049E960[] = "vector length error\n";
 }
-DEFINE_VECTOR_INIT_RANGE(Array_CopyRange20, VRElem20, 0x4CCCCC, D_0049E960, D_0049ED58, 0x5C)
+DEFINE_VECTOR_INIT_RANGE(std_vector_imp_cTimedEvent_init, VRElem20, 0x4CCCCC, D_0049E960, D_0049ED58, 0x5C)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001BAEF0(void) {}
 #pragma pop /* merge_units */

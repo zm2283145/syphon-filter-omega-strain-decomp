@@ -9,7 +9,7 @@
 #include "types.h"
 
 /* Sets bit n in the objective mask (ignores negative n). */
-void Objective_SetMaskBit(void* self, unsigned int* mask, int n)
+void cAgentData_SetBit(void* self, unsigned int* mask, int n)
 {
     if (n > -1)
         mask[n / 32] |= 1 << (n & 31);
@@ -23,7 +23,7 @@ typedef union ScriptArg { int i; float f; void* p; unsigned char b; } ScriptArg;
 typedef struct { char data[0x18]; } ObjRow_32F0D0;
 extern int D_00532BC0;
 extern char D_005329F0[];
-extern void* ObjectiveRow_Construct(ObjRow_32F0D0* r, int a, int b, int id);
+extern void* cAgentData_Record_ctor_charP_int_int(ObjRow_32F0D0* r, int a, int b, int id);
 extern void cArray_Record_PushBackActual(void* registry, void* item);
 int Objective_Register(ScriptArg* args)
 {
@@ -32,7 +32,7 @@ int Objective_Register(ScriptArg* args)
     int p1[1];
     p1[0] = args[1].i;
     p0[0] = args[0].i;
-    cArray_Record_PushBackActual(D_005329F0, ObjectiveRow_Construct(&r, *(int*)p0, *(int*)p1, D_00532BC0++));
+    cArray_Record_PushBackActual(D_005329F0, cAgentData_Record_ctor_charP_int_int(&r, *(int*)p0, *(int*)p1, D_00532BC0++));
     return 0;
 }
 #pragma pop /* merge_units */

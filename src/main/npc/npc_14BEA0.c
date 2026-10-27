@@ -18,7 +18,7 @@ public:
     char pad[0xB8];
     int bits[9];
 };
-extern "C" void cNPC_v7B(NPC_BEA0* self, int notify)
+extern "C" void cNPC_RestrictMovementToNodeGroup(NPC_BEA0* self, int notify)
 {
     int i;
     for (i = 0; i < 9; i++)
@@ -42,7 +42,7 @@ struct Bits_0014BF00 {
 };
 typedef struct { char pad[0x7C]; int id; } Obj_0014BF00;
 typedef struct { char pad[0xBC]; Bits_0014BF00 bits; } NPC_0014BF00;
-extern "C" void cNPC_v7D(NPC_0014BF00* self, Obj_0014BF00* o)
+extern "C" void cNPC_RemoveGroupFromPathRegion(NPC_0014BF00* self, Obj_0014BF00* o)
 {
     int id = o->id;
     if (self->bits.test(id)) self->bits.reset(id);
@@ -63,7 +63,7 @@ struct Bits_0014BF60 {
 };
 typedef struct { char pad[0x7C]; int id; } Obj_0014BF60;
 typedef struct { char pad[0xBC]; Bits_0014BF60 bits; } NPC_0014BF60;
-extern "C" void cNPC_v7C(NPC_0014BF60* self, Obj_0014BF60* o)
+extern "C" void cNPC_AddGroupToPathRegion(NPC_0014BF60* self, Obj_0014BF60* o)
 {
     int id = o->id;
     if (!self->bits.test(id)) self->bits.set(id);
@@ -76,7 +76,7 @@ static inline void merge_flush_func_0014BF60(void) {}
 /* merge_units: begin func_0014BFB0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0xBC]; int bits[8]; } S_BFB0;
-unsigned char NpcAi_IsRegionAllowed(S_BFB0* self, int i)
+unsigned char cNPC_GroupInPathRegion(S_BFB0* self, int i)
 {
     unsigned char r = 1;
     if (i >= 0)

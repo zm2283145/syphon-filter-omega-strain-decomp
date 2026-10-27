@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* ColCandidate_GetNormal(char* self) {
+void* cCollisionFace_UnitNormal(char* self) {
     return self + 48;
 }

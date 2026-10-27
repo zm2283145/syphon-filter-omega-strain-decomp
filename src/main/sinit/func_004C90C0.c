@@ -5,10 +5,10 @@
 #pragma inline_depth(8)
 
 extern "C" {
-extern float Math_CosThunk(float);
-extern float Math_SinThunk(float);
-extern float Math_Cos(float);
-extern float Math_Sin(float);
+extern float COS(float);
+extern float SIN(float);
+extern float Libc_Cosf(float);
+extern float Libc_Sinf(float);
 extern void __register_global_object(void* obj, void* dtor, void* link);
 extern void __construct_array(void* arr, void* ctor, void* dtor, int size, int n);
 extern void cJointLimits_dtor(void);
@@ -29,12 +29,12 @@ static inline void EQ(V& q, const E& e)
     float hx = h * e.x;
     float hy = h * e.y;
     float hz = h * e.z;
-    float cx = Math_CosThunk(hx);
-    float cy = Math_CosThunk(hy);
-    float cz = Math_CosThunk(hz);
-    float sx = Math_SinThunk(hx);
-    float sy = Math_SinThunk(hy);
-    float sz = Math_SinThunk(hz);
+    float cx = COS(hx);
+    float cy = COS(hy);
+    float cz = COS(hz);
+    float sx = SIN(hx);
+    float sy = SIN(hy);
+    float sz = SIN(hz);
     float cycz = cy * cz;
     float sysz = sy * sz;
     float sycz = sy * cz;
@@ -50,12 +50,12 @@ static inline void EQh(V& q, const E& e, float h)
     float hx = h * e.x;
     float hy = h * e.y;
     float hz = h * e.z;
-    float cx = Math_CosThunk(hx);
-    float cy = Math_CosThunk(hy);
-    float cz = Math_CosThunk(hz);
-    float sx = Math_SinThunk(hx);
-    float sy = Math_SinThunk(hy);
-    float sz = Math_SinThunk(hz);
+    float cx = COS(hx);
+    float cy = COS(hy);
+    float cz = COS(hz);
+    float sx = SIN(hx);
+    float sy = SIN(hy);
+    float sz = SIN(hz);
     float cycz = cy * cz;
     float sysz = sy * sz;
     float sycz = sy * cz;
@@ -70,8 +70,8 @@ static inline void AQ(V& q, const AA& a)
 {
     float px, py;
     float h = 0.5f * a.a;
-    float c = Math_Cos(h);
-    float s = Math_Sin(h);
+    float c = Libc_Cosf(h);
+    float s = Libc_Sinf(h);
     float x = a.x, y = a.y, z = a.z;
     px = s * x; py = s * y;
     s = s * z;
@@ -84,7 +84,7 @@ static inline void AQ(V& q, const AA& a)
 struct SO { float x, y, z; };
 static inline float IS2(float a)
 {
-    float t = 1.0f / Math_Sin(0.5f * a);
+    float t = 1.0f / Libc_Sinf(0.5f * a);
     return t * t;
 }
 static inline void SinInit(SO* o, float a, float b, float c)

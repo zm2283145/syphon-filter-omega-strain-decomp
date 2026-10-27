@@ -7,11 +7,11 @@ typedef struct { int a; char name[1]; } File_3C50;
 struct List_3C50 { char pad[0xC]; unsigned char owned; };
 typedef struct { char pad[0x10]; List_3C50* list; } Self_3C50;
 extern "C" {
-int FileMan_FindMember(File_3C50* f);
-int FileMan_GetSize(File_3C50* f);
-int FileMan_LoadMemberSync(File_3C50* f, char** buf, int size);
+int cFileMan_Open(File_3C50* f);
+int cFileMan_GetSize(File_3C50* f);
+int cFileMan_Read_charPP_int(File_3C50* f, char** buf, int size);
 void cFileMan_Close(File_3C50* f);
-void* Mem_Alloc(int a, int size, char* file, int line);
+void* cMemMan_Allocate(int a, int size, char* file, int line);
 void std_vector_charPtr_ctor_void(List_3C50* l);
 void std_vector_charPtr_push_back_charPR(List_3C50* list, Buf_3C50* buf);
 extern char D_0049EE88;
@@ -59,19 +59,19 @@ char* cLoader_AllocateAndFillAnimationBuffer(Self_3C50* self, File_3C50* f)
     Buf_3C50 tmp;
     int size;
     int r;
-    r = FileMan_FindMember(f);
+    r = cFileMan_Open(f);
     if (!(r & 0xFF)) {
-        size = FileMan_GetSize(f);
-        { char* p; { AllocGuard g; p = (char*)Mem_Alloc(0, size, &D_0049EE88, 0xDB); } buf.p = p; }
+        size = cFileMan_GetSize(f);
+        { char* p; { AllocGuard g; p = (char*)cMemMan_Allocate(0, size, &D_0049EE88, 0xDB); } buf.p = p; }
         if (buf.p) {
             tmp = buf;
-            r = FileMan_LoadMemberSync(f, &tmp.p, size);
+            r = cFileMan_Read_charPP_int(f, &tmp.p, size);
             cFileMan_Close(f);
             if (!(r & 0xFF)) {
                 { char* dst; char* src = tmp.p; dst = buf.p; if (src != dst) MemCopy_3C50(dst, src, size); }
                 if (!self->list) {
                     List_3C50* l;
-                    { AllocGuard g; l = (List_3C50*)Mem_Alloc(0, 0x10, &D_0049EE88, 0xF1); }
+                    { AllocGuard g; l = (List_3C50*)cMemMan_Allocate(0, 0x10, &D_0049EE88, 0xF1); }
                     if (l) { std_vector_charPtr_ctor_void(l); l->owned = 1; }
                     self->list = l;
                 }

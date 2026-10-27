@@ -7,11 +7,11 @@
 #include "specfx_types.h"
 
 extern char D_0055C0A8[];   /* global effect list */
-extern SpecFxListPos* List_InsertBefore(SpecFxListPos* result, void* list, SpecFxListPos* pos, int* value);
+extern SpecFxListPos* std_list_deleter_voidPtr_insert(SpecFxListPos* result, void* list, SpecFxListPos* pos, int* value);
 extern SpecFxListPos* std_list_cSfxSchedulerPtr_push_back(void* list, int* value);
 
 /* Appends fx to the global effect list. */
-void SpecFx_Register(SpecFx* fx) {
+void nDynamicSfxList_Add(SpecFx* fx) {
     int value[1];
 
     value[0] = (int)fx;
@@ -24,5 +24,5 @@ SpecFxListPos* std_list_cSfxSchedulerPtr_push_back(void* list, int* value) {
     SpecFxListPos result;
 
     end.node = (char*)list + 4;
-    return List_InsertBefore(&result, list, &end, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &end, value);
 }

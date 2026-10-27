@@ -22,13 +22,13 @@ typedef struct Widget {
     char pad2C[0x44 - 0x2C];
     Child* child;           /* +0x44 */
 } Widget;
-extern "C" void List_Begin(ListIter* out, NodeList* list);  /* list.begin() */
+extern "C" void std_list_deleter_voidPtr_begin_void(ListIter* out, NodeList* list);  /* list.begin() */
 extern "C" void std_list_GuiWidgetPtr_generic_iterator_ctor(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
 extern "C" void std_list_GuiWidgetPtr_end(ListIter* out, NodeList* list);  /* list.end() */
 extern "C" void cLListIterator_GuiWidgetPtr_ctor_listR(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
 
 /* Sets flag 0x1 and notifies every child widget in the +0x28 list (child +0x44, virtual +0xC). */
-extern "C" void GuiWidget_Init(Widget* self)
+extern "C" void GuiWidget_onAdd(Widget* self)
 {
     ListIter endIt;
     ListIter beginIt;
@@ -36,7 +36,7 @@ extern "C" void GuiWidget_Init(Widget* self)
     ListIter last;
     ListNode* node;
     self->flags |= 1;
-    List_Begin(&beginIt, &self->children);
+    std_list_deleter_voidPtr_begin_void(&beginIt, &self->children);
     std_list_GuiWidgetPtr_generic_iterator_ctor(&it, &beginIt);
     node = it.node;
     std_list_GuiWidgetPtr_end(&endIt, &self->children);

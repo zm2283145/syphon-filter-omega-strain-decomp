@@ -7,16 +7,16 @@
 /* merge_units: begin func_00469000 */
 extern short D_00497CC0;
 extern int D_00497CC4;
-extern int Medius_TerminateString(char *, int);
-extern int Net_SendLocked(int, int, int, int, int, int, void *);extern int D_005984F0;
+extern int iTerminateString_void_2(char *, int);
+extern int NetSendMessage(int, int, int, int, int, int, void *);extern int D_005984F0;
 unsigned int D_00497CF8[1] = { 0x0 };
 int MediusSessionBegin(char *a, int b)
 {
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
-    Medius_TerminateString(a, 0x15);
+    iTerminateString_void_2(a, 0x15);
     (*(int*)D_00497CF8) = b;
-    return Net_SendLocked(0x40, D_00497CC4, 0xFFFF, 1, D_005984F0, 0x1C, a) ? -5 : 0;
+    return NetSendMessage(0x40, D_00497CC4, 0xFFFF, 1, D_005984F0, 0x1C, a) ? -5 : 0;
 }
 /* merge_units: end func_00469000 */
 
@@ -27,10 +27,10 @@ int MediusSessionEnd(char *a, int b)
 {
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
-    Medius_TerminateString(a + 0x15, 0x11);
-    Medius_TerminateString(a, 0x15);
+    iTerminateString_void_2(a + 0x15, 0x11);
+    iTerminateString_void_2(a, 0x15);
     D_00497CFC = b;
-    return Net_SendLocked(0x40, D_00497CC4, 0xFFFF, 1, D_005984F8, 0x26, a) ? -5 : 0;
+    return NetSendMessage(0x40, D_00497CC4, 0xFFFF, 1, D_005984F8, 0x26, a) ? -5 : 0;
 }
 /* merge_units: end func_004690A0 */
 
@@ -38,11 +38,11 @@ int MediusSessionEnd(char *a, int b)
 extern int D_00598500;
 int MediusMachineSignature(char *a)
 {
-    Medius_TerminateString(a, 0x15);
-    Medius_TerminateString(a + 0x15, 0x11);
+    iTerminateString_void_2(a, 0x15);
+    iTerminateString_void_2(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
-    return Net_SendLocked(0x40, D_00497CC4, 0xFFFF, 1, D_00598500, 0xA6, a) ? -5 : 0;
+    return NetSendMessage(0x40, D_00497CC4, 0xFFFF, 1, D_00598500, 0xA6, a) ? -5 : 0;
 }
 /* merge_units: end func_00469150 */
 
@@ -50,10 +50,10 @@ int MediusMachineSignature(char *a)
 extern int D_00598504;
 int MediusDnasSignature(char *a)
 {
-    Medius_TerminateString(a, 0x15);
-    Medius_TerminateString(a + 0x15, 0x11);
+    iTerminateString_void_2(a, 0x15);
+    iTerminateString_void_2(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
-    return Net_SendLocked(0x40, D_00497CC4, 0xFFFF, 0x4, D_00598504, 0x50, a) ? -5 : 0;
+    return NetSendMessage(0x40, D_00497CC4, 0xFFFF, 0x4, D_00598504, 0x50, a) ? -5 : 0;
 }
 /* merge_units: end func_004691D8 */

@@ -18,7 +18,7 @@ void* details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_
     return self + 4;
 }
 
-List* ScalarCollection_Init(List* l) {
+List* std_list_deleter_voidPtr_ctor_void(List* l) {
     l->count = 0;
     l->first = l->last = &l->first;
     return l;
@@ -31,7 +31,7 @@ List* ScalarCollection_Init(List* l) {
 #pragma cplusplus on
 #include "alloc_guard.h"
 extern "C" {
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void cHogFile_dtor(void* p, int flags);
 }
 struct LN_9090 { LN_9090* prev; LN_9090* next; char val[4]; };
@@ -53,7 +53,7 @@ extern "C" void std_list_deleter_cHogFile_erase_listdeleter_listdeleter(LN_9090*
         *first = (*first)->next;
         if (n) {
             AllocGuard guard;
-            Mem_Free(0, n, "allocator.hh", 0x64);
+            cMemMan_Deallocate(0, n, "allocator.hh", 0x64);
         }
         list->count--;
     }

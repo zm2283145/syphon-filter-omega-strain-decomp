@@ -39,9 +39,9 @@ struct W_60CF0 {
 extern "C" {
 extern char D_004E1730[];
 void GuiWidget_ctor(void* p);
-void Resource_Construct(void* m);
+void cFileMan_ctor_void(void* m);
 void cArray_tQuip_ctor(Sub_60CF0* s);
-void GuiPersonnelMenu_ctor(void* m);
+void cSndFx_ctor_void(void* m);
 }
 #pragma opt_propagation off
 #pragma opt_unroll_loops off
@@ -55,8 +55,8 @@ extern "C" W_60CF0* GuiEndGameAwards_ctor(W_60CF0* self)
     self->vt = D_004E1730;
     p->h24.v = -2;
     p->w20 = 0;
-    Resource_Construct(p->memberA);
-    Resource_Construct(p->memberB);
+    cFileMan_ctor_void(p->memberA);
+    cFileMan_ctor_void(p->memberB);
     p->id = -1;
     p->mask = -1;
     p->w20 = 0;
@@ -69,7 +69,7 @@ extern "C" W_60CF0* GuiEndGameAwards_ctor(W_60CF0* self)
     p->b186 = 0;
     s = &self->sub;
     cArray_tQuip_ctor(s);
-    GuiPersonnelMenu_ctor(s->menu);
+    cSndFx_ctor_void(s->menu);
     s->x10 = 0;
     s->x1B0 = 0;
     self->x1B4 = 0;

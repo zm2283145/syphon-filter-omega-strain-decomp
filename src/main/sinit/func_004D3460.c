@@ -2,8 +2,8 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int FreeList_Push(char **);                              
-int String_CtorCStr_13B480(char *, char *);                 
+int AbstractWidgetClassRep_AddClassRep(char **);                              
+int std_basic_string_char_char_traits_char_ctor_charP(char *, char *);                 
 int __register_global_object(char *, char *, char *);          
 extern char D_004AC288;
 extern char D_004AC298;
@@ -17,9 +17,9 @@ extern char String_Dtor_138350;
 void StaticInit_GuiEquipmentModify(void) {
     D_0051EE08 = &D_004DE0D0;
     D_0051EE00 = "GuiEquipmentModify";
-    FreeList_Push(&D_0051EE00);
-    String_CtorCStr_13B480(&D_004AC288, "FEMALE.SKAS");
+    AbstractWidgetClassRep_AddClassRep(&D_0051EE00);
+    std_basic_string_char_char_traits_char_ctor_charP(&D_004AC288, "FEMALE.SKAS");
     __register_global_object(&D_004AC288, &String_Dtor_138350, &D_0051EE18);
-    String_CtorCStr_13B480(&D_004AC298, "MALE.SKAS");
+    std_basic_string_char_char_traits_char_ctor_charP(&D_004AC298, "MALE.SKAS");
     __register_global_object(&D_004AC298, &String_Dtor_138350, &D_0051EE28);
 }

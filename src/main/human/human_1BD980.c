@@ -24,11 +24,11 @@ struct ChannelVector_1BD980 {
     Channel_1BD980* begin() { return data; }
     Channel_1BD980* end() { return data + count; }
 };
-extern "C" void AnimChannelVec_Grow(ChannelVector_1BD980* v, Channel_1BD980* pos, unsigned int n, const Channel_1BD980* fill);
+extern "C" void std_vector_imp_cSkaSliderValue_insert(ChannelVector_1BD980* v, Channel_1BD980* pos, unsigned int n, const Channel_1BD980* fill);
 extern "C" void std_vector_imp_cSkaSliderValue_erase(ChannelVector_1BD980* v, Channel_1BD980* first, Channel_1BD980* last);
-extern "C" void ChannelVector_Resize(ChannelVector_1BD980* v, unsigned int n, const Channel_1BD980* fill) {
+extern "C" void std_vector_imp_cSkaSliderValue_resize(ChannelVector_1BD980* v, unsigned int n, const Channel_1BD980* fill) {
     if (v->size() < n)
-        AnimChannelVec_Grow(v, v->end(), n - v->size(), fill);
+        std_vector_imp_cSkaSliderValue_insert(v, v->end(), n - v->size(), fill);
     else if (n < v->size())
         std_vector_imp_cSkaSliderValue_erase(v, v->begin() + n, v->end());
 }
@@ -44,7 +44,7 @@ static inline void merge_flush_func_001BD980(void) {}
 #define VIFC_COPY(d, s) ((d)->c.m0 = (s)->c.m0, (d)->c.m1 = (s)->c.m1, (d)->c.m2 = (s)->c.m2, (d)->c.m3 = (s)->c.m3, (d)->c.m4 = (s)->c.m4)
 struct G3_001BDA10 { int a[3]; };
 union E_001BDA10 { struct { float m0; float m1; unsigned char m2; int m3; int m4; } c; struct { G3_001BDA10 m0; int m1; int m2; } a; };
-DEFINE_VECTOR_INSERT_FILL_CNT(Vector_Insert_1BDA10, E_001BDA10, 0x4CCCCC, 0x266666, D_0049E980, D_0049ED58, 0x5C, std_swap_vectordeleterR_vectordeleterR_7, extern char D_0049ED38[]; void func_001BFA20(Vector_Insert_1BDA10_V* v);, func_001BFA20(&tmp); { E_001BDA10* fp_ = tmp.data; if (fp_) { if (fp_) TStr_Free((char*)fp_, D_0049ED38, 0x64); } }, VIFC_ASSIGN, VIFC_COPY)
+DEFINE_VECTOR_INSERT_FILL_CNT(std_vector_imp_cTimedEvent_insert, E_001BDA10, 0x4CCCCC, 0x266666, D_0049E980, D_0049ED58, 0x5C, std_swap_vectordeleterR_vectordeleterR_7, extern char D_0049ED38[]; void func_001BFA20(std_vector_imp_cTimedEvent_insert_V* v);, func_001BFA20(&tmp); { E_001BDA10* fp_ = tmp.data; if (fp_) { if (fp_) TStr_Free((char*)fp_, D_0049ED38, 0x64); } }, VIFC_ASSIGN, VIFC_COPY)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001BDA10(void) {}
 #pragma pop /* merge_units */

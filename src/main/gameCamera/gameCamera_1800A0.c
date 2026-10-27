@@ -27,7 +27,7 @@ static inline void merge_flush_func_001800A0(void) {}
 #pragma push /* merge_units */
 extern char D_004E1D88;
 extern Vec4 D_004E1D90;
-void VecCurve_ZeroDerivative(Vec4* out) {
+void cSplinedMotion_Vector_ZeroVel(Vec4* out) {
     if (!D_004E1D88) {
         D_004E1D90.x = 0.0f;
         D_004E1D88 = 1;

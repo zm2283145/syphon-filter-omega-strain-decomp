@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 #include "vslot_pad.h"
-/* Bullet_ApplyHit: resolve a bullet hit on this actor - which body region it struck (hit volumes,
+/* cHuman_CheckBullet: resolve a bullet hit on this actor - which body region it struck (hit volumes,
    or the aimed part for a player's own target), friendly-fire/miss chance, kill stats, then the
    combat event; records the region and node code back into the hit record. */
 struct V_188780 { float x, y, z, w; } __attribute__((aligned(16)));
@@ -50,12 +50,12 @@ extern "C" {
 extern float D_0048A2B8[];
 extern signed char ActorNodeCodeTable[];
 extern char g_Game[];
-int Random_Next(void);
-Actor_188780* Controller_GetAimTarget(Ctrl_188780* c);
-void* Agent_GetSelected(void* a, int b);
-void Stats_Add(void* a, int b, int c);
-int Actor_GetHitVolumes(Actor_188780* a, V_188780* from, V_188780* dir, int mode, HV_188780* out);
-int Bullet_ApplyHit(Actor_188780* self, Hit_188780* h);
+int Libc_Rand(void);
+Actor_188780* cGobjController_GetTarget(Ctrl_188780* c);
+void* cGameSystem_GetAgentData(void* a, int b);
+void cAgentData_AddScore(void* a, int b, int c);
+int cHuman_BulletBlood(Actor_188780* a, V_188780* from, V_188780* dir, int mode, HV_188780* out);
+int cHuman_CheckBullet(Actor_188780* self, Hit_188780* h);
 }
 
 static inline bool IsHuman(Actor_188780* a) { bool r = 0; if (a->ctrl && a->ctrl->IsHuman()) r = 1; return r; }
@@ -71,7 +71,7 @@ static inline bool Counts(unsigned char t)
     return r;
 }
 
-int Bullet_ApplyHit(Actor_188780* self, Hit_188780* h)
+int cHuman_CheckBullet(Actor_188780* self, Hit_188780* h)
 {
     HV_188780 hv;
     bool miss;
@@ -118,15 +118,15 @@ int Bullet_ApplyHit(Actor_188780* self, Hit_188780* h)
         mode = 2;
     /* an NPC shooting at something other than its aim target misses by chance (HitInnocentNpcChance) */
     miss = 0;
-    if (sc && !sc->IsHuman() && Controller_GetAimTarget(sc) != self) {
-        if ((float)Random_Next() / 2147483648.0f > D_0048A2B8[0])
+    if (sc && !sc->IsHuman() && cGobjController_GetTarget(sc) != self) {
+        if ((float)Libc_Rand() / 2147483648.0f > D_0048A2B8[0])
             miss = 1;
     }
     hv.f4C = h->f28;
     if (miss)
         flags = 0;
     else
-        flags = Actor_GetHitVolumes(self, &ray->from, &ray->dir, mode, &hv);
+        flags = cHuman_BulletBlood(self, &ray->from, &ray->dir, mode, &hv);
     loc = 0;
     if (flags & 0x40)
         loc = 2;
@@ -136,7 +136,7 @@ int Bullet_ApplyHit(Actor_188780* self, Hit_188780* h)
         loc = 3;
     else if (flags)
         loc = 1;
-    aimed = sc && Controller_GetAimTarget(sc) == self && own;
+    aimed = sc && cGobjController_GetTarget(sc) == self && own;
     if (aimed) {
         int k = part & 3;
         if (k == 0)
@@ -162,11 +162,11 @@ int Bullet_ApplyHit(Actor_188780* self, Hit_188780* h)
             bool cnt = Counts(t);
             if (!Dying(self) && cnt) {
                 if (IsHuman(src) && src->alive && !both && h->b2C) {
-                    Stats_Add(Agent_GetSelected(g_Game, -1), 10, 1);
+                    cAgentData_AddScore(cGameSystem_GetAgentData(g_Game, -1), 10, 1);
                     if (h->b0D)
-                        Stats_Add(Agent_GetSelected(g_Game, -1), 12, 1);
+                        cAgentData_AddScore(cGameSystem_GetAgentData(g_Game, -1), 12, 1);
                     if (t == 7 && (unsigned char)loc != 2)
-                        Stats_Add(Agent_GetSelected(g_Game, -1), 6, 1);
+                        cAgentData_AddScore(cGameSystem_GetAgentData(g_Game, -1), 6, 1);
                 }
             }
         }

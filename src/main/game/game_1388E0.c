@@ -17,28 +17,28 @@
 
 #define NMC_UB(off) (*(unsigned char*)((char*)p + (off)) = *(unsigned char*)((char*)self + (off)))
 /* Clone a network message. */
-DEFINE_NET_MSG_CLONE(cNetAgentUpdateMsg_v01, 0x30, D_0049A890, 0xC68, D_004D91A0,
+DEFINE_NET_MSG_CLONE(cNetAgentUpdateMsg_Clone, 0x30, D_0049A890, 0xC68, D_004D91A0,
                      NMC_B(0x24); NMC_W(0x28); NMC_UB(0x2C); NMC_UB(0x2D))
 #pragma pop /* merge_units */
 /* merge_units: end func_001388E0 */
 
 /* merge_units: begin func_00138A10 */
 #pragma push /* merge_units */
-extern int* Event_GetType(void*);
-extern int Receiver_HandleEventBase(void*, void*);
-extern int LosMgr_Update(void*);
-extern int LosReceiver_HandleRequest(void*, void*);
+extern int* cMessage_Name(void*);
+extern int cSystem_HandleMessage(void*, void*);
+extern int cLosManager_cCollisionModelList_Game_NextFrame(void*);
+extern int cLosManager_cCollisionModelList_Game_HandleRequest(void*, void*);
 extern int g_LosRequestMsgClass;
 extern int D_005436B0;
-int LosReceiver_HandleEvent(void* self, void* event)
+int cLosManager_cCollisionModelList_Game_HandleMessage(void* self, void* event)
 {
-    int type = *Event_GetType(event);
+    int type = *cMessage_Name(event);
     if (type == D_005436B0)
-        return LosMgr_Update(self);
-    type = *Event_GetType(event);
+        return cLosManager_cCollisionModelList_Game_NextFrame(self);
+    type = *cMessage_Name(event);
     if (type == g_LosRequestMsgClass)
-        return LosReceiver_HandleRequest(self, event);
-    return Receiver_HandleEventBase(self, event);
+        return cLosManager_cCollisionModelList_Game_HandleRequest(self, event);
+    return cSystem_HandleMessage(self, event);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00138A10(void) {}
@@ -64,9 +64,9 @@ struct AList {
     AIter begin() { return AIter(head.next); }
     AIter end() { return AIter(&head); }
 };
-extern "C" void ObjectList_EraseRange(AIter*, AList*, AIter*, AIter*);
+extern "C" void std_list_deleter_voidPtr_erase_listdeleter_listdeleter(AIter*, AList*, AIter*, AIter*);
 
-extern "C" void ActiveList_EraseMatching(AList* l, APred pred)
+extern "C" void std_list_imp_voidPtr_remove_if(AList* l, APred pred)
 {
     AIter e = l->end();
     for (AIter i = l->begin(); i != e;) {
@@ -77,7 +77,7 @@ extern "C" void ActiveList_EraseMatching(AList* l, APred pred)
             {
                 AIter r, a, b;
                 a = i; b = j;
-                ObjectList_EraseRange(&r, l, &a, &b);
+                std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&r, l, &a, &b);
                 i = r;
             }
             if (i == e) break;

@@ -12,7 +12,7 @@
 /* merge_units: begin func_001A7370 */
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-V4* Quat_RotateVector(V4* a, V4* b) {
+V4* cVector_Rotate_cQuaternionR(V4* a, V4* b) {
     asm {
         lqc2 vf1, 0x0(a)
         vmove.w vf6, vf1
@@ -44,21 +44,21 @@ static inline void merge_flush_func_001A7370(void) {}
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4_73C0;
 typedef struct { char pad[0xB0]; void* root; } Obj_73C0;
-extern int Root_GetParent(void* r);
-extern void Root_RefreshWorldCache(void* r);
-extern char* Root_Identity(void* r);
+extern int cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(void* r);
+extern void cSkaAnimAnchor_TreeNode_UpdateTransform(void* r);
+extern char* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(void* r);
 #pragma push
 #pragma opt_propagation off
 V4_73C0* cSkaAnimAnchor_TreeNode_GetParentInverseRotation(Obj_73C0* o, V4_73C0* out)
 {
     void* r = o->root;
     V4_73C0* v;
-    if (Root_GetParent(r)) {
-        Root_RefreshWorldCache(r);
-        v = (V4_73C0*)Root_Identity(r);
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(r)) {
+        cSkaAnimAnchor_TreeNode_UpdateTransform(r);
+        v = (V4_73C0*)cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r);
         asm { .set reorder } /* empty barrier keeps the then-arm separate (known trick) */
     } else {
-        v = (V4_73C0*)(Root_Identity(r) + 0x50);
+        v = (V4_73C0*)(cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r) + 0x50);
     }
     VCopyFF(out, v);
     asm {
@@ -91,16 +91,16 @@ static inline P* PInvert(P* p) {
 #pragma opt_propagation off
 #pragma opt_common_subs off
 /* Copies the parent's world placement into out and inverts it in place. */
-P* Root_GetParentInverse(Obj* o, P* out)
+P* cSkaAnimAnchor_TreeNode_GetParentInverseTransform(Obj* o, P* out)
 {
     void* r = o->root;
     P* v;
-    if (Root_GetParent(r)) {
-        Root_RefreshWorldCache(r);
-        v = (P*)Root_Identity(r);
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(r)) {
+        cSkaAnimAnchor_TreeNode_UpdateTransform(r);
+        v = (P*)cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r);
         asm { .set reorder }
     } else {
-        v = (P*)(Root_Identity(r) + 0x50);
+        v = (P*)(cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r) + 0x50);
     }
     PCopy(out, v);
     PInvert(out);

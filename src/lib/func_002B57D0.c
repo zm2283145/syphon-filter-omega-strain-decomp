@@ -4,7 +4,7 @@ extern RQ D_00506640;
 extern int func_002BB898(void);
 extern int func_002BC7E8(void);
 extern unsigned int strlen(const char *);
-extern int String_Copy(char *, char *);
+extern int Libc_Strcpy(char *, char *);
 
 int func_002B57D0(int a, char *name)
 {
@@ -15,7 +15,7 @@ int func_002B57D0(int a, char *name)
     if (strlen(name) >= 0x80) return 0x8101005B;
     D_00506640.a = a;
     D_00506640.op = 0xB;
-    String_Copy(D_00506640.name, name);
+    Libc_Strcpy(D_00506640.name, name);
     D_00506640.xC = k;
     func_002BC7E8();
     return 0;

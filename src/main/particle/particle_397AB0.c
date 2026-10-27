@@ -8,7 +8,7 @@
 #include "types.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 int strcmp(const void *, const void *);
 
 /* merge_units: begin func_00397AB0 */
@@ -25,7 +25,7 @@ public:
     float f60;
     float f64;
 };
-extern "C" bool ParticleEmitter_IsDead(O397AB0* o, float x) {
+extern "C" bool cParticleBase_Done(O397AB0* o, float x) {
     return !o->get()->f8F4 && (x - o->f64 > o->f60);
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -41,11 +41,11 @@ static inline void merge_flush_func_00397AB0(void) {}
 typedef struct { char* name; int pad4; int count; int** refs; } E397B20;
 typedef struct { int pad0; int count; E397B20** items; } L397B20;
 typedef struct { char pad[0x1C]; unsigned char loaded; } S397B20;
-extern void Resource_Construct(void*);
-extern void FileMan_Release(void*, int);
-extern void Hog_Register(void*, char*, int, int);
-extern void ParticleLib_LoadPar(S397B20*, void*);
-extern int ParticleLib_FindId(void*, char*);
+extern void cFileMan_ctor_void(void*);
+extern void cFileMan_dtor(void*, int);
+extern void cFileMan_EncodeFilename_charP_cHogFileR_bool(void*, char*, int, int);
+extern void cParticleSystem_Load_cFileManR(S397B20*, void*);
+extern int cParticleSystem_GetEffectID(void*, char*);
 extern void cTimerDisable_ctor(int* g);
 extern void cTimerDisable_dtor(int* g, int del);
 extern void cEffectRequest_dtor(E397B20*, int);
@@ -62,18 +62,18 @@ extern int D_0053B5B0;
 extern int D_0053B5B8;
 extern L397B20* D_0053BB58;
 
-void ParticleLib_ResolveRequests(S397B20* self, int arg1)
+void cParticleSystem_LoadRequestedEffects(S397B20* self, int arg1)
 {
     char buf[0xA0];
     int i;
-    Resource_Construct(buf);
+    cFileMan_ctor_void(buf);
     for (i = 0; i < D_0053BB58->count; i++) {
         E397B20* e = D_0053BB58->items[i];
         int id;
         int j;
-        Hog_Register(buf, e->name, arg1, 0);
-        ParticleLib_LoadPar(self, buf);
-        id = ParticleLib_FindId(D_0053B540, e->name);
+        cFileMan_EncodeFilename_charP_cHogFileR_bool(buf, e->name, arg1, 0);
+        cParticleSystem_Load_cFileManR(self, buf);
+        id = cParticleSystem_GetEffectID(D_0053B540, e->name);
         if (strcmp(e->name, D_004BC5E0) == 0) {
             D_0053B5A0 = id;
         } else if (strcmp(e->name, D_004BC600) == 0) {
@@ -90,7 +90,7 @@ void ParticleLib_ResolveRequests(S397B20* self, int arg1)
             int g[1];
             cTimerDisable_ctor(g);
             cEffectRequest_dtor(e, -1);
-            Mem_Free(0, e, D_004BC5D0, 0x11E1);
+            cMemMan_Deallocate(0, e, D_004BC5D0, 0x11E1);
             cTimerDisable_dtor(g, -1);
         }
     }
@@ -99,12 +99,12 @@ void ParticleLib_ResolveRequests(S397B20* self, int arg1)
         int g[1];
         cTimerDisable_ctor(g);
         cArray_cEffectRequestPtr_dtor(l, -1);
-        Mem_Free(0, l, D_004BC5D0, 0x11E4);
+        cMemMan_Deallocate(0, l, D_004BC5D0, 0x11E4);
         cTimerDisable_dtor(g, -1);
     }
     D_0053BB58 = 0;
     self->loaded = 1;
-    FileMan_Release(buf, -1);
+    cFileMan_dtor(buf, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00397B20(void) {}

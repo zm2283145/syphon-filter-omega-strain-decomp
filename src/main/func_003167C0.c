@@ -3,13 +3,13 @@
 #define NULL 0
 #pragma mpwc_relax on
 int Global_Shatter(int, int, int);                      
-int Object_LookupById(int *);                       
+int nGobjManager_LookupGOBJ_cObjectIdR(int *);                       
 extern unsigned char D_005721D0;
 extern unsigned char D_005723C8;
 
 #pragma push
 #pragma opt_common_subs off
-int cNetShatterMsg_NetReceive(int d0, int d1, int d2, char * arg3) {
+int cNetShatterMsg_NetShatterMsgCallback(int d0, int d1, int d2, char * arg3) {
     struct { char pad20[4]; int f24; int f28[2]; } sl;
     int temp_v0;
     int temp_s0;
@@ -20,8 +20,8 @@ int cNetShatterMsg_NetReceive(int d0, int d1, int d2, char * arg3) {
     if (D_005721D0 != 0) {
         sl.f28[0] = F_(arg3, 0x8, int);
         sl.f24 = F_(arg3, 0xC, int);
-        temp_s0 = Object_LookupById(sl.f28);
-        temp_v0 = Object_LookupById(&sl.f24);
+        temp_s0 = nGobjManager_LookupGOBJ_cObjectIdR(sl.f28);
+        temp_v0 = nGobjManager_LookupGOBJ_cObjectIdR(&sl.f24);
         if ((temp_s0 != 0) && (temp_v0 != 0)) {
             Global_Shatter(temp_s0, temp_v0, 1);
         }

@@ -42,14 +42,14 @@ static inline void merge_flush_func_00380C90(void) {}
 
 /* merge_units: begin func_00380CE0 */
 #pragma push /* merge_units */
-extern void List_Erase_383560(int* out, void* a, int* b);
+extern void std_list_deleter_int_erase_listdeleter(int* out, void* a, int* b);
 
-/* Calls List_Erase_383560 with a copy of *b and stores the produced word in *out. */
+/* Calls std_list_deleter_int_erase_listdeleter with a copy of *b and stores the produced word in *out. */
 void cLList_int_Erase(int* out, void* a, int* b) {
     int value;
     int result;
     value = *b;
-    List_Erase_383560(&result, a, &value);
+    std_list_deleter_int_erase_listdeleter(&result, a, &value);
     *out = result;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -81,14 +81,14 @@ static inline void merge_flush_func_00380D20(void) {}
 /* merge_units: begin func_00380D40 */
 #pragma push /* merge_units */
 extern void cFileMan_EncodeFilename_charP_cFileManR(void* obj, char* name, void* obj2);
-extern void TexMan_LoadNewTexture(void* self, void* obj, __int128* name);
-/* Formats a 16-byte name into a buffer, applies it to obj, then forwards to TexMan_LoadNewTexture. */
-void Tex_FindByName(void* self, __int128 name, void* obj)
+extern void cTexMan_AddTextureTDX(void* self, void* obj, __int128* name);
+/* Formats a 16-byte name into a buffer, applies it to obj, then forwards to cTexMan_AddTextureTDX. */
+void cTexMan_AddTextureFromFile_R_cFileMan(void* self, __int128 name, void* obj)
 {
     char buf[80];
     sprintf(buf, "%s.TDX", &name);
     cFileMan_EncodeFilename_charP_cFileManR(obj, buf, obj);
-    TexMan_LoadNewTexture(self, obj, &name);
+    cTexMan_AddTextureTDX(self, obj, &name);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00380D40(void) {}

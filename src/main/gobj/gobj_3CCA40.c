@@ -9,7 +9,7 @@
 #include "vu0_ops.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003CCA40 */
 #pragma push /* merge_units */
@@ -45,7 +45,7 @@ public:
     virtual void v28(); virtual void v29();
 };
 struct C3Own3CC { char pad[0x58]; C3Vt3CC* child; };
-extern "C" void Controller_DeathNotice(C3Own3CC* o)
+extern "C" void cGOBJ_Die(C3Own3CC* o)
 {
     if (o->child != 0) {
         o->child->v29();
@@ -68,8 +68,8 @@ extern char D_004E08A0[];
 extern char g_MsgLibDamageRequestKey[];
 extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
-void Event_Construct(Msg_3CCB00* m, void* type);
-void Event_Send(Msg_3CCB00* m, void* target, int f);
+void cMessage_ctor_cMessageNameR(Msg_3CCB00* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(Msg_3CCB00* m, void* target, int f);
 void cMessage_dtor(Msg_3CCB00* m, int f);
 }
 static inline unsigned char IsGod_3CCB00(Self_3CCB00* self)
@@ -79,14 +79,14 @@ static inline unsigned char IsGod_3CCB00(Self_3CCB00* self)
     if (c && c->IsGod()) r = 1;
     return r;
 }
-extern "C" int Actor_ApplyContactDamage(Self_3CCB00* self, int attacker, int p2, int p3, int p4, int flag, int p6, float dmg)
+extern "C" int cGOBJ_ReceiveDamage(Self_3CCB00* self, int attacker, int p2, int p3, int p4, int flag, int p6, float dmg)
 {
     if (!attacker) return 0;
     if (!(self->health <= 0.0f)) {
         int idmg;
         Msg_3CCB00 m;
         if (!g_IsMultiplayer || !IsGod_3CCB00(self)) self->health = self->health - dmg;
-        Event_Construct(&m, g_MsgLibDamageRequestKey);
+        cMessage_ctor_cMessageNameR(&m, g_MsgLibDamageRequestKey);
         idmg = (int)dmg;
         m.attacker = attacker;
         m.vt = D_004E08A0;
@@ -98,13 +98,13 @@ extern "C" int Actor_ApplyContactDamage(Self_3CCB00* self, int attacker, int p2,
             if (self->ctl == 0 && flag == 0) {
                 m.kind = 2;
                 m.flag = 0;
-                Event_Send(&m, self, 0);
+                QueueMessage_cMessageR_cSystemP_int(&m, self, 0);
             } else if ((self->b14 && self->ctl) || (!self->ctl && flag)) {
                 m.kind = 2;
-                Event_Send(&m, self, 0);
+                QueueMessage_cMessageR_cSystemP_int(&m, self, 0);
             }
         } else {
-            Event_Send(&m, self, 0);
+            QueueMessage_cMessageR_cSystemP_int(&m, self, 0);
         }
         if ((int)self->health <= 0) {
             self->health = 0.0f;
@@ -118,7 +118,7 @@ extern "C" int Actor_ApplyContactDamage(Self_3CCB00* self, int attacker, int p2,
         int v = g_IsMultiplayer ? D_005721C0 : 1;
         if (!v && !self->ctl && !flag) {
             Msg_3CCB00 m2;
-            Event_Construct(&m2, g_MsgLibDamageRequestKey);
+            cMessage_ctor_cMessageNameR(&m2, g_MsgLibDamageRequestKey);
             m2.attacker = attacker;
             m2.vt = D_004E08A0;
             m2.p3 = p3;
@@ -127,7 +127,7 @@ extern "C" int Actor_ApplyContactDamage(Self_3CCB00* self, int attacker, int p2,
             m2.flag = 1;
             m2.kind = 2;
             m2.flag = 0;
-            Event_Send(&m2, self, 0);
+            QueueMessage_cMessageR_cSystemP_int(&m2, self, 0);
             m2.vt = D_004E08A0;
             cMessage_dtor(&m2, 0);
         }
@@ -152,9 +152,9 @@ static inline void F6Delete(F6Comp* p)
 {
     AllocGuard g;
     p->Destroy(-1);
-    Mem_Free(0, p, "gobj.cc", 0x291);
+    cMemMan_Deallocate(0, p, "gobj.cc", 0x291);
 }
-extern "C" void Actor_AttachComponent(F6Actor* a, F6Comp* c)
+extern "C" void cGOBJ_AttachController(F6Actor* a, F6Comp* c)
 {
     if (a->comp) {
         if (a->comp) {

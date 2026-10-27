@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *g_ActorActionMsgClass;
 
-void StaticInit_CasActionMsgName(void) {
+void StaticInit_charActionMsg(void) {
     g_ActorActionMsgClass = "CAS_ACTION";
 }

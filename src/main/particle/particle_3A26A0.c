@@ -5,7 +5,7 @@
  */
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003A26A0 */
 #pragma push /* merge_units */
@@ -15,8 +15,8 @@ int Mem_Free();
 #pragma inline_depth(8)
 
 extern "C" {
-void* Mem_Alloc(int, int, char*, int);
-void* ParticleDefs_SlotForId(void* self, int n);
+void* cMemMan_Allocate(int, int, char*, int);
+void* cLList_cParticleDefinitionPtr_opIndex(void* self, int n);
 extern char D_0053B544[];
 extern char D_004BC5D0[];
 }
@@ -60,26 +60,26 @@ struct Mgr3A26A0 {
 };
 
 extern "C" {
-Node3A26A0* ParticleEmitter_Construct(void* p, Node3A26A0* ins, Desc3A26A0* d, int a, float f);
-Node3A26A0* PhysEmitter_Construct(void* p, Node3A26A0* ins, Desc3A26A0* d, int a, float f);
-Node3A26A0* ShatterEmitter_Construct(void* p, Node3A26A0* ins, Desc3A26A0* d, int a, float f, V43A26A0* v);
+Node3A26A0* cParticleSpline_ctor(void* p, Node3A26A0* ins, Desc3A26A0* d, int a, float f);
+Node3A26A0* cParticleSpray_ctor(void* p, Node3A26A0* ins, Desc3A26A0* d, int a, float f);
+Node3A26A0* cParticleShatter_ctor(void* p, Node3A26A0* ins, Desc3A26A0* d, int a, float f, V43A26A0* v);
 }
 
 static inline void* Alloc3A26A0(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004BC5D0, line);
+    return cMemMan_Allocate(0, size, D_004BC5D0, line);
 }
 
 static inline Node3A26A0* New3A26A0(Node3A26A0* ins, Desc3A26A0* d, int a3, float f)
 {
     void* t = Alloc3A26A0(0x180, 0x59C);
     if (t)
-        t = ParticleEmitter_Construct(t, ins, d, a3, f);
+        t = cParticleSpline_ctor(t, ins, d, a3, f);
     return (Node3A26A0*)t;
 }
 
-extern "C" Node3A26A0* ParticleEmitter_SpawnChildren(Mgr3A26A0* mgr, Node3A26A0* ins, int name, int a3, float f)
+extern "C" Node3A26A0* cParticle_AddChild(Mgr3A26A0* mgr, Node3A26A0* ins, int name, int a3, float f)
 {
     Node3A26A0* t;
     bool found;
@@ -88,14 +88,14 @@ extern "C" Node3A26A0* ParticleEmitter_SpawnChildren(Mgr3A26A0* mgr, Node3A26A0*
     bool after;
     bool seen;
 
-    d = *(Desc3A26A0**)ParticleDefs_SlotForId(D_0053B544, name);
+    d = *(Desc3A26A0**)cLList_cParticleDefinitionPtr_opIndex(D_0053B544, name);
     after = 0;
     if (d->b4 == 1) {
         t = New3A26A0(ins, d, a3, f);
     } else if (!ins || !ins->bC) {
         t = (Node3A26A0*)Alloc3A26A0(0x130, 0x5A3);
         if (t)
-            t = PhysEmitter_Construct(t, ins, d, a3, mgr->f50);
+            t = cParticleSpray_ctor(t, ins, d, a3, mgr->f50);
         if (ins && ins->IsAttached())
             after = 1;
     } else {
@@ -106,7 +106,7 @@ extern "C" Node3A26A0* ParticleEmitter_SpawnChildren(Mgr3A26A0* mgr, Node3A26A0*
             v.y = 1.0f;
             v.z = 0.0f;
             v.w = 0.0f;
-            t = ShatterEmitter_Construct(t, ins, d, a3, mgr->f50, &v);
+            t = cParticleShatter_ctor(t, ins, d, a3, mgr->f50, &v);
         }
     }
     found = 0;
@@ -179,8 +179,8 @@ struct Box {
 struct Data { char pad[0x890]; Box box; };
 struct Obj { char pad[0x24]; Data* d; char pad28[0x18]; V pos; char pad50[0x19]; unsigned char f69; Box* Get() { return &d->box; } };
 extern "C" Box D_0053B660;
-extern "C" Box* ParticleInst_ComputeBounds(Obj* o);
-Box* ParticleInst_ComputeBounds(Obj* o)
+extern "C" Box* cParticle_GetBBox(Obj* o);
+Box* cParticle_GetBBox(Obj* o)
 {
     if (!o->f69) return &o->d->box;
     {
@@ -242,7 +242,7 @@ static inline void NodeDtor_3A2BA0(Node_3A2BA0* m)
     }
 }
 
-extern "C" Self_3A2BA0* ParticleInst_Kill(Self_3A2BA0* self, short deleteFlag)
+extern "C" Self_3A2BA0* cParticle_dtor(Self_3A2BA0* self, short deleteFlag)
 {
     if (self) {
         while (self->count != 0) {
@@ -255,7 +255,7 @@ extern "C" Self_3A2BA0* ParticleInst_Kill(Self_3A2BA0* self, short deleteFlag)
             {
                 AllocGuard g;
                 ((Obj_3A2BA0*)n)->Destroy(-1);
-                Mem_Free(0, n, D_004BC5D0, 0x570);
+                cMemMan_Deallocate(0, n, D_004BC5D0, 0x570);
             }
         }
         self->head.next = &self->tail;
@@ -268,7 +268,7 @@ extern "C" Self_3A2BA0* ParticleInst_Kill(Self_3A2BA0* self, short deleteFlag)
             {
                 AllocGuard g;
                 o->Destroy(-1);
-                Mem_Free(0, o, D_004BC5D0, 0x576);
+                cMemMan_Deallocate(0, o, D_004BC5D0, 0x576);
             }
             self->owned = 0;
         }
@@ -351,35 +351,35 @@ struct TracerTC {
 
 extern "C" {
 #if 0 /* merge_units */
-NodeTC* ParticleEmitter_Construct(void* p, NodeTC* ins, DescTC* d, int a, float f);
+NodeTC* cParticleSpline_ctor(void* p, NodeTC* ins, DescTC* d, int a, float f);
 #endif /* merge_units */
-#define ParticleEmitter_Construct(a0, a1, a2, a3, a4) ((NodeTC *)ParticleEmitter_Construct((a0), (Node3A26A0 *)(a1), (Desc3A26A0 *)(a2), (a3), (a4))) /* merge_units */
+#define cParticleSpline_ctor(a0, a1, a2, a3, a4) ((NodeTC *)cParticleSpline_ctor((a0), (Node3A26A0 *)(a1), (Desc3A26A0 *)(a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
-NodeTC* PhysEmitter_Construct(void* p, NodeTC* ins, DescTC* d, int a, float f);
+NodeTC* cParticleSpray_ctor(void* p, NodeTC* ins, DescTC* d, int a, float f);
 #endif /* merge_units */
-#define PhysEmitter_Construct(a0, a1, a2, a3, a4) ((NodeTC *)PhysEmitter_Construct((a0), (Node3A26A0 *)(a1), (Desc3A26A0 *)(a2), (a3), (a4))) /* merge_units */
+#define cParticleSpray_ctor(a0, a1, a2, a3, a4) ((NodeTC *)cParticleSpray_ctor((a0), (Node3A26A0 *)(a1), (Desc3A26A0 *)(a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
-NodeTC* ShatterEmitter_Construct(void* p, NodeTC* ins, DescTC* d, int a, float f, V4TC* v);
+NodeTC* cParticleShatter_ctor(void* p, NodeTC* ins, DescTC* d, int a, float f, V4TC* v);
 #endif /* merge_units */
-#define ShatterEmitter_Construct(a0, a1, a2, a3, a4, a5) ((NodeTC *)ShatterEmitter_Construct((a0), (Node3A26A0 *)(a1), (Desc3A26A0 *)(a2), (a3), (a4), (V43A26A0 *)(a5))) /* merge_units */
+#define cParticleShatter_ctor(a0, a1, a2, a3, a4, a5) ((NodeTC *)cParticleShatter_ctor((a0), (Node3A26A0 *)(a1), (Desc3A26A0 *)(a2), (a3), (a4), (V43A26A0 *)(a5))) /* merge_units */
 
-NodeTC* WeatherEmitter_Construct(void* p, NodeTC* ins, DescTC* d, int a, float f, V4TC* v);
-TracerTC* Tracer_Create(TracerTC* self, int name, int a3, float f);
+NodeTC* cParticleBox_ctor(void* p, NodeTC* ins, DescTC* d, int a, float f, V4TC* v);
+TracerTC* cParticle_ctor(TracerTC* self, int name, int a3, float f);
 }
 
 static inline void* AllocTC(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004BC5D0, line);
+    return cMemMan_Allocate(0, size, D_004BC5D0, line);
 }
 
 static inline NodeTC* New1TC(TracerTC* self, int a3)
 {
     void* t = AllocTC(0x180, 0x52D);
     if (t)
-        t = ParticleEmitter_Construct(t, 0, self->desc, a3, self->x50);
+        t = cParticleSpline_ctor(t, 0, self->desc, a3, self->x50);
     return (NodeTC*)t;
 }
 
@@ -392,7 +392,7 @@ static inline NodeTC* New2TC(TracerTC* self, int a3)
         v.y = 1.0f;
         v.z = 0.0f;
         v.w = 0.0f;
-        t = ShatterEmitter_Construct(t, 0, self->desc, a3, self->x50, &v);
+        t = cParticleShatter_ctor(t, 0, self->desc, a3, self->x50, &v);
     }
     return (NodeTC*)t;
 }
@@ -406,7 +406,7 @@ static inline NodeTC* New3TC(TracerTC* self, int a3)
         v.y = 1.0f;
         v.z = 0.0f;
         v.w = 0.0f;
-        t = WeatherEmitter_Construct(t, 0, self->desc, a3, self->x50, &v);
+        t = cParticleBox_ctor(t, 0, self->desc, a3, self->x50, &v);
     }
     return (NodeTC*)t;
 }
@@ -415,11 +415,11 @@ static inline NodeTC* New4TC(TracerTC* self, int a3)
 {
     void* t = AllocTC(0x130, 0x53B);
     if (t)
-        t = PhysEmitter_Construct(t, 0, self->desc, a3, self->x50);
+        t = cParticleSpray_ctor(t, 0, self->desc, a3, self->x50);
     return (NodeTC*)t;
 }
 
-extern "C" TracerTC* Tracer_Create(TracerTC* self, int name, int a3, float f)
+extern "C" TracerTC* cParticle_ctor(TracerTC* self, int name, int a3, float f)
 {
     NodeTC* t;
     NodeTC* p;
@@ -449,7 +449,7 @@ extern "C" TracerTC* Tracer_Create(TracerTC* self, int name, int a3, float f)
     self->tail.next = (NodeTC*)tl;
     self->tail.prev = (NodeTC*)hd;
     self->count = 0;
-    self->desc = *(DescTC**)ParticleDefs_SlotForId(D_0053B544, name);
+    self->desc = *(DescTC**)cLList_cParticleDefinitionPtr_opIndex(D_0053B544, name);
     if (self->desc->b4 == 1) {
         t = New1TC(self, a3);
     } else if (name == D_0053B5A0) {
@@ -469,9 +469,9 @@ extern "C" TracerTC* Tracer_Create(TracerTC* self, int name, int a3, float f)
     self->count++;
     return self;
 }
-#undef ParticleEmitter_Construct /* merge_units */
-#undef PhysEmitter_Construct /* merge_units */
-#undef ShatterEmitter_Construct /* merge_units */
+#undef cParticleSpline_ctor /* merge_units */
+#undef cParticleSpray_ctor /* merge_units */
+#undef cParticleShatter_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003A2DD0(void) {}
 #pragma pop /* merge_units */

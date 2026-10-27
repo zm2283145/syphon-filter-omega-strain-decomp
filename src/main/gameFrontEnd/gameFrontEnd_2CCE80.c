@@ -47,9 +47,9 @@ static inline void merge_flush_func_002CCE80(void) {}
 #pragma cplusplus on
 extern "C" {
 #if 0 /* merge_units */
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 #endif /* merge_units */
-#define Mem_Alloc(a0, a1, a2, a3) ((void *)Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
+#define cMemMan_Allocate(a0, a1, a2, a3) ((void *)cMemMan_Allocate((a0), (a1), (a2), (a3))) /* merge_units */
 
 extern char D_004DFD80[];
 extern char D_004DE200[];
@@ -60,7 +60,7 @@ extern "C" MsgCF30* cLoadMsg_Clone(MsgCF30* src)
     MsgCF30* p;
     {
         AllocGuard guard;
-        p = (MsgCF30*)Mem_Alloc(0, 0x24, "game_msg.hh", 0x2D);
+        p = (MsgCF30*)cMemMan_Allocate(0, 0x24, "game_msg.hh", 0x2D);
     }
     if (p) {
         p->vtable = D_004DFD80;
@@ -76,7 +76,7 @@ extern "C" MsgCF30* cLoadMsg_Clone(MsgCF30* src)
     }
     return p;
 }
-#undef Mem_Alloc /* merge_units */
+#undef cMemMan_Allocate /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002CCF30(void) {}
 #pragma pop /* merge_units */

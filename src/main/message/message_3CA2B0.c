@@ -55,7 +55,7 @@ void* std_list_tQueuedMessage_dtor(void* self, short del)
 #pragma push /* merge_units */
 extern void std_list_deleter_tQueuedMessage_begin(int* out, void* self);
 extern void std_list_deleter_tQueuedMessage_end(int* out, void* self);
-extern void ObjectList_EraseRange_3C9EA0(int* out, void* self, int* first, int* last);
+extern void std_list_deleter_tQueuedMessage_erase(int* out, void* self, int* first, int* last);
 void* std_list_imp_tQueuedMessage_dtor(void* self, short del)
 {
     if (self) {
@@ -65,7 +65,7 @@ void* std_list_imp_tQueuedMessage_dtor(void* self, short del)
             int last;
             std_list_deleter_tQueuedMessage_begin(&first, self);
             std_list_deleter_tQueuedMessage_end(&last, self);
-            ObjectList_EraseRange_3C9EA0(&r, self, &first, &last);
+            std_list_deleter_tQueuedMessage_erase(&r, self, &first, &last);
         }
         if (del > 0)
             operator_delete(self);

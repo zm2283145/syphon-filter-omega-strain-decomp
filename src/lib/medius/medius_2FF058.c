@@ -11,8 +11,8 @@ typedef struct { char p[0x44]; unsigned char f44; char p45; unsigned short f46; 
 extern unsigned char D_004908EC;
 extern int rt_msg_client_is_valid_channel(C *);
 extern int rt_msg_client_is_valid_outgoing_msg(int);
-extern int NetConn_Flush(C *);
-int NetConn_BufferMessage(C *c, int type, unsigned short id, void *data, unsigned short len, unsigned char flag)
+extern int rt_msg_client_transfer_last_msg(C *);
+int rt_msg_client_store_msg_in_send_buf(C *c, int type, unsigned short id, void *data, unsigned short len, unsigned char flag)
 {
     B *b;
     int ok;
@@ -32,7 +32,7 @@ int NetConn_BufferMessage(C *c, int type, unsigned short id, void *data, unsigne
         }
     } else ok = 1;
     if (!ok) {
-        r = NetConn_Flush(c);
+        r = rt_msg_client_transfer_last_msg(c);
         if (r) return r;
     }
     b->type = type;
@@ -40,7 +40,7 @@ int NetConn_BufferMessage(C *c, int type, unsigned short id, void *data, unsigne
     memcpy(b->data + b->len, data, len);
     b->len += len;
     b->count++;
-    if (!(type == 2 || type == 3)) NetConn_Flush(c);
+    if (!(type == 2 || type == 3)) rt_msg_client_transfer_last_msg(c);
     if (flag == 1) {
         if (c->f44 == 1 && c->f46 != 0xFFFF) {
             if (c->f46 != id && id != 0xFFFF) c->f46 = 0xFFFE;
@@ -60,7 +60,7 @@ extern int rt_msg_client_is_valid_channel(C_002FF220 *);
 #define rt_msg_client_is_valid_channel(a0) (rt_msg_client_is_valid_channel((C *)(a0))) /* merge_units */
 
 extern int rt_circ_buf_get_avail_nowrap(void *, unsigned int *);
-extern int NetConn_Drain(C_002FF220 *);
+extern int rt_msg_client_send_channel_circ_buf(C_002FF220 *);
 extern int rt_circ_buf_normalize_with_buf(void *, int, int);
 int rt_msg_client_create_send_buf_space(C_002FF220 *c, unsigned int sz)
 {
@@ -74,7 +74,7 @@ int rt_msg_client_create_send_buf_space(C_002FF220 *c, unsigned int sz)
     if ((q != 0) != 1) return 2;
     if (rt_circ_buf_get_avail_nowrap(q, x)) return 0x15;
     if (x[0] < sz) {
-        r = NetConn_Drain(c);
+        r = rt_msg_client_send_channel_circ_buf(c);
         if (r) return r;
         if (rt_circ_buf_normalize_with_buf(q, 1, D_004908F8)) return 0x15;
         if (rt_circ_buf_get_avail_nowrap(q, x)) return 0x15;

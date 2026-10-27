@@ -18,12 +18,12 @@ typedef struct {
     short ids[10];
 } Self_2BF370;
 
-extern void GuiWidget_SetPos(void*, float, float);
-extern void GuiEquipmentModify_BuildList(Self_2BF370*);
-extern void GuiEquipmentModify_BuildCurrentColumn(Self_2BF370*);
-extern void GuiEquipmentModify_BuildSelectionColumn(Self_2BF370*);
+extern void GuiWidget_SetPosition(void*, float, float);
+extern void GuiEquipmentModify_UpdateList(Self_2BF370*);
+extern void GuiEquipmentModify_UpdateCurrent(Self_2BF370*);
+extern void GuiEquipmentModify_UpdateSelection(Self_2BF370*);
 
-void GuiEquipmentModify_BuildEquipList(Self_2BF370* self)
+void GuiEquipmentModify_UpdateSelectionHand(Self_2BF370* self)
 {
     int i;
     int span;
@@ -49,8 +49,8 @@ void GuiEquipmentModify_BuildEquipList(Self_2BF370* self)
     off = span - q * self->step - 1;
     if (first < 0)
         first = 0;
-    GuiWidget_SetPos(self->list, (float)self->x, (float)(self->total - off - first * self->step));
-    GuiEquipmentModify_BuildList(self);
-    GuiEquipmentModify_BuildCurrentColumn(self);
-    GuiEquipmentModify_BuildSelectionColumn(self);
+    GuiWidget_SetPosition(self->list, (float)self->x, (float)(self->total - off - first * self->step));
+    GuiEquipmentModify_UpdateList(self);
+    GuiEquipmentModify_UpdateCurrent(self);
+    GuiEquipmentModify_UpdateSelection(self);
 }

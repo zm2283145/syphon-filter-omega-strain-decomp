@@ -7,6 +7,6 @@ int cNetNPC_MoveToNode(Npc3880* o, Node3880* n)
 {
     if (NpcAuth_IsLocal())
         cNPC_MoveToNode(o, n);
-    NetEvent_Send(o->net, 6, 8, *(volatile int*)&n->netId, 0, 0, 0);
+    cNetNPCMsgs_SendMessage(o->net, 6, 8, *(volatile int*)&n->netId, 0, 0, 0);
     return 1;
 }

@@ -121,32 +121,32 @@ extern float D_0048AC3C;
 extern float D_0048AC40;
 extern float D_0048AC44;
 extern char g_TargetVisMgr;
-WNode* WorldObjList_Get(void* l);
+WNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_2(void* l);
 int func_00159570(void* p);
-Cam** List_Front(void* p);
-Item* WeaponInv_GetHeldItem(Inv* inv);
-int TeamTable_AreEnemies(Tgt* a, Tgt* b);
-void Combat_HitDirection(Mtx3* m, V4* v, V4* out);
-Tgt* Controller_GetAimTarget(Ctl* c);
+Cam** cLList_cCAMERA_GOBJPtr_Front(void* p);
+Item* cWeapon_GetWeaponEntry(Inv* inv);
+int cGOBJ_Enemy(Tgt* a, Tgt* b);
+void GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP(Mtx3* m, V4* v, V4* out);
+Tgt* cGobjController_GetTarget(Ctl* c);
 WNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4(void* n);
 WNode* std_list_deleter_cSafePtr_cGOBJ_tail(void* l);
 WNode** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(WIt* it, WNode* n);
 WNode** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(WIt* it, WNode* n);
-int TargetVis_Test(void* mgr, Tgt* a, Tgt* b, int c, int d);
-void TargetVis_LeaveRecent(RList* l, Pred p);
-WIt WeakHandleList_Append(RList* list, const WIt& pos, HndT* h);
-Tgt* Targeting_LockPick(Tgt* self, Tgt* cur, RList* recent);
+int cTargetManager_IsLosBlocked(void* mgr, Tgt* a, Tgt* b, int c, int d);
+void std_list_imp_cSafePtr_cGOBJ_remove_if(RList* l, Pred p);
+WIt std_list_deleter_cSafePtr_cGOBJ_insert(RList* list, const WIt& pos, HndT* h);
+Tgt* ChooseTarget(Tgt* self, Tgt* cur, RList* recent);
 }
 
 static inline float Sq(float x) { return x * x; }
-static inline bool NotVis(Tgt* a, Tgt* b) { return !TargetVis_Test(&g_TargetVisMgr, a, b, 0, 1); }
+static inline bool NotVis(Tgt* a, Tgt* b) { return !cTargetManager_IsLosBlocked(&g_TargetVisMgr, a, b, 0, 1); }
 static inline WIt Next(WIt& i) { return i++; }
-static inline WIt2 WBegin(WList& l) { WIt2 r(WorldObjList_Get(&l.list)->next); return r; }
-static inline WIt2 WEnd(WList& l) { WIt2 r(WorldObjList_Get(&l.list)); return r; }
+static inline WIt2 WBegin(WList& l) { WIt2 r(details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_2(&l.list)->next); return r; }
+static inline WIt2 WEnd(WList& l) { WIt2 r(details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_2(&l.list)); return r; }
 static inline WIt RHead(RList* l) { WIt r(details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4(&l->head)->next); return r; }
 static inline WIt RBegin(RList* l) { WIt t; std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(&t, std_list_deleter_cSafePtr_cGOBJ_tail(l)->next); return t; }
 static inline WIt REnd(RList* l) { WIt t; std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&t, std_list_deleter_cSafePtr_cGOBJ_tail(l)); return t; }
-static inline void RPush(RList* l, const HndT& h) { WNode* hd = (WNode*)&l->head; WeakHandleList_Append(l, WIt(hd), (HndT*)&h); }
+static inline void RPush(RList* l, const HndT& h) { WNode* hd = (WNode*)&l->head; std_list_deleter_cSafePtr_cGOBJ_insert(l, WIt(hd), (HndT*)&h); }
 
 static inline V4 Xform(const Mtx& m, const V4& in) {
     V4 v;
@@ -185,10 +185,10 @@ static inline float LenSq(V4* v) {
 }
 static inline float Abs(float x) { float r = 0.0f; asm { abs.s r, x } return r; }
 
-static inline void Leave2(RList* l, const HndT& h) { Eq eq; TargetVis_LeaveRecent(l, Pred(eq, (HndT&)h)); }
+static inline void Leave2(RList* l, const HndT& h) { Eq eq; std_list_imp_cSafePtr_cGOBJ_remove_if(l, Pred(eq, (HndT&)h)); }
 static inline void Leave3(RList* l, Tgt* t) { Leave2(l, HndT(t)); }
 static inline void Push2(RList* l, Tgt* t) { RPush(l, HndT(t)); }
-Tgt* Targeting_LockPick(Tgt* self, Tgt* cur, RList* recent)
+Tgt* ChooseTarget(Tgt* self, Tgt* cur, RList* recent)
 {
     WList& wl = g_Hud->S()->objs;
     WIt2 it = WBegin(wl);
@@ -196,13 +196,13 @@ Tgt* Targeting_LockPick(Tgt* self, Tgt* cur, RList* recent)
     V4 off(0.0f, 0.0f, 5.0f, 1.0f);
     Mtx sm = self->GetMtx();
     V4 aim = Xform(sm, off);
-    Cam* cam = func_00159570(&g_CameraObject) ? *List_Front(&g_CameraObject) : 0;
+    Cam* cam = func_00159570(&g_CameraObject) ? *cLList_cCAMERA_GOBJPtr_Front(&g_CameraObject) : 0;
     V4 aim2;
     Mtx3 cm = cam->GetMtx();
     aim2 = aim;
     int cnt = recent->count;
     bool sawCur = false;
-    Item* item = WeaponInv_GetHeldItem(self->inv);
+    Item* item = cWeapon_GetWeaponEntry(self->inv);
     Tgt* tgts[16];
     float scores[16];
     int n;
@@ -216,7 +216,7 @@ Tgt* Targeting_LockPick(Tgt* self, Tgt* cur, RList* recent)
         Tgt* t = HGet(&*it);
         if (!t) continue;
         if (!t->Targetable()) continue;
-        if (t == self || !TeamTable_AreEnemies(self, t)) continue;
+        if (t == self || !cGOBJ_Enemy(self, t)) continue;
         if (t->Kind() != 2) continue;
         int cover = t->x44;
         {
@@ -241,7 +241,7 @@ Tgt* Targeting_LockPick(Tgt* self, Tgt* cur, RList* recent)
         if (wd < maxSq) {
             V4 hd;
             V4 dir = t->GetDir();
-            Combat_HitDirection(&cm, &dir, &hd);
+            GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP(&cm, &dir, &hd);
             dist = D_0048AC24 * (maxSq - wd);
             pitch = 1.0f - Abs(hd.u.f.z) / 3.1415927f;
             yaw = 1.0f - Abs(hd.u.f.x) / 3.1415927f;
@@ -252,7 +252,7 @@ Tgt* Targeting_LockPick(Tgt* self, Tgt* cur, RList* recent)
             if (pitch > D_0048AC3C || wd < closeSq) lvl = 1;
             else if (pitch > D_0048AC40) lvl = 2;
             else if (pitch > D_0048AC44) lvl = 3;
-            if (c && Controller_GetAimTarget(c) == self && dsq < 200.0f && c->x20 > 0.75f) lvl = 1;
+            if (c && cGobjController_GetTarget(c) == self && dsq < 200.0f && c->x20 > 0.75f) lvl = 1;
             lvlScore = (4.0f - (float)lvl) / 3.0f * D_0048AC34;
             pitch = pitch * D_0048AC2C;
             int found = -1;

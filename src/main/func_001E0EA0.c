@@ -8,7 +8,7 @@
 #include "loose00_types.h"
 
 extern int std_vector_pod_int_opAssign(void*, void*);
-extern int Vec16Array_PopBack(Vec16Array*);
+extern int std_vector_imp_cEdgeGroup_pop_back(Vec16Array*);
 extern int cEdgeGroup_dtor(FlagElem16*, int);
 
 /* End pointer of an array of 0x60-byte records. */
@@ -29,12 +29,12 @@ Elem60* std_vector_imp_cCollisionEdge_begin(Vec60Array* v) {
     return v->data;
 }
 
-int Vec16Array_PopBack_Thunk(Vec16Array* v) {
-    return Vec16Array_PopBack(v);
+int cArray_cEdgeGroup_PopBack(Vec16Array* v) {
+    return std_vector_imp_cEdgeGroup_pop_back(v);
 }
 
 /* Pop the last 16-byte element and destroy it. */
-int Vec16Array_PopBack(Vec16Array* v) {
+int std_vector_imp_cEdgeGroup_pop_back(Vec16Array* v) {
     int count;
     FlagElem16* data;
 

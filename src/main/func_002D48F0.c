@@ -33,9 +33,9 @@ struct MsgA : CMsg { int a24; unsigned char a28; char p29[7]; V4 v; };
 struct MsgB : CMsg { int a24; unsigned char a28; char p29[3]; int id; };
 extern char g_ActorActionMsgClass[], D_004E0840[], D_004E0140[], D_004E01A0[];
 extern "C" {
-void MsgQueue_QueueClone(void*, void*, int, int);
-Actor* AiController_GetActor(Self*);
-int Weapon_CanAttack(void*);
+void QueueMessage_cMessageR_cSystemP_int_int(void*, void*, int, int);
+Actor* cNPC_Human(Self*);
+int cWeapon_Ready(void*);
 int cNetNPC_WeaponShoot(Self*);
 void cNetNPC_AimFire(Self* s, Tgt* t);
 }
@@ -48,18 +48,18 @@ void cNetNPC_AimFire(Self* s, Tgt* t)
         V4 p = t->AimPoint(-1);
         MsgA m;
         MsgA* pm = &m;
-        Event_Construct(pm, g_ActorActionMsgClass);
+        cMessage_ctor_cMessageNameR(pm, g_ActorActionMsgClass);
         pm->vtable = D_004E0840;
         pm->a24 = 0x39;
         pm->a28 = 4;
         pm->vtable = D_004E0140;
         V4_Copy(&pm->v, &p);
-        MsgQueue_QueueClone(&m, s->ctl, 1, 0);
+        QueueMessage_cMessageR_cSystemP_int_int(&m, s->ctl, 1, 0);
         m.vtable = D_004E0840;
         cMessage_dtor(&m, 0);
     }
     if (s->burst > 0) {
-        if (Weapon_CanAttack(AiController_GetActor(s)->inv) && s->shotWait <= 0.0f && cNetNPC_WeaponShoot(s)) {
+        if (cWeapon_Ready(cNPC_Human(s)->inv) && s->shotWait <= 0.0f && cNetNPC_WeaponShoot(s)) {
             s->burst--;
             s->shotWait = s->shotDelay;
         }
@@ -71,13 +71,13 @@ void cNetNPC_AimFire(Self* s, Tgt* t)
         MsgB m;
         MsgB* pm = &m;
         int* id = &t->id;
-        Event_Construct(pm, g_ActorActionMsgClass);
+        cMessage_ctor_cMessageNameR(pm, g_ActorActionMsgClass);
         pm->vtable = D_004E0840;
         pm->a24 = 0x3E;
         pm->a28 = 5;
         pm->vtable = D_004E01A0;
         pm->id = *id;
-        MsgQueue_QueueClone(pm, s->ctl, 1, 0);
+        QueueMessage_cMessageR_cSystemP_int_int(pm, s->ctl, 1, 0);
         m.vtable = D_004E0840;
         cMessage_dtor(&m, 0);
     }

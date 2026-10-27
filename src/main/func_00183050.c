@@ -8,6 +8,6 @@
 #include "loose00_types.h"
 
 /* End of a counted pointer array {count, items[]}. */
-void** InlinePtrArray_End(PtrStack* s) {
+void** cArray_FixedCapacity_cGOBJPtr_2_End(PtrStack* s) {
     return &s->items[s->count];
 }

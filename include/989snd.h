@@ -31,11 +31,11 @@
  *   8    snd_ResolveBankXREFS()        no arguments
  *   0xB  snd_SetPlaybackMode(x)       one word
  *   0x18 snd_StopAllSounds()        no arguments, sent at sound shutdown
- *   0x21 snd_RestartVAGStream(...)     six words plus callback/user data
- *   0x56 snd_GetSoundUserData(...)     0x30-byte block
- *   0x5C snd_PlaySoundVolPan(...)     0x30-byte block with a field mask (0x3C | 1)
+ *   0x21 snd_SetSoundParams_CB(...)     six words plus callback/user data
+ *   0x56 snd_GetSoundUserData_CB(...)     0x30-byte block
+ *   0x5C snd_PlaySoundByNameVolPanPMPB_CB(...)     0x30-byte block with a field mask (0x3C | 1)
  *   0x60 snd_SetMasterVolumeDucker(x, p)    word + six-word block (-1 when p is NULL)
- *   0x61 snd_StopVAGStreamsInGroup(x)       one word
+ *   0x61 snd_StopAllSoundsInGroup(x)       one word
  */
 
 #define SND_ERR_RPC_FAILED 0x106 /* stored to snd_lastError when sceSifCallRpc fails */

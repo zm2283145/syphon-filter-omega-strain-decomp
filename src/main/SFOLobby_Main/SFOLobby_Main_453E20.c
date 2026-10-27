@@ -13,36 +13,36 @@ typedef struct {
     char pad2418[0x26AC - 0x2418];
 } Game;
 extern Game* D_00585E60;
-extern void LobbyArray_ctor(Slot* slot);
+extern void SFOLobbyList_ctor(Slot* slot);
 extern void* memset(void* p, int c, int n);
-extern void LobbyArray_Init(Slot* slot, int a, int b, int c);
-extern char* String_Copy(char* dst, const char* src);
+extern void SFOLobbyList_AllocList(Slot* slot, int a, int b, int c);
+extern char* Libc_Strcpy(char* dst, const char* src);
 
 /* Game state constructor: builds the slots, clears the data block and sets defaults. */
 Game* SFOLobby_ctor(Game* self)
 {
-    LobbyArray_ctor(&self->slots[0]);
-    LobbyArray_ctor(&self->slots[1]);
-    LobbyArray_ctor(&self->slots[2]);
-    LobbyArray_ctor(&self->slots[3]);
-    LobbyArray_ctor(&self->slots[4]);
-    LobbyArray_ctor(&self->slots[5]);
-    LobbyArray_ctor(&self->slots[6]);
-    LobbyArray_ctor(&self->slots[7]);
-    LobbyArray_ctor(&self->slots[8]);
-    LobbyArray_ctor(&self->slots[9]);
-    LobbyArray_ctor(&self->slots[10]);
-    LobbyArray_ctor(&self->slots[11]);
-    LobbyArray_ctor(&self->slots[12]);
+    SFOLobbyList_ctor(&self->slots[0]);
+    SFOLobbyList_ctor(&self->slots[1]);
+    SFOLobbyList_ctor(&self->slots[2]);
+    SFOLobbyList_ctor(&self->slots[3]);
+    SFOLobbyList_ctor(&self->slots[4]);
+    SFOLobbyList_ctor(&self->slots[5]);
+    SFOLobbyList_ctor(&self->slots[6]);
+    SFOLobbyList_ctor(&self->slots[7]);
+    SFOLobbyList_ctor(&self->slots[8]);
+    SFOLobbyList_ctor(&self->slots[9]);
+    SFOLobbyList_ctor(&self->slots[10]);
+    SFOLobbyList_ctor(&self->slots[11]);
+    SFOLobbyList_ctor(&self->slots[12]);
     D_00585E60 = self;
     memset(self->state, 0, (char*)(self + 1) - self->state);
     self->unk2414 = 0;
     self->mode = 8;
     self->active = 1;
     self->slots[1].flag = 1;
-    LobbyArray_Init(&self->slots[1], 0x40, 0, 0xAC);
-    LobbyArray_Init(&self->slots[2], 8, 0, 0x214);
-    LobbyArray_Init(&self->slots[3], 0x10, 0, 9);
-    String_Copy(self->name, "MediusLobby");
+    SFOLobbyList_AllocList(&self->slots[1], 0x40, 0, 0xAC);
+    SFOLobbyList_AllocList(&self->slots[2], 8, 0, 0x214);
+    SFOLobbyList_AllocList(&self->slots[3], 0x10, 0, 9);
+    Libc_Strcpy(self->name, "MediusLobby");
     return self;
 }

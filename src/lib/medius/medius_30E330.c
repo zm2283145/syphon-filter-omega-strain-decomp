@@ -38,7 +38,7 @@ extern int func_00310988(int *p, int kind, int arg);
 extern int rt_comm_create(UpCtxE330 *c, char *host, unsigned short port, AddrE330 *a);
 extern int func_00310C30(int h);
 extern int rt_comm_destroy(int s);
-extern int Socket_WriteConnected(int s, char *buf, unsigned short len, short *written);
+extern int rt_comm_send(int s, char *buf, unsigned short len, short *written);
 extern int rt_time_get_time_stamp(void *p);
 int func_0030E330(UpnpE330 *u, int flags, int cb)
 {
@@ -83,7 +83,7 @@ int func_0030E330(UpnpE330 *u, int flags, int cb)
             return 5;
         }
         sprintf(u->ctx->req, D_004B0158, u->ctx->path, host, port);
-        if (Socket_WriteConnected(u->ctx->sock, u->ctx->req, strlen(u->ctx->req), &written) != 0
+        if (rt_comm_send(u->ctx->sock, u->ctx->req, strlen(u->ctx->req), &written) != 0
             || strlen(u->ctx->req) != written) {
             rt_comm_destroy(u->ctx->sock);
             func_00310C30(u->ctx->conn);

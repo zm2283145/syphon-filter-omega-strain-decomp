@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { float x, y, z, r; } __attribute__((aligned(16))) S_3110;
 typedef struct { S_3110 a; S_3110 c; } Sp_3110;
-int Sphere_Overlaps(Sp_3110* a, Sp_3110* b) {
+int cSphere_Intersects(Sp_3110* a, Sp_3110* b) {
     int t; float d;
     asm {
         lqc2 vf1, 0x10(a)

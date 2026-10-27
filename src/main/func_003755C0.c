@@ -11,7 +11,7 @@ typedef struct {
     char pad107[0x110 - 0x107];
 } CameraRecord;
 extern void* memset(void*, int, unsigned int);
-CameraRecord* CameraRecord_Construct(CameraRecord* r)
+CameraRecord* cXViewport_ctor(CameraRecord* r)
 {
     memset(r, 0, sizeof(CameraRecord));
     { void* p = &r->m10; UnitMtx_55C0(p); }

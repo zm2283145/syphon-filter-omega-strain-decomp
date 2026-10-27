@@ -1,5 +1,5 @@
 #pragma cplusplus on
-/* IeElement_Construct (interface_element.cc): base IfItem fields, then derived vtable,
+/* cInterfaceElement_ctor (interface_element.cc): base IfItem fields, then derived vtable,
  * identity matrix, optional text object from info->rD0, and RGBA bytes from info->colA0. */
 #include "types.h"
 #include "alloc_guard.h"
@@ -36,15 +36,15 @@ extern char D_004E0220[];
 extern char D_004BDFB0[];
 extern int g_InterfaceFont;
 extern V4_9000 g_TextColourBlock;
-void* Mem_Alloc(int pool, int size, char* file, int line);
-Text_9000* TextObj_Construct(Text_9000* s, int a, int b, int c, int d, int e, V4_9000* v);
-char* TextManager_Get(void);
-void TextManager_AddText(void* list, int* id);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+Text_9000* cTextArea_ctor(Text_9000* s, int a, int b, int c, int d, int e, V4_9000* v);
+char* GetTextSystem(void);
+void cLList_cTextAreaPtr_PushBackActual(void* list, int* id);
 }
 static inline void UM(void* p) { int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
-static inline void* NewMem(unsigned int size) { AllocGuard g; return Mem_Alloc(0, size, D_004BDFB0, 0x31); }
-static inline void AddText(Text_9000* t) { TextManager_AddText(TextManager_Get() + 0x10, (int*)&t); }
-extern "C" Ie_9000* IeElement_Construct(Ie_9000* self, Info_9000* info)
+static inline void* NewMem(unsigned int size) { AllocGuard g; return cMemMan_Allocate(0, size, D_004BDFB0, 0x31); }
+static inline void AddText(Text_9000* t) { cLList_cTextAreaPtr_PushBackActual(GetTextSystem() + 0x10, (int*)&t); }
+extern "C" Ie_9000* cInterfaceElement_ctor(Ie_9000* self, Info_9000* info)
 {
     Rect_9000* r;
     self->vt = D_004E0800;
@@ -77,7 +77,7 @@ extern "C" Ie_9000* IeElement_Construct(Ie_9000* self, Info_9000* info)
         }
         t = (Text_9000*)NewMem(0x60);
         if (t)
-            t = TextObj_Construct(t, (int)r->f0, (int)r->f4, (int)w, (int)h, 0, &g_TextColourBlock);
+            t = cTextArea_ctor(t, (int)r->f0, (int)r->f4, (int)w, (int)h, 0, &g_TextColourBlock);
         self->text = t;
         { Text_9000* tt = self->text; tt->font = g_InterfaceFont; }
         AddText(self->text);

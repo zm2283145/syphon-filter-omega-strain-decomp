@@ -24,10 +24,10 @@ extern unsigned char D_005721D8;
 extern unsigned char D_00572528;
 extern int g_DmeLobby;
 extern unsigned char g_DmeLobbyActive;
-void Event_Construct(NetLevelInfoMsg* m, void* type);
+void cMessage_ctor_cMessageNameR(NetLevelInfoMsg* m, void* type);
 void cMessage_dtor(NetLevelInfoMsg* m, int f);
 int NetLevelInfoMsg_Send(NetLevelInfoMsg* m, int a, int* out, int b, int c, int size, char* buf);
-int Net_SendLocked(int kind, int net, int dst, int ch, unsigned int len, int n, void* buf);
+int NetSendMessage(int kind, int net, int dst, int ch, unsigned int len, int n, void* buf);
 void printf(char* fmt, char* file, int line, int err); /* debug printf */
 int NetGetTime(int* out);
 void func_003FBEB0(void);
@@ -41,7 +41,7 @@ void NetGetClientBufferStatus(int net, int i, int* a, int* b, int* c, int* d);
 void NetGetNetUpdateErrors(int* arr);
 int snprintf(char* s, int n, const char* fmt, ...);
 void cNetObj_Update(char* p);
-void SFOLobby_Update(int v);
+void SFOLobby_Intel(int v);
 
 #pragma opt_dead_assignments off
 static inline void NetBusyEnter(void) { if (!D_005723C8) D_005723C8 = 1; }
@@ -65,13 +65,13 @@ int DME_Update(void)
         if (D_00572428[i] == DME_LEVELINFO_PENDING) {
             int v = D_00494198;
             int r;
-            Event_Construct(&m, D_005839A0);
+            cMessage_ctor_cMessageNameR(&m, D_005839A0);
             m.vt = D_004E1180;
             m.value = v;
             m.size = 0x40;
             r = NetLevelInfoMsg_Send(&m, 0, &out, 0, 0, 0x20, buf);
             if (r > -1) {
-                int e = Net_SendLocked((signed char)m.size, D_005721A8, i + 1, 2, out, r, buf);
+                int e = NetSendMessage((signed char)m.size, D_005721A8, i + 1, 2, out, r, buf);
                 if (e) printf("%s : %d SHIT - %d\n", D_004BF9B0, 0x528, e);
             }
             D_00572428[i] = -1;
@@ -131,7 +131,7 @@ int DME_Update(void)
     if (D_00572528 && g_DmeLobby && g_DmeLobbyActive && !D_005723C8) {
         NetBusyEnter();
         NetBusyLeave();
-        SFOLobby_Update(g_DmeLobby);
+        SFOLobby_Intel(g_DmeLobby);
     }
     return ret;
 }

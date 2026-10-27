@@ -9,6 +9,6 @@
 extern int D_0052ACE0;
 
 /* Message type id. */
-int cNetQuickChatMsg_v05(void) {
+int cNetQuickChatMsg_GetMsgId(void) {
     return D_0052ACE0;
 }

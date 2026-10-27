@@ -122,43 +122,43 @@ static inline void merge_flush_func_003CC760(void) {}
 extern int D_005436B8;   /* cGOBJ script-type key */
 extern int D_005436C0;   /* cGOBJ script-type value */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
-extern int* cSystem_GetScriptTypeKeyPtr(void);
-extern int ScriptType_AddAccepted(int type, int iface);
-extern void ScriptType_SetParent(int type, int base);
+extern int cScriptInterpreter_CallEvent(void* filter, int a0, int a1);
+extern int* cSystem_SOBJ_getClassId(void);
+extern int cScriptBase_declareMsgUse(int type, int iface);
+extern void cScriptBase_declareParent(int type, int base);
 extern int* cDamageMsg_SOBJ_getClassId(void);
 
 /* Registers the cGOBJ script type: parent type, then one accepted interface. */
-int ScriptType_cGOBJ_Init(void) {
+int cGOBJ_SOBJ_init(void) {
     int* key;
 
-    key = cSystem_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_005436C0, *key);
+    key = cSystem_SOBJ_getClassId();
+    cScriptBase_declareParent(D_005436C0, *key);
     key = cDamageMsg_SOBJ_getClassId();
-    return ScriptType_AddAccepted(D_005436C0, *key);
+    return cScriptBase_declareMsgUse(D_005436C0, *key);
 }
 
 /* Identity conversion of a GOBJ script value; the volatile mirrors the stack temporary. */
-int GObj_IdentityA(int obj) {
+int cGOBJ_SOBJ_toInt(int obj) {
     volatile int tmp = obj;
     return tmp;
 }
 
-void* GObj_IdentityB(void* self) {
+void* cGOBJ_SOBJ_convert(void* self) {
     return self;
 }
 
 /* Address of the cGOBJ script-type key. */
-int* cGOBJ_GetScriptTypeKeyPtr(void) {
+int* cGOBJ_SOBJ_getClassId(void) {
     return &D_005436B8;
 }
 
-int cGOBJ_v0B(void) {
+int cGOBJ_getSOBJClassId(void) {
     return D_005436B8;
 }
 
-int cGOBJ_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cGOBJ_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003CC7B0(void) {}

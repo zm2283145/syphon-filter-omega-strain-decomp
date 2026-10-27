@@ -10,12 +10,12 @@
 #include "types.h"
 #include "alloc_guard.h"
 extern "C" {
-void Mem_Free(int heap, void* p, char* file, int line);
+void cMemMan_Deallocate(int heap, void* p, char* file, int line);
 void operator_delete(void* p);
 }
 struct S_00279D80 { void** a; void** b; int na; int nb; };
-static inline void Free_00279D80(void* p, int line) { AllocGuard g; Mem_Free(0, p, "decals.cc", line); }
-extern "C" S_00279D80* DecalMgr_dtor(S_00279D80* self, short flag)
+static inline void Free_00279D80(void* p, int line) { AllocGuard g; cMemMan_Deallocate(0, p, "decals.cc", line); }
+extern "C" S_00279D80* cDecalMan_dtor(S_00279D80* self, short flag)
 {
     if (self) {
         int i;
@@ -40,12 +40,12 @@ struct Mgr_27A020 {
     int f20; int f24; char pad28[8]; char f30[1];
 };
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void BloodDecal_BuildDirections(void* p, int n);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void CreateSphereNormals(void* p, int n);
 extern char D_004A9238[];
 extern int D_00543798;
 }
-extern "C" Mgr_27A020* DecalMgr_ctor(Mgr_27A020* self, int na, int nb) {
+extern "C" Mgr_27A020* cDecalMan_ctor(Mgr_27A020* self, int na, int nb) {
     self->a = 0;
     self->b = 0;
     self->na = na;
@@ -54,13 +54,13 @@ extern "C" Mgr_27A020* DecalMgr_ctor(Mgr_27A020* self, int na, int nb) {
     self->f14 = 0;
     self->f18 = 0;
     self->f1C = 0;
-    { Item_27A020** t; { int sz = self->na * 4; AllocGuard g; t = (Item_27A020**)Mem_Alloc(0, sz, D_004A9238, 0x74); } self->a = t; }
-    { Item_27A020** t; { int sz = self->nb * 4; AllocGuard g; t = (Item_27A020**)Mem_Alloc(0, sz, D_004A9238, 0x75); } self->b = t; }
+    { Item_27A020** t; { int sz = self->na * 4; AllocGuard g; t = (Item_27A020**)cMemMan_Allocate(0, sz, D_004A9238, 0x74); } self->a = t; }
+    { Item_27A020** t; { int sz = self->nb * 4; AllocGuard g; t = (Item_27A020**)cMemMan_Allocate(0, sz, D_004A9238, 0x75); } self->b = t; }
     {
         int i;
         for (i = 0; i < self->na; i++) {
             Item_27A020* p;
-            { AllocGuard g; p = (Item_27A020*)Mem_Alloc(0, 0x60, D_004A9238, 0x78); }
+            { AllocGuard g; p = (Item_27A020*)cMemMan_Allocate(0, 0x60, D_004A9238, 0x78); }
             if (p) { p->f0 = 0; p->f50 = 0; p->f54 = -1; p->f58 = 0; p->f5C = -1.0f; }
             self->a[i] = p;
         }
@@ -69,14 +69,14 @@ extern "C" Mgr_27A020* DecalMgr_ctor(Mgr_27A020* self, int na, int nb) {
         int i;
         for (i = 0; i < self->nb; i++) {
             Item_27A020* p;
-            { AllocGuard g; p = (Item_27A020*)Mem_Alloc(0, 0x60, D_004A9238, 0x7A); }
+            { AllocGuard g; p = (Item_27A020*)cMemMan_Allocate(0, 0x60, D_004A9238, 0x7A); }
             if (p) { p->f0 = 0; p->f50 = 0; p->f54 = -1; p->f58 = 0; p->f5C = -1.0f; }
             self->b[i] = p;
         }
     }
     self->f20 = (int)(0.1f * (float)self->na);
     self->f24 = (int)(0.1f * (float)self->nb);
-    BloodDecal_BuildDirections(self->f30, 0x20);
+    CreateSphereNormals(self->f30, 0x20);
     D_00543798 = self->nb;
     return self;
 }

@@ -35,9 +35,9 @@ static inline void merge_flush_func_003FDEE0(void) {}
 #pragma mpwc_relax on
 /*fc*/
 int Alloc_Lock();                                    
-int Alloc_Unlock();                                  
-int Loc_ReadPoolFile();                       
-int Mem_Alloc();                        
+int EnableIntc();                                  
+int LoadStrings();                       
+int cMemMan_Allocate();                        
 signed char CharMap_Load();                         
 extern char D_00493A40;
 extern char D_004BE440;
@@ -53,7 +53,7 @@ extern int D_0055D460;
 extern int D_0055D468;
 extern unsigned char D_0055D470;
 
-void Loc_LoadCommonPool(int arg0) {
+void nGlobalization_LoadCommonStrings(int arg0) {
     int sp130[68];
     int sp30[64];
     int temp_s1;
@@ -63,15 +63,15 @@ void Loc_LoadCommonPool(int arg0) {
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    temp_s1 = Mem_Alloc(0, 0x1E000, &D_004BE440, 0x110);
+    temp_s1 = cMemMan_Allocate(0, 0x1E000, &D_004BE440, 0x110);
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     D_0055D458 = temp_s1;
     D_0055D460 = temp_s1;
     D_0055D468 = temp_s1;
     g_ProfileLockDepth -= 1;
-    Loc_ReadPoolFile(&D_0055CA40, sp130);
+    LoadStrings(&D_0055CA40, sp130);
     D_0055CA80 = D_0055CA74;
     D_0055D468 = D_0055D460;
     sprintf(sp30, "%s\\COMMON\\sfo_char.map", arg0);

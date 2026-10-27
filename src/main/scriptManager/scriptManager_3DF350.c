@@ -17,14 +17,14 @@
  */
 
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int value);
 extern OwnedVec* std_vector_imp_cObjectId_ctor(OwnedVec* v);
 
 int* std_vector_StringPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }
 
-int* Script_GetStringTableEntry(PtrVec* v, int i) {
+int* cArray_charPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }
 
@@ -34,7 +34,7 @@ int* cArray_intPtr_opIndex_int_2(PtrVec* v, int i) {
 
 /* push_back: inserts one value at the end. */
 int std_vector_cGroupPtr_push_back(PtrVec* v, int value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 
 OwnedVec* cArray_cObjectId_ctor(OwnedVec* v) {

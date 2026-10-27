@@ -62,12 +62,12 @@ SIt* std_list_deleter_TextAtom_generic_iterator_ctor(SIt* self, SNode* n);
 SNode* std_list_deleter_TextAtom_tail(SList* l);
 SNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_12(SNode* h);
 char* strncpy(char* d, const char* s, int n);
-int Font_GetLineHeight(int font);
+int cFont_GetCharH(int font);
 void TextObj_Draw(TextPos* o);
-void TextObj_SetColour(TextPos* o, V4S* c);
-void TextObj_SetText(TextPos* o, char* s);
-void GuiWidget_Draw(SubW* w);
-void GuiSubTitleDisplay_Draw(SubW* self);
+void cTextArea_SetColor(TextPos* o, V4S* c);
+void cTextArea_SetText(TextPos* o, char* s);
+void GuiWidget_onRender(SubW* w);
+void GuiSubTitleDisplay_onRender(SubW* self);
 }
 
 static inline SMtx* MtxAt(int i) { return &((SRender*)g_Video)->mtx[i]; }
@@ -80,7 +80,7 @@ static inline void SetPos(TextPos* o, int x, int y) { o->x = x; o->y = y; }
 static inline const int& Max(const int& a, const int& b) { return a < b ? b : a; }
 static inline bool operator!=(const SIt& a, const SIt& b) { return a.p != b.p; }
 
-void GuiSubTitleDisplay_Draw(SubW* self)
+void GuiSubTitleDisplay_onRender(SubW* self)
 {
     if (self->text && self->count) {
         int first;
@@ -135,15 +135,15 @@ void GuiSubTitleDisplay_Draw(SubW* self)
                 buf[nch] = 0;
                 float fy = (float)it->y; y = (int)(self->y - fy);
                 if (self->maxLines && !(last - first < self->maxLines - 1)) {
-                    float h = (float)Font_GetLineHeight(self->font);
+                    float h = (float)cFont_GetCharH(self->font);
                     y += (float)first * h + (1.0f - alpha) * h;
                 }
                 float fx = (float)it->x; SetPos(self->obj, (int)(self->x + fx), y);
                 c = it->color;
                 if (i == first && !(last - first < self->maxLines - 1))
                     c.w = alpha;
-                TextObj_SetColour(self->obj, &c);
-                TextObj_SetText(self->obj, buf);
+                cTextArea_SetColor(self->obj, &c);
+                cTextArea_SetText(self->obj, buf);
                 TextObj_Draw(self->obj);
                 t += (float)nch / 20.0f;
             }
@@ -152,5 +152,5 @@ void GuiSubTitleDisplay_Draw(SubW* self)
         D_00538C64--;
         D_00538C68 = 1;
     }
-    GuiWidget_Draw(self);
+    GuiWidget_onRender(self);
 }

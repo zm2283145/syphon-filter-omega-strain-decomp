@@ -1,4 +1,4 @@
-/* HudTargets_RemoveMarker: per-frame check of one HUD target marker: returns 0 when the marker should
+/* cHudTargetInfo_Update: per-frame check of one HUD target marker: returns 0 when the marker should
  * go (object gone, handle stale, target dead), otherwise refreshes its colours by team, visibility and
  * lock progress and records the object in the tracked-handle list. */
 #pragma cplusplus on
@@ -35,15 +35,15 @@ struct Hnd { VObj* obj; int id; };
 struct MRec { int id; char* icon0; char* icon1; unsigned char team; char pad0D[3]; int kind; Hnd h; };
 
 extern "C" {
-VObj* Object_LookupById(int* id);
-int ObjMarkerList_Append(char* list, MRec** rec);
-void IeElement_SetColour(char* e, float* c);
-int TeamTable_AreEnemies(int a, int b);
-void HudTracker_Kill(char* t);
-void ObjMarker_ConstructIcon(MRec* rec, unsigned char enemy);
-int TargetVis_Test(char* a, int b, VObj* c, int d, int e);
-VObj* Controller_GetAimTarget(VObj* c);
-void WeakHandleList_Append(int* res, char* list, char** pos, Hnd* h);
+VObj* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+int std_list_cHudTargetInfoPtr_push_back(char* list, MRec** rec);
+void cInterfaceElement_SetFilterColor(char* e, float* c);
+int cGOBJ_Enemy(int a, int b);
+void cIE_GOBJ_AnimateOff(char* t);
+void cHudTargetInfo_SetModel(MRec* rec, unsigned char enemy);
+int cTargetManager_IsLosBlocked(char* a, int b, VObj* c, int d, int e);
+VObj* cGobjController_GetTarget(VObj* c);
+void std_list_deleter_cSafePtr_cGOBJ_insert(int* res, char* list, char** pos, Hnd* h);
 extern char* g_LocalPlayer;
 extern char g_TargetVisMgr[];
 extern float D_004FFDB0[4];
@@ -55,16 +55,16 @@ extern float D_0048B310;
 }
 
 static inline bool Alive(VObj* o) { return o->b2D && o->b2C && !o->b2E; }
-#define SetBoth(r, c) (IeElement_SetColour(F_((r)->icon1, 0x60, char*), (c)), IeElement_SetColour(F_((r)->icon0, 0x60, char*), (c)))
+#define SetBoth(r, c) (cInterfaceElement_SetFilterColor(F_((r)->icon1, 0x60, char*), (c)), cInterfaceElement_SetFilterColor(F_((r)->icon0, 0x60, char*), (c)))
 
 #pragma bool off
-static inline int Hidden(int a, VObj* o) { return !(TargetVis_Test(g_TargetVisMgr, a, o, 0, 0) != 0); }
+static inline int Hidden(int a, VObj* o) { return !(cTargetManager_IsLosBlocked(g_TargetVisMgr, a, o, 0, 0) != 0); }
 #pragma bool reset
-extern "C" unsigned char HudTargets_RemoveMarker(MRec* rec, char* list, char* hlist, float* best, float scale)
+extern "C" unsigned char cHudTargetInfo_Update(MRec* rec, char* list, char* hlist, float* best, float scale)
 {
     VObj* obj;
     unsigned char keep;
-    obj = Object_LookupById((int*)(rec->icon1 + 0x68));
+    obj = nGobjManager_LookupGOBJ_cObjectIdR((int*)(rec->icon1 + 0x68));
     keep = 1;
     if (!obj)
         return 0;
@@ -74,10 +74,10 @@ extern "C" unsigned char HudTargets_RemoveMarker(MRec* rec, char* list, char* hl
         bool isNull = !o;
         if (!isNull && o->serial != rec->h.id) ok = 0;
         o = ok ? o : 0;
-        if (o) ObjMarkerList_Append(list, &rec);
+        if (o) std_list_cHudTargetInfoPtr_push_back(list, &rec);
         else keep = 0;
     } else if (rec->kind == 2) {
-        ObjMarkerList_Append(list, &rec);
+        std_list_cHudTargetInfoPtr_push_back(list, &rec);
     } else if (F_(obj, 0x58, int) != 0) {
         if (!Alive(obj)) {
             keep = 0;
@@ -89,15 +89,15 @@ extern "C" unsigned char HudTargets_RemoveMarker(MRec* rec, char* list, char* hl
                 SetBoth(rec, g_HudPlayerMarkerColour);
             } else {
                 char* pl = g_LocalPlayer;
-                int e = TeamTable_AreEnemies(F_(pl, 0x30, int), (int)obj) != 0;
-                if (!e) e = TeamTable_AreEnemies((int)obj, F_(pl, 0x30, int)) != 0;
+                int e = cGOBJ_Enemy(F_(pl, 0x30, int), (int)obj) != 0;
+                if (!e) e = cGOBJ_Enemy((int)obj, F_(pl, 0x30, int)) != 0;
                 act = e;
                 if (act != rec->team) {
-                    HudTracker_Kill(rec->icon1);
-                    HudTracker_Kill(rec->icon0);
+                    cIE_GOBJ_AnimateOff(rec->icon1);
+                    cIE_GOBJ_AnimateOff(rec->icon0);
                     rec->icon1 = 0;
                     rec->icon0 = 0;
-                    ObjMarker_ConstructIcon(rec, act);
+                    cHudTargetInfo_SetModel(rec, act);
                 }
                 if (!act) {
                     SetBoth(rec, D_004FFDB0);
@@ -109,8 +109,8 @@ extern "C" unsigned char HudTargets_RemoveMarker(MRec* rec, char* list, char* hl
                         float col[4];
                         if (Alive(obj) && (unsigned char)obj->Kind() == 2) {
                             VObj* ctl = obj->x58;
-                            if (ctl && Controller_GetAimTarget(ctl)) {
-                                VObj* tg = Controller_GetAimTarget(ctl)->x58;
+                            if (ctl && cGobjController_GetTarget(ctl)) {
+                                VObj* tg = cGobjController_GetTarget(ctl)->x58;
                                 if (tg && tg->IsActive() && tg->b14)
                                     t = obj->x58->f20;
                             }
@@ -134,7 +134,7 @@ extern "C" unsigned char HudTargets_RemoveMarker(MRec* rec, char* list, char* hl
                         if (obj) p = &obj->serial; else { def = -1; p = &def; }
                         h.id = *p;
                         pos = hlist + 4;
-                        WeakHandleList_Append(&res, hlist, &pos, &h);
+                        std_list_deleter_cSafePtr_cGOBJ_insert(&res, hlist, &pos, &h);
                     }
                 }
             }

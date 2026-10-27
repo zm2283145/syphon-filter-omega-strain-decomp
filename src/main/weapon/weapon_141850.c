@@ -12,7 +12,7 @@
 typedef struct { char pad[0x40]; float f40; } FObj;
 
 /* Returns 3 if the float at +0x40 truncates to 0, else 0. */
-int GObj_GetLifeState(FObj* self)
+int cGOBJ_GetHealthState(FObj* self)
 {
     return (int)self->f40 ? 0 : 3;
 }
@@ -30,7 +30,7 @@ static inline void merge_flush_func_00141850(void) {}
  */
 
 
-void* WorldObjList_Get(void* self) {
+void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_2(void* self) {
     return self;
 }
 /* merge_units: generate this block's code under its own pragmas */

@@ -13,12 +13,12 @@ struct M {
     V Applied(V v) const { V* p = &v; Apply(p); return *p; }
 };
 struct Renderer { char pad0[0x180]; float f180; char pad184[0xC]; float f190; char pad194[0xF00 - 0x194]; M view; };
-extern "C" void Renderer_UpdateCameraMatrices(Renderer* r);
+extern "C" void XLib_UpdateCompMat(Renderer* r);
 static inline float MaxF(float a, float b) { return a > b ? a : b; }
 static inline float MinF(float a, float b) { return a < b ? a : b; }
-extern "C" float Shadow_FogFactor(Renderer* r, const V* p)
+extern "C" float XLib_GetFogVal(Renderer* r, const V* p)
 {
-    Renderer_UpdateCameraMatrices(r);
+    XLib_UpdateCompMat(r);
     const M* m = &r->view;
     V v = m->Applied(*p);
     float f = r->f180 + r->f190 / v.w;

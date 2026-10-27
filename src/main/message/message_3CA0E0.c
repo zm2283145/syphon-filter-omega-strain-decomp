@@ -14,8 +14,8 @@
 
 extern "C" {
 extern char D_004BD198[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 }
 
 struct I8_003CA0E0Val { int w0; int w1; int w2; };
@@ -49,7 +49,7 @@ struct ListI8_003CA0E0Holder {
             ListI8_003CA0E0Node* p = node;
             if (p) {
                 AllocGuard guard;
-                Mem_Free(0, p, D_004BD198, 0x64);
+                cMemMan_Deallocate(0, p, D_004BD198, 0x64);
             }
         }
     }
@@ -64,7 +64,7 @@ struct ListI8_003CA0E0Holder {
         ListI8_003CA0E0Flag flag;                                                  \
         {                                                                     \
             AllocGuard guard;                                                 \
-            n = (ListI8_003CA0E0Node*)Mem_Alloc(0, 20, "allocator.hh", 0x5C);            \
+            n = (ListI8_003CA0E0Node*)cMemMan_Allocate(0, 20, "allocator.hh", 0x5C);            \
         }                                                                     \
         ListI8_003CA0E0Holder h;                                                     \
         h.alloc = alloc;                                                      \
@@ -86,4 +86,4 @@ struct ListI8_003CA0E0Holder {
     }
 
 #endif /* LIB_003CA0E0 */
-DEFINE_LIST_INSERT_BEFORE8(MsgQueue_Insert)
+DEFINE_LIST_INSERT_BEFORE8(std_list_deleter_tQueuedMessage_insert)

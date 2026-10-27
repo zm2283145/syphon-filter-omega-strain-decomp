@@ -17,29 +17,29 @@ extern float D_004C0390;
 extern float D_004C0394;
 extern float D_004C0398;
 
-void GuiWidget_Update(void* self, float dt);
-float Math_FMod(float a, float b);
+void GuiWidget_onAdvanceTime(void* self, float dt);
+float Libc_Fmodf(float a, float b);
 void* cMatrix_ctor_void(Mtx* m);
-void Mtx_MakeAxisRotation(Mtx* m, float x, float y, float z, float a);
-void Mtx_Multiply(Mtx* d, Mtx* s);
+void cMatrix_SetWithAxisAngle(Mtx* m, float x, float y, float z, float a);
+void cMatrix_Rotate(Mtx* d, Mtx* s);
 
-void GuiWeaponDisplay_Update(WeaponDisplay* self, float dt)
+void GuiWeaponDisplay_onAdvanceTime(WeaponDisplay* self, float dt)
 {
     Mtx rot;
     float a;
     const float kPi = 3.1415927f;
-    GuiWidget_Update(self, dt);
+    GuiWidget_onAdvanceTime(self, dt);
     if (self->active) {
         self->active = 1;
         VU0_UnitMatrix(&self->mtx);
         self->angle += dt;
-        self->angle = Math_FMod(self->angle, 120.0f);
+        self->angle = Libc_Fmodf(self->angle, 120.0f);
         a = 3.0f * self->angle;
         a = kPi * (a / 180.0f); /* const local for kPi gives retail constant-load order */
         { Mtx* m = &self->mtx; VU0_UnitMatrix(m); }
         cMatrix_ctor_void(&rot);
-        Mtx_MakeAxisRotation(&rot, D_004C0390, D_004C0394, D_004C0398, a);
-        Mtx_Multiply(&self->mtx, &rot);
+        cMatrix_SetWithAxisAngle(&rot, D_004C0390, D_004C0394, D_004C0398, a);
+        cMatrix_Rotate(&self->mtx, &rot);
     }
 }
 

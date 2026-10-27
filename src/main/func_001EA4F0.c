@@ -1,5 +1,5 @@
 /*
- * HumanCol_InstallPresets: builds the nine collision preset descriptors on the
+ * cHumanCollisionRoutine_InitLedgeSearchWorkSpace: builds the nine collision preset descriptors on the
  * stack (candidate masks, height/distance/cosine ranges) and appends them to
  * g_HumanColPresetMgr; the last append is expanded in place.
  */
@@ -16,15 +16,15 @@ typedef struct HumanColDesc {
     unsigned char descFlag;         /* 0x30 */
 } HumanColDesc;
 
-extern float Math_Cos(float);
+extern float Libc_Cosf(float);
 extern int* cBitArray_19_ctor_cBitArrayR(int* dst, int* src);
 extern int* cBitArray_5_ctor_cBitArrayR(int* dst, int* src);
-extern HumanColPresetCfg* HumanColPreset_Copy(HumanColPresetCfg* dst, HumanColPresetCfg* src);
-extern HumanColPresetMgr* HumanCol_AppendPreset(HumanColPresetMgr* mgr, HumanColDesc* desc);
-extern HumanColPreset* HumanColPreset_SetConfig(HumanColPreset* p, int selector, int* mask0, int* mask1,
+extern HumanColPresetCfg* cHumanCollisionRoutine_cLedgeSearchLimits_ctor(HumanColPresetCfg* dst, HumanColPresetCfg* src);
+extern HumanColPresetMgr* cHumanCollisionRoutine_cIntermediateLedgeSearchInfoList_opShl(HumanColPresetMgr* mgr, HumanColDesc* desc);
+extern HumanColPreset* cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_ctor_eLedgeSubtype_cBitArrayR_cBitArrayR_cBitArrayR_etc(HumanColPreset* p, int selector, int* mask0, int* mask1,
                                                 int* mask2, int* mask3, HumanColPresetCfg* cfg, int enabled);
-extern void ContactList_Add(HumanColPresetMgr* mgr, HumanColPreset* p);
-extern HumanColPreset* HumanColPreset_Dtor(HumanColPreset* self, short flag);
+extern void cArray_FixedCapacity_cIntermediateLedgeSearchInfo_9_PushBackActual(HumanColPresetMgr* mgr, HumanColPreset* p);
+extern HumanColPreset* cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_dtor(HumanColPreset* self, short flag);
 extern HumanColPresetMgr* g_HumanColPresetMgr;
 extern float D_004A0400;
 extern float D_004A0408;
@@ -36,12 +36,12 @@ static inline void Range_Set(float* r, float lo, float hi) {
 
 #define Cfg_Init(c, a, b, d, e, angLo, angHi, en) \
     ((c)->range0Min = (a), (c)->range0Max = (b), (c)->range1Min = (d), (c)->range1Max = (e), \
-     Range_Set(&(c)->range2Min, Math_Cos(angLo), Math_Cos(angHi)), (c)->enabled = (en))
+     Range_Set(&(c)->range2Min, Libc_Cosf(angLo), Libc_Cosf(angHi)), (c)->enabled = (en))
 
 static inline void Desc_Tail(HumanColDesc* d, int* m2, int* m3, HumanColPresetCfg* cfg, int flag) {
     cBitArray_5_ctor_cBitArrayR(&d->masks[2], m2);
     cBitArray_5_ctor_cBitArrayR(&d->masks[3], m3);
-    HumanColPreset_Copy(&d->cfg, cfg);
+    cHumanCollisionRoutine_cLedgeSearchLimits_ctor(&d->cfg, cfg);
     d->descFlag = flag;
 }
 
@@ -55,7 +55,7 @@ static inline void Desc_Head(HumanColDesc* d, int kind, int sel, int* m0, int* m
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_propagation off
-void HumanCol_InstallPresets(void) {
+void cHumanCollisionRoutine_InitLedgeSearchWorkSpace(void) {
     int a0, a1, a2, a3;
     int b0, b1, b2, b3;
     int c0, c1, c2, c3;
@@ -154,16 +154,16 @@ void HumanCol_InstallPresets(void) {
     Desc_Head(&di, 12, 8, &i0, &i1);
     Desc_Tail(p, &i2, &i3, &ci, 0);
 
-    mgr = HumanCol_AppendPreset(g_HumanColPresetMgr, &da);
-    mgr = HumanCol_AppendPreset(mgr, &db);
-    mgr = HumanCol_AppendPreset(mgr, &dc);
-    mgr = HumanCol_AppendPreset(mgr, &dd);
-    mgr = HumanCol_AppendPreset(mgr, &de);
-    mgr = HumanCol_AppendPreset(mgr, &df);
-    mgr = HumanCol_AppendPreset(mgr, &dg);
-    mgr = HumanCol_AppendPreset(mgr, &dh);
-    HumanColPreset_SetConfig(&tmp, di.kind, &di.masks[0], &di.masks[1], &di.masks[2], &di.masks[3], &di.cfg, di.descFlag);
-    ContactList_Add(mgr, &tmp);
-    HumanColPreset_Dtor(&tmp, -1);
+    mgr = cHumanCollisionRoutine_cIntermediateLedgeSearchInfoList_opShl(g_HumanColPresetMgr, &da);
+    mgr = cHumanCollisionRoutine_cIntermediateLedgeSearchInfoList_opShl(mgr, &db);
+    mgr = cHumanCollisionRoutine_cIntermediateLedgeSearchInfoList_opShl(mgr, &dc);
+    mgr = cHumanCollisionRoutine_cIntermediateLedgeSearchInfoList_opShl(mgr, &dd);
+    mgr = cHumanCollisionRoutine_cIntermediateLedgeSearchInfoList_opShl(mgr, &de);
+    mgr = cHumanCollisionRoutine_cIntermediateLedgeSearchInfoList_opShl(mgr, &df);
+    mgr = cHumanCollisionRoutine_cIntermediateLedgeSearchInfoList_opShl(mgr, &dg);
+    mgr = cHumanCollisionRoutine_cIntermediateLedgeSearchInfoList_opShl(mgr, &dh);
+    cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_ctor_eLedgeSubtype_cBitArrayR_cBitArrayR_cBitArrayR_etc(&tmp, di.kind, &di.masks[0], &di.masks[1], &di.masks[2], &di.masks[3], &di.cfg, di.descFlag);
+    cArray_FixedCapacity_cIntermediateLedgeSearchInfo_9_PushBackActual(mgr, &tmp);
+    cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_dtor(&tmp, -1);
 }
 #pragma pop

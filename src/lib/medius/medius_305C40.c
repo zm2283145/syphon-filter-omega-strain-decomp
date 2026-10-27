@@ -4,7 +4,7 @@ extern int* D_004912F0[];
 extern int D_004912F4[];
 extern unsigned int D_0052980C[];
 extern unsigned int D_00529808[];
-int NetMsg_GetCallback(unsigned int a, unsigned int b, int* out)
+int rt_parse_get_callback(unsigned int a, unsigned int b, int* out)
 {
     if (out == 0) return 2;
     *out = 0;

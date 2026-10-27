@@ -105,45 +105,45 @@ extern signed char D_004EEF90; extern signed char D_004EEF98; extern signed char
 extern signed char D_004EEFB0; extern signed char D_004EEFB8; extern signed char D_004EEFC0;
 extern signed char D_004EEFC8; extern signed char D_004EEFD0;
 extern float g_DefaultMotionTransition;
-void Event_Construct(void* m, void* t);
-void Event_Send(void* m, void* t, int f);
+void cMessage_ctor_cMessageNameR(void* m, void* t);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* t, int f);
 void cMessage_dtor(void* m, int f);
-void ModelCtx_FindNodeById(It_L* out, int* tree, Name_L* key);
-void NodeMap_End(It_L* out, int* tree);
-int NodeMapIter_NotEqual(It_L* a, It_L* b);
-int* NodeMapIter_Value(It_L* a);
-Obj_L* Object_LookupById(int* id);
-void ActorObj_BuildNodeMatrix(Mtx_L* out, Node_L* n);
-Anm_L* ModelCtx_GetAnchorById(void* lib, int id);
-Anm_L* Motion_Lookup(void* lib, Name_L* n);
+void cAssocArray_cString16N_3_int_Find(It_L* out, int* tree, Name_L* key);
+void cAssocArray_cString16N_3_int_End(It_L* out, int* tree);
+int cAssocArray_cString16N_3_int_ConstIterator_opNe(It_L* a, It_L* b);
+int* cAssocArray_cString16N_3_int_ConstIterator_opMul(It_L* a);
+Obj_L* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+void cNode_GetNodeMatrix(Mtx_L* out, Node_L* n);
+Anm_L* cSkaAnimationSet_GetNode_int(void* lib, int id);
+Anm_L* cSkaAnimationSet_GetNode_cString16NR(void* lib, Name_L* n);
 int cSkaNode_CheckType(Anm_L* a, int b);
-void Actor_RequestTeleport(Act_L* a, Mtx_L* m);
-void Root_SetWorldPlacement(Root_L* r, Plc_L* p);
-Plc_L* Root_ResolveWorldPlacement(Root_L* r);
-void* ModelCtx_FindNodeByName(Sys_L* s, Name_L* n);
+void cHuman_TeleportAndResetPhysics(Act_L* a, Mtx_L* m);
+void cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(Root_L* r, Plc_L* p);
+Plc_L* cSkaAnimAnchor_GetTransform(Root_L* r);
+void* cSkaSystem_GetAnimation(Sys_L* s, Name_L* n);
 void* cSkaParams_Skeleton(void* p);
 int cSkeleton_GetSkeletonData(void* p);
-void Motion_GetStartPlacement(Plc_L* out, void* node, int k);
-void VecPair_Copy(Plc_L* d, Plc_L* s);
-void Root_BaseConstruct(Plc_L* p);
-void World_PushObjectFromAction(void* w, void* p);
-void MotionTokens_Init(void* p);
+void cSkaAnim_GetFirstFrameRootTransform(Plc_L* out, void* node, int k);
+void cQuatVec_ctor_cQuatVecR(Plc_L* d, Plc_L* s);
+void cQuatVec_GetUnit(Plc_L* p);
+void cGameSystem_PushCamera(void* w, void* p);
+void cArray_FixedSize_cSkaAnimEvent_7_ctor_void(void* p);
 void cArray_cTimedEvent_ctor_void(void* p);
 void cString16N_3_ctor_void(void* p);
 void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(void* d, void* s);
 void cSkaPlaybackGroupId_ctor_int(void* p, int v);
-void MotionRequest_Construct(void* d, Name_L* n);
-void Actor_ResolveMotionSelection(Sel_L* sel, int* out, Y_L* y, void* model);
-float Model_GetFirstFloat(void* m);
-V4_L* AnimRate_Init(V4_L* p, float f);
-V4_L* Vec4_Copy_18A350(V4_L* d, V4_L* s);
-void AnimEvent_Construct(Ev_L* e);
-signed char MotionRequest_GetMode(Sel_L* s);
+void cString16N_3_ctor_cString16NR(void* d, Name_L* n);
+void cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(Sel_L* sel, int* out, Y_L* y, void* model);
+float cSkaAnimationSet_DefaultCrossFadeDuration(void* m);
+V4_L* cSkaCrossFadeDuration_ctor_float(V4_L* p, float f);
+V4_L* cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(V4_L* d, V4_L* s);
+void cSkaAnimEndedMessage_ctor_void(Ev_L* e);
+signed char cSkaRequestStream_AnimationPacket_GetInstruction(Sel_L* s);
 void* cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(Sel_L* s);
 float cSkaRequestStream_AnimationPacket_GetDuration(Sel_L* s);
 float func_0018A2C0(Sel_L* s);
-void AnimCtl_InstallMotion(void* ctl, void* id, signed char mode, void* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
-void AnimEvent_dtor(void* p, int f);
+void cSkaRequestStream_AddRequest(void* ctl, void* id, signed char mode, void* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
+void cSkaAnimEndedMessage_dtor(void* p, int f);
 void func_001BE5A0(void* p, int f);
 void __destroy_array(void* p, void* dtor, int size, int n);
 void func_0018A210(void* p, int f);
@@ -211,7 +211,7 @@ static inline float Recip_L(float v) { float r; if (v != 0.0f) r = 1.0f / v; els
 static inline float ClampY_L(float x, float z, float o) { float lo = z; float hi = o; float r; asm { max.s r, x, lo; min.s r, r, hi } return r; }
 static inline void RangeInitY_L(Range_L* r, float t, float z, float o) { float v; v = 0.0f; r->flag = 0; v = ClampY_L(t, z, o); r->hi = v; r->lo = v; }
 
-static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; MotionTokens_Init(px->pairs); cArray_cTimedEvent_ctor_void(px->tail); return px; }
+static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; cArray_FixedSize_cSkaAnimEvent_7_ctor_void(px->pairs); cArray_cTimedEvent_ctor_void(px->tail); return px; }
 static inline void XSet_L(X_L* x, int i, int id, void* a) { Pair_L* p = &x->pairs[i]; p->id = id; p->a = a; x->kind = 1; }
 static inline X_L* XSetR_L(X_L* x, int i, int id, void* a, unsigned char k) { Pair_L* p = &x->pairs[i]; p->id = id; p->a = a; x->kind = k; return x; }
 static inline void XDtor_L(X_L* x) { func_001BE5A0(x->tail, 0); __destroy_array(x->pairs, (void*)func_0018A210, 8, 7); }
@@ -260,20 +260,20 @@ static inline void Install_L(Act_L* a, Sel_L* sel, Rate_L* r)
     a->sys.anim.v.w = r->w;
     a->sys.anim.b5 = 1;
     cSkaPlaybackGroupId_ctor_int(&y, -1);
-    Actor_ResolveMotionSelection(sel, &out, &y, an->model);
+    cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(sel, &out, &y, an->model);
     if (out) {
         V4_L* p;
         if (an->b5)
             p = &an->v;
         else
-            p = AnimRate_Init(&rate, Model_GetFirstFloat(an->model));
-        Vec4_Copy_18A350(&vec, p);
+            p = cSkaCrossFadeDuration_ctor_float(&rate, cSkaAnimationSet_DefaultCrossFadeDuration(an->model));
+        cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(&vec, p);
         an->b5 = 0;
-        AnimEvent_Construct(&e1);
-        AnimEvent_Construct(&e2);
-        AnimCtl_InstallMotion(an, (void*)out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(sel), cSkaRequestStream_AnimationPacket_GetDuration(sel), func_0018A2C0(sel));
-        AnimEvent_dtor(&e2, -1);
-        AnimEvent_dtor(&e1, -1);
+        cSkaAnimEndedMessage_ctor_void(&e1);
+        cSkaAnimEndedMessage_ctor_void(&e2);
+        cSkaRequestStream_AddRequest(an, (void*)out, cSkaRequestStream_AnimationPacket_GetInstruction(sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(sel), cSkaRequestStream_AnimationPacket_GetDuration(sel), func_0018A2C0(sel));
+        cSkaAnimEndedMessage_dtor(&e2, -1);
+        cSkaAnimEndedMessage_dtor(&e1, -1);
     }
 }
 static inline void DirectP_L(Act_L* a, Name_L* n, int mode, int i0, int i1, int i3, int i5, int i6)
@@ -283,19 +283,19 @@ static inline void DirectP_L(Act_L* a, Name_L* n, int mode, int i0, int i1, int 
     { unsigned char k = 1; px = XSetR_L(XSetR_L(XSetR_L(XSetR_L(XSetQR_L(&x, 0, i0, a, k), 1, i1, a, k), 3, i3, a, k), 5, i5, a, k), 6, i6, a, k); }
     RateDef_L(&r);
     sys = &a->sys;
-    m = Motion_Lookup(sys->lib, n);
+    m = cSkaAnimationSet_GetNode_cString16NR(sys->lib, n);
     if (m) {
         Ev_L e1;
         Ev_L e2;
         Y_L y;
         void* ctl;
-        AnimEvent_Construct(&e1);
-        AnimEvent_Construct(&e2);
+        cSkaAnimEndedMessage_ctor_void(&e1);
+        cSkaAnimEndedMessage_ctor_void(&e2);
         ctl = func_0018C6A0(sys);
         nSka_GetPlaybackGroupId(&y, m);
-        AnimCtl_InstallMotion(ctl, m, mode, &r, &y, &e1, &e2, px, -1.0f, 0.0f);
-        AnimEvent_dtor(&e2, -1);
-        AnimEvent_dtor(&e1, -1);
+        cSkaRequestStream_AddRequest(ctl, m, mode, &r, &y, &e1, &e2, px, -1.0f, 0.0f);
+        cSkaAnimEndedMessage_dtor(&e2, -1);
+        cSkaAnimEndedMessage_dtor(&e1, -1);
     }
     XDtor_L(&x);
 }
@@ -325,7 +325,7 @@ static inline void PSetBit_L(Phys_L* p, int bit)
         p->mode = i;
     }
 }
-static inline void SetRoot_L(Root_L* r, Plc_L* p) { Root_SetWorldPlacement(r, p); r->f160 = 0; }
+static inline void SetRoot_L(Root_L* r, Plc_L* p) { cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(r, p); r->f160 = 0; }
 static inline void Q1_L(void* d0, const void* s0) { void* d = d0; __int128 q; const void* s = s0; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
 static inline Plc_L* ToPlc_L(Plc_L* out, Mtx_L* m)
 {
@@ -452,18 +452,18 @@ static inline void SetRootM_L(Root_L* r, Mtx_L* m) { Plc_L p; ToPlc_L(&p, m); Q1
 static inline void StartPlc_L(Plc_L* out, Act_L* a, Name_L* n)
 {
     Sys_L* s = &a->sys;
-    void* nd = ModelCtx_FindNodeByName(s, n);
+    void* nd = cSkaSystem_GetAnimation(s, n);
     if (nd) {
         Plc_L t;
-        Motion_GetStartPlacement(&t, nd, cSkeleton_GetSkeletonData(cSkaParams_Skeleton(s->f10)));
-        VecPair_Copy(out, &t);
+        cSkaAnim_GetFirstFrameRootTransform(&t, nd, cSkeleton_GetSkeletonData(cSkaParams_Skeleton(s->f10)));
+        cQuatVec_ctor_cQuatVecR(out, &t);
     } else {
-        Root_BaseConstruct(out);
+        cQuatVec_GetUnit(out);
     }
 }
 static inline void AEvInit_L(AEv_L* e)
 {
-    Event_Construct(e, D_00542B60);
+    cMessage_ctor_cMessageNameR(e, D_00542B60);
     e->vtable = D_004DA930;
     e->f24 = 0;
     e->f28 = 0;
@@ -516,12 +516,12 @@ static inline int FindAnchor_L(Act_L* actor, Name_L* key)
     It_L it;
     It_L end;
     Lib_L* lib = (Lib_L*)actor->sys.lib;
-    ModelCtx_FindNodeById(&it, &lib->tree, key);
-    NodeMap_End(&end, &lib->tree);
-    return NodeMapIter_NotEqual(&it, &end) ? *NodeMapIter_Value(&it) : 0;
+    cAssocArray_cString16N_3_int_Find(&it, &lib->tree, key);
+    cAssocArray_cString16N_3_int_End(&end, &lib->tree);
+    return cAssocArray_cString16N_3_int_ConstIterator_opNe(&it, &end) ? *cAssocArray_cString16N_3_int_ConstIterator_opMul(&it) : 0;
 }
 
-static inline void NodeMtx_L(Mtx_L* mt, Node_L* nd) { Mtx_L t; ActorObj_BuildNodeMatrix(&t, nd); Q4(mt, &t); }
+static inline void NodeMtx_L(Mtx_L* mt, Node_L* nd) { Mtx_L t; cNode_GetNodeMatrix(&t, nd); Q4(mt, &t); }
 static inline void NameAssign_L(Name_L* dst, char* src) { Name_L tmp; NAME_COPY(tmp.c, src) if (dst->c[0] || tmp.c[0]) QCopy_L(dst, &tmp); }
 static inline void Inst2_L(Act_L* a, Sel_L* sel, Rate_L* r) { Install_L(a, sel, r); }
 static inline void BlkA_L(Act_L* actor, Name_L* name, int id0, int id1, float speed)
@@ -539,7 +539,7 @@ static inline void BlkA_L(Act_L* actor, Name_L* name, int id0, int id1, float sp
         Sel_L sel;
         ps = &sel;
         ps->mode = 0;
-        MotionRequest_Construct(ps->sub, name);
+        cString16N_3_ctor_cString16NR(ps->sub, name);
         ps->f48 = 1;
         cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&ps->x, px);
         ps->f98 = speed;
@@ -598,12 +598,12 @@ static inline void SendMsg4_L(Obj_L* obj, Act_L* actor)
 {
     Msg4_L m;
     Msg4_L* p = &m;
-    Event_Construct(p, g_CasEventMsgClass);
+    cMessage_ctor_cMessageNameR(p, g_CasEventMsgClass);
     p->vtable = D_004DA950;
     p->f24 = 0xD;
     p->f28 = -1;
     p->f2C = actor;
-    { int one = 1; m.f20 = one; Event_Send(&m, obj, one); }
+    { int one = 1; m.f20 = one; QueueMessage_cMessageR_cSystemP_int(&m, obj, one); }
     m.vtable = D_004DA950;
     cMessage_dtor(&m, 0);
 }
@@ -613,13 +613,13 @@ static inline void Mot_L(Sys_L* sys, Anm_L* m, int mode, Rate_L* r, X_L* px)
     Ev_L e2;
     Y_L y;
     void* ctl;
-    AnimEvent_Construct(&e1);
-    AnimEvent_Construct(&e2);
+    cSkaAnimEndedMessage_ctor_void(&e1);
+    cSkaAnimEndedMessage_ctor_void(&e2);
     ctl = func_0018C6A0(sys);
     nSka_GetPlaybackGroupId(&y, m);
-    AnimCtl_InstallMotion(ctl, m, mode, r, &y, &e1, &e2, px, -1.0f, 0.0f);
-    AnimEvent_dtor(&e2, -1);
-    AnimEvent_dtor(&e1, -1);
+    cSkaRequestStream_AddRequest(ctl, m, mode, r, &y, &e1, &e2, px, -1.0f, 0.0f);
+    cSkaAnimEndedMessage_dtor(&e2, -1);
+    cSkaAnimEndedMessage_dtor(&e1, -1);
 }
 static inline void Mot2_L(Sys_L* sys, Anm_L* m, int mode, Rate_L* r, X_L* px) { if (m) Mot_L(sys, m, mode, r, px); }
 static inline void DP_L(Act_L* a, Name_L* n, int mode, int i0, int i1, int i3, int i5, int i6)
@@ -629,7 +629,7 @@ static inline void DP_L(Act_L* a, Name_L* n, int mode, int i0, int i1, int i3, i
     { unsigned char k = 1; px = XSetR_L(XSetR_L(XSetR_L(XSetR_L(XSetQR_L(&x, 0, i0, a, k), 1, i1, a, k), 3, i3, a, k), 5, i5, a, k), 6, i6, a, k); }
     RateDef_L(&r);
     sys = &a->sys;
-    m = Motion_Lookup(sys->lib, n);
+    m = cSkaAnimationSet_GetNode_cString16NR(sys->lib, n);
     Mot2_L(sys, m, mode, &r, px);
     XDtor_L(&x);
 }
@@ -641,7 +641,7 @@ static inline void DP3_L(Act_L* a, Name_L* n, unsigned char k, int mode, int i0,
     { px = XSetR_L(XSetR_L(XSetR_L(XSetR_L(XSetQR_L(&x, 0, i0, a, k), 1, i1, a, k), 3, i3, a, k), 5, i5, a, k), 6, i6, a, k); }
     RateDef_L(&r);
     sys = &a->sys;
-    m = Motion_Lookup(sys->lib, n);
+    m = cSkaAnimationSet_GetNode_cString16NR(sys->lib, n);
     Mot2_L(sys, m, mode, &r, px);
     XDtor_L(&x);
 }
@@ -670,7 +670,7 @@ static inline void B2_L(Act_L* actor)
     RateDef_L(&r);
     { px = XSetR_L(XSetR_L(XSetR_L(XSetR_L(XSetQR_L(&x, 0, 0x14, actor, 1), 1, 0x15, actor, 1), 3, 0x16, actor, 1), 5, 0x17, actor, 1), 6, 0x18, actor, 1); }
     NAME_COPY3(nm.c, D_0049DD30)
-    m = Motion_Lookup(sys->lib, &nm);
+    m = cSkaAnimationSet_GetNode_cString16NR(sys->lib, &nm);
     Mot2_L(sys, m, 0, &r, px);
     XDtor_L(&x);
 }
@@ -681,7 +681,7 @@ static inline void B3_L(Act_L* actor)
     { px = XSetR_L(XSetR_L(XSetR_L(XSetQR_L(&x, 0, 0x19, actor, 1), 3, 0x1A, actor, 1), 5, 0x1B, actor, 1), 6, 0x1C, actor, 1); }
     RateDef_L(&r);
     sys = &actor->sys;
-    m = Motion_Lookup(sys->lib, &D_0049D260);
+    m = cSkaAnimationSet_GetNode_cString16NR(sys->lib, &D_0049D260);
     Mot2_L(sys, m, 0, &r, px);
     XDtor_L(&x);
 }
@@ -692,7 +692,7 @@ static inline void AEvRun_L(Act_L* actor, Rate_L* r, X_L* x, int* s2, Sys_L* sys
     AEv_L e2;
     { AEv_L* p1 = &e1; AEvInit_L(p1); }
     { AEv_L* p2 = &e2; AEvInit_L(p2); }
-    AnimCtl_InstallMotion(&sys->anim, (void*)*s2, 0, r, YOf_L(s2), &e1, &e2, x, -1.0f, 0.0f);
+    cSkaRequestStream_AddRequest(&sys->anim, (void*)*s2, 0, r, YOf_L(s2), &e1, &e2, x, -1.0f, 0.0f);
     e2.vtable = D_004DA930;
     cMessage_dtor(&e2, 0);
     e1.vtable = D_004DA930;
@@ -720,7 +720,7 @@ static inline void DP31_L(Act_L* a, Name_L* n, int id)
     { unsigned char k = 1; px = XSetR_L(XSetR_L(XSetR_L(XSetR_L(XSetQR_L(&x, 0, id, a, k), 1, 0x6D, a, k), 3, 0x6E, a, k), 5, 0x6F, a, k), 6, 0x70, a, k); }
     RateDef_L(&r);
     sys = &a->sys;
-    m = Motion_Lookup(sys->lib, n);
+    m = cSkaAnimationSet_GetNode_cString16NR(sys->lib, n);
     Mot2_L(sys, m, 1, &r, px);
     XDtor_L(&x);
 }
@@ -731,19 +731,19 @@ static inline void DP31b_L(Act_L* a, Name_L* n, int id)
     { unsigned char k = 1; px = XSetR_L(XSetR_L(XSetR_L(XSetR_L(XSetQR_L(&x, 0, id, a, k), 1, 0x6D, a, k), 3, 0x6E, a, k), 5, 0x6F, a, k), 6, 0x70, a, k); }
     RateDef_L(&r);
     sys = &a->sys;
-    m = Motion_Lookup(sys->lib, n);
+    m = cSkaAnimationSet_GetNode_cString16NR(sys->lib, n);
     if (m) {
         Ev_L e1;
         Ev_L e2;
         Y_L y;
         void* ctl;
-        AnimEvent_Construct(&e1);
-        AnimEvent_Construct(&e2);
+        cSkaAnimEndedMessage_ctor_void(&e1);
+        cSkaAnimEndedMessage_ctor_void(&e2);
         ctl = func_0018C6A0(sys);
         nSka_GetPlaybackGroupId(&y, m);
-        AnimCtl_InstallMotion(ctl, m, 1, &r, &y, &e1, &e2, px, -1.0f, 0.0f);
-        AnimEvent_dtor(&e2, -1);
-        AnimEvent_dtor(&e1, -1);
+        cSkaRequestStream_AddRequest(ctl, m, 1, &r, &y, &e1, &e2, px, -1.0f, 0.0f);
+        cSkaAnimEndedMessage_dtor(&e2, -1);
+        cSkaAnimEndedMessage_dtor(&e1, -1);
     }
     XDtor_L(&x);
 }
@@ -753,13 +753,13 @@ static inline void Mot1_L(Sys_L* sys, Anm_L* m, Rate_L* r, X_L* px)
     Ev_L e2;
     Y_L y;
     void* ctl;
-    AnimEvent_Construct(&e1);
-    AnimEvent_Construct(&e2);
+    cSkaAnimEndedMessage_ctor_void(&e1);
+    cSkaAnimEndedMessage_ctor_void(&e2);
     ctl = func_0018C6A0(sys);
     nSka_GetPlaybackGroupId(&y, m);
-    AnimCtl_InstallMotion(ctl, m, 1, r, &y, &e1, &e2, px, -1.0f, 0.0f);
-    AnimEvent_dtor(&e2, -1);
-    AnimEvent_dtor(&e1, -1);
+    cSkaRequestStream_AddRequest(ctl, m, 1, r, &y, &e1, &e2, px, -1.0f, 0.0f);
+    cSkaAnimEndedMessage_dtor(&e2, -1);
+    cSkaAnimEndedMessage_dtor(&e1, -1);
 }
 static inline void DP31c_L(Act_L* a, Name_L* n, int id)
 {
@@ -768,7 +768,7 @@ static inline void DP31c_L(Act_L* a, Name_L* n, int id)
     { unsigned char k = 1; px = XSetR_L(XSetR_L(XSetR_L(XSetR_L(XSetQR_L(&x, 0, id, a, k), 1, 0x6D, a, k), 3, 0x6E, a, k), 5, 0x6F, a, k), 6, 0x70, a, k); }
     RateDef_L(&r);
     sys = &a->sys;
-    m = Motion_Lookup(sys->lib, n);
+    m = cSkaAnimationSet_GetNode_cString16NR(sys->lib, n);
     if (m) Mot_L(sys, m, 1, &r, px);
     XDtor_L(&x);
 }
@@ -779,7 +779,7 @@ static inline void DP31d_L(Act_L* a, Name_L* n, int id)
     { unsigned char k = 1; px = XSetR_L(XSetR_L(XSetR_L(XSetR_L(XSetQR_L(&x, 0, id, a, k), 1, 0x6D, a, k), 3, 0x6E, a, k), 5, 0x6F, a, k), 6, 0x70, a, k); }
     RateDef_L(&r);
     sys = &a->sys;
-    m = Motion_Lookup(sys->lib, n);
+    m = cSkaAnimationSet_GetNode_cString16NR(sys->lib, n);
     if (m) Mot1_L(sys, m, &r, px);
     XDtor_L(&x);
 }
@@ -834,13 +834,13 @@ struct MA_L : MV_L {
 };
 typedef struct { char pad[0x24]; float f24; } Cam_L;
 extern "C" {
-unsigned char WeaponInv_GetHeldClass(void* inv);
+unsigned char cWeapon_GetEquipmentType(void* inv);
 Range_L* cSkaTimeSpan_Normalized_ctor_float_float_bool(Range_L* r, float f0, float f1, unsigned char z);
-void Actor_SetDeathMotionOverride(MA_L* a, char* n, int f);
+void cHuman_RequestDeathAnimation(MA_L* a, char* n, int f);
 unsigned char Secondary_RequestOneShot(Ob2_L* o, Name_L* n, unsigned char kind, AEv_L* p);
-void SoundPosRequest_Ctor(SMsg_L* m, void* req, V4_L* pos);
-void FileMan_Release(void* p, int f);
-void World_PushObject(void* w, MA_L* a, int f);
+void cPlaySoundMsg_ctor_cSndFxR_cGOBJP(SMsg_L* m, void* req, V4_L* pos);
+void cFileMan_dtor(void* p, int f);
+void cGameSystem_PushWeaponCam(void* w, MA_L* a, int f);
 extern float D_0048A268; extern float D_0048A278;
 extern Cam_L* g_HotboxTracker;
 extern char D_0049DF38[]; extern char D_0049DF48[]; extern char D_0049DF58[];
@@ -889,7 +889,7 @@ static inline void Blk1_L(MA_L* a, char* n0, int mode, float dist)
     MNameP_L(&n, n0);
     pn = &n;
     { X_L* py = cSkaAnimCheckpoints_ScheduleEvent(px, Rng_L(dist), mode & 0xFF, a);
-    m = Motion_Lookup(sys->lib, pn);
+    m = cSkaAnimationSet_GetNode_cString16NR(sys->lib, pn);
     Mot2_L(sys, m, 3, &r, py); }
     XDtor_L(&x);
 }
@@ -897,11 +897,11 @@ static inline void MtxEv_L(MA_L* t, Mtx_L* mt)
 {
     MsgM_L e;
     MsgM_L* pe = &e;
-    Event_Construct(pe, g_TeleportMsgClass);
+    cMessage_ctor_cMessageNameR(pe, g_TeleportMsgClass);
     pe->vtable = D_004D9360;
     pe->f24 = 2;
     Q4(&pe->m, mt);
-    Event_Send(&e, t, 1);
+    QueueMessage_cMessageR_cSystemP_int(&e, t, 1);
     e.vtable = D_004D9360;
     cMessage_dtor(&e, 0);
 }
@@ -916,7 +916,7 @@ static inline void Blk3_L(MA_L* t, char* n1)
     sys = &t->sys;
     RateF_L(&r, 0.01f);
     MNameP_L(&n, n1);
-    m = Motion_Lookup(sys->lib, &n);
+    m = cSkaAnimationSet_GetNode_cString16NR(sys->lib, &n);
     Mot2_L(sys, m, 1, &r, &x);
     XDtor_L(&x);
 }
@@ -926,7 +926,7 @@ static inline unsigned char SndReq_L(MA_L* a, char* sn)
     AEv_L e;
     unsigned char ok;
     AEv_L* pe = &e;
-    Event_Construct(pe, D_00542B60);
+    cMessage_ctor_cMessageNameR(pe, D_00542B60);
     pe->vtable = D_004DA930;
     pe->f24 = 4;
     pe->f28 = 0;
@@ -945,7 +945,7 @@ static inline unsigned char SndReq_L(MA_L* a, char* sn)
 extern "C" void Melee_StartAttack(MA_L* a, MA_L* t, int flag)
 {
     bool r;
-    int cls = WeaponInv_GetHeldClass(a->inv);
+    int cls = cWeapon_GetEquipmentType(a->inv);
     bool two = cls == 0xB;
     int blunt;
     float dist;
@@ -986,7 +986,7 @@ extern "C" void Melee_StartAttack(MA_L* a, MA_L* t, int flag)
                         int h = 0xA;
                         /* empty asm: scheduling barrier keeps retail beqz/delay-slot shape */
                         if (two) asm { .set reorder } else h = 9;
-                        Actor_SetDeathMotionOverride(t, n2, 1);
+                        cHuman_RequestDeathAnimation(t, n2, 1);
                         t->Hit(a, 2, h, 10000.0f, 0, 0, 0);
                     }
                 }
@@ -994,7 +994,7 @@ extern "C" void Melee_StartAttack(MA_L* a, MA_L* t, int flag)
                     Ctl_L* c = a->ctl;
                     bool p = 0;
                     if (c && c->IsPlayer()) p = 1;
-                    if (p) World_PushObject(g_Game, a, 0);
+                    if (p) cGameSystem_PushWeaponCam(g_Game, a, 0);
                 }
                 a->b33E8 = 1;
                 a->f33CC = MId_L(t);
@@ -1009,22 +1009,22 @@ extern "C" void Melee_StartAttack(MA_L* a, MA_L* t, int flag)
                     if (blunt) {
                         V4C_L pos = a->GetPos();
                         SMsg_L m;
-                        SoundPosRequest_Ctor(&m, D_004F2310, &pos.v);
+                        cPlaySoundMsg_ctor_cSndFxR_cGOBJP(&m, D_004F2310, &pos.v);
                         m.b20 = 1;
-                        Event_Send(&m, g_Game, 0);
+                        QueueMessage_cMessageR_cSystemP_int(&m, g_Game, 0);
                         m.vt = D_004DAE30;
-                        FileMan_Release((char*)&m + 0x114, -1);
-                        FileMan_Release((char*)&m + 0x78, -1);
+                        cFileMan_dtor((char*)&m + 0x114, -1);
+                        cFileMan_dtor((char*)&m + 0x78, -1);
                         cMessage_dtor(&m, 0);
                     } else if (t == 0) {
                         V4C_L pos = a->GetPos();
                         SMsg_L m;
-                        SoundPosRequest_Ctor(&m, D_004F2650, &pos.v);
+                        cPlaySoundMsg_ctor_cSndFxR_cGOBJP(&m, D_004F2650, &pos.v);
                         m.b20 = 1;
-                        Event_Send(&m, g_Game, 0);
+                        QueueMessage_cMessageR_cSystemP_int(&m, g_Game, 0);
                         m.vt = D_004DAE30;
-                        FileMan_Release((char*)&m + 0x114, -1);
-                        FileMan_Release((char*)&m + 0x78, -1);
+                        cFileMan_dtor((char*)&m + 0x114, -1);
+                        cFileMan_dtor((char*)&m + 0x78, -1);
                         cMessage_dtor(&m, 0);
                     }
                     a->b33E8 = 1;
@@ -1036,14 +1036,14 @@ extern "C" void Melee_StartAttack(MA_L* a, MA_L* t, int flag)
         if (a->b33E8 == 1 && a->b14) {
             MsgE_L e;
             MsgE_L* pe = &e;
-            Event_Construct(pe, D_004EEEE8);
+            cMessage_ctor_cMessageNameR(pe, D_004EEEE8);
             pe->vtable = D_004DCF10;
             pe->vtable = D_004DA8F0;
             pe->f24 = t;
             pe->f28 = flag;
             pe->f20 = 4;
             e.f1C = 0x40;
-            Event_Send(&e, a, 0);
+            QueueMessage_cMessageR_cSystemP_int(&e, a, 0);
             e.vtable = D_004DCF10;
             cMessage_dtor(&e, 0);
         }

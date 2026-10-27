@@ -1,5 +1,5 @@
 #include "types.h"
-/* Global_ShockToDeath: stun countdown; when expired, notify, play sound and send death state */
+/* cHuman_Shock: stun countdown; when expired, notify, play sound and send death state */
 typedef struct { char d[0x9C]; } Pt1StStr;
 typedef struct {
     void* vt;
@@ -36,13 +36,13 @@ typedef struct Pt1StActor {
     char shockFlag;
 } Pt1StActor;
 extern char D_004EF078[];
-extern void Message_GetScriptTypeKey();
+extern void cMessage_getSOBJClassId();
 extern void cNetShockMsg_dtor();
-extern void cNetShockMsg_v01();
-extern void cNetShockMsg_v04();
+extern void cNetShockMsg_Clone();
+extern void cNetShockMsg_Pack();
 extern void cNetShockMsg_v05();
 extern void cNetMsg_Pack();
-void * const D_004DA9F0[8] = { (void*)0x0, (void*)0x0, (void*)cNetShockMsg_dtor, (void*)cNetShockMsg_v01, (void*)cNetMsg_Pack, (void*)Message_GetScriptTypeKey, (void*)cNetShockMsg_v04, (void*)cNetShockMsg_v05 };
+void * const D_004DA9F0[8] = { (void*)0x0, (void*)0x0, (void*)cNetShockMsg_dtor, (void*)cNetShockMsg_Clone, (void*)cNetMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)cNetShockMsg_Pack, (void*)cNetShockMsg_v05 };
 extern char D_004DCF10[];
 extern char D_004F12D0[];
 extern char g_Game[];
@@ -51,48 +51,48 @@ extern char D_004E01E0[];
 extern char D_004E0840[];
 extern char D_004DAE30[];
 extern int D_0048A308;
-extern void Event_Construct(void* msg, void* name);
-extern void Event_Send(void* msg, void* target, int immediate);
+extern void cMessage_ctor_cMessageNameR(void* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int immediate);
 extern void cMessage_dtor(void* msg, int flags);
-extern void SoundEvent_CtorFromPreset(Pt1StSnd* e, void* preset, void* owner);
-extern void FileMan_Release(Pt1StStr* s, int flag);
-extern void Actor_ShockReaction(Pt1StActor* a, int kind, int b, float f);
+extern void cPlaySoundMsg_ctor_cSndFxR(Pt1StSnd* e, void* preset, void* owner);
+extern void cFileMan_dtor(Pt1StStr* s, int flag);
+extern void cHuman_SetParticleEffect(Pt1StActor* a, int kind, int b, float f);
 
-void Global_ShockToDeath(Pt1StActor* a, char flag, int notify, float time, float arg)
+void cHuman_Shock(Pt1StActor* a, char flag, int notify, float time, float arg)
 {
     if (a->shockTime < 0.0f) {
         Pt1StSnd snd;
         Pt1StStateMsg sm;
         if (notify) {
             Pt1StShockMsg m;
-            Event_Construct(&m, D_004EF078);
+            cMessage_ctor_cMessageNameR(&m, D_004EF078);
             m.vt = ((char*)D_004DA9F0);
             m.arg = arg;
             m.flag = flag;
             m.time = time;
-            Event_Send(&m, a, 0);
+            QueueMessage_cMessageR_cSystemP_int(&m, a, 0);
             m.vt = D_004DCF10;
             cMessage_dtor(&m, 0);
         }
-        Actor_ShockReaction(a, 2, 1, 1.0f);
-        SoundEvent_CtorFromPreset(&snd, D_004F12D0, a);
+        cHuman_SetParticleEffect(a, 2, 1, 1.0f);
+        cPlaySoundMsg_ctor_cSndFxR(&snd, D_004F12D0, a);
         snd.flag = 1;
-        Event_Send(&snd, g_Game, 0);
-        Event_Construct(&sm, g_ActorActionMsgClass);
+        QueueMessage_cMessageR_cSystemP_int(&snd, g_Game, 0);
+        cMessage_ctor_cMessageNameR(&sm, g_ActorActionMsgClass);
         sm.state = 7;
         sm.sub = 2;
         sm.vt = D_004E01E0;
         sm.immediate = 1;
         sm.stamp = D_0048A308;
-        Event_Send(&sm, a, 1);
+        QueueMessage_cMessageR_cSystemP_int(&sm, a, 1);
         a->shockTime = 0.0f;
         a->shockMax = time;
         a->shockFlag = flag;
         sm.vt = D_004E0840;
         cMessage_dtor(&sm, 0);
         snd.vt = D_004DAE30;
-        FileMan_Release(&snd.s114, -1);
-        FileMan_Release(&snd.s78, -1);
+        cFileMan_dtor(&snd.s114, -1);
+        cFileMan_dtor(&snd.s78, -1);
         cMessage_dtor(&snd, 0);
     } else {
         if (!(time <= a->shockMax))

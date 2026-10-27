@@ -8,6 +8,6 @@
 
 /* Read a scalar (used for the physical mass at actor +0x2E0, research
  * ACTOR_RESPONSE_PROBES.md). */
-float Physical_GetMass(float* value) {
+float cPointMass_GetMass(float* value) {
     return value[0];
 }

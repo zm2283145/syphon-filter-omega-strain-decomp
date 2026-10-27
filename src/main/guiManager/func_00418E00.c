@@ -25,8 +25,8 @@ void cLListIterator_GuiWidgetPtr_ctor_void(void* it);
 void std_list_GuiWidgetPtr_push_back_GuiWidgetPR(void* list, W_418E00** v);
 NI_418 std_list_GuiWidgetPtr_end(void* list);
 void cLListIterator_GuiWidgetPtr_ctor_listR(void* dst, const NI_418& src);
-void GuiManager_RemoveWidget(M_418E00* m, W_418E00* w);
-void Mem_Free(int pool, void* p, char* file, int line);
+void GuiManager_Remove(M_418E00* m, W_418E00* w);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 extern char D_004BF138[];
 }
 
@@ -53,7 +53,7 @@ loopf:
     cLListIterator_GuiWidgetPtr_ctor_cLListIteratorR(out, &it);
 }
 
-extern "C" void GuiManager_UnloadRoot(M_418E00* m, W_418E00* w, int del)
+extern "C" void GuiManager_DestroyWidget(M_418E00* m, W_418E00* w, int del)
 {
     char* pos;
     char* end;
@@ -64,12 +64,12 @@ extern "C" void GuiManager_UnloadRoot(M_418E00* m, W_418E00* w, int del)
         if (!(w->f14 & 0x40) || del) {
             w->f14 |= 0x40;
             if (del) {
-                GuiManager_RemoveWidget(m, w);
+                GuiManager_Remove(m, w);
                 {
                     W_418E00* p = w;
                     AllocGuard g;
                     p->~W_418E00();
-                    Mem_Free(0, p, D_004BF138, 0xDB);
+                    cMemMan_Deallocate(0, p, D_004BF138, 0xDB);
                 }
             } else {
                 std_list_GuiWidgetPtr_push_back_GuiWidgetPR(m->pending, &w);

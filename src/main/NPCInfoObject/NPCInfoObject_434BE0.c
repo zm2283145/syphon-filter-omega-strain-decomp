@@ -13,8 +13,8 @@
 #define NULL 0
 #pragma mpwc_relax on
 int Alloc_Lock(int);                                    
-int Alloc_Unlock(int);                                  
-char * Mem_Alloc(int, int, char *, int);                      
+int EnableIntc(int);                                  
+char * cMemMan_Allocate(int, int, char *, int);                      
 int std_tree_pair_tNPCInfoPtr_value_compare_insert_one(char *, char *, void **);                 
 extern char D_004BFCA0;
 extern unsigned char g_ProfileLockEnabled;
@@ -31,9 +31,9 @@ void func_00434BE0(int d0, char * arg1, signed char arg2) {
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    temp_s0 = Mem_Alloc(0, 0x14, &D_004BFCA0, 0x300);
+    temp_s0 = cMemMan_Allocate(0, 0x14, &D_004BFCA0, 0x300);
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     g_ProfileLockDepth -= 1;
     if (temp_s0 != NULL) {
@@ -75,9 +75,9 @@ void func_00434D10(int d0, char * arg1) {
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    temp_s0 = Mem_Alloc(0, 0x14, &D_004BFCA0, 0x2F4);
+    temp_s0 = cMemMan_Allocate(0, 0x14, &D_004BFCA0, 0x2F4);
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     g_ProfileLockDepth -= 1;
     if (temp_s0 != NULL) {

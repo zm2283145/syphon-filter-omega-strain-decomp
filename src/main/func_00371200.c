@@ -5,15 +5,15 @@ typedef struct { u64_t a; u64_t b; } QW;
 typedef struct { char pad[0x24]; Pkt* pk; int aFD8; int padFDC; int aFE0; int aFE4; char padFE8[0x10]; } E;
 typedef struct { char pad[8]; u64_t f8; char pad10[0xFA0]; E ents[1]; } Hdr;
 typedef struct { char pad[8]; u64_t f8; char pad10[0x1010]; int cur; char pad1024[0xC]; int n; int pad1034; int base; int* arr; int pend; char pad1044[0x9C]; unsigned int a10E0; } S;
-extern void Renderer_SetReceiverConsts(S* o, unsigned int flags);
+extern void XLib_ApplyContext(S* o, unsigned int flags);
 extern char D_00538080[];
 extern char D_00537F80[];
 extern int D_00492F70;
 extern void cVU1Man_NewProgBatch(void*);
-extern void Vu1_UploadMicrocode(void*, int);
+extern void cVU1Man_RequestProg(void*, int);
 extern void cDmaMan_RegisterModel(void*, int);
 extern int cDmaMan_BeginChain_eDmaChannel_int(void*, unsigned char, int);
-extern void DmaPacket_Close(void*, unsigned char, void*);
+extern void cDmaMan_EndChain_int_ulongP(void*, unsigned char, void*);
 extern long long DMATAG3(int a, int b, int c);
 extern int cVU1Man_GetMSCAL(void* table, int index);
 
@@ -27,7 +27,7 @@ static inline QW* Emit(QW* p, int num, int addr, int src)
 
 #define EMIT_BODY(TAG, REGS, MC, NQ)                                                   \
     cVU1Man_NewProgBatch(D_00538080);                                                        \
-    Vu1_UploadMicrocode(D_00538080, MC);                                              \
+    cVU1Man_RequestProg(D_00538080, MC);                                              \
     ep = (E*)((char*)o + o->cur * 56 + 0xFB0);                                        \
     cDmaMan_RegisterModel(D_00537F80, D_00492F70);                                            \
     p = (QW*)cDmaMan_BeginChain_eDmaChannel_int(D_00537F80, 1, o->base * NQ);                              \
@@ -64,7 +64,7 @@ static inline QW* Emit(QW* p, int num, int addr, int src)
             p++;                                                                      \
         }                                                                             \
     }                                                                                 \
-    DmaPacket_Close(D_00537F80, 1, p);
+    cDmaMan_EndChain_int_ulongP(D_00537F80, 1, p);
 
 static inline void Draw3_1200(S* o, E* e)
 {
@@ -104,7 +104,7 @@ static inline void Draw2_1200(S* o, E* e)
     EMIT_BODY(0x20024000, 0x41, 1, 4)
 }
 
-void Renderer_FlushBatch(S* o)
+void XLib_DrawStrip(S* o)
 {
     E* e;
 
@@ -114,7 +114,7 @@ void Renderer_FlushBatch(S* o)
     }
     if (o->arr[o->n - o->base] > 0) {
         if ((o->a10E0 & 0x400) || (o->a10E0 & 0x1000)) return;
-        Renderer_SetReceiverConsts(o, o->a10E0 | 0x40000);
+        XLib_ApplyContext(o, o->a10E0 | 0x40000);
         e = (E*)((char*)o + 0xFB0 + o->cur * 56);
         if (o->a10E0 & 1) {
             Draw3_1200(o, e);

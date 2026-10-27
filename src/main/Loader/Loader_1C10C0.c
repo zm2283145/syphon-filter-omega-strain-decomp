@@ -21,25 +21,25 @@ extern "C" {
 extern char D_0049EE88[];
 extern Vec_1C10C0* D_004FFBE0;
 extern char g_Game[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-int Pop_FindTag(PopReader_1C10C0* r, int tag);
-Node_1C10C0* Node_Construct(void* p, PopReader_1C10C0* r, int i);
-void Loader_UpdateLoadingScreen(void* a, char* name, int x);
-void* App_GetInstance(void);
-void PtrVector_Resize(Vec_1C10C0* v, int n, void** fill);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+int cPopulation_SeekBlock(PopReader_1C10C0* r, int tag);
+Node_1C10C0* cNode_ctor_cPopulationR_int(void* p, PopReader_1C10C0* r, int i);
+void cMachine_ShowLoadingScreen(void* a, char* name, int x);
+void* GetMachine(void);
+void std_vector_pod_int_resize(Vec_1C10C0* v, int n, void** fill);
 void nGobjManager_AddNode(Node_1C10C0* n);
-void World_RegisterNode(void* w, Node_1C10C0* n);
+void cGameSystem_AddTeleport(void* w, Node_1C10C0* n);
 }
 #pragma opt_strength_reduction off
-extern "C" void Loader_InitNodes(void* a0, PopReader_1C10C0* r)
+extern "C" void cLoader_LoadNodes(void* a0, PopReader_1C10C0* r)
 {
     if (r->cur) {
         int mis;
-        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Nodes...", 0);
+        cMachine_ShowLoadingScreen(GetMachine(), "Initializing Nodes...", 0);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;
-        if ((unsigned char)Pop_FindTag(r, 0x3A444F4E)) {
+        if ((unsigned char)cPopulation_SeekBlock(r, 0x3A444F4E)) {
             int n;
             Vec_1C10C0* list;
             int i;
@@ -49,22 +49,22 @@ extern "C" void Loader_InitNodes(void* a0, PopReader_1C10C0* r)
             if (n) {
                 void* z[1];
                 z[0] = 0;
-                PtrVector_Resize(list, n, z);
+                std_vector_pod_int_resize(list, n, z);
             }
             for (i = 0; i < n; i++) {
                 Node_1C10C0* p;
                 Node_1C10C0** slot = &list->data[i];
                 {
                     AllocGuard g;
-                    p = (Node_1C10C0*)Mem_Alloc(0, 0x90, D_0049EE88, 0x519);
+                    p = (Node_1C10C0*)cMemMan_Allocate(0, 0x90, D_0049EE88, 0x519);
                 }
                 if (p)
-                    p = Node_Construct(p, r, i);
+                    p = cNode_ctor_cPopulationR_int(p, r, i);
                 *slot = p;
                 nGobjManager_AddNode(list->data[i]);
                 Node_1C10C0* q = list->data[i];
                 if (q->flags & 0x200)
-                    World_RegisterNode(g_Game, q);
+                    cGameSystem_AddTeleport(g_Game, q);
             }
         }
     }
@@ -81,29 +81,29 @@ static inline void merge_flush_func_001C10C0(void) {}
 struct PopReader_1C12A0 { int unk0; int size; unsigned int base; char* cur; };
 extern "C" {
 extern void* D_004FFBD4;
-void Object_Register(void* o);
+void nGobjManager_AddGOBJ(void* o);
 #if 0 /* merge_units */
-int Pop_FindTag(PopReader_1C12A0* r, int tag);
+int cPopulation_SeekBlock(PopReader_1C12A0* r, int tag);
 #endif /* merge_units */
-#define Pop_FindTag(a0, a1) (Pop_FindTag((PopReader_1C10C0 *)(a0), (a1))) /* merge_units */
+#define cPopulation_SeekBlock(a0, a1) (cPopulation_SeekBlock((PopReader_1C10C0 *)(a0), (a1))) /* merge_units */
 
 void* cEnvSettings_ctor(void* p, PopReader_1C12A0* r);
-void EnvController_AddEnv(void* list, void** item);
+void cLList_cEnvSettingsPtr_PushBackActual(void* list, void** item);
 int cLList_cEnvSettingsPtr_Empty(void* list);
 void** cLList_cEnvSettingsPtr_opIndex(void* list, int i);
-void EnvController_ActivateFirst(void* list, void* item);
+void cEnvMan_SetCurrent(void* list, void* item);
 }
-extern "C" void Loader_InitEnvironmentSettings(void* a0, PopReader_1C12A0* r)
+extern "C" void cLoader_LoadEnvSettings(void* a0, PopReader_1C12A0* r)
 {
     int mis;
     int n;
     void* list;
     int i;
-    Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Environment Settings...", 0);
+    cMachine_ShowLoadingScreen(GetMachine(), "Initializing Environment Settings...", 0);
     mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
     if (mis)
         r->cur += 4 - mis;
-    Pop_FindTag(r, 0x3A564E45);
+    cPopulation_SeekBlock(r, 0x3A564E45);
     n = *(int*)r->cur;
     r->cur += 4;
     list = D_004FFBD4;
@@ -111,18 +111,18 @@ extern "C" void Loader_InitEnvironmentSettings(void* a0, PopReader_1C12A0* r)
         void* p;
         {
             AllocGuard g;
-            p = Mem_Alloc(0, 0xA8, D_0049EE88, 0x4F3);
+            p = cMemMan_Allocate(0, 0xA8, D_0049EE88, 0x4F3);
         }
         if (p)
             p = cEnvSettings_ctor(p, r);
         void* item[1];
         item[0] = p;
-        EnvController_AddEnv(list, item);
-        Object_Register(p);
+        cLList_cEnvSettingsPtr_PushBackActual(list, item);
+        nGobjManager_AddGOBJ(p);
     }
-    EnvController_ActivateFirst(list, cLList_cEnvSettingsPtr_Empty(list) ? 0 : *cLList_cEnvSettingsPtr_opIndex(list, 0));
+    cEnvMan_SetCurrent(list, cLList_cEnvSettingsPtr_Empty(list) ? 0 : *cLList_cEnvSettingsPtr_opIndex(list, 0));
 }
-#undef Pop_FindTag /* merge_units */
+#undef cPopulation_SeekBlock /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C12A0(void) {}
 #pragma pop /* merge_units */

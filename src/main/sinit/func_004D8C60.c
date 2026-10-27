@@ -1,7 +1,7 @@
 #include "types.h"
-int NetMsgTable_Add();
-int cGOBJ_GetScriptTypeKeyPtr();
-int Script_RegisterNative_2();
+int cNetMsg_RegisterMsg();
+int cGOBJ_SOBJ_getClassId();
+int cScriptBase_registerFunc_intPintPint_intP_charP_int_etc();
 int Script_ActivateBodyToss_2();
 int Script_ActivateBodyToss();
 int func_004768E0();
@@ -14,7 +14,7 @@ extern int D_00588050;
 extern int D_00588058;
 void StaticInit_RegisterActivateBodyToss(void) {
     D_00588038 = "cActivateBodyTossMsg";
-    D_00588048 = NetMsgTable_Add(func_004768E0, &D_00588040, "cActivateBodyTossMsg");
-    D_00588050 = Script_RegisterNative_2(Script_ActivateBodyToss, &D_00493880, "ActivateBodyToss", 1, cGOBJ_GetScriptTypeKeyPtr());
-    D_00588058 = Script_RegisterNative_2(Script_ActivateBodyToss_2, &D_00493880, "ActivateBodyToss", 2, cGOBJ_GetScriptTypeKeyPtr(), &D_00493878);
+    D_00588048 = cNetMsg_RegisterMsg(func_004768E0, &D_00588040, "cActivateBodyTossMsg");
+    D_00588050 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_ActivateBodyToss, &D_00493880, "ActivateBodyToss", 1, cGOBJ_SOBJ_getClassId());
+    D_00588058 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_ActivateBodyToss_2, &D_00493880, "ActivateBodyToss", 2, cGOBJ_SOBJ_getClassId(), &D_00493878);
 }

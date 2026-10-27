@@ -7,13 +7,13 @@
 #include "types.h"
 #include "game_types.h"
 
-extern ListIter* List_InsertBefore(ListIter* out, LinkList* list, ListIter* pos, int* value);
+extern ListIter* std_list_deleter_voidPtr_insert(ListIter* out, LinkList* list, ListIter* pos, int* value);
 
 /* Inserts *value at the back of the list (before the header node). */
-ListIter* List_PushBack_132E20(LinkList* list, int* value) {
+ListIter* cLList_cScenePtr_PushBackActual(LinkList* list, int* value) {
     ListIter pos;
     ListIter result;
 
     pos.node = &list->header;
-    return List_InsertBefore(&result, list, &pos, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &pos, value);
 }

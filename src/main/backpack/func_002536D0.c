@@ -3,8 +3,8 @@
 extern "C" {
 extern char* D_005061D0;
 extern int g_HotboxTracker;
-extern void Object_Register(void* o);
-extern void* Hotbox_CreateRuntime(int a, void* o, int b, int c);
+extern void nGobjManager_AddGOBJ(void* o);
+extern void* cHotboxMan_CreateInteractBox(int a, void* o, int b, int c);
 extern void Backpack_UpdateBoxPriority(void* o);
 }
 struct VC_002536D0 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(); virtual void v21(int a); };
@@ -41,9 +41,9 @@ extern "C" void cBackpack_Unpack(S_002536D0* p) {
     }
     if (p->obj == 0) {
         ((VC_002536D0*)p)->v21(1);
-        Object_Register(p);
+        nGobjManager_AddGOBJ(p);
         if (p->obj == 0) {
-            p->obj = (Obj_002536D0*)Hotbox_CreateRuntime(g_HotboxTracker, p, 0, 1);
+            p->obj = (Obj_002536D0*)cHotboxMan_CreateInteractBox(g_HotboxTracker, p, 0, 1);
             p->obj->v = p->id;
         }
     }

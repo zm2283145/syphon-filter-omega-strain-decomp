@@ -22,10 +22,10 @@ extern unsigned char D_00572528;
 extern unsigned char D_005723C8;
 extern void SleepThread(void);
 extern void SuspendThread_2(int);
-extern void SuspendThread(int);
-extern void App_CardWaitPoll(int, int);
-extern O2C84B0* DME_GetLobby(void);
-extern void SFOLobby_Update(O2C84B0* o);
+extern void ResumeThread(int);
+extern void cGameFrontEnd_LobbyCallback(int, int);
+extern O2C84B0* cDME_GetLobby(void);
+extern void SFOLobby_Intel(O2C84B0* o);
 }
 #pragma define_section REENT_DTOR ".dtors_drop" far_absolute RX
 struct Reent_84B0 { Reent_84B0(unsigned char b) { if (!b) D_005723C8 = 1; } __declspec(weak) __declspec(REENT_DTOR) ~Reent_84B0() { D_005723C8 = 0; } };
@@ -115,28 +115,28 @@ extern "C" void FrontEnd_SplashThreadMain(int arg)
             if (DivTime() - last >= 10 && !g_ProfileLockDepth) {
                 SuspendThread_2(D_0048C348);
                 SpSave(buf);
-                fp = App_CardWaitPoll;
+                fp = cGameFrontEnd_LobbyCallback;
                 D_0051EE90 = g_GuiSoundGate = 1;
                 fp(0, 0x3039);
                 unsigned char b;
                 if (!D_00572528 && !(b = D_005723C8)) {
                     O2C84B0* o;
                     { Reent_84B0 r(b); }
-                    o = DME_GetLobby();
+                    o = cDME_GetLobby();
                     if (o) {
                         if (!o->busy) {
                             o->busy = 1;
-                            SFOLobby_Update(o);
+                            SFOLobby_Intel(o);
                             o->busy = 0;
                         } else {
-                            SFOLobby_Update(o);
+                            SFOLobby_Intel(o);
                         }
                     }
                 }
                 g_GuiSoundGate = 0;
                 D_0051EE90 = 0;
                 SpLoad(buf);
-                SuspendThread(D_0048C348);
+                ResumeThread(D_0048C348);
                 last = DivTime();
             }
             SleepThread();
@@ -201,19 +201,19 @@ extern int D_00538C64;
 extern char D_00538C68;
 extern V4_002C8840 D_00539170;
 extern long long D_004BC1B0;
-void Renderer_BindTexture(void* m, int idx);
+void cTexMan_SetActive(void* m, int idx);
 void XLib_NewStrip(void* s);
 void XLib_NextBatchVert(void* s);
-void Vec4_Copy(V4_002C8840* d, V4_002C8840* s);
-void GuiBatch_AddVertexColor(V4_002C8840* d, V4_002C8840* s);
-float GuiBatch_AddVertexUV(void);
-V4_002C8840* Vec4_Set(V4_002C8840* o, float x, float y, float z, float w);
-void Renderer_FlushPrimitives(void* s);
-void Video_BeginFrame(void* s);
+void cVector_opAssign(V4_002C8840* d, V4_002C8840* s);
+void tIRGBA_opAssign_tRGBAR(V4_002C8840* d, V4_002C8840* s);
+float tVifFloatToInt_short_4_Bias(void);
+V4_002C8840* cVector_ctor_float_float_float_float(V4_002C8840* o, float x, float y, float z, float w);
+void XLib_DrawSprites2(void* s);
+void XLib_NextFrame(void* s);
 void cFileMan_ctor_charP_cFileIOP_bool(void* s, char* name, int a, int b);
-void FileMan_Release(void* s, int a);
-int TexMan_FindOrLoad(void* m, void* s);
-void Tex_Release(void* m, int idx, int a, int b);
+void cFileMan_dtor(void* s, int a);
+int cTexMan_AddTextureFromFile_cFileManR(void* m, void* s);
+void cTexMan_RemoveTexture(void* m, int idx, int a, int b);
 }
 #define D_00539224 (D_00539210.f24)
 #define D_00539228 (D_00539210.f28)
@@ -240,10 +240,10 @@ static inline void Emit_002C8840(const V4c_002C8840& pos, const V4c_002C8840& co
     float u;
     XLib_NextBatchVert(g_Video);
     e = &RS_002C8840->ents[D_00539210.f10];
-    Vec4_Copy(&e->pos[D_00539224 - 1], (V4_002C8840*)&pos);
-    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V4_002C8840*)&col);
-    u = uv.x + GuiBatch_AddVertexUV();
-    Vec4_Copy(&e->c34[D_00539224 - 1], Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
+    cVector_opAssign(&e->pos[D_00539224 - 1], (V4_002C8840*)&pos);
+    tIRGBA_opAssign_tRGBAR(&e->c30[D_00539224 - 1], (V4_002C8840*)&col);
+    u = uv.x + tVifFloatToInt_short_4_Bias();
+    cVector_opAssign(&e->c34[D_00539224 - 1], cVector_ctor_float_float_float_float(&tmp, u, uv.y + tVifFloatToInt_short_4_Bias(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 static inline unsigned char Prim_002C8840(void) { if (g_DrawMode & 1) return 3; return 2; }
@@ -261,9 +261,9 @@ extern "C" void func_002C8840(char* name)
     int vp;
     if (name == 0 || *name == 0) return;
     cFileMan_ctor_charP_cFileIOP_bool(&str, name, 0, 0);
-    idx = TexMan_FindOrLoad(g_TextureMgr, &str);
+    idx = cTexMan_AddTextureFromFile_cFileManR(g_TextureMgr, &str);
     if (idx == -1) {
-        FileMan_Release(&str, -1);
+        cFileMan_dtor(&str, -1);
         return;
     }
     saved = g_DrawMode;
@@ -272,7 +272,7 @@ extern "C" void func_002C8840(char* name)
     UM_002C8840(&RS_002C8840->mtx[D_00538C64]);
     D_00538C68 = 1;
     g_DrawMode = 1;
-    Renderer_BindTexture(g_TextureMgr, idx);
+    cTexMan_SetActive(g_TextureMgr, idx);
     vp = (int)&D_00539170;
     {
         Slot_002C8840* s = SLOT_002C8840(D_00538C60);
@@ -314,8 +314,8 @@ extern "C" void func_002C8840(char* name)
         D_00539224 = 0;
         Emit_002C8840(V4c_002C8840(-hw, hh, 0.5f, 1.0f), V4c_002C8840(1.0f, 1.0f, 1.0f, 1.0f), V4c_002C8840(0.0f, 0.0f, 1.0f, 0.0f));
         Emit_002C8840(V4c_002C8840(hw, -hh, 0.5f, 1.0f), V4c_002C8840(1.0f, 1.0f, 1.0f, 1.0f), V4c_002C8840(umax, vmax, 1.0f, 0.0f));
-        Renderer_FlushPrimitives(g_Video);
-        Video_BeginFrame(g_Video);
+        XLib_DrawSprites2(g_Video);
+        XLib_NextFrame(g_Video);
     }
     D_00538C64--;
     D_00538C68 = 1;
@@ -325,8 +325,8 @@ extern "C" void func_002C8840(char* name)
         s->f2F4 = 0;
     }
     g_DrawMode = saved;
-    Tex_Release(g_TextureMgr, idx, 0, 1);
-    FileMan_Release(&str, -1);
+    cTexMan_RemoveTexture(g_TextureMgr, idx, 0, 1);
+    cFileMan_dtor(&str, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002C8840(void) {}

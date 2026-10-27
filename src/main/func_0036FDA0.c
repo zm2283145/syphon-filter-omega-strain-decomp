@@ -21,7 +21,7 @@ struct X : XBase {
     int a0;
     R rel;
 };
-extern "C" X* Xform_Construct(X* x0)
+extern "C" X* cXformNode_ctor_void(X* x0)
 {
     R* r;
     X* x = x0;

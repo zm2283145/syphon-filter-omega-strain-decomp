@@ -5,12 +5,12 @@
  */
 
 /* merge_units: begin func_002DD2E8 */
-extern int Net_AllocZeroed(int* out, unsigned long n);
+extern int rt_memory_allocate_init_zero(int* out, unsigned long n);
 extern void printf(const char* msg);
-int Rt_MemoryAllocate(unsigned int n)
+int DMEmalloc(unsigned int n)
 {
     int p = 0;
-    if (Net_AllocZeroed(&p, n))
+    if (rt_memory_allocate_init_zero(&p, n))
         printf("rt_memory_allocate failed 
 ");
     return p;

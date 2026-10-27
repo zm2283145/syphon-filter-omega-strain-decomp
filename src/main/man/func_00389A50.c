@@ -39,15 +39,15 @@ typedef struct {
 extern "C" {
 extern MCache g_AgentPartCache;
 extern TMgr* g_TextureMgr;
-int MeshCache_FindSlot(MCache* c, __int128 key);
-void Model_HardMeshAttachPoints(SkMdl* m);
+int FindPart__7MonsterF1(MCache* c, __int128 key);
+void cMan_SetGunOffsets(SkMdl* m);
 }
-extern "C" signed char ActorModel_StreamWait(SkMdl* m)
+extern "C" signed char cMan_CheckLoading(SkMdl* m)
 {
     unsigned long n = m->count;
     int lod;
     m->missing = 0;
-    int s = MeshCache_FindSlot(&g_AgentPartCache, m->key);
+    int s = FindPart__7MonsterF1(&g_AgentPartCache, m->key);
     if (s != -1 && !g_AgentPartCache.recs[s][0].p) {
         m->missing++;
     }
@@ -88,7 +88,7 @@ extern "C" signed char ActorModel_StreamWait(SkMdl* m)
     }
     if (!m->missing) {
         m->b2BDC = 0;
-        Model_HardMeshAttachPoints(m);
+        cMan_SetGunOffsets(m);
     }
     return m->missing;
 }

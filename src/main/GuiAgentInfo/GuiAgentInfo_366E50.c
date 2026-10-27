@@ -55,12 +55,12 @@ Rec3C* func_00366EB0(Rec3C* first, Rec3C* last, Rec3C* destEnd) {
 
 #include "loose03_types.h"
 
-extern int AnimChannelBase_CopyCtor(L3AnimChannel* self, L3AnimChannel* src);
+extern int cSplinedMotion_float_ctor_cSplinedMotionR(L3AnimChannel* self, L3AnimChannel* src);
 extern char D_004DA840[];       /* AnimChannel vtable */
 
 /* AnimChannel copy constructor. */
 L3AnimChannel* AnimChannel_CopyCtor_366F20(L3AnimChannel* self, L3AnimChannel* src) {
-    AnimChannelBase_CopyCtor(self, src);
+    cSplinedMotion_float_ctor_cSplinedMotionR(self, src);
     self->vtable = D_004DA840;
     self->wrap = src->wrap;
     return self;

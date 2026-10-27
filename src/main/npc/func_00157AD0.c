@@ -50,18 +50,18 @@ extern char D_004DB660[];
 extern PtrVec g_NpcDeadList;
 extern char g_Game[];
 extern char g_NpcRouteMgr[];
-extern int Service_Lookup(void* a, void* b);
-extern void NpcRoute_Release(int mgr, Actor_7AD0* actor);
-extern void NpcRoute_ReleaseBuffer(int route);
-extern void cAI_v11(cNPC_7AD0* self);
-extern void ActiveList_EraseMatching(PtrVec* v, Pred_7AD0 p);
-extern void NpcThinkList_RemoveActor(Actor_7AD0* actor);
-extern void LookSlot_Release(int* result, Look_7AD0* obj, int* end, int** begin);
-extern Obj_7AD0* Object_LookupById(int* id);
-extern void Event_Construct(Msg_7AD0* msg, void* name);
-extern void Event_Send(Msg_7AD0* msg, void* target, int flags);
+extern int cSystemContainer_GetSystem(void* a, void* b);
+extern void cPathSystem_ClearRequests(int mgr, Actor_7AD0* actor);
+extern void cPathNavigator_Deactivate(int route);
+extern void cAI_Deactivate(cNPC_7AD0* self);
+extern void std_list_imp_voidPtr_remove_if(PtrVec* v, Pred_7AD0 p);
+extern void cNPC_RemoveFromActiveList(Actor_7AD0* actor);
+extern void std_list_deleter_cLookAtListItem_erase(int* result, Look_7AD0* obj, int* end, int** begin);
+extern Obj_7AD0* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+extern void cMessage_ctor_cMessageNameR(Msg_7AD0* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg_7AD0* msg, void* target, int flags);
 extern void cMessage_dtor(Msg_7AD0* msg, int flags);
-extern void Object_ClosestPlayerDistSq(Actor_7AD0* actor, float* out);
+extern void cGOBJ_GetClosestPlayer(Actor_7AD0* actor, float* out);
 }
 
 inline void LookClear_7AD0(Look_7AD0* obj)
@@ -69,10 +69,10 @@ inline void LookClear_7AD0(Look_7AD0* obj)
     int* begin = &obj->begin;
     int end = obj->end;
     int result;
-    LookSlot_Release(&result, obj, &end, &begin);
+    std_list_deleter_cLookAtListItem_erase(&result, obj, &end, &begin);
 }
 
-extern "C" void cNPC_v11(cNPC_7AD0* self)
+extern "C" void cNPC_Deactivate_void(cNPC_7AD0* self)
 {
     float dist;
     int result;
@@ -90,29 +90,29 @@ extern "C" void cNPC_v11(cNPC_7AD0* self)
         return;
     }
     {
-        int mgr = Service_Lookup(g_Game, g_NpcRouteMgr);
-        NpcRoute_Release(mgr, self->actor);
+        int mgr = cSystemContainer_GetSystem(g_Game, g_NpcRouteMgr);
+        cPathSystem_ClearRequests(mgr, self->actor);
     }
-    NpcRoute_ReleaseBuffer(self->route);
-    cAI_v11(self);
-    ActiveList_EraseMatching(&g_NpcDeadList, Pred_7AD0(e, &self));
-    NpcThinkList_RemoveActor(self->actor);
+    cPathNavigator_Deactivate(self->route);
+    cAI_Deactivate(self);
+    std_list_imp_voidPtr_remove_if(&g_NpcDeadList, Pred_7AD0(e, &self));
+    cNPC_RemoveFromActiveList(self->actor);
     if (Look_7AD0* l = self->look) {
         begin = &l->begin;
         end = l->end;
-        LookSlot_Release(&result, l, &end, &begin);
+        std_list_deleter_cLookAtListItem_erase(&result, l, &end, &begin);
         self->look->b14 = 0;
     }
     if (self->actor->IsLinked()) {
-        Obj_7AD0* o = Object_LookupById(&self->id);
+        Obj_7AD0* o = nGobjManager_LookupGOBJ_cObjectIdR(&self->id);
         if (o && o->magic == 0xBEBAAFDE) {
             Actor_7AD0* a = self->actor;
             Msg_7AD0 msg;
-            Event_Construct(&msg, D_004A4A68);
+            cMessage_ctor_cMessageNameR(&msg, D_004A4A68);
             msg.vtable = D_004DB600;
             msg.flag = 1;
             msg.actor = a;
-            Event_Send(&msg, o, 0);
+            QueueMessage_cMessageR_cSystemP_int(&msg, o, 0);
             msg.vtable = D_004DB660;
             cMessage_dtor(&msg, 0);
         }
@@ -121,7 +121,7 @@ extern "C" void cNPC_v11(cNPC_7AD0* self)
         state = self->actor->GetState();
         ok = state == 2 || state == 3;
         if (ok) {
-            Object_ClosestPlayerDistSq(self->actor, &dist);
+            cGOBJ_GetClosestPlayer(self->actor, &dist);
         }
     }
     self->dead = 1;

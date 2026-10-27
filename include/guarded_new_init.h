@@ -28,7 +28,7 @@
         GuardedNewObject* p;                                                  \
         {                                                                     \
             AllocGuard guard;                                                 \
-            p = (GuardedNewObject*)Mem_Alloc(0, (size), fileSym, 0x2A);       \
+            p = (GuardedNewObject*)cMemMan_Allocate(0, (size), fileSym, 0x2A);       \
         }                                                                     \
         if (p) {                                                              \
             baseCtor(p);                                                      \

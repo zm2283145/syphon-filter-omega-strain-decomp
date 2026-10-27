@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int* PtrVec_At(PtrVec* v, int i) {
+int* std_vector_cNodePtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }

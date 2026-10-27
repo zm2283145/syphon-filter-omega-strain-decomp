@@ -4,10 +4,10 @@
 /*
  * Post a stored event with action 4 and an angle when not yet posted: the event block at
  * blockOffset holds action (+0x28), target (+0x2C), posted flag (+0x30)
- * and angle (+0x34). Event_Send(block, target, 1), then mark posted and
+ * and angle (+0x34). QueueMessage_cMessageR_cSystemP_int(block, target, 1), then mark posted and
  * clear the target.
  */
-extern void Event_Send(void* block, int target, int flag);
+extern void QueueMessage_cMessageR_cSystemP_int(void* block, int target, int flag);
 
 typedef struct StoredEventBlock {
     char data[0x28];
@@ -29,7 +29,7 @@ typedef struct StoredEventBlock {
         if (self->ev.target && !self->ev.posted) {                            \
             self->ev.action = 4;                                              \
             self->ev.angle = angle;                                           \
-            Event_Send(&self->ev, self->ev.target, 1);                        \
+            QueueMessage_cMessageR_cSystemP_int(&self->ev, self->ev.target, 1);                        \
         }                                                                     \
         self->ev.posted = 1;                                                  \
         self->ev.target = 0;                                                  \

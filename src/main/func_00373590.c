@@ -1,5 +1,5 @@
 #include "types.h"
-/* LightMgr_TestBounds: bounding-sphere test of a light entry, appends (light, key) to the gather list */
+/* cLightMan_AddLightScoreBox: bounding-sphere test of a light entry, appends (light, key) to the gather list */
 typedef struct Pt1TbVec { float x, y, z, w; } __attribute__((aligned(16))) Pt1TbVec;
 typedef struct Pt1TbEntry {
     unsigned char flags;
@@ -17,7 +17,7 @@ typedef struct Pt1TbGather {
     Pt1TbList* list;
 } Pt1TbGather;
 
-void LightMgr_TestBounds(Pt1TbGather* g, Pt1TbVec* pos, Pt1TbEntry* e, float radius)
+void cLightMan_AddLightScoreBox(Pt1TbGather* g, Pt1TbVec* pos, Pt1TbEntry* e, float radius)
 {
     float key;
     unsigned char ok;

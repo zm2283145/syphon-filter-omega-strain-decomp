@@ -9,7 +9,7 @@
 
 extern "C" {
 /*fc*/
-int Mem_Free(...);                      
+int cMemMan_Deallocate(...);                      
 int String_Dtor(...);                         
 int std_list_cSafePtr_cGOBJ_dtor(...);                            
 int std_list_cHudTargetInfoPtr_end_void_2(...);                          
@@ -17,7 +17,7 @@ int cLListIterator_cHudTargetInfoPtr_ctor_listR(...);
 int std_list_cHudTargetInfoPtr_begin_void_2(...);                          
 int std_list_cHudTargetsObserverPtr_dtor(...);                            
 int std_list_cHudTargetInfoPtr_dtor(...);                            
-int HudTracker_Kill(...);                               
+int cIE_GOBJ_AnimateOff(...);                               
 int operator_delete(...);                             
 extern unsigned char D_0048B308;
 extern char D_004A8F60;
@@ -54,8 +54,8 @@ extern "C" int cHudTargetManager_dtor(char *arg0, long long arg1) {
                     AllocGuard g;
                 if (temp_s1 != NULL) {
                     if (D_0048B308 != 0) {
-                        HudTracker_Kill(F_(temp_s1, 0x8, int));
-                        HudTracker_Kill(F_(temp_s1, 0x4, int));
+                        cIE_GOBJ_AnimateOff(F_(temp_s1, 0x8, int));
+                        cIE_GOBJ_AnimateOff(F_(temp_s1, 0x4, int));
                     }
                     temp_a0 = temp_s1 + 0x28;
                     if (temp_a0 != NULL) {
@@ -66,7 +66,7 @@ extern "C" int cHudTargetManager_dtor(char *arg0, long long arg1) {
                         String_Dtor(temp_a0_2, 0);
                     }
                 }
-                Mem_Free(0, temp_s1, &D_004A8F60, 0x17E);
+                cMemMan_Deallocate(0, temp_s1, &D_004A8F60, 0x17E);
                 }
                 var_s0 = (char *)(F_(var_s0, 0x4, int));
         }

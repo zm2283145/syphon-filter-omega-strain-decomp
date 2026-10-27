@@ -42,14 +42,14 @@ extern "C" {
 extern unsigned char D_004FFBB7;
 extern int D_004F7D90;
 extern Player_2423* g_LocalPlayer;
-void List_Begin(It_2423* out, char* l);
-void CalloutList_End(It_2423* out, char* l);
+void std_list_deleter_voidPtr_begin_void(It_2423* out, char* l);
+void std_list_tCalloutPtr_end_void(It_2423* out, char* l);
 void cLListIterator_tCalloutPtr_ctor(It_2423* out, It_2423* in);
 void std_list_tCalloutPtr_generic_iterator_ctor(It_2423* out, It_2423* in);
 int Hud_IsGuiFocused(Hud_2423* s);
-void IeElement_SetShown(Elem_2423* e, int v);
-Obj_2423* Object_LookupById(Ent_2423* e);
-int Hud_ClearCallout(Hud_2423* o, Ent_2423* key, int id, signed char flag, int send);
+void cInterfaceElement_Activate(Elem_2423* e, int v);
+Obj_2423* nGobjManager_LookupGOBJ_cObjectIdR(Ent_2423* e);
+int cHud_ClearCallout(Hud_2423* o, Ent_2423* key, int id, signed char flag, int send);
 }
 
 static inline bool Visible(Obj_2423* o)
@@ -60,10 +60,10 @@ static inline bool Visible(Obj_2423* o)
     if (vis) { if (o->Shown()) ok = 1; }
     return ok;
 }
-static inline void Begin_(It_2423* out, char* l) { It_2423 t; List_Begin(&t, l); std_list_tCalloutPtr_generic_iterator_ctor(out, &t); }
-static inline void End_(It_2423* out, char* l) { It_2423 t; CalloutList_End(&t, l); cLListIterator_tCalloutPtr_ctor(out, &t); }
+static inline void Begin_(It_2423* out, char* l) { It_2423 t; std_list_deleter_voidPtr_begin_void(&t, l); std_list_tCalloutPtr_generic_iterator_ctor(out, &t); }
+static inline void End_(It_2423* out, char* l) { It_2423 t; std_list_tCalloutPtr_end_void(&t, l); cLListIterator_tCalloutPtr_ctor(out, &t); }
 
-extern "C" void Hud_UpdateCallouts(Hud_2423* self, float dt)
+extern "C" void cHud_UpdateCallouts(Hud_2423* self, float dt)
 {
     It_2423 it;
     It_2423 e;
@@ -73,26 +73,26 @@ extern "C" void Hud_UpdateCallouts(Hud_2423* self, float dt)
         Ent_2423* ent = it.n->ent;
         if (ent->elem) {
             if (D_004FFBB7 || (Hud_IsGuiFocused(self) && self->x6A4->xD4 != 1)) {
-                IeElement_SetShown(ent->elem, 0);
+                cInterfaceElement_Activate(ent->elem, 0);
                 it.n = it.n->next;
                 continue;
             }
             if (self->b6A9) {
                 Elem_2423* el = ent->elem;
                 if (el->x70 == D_004F7D90) {
-                    IeElement_SetShown(el, 0);
+                    cInterfaceElement_Activate(el, 0);
                     it.n = it.n->next;
                     continue;
                 }
             }
-            IeElement_SetShown(ent->elem, 1);
+            cInterfaceElement_Activate(ent->elem, 1);
             {
-                Obj_2423* o = Object_LookupById(ent);
+                Obj_2423* o = nGobjManager_LookupGOBJ_cObjectIdR(ent);
                 if (!o || !Visible(o)) {
-                    IeElement_SetShown(ent->elem, 0);
+                    cInterfaceElement_Activate(ent->elem, 0);
                 } else if (ent->b18 && o->GetKind() == 3) {
                     it.n = it.n->next;
-                    Hud_ClearCallout(self, ent, ent->id, 0, 0);
+                    cHud_ClearCallout(self, ent, ent->id, 0, 0);
                     continue;
                 } else if (!self->x6A0 || !self->b6A9) {
                     Player_2423* p = g_LocalPlayer;
@@ -100,7 +100,7 @@ extern "C" void Hud_UpdateCallouts(Hud_2423* self, float dt)
                         V d = p->obj->GetPos() - o->GetPos();
                         ent->distSq = LenSq(&d);
                         if (!(ent->distSq <= 8100.0f))
-                            IeElement_SetShown(ent->elem, 0);
+                            cInterfaceElement_Activate(ent->elem, 0);
                     }
                 }
             }
@@ -112,7 +112,7 @@ extern "C" void Hud_UpdateCallouts(Hud_2423* self, float dt)
             ent->timer = t;
             if (t <= z) {
                 it.n = it.n->next;
-                Hud_ClearCallout(self, ent, ent->id, 0, 0);
+                cHud_ClearCallout(self, ent, ent->id, 0, 0);
             } else {
                 it.n = it.n->next;
             }

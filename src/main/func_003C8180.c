@@ -19,20 +19,20 @@ extern char D_0049AE20[];
 extern char D_0049AE40[];
 void Libc_Fprintf(int stream, const char* msg);
 void Libc_Abort(void);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void Mem_Free(int pool, void* p, char* file, int line);
-void Vec4_Copy(Q8180* d, Q8180* s);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+void cVector_opAssign(Q8180* d, Q8180* s);
 void cCollisionModel_FaceProperties_opAssign(void* d, void* s);
 void cCollisionModel_FaceLocator_opAssign(void* d, void* s);
-void* Mem_PlacementNew(int size, void* p);
+void* opNew_uint_voidP(int size, void* p);
 void cCollisionFace_ctor_cCollisionFaceR(void* d, void* s);
 }
 struct CandVec8180 { unsigned int cap; unsigned int count; Cand8180* data; };
 static inline void Assign8180(Cand8180* d, Cand8180* s) {
-    Vec4_Copy(&d->rows[0], &s->rows[0]);
-    Vec4_Copy(&d->rows[1], &s->rows[1]);
-    Vec4_Copy(&d->rows[2], &s->rows[2]);
-    Vec4_Copy(&d->rows[3], &s->rows[3]);
+    cVector_opAssign(&d->rows[0], &s->rows[0]);
+    cVector_opAssign(&d->rows[1], &s->rows[1]);
+    cVector_opAssign(&d->rows[2], &s->rows[2]);
+    cVector_opAssign(&d->rows[3], &s->rows[3]);
     d->flag50 = s->flag50;
     cCollisionModel_FaceProperties_opAssign(d->part40, s->part40);
     cCollisionModel_FaceLocator_opAssign(d->part60, s->part60);
@@ -40,7 +40,7 @@ static inline void Assign8180(Cand8180* d, Cand8180* s) {
     d->flag52 = s->flag52;
 }
 static inline void Construct8180(Cand8180* d, Cand8180* s) {
-    void* p = Mem_PlacementNew(0x70, d);
+    void* p = opNew_uint_voidP(0x70, d);
     if (p) cCollisionFace_ctor_cCollisionFaceR(p, s);
 }
 static inline const unsigned int& Min8180(const unsigned int& a, const unsigned int& b) {
@@ -49,14 +49,14 @@ static inline const unsigned int& Min8180(const unsigned int& a, const unsigned 
 static inline void Free8180(void* p) {
     if (p) {
         AllocGuard g;
-        Mem_Free(0, p, D_0049AE20, 0x64);
+        cMemMan_Deallocate(0, p, D_0049AE20, 0x64);
     }
 }
 static inline Cand8180* Alloc8180(unsigned int cnt) {
     AllocGuard g;
-    return (Cand8180*)Mem_Alloc(0, cnt * sizeof(Cand8180), D_0049AE40, 0x5C);
+    return (Cand8180*)cMemMan_Allocate(0, cnt * sizeof(Cand8180), D_0049AE40, 0x5C);
 }
-extern "C" void ColQuery_CopyCandidates(CandVec8180* v, Cand8180* first, Cand8180* last) {
+extern "C" void std_vector_imp_cCollisionFace_do_assign(CandVec8180* v, Cand8180* first, Cand8180* last) {
     Cand8180* d;
     Cand8180* e;
     unsigned int n = last - first;

@@ -1,17 +1,17 @@
 #pragma opt_propagation off
-extern char* App_GetInstance(void);
-extern void Boot_LoadFonts(char* g);
+extern char* GetMachine(void);
+extern void cMachine_InitFonts(char* g);
 extern void SetFontColors(int x);
 extern void cInterfaceManager_RemoveHogPath(char* a, char* b);
 extern void func_00413880(char* a, char* b);
 extern void cInterfaceManager_SetHogList(char* a, char* b);
 extern void cInterfaceManager_OpenHogOfHog(char* a, char* b);
 extern void cInterfaceManager_Init(char* a);
-extern int Gui_GetScreenList(void);
-extern char* Gui_GetScreenStack(void);
-extern void GuiCanvas_Create(char* s);
+extern int Gui_Manager(void);
+extern char* Gui_Canvas(void);
+extern void Gui_Init(char* s);
 extern void GuiCanvas_Activate(char* p, int x);
-extern void GuiFont_Register(int a, char* b, int c, int d);
+extern void GuiManager_AddFont(int a, char* b, int c, int d);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char D_0048B2F8[];
 extern char D_004AD048[];
@@ -47,25 +47,25 @@ void FrontEnd_CreateCanvas(SelfB8C0* self, int flag)
     if (self->done) {
         return;
     }
-    Boot_LoadFonts(App_GetInstance());
-    GuiCanvas_Create(flag ? D_004AD048 : D_004AD060);
+    cMachine_InitFonts(GetMachine());
+    Gui_Init(flag ? D_004AD048 : D_004AD060);
     {
-        char* g = App_GetInstance();
-        GuiFont_Register(Gui_GetScreenList(), D_004AD078, *(int*)(g + 0x280), 0);
+        char* g = GetMachine();
+        GuiManager_AddFont(Gui_Manager(), D_004AD078, *(int*)(g + 0x280), 0);
     }
     {
-        char* g = App_GetInstance();
-        GuiFont_Register(Gui_GetScreenList(), D_004AD080, *(int*)(g + 0x284), 0);
+        char* g = GetMachine();
+        GuiManager_AddFont(Gui_Manager(), D_004AD080, *(int*)(g + 0x284), 0);
     }
     {
-        char* g = App_GetInstance();
-        GuiFont_Register(Gui_GetScreenList(), D_004AD088, *(int*)(g + 0x288), 0);
+        char* g = GetMachine();
+        GuiManager_AddFont(Gui_Manager(), D_004AD088, *(int*)(g + 0x288), 0);
     }
-    SetFontColors(*(int*)(App_GetInstance() + 0x280));
-    SetFontColors(*(int*)(App_GetInstance() + 0x284));
-    SetFontColors(*(int*)(App_GetInstance() + 0x288));
-    Gui_GetScreenStack()[0x51] = 0;
-    GuiCanvas_Activate(Gui_GetScreenStack(), 1);
+    SetFontColors(*(int*)(GetMachine() + 0x280));
+    SetFontColors(*(int*)(GetMachine() + 0x284));
+    SetFontColors(*(int*)(GetMachine() + 0x288));
+    Gui_Canvas()[0x51] = 0;
+    GuiCanvas_Activate(Gui_Canvas(), 1);
     cInterfaceManager_Init(D_00571DC0);
     cInterfaceManager_SetHogList(D_00571DC0, D_004FFB8C);
     sprintf(buf, D_004AD098, D_0048B2F8);

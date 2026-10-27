@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 #include "vslot_pad.h"
-/* Flashlight_SetState: switch the flashlight on/off (sound, inventory notice, create/destroy its lights) */
+/* cFlashlight_SetState: switch the flashlight on/off (sound, inventory notice, create/destroy its lights) */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) Pt1FsV4;
 struct Pt1FsId { int a, b, c, d; Pt1FsId() {} } __attribute__((aligned(16)));
 typedef struct { char d[0x9C]; } Pt1FsStr;
@@ -54,52 +54,52 @@ extern char g_LightMgr[];
 extern char D_004D9280[];
 extern char D_004D9240[];
 extern char D_004D9200[];
-extern "C" void FlashGlare_GetCoronaFlag();
-extern "C" void FlashGlare_GetCoronaSize();
-extern "C" void FlashGlare_GetRange();
-extern "C" void Flashlight_ReleaseGlare();
-extern "C" void Light_Disable();
-extern "C" void Light_SetPosition();
-extern "C" void Light_Enable();
+extern "C" void cDazzleLight_DazzleCoversScreen();
+extern "C" void cDazzleLight_GetDazzlePct();
+extern "C" void cDazzleLight_GetAttenDist();
+extern "C" void cDazzleLight_dtor();
+extern "C" void cLightSrc_Deactivate();
+extern "C" void cLightSrc_SetPosition();
+extern "C" void cLightSrc_Activate();
 extern "C" void func_001479A0();
 extern "C" void PointLightComp_Start();
 extern "C" void func_00147A00();
 extern "C" void func_00147A10();
-void * const D_004E15E0[16] = { (void*)0x0, (void*)0x0, (void*)Flashlight_ReleaseGlare, (void*)PointLightComp_Start, (void*)0x1479E0, (void*)func_00147A00, (void*)func_00147A10, (void*)func_001479A0, (void*)FlashGlare_GetCoronaSize, (void*)FlashGlare_GetCoronaFlag, (void*)Light_SetPosition, (void*)Light_Enable, (void*)Light_Disable, (void*)FlashGlare_GetRange, (void*)0x0, (void*)0x0 };
+void * const D_004E15E0[16] = { (void*)0x0, (void*)0x0, (void*)cDazzleLight_dtor, (void*)PointLightComp_Start, (void*)0x1479E0, (void*)func_00147A00, (void*)func_00147A10, (void*)func_001479A0, (void*)cDazzleLight_GetDazzlePct, (void*)cDazzleLight_DazzleCoversScreen, (void*)cLightSrc_SetPosition, (void*)cLightSrc_Activate, (void*)cLightSrc_Deactivate, (void*)cDazzleLight_GetAttenDist, (void*)0x0, (void*)0x0 };
 extern char g_TargetVisMgr[];
 extern signed char D_004979B0;
 extern unsigned char g_LevelLightsDirty;
-extern "C" void SoundPosRequest_Ctor(Pt1FsSnd* e, void* preset, Pt1FsId* id);
-extern "C" void Event_Send(void* msg, void* target, int immediate);
+extern "C" void cPlaySoundMsg_ctor_cSndFxR_cGOBJP(Pt1FsSnd* e, void* preset, Pt1FsId* id);
+extern "C" void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int immediate);
 extern "C" void cMessage_dtor(void* msg, int flags);
-extern "C" void FileMan_Release(Pt1FsStr* s, int flag);
-extern "C" void WeaponInv_SetSlotModelState(void* weapons, int item, int state);
-extern "C" Pt1FsLight* LightMgr_AllocPoint(void* pool, int kind);
+extern "C" void cFileMan_dtor(Pt1FsStr* s, int flag);
+extern "C" void cWeapon_SetHardpointActivation(void* weapons, int item, int state);
+extern "C" Pt1FsLight* cLightMan_AddLight(void* pool, int kind);
 extern "C" Pt1FsV4* tRGBA_ctor_float_float_float_float(Pt1FsV4* out, float r, float g, float b, float a);
-extern "C" Pt1FsV4* Vec4_Set(Pt1FsV4* out, float x, float y, float z, float w);
-extern "C" void LevelLight_InitPoint(Pt1FsLight* l, int flags, Pt1FsV4* color, Pt1FsV4* pos, int range);
-extern "C" void TargetVis_Register(void* reg, int id);
-extern "C" void TargetVis_Unregister(void* reg, int id);
+extern "C" Pt1FsV4* cVector_ctor_float_float_float_float(Pt1FsV4* out, float x, float y, float z, float w);
+extern "C" void cLightSrc_ctor_eLightSrcTypes_tRGBAR_cVectorR_uint(Pt1FsLight* l, int flags, Pt1FsV4* color, Pt1FsV4* pos, int range);
+extern "C" void cTargetManager_AddGobj(void* reg, int id);
+extern "C" void cTargetManager_RemoveGobj(void* reg, int id);
 
-extern "C" void Flashlight_SetState(Pt1FsSelf* self, int on)
+extern "C" void cFlashlight_SetState(Pt1FsSelf* self, int on)
 {
     if ((unsigned char)on == self->on)
         return;
     if (self->owner) {
         Pt1FsId id = self->owner->GetId();
         Pt1FsSnd snd;
-        SoundPosRequest_Ctor(&snd, g_FlashlightClickSound, &id);
+        cPlaySoundMsg_ctor_cSndFxR_cGOBJP(&snd, g_FlashlightClickSound, &id);
         snd.flag = 1;
-        Event_Send(&snd, g_Game, 0);
-        WeaponInv_SetSlotModelState(self->owner->weapons, 7, on);
+        QueueMessage_cMessageR_cSystemP_int(&snd, g_Game, 0);
+        cWeapon_SetHardpointActivation(self->owner->weapons, 7, on);
         snd.vt = D_004DAE30;
-        FileMan_Release(&snd.s114, -1);
-        FileMan_Release(&snd.s78, -1);
+        cFileMan_dtor(&snd.s114, -1);
+        cFileMan_dtor(&snd.s78, -1);
         cMessage_dtor(&snd, 0);
     }
     self->on = on;
     if (self->on) {
-        Pt1FsLight* l = LightMgr_AllocPoint(g_LightMgr, 4);
+        Pt1FsLight* l = cLightMan_AddLight(g_LightMgr, 4);
         if (l) {
             *(void**)((char*)l + 4) = D_004D9280;
             l->kind = D_004979B0;
@@ -122,25 +122,25 @@ extern "C" void Flashlight_SetState(Pt1FsSelf* self, int on)
             *(void**)((char*)l + 4) = D_004D9200;
         }
         self->beam = l;
-        l = LightMgr_AllocPoint(g_LightMgr, 4);
+        l = cLightMan_AddLight(g_LightMgr, 4);
         if (l) {
             Pt1FsV4 color;
             Pt1FsV4 pos;
-            LevelLight_InitPoint(l, 0x40, tRGBA_ctor_float_float_float_float(&color, 1.0f, 1.0f, 1.0f, 1.0f), Vec4_Set(&pos, 0.0f, 0.0f, 0.0f, 0.0f), 0x10);
+            cLightSrc_ctor_eLightSrcTypes_tRGBAR_cVectorR_uint(l, 0x40, tRGBA_ctor_float_float_float_float(&color, 1.0f, 1.0f, 1.0f, 1.0f), cVector_ctor_float_float_float_float(&pos, 0.0f, 0.0f, 0.0f, 0.0f), 0x10);
             *(void**)((char*)l + 4) = ((char*)D_004E15E0);
             l->extra = 0;
         }
         self->glow = l;
         self->level = -1.0f;
         if (self->beam) {
-            TargetVis_Register(g_TargetVisMgr, self->visId);
+            cTargetManager_AddGobj(g_TargetVisMgr, self->visId);
             self->beam->Enable();
         }
         if (self->glow)
             self->glow->Enable();
     } else {
         if (self->beam) {
-            TargetVis_Unregister(g_TargetVisMgr, self->visId);
+            cTargetManager_RemoveGobj(g_TargetVisMgr, self->visId);
             if (self->beam)
                 self->beam->Destroy(1);
             self->beam = 0;

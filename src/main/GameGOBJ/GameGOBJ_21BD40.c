@@ -15,22 +15,22 @@
  */
 
 
-void cSoundGOBJ_v0E(void) {
+void cSoundGOBJ_Init(void) {
 }
 
-void cSoundGOBJ_v0F(void) {
+void cSoundGOBJ_Load(void) {
 }
 
-int cElevatorGOBJ_v04(void) {
+int cElevatorGOBJ_IsNetworked(void) {
     return 1;
 }
 
 /* Set / clear the cGOBJ byte at +0x2C (1 after construction). */
-void cGameGOBJ_v08(cGOBJ* self) {
+void cGameGOBJ_NetEnable(cGOBJ* self) {
     self->unk2C = 1;
 }
 
-void cGameGOBJ_v09(cGOBJ* self) {
+void cGameGOBJ_NetDisable(cGOBJ* self) {
     self->unk2C = 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -67,7 +67,7 @@ typedef struct Holder {
 } Holder;
 
 /* Returns the target's virtual +0xB8 result while enabled, else 0. */
-extern "C" int cGameGOBJ_GetModelCol(Holder* self)
+extern "C" int cGameGOBJ_GetCollisionModel(Holder* self)
 {
     if (!self->enabled)
         return 0;

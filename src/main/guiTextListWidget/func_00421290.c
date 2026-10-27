@@ -4,13 +4,13 @@
 #include "guiTextWidget_types.h"
 
 extern "C" {
-void String_CtorEmpty(void* string);
-GuiStreamString* String_CtorCStr_13B480(GuiStreamString* string, const char* text);
-void String_AssignString(void* destination, const void* source);
+void cString_ctor_void(void* string);
+GuiStreamString* std_basic_string_char_char_traits_char_ctor_charP(GuiStreamString* string, const char* text);
+void std_basic_string_char_char_traits_char_assign_basicstringR(void* destination, const void* source);
 void String_Dtor(void* string, int flags);
 void std_vector_imp_Item_insert(TextListEntryVec* entries, TextListEntry* position,
                    int count, const TextListEntry* value);
-void GuiArrayWidget_Select(TextRenderWidget* self, int first, int second);
+void GuiArrayWidget_SetSelected(TextRenderWidget* self, int first, int second);
 void operator_delete(void* allocation);
 }
 
@@ -22,15 +22,15 @@ extern "C" int GuiTextListWidget_AddItem(TextRenderWidget* self, const char* tex
         return 0;
     GuiStreamString temporary;
     TextListEntry entry;
-    String_CtorEmpty(entry.text);
-    String_CtorCStr_13B480(&temporary, text);
-    String_AssignString(entry.text, &temporary);
+    cString_ctor_void(entry.text);
+    std_basic_string_char_char_traits_char_ctor_charP(&temporary, text);
+    std_basic_string_char_char_traits_char_assign_basicstringR(entry.text, &temporary);
     String_Dtor(&temporary, 0);
     entry.unk0C = value;
     entry.unk10 = style;
     std_vector_imp_Item_insert(&self->entries, self->entries.data + self->entries.count, 1, &entry);
     ((TextListLayout*)self)->set_extent(1, self->entries.count);
-    GuiArrayWidget_Select(self, 0, 0);
+    GuiArrayWidget_SetSelected(self, 0, 0);
     String_Dtor(entry.text, 0);
     return 1;
 }

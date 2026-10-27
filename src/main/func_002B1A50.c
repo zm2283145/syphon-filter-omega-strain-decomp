@@ -5,7 +5,7 @@ extern Row2B1A50 D_0048BD10[];
 extern char D_004ABEE8[];
 extern char D_004ABEF8[];
 extern int sprintf(char* buf, const char* fmt, ...);
-extern char* Loc_LookupText(char* key);
+extern char* nGlobalization_GetString_charP(char* key);
 extern void GuiTextWidget_SetText(void* w, char* text, int flags);
 /* Relabels the four value buttons from the table row. */
 void GuiQuickChat_UpdateDirText(S2B1A50* s)
@@ -17,7 +17,7 @@ void GuiQuickChat_UpdateDirText(S2B1A50* s)
             Row2B1A50* r = &D_0048BD10[s->sel];
             if (r->flag) sprintf(buf, D_004ABEE8, r->vals[i]);
             else sprintf(buf, D_004ABEF8, r->vals[i]);
-            GuiTextWidget_SetText(s->labels[i], Loc_LookupText(buf), 0);
+            GuiTextWidget_SetText(s->labels[i], nGlobalization_GetString_charP(buf), 0);
         }
     }
 }

@@ -17,7 +17,7 @@ typedef struct SlotFlags {
 extern char* D_004EE620; /* table of 16-byte rows of flag bytes */
 
 /* Clears flag bit 0 of byte `col` in row `row` of the D_004EE620 table. */
-void TeamTable_ClearBit0(int row, int col) {
+void TeamDelEnemy_int_int(int row, int col) {
     SlotFlags* flags = (SlotFlags*)(D_004EE620 + row * 16 + col);
     flags->set = 0;
 }

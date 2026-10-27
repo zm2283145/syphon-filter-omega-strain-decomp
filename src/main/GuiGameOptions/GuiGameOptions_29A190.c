@@ -85,36 +85,36 @@ extern char D_004AA7B0[];
 extern char D_004AA7C0[];
 extern char D_004AA7D0[];
 extern char D_004AA7E0[];
-char* Loc_LookupText(char* key);
-int FrontEnd_OpenPopup(void* fe, int kind, char* title, char* text, Hud_A190* owner, int id);
-void String_CtorCStr_13B480(Str_A190* s, char* text);
-char* String_CStr(Str_A190* s);
+char* nGlobalization_GetString_charP(char* key);
+int cGameFrontEnd_PushMessageBox(void* fe, int kind, char* title, char* text, Hud_A190* owner, int id);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_A190* s, char* text);
+char* std_basic_string_char_char_traits_char_c_str(Str_A190* s);
 void String_Dtor(Str_A190* s, int flags);
-void GuiGameOptions_Show(Hud_A190* self, int idx);
-void GuiGameOptions_Enter(Hud_A190* self);
-void GuiGameOptions_VideoRevert(Hud_A190* self, int a);
-void GuiGameOptions_Refresh(Hud_A190* self, int mask);
-void GameOptions_Apply(void* p, int mask);
-void PadRumble_Start(float f, int a, int b, int c, int d);
+void GuiGameOptions_SelectGroup(Hud_A190* self, int idx);
+void GuiGameOptions_ActivateGroup(Hud_A190* self);
+void GuiGameOptions_RevertProscan(Hud_A190* self, int a);
+void GuiGameOptions_SetValues(Hud_A190* self, int mask);
+void cGameOptions_Apply(void* p, int mask);
+void nRumbleManager_Start(float f, int a, int b, int c, int d);
 int GuiTextListWidget_GetItemText(Wdg_A190* w, int idx);
 int GuiTextListWidget_GetItemId(Wdg_A190* w, int idx);
-void FrontEnd_SuspendGui(void* fe, int a);
-void FrontEnd_ResumeGui(void* fe);
-long long Time_GetMilliseconds(void);
-void Event_Construct(void* msg, void* type);
-void Transport_Send(int a, void* msg, int b, int c);
-void Event_Send(void* msg, void* target, int flags);
+void cGameFrontEnd_Suspend(void* fe, int a);
+void cGameFrontEnd_Restore(void* fe);
+long long cTimer_GetMillisecondTime(void);
+void cMessage_ctor_cMessageNameR(void* msg, void* type);
+void cNetObj_SendMessage_int_cMessageR_int_int(int a, void* msg, int b, int c);
+void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int flags);
 #if 0 /* merge_units */
 void cMessage_dtor(void* msg, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void FileMan_Release(void* part, int flags);
+void cFileMan_dtor(void* part, int flags);
 #endif /* merge_units */
-#define FileMan_Release(a0, a1) (FileMan_Release((a0), (a1))) /* merge_units */
+#define cFileMan_dtor(a0, a1) (cFileMan_dtor((a0), (a1))) /* merge_units */
 
-void SoundAction_CtorVoice(void* action, int kind, char* voice, int a, int b);
+void cSndFx_SetSndFx(void* action, int kind, char* voice, int a, int b);
 void EffectMsg_WrapRequest(void* msg, void* action);
 int GuiSaveAgentWidget_OnEvent(Hud_A190* self, Wdg_A190* w, unsigned short msg, int sub, int text);
 }
@@ -122,10 +122,10 @@ static inline unsigned char IsLocal_A190(Plr_A190* p) { unsigned char r = 0; if 
 static inline int LocalId_A190(Plr_A190* p) { int id; if (g_IsMultiplayer) { if (IsLocal_A190(p)) id = ((p->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
 static inline Plr_A190* AsHuman_A190(Plr_A190* p) { return (p && p->kind == g_HumanActorClassKey) ? p : 0; }
 
-extern "C" int GuiGameOptions_HandleEvent(Hud_A190* self, Wdg_A190* w, unsigned short msg, int sub, int text)
+extern "C" int GuiGameOptions_onMessage(Hud_A190* self, Wdg_A190* w, unsigned short msg, int sub, int text)
 {
     if (msg == 0 && w->id != -1) {
-        GuiGameOptions_Show(self, w->id);
+        GuiGameOptions_SelectGroup(self, w->id);
         return 1;
     }
     if (msg == 0x10 && sub == 1 && w->id != -1) {
@@ -133,63 +133,63 @@ extern "C" int GuiGameOptions_HandleEvent(Hud_A190* self, Wdg_A190* w, unsigned 
     }
     if (msg == 0x13 && w == self->list) {
         int n = GuiTextListWidget_GetItemText(self->list, text);
-        char* fmt = Loc_LookupText(D_004AA790);
+        char* fmt = nGlobalization_GetString_charP(D_004AA790);
         if (fmt && n) {
             char buf[0x80];
             void* fe;
             sprintf(buf, fmt, n);
             self->w404 = GuiTextListWidget_GetItemId(self->list, text);
             fe = D_004FFC04;
-            FrontEnd_OpenPopup(fe, 5, Loc_LookupText(D_004AA7A0), buf, self, 0xD);
+            cGameFrontEnd_PushMessageBox(fe, 5, nGlobalization_GetString_charP(D_004AA7A0), buf, self, 0xD);
         }
         return 1;
     }
     if (msg == 2) {
         if (w->id != -1) {
-            GuiGameOptions_Enter(self);
+            GuiGameOptions_ActivateGroup(self);
             return 1;
         }
         if (w == self->w408) {
             self->bBC = !self->bBC;
-            GameOptions_Apply(self->xB8, 1);
-            GuiGameOptions_Refresh(self, 1);
+            cGameOptions_Apply(self->xB8, 1);
+            GuiGameOptions_SetValues(self, 1);
         } else if (w == self->w40C) {
             self->bBD = !self->bBD;
-            GameOptions_Apply(self->xB8, 2);
-            GuiGameOptions_Refresh(self, 2);
-            if (self->bBD) PadRumble_Start(1.0f, 0, 1, 0xFF, 1);
+            cGameOptions_Apply(self->xB8, 2);
+            GuiGameOptions_SetValues(self, 2);
+            if (self->bBD) nRumbleManager_Start(1.0f, 0, 1, 0xFF, 1);
         }
         if (w == self->w410) {
             self->bBE = !self->bBE;
-            GameOptions_Apply(self->xB8, 4);
-            GuiGameOptions_Refresh(self, 4);
+            cGameOptions_Apply(self->xB8, 4);
+            GuiGameOptions_SetValues(self, 4);
         }
         if (w == self->w414) {
             self->bBF = !self->bBF;
-            GameOptions_Apply(self->xB8, 8);
-            GuiGameOptions_Refresh(self, 8);
+            cGameOptions_Apply(self->xB8, 8);
+            GuiGameOptions_SetValues(self, 8);
         } else if (w == self->w424) {
             self->iCC++;
             if (self->iCC >= 2) self->iCC = 0;
-            GameOptions_Apply(self->xB8, 0x80);
-            GuiGameOptions_Refresh(self, 0x80);
+            cGameOptions_Apply(self->xB8, 0x80);
+            GuiGameOptions_SetValues(self, 0x80);
         } else if (w == self->w42C) {
             self->iD8++;
             if (self->iD8 >= 2) self->iD8 = 0;
             if (self->iD8 == 1) {
                 Str_A190 t;
                 Str_A190 s;
-                String_CtorCStr_13B480(&t, Loc_LookupText(D_004AA7B0));
-                String_CtorCStr_13B480(&s, Loc_LookupText(D_004AA7C0));
-                { char* txt = String_CStr(&s); FrontEnd_OpenPopup(D_004FFC04, 5, String_CStr(&t), txt, self, 0xB); }
-                GuiGameOptions_Refresh(self, 0x800);
+                std_basic_string_char_char_traits_char_ctor_charP(&t, nGlobalization_GetString_charP(D_004AA7B0));
+                std_basic_string_char_char_traits_char_ctor_charP(&s, nGlobalization_GetString_charP(D_004AA7C0));
+                { char* txt = std_basic_string_char_char_traits_char_c_str(&s); cGameFrontEnd_PushMessageBox(D_004FFC04, 5, std_basic_string_char_char_traits_char_c_str(&t), txt, self, 0xB); }
+                GuiGameOptions_SetValues(self, 0x800);
                 String_Dtor(&s, 0);
                 String_Dtor(&t, 0);
             } else {
-                FrontEnd_SuspendGui(D_004FFC04, 1);
-                GameOptions_Apply(self->xB8, 0x800);
-                FrontEnd_ResumeGui(D_004FFC04);
-                GuiGameOptions_Refresh(self, 0x800);
+                cGameFrontEnd_Suspend(D_004FFC04, 1);
+                cGameOptions_Apply(self->xB8, 0x800);
+                cGameFrontEnd_Restore(D_004FFC04);
+                GuiGameOptions_SetValues(self, 0x800);
             }
         }
         return 1;
@@ -199,19 +199,19 @@ extern "C" int GuiGameOptions_HandleEvent(Hud_A190* self, Wdg_A190* w, unsigned 
             if (msg == 0x1A) {
                 Str_A190 t;
                 Str_A190 s;
-                String_CtorCStr_13B480(&t, Loc_LookupText(D_004AA7D0));
-                String_CtorCStr_13B480(&s, Loc_LookupText(D_004AA7E0));
-                { char* txt = String_CStr(&s); self->popup = FrontEnd_OpenPopup(D_004FFC04, 5, String_CStr(&t), txt, self, 0xC); }
+                std_basic_string_char_char_traits_char_ctor_charP(&t, nGlobalization_GetString_charP(D_004AA7D0));
+                std_basic_string_char_char_traits_char_ctor_charP(&s, nGlobalization_GetString_charP(D_004AA7E0));
+                { char* txt = std_basic_string_char_char_traits_char_c_str(&s); self->popup = cGameFrontEnd_PushMessageBox(D_004FFC04, 5, std_basic_string_char_char_traits_char_c_str(&t), txt, self, 0xC); }
                 self->x78 = 1;
-                self->x7C = Time_GetMilliseconds();
-                FrontEnd_SuspendGui(D_004FFC04, 1);
-                GameOptions_Apply(self->xB8, 0x800);
-                FrontEnd_ResumeGui(D_004FFC04);
+                self->x7C = cTimer_GetMillisecondTime();
+                cGameFrontEnd_Suspend(D_004FFC04, 1);
+                cGameOptions_Apply(self->xB8, 0x800);
+                cGameFrontEnd_Restore(D_004FFC04);
                 String_Dtor(&s, 0);
                 String_Dtor(&t, 0);
             } else {
                 self->iD8 = 0;
-                GuiGameOptions_Refresh(self, 0x800);
+                GuiGameOptions_SetValues(self, 0x800);
             }
             return 1;
         }
@@ -219,7 +219,7 @@ extern "C" int GuiGameOptions_HandleEvent(Hud_A190* self, Wdg_A190* w, unsigned 
             if (msg == 0x1A) {
                 self->x78 = 0;
             } else {
-                GuiGameOptions_VideoRevert(self, 0);
+                GuiGameOptions_RevertProscan(self, 0);
             }
             return 1;
         }
@@ -231,12 +231,12 @@ extern "C" int GuiGameOptions_HandleEvent(Hud_A190* self, Wdg_A190* w, unsigned 
                     id = self->w404;
                     slot = LocalId_A190(AsHuman_A190(o));
                     NetMsg_A190 m;
-                    Event_Construct(&m, D_00506440);
+                    cMessage_ctor_cMessageNameR(&m, D_00506440);
                     m.vtbl = D_004DD5E0;
                     m.kind = 4;
                     m.slot = slot;
                     m.id = id;
-                    Transport_Send(0, &m, -1, -1);
+                    cNetObj_SendMessage_int_cMessageR_int_int(0, &m, -1, -1);
                     m.vtbl = D_004DCF10;
                     cMessage_dtor(&m, 0);
                 }
@@ -248,29 +248,29 @@ extern "C" int GuiGameOptions_HandleEvent(Hud_A190* self, Wdg_A190* w, unsigned 
         if (w == self->w418) {
             SoundEvP_A190 ev;
             self->fC0 = sub / 100.0f;
-            GameOptions_Apply(self->xB8, 0x10);
-            SoundAction_CtorVoice(self->snd, 1, D_0048B900, 0, 0);
+            cGameOptions_Apply(self->xB8, 0x10);
+            cSndFx_SetSndFx(self->snd, 1, D_0048B900, 0, 0);
             EffectMsg_WrapRequest(&ev, self->snd);
             ev.flag = 1;
-            Event_Send(&ev, g_Game, 1);
+            QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 1);
             ev.vtbl = D_004DAE30;
-            FileMan_Release(ev.partB, -1);
-            FileMan_Release(ev.partA, -1);
+            cFileMan_dtor(ev.partB, -1);
+            cFileMan_dtor(ev.partA, -1);
             cMessage_dtor(&ev, 0);
         } else if (w == self->w41C) {
         } else if (w == self->w420) {
             self->fC8 = sub / 100.0f;
-            GameOptions_Apply(self->xB8, 0x40);
+            cGameOptions_Apply(self->xB8, 0x40);
         } else if (w == self->w428) {
             self->fD4 = sub / 100.0f;
-            GameOptions_Apply(self->xB8, 0x400);
+            cGameOptions_Apply(self->xB8, 0x400);
         }
         return 1;
     }
     return GuiSaveAgentWidget_OnEvent(self, w, msg, sub, text);
 }
 #undef cMessage_dtor /* merge_units */
-#undef FileMan_Release /* merge_units */
+#undef cFileMan_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0029A190(void) {}
 #pragma pop /* merge_units */

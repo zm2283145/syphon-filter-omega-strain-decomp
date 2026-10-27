@@ -230,12 +230,12 @@ int rt_comm_platform2_get_avail_bytes_to_read(int a, short *out)
 
 /* merge_units: begin func_002F7628 */
 extern char D_004908A8[];
-extern void String_Copy(char *d, const char *s);
+extern void Libc_Strcpy(char *d, const char *s);
 int rt_comm_platform2_get_local_ip(char *out)
 {
     if (D_004908A0 != 1) return 5;
     if (out == 0) return 2;
-    String_Copy(out, D_004908A8);
+    Libc_Strcpy(out, D_004908A8);
     return 0;
 }
 /* merge_units: end func_002F7628 */
@@ -246,7 +246,7 @@ int rt_comm_platform2_get_broadcast_ip(char *out)
 {
     if (D_004908A0 != 1) return 5;
     if (out == 0) return 2;
-    String_Copy(out, D_004908C0);
+    Libc_Strcpy(out, D_004908C0);
     return 0;
 }
 /* merge_units: end func_002F7670 */

@@ -12,5 +12,5 @@ SCF_TIME_GET(rt_time_get_msecs, rt_time_timestamp_to_msecs)
 /* merge_units: end func_00306030 */
 
 /* merge_units: begin func_00306078 */
-SCF_TIME_GET(rt_time_get_secs, TimeVal_ToSeconds)
+SCF_TIME_GET(rt_time_get_secs, rt_time_timestamp_to_secs)
 /* merge_units: end func_00306078 */

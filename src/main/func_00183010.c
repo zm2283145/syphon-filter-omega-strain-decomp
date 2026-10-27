@@ -6,7 +6,7 @@ typedef struct Bounds {
 } Bounds;
 
 /* Resets a bounding box to empty (min = +FLT_MAX, max = -FLT_MAX, w = 1). */
-Bounds* Bounds_SetEmpty(Bounds* b) {
+Bounds* cBox_ctor_void(Bounds* b) {
     b->min.x = 3.4028235e38f;
     b->min.y = 3.4028235e38f;
     b->min.z = 3.4028235e38f;

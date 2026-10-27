@@ -2,9 +2,9 @@
 #include "types.h"
 #include "alloc_guard.h"
 
-/* Backpack_SnapshotCrates: drop the old crate snapshots, then snapshot every backpack in state 1
+/* cBackpack_SaveCratesInfo: drop the old crate snapshots, then snapshot every backpack in state 1
  * (its id, the four words at +0x2E0 and the 0x27C-byte body at +0x64) into the snapshot list
- * D_004F7F48 (Backpack_RestoreCrateSnapshots copies them back). */
+ * D_004F7F48 (cBackpack_ResetCrates copies them back). */
 
 struct Crate {
     char pad0[0xC];
@@ -33,11 +33,11 @@ extern CrateVec* g_BackpackList;
 extern char D_004A7B50[];
 extern char D_004F7F48[];
 void cBackpack_PurgeCrateSaves(void);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void CrateSnapshot_Init(Snapshot* s);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cBackpack_InitCrate(Snapshot* s);
 Crate** std_vector_cBackpackPtr_opIndex(CrateVec* v, int i);
-void CrateSnapshotList_Append(void* list, Snapshot** s);
-void Backpack_SnapshotCrates(void);
+void std_list_CrateSavePtr_push_back(void* list, Snapshot** s);
+void cBackpack_SaveCratesInfo(void);
 }
 
 /* byte/quadword copy macro (the copy loop of cLoader_AllocateAndFillAnimationBuffer.c); volatile here because retail
@@ -81,7 +81,7 @@ static inline void MemCopy(void* dst, void* src, int n)
 /* the new snapshot pointer lives in memory (its address goes to the list append) */
 union SnapRef { Snapshot* p; };
 
-void Backpack_SnapshotCrates(void)
+void cBackpack_SaveCratesInfo(void)
 {
     CrateVec* list = g_BackpackList;
     int i;
@@ -93,12 +93,12 @@ void Backpack_SnapshotCrates(void)
                 Snapshot* p;
                 {
                     AllocGuard g;
-                    p = (Snapshot*)Mem_Alloc(0, sizeof(Snapshot), D_004A7B50, 0x1EA);
+                    p = (Snapshot*)cMemMan_Allocate(0, sizeof(Snapshot), D_004A7B50, 0x1EA);
                 }
                 if (p) p->id = -1;
                 s.p = p;
             }
-            CrateSnapshot_Init(s.p);
+            cBackpack_InitCrate(s.p);
             {
                 Crate* c = *std_vector_cBackpackPtr_opIndex(list, i);
                 Snapshot* d = s.p;
@@ -109,7 +109,7 @@ void Backpack_SnapshotCrates(void)
             s.p->f288 = list->items[i]->f2E8;
             s.p->f28C = list->items[i]->f2EC;
             MemCopy(s.p->body, (*std_vector_cBackpackPtr_opIndex(list, i))->body, sizeof(s.p->body));
-            CrateSnapshotList_Append(D_004F7F48, &s.p);
+            std_list_CrateSavePtr_push_back(D_004F7F48, &s.p);
         }
     }
 }

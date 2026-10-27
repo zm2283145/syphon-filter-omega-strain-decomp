@@ -12,7 +12,7 @@
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(ScalarCollection_Dtor_259290, func_00135C90)
+DEFINE_BASE_DTOR_CHAIN(cLList_CrateSavePtr_dtor, func_00135C90)
 #pragma pop /* merge_units */
 /* merge_units: end func_00259290 */
 
@@ -24,7 +24,7 @@ extern signed char D_004F7FB0;
 extern Box_92F0 D_004F7FC0;
 extern char* g_WeaponDatabase;
 typedef struct { char pad[0x60]; char* p; unsigned char idx; } Self_92F0;
-void* WeaponPreview_GetBounds(Self_92F0* self)
+void* cHudWeapon_GetBBox(Self_92F0* self)
 {
     char* p;
     if (!D_004F7FB0) {
@@ -45,10 +45,10 @@ void* WeaponPreview_GetBounds(Self_92F0* self)
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int ActorModel_DrawLod(int, int, char *, int);
+int gunList_GunRender(int, int, char *, int);
 extern char g_IdentityMatrix;
 
-void WeaponPreview_Draw(char * arg0) {
+void cHudWeapon_Render(char * arg0) {
     int var_a0;
     unsigned char temp_a1;
 
@@ -60,7 +60,7 @@ void WeaponPreview_Draw(char * arg0) {
         }
     }
     if (var_a0 != 0) {
-        ActorModel_DrawLod(var_a0, F_(arg0, 0x38, int), &g_IdentityMatrix, 1);
+        gunList_GunRender(var_a0, F_(arg0, 0x38, int), &g_IdentityMatrix, 1);
     }
 }
 #pragma pop /* merge_units */

@@ -17,9 +17,9 @@ extern "C" {
 extern unsigned char D_0055C780[];
 extern char D_004DE148[];
 extern int D_0051EE70;
-extern void Mtx_ToEuler(V4* out, M4* m);
-extern void* AgentPacking_Compact(void* data, int* len);
-extern bool NetObj_SendMessage(int a, int b, void* c, int target, int type);
+extern void cEulerAngle_T_1_2_ctor_cMatrixR(V4* out, M4* m);
+extern void* SKL_CompressSKL(void* data, int* len);
+extern bool cNetObj_SendMessage_int_int_ucharP_int_etc(int a, int b, void* c, int target, int type);
 bool netCreatePlayer_SendCreated(int idx, int a1, int a2, M4* m, void* data, short* sh, int s1);
 }
 
@@ -85,7 +85,7 @@ bool netCreatePlayer_SendCreated(int idx, int a1, int a2, M4* m, void* data, sho
     if (IsConnected(idx)) {
         msg.name = D_004DE148;
         msg.a1 = a1;
-        Mtx_ToEuler(&e, m);
+        cEulerAngle_T_1_2_ctor_cMatrixR(&e, m);
         msg.rot.x = e.x; msg.rot.y = e.y; msg.rot.z = e.z;
         Q1(&p, &m->r[3]);
         msg.pos.x = p.x;
@@ -93,9 +93,9 @@ bool netCreatePlayer_SendCreated(int idx, int a1, int a2, M4* m, void* data, sho
         msg.pos.z = p.z;
         msg.s1 = s1;
         for (i = 0; i != 6; i++) msg.arr[i] = sh[i];
-        void* d = AgentPacking_Compact(data, &len);
+        void* d = SKL_CompressSKL(data, &len);
         QCopy(msg.buf, d, len);
-        Msg72A0* pm = &msg; if (NetObj_SendMessage(D_0051EE70, 0x430, pm, idx, 0x40)) ret = true;
+        Msg72A0* pm = &msg; if (cNetObj_SendMessage_int_int_ucharP_int_etc(D_0051EE70, 0x430, pm, idx, 0x40)) ret = true;
     }
     return ret;
 }

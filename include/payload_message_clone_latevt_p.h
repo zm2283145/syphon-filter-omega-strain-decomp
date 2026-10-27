@@ -23,7 +23,7 @@
         PayloadMessageP* p;                                                   \
         {                                                                     \
             AllocGuard guard;                                                 \
-            p = (PayloadMessageP*)Mem_Alloc(0, (size), fileSym, (line));      \
+            p = (PayloadMessageP*)cMemMan_Allocate(0, (size), fileSym, (line));      \
         }                                                                     \
         if (p) {                                                              \
             baseCtor(p, self);                                                \

@@ -9,6 +9,6 @@
 extern int D_004EA0A0;
 
 /* Returns the value of global D_004EA0A0. */
-int cNetAgentUpdateMsg_v05(void) {
+int cNetAgentUpdateMsg_GetMsgId(void) {
     return D_004EA0A0;
 }

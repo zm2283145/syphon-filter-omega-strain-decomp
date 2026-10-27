@@ -15,7 +15,7 @@ typedef struct {
     short x184;
     char x186;
 } SoundActionA210;
-extern void String_Copy(char* dst, const char* src);
+extern void Libc_Strcpy(char* dst, const char* src);
 static inline void MemClearA210(void* d0, int n0) { int n = n0; void* dst = d0;
     asm {
         .set noreorder
@@ -47,14 +47,14 @@ static inline void MemClearA210(void* d0, int n0) { int n = n0; void* dst = d0;
     done:
     }
 }
-extern void Resource_Construct(void* p);
-SoundActionA210* SoundRequest_Ctor(SoundActionA210* p, int type, const char* name, VoiceA210* voice, int x180) {
+extern void cFileMan_ctor_void(void* p);
+SoundActionA210* cSndFx_ctor_int_charP_cGOBJP_int(SoundActionA210* p, int type, const char* name, VoiceA210* voice, int x180) {
     int tmp;
     int* r;
     p->voiceId = -2;
     p->voice = 0;
-    Resource_Construct((char*)p + 0x48);
-    Resource_Construct((char*)p + 0xE4);
+    cFileMan_ctor_void((char*)p + 0x48);
+    cFileMan_ctor_void((char*)p + 0xE4);
     p->type = type;
     p->voice = voice;
     if (voice) {
@@ -70,7 +70,7 @@ SoundActionA210* SoundRequest_Ctor(SoundActionA210* p, int type, const char* nam
     p->x34 = 0;
     p->x38 = 0;
     MemClearA210(p->name, 0x10);
-    String_Copy(p->name, name);
+    Libc_Strcpy(p->name, name);
     p->x186 = 0;
     return p;
 }

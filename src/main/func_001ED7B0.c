@@ -1,5 +1,5 @@
 #include "types.h"
-int HumanColQueryMask_Equals(int* a, int* b)
+int cBitArray_5_opEq(int* a, int* b)
 {
     int i;
     for (i = 0; i < 1; i++) {

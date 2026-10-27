@@ -7,9 +7,9 @@
 #include "loose03_types.h"
 
 /* Inserts count copies of *value at pos (vector insert). */
-extern int Vector_Insert_183D90(Vec112* v, Elem112* pos, int count, Elem112* value);
+extern int std_vector_imp_cCollisionFace_insert(Vec112* v, Elem112* pos, int count, Elem112* value);
 
 /* push_back: insert one element at the end. */
 int func_003BFFF0(Vec112* v, Elem112* value) {
-    return Vector_Insert_183D90(v, &v->data[v->count], 1, value);
+    return std_vector_imp_cCollisionFace_insert(v, &v->data[v->count], 1, value);
 }

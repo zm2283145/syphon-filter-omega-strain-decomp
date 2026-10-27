@@ -21,7 +21,7 @@ extern char D_004BE030[];
 extern char D_004BE050[];
 extern char D_004BE058[];
 extern int D_0055C0B8;
-extern void* Mem_Alloc(int pool, int size, char* file, int line);
+extern void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern int strcmp(const char* a, const char* b);
 int CreateFeature(Self0770* self, char** cursor);
 }
@@ -92,7 +92,7 @@ extern "C" int CreateFeature(Self0770* self, char** cursor)
         V4* a;
         V4* v;
         int n;
-        { AllocGuard g; a = (V4*)Mem_Alloc(0, 0x20, D_004BE030, 0xC4); }
+        { AllocGuard g; a = (V4*)cMemMan_Allocate(0, 0x20, D_004BE030, 0xC4); }
         self->line = a;
         v = self->line;
         if (D_0055C0B8 > 1) n = ReadI(cursor);
@@ -126,7 +126,7 @@ extern "C" int CreateFeature(Self0770* self, char** cursor)
         float x = ReadF(cursor);
         float y = ReadF(cursor);
         float z = ReadF(cursor);
-        { AllocGuard g; v = (V4*)Mem_Alloc(0, 0x10, D_004BE030, 0xE6); }
+        { AllocGuard g; v = (V4*)cMemMan_Allocate(0, 0x10, D_004BE030, 0xE6); }
         SetPt(v, x, y, z);
         self->point = v;
     } else {

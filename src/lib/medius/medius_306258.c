@@ -54,7 +54,7 @@ done:
 
 /* merge_units: begin func_00306380 */
 typedef struct { unsigned int sec; unsigned int usec; } ScfTime_00306380;
-int TimeVal_ToSeconds(ScfTime_00306380 *tv, unsigned int *out)
+int rt_time_timestamp_to_secs(ScfTime_00306380 *tv, unsigned int *out)
 {
     int ret = 2;
     if (tv == 0) return ret;

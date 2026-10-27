@@ -66,11 +66,11 @@ struct Out_7800 {
 };
 extern "C" {
 extern float D_004A9330;
-unsigned char WeaponInv_GetHeldClass(int);
+unsigned char cWeapon_GetEquipmentType(int);
 Id_7800* cObjectId_ctor_uint(Id_7800*, int);
 Id_7800* cSystem_GetObjectID_void_2(Obj_7800*);
-void Quat_DampTowardIdentity(Q7*, int);
-void Camera_ApplyInput(Cam_7800* cam, Out_7800* out, Player_7800* pl, Q7* a3, Q7* t0, Q7* t1, Q7* t2);
+void cHumanIkRoutine_GetCurrentGunRecoilAnimation(Q7*, int);
+void cPlayerControls_UpdateCamera(Cam_7800* cam, Out_7800* out, Player_7800* pl, Q7* a3, Q7* t0, Q7* t1, Q7* t2);
 }
 struct HS_7800 { Obj_7800* obj; int id; };
 static inline void SetH(HS_7800* h, Obj_7800* o) { Id_7800 t; h->obj = o; h->id = (o ? cSystem_GetObjectID_void_2(o) : cObjectId_ctor_uint(&t, -1))->v; }
@@ -82,7 +82,7 @@ static inline bool CamBit8(Cam_7800* c) { return Bit(c->f3C, 8); }
 static inline bool InVeh(Player_7800* p) { return Bit(p->f3204, 4) && p->veh; }
 static inline bool VehB3D2(Player_7800* p) { bool r = false; if (InVeh(p) && p->veh->b3D2) r = true; return r; }
 static inline bool VehB3D4(Player_7800* p) { return p->veh && p->veh->b3D4; }
-void Camera_ApplyInput(Cam_7800* cam, Out_7800* out, Player_7800* pl, Q7* a3, Q7* t0, Q7* t1, Q7* t2)
+void cPlayerControls_UpdateCamera(Cam_7800* cam, Out_7800* out, Player_7800* pl, Q7* a3, Q7* t0, Q7* t1, Q7* t2)
 {
     Obj_7800* tgt;
     int tid;
@@ -125,7 +125,7 @@ void Camera_ApplyInput(Cam_7800* cam, Out_7800* out, Player_7800* pl, Q7* a3, Q7
     }
     if ((cam->f3C >> 8) & 1) {
         out->flags.w[0] |= 4;
-        if (WeaponInv_GetHeldClass(pl->f3524) != 1)
+        if (cWeapon_GetEquipmentType(pl->f3524) != 1)
             out->flags.w[0] |= 8;
     }
     if ((cam->f3C >> 5) & 1)
@@ -151,7 +151,7 @@ void Camera_ApplyInput(Cam_7800* cam, Out_7800* out, Player_7800* pl, Q7* a3, Q7
         }
     }
     if (pl->f3314) {
-        Quat_DampTowardIdentity(&v, pl->f3314);
+        cHumanIkRoutine_GetCurrentGunRecoilAnimation(&v, pl->f3314);
     } else {
         ((int*)&v)[0] = 0; ((int*)&v)[1] = 0; ((int*)&v)[2] = 0; ((int*)&v)[3] = 0;
     }

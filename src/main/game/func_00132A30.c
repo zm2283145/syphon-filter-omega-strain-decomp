@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* Actor_GetSkeleton(char* self) {
+void* cSKM_GOBJ_GetSkeleton_void(char* self) {
     return self + 11856;
 }

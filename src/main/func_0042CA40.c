@@ -2,9 +2,9 @@
 #include "vtable_base_dtor.h"
 
 extern "C" {
-extern "C" void Message_GetScriptTypeKey();
-extern "C" void cNetActivateAndControlMsg_v01();
-extern "C" void cNetActivateAndControlMsg_v02();
+extern "C" void cMessage_getSOBJClassId();
+extern "C" void cNetActivateAndControlMsg_Clone();
+extern "C" void cNetActivateAndControlMsg_Pack();
 extern void * const D_004E0EA0[];
 void* cMessage_dtor(void* self, short deleteFlag);
 }
@@ -18,4 +18,4 @@ extern "C" VtableObject* cNetActivateAndControlMsg_dtor(VtableObject* self, shor
     }
     return self;
 }
-void * const D_004E0EA0[8] = { (void*)0x0, (void*)0x0, (void*)cNetActivateAndControlMsg_dtor, (void*)cNetActivateAndControlMsg_v01, (void*)cNetActivateAndControlMsg_v02, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+void * const D_004E0EA0[8] = { (void*)0x0, (void*)0x0, (void*)cNetActivateAndControlMsg_dtor, (void*)cNetActivateAndControlMsg_Clone, (void*)cNetActivateAndControlMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };

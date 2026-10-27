@@ -19,17 +19,17 @@ extern "C" char g_Game[];
 extern "C" const char* D_0048C160[];
 extern "C" void func_00296F20(L4B50* l);
 extern "C" void std_vector_deleter_tRequirementInfo_dtor(L4B50* l, int flags);
-extern "C" void* Agent_GetSelected(void* list, int idx);
-extern "C" void AgentData_GetAwardItems(void* ag, int a, int b, L4B50* l);
-extern "C" void* AgentData_GetLevelShortName(void* ag, const char* name);
-extern "C" void AgentData_GetLevelObjectives(void* ag, void* x, L4B50* l);
-extern "C" int Loc_LookupText(const char* key);
+extern "C" void* cGameSystem_GetAgentData(void* list, int idx);
+extern "C" void cAgentData_GetRequirements(void* ag, int a, int b, L4B50* l);
+extern "C" void* cAgentData_GetLevelPrefix(void* ag, const char* name);
+extern "C" void cAgentData_GetLevelRequirements(void* ag, void* x, L4B50* l);
+extern "C" int nGlobalization_GetString_charP(const char* key);
 extern "C" void GuiTextListWidget_AddItem(void* t, int id, int i, int mode);
 
 /* The inline size() keeps the loop-entry test on the stack slot; enum constants keep the 0/1 select as branches. */
-extern "C" void GuiPersonnelMenu_Fill(O4B50* self)
+extern "C" void GuiPersonnelMenu_PopulateList(O4B50* self)
 {
-    void* ag = Agent_GetSelected(g_Game, -1);
+    void* ag = cGameSystem_GetAgentData(g_Game, -1);
     L4B50 l;
     int text;
     int i;
@@ -44,16 +44,16 @@ extern "C" void GuiPersonnelMenu_Fill(O4B50* self)
             std_vector_deleter_tRequirementInfo_dtor(&l, 0);
             return;
         }
-        x = AgentData_GetLevelShortName(ag, name);
+        x = cAgentData_GetLevelPrefix(ag, name);
         if (!x) {
             std_vector_deleter_tRequirementInfo_dtor(&l, 0);
             return;
         }
-        AgentData_GetLevelObjectives(ag, x, &l);
+        cAgentData_GetLevelRequirements(ag, x, &l);
     } else {
-        AgentData_GetAwardItems(ag, self->kind, self->arg, &l);
+        cAgentData_GetRequirements(ag, self->kind, self->arg, &l);
     }
-    text = Loc_LookupText("Classified");
+    text = nGlobalization_GetString_charP("Classified");
     for (i = 0; i < l.size(); i++) {
         E4B50* e = (E4B50*)((int)l.data + i * sizeof(E4B50));
         int id = text;

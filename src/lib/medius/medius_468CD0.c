@@ -92,13 +92,13 @@ int MediusUpdateBare(void)
 /* merge_units: end func_00468EF0 */
 
 /* merge_units: begin func_00468F78 */
-extern int Medius_TerminateString(char *, int);
-extern int Net_SendLocked(int, int, int, int, int, int, void *);extern int D_00598638;
+extern int iTerminateString_void_2(char *, int);
+extern int NetSendMessage(int, int, int, int, int, int, void *);extern int D_00598638;
 int MediusUpdateClientState(char *a)
 {
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
-    Medius_TerminateString(a, 0x11);
-    return Net_SendLocked(0x40, D_00497CC4, 0xFFFF, 1, D_00598638, 0x18, a) ? -5 : 0;
+    iTerminateString_void_2(a, 0x11);
+    return NetSendMessage(0x40, D_00497CC4, 0xFFFF, 1, D_00598638, 0x18, a) ? -5 : 0;
 }
 /* merge_units: end func_00468F78 */

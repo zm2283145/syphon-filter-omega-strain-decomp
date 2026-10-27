@@ -9,7 +9,7 @@
 
 #include "types.h"
 
-/* 12-byte collection header initialized by ScalarCollection_Init. */
+/* 12-byte collection header initialized by std_list_deleter_voidPtr_ctor_void. */
 typedef struct L4ScalarCollection {
     int unk00;
     int unk04;
@@ -89,17 +89,17 @@ typedef struct GuiWidget424C50 {
 } GuiWidget424C50;
 
 /*
- * Object built by MoviePlayer_ctor (>= 0x237 bytes). Two sub-objects at 0x6C and
- * 0x190 are initialized by Resource_Construct; the one at 0x190 is then filled from
+ * Object built by cMoviePlayer_ctor (>= 0x237 bytes). Two sub-objects at 0x6C and
+ * 0x190 are initialized by cFileMan_ctor_void; the one at 0x190 is then filled from
  * the constructor's source record by cFileMan_EncodeFilename_charP_cFileManR.
  */
 typedef struct Unk3F9380 {
     int unk00[20];                 /* 0x00 */
     char pad50[0x1C];
-    char unk6C[0x11C];             /* 0x6C: Resource_Construct object */
+    char unk6C[0x11C];             /* 0x6C: cFileMan_ctor_void object */
     int unk188;                    /* 0x188 */
     int unk18C;                    /* 0x18C */
-    char unk190[0x9C];             /* 0x190: Resource_Construct object */
+    char unk190[0x9C];             /* 0x190: cFileMan_ctor_void object */
     int unk22C;                    /* 0x22C */
     char unk230;                   /* 0x230 */
     char unk231;                   /* 0x231 */
@@ -119,7 +119,7 @@ typedef struct L4Entry110 {
     char pad107[9];
 } L4Entry110;
 
-/* Owner of eight L4Entry110 records (used by Renderer_GetCurrentCamera/Renderer_PushCameraState). */
+/* Owner of eight L4Entry110 records (used by XLib_EditViewport/XLib_PushViewport). */
 typedef struct Unk3D3670 {
     char pad00[0xF4];
     int unkF4;                     /* 0xF4 */
@@ -190,7 +190,7 @@ typedef union L4ScriptArg {
     signed char c;
 } L4ScriptArg;
 
-/* Record built by MaterialProp_SetDefaults (>= 0x35 bytes). */
+/* Record built by cMaterialProperties_MatPropInfo_ctor_void (>= 0x35 bytes). */
 typedef struct Unk409750 {
     int unk00;                     /* 0x00 */
     int unk04;                     /* 0x04 */
@@ -208,7 +208,7 @@ typedef struct Unk409750 {
     char unk34;                    /* 0x34 */
 } Unk409750;
 
-/* Object with the getters/setters at GuiArrayWidget_GetFixedRow..GuiArrayWidget_SetTable. */
+/* Object with the getters/setters at GuiArrayWidget_GetFixedRow..GuiArrayWidget_SetVisibleSize. */
 typedef struct Unk423540 {
     char pad00[0x70];
     int unk70;                     /* 0x70 */
@@ -219,20 +219,20 @@ typedef struct Unk423540 {
     int unk84;                     /* 0x84 */
 } Unk423540;
 
-/* Object used by HudLockTracker_Draw..HudTracker_Attach (>= 0x85 bytes). */
+/* Object used by HudLockTracker_Draw..cIE_GOBJ_SetHost (>= 0x85 bytes). */
 typedef struct Unk3E96F0 {
     char pad00[0x60];
-    int unk60;                     /* 0x60: handle passed to IeElement_Fade/IeElement_EvaluateAt */
+    int unk60;                     /* 0x60: handle passed to cAnimator_AnimateTo/viBufGetTs */
     char unk64;                    /* 0x64 */
     char pad65[3];
     int unk68;                     /* 0x68 */
     char pad6C[4];
-    char unk70[0x10];              /* 0x70: sub-object updated by HudTracker_ToCameraSpace */
+    char unk70[0x10];              /* 0x70: sub-object updated by cIE_GOBJ_TransformPointIntoCamera */
     int unk80;                     /* 0x80 */
     char unk84;                    /* 0x84 */
 } Unk3E96F0;
 
-/* Node of the ordered containers handled by List_InsertBefore: +4 links to the next node, +8 is the value. */
+/* Node of the ordered containers handled by std_list_deleter_voidPtr_insert: +4 links to the next node, +8 is the value. */
 typedef struct L4Node {
     struct L4Node* unk00;          /* 0x00 */
     struct L4Node* next;           /* 0x04 */
@@ -259,7 +259,7 @@ typedef struct Msg3E43D0Src {
     unsigned char unk09;           /* 0x09 */
 } Msg3E43D0Src;
 
-/* Widget-like object built by GuiTextEditWidget_Construct on top of GuiTextWidget_ctor (>= 0x90 bytes). */
+/* Widget-like object built by GuiTextEditWidget_ctor_2 on top of GuiTextWidget_ctor (>= 0x90 bytes). */
 typedef struct Unk41ADC0 {
     void* vtable;                  /* 0x00 */
     char pad04[0x10];
@@ -353,7 +353,7 @@ typedef struct L4Elem124Vec {
     int unk0C;                     /* 0x0C */
 } L4Elem124Vec;
 
-/* Object tested by GuiCanvas_UpdatePads: GuiWidget flags at +0x14 and a byte at +0x51. */
+/* Object tested by GuiCanvas_ProcessInput_void: GuiWidget flags at +0x14 and a byte at +0x51. */
 typedef struct Unk415870 {
     char pad00[0x14];
     unsigned short flags;          /* 0x14 */
@@ -361,13 +361,13 @@ typedef struct Unk415870 {
     unsigned char unk51;           /* 0x51 */
 } Unk415870;
 
-/* Record whose +4 word holds the 0xBEBAAFDE validity tag (Node_DeferredDeleteCallback). */
+/* Record whose +4 word holds the 0xBEBAAFDE validity tag (cDeleteCallback_Call). */
 typedef struct L4Tagged {
     int unk00;                     /* 0x00 */
     unsigned int tag;              /* 0x04: 0xBEBAAFDE when valid */
 } L4Tagged;
 
-/* Owner of an L4Tagged pointer at +0xC (Node_DeferredDeleteCallback). */
+/* Owner of an L4Tagged pointer at +0xC (cDeleteCallback_Call). */
 typedef struct Unk3CB4F0 {
     char pad00[0xC];
     L4Tagged* unk0C;               /* 0x0C */
@@ -391,7 +391,7 @@ typedef struct L4Elem18Vec {
     L4Elem18* data;                /* 0x08 */
 } L4Elem18Vec;
 
-/* Object with a container at +0x20 (Script_AddChild). */
+/* Object with a container at +0x20 (cSystemContainer_AddSystem). */
 typedef struct Unk3CAC40 {
     char pad00[0x20];
     char unk20[0xC];               /* 0x20: list with its sentinel at +4 */
@@ -447,7 +447,7 @@ typedef struct L4Bytes3 {
     char unk02;
 } L4Bytes3;
 
-/* Collection with a trailing flag and a vtable pointer at +0x10 (ListenerList_Ctor). */
+/* Collection with a trailing flag and a vtable pointer at +0x10 (cAnimTexMan_ctor). */
 typedef struct Unk3D28D0 {
     L4ScalarCollection coll;       /* 0x00 */
     char unk0C;                    /* 0x0C */
@@ -455,14 +455,14 @@ typedef struct Unk3D28D0 {
     void* vtable;                  /* 0x10 */
 } Unk3D28D0;
 
-/* Object with a handle at +0x74 and a word at +0x78 (IeElement_SetData / IeElement_SetText). */
+/* Object with a handle at +0x74 and a word at +0x78 (cInterfaceElement_SetGobj / cInterfaceElement_SetText). */
 typedef struct Unk3E7EB0 {
     char pad00[0x74];
     int unk74;                     /* 0x74 */
     int unk78;                     /* 0x78 */
 } Unk3E7EB0;
 
-/* Object with flag bytes at +0x104 and +0x106 (IeDraw_SetPerspective). */
+/* Object with flag bytes at +0x104 and +0x106 (cXViewport_SetPersp). */
 typedef struct Unk3ED240 {
     char pad00[0x104];
     char unk104;                   /* 0x104 */
@@ -476,7 +476,7 @@ typedef struct Unk3EE500 {
     int unk8C;                     /* 0x8C */
 } Unk3EE500;
 
-/* Archive handle returned by Archive_Open (only the byte at +0x168 is known). */
+/* Archive handle returned by cHogList_Open (only the byte at +0x168 is known). */
 typedef struct L4Archive {
     char pad00[0x168];
     char unk168;                   /* 0x168: set to 1 by cHogList_OpenProtected */
@@ -500,7 +500,7 @@ typedef struct L4FreeNode {
     struct L4FreeNode* next;       /* 0x04 */
 } L4FreeNode;
 
-/* Registered object: +0x1C holds the registry it belongs to (Object_SetRegistry). */
+/* Registered object: +0x1C holds the registry it belongs to (cSystem_SetOwningList). */
 typedef struct L4RegObj {
     char pad00[0x1C];
     int registry;                  /* 0x1C */

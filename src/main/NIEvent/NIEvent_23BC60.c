@@ -36,7 +36,7 @@ struct Ev0023BCC0 {
     Item0023BCC0** items;
 };
 #pragma opt_strength_reduction off
-extern "C" void cNIEventOBJ_v09(Ev0023BCC0* self)
+extern "C" void cNIEventOBJ_NetDisable(Ev0023BCC0* self)
 {
     int i;
     self->b2C = 0;
@@ -56,7 +56,7 @@ static inline void merge_flush_func_0023BCC0(void) {}
 #pragma exceptions off
 class G7V { public: virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void fn(int x); };
 struct G7Ev { char pad[0x2C]; unsigned char b2C; char pad2[0xA0 - 0x2D]; int count; G7V** arr; };
-extern "C" void cNIEventOBJ_v08(G7Ev* e)
+extern "C" void cNIEventOBJ_NetEnable(G7Ev* e)
 {
     int i;
     e->b2C = 1;

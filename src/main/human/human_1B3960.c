@@ -16,21 +16,21 @@ class O_1B3960 { public: VPAD16(a) VPAD4(b) VPAD2(c) virtual void Kill(int f); c
 extern "C" {
 extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
-P_1B3960* PlayerSlots_Get(int i);
-int Player_GetIndex(int h);
-void cNPC_Deactivate(void* npc, P_1B3960* p);
+P_1B3960* cNetObj_GetPlayer(int i);
+int cNetObj_GetOwner(int h);
+void cNPC_Deactivate_cGOBJP(void* npc, P_1B3960* p);
 }
 static inline int Net_1B3960(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
-static inline void Deact_1B3960(void* npc, P_1B3960* f) { if (f && Net_1B3960()) cNPC_Deactivate(npc, f); }
-extern "C" void Npc_v09(O_1B3960* self, int id)
+static inline void Deact_1B3960(void* npc, P_1B3960* f) { if (f && Net_1B3960()) cNPC_Deactivate_cGOBJP(npc, f); }
+extern "C" void cHuman_NetDisable(O_1B3960* self, int id)
 {
     P_1B3960* found = 0;
     if (id >= 0) {
         if (Net_1B3960()) {
             int i;
             for (i = 0; i < 4; i++) {
-                P_1B3960* p = PlayerSlots_Get(i);
-                if (p && Player_GetIndex(p->h) == id) { found = p; break; }
+                P_1B3960* p = cNetObj_GetPlayer(i);
+                if (p && cNetObj_GetOwner(p->h) == id) { found = p; break; }
             }
         }
         Deact_1B3960(self->npc, found);
@@ -52,28 +52,28 @@ struct N_1B3A60 { char pad[0x30]; T_1B3A60* t; };
 struct O_1B3A60 { char pad[0x58]; N_1B3A60* npc; };
 extern "C" {
 #if 0 /* merge_units */
-P_1B3A60* PlayerSlots_Get(int i);
+P_1B3A60* cNetObj_GetPlayer(int i);
 #endif /* merge_units */
-#define PlayerSlots_Get(a0) ((P_1B3A60 *)PlayerSlots_Get((a0))) /* merge_units */
+#define cNetObj_GetPlayer(a0) ((P_1B3A60 *)cNetObj_GetPlayer((a0))) /* merge_units */
 
-void NpcAi_ActivateForPlayer(N_1B3A60* npc, P_1B3A60* p);
+void cNPC_Activate_cGOBJP(N_1B3A60* npc, P_1B3A60* p);
 }
 static inline int Net_1B3A60(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
-static inline void Act_1B3A60(N_1B3A60* npc, P_1B3A60* f) { if (f && Net_1B3A60()) NpcAi_ActivateForPlayer(npc, f); }
-extern "C" void Npc_v08(O_1B3A60* self, int id)
+static inline void Act_1B3A60(N_1B3A60* npc, P_1B3A60* f) { if (f && Net_1B3A60()) cNPC_Activate_cGOBJP(npc, f); }
+extern "C" void cHuman_NetEnable(O_1B3A60* self, int id)
 {
     P_1B3A60* found = 0;
     if (id >= 0 && Net_1B3A60()) {
         int i;
         for (i = 0; i < 4; i++) {
-            P_1B3A60* p = PlayerSlots_Get(i);
-            if (p && Player_GetIndex(p->h) == id) { found = p; break; }
+            P_1B3A60* p = cNetObj_GetPlayer(i);
+            if (p && cNetObj_GetOwner(p->h) == id) { found = p; break; }
         }
     }
     self->npc->t->Set(-1);
     Act_1B3A60(self->npc, found);
 }
-#undef PlayerSlots_Get /* merge_units */
+#undef cNetObj_GetPlayer /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001B3A60(void) {}
 #pragma pop /* merge_units */

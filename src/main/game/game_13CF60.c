@@ -82,29 +82,29 @@ extern signed char D_005723C0;
 extern char D_005724A0[];
 extern unsigned char D_005724B0;
 
-extern void StaticInit_RunAll(void);
+extern void mwInit(void);
 extern char *strrchr(const char *, int);
-extern StrObj *String_CtorCStr_13B480(StrObj *, const char *);
-extern void String_AssignString(StrObj *, StrObj *);
+extern StrObj *std_basic_string_char_char_traits_char_ctor_charP(StrObj *, const char *);
+extern void std_basic_string_char_char_traits_char_assign_basicstringR(StrObj *, StrObj *);
 extern void String_Dtor(void *, short);
 extern char *strncpy(char *, const char *, int);
 extern void printf(char *, ...);
-extern void LevelSelect_FindByName(int, char *);
-extern int String_ToLower(int);
+extern void MissionSelectData_SelectMissionByName(int, char *);
+extern int Libc_Tolower(int);
 extern void cScriptInterpreter_SetGenerateSyms(int);
-extern void ScriptFilter_SetGate(int);
+extern void cScriptInterpreter_SetEnabled(int);
 extern void *opNew_uint_int_charP_int(int, int, char *, int);
 extern char *cDME_tServer_ctor(void *);
 extern void cArray_tServerPtr_PushBackActual(void *, char **);
 extern void cGameSystem_SetPlayerFilename(char *, char *);
-extern void DME_InstallTimer(void);
-extern int App_GetInstance(void);
+extern void cThreadMgr_Init(void);
+extern int GetMachine(void);
 extern void StringPool_Load(int);
 extern void App_BindIopRpc(int);
-extern void App_InitSystemsOnce(void);
+extern void cMachine_InitDME(void);
 extern void Net_RetryConnect(char *);
 extern void DME_Update(void);
-extern int Game_MainUpdate(int);
+extern int cMachine_NextFrame(int);
 
 static inline void Game_SetState(int s)
 {
@@ -126,7 +126,7 @@ int Game_ParseCommandLine(int argc, char **argv)
     char *t;
     int i;
 
-    StaticInit_RunAll();
+    mwInit();
     magic[0] = 0xE4A;
     run = 1;
     named = 0;
@@ -136,8 +136,8 @@ int Game_ParseCommandLine(int argc, char **argv)
     if (base == 0) base = strrchr(argv[0], '/');
     if (base == 0) base = argv[0];
     else base = base + 1;
-    String_CtorCStr_13B480(&tmp, base);
-    String_AssignString(&D_004FFBA4, &tmp);
+    std_basic_string_char_char_traits_char_ctor_charP(&tmp, base);
+    std_basic_string_char_char_traits_char_assign_basicstringR(&D_004FFBA4, &tmp);
     String_Dtor(&tmp, 0);
     Game_SetState(9);
     if (argc > 1) {
@@ -157,7 +157,7 @@ int Game_ParseCommandLine(int argc, char **argv)
                     break;
                 case 'l':
                     strncpy(g_LevelDirName, val, 0x80);
-                    LevelSelect_FindByName(D_004FFC04 + 0x188, val);
+                    MissionSelectData_SelectMissionByName(D_004FFC04 + 0x188, val);
                     printf(D_0049AF30, val);
                     run = 0;
                     break;
@@ -166,11 +166,11 @@ int Game_ParseCommandLine(int argc, char **argv)
                     printf(D_0049AF50, arg);
                     break;
                 case 's':
-                    if (String_ToLower(val[0]) == 'g') {
+                    if (Libc_Tolower(val[0]) == 'g') {
                         cScriptInterpreter_SetGenerateSyms(1);
                         skip = 1;
-                    } else if (String_ToLower(val[0]) == 'o') {
-                        ScriptFilter_SetGate(String_ToLower(val[1]) == 'n');
+                    } else if (Libc_Tolower(val[0]) == 'o') {
+                        cScriptInterpreter_SetEnabled(Libc_Tolower(val[1]) == 'n');
                     }
                     run = 0;
                     break;
@@ -219,21 +219,21 @@ int Game_ParseCommandLine(int argc, char **argv)
             }
         }
     }
-    DME_InstallTimer();
+    cThreadMgr_Init();
     if (run) D_004FFBB2 = 1;
-    StringPool_Load(App_GetInstance());
+    StringPool_Load(GetMachine());
     if (skip) {
-        App_BindIopRpc(App_GetInstance());
+        App_BindIopRpc(GetMachine());
     } else {
         if (g_IsMultiplayer && host) {
-            App_BindIopRpc(App_GetInstance());
-            App_InitSystemsOnce();
+            App_BindIopRpc(GetMachine());
+            cMachine_InitDME();
             if (named) {
                 Net_RetryConnect(name);
                 while (D_005724B0 == 5) DME_Update();
             }
         }
-        while (Game_MainUpdate(App_GetInstance())) {
+        while (cMachine_NextFrame(GetMachine())) {
         }
     }
     /* Exit(0) is an inlined EE kernel syscall */

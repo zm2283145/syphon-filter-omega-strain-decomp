@@ -6,12 +6,12 @@
 
 #include "types.h"
 
-extern int NetMsg_RegisterTypeCore(int, int, int);
+extern int rt_parse_register(int, int, int);
 
-int NetMsg_RegisterTypeInner(void) {
+int NetIRegisterMessage(void) {
     int a0, a1, a2, v0, v1;
 
-    v0 = NetMsg_RegisterTypeCore(a0, a1, a2);
+    v0 = rt_parse_register(a0, a1, a2);
     v1 = 0 + 30;
     if (v0 == 0) v1 = 0;
     v0 = v1;

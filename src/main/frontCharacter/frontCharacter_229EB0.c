@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00229EB0 */
 #pragma push /* merge_units */
@@ -25,7 +25,7 @@ int Mem_Free();
 extern "C" {
 /*fc*/
 int cHuman_UnInitStatics(...);                                  
-int Hog_Unload(...);                            
+int cHogFile_CloseHog(...);                            
 int cSkaAnimationSet_dtor(...);                            
 int Monster_dtor(...);                            
 extern int D_004F77A0;
@@ -48,23 +48,23 @@ extern "C" void CCI_Screen_ScreenCleanup(char * arg0) {
     D_005712F4 = 0;
     temp_a0 = (char *)(F_(arg0, 0x4, int));
     if ((temp_a0 != NULL) && (F_(temp_a0, 0x14C, unsigned char) != 0)) {
-        Hog_Unload(temp_a0);
+        cHogFile_CloseHog(temp_a0);
     }
     temp_a0_2 = (char *)(F_(arg0, 0x8, int));
     if ((temp_a0_2 != NULL) && (F_(temp_a0_2, 0x14C, unsigned char) != 0)) {
-        Hog_Unload(temp_a0_2);
+        cHogFile_CloseHog(temp_a0_2);
     }
     temp_a0_3 = (char *)(F_(arg0, 0xC, int));
     if ((temp_a0_3 != NULL) && (F_(temp_a0_3, 0x14C, unsigned char) != 0)) {
-        Hog_Unload(temp_a0_3);
+        cHogFile_CloseHog(temp_a0_3);
     }
     temp_a0_4 = (char *)(F_(arg0, 0x10, int));
     if ((temp_a0_4 != NULL) && (F_(temp_a0_4, 0x14C, unsigned char) != 0)) {
-        Hog_Unload(temp_a0_4);
+        cHogFile_CloseHog(temp_a0_4);
     }
     temp_a0_5 = (char *)(F_(arg0, 0x14, int));
     if ((temp_a0_5 != NULL) && (F_(temp_a0_5, 0x14C, unsigned char) != 0)) {
-        Hog_Unload(temp_a0_5);
+        cHogFile_CloseHog(temp_a0_5);
     }
     F_(arg0, 0x4, int) = NULL;
     F_(arg0, 0x8, int) = NULL;
@@ -75,7 +75,7 @@ extern "C" void CCI_Screen_ScreenCleanup(char * arg0) {
     {
         AllocGuard g;
     cSkaAnimationSet_dtor(temp_s0, -1);
-    Mem_Free(0, temp_s0, "frontCharacter.cc", 0x8F);
+    cMemMan_Deallocate(0, temp_s0, "frontCharacter.cc", 0x8F);
     }
     D_004F77A0 = 0;
     cHuman_UnInitStatics();
@@ -88,24 +88,24 @@ static inline void merge_flush_func_00229EB0(void) {}
 /* merge_units: begin func_0022A040 */
 #pragma push /* merge_units */
 #include "fileman_entry.h"
-void FrontEnd_LoadIdleClip(void); /* gsynth: defined below */
+void LoadIdleAnim(void); /* gsynth: defined below */
 #pragma cplusplus on
 #pragma mpwc_relax on
 
 
 extern "C" {
-char * Mem_Alloc(int, int, char *, int);                      
+char * cMemMan_Allocate(int, int, char *, int);                      
 int cAssocArray_cString16N_2_cSkaAnimationBlendPtr_ctor(char * );                            
 int cArray_cSkaNodePtr_ctor(char * );                            
 int cAssocArray_cString16N_3_int_ctor(char * );                            
 int cArray_charPtr_ctor(char * );                            
 int cArray_cString4_ctor(char * );                            
 #if 0 /* merge_units */
-int FrontEnd_LoadIdleClip();
+int LoadIdleAnim();
 #endif /* merge_units */
-#define FrontEnd_LoadIdleClip() (FrontEnd_LoadIdleClip()) /* merge_units */
+#define LoadIdleAnim() (LoadIdleAnim()) /* merge_units */
                                   
-int FrontCharacter_Setup(int, int);                            
+int CCI_Screen_myTexWads(int, int);                            
 extern char D_004A6320;
 #if 0 /* merge_units */
 extern char * D_004F77A0;
@@ -118,7 +118,7 @@ extern "C" void CCI_Screen_ScreenInit(int arg0, int arg1) {
 
     {
         AllocGuard g;
-    temp_s2 = Mem_Alloc(0, 0x5C, &D_004A6320, 0x70);
+    temp_s2 = cMemMan_Allocate(0, 0x5C, &D_004A6320, 0x70);
     }
     if (temp_s2 != NULL) {
         F_(temp_s2, 0x0, int) = 0;
@@ -131,10 +131,10 @@ extern "C" void CCI_Screen_ScreenInit(int arg0, int arg1) {
         F_(temp_s2, 0x58, int) = 0;
     }
     D_004F77A0 = temp_s2;
-    FrontEnd_LoadIdleClip();
-    FrontCharacter_Setup(arg0, arg1);
+    LoadIdleAnim();
+    CCI_Screen_myTexWads(arg0, arg1);
 }
-#undef FrontEnd_LoadIdleClip /* merge_units */
+#undef LoadIdleAnim /* merge_units */
 #undef D_004F77A0 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0022A040(void) {}
@@ -143,7 +143,7 @@ static inline void merge_flush_func_0022A040(void) {}
 
 /* merge_units: begin func_0022A140 */
 #pragma push /* merge_units */
-extern void Human_InitStatics(void);
+extern void cHuman_InitStatics(void);
 extern int cFileMan_EncodeFilename_charP_cFileIOP_bool(void* h, const char* name, int arg, int opt);
 extern void cSkaAnimationSet_AddAnimation_cFileManR(void* a, void* e);
 extern int cArray_cString4_PushBackActual(void* v, void* value);
@@ -156,15 +156,15 @@ extern char* D_004F77A0;
 
 
 /* Loads the front-end idle animation and pushes an empty 4-char tag onto the character list. */
-void FrontEnd_LoadIdleClip(void)
+void LoadIdleAnim(void)
 {
     char tag[4];
     FileManEntry e;
     unsigned char done;
     unsigned int i;
     const char* s;
-    Human_InitStatics();
-    Resource_Construct(&e);
+    cHuman_InitStatics();
+    cFileMan_ctor_void(&e);
     cFileMan_EncodeFilename_charP_cFileIOP_bool(&e, D_004A6340, 0, 0);
     cSkaAnimationSet_AddAnimation_cFileManR(D_004F77A0, &e);
     done = 0;
@@ -176,7 +176,7 @@ void FrontEnd_LoadIdleClip(void)
         s++;
     }
     cArray_cString4_PushBackActual(D_004F77A0 + 4, tag);
-    FileMan_Release(&e, -1);
+    cFileMan_dtor(&e, -1);
 }
 #undef D_004F77A0 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

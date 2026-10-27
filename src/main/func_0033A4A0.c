@@ -4,7 +4,7 @@
 #include "alloc_guard.h"
 
 extern "C" {
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void* cArray_eRequirementState_dtor(void* self, short flags);
 void opDelete_tAchievementP_int_bool_charP_etc(void* allocation, int pool, int destroy, char* file, int line);
 }
@@ -15,5 +15,5 @@ void opDelete_tAchievementP_int_bool_charP_etc(void* allocation, int pool, int d
         if (allocation)
             cArray_eRequirementState_dtor((char*)allocation + 4, -1);
     }
-    Mem_Free(pool, allocation, file, line);
+    cMemMan_Deallocate(pool, allocation, file, line);
 }

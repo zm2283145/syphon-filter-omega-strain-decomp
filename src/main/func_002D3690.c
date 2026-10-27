@@ -9,5 +9,5 @@ void cNetNPC_Teleport(Npc3690* o, Gobj3690* g)
         id = g->netId;
     else
         id = -1;
-    NetEvent_Send(o->net, 7, 8, id, 0, 0, 0);
+    cNetNPCMsgs_SendMessage(o->net, 7, 8, id, 0, 0, 0);
 }

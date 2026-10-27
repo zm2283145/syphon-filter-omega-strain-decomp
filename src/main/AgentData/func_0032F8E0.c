@@ -10,7 +10,7 @@ extern int D_00532AB8;
 extern unsigned char cAgentData_HasCommendation(cAgentData* agent, int id);
 extern unsigned char cAgentData_HasRating(cAgentData* agent, int id);
 extern unsigned char cAgentData_HasSpecialRating(cAgentData* agent, int id);
-extern int AgentData_StepAwardElement(cAgentData* agent, unsigned char* flag, int key, int unk);
+extern int cAgentData_UpdateAchievement(cAgentData* agent, unsigned char* flag, int key, int unk);
 
 int Script_cAgentData_HasSpecialRating(AgentScriptArg* args) {
     int id[1];
@@ -30,12 +30,12 @@ int Script_cAgentData_HasRating(AgentScriptArg* args) {
     return cAgentData_HasRating(args[0].p, STACK_COPY(id));
 }
 
-/* Updates the omega flag through AgentData_StepAwardElement, then reports whether it is set. */
+/* Updates the omega flag through cAgentData_UpdateAchievement, then reports whether it is set. */
 int Script_cAgentData_HasOmega(AgentScriptArg* args) {
     cAgentData* agent = args[0].p;
     unsigned char* omega = agent->omega;
     int has;
-    AgentData_StepAwardElement(agent, omega, D_00532AB8, 0);
+    cAgentData_UpdateAchievement(agent, omega, D_00532AB8, 0);
     has = omega ? *omega != 0 : 0;
     return has != 0;
 }

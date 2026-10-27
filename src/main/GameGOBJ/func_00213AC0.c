@@ -32,7 +32,7 @@ static inline bool IsReady(Holder* self)
 
 /* Returns the target's virtual +0x88 result when enabled and its link is non-empty, else 0. */
 #pragma optimization_level 3
-extern "C" int cGameGOBJ_GetBounds(Holder* self)
+extern "C" int cGameGOBJ_GetBBox(Holder* self)
 {
     if (!IsReady(self))
         return 0;

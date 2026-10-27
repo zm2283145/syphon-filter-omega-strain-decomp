@@ -18,23 +18,23 @@ extern int D_004FFC04;
 extern Net_441780 g_MemCard;
 extern char D_004C04B8[]; extern char D_004C04C0[]; extern char D_004C04C8[];
 extern char D_004C04D8[]; extern char D_004C0468[];
-int Agent_GetSelected(void*, int);
-char* Loc_LookupText(char*);
-int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
-void FrontEnd_ClosePopup(int, int);
-int AgentData_GetSaveSize(int);
-int MemCard_GetSpaceNeeded(Net_441780*, int);
-int MemCardWrap_Exists(Net_441780*, char*);
+int cGameSystem_GetAgentData(void*, int);
+char* nGlobalization_GetString_charP(char*);
+int cGameFrontEnd_PushMessageBox(int, int, char*, char*, void*, int);
+void cGameFrontEnd_PopMessageBox(int, int);
+int cAgentData_GetNumSavedBytes(int);
+int cMemCard_GetClustersNeeded(Net_441780*, int);
+int cMemCard_FileExists(Net_441780*, char*);
 int SaveAgentWidget_FindSlotFile(int, char*, char*);
 void GuiSaveAgentWidget_HandleEvent(Obj_441780*);
 int sprintf(char*, const char*, ...);
 char* strncpy(char*, const char*, int);
 char* strstr(const char*, const char*);
 char* Libc_Strcat(char*, const char*);
-void String_Copy(char*, const char*);
+void Libc_Strcpy(char*, const char*);
 }
 
-static inline int ShowMsg(int mgr, int type, char* t, char* msg, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, Loc_LookupText(t), msg, cb, x); }
+static inline int ShowMsg(int mgr, int type, char* t, char* msg, void* cb, int x) { return cGameFrontEnd_PushMessageBox(mgr, type, nGlobalization_GetString_charP(t), msg, cb, x); }
 
 extern "C" int SaveAgentWidget_SpaceCheck(Obj_441780* self)
 {
@@ -43,14 +43,14 @@ extern "C" int SaveAgentWidget_SpaceCheck(Obj_441780* self)
     int have;
     int lim;
     if (self->mode == 4) {
-        if (!MemCardWrap_Exists(net, D_004C04B8)) need = 1000;
+        if (!cMemCard_FileExists(net, D_004C04B8)) need = 1000;
     } else if (!SaveAgentWidget_FindSlotFile(self->f50, 0, 0)) {
-        need = AgentData_GetSaveSize(Agent_GetSelected(g_Game, -1));
+        need = cAgentData_GetNumSavedBytes(cGameSystem_GetAgentData(g_Game, -1));
     }
-    have = MemCard_GetSpaceNeeded(net, need);
+    have = cMemCard_GetClustersNeeded(net, need);
     lim = net->impl->f5A4;
     if (!net->impl->f59D || !net->impl->f59E) {
-        FrontEnd_ClosePopup(D_004FFC04, self->dlg);
+        cGameFrontEnd_PopMessageBox(D_004FFC04, self->dlg);
         GuiSaveAgentWidget_HandleEvent(self);
         return 0;
     }
@@ -61,7 +61,7 @@ extern "C" int SaveAgentWidget_SpaceCheck(Obj_441780* self)
         char* p;
         int n;
         sprintf(num, D_004C04C0, have);
-        fmt = Loc_LookupText(D_004C04C8);
+        fmt = nGlobalization_GetString_charP(D_004C04C8);
         p = strstr(fmt, D_004C04D8);
         n = p - fmt;
         if (p) {
@@ -70,9 +70,9 @@ extern "C" int SaveAgentWidget_SpaceCheck(Obj_441780* self)
             Libc_Strcat(msg, num);
             Libc_Strcat(msg, p + 4);
         } else {
-            String_Copy(msg, fmt);
+            Libc_Strcpy(msg, fmt);
         }
-        FrontEnd_ClosePopup(D_004FFC04, self->dlg);
+        cGameFrontEnd_PopMessageBox(D_004FFC04, self->dlg);
         self->dlg = ShowMsg(D_004FFC04, 2, D_004C0468, msg, self, 7);
         return 0;
     }

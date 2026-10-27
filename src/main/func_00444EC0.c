@@ -2,8 +2,8 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int String_Copy(char *, char *);                            
-int Medius_InitCommLib(int *, int *);                    
+int Libc_Strcpy(char *, char *);                            
+int MGCLInitialize(int *, int *);                    
 int NetGetMyIpAddress(char *);                               
 int KM_GetSoftwareID();                                
 int memset(int *, int, int);                              
@@ -41,17 +41,17 @@ int SFOMGCL_Initialize_API(void) {
     sl.f40 = &Callback_ServerEndGame;
     sl.f48 = 0x20;
     sl.f4C[0] = KM_GetSoftwareID();
-    keep = temp_v0 = Medius_InitCommLib(&sl.f30, &sl.f5C);
+    keep = temp_v0 = MGCLInitialize(&sl.f30, &sl.f5C);
     if (temp_v0 != 0) {
         return keep;
     }
     
     D_00584231 = 1;
     NetGetMyIpAddress(sl.f20);
-    String_Copy(&D_00584242, sl.f20);
-    String_Copy(&D_00584262, "2002");
-    String_Copy(&D_00584282, sl.f20);
-    String_Copy(&D_005842A2, "2002");
+    Libc_Strcpy(&D_00584242, sl.f20);
+    Libc_Strcpy(&D_00584262, "2002");
+    Libc_Strcpy(&D_00584282, sl.f20);
+    Libc_Strcpy(&D_005842A2, "2002");
     D_00584518 = (D_005842C4 = 1); 
     return temp_v0;
 }

@@ -9,7 +9,7 @@
 
 /* library prototypes shared by the blocks below (C linkage) */
 #include "SFOLobby_helpers.h"
-int Mem_Free();
+int cMemMan_Deallocate();
 int strlen(const char *);
 
 /* merge_units: begin func_00214BD0 */
@@ -21,14 +21,14 @@ extern void cPlayer_SetMenuDefault(void*, int);
 extern void cPlayer_SetMenuTitle_2(void*, char*);
 extern void cPlayer_AddMenuChoice_2(void*, int);
 extern void cPlayer_LaunchChooseMenu_2(void*);
-extern char* Loc_LookupText(char*);
+extern char* nGlobalization_GetString_charP(char*);
 #pragma opt_strength_reduction off
 void cElevatorGOBJ_ChooseFloor(E214* e) {
     void* m = g_LocalPlayer;
     int i;
     cPlayer_SetMenuReceiver(m, e);
     cPlayer_SetMenuDefault(m, *e->f128);
-    cPlayer_SetMenuTitle_2(m, Loc_LookupText("ElevChooseFloor"));
+    cPlayer_SetMenuTitle_2(m, nGlobalization_GetString_charP("ElevChooseFloor"));
     for (i = 0; i < e->n; i++) cPlayer_AddMenuChoice_2(m, e->items[i]);
     cPlayer_LaunchChooseMenu_2(m);
 }
@@ -54,8 +54,8 @@ extern char g_TriggerMsgKey[];
 extern char D_004DAF10[];
 extern char D_004F5448[];
 extern char D_004DAED0[];
-extern void Event_Construct(void* m, void* type);
-extern void Event_Send(void* m, void* target, int immediate);
+extern void cMessage_ctor_cMessageNameR(void* m, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 extern void cMessage_dtor(void* m, int flags);
 #if 0 /* merge_units */
 extern void cElevatorGOBJ_ChooseFloor(Lift_00214C90* l);
@@ -63,23 +63,23 @@ extern void cElevatorGOBJ_ChooseFloor(Lift_00214C90* l);
 #define cElevatorGOBJ_ChooseFloor(a0) (cElevatorGOBJ_ChooseFloor((void *)(a0))) /* merge_units */
 
 extern void NetRequestObjectPrivateOwnership(void* h);
-extern void Lift_DeactivateRecipients(Lift_00214C90* l);
-extern unsigned char Lift_OpenDoors(Lift_00214C90* l);
+extern void cElevatorGOBJ_DisableCallboxes(Lift_00214C90* l);
+extern unsigned char cElevatorGOBJ_OpenDoors(Lift_00214C90* l);
 static inline int IsAuth_00214C90(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 static inline int ObjId_00214C90(Obj_00214C90* o) { return o ? o->id : 0; }
-void Lift_SeekFloor(Lift_00214C90* l, int floor, int a2, int a3)
+void cElevatorGOBJ_SeekFloor(Lift_00214C90* l, int floor, int a2, int a3)
 {
     if (g_IsMultiplayer && IsAuth_00214C90()) {
         LiftMsg_00214C90 msg;
         LiftMsg_00214C90* m = &msg;
-        Event_Construct(m, g_TriggerMsgKey);
+        cMessage_ctor_cMessageNameR(m, g_TriggerMsgKey);
         msg.floor = floor;
         msg.vtable = D_004DAF10;
         msg.kind = 1;
         m->to = ObjId_00214C90((Obj_00214C90*)l);
         m->from = ObjId_00214C90(0);
         msg.b20 = 4;
-        Event_Send(&msg, l, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, l, 0);
         msg.vtable = D_004DAF10;
         cMessage_dtor(&msg, 0);
     }
@@ -107,37 +107,37 @@ void Lift_SeekFloor(Lift_00214C90* l, int floor, int a2, int a3)
             st = l->state;
             if (st->target > st->cur) {
                 Notice_00214C90 n;
-                Event_Construct(&n, D_004F5448);
+                cMessage_ctor_cMessageNameR(&n, D_004F5448);
                 n.vtable = D_004DAED0;
                 n.kind = 1;
                 n.arg = floor;
-                Event_Send(&n, l, 0);
+                QueueMessage_cMessageR_cSystemP_int(&n, l, 0);
                 n.vtable = D_004DAED0;
                 cMessage_dtor(&n, 0);
                 l->state->dir = 1;
-                Lift_DeactivateRecipients(l);
+                cElevatorGOBJ_DisableCallboxes(l);
             } else if (st->target < st->cur) {
                 Notice_00214C90 n;
-                Event_Construct(&n, D_004F5448);
+                cMessage_ctor_cMessageNameR(&n, D_004F5448);
                 n.vtable = D_004DAED0;
                 n.kind = 1;
                 n.arg = floor;
-                Event_Send(&n, l, 0);
+                QueueMessage_cMessageR_cSystemP_int(&n, l, 0);
                 n.vtable = D_004DAED0;
                 cMessage_dtor(&n, 0);
                 l->state->dir = -1;
-                Lift_DeactivateRecipients(l);
+                cElevatorGOBJ_DisableCallboxes(l);
             } else {
                 st->dir = 0;
-                Lift_OpenDoors(l);
+                cElevatorGOBJ_OpenDoors(l);
             }
         } else {
             Notice_00214C90 n;
-            Event_Construct(&n, D_004F5448);
+            cMessage_ctor_cMessageNameR(&n, D_004F5448);
             n.vtable = D_004DAED0;
             n.kind = 4;
             n.arg = floor;
-            Event_Send(&n, l, 0);
+            QueueMessage_cMessageR_cSystemP_int(&n, l, 0);
             n.vtable = D_004DAED0;
             cMessage_dtor(&n, 0);
         }
@@ -153,13 +153,13 @@ static inline void merge_flush_func_00214C90(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x28]; int state; } ElevState;
 typedef struct { char pad[0x128]; ElevState* st; } ElevGobj;
-extern int cElevatorGOBJ_DoorsClosed(ElevGobj* self);
-extern int cElevatorGOBJ_DoorsOpen(ElevGobj* self);
+extern int cElevatorGOBJ_DoorsAreClosed(ElevGobj* self);
+extern int cElevatorGOBJ_DoorsAreOpen(ElevGobj* self);
 int cElevatorGOBJ_GetState(ElevGobj* self)
 {
     if (self->st->state == 1)
         return 1;
-    if (cElevatorGOBJ_DoorsClosed(self) || cElevatorGOBJ_DoorsOpen(self))
+    if (cElevatorGOBJ_DoorsAreClosed(self) || cElevatorGOBJ_DoorsAreOpen(self))
         return 0;
     return 2;
 }
@@ -174,7 +174,7 @@ static inline void merge_flush_func_00214FA0(void) {}
 #include "alloc_guard.h"
 
 extern "C" {
-void* Mem_Alloc(int, int, char*, int);
+void* cMemMan_Allocate(int, int, char*, int);
 extern char D_004A4550[];
 }
 
@@ -202,16 +202,16 @@ extern "C" void cElevatorGOBJ_SetFloorName(cElevatorGOBJ* self, int i, char* nam
         if ((*pd)[i]) {
             p = *std_vector_charPtr_opIndex_uint(&self->names, i);
             AllocGuard g;
-            Mem_Free(0, p, D_004A4550, 0x697);
+            cMemMan_Deallocate(0, p, D_004A4550, 0x697);
         }
         slot = &(*pd)[i];
         n = strlen(name) + 1;
         {
             AllocGuard g;
-            q = (char*)Mem_Alloc(0, n, D_004A4550, 0x699);
+            q = (char*)cMemMan_Allocate(0, n, D_004A4550, 0x699);
         }
         *slot = q;
-        String_Copy((*pd)[i], name);
+        Libc_Strcpy((*pd)[i], name);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

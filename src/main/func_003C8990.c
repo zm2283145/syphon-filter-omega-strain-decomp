@@ -4,7 +4,7 @@ typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 static inline void Q8990(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(t) : "r"(d), "r"(s) : "memory"); }
 #pragma peephole off
 #pragma opt_propagation off
-void Culler_TestObject(void* self, V4* box, V4* m, int* outi, float* outf)
+void cBBoxMan_SingleVisibilityTest(void* self, V4* box, V4* m, int* outi, float* outf)
 {
     V4* d = (V4*)0x11004050;
     V4 v;

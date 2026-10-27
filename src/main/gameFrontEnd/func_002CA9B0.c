@@ -2,11 +2,11 @@
 #include "types.h"
 #include "alloc_guard.h"
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 }
-extern "C" void sfo_malloc_2CA9B0(void* p)
+extern "C" void sfo_free(void* p)
 {
     AllocGuard g;
     char f[] = "sfo_malloc: should only be used in rtime lib";
-    Mem_Free(2, p, f, 0);
+    cMemMan_Deallocate(2, p, f, 0);
 }

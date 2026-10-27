@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-V4* Quat_ToMatrix(V4* a, V4* b) {
+V4* cMatrix_ctor_cQuaternionR(V4* a, V4* b) {
     asm {
         lqc2 vf1, 0x0(b)
         vadd.xyzw vf2, vf1, vf1

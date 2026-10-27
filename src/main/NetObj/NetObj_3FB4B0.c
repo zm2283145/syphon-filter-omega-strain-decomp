@@ -30,9 +30,9 @@ struct NObj { char pad[0x49]; unsigned char type; char pad4A[0xE]; Ctrl* ctrl; }
 struct NMap { int unk0; int unk4; };
 
 extern "C" {
-NMap* NetMap_Lookup(void);
-NObj* Object_LookupById(int* id);
-void* Mem_Alloc(int, int, char*, int);
+NMap* cNetObj_GetNetSystem(void);
+NObj* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+void* cMemMan_Allocate(int, int, char*, int);
 void* cNPCInfoObject_ctor(void* p);
 void cNPCInfoObject_SetOwner_uint_int(void* mgr, int id, int val);
 extern void* D_0055C988;
@@ -40,9 +40,9 @@ extern char D_004BE228[];
 }
 
 extern "C" void cNetObj_SetOwner(int id, int val) {
-    NMap* m = NetMap_Lookup();
+    NMap* m = cNetObj_GetNetSystem();
     int key = id;
-    NObj* o = Object_LookupById(&key);
+    NObj* o = nGobjManager_LookupGOBJ_cObjectIdR(&key);
     if (m) {
         if (o && o->ctrl && o->type == 2) {
             if (o->ctrl->GetState() == 2 || o->ctrl->GetState() == 1) {
@@ -50,7 +50,7 @@ extern "C" void cNetObj_SetOwner(int id, int val) {
                 void* p;
                 {
                     AllocGuard g;
-                    p = Mem_Alloc(0, 1, D_004BE228, 0x20C);
+                    p = cMemMan_Allocate(0, 1, D_004BE228, 0x20C);
                 }
                 if (p) p = cNPCInfoObject_ctor(p);
                 D_0055C988 = p;
@@ -85,17 +85,17 @@ extern int D_0055C9C4;
 extern unsigned char D_0055C9C8;
 extern int D_0055C9CC;
 extern int D_0055C9D0;
-extern NetRecvE6* NetRecvMap_Insert(void* map, int* key);
+extern NetRecvE6* std_tree_pair_int_value_compare_find_or_insert(void* map, int* key);
 
 /* Binds a receiver to a net id; offline returns a static dummy slot. */
-int* NetMap_BindReceiver(int id, int context, int handler)
+int* cNetObj_AddSystem(int id, int context, int handler)
 {
     int key[1];
     key[0] = id;
     if (g_IsMultiplayer) {
-        NetRecvMap_Insert(D_0055C7A0, key)->handler = handler;
-        NetRecvMap_Insert(D_0055C7A0, key)->context = context;
-        return &NetRecvMap_Insert(D_0055C7A0, key)->handler;
+        std_tree_pair_int_value_compare_find_or_insert(D_0055C7A0, key)->handler = handler;
+        std_tree_pair_int_value_compare_find_or_insert(D_0055C7A0, key)->context = context;
+        return &std_tree_pair_int_value_compare_find_or_insert(D_0055C7A0, key)->handler;
     }
     if (D_0055C9B8 == 0) {
         D_0055C9C0 = 0;

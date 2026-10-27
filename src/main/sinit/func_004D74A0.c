@@ -25,7 +25,7 @@ extern char cAssocArray_int_cMessagePtr_dtor;
 extern char std_multimap_short_tNetObjectPtr_dtor;
 extern char cAssocArray_int_tNetObjectPtr_dtor;
 
-void StaticInit_RegisterSwitchControllersMsg(void) {
+void StaticInit_NetObjectMgr(void) {
     int sp3C;
     int sp38;
     int sp34;

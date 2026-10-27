@@ -70,11 +70,11 @@ extern int rt_msg_client_is_valid_connection(O_002FDDF0 *);
 
 extern int rt_msg_client_is_valid_channel(S_002FDDF0 *);
 extern int rt_time_elapsed(void *, unsigned int *);
-extern int NetConn_BufferMessage(S_002FDDF0 *, int, int, unsigned char *, int, int);
+extern int rt_msg_client_store_msg_in_send_buf(S_002FDDF0 *, int, int, unsigned char *, int, int);
 extern int rt_msg_client_store_connect_aux_udp(O_002FDDF0 *, S_002FDDF0 *);
 extern int rt_msg_client_store_flush_msg_in_send_buf(S_002FDDF0 *, unsigned short);
-extern int NetConn_Flush(S_002FDDF0 *);
-extern int NetConn_Drain(S_002FDDF0 *);
+extern int rt_msg_client_transfer_last_msg(S_002FDDF0 *);
+extern int rt_msg_client_send_channel_circ_buf(S_002FDDF0 *);
 extern int rt_circ_buf_get_used(void *, unsigned int *);
 extern int rt_circ_buf_normalize_with_buf(void *, int, int);
 int rt_msg_client_update_send(O_002FDDF0 *o, S_002FDDF0 *s)
@@ -95,7 +95,7 @@ int rt_msg_client_update_send(O_002FDDF0 *o, S_002FDDF0 *s)
         if (s->f30) {
             if (rt_time_elapsed(s->f34, &t)) return 0x18;
             if (t > s->f30) {
-                r = NetConn_BufferMessage(s, 5, 0xFFFF, &msg, 1, 0);
+                r = rt_msg_client_store_msg_in_send_buf(s, 5, 0xFFFF, &msg, 1, 0);
                 if (r) return r;
                 if (rt_time_start(s->f34)) return 0x18;
                 s->f3C++;
@@ -115,18 +115,18 @@ int rt_msg_client_update_send(O_002FDDF0 *o, S_002FDDF0 *s)
     if (rt_time_elapsed(s->f20, &t)) return 0x18;
     if (t > s->f40 || s->f40 == 0 || s->f44 == 1 || o->f8 != 8) {
         flushed = 1;
-        if (NetConn_Flush(s) == 8) pending = 1;
+        if (rt_msg_client_transfer_last_msg(s) == 8) pending = 1;
         else s->f44 = 0;
     }
     if (rt_circ_buf_get_used(s->f68, &n)) return 0x15;
     if (n) {
         if (flushed == 1) {
-            r = NetConn_Drain(s);
+            r = rt_msg_client_send_channel_circ_buf(s);
             if (r) return r;
             if (rt_circ_buf_normalize_with_buf(s->f68, 0, 0)) return 0x15;
         }
         if (pending) {
-            if (NetConn_Flush(s) != 8) s->f44 = 0;
+            if (rt_msg_client_transfer_last_msg(s) != 8) s->f44 = 0;
         }
     }
     return 0;

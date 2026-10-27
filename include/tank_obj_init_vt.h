@@ -14,9 +14,9 @@ struct TankObj {
 extern "C" {
 extern char g_TargetVisMgr[];
 extern void* const cTank_vtable[]; /* defined by the cTank factory unit */
-void TargetVis_Register(void* list, int arg);
-void Object_Register(TankObj* o);
-int NetMap_BindReceiver(int id, int owner, TankObj* o);
+void cTargetManager_AddGobj(void* list, int arg);
+void nGobjManager_AddGOBJ(TankObj* o);
+int cNetObj_AddSystem(int id, int owner, TankObj* o);
 }
 static inline int TankObj_HostOk(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 static inline void TankObj_Init(TankObj* o, int arg)
@@ -27,8 +27,8 @@ static inline void TankObj_Init(TankObj* o, int arg)
     o->f68 = 0;
     o->f64 = 0;
     o->b70 = 1;
-    TargetVis_Register(g_TargetVisMgr, arg);
-    Object_Register(o);
+    cTargetManager_AddGobj(g_TargetVisMgr, arg);
+    nGobjManager_AddGOBJ(o);
     o->activate(1);
     o->f74 = 0;
     if (g_IsMultiplayer) {
@@ -36,7 +36,7 @@ static inline void TankObj_Init(TankObj* o, int arg)
         if (!TankObj_HostOk()) o->b14 = 0;
         {
             int t = o->id10;
-            NetMap_BindReceiver(t, NetObjId(), o);
+            cNetObj_AddSystem(t, NetObjId(), o);
         }
     }
 }

@@ -5,9 +5,9 @@
 #include "alloc_guard.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 extern "C" {
-char *Mem_Alloc(int, int, char *, int);
-int ObjectList_EraseRange(int *, char *, int *, char **);
-int PathList_PushBack(char *, char **, int *);
+char *cMemMan_Allocate(int, int, char *, int);
+int std_list_deleter_voidPtr_erase_listdeleter_listdeleter(int *, char *, int *, char **);
+int std_list_cPathSystemRequestPtr_push_back(char *, char **, int *);
 extern char D_0049C1B8;
 extern int D_004EA798;
 extern int g_NpcRegionTable;
@@ -16,14 +16,14 @@ extern int D_004ED9C8;
 extern int D_004ED9CC;
 extern signed char D_004ED9D0;
 }
-static inline void clr16(char *arg0) { int r; int f; char *l; l = arg0 + 0x30; f = F_(arg0, 0x34, int); ObjectList_EraseRange(&r, arg0 + 0x2C, &f, &l); }
+static inline void clr16(char *arg0) { int r; int f; char *l; l = arg0 + 0x30; f = F_(arg0, 0x34, int); std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&r, arg0 + 0x2C, &f, &l); }
 struct Id{volatile int value;Id(int v):value(v){}};
 static inline int* Identity(int*p){return p;}
 static inline int* set16(char *t, int *pv) { F_(t, 0x4, int) = *pv; return pv;}
-static inline void push16(char *arg0, char **pp, char *t) { PathList_PushBack(arg0 + 0x2C, pp, set16(t, Identity((int*)&Id(-1)))); }
+static inline void push16(char *arg0, char **pp, char *t) { std_list_cPathSystemRequestPtr_push_back(arg0 + 0x2C, pp, set16(t, Identity((int*)&Id(-1)))); }
 #pragma push
 #pragma opt_propagation off
-extern "C" void NpcRouteMgr_AllocRequestPool(char *arg0) {
+extern "C" void cPathSystem_Init(char *arg0) {
     char *sp6C;
     int var_s2;
     char *temp_v1;
@@ -33,7 +33,7 @@ extern "C" void NpcRouteMgr_AllocRequestPool(char *arg0) {
     clr16(arg0);
     {
         AllocGuard g;
-        temp_s1 = Mem_Alloc(0, 0x6100, &D_0049C1B8, 0x28);
+        temp_s1 = cMemMan_Allocate(0, 0x6100, &D_0049C1B8, 0x28);
     }
     var_s2 = 0;
     var_s0 = arg0;

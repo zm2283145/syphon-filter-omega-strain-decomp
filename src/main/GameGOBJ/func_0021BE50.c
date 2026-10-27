@@ -4,6 +4,6 @@
 
 #include "gobj_types.h"
 
-int cGameGOBJ_v04(void) {
+int cGameGOBJ_IsNetworked(void) {
     return 1;
 }

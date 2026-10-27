@@ -3,8 +3,8 @@
 #include "alloc_guard.h"
 /* ReorderList_uint_cQuaternionP_uintP: reorder 16-byte elements in place by an order table (same family as ReorderList_uint_cJointLimitsP_uintP) */
 extern "C" {
-void* Mem_Alloc(int, int, char*, int);
-int Mem_Free(int, void*, char*, int);
+void* cMemMan_Allocate(int, int, char*, int);
+int cMemMan_Deallocate(int, void*, char*, int);
 extern char D_004A0170[];
 }
 template <class T> static inline void Swap1DE3B0(T& a, T& b)
@@ -29,7 +29,7 @@ extern "C" void ReorderList_uint_cQuaternionP_uintP(unsigned int n, Q1DE3B0* dat
     unsigned int j;
     {
         AllocGuard g;
-        tmp = (unsigned int*)Mem_Alloc(0, n * 4, D_004A0170, 0x7AF);
+        tmp = (unsigned int*)cMemMan_Allocate(0, n * 4, D_004A0170, 0x7AF);
     }
     for (i = 0; i < n; i++)
         tmp[i] = order[i];
@@ -41,6 +41,6 @@ extern "C" void ReorderList_uint_cQuaternionP_uintP(unsigned int n, Q1DE3B0* dat
     }
     {
         AllocGuard g;
-        Mem_Free(0, tmp, D_004A0170, 0x7C3);
+        cMemMan_Deallocate(0, tmp, D_004A0170, 0x7C3);
     }
 }

@@ -2,37 +2,37 @@
 typedef struct { void* vt; char pad[0xA8]; char mAC[0x1C]; char mC8[0x1C]; char mE4[0x20]; char m104[0x70]; char m174[4]; } O2AEF40;
 extern void GuiSaveAgentWidget_SaveDone();
 extern void GuiNetAgencyCell_GetClassName();
-extern void GuiNetAgencyCell_IsType();
+extern void GuiNetAgencyCell_IsClass();
 extern void GuiNetAgencyCell_PollLobby();
 extern void GuiNetAgencyCell_SelectAgentRemove();
-extern void GuiNetAgencyCell_Update();
-extern void GuiNetAgencyCell_HandleEvent();
+extern void GuiNetAgencyCell_onAdvanceTime();
+extern void GuiNetAgencyCell_onMessage();
 extern void GuiNetAgencyCell_Deactivate();
 extern void GuiNetAgencyCell_Activate();
-extern void GuiNetAgencyCell_Init();
-extern void GuiMenuScreen_HandleInput();
-extern void GuiMenuScreen_OpenAgentInfo();
+extern void GuiNetAgencyCell_onAdd();
+extern void GuiMissionLobbyScreen_onInput();
+extern void GuiMissionLobbyScreen_SelectAgentInfo();
 extern void GuiMenuScreen_JoinGame();
-extern void GuiMenuScreen_OpenKeyboard();
-extern void GuiMenuScreen_Sleep();
-extern void GuiMenuScreen_Wake();
-extern void GuiWidget_FocusPrev();
-extern void GuiWidget_FocusNext();
-extern void GuiWidget_FocusLast();
-extern void GuiWidget_FocusFirst();
-extern void GuiWidget_BubbleActivate();
-extern void GuiWidget_BubbleType1();
-extern void GuiWidget_BubbleType0();
-extern void GuiWidget_Draw();
-extern void GuiWidget_ClearFlag4();
-extern void GuiWidget_SetFlag4();
-extern void GuiWidget_Deinit();
+extern void GuiMissionLobbyScreen_SelectAgentChat();
+extern void GuiMissionLobbyScreen_onSleep();
+extern void GuiMissionLobbyScreen_onWake();
+extern void GuiWidget_FindPrevFocus();
+extern void GuiWidget_FindNextFocus();
+extern void GuiWidget_FindLastFocus();
+extern void GuiWidget_FindFirstFocus();
+extern void GuiWidget_onAction();
+extern void GuiWidget_onLoseFocus();
+extern void GuiWidget_onGainFocus();
+extern void GuiWidget_onRender();
+extern void GuiWidget_onDeactivate();
+extern void GuiWidget_onActivate();
+extern void GuiWidget_onRemove();
 extern void GuiWidget_Load();
 extern void * const D_004DDD40[];
 extern char D_004DE8A0[];
 extern void String_Dtor(void* p, int f);
-extern void LobbyArray_dtor(void* p, int f);
-extern void GuiScreen_dtor(void* p, int f);
+extern void SFOLobbyList_dtor(void* p, int f);
+extern void GuiLobbyScreen_dtor(void* p, int f);
 extern void operator_delete(void* p);
 static inline void Base2AEF40(O2AEF40* p)
 {
@@ -40,10 +40,10 @@ static inline void Base2AEF40(O2AEF40* p)
         p->vt = D_004DE8A0;
         if (p->m104)
             String_Dtor(p->m104, 0);
-        LobbyArray_dtor(p->mE4, -1);
-        LobbyArray_dtor(p->mC8, -1);
-        LobbyArray_dtor(p->mAC, -1);
-        GuiScreen_dtor(p, 0);
+        SFOLobbyList_dtor(p->mE4, -1);
+        SFOLobbyList_dtor(p->mC8, -1);
+        SFOLobbyList_dtor(p->mAC, -1);
+        GuiLobbyScreen_dtor(p, 0);
     }
 }
 O2AEF40* GuiNetAgencyCell_dtor(O2AEF40* self, short del)
@@ -58,4 +58,4 @@ O2AEF40* GuiNetAgencyCell_dtor(O2AEF40* self, short del)
     }
     return self;
 }
-void * const D_004DDD40[32] = { (void*)0x0, (void*)0x0, (void*)GuiNetAgencyCell_dtor, (void*)GuiNetAgencyCell_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiMenuScreen_Wake, (void*)GuiMenuScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiMenuScreen_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiNetAgencyCell_Update, (void*)GuiNetAgencyCell_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiNetAgencyCell_GetClassName, (void*)GuiNetAgencyCell_IsType, (void*)GuiSaveAgentWidget_SaveDone, (void*)GuiNetAgencyCell_PollLobby, (void*)GuiNetAgencyCell_Activate, (void*)GuiNetAgencyCell_Deactivate, (void*)GuiMenuScreen_OpenKeyboard, (void*)GuiMenuScreen_OpenAgentInfo, (void*)GuiMenuScreen_JoinGame, (void*)GuiNetAgencyCell_SelectAgentRemove, (void*)0x0 };
+void * const D_004DDD40[32] = { (void*)0x0, (void*)0x0, (void*)GuiNetAgencyCell_dtor, (void*)GuiNetAgencyCell_onAdd, (void*)GuiWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiWidget_onDeactivate, (void*)GuiMissionLobbyScreen_onWake, (void*)GuiMissionLobbyScreen_onSleep, (void*)GuiWidget_onGainFocus, (void*)GuiWidget_onLoseFocus, (void*)GuiMissionLobbyScreen_onInput, (void*)GuiWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiNetAgencyCell_onAdvanceTime, (void*)GuiNetAgencyCell_onMessage, (void*)GuiWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiNetAgencyCell_GetClassName, (void*)GuiNetAgencyCell_IsClass, (void*)GuiSaveAgentWidget_SaveDone, (void*)GuiNetAgencyCell_PollLobby, (void*)GuiNetAgencyCell_Activate, (void*)GuiNetAgencyCell_Deactivate, (void*)GuiMissionLobbyScreen_SelectAgentChat, (void*)GuiMissionLobbyScreen_SelectAgentInfo, (void*)GuiMenuScreen_JoinGame, (void*)GuiNetAgencyCell_SelectAgentRemove, (void*)0x0 };

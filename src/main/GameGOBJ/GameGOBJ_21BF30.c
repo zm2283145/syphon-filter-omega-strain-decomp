@@ -21,7 +21,7 @@
 
 DEFINE_RESIZE_ELEMENT(Elem16, 16)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(std_vector_imp_cQuaternion_resize, Elem16, Vector_Insert_21C330, std_vector_imp_cQuaternion_erase)
+DEFINE_VECTOR_RESIZE(std_vector_imp_cQuaternion_resize, Elem16, std_vector_imp_cQuaternion_insert, std_vector_imp_cQuaternion_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_0021BF30 */

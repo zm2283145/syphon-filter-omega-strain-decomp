@@ -9,7 +9,7 @@
 #pragma cplusplus on
 #include "types.h"
 #include "short_string_replace.h"
-extern "C" void String_Reserve(ShortStr* self, unsigned int n);
+extern "C" void std_basic_string_char_char_traits_char_reserve(ShortStr* self, unsigned int n);
 struct E_32A730 { ShortStr name; int val; ShortStr desc; unsigned char flag; int a, b, c; };
 static inline void StrCopy_32A730(ShortStr* self, const ShortStr* src)
 {
@@ -19,9 +19,9 @@ static inline void StrCopy_32A730(ShortStr* self, const ShortStr* src)
         self->u.l.word = 0;
         self->u.l.length = 0;
         self->u.l.data = 0;
-        String_Reserve(self, src->u.l.length);
+        std_basic_string_char_char_traits_char_reserve(self, src->u.l.length);
         ShortStrIterTag tag;
-        String_Replace(self, 0, 0, src->u.l.data, src->u.l.data + src->u.l.length, tag);
+        std_basic_string_char_char_traits_char_do_replace(self, 0, 0, src->u.l.data, src->u.l.data + src->u.l.length, tag);
     }
 }
 static inline void StrCopy2_32A730(ShortStr* self, const ShortStr* src)
@@ -33,9 +33,9 @@ static inline void StrCopy2_32A730(ShortStr* self, const ShortStr* src)
         self->u.l.length = 0;
         self->u.l.data = 0;
         const unsigned int& len = src->u.l.length;
-        String_Reserve(self, len);
+        std_basic_string_char_char_traits_char_reserve(self, len);
         ShortStrIterTag tag;
-        String_Replace(self, 0, 0, src->u.l.data, src->u.l.data + len, tag);
+        std_basic_string_char_char_traits_char_do_replace(self, 0, 0, src->u.l.data, src->u.l.data + len, tag);
     }
 }
 extern "C" E_32A730* GuiSlideShow_Slide_ctor(E_32A730* self, const E_32A730* src)
@@ -65,7 +65,7 @@ extern char D_004B88C0[];
 char D_004B8850[] = "vector::assign length error\n";
 void cString_opAssign(TStr* d, const TStr* s);
 void GuiSlideShow_Slide_dtor(E2A870* p, int f);
-void* Mem_PlacementNew(unsigned int size, void* p);
+void* opNew_uint_voidP(unsigned int size, void* p);
 #if 0 /* merge_units */
 void GuiSlideShow_Slide_ctor(void* d, const E2A870* s);
 #endif /* merge_units */
@@ -75,7 +75,7 @@ void std_vector_deleter_Slide_clear(V2A870* v);
 void opDelete_SlideP_int_bool_charP_etc(void* allocation, int pool, int destroy, char* file, int line);
 }
 static inline const unsigned int& Min2A870(const unsigned int& a, const unsigned int& b) { return b < a ? b : a; }
-static inline E2A870* Alloc2A870(unsigned int n) { AllocGuard g; return (E2A870*)Mem_Alloc(0, n * sizeof(E2A870), D_004B88C0, 0x5C); }
+static inline E2A870* Alloc2A870(unsigned int n) { AllocGuard g; return (E2A870*)cMemMan_Allocate(0, n * sizeof(E2A870), D_004B88C0, 0x5C); }
 
 extern "C" void std_vector_imp_Slide_do_assign(V2A870* v, const E2A870* first, const E2A870* last)
 {
@@ -100,7 +100,7 @@ extern "C" void std_vector_imp_Slide_do_assign(V2A870* v, const E2A870* first, c
             v->count = n;
         } else if (v->count < n) {
             for (; first != last; first++, p++) {
-                void* m = Mem_PlacementNew(sizeof(E2A870), p);
+                void* m = opNew_uint_voidP(sizeof(E2A870), p);
                 if (m)
                     GuiSlideShow_Slide_ctor(m, first);
                 v->count++;
@@ -126,7 +126,7 @@ extern "C" void std_vector_imp_Slide_do_assign(V2A870* v, const E2A870* first, c
         {
             E2A870* p = v->data;
             for (; first != last; first++, p++) {
-                void* m = Mem_PlacementNew(sizeof(E2A870), p);
+                void* m = opNew_uint_voidP(sizeof(E2A870), p);
                 if (m)
                     GuiSlideShow_Slide_ctor(m, first);
                 v->count++;

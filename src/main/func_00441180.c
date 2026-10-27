@@ -13,16 +13,16 @@ struct Widget {
 extern "C" char D_004C03A0[];
 static void * const dat_004976C8[2] = { (void*)D_004C03A0, (void*)0x0 };
 extern char D_004A7520[];
-extern "C" void GuiWidget_Init(void* self);
-extern "C" Widget* GuiWidget_FindChildByName(void* self, int id);
+extern "C" void GuiWidget_onAdd(void* self);
+extern "C" Widget* GuiWidget_FindChild_charP(void* self, int id);
 typedef struct Screen { char pad[0xA0]; Widget* child; /* +0xA0 */ } Screen;
 
-/* GuiWidget_Init, then caches the (*(int*)dat_004976C8) child at +0xA0 if it is of type D_004A7520 (virtual +0x58), else 0. */
-extern "C" void GuiWeaponDisplay_Init(Screen* self)
+/* GuiWidget_onAdd, then caches the (*(int*)dat_004976C8) child at +0xA0 if it is of type D_004A7520 (virtual +0x58), else 0. */
+extern "C" void GuiWeaponDisplay_onAdd(Screen* self)
 {
     Widget* child;
-    GuiWidget_Init(self);
-    child = GuiWidget_FindChildByName(self, (*(int*)dat_004976C8));
+    GuiWidget_onAdd(self);
+    child = GuiWidget_FindChild_charP(self, (*(int*)dat_004976C8));
     if (!child || !child->IsA(D_004A7520))
     child = 0;
     self->child = child;

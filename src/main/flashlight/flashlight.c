@@ -16,7 +16,7 @@ extern char D_004D9240[];
 extern char D_004D9280[];
 extern char g_LightMgr[];
 extern unsigned char g_LevelLightsDirty;
-void LightMgr_RemoveFromTable(void* pool, void* p);
+void cLightMan_RemoveLight(void* pool, void* p);
 }
 class S_8580 {
 public:
@@ -27,7 +27,7 @@ public:
 };
 #define VT(p) (*(void**)((char*)(p) + 4))
 #pragma opt_common_subs off
-extern "C" S_8580* Flashlight_ReleaseGlare(S_8580* self, short flag)
+extern "C" S_8580* cDazzleLight_dtor(S_8580* self, short flag)
 {
     S_8580* s = self;
     if (s) {
@@ -41,7 +41,7 @@ extern "C" S_8580* Flashlight_ReleaseGlare(S_8580* self, short flag)
                 VT(s) = D_004D9280;
         }
         if (flag > 0)
-            LightMgr_RemoveFromTable(g_LightMgr, s);
+            cLightMan_RemoveLight(g_LightMgr, s);
     }
     return s;
 }
@@ -62,20 +62,20 @@ extern "C" S_8580* Flashlight_ReleaseGlare(S_8580* self, short flag)
 struct VC0045B990 { char vpad[4]; virtual int v0(...); };
 struct VD0045B990 { virtual int v0(...); };
 extern "C" {
-int Mem_Free(...);
-int TargetVis_Unregister(...);
+int cMemMan_Deallocate(...);
+int cTargetManager_RemoveGobj(...);
 int operator_delete(...);
 extern char g_TargetVisMgr;
 extern unsigned char g_ProfileLockEnabled;
 }
 /* Deleting destructor (called as (fl, 1) from 001b57c0); frees the object when (short)flags > 0. */
-extern "C" char * Flashlight_Destroy(Flashlight *fl, long long flags) {
+extern "C" char * cFlashlight_dtor(Flashlight *fl, long long flags) {
     void **spot;
     char * light;
     char * glare;
 
     if (fl != NULL) {
-        TargetVis_Unregister(&g_TargetVisMgr, fl->litSpot);
+        cTargetManager_RemoveGobj(&g_TargetVisMgr, fl->litSpot);
         light = (char *)(fl->beamLight);
         if ((light != NULL) && (light != NULL)) { /* inlined delete */
             ((VC0045B990 *)(light))->v0(1);
@@ -88,7 +88,7 @@ extern "C" char * Flashlight_Destroy(Flashlight *fl, long long flags) {
         {
             AllocGuard g;
         ((VD0045B990 *)(spot))->v0(-1);
-        Mem_Free(0, spot, "flashlight.cc", 0x58);
+        cMemMan_Deallocate(0, spot, "flashlight.cc", 0x58);
         }
         if (((long long) (flags << 0x30) >> 0x30) > 0) {
             operator_delete(fl);
@@ -107,13 +107,13 @@ extern "C" char * Flashlight_Destroy(Flashlight *fl, long long flags) {
 
 struct VC0045BAD0 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(); virtual int v21(); virtual int v22(); virtual int v23(); virtual int v24(); virtual int v25(); virtual int v26(); virtual int v27(); virtual int v28(); virtual int v29(); virtual int v30(); virtual int v31(); virtual int v32(); virtual int v33(); virtual int v34(...); };
 extern "C" {
-int IdMgr_Allocate(...);
-void **Mem_Alloc(...);
+int nGobjManager_GetNextId(...);
+void **cMemMan_Allocate(...);
 void **cGOBJ_ctor(...);
 extern char D_004C2018;
 extern char g_IdentityMatrix; /* identity matrix */
 }
-extern "C" Flashlight * Flashlight_Construct(Flashlight * fl, int owner) {
+extern "C" Flashlight * cFlashlight_ctor(Flashlight * fl, int owner) {
     int kind;
     int id;
     void **spotObj;
@@ -121,11 +121,11 @@ extern "C" Flashlight * Flashlight_Construct(Flashlight * fl, int owner) {
 
     {
         AllocGuard g;
-    obj = Mem_Alloc(0, 0x60, &D_004C2018, 0x42); /* "flashlight.cc" */
+    obj = cMemMan_Allocate(0, 0x60, &D_004C2018, 0x42); /* "flashlight.cc" */
     }
     if (obj != NULL) {
         kind = 0;
-        IdMgr_Allocate(&id, FLASHLIGHT_LITSPOT_ID_CATEGORY);
+        nGobjManager_GetNextId(&id, FLASHLIGHT_LITSPOT_ID_CATEGORY);
         obj = cGOBJ_ctor(obj, &id, 0, &kind);
     }
     fl->litSpot = obj;

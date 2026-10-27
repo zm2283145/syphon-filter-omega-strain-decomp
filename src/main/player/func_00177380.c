@@ -3,7 +3,7 @@
 #define CMSG_NO_PROTOS
 #define CMSG_KIND_T signed char
 #include "cmessage.h"
-/* Player_DispatchMessage: the player component's message handler (zone enter/leave, pickup
+/* cPlayer_HandleMessage: the player component's message handler (zone enter/leave, pickup
    triggers, teleports, flags); anything else goes to the base receiver. */
 struct M4_177380 { float m[16]; } __attribute__((aligned(16)));
 struct TMsg_177380 { CMSG_HEADER; signed char mode; char pad25[0xB]; M4_177380 mtx; } __attribute__((aligned(16)));
@@ -44,23 +44,23 @@ extern char D_004D9360[];
 extern char D_004D9DA0[];
 extern char D_004DAF10[];
 extern char D_004DFD80[];
-int* Event_GetType(void* m);
-unsigned char Event_Send(void* msg, void* target, int immediate);
+int* cMessage_Name(void* m);
+unsigned char QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int immediate);
 void cMessage_dtor(void* msg, int flags);
-unsigned char PlayerComp_HandleMessage(Player_177380* self, void* m);
-unsigned char Receiver_HandleEventBase(Player_177380* self, void* m);
-void InputState_EnterCrouchZone(void* in, void* owner);
-void InputState_LeaveCrouchZone(void* in, void* owner);
-void InputState_EnterJumpZone(void* in, int kind, int* id);
-void InputState_LeaveJumpZone(void* in);
-void* Object_LookupById(int* id);
+unsigned char cPlayer_HandleCASEvent(Player_177380* self, void* m);
+unsigned char cSystem_HandleMessage(Player_177380* self, void* m);
+void cPlayerControls_HandleEnterCrawlBox(void* in, void* owner);
+void cPlayerControls_HandleExitCrawlBox(void* in, void* owner);
+void cPlayerControls_HandleEnterJumpBox(void* in, int kind, int* id);
+void cPlayerControls_HandleExitJumpBox(void* in);
+void* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
 int PlayerInput_IsPickupMenuForZone(void* in, void* zone);
-void PlayerInput_ClosePickupMenu(void* in);
+void cPlayerControls_KillPickup(void* in);
 void cGOBJTriggerEventMsg_ctor(void* m, int a, int b, void* c, int d);
-unsigned char Player_DispatchMessage(Player_177380* self, Msg_177380* m);
+unsigned char cPlayer_HandleMessage(Player_177380* self, Msg_177380* m);
 }
 
-unsigned char Player_DispatchMessage(Player_177380* self, Msg_177380* m)
+unsigned char cPlayer_HandleMessage(Player_177380* self, Msg_177380* m)
 {
     int jid;
     int oid;
@@ -69,10 +69,10 @@ unsigned char Player_DispatchMessage(Player_177380* self, Msg_177380* m)
     TMsg_177380 m2;
     int t;
     int sub;
-    t = *Event_GetType(m);
+    t = *cMessage_Name(m);
     if (t == g_CasEventMsgClass)
-        return PlayerComp_HandleMessage(self, m);
-    t = *Event_GetType(m);
+        return cPlayer_HandleCASEvent(self, m);
+    t = *cMessage_Name(m);
     if (t == D_004EE698) {
         sub = m->sub;
         switch (sub) {
@@ -86,10 +86,10 @@ unsigned char Player_DispatchMessage(Player_177380* self, Msg_177380* m)
         case 9:
             switch (m->b24) {
             case 0:
-                InputState_EnterCrouchZone(self->input, self->owner);
+                cPlayerControls_HandleEnterCrawlBox(self->input, self->owner);
                 break;
             case 2:
-                InputState_LeaveCrouchZone(self->input, self->owner);
+                cPlayerControls_HandleExitCrawlBox(self->input, self->owner);
                 break;
             }
             break;
@@ -98,31 +98,31 @@ unsigned char Player_DispatchMessage(Player_177380* self, Msg_177380* m)
             switch (m->b24) {
             case 0:
                 jid = m->id;
-                { int* pj = &jid; bool b = sub == 16; InputState_EnterJumpZone(self->input, b ? 2 : 1, pj); }
+                { int* pj = &jid; bool b = sub == 16; cPlayerControls_HandleEnterJumpBox(self->input, b ? 2 : 1, pj); }
                 break;
             case 2:
-                InputState_LeaveJumpZone(self->input);
+                cPlayerControls_HandleExitJumpBox(self->input);
                 break;
             }
             break;
         case 18: {
             void* o;
             oid = m->id;
-            o = Object_LookupById(&oid);
+            o = nGobjManager_LookupGOBJ_cObjectIdR(&oid);
             if (o) {
                 /* retail reads the word and masks it (lw + andi 0xff) */
                 int k = ((MsgI_177380*)m)->v;
                 k &= 0xFF;
                 if (k == 2) {
                     if (PlayerInput_IsPickupMenuForZone(self->input, o))
-                        PlayerInput_ClosePickupMenu(self->input);
+                        cPlayerControls_KillPickup(self->input);
                 } else if (k == 0) {
                     if (self->active) {
                         self->b17C = 0;
                         self->b1BC = 1;
                         { void* ow = self->owner; cGOBJTriggerEventMsg_ctor(&trig, 4, m->id, ow, 0); }
                         trig.kind = 1;
-                        Event_Send(&trig, o, 1);
+                        QueueMessage_cMessageR_cSystemP_int(&trig, o, 1);
                         trig.vtable = D_004DAF10;
                         cMessage_dtor(&trig, 0);
                     }
@@ -139,12 +139,12 @@ unsigned char Player_DispatchMessage(Player_177380* self, Msg_177380* m)
         }
         return 0;
     }
-    t = *Event_GetType(m);
+    t = *cMessage_Name(m);
     if (t == D_004F53F0) {
         self->b160 = !self->b160;
         return 1;
     }
-    t = *Event_GetType(m);
+    t = *cMessage_Name(m);
     if (t == g_TeleportMsgClass) {
         void* tg = self->owner;
         if (tg) {
@@ -177,14 +177,14 @@ unsigned char Player_DispatchMessage(Player_177380* self, Msg_177380* m)
                 "sq %1, 0x30(%2)"
                 : "=&r"(qa), "=&r"(qb) : "r"(&p->mtx), "r"(&s->mtx) : "memory");
             }
-            r = Event_Send(&m1, tg, 1);
+            r = QueueMessage_cMessageR_cSystemP_int(&m1, tg, 1);
             m1.vtable = D_004D9360;
             cMessage_dtor(&m1, 0);
             return r;
         }
         return 0;
     }
-    t = *Event_GetType(m);
+    t = *cMessage_Name(m);
     if (t == D_0055D4D8) {
         void* tg = self->owner;
         if (tg) {
@@ -217,27 +217,27 @@ unsigned char Player_DispatchMessage(Player_177380* self, Msg_177380* m)
                 "sq %1, 0x30(%2)"
                 : "=&r"(qa), "=&r"(qb) : "r"(&p->mtx), "r"(&s->mtx) : "memory");
             }
-            r = Event_Send(&m2, tg, 1);
+            r = QueueMessage_cMessageR_cSystemP_int(&m2, tg, 1);
             m2.vtable = D_004D9DA0;
             cMessage_dtor(&m2, 0);
             return r;
         }
         return 0;
     }
-    t = *Event_GetType(m);
+    t = *cMessage_Name(m);
     if (t == D_004F53F8) {
         self->f1B8 = ((MsgI_177380*)m)->v;
         return 1;
     }
-    t = *Event_GetType(m);
+    t = *cMessage_Name(m);
     if (t == D_004A0318) {
         self->f180 = ((MsgI_177380*)m)->v;
         return 1;
     }
-    t = *Event_GetType(m);
+    t = *cMessage_Name(m);
     if (t == D_00588038) {
         self->b188 = m->b24;
         return 1;
     }
-    return Receiver_HandleEventBase(self, m);
+    return cSystem_HandleMessage(self, m);
 }

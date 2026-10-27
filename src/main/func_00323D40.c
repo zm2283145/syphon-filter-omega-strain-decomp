@@ -18,7 +18,7 @@ static inline void write32(int v)
 typedef struct { char pad[0x1C]; int size; char pad2[4]; int a; int b; } cNetQuickChatMsg;
 
 /* cNetQuickChatMsg virtual 4: writes two 32-bit values and sets the message size to 0x40. */
-void cNetQuickChatMsg_v04(cNetQuickChatMsg* self)
+void cNetQuickChatMsg_Pack(cNetQuickChatMsg* self)
 {
     write32(self->a);
     write32(self->b);

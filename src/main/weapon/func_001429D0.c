@@ -16,25 +16,25 @@ typedef struct { int pad; E_INV e[7]; char pad2[0x88 - 0x74]; void* owner; } INV
 extern char D_0052ACC8[];
 extern char D_004DE610[];
 extern unsigned char g_IsMultiplayer;
-extern void Event_Construct(Msg_INV* msg, void* name);
-extern void Event_Send(Msg_INV* msg, void* target, int flags);
+extern void cMessage_ctor_cMessageNameR(Msg_INV* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg_INV* msg, void* target, int flags);
 extern void cMessage_dtor(Msg_INV* msg, int flags);
-extern int WeaponInv_GetSpareRoom(INV* self, unsigned char slot);
-int WeaponInv_AddSpare(INV* self, unsigned char slot, int req, int quiet)
+extern int cWeapon_NeededAmmo(INV* self, unsigned char slot);
+int cWeapon_PickupAmmo_eWpnSlot_int_bool(INV* self, unsigned char slot, int req, int quiet)
 {
-    int room = WeaponInv_GetSpareRoom(self, slot);
+    int room = cWeapon_NeededAmmo(self, slot);
     int n = (req < room || quiet) ? req : room;
     self->e[slot].d += n;
     if (g_IsMultiplayer && !quiet) {
         Msg_INV msg;
-        Event_Construct(&msg, D_0052ACC8);
+        cMessage_ctor_cMessageNameR(&msg, D_0052ACC8);
         msg.vtable = D_004DE610;
         msg.slot = slot;
         msg.value = req;
         msg.op = 4;
         msg.x1C = 0x40;
         msg.kind = 4;
-        Event_Send(&msg, self->owner, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, self->owner, 0);
         msg.vtable = D_004DE610;
         cMessage_dtor(&msg, 0);
     }

@@ -104,7 +104,7 @@ DEFINE_OBJ_LIST_DTOR(std_list_cNodeListPtr_dtor)
 #include "base_dtor_chain.h"
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(ScalarCollection_Dtor_26A210, func_00135C90)
+DEFINE_BASE_DTOR_CHAIN(cLList_ArrayPtr_dtor, func_00135C90)
 #pragma pop /* merge_units */
 /* merge_units: end func_0026A210 */
 
@@ -113,6 +113,6 @@ DEFINE_BASE_DTOR_CHAIN(ScalarCollection_Dtor_26A210, func_00135C90)
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(ScalarCollection_Dtor_26A270, func_00135C90)
+DEFINE_BASE_DTOR_CHAIN(cLList_cNodeListPtr_dtor, func_00135C90)
 #pragma pop /* merge_units */
 /* merge_units: end func_0026A270 */

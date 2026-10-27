@@ -15,11 +15,11 @@
 #include "types.h"
 #include "loose04_types.h"
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int count, int value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int count, int value);
 
 /* Appends one object to the registry vector. */
-int ObjRegistry_InsertOne(PtrVec* v, int obj) {
-    return PtrVec_Insert(v, v->data + v->count, 1, obj);
+int std_vector_cSystemPtr_push_back(PtrVec* v, int obj) {
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, obj);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0040B810 */
@@ -28,8 +28,8 @@ int ObjRegistry_InsertOne(PtrVec* v, int obj) {
 #pragma push /* merge_units */
 typedef struct { int pad; int count; void** data; } Vec40B830;
 typedef struct { void* vt; char m4[0x10]; char m14[0xC]; } Obj40B830;
-extern Vec40B830* GobjScope_GetList(void);
-extern void PtrVector_Resize(Vec40B830* v, int n, int* fill);
+extern Vec40B830* GetPurgeList(void);
+extern void std_vector_pod_int_resize(Vec40B830* v, int n, int* fill);
 extern void std_vector_deleter_cObjectId_dtor(void* p, int f);
 extern void std_vector_cSystemPtr_dtor(void* p, int f);
 extern void operator_delete(void* p);
@@ -39,10 +39,10 @@ static inline void D3_40B830(void* p) { if (p) D2_40B830(p); }
 #pragma push
 #pragma inline_depth(10)
 #pragma opt_strength_reduction off
-Obj40B830* GobjScopeBase_Dtor(Obj40B830* self, short del)
+Obj40B830* cBaseObjList_dtor(Obj40B830* self, short del)
 {
     if (self) {
-        Vec40B830* v = GobjScope_GetList();
+        Vec40B830* v = GetPurgeList();
         int i;
         int last = v->count - 1;
         int zero;
@@ -53,7 +53,7 @@ Obj40B830* GobjScopeBase_Dtor(Obj40B830* self, short del)
             }
         }
         zero = 0;
-        PtrVector_Resize(v, last + 1, &zero);
+        std_vector_pod_int_resize(v, last + 1, &zero);
         D3_40B830(self->m14);
         if (self->m4) std_vector_cSystemPtr_dtor(self->m4, -1);
         if (del > 0) operator_delete(self);

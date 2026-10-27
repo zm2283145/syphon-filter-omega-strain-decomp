@@ -802,13 +802,13 @@ int Newlib_VsprintfR(reent_X *ptr, char *str, const char *fmt, va_list ap)
 
 /* merge_units: begin func_0012EB58 */
 extern int D_0058805C;
-extern int Newlib_SysWrite(int fd, void* buf, unsigned int cnt);
+extern int Libc_Write(int fd, void* buf, unsigned int cnt);
 struct reent_0012EB58 { int _errno; };
 long Newlib_WriteR(struct reent_0012EB58* ptr, int fd, void* buf, unsigned int cnt)
 {
     long ret;
     D_0058805C = 0;
-    if ((ret = Newlib_SysWrite(fd, buf, cnt)) == -1 && D_0058805C != 0)
+    if ((ret = Libc_Write(fd, buf, cnt)) == -1 && D_0058805C != 0)
         ptr->_errno = D_0058805C;
     return ret;
 }

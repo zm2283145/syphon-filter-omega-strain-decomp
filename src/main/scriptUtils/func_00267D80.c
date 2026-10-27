@@ -26,7 +26,7 @@ struct Holder {
 };
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" float Global_Distance_3(Holder* h, Holder* o) {
+extern "C" float nScriptUtils_Distance_cPlayerP_cNPCP(Holder* h, Holder* o) {
     GObj* g = h->obj; V4 a = g->GetPos();
     V4 b = o->obj->GetPos();
     V4 d;

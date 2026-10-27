@@ -8,31 +8,31 @@ typedef struct { char d[0x40]; } B40;
 typedef struct { char d[0x50]; } B50;
 typedef struct { B10 m2D0; B8 m2E0; B10 m2E8; B8 m2F8; B10 m300; } S2D0;
 extern char D_004A3A20[];
-extern void* CanonicalKey_Construct(void*, void*);
+extern void* cString16N_3_ctor_charP(void*, void*);
 extern void cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_int_eAxisOfMotion(void*, void*, void*, int, int);
-extern void MotionSlider_RegisterNode(void*, void*, void*, void*);
+extern void cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(void*, void*, void*, void*);
 extern void cSkaAnim_dtor(void*, int);
-extern float Math_DegToRad(float);
-extern void* Camera_ShakeMatrix(void*, float, float, float);
+extern float Deg2Rad(float);
+extern void* cEulerAngle_T_1_2_ctor_float_float_float(void*, float, float, float);
 extern void cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier_cEulerAngleTR_etc(void*, void*, void*, int, void*, int);
 extern void cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(void*);
 extern void cSkaBlendSequenceExtents_ctor_float_float(void*, float, float);
-extern void MotionSliderChild_Resolve(void*, void*, void*, void*);
+extern void cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(void*, void*, void*, void*);
 extern void* cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(void*, void*);
-extern void Quat_SetIdentity(void*);
-extern void MotionSlider_Ctor(void*, int, void*, int, int, void*);
-extern void MotionSlider_Dtor(void*, int);
+extern void cQuaternion_GetIdentity(void*);
+extern void cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(void*, int, void*, int, int, void*);
+extern void cSkaSlider_dtor(void*, int);
 extern void cSkaBlendSequenceItem_dtor(void*, int);
 extern void cSkaBlendSequenceExtents_dtor(void*, int);
 extern void cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(void*, int);
 extern void* cSkaPlaybackGroupId_ctor_int(void*, int);
-extern void MotionSelNode_Ctor(void*, void*, void*, void*);
-extern void* MotionRegistry_MakeKey(void*, void*);
-extern void MotionRegistry_Register(void*, void*, void*);
-extern void MotionNodeWrapper_Dtor(void*, int);
+extern void cSkaAnimationBlend_ctor(void*, void*, void*, void*);
+extern void* cString16N_2_ctor_charP(void*, void*);
+extern void cSkaAnimationSet_CreateAnimationBlend(void*, void*, void*);
+extern void cSkaAnimationBlend_dtor(void*, int);
 /* Builds and registers the run-roll-back-left motion nodes. */
 #pragma optimization_level 1
-void MotionGraph_BuildRunRollBackLeft(void* p0)
+void BuildAnimationBlend_RunRollBackLeft(void* p0)
 {
     B4 v32C;
     B4 v328;
@@ -56,30 +56,30 @@ void MotionGraph_BuildRunRollBackLeft(void* p0)
     B30 v30;
     void* t1;
     void* t2;
-    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_int_eAxisOfMotion(&v220, CanonicalKey_Construct(&v270, D_004A3A20), p0, 2, 1);
-    MotionSlider_RegisterNode(&v32C, p0, CanonicalKey_Construct(&v2A0, "animRunRollBackLeft_Left"), &v220);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_int_eAxisOfMotion(&v220, cString16N_3_ctor_charP(&v270, D_004A3A20), p0, 2, 1);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v32C, p0, cString16N_3_ctor_charP(&v2A0, "animRunRollBackLeft_Left"), &v220);
     cSkaAnim_dtor(&v220, -1);
-    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier_cEulerAngleTR_etc(&v160, CanonicalKey_Construct(&v1C0, "animRunRollBackLeft_Left"), p0, 4, Camera_ShakeMatrix(&v1B0, 0.0f, 0.0f, Math_DegToRad(90.0f)), 2);
-    MotionSlider_RegisterNode(&v328, p0, CanonicalKey_Construct(&v1F0, "animRunRollBackLeft_Back"), &v160);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier_cEulerAngleTR_etc(&v160, cString16N_3_ctor_charP(&v1C0, "animRunRollBackLeft_Left"), p0, 4, cEulerAngle_T_1_2_ctor_float_float_float(&v1B0, 0.0f, 0.0f, Deg2Rad(90.0f)), 2);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v328, p0, cString16N_3_ctor_charP(&v1F0, "animRunRollBackLeft_Back"), &v160);
     cSkaAnim_dtor(&v160, -1);
     cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(&v318);
     cSkaBlendSequenceExtents_ctor_float_float(&v310, 0.0f, 0.0f);
-    MotionSliderChild_Resolve(&s2D0.m300, CanonicalKey_Construct(&v100, "animRunRollBackLeft_Back"), p0, &v310);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&s2D0.m300, cString16N_3_ctor_charP(&v100, "animRunRollBackLeft_Back"), p0, &v310);
     cSkaBlendSequenceExtents_ctor_float_float(&s2D0.m2F8, 0.25f, 1.0f);
-    MotionSliderChild_Resolve(&s2D0.m2E8, CanonicalKey_Construct(&vD0, "animRunRollBackLeft_Left"), p0, &s2D0.m2F8);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&s2D0.m2E8, cString16N_3_ctor_charP(&vD0, "animRunRollBackLeft_Left"), p0, &s2D0.m2F8);
     t1 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(&v318, &s2D0.m300);
     t2 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t1, &s2D0.m2E8);
-    Quat_SetIdentity(&vC0);
-    MotionSlider_Ctor(&v80, 15, t2, 0, 0, &vC0);
-    MotionSlider_RegisterNode(&v324, p0, CanonicalKey_Construct(&v130, "sliderRunRollBackLeft"), &v80);
-    MotionSlider_Dtor(&v80, -1);
+    cQuaternion_GetIdentity(&vC0);
+    cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(&v80, 15, t2, 0, 0, &vC0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v324, p0, cString16N_3_ctor_charP(&v130, "sliderRunRollBackLeft"), &v80);
+    cSkaSlider_dtor(&v80, -1);
     cSkaBlendSequenceItem_dtor(&s2D0.m2E8, -1);
     cSkaBlendSequenceExtents_dtor(&s2D0.m2F8, -1);
     cSkaBlendSequenceItem_dtor(&s2D0.m300, -1);
     cSkaBlendSequenceExtents_dtor(&v310, -1);
     cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(&v318, -1);
-    MotionSelNode_Ctor(&s2D0.m2D0, CanonicalKey_Construct(&v30, "sliderRunRollBackLeft"), p0, cSkaPlaybackGroupId_ctor_int(&s2D0.m2E0, 2));
-    MotionRegistry_Register(p0, MotionRegistry_MakeKey(&v60, "RunRollBackLeft"), &s2D0.m2D0);
-    MotionNodeWrapper_Dtor(&s2D0.m2D0, -1);
+    cSkaAnimationBlend_ctor(&s2D0.m2D0, cString16N_3_ctor_charP(&v30, "sliderRunRollBackLeft"), p0, cSkaPlaybackGroupId_ctor_int(&s2D0.m2E0, 2));
+    cSkaAnimationSet_CreateAnimationBlend(p0, cString16N_2_ctor_charP(&v60, "RunRollBackLeft"), &s2D0.m2D0);
+    cSkaAnimationBlend_dtor(&s2D0.m2D0, -1);
 }
 #pragma optimization_level reset

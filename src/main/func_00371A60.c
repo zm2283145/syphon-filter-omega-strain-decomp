@@ -9,14 +9,14 @@ typedef struct {
     int count;
     E2Slot slots[16];
 } E2Group;
-extern void Model_SetPatchBit(void*, int, int);
+extern void cVU1Model_UpdateLighting(void*, int, int);
 extern unsigned char g_LevelLightsDirty;
-void PntLight_Disable(E2Group* g) {
+void cSceneLight_Deactivate(E2Group* g) {
     int i;
     if (g->active && g->count) {
         for (i = 0; i < 16; i++) {
             E2Slot* s = &g->slots[i];
-            if (s->obj) Model_SetPatchBit(s->obj, s->arg, 0);
+            if (s->obj) cVU1Model_UpdateLighting(s->obj, s->arg, 0);
         }
         g->active = 0;
     }

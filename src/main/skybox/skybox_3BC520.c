@@ -12,20 +12,20 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003BC520 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x68]; int count; void* items[1]; } G4_Act;
-extern void SkyLayer_Update(void* a);
-extern void Actor_BaseLogicUpdate(G4_Act* a, float dt);
-void Skybox_Update(G4_Act* a, float dt)
+extern void cSLayer_Update(void* a);
+extern void cGOBJ_NextFrame(G4_Act* a, float dt);
+void cSKYBOX_GOBJ_NextFrame(G4_Act* a, float dt)
 {
     int i;
     for (i = 0; i < a->count; i++) {
-        SkyLayer_Update(a->items[i]);
+        cSLayer_Update(a->items[i]);
     }
-    Actor_BaseLogicUpdate(a, dt);
+    cGOBJ_NextFrame(a, dt);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003BC520(void) {}
@@ -41,7 +41,7 @@ extern char D_004DFC70[];
 void cGOBJ_dtor(void* self, int flag);
 void cHogFile_dtor(void* p, int flag);
 void cVU1Model_dtor(void* p, int flag);
-void Model_Unload(void* p);
+void cVU1Model_Unload(void* p);
 void operator_delete(void* p);
 }
 struct SkyM {
@@ -54,16 +54,16 @@ static inline void DelSky(SkyM* p)
 {
     AllocGuard g;
     if (p) {
-        Model_Unload(p->m174);
+        cVU1Model_Unload(p->m174);
         if (p->b170) {
             void* q = p->p16C;
             AllocGuard g2;
-            Mem_Free(0, q, D_004BD038, 0x2B);
+            cMemMan_Deallocate(0, q, D_004BD038, 0x2B);
         }
         cVU1Model_dtor(p->m174, -1);
         cHogFile_dtor(p, -1);
     }
-    Mem_Free(0, p, D_004BD038, 0x97);
+    cMemMan_Deallocate(0, p, D_004BD038, 0x97);
 }
 extern "C" SkyG* cSKYBOX_GOBJ_dtor(SkyG* self, short flag)
 {

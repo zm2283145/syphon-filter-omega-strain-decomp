@@ -55,15 +55,15 @@ extern char D_004DADF0[];
 extern void* g_VisionFxMan;
 extern void* g_Hud;
 extern unsigned char D_0053B540;
-void SoundEvent_CtorFromPreset(Snd* e, void* r, void* owner);
-void SoundStopMsg_Ctor(Snd2* e, void* r, void* owner);
-void Event_Send(void* m, void* target, int immediate);
+void cPlaySoundMsg_ctor_cSndFxR(Snd* e, void* r, void* owner);
+void cStopSoundMsg_ctor_cSndFxR_cGOBJP(Snd2* e, void* r, void* owner);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
-void FileMan_Release(Str* s, int flag);
-void VisionMgr_SetPendingMode(void*, int, int);
-void Hud_SelectTextColorTable(void*, int);
+void cFileMan_dtor(Str* s, int flag);
+void cVisionFxMan_SetMode(void*, int, int);
+void cHud_UseNightVisionColors(void*, int);
 }
-extern "C" void Actor_UpdateNightVisionBlind(Act* a)
+extern "C" void cHuman_SetVisionEffect(Act* a)
 {
     signed char v = 0;
     unsigned char s;
@@ -82,8 +82,8 @@ extern "C" void Actor_UpdateNightVisionBlind(Act* a)
                 case 2: m = 2; break;
                 case 3: m = 3; break;
                 }
-                VisionMgr_SetPendingMode(g_VisionFxMan, m, 0);
-                Hud_SelectTextColorTable(g_Hud, s == 1);
+                cVisionFxMan_SetMode(g_VisionFxMan, m, 0);
+                cHud_UseNightVisionColors(g_Hud, s == 1);
                 D_0053B540 = s == 1;
             }
         }
@@ -91,24 +91,24 @@ extern "C" void Actor_UpdateNightVisionBlind(Act* a)
     if (s == 2) {
         if (!a->b33B9) {
             Snd ev;
-            SoundEvent_CtorFromPreset(&ev, D_004F1FD0, a);
+            cPlaySoundMsg_ctor_cSndFxR(&ev, D_004F1FD0, a);
             ev.flag = 1;
-            Event_Send(&ev, g_Game, 0);
+            QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 0);
             a->b33B9 = 1;
             ev.vt = D_004DAE30;
-            FileMan_Release(&ev.s114, -1);
-            FileMan_Release(&ev.s78, -1);
+            cFileMan_dtor(&ev.s114, -1);
+            cFileMan_dtor(&ev.s78, -1);
             cMessage_dtor(&ev, 0);
         }
     } else if (a->b33B9) {
         Snd2 ev;
-        SoundStopMsg_Ctor(&ev, D_004F1FD0, a);
+        cStopSoundMsg_ctor_cSndFxR_cGOBJP(&ev, D_004F1FD0, a);
         ev.flag = 1;
-        Event_Send(&ev, g_Game, 0);
+        QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 0);
         a->b33B9 = 0;
         ev.vt = D_004DADF0;
-        FileMan_Release(&ev.s114, -1);
-        FileMan_Release(&ev.s78, -1);
+        cFileMan_dtor(&ev.s114, -1);
+        cFileMan_dtor(&ev.s78, -1);
         cMessage_dtor(&ev, 0);
     }
 }
@@ -122,7 +122,7 @@ static inline void merge_flush_func_001B31B0(void) {}
 typedef struct { char pad[0x352C]; float t; } O_1B33D0;
 const float D_0048A208[2] = { 5.0f, 0.0f };
 static const float dat_0048A210[2] = { 0.2f, 0.0f };
-float Actor_GetShotShakePenalty(O_1B33D0* o)
+float cHuman_GetRecoilAimAdjust(O_1B33D0* o)
 {
     return 1.0f + ((*(float*)dat_0048A210) - 1.0f) * (o->t / (*(float*)D_0048A208));
 }

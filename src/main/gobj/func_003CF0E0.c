@@ -6,10 +6,10 @@
 #include "gobj_types.h"
 
 extern char D_004DFF50[];   /* cGOBJ vtable */
-extern void Object_ConstructBase(cGOBJ* self, int* desc);
+extern void cSystemContainer_ctor_cObjectIdR(cGOBJ* self, int* desc);
 
 cGOBJ* cGOBJ_ctor(cGOBJ* self, int* desc, int a2, int* a3) {
-    Object_ConstructBase(self, desc);
+    cSystemContainer_ctor_cObjectIdR(self, desc);
     self->vtable = D_004DFF50;
     self->unk2C = 1;
     self->unk2D = 0;

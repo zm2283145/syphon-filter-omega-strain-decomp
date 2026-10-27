@@ -47,11 +47,11 @@ struct Self {
 extern "C" {
 extern signed char D_004E9FB0;
 extern Key D_004E9FC0;
-int NodeNameMap_Find(Owner* m, Key* k);
-Item** Registry_At(int* reg, int idx);
-void Secondary_MakeMotionSlot(Slot* s, int clip, int owner);
+int cSkaAnimationSet_GetNodeId(Owner* m, Key* k);
+Item** cArray_cSkaNodePtr_opIndex(int* reg, int idx);
+void cSkaAnimDataIterator_ctor_cSkaAnimDataR_cSkeletonDataR(Slot* s, int clip, int owner);
 void cSkaAnimDataIterator_opAssign(Slot* d, Slot* s);
-void Secondary_MotionRecordDtor(Slot* s, int f);
+void cSkaAnimDataIterator_dtor(Slot* s, int f);
 }
 
 static inline void QZero_CAB60(void* dd, int nn)

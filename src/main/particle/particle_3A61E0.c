@@ -47,6 +47,6 @@ extern "C" Obj_3A6240* cParticleSystem_dtor(Obj_3A6240* self, short deleteFlag)
 #include "obj_list_dtor.h"
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(ReceiverList_Dtor_3A62A0)
+DEFINE_OBJ_LIST_DTOR(std_list_cSkeletonDataBankEntryPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003A62A0 */

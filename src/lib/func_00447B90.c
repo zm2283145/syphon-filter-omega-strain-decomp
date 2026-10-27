@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern int SFOLobby_NoInstance(void);
+extern int SFOLobby_IgnoreCallbacks(void);
 
 int SFOLobby_Callback_MediusErrorMessage(void) {
     int tmp0;
 
-    tmp0 = SFOLobby_NoInstance();
+    tmp0 = SFOLobby_IgnoreCallbacks();
     return tmp0;
 }

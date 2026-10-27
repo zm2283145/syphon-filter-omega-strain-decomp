@@ -8,7 +8,7 @@
 #include "types.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_001B4970 */
 #pragma push /* merge_units */
@@ -24,33 +24,33 @@ extern int g_ProfileLockDepth;
 extern char D_0049D8D0;
 extern char g_TargetVisMgr;
 void Alloc_Lock(int);
-void Alloc_Unlock(int);
-void ActorModel_Deactivate(void*);
-void TargetVis_Unregister(void*, void*);
-void Actor_v07(void*);
+void EnableIntc(int);
+void cMan_UnDead(void*);
+void cTargetManager_RemoveGobj(void*, void*);
+void cSKM_GOBJ_NetDeactivate(void*);
 void cNPCInfoObject_ctor(int*);
 void cNPCInfoObject_Deactivate(int*, void*);
 void cNPCInfoObject_dtor(int*, int);
-void ActorPhys_ReleaseWaterEffect(VObj*);
+void cHumanCollisionRoutine_HandleHumanDeactivation(VObj*);
 }
 
-extern "C" void Npc_v07(Act* a)
+extern "C" void cHuman_NetDeactivate(Act* a)
 {
     int loc;
     VObj* o;
-    ActorModel_Deactivate(a->a60);
-    TargetVis_Unregister(&g_TargetVisMgr, a);
-    Actor_v07(a);
+    cMan_UnDead(a->a60);
+    cTargetManager_RemoveGobj(&g_TargetVisMgr, a);
+    cSKM_GOBJ_NetDeactivate(a);
     cNPCInfoObject_ctor(&loc);
     cNPCInfoObject_Deactivate(&loc, a->a0C);
-    if (a->w3310) ActorPhys_ReleaseWaterEffect(a->w3310);
+    if (a->w3310) cHumanCollisionRoutine_HandleHumanDeactivation(a->w3310);
     o = a->w3310;
     if (o) {
         if (g_ProfileLockEnabled) Alloc_Lock(9);
         g_ProfileLockDepth++;
         o->~VObj();
-        Mem_Free(0, o, &D_0049D8D0, 0x456);
-        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        cMemMan_Deallocate(0, o, &D_0049D8D0, 0x456);
+        if (g_ProfileLockEnabled) EnableIntc(9);
         g_ProfileLockDepth--;
         a->w3310 = 0;
     }
@@ -59,8 +59,8 @@ extern "C" void Npc_v07(Act* a)
         if (g_ProfileLockEnabled) Alloc_Lock(9);
         g_ProfileLockDepth++;
         o->~VObj();
-        Mem_Free(0, o, &D_0049D8D0, 0x45B);
-        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        cMemMan_Deallocate(0, o, &D_0049D8D0, 0x45B);
+        if (g_ProfileLockEnabled) EnableIntc(9);
         g_ProfileLockDepth--;
         a->w3314 = 0;
     }
@@ -75,7 +75,7 @@ static inline void merge_flush_func_001B4970(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" { void operator_delete(void* p); void cMessage_dtor(void* m, int f); void __destroy_array(void* p, void* dtor, int size, int n);
-void cIkTargetWithSplinedTransition_dtor(void); void Secondary_MotionRecordDtor(void); void func_001B4C70(void);
+void cIkTargetWithSplinedTransition_dtor(void); void cSkaAnimDataIterator_dtor(void); void func_001B4C70(void);
 extern char D_004DACF0[];
 extern char D_004DA930[];
 extern char D_004DA440[];
@@ -99,7 +99,7 @@ extern "C" void* cHumanIkRoutine_dtor(O_1B4B10* self, short deleteFlag)
         Msg_1B4B10(&self->m32C);
         D2_1B4B10(&self->m230);
         D2_1B4B10(&self->m160);
-        __destroy_array(self->aE0, (void*)Secondary_MotionRecordDtor, 0x30, 2);
+        __destroy_array(self->aE0, (void*)cSkaAnimDataIterator_dtor, 0x30, 2);
         if (self->a14) Arr_1B4B10(self->a14, (void*)func_001B4C70, 8, 0x19);
         if (self) self->vt.vt = ((char*)D_004DA830);
         if (deleteFlag > 0) operator_delete(self);

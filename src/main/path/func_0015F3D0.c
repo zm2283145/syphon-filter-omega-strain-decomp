@@ -29,20 +29,20 @@ typedef struct RbReq {
 } RbReq;
 typedef struct RbRouter { char pad0[0x20]; } RbRouter;
 extern "C" {
-RbReq* NpcRouteMgr_TakeFreeRequest(RbRouter* r);
-void NpcRouteMgr_FreeRequest(RbRouter* r, RbReq* req);
-RbNode* NpcPath_GetNode(int i);
-void Node_GetTranslation(RbV4* out, RbNode* n);
-unsigned char NpcRoute_Search(RbReq* req);
-unsigned char NpcPath_RebuildRoute(RbRouter* r, int to, int from, RbObj* obj);
+RbReq* cPathSystem_GetRequest(RbRouter* r);
+void cPathSystem_FreeRequest(RbRouter* r, RbReq* req);
+RbNode* cAIPathData_GetNode(int i);
+void cNode_GetLoc(RbV4* out, RbNode* n);
+unsigned char cPathRequest_Update(RbReq* req);
+unsigned char cPathSystem_RestorePath(RbRouter* r, int to, int from, RbObj* obj);
 }
 #pragma push
 #pragma opt_propagation on
-extern "C" unsigned char NpcPath_RebuildRoute(RbRouter* r, int to, int from, RbObj* obj)
+extern "C" unsigned char cPathSystem_RestorePath(RbRouter* r, int to, int from, RbObj* obj)
 {
     int none;
     int saved = obj->x10;
-    RbReq* req = NpcRouteMgr_TakeFreeRequest(r);
+    RbReq* req = cPathSystem_GetRequest(r);
     unsigned char res;
     RbNode* n;
     RbV4 t;
@@ -57,14 +57,14 @@ extern "C" unsigned char NpcPath_RebuildRoute(RbRouter* r, int to, int from, RbO
     req->x4C = from;
     req->x12 = 1;
     VCopyF(&req->x20, &obj->pos);
-    req->x50 = NpcPath_GetNode(from)->x7C;
-    n = NpcPath_GetNode(to);
+    req->x50 = cAIPathData_GetNode(from)->x7C;
+    n = cAIPathData_GetNode(to);
     req->x48 = n->x7C;
-    Node_GetTranslation(&t, n);
+    cNode_GetLoc(&t, n);
     VCopyF(&req->x30, &t);
     req->x54 = 0;
-    res = NpcRoute_Search(req);
-    NpcRouteMgr_FreeRequest(r, req);
+    res = cPathRequest_Update(req);
+    cPathSystem_FreeRequest(r, req);
     obj->x10 = saved;
     return res;
 }

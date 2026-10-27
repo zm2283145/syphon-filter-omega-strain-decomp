@@ -29,7 +29,7 @@ int D_004AB080 = 0x4D697547;
 extern int strcmp(void*);
 
 /* Returns whether strcmp(&D_004AB080) returned 0. */
-int GuiMissionSetup_IsType(void) {
+int GuiMissionSetup_IsClass(void) {
     return strcmp(&D_004AB080) == 0;
 }
 #pragma pop /* merge_units */

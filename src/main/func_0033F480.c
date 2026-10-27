@@ -1,22 +1,22 @@
 /*
  * Matched functions (byte-identical with the retail executable).
  * Original translation unit not identified yet (screen derived from the
- * GuiLobbyScreen.cc base built by GuiScreen_ctor).
+ * GuiLobbyScreen.cc base built by GuiLobbyScreen_ctor).
  */
 
 #include "loose03_types.h"
 
 extern char D_004DE8A0[];       /* L3GuiMenuScreen vtable */
-extern int GuiScreen_ctor(L3GuiMenuScreen*);
-extern int LobbyArray_ctor(Member44FA00*);
+extern int GuiLobbyScreen_ctor(L3GuiMenuScreen*);
+extern int SFOLobbyList_ctor(Member44FA00*);
 
 /* L3GuiMenuScreen constructor. */
-L3GuiMenuScreen* GuiMenuScreen_ctor(L3GuiMenuScreen* self) {
-    GuiScreen_ctor(self);
+L3GuiMenuScreen* GuiMissionLobbyScreen_ctor(L3GuiMenuScreen* self) {
+    GuiLobbyScreen_ctor(self);
     self->base.vtable = D_004DE8A0;
-    LobbyArray_ctor(&self->unkAC);
-    LobbyArray_ctor(&self->unkC8);
-    LobbyArray_ctor(&self->unkE4);
+    SFOLobbyList_ctor(&self->unkAC);
+    SFOLobbyList_ctor(&self->unkC8);
+    SFOLobbyList_ctor(&self->unkE4);
     self->unk104 = 0;
     self->unk108 = 0;
     self->unk10C = 0;

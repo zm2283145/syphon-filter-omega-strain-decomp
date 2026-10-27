@@ -12,22 +12,22 @@ typedef struct { char pad[0x30]; A_455550* f30; } G_455550;
 typedef struct { char pad[0x48]; void* f48; } O_455550;
 extern G_455550* g_LocalPlayer;
 extern int g_HumanActorClassKey;
-extern void GuiWidget_BaseWake(O_455550*);
-extern int Player_GetHeldItem(G_455550*);
-extern void GuiEquipmentPane_Cycle(O_455550*, int);
-extern void GuiEquipmentPane_SetItem(O_455550*, A_455550*, int);
+extern void GuiWidget_onWake(O_455550*);
+extern int cPlayer_GetActiveWeapon(G_455550*);
+extern void GuiEquipmentPane_SelectNext(O_455550*, int);
+extern void GuiEquipmentPane_SetWeapon(O_455550*, A_455550*, int);
 
-void GuiEquipmentPane_Wake(O_455550* o)
+void GuiEquipmentPane_onWake(O_455550* o)
 {
     G_455550* g;
-    GuiWidget_BaseWake(o);
+    GuiWidget_onWake(o);
     if (o->f48 && (g = g_LocalPlayer)) {
-        if (Player_GetHeldItem(g) == -1) {
-            GuiEquipmentPane_Cycle(o, 1);
+        if (cPlayer_GetActiveWeapon(g) == -1) {
+            GuiEquipmentPane_SelectNext(o, 1);
         } else {
             A_455550* a = g->f30;
             a = (a && a->type == g_HumanActorClassKey) ? a : 0;
-            GuiEquipmentPane_SetItem(o, a, Player_GetHeldItem(g));
+            GuiEquipmentPane_SetWeapon(o, a, cPlayer_GetActiveWeapon(g));
         }
     }
 }
@@ -51,11 +51,11 @@ extern char D_004A7520[];
 extern char D_004C1D88[];
 extern char D_004AAE20[];
 extern char D_004AAE00[];
-void GuiWidget_Init(S_455610* s);
+void GuiWidget_onAdd(S_455610* s);
 }
-extern "C" void GuiEquipmentPane_Init(S_455610* s)
+extern "C" void GuiEquipmentPane_onAdd(S_455610* s)
 {
-    GuiWidget_Init(s);
+    GuiWidget_onAdd(s);
     s->f48 = GuiFindAs(s, D_00497998, D_004BB3D0);
     s->f50 = GuiFindAs(s, D_004C1A60, D_004A7520);
     s->f54 = GuiFindAs(s, D_004C19C0, D_004C1D88);
@@ -73,7 +73,7 @@ extern "C" void GuiEquipmentPane_Init(S_455610* s)
 #pragma push /* merge_units */
 typedef struct { unsigned short a0; unsigned short a2; short pad4; unsigned short a6; unsigned short a8; } E4557C0;
 extern int GuiStartMenu_ReturnToMenu(void* self, E4557C0* e);
-extern int GuiArrayWidget_OnInput(void* self, E4557C0* e);
+extern int GuiArrayWidget_onInput(void* self, E4557C0* e);
 int GuiWeaponStats_HandleInput(void* self, E4557C0* e)
 {
     int b = e->a0 == 1 && e->a2 == 0 && e->a8 == 0x10 && e->a6 == 0;
@@ -81,7 +81,7 @@ int GuiWeaponStats_HandleInput(void* self, E4557C0* e)
         GuiStartMenu_ReturnToMenu(self, e);
         return 1;
     }
-    return GuiArrayWidget_OnInput(self, e);
+    return GuiArrayWidget_onInput(self, e);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_004557C0 */
@@ -101,15 +101,15 @@ extern char D_004C1A50[];
 extern char D_004C1A88[];
 extern char D_004C1A98[];
 int sprintf(char* d, const char* f, ...);
-char* Loc_LookupText(char* key);
-void GuiTextArrayWidget_SetCellText(void* list, int col, int row, char* text);
-Wpn_00455840* WeaponDb_Get(int db, int id);
-void String_Copy(char* d, char* s);
-int WeaponStats_RatingA(int a);
-int WeaponStats_RatingB(int a);
-void Format_RomanNumeral(int a, char* buf, int n);
-int WeaponInv_ClipsForActor(int actor, int a);
-void GuiWeaponStats_Fill(void* list, int id)
+char* nGlobalization_GetString_charP(char* key);
+void GuiTextArrayWidget_SetText(void* list, int col, int row, char* text);
+Wpn_00455840* cWeaponDB_GetEntry(int db, int id);
+void Libc_Strcpy(char* d, char* s);
+int cGameFrontEnd_GetConvertedWeaponFireRate(int a);
+int cGameFrontEnd_GetConvertedWeaponDamage(int a);
+void cGameFrontEnd_ConvertIntToRomanNumeral(int a, char* buf, int n);
+int cHuman_AdjustMaxClips(int actor, int a);
+void GuiWeaponStats_SetWeaponStats(void* list, int id)
 {
     char key[0x10];
     char buf[0x20];
@@ -118,35 +118,35 @@ void GuiWeaponStats_Fill(void* list, int id)
     for (i = 0; i < 4; i++) {
         char* t;
         sprintf(key, D_004C1A88, i);
-        t = Loc_LookupText(key);
-        GuiTextArrayWidget_SetCellText(list, 0, i, t ? t : D_004C1A38);
+        t = nGlobalization_GetString_charP(key);
+        GuiTextArrayWidget_SetText(list, 0, i, t ? t : D_004C1A38);
     }
-    w = WeaponDb_Get(g_WeaponDatabase, id);
+    w = cWeaponDB_GetEntry(g_WeaponDatabase, id);
     if (w) {
         int actor = g_LocalPlayer->f30;
         for (i = 0; i < 4; i++) {
-            String_Copy(buf, D_004C1A98);
+            Libc_Strcpy(buf, D_004C1A98);
             switch (i) {
             case 0:
                 if (w->f60)
-                    Format_RomanNumeral(WeaponStats_RatingA(w->f60), buf, 0x20);
+                    cGameFrontEnd_ConvertIntToRomanNumeral(cGameFrontEnd_GetConvertedWeaponFireRate(w->f60), buf, 0x20);
                 break;
             case 1:
                 if (w->f64)
-                    Format_RomanNumeral(WeaponStats_RatingB(w->f64), buf, 0x20);
+                    cGameFrontEnd_ConvertIntToRomanNumeral(cGameFrontEnd_GetConvertedWeaponDamage(w->f64), buf, 0x20);
                 break;
             case 2:
                 if (w->f70)
                     sprintf(buf, D_004C1A50, w->f70);
                 break;
             case 3: {
-                int n = w->f70 * WeaponInv_ClipsForActor(actor, w->f74);
+                int n = w->f70 * cHuman_AdjustMaxClips(actor, w->f74);
                 if (n)
                     sprintf(buf, D_004C1A50, n);
                 break;
             }
             }
-            GuiTextArrayWidget_SetCellText(list, 1, i, buf);
+            GuiTextArrayWidget_SetText(list, 1, i, buf);
         }
     }
 }

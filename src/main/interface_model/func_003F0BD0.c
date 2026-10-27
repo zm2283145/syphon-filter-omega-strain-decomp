@@ -36,7 +36,7 @@ extern char D_004939C8[];
 extern char D_004939D0[];
 extern char D_004939D8[];
 extern char D_004939E0[];
-extern void* Mem_Alloc(int pool, int size, char* file, int line);
+extern void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern void* opNew_uint_int_charP_int(int size, int pool, char* file, int line);
 extern int strcmp(const char* a, const char* b);
 extern void std_vector_AnimType_push_back(void* v, char* value);
@@ -133,7 +133,7 @@ static inline ObjB_0BD0* ObjC_Ctor(ObjB_0BD0* o, void* a, char** cursor)
     if (strcmp(s.text, str) == 0) { \
         ObjB_0BD0* o; \
         std_vector_AnimType_push_back(names, code); \
-        { AllocGuard g; o = (ObjB_0BD0*)Mem_Alloc(0, 0x30, D_004BE030, line); } \
+        { AllocGuard g; o = (ObjB_0BD0*)cMemMan_Allocate(0, 0x30, D_004BE030, line); } \
         if (o) o = ObjC_Ctor(o, (char*)self + off, cursor); \
         return o; \
     }
@@ -148,14 +148,14 @@ extern "C" void* CreateAnimation(Self_0BD0* self, char** cursor, void* names)
     if (strcmp(s.text, D_004BE060) == 0) {
         ObjA_0BD0* o;
         std_vector_AnimType_push_back(names, D_00493998);
-        { AllocGuard g; o = (ObjA_0BD0*)Mem_Alloc(0, 0x28, D_004BE030, 0x84); }
+        { AllocGuard g; o = (ObjA_0BD0*)cMemMan_Allocate(0, 0x28, D_004BE030, 0x84); }
         if (o) o = ObjA_Ctor(o, self->p70, cursor);
         return o;
     }
     if (strcmp(s.text, D_004BE068) == 0) {
         ObjB_0BD0* o;
         std_vector_AnimType_push_back(names, D_004939A0);
-        { AllocGuard g; o = (ObjB_0BD0*)Mem_Alloc(0, 0x30, D_004BE030, 0x89); }
+        { AllocGuard g; o = (ObjB_0BD0*)cMemMan_Allocate(0, 0x30, D_004BE030, 0x89); }
         if (o) o = ObjB_Ctor(o, (char*)self + 0xA0, cursor);
         return o;
     }

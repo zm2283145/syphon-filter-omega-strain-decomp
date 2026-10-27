@@ -14,7 +14,7 @@
 #include "ai_msg_pack.h"
 #include "vslot_pad.h"
 #include "message_pack.h"
-int Event_Construct(void* e, void* type);
+int cMessage_ctor_cMessageNameR(void* e, void* type);
 
 /* the twelve per-message copies of the header name (retail keeps them unpooled) */
 char D_004A8C30[16] = "aiMsgs.hh";
@@ -36,7 +36,7 @@ char D_004A8CE0[12] = "aiMsgs.hh";
 extern "C" char D_004DCBD0[];
 extern "C" char D_004DCD70[];
 extern "C" char D_004DFD80[];
-MSG_CLONE_BEGIN(cAIPickupableAwarenessMsg_v01, 0x28, D_004A8C60, 0x10A)
+MSG_CLONE_BEGIN(cAIPickupableAwarenessMsg_Clone, 0x28, D_004A8C60, 0x10A)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);
@@ -86,18 +86,18 @@ extern int D_004FF240;
 extern int D_004FF248;
 extern int D_004FF250;
 extern int D_004FF258;
-extern int GObj_IdentityA(int who);
-extern int cNode_Identity(int node);
-extern int* Message_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int type, int baseType);
+extern int cGOBJ_SOBJ_toInt(int who);
+extern int cNode_SOBJ_toInt(int node);
+extern int* cMessage_SOBJ_getClassId(void);
+extern void cScriptBase_declareParent(int type, int baseType);
 
 int Script_cAIUnconsciousMsg_Who(cAIGOBJMsg** msg) {
-    return GObj_IdentityA((*msg)->who);
+    return cGOBJ_SOBJ_toInt((*msg)->who);
 }
 
-void ScriptType_cAIUnconsciousMsg_Init(void) {
-    int* base = Message_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004FF258, *base);
+void cAIUnconsciousMsg_SOBJ_init(void) {
+    int* base = cMessage_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004FF258, *base);
 }
 
 int func_0026ED30(void) {
@@ -108,8 +108,8 @@ int cAIUnconsciousMsg_v03(void) {
     return D_004FF250;
 }
 
-void ScriptType_cAIDisguiseTakenMsg_Init(void) {
-    ScriptType_SetParent(D_004FF248, D_004FF178);
+void cAIDisguiseTakenMsg_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004FF248, D_004FF178);
 }
 
 int func_0026ED70(void) {
@@ -127,31 +127,31 @@ int Script_cAIBodyMovedMsg_PickedUp(cAIBodyMovedMsg** msg) {
 }
 
 int Script_cAIBodyMovedMsg_Who(cAIGOBJMsg** msg) {
-    return GObj_IdentityA((*msg)->who);
+    return cGOBJ_SOBJ_toInt((*msg)->who);
 }
 
-void ScriptType_cAIBodyMovedMsg_Init(void) {
-    int* base = Message_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004FF228, *base);
+void cAIBodyMovedMsg_SOBJ_init(void) {
+    int* base = cMessage_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004FF228, *base);
 }
 
 int cAIBodyMovedMsg_SOBJ_getClassId(void) {
     return (int)&D_004FF220;
 }
 
-int cAIBodyMovedMsg_v03(void) {
+int cAIBodyMovedMsg_getSOBJClassId(void) {
     return D_004FF220;
 }
 
-void ScriptType_cAIPickupableAwarenessMsg_Ini(void) {
-    ScriptType_SetParent(D_004FF218, D_004FF178);
+void cAIPickupableAwarenessMsg_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004FF218, D_004FF178);
 }
 
 int cAIPickupableAwarenessMsg_SOBJ_getClassId(void) {
     return (int)&D_004FF210;
 }
 
-int cAIPickupableAwarenessMsg_v03(void) {
+int cAIPickupableAwarenessMsg_getSOBJClassId(void) {
     return D_004FF210;
 }
 
@@ -169,15 +169,15 @@ int Script_cAIWeaponFiredMsg_WeaponId(cAIWeaponFiredMsg** msg) {
     return weaponId;
 }
 
-void ScriptType_cAIWeaponFiredMsg_Init(void) {
-    ScriptType_SetParent(D_004FF1F0, D_004FF178);
+void cAIWeaponFiredMsg_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004FF1F0, D_004FF178);
 }
 
 int cAIWeaponFiredMsg_SOBJ_getClassId(void) {
     return (int)&D_004FF1E8;
 }
 
-int cAIWeaponFiredMsg_v03(void) {
+int cAIWeaponFiredMsg_getSOBJClassId(void) {
     return D_004FF1E8;
 }
 
@@ -185,76 +185,76 @@ int Script_cAINewAwarenessMsg_Cause(cAINewAwarenessMsg** msg) {
     return (*msg)->cause;
 }
 
-void ScriptType_cAINewAwarenessMsg_Init(void) {
-    ScriptType_SetParent(D_004FF1D8, D_004FF178);
+void cAINewAwarenessMsg_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004FF1D8, D_004FF178);
 }
 
 int cAINewAwarenessMsg_SOBJ_getClassId(void) {
     return (int)&D_004FF1D0;
 }
 
-int cAINewAwarenessMsg_v03(void) {
+int cAINewAwarenessMsg_getSOBJClassId(void) {
     return D_004FF1D0;
 }
 
-void ScriptType_cAIDestinationReachedMsg_Init(void) {
-    ScriptType_SetParent(D_004FF1C8, D_004FF198);
+void cAIDestinationReachedMsg_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004FF1C8, D_004FF198);
 }
 
 int cAIDestinationReachedMsg_SOBJ_getClassId(void) {
     return (int)&D_004FF1C0;
 }
 
-int cAIDestinationReachedMsg_v03(void) {
+int cAIDestinationReachedMsg_getSOBJClassId(void) {
     return D_004FF1C0;
 }
 
-void ScriptType_cAIWaypointReachedMsg_Init(void) {
-    ScriptType_SetParent(D_004FF1B8, D_004FF198);
+void cAIWaypointReachedMsg_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004FF1B8, D_004FF198);
 }
 
 int cAIWaypointReachedMsg_SOBJ_getClassId(void) {
     return (int)&D_004FF1B0;
 }
 
-int cAIWaypointReachedMsg_v03(void) {
+int cAIWaypointReachedMsg_getSOBJClassId(void) {
     return D_004FF1B0;
 }
 
 int Script_cAINodeMsg_GetNode(cAINodeMsg** msg) {
-    return cNode_Identity((*msg)->node);
+    return cNode_SOBJ_toInt((*msg)->node);
 }
 
-void ScriptType_cAINodeMsg_Init(void) {
+void cAINodeMsg_SOBJ_init(void) {
 }
 
-int cAINodeMsg_v03(void) {
+int cAINodeMsg_getSOBJClassId(void) {
     return D_004FF198;
 }
 
 int Script_cAIGOBJMsg_Who(cAIGOBJMsg** msg) {
-    return GObj_IdentityA((*msg)->who);
+    return cGOBJ_SOBJ_toInt((*msg)->who);
 }
 
 int Script_cAIGOBJMsg_GetGOBJ(cAIGOBJMsg** msg) {
-    return GObj_IdentityA((*msg)->who);
+    return cGOBJ_SOBJ_toInt((*msg)->who);
 }
 
-void ScriptType_cAIGOBJMsg_Init(void) {
+void cAIGOBJMsg_SOBJ_init(void) {
 }
 
-int cAIGOBJMsg_v03(void) {
+int cAIGOBJMsg_getSOBJClassId(void) {
     return D_004FF178;
 }
 
-void ScriptType_cAITimeElapsedMsg_Init(void) {
+void cAITimeElapsedMsg_SOBJ_init(void) {
 }
 
 int cAITimeElapsedMsg_SOBJ_getClassId(void) {
     return (int)&D_004FF168;
 }
 
-int cAITimeElapsedMsg_v03(void) {
+int cAITimeElapsedMsg_getSOBJClassId(void) {
     return D_004FF168;
 }
 
@@ -263,40 +263,40 @@ int Script_cAIDeadMsg_DamageType(cAIDeadMsg** msg) {
 }
 
 int Script_cAIDeadMsg_Attacker(cAIDeadMsg** msg) {
-    return GObj_IdentityA((*msg)->gobj.who);
+    return cGOBJ_SOBJ_toInt((*msg)->gobj.who);
 }
 
-void ScriptType_cAIDeadMsg_Init(void) {
+void cAIDeadMsg_SOBJ_init(void) {
 }
 
 int cAIDeadMsg_SOBJ_getClassId(void) {
     return (int)&D_004FF148;
 }
 
-int cAIDeadMsg_v03(void) {
+int cAIDeadMsg_getSOBJClassId(void) {
     return D_004FF148;
 }
 
-void ScriptType_cAIDeactivatedMsg_Init(void) {
+void cAIDeactivatedMsg_SOBJ_init(void) {
 }
 
 int cAIDeactivatedMsg_SOBJ_getClassId(void) {
     return (int)&D_004FF138;
 }
 
-int cAIDeactivatedMsg_v03(void) {
+int cAIDeactivatedMsg_getSOBJClassId(void) {
     return D_004FF138;
 }
 
-void ScriptType_cAIActivatedMsg_Init(void) {
-    ScriptType_SetParent(D_004FF130, D_004FF178);
+void cAIActivatedMsg_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004FF130, D_004FF178);
 }
 
 int cAIActivatedMsg_SOBJ_getClassId(void) {
     return (int)&D_004FF128;
 }
 
-int cAIActivatedMsg_v03(void) {
+int cAIActivatedMsg_getSOBJClassId(void) {
     return D_004FF128;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -310,7 +310,7 @@ static inline void merge_flush_func_0026ECF0(void) {}
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int WeaponInv_GetHeldClass(int );
+int cWeapon_GetEquipmentType(int );
 extern int D_004DCBF0;
 #if 0 /* merge_units */
 extern int D_004DCD70;
@@ -321,14 +321,14 @@ extern int D_004DCD70;
 extern int g_ScriptAIWeaponFiredMsgKey;
 
 int cAIWeaponFiredMsg_ctor(int arg0, int arg1, int arg2, int arg3) {
-    Event_Construct((void*)arg0, &g_ScriptAIWeaponFiredMsgKey);
+    cMessage_ctor_cMessageNameR((void*)arg0, &g_ScriptAIWeaponFiredMsgKey);
     F_(arg0, 0x0, int) = (int)(&D_004DCD70);
     F_(arg0, 0x24, int) = arg1;
     F_(arg0, 0x20, signed char) = 2;
     F_(arg0, 0x0, int) = (int)(&D_004DCBF0);
     F_(arg0, 0x2C, int) = arg3;
     if (arg2 != NULL) {
-        F_(arg0, 0x30, signed char) = (signed char) ((WeaponInv_GetHeldClass(arg2) & 0xFF) == 1);
+        F_(arg0, 0x30, signed char) = (signed char) ((cWeapon_GetEquipmentType(arg2) & 0xFF) == 1);
         F_(arg0, 0x28, int) = (int) F_(((char *)(F_(arg2, 0x84, unsigned char) * 0x10) + (int)(arg2)), 0x8, int);
     } else {
         F_(arg0, 0x28, int) = -1;
@@ -346,8 +346,8 @@ static inline void merge_flush_func_0026F110(void) {}
 #pragma push /* merge_units */
 typedef struct { void* vt; int pad[8]; void* who; int pad2[3]; int whoId; int receiverId; } Evt26F1D0;
 typedef struct { int header; int receiverId; int whoId; } Arg26F1D0;
-extern void* Object_LookupById(int* id);
-extern void MsgQueue_QueueClone(Evt26F1D0* e, void* obj, int a, int b);
+extern void* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+extern void QueueMessage_cMessageR_cSystemP_int_int(Evt26F1D0* e, void* obj, int a, int b);
 extern void cMessage_dtor(Evt26F1D0* e, int f);
 #if 0 /* merge_units */
 extern char D_004DCD70[];
@@ -360,24 +360,24 @@ extern unsigned char D_005721D0;
 extern unsigned char D_005723C8;
 #pragma push
 #pragma opt_propagation off
-/* Network receive handler for cAIUnconsciousMsg (registered by cAIUnconsciousMsg_NetRegister): rebuilds the
+/* Network receive handler for cAIUnconsciousMsg (registered by cAIUnconsciousMsg_InitNet): rebuilds the
  * message from the packet {receiver id, who id} and queues a clone on the receiving
  * object. Returns the packet size. */
-int cAIUnconsciousMsg_NetReceive(int a0, int a1, int a2, Arg26F1D0* arg) {
+int cAIUnconsciousMsg_NetAIUnconsciousMsgCallback(int a0, int a1, int a2, Arg26F1D0* arg) {
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Evt26F1D0 e;
         void* obj;
         Arg26F1D0* a = arg;
         Evt26F1D0* p = &e;
-        Event_Construct(p, g_ScriptAIUnconsciousMsgKey);
+        cMessage_ctor_cMessageNameR(p, g_ScriptAIUnconsciousMsgKey);
         e.vt = D_004DCD70;
         e.whoId = a->whoId;
-        p->who = Object_LookupById((int*)((char*)&e + 0x34) /* &e.whoId */);
+        p->who = nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x34) /* &e.whoId */);
         e.vt = D_004DCC30;
         e.receiverId = a->receiverId;
-        obj = Object_LookupById((int*)((char*)&e + 0x38) /* &e.receiverId */);
-        if (obj) MsgQueue_QueueClone(&e, obj, 0, 0);
+        obj = nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x38) /* &e.receiverId */);
+        if (obj) QueueMessage_cMessageR_cSystemP_int_int(&e, obj, 0, 0);
         e.vt = D_004DCD70;
         cMessage_dtor(&e, 0);
     }
@@ -394,20 +394,20 @@ static inline void merge_flush_func_0026F1D0(void) {}
 /* merge_units: begin func_0026F2B0 */
 #pragma push /* merge_units */
 extern int NetRegisterMessageStart(void);
-extern int Event_UnpackHeader(void* p);
+extern int cMessage_RegisterFields(void* p);
 extern int NetMessageField(void* a, void* b, int c, int d);
-extern int NetMsg_RegisterType(void* t, int id, void* fn);
+extern int NetRegisterMessage(void* t, int id, void* fn);
 extern int D_004FF120;
-extern int cAIUnconsciousMsg_NetReceive();
+extern int cAIUnconsciousMsg_NetAIUnconsciousMsgCallback();
 /* Registers the cAIUnconsciousMsg network message (field formats, then the receive
- * handler cAIUnconsciousMsg_NetReceive). Returns 1 on success. */
-unsigned char cAIUnconsciousMsg_NetRegister(void) {
+ * handler cAIUnconsciousMsg_NetAIUnconsciousMsgCallback). Returns 1 on success. */
+unsigned char cAIUnconsciousMsg_InitNet(void) {
     struct { long long buf; int a[2]; } L;
     int busy;
     unsigned char r = 0;
     unsigned char ok;
     busy = NetRegisterMessageStart();
-    if (!busy) { ok = 0; do { if (!Event_UnpackHeader(&L.buf)) break; if (NetMessageField(&L.buf, L.a, 4, 1) != 0) break; ok = 1; } while (0); if (ok && !busy && NetMsg_RegisterType(&D_004FF120, 2, cAIUnconsciousMsg_NetReceive) == 0) r = 1; }
+    if (!busy) { ok = 0; do { if (!cMessage_RegisterFields(&L.buf)) break; if (NetMessageField(&L.buf, L.a, 4, 1) != 0) break; ok = 1; } while (0); if (ok && !busy && NetRegisterMessage(&D_004FF120, 2, cAIUnconsciousMsg_NetAIUnconsciousMsgCallback) == 0) r = 1; }
     return r;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -417,7 +417,7 @@ static inline void merge_flush_func_0026F2B0(void) {}
 
 /* merge_units: begin func_0026F360 */
 #pragma push /* merge_units */
-AIMSG_PACK_BEGIN(cAIUnconsciousMsg_v02, 0xC)
+AIMSG_PACK_BEGIN(cAIUnconsciousMsg_Pack, 0xC)
     AIMsg_PackBase(self, a1, type, a3, t0, len, buf);
 AIMSG_PACK_END(0xC, D_004FF120)
 #pragma pop /* merge_units */
@@ -429,9 +429,9 @@ typedef struct { void* vt; int pad[8]; void* who; int pad2[3]; int whoId; int re
 typedef struct { int header; int receiverId; int whoId; } Arg26F400;
 
 #if 0 /* merge_units */
-extern void MsgQueue_QueueClone(Evt26F400* e, void* obj, int a, int b);
+extern void QueueMessage_cMessageR_cSystemP_int_int(Evt26F400* e, void* obj, int a, int b);
 #endif /* merge_units */
-#define MsgQueue_QueueClone(a0, a1, a2, a3) (MsgQueue_QueueClone((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((void *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 
 #if 0 /* merge_units */
@@ -444,24 +444,24 @@ extern char D_004DCC50[];
 extern char D_004FF2B8[];
 #pragma push
 #pragma opt_propagation off
-/* Network receive handler for cAIDisguiseTakenMsg (registered by cAIDisguiseTakenMsg_NetRegister): rebuilds the
+/* Network receive handler for cAIDisguiseTakenMsg (registered by cAIDisguiseTakenMsg_InitNet): rebuilds the
  * message from the packet {receiver id, who id} and queues a clone on the receiving
  * object. Returns the packet size. */
-int cAIDisguiseTakenMsg_NetReceive(int a0, int a1, int a2, Arg26F400* arg) {
+int cAIDisguiseTakenMsg_NetAIDisguiseTakenMsgCallback(int a0, int a1, int a2, Arg26F400* arg) {
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Evt26F400 e;
         void* obj;
         Arg26F400* a = arg;
         Evt26F400* p = &e;
-        Event_Construct(p, D_004FF2B8);
+        cMessage_ctor_cMessageNameR(p, D_004FF2B8);
         e.vt = D_004DCD70;
         e.whoId = a->whoId;
-        p->who = Object_LookupById((int*)((char*)&e + 0x34) /* &e.whoId */);
+        p->who = nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x34) /* &e.whoId */);
         e.vt = D_004DCC50;
         e.receiverId = a->receiverId;
-        obj = Object_LookupById((int*)((char*)&e + 0x38) /* &e.receiverId */);
-        if (obj) MsgQueue_QueueClone(&e, obj, 0, 0);
+        obj = nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x38) /* &e.receiverId */);
+        if (obj) QueueMessage_cMessageR_cSystemP_int_int(&e, obj, 0, 0);
         e.vt = D_004DCD70;
         cMessage_dtor(&e, 0);
     }
@@ -469,7 +469,7 @@ int cAIDisguiseTakenMsg_NetReceive(int a0, int a1, int a2, Arg26F400* arg) {
     return 0xC;
 }
 #pragma pop
-#undef MsgQueue_QueueClone /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0026F400(void) {}
@@ -479,16 +479,16 @@ static inline void merge_flush_func_0026F400(void) {}
 /* merge_units: begin func_0026F4E0 */
 #pragma push /* merge_units */
 extern int D_004FF118;
-extern int cAIDisguiseTakenMsg_NetReceive();
+extern int cAIDisguiseTakenMsg_NetAIDisguiseTakenMsgCallback();
 typedef struct { long long buf; int a[2]; } L4E0;
 
 /* Registers the cAIDisguiseTakenMsg network message (field formats, then the receive
- * handler cAIDisguiseTakenMsg_NetReceive). Returns 1 on success. */
-unsigned char cAIDisguiseTakenMsg_NetRegister(void) {
+ * handler cAIDisguiseTakenMsg_NetAIDisguiseTakenMsgCallback). Returns 1 on success. */
+unsigned char cAIDisguiseTakenMsg_InitNet(void) {
     L4E0 L;
     unsigned char r = 0;
     unsigned char ok;
-    if (!NetRegisterMessageStart()) { ok = 0; do { if (!Event_UnpackHeader(&L.buf)) break; if (NetMessageField(&L.buf, L.a, 4, 1) != 0) break; ok = 1; } while (0); if (ok && NetMsg_RegisterType(&D_004FF118, 2, cAIDisguiseTakenMsg_NetReceive) == 0) r = 1; }
+    if (!NetRegisterMessageStart()) { ok = 0; do { if (!cMessage_RegisterFields(&L.buf)) break; if (NetMessageField(&L.buf, L.a, 4, 1) != 0) break; ok = 1; } while (0); if (ok && NetRegisterMessage(&D_004FF118, 2, cAIDisguiseTakenMsg_NetAIDisguiseTakenMsgCallback) == 0) r = 1; }
     return r;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -510,9 +510,9 @@ typedef struct { void* vt; int pad[8]; void* who; unsigned char flag; char pad2[
 typedef struct { int header; int receiverId; int whoId; unsigned char flag; } Arg26F610;
 
 #if 0 /* merge_units */
-extern void MsgQueue_QueueClone(Evt26F610* e, void* obj, int a, int b);
+extern void QueueMessage_cMessageR_cSystemP_int_int(Evt26F610* e, void* obj, int a, int b);
 #endif /* merge_units */
-#define MsgQueue_QueueClone(a0, a1, a2, a3) (MsgQueue_QueueClone((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((void *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 
 #if 0 /* merge_units */
@@ -525,25 +525,25 @@ extern char D_004DCC70[];
 extern char D_004FF2B0[];
 #pragma push
 #pragma opt_propagation off
-/* Network receive handler for cAIBodyMovedMsg (registered by cAIBodyMovedMsg_NetRegister): rebuilds the
+/* Network receive handler for cAIBodyMovedMsg (registered by cAIBodyMovedMsg_InitNet): rebuilds the
  * message from the packet {receiver id, who id, flag} and queues a clone on the receiving
  * object. Returns the packet size. */
-int cAIBodyMovedMsg_NetReceive(int a0, int a1, int a2, Arg26F610* arg) {
+int cAIBodyMovedMsg_NetAIBodyMovedMsgCallback(int a0, int a1, int a2, Arg26F610* arg) {
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Evt26F610 e;
         void* obj;
         Arg26F610* a = arg;
         Evt26F610* p = &e;
-        Event_Construct(p, D_004FF2B0);
+        cMessage_ctor_cMessageNameR(p, D_004FF2B0);
         e.vt = D_004DCD70;
         e.whoId = a->whoId;
-        p->who = Object_LookupById((int*)((char*)&e + 0x34) /* &e.whoId */);
+        p->who = nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x34) /* &e.whoId */);
         e.vt = D_004DCC70;
         e.flag = a->flag;
         e.receiverId = a->receiverId;
-        obj = Object_LookupById((int*)((char*)&e + 0x38) /* &e.receiverId */);
-        if (obj) MsgQueue_QueueClone(&e, obj, 0, 0);
+        obj = nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x38) /* &e.receiverId */);
+        if (obj) QueueMessage_cMessageR_cSystemP_int_int(&e, obj, 0, 0);
         e.vt = D_004DCD70;
         cMessage_dtor(&e, 0);
     }
@@ -551,7 +551,7 @@ int cAIBodyMovedMsg_NetReceive(int a0, int a1, int a2, Arg26F610* arg) {
     return 0x10;
 }
 #pragma pop
-#undef MsgQueue_QueueClone /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0026F610(void) {}
@@ -561,22 +561,22 @@ static inline void merge_flush_func_0026F610(void) {}
 /* merge_units: begin func_0026F6F0 */
 #pragma push /* merge_units */
 extern int D_004FF110;
-extern int cAIBodyMovedMsg_NetReceive();
+extern int cAIBodyMovedMsg_NetAIBodyMovedMsgCallback();
 typedef struct { long long buf; int a; char b; } L_0026F6F0;
 /* Registers the cAIBodyMovedMsg network message (field formats, then the receive
- * handler cAIBodyMovedMsg_NetReceive). Returns 1 on success. */
-unsigned char cAIBodyMovedMsg_NetRegister(void) {
+ * handler cAIBodyMovedMsg_NetAIBodyMovedMsgCallback). Returns 1 on success. */
+unsigned char cAIBodyMovedMsg_InitNet(void) {
     L_0026F6F0 L;
     unsigned char r = 0;
     unsigned char ok;
     if (!NetRegisterMessageStart()) {
         ok = 0;
         do {
-            if (!Event_UnpackHeader(&L.buf)) break;
+            if (!cMessage_RegisterFields(&L.buf)) break;
             if (NetMessageField(&L.buf, &L.a, 4, 1) != 0) break;
             ok = 1;
         } while (0);
-        if (ok && NetMessageField(&L.buf, &L.b, 1, 1) == 0 && NetMsg_RegisterType(&D_004FF110, 2, cAIBodyMovedMsg_NetReceive) == 0) r = 1;
+        if (ok && NetMessageField(&L.buf, &L.b, 1, 1) == 0 && NetRegisterMessage(&D_004FF110, 2, cAIBodyMovedMsg_NetAIBodyMovedMsgCallback) == 0) r = 1;
     }
     return r;
 }
@@ -587,7 +587,7 @@ static inline void merge_flush_func_0026F6F0(void) {}
 
 /* merge_units: begin func_0026F7A0 */
 #pragma push /* merge_units */
-AIMSG_PACK_BEGIN(cAIBodyMovedMsg_v02, 0x10)
+AIMSG_PACK_BEGIN(cAIBodyMovedMsg_Pack, 0x10)
     AIMsg_PackBase(self, a1, type, a3, t0, len, buf);
     ((unsigned char*)buf)[0xC] = *(unsigned char*)&self->p28;
 AIMSG_PACK_END(0x10, D_004FF110)
@@ -600,9 +600,9 @@ typedef struct { void* vt; int pad[8]; void* who; signed char flag; char pad2[11
 typedef struct { int header; int receiverId; int whoId; signed char flag; } Arg26F850;
 
 #if 0 /* merge_units */
-extern void MsgQueue_QueueClone(Evt26F850* e, void* obj, int a, int b);
+extern void QueueMessage_cMessageR_cSystemP_int_int(Evt26F850* e, void* obj, int a, int b);
 #endif /* merge_units */
-#define MsgQueue_QueueClone(a0, a1, a2, a3) (MsgQueue_QueueClone((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((void *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 
 #if 0 /* merge_units */
@@ -615,25 +615,25 @@ extern char D_004DCC90[];
 extern char g_ScriptAINewAwarenessMsgKey[];
 #pragma push
 #pragma opt_propagation off
-/* Network receive handler for cAINewAwarenessMsg (registered by cAINewAwarenessMsg_NetRegister): rebuilds the
+/* Network receive handler for cAINewAwarenessMsg (registered by cAINewAwarenessMsg_InitNet): rebuilds the
  * message from the packet {receiver id, who id, flag} and queues a clone on the receiving
  * object. Returns the packet size. */
-int cAINewAwarenessMsg_NetReceive(int a0, int a1, int a2, Arg26F850* arg) {
+int cAINewAwarenessMsg_NetAINewAwarenessMsgCallback(int a0, int a1, int a2, Arg26F850* arg) {
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Evt26F850 e;
         void* obj;
         Arg26F850* a = arg;
         Evt26F850* p = &e;
-        Event_Construct(p, g_ScriptAINewAwarenessMsgKey);
+        cMessage_ctor_cMessageNameR(p, g_ScriptAINewAwarenessMsgKey);
         e.vt = D_004DCD70;
         e.whoId = a->whoId;
-        p->who = Object_LookupById((int*)((char*)&e + 0x34) /* &e.whoId */);
+        p->who = nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x34) /* &e.whoId */);
         e.vt = D_004DCC90;
         e.flag = a->flag;
         e.receiverId = a->receiverId;
-        obj = Object_LookupById((int*)((char*)&e + 0x38) /* &e.receiverId */);
-        if (obj) MsgQueue_QueueClone(&e, obj, 0, 0);
+        obj = nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x38) /* &e.receiverId */);
+        if (obj) QueueMessage_cMessageR_cSystemP_int_int(&e, obj, 0, 0);
         e.vt = D_004DCD70;
         cMessage_dtor(&e, 0);
     }
@@ -641,7 +641,7 @@ int cAINewAwarenessMsg_NetReceive(int a0, int a1, int a2, Arg26F850* arg) {
     return 0x10;
 }
 #pragma pop
-#undef MsgQueue_QueueClone /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0026F850(void) {}
@@ -651,22 +651,22 @@ static inline void merge_flush_func_0026F850(void) {}
 /* merge_units: begin func_0026F930 */
 #pragma push /* merge_units */
 extern int D_004FF108;
-extern int cAINewAwarenessMsg_NetReceive();
+extern int cAINewAwarenessMsg_NetAINewAwarenessMsgCallback();
 typedef struct { long long buf; int a; char b; } L_0026F930;
 /* Registers the cAINewAwarenessMsg network message (field formats, then the receive
- * handler cAINewAwarenessMsg_NetReceive). Returns 1 on success. */
-unsigned char cAINewAwarenessMsg_NetRegister(void) {
+ * handler cAINewAwarenessMsg_NetAINewAwarenessMsgCallback). Returns 1 on success. */
+unsigned char cAINewAwarenessMsg_InitNet(void) {
     L_0026F930 L;
     unsigned char r = 0;
     unsigned char ok;
     if (!NetRegisterMessageStart()) {
         ok = 0;
         do {
-            if (!Event_UnpackHeader(&L.buf)) break;
+            if (!cMessage_RegisterFields(&L.buf)) break;
             if (NetMessageField(&L.buf, &L.a, 4, 1) != 0) break;
             ok = 1;
         } while (0);
-        if (ok && NetMessageField(&L.buf, &L.b, 1, 1) == 0 && NetMsg_RegisterType(&D_004FF108, 2, cAINewAwarenessMsg_NetReceive) == 0) r = 1;
+        if (ok && NetMessageField(&L.buf, &L.b, 1, 1) == 0 && NetRegisterMessage(&D_004FF108, 2, cAINewAwarenessMsg_NetAINewAwarenessMsgCallback) == 0) r = 1;
     }
     return r;
 }
@@ -677,7 +677,7 @@ static inline void merge_flush_func_0026F930(void) {}
 
 /* merge_units: begin func_0026F9E0 */
 #pragma push /* merge_units */
-AIMSG_PACK_BEGIN(cAINewAwarenessMsg_v02, 0x10)
+AIMSG_PACK_BEGIN(cAINewAwarenessMsg_Pack, 0x10)
     AIMsg_PackBase(self, a1, type, a3, t0, len, buf);
     ((char*)buf)[0xC] = *(char*)&self->p28;
 AIMSG_PACK_END(0x10, D_004FF108)
@@ -693,11 +693,11 @@ typedef struct { void* vt; int pad[8]; void* n1; void* n2; int pad2[2]; int whoI
 typedef struct { int header; int receiverId; int n1; int n2; } Arg26FA90;
 extern "C" {
 
-extern void* NpcPath_GetNode(int id);
+extern void* cAIPathData_GetNode(int id);
 #if 0 /* merge_units */
-extern void MsgQueue_QueueClone(Evt26FA90* e, void* obj, int a, int b);
+extern void QueueMessage_cMessageR_cSystemP_int_int(Evt26FA90* e, void* obj, int a, int b);
 #endif /* merge_units */
-#define MsgQueue_QueueClone(a0, a1, a2, a3) (MsgQueue_QueueClone((Evt26F1D0 *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((Evt26F1D0 *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 
 #if 0 /* merge_units */
@@ -714,28 +714,28 @@ extern char g_ScriptAIDestinationReachedMsgKey[];
 #pragma optimization_level 3
 
 #pragma opt_propagation off
-/* Network receive handler for cAIDestinationReachedMsg (registered by cAIDestinationReachedMsg_NetRegister): rebuilds the
+/* Network receive handler for cAIDestinationReachedMsg (registered by cAIDestinationReachedMsg_InitNet): rebuilds the
  * message from the packet {receiver id, who id} and queues a clone on the receiving
  * object. Returns the packet size. */
-extern "C" int cAIDestinationReachedMsg_NetReceive(int a0, int a1, int a2, Arg26FA90* arg) {
+extern "C" int cAIDestinationReachedMsg_NetAIDestinationReachedMsgCallback(int a0, int a1, int a2, Arg26FA90* arg) {
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Evt26FA90 e;
         Obj26FA90* obj;
         Arg26FA90* a = arg;
         Evt26FA90* p = &e;
-        Event_Construct(p, g_ScriptAIDestinationReachedMsgKey);
+        cMessage_ctor_cMessageNameR(p, g_ScriptAIDestinationReachedMsgKey);
         e.vt = D_004DCD50;
-        if (a->n1 >= 0) p->n1 = NpcPath_GetNode(a->n1); else p->n1 = 0;
-        if (a->n2 >= 0) p->n2 = NpcPath_GetNode(a->n2); else p->n2 = 0;
+        if (a->n1 >= 0) p->n1 = cAIPathData_GetNode(a->n1); else p->n1 = 0;
+        if (a->n2 >= 0) p->n2 = cAIPathData_GetNode(a->n2); else p->n2 = 0;
         p->vt = D_004DCCB0;
         e.receiverId = a->receiverId;
-        obj = (Obj26FA90*)Object_LookupById((int*)((char*)&e + 0x38) /* &e.receiverId */);
+        obj = (Obj26FA90*)nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x38) /* &e.receiverId */);
         if (obj) {
             unsigned char ok = 0;
             if (obj->sub && obj->sub->Check()) ok = 1;
             if (ok) obj->sub->f210 = 0;
-            MsgQueue_QueueClone(&e, obj, 0, 0);
+            QueueMessage_cMessageR_cSystemP_int_int(&e, obj, 0, 0);
         }
         e.vt = D_004DCD50;
         cMessage_dtor(&e, 0);
@@ -744,7 +744,7 @@ extern "C" int cAIDestinationReachedMsg_NetReceive(int a0, int a1, int a2, Arg26
     return 0x10;
 }
 #pragma pop
-#undef MsgQueue_QueueClone /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0026FA90(void) {}
@@ -754,22 +754,22 @@ static inline void merge_flush_func_0026FA90(void) {}
 /* merge_units: begin func_0026FBF0 */
 #pragma push /* merge_units */
 extern int D_004FF100;
-extern int cAIDestinationReachedMsg_NetReceive();
+extern int cAIDestinationReachedMsg_NetAIDestinationReachedMsgCallback();
 typedef struct { long long buf; int a; char b; } L_0026FBF0;
 /* Registers the cAIDestinationReachedMsg network message (field formats, then the receive
- * handler cAIDestinationReachedMsg_NetReceive). Returns 1 on success. */
-unsigned char cAIDestinationReachedMsg_NetRegister(void) {
+ * handler cAIDestinationReachedMsg_NetAIDestinationReachedMsgCallback). Returns 1 on success. */
+unsigned char cAIDestinationReachedMsg_InitNet(void) {
     L_0026FBF0 L;
     unsigned char r = 0;
     unsigned char ok;
     if (!NetRegisterMessageStart()) {
         ok = 0;
         do {
-            if (!Event_UnpackHeader(&L.buf)) break;
+            if (!cMessage_RegisterFields(&L.buf)) break;
             if (NetMessageField(&L.buf, &L.a, 4, 1) != 0) break;
             ok = 1;
         } while (0);
-        if (ok && NetMsg_RegisterType(&D_004FF100, 2, cAIDestinationReachedMsg_NetReceive) == 0) r = 1;
+        if (ok && NetRegisterMessage(&D_004FF100, 2, cAIDestinationReachedMsg_NetAIDestinationReachedMsgCallback) == 0) r = 1;
     }
     return r;
 }
@@ -792,7 +792,7 @@ static inline void pack_FC80(EFC80* e, int a1, int* type, int a3, int a4, unsign
         e->size = 0x40;
     }
 }
-int cAIDestinationReachedMsg_v02(EFC80* e, int a1, int* type, int a3, int a4, unsigned int sz, void* buf)
+int cAIDestinationReachedMsg_Pack(EFC80* e, int a1, int* type, int a3, int a4, unsigned int sz, void* buf)
 {
     int r = -1;
     if (sz >= 0x10 && buf) {
@@ -818,9 +818,9 @@ typedef struct { void* vt; int pad[8]; void* n1; void* n2; int pad2[2]; int whoI
 typedef struct { int header; int receiverId; int n1; int n2; } Arg26FD50;
 extern "C" {
 #if 0 /* merge_units */
-extern void MsgQueue_QueueClone(Evt26FD50* e, void* obj, int a, int b);
+extern void QueueMessage_cMessageR_cSystemP_int_int(Evt26FD50* e, void* obj, int a, int b);
 #endif /* merge_units */
-#define MsgQueue_QueueClone(a0, a1, a2, a3) (MsgQueue_QueueClone((Evt26F1D0 *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((Evt26F1D0 *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(Evt26FD50* e, int f);
@@ -834,30 +834,30 @@ extern char g_ScriptAIWaypointReachedMsgKey[];
 #pragma optimization_level 3
 
 #pragma opt_propagation off
-/* Network receive handler for cAIWaypointReachedMsg (registered by cAIWaypointReachedMsg_NetRegister): rebuilds the
+/* Network receive handler for cAIWaypointReachedMsg (registered by cAIWaypointReachedMsg_InitNet): rebuilds the
  * message from the packet {receiver id, who id} and queues a clone on the receiving
  * object. Returns the packet size. */
-extern "C" int cAIWaypointReachedMsg_NetReceive(int a0, int a1, int a2, Arg26FD50* arg) {
+extern "C" int cAIWaypointReachedMsg_NetAIWaypointReachedMsgCallback(int a0, int a1, int a2, Arg26FD50* arg) {
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Evt26FD50 e;
         Obj26FD50* obj;
 Arg26FD50* a = arg;
 Evt26FD50* p = &e;
-        Event_Construct(p, g_ScriptAIWaypointReachedMsgKey);
+        cMessage_ctor_cMessageNameR(p, g_ScriptAIWaypointReachedMsgKey);
         e.vt = D_004DCD50;
-        if (a->n1 >= 0) p->n1 = NpcPath_GetNode(a->n1); else p->n1 = 0;
-        if (a->n2 >= 0) p->n2 = NpcPath_GetNode(a->n2); else p->n2 = 0;
+        if (a->n1 >= 0) p->n1 = cAIPathData_GetNode(a->n1); else p->n1 = 0;
+        if (a->n2 >= 0) p->n2 = cAIPathData_GetNode(a->n2); else p->n2 = 0;
         p->vt = D_004DCCD0;
         e.receiverId = a->receiverId;
-        obj = (Obj26FD50*)Object_LookupById((int*)((char*)&e + 0x38) /* &e.receiverId */);
+        obj = (Obj26FD50*)nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x38) /* &e.receiverId */);
         if (obj) {
             if (a->n2 >= 0) {
             unsigned char ok = 0;
             if (obj->sub && obj->sub->Check()) ok = 1;
-            if (ok) obj->sub->f210 = (int)NpcPath_GetNode(a->n2);
+            if (ok) obj->sub->f210 = (int)cAIPathData_GetNode(a->n2);
             }
-            MsgQueue_QueueClone(&e, obj, 0, 0);
+            QueueMessage_cMessageR_cSystemP_int_int(&e, obj, 0, 0);
         }
         e.vt = D_004DCD50;
         cMessage_dtor(&e, 0);
@@ -866,7 +866,7 @@ Evt26FD50* p = &e;
     return 0x10;
 }
 #pragma pop
-#undef MsgQueue_QueueClone /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0026FD50(void) {}
@@ -876,22 +876,22 @@ static inline void merge_flush_func_0026FD50(void) {}
 /* merge_units: begin func_0026FED0 */
 #pragma push /* merge_units */
 extern int D_004FF0F8;
-extern int cAIWaypointReachedMsg_NetReceive();
+extern int cAIWaypointReachedMsg_NetAIWaypointReachedMsgCallback();
 typedef struct { long long buf; int a; char b; } L_0026FED0;
 /* Registers the cAIWaypointReachedMsg network message (field formats, then the receive
- * handler cAIWaypointReachedMsg_NetReceive). Returns 1 on success. */
-unsigned char cAIWaypointReachedMsg_NetRegister(void) {
+ * handler cAIWaypointReachedMsg_NetAIWaypointReachedMsgCallback). Returns 1 on success. */
+unsigned char cAIWaypointReachedMsg_InitNet(void) {
     L_0026FED0 L;
     unsigned char r = 0;
     unsigned char ok;
     if (!NetRegisterMessageStart()) {
         ok = 0;
         do {
-            if (!Event_UnpackHeader(&L.buf)) break;
+            if (!cMessage_RegisterFields(&L.buf)) break;
             if (NetMessageField(&L.buf, &L.a, 4, 1) != 0) break;
             ok = 1;
         } while (0);
-        if (ok && NetMsg_RegisterType(&D_004FF0F8, 2, cAIWaypointReachedMsg_NetReceive) == 0) r = 1;
+        if (ok && NetRegisterMessage(&D_004FF0F8, 2, cAIWaypointReachedMsg_NetAIWaypointReachedMsgCallback) == 0) r = 1;
     }
     return r;
 }
@@ -914,7 +914,7 @@ static inline void pack_FF60(EFF60* e, int a1, int* type, int a3, int a4, unsign
         e->size = 0x40;
     }
 }
-int cAIWaypointReachedMsg_v02(EFF60* e, int a1, int* type, int a3, int a4, unsigned int sz, void* buf)
+int cAIWaypointReachedMsg_Pack(EFF60* e, int a1, int* type, int a3, int a4, unsigned int sz, void* buf)
 {
     int r = -1;
     if (sz >= 0x10 && buf) {
@@ -937,9 +937,9 @@ typedef struct { void* vt; int pad[8]; void* who; int pad2[3]; int whoId; int re
 typedef struct { int header; int receiverId; int whoId; } Arg270030;
 
 #if 0 /* merge_units */
-extern void MsgQueue_QueueClone(Evt270030* e, void* obj, int a, int b);
+extern void QueueMessage_cMessageR_cSystemP_int_int(Evt270030* e, void* obj, int a, int b);
 #endif /* merge_units */
-#define MsgQueue_QueueClone(a0, a1, a2, a3) (MsgQueue_QueueClone((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((void *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 
 #if 0 /* merge_units */
@@ -952,23 +952,23 @@ extern char D_004DCCF0[];
 extern char g_ScriptAIDeadMsgKey[];
 #pragma push
 #pragma opt_propagation off
-/* Network receive handler for cAIDeadMsg (registered by cAIDeadMsg_NetRegister): rebuilds the
+/* Network receive handler for cAIDeadMsg (registered by cAIDeadMsg_InitNet): rebuilds the
  * message from the packet {receiver id, who id} and queues a clone on the receiving
  * object. Returns the packet size. */
-int cAIDeadMsg_NetReceive(int a0, int a1, int a2, Arg270030* arg) {
+int cAIDeadMsg_NetAIDeadMsgCallback(int a0, int a1, int a2, Arg270030* arg) {
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Evt270030 e;
         void* obj;
         Arg270030* a = arg;
         Evt270030* p = &e;
-        Event_Construct(p, g_ScriptAIDeadMsgKey);
+        cMessage_ctor_cMessageNameR(p, g_ScriptAIDeadMsgKey);
         e.vt = D_004DCCF0;
         e.whoId = a->whoId;
-        p->who = Object_LookupById((int*)((char*)&e + 0x34) /* &e.whoId */);
+        p->who = nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x34) /* &e.whoId */);
         e.receiverId = a->receiverId;
-        obj = Object_LookupById((int*)((char*)&e + 0x38) /* &e.receiverId */);
-        if (obj) MsgQueue_QueueClone(&e, obj, 0, 0);
+        obj = nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x38) /* &e.receiverId */);
+        if (obj) QueueMessage_cMessageR_cSystemP_int_int(&e, obj, 0, 0);
         e.vt = D_004DCCF0;
         cMessage_dtor(&e, 0);
     }
@@ -976,7 +976,7 @@ int cAIDeadMsg_NetReceive(int a0, int a1, int a2, Arg270030* arg) {
     return 0x10;
 }
 #pragma pop
-#undef MsgQueue_QueueClone /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00270030(void) {}
@@ -986,15 +986,15 @@ static inline void merge_flush_func_00270030(void) {}
 /* merge_units: begin func_00270100 */
 #pragma push /* merge_units */
 extern int D_004FF0F0;
-extern int cAIDeadMsg_NetReceive();
+extern int cAIDeadMsg_NetAIDeadMsgCallback();
 /* Registers the cAIDeadMsg network message (field formats, then the receive
- * handler cAIDeadMsg_NetReceive). Returns 1 on success. */
-unsigned char cAIDeadMsg_NetRegister(void) {
+ * handler cAIDeadMsg_NetAIDeadMsgCallback). Returns 1 on success. */
+unsigned char cAIDeadMsg_InitNet(void) {
     int ok[2];
     int buf[2];
     unsigned char r = 0;
-    if (NetRegisterMessageStart() == 0 && Event_UnpackHeader(buf) != 0 && NetMessageField(buf, ok, 4, 1) == 0 &&
-        NetMsg_RegisterType(&D_004FF0F0, 2, cAIDeadMsg_NetReceive) == 0) {
+    if (NetRegisterMessageStart() == 0 && cMessage_RegisterFields(buf) != 0 && NetMessageField(buf, ok, 4, 1) == 0 &&
+        NetRegisterMessage(&D_004FF0F0, 2, cAIDeadMsg_NetAIDeadMsgCallback) == 0) {
         r = 1;
     }
     return r;
@@ -1014,7 +1014,7 @@ extern void Event_PackHeader(AIDeadMsg* self, int a1, int* type, int a3, int t0,
 #define Event_PackHeader(a0, a1, a2, a3, a4, a5, a6) (Event_PackHeader((void *)(a0), (a1), (a2), (a3), (a4), (a5), (a6))) /* merge_units */
 
 
-int cAIDeadMsg_v02(AIDeadMsg* self, int a1, int* type, int a3, int t0, unsigned int len, int* buf) {
+int cAIDeadMsg_Pack(AIDeadMsg* self, int a1, int* type, int a3, int t0, unsigned int len, int* buf) {
     int r = -1;
     if (len >= 0x10 && buf != 0) {
         Event_PackHeader(self, a1, type, a3, t0, len, buf);
@@ -1039,9 +1039,9 @@ typedef struct { void* vt; int pad[9]; int receiverId; int pad2; } Evt270210;
 typedef struct { int header; int receiverId; } Arg270210;
 
 #if 0 /* merge_units */
-extern void MsgQueue_QueueClone(Evt270210* e, void* obj, int a, int b);
+extern void QueueMessage_cMessageR_cSystemP_int_int(Evt270210* e, void* obj, int a, int b);
 #endif /* merge_units */
-#define MsgQueue_QueueClone(a0, a1, a2, a3) (MsgQueue_QueueClone((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((void *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 
 #if 0 /* merge_units */
@@ -1053,19 +1053,19 @@ extern void cMessage_dtor(Evt270210* e, int f);
 extern char D_004DCD10[];
 extern char g_ScriptAIDeactivatedMsgKey[];
 #pragma opt_common_subs off
-/* Network receive handler for cAIDeactivatedMsg (registered by cAIDeactivatedMsg_NetRegister): rebuilds the
+/* Network receive handler for cAIDeactivatedMsg (registered by cAIDeactivatedMsg_InitNet): rebuilds the
  * message from the packet {receiver id} and queues a clone on the receiving
  * object. Returns the packet size. */
-int cAIDeactivatedMsg_NetReceive(int a0, int a1, int a2, Arg270210* arg) {
+int cAIDeactivatedMsg_NetAIDeactivatedMsgCallback(int a0, int a1, int a2, Arg270210* arg) {
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Evt270210 e;
         void* obj;
-        Event_Construct(&e, g_ScriptAIDeactivatedMsgKey);
+        cMessage_ctor_cMessageNameR(&e, g_ScriptAIDeactivatedMsgKey);
         e.vt = D_004DCD10;
         e.receiverId = arg->receiverId;
-        obj = Object_LookupById(&e.receiverId);
-        if (obj) MsgQueue_QueueClone(&e, obj, 0, 0);
+        obj = nGobjManager_LookupGOBJ_cObjectIdR(&e.receiverId);
+        if (obj) QueueMessage_cMessageR_cSystemP_int_int(&e, obj, 0, 0);
         e.vt = D_004DCD10;
         cMessage_dtor(&e, 0);
     }
@@ -1076,7 +1076,7 @@ int cAIDeactivatedMsg_NetReceive(int a0, int a1, int a2, Arg270210* arg) {
 
 
 #pragma opt_common_subs reset
-#undef MsgQueue_QueueClone /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00270210(void) {}
@@ -1086,14 +1086,14 @@ static inline void merge_flush_func_00270210(void) {}
 /* merge_units: begin func_002702C0 */
 #pragma push /* merge_units */
 extern int D_004FF0E8;
-extern int cAIDeactivatedMsg_NetReceive();
+extern int cAIDeactivatedMsg_NetAIDeactivatedMsgCallback();
 /* Registers the cAIDeactivatedMsg network message (field formats, then the receive
- * handler cAIDeactivatedMsg_NetReceive). Returns 1 on success. */
-unsigned char cAIDeactivatedMsg_NetRegister(void) {
+ * handler cAIDeactivatedMsg_NetAIDeactivatedMsgCallback). Returns 1 on success. */
+unsigned char cAIDeactivatedMsg_InitNet(void) {
     int buf[4];
     unsigned char r = 0;
-    if (NetRegisterMessageStart() == 0 && Event_UnpackHeader(buf + 2) != 0 &&
-        NetMsg_RegisterType(&D_004FF0E8, 2, cAIDeactivatedMsg_NetReceive) == 0) {
+    if (NetRegisterMessageStart() == 0 && cMessage_RegisterFields(buf + 2) != 0 &&
+        NetRegisterMessage(&D_004FF0E8, 2, cAIDeactivatedMsg_NetAIDeactivatedMsgCallback) == 0) {
         r = 1;
     }
     return r;
@@ -1105,7 +1105,7 @@ static inline void merge_flush_func_002702C0(void) {}
 
 /* merge_units: begin func_00270330 */
 #pragma push /* merge_units */
-AIMSG_PACK_BEGIN(cAIDeactivatedMsg_v02, 0x8)
+AIMSG_PACK_BEGIN(cAIDeactivatedMsg_Pack, 0x8)
     Event_PackHeader(self, a1, type, a3, t0, len, buf);
 AIMSG_PACK_END(0x8, D_004FF0E8)
 #pragma pop /* merge_units */
@@ -1116,9 +1116,9 @@ AIMSG_PACK_END(0x8, D_004FF0E8)
 typedef struct { void* vt; int pad[8]; void* who; int pad2[3]; int whoId; int receiverId; } Evt270390;
 typedef struct { int header; int receiverId; int whoId; } Arg270390;
 #if 0 /* merge_units */
-extern void MsgQueue_QueueClone(Evt270390* e, void* obj, int a, int b);
+extern void QueueMessage_cMessageR_cSystemP_int_int(Evt270390* e, void* obj, int a, int b);
 #endif /* merge_units */
-#define MsgQueue_QueueClone(a0, a1, a2, a3) (MsgQueue_QueueClone((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((void *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(Evt270390* e, int f);
@@ -1134,24 +1134,24 @@ extern char D_004DCD30[];
 extern char g_ScriptAIActivatedMsgKey[];
 #pragma push
 #pragma opt_propagation off
-/* Network receive handler for cAIActivatedMsg (registered by cAIActivatedMsg_NetRegister): rebuilds the
+/* Network receive handler for cAIActivatedMsg (registered by cAIActivatedMsg_InitNet): rebuilds the
  * message from the packet {receiver id, who id} and queues a clone on the receiving
  * object. Returns the packet size. */
-int cAIActivatedMsg_NetReceive(int a0, int a1, int a2, Arg270390* arg) {
+int cAIActivatedMsg_NetAIActivatedMsgCallback(int a0, int a1, int a2, Arg270390* arg) {
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Evt270390 e;
         void* obj;
         Arg270390* a = arg;
         Evt270390* p = &e;
-        Event_Construct(p, g_ScriptAIActivatedMsgKey);
+        cMessage_ctor_cMessageNameR(p, g_ScriptAIActivatedMsgKey);
         e.vt = D_004DCD70;
         e.whoId = a->whoId;
-        p->who = Object_LookupById((int*)((char*)&e + 0x34) /* &e.whoId */);
+        p->who = nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x34) /* &e.whoId */);
         e.vt = D_004DCD30;
         e.receiverId = a->receiverId;
-        obj = Object_LookupById((int*)((char*)&e + 0x38) /* &e.receiverId */);
-        if (obj) MsgQueue_QueueClone(&e, obj, 0, 0);
+        obj = nGobjManager_LookupGOBJ_cObjectIdR((int*)((char*)&e + 0x38) /* &e.receiverId */);
+        if (obj) QueueMessage_cMessageR_cSystemP_int_int(&e, obj, 0, 0);
         e.vt = D_004DCD70;
         cMessage_dtor(&e, 0);
     }
@@ -1159,7 +1159,7 @@ int cAIActivatedMsg_NetReceive(int a0, int a1, int a2, Arg270390* arg) {
     return 0xC;
 }
 #pragma pop
-#undef MsgQueue_QueueClone /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #undef D_004DCD70 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -1170,22 +1170,22 @@ static inline void merge_flush_func_00270390(void) {}
 /* merge_units: begin func_00270470 */
 #pragma push /* merge_units */
 extern int D_004FF0E0;
-extern int cAIActivatedMsg_NetReceive();
+extern int cAIActivatedMsg_NetAIActivatedMsgCallback();
 typedef struct { long long buf; int a; char b; } L_00270470;
 /* Registers the cAIActivatedMsg network message (field formats, then the receive
- * handler cAIActivatedMsg_NetReceive). Returns 1 on success. */
-unsigned char cAIActivatedMsg_NetRegister(void) {
+ * handler cAIActivatedMsg_NetAIActivatedMsgCallback). Returns 1 on success. */
+unsigned char cAIActivatedMsg_InitNet(void) {
     L_00270470 L;
     unsigned char r = 0;
     unsigned char ok;
     if (!NetRegisterMessageStart()) {
         ok = 0;
         do {
-            if (!Event_UnpackHeader(&L.buf)) break;
+            if (!cMessage_RegisterFields(&L.buf)) break;
             if (NetMessageField(&L.buf, &L.a, 4, 1) != 0) break;
             ok = 1;
         } while (0);
-        if (ok && NetMsg_RegisterType(&D_004FF0E0, 2, cAIActivatedMsg_NetReceive) == 0) r = 1;
+        if (ok && NetRegisterMessage(&D_004FF0E0, 2, cAIActivatedMsg_NetAIActivatedMsgCallback) == 0) r = 1;
     }
     return r;
 }
@@ -1196,7 +1196,7 @@ static inline void merge_flush_func_00270470(void) {}
 
 /* merge_units: begin func_00270500 */
 #pragma push /* merge_units */
-AIMSG_PACK_BEGIN(cAIActivatedMsg_v02, 0xC)
+AIMSG_PACK_BEGIN(cAIActivatedMsg_Pack, 0xC)
     AIMsg_PackBase(self, a1, type, a3, t0, len, buf);
 AIMSG_PACK_END(0xC, D_004FF0E0)
 #pragma pop /* merge_units */
@@ -1206,7 +1206,7 @@ AIMSG_PACK_END(0xC, D_004FF0E0)
 #pragma push /* merge_units */
 typedef struct { char pad[0x78]; int netId; } G05A0;
 typedef struct { char pad[0x1C]; int size; char pad2[4]; G05A0* a; G05A0* b; } E05A0;
-int cAINodeMsg_v02(E05A0* e, int a1, int* type, int a3, int a4, unsigned int sz, void* buf)
+int cAINodeMsg_Pack(E05A0* e, int a1, int* type, int a3, int a4, unsigned int sz, void* buf)
 {
     if (sz >= 0x10 && buf) {
         int* b = (int*)buf;
@@ -1224,7 +1224,7 @@ static inline void merge_flush_func_002705A0(void) {}
 
 /* merge_units: begin func_00270630 */
 #pragma push /* merge_units */
-int cAIGOBJMsg_v02(AIMsgPackObj* self, int a1, int* type, int a3, int t0, unsigned int len, int* buf) {
+int cAIGOBJMsg_Pack(AIMsgPackObj* self, int a1, int* type, int a3, int t0, unsigned int len, int* buf) {
     AIMsg_PackBase(self, a1, type, a3, t0, len, buf);
     return -1;
 }
@@ -1241,7 +1241,7 @@ extern "C" char D_004DCBF0[];
 #endif /* merge_units */
 #define D_004DCBF0 ((char*)&D_004DCBF0) /* merge_units */
 
-MSG_CLONE_BEGIN(cAIWeaponFiredMsg_v01, 0x34, D_004A8C70, 0xFC)
+MSG_CLONE_BEGIN(cAIWeaponFiredMsg_Clone, 0x34, D_004A8C70, 0xFC)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);
@@ -1266,7 +1266,7 @@ MSG_CLONE_END
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" char D_004DCC10[];
-MSG_CLONE_BEGIN(cAITimeElapsedMsg_v01, 0x24, D_004A8CB0, 0x9D)
+MSG_CLONE_BEGIN(cAITimeElapsedMsg_Clone, 0x24, D_004A8CB0, 0x9D)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);
@@ -1289,7 +1289,7 @@ extern "C" char D_004DCC30[];
 #endif /* merge_units */
 #define D_004DCC30 ((char*)&D_004DCC30) /* merge_units */
 
-MSG_CLONE_BEGIN(cAIUnconsciousMsg_v01, 0x28, D_004A8C30, 0x158)
+MSG_CLONE_BEGIN(cAIUnconsciousMsg_Clone, 0x28, D_004A8C30, 0x158)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);
@@ -1511,7 +1511,7 @@ extern "C" char D_004DCD30[];
 #endif /* merge_units */
 #define D_004DCD30 ((char*)&D_004DCD30) /* merge_units */
 
-MSG_CLONE_BEGIN(cAIActivatedMsg_v01, 0x28, D_004A8CE0, 0x4A)
+MSG_CLONE_BEGIN(cAIActivatedMsg_Clone, 0x28, D_004A8CE0, 0x4A)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

@@ -23,8 +23,8 @@ typedef struct WeaponDef {
     char pad31[0x48 - 0x31];
     signed char equipMode;   /* 0x48: 6 means no weapon selected */
     char pad49[0x70 - 0x49];
-    int unk70;               /* 0x70: multiplied by the WeaponInv_ClipsForActor result */
-    int unk74;               /* 0x74: key passed to WeaponInv_ClipsForActor */
+    int unk70;               /* 0x70: multiplied by the cHuman_AdjustMaxClips result */
+    int unk74;               /* 0x74: key passed to cHuman_AdjustMaxClips */
 } WeaponDef;
 
 /* Inventory slot (16 bytes); id -1 marks an empty slot. */
@@ -32,7 +32,7 @@ typedef struct InventorySlot {
     int unk0;                /* 0x0 */
     int id;                  /* 0x4: weapon id */
     int unk8;                /* 0x8 */
-    int unkC;                /* 0xC: subtracted in WeaponInv_GetSpareRoom */
+    int unkC;                /* 0xC: subtracted in cWeapon_NeededAmmo */
 } InventorySlot;
 
 /* Actor inventory (actor +0x3524). */
@@ -41,7 +41,7 @@ typedef struct Inventory {
     InventorySlot slots[8];  /* 0x04 */
     unsigned char selected;  /* 0x84: selected slot; 6 = holstered */
     char pad85[0x88 - 0x85];
-    void* unk88;             /* 0x88: passed to WeaponInv_ClipsForActor */
+    void* unk88;             /* 0x88: passed to cHuman_AdjustMaxClips */
 } Inventory;
 
 /* cOutOfAmmoMsg payload. */
@@ -62,6 +62,6 @@ typedef struct WeaponRec24Vec {
 } WeaponRec24Vec;
 
 extern void* g_WeaponDatabase;     /* weapon definition table */
-extern WeaponDef* WeaponDb_Get(void* table, int id);
+extern WeaponDef* cWeaponDB_GetEntry(void* table, int id);
 
 #endif

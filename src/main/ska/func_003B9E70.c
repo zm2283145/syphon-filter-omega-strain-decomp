@@ -25,7 +25,7 @@ static inline void Dealloc(int* p)
 {
     if (p) {
         AllocGuard g;
-        Mem_Free(0, p, D_0049AF00, 0x64);
+        cMemMan_Deallocate(0, p, D_0049AF00, 0x64);
     }
 }
 static inline void CopyQ(DqBuf* q, int* d)

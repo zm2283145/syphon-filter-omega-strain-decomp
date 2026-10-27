@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 
-/* Backpack_RestoreCrateSnapshots: copy every crate snapshot (Backpack_SnapshotCrates) back into
+/* cBackpack_ResetCrates: copy every crate snapshot (cBackpack_SaveCratesInfo) back into
  * the backpack with the same id and give it a runtime hotbox if it has none. */
 
 struct RT { char pad[0x94]; int id; };
@@ -34,10 +34,10 @@ extern "C" {
 extern CrateVec* g_BackpackList;
 extern char D_004F7F48[];
 Crate** std_vector_cBackpackPtr_opIndex(CrateVec* v, int i);
-void Backpack_RestoreCrateSnapshots(void);
+void cBackpack_ResetCrates(void);
 extern int g_HotboxTracker;
-RT* Hotbox_CreateRuntime(int tracker, Crate* c, int flag, int big);
-Raw List_Begin(void* list);
+RT* cHotboxMan_CreateInteractBox(int tracker, Crate* c, int flag, int big);
+Raw std_list_deleter_voidPtr_begin_void(void* list);
 Raw std_list_CrateSavePtr_end(void* list);
 void std_list_CrateSavePtr_generic_iterator_ctor(SNode** out, const Raw& r);
 void cLListIterator_CrateSavePtr_ctor(SNode** out, const Raw& r);
@@ -88,7 +88,7 @@ struct SIt {
     SIt& operator=(const SIt& o) { p = o.p; return *this; }
 };
 
-void Backpack_RestoreCrateSnapshots(void)
+void cBackpack_ResetCrates(void)
 {
     CrateVec* list = g_BackpackList;
     SIt it;
@@ -98,7 +98,7 @@ void Backpack_RestoreCrateSnapshots(void)
     SIt r;
     SIt t;
     int i;
-    std_list_CrateSavePtr_generic_iterator_ctor(&b, List_Begin(D_004F7F48));
+    std_list_CrateSavePtr_generic_iterator_ctor(&b, std_list_deleter_voidPtr_begin_void(D_004F7F48));
     it.p = b;
     while ((cLListIterator_CrateSavePtr_ctor(&end, std_list_CrateSavePtr_end(D_004F7F48)), it.p != end)) {
         for (i = 0; i < list->count; i++) {
@@ -115,7 +115,7 @@ void Backpack_RestoreCrateSnapshots(void)
                     if (!k->rt) {
                         RT* q;
                         int id;
-                        k->rt = Hotbox_CreateRuntime(g_HotboxTracker, k, 0, 1);
+                        k->rt = cHotboxMan_CreateInteractBox(g_HotboxTracker, k, 0, 1);
                         id = k->id;
                         q = k->rt;
                         q->id = id;

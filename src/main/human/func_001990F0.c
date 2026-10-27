@@ -21,8 +21,8 @@ extern unsigned char g_IsMultiplayer;
 extern char D_004EEE98[];
 extern char D_004DA9D0[]; /* message vtable */
 extern char D_004DCF10[]; /* base message vtable */
-extern void Event_Construct(HumanMsg* msg, void* name);
-extern void Event_Send(HumanMsg* msg, void* target, int flags);
+extern void cMessage_ctor_cMessageNameR(HumanMsg* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(HumanMsg* msg, void* target, int flags);
 extern void cMessage_dtor(HumanMsg* msg, int flags);
 
 /* Stores the byte at +0x346C and, when g_IsMultiplayer is set and not silent, broadcasts it. */
@@ -30,13 +30,13 @@ void cNetSetFlagMsg_Send(Human346C* self, unsigned char value, int silent) {
     HumanMsg msg;
     self->value = value;
     if (g_IsMultiplayer && !silent) {
-        Event_Construct(&msg, D_004EEE98);
+        cMessage_ctor_cMessageNameR(&msg, D_004EEE98);
         msg.vtable = D_004DA9D0;
         msg.value = value;
         msg.kind = 4;
         msg.size = 0x40;
         msg.extra = 0;
-        Event_Send(&msg, self, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, self, 0);
         msg.vtable = D_004DCF10;
         cMessage_dtor(&msg, 0);
     }

@@ -12,12 +12,12 @@
 extern unsigned char D_004938D0;
 extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
-extern void ScriptMgr_CallFunction(void*, char*, int);
+extern void cScriptInterpreter_CallFunction(void*, char*, int);
 static inline int ok3E1(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
-void Script_ClientStartLevel(void* s) {
+void cScriptInterpreter_StartLevel(void* s) {
     if (D_004938D0) {
-        ScriptMgr_CallFunction(s, "init::ClientStartLevel", 0);
-        if (!g_IsMultiplayer || ok3E1()) ScriptMgr_CallFunction(s, "init::StartLevel", 0);
+        cScriptInterpreter_CallFunction(s, "init::ClientStartLevel", 0);
+        if (!g_IsMultiplayer || ok3E1()) cScriptInterpreter_CallFunction(s, "init::StartLevel", 0);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -42,16 +42,16 @@ extern "C" unsigned char D_004938D0;
 #endif /* merge_units */
 #define D_004938D0 (*(unsigned char*)&D_004938D0) /* merge_units */
 
-extern "C" unsigned char ScriptFilter_RunPass(void* filter, int type, int arg, FiltScratchE6* scratch, int mode, int pass);
+extern "C" unsigned char cScriptInterpreter_callEvent_cSystemP_cMessageP_charP_int_etc(void* filter, int type, int arg, FiltScratchE6* scratch, int mode, int pass);
 
 /* Runs both filter passes for an object; true if either accepted it. */
-extern "C" unsigned char ScriptFilter_Dispatch(void* filter, FiltObjE6* obj, int arg)
+extern "C" unsigned char cScriptInterpreter_CallEvent(void* filter, FiltObjE6* obj, int arg)
 {
     unsigned char result = 0;
     if (D_004938D0) {
         FiltScratchE6 scratch;
-        result = ScriptFilter_RunPass(filter, obj->GetType(), arg, &scratch, 2, 0);
-        if (ScriptFilter_RunPass(filter, obj->GetType(), arg, &scratch, 2, 1)) {
+        result = cScriptInterpreter_callEvent_cSystemP_cMessageP_charP_int_etc(filter, obj->GetType(), arg, &scratch, 2, 0);
+        if (cScriptInterpreter_callEvent_cSystemP_cMessageP_charP_int_etc(filter, obj->GetType(), arg, &scratch, 2, 1)) {
             result = 1;
         }
     }

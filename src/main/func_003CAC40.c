@@ -7,11 +7,11 @@
 #include "types.h"
 #include "loose04_types.h"
 
-extern L4Iter* List_InsertBefore(L4Iter* out, void* list, L4Iter* pos, int* value);
+extern L4Iter* std_list_deleter_voidPtr_insert(L4Iter* out, void* list, L4Iter* pos, int* value);
 L4Iter* std_list_cSystemPtr_push_back(void* list, int* value);
 
 /* Appends value to the list at +0x20; always returns 1. */
-int Script_AddChild(Unk3CAC40* self, int value) {
+int cSystemContainer_AddSystem(Unk3CAC40* self, int value) {
     int loc[1];
 
     loc[0] = value;
@@ -24,5 +24,5 @@ L4Iter* std_list_cSystemPtr_push_back(void* list, int* value) {
     L4Iter it[2];
 
     it[0].node = (L4Node*)((char*)list + 4);
-    return List_InsertBefore(&it[1], list, &it[0], value);
+    return std_list_deleter_voidPtr_insert(&it[1], list, &it[0], value);
 }

@@ -2,7 +2,7 @@
 #pragma inline_depth(8)
 #include "types.h"
 #include "vslot_pad.h"
-/* NpcAi_ModeAttack: attack-mode message handler - close in on / keep the target in range, approach
+/* cNPC_Attack: attack-mode message handler - close in on / keep the target in range, approach
    or route to its node, ask for ammo, take cover on posture changes, and react to perception. */
 /* quadword copy (lq/sq): a 128-bit move C cannot express, the retail vector copy */
 static inline void Q16(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
@@ -63,27 +63,27 @@ extern int D_004ED9B8;
 extern char g_Game[];
 extern char g_NpcRouteMgr[];
 extern char g_ActorActionMsgClass[], D_004E0840[];
-int* Event_GetType(Ev* ev);
-void* Service_Lookup(void* a, void* b);
-int NpcRoute_IsHeadPending(void* svc, GObj* id);
-void NpcPath_RequestRoute(Route* r, Ai* t, int node);
-void NpcAi_ApproachSearch(Npc* self);
-void NpcAi_RequestMode(void* brain, int mode, int arg);
-void NpcAi_SetMovementState(Npc* self, int a, int b);
-unsigned char NpcAttack_CombatPosture(Npc* self);
-void NpcAi_CoverSearch(Npc* self);
-int WeaponInv_GetClip(Inv* inv, int slot);
-PNode* NpcPath_GetNode(int n);
-void Event_Construct(void*, void*);
-void Event_Send(void*, void*, int);
+int* cMessage_Name(Ev* ev);
+void* cSystemContainer_GetSystem(void* a, void* b);
+int cPathSystem_IsRequestBeingProcessed(void* svc, GObj* id);
+void cPathNavigator_Request_cVectorR_int(Route* r, Ai* t, int node);
+void cNPC_MoveToAttackNode(Npc* self);
+void cStateMachine_ChangeState(void* brain, int mode, int arg);
+void cNPC_SetMoveMode(Npc* self, int a, int b);
+unsigned char cNPC_RecommendAIMode(Npc* self);
+void cNPC_MoveToCoverNode(Npc* self);
+int cWeapon_GetClipAmmo(Inv* inv, int slot);
+PNode* cAIPathData_GetNode(int n);
+void cMessage_ctor_cMessageNameR(void*, void*);
+void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 void cMessage_dtor(void*, int);
-unsigned char NpcAi_ModeAttack(Npc* self, Ev* ev);
+unsigned char cNPC_Attack(Npc* self, Ev* ev);
 }
 
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
 struct MsgB {
     void* vtable; void* type; int pad8[5]; int flags; unsigned char kind; char pad21[3];
-    MsgB(void* t) { Event_Construct(this, t); }
+    MsgB(void* t) { cMessage_ctor_cMessageNameR(this, t); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); }
 };
 struct MsgI : MsgB {
@@ -96,7 +96,7 @@ struct MsgI : MsgB {
 static inline void Sub(V* r, V* a, V* b) { __asm__ volatile("lqc2 vf1, 0x0(%1); lqc2 vf2, 0x0(%2); vsub.xyzw vf1, vf1, vf2; sqc2 vf1, 0x0(%0)" : : "r"(r), "r"(a), "r"(b) : "memory"); }
 static inline float Len(V* a) { float r = 0.0f; int t; __asm__ volatile("lqc2 $vf1, 0x0(%2); vmul.xyz $vf2, $vf1, $vf1; vmulax.w $ACC, $vf0, $vf2x; vmadday.w $ACC, $vf0, $vf2y; vmaddz.w $vf3, $vf0, $vf2z; vsqrt $Q, $vf3w; vwaitq; vaddq.x $vf4, $vf0, $Q; qmfc2.ni %1, $vf4; mtc1 %1, %0" : "+f"(r), "=&r"(t) : "r"(a) : "memory"); return r; }
 static inline float LenSq(V* a) { float r = 0.0f; int t; __asm__ volatile("lqc2 $vf1, 0x0(%2); vaddw.x $vf3, $vf0, $vf0w; vmul.xyz $vf2, $vf1, $vf1; vmulax.x $ACC, $vf3, $vf2x; vmadday.x $ACC, $vf3, $vf2y; vmaddz.x $vf4, $vf3, $vf2z; qmfc2.ni %1, $vf4; mtc1 %1, %0" : "+f"(r), "=&r"(t) : "r"(a) : "memory"); return r; }
-static inline void AskAmmo(Npc* self) { MsgI m(60, 0); Event_Send(&m, self->obj, 0); }
+static inline void AskAmmo(Npc* self) { MsgI m(60, 0); QueueMessage_cMessageR_cSystemP_int(&m, self->obj, 0); }
 static inline void QD(void* d0, const void* s0) { void* d = d0; __int128 q; const void* s = s0; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
 static inline bool OnPNode(Npc* self, PNode* pn) { int tn = self->target->node; return pn->node == tn; }
 static inline bool OnNode2(Route* r, Ai* t) { int tn = t->node; return r->node == tn; }
@@ -105,7 +105,7 @@ static inline unsigned char Engaged(Ai* ai) { unsigned char f = 0; if (ai->b0) {
 static inline bool Visited(Npc* self, int i) { bool r = 1; if (i >= 0) r = (self->bitsBC[i / 32] >> (i & 31)) & 1; return r; }
 static inline void Offset(Npc* self, V* p) { { M m = self->obj->GetMatrix(); M* pm = &m; QD(p, &pm->r[3]); } Sub(p, p, &self->target->pos); }
 
-unsigned char NpcAi_ModeAttack(Npc* self0, Ev* ev0)
+unsigned char cNPC_Attack(Npc* self0, Ev* ev0)
 {
     V d2;
     V d3;
@@ -114,7 +114,7 @@ unsigned char NpcAi_ModeAttack(Npc* self0, Ev* ev0)
     self = self0;
     ev = ev0;
     handled = 0;
-    t = *Event_GetType(ev);
+    t = *cMessage_Name(ev);
     if (t == D_004EE550) {
         if ((unsigned char)ev->kind == 2) {
             if (self->target->b3 && Engaged(self->target)) {
@@ -122,7 +122,7 @@ unsigned char NpcAi_ModeAttack(Npc* self0, Ev* ev0)
                 Offset(self, &d2);
                 len = Len(&d2);
                 if ((unsigned char)self->Busy() && len < 30.0f && OnNode2(self->route, self->target))
-                    NpcAi_SetMovementState(self, 0, 20);
+                    cNPC_SetMoveMode(self, 0, 20);
             }
             handled = 1;
         } else if ((unsigned char)ev->kind == 3) {
@@ -132,7 +132,7 @@ unsigned char NpcAi_ModeAttack(Npc* self0, Ev* ev0)
             if (Engaged(self->target)) {
                 if (!(unsigned char)self->Busy() && !(len <= 40.0f)) {
                     if (!Visited(self, self->target->node)) {
-                        NpcAi_ApproachSearch(self);
+                        cNPC_MoveToAttackNode(self);
                     } else if (OnNode(self)) {
                         if (self->target->Get()->ctrl && self->target->Get()->ctrl->IsHuman())
                             handled = 1;
@@ -146,7 +146,7 @@ unsigned char NpcAi_ModeAttack(Npc* self0, Ev* ev0)
                 low = 1;
                 {
                     Inv* inv = self->obj->inv;
-                    if (!inv->bA0 && !(WeaponInv_GetClip(inv, 6) < self->clipMin))
+                    if (!inv->bA0 && !(cWeapon_GetClipAmmo(inv, 6) < self->clipMin))
                         low = 0;
                 }
                 if (low)
@@ -158,12 +158,12 @@ unsigned char NpcAi_ModeAttack(Npc* self0, Ev* ev0)
                     Ai* tg = self->target;
                     int node = tg->node;
                     if (self->b158) {
-                        void* svc = Service_Lookup(g_Game, g_NpcRouteMgr);
-                        if (node >= 0 && !NpcRoute_IsHeadPending(svc, self->obj))
-                            NpcPath_RequestRoute(self->route, tg, node);
+                        void* svc = cSystemContainer_GetSystem(g_Game, g_NpcRouteMgr);
+                        if (node >= 0 && !cPathSystem_IsRequestBeingProcessed(svc, self->obj))
+                            cPathNavigator_Request_cVectorR_int(self->route, tg, node);
                     }
                 } else {
-                    NpcAi_ApproachSearch(self);
+                    cNPC_MoveToAttackNode(self);
                 }
             }
             self->fE8 = 40;
@@ -175,8 +175,8 @@ unsigned char NpcAi_ModeAttack(Npc* self0, Ev* ev0)
                 self->fEC = 0;
             handled = 1;
         } else if ((unsigned char)ev->kind == 8) {
-            if (NpcAttack_CombatPosture(self) == 2) {
-                NpcAi_CoverSearch(self);
+            if (cNPC_RecommendAIMode(self) == 2) {
+                cNPC_MoveToCoverNode(self);
                 self->pair = Pair(4, 2);
             }
         } else if ((unsigned char)ev->kind == 7) {
@@ -197,22 +197,22 @@ unsigned char NpcAi_ModeAttack(Npc* self0, Ev* ev0)
             self->SetMovement(1, 20);
         }
     } else {
-        int t2 = *Event_GetType(ev);
+        int t2 = *cMessage_Name(ev);
         if (t2 == D_004ED9B8) {
             if ((unsigned char)ev->kind == 5) {
                 float l2;
                 Offset(self, &d5);
                 l2 = LenSq(&d5);
                 if (Engaged(self->target) && (unsigned char)self->Busy() && l2 < 900.0f)
-                    NpcAi_SetMovementState(self, 0, 20);
+                    cNPC_SetMoveMode(self, 0, 20);
             } else if ((unsigned char)ev->kind == 1 || (unsigned char)ev->kind == 3) {
             } else if ((unsigned char)ev->kind == 2) {
                 if (self->pair.a == 4 && self->pair.b != 4)
-                    NpcAi_RequestMode(self->brain, self->pair.b, 0);
+                    cStateMachine_ChangeState(self->brain, self->pair.b, 0);
             } else if ((unsigned char)ev->kind == 7) {
                 if (ev->f28 == 10) {
                     int n = self->route->f50;
-                    if (n >= 0) { PNode* pn = NpcPath_GetNode(n); if (OnPNode(self, pn))
+                    if (n >= 0) { PNode* pn = cAIPathData_GetNode(n); if (OnPNode(self, pn))
                         self->SetMovement(2, 20); }
                 }
             }

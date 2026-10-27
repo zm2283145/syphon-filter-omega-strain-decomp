@@ -46,10 +46,10 @@ int rt_mutex_platform_get_thread_id(int *out)
 /* merge_units: begin func_00302648 */
 #define SCF_LOCK_PAIR(name, fn) int name(void) { fn(2); fn(3); return 0; }
 extern void Alloc_Lock(int n);
-extern void Alloc_Unlock(int n);
+extern void EnableIntc(int n);
 SCF_LOCK_PAIR(rt_mutex_platform_begin_critical_section, Alloc_Lock)
 /* merge_units: end func_00302648 */
 
 /* merge_units: begin func_00302670 */
-SCF_LOCK_PAIR(rt_mutex_platform_end_critical_section, Alloc_Unlock)
+SCF_LOCK_PAIR(rt_mutex_platform_end_critical_section, EnableIntc)
 /* merge_units: end func_00302670 */

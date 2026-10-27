@@ -34,7 +34,7 @@ Rel* std_vector_void_cSystem_ctor(Rel* r) {
     return r;
 }
 
-int cBeamMsg_v05(void) {
+int cBeamMsg_GetMsgId(void) {
     return D_00506218;
 }
 #pragma pop /* merge_units */
@@ -47,7 +47,7 @@ int cBeamMsg_v05(void) {
 
 /* Clone a network message. */
 extern "C" { char D_004A93C0[] = "BeamMsg.hh"; }
-DEFINE_NET_MSG_CLONE(cBeamMsg_v01, 0x28, D_004A93C0, 0x19, D_004DCF30,
+DEFINE_NET_MSG_CLONE(cBeamMsg_Clone, 0x28, D_004A93C0, 0x19, D_004DCF30,
                      NMC_W(0x24))
 #pragma pop /* merge_units */
 /* merge_units: end func_00282740 */
@@ -57,16 +57,16 @@ DEFINE_NET_MSG_CLONE(cBeamMsg_v01, 0x28, D_004A93C0, 0x19, D_004DCF30,
 #include "loose01_types.h"
 
 extern int D_00506228;
-extern int GObj_IdentityA(void*);
+extern int cGOBJ_SOBJ_toInt(void*);
 
 int Script_cBeamMsg_Who(ScriptArg* args) {
-    return GObj_IdentityA(((PtrMsg*)args[0].p)->who);
+    return cGOBJ_SOBJ_toInt(((PtrMsg*)args[0].p)->who);
 }
 
-void ScriptType_cBeamMsg_Init(void) {
+void cBeamMsg_SOBJ_init(void) {
 }
 
-int cBeamMsg_v03(void) {
+int cBeamMsg_getSOBJClassId(void) {
     return D_00506228;
 }
 #pragma pop /* merge_units */
@@ -78,19 +78,19 @@ typedef struct { void* vt; char pad[0x1C]; unsigned char flag; char pad21[3]; ch
 extern char D_00506210[];
 extern char D_004DCF30[];
 extern char D_004DCF10[];
-void Event_Construct(Ev_A080* e, void* type);
-void NetStream_ReadObject(void* p);
-void Event_Send(Ev_A080* e, void* target, int a);
+void cMessage_ctor_cMessageNameR(Ev_A080* e, void* type);
+void cNetMsg_GetGOBJ(void* p);
+void QueueMessage_cMessageR_cSystemP_int(Ev_A080* e, void* target, int a);
 void cMessage_dtor(Ev_A080* e, int f);
 void cBeamMsg_NetReceive(void* target)
 {
     Ev_A080 e;
-    Event_Construct(&e, D_00506210);
+    cMessage_ctor_cMessageNameR(&e, D_00506210);
     e.vt = D_004DCF30;
-    NetStream_ReadObject(e.m24);
+    cNetMsg_GetGOBJ(e.m24);
     e.flag = 1;
     if (target)
-        Event_Send(&e, target, 0);
+        QueueMessage_cMessageR_cSystemP_int(&e, target, 0);
     e.vt = D_004DCF10;
     cMessage_dtor(&e, 0);
 }
@@ -101,7 +101,7 @@ void cBeamMsg_NetReceive(void* target)
 #pragma push /* merge_units */
 extern void cNetMsg_PutGOBJ(void*);
 
-void cBeamMsg_v04(PtrMsg* self) {
+void cBeamMsg_Pack(PtrMsg* self) {
     cNetMsg_PutGOBJ(self->who);
 }
 #pragma pop /* merge_units */

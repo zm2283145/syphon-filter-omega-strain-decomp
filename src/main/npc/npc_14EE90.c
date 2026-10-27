@@ -26,7 +26,7 @@ static inline Tgt_EE90* H_Get(H_EE90* o)
     if (!z && n->key != o->key) ok = 0;
     return ok ? n : 0;
 }
-Tgt_EE90* NpcLook_FindFacingObject(NPC_EE90* self)
+Tgt_EE90* cNPC_GetMostDenseLookAtGobj(NPC_EE90* self)
 {
     N_EE90* it;
     N_EE90* end;
@@ -61,18 +61,18 @@ typedef struct Raw4 { int* p; } Raw4;
 typedef struct PNode { char pad[0x7C]; int kind; } PNode;
 typedef struct Self14 { char pad[0x160]; int f160; } Self14;
 typedef struct Grp { char pad[0x8]; char* arr; } Grp;
-extern char* NpcPath_GetNode(int id);
+extern char* cAIPathData_GetNode(int id);
 extern int* std_vector_imp_tNodeLink_begin_void(void* c);
 extern int* std_vector_imp_tNodeLink_end_void(void* c);
 extern void std_vector_tNodeLink_pointer2iterator_tNodeLinkPR(It8* out, void* c, int** raw);
 extern void std_vector_int_begin(Raw4* out, void* c);
 extern void std_vector_int_end_void(Raw4* out, void* c);
 extern void cArray_int_ConstIterator_ctor(It4* out, Raw4* raw);
-extern void NpcLook_AddPoint(Self14* self, PNode* n, int x, float f);
+extern void cNPC_AddLookAt(Self14* self, PNode* n, int x, float f);
 extern Grp* D_004FFBE8;
 static inline unsigned char ne8(It8 a, It8 b) { return !(a.p == b.p); }
 static inline unsigned char ne4(It4 a, It4 b) { return !(a.p == b.p); }
-void NpcLook_AddNodePoints(Self14* self, int kind, int path, int skip, float f) {
+void cNPC_AddLinkedNodesToLookAt(Self14* self, int kind, int path, int skip, float f) {
     It8 it1;
     It4 it2;
     It8 t84;
@@ -85,7 +85,7 @@ void NpcLook_AddNodePoints(Self14* self, int kind, int path, int skip, float f) 
     Raw4 raw68;
     Raw4 raw64;
     if (path >= 0) {
-        void* c = NpcPath_GetNode(path) + 0x68;
+        void* c = cAIPathData_GetNode(path) + 0x68;
         raw70 = std_vector_imp_tNodeLink_begin_void(c);
         std_vector_tNodeLink_pointer2iterator_tNodeLinkPR(&b78, c, &raw70);
         t84.p = b78.p;
@@ -93,8 +93,8 @@ void NpcLook_AddNodePoints(Self14* self, int kind, int path, int skip, float f) 
         while ((raw6C = std_vector_imp_tNodeLink_end_void(c), std_vector_tNodeLink_pointer2iterator_tNodeLinkPR(&end1, c, &raw6C), !(it1.p == end1.p))) {
             int id = *it1.p;
             if (id != skip) {
-                PNode* n = (PNode*)NpcPath_GetNode(id);
-                if (kind < 0 || kind == n->kind) NpcLook_AddPoint(self, n, self->f160, f);
+                PNode* n = (PNode*)cAIPathData_GetNode(id);
+                if (kind < 0 || kind == n->kind) cNPC_AddLookAt(self, n, self->f160, f);
             }
             it1.p += 2;
         }
@@ -104,7 +104,7 @@ void NpcLook_AddNodePoints(Self14* self, int kind, int path, int skip, float f) 
         cArray_int_ConstIterator_ctor(&t80, &raw68);
         it2 = t80;
         while ((std_vector_int_end_void(&raw64, c), cArray_int_ConstIterator_ctor(&end2, &raw64), !(it2.p == end2.p))) {
-            NpcLook_AddPoint(self, (PNode*)NpcPath_GetNode(*it2.p), self->f160, f);
+            cNPC_AddLookAt(self, (PNode*)cAIPathData_GetNode(*it2.p), self->f160, f);
             it2.p += 1;
         }
     }

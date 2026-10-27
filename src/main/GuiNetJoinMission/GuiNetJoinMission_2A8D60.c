@@ -14,44 +14,44 @@ extern "C" {
 extern Mgr_002A8D60* D_004FFC04;
 extern char* D_0048BBD8;
 extern char* D_0048BBE0;
-void GuiScreen_Navigate(S_002A8D60* self, int a);
+void GuiLobbyScreen_PushLobbyScreen(S_002A8D60* self, int a);
 int GuiMissionLobbyScreen_GetDisplayMode(S_002A8D60* self);
 void GuiMissionLobbyScreen_SetDisplayMode(S_002A8D60* self, int a);
-void* DME_GetLobby(void);
+void* cDME_GetLobby(void);
 void SFOLobby_LobbySetDisplay(void* g, int a);
-char* Loc_LookupText(char* key);
+char* nGlobalization_GetString_charP(char* key);
 void GuiTextWidget_SetText(void* w, char* s, int a);
 void func_0033D800(S_002A8D60* self);
-int GuiMenuScreen_HandleEvent(S_002A8D60* self, void* w, int msg, int sub, char* text);
+int GuiMissionLobbyScreen_onMessage(S_002A8D60* self, void* w, int msg, int sub, char* text);
 }
-extern "C" int GuiNetJoinMission_HandleEvent(S_002A8D60* self, void* w, int msg, int sub, char* text)
+extern "C" int GuiNetJoinMission_onMessage(S_002A8D60* self, void* w, int msg, int sub, char* text)
 {
     unsigned short m = msg;
     if (m == 0x1A && sub == 0xB) {
-        GuiScreen_Navigate(self, 1);
+        GuiLobbyScreen_PushLobbyScreen(self, 1);
         return 1;
     }
     if (m == 2) {
         if (w == self->p164) {
             D_004FFC04->f268 = 2;
-            GuiScreen_Navigate(self, 5);
+            GuiLobbyScreen_PushLobbyScreen(self, 5);
             return 1;
         }
         if (w == self->p160) {
             if ((unsigned char)GuiMissionLobbyScreen_GetDisplayMode(self) == 2) {
                 char* t;
                 GuiMissionLobbyScreen_SetDisplayMode(self, 0);
-                if (DME_GetLobby())
-                    SFOLobby_LobbySetDisplay(DME_GetLobby(), 1);
-                t = Loc_LookupText(D_0048BBD8);
+                if (cDME_GetLobby())
+                    SFOLobby_LobbySetDisplay(cDME_GetLobby(), 1);
+                t = nGlobalization_GetString_charP(D_0048BBD8);
                 if (t && self->p160)
                     GuiTextWidget_SetText(self->p160, t, 0);
             } else {
                 char* t;
                 GuiMissionLobbyScreen_SetDisplayMode(self, 2);
-                if (DME_GetLobby())
-                    SFOLobby_LobbySetDisplay(DME_GetLobby(), 0);
-                t = Loc_LookupText(D_0048BBE0);
+                if (cDME_GetLobby())
+                    SFOLobby_LobbySetDisplay(cDME_GetLobby(), 0);
+                t = nGlobalization_GetString_charP(D_0048BBE0);
                 if (t && self->p160)
                     GuiTextWidget_SetText(self->p160, t, 0);
             }
@@ -74,7 +74,7 @@ extern "C" int GuiNetJoinMission_HandleEvent(S_002A8D60* self, void* w, int msg,
         else if (w == self->p168)
             GuiMissionLobbyScreen_SetDisplayMode(self, 0);
     }
-    return GuiMenuScreen_HandleEvent(self, w, msg, sub, text);
+    return GuiMissionLobbyScreen_onMessage(self, w, msg, sub, text);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002A8D60 */
@@ -84,7 +84,7 @@ extern "C" int GuiNetJoinMission_HandleEvent(S_002A8D60* self, void* w, int msg,
 #include "active_flag_release.h"
 
 /* Stop and release when active. */
-DEFINE_ACTIVE_FLAG_RELEASE(GuiNetJoinMission_Deactivate, SFOLobby_LeaveRoom)
+DEFINE_ACTIVE_FLAG_RELEASE(GuiNetJoinMission_Deactivate, SFOLobby_LobbyScreenExit)
 #pragma pop /* merge_units */
 /* merge_units: end func_002A8FD0 */
 
@@ -106,23 +106,23 @@ extern char* D_004FFC04;
 #endif /* merge_units */
 #define D_004FFC04 (*(char **)&D_004FFC04) /* merge_units */
 
-void App_CardWaitPoll();
+void cGameFrontEnd_LobbyCallback();
 #if 0 /* merge_units */
-Lobby2A* DME_GetLobby(void);
+Lobby2A* cDME_GetLobby(void);
 #endif /* merge_units */
-#define DME_GetLobby() ((Lobby2A *)DME_GetLobby()) /* merge_units */
+#define cDME_GetLobby() ((Lobby2A *)cDME_GetLobby()) /* merge_units */
 
 void SFOLobby_MissionScreenExit(Lobby2A*);
-int SFOLobby_JoinRoom(Lobby2A*, void (*)(), void*, void*, void*);
-int GuiScreen_GetLobbyString(W2A9030*, int, int, int, int, int);
-void FrontEnd_OpenPopup(char*, int, char*, int, W2A9030*, int);
-VObj2A* GuiWidget_FindChildByName(W2A9030*, char*);
+int SFOLobby_LobbyScreenStart(Lobby2A*, void (*)(), void*, void*, void*);
+int GuiLobbyScreen_GetLobbyString(W2A9030*, int, int, int, int, int);
+void cGameFrontEnd_PushMessageBox(char*, int, char*, int, W2A9030*, int);
+VObj2A* GuiWidget_FindChild_charP(W2A9030*, char*);
 #if 0 /* merge_units */
 void GuiTextWidget_SetText(VObj2A*, char*, int);
 #endif /* merge_units */
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((void *)(a0), (a1), (a2))) /* merge_units */
 
-char* Agent_GetSelected(void*, int);
+char* cGameSystem_GetAgentData(void*, int);
 #if 0 /* merge_units */
 void GuiMissionLobbyScreen_SetDisplayMode(W2A9030*, int);
 #endif /* merge_units */
@@ -134,9 +134,9 @@ void SFOLobby_LobbySetDisplay(Lobby2A*, int);
 #define SFOLobby_LobbySetDisplay(a0, a1) (SFOLobby_LobbySetDisplay((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-char* Loc_LookupText(char*);
+char* nGlobalization_GetString_charP(char*);
 #endif /* merge_units */
-#define Loc_LookupText(a0) (Loc_LookupText((a0))) /* merge_units */
+#define nGlobalization_GetString_charP(a0) (nGlobalization_GetString_charP((a0))) /* merge_units */
 
 }
 
@@ -144,35 +144,35 @@ char* Loc_LookupText(char*);
 extern "C" void GuiNetJoinMission_Activate(W2A9030* self)
 {
     if (!self->done) {
-        Lobby2A* l = DME_GetLobby();
+        Lobby2A* l = cDME_GetLobby();
         VObj2A* o;
         char* s;
         if (l) {
             if (l->state == 4) SFOLobby_MissionScreenExit(l);
-            if (!SFOLobby_JoinRoom(l, App_CardWaitPoll, self->mAC, self->mC8, self->mE4)) {
+            if (!SFOLobby_LobbyScreenStart(l, cGameFrontEnd_LobbyCallback, self->mAC, self->mC8, self->mE4)) {
                 char* g = D_004FFC04;
-                FrontEnd_OpenPopup(g, 2, D_004AB6B8, GuiScreen_GetLobbyString(self, 0x5A, 0, 0, 0, 0), self, 0xB);
+                cGameFrontEnd_PushMessageBox(g, 2, D_004AB6B8, GuiLobbyScreen_GetLobbyString(self, 0x5A, 0, 0, 0, 0), self, 0xB);
             }
         }
-        o = GuiWidget_FindChildByName(self, D_0048BBD0);
+        o = GuiWidget_FindChild_charP(self, D_0048BBD0);
         o = (o != 0 && o->v20(D_004A7520) != 0) ? o : 0;
         if (o) GuiTextWidget_SetText(o, D_004FFC04 + 0x1C8, 0);
-        o = GuiWidget_FindChildByName(self, D_0048BBC8);
+        o = GuiWidget_FindChild_charP(self, D_0048BBC8);
         o = (o != 0 && o->v20(D_004A7520) != 0) ? o : 0;
-        if (o) GuiTextWidget_SetText(o, Agent_GetSelected(g_Game, -1) + 0x95C, 0);
+        if (o) GuiTextWidget_SetText(o, cGameSystem_GetAgentData(g_Game, -1) + 0x95C, 0);
         GuiMissionLobbyScreen_SetDisplayMode(self, 0);
-        if (DME_GetLobby()) SFOLobby_LobbySetDisplay(DME_GetLobby(), 1);
-        s = Loc_LookupText(D_0048BBD8);
+        if (cDME_GetLobby()) SFOLobby_LobbySetDisplay(cDME_GetLobby(), 1);
+        s = nGlobalization_GetString_charP(D_0048BBD8);
         if (s && self->label) GuiTextWidget_SetText(self->label, s, 0);
         if (self->sub) self->sub->flag = 0;
         self->done = 1;
     }
 }
 #undef D_004FFC04 /* merge_units */
-#undef DME_GetLobby /* merge_units */
+#undef cDME_GetLobby /* merge_units */
 #undef GuiTextWidget_SetText /* merge_units */
 #undef GuiMissionLobbyScreen_SetDisplayMode /* merge_units */
 #undef SFOLobby_LobbySetDisplay /* merge_units */
-#undef Loc_LookupText /* merge_units */
+#undef nGlobalization_GetString_charP /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002A9030 */

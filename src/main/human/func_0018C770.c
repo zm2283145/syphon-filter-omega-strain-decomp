@@ -41,12 +41,12 @@ extern char D_004DAE10[];
 extern char D_0049DC10[];
 extern char g_LevelDirName[];
 extern unsigned char g_IsMultiplayer;
-void Resource_Construct(void* m);
-void FileMan_Release(void* part, int flags);
+void cFileMan_ctor_void(void* m);
+void cFileMan_dtor(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
-void Event_Send(void* msg, void* target, int flags);
-int Objective_GetLevelMissionNumber(void* o);
-void SoundAction_CtorVoice(void* action, int kind, char* name, int a, int b);
+void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int flags);
+int cAgentData_GetCommander(void* o);
+void cSndFx_SetSndFx(void* action, int kind, char* name, int a, int b);
 void SoundMsg_WrapAction(Msg_18C770* msg, void* action);
 }
 static inline bool HasCtl(Actor_18C770* a)
@@ -56,7 +56,7 @@ static inline bool HasCtl(Actor_18C770* a)
     return ok;
 }
 #pragma opt_propagation off
-extern "C" void Actor_BuildVoiceKey(Actor_18C770* actor, int b)
+extern "C" void cHuman_PlayQuip(Actor_18C770* actor, int b)
 {
     Act_18C770 act;
     char buf[32];
@@ -65,9 +65,9 @@ extern "C" void Actor_BuildVoiceKey(Actor_18C770* actor, int b)
     act.h24.v = -2;
     act.w20 = 0;
     pa = act.memberA;
-    Resource_Construct(pa);
+    cFileMan_ctor_void(pa);
     pb = act.memberB;
-    Resource_Construct(pb);
+    cFileMan_ctor_void(pb);
     p->id = -1;
     p->mask = -1;
     p->w20 = 0;
@@ -78,7 +78,7 @@ extern "C" void Actor_BuildVoiceKey(Actor_18C770* actor, int b)
     p->h184 = -1;
     p->w180 = 0;
     p->b186 = 0;
-    n = Objective_GetLevelMissionNumber(g_LevelDirName);
+    n = cAgentData_GetCommander(g_LevelDirName);
     if (n > 0) {
         Msg_18C770 m;
         int idx;
@@ -89,15 +89,15 @@ extern "C" void Actor_BuildVoiceKey(Actor_18C770* actor, int b)
             idx = 0;
         }
         sprintf(buf, D_0049DC10, n, b, idx + 1);
-        SoundAction_CtorVoice(&act, 4, buf, 0, 0);
+        cSndFx_SetSndFx(&act, 4, buf, 0, 0);
         SoundMsg_WrapAction(&m, &act);
         m.flag = 1;
-        Event_Send(&m, g_Game, 1);
+        QueueMessage_cMessageR_cSystemP_int(&m, g_Game, 1);
         m.vtbl = D_004DAE10;
-        FileMan_Release(m.partB, -1);
-        FileMan_Release(m.partA, -1);
+        cFileMan_dtor(m.partB, -1);
+        cFileMan_dtor(m.partA, -1);
         cMessage_dtor(&m, 0);
     }
-    FileMan_Release(pb, -1);
-    FileMan_Release(pa, -1);
+    cFileMan_dtor(pb, -1);
+    cFileMan_dtor(pa, -1);
 }

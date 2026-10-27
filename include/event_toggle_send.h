@@ -25,7 +25,7 @@ typedef struct ToggleSender {
 } ToggleSender;
 
 extern unsigned char g_IsMultiplayer;
-void Event_Construct(ToggleEventMsg* msg, void* type);
+void cMessage_ctor_cMessageNameR(ToggleEventMsg* msg, void* type);
 void cMessage_dtor(ToggleEventMsg* msg, int flags);
 
 #define DEFINE_EVENT_TOGGLE_SEND(name, typeSym, vtableSym, postFn, newState)  \
@@ -36,7 +36,7 @@ void cMessage_dtor(ToggleEventMsg* msg, int flags);
     {                                                                         \
         if (g_IsMultiplayer) {                                                     \
             ToggleEventMsg msg;                                               \
-            Event_Construct(&msg, typeSym);                                   \
+            cMessage_ctor_cMessageNameR(&msg, typeSym);                                   \
             msg.vtable = vtableSym;                                           \
             msg.target = -1;                                                  \
             msg.size = 0x40;                                                  \

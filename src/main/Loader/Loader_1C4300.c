@@ -47,12 +47,12 @@ static inline void merge_flush_func_001C4300(void) {}
 #pragma push /* merge_units */
 typedef struct { char unused; } Alloc; /* empty allocator object passed by value */
 
-extern String* String_Replace(String* str, int pos, int count, const char* first, const char* last, Alloc alloc);
+extern String* std_basic_string_char_char_traits_char_do_replace(String* str, int pos, int count, const char* first, const char* last, Alloc alloc);
 /* Replaces count characters at pos with the C string s. */
 String* std_basic_string_char_char_traits_char_replace_uint_uint_charP(String* str, int pos, int count, const char* s)
 {
     Alloc alloc;
-    return String_Replace(str, pos, count, s, s + strlen(s), alloc);
+    return std_basic_string_char_char_traits_char_do_replace(str, pos, count, s, s + strlen(s), alloc);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C4330(void) {}
@@ -64,13 +64,13 @@ static inline void merge_flush_func_001C4330(void) {}
 typedef struct { unsigned char isLong : 1; unsigned char len : 7; } ShortHdr;
 typedef struct { union { unsigned int word; ShortHdr s; } hdr; int longLen; char* longData; } SsoString;
 
-extern int String_Compare(SsoString* self, int pos, int n, const char* s, int len);
+extern int std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(SsoString* self, int pos, int n, const char* s, int len);
 
 /* Compare the entire string with a C string; retain the legacy symbol name. */
-int String_AssignCStr_1C43A0(SsoString* self, const char* s)
+int std_basic_string_char_char_traits_char_compare_charP(SsoString* self, const char* s)
 {
     int len = strlen(s);
-    return String_Compare(self, 0, (self->hdr.word & 1) ? self->longLen : (unsigned char)self->hdr.s.len, s, len);
+    return std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(self, 0, (self->hdr.word & 1) ? self->longLen : (unsigned char)self->hdr.s.len, s, len);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C43A0(void) {}

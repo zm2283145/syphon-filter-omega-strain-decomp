@@ -3,9 +3,9 @@
 extern char D_004B51B8[];
 extern char D_004B7770[];
 extern void Libc_Calloc();
+extern void Libc_Cosf();
 extern void Libc_Free();
-extern void Math_Cos();
-extern void Math_Sin();
+extern void Libc_Sinf();
 extern void memcpy();
 extern void memset();
 
@@ -25,9 +25,9 @@ void *D_004E1D3C[1] = { &memset };
 
 void *D_004E1D40[1] = { &memcpy };
 
-void *D_004E1D44[1] = { &Math_Cos };
+void *D_004E1D44[1] = { &Libc_Cosf };
 
-void *D_004E1D48[1] = { &Math_Sin };
+void *D_004E1D48[1] = { &Libc_Sinf };
 
 short D_004E1D4C[2] = { 0, 0 };
 

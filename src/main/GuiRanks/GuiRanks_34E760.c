@@ -29,22 +29,22 @@ typedef struct { char pad[8]; Entry36* entries; } EntryTable;
 typedef struct { char pad[0x48]; void* key; } Obj48;
 extern char g_Game[];
 extern int GuiTextListWidget_GetItemId(void* key);
-extern void* Agent_GetSelected(void* list, int index);
+extern void* cGameSystem_GetAgentData(void* list, int index);
 #if 0 /* merge_units */
 extern EntryTable* cAgentData_GetRanks(void);
 #endif /* merge_units */
 #define cAgentData_GetRanks() ((EntryTable *)cAgentData_GetRanks()) /* merge_units */
 
-extern void GuiPersonnelScreen_ShowItem(Obj48* o, int idx, int value);
+extern void GuiPersonnelScreen_SetupPreviewWidgets(Obj48* o, int idx, int value);
 /* Looks up the entry index for the key and applies its value. */
-void GuiRanks_Show(Obj48* o)
+void GuiRanks_ItemGainFocus(Obj48* o)
 {
     int idx = GuiTextListWidget_GetItemId(o->key);
     if (idx != -1) {
         Entry36* e;
-        Agent_GetSelected(g_Game, -1);
+        cGameSystem_GetAgentData(g_Game, -1);
         e = &cAgentData_GetRanks()->entries[idx];
-        GuiPersonnelScreen_ShowItem(o, idx, e->value);
+        GuiPersonnelScreen_SetupPreviewWidgets(o, idx, e->value);
     }
 }
 #undef cAgentData_GetRanks /* merge_units */

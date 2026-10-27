@@ -6,14 +6,14 @@
 #include "types.h"
 #include "player_types.h"
 
-extern void Component_BaseInit(void* self);
+extern void cGameGobjController_ctor(void* self);
 extern char D_004D9CF0[];  /* player component class table */
-extern void InputState_Ctor(PlayerInputState* input);
+extern void cPlayerControls_ctor(PlayerInputState* input);
 
-PlayerComponent* PlayerComponent_Construct(PlayerComponent* self) {
-    Component_BaseInit(self);
+PlayerComponent* cPlayer_ctor(PlayerComponent* self) {
+    cGameGobjController_ctor(self);
     self->vtable = D_004D9CF0;
-    InputState_Ctor(&self->input);
+    cPlayerControls_ctor(&self->input);
     self->unk1A0 = 0;
     self->unk1C0 = 0;
     self->unk1B4 = 0;

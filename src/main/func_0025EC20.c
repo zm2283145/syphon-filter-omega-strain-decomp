@@ -1,4 +1,4 @@
-/* VisionFx_DrawNoiseTiles: tiled quad draw. D_00539210..D8 are one struct global, so stores to one field make MW reload g_DrawMode for each ternary as retail does. The quad copy and identity matrix are GCC-style __asm__ volatile (no CSE across them). inline_depth(10) is needed so the nested inlines expand. */
+/* cScreenTile_Render: tiled quad draw. D_00539210..D8 are one struct global, so stores to one field make MW reload g_DrawMode for each ternary as retail does. The quad copy and identity matrix are GCC-style __asm__ volatile (no CSE across them). inline_depth(10) is needed so the nested inlines expand. */
 #pragma cplusplus on
 #pragma opt_loop_invariants off
 #pragma opt_strength_reduction off
@@ -48,14 +48,14 @@ extern int D_00538C64;
 extern char D_00538C68;
 extern V4_0025EC20 D_00539170;
 extern long long D_004BC1B0;
-void Renderer_BindTexture(void* m, int idx);
+void cTexMan_SetActive(void* m, int idx);
 void XLib_NewStrip(void* s);
 void XLib_NextBatchVert(void* s);
-void Vec4_Copy(V4_0025EC20* d, V4_0025EC20* s);
-void GuiBatch_AddVertexColor(V4_0025EC20* d, V4_0025EC20* s);
-float GuiBatch_AddVertexUV(void);
-V4_0025EC20* Vec4_Set(V4_0025EC20* o, float x, float y, float z, float w);
-void Renderer_FlushPrimitives(void* s);
+void cVector_opAssign(V4_0025EC20* d, V4_0025EC20* s);
+void tIRGBA_opAssign_tRGBAR(V4_0025EC20* d, V4_0025EC20* s);
+float tVifFloatToInt_short_4_Bias(void);
+V4_0025EC20* cVector_ctor_float_float_float_float(V4_0025EC20* o, float x, float y, float z, float w);
+void XLib_DrawSprites2(void* s);
 }
 #define D_00539224 (D_00539210.f24)
 #define D_00539228 (D_00539210.f28)
@@ -82,10 +82,10 @@ static inline void Emit_0025EC20(const V4c_0025EC20& pos, const V4c_0025EC20& co
     float u;
     XLib_NextBatchVert(g_Video);
     e = &RS_0025EC20->ents[D_00539210.f10];
-    Vec4_Copy(&e->pos[D_00539224 - 1], (V4_0025EC20*)&pos);
-    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V4_0025EC20*)&col);
-    u = uv.x + GuiBatch_AddVertexUV();
-    Vec4_Copy(&e->c34[D_00539224 - 1], Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
+    cVector_opAssign(&e->pos[D_00539224 - 1], (V4_0025EC20*)&pos);
+    tIRGBA_opAssign_tRGBAR(&e->c30[D_00539224 - 1], (V4_0025EC20*)&col);
+    u = uv.x + tVifFloatToInt_short_4_Bias();
+    cVector_opAssign(&e->c34[D_00539224 - 1], cVector_ctor_float_float_float_float(&tmp, u, uv.y + tVifFloatToInt_short_4_Bias(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 static inline unsigned char Prim_0025EC20(void) { if (g_DrawMode & 1) return 3; return 2; }
@@ -95,7 +95,7 @@ static inline void Setup_0025EC20(Arg_0025EC20* a, const V4_0025EC20* vp)
 {
     g_DrawMode = 5;
     D_005392D8 = D_004BC1B0;
-    Renderer_BindTexture(g_TextureMgr, a->tex);
+    cTexMan_SetActive(g_TextureMgr, a->tex);
     D_00538C60++;
     { Slot_0025EC20* s0 = SLOT_0025EC20(D_00538C60); s0->f2F6 = 1; }
     {
@@ -120,7 +120,7 @@ static inline void Setup_0025EC20(Arg_0025EC20* a, const V4_0025EC20* vp)
     D_00538C68 = 1;
 }
 
-extern "C" void VisionFx_DrawNoiseTiles(Arg_0025EC20* a)
+extern "C" void cScreenTile_Render(Arg_0025EC20* a)
 {
     int vp = (int)&D_00539170;
     int saved;
@@ -148,7 +148,7 @@ extern "C" void VisionFx_DrawNoiseTiles(Arg_0025EC20* a)
             Emit_0025EC20(V4c_0025EC20(x + a->dx, y - a->dy, 1e-8f, 1.0f), V4c_0025EC20(1.0f, 1.0f, 1.0f, a->alpha), V4c_0025EC20(1.0f, 1.0f, 1.0f, 0.0f));
         }
     }
-    Renderer_FlushPrimitives(g_Video);
+    XLib_DrawSprites2(g_Video);
     D_00538C68 = 1;
     D_00538C64--;
     D_00538C60--;

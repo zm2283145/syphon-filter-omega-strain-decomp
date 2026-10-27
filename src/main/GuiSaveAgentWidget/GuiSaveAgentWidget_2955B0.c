@@ -16,7 +16,7 @@
 
 struct VC002955B0 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(); virtual int v21(...); };
 extern "C" {
-char * Agent_GetSelected(...);                    
+char * cGameSystem_GetAgentData(...);                    
 int GuiSaveAgentWidget_HandleEvent(...);                            
 extern char g_Game;
 }
@@ -25,7 +25,7 @@ extern "C" void GuiCommandCenter_Exit(char * arg0) {
     char * temp_v0;
 
     F_(arg0, 0x2F4, signed char) = 1;
-    temp_v0 = Agent_GetSelected(&g_Game, -1);
+    temp_v0 = cGameSystem_GetAgentData(&g_Game, -1);
     var_v1 = F_(temp_v0, 0xB73, unsigned char) != 0;
     if (var_v1 == 0) {
         var_v1 = F_(temp_v0, 0xB72, unsigned char) != 0;
@@ -52,20 +52,20 @@ struct S_00295640 {
 extern "C" {
 extern Ui_00295640* D_004FFC04;
 extern char D_004AA288[];
-void GuiCommandCenter_OpenPanel(S_00295640* self, int a);
-void GuiCommandCenter_MoveSelection(S_00295640* self, unsigned char a);
-void* Gui_GetScreenStack(void);
-void GuiWidget_SendEvent(void* a, void* b, int c, int d, int e);
-int GuiScreen_GetLobbyString(S_00295640* self, int a, int b, int c, int d, int e);
-int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_00295640* d, int e);
+void GuiCommandCenter_ActivateGroup(S_00295640* self, int a);
+void GuiCommandCenter_MoveButtonFocus(S_00295640* self, unsigned char a);
+void* Gui_Canvas(void);
+void GuiWidget_SendMessage(void* a, void* b, int c, int d, int e);
+int GuiLobbyScreen_GetLobbyString(S_00295640* self, int a, int b, int c, int d, int e);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, int c, S_00295640* d, int e);
 #if 0 /* merge_units */
 void GuiCommandCenter_Exit(S_00295640* self);
 #endif /* merge_units */
 #define GuiCommandCenter_Exit(a0) ((void)GuiCommandCenter_Exit((char *)(a0))) /* merge_units */
 
-int GuiScreen_HandleInput(S_00295640* self, Ev_00295640* ev);
+int GuiLobbyScreen_onInput(S_00295640* self, Ev_00295640* ev);
 }
-extern "C" int GuiCommandCenter_HandleInput(S_00295640* self, Ev_00295640* ev)
+extern "C" int GuiCommandCenter_onInput(S_00295640* self, Ev_00295640* ev)
 {
     bool down = ev->type == 1 && ev->f2 == 0 && ev->f6 == 0;
     if (down) {
@@ -74,15 +74,15 @@ extern "C" int GuiCommandCenter_HandleInput(S_00295640* self, Ev_00295640* ev)
         case 4:
         case 8:
             if (self->b1D4)
-                GuiCommandCenter_OpenPanel(self, 0);
-            GuiCommandCenter_MoveSelection(self, ev->btn == 4 ? 4 : 8);
+                GuiCommandCenter_ActivateGroup(self, 0);
+            GuiCommandCenter_MoveButtonFocus(self, ev->btn == 4 ? 4 : 8);
             return 1;
         }
         if (b == 0x40 && !self->b1D4 && self->f1CC != -1) {
             if (self->b178[self->f1CC])
-                GuiCommandCenter_OpenPanel(self, self->c1B4[self->f1CC]);
+                GuiCommandCenter_ActivateGroup(self, self->c1B4[self->f1CC]);
             else
-                GuiWidget_SendEvent(self->p118[self->f1CC], Gui_GetScreenStack(), 0x10, 4, 0);
+                GuiWidget_SendMessage(self->p118[self->f1CC], Gui_Canvas(), 0x10, 4, 0);
             return 1;
         }
         if (b == 0x10) {
@@ -90,29 +90,29 @@ extern "C" int GuiCommandCenter_HandleInput(S_00295640* self, Ev_00295640* ev)
             if (st == 4) {
                 self->f2E0 = 0;
                 if (self->f1CC == 0x14)
-                    GuiCommandCenter_OpenPanel(self, 0);
+                    GuiCommandCenter_ActivateGroup(self, 0);
                 else
-                    GuiCommandCenter_OpenPanel(self, 1);
+                    GuiCommandCenter_ActivateGroup(self, 1);
                 return 1;
             }
             if (st == 5) {
                 self->f2E4 = 0;
-                GuiCommandCenter_OpenPanel(self, 4);
+                GuiCommandCenter_ActivateGroup(self, 4);
                 return 1;
             }
             if (st == 0) {
                 Ui_00295640* ui = D_004FFC04;
                 if (ui->b30 && !ui->b32)
-                    self->f2F8 = FrontEnd_OpenPopup(ui, 5, D_004AA288, GuiScreen_GetLobbyString(self, 0xE, 0, 0, 0, 0), self, 0x19);
+                    self->f2F8 = cGameFrontEnd_PushMessageBox(ui, 5, D_004AA288, GuiLobbyScreen_GetLobbyString(self, 0xE, 0, 0, 0, 0), self, 0x19);
                 else
                     GuiCommandCenter_Exit(self);
             } else {
-                GuiCommandCenter_OpenPanel(self, 0);
+                GuiCommandCenter_ActivateGroup(self, 0);
             }
             return 1;
         }
     }
-    return GuiScreen_HandleInput(self, ev);
+    return GuiLobbyScreen_onInput(self, ev);
 }
 #undef GuiCommandCenter_Exit /* merge_units */
 #pragma pop /* merge_units */

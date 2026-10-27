@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00383020 */
 #pragma push /* merge_units */
@@ -44,7 +44,7 @@ int operator_delete(char * );
 extern char D_004BC2B8;
 extern unsigned char g_ProfileLockEnabled;
 }
-extern "C" char * TexMan_Destroy(char * arg0, long long arg1) {
+extern "C" char * cTexMan_dtor(char * arg0, long long arg1) {
     int temp_s2;
     char * temp_a0;
     char * temp_a0_2;
@@ -57,7 +57,7 @@ extern "C" char * TexMan_Destroy(char * arg0, long long arg1) {
         temp_s2 = F_(arg0, 0x8, int);
         {
             AllocGuard g;
-        Mem_Free(0, temp_s2, &D_004BC2B8, 0x6E);
+        cMemMan_Deallocate(0, temp_s2, &D_004BC2B8, 0x6E);
         }
         temp_a0 = arg0 + 0x434;
         if (temp_a0 != NULL) {
@@ -92,7 +92,7 @@ static inline void merge_flush_func_00383020(void) {}
 
 
 extern "C" {
-void ObjectList_EraseRange_383420(ListNode_383150** result, List_383150* list,
+void std_list_deleter_int_erase_listdeleter_listdeleter(ListNode_383150** result, List_383150* list,
                    ListNode_383150** first, ListNode_383150** last);
 #if 0 /* merge_units */
 int operator_delete(void* allocation);
@@ -111,7 +111,7 @@ extern "C" List_383150* std_list_int_dtor(List_383150* self, short deleteFlag)
                 ListNode_383150* last;
                 last = (ListNode_383150*)&self->sentinelPrev;
                 first = self->first;
-                ObjectList_EraseRange_383420(&result, self, &first, &last);
+                std_list_deleter_int_erase_listdeleter_listdeleter(&result, self, &first, &last);
             }
         }
         if (deleteFlag > 0)
@@ -137,11 +137,11 @@ extern char D_004BC2B8[];
 
 extern int D_00539328;
 extern int D_00539330;
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 void std_list_deleter_int_ctor(void* self);
 int AddIntcHandler(int cause, void* handler, int next);
 void cTexMan_VIF1InterruptCB(void);
-int TexCache_LoadErrorTexture(void* self);
+int cTexMan_UseMrYuckTexture(void* self);
 }
 
 static inline void MemClear_3831(void* d0, int n0) { int n = n0; void* dst = d0;
@@ -211,7 +211,7 @@ struct TexCache {
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
 /* TexCache constructor: allocate the entry table, hook interrupt 5, reset VRAM state. */
-extern "C" TexCache* TexMan_Construct(TexCache* self, unsigned int base, int cap)
+extern "C" TexCache* cTexMan_ctor(TexCache* self, unsigned int base, int cap)
 {
     int i;
     std_list_deleter_int_ctor(self->m41C);
@@ -225,7 +225,7 @@ extern "C" TexCache* TexMan_Construct(TexCache* self, unsigned int base, int cap
         int sz = self->cap * 4;
         {
             AllocGuard g;
-            p = (TexEntry**)Mem_Alloc(0, sz, D_004BC2B8, 0x3A);
+            p = (TexEntry**)cMemMan_Allocate(0, sz, D_004BC2B8, 0x3A);
         }
         self->entries = p;
     }
@@ -237,7 +237,7 @@ extern "C" TexCache* TexMan_Construct(TexCache* self, unsigned int base, int cap
     self->u15 = 0;
     self->u16 = 1;
     self->handler = AddIntcHandler(5, (void*)cTexMan_VIF1InterruptCB, 0);
-    Alloc_Unlock(5);
+    EnableIntc(5);
     *(volatile int*)0x10003010 = 4;
     {
         TexEntry** p = self->entries;
@@ -259,7 +259,7 @@ extern "C" TexCache* TexMan_Construct(TexCache* self, unsigned int base, int cap
     self->u488 = 0;
     self->u489 = 0;
     MemClear_3831(self->zero440, 0x40);
-    TexCache_LoadErrorTexture(self);
+    cTexMan_UseMrYuckTexture(self);
     return self;
 }
 #undef D_004BC2B8 /* merge_units */

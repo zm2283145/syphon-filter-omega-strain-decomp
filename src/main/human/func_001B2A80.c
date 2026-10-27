@@ -6,22 +6,22 @@ typedef struct M4 { V4 r[4]; } M4;
 typedef struct Msg { void* vtable; char pad[0x1C]; unsigned char kind; char pad2[3]; unsigned char b24; char pad3[0xB]; char data[0x40]; } Msg;
 extern "C" {
 extern char g_TeleportMsgClass[], D_004D9360[];
-extern float Vec4_GetX(V4*);
-extern float Vec4_GetY(V4*);
-extern float Vec4_GetZ(V4*);
-extern void Mtx_MakeAxisRotation(M4*, float, float, float, float);
-extern void Event_Construct(Msg* m, void* type);
-extern int TeleportMsg_IsMode3(Msg* m);
+extern float cVector_X_void(V4*);
+extern float cVector_Y_void(V4*);
+extern float cVector_Z_void(V4*);
+extern void cMatrix_SetWithAxisAngle(M4*, float, float, float, float);
+extern void cMessage_ctor_cMessageNameR(Msg* m, void* type);
+extern int cMoveMsg_Template_1_HasDeltaPosition(Msg* m);
 extern void* func_00133EC0(void* obj);
 extern void cVector_Copy_WSet0(V4* out, void* v);
-extern void Vec4_CopyAsPoint(V4* out, void* v);
-extern void Mtx_SetRotationTranslation(void* data, void* obj, V4* v);
-extern void Event_Send(Msg* m, void* target, int immediate);
+extern void cVector_Copy_WSet1(V4* out, void* v);
+extern void cMatrix_ctor_cMatrixR_cVectorR(void* data, void* obj, V4* v);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg* m, void* target, int immediate);
 extern void cMessage_dtor(Msg* m, int flags);
 void cNPCInfoObject_ctor(int* shared);
 int cNPCInfoObject_IsActiveOnRemote(int* shared, void* id);
 void cNPCInfoObject_dtor(int* shared, short flags);
-void Actor_BasePreLogic(struct Npc* self, float dt);
+void cGOBJ_CriticalNextFrame(struct Npc* self, float dt);
 void Npc_PreUpdate(struct Npc* self, float dt);
 }
 
@@ -73,25 +73,25 @@ extern "C" void Npc_PreUpdate(Npc* self, float dt)
             axis.y = 0.0f;
             axis.z = 1.0f;
             axis.w = 1.0f;
-            Mtx_MakeAxisRotation(&mtx, Vec4_GetX(&axis), Vec4_GetY(&axis), Vec4_GetZ(&axis), ang);
+            cMatrix_SetWithAxisAngle(&mtx, cVector_X_void(&axis), cVector_Y_void(&axis), cVector_Z_void(&axis), ang);
             pos.w = 1.0f;
             V4_Copy(&mtx.r[3], &pos);
             {
                 if (AllFree(self)) {
                     m = &msg;
-                    Event_Construct(m, g_TeleportMsgClass);
+                    cMessage_ctor_cMessageNameR(m, g_TeleportMsgClass);
                     m->vtable = D_004D9360;
                     m->b24 = 2;
-                    if (TeleportMsg_IsMode3(m)) {
+                    if (cMoveMsg_Template_1_HasDeltaPosition(m)) {
                         cVector_Copy_WSet0(&a2, func_00133EC0(&mtx));
                         v = &a2;
                     } else {
-                        Vec4_CopyAsPoint(&b2, func_00133EC0(&mtx));
+                        cVector_Copy_WSet1(&b2, func_00133EC0(&mtx));
                         v = &b2;
                     }
-                    Mtx_SetRotationTranslation(m->data, &mtx, v);
+                    cMatrix_ctor_cMatrixR_cVectorR(m->data, &mtx, v);
                     msg.kind = 1;
-                    Event_Send(&msg, self, 1);
+                    QueueMessage_cMessageR_cSystemP_int(&msg, self, 1);
                     msg.vtable = D_004D9360;
                     cMessage_dtor(&msg, 0);
                 }
@@ -100,5 +100,5 @@ extern "C" void Npc_PreUpdate(Npc* self, float dt)
         }
         cNPCInfoObject_dtor(&shared, -1);
     }
-    Actor_BasePreLogic(self, dt);
+    cGOBJ_CriticalNextFrame(self, dt);
 }

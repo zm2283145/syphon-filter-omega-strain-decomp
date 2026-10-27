@@ -52,22 +52,22 @@ extern __int128* D_0048B460;
 extern Tab_C390 D_0048B500[][11];
 extern unsigned int D_00571300;
 
-extern int Appearance_GetBodyKind(void* a);
-extern signed char Appearance_GetToneDigit(void* a);
-extern void String_Copy(char* dst, const char* src);
-extern void Skel_ApplyScalePreset(Skel_C390* s, int preset);
+extern int SKL_FindSex(void* a);
+extern signed char SKL_FindRace(void* a);
+extern void Libc_Strcpy(char* dst, const char* src);
+extern void cMan_SetBoneSet(Skel_C390* s, int preset);
 extern int sprintf(char* buf, const char* fmt, ...);
-extern void* Gui_GetScreenStack(void);
+extern void* Gui_Canvas(void);
 extern void GuiTextWidget_SetText(W_C390* w, char* text, int flags);
-extern void GuiWidget_SendEvent(S_C390* o, void* w, int kind, int v, int f);
-extern void GuiAgentCreate_Randomize(S_C390* o, int dir, int b);
-extern int AgentPacking_StepMeshA(void* db, int dir, __int128 key, int cur, int slot, int body, int tone, void* app, void* x);
-extern int AgentPacking_StepMeshB(void* db, int dir, __int128 key, int cur, int slot, int body, int tone, void* app, void* x);
-extern int AgentPacking_StepColour(void* db, int dir, __int128 a, __int128 b, unsigned int cur, int slot, unsigned int body, unsigned int tone, void* app, void* x);
+extern void GuiWidget_SendMessage(S_C390* o, void* w, int kind, int v, int f);
+extern void GuiAgentCreate_UpdateClones(S_C390* o, int dir, int b);
+extern int Monster_FindNextPart(void* db, int dir, __int128 key, int cur, int slot, int body, int tone, void* app, void* x);
+extern int Monster_FindNextSamePart(void* db, int dir, __int128 key, int cur, int slot, int body, int tone, void* app, void* x);
+extern int FindNextTexture__7MonsterFi11UiUiUiUiR3SKLR8ManParts(void* db, int dir, __int128 a, __int128 b, unsigned int cur, int slot, unsigned int body, unsigned int tone, void* app, void* x);
 extern int AgentPacking_StepTexture(void* db, int dir, __int128 a, __int128 b, unsigned int cur, int slot, unsigned int body, int tone, void* app, void* x);
-extern int AgentPartCache_FindTexture(void* db, __int128 key);
-extern int AgentPartCache_FindMesh(void* db, __int128 key);
-extern int ActorModel_StepMorph(Skel_C390* s, int dir, int idx, int body);
+extern int FindTextureNumber__7MonsterF1(void* db, __int128 key);
+extern int FindPartNumber__7MonsterF1(void* db, __int128 key);
+extern int cMan_NextFaceShape(Skel_C390* s, int dir, int idx, int body);
 
 static inline int kc390eq(__int128 m, __int128 a, __int128 b) {
     __int128 r;
@@ -85,7 +85,7 @@ static inline void FindIdx_C390(S_C390* self) {
     __int128 mask = kc390q(0xFFFFFFFF00);
     Key_C390 key;
     int i;
-    String_Copy(key.s, D_004A9A28);
+    Libc_Strcpy(key.s, D_004A9A28);
     for (i = 0; i < self->tbl->skel.count; i++) {
         if (kc390eq(mask, key.q, self->tbl->skel.e[i].a)) {
             self->idx = i;
@@ -96,15 +96,15 @@ static inline void FindIdx_C390(S_C390* self) {
 
 static inline void Slider_C390(S_C390* o, W_C390* w, int kind, int v, int f)
 {
-    if (w) GuiWidget_SendEvent(o, w, kind, v, f);
+    if (w) GuiWidget_SendMessage(o, w, kind, v, f);
 }
 
-void GuiAgentCreate_StepOption(S_C390* self, int back, int fwd)
+void GuiAgentCreate_UserInterface(S_C390* self, int back, int fwd)
 {
     int dir = 1;
-    self->row = Appearance_GetBodyKind(self->tbl->skel.app);
+    self->row = SKL_FindSex(self->tbl->skel.app);
     self->tbl->skel.body = self->row;
-    self->tone = Appearance_GetToneDigit(self->tbl->skel.app);
+    self->tone = SKL_FindRace(self->tbl->skel.app);
     self->tbl->skel.tone = self->tone;
     if ((back || fwd) && self->cur < 11 && self->count) {
         Skel_C390* s;
@@ -115,30 +115,30 @@ void GuiAgentCreate_StepOption(S_C390* self, int back, int fwd)
         if (self->mode == 0) {
             int r;
             s = &self->tbl->skel;
-            r = AgentPacking_StepMeshA(g_AgentPartCache, dir, s->e[self->slot].a, self->vE0, self->slot, self->row, self->tone, s->app, s->x1EC0);
+            r = Monster_FindNextPart(g_AgentPartCache, dir, s->e[self->slot].a, self->vE0, self->slot, self->row, self->tone, s->app, s->x1EC0);
             if (r != -1) {
                 self->vE0 = r;
-                self->vE4 = AgentPartCache_FindTexture(g_AgentPartCache, self->tbl->skel.e[self->slot].b);
+                self->vE4 = FindTextureNumber__7MonsterF1(g_AgentPartCache, self->tbl->skel.e[self->slot].b);
             }
         } else if (self->mode == 7) {
             Skel_C390* s = &self->tbl->skel;
-            int r = AgentPacking_StepMeshB(g_AgentPartCache, dir, s->e[self->slot].a, self->vE0, self->slot, self->row, self->tone, s->app, s->x1EC0);
+            int r = Monster_FindNextSamePart(g_AgentPartCache, dir, s->e[self->slot].a, self->vE0, self->slot, self->row, self->tone, s->app, s->x1EC0);
             if (r != -1) {
                 self->vE0 = r;
-                self->vE4 = AgentPartCache_FindTexture(g_AgentPartCache, self->tbl->skel.e[self->slot].b);
+                self->vE4 = FindTextureNumber__7MonsterF1(g_AgentPartCache, self->tbl->skel.e[self->slot].b);
             }
         } else if (self->mode == 1 || self->mode == 2) {
             int slot = self->slot;
             int r;
             s = &self->tbl->skel;
             if (slot < self->tbl->skel.count)
-                r = AgentPacking_StepColour(g_AgentPartCache, dir, s->e[slot].a, s->e[slot].b, self->vE4, slot, self->row, self->tone, s->app, s->x1EC0);
+                r = FindNextTexture__7MonsterFi11UiUiUiUiR3SKLR8ManParts(g_AgentPartCache, dir, s->e[slot].a, s->e[slot].b, self->vE4, slot, self->row, self->tone, s->app, s->x1EC0);
             else
-                r = AgentPacking_StepColour(g_AgentPartCache, dir, *D_0048B460, s->e[slot].b, self->vE4, slot, self->row, self->tone, s->app, s->x1EC0);
+                r = FindNextTexture__7MonsterFi11UiUiUiUiR3SKLR8ManParts(g_AgentPartCache, dir, *D_0048B460, s->e[slot].b, self->vE4, slot, self->row, self->tone, s->app, s->x1EC0);
             if (r != -1)
                 self->vE4 = r;
         } else if (self->mode == 3) {
-            GuiAgentCreate_Randomize(self, dir, 1);
+            GuiAgentCreate_UpdateClones(self, dir, 1);
         } else if (self->mode == 4) {
             self->toggle = ++self->toggle & 1;
             if (self->toggle == 0)
@@ -150,21 +150,21 @@ void GuiAgentCreate_StepOption(S_C390* self, int back, int fwd)
             self->tbl->skel.f23F0 = 1.0f;
             self->tbl->skel.i23F4 = 0;
             FindIdx_C390(self);
-            Skel_ApplyScalePreset(&self->tbl->skel, -1);
-            self->vE0 = AgentPartCache_FindMesh(g_AgentPartCache, self->tbl->skel.e[self->slot].a);
-            self->vE4 = AgentPartCache_FindTexture(g_AgentPartCache, self->tbl->skel.e[self->slot].b);
-            self->tone = Appearance_GetToneDigit(self->tbl->skel.app);
+            cMan_SetBoneSet(&self->tbl->skel, -1);
+            self->vE0 = FindPartNumber__7MonsterF1(g_AgentPartCache, self->tbl->skel.e[self->slot].a);
+            self->vE4 = FindTextureNumber__7MonsterF1(g_AgentPartCache, self->tbl->skel.e[self->slot].b);
+            self->tone = SKL_FindRace(self->tbl->skel.app);
             self->tbl->skel.tone = self->tone;
-            self->row = Appearance_GetBodyKind(self->tbl->skel.app);
+            self->row = SKL_FindSex(self->tbl->skel.app);
             self->tbl->skel.body = self->row;
         } else if (self->mode == 5) {
             Skel_C390* s = &self->tbl->skel;
             int p = dir + s->preset;
             if (p < 0) p = D_00571300 - 1;
             if ((unsigned int)p >= D_00571300) p = 0;
-            Skel_ApplyScalePreset(s, p);
+            cMan_SetBoneSet(s, p);
         } else if (self->mode == 6) {
-            self->vE8 = ActorModel_StepMorph(&self->tbl->skel, dir, self->vE8, self->row);
+            self->vE8 = cMan_NextFaceShape(&self->tbl->skel, dir, self->vE8, self->row);
         } else if (self->mode == 8) {
             Skel_C390* s = &self->tbl->skel;
             int r = AgentPacking_StepTexture(g_AgentPartCache, dir, s->e[self->slot].a, s->e[self->slot].b, self->vE4, self->slot, self->row, self->tone, s->app, s->x1EC0);
@@ -178,7 +178,7 @@ void GuiAgentCreate_StepOption(S_C390* self, int back, int fwd)
         D_0048B500[self->row][self->cur].pos = self->pos;
         v = (int)((100.0f / (float)(self->count - 1)) * (float)self->pos);
         if (self->pos != old)
-            GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 6, 0);
+            GuiWidget_SendMessage(self, Gui_Canvas(), 0x10, 6, 0);
         if (self->w5C) {
             if (self->count) {
                 sprintf(buf, D_004A9A30, self->pos + 1, self->count);
@@ -189,8 +189,8 @@ void GuiAgentCreate_StepOption(S_C390* self, int back, int fwd)
         }
         Slider_C390(self, self->w58, 10, v, 0);
     }
-    self->row = Appearance_GetBodyKind(self->tbl->skel.app);
+    self->row = SKL_FindSex(self->tbl->skel.app);
     self->tbl->skel.body = self->row;
-    self->tone = Appearance_GetToneDigit(self->tbl->skel.app);
+    self->tone = SKL_FindRace(self->tbl->skel.app);
     self->tbl->skel.tone = self->tone;
 }

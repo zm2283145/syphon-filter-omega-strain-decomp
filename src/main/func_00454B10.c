@@ -16,20 +16,20 @@ extern G_454B10* g_LocalPlayer;
 extern void* g_WeaponDatabase;
 extern void* g_Hud;
 extern char g_Game[];
-void GuiMultiLineText_ScrollUp(void* p, int v);
-void GuiMultiLineText_ScrollDown(void* p, int v);
-int WeaponInv_SlotOfItem(int id);
-void* WeaponDb_Get(void* db, int id);
-void* WeaponInv_GetHeldItem(void* p);
-void Player_EquipItem(G_454B10* g, int id);
-void Goggles_Toggle(A_454B10* a);
-M_454B10* Gui_GetScreenStack(void);
-void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
-void GuiEquipmentPane_Cycle(O_454B10* o, bool f);
+void GuiMLTextWidget_ScrollUp(void* p, int v);
+void GuiMLTextWidget_ScrollDown(void* p, int v);
+int cWeapon_GetWeaponSlot(int id);
+void* cWeaponDB_GetEntry(void* db, int id);
+void* cWeapon_GetWeaponEntry(void* p);
+void cPlayer_SelectWeapon(G_454B10* g, int id);
+void cHuman_CycleGadgetState(A_454B10* a);
+M_454B10* Gui_Canvas(void);
+void GuiWidget_SendMessage(void* a, void* b, int kind, int v, int f);
+void GuiEquipmentPane_SelectNext(O_454B10* o, bool f);
 void GuiStartMenu_ReturnToMenu(O_454B10* o);
-void Hud_ClosePauseMenu(void* p);
-void Game_SetPaused(void* p, int v);
-int GuiEquipmentPane_HandleInput(O_454B10* o, Ev_454B10* ev);
+void cHud_DeactivateObjectiveMenu(void* p);
+void cGameSystem_PauseGame(void* p, int v);
+int GuiEquipmentPane_onInput(O_454B10* o, Ev_454B10* ev);
 }
 static inline unsigned char Down_454B10(Ev_454B10* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Btn_454B10(Ev_454B10* e, int b) { unsigned char r = 0; if (Down_454B10(e) && e->btn == b) r = 1; return r; }
@@ -38,14 +38,14 @@ static inline bool Down2_454B10(Ev_454B10* e) { return e->type == 1 && e->b2 == 
 static inline bool Btn2_454B10(Ev_454B10* e, int b) { return Down2_454B10(e) && e->btn == b; }
 static inline bool Plain2_454B10(Ev_454B10* e, int b) { return Btn2_454B10(e, b) && e->b6 == 0; }
 
-int GuiEquipmentPane_HandleInput(O_454B10* o, Ev_454B10* ev)
+int GuiEquipmentPane_onInput(O_454B10* o, Ev_454B10* ev)
 {
     if (Plain_454B10(ev, 0x1000) && o->f4C) {
-        GuiMultiLineText_ScrollUp(o->f4C, 0);
+        GuiMLTextWidget_ScrollUp(o->f4C, 0);
         return 1;
     }
     if (Plain2_454B10(ev, 0x4000) && o->f4C) {
-        GuiMultiLineText_ScrollDown(o->f4C, 0);
+        GuiMLTextWidget_ScrollDown(o->f4C, 0);
         return 1;
     }
     if (Plain2_454B10(ev, 0x40)) {
@@ -54,25 +54,25 @@ int GuiEquipmentPane_HandleInput(O_454B10* o, Ev_454B10* ev)
             unsigned char sent;
             A_454B10* a = g_LocalPlayer->f30;
             sent = 0;
-            unsigned char kind = WeaponInv_SlotOfItem(wid);
+            unsigned char kind = cWeapon_GetWeaponSlot(wid);
             if (kind < 6) {
-                void* wd = WeaponDb_Get(g_WeaponDatabase, wid);
-                if (wd && wd != WeaponInv_GetHeldItem(a->f3524)) {
+                void* wd = cWeaponDB_GetEntry(g_WeaponDatabase, wid);
+                if (wd && wd != cWeapon_GetWeaponEntry(a->f3524)) {
                     sent = 1;
-                    Player_EquipItem(g_LocalPlayer, wid);
+                    cPlayer_SelectWeapon(g_LocalPlayer, wid);
                 }
             } else if (kind == 6 && !a->b33E7) {
                 sent = 1;
-                Goggles_Toggle(a);
+                cHuman_CycleGadgetState(a);
             } else if (kind == 7 && a->b33E7) {
                 sent = 1;
-                Goggles_Toggle(a);
+                cHuman_CycleGadgetState(a);
             }
-            if (sent) GuiWidget_SendEvent(o->f48, Gui_GetScreenStack(), 0x10, 1, 0);
+            if (sent) GuiWidget_SendMessage(o->f48, Gui_Canvas(), 0x10, 1, 0);
         }
     }
     if (Plain_454B10(ev, 1) || Plain2_454B10(ev, 2)) {
-        GuiEquipmentPane_Cycle(o, Btn2_454B10(ev, 2));
+        GuiEquipmentPane_SelectNext(o, Btn2_454B10(ev, 2));
         return 1;
     }
     if (Plain2_454B10(ev, 0x10)) {
@@ -80,9 +80,9 @@ int GuiEquipmentPane_HandleInput(O_454B10* o, Ev_454B10* ev)
         return 1;
     }
     if (Plain2_454B10(ev, 0x800)) {
-        Gui_GetScreenStack()->v24(o);
-        Hud_ClosePauseMenu(g_Hud);
-        Game_SetPaused(g_Game, 0);
+        Gui_Canvas()->v24(o);
+        cHud_DeactivateObjectiveMenu(g_Hud);
+        cGameSystem_PauseGame(g_Game, 0);
         return 1;
     }
     return 0;

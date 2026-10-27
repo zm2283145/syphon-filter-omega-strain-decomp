@@ -21,7 +21,7 @@ extern Blk* cMemChunk_GetNext(Blk* b);
 extern Blk* cMemBin_FindBin(Heap* h, unsigned int size);
 extern unsigned int cMemChunk_GetSize(Blk* b);
 
-void Mem_HeapFree(Heap* h, char* ptr, char* file, int line)
+void cMemBin_Deallocate(Heap* h, char* ptr, char* file, int line)
 {
     Blk* b;
     Blk* p;

@@ -11,10 +11,10 @@
 #include "tree_insert_obj.h"
 struct Val_1C4F20 { int a, b, c; int d; };
 extern "C" {
-void String_CopyCtor(void* d, const void* s);
+void std_basic_string_char_char_traits_char_ctor_basicstringR(void* d, const void* s);
 void std_red_black_tree_1_balance_insert(void* node, void* root);
 }
-extern "C" TONode* Tree_Insert_13C570(TOTree* tree, TONode* parent, int left, int first, const Val_1C4F20* src)
+extern "C" TONode* std_tree_pair_cString_value_compare_insert_node_at_nodeP_bool_bool_pairR(TOTree* tree, TONode* parent, int left, int first, const Val_1C4F20* src)
 {
     if (tree->count > 0xFFFFFFFFU - 1) {
         Libc_Fprintf(D_00489738->stream, "tree::insert length error\n");
@@ -23,7 +23,7 @@ extern "C" TONode* Tree_Insert_13C570(TOTree* tree, TONode* parent, int left, in
     TONode* node = (TONode*)TStr_Alloc(0x1C, "allocator.hh", 0x5C);
     Val_1C4F20* v = (Val_1C4F20*)node->value;
     if (v) {
-        String_CopyCtor(v, src);
+        std_basic_string_char_char_traits_char_ctor_basicstringR(v, src);
         v->d = src->d;
     }
     node->right = 0;
@@ -50,8 +50,8 @@ struct N_C6F0 { void* l; void* r; int p; char val[4]; };
 struct T_C6F0 { int count; void* root; int pad8; N_C6F0* head; };
 extern "C" {
 extern char D_0049ADD0[];
-void Mem_Free(int pool, void* p, char* file, int line);
-void Tree_Successor(N_C6F0** it);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+void std_red_black_tree_1_increment(N_C6F0** it);
 void std_red_black_tree_1_balance_erase(N_C6F0* n, void* root);
 void String_Dtor(void* v, short f);
 }
@@ -60,7 +60,7 @@ extern "C" void std_tree_pair_cString_value_compare_erase(T_C6F0* t, N_C6F0** it
     N_C6F0* n = *it;
     N_C6F0** hp = &t->head;
     if (n == t->head) {
-        Tree_Successor(it);
+        std_red_black_tree_1_increment(it);
         *hp = *it;
     }
     std_red_black_tree_1_balance_erase(n, t->root);
@@ -70,7 +70,7 @@ extern "C" void std_tree_pair_cString_value_compare_erase(T_C6F0* t, N_C6F0** it
     }
     if (n) {
         AllocGuard g;
-        Mem_Free(0, n, D_0049ADD0, 0x64);
+        cMemMan_Deallocate(0, n, D_0049ADD0, 0x64);
     }
     t->count--;
 }

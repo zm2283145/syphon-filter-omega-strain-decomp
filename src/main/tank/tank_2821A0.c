@@ -18,7 +18,7 @@ static inline short ReadShort(void) {
 }
 
 /* Reads two 16-bit halves from the cursor and stores them as one 32-bit word. */
-void Script_ReadU32(unsigned int* out) {
+void cNetMsg_GetID(unsigned int* out) {
     unsigned short low = ReadShort();
     unsigned short high = ReadShort();
     *out = low + (high << 16);

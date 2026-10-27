@@ -2,7 +2,7 @@
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 #pragma push
 #pragma opt_common_subs off
-V4 Vec3_LerpKeepW_190950(V4* b, V4* c, float s) {
+V4 LerpXYZ(V4* b, V4* c, float s) {
     V4 l0;
     V4* q1 = &l0;
     int rv1;

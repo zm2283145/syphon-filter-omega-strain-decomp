@@ -28,7 +28,7 @@ static inline void merge_flush_func_004704F0(void) {}
 
 /* merge_units: begin func_00470560 */
 #pragma push /* merge_units */
-/* ItemInv_Count */
+/* cInventory_GetCount_int */
 
 
 static inline Pt2_Item* Find(Pt2_ItemInv* inv, int id) {
@@ -39,7 +39,7 @@ static inline Pt2_Item* Find(Pt2_ItemInv* inv, int id) {
     return 0;
 }
 #pragma opt_strength_reduction off
-int ItemInv_Count(Pt2_ItemInv* inv, int id) {
+int cInventory_GetCount_int(Pt2_ItemInv* inv, int id) {
     Pt2_Item* e = Find(inv, id);
     return e ? e->count : 0;
 }
@@ -50,11 +50,11 @@ static inline void merge_flush_func_00470560(void) {}
 
 /* merge_units: begin func_004705D0 */
 #pragma push /* merge_units */
-/* Global_PlayerGetItemCount */
+/* cInventory_GetCount_charP */
 typedef struct { int key; char pad[40]; } Pt2_ItemDef;
 extern int D_00587FF4;
 extern Pt2_ItemDef* D_00587FF8;
-extern int Loc_FindKeyThunk(char*);
+extern int nGlobalization_GetStringIndex(char*);
 static inline int Pt2_FindDef(int key) {
     int i;
     for (i = 0; i < D_00587FF4; i++) {
@@ -64,8 +64,8 @@ static inline int Pt2_FindDef(int key) {
 }
 
 #pragma opt_strength_reduction off
-int Global_PlayerGetItemCount(Pt2_ItemInv* inv, char* name) {
-    int idx = Pt2_FindDef(Loc_FindKeyThunk(name));
+int cInventory_GetCount_charP(Pt2_ItemInv* inv, char* name) {
+    int idx = Pt2_FindDef(nGlobalization_GetStringIndex(name));
     if (idx > -1) {
         int i;
         for (i = 0; i < *(volatile int*)&inv->n; i++) {
@@ -101,20 +101,20 @@ typedef struct {
 } InvMsg_h5;
 extern unsigned char g_IsMultiplayer;
 extern char D_00587FC0[];
-extern void Message_GetScriptTypeKey();
+extern void cMessage_getSOBJClassId();
 extern void cNetInventoryMsg_dtor();
-extern void cNetInventoryMsg_v01();
-extern void cNetInventoryMsg_v04();
+extern void cNetInventoryMsg_Clone();
+extern void cNetInventoryMsg_Pack();
 extern void cNetInventoryMsg_v05();
 extern void cNetMsg_Pack();
-void * const D_004E1AC0[8] = { (void*)0x0, (void*)0x0, (void*)cNetInventoryMsg_dtor, (void*)cNetInventoryMsg_v01, (void*)cNetMsg_Pack, (void*)Message_GetScriptTypeKey, (void*)cNetInventoryMsg_v04, (void*)cNetInventoryMsg_v05 };
+void * const D_004E1AC0[8] = { (void*)0x0, (void*)0x0, (void*)cNetInventoryMsg_dtor, (void*)cNetInventoryMsg_Clone, (void*)cNetMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)cNetInventoryMsg_Pack, (void*)cNetInventoryMsg_v05 };
 extern char D_004DCF10[];
-extern void Event_Construct(InvMsg_h5* msg, void* name);
-extern void Event_Send(InvMsg_h5* msg, void* target, int flags);
+extern void cMessage_ctor_cMessageNameR(InvMsg_h5* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(InvMsg_h5* msg, void* target, int flags);
 extern void cMessage_dtor(InvMsg_h5* msg, int flags);
-extern void ItemInv_AppendPair(Inventory_h5* inv, InvPair_h5* pos, int n, InvPair_h5* val);
+extern void std_vector_imp_tItem_insert(Inventory_h5* inv, InvPair_h5* pos, int n, InvPair_h5* val);
 #pragma opt_strength_reduction off
-int ItemInv_Remove(Inventory_h5* inv, int item, int n, int silent)
+int cInventory_Remove_int_int_bool(Inventory_h5* inv, int item, int n, int silent)
 {
     int i;
     if (item > -1)
@@ -129,14 +129,14 @@ int ItemInv_Remove(Inventory_h5* inv, int item, int n, int silent)
             }
             if (g_IsMultiplayer && !silent) {
                 InvMsg_h5 msg;
-                Event_Construct(&msg, D_00587FC0);
+                cMessage_ctor_cMessageNameR(&msg, D_00587FC0);
                 msg.vtable = ((char*)D_004E1AC0);
                 msg.b20 = 4;
                 msg.kind = 0x40;
                 msg.item = item;
                 msg.count = n;
                 msg.added = 0;
-                Event_Send(&msg, inv->owner, 0);
+                QueueMessage_cMessageR_cSystemP_int(&msg, inv->owner, 0);
                 msg.vtable = D_004DCF10;
                 cMessage_dtor(&msg, 0);
             }

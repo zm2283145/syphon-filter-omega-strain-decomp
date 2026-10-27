@@ -7,7 +7,7 @@
 #include "playerControls_types.h"
 
 /* True when crouchZone is set and unk25 is clear. */
-int PlayerInput_ZoneEnteredThisFrame(InputState* self) {
+int cPlayerControls_HasEnteredCrawlHotbox(InputState* self) {
     int result = !(self->unk25 != 0);
 
     if (result) {

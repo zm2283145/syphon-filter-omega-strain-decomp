@@ -5,7 +5,7 @@
 
 #include "types.h"
 
-/* Net message screen (derives from the GuiLobbyScreen-unit widget built by GuiScreen_ctor). */
+/* Net message screen (derives from the GuiLobbyScreen-unit widget built by GuiLobbyScreen_ctor). */
 typedef struct GuiNetMessages {
     void* vtable;                   /* 0x00 */
     char pad04[0x80];

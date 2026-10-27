@@ -78,15 +78,15 @@ extern char g_LosRequestMsgClass[];
 extern char D_004D9180[];
 extern char g_Game[];
 extern char g_LosCheckService[];
-void Event_Construct(void*, void*);
+void cMessage_ctor_cMessageNameR(void*, void*);
 void cMessage_dtor(void*, int);
-Svc* Service_Lookup(void* a, void* b);
+Svc* cSystemContainer_GetSystem(void* a, void* b);
 extern char g_Video[];
 extern int D_00538C60;
 extern int D_00538C64;
 extern char D_00538C68;
-void* Camera_GetNode(void* o);
-Mq Transform_GetInverseMatrix(void* xf);
+void* cGOBJ_GetXform_void(void* o);
+Mq cXform_GetInverseMatrix(void* xf);
 int XLib_Inside(void* r, V* p);
 bool cGameCamera_CanSee(Cam* c, Tgt* t);
 }
@@ -108,7 +108,7 @@ struct LosMsg : MsgB {
     LosMsg(LosRes* r, const V& f, const V& d, void* o, int mask)
     {
         LosMsg* m = this;
-        Event_Construct(m, g_LosRequestMsgClass);
+        cMessage_ctor_cMessageNameR(m, g_LosRequestMsgClass);
         m->vtable = D_004D9180;
         m->x24 = 0;
         m->x28 = 0;
@@ -141,7 +141,7 @@ bool cGameCamera_CanSee(Cam* c, Tgt* t)
     SetFog(c, 2.0f);
     QR(&RS->mtx[D_00538C64 + 1], &RS->mtx[D_00538C64]);
     D_00538C64++;
-    SetTop(Transform_GetInverseMatrix(Camera_GetNode(c)));
+    SetTop(cXform_GetInverseMatrix(cGOBJ_GetXform_void(c)));
     D_00538C68 = 1;
     V p = t->GetPos();
     if ((unsigned char)XLib_Inside(g_Video, &p)) {
@@ -153,7 +153,7 @@ bool cGameCamera_CanSee(Cam* c, Tgt* t)
         eye += dir * 2.0f / len;
         {
             LosMsg msg(&res, eye, dir, t, 4);
-            Service_Lookup(g_Game, g_LosCheckService)->Post(&msg);
+            cSystemContainer_GetSystem(g_Game, g_LosCheckService)->Post(&msg);
             if (!res.hit) vis = 1;
         }
     }

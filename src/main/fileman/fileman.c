@@ -12,22 +12,22 @@
 struct S36D680 { unsigned int flags; char name[0x94]; int* f; };
 extern "C" {
 extern char D_004BBF90[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void Mem_Free(int pool, void* p, char* file, int line);
-int FileHal_Reopen(void* f, void* name, int mode);
-void FileHal_Dtor(void* f, int how);
-int* FileHal_CtorDefault(void* p);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+int cFileIO_Open(void* f, void* name, int mode);
+void cFileIO_dtor(void* f, int how);
+int* cFileIO_ctor_void(void* p);
 }
 static inline void* New36D680()
 {
     AllocGuard g;
-    return Mem_Alloc(0, 0xC8, D_004BBF90, 0x21A);
+    return cMemMan_Allocate(0, 0xC8, D_004BBF90, 0x21A);
 }
 static inline void Del36D680(int* f)
 {
     AllocGuard g;
-    FileHal_Dtor(f, -1);
-    Mem_Free(0, f, D_004BBF90, 0x235);
+    cFileIO_dtor(f, -1);
+    cMemMan_Deallocate(0, f, D_004BBF90, 0x235);
 }
 extern "C" int cFileMan_OpenFile(S36D680* o)
 {
@@ -35,7 +35,7 @@ extern "C" int cFileMan_OpenFile(S36D680* o)
     int err = 0;
     if (!o->f) {
         int* p = (int*)New36D680();
-        if (p) p = FileHal_CtorDefault(p);
+        if (p) p = cFileIO_ctor_void(p);
         o->f = p;
         o->flags |= 0x10;
     } else if (*o->f >= 0) {
@@ -43,9 +43,9 @@ extern "C" int cFileMan_OpenFile(S36D680* o)
     }
     if (open) {
         if (o->flags & 4) {
-            FileHal_Reopen(o->f, o->name, 0x8000);
+            cFileIO_Open(o->f, o->name, 0x8000);
             err = 3;
-        } else if (!FileHal_Reopen(o->f, o->name, 1)) {
+        } else if (!cFileIO_Open(o->f, o->name, 1)) {
             err = 3;
         }
     }
@@ -77,13 +77,13 @@ int cFileMan_IsClientMemAllocated(S36D880* o)
 /* merge_units: begin func_0036D8E0 */
 #pragma push /* merge_units */
 typedef struct { unsigned int flags; char pad[0x94]; char* a98; } S36D8E0;
-extern int FileHal_PollRead(char* p);
-int FileMan_PollRead(S36D8E0* o)
+extern int cFileIO_IsReadDone(char* p);
+int cFileMan_IsReadDone(S36D8E0* o)
 {
     int r = 1;
     if (o->flags & 4) {
-        if (o->flags & 2) r = FileHal_PollRead(o->a98 + 0x80);
-        else if (o->flags & 1) r = FileHal_PollRead(o->a98);
+        if (o->flags & 2) r = cFileIO_IsReadDone(o->a98 + 0x80);
+        else if (o->flags & 1) r = cFileIO_IsReadDone(o->a98);
         else r = 1;
     }
     return r;
@@ -98,7 +98,7 @@ extern int cHogFile_Stream_int_voidP_bool(void* target, int id, int value, int f
 typedef struct { unsigned int flags; char pad[0x80]; short id; char pad2[0x12]; void* target; } Obj;
 
 /* If flag bit 1 is set, forwards *value to the target and returns true. */
-unsigned char FileMan_ReadMember(Obj* self, int* value)
+unsigned char cFileMan_Stream(Obj* self, int* value)
 {
     unsigned char result = 0;
     if (self->flags & 2) {
@@ -116,29 +116,29 @@ unsigned char FileMan_ReadMember(Obj* self, int* value)
 typedef struct { char* p0; int p4; char* p8; unsigned char c; } H36D990;
 typedef struct { unsigned int flags; char pad[0x80]; short idx; H36D990 h; char* a98; } S36D990;
 extern "C" {
-int FileHal_Read(void* f, void* buf, int size, int off);
+int cFileIO_Read_charP_int_int(void* f, void* buf, int size, int off);
 #if 0 /* merge_units */
 int cHogFile_Stream_int_voidP_bool(void* f, int idx, void* buf, int off);
 #endif /* merge_units */
 #define cHogFile_Stream_int_voidP_bool(a0, a1, a2, a3) (cHogFile_Stream_int_voidP_bool((a0), (a1), (int)(a2), (a3))) /* merge_units */
 
-int Hog_GetEntrySize(void* f, int idx);
-char* Hog_GetMemberInPlace(void* f, int idx);
+int cHogFile_GetBlockSize(void* f, int idx);
+char* cHogFile_GetBlock_int(void* f, int idx);
 }
 static inline char* Get(H36D990* h) { return h->p8 ? h->p8 : h->p0; }
 static inline int GetSize(S36D990* o)
 {
     unsigned int f = o->flags;
-    if (f & 2) return Hog_GetEntrySize(o->a98, o->idx);
+    if (f & 2) return cHogFile_GetBlockSize(o->a98, o->idx);
     if (f & 1) return (*(int*)(o->a98 + 0x2C) / 0x800) * 0x800 + 0x800;
     return 0;
 }
 static inline void* Alloc36D990(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004BBF90, line);
+    return cMemMan_Allocate(0, size, D_004BBF90, line);
 }
-extern "C" int FileMan_LoadMemberSync(S36D990* o, char** out, int size)
+extern "C" int cFileMan_Read_charPP_int(S36D990* o, char** out, int size)
 {
     unsigned int f;
     int err;
@@ -160,11 +160,11 @@ extern "C" int FileMan_LoadMemberSync(S36D990* o, char** out, int size)
                 if (cHogFile_Stream_int_voidP_bool(o->a98, o->idx, *out, 0)) err = 4;
             }
         } else {
-            *out = Hog_GetMemberInPlace(d, o->idx);
+            *out = cHogFile_GetBlock_int(d, o->idx);
         }
     } else if (f & 1) {
         if (!*out) *out = (char*)Alloc36D990(sz, 0x18F);
-        if (!FileHal_Read(o->a98, *out, sz, 0)) err = 4;
+        if (!cFileIO_Read_charP_int_int(o->a98, *out, sz, 0)) err = 4;
     } else {
         err = 5;
     }
@@ -179,16 +179,16 @@ extern "C" int FileMan_LoadMemberSync(S36D990* o, char** out, int size)
 typedef struct { char* p0; int p4; char* p8; unsigned char c; } H36DC60;
 typedef struct { char pad[0x14C]; unsigned char mode; } D36DC60;
 typedef struct { unsigned int flags; char pad[0x80]; short idx; H36DC60 h; char* a98; } S36DC60;
-int FileHal_ReadAll(void*, void*);
+int cFileIO_Read_void(void*, void*);
 char* cHogFile_GetStream(void*);
-void Hog_ReadEntry(void*, int, int);
+void cHogFile_Stream_int_bool(void*, int, int);
 #if 0 /* merge_units */
-char* Hog_GetMemberInPlace(void*, int);
+char* cHogFile_GetBlock_int(void*, int);
 #endif /* merge_units */
-#define Hog_GetMemberInPlace(a0, a1) (Hog_GetMemberInPlace((a0), (a1))) /* merge_units */
+#define cHogFile_GetBlock_int(a0, a1) (cHogFile_GetBlock_int((a0), (a1))) /* merge_units */
 
 static inline char* Get_0036DC60(H36DC60* h) { return h->p8 ? h->p8 : h->p0; }
-char* FileMan_ReadData(S36DC60* o)
+char* cFileMan_Read_void(S36DC60* o)
 {
     unsigned int f = o->flags;
     H36DC60* h = &o->h;
@@ -197,15 +197,15 @@ char* FileMan_ReadData(S36DC60* o)
         D36DC60* d = (D36DC60*)o->a98;
         if (d->mode == 2) {
             if (h->c) return Get_0036DC60(h);
-            Hog_ReadEntry(d, o->idx, 0);
+            cHogFile_Stream_int_bool(d, o->idx, 0);
             return cHogFile_GetStream(o->a98);
         }
-        return Hog_GetMemberInPlace(d, o->idx);
+        return cHogFile_GetBlock_int(d, o->idx);
     }
-    if (f & 1) return FileHal_ReadAll(o->a98, h) ? *(char**)(o->a98 + 0xC4) : 0;
+    if (f & 1) return cFileIO_Read_void(o->a98, h) ? *(char**)(o->a98 + 0xC4) : 0;
     return 0;
 }
-#undef Hog_GetMemberInPlace /* merge_units */
+#undef cHogFile_GetBlock_int /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0036DC60 */
 
@@ -229,9 +229,9 @@ struct Hdr_36DDC0 { char pad[0x10]; int f10; };
 struct Arc_36DDC0 { char pad0[4]; int f4; char pad8[0x7C]; int f84; char pad88[0xC0]; Hdr_36DDC0* f148; };
 struct FME_36DDC0 { int flags; char name[128]; short h84; int a88; int a8C; int a90; unsigned char b94; Arc_36DDC0* a98; };
 
-extern "C" int Hog_GetMemberOffset(Arc_36DDC0*, int);
+extern "C" int cHogFile_GetBlockOffset(Arc_36DDC0*, int);
 
-static inline int Off(Arc_36DDC0* a, int idx) { return a->f148->f10 + Hog_GetMemberOffset(a, idx); }
+static inline int Off(Arc_36DDC0* a, int idx) { return a->f148->f10 + cHogFile_GetBlockOffset(a, idx); }
 
 extern "C" int cFileMan_GetCDSector(FME_36DDC0* f)
 {
@@ -250,21 +250,21 @@ extern "C" int cFileMan_GetCDSector(FME_36DDC0* f)
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #if 0 /* merge_units */
-int Hog_GetEntrySize(int, int);
+int cHogFile_GetBlockSize(int, int);
 #endif /* merge_units */
-#define Hog_GetEntrySize(a0, a1) (Hog_GetEntrySize((void *)(a0), (a1))) /* merge_units */
+#define cHogFile_GetBlockSize(a0, a1) (cHogFile_GetBlockSize((void *)(a0), (a1))) /* merge_units */
 
-int FileMan_GetSize(char * arg0) {
+int cFileMan_GetSize(char * arg0) {
     int f = F_(arg0, 0x0, int);
     if (f & 2) {
-        return Hog_GetEntrySize(F_(arg0, 0x98, int), F_(arg0, 0x84, short));
+        return cHogFile_GetBlockSize(F_(arg0, 0x98, int), F_(arg0, 0x84, short));
     }
     if (f & 1) {
         return (F_(F_(arg0, 0x98, int), 0x2C, int) / 0x800) * 0x800 + 0x800;
     }
     return 0;
 }
-#undef Hog_GetEntrySize /* merge_units */
+#undef cHogFile_GetBlockSize /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0036DE50 */
 
@@ -277,12 +277,12 @@ int FileMan_GetSize(char * arg0) {
 
 #include "fileman_types.h"
 
-extern int FileHal_Close(int halFile);
+extern int cFileIO_Close(int halFile);
 
-/* If the entry has an open file (flag bit 0), pass its HAL file to FileHal_Close. */
+/* If the entry has an open file (flag bit 0), pass its HAL file to cFileIO_Close. */
 void cFileMan_Close(FileManEntry* entry) {
     if (entry->flags & 1) {
-        FileHal_Close(entry->halFile);
+        cFileIO_Close(entry->halFile);
     }
 }
 #pragma pop /* merge_units */
@@ -292,21 +292,21 @@ void cFileMan_Close(FileManEntry* entry) {
 #pragma push /* merge_units */
 typedef struct { char p0[0x14C]; unsigned char ready; } Y36DEF0;
 typedef struct { unsigned int flags; char p4[0x80]; short h84; char p86[0x12]; Y36DEF0* y; } X36DEF0;
-extern short Hog_FindFileNoCase(Y36DEF0* y, void* p, int z);
+extern short cHogFile_GetBlockIndex(Y36DEF0* y, void* p, int z);
 #if 0 /* merge_units */
 extern int cFileMan_OpenFile(X36DEF0* x);
 #endif /* merge_units */
 #define cFileMan_OpenFile(a0) ((int)cFileMan_OpenFile((void *)(a0))) /* merge_units */
 
 /* Polls the stream state: 1 idle, 2 not ready, 3 failed open, 0 opened, 5 nothing to do. */
-int FileMan_FindMember(X36DEF0* x)
+int cFileMan_Open(X36DEF0* x)
 {
     if (x->flags == 0) return 1;
     if (x->flags & 2) {
         int r;
         if (!x->y->ready) r = 2;
         else {
-            x->h84 = Hog_FindFileNoCase(x->y, (char*)x + 4, 0);
+            x->h84 = cHogFile_GetBlockIndex(x->y, (char*)x + 4, 0);
             if (x->h84 == -1) r = 3;
             else r = 0;
         }
@@ -390,7 +390,7 @@ extern char* strncpy(char* d, const char* s, unsigned int n);
 #endif /* merge_units */
 #define strncpy(a0, a1, a2) (strncpy((a0), (a1), (int)(a2))) /* merge_units */
 
-int Hog_Register(Hog_36E1B0* h, const char* name, int arg, int opt) {
+int cFileMan_EncodeFilename_charP_cHogFileR_bool(Hog_36E1B0* h, const char* name, int arg, int opt) {
     h->flags = 0;
     strncpy(h->name, name, 0x80);
     h->f98 = arg;
@@ -409,27 +409,27 @@ int Hog_Register(Hog_36E1B0* h, const char* name, int arg, int opt) {
 #pragma exceptions off
 extern "C" {
 #if 0 /* merge_units */
-void FileHal_Dtor(void* p, int n);
+void cFileIO_dtor(void* p, int n);
 #endif /* merge_units */
-#define FileHal_Dtor(a0, a1) (FileHal_Dtor((a0), (a1))) /* merge_units */
+#define cFileIO_dtor(a0, a1) (cFileIO_dtor((a0), (a1))) /* merge_units */
 
 void operator_delete(void* p);
 }
 typedef struct { int flags; char pad4[0x94]; void* p98; } F8Obj_36E;
-extern "C" F8Obj_36E* FileMan_Release(F8Obj_36E* o, short del)
+extern "C" F8Obj_36E* cFileMan_dtor(F8Obj_36E* o, short del)
 {
     if (o) {
         if (o->flags & 0x10) {
             void* p = o->p98;
             AllocGuard g;
-            FileHal_Dtor(p, -1);
-            Mem_Free(0, p, D_004BBF90, 0x4C);
+            cFileIO_dtor(p, -1);
+            cMemMan_Deallocate(0, p, D_004BBF90, 0x4C);
         }
         if (del > 0)
             operator_delete(o);
     }
     return o;
 }
-#undef FileHal_Dtor /* merge_units */
+#undef cFileIO_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0036E220 */

@@ -23,13 +23,13 @@ double Newlib_MprecLog10(int dig)
 
 /* merge_units: begin func_00127298 */
 extern int D_0058805C;
-extern int Newlib_SysOpen(int fd, void* buf, unsigned int cnt);
+extern int Libc_Open(int fd, void* buf, unsigned int cnt);
 struct reent_00127298 { int _errno; };
 int Newlib_OpenR(struct reent_00127298* ptr, int fd, void* buf, unsigned int cnt)
 {
     int ret;
     D_0058805C = 0;
-    if ((ret = Newlib_SysOpen(fd, buf, cnt)) == -1 && D_0058805C != 0)
+    if ((ret = Libc_Open(fd, buf, cnt)) == -1 && D_0058805C != 0)
         ptr->_errno = D_0058805C;
     return ret;
 }

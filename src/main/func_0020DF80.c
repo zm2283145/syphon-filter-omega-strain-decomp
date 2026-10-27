@@ -23,14 +23,14 @@ static inline V Sum(const V& a, const V& b) { V c; __asm__ volatile("lqc2 $vf1, 
 struct Box { V lo, hi;
     void Extend(const V& p) { V* l = &lo; V* h = &hi; __asm__ volatile("lqc2 $vf1, 0x0(%0); lqc2 $vf2, 0x0(%1); lqc2 $vf3, 0x0(%2); vmini.xyz $vf1, $vf1, $vf3; vmax.xyz $vf2, $vf2, $vf3; sqc2 $vf1, 0x0(%0); sqc2 $vf2, 0x0(%1)" : : "r"(l), "r"(h), "r"(&p) : "memory"); }
 };
-extern "C" void* VecList_GetData(void* self);
+extern "C" void* std_vector_deleter_cVector_data(void* self);
 struct It { V* p; It() {} It(const It& o) { p = o.p; } };
 static inline bool operator==(const It& a, const It& b) { V* y = b.p; V* x = a.p; return x == y; }
 static inline bool operator!=(const It& a, const It& b) { return !(a == b); }
 struct VecList {
     int f0; int n; V* data;
-    It begin() { It t; t.p = *(V**)VecList_GetData(this); return t; }
-    It end() { It t; t.p = *(V**)VecList_GetData(this) + n; return t; }
+    It begin() { It t; t.p = *(V**)std_vector_deleter_cVector_data(this); return t; }
+    It end() { It t; t.p = *(V**)std_vector_deleter_cVector_data(this) + n; return t; }
 };
 struct CameraCol {
     char pad0[0x10];
@@ -44,9 +44,9 @@ struct CameraCol {
 static inline void Grow(Box* out, const V& pad) { out->lo += -pad; out->hi += pad; }
 extern "C" {
 extern float D_004A3F60;
-void CameraCol_ComputeBounds(CameraCol* c, Box* out);
+void cGameCameraCollisionRoutine_ConstructTestObjectForFirstPassCull(CameraCol* c, Box* out);
 }
-void CameraCol_ComputeBounds(CameraCol* c, Box* out)
+void cGameCameraCollisionRoutine_ConstructTestObjectForFirstPassCull(CameraCol* c, Box* out)
 {
     V off; off = V(c->ext, D_004A3F60);
     out->lo = V(3.4028235e38f, 3.4028235e38f, 3.4028235e38f, 1.0f);

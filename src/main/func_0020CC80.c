@@ -22,7 +22,7 @@ extern E* cAllocator_cSkaTransBLEND_allocate(void* alloc, unsigned int n, int hi
 
 #pragma push
 #pragma optimization_level 1
-void Vector_Assign_20CC80(V* v, E* first, E* last)
+void std_vector_imp_cSkaTransBLEND_do_assign(V* v, E* first, E* last)
 {
     unsigned int n;
     E* p;

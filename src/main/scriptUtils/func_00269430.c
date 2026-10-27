@@ -4,12 +4,12 @@
 #pragma mpwc_relax on
 /*fc*/
 int Alloc_Lock();                                    
-int Alloc_Unlock();                                  
-int IdMgr_Allocate();                           
-char * Mem_Alloc(int, int, char *, int);                      
-int Object_Register();                          
+int EnableIntc();                                  
+int nGobjManager_GetNextId();                           
+char * cMemMan_Allocate(int, int, char *, int);                      
+int nGobjManager_AddGOBJ();                          
 int cGOBJ_ctor();                
-int List_PushBack_269530();                      
+int std_list_cNodeListPtr_push_back();                      
 extern char D_004A82B8;
 extern char D_004DCA80;
 extern char D_004F83C0;
@@ -26,21 +26,21 @@ char * cNodeList_ctor(int arg0) {
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    temp_s1 = (char *)(Mem_Alloc(0, 0x64, &D_004A82B8, 0x70));
+    temp_s1 = (char *)(cMemMan_Allocate(0, 0x64, &D_004A82B8, 0x70));
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     g_ProfileLockDepth -= 1;
     if (temp_s1 != NULL) {
         sl.f30 = 0;
-        IdMgr_Allocate(sl.f34, 0xF5);
+        nGobjManager_GetNextId(sl.f34, 0xF5);
         cGOBJ_ctor(temp_s1, sl.f34, 0, &sl.f30);
         F_(temp_s1, 0x0, int) = (int)(&D_004DCA80);
         F_(temp_s1, 0x60, int) = arg0;
-        Object_Register(temp_s1);
+        nGobjManager_AddGOBJ(temp_s1);
     }
     sl.f3C = temp_s1;
-    List_PushBack_269530(&D_004F83C0, &sl.f3C);
+    std_list_cNodeListPtr_push_back(&D_004F83C0, &sl.f3C);
     return sl.f3C;
 }
 #pragma pop

@@ -1,5 +1,5 @@
 extern int func_002B6318(char *s, char c);
-extern int String_CompareN(char *a, char *b, int n);
+extern int Libc_Strncmp(char *a, char *b, int n);
 extern int strcmp(const char *a, const char *b);
 int isWildFit(char *s, char *p)
 {
@@ -11,7 +11,7 @@ int isWildFit(char *s, char *p)
             n = q;
         else
             n = q < a ? q : a;
-        if (String_CompareN(p, s, n) != 0)
+        if (Libc_Strncmp(p, s, n) != 0)
             return 0;
         p += n;
         s += n;

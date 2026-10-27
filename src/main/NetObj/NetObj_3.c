@@ -44,7 +44,7 @@ DEFINE_TREE_ERASE_ITER(std_tree_pair_int_value_compare_cAllocator_pair_erase, st
 extern void std_tree_pair_int_value_compare_destroy_nodeP_2(RbTree* tree, void* node);
 
 /* Clears the tree: erases all nodes from the root down, then resets the header. */
-void NetMap_Clear(RbTree* tree) {
+void std_tree_pair_int_value_compare_clear_void(RbTree* tree) {
     if (tree->root != 0) {
         std_tree_pair_int_value_compare_destroy_nodeP_2(tree, tree->root);
         tree->count = 0;

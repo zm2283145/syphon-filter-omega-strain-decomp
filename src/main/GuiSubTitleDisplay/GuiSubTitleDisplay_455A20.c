@@ -10,8 +10,8 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-char *Loc_LookupText(char *);                             
-int GuiTextArrayWidget_SetCellText(int, int, int, char *);                  
+char *nGlobalization_GetString_charP(char *);                             
+int GuiTextArrayWidget_SetText(int, int, int, char *);                  
 int sprintf(char *, char *, int);                             
 extern char D_004C1A38;
 extern char D_004C1A40;
@@ -23,13 +23,13 @@ void GuiWeaponStats_SetItemStats(int arg0, int arg1) {
 
     var_s0 = 0;
     do {
-        GuiTextArrayWidget_SetCellText(arg0, 0, var_s0, &D_004C1A38);
-        GuiTextArrayWidget_SetCellText(arg0, 1, var_s0, &D_004C1A38);
+        GuiTextArrayWidget_SetText(arg0, 0, var_s0, &D_004C1A38);
+        GuiTextArrayWidget_SetText(arg0, 1, var_s0, &D_004C1A38);
         var_s0 += 1;
     } while (var_s0 < 3);
-    GuiTextArrayWidget_SetCellText(arg0, 0, 2, Loc_LookupText(&D_004C1A40));
+    GuiTextArrayWidget_SetText(arg0, 0, 2, nGlobalization_GetString_charP(&D_004C1A40));
     sprintf(sp40, &D_004C1A50, arg1);
-    GuiTextArrayWidget_SetCellText(arg0, 1, 2, sp40);
+    GuiTextArrayWidget_SetText(arg0, 1, 2, sp40);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00455A20 */
@@ -38,13 +38,13 @@ void GuiWeaponStats_SetItemStats(int arg0, int arg1) {
 #pragma push /* merge_units */
 extern char D_00587D50[];
 extern char D_00587D60[];
-extern void TextArrayCell_SetColour(void* self, const char* name);
-extern void GuiTextArrayWidget_DrawCell(void* self, void* data, int a, int b);
+extern void GuiTextArrayWidget_SetTextColor(void* self, const char* name);
+extern void GuiTextArrayWidget_onElementRender(void* self, void* data, int a, int b);
 /* Sets the name (depending on whether data is given), then initialises with data. */
-void GuiWeaponStats_CellColour(void* self, void* data, int a, int b)
+void GuiWeaponStats_onElementRender(void* self, void* data, int a, int b)
 {
-    TextArrayCell_SetColour(self, data == 0 ? D_00587D50 : D_00587D60);
-    GuiTextArrayWidget_DrawCell(self, data, a, b);
+    GuiTextArrayWidget_SetTextColor(self, data == 0 ? D_00587D50 : D_00587D60);
+    GuiTextArrayWidget_onElementRender(self, data, a, b);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00455AE0 */
@@ -63,22 +63,22 @@ struct Menu {
     virtual void Method5C(int a, int b); /* +0x5C */
 };
 
-extern "C" void GuiTextArrayWidget_Init(Menu* self);
-extern "C" void GuiArrayWidget_ColumnWidth(Menu* self, int column, int width);
+extern "C" void GuiTextArrayWidget_onAdd(Menu* self);
+extern "C" void GuiArrayWidget_SetColumnWidth(Menu* self, int column, int width);
 extern "C" void GuiTextArrayWidget_SetFont(Menu* self, const char* name);
-extern "C" void GuiTextArrayWidget_SetHAlign(Menu* self, int value);
-extern "C" void GuiWeaponStats_Fill(Menu* self, int index);
+extern "C" void GuiTextArrayWidget_SetTextFormat(Menu* self, int value);
+extern "C" void GuiWeaponStats_SetWeaponStats(Menu* self, int index);
 
-/* Menu setup: base init, virtual +0x5C(2, 4), two column widths, the "callout" name, then GuiWeaponStats_Fill(-1). */
-extern "C" void GuiWeaponStats_Init(Menu* self)
+/* Menu setup: base init, virtual +0x5C(2, 4), two column widths, the "callout" name, then GuiWeaponStats_SetWeaponStats(-1). */
+extern "C" void GuiWeaponStats_onAdd(Menu* self)
 {
-    GuiTextArrayWidget_Init(self);
+    GuiTextArrayWidget_onAdd(self);
     self->Method5C(2, 4);
-    GuiArrayWidget_ColumnWidth(self, 0, 0x73);
-    GuiArrayWidget_ColumnWidth(self, 1, 10);
+    GuiArrayWidget_SetColumnWidth(self, 0, 0x73);
+    GuiArrayWidget_SetColumnWidth(self, 1, 10);
     GuiTextArrayWidget_SetFont(self, "callout");
-    GuiTextArrayWidget_SetHAlign(self, 0);
-    GuiWeaponStats_Fill(self, -1);
+    GuiTextArrayWidget_SetTextFormat(self, 0);
+    GuiWeaponStats_SetWeaponStats(self, -1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00455B60 */
@@ -111,7 +111,7 @@ extern char* D_004EE620; /* table of 16-byte rows of flag bytes */
 
 
 /* Sets flag bit 0 of byte `col` in row `row` of the D_004EE620 table. */
-void TeamTable_SetBit0_455C20(int row, int col) {
+void TeamSetEnemy_int_int_3(int row, int col) {
     SlotFlags* flags = (SlotFlags*)(D_004EE620 + row * 16 + col);
     flags->set = 1;
 }

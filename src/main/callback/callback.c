@@ -15,8 +15,8 @@ struct O9A60 { char pad[0xC]; int serial; };
 struct H9A60 { O9A60* p; int serial; };
 extern "C" {
 extern H9A60 D_00583878;
-void* Camera_GetNode(O9A60* o);
-void Transform_GetInverseMatrix(M9A60* out, void* t);
+void* cGOBJ_GetXform_void(O9A60* o);
+void cXform_GetInverseMatrix(M9A60* out, void* t);
 }
 
 static inline bool Valid9A60(H9A60* h)
@@ -33,13 +33,13 @@ static inline O9A60* Get9A60(H9A60* h)
 {
     return Valid9A60(h) ? (O9A60*)*(O9A60* volatile*)&h->p : (O9A60*)0;
 }
-extern "C" void HudTracker_ToCameraSpace(V9A60* v)
+extern "C" void cIE_GOBJ_TransformPointIntoCamera(V9A60* v)
 {
     O9A60* o = Get9A60(&D_00583878);
     if (o) {
         M9A60 m;
         M9A60* pm;
-        Transform_GetInverseMatrix(&m, Camera_GetNode(o));
+        cXform_GetInverseMatrix(&m, cGOBJ_GetXform_void(o));
         pm = &m;
         asm {
             lqc2 vf8, 0x0(v)
@@ -63,7 +63,7 @@ extern "C" void HudTracker_ToCameraSpace(V9A60* v)
 typedef struct { void* vt; char pad[0x5C]; void* m60; } G9B20;
 extern char D_004E0360[];
 extern char D_004E05A0[];
-extern void IeElement_Release(void* p);
+extern void cInterfaceElement_Destroy(void* p);
 extern void cGOBJ_dtor(void* self, short del);
 extern void operator_delete(void* p);
 G9B20* cMAP_GOBJ_dtor(G9B20* self, short del)
@@ -72,7 +72,7 @@ G9B20* cMAP_GOBJ_dtor(G9B20* self, short del)
         self->vt = D_004E0360;
         if (self) {
             self->vt = D_004E05A0;
-            IeElement_Release(self->m60);
+            cInterfaceElement_Destroy(self->m60);
             cGOBJ_dtor(self, 0);
         }
         if (del > 0)
@@ -87,13 +87,13 @@ G9B20* cMAP_GOBJ_dtor(G9B20* self, short del)
 #pragma push /* merge_units */
 typedef struct { void* vt; char pad[0x5C]; void* m60; } G9BA0;
 extern char D_004E0480[];
-G9BA0* HudTracker_Delete(G9BA0* self, short del)
+G9BA0* cPIE_GOBJ_dtor(G9BA0* self, short del)
 {
     if (self) {
         self->vt = D_004E0480;
         if (self) {
             self->vt = D_004E05A0;
-            IeElement_Release(self->m60);
+            cInterfaceElement_Destroy(self->m60);
             cGOBJ_dtor(self, 0);
         }
         if (del > 0)
@@ -119,26 +119,26 @@ extern unsigned char g_EventQueueClosed;            /* queue closed */
 extern int g_ProfileLockDepth;
 extern char g_EventQueue[];                   /* queued events */
 extern EQEvent* g_EventQueueRunning;                 /* event currently running */
-void Alloc_Lock(int);void Alloc_Unlock(int);
-void Mem_Free(int,void*,char*,int);
-void ActiveList_EraseMatching(void*,EQPred);
-void List_Begin(EQPos*,void*);void EQList_End(EQPos*,void*);void EQList_Begin(EQPos*,void*);
+void Alloc_Lock(int);void EnableIntc(int);
+void cMemMan_Deallocate(int,void*,char*,int);
+void std_list_imp_voidPtr_remove_if(void*,EQPred);
+void std_list_deleter_voidPtr_begin_void(EQPos*,void*);void std_list_cCBDataPtr_end(EQPos*,void*);void std_list_cCBDataPtr_begin(EQPos*,void*);
 void EQPos_CopyConst(EQPos*,const EQPos*);void EQPos_Copy(EQPos*,const EQPos*);
 }
 struct Begin:EQPos { Begin(const EQPos& r) {EQPos_CopyConst(this,&r);} };
 struct EQIter:EQPos { EQIter(const EQPos& r) {EQPos_Copy(this,&r);} };
-static inline void BeginQ(EQPos*p){EQPos r;List_Begin(&r,g_EventQueue);EQPos_CopyConst(p,&r);}
-static inline void EndQ(EQPos*p){EQPos r;EQList_End(&r,g_EventQueue);EQPos_Copy(p,&r);}
-static inline void Restart(EQPos*p){EQPos r;EQList_Begin(&r,g_EventQueue);EQPos_Copy(p,&r);}
+static inline void BeginQ(EQPos*p){EQPos r;std_list_deleter_voidPtr_begin_void(&r,g_EventQueue);EQPos_CopyConst(p,&r);}
+static inline void EndQ(EQPos*p){EQPos r;std_list_cCBDataPtr_end(&r,g_EventQueue);EQPos_Copy(p,&r);}
+static inline void Restart(EQPos*p){EQPos r;std_list_cCBDataPtr_begin(&r,g_EventQueue);EQPos_Copy(p,&r);}
 static inline int Neq(const EQPos&a,const EQPos&b){return a.p!=b.p;}
 static inline void Delete(EQEvent*e){
  AllocGuard guard;
- e->~EQEvent();Mem_Free(0,e,"callback.cc",0x36);
+ e->~EQEvent();cMemMan_Deallocate(0,e,"callback.cc",0x36);
  
 }
 static inline EQPred MakePred(EQEvent**ev){EQCmp c;return EQPred(c,ev);}
 static inline void Remove(EQEvent*ev){
- if(g_EventQueueRunning!=ev){ActiveList_EraseMatching(g_EventQueue,MakePred(&ev));{EQEvent*p=ev;AllocGuard guard;p->~EQEvent();Mem_Free(0,p,"callback.cc",0x36);}}
+ if(g_EventQueueRunning!=ev){std_list_imp_voidPtr_remove_if(g_EventQueue,MakePred(&ev));{EQEvent*p=ev;AllocGuard guard;p->~EQEvent();cMemMan_Deallocate(0,p,"callback.cc",0x36);}}
 }
 static inline void Run(EQEvent* e){e->run();}
 

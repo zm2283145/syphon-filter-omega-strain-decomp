@@ -11,9 +11,9 @@
 #include "types.h"
 #include "alloc_guard.h"
 
-/* Allocator release(ptr, pool, destroy, file, line): destroy the element's member at +4, then Mem_Free under the guard. */
+/* Allocator release(ptr, pool, destroy, file, line): destroy the element's member at +4, then cMemMan_Deallocate under the guard. */
 extern "C" {
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void* std_pair_cString_int_dtor(void* self, short flags);
 void opDelete_nodeP_int_bool_charP_etc_9(void* allocation, int pool, int destroy, char* file, int line);
 }
@@ -24,7 +24,7 @@ void opDelete_nodeP_int_bool_charP_etc_9(void* allocation, int pool, int destroy
         if (allocation)
             std_pair_cString_int_dtor((char*)allocation + 12, -1);
     }
-    Mem_Free(pool, allocation, file, line);
+    cMemMan_Deallocate(pool, allocation, file, line);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0040AD30 */
@@ -35,20 +35,20 @@ extern char D_004BEC68[];
 extern void cTimerDisable_ctor(int* g);
 extern void cTimerDisable_dtor(int* g, int del);
 #if 0 /* merge_units */
-extern void Mem_Free(int heap, void* p, const char* file, int line);
+extern void cMemMan_Deallocate(int heap, void* p, const char* file, int line);
 #endif /* merge_units */
-#define Mem_Free(a0, a1, a2, a3) (Mem_Free((a0), (a1), (char *)(a2), (a3))) /* merge_units */
+#define cMemMan_Deallocate(a0, a1, a2, a3) (cMemMan_Deallocate((a0), (a1), (char *)(a2), (a3))) /* merge_units */
 
 void cAllocator_node_deallocate_nodeP_uint_10(void* self, void* p)
 {
     if (p) {
         int g[1];
         cTimerDisable_ctor(g);
-        Mem_Free(0, p, D_004BEC68, 100);
+        cMemMan_Deallocate(0, p, D_004BEC68, 100);
         cTimerDisable_dtor(g, -1);
     }
 }
-#undef Mem_Free /* merge_units */
+#undef cMemMan_Deallocate /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0040AE10 */
 

@@ -12,11 +12,11 @@ typedef struct {
     int w60;
     char pad64[0xC];
 } E_1D8610;
-extern void* Vec4_GetZero(void);
-extern void Vec4_Assign(void* d, void* s);
-extern void Quat_SetIdentity(Q_1D8610* q);
+extern void* cVector_GetZero(void);
+extern void cVector_ctor_cVectorR(void* d, void* s);
+extern void cQuaternion_GetIdentity(Q_1D8610* q);
 extern void cQuaternion_ctor_cQuaternionR(Q_1D8610* d, Q_1D8610* s);
-E_1D8610* UpperBodyLook_ClearRecords(E_1D8610* arr)
+E_1D8610* cArray_FixedSize_cAimComponent_2_ctor(E_1D8610* arr)
 {
     E_1D8610* e = arr;
     do {
@@ -30,14 +30,14 @@ E_1D8610* UpperBodyLook_ClearRecords(E_1D8610* arr)
         e->b3 = -1;
         e->b4 = 0;
         e->b5 = 0;
-        Vec4_Assign(&e->v10, Vec4_GetZero());
-        Quat_SetIdentity(&qa);
+        cVector_ctor_cVectorR(&e->v10, cVector_GetZero());
+        cQuaternion_GetIdentity(&qa);
         cQuaternion_ctor_cQuaternionR(&e->q20, &qa);
-        Quat_SetIdentity(&qb);
+        cQuaternion_GetIdentity(&qb);
         cQuaternion_ctor_cQuaternionR(&e->q30, &qb);
-        Quat_SetIdentity(&qc);
+        cQuaternion_GetIdentity(&qc);
         cQuaternion_ctor_cQuaternionR(&e->q40, &qc);
-        Quat_SetIdentity(&qd);
+        cQuaternion_GetIdentity(&qd);
         cQuaternion_ctor_cQuaternionR(&e->q50, &qd);
         e->w60 = 0;
         e++;

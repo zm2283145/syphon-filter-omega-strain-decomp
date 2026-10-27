@@ -1,10 +1,10 @@
 #include "types.h"
-int Net_ResetSession(void);
+int cDME_ExitGame(void);
 int NetRegisterMallocFreeCallbacks(void*, void*);
 extern int D_00572270[4][20];
 extern signed char D_00572418[4];
 extern char Sfo_Malloc;
-extern char sfo_malloc_2CA9B0;
+extern char sfo_free;
 unsigned char cDME_Init_PreLobby(void) {
     int i;
     int j;
@@ -15,8 +15,8 @@ unsigned char cDME_Init_PreLobby(void) {
         { int* p = D_00572270[i]; for (j = 0; j < 20; j++) p[j] = 0; }
     }
     ok = 0;
-    r = NetRegisterMallocFreeCallbacks(&Sfo_Malloc, &sfo_malloc_2CA9B0);
-    Net_ResetSession();
+    r = NetRegisterMallocFreeCallbacks(&Sfo_Malloc, &sfo_free);
+    cDME_ExitGame();
     if (r == 0) ok = 1;
     return ok;
 }

@@ -9,11 +9,11 @@
 #include "types.h"
 typedef struct AcPair { int token; int target; } AcPair;
 typedef struct AcHost { unsigned char active; char p1[3]; AcPair pairs[6]; } AcHost;
-void MotionNotify_SendSlot(AcHost* h, int idx, unsigned char clear); /* gsynth: defined below */typedef struct { char pad[0x28]; unsigned char kind; char pad29[3]; void* target; unsigned char sent; char pad31[3]; float value; } D6AnimMsg;
-void MotionMsg_Send(D6AnimMsg* m, unsigned char kind, float value); /* gsynth: defined below */
+void cSkaAnimCheckpoints_TriggerCheckpointEvent(AcHost* h, int idx, unsigned char clear); /* gsynth: defined below */typedef struct { char pad[0x28]; unsigned char kind; char pad29[3]; void* target; unsigned char sent; char pad31[3]; float value; } D6AnimMsg;
+void cSkaAnimEndedMessage_Trigger(D6AnimMsg* m, unsigned char kind, float value); /* gsynth: defined below */
 /* cSkaRequestStream_SignalInterruptionOfCurrentlyPlayingItems: walks the active motion deque, resetting both message slots and the notify slot of
- * every 0xF8-byte record (MotionGraph_ClearActive without the final deque clear). Same iterator idiom
- * as src/main/ska/MotionGraph_ClearActive.c. */
+ * every 0xF8-byte record (cSkaRequestStream_ClearCurrentlyPlayingItems without the final deque clear). Same iterator idiom
+ * as src/main/ska/cSkaRequestStream_ClearCurrentlyPlayingItems.c. */
 #pragma cplusplus on
 #include "alloc_guard.h" /* ALLOC_GUARD_DTOR: discard the out-of-line copy of the empty dtor */
 struct Ring { int** cur; int** begin; int** x8; int** end; };
@@ -41,16 +41,16 @@ struct MGraph { char pad[0x18]; BlockArray arr; };
 extern "C" {
 void std_deque_deleter_common_cSkaSystem_Request_make_iterator(DqIt* out, BlockArray* a, int n);
 #if 0 /* merge_units */
-void MotionMsg_Send(void* m, unsigned char kind, float value);
+void cSkaAnimEndedMessage_Trigger(void* m, unsigned char kind, float value);
 #endif /* merge_units */
-#define MotionMsg_Send(a0, a1, a2) (MotionMsg_Send((D6AnimMsg *)(a0), (a1), (a2))) /* merge_units */
+#define cSkaAnimEndedMessage_Trigger(a0, a1, a2) (cSkaAnimEndedMessage_Trigger((D6AnimMsg *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-void MotionNotify_SendSlot(void* h, int idx, unsigned char clear);
+void cSkaAnimCheckpoints_TriggerCheckpointEvent(void* h, int idx, unsigned char clear);
 #endif /* merge_units */
-#define MotionNotify_SendSlot(a0, a1, a2) (MotionNotify_SendSlot((AcHost *)(a0), (a1), (a2))) /* merge_units */
+#define cSkaAnimCheckpoints_TriggerCheckpointEvent(a0, a1, a2) (cSkaAnimCheckpoints_TriggerCheckpointEvent((AcHost *)(a0), (a1), (a2))) /* merge_units */
 
-void MotionArray_Clear(BlockArray* a);
+void std_deque_deleter_cSkaSystem_Request_clear(BlockArray* a);
 }
 extern "C" void cSkaRequestStream_SignalInterruptionOfCurrentlyPlayingItems(MGraph* g)
 {
@@ -67,14 +67,14 @@ extern "C" void cSkaRequestStream_SignalInterruptionOfCurrentlyPlayingItems(MGra
     }
     while (it.Ne(e)) {
         p = it.elem;
-        MotionMsg_Send(p + 0x24, 5, 0.0f);
-        MotionMsg_Send(p + 0x5C, 5, 0.0f);
-        MotionNotify_SendSlot(p + 0x94, 6, 0);
+        cSkaAnimEndedMessage_Trigger(p + 0x24, 5, 0.0f);
+        cSkaAnimEndedMessage_Trigger(p + 0x5C, 5, 0.0f);
+        cSkaAnimCheckpoints_TriggerCheckpointEvent(p + 0x94, 6, 0);
         ++it;
     }
 }
-#undef MotionMsg_Send /* merge_units */
-#undef MotionNotify_SendSlot /* merge_units */
+#undef cSkaAnimEndedMessage_Trigger /* merge_units */
+#undef cSkaAnimCheckpoints_TriggerCheckpointEvent /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003ABB10(void) {}
 #pragma pop /* merge_units */
@@ -85,12 +85,12 @@ static inline void merge_flush_func_003ABB10(void) {}
 typedef struct AcMsg { void* vt; char p4[0x20]; int token; char p28[8]; } AcMsg;
 extern char D_00542B68[];
 extern char D_004DFBD0[];
-extern void Event_Construct(void*, void*);
-extern void Event_Send(void*, int, int);
+extern void cMessage_ctor_cMessageNameR(void*, void*);
+extern void QueueMessage_cMessageR_cSystemP_int(void*, int, int);
 extern void cMessage_dtor(void*, int);
 static inline int AcPair_Valid(AcPair* p) { return p->target != 0 && ~p->token != 0; }
 #pragma opt_common_subs off
-void MotionNotify_SendSlot(AcHost* h, int idx, unsigned char clear)
+void cSkaAnimCheckpoints_TriggerCheckpointEvent(AcHost* h, int idx, unsigned char clear)
 {
     AcPair* p;
     if (h->active) {
@@ -98,10 +98,10 @@ void MotionNotify_SendSlot(AcHost* h, int idx, unsigned char clear)
         if (AcPair_Valid(p)) {
             AcMsg msg;
             int tok = p->token;
-            Event_Construct(&msg, D_00542B68);
+            cMessage_ctor_cMessageNameR(&msg, D_00542B68);
             msg.token = tok;
             msg.vt = D_004DFBD0;
-            Event_Send(&msg, p->target, 1);
+            QueueMessage_cMessageR_cSystemP_int(&msg, p->target, 1);
             msg.vt = D_004DFBD0;
             cMessage_dtor(&msg, 0);
             if ((signed char)idx >= 5) h->active = 0;
@@ -117,23 +117,23 @@ static inline void merge_flush_func_003ABC80(void) {}
 /* merge_units: begin func_003ABD80 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern void Event_Send(void* msg, void* target, int flags);
+extern void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int flags);
 #endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((a0), (int)(a1), (a2))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((a0), (int)(a1), (a2))) /* merge_units */
 
 
-void MotionMsg_Send(D6AnimMsg* m, unsigned char kind, float value)
+void cSkaAnimEndedMessage_Trigger(D6AnimMsg* m, unsigned char kind, float value)
 {
     if (m->target && !m->sent) {
         m->kind = kind;
         m->value = value;
-        Event_Send(m, m->target, 1);
+        QueueMessage_cMessageR_cSystemP_int(m, m->target, 1);
     }
     if (kind == 4 || kind == 5) {
         m->sent = 1;
     }
 }
-#undef Event_Send /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003ABD80(void) {}
 #pragma pop /* merge_units */
@@ -141,7 +141,7 @@ static inline void merge_flush_func_003ABD80(void) {}
 
 /* merge_units: begin func_003ABE00 */
 #pragma push /* merge_units */
-/* MotionGraph_ClearActive: walks the active motion deque, resetting both message slots and the notify slot of
+/* cSkaRequestStream_ClearCurrentlyPlayingItems: walks the active motion deque, resetting both message slots and the notify slot of
  * every 0xF8-byte record, then clears the deque. Hand-matched (fam1).
  * The empty destructor keeps the iterator in memory (fields reached through s-register addresses, as in retail);
  * the field-wise operator= gives the word-by-word iterator copy. */
@@ -149,17 +149,17 @@ static inline void merge_flush_func_003ABD80(void) {}
 
 extern "C" {
 #if 0 /* merge_units */
-void MotionMsg_Send(void* m, unsigned char kind, float value);
+void cSkaAnimEndedMessage_Trigger(void* m, unsigned char kind, float value);
 #endif /* merge_units */
-#define MotionMsg_Send(a0, a1, a2) (MotionMsg_Send((D6AnimMsg *)(a0), (a1), (a2))) /* merge_units */
+#define cSkaAnimEndedMessage_Trigger(a0, a1, a2) (cSkaAnimEndedMessage_Trigger((D6AnimMsg *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-void MotionNotify_SendSlot(void* h, int idx, unsigned char clear);
+void cSkaAnimCheckpoints_TriggerCheckpointEvent(void* h, int idx, unsigned char clear);
 #endif /* merge_units */
-#define MotionNotify_SendSlot(a0, a1, a2) (MotionNotify_SendSlot((AcHost *)(a0), (a1), (a2))) /* merge_units */
+#define cSkaAnimCheckpoints_TriggerCheckpointEvent(a0, a1, a2) (cSkaAnimCheckpoints_TriggerCheckpointEvent((AcHost *)(a0), (a1), (a2))) /* merge_units */
 
 }
-extern "C" void MotionGraph_ClearActive(MGraph* g)
+extern "C" void cSkaRequestStream_ClearCurrentlyPlayingItems(MGraph* g)
 {
     DqIt it;
     DqIt b;
@@ -174,15 +174,15 @@ extern "C" void MotionGraph_ClearActive(MGraph* g)
     }
     while (it.Ne(e)) {
         p = it.elem;
-        MotionMsg_Send(p + 0x24, 5, 0.0f);
-        MotionMsg_Send(p + 0x5C, 5, 0.0f);
-        MotionNotify_SendSlot(p + 0x94, 6, 0);
+        cSkaAnimEndedMessage_Trigger(p + 0x24, 5, 0.0f);
+        cSkaAnimEndedMessage_Trigger(p + 0x5C, 5, 0.0f);
+        cSkaAnimCheckpoints_TriggerCheckpointEvent(p + 0x94, 6, 0);
         ++it;
     }
-    MotionArray_Clear(&g->arr);
+    std_deque_deleter_cSkaSystem_Request_clear(&g->arr);
 }
-#undef MotionMsg_Send /* merge_units */
-#undef MotionNotify_SendSlot /* merge_units */
+#undef cSkaAnimEndedMessage_Trigger /* merge_units */
+#undef cSkaAnimCheckpoints_TriggerCheckpointEvent /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003ABE00(void) {}
 #pragma pop /* merge_units */
@@ -190,24 +190,24 @@ static inline void merge_flush_func_003ABE00(void) {}
 
 /* merge_units: begin func_003ABF80 */
 #pragma push /* merge_units */
-/* MotionGraph_ClearQueued: MotionGraph_ClearActive (src/main/ska/MotionGraph_ClearActive.c) for a graph whose active deque
+/* cSkaRequestStream_ClearQueue: cSkaRequestStream_ClearCurrentlyPlayingItems (src/main/ska/cSkaRequestStream_ClearCurrentlyPlayingItems.c) for a graph whose active deque
  * sits at +0x30: resets both message slots and the notify slot of every 0xF8-byte record, then clears the deque. */
 #pragma cplusplus on
 
 struct MGraph_003ABF80 { char pad[0x30]; BlockArray arr; };
 extern "C" {
 #if 0 /* merge_units */
-void MotionMsg_Send(void* m, unsigned char kind, float value);
+void cSkaAnimEndedMessage_Trigger(void* m, unsigned char kind, float value);
 #endif /* merge_units */
-#define MotionMsg_Send(a0, a1, a2) (MotionMsg_Send((D6AnimMsg *)(a0), (a1), (a2))) /* merge_units */
+#define cSkaAnimEndedMessage_Trigger(a0, a1, a2) (cSkaAnimEndedMessage_Trigger((D6AnimMsg *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-void MotionNotify_SendSlot(void* h, int idx, unsigned char clear);
+void cSkaAnimCheckpoints_TriggerCheckpointEvent(void* h, int idx, unsigned char clear);
 #endif /* merge_units */
-#define MotionNotify_SendSlot(a0, a1, a2) (MotionNotify_SendSlot((AcHost *)(a0), (a1), (a2))) /* merge_units */
+#define cSkaAnimCheckpoints_TriggerCheckpointEvent(a0, a1, a2) (cSkaAnimCheckpoints_TriggerCheckpointEvent((AcHost *)(a0), (a1), (a2))) /* merge_units */
 
 }
-extern "C" void MotionGraph_ClearQueued(MGraph_003ABF80* g)
+extern "C" void cSkaRequestStream_ClearQueue(MGraph_003ABF80* g)
 {
     DqIt it;
     DqIt b;
@@ -222,15 +222,15 @@ extern "C" void MotionGraph_ClearQueued(MGraph_003ABF80* g)
     }
     while (it.Ne(e)) {
         p = it.elem;
-        MotionMsg_Send(p + 0x24, 5, 0.0f);
-        MotionMsg_Send(p + 0x5C, 5, 0.0f);
-        MotionNotify_SendSlot(p + 0x94, 6, 0);
+        cSkaAnimEndedMessage_Trigger(p + 0x24, 5, 0.0f);
+        cSkaAnimEndedMessage_Trigger(p + 0x5C, 5, 0.0f);
+        cSkaAnimCheckpoints_TriggerCheckpointEvent(p + 0x94, 6, 0);
         ++it;
     }
-    MotionArray_Clear(&g->arr);
+    std_deque_deleter_cSkaSystem_Request_clear(&g->arr);
 }
-#undef MotionMsg_Send /* merge_units */
-#undef MotionNotify_SendSlot /* merge_units */
+#undef cSkaAnimEndedMessage_Trigger /* merge_units */
+#undef cSkaAnimCheckpoints_TriggerCheckpointEvent /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003ABF80(void) {}
 #pragma pop /* merge_units */
@@ -256,14 +256,14 @@ extern void* const D_004DFBD0[8];
 #define D_004DFBD0 ((void * const*)&D_004DFBD0) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Event_Construct(UtMsg* m, void* type);
+extern void cMessage_ctor_cMessageNameR(UtMsg* m, void* type);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Event_Send(void* m, int target, int immediate);
+extern void QueueMessage_cMessageR_cSystemP_int(void* m, int target, int immediate);
 #endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((a0), (a1), (a2))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(UtMsg* m, int flags);
@@ -271,10 +271,10 @@ extern void cMessage_dtor(UtMsg* m, int flags);
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
 extern UtSlot* std_deque_cSkaSystem_Request_opIndex(UtArr* a, int index);
-extern UtSlot* Array_GetLast(UtArr* a);
+extern UtSlot* std_deque_deleter_common_cSkaSystem_Request_back_void(UtArr* a);
 extern UtReq* std_deque_deleter_common_cSkaSystem_Request_front(UtArr* a);
 extern int IsReadyForNextAnim(UtSlot* s, UtRange* r);
-extern void MotionGraph_Install(float w, UtCtl* c, UtReq* r, int stop);
+extern void cSkaRequestStream_StartPlayingItem(float w, UtCtl* c, UtReq* r, int stop);
 extern void std_deque_deleter_cSkaSystem_Request_pop_front(UtArr* a);
 
 static inline void UtMsgSend(UtAnimMsg* m, unsigned char kind, float value)
@@ -282,7 +282,7 @@ static inline void UtMsgSend(UtAnimMsg* m, unsigned char kind, float value)
     if (m->target && !m->sent) {
         m->kind = kind;
         m->value = value;
-        Event_Send(m, m->target, 1);
+        QueueMessage_cMessageR_cSystemP_int(m, m->target, 1);
     }
     if (kind == 4 || kind == 5) {
         m->sent = 1;
@@ -297,10 +297,10 @@ static inline void UtNotifySend(UtNotify* h, int idx, unsigned char clear)
         if (UtLinkValid(p)) {
             UtMsg msg;
             int tok = p->id;
-            Event_Construct(&msg, D_00542B68);
+            cMessage_ctor_cMessageNameR(&msg, D_00542B68);
             msg.vtable = (void*)D_004DFBD0;
             msg.value = tok;
-            Event_Send(&msg, p->target, 1);
+            QueueMessage_cMessageR_cSystemP_int(&msg, p->target, 1);
             msg.vtable = (void*)D_004DFBD0;
             cMessage_dtor(&msg, 0);
             if ((signed char)idx >= 5) h->active = 0;
@@ -309,7 +309,7 @@ static inline void UtNotifySend(UtNotify* h, int idx, unsigned char clear)
     }
 }
 
-void AnimCtl_UpdateTransitions(UtCtl* c, float t)
+void cSkaRequestStream_ReorderLists(UtCtl* c, float t)
 {
     UtSlot* e;
     int found;
@@ -341,10 +341,10 @@ void AnimCtl_UpdateTransitions(UtCtl* c, float t)
                         if (UtLinkValid(p)) {
                             UtMsg msg;
                             tok = p->id;
-                            Event_Construct(&msg, D_00542B68);
+                            cMessage_ctor_cMessageNameR(&msg, D_00542B68);
                             msg.vtable = (void*)D_004DFBD0;
                             msg.value = tok;
-                            Event_Send(&msg, p->target, 1);
+                            QueueMessage_cMessageR_cSystemP_int(&msg, p->target, 1);
                             msg.vtable = (void*)D_004DFBD0;
                             cMessage_dtor(&msg, 0);
                             ns->notify.active = 0;
@@ -358,23 +358,23 @@ void AnimCtl_UpdateTransitions(UtCtl* c, float t)
         }
     } else if (c->queue.count > 0) {
 
-        e = Array_GetLast(&c->arr);
+        e = std_deque_deleter_common_cSkaSystem_Request_back_void(&c->arr);
         r = std_deque_deleter_common_cSkaSystem_Request_front(&c->queue);
         if (IsReadyForNextAnim(e, &r->range)) {
             e->done = 1;
-            MotionGraph_Install(0.0f, c, r, 0);
+            cSkaRequestStream_StartPlayingItem(0.0f, c, r, 0);
             std_deque_deleter_cSkaSystem_Request_pop_front(&c->queue);
         }
     } else if (c->hold) {
-        e = Array_GetLast(&c->arr);
+        e = std_deque_deleter_common_cSkaSystem_Request_back_void(&c->arr);
         if (IsReadyForNextAnim(e, &c->range)) {
             UtNotifySend(&e->notify, 2, 1);
         }
     }
 }
 #undef D_004DFBD0 /* merge_units */
-#undef Event_Construct /* merge_units */
-#undef Event_Send /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003AC100(void) {}

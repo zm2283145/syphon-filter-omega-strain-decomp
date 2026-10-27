@@ -6,7 +6,7 @@ typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-V4 Mtx_MulVec4(V4* vp, void* m) {
+V4 cVector_GetTransformed(V4* vp, void* m) {
     V4 v;
     V4* p; V4* d;
     d = &v; VCopyF(d, vp);

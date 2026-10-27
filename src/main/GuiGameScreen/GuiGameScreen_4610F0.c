@@ -34,11 +34,11 @@ extern "C" {
 extern char g_Game[];
 extern char D_004DADF0[];
 extern char D_004DAE10[];
-extern void SoundEvent_Ctor(SoundEventMsg_4610F0* msg, void* action, int flags);
-extern void Event_Send(void* msg, void* target, int flags);
-extern void FileMan_Release(void* part, int flags);
+extern void cStopSoundMsg_ctor_cSndFxR_bool(SoundEventMsg_4610F0* msg, void* action, int flags);
+extern void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int flags);
+extern void cFileMan_dtor(void* part, int flags);
 extern void cMessage_dtor(void* msg, int flags);
-extern void SoundAction_CtorVoice(void* action, int kind, char* voice, int a, int b);
+extern void cSndFx_SetSndFx(void* action, int kind, char* voice, int a, int b);
 extern void SoundMsg_WrapAction(SoundMsg_4610F0* msg, void* action);
 }
 
@@ -46,12 +46,12 @@ static inline void StopVoice_4610F0(Self_4610F0* self)
 {
     SoundEventMsg_4610F0 stop;
     self->playing = 0;
-    SoundEvent_Ctor(&stop, self->action, 0);
+    cStopSoundMsg_ctor_cSndFxR_bool(&stop, self->action, 0);
     stop.flag = 1;
-    Event_Send(&stop, g_Game, 1);
+    QueueMessage_cMessageR_cSystemP_int(&stop, g_Game, 1);
     stop.vtbl = D_004DADF0;
-    FileMan_Release(stop.partB, -1);
-    FileMan_Release(stop.partA, -1);
+    cFileMan_dtor(stop.partB, -1);
+    cFileMan_dtor(stop.partA, -1);
     cMessage_dtor(&stop, 0);
 }
 
@@ -59,18 +59,18 @@ static inline void PlayVoice_4610F0(Self_4610F0* self, char* voice)
 {
     SoundMsg_4610F0 play;
     StopVoice_4610F0(self);
-    SoundAction_CtorVoice(self->action, 4, voice, 0, 0);
+    cSndFx_SetSndFx(self->action, 4, voice, 0, 0);
     self->playing = 0;
     SoundMsg_WrapAction(&play, self->action);
     play.flag = 1;
-    Event_Send(&play, g_Game, 1);
+    QueueMessage_cMessageR_cSystemP_int(&play, g_Game, 1);
     play.vtbl = D_004DAE10;
-    FileMan_Release(play.partB, -1);
-    FileMan_Release(play.partA, -1);
+    cFileMan_dtor(play.partB, -1);
+    cFileMan_dtor(play.partA, -1);
     cMessage_dtor(&play, 0);
 }
 
-extern "C" void VoiceQueue_Fire(Self_4610F0* self)
+extern "C" void cQuipList_NextQuip(Self_4610F0* self)
 {
     if (self->cur < self->count) {
         Line_4610F0* line = &self->lines[self->cur++];

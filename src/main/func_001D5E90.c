@@ -1,4 +1,4 @@
-// UpperBodyIk_Position: copy the source position into the object transform, then apply the parent rotation/translation (VU0).
+// cBoneIk_LimbPose_CalculateSkelSpacePos: copy the source position into the object transform, then apply the parent rotation/translation (VU0).
 #pragma cplusplus on
 #include "types.h"
 #pragma always_inline on
@@ -60,7 +60,7 @@ static inline void ApplyParent(Obj* rx, Obj* px, V& p)
     }
 }
 
-extern "C" void UpperBodyIk_Position(Obj* o)
+extern "C" void cBoneIk_LimbPose_CalculateSkelSpacePos(Obj* o)
 {
     o->xf.Pos() = o->src->Get();
     if (o->parent) {

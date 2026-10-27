@@ -14,59 +14,59 @@ struct S_002ADAB0 {
 extern "C" {
 extern void* D_004FFC04;
 extern char D_004ABB08[];
-void* Gui_GetScreenList(void);
-void* GuiManager_FindOrLoad(void* a, char* b, char* c);
-int GuiScreen_GetLobbyString(S_002ADAB0* self, int a, char* b, int c, int d, int e);
-void GuiKeyboard_Open(void* pg, int a, char* b, S_002ADAB0* c, int d, int e, int f);
-void* DME_GetLobby(void);
-char* String_CStr(void* s);
-int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_002ADAB0* d, int e);
+void* Gui_Manager(void);
+void* GuiManager_OpenGui(void* a, char* b, char* c);
+int GuiLobbyScreen_GetLobbyString(S_002ADAB0* self, int a, char* b, int c, int d, int e);
+void GuiKeyboard_Display(void* pg, int a, char* b, S_002ADAB0* c, int d, int e, int f);
+void* cDME_GetLobby(void);
+char* std_basic_string_char_char_traits_char_c_str(void* s);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, int c, S_002ADAB0* d, int e);
 int func_0044D9C0(void* g, int a);
-void FrontEnd_ClosePopup(void* ui, int id);
-int SFOLobby_LookupAccountId(void* g, char* t);
-int SFOLobby_FormatError(void* g, int a);
+void cGameFrontEnd_PopMessageBox(void* ui, int id);
+int SFOLobby_GetAgentID(void* g, char* t);
+int SFOLobby_GetErrorDetails(void* g, int a);
 void GuiLobbyScreen_ContactInviteAgent(S_002ADAB0* self, int r, char* t);
 void GuiMissionLobbyScreen_SetDisplayMode(S_002ADAB0* self, int a);
-int GuiMenuScreen_HandleEvent(S_002ADAB0* self, void* w, int msg, int sub, char* text);
+int GuiMissionLobbyScreen_onMessage(S_002ADAB0* self, void* w, int msg, int sub, char* text);
 }
-extern "C" int GuiNetContacts_HandleEvent(S_002ADAB0* self, void* w, int msg, int sub, char* text)
+extern "C" int GuiNetContacts_onMessage(S_002ADAB0* self, void* w, int msg, int sub, char* text)
 {
     unsigned short m = msg;
     if (m == 2 && w == self->p160) {
-        void* pg = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiKeyboard", "KEYBOARD");
+        void* pg = GuiManager_OpenGui(Gui_Manager(), "GuiKeyboard", "KEYBOARD");
         if (pg)
-            GuiKeyboard_Open(pg, GuiScreen_GetLobbyString(self, 0x40, 0, 0, 0, 0), D_004ABB08, self, 0xF, 0xC, 0);
+            GuiKeyboard_Display(pg, GuiLobbyScreen_GetLobbyString(self, 0x40, 0, 0, 0, 0), D_004ABB08, self, 0xF, 0xC, 0);
         return 1;
     }
     if (m == 0x1A) {
         if (sub == 0xD) {
-            void* g = DME_GetLobby();
+            void* g = cDME_GetLobby();
             if (g) {
                 int h;
-                char* nm = String_CStr(self->s104);
+                char* nm = std_basic_string_char_char_traits_char_c_str(self->s104);
                 void* ui = D_004FFC04;
-                h = FrontEnd_OpenPopup(ui, 0, D_004ABB08, GuiScreen_GetLobbyString(self, 0x36, nm, 0, 0, 0), 0, 0);
+                h = cGameFrontEnd_PushMessageBox(ui, 0, D_004ABB08, GuiLobbyScreen_GetLobbyString(self, 0x36, nm, 0, 0, 0), 0, 0);
                 if (func_0044D9C0(g, self->f100)) {
-                    char* nm2 = String_CStr(self->s104);
+                    char* nm2 = std_basic_string_char_char_traits_char_c_str(self->s104);
                     void* ui2 = D_004FFC04;
-                    FrontEnd_OpenPopup(ui2, 2, D_004ABB08, GuiScreen_GetLobbyString(self, 0x37, nm2, 0, 0, 0), 0, 0);
+                    cGameFrontEnd_PushMessageBox(ui2, 2, D_004ABB08, GuiLobbyScreen_GetLobbyString(self, 0x37, nm2, 0, 0, 0), 0, 0);
                 } else {
-                    char* nm3 = String_CStr(self->s104);
+                    char* nm3 = std_basic_string_char_char_traits_char_c_str(self->s104);
                     void* ui3 = D_004FFC04;
-                    FrontEnd_OpenPopup(ui3, 2, D_004ABB08, GuiScreen_GetLobbyString(self, 0x38, nm3, 0, 0, 0), 0, 0);
+                    cGameFrontEnd_PushMessageBox(ui3, 2, D_004ABB08, GuiLobbyScreen_GetLobbyString(self, 0x38, nm3, 0, 0, 0), 0, 0);
                 }
-                FrontEnd_ClosePopup(D_004FFC04, h);
+                cGameFrontEnd_PopMessageBox(D_004FFC04, h);
             }
             return 1;
         }
         if (sub == 0xC) {
             if (text && *text) {
-                void* g = DME_GetLobby();
+                void* g = cDME_GetLobby();
                 if (g) {
-                    int r = SFOLobby_LookupAccountId(g, text);
-                    if ((unsigned char)SFOLobby_FormatError(g, 0)) {
+                    int r = SFOLobby_GetAgentID(g, text);
+                    if ((unsigned char)SFOLobby_GetErrorDetails(g, 0)) {
                         void* ui = D_004FFC04;
-                        FrontEnd_OpenPopup(ui, 2, D_004ABB08, GuiScreen_GetLobbyString(self, 0x17, text, 0, 0, 0), 0, 0);
+                        cGameFrontEnd_PushMessageBox(ui, 2, D_004ABB08, GuiLobbyScreen_GetLobbyString(self, 0x17, text, 0, 0, 0), 0, 0);
                     } else {
                         GuiLobbyScreen_ContactInviteAgent(self, r, text);
                     }
@@ -83,7 +83,7 @@ extern "C" int GuiNetContacts_HandleEvent(S_002ADAB0* self, void* w, int msg, in
         else
             GuiMissionLobbyScreen_SetDisplayMode(self, 1);
     }
-    return GuiMenuScreen_HandleEvent(self, w, msg, sub, text);
+    return GuiMissionLobbyScreen_onMessage(self, w, msg, sub, text);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002ADAB0 */
@@ -93,7 +93,7 @@ extern "C" int GuiNetContacts_HandleEvent(S_002ADAB0* self, void* w, int msg, in
 #include "active_flag_release.h"
 
 /* Stop and release when active. */
-DEFINE_ACTIVE_FLAG_RELEASE(GuiNetContacts_Deactivate, SFOLobby_LeaveContactsState)
+DEFINE_ACTIVE_FLAG_RELEASE(GuiNetContacts_Deactivate, SFOLobby_ContactScreenExit)
 #pragma pop /* merge_units */
 /* merge_units: end func_002ADE00 */
 
@@ -103,21 +103,21 @@ typedef struct { char pad[0xB4]; unsigned char bB4; unsigned char bB5; } P2ADE60
 typedef struct { char pad[0x255C]; int mode; } G2ADE60;
 typedef struct { char pad0[0x80]; unsigned char shown; char pad81[7]; P2ADE60* p88; char pad8C[0xAC - 0x8C]; char mAC[0x1C]; char mC8[4]; } S2ADE60;
 #if 0 /* merge_units */
-extern G2ADE60* DME_GetLobby(void);
+extern G2ADE60* cDME_GetLobby(void);
 #endif /* merge_units */
-#define DME_GetLobby() ((G2ADE60 *)DME_GetLobby()) /* merge_units */
+#define cDME_GetLobby() ((G2ADE60 *)cDME_GetLobby()) /* merge_units */
 
 extern void SFOLobby_MissionScreenExit(G2ADE60* g);
-extern void App_CardWaitPoll(void);
-extern void SFOLobby_EnterContactsState(G2ADE60* g, void* cb, void* a, void* b);
+extern void cGameFrontEnd_LobbyCallback(void);
+extern void SFOLobby_ContactScreenStart(G2ADE60* g, void* cb, void* a, void* b);
 void GuiNetContacts_Activate(S2ADE60* s)
 {
     if (!s->shown) {
-        G2ADE60* g = DME_GetLobby();
+        G2ADE60* g = cDME_GetLobby();
         if (g) {
             if (g->mode == 4)
                 SFOLobby_MissionScreenExit(g);
-            SFOLobby_EnterContactsState(g, App_CardWaitPoll, s->mAC, s->mC8);
+            SFOLobby_ContactScreenStart(g, cGameFrontEnd_LobbyCallback, s->mAC, s->mC8);
         }
         if (s->p88) {
             s->p88->bB4 = 1;
@@ -126,6 +126,6 @@ void GuiNetContacts_Activate(S2ADE60* s)
         s->shown = 1;
     }
 }
-#undef DME_GetLobby /* merge_units */
+#undef cDME_GetLobby /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002ADE60 */

@@ -1,7 +1,7 @@
 /*
- * guiManager.cc: the object returned by Gui_GetScreenList(). It loads .GUI
+ * guiManager.cc: the object returned by Gui_Manager(). It loads .GUI
  * widget trees from the mounted HOG archives and owns the set-up widgets.
- * (loose02_types.h's GuiManager is the screen stack from Gui_GetScreenStack.)
+ * (loose02_types.h's GuiManager is the screen stack from Gui_Canvas.)
  */
 #ifndef GUIMANAGER_H
 #define GUIMANAGER_H
@@ -27,8 +27,8 @@ typedef struct GuiPtrList {
 
 typedef struct GuiScreenList {
     char pad00[0x14];
-    GuiPtrList widgets;            /* 0x14 set-up widgets (GuiManager_AddWidget) */
-    GuiPtrList pendingDelete;      /* 0x20 widgets destroyed by GuiManager_FlushDeleted */
+    GuiPtrList widgets;            /* 0x14 set-up widgets (GuiManager_Add) */
+    GuiPtrList pendingDelete;      /* 0x20 widgets destroyed by GuiManager_DestroyPending */
     char loadedNames[0xC];         /* 0x2C list of String: names of loaded .GUI files */
 } GuiScreenList;
 

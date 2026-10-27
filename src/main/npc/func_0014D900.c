@@ -14,12 +14,12 @@ typedef struct Self_0014D900 {
 } Self_0014D900;
 extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
-extern void Event_Construct(Msg_0014D900* msg, void* name);
-extern void Event_Send(Msg_0014D900* msg, void* target, int flags);
+extern void cMessage_ctor_cMessageNameR(Msg_0014D900* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg_0014D900* msg, void* target, int flags);
 extern void cMessage_dtor(Msg_0014D900* msg, int flags);
-#define SEND1(V) { Msg_0014D900 msg; Event_Construct(&msg, g_ActorActionMsgClass); msg.b28 = 0; msg.vtable = D_004E0840; msg.value = V; { void* t = self->target; msg.b20 = 1; Event_Send(&msg, t, 0); } msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
-#define SEND0(V) { Msg_0014D900 msg; Event_Construct(&msg, g_ActorActionMsgClass); msg.b28 = 0; msg.vtable = D_004E0840; msg.value = V; Event_Send(&msg, self->target, 0); msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
-void NpcAi_RequestAction(Self_0014D900* self, unsigned char type, int prio, float f)
+#define SEND1(V) { Msg_0014D900 msg; cMessage_ctor_cMessageNameR(&msg, g_ActorActionMsgClass); msg.b28 = 0; msg.vtable = D_004E0840; msg.value = V; { void* t = self->target; msg.b20 = 1; QueueMessage_cMessageR_cSystemP_int(&msg, t, 0); } msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
+#define SEND0(V) { Msg_0014D900 msg; cMessage_ctor_cMessageNameR(&msg, g_ActorActionMsgClass); msg.b28 = 0; msg.vtable = D_004E0840; msg.value = V; QueueMessage_cMessageR_cSystemP_int(&msg, self->target, 0); msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
+void cNPC_DoAction(Self_0014D900* self, unsigned char type, int prio, float f)
 {
     switch (type) {
     case 9:

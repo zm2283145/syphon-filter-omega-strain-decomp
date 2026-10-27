@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 int sprintf(void *, const void *, ...);
 
 /* merge_units: begin func_001450F0 */
@@ -22,30 +22,30 @@ int sprintf(void *, const void *, ...);
 struct E_00145200 { char pad[0xD8]; int xD8; char padDC[0x11C - 0xDC]; void* p11C; char pad120[0x134 - 0x120]; int x134; unsigned char x138; char p139[3]; void* p13C; };
 struct I_00145200 { int a; int n; };
 struct S_00145200 { int x0; I_00145200* info; char pad8[0xC]; E_00145200* arr; unsigned char x18; char pad1c[0xB8 - 0x1C]; void* pB8[7]; void* pD4; };
-extern "C" void WeaponDb_LoadResources(S_00145200* self); /* gsynth: defined below */
+extern "C" void cWeaponDB_UnloadLevelSpecific(S_00145200* self); /* gsynth: defined below */
 #pragma pop
 extern char D_0048B2F8[];
 extern char D_004FFB8C[];
 typedef struct { char pad[0x10]; unsigned char loaded; char pad2[0xB]; char hog[4]; } S_HOG;
 #if 0 /* merge_units */
-extern void WeaponDb_LoadResources(S_HOG* self);
+extern void cWeaponDB_UnloadLevelSpecific(S_HOG* self);
 #endif /* merge_units */
-#define WeaponDb_LoadResources(a0) (WeaponDb_LoadResources((void *)(a0))) /* merge_units */
+#define cWeaponDB_UnloadLevelSpecific(a0) (cWeaponDB_UnloadLevelSpecific((void *)(a0))) /* merge_units */
 
-extern void ArchiveList_CloseNamed(char* a, char* b);
+extern void cHogList_Close(char* a, char* b);
 extern void cFileMan_Close(void* p);
-void WeaponDb_UnloadWpnHog(S_HOG* self)
+void cWeaponDB_CloseWeaponsHog(S_HOG* self)
 {
     if (self->loaded) {
         char buf[0x80];
-        WeaponDb_LoadResources(self);
+        cWeaponDB_UnloadLevelSpecific(self);
         sprintf(buf, "%s\\COMMON\\WPNHOG.HOG", D_0048B2F8);
-        ArchiveList_CloseNamed(D_004FFB8C, buf);
+        cHogList_Close(D_004FFB8C, buf);
         cFileMan_Close(self->hog);
         self->loaded = 0;
     }
 }
-#undef WeaponDb_LoadResources /* merge_units */
+#undef cWeaponDB_UnloadLevelSpecific /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001450F0(void) {}
 #pragma pop /* merge_units */
@@ -54,17 +54,17 @@ static inline void merge_flush_func_001450F0(void) {}
 /* merge_units: begin func_00145160 */
 #pragma push /* merge_units */
 extern char D_0049B210[];
-extern void* Archive_Open(char* a, char* b, int c, int d);
-extern void Hog_Register(void* hog, char* name, void* arc, int z);
+extern void* cHogList_Open(char* a, char* b, int c, int d);
+extern void cFileMan_EncodeFilename_charP_cHogFileR_bool(void* hog, char* name, void* arc, int z);
 extern void WeaponDb_LoadShellsArchive(S_HOG* self, void* arc);
-void WeaponDb_LoadWpnHog(S_HOG* self)
+void cWeaponDB_OpenWeaponsHog(S_HOG* self)
 {
     if (!self->loaded) {
         char buf[0x80];
         void* arc;
         sprintf(buf, D_0049B210, D_0048B2F8);
-        arc = Archive_Open(D_004FFB8C, buf, 0, 0);
-        Hog_Register(self->hog, "DUMMY.SKL", arc, 0);
+        arc = cHogList_Open(D_004FFB8C, buf, 0, 0);
+        cFileMan_EncodeFilename_charP_cHogFileR_bool(self->hog, "DUMMY.SKL", arc, 0);
         WeaponDb_LoadShellsArchive(self, arc);
         self->loaded = 1;
     }
@@ -88,9 +88,9 @@ void ActorModel_Release(void* p);
 
 
 
-static inline void Free_00145200(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_0049B1D0, line); }
-static inline void DelD4_00145200(void* p, int line) { G_00145200 g; cTimerDisable_ctor(&g); cArray_charPtr_dtor_void(p, -1); Mem_Free(0, p, D_0049B1D0, line); cTimerDisable_dtor(&g, -1); }
-extern "C" void WeaponDb_LoadResources(S_00145200* self)
+static inline void Free_00145200(void* p, int line) { AllocGuard g; cMemMan_Deallocate(0, p, D_0049B1D0, line); }
+static inline void DelD4_00145200(void* p, int line) { G_00145200 g; cTimerDisable_ctor(&g); cArray_charPtr_dtor_void(p, -1); cMemMan_Deallocate(0, p, D_0049B1D0, line); cTimerDisable_dtor(&g, -1); }
+extern "C" void cWeaponDB_UnloadLevelSpecific(S_00145200* self)
 {
     int i;
     for (i = 0; i < self->info->n; i++) {

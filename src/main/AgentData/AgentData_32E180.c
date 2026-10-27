@@ -13,13 +13,13 @@
 
 #include "loose03_types.h"
 
-extern int AgentData_SetObjectiveBit(int agent, int bit, int value);
-extern int Agent_GetSelected(void* agents, int index);
+extern int cAgentData_AddObjective(int agent, int bit, int value);
+extern int cGameSystem_GetAgentData(void* agents, int index);
 extern char g_Game[];       /* agent list */
 
 /* Set objective bit `bit` on the selected agent. */
 int Objective_AddGlobal(int bit) {
-    return AgentData_SetObjectiveBit(Agent_GetSelected(g_Game, -1), bit, 1);
+    return cAgentData_AddObjective(cGameSystem_GetAgentData(g_Game, -1), bit, 1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0032E180 */
@@ -31,7 +31,7 @@ int Objective_AddGlobal(int bit) {
 typedef union ScriptArg { int i; float f; void* p; } ScriptArg;
 typedef struct { char data[0x1C]; } OmegaReq;
 extern char D_00532BB0[];
-extern void* OmegaReqRow_Construct(OmegaReq* r, int a, int zero, int e, int b, int c, int d);
+extern void* cAgentData_tRequirementInfo_ctor(OmegaReq* r, int a, int zero, int e, int b, int c, int d);
 extern void cArray_tRequirementInfo_PushBackActual(void* registry, void* item);
 
 /* Script native: builds an Omega requirement from args[0..4] and registers it; returns 0. */
@@ -48,7 +48,7 @@ int Script_cAgentData__RegisterOmegaReq_2(ScriptArg* args)
     p2[0] = args[2].i;
     p1[0] = args[1].i;
     p0[0] = args[0].i;
-    cArray_tRequirementInfo_PushBackActual(D_00532BB0, OmegaReqRow_Construct(&r, *(int*)p0, 0, *(int*)p4, *(int*)p1, *(int*)p2, *(int*)p3));
+    cArray_tRequirementInfo_PushBackActual(D_00532BB0, cAgentData_tRequirementInfo_ctor(&r, *(int*)p0, 0, *(int*)p4, *(int*)p1, *(int*)p2, *(int*)p3));
     return 0;
 }
 #pragma pop /* merge_units */

@@ -26,8 +26,8 @@ struct SkelNode {
     struct S150 { unsigned char b150, b151; float f154; V v160; float f170; } s150;
     V v180, v190, v1A0, v1B0, v1C0;
 };
-extern "C" SkelNode* SkelNode_CopyConstruct(SkelNode* d, SkelNode* s);
-SkelNode* SkelNode_CopyConstruct(SkelNode* d, SkelNode* s)
+extern "C" SkelNode* cBone_opAssign(SkelNode* d, SkelNode* s);
+SkelNode* cBone_opAssign(SkelNode* d, SkelNode* s)
 {
     d->fC0 = s->fC0;
     d->mD0 = s->mD0;
@@ -54,7 +54,7 @@ extern char D_004DF640[];
 int cArray_cXformNodePtr_Empty(void* l);
 void** cArray_cXformNodePtr_Back(void* l);
 void cArray_cXformNodePtr_dtor(void* p, int f);
-void TransformNode_dtor(void* p, int f);
+void cXform_dtor(void* p, int f);
 void operator_delete(void* p);
 }
 static inline bool Empty3BA9A0(void* l) { return cArray_cXformNodePtr_Empty(l); }
@@ -65,7 +65,7 @@ static inline void Base3BA9A0(Obj3BA9A0* self)
         self->Clear(1);
         while (!Empty3BA9A0(self->mA4)) self->Remove(*cArray_cXformNodePtr_Back(self->mA4), 1);
         cArray_cXformNodePtr_dtor(self->mA4, -1);
-        TransformNode_dtor(self, 0);
+        cXform_dtor(self, 0);
     }
 }
 extern "C" Obj3BA9A0* cBone_dtor(Obj3BA9A0* self, short del)

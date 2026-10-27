@@ -1,6 +1,6 @@
 #pragma cplusplus on
 #include "types.h"
-/* Pickup_PerformAction: hand the backpack's weapons (with their clips/spares, possibly as a dual
+/* cBackpack_AutoPickup: hand the backpack's weapons (with their clips/spares, possibly as a dual
    pair), its ammo and its held item to the player, with a pickup sound and HUD notices. */
 struct V4_254DA0 {
     float x, y, z, w;
@@ -9,7 +9,7 @@ struct V4_254DA0 {
 } __attribute__((aligned(16)));
 struct Str_254DA0 { char d[0x9C]; };
 struct Str2_254DA0 { char d[0xAC]; };
-extern "C" void FileMan_Release(void* s, int flags);
+extern "C" void cFileMan_dtor(void* s, int flags);
 extern "C" void cMessage_dtor(void* msg, int flags);
 extern "C" char D_004DAE30[];
 #pragma define_section DTOR_DROP_254DA0 ".dtors_drop" far_absolute RX
@@ -23,7 +23,7 @@ struct MsgBase_254DA0 {
 struct SndMsgP_254DA0 { void* vtbl; char pad4[0x1C]; unsigned char flag; char pad21[0xF]; char req[0x190]; };
 struct SndMsg_254DA0 : MsgBase_254DA0 {
     Req_254DA0 req;
-    __declspec(weak) __declspec(DTOR_DROP_254DA0) ~SndMsg_254DA0() { vtbl = D_004DAE30; if (&req) { /* the request part's teardown tests its address */ FileMan_Release(&req.b, -1); FileMan_Release(&req.a, -1); } }
+    __declspec(weak) __declspec(DTOR_DROP_254DA0) ~SndMsg_254DA0() { vtbl = D_004DAE30; if (&req) { /* the request part's teardown tests its address */ cFileMan_dtor(&req.b, -1); cFileMan_dtor(&req.a, -1); } }
 };
 struct Slot_254DA0 { int a; int b; int id; int c; };
 struct Inv_254DA0 { Slot_254DA0 slots[1]; char pad10[0x18 - 0x10]; int dual; };
@@ -70,36 +70,36 @@ extern char D_004F1AF0[];
 extern char D_004F17B0[];
 extern char D_004F1C90[];
 extern char D_004DAE30[];
-int Backpack_ListItems(Bp_254DA0* p, int* ids, Inv_254DA0* inv, int max);
-unsigned char Backpack_TakeItem(Bp_254DA0* p, int id, int remove);
-int WeaponInv_SlotOfItem(int id);
-void* Agent_GetSelected(char* game, int i);
-int AgentData_HasUnlock(void* agent, int what);
-void Backpack_QueryAmmo(Bp_254DA0* p, int id, int* a, int* b, int* c);
-char* WeaponDb_Get(int db, int id);
-char* Loc_LookupText(char* key);
-void WeaponInv_Add(Inv_254DA0* inv, int id, int a, int b, int c, int d);
-void WeaponInv_SetClip(Inv_254DA0* inv, int slot, int n, int z);
-void WeaponInv_AddSpare(Inv_254DA0* inv, int slot, int n, int z);
+int cBackpack_GetWeaponDbs(Bp_254DA0* p, int* ids, Inv_254DA0* inv, int max);
+unsigned char cBackpack_TakeWeapon(Bp_254DA0* p, int id, int remove);
+int cWeapon_GetWeaponSlot(int id);
+void* cGameSystem_GetAgentData(char* game, int i);
+int cAgentData_HasSpecialBonus(void* agent, int what);
+void cBackpack_GetAmmoCounts(Bp_254DA0* p, int id, int* a, int* b, int* c);
+char* cWeaponDB_GetEntry(int db, int id);
+char* nGlobalization_GetString_charP(char* key);
+void cWeapon_Add(Inv_254DA0* inv, int id, int a, int b, int c, int d);
+void cWeapon_PickupClip(Inv_254DA0* inv, int slot, int n, int z);
+void cWeapon_PickupAmmo_eWpnSlot_int_bool(Inv_254DA0* inv, int slot, int n, int z);
 int sprintf(char* buf, const char* fmt, ...);
-void Hud_PostNotification(int hud, char* text);
-void WeaponInv_DualShare(Inv_254DA0* inv);
-void SoundPosRequest_Ctor(void* m, char* req, V4_254DA0* pos);
-void Event_Send(void* msg, void* target, int immediate);
-void FileMan_Release(void* s, int flags);
+void cHud_Message(int hud, char* text);
+void cWeapon_EqualizeDualWieldAmmo(Inv_254DA0* inv);
+void cPlaySoundMsg_ctor_cSndFxR_cGOBJP(void* m, char* req, V4_254DA0* pos);
+void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int immediate);
+void cFileMan_dtor(void* s, int flags);
 void cMessage_dtor(void* msg, int flags);
-unsigned char Backpack_PickupAmmo(Bp_254DA0* p, Inv_254DA0* inv);
-void Object_Register(Bp_254DA0* p);
-Hot_254DA0* Hotbox_CreateRuntime(int mgr, Bp_254DA0* p, int a, int b);
-void Backpack_Finish(Bp_254DA0* p);
-void Pickup_PerformAction(Bp_254DA0* self, Player_254DA0* pl);
+unsigned char cBackpack_AutoTakeAmmo(Bp_254DA0* p, Inv_254DA0* inv);
+void nGobjManager_AddGOBJ(Bp_254DA0* p);
+Hot_254DA0* cHotboxMan_CreateInteractBox(int mgr, Bp_254DA0* p, int a, int b);
+void cBackpack_Unlock(Bp_254DA0* p);
+void cBackpack_AutoPickup(Bp_254DA0* self, Player_254DA0* pl);
 }
 
 
 static inline bool IsPrimary_254DA0(unsigned char s) { return s == 0; }
 static inline int ItemAt_254DA0(Inv_254DA0* inv, unsigned char s) { return inv->slots[s].id; }
 static inline bool HasDual_254DA0(Inv_254DA0* inv) { return inv->dual >= 0; }
-void Pickup_PerformAction(Bp_254DA0* self, Player_254DA0* pl)
+void cBackpack_AutoPickup(Bp_254DA0* self, Player_254DA0* pl)
 {
     if (self->open) {
         int spare;
@@ -108,14 +108,14 @@ void Pickup_PerformAction(Bp_254DA0* self, Player_254DA0* pl)
         int ids[10];
         char buf[0x80];
         Inv_254DA0* inv = pl->inv;
-        int n = Backpack_ListItems(self, ids, inv, 10);
+        int n = cBackpack_GetWeaponDbs(self, ids, inv, 10);
         int db = g_WeaponDatabase;
         bool played = false;
         V4_254DA0 pos = pl->GetPos(-1);
         int i;
         for (i = 0; i < n; i++) {
-            if (Backpack_TakeItem(self, ids[i], 1)) {
-                int slot = WeaponInv_SlotOfItem(ids[i]);
+            if (cBackpack_TakeWeapon(self, ids[i], 1)) {
+                int slot = cWeapon_GetWeaponSlot(ids[i]);
                 bool dualOk;
                 bool same;
                 int have;
@@ -125,41 +125,41 @@ void Pickup_PerformAction(Bp_254DA0* self, Player_254DA0* pl)
                 same = have == ids[i];
                 dualOk = HasDual_254DA0(inv);
                 unsigned char hasDual = first && dualOk;
-                bool dual = first && !hasDual && same && AgentData_HasUnlock(Agent_GetSelected(g_Game, -1), 1);
+                bool dual = first && !hasDual && same && cAgentData_HasSpecialBonus(cGameSystem_GetAgentData(g_Game, -1), 1);
                 char* name;
-                Backpack_QueryAmmo(self, ids[i], &spare, &clip, &extra);
-                name = Loc_LookupText(WeaponDb_Get(db, ids[i]) + 0x80);
+                cBackpack_GetAmmoCounts(self, ids[i], &spare, &clip, &extra);
+                name = nGlobalization_GetString_charP(cWeaponDB_GetEntry(db, ids[i]) + 0x80);
                 if (dual)
                     slot = 1;
                 if (have < 0 || dual) {
-                    WeaponInv_Add(inv, ids[i], 0, 0, 0, 0);
-                    WeaponInv_SetClip(inv, slot, clip, 0);
-                    WeaponInv_AddSpare(inv, slot, spare, 0);
-                    Backpack_TakeItem(self, ids[i], 0);
-                    sprintf(buf, D_004A7B18, name, Loc_LookupText(D_004A7B20));
-                    Hud_PostNotification(g_Hud, buf);
-                    WeaponInv_DualShare(inv);
+                    cWeapon_Add(inv, ids[i], 0, 0, 0, 0);
+                    cWeapon_PickupClip(inv, slot, clip, 0);
+                    cWeapon_PickupAmmo_eWpnSlot_int_bool(inv, slot, spare, 0);
+                    cBackpack_TakeWeapon(self, ids[i], 0);
+                    sprintf(buf, D_004A7B18, name, nGlobalization_GetString_charP(D_004A7B20));
+                    cHud_Message(g_Hud, buf);
+                    cWeapon_EqualizeDualWieldAmmo(inv);
                     if (!played) {
                         SndMsg_254DA0 m1;
-                        SoundPosRequest_Ctor(&m1, D_004F1AF0, &pos);
+                        cPlaySoundMsg_ctor_cSndFxR_cGOBJP(&m1, D_004F1AF0, &pos);
                         m1.flag = 1;
-                        Event_Send(&m1, g_Game, 0);
+                        QueueMessage_cMessageR_cSystemP_int(&m1, g_Game, 0);
                         played = true;
                     }
                 }
             }
         }
-        if (Backpack_PickupAmmo(self, inv)) {
-            WeaponInv_DualShare(inv);
+        if (cBackpack_AutoTakeAmmo(self, inv)) {
+            cWeapon_EqualizeDualWieldAmmo(inv);
             if (!played) {
                 SndMsgP_254DA0 m2;
-                SoundPosRequest_Ctor(&m2, D_004F17B0, &pos);
+                cPlaySoundMsg_ctor_cSndFxR_cGOBJP(&m2, D_004F17B0, &pos);
                 m2.flag = 1;
-                Event_Send(&m2, g_Game, 0);
+                QueueMessage_cMessageR_cSystemP_int(&m2, g_Game, 0);
                 m2.vtbl = D_004DAE30;
                 played = true;
-                FileMan_Release(&m2.req[0xE4], -1);
-                FileMan_Release(&m2.req[0x48], -1);
+                cFileMan_dtor(&m2.req[0xE4], -1);
+                cFileMan_dtor(&m2.req[0x48], -1);
                 cMessage_dtor(&m2, 0);
             }
         }
@@ -188,27 +188,27 @@ void Pickup_PerformAction(Bp_254DA0* self, Player_254DA0* pl)
                     }
                     if (!self->hot) {
                         self->SetActive(1);
-                        Object_Register(self);
+                        nGobjManager_AddGOBJ(self);
                         if (!self->hot) {
-                            self->hot = Hotbox_CreateRuntime(g_HotboxTracker, self, 0, 1);
+                            self->hot = cHotboxMan_CreateInteractBox(g_HotboxTracker, self, 0, 1);
                             self->hot->id = self->id;
                         }
                     }
                 }
                 if (!played) {
                     SndMsgP_254DA0 m3;
-                    SoundPosRequest_Ctor(&m3, D_004F1C90, &pos);
+                    cPlaySoundMsg_ctor_cSndFxR_cGOBJP(&m3, D_004F1C90, &pos);
                     m3.flag = 1;
-                    Event_Send(&m3, g_Game, 0);
+                    QueueMessage_cMessageR_cSystemP_int(&m3, g_Game, 0);
                     m3.vtbl = D_004DAE30;
-                    FileMan_Release(&m3.req[0xE4], -1);
-                    FileMan_Release(&m3.req[0x48], -1);
+                    cFileMan_dtor(&m3.req[0xE4], -1);
+                    cFileMan_dtor(&m3.req[0x48], -1);
                     cMessage_dtor(&m3, 0);
                 }
-                { int hud = g_Hud; Hud_PostNotification(hud, Loc_LookupText(D_004A7B30)); }
+                { int hud = g_Hud; cHud_Message(hud, nGlobalization_GetString_charP(D_004A7B30)); }
             }
         }
     }
     if (!self->keep)
-        Backpack_Finish(self);
+        cBackpack_Unlock(self);
 }

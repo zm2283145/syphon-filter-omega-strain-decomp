@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void ListIter_NotEqual_Thunk_1F33F0(void);
+extern void std_opNe_listR_listR_2(void);
 
-void ListIter_NotEqual_Thunk_1F33E0(void) {
-    ListIter_NotEqual_Thunk_1F33F0();
+void opNe_cConstLListIteratorR_cConstLListIteratorR_3(void) {
+    std_opNe_listR_listR_2();
 }

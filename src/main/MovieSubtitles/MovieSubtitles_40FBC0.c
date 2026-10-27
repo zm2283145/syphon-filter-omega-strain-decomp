@@ -25,8 +25,8 @@ typedef struct {
 static char D_004BEEF8[] = "FEED";
 static char D_004BEF00[] = "INIT";
 static char D_004BEF08[] = "END";
-extern void String_PushBack(Str40FBC0* s, int c);
-extern char* String_CStr_Thunk(Str40FBC0* s);
+extern void std_basic_string_char_char_traits_char_opAddAssign(Str40FBC0* s, int c);
+extern char* cString_opCast_constcharPtr(Str40FBC0* s);
 extern void cString_ctor_charP(Str40FBC0* s, char* cs);
 #if 0 /* merge_units */
 extern int func_0040FE50(Str40FBC0* s, Str40FBC0* key);
@@ -54,12 +54,12 @@ void cSubtitleFeed_ParseINI(Subs40FBC0* self, const char* s, const char* end)
                 p++;
             } else {
                 p++;
-                String_PushBack(&line, c);
+                std_basic_string_char_char_traits_char_opAddAssign(&line, c);
             }
         }
         if (p < end && *p == '\n') p++;
-        if (*String_CStr_Thunk(&line) != 0 && *String_CStr_Thunk(&line) != '#') {
-            if (*String_CStr_Thunk(&line) == '%') {
+        if (*cString_opCast_constcharPtr(&line) != 0 && *cString_opCast_constcharPtr(&line) != '#') {
+            if (*cString_opCast_constcharPtr(&line) == '%') {
                 int r;
                 Str40FBC0 k1;
                 Str40FBC0 k2;
@@ -111,7 +111,7 @@ static inline void merge_flush_func_0040FBC0(void) {}
 /* merge_units: begin func_0040FE50 */
 #pragma push /* merge_units */
 extern int std_basic_string_char_char_traits_char_find_basicstringR_uint(void* a, Str_40FE50* s, int c);
-extern char* String_CStr(void* a);
+extern char* std_basic_string_char_char_traits_char_c_str(void* a);
 static inline unsigned int Len_40FE50(Str_40FE50* s) { return (s->u.l.word & 1) ? s->u.l.length : (unsigned char)s->u.s.len; }
 #pragma opt_rotateloops off
 char* func_0040FE50(void* a, Str_40FE50* s)
@@ -119,7 +119,7 @@ char* func_0040FE50(void* a, Str_40FE50* s)
     char* p = 0;
     int r = std_basic_string_char_char_traits_char_find_basicstringR_uint(a, s, 0);
     if (r > -1) {
-        p = String_CStr(a) + r + Len_40FE50(s);
+        p = std_basic_string_char_char_traits_char_c_str(a) + r + Len_40FE50(s);
         while (*p == ' ' || *p == '\t') p++;
     }
     return p;

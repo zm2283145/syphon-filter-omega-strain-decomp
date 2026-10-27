@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void EQList_End(Iter* out, Tree* t) {
+void std_list_cCBDataPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
@@ -15,7 +15,7 @@ Word* EQPos_Copy(Word* dst, Word* src) {
     return dst;
 }
 
-void EQList_Begin(Iter* out, PtrVec* v) {
+void std_list_cCBDataPtr_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 

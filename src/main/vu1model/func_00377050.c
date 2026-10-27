@@ -1,4 +1,4 @@
-/* Model_SetupExtraTable: relocate the extra-table entry list and each entry's
+/* cVU1Model_PatchLights: relocate the extra-table entry list and each entry's
  * {ptr, n, data[n]} record chain from file offsets to pointers. */
 typedef struct Ent { int id; int *data; } Ent;
 typedef struct Hdr {
@@ -16,7 +16,7 @@ typedef struct Model {
     char *base;
     Hdr *hdr;
 } Model;
-void Model_SetupExtraTable(Model *m)
+void cVU1Model_PatchLights(Model *m)
 {
     int i;
     int *q;

@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { char pad[0x3E8]; int ival[125]; float fval[125]; int on; int pad7D4; int count; } VU_3C8690;
 #pragma opt_rotateloops off
-void Cull_BatchFlush(VU_3C8690* p)
+void cBBoxMan_EndVisibilityTest(VU_3C8690* p)
 {
     int i;
     if (p->on) {

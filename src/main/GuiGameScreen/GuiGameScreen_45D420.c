@@ -11,12 +11,12 @@
 #pragma push /* merge_units */
 typedef struct { unsigned short type; unsigned short b2; char pad4[2]; unsigned short b6; unsigned short btn; } Ev_45D420;
 typedef struct { char pad[0x90]; int f90; int f94; int f98; unsigned char b9C; char pad9D[0xD4 - 0x9D]; int fD4; } O_45D420;
-int GuiGameScreen_IsChooseMenuVisible(O_45D420* o);
+int GuiGameScreen_IsChooseMenuActive(O_45D420* o);
 void GuiGameScreen_CloseChooseMenu(O_45D420* o);
-unsigned long long Time_GetMilliseconds(void);
-void GuiGameScreen_StepWeaponSelect(O_45D420* o, int v);
-void GuiGameScreen_EquipSelected(O_45D420* o);
-void GuiGameScreen_ToggleWeaponSelect(O_45D420* o, int on);
+unsigned long long cTimer_GetMillisecondTime(void);
+void GuiGameScreen_CycleWeaponSelect(O_45D420* o, int v);
+void GuiGameScreen_SelectCurrentWeapon(O_45D420* o);
+void GuiGameScreen_ActivateWeaponSelect(O_45D420* o, int on);
 static inline unsigned char Down_45D420(Ev_45D420* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Btn_45D420(Ev_45D420* e, int b) { unsigned char r = 0; if (Down_45D420(e) && e->btn == b) r = 1; return r; }
 static inline unsigned char Shift_45D420(Ev_45D420* e, int b) { unsigned char r = 0; if (Btn_45D420(e, b) && e->b6 == 1) r = 1; return r; }
@@ -24,25 +24,25 @@ static inline int Down2_45D420(Ev_45D420* e) { return e->type == 1 && e->b2 == 0
 static inline int Btn2_45D420(Ev_45D420* e, int b) { return Down2_45D420(e) && e->btn == b; }
 static inline int Plain2_45D420(Ev_45D420* e, int b) { return Btn2_45D420(e, b) && e->b6 == 0; }
 
-int GuiGameScreen_OnInput(O_45D420* o, Ev_45D420* ev)
+int GuiGameScreen_onInput(O_45D420* o, Ev_45D420* ev)
 {
-    if (Plain2_45D420(ev, 0x10) && GuiGameScreen_IsChooseMenuVisible(o)) {
+    if (Plain2_45D420(ev, 0x10) && GuiGameScreen_IsChooseMenuActive(o)) {
         GuiGameScreen_CloseChooseMenu(o);
         return 1;
     }
     if (o->fD4 == 1) {
     if (Shift_45D420(ev, 0x100)) {
-        if (!o->b9C && o->f94 == o->f90 && Time_GetMilliseconds() - o->f98 < 100) GuiGameScreen_StepWeaponSelect(o, 1);
-        GuiGameScreen_EquipSelected(o);
-        GuiGameScreen_ToggleWeaponSelect(o, 0);
+        if (!o->b9C && o->f94 == o->f90 && cTimer_GetMillisecondTime() - o->f98 < 100) GuiGameScreen_CycleWeaponSelect(o, 1);
+        GuiGameScreen_SelectCurrentWeapon(o);
+        GuiGameScreen_ActivateWeaponSelect(o, 0);
         return 1;
     }
     if (Plain2_45D420(ev, 8) || Plain2_45D420(ev, 2)) {
-        GuiGameScreen_StepWeaponSelect(o, 0);
+        GuiGameScreen_CycleWeaponSelect(o, 0);
         return 1;
     }
     if (Plain2_45D420(ev, 4) || Plain2_45D420(ev, 1)) {
-        GuiGameScreen_StepWeaponSelect(o, 1);
+        GuiGameScreen_CycleWeaponSelect(o, 1);
         return 1;
     }
     }
@@ -75,7 +75,7 @@ typedef struct {
     T_45D710* def;
 } O_45D710;
 extern void* g_WeaponDatabase;
-W_45D710* WeaponDb_Get(void* db, int id);
+W_45D710* cWeaponDB_GetEntry(void* db, int id);
 
 static inline T_45D710* W_Get(W_45D710* w)
 {
@@ -90,7 +90,7 @@ void GuiGameScreen_WeaponRestoreTransparency(O_45D710* o)
         if (o->ids[i] == -2) {
             o->def->v = -1;
         } else {
-            W_45D710* w = WeaponDb_Get(g_WeaponDatabase, o->ids[i]);
+            W_45D710* w = cWeaponDB_GetEntry(g_WeaponDatabase, o->ids[i]);
             if (w) {
                 T_45D710* t = W_Get(w);
                 if (t) t->v = o->vals[i];
@@ -118,15 +118,15 @@ typedef struct {
     T_45D710* def;
 } O_45D710_0045D7F0;
 extern int D_00497B08;
-void PtrVector_Resize(void* v, unsigned int n, int* fill);
+void std_vector_pod_int_resize(void* v, unsigned int n, int* fill);
 
 void GuiGameScreen_WeaponSaveTransparency(O_45D710_0045D7F0* o)
 {
     int i;
-    PtrVector_Resize(o->vec80, o->n, &D_00497B08);
+    std_vector_pod_int_resize(o->vec80, o->n, &D_00497B08);
     for (i = 0; i < o->n; i++) {
         if (o->ids[i] != -2) {
-            W_45D710* w = WeaponDb_Get(g_WeaponDatabase, o->ids[i]);
+            W_45D710* w = cWeaponDB_GetEntry(g_WeaponDatabase, o->ids[i]);
             if (w) {
                 T_45D710* t = W_Get(w);
                 if (t) o->vals[i] = t->v;

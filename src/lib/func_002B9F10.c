@@ -3,7 +3,7 @@ typedef struct { unsigned short mode,pad; int size; MCDate created; int cl,index
 typedef struct { int busy; char pad[0x894]; } MCPortTail;
 extern MCPortTail D_00513518[];
 extern const char D_004AC220[];
-extern void String_Copy(char *, char *);
+extern void Libc_Strcpy(char *, char *);
 extern char *Libc_Strcat(char *, const char *);
 extern int func_002B8188(int,char*,char*);
 extern int _sceMcFatSearchFile(int,char*,MCEnt*,int*,int*);
@@ -28,7 +28,7 @@ int func_002B9F10(int dev, char *path)
     if (err != 0x81010011) return err;
     if (!(st.mode & 2)) return 0x8101000D;
     if (st.mode & 0x20) {
-        String_Copy(tmp, full);
+        Libc_Strcpy(tmp, full);
         Libc_Strcat(tmp, D_004AC220);
         err = _sceMcFatGetDir(dev, tmp, 0, -1, 0, &cnt);
         if (err) return err;

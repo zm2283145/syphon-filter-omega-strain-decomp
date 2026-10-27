@@ -4,7 +4,7 @@ typedef struct { char pad[8]; signed char type; char pad9[3]; int id; int value;
 extern int D_0051F0B8;
 extern int Event_PackHeader(ObjEvt_e1*, int, int*, int, int, unsigned int, char*);
 extern char* strncpy(char*, const char*, unsigned int);
-int ObjectiveEvent_Serialize(ObjEvt_e1* self, int recv, int* outSize, int a3, int a4, unsigned int cap, char* buf)
+int cNetObjectiveMsg_Pack(ObjEvt_e1* self, int recv, int* outSize, int a3, int a4, unsigned int cap, char* buf)
 {
     int ret = -1;
     ObjPkt_e1* p;

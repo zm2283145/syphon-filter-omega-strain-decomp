@@ -14,18 +14,18 @@ struct S_0028A180 { char pad[0x94]; Obj94_0028A180* p94; };
 extern "C" {
 extern char D_004A9798[];
 extern char D_004A97A8[];
-void* Gui_GetScreenList(void);
-void* GuiManager_FindOrLoad(void* a, char* b, char* c);
-char* String_CStr(Str_0028A180* s);
-char* GuiScreen_GetLobbyString(S_0028A180* self, int a, int b, int c, int d, int e);
-void GuiKeyboard_Open(void* kb, char* title, char* text, S_0028A180* self, int a, int b, int c);
+void* Gui_Manager(void);
+void* GuiManager_OpenGui(void* a, char* b, char* c);
+char* std_basic_string_char_char_traits_char_c_str(Str_0028A180* s);
+char* GuiLobbyScreen_GetLobbyString(S_0028A180* self, int a, int b, int c, int d, int e);
+void GuiKeyboard_Display(void* kb, char* title, char* text, S_0028A180* self, int a, int b, int c);
 }
 extern "C" void GuiAccountLogin_EditPassword(S_0028A180* self)
 {
-    void* kb = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9798, D_004A97A8);
+    void* kb = GuiManager_OpenGui(Gui_Manager(), D_004A9798, D_004A97A8);
     if (kb) {
-        char* text = String_CStr(&self->p94->name);
-        GuiKeyboard_Open(kb, GuiScreen_GetLobbyString(self, 0x28, 0, 0, 0, 0), text, self, 0xF, 0x22, 1);
+        char* text = std_basic_string_char_char_traits_char_c_str(&self->p94->name);
+        GuiKeyboard_Display(kb, GuiLobbyScreen_GetLobbyString(self, 0x28, 0, 0, 0, 0), text, self, 0xF, 0x22, 1);
     }
 }
 #pragma pop /* merge_units */
@@ -40,48 +40,48 @@ struct S_0028A230 { char pad[0x8C]; Obj8C_0028A230* p8C; char pad90[0x14]; unsig
 extern "C" {
 extern void* D_004FFC04;
 #if 0 /* merge_units */
-char* String_CStr(Str_0028A230* s);
+char* std_basic_string_char_char_traits_char_c_str(Str_0028A230* s);
 #endif /* merge_units */
-#define String_CStr(a0) (String_CStr((Str_0028A180 *)(a0))) /* merge_units */
+#define std_basic_string_char_char_traits_char_c_str(a0) (std_basic_string_char_char_traits_char_c_str((Str_0028A180 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-char* GuiScreen_GetLobbyString(S_0028A230* self, int a, int b, int c, int d, int e);
+char* GuiLobbyScreen_GetLobbyString(S_0028A230* self, int a, int b, int c, int d, int e);
 #endif /* merge_units */
-#define GuiScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) (GuiScreen_GetLobbyString((S_0028A180 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define GuiLobbyScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) (GuiLobbyScreen_GetLobbyString((S_0028A180 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
-void GuiKeyboard_Open(void* kb, char* title, char* text, S_0028A230* self, int a, int b, int c);
+void GuiKeyboard_Display(void* kb, char* title, char* text, S_0028A230* self, int a, int b, int c);
 #endif /* merge_units */
-#define GuiKeyboard_Open(a0, a1, a2, a3, a4, a5, a6) (GuiKeyboard_Open((a0), (a1), (a2), (S_0028A180 *)(a3), (a4), (a5), (a6))) /* merge_units */
+#define GuiKeyboard_Display(a0, a1, a2, a3, a4, a5, a6) (GuiKeyboard_Display((a0), (a1), (a2), (S_0028A180 *)(a3), (a4), (a5), (a6))) /* merge_units */
 
-void String_CtorCStr_13B480(Str_0028A230* s, const char* c);
-int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_0028A230* d, int e);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_0028A230* s, const char* c);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, char* c, S_0028A230* d, int e);
 void String_Dtor(Str_0028A230* s, int flags);
 }
 extern "C" void GuiAccountLogin_EditUserName(S_0028A230* self)
 {
     if (self->bA4) {
-        void* kb = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9798, D_004A97A8);
+        void* kb = GuiManager_OpenGui(Gui_Manager(), D_004A9798, D_004A97A8);
         if (kb) {
-            char* text = String_CStr(&self->p8C->name);
-            GuiKeyboard_Open(kb, GuiScreen_GetLobbyString(self, 0x27, 0, 0, 0, 0), text, self, 0xF, 0x21, 1);
+            char* text = std_basic_string_char_char_traits_char_c_str(&self->p8C->name);
+            GuiKeyboard_Display(kb, GuiLobbyScreen_GetLobbyString(self, 0x27, 0, 0, 0, 0), text, self, 0xF, 0x21, 1);
         }
     } else {
         Str_0028A230 a;
         Str_0028A230 b;
-        String_CtorCStr_13B480(&a, GuiScreen_GetLobbyString(self, 0x29, 0, 0, 0, 0));
-        String_CtorCStr_13B480(&b, GuiScreen_GetLobbyString(self, 0x2A, 0, 0, 0, 0));
+        std_basic_string_char_char_traits_char_ctor_charP(&a, GuiLobbyScreen_GetLobbyString(self, 0x29, 0, 0, 0, 0));
+        std_basic_string_char_char_traits_char_ctor_charP(&b, GuiLobbyScreen_GetLobbyString(self, 0x2A, 0, 0, 0, 0));
         {
-            char* tb = String_CStr(&b);
-            FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, self, 0x25);
+            char* tb = std_basic_string_char_char_traits_char_c_str(&b);
+            cGameFrontEnd_PushMessageBox(D_004FFC04, 2, std_basic_string_char_char_traits_char_c_str(&a), tb, self, 0x25);
         }
         String_Dtor(&b, 0);
         String_Dtor(&a, 0);
     }
 }
-#undef String_CStr /* merge_units */
-#undef GuiScreen_GetLobbyString /* merge_units */
-#undef GuiKeyboard_Open /* merge_units */
+#undef std_basic_string_char_char_traits_char_c_str /* merge_units */
+#undef GuiLobbyScreen_GetLobbyString /* merge_units */
+#undef GuiKeyboard_Display /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0028A230 */
 
@@ -154,12 +154,12 @@ extern int D_004FFC04;
 #endif /* merge_units */
 #define D_004FFC04 (*(int*)&D_004FFC04) /* merge_units */
 
-extern int FrontEnd_FreePolicyLists(int);
+extern int cGameFrontEnd_LobbyStopAccountScreen(int);
 
-/* If the pending flag is set, call FrontEnd_FreePolicyLists on the global at D_004FFC04 and clear it. */
+/* If the pending flag is set, call cGameFrontEnd_LobbyStopAccountScreen on the global at D_004FFC04 and clear it. */
 void GuiAccountLogin_Deactivate(Unk28A430* self) {
     if (self->pending != 0) {
-        FrontEnd_FreePolicyLists(D_004FFC04);
+        cGameFrontEnd_LobbyStopAccountScreen(D_004FFC04);
         self->pending = 0;
     }
 }
@@ -170,7 +170,7 @@ void GuiAccountLogin_Deactivate(Unk28A430* self) {
 /* merge_units: begin func_0028A470 */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int FrontEnd_DownloadPolicies(int);                               
+int cGameFrontEnd_LobbyStartAccountScreen(int);                               
 #if 0 /* merge_units */
 extern int D_004FFC04;
 #endif /* merge_units */
@@ -180,7 +180,7 @@ extern int D_004FFC04;
 #pragma opt_common_subs off
 void GuiAccountLogin_Activate(int arg0) {
     if (F_(arg0, 0x80, unsigned char) == 0) {
-        FrontEnd_DownloadPolicies(D_004FFC04);
+        cGameFrontEnd_LobbyStartAccountScreen(D_004FFC04);
         F_(arg0, 0x80, unsigned char) = 1U;
     }
 }
@@ -195,7 +195,7 @@ typedef struct { char pad0[0x10]; int state; char pad14[0x8C - 0x14]; W* p8C; in
 extern char D_00506340[];
 extern char D_00506350[];
 extern unsigned char D_00506360;
-char* AgentData_GetName(char* a);
+char* cAgentData_GetUserName(char* a);
 void GuiScreen_Wake(S* s);
 void GuiTextWidget_SetText(W* w, char* s, int a);
 void GuiAccountLogin_Wake(S* self)
@@ -214,7 +214,7 @@ void GuiAccountLogin_Wake(S* self)
     } else {
         if (self->p8C) {
             self->p8C->flags &= ~4;
-            GuiTextWidget_SetText(self->p8C, AgentData_GetName(self->p9C), 0);
+            GuiTextWidget_SetText(self->p8C, cAgentData_GetUserName(self->p9C), 0);
         }
         if (self->p94) {
             self->p94->flags &= ~4;
@@ -263,43 +263,43 @@ extern int D_0048B410;
 extern int D_0048B418;
 extern int D_0048B420;
 extern int D_0048B428;
-void GuiScreen_Init(void);
-int Agent_GetSelected(void* a, int b);
-W28A5C0* GuiWidget_FindChildByName(S_28A5C0* a, int b);
-char* Loc_LookupText(char* key);
+void GuiLobbyScreen_onAdd(void);
+int cGameSystem_GetAgentData(void* a, int b);
+W28A5C0* GuiWidget_FindChild_charP(S_28A5C0* a, int b);
+char* nGlobalization_GetString_charP(char* key);
 #if 0 /* merge_units */
 void GuiTextWidget_SetText(void* w, char* s, int a);
 #endif /* merge_units */
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((W *)(a0), (a1), (a2))) /* merge_units */
 
 }
-extern "C" void GuiAccountLogin_Init(S_28A5C0* self)
+extern "C" void GuiAccountLogin_onAdd(S_28A5C0* self)
 {
     W28A5C0* p;
-    GuiScreen_Init();
-    self->f9C = Agent_GetSelected(g_Game, -1);
-    self->p88 = GuiWidget_FindChildByName(self, D_0048B400);
-    p = GuiWidget_FindChildByName(self, D_0048B408);
+    GuiLobbyScreen_onAdd();
+    self->f9C = cGameSystem_GetAgentData(g_Game, -1);
+    self->p88 = GuiWidget_FindChild_charP(self, D_0048B400);
+    p = GuiWidget_FindChild_charP(self, D_0048B408);
     p = (p && p->IsA(D_004A9880)) ? p : 0;
     self->p8C = p;
     if (self->p8C)
         self->p8C->f84 = 15;
-    self->p90 = GuiWidget_FindChildByName(self, D_0048B410);
-    p = GuiWidget_FindChildByName(self, D_0048B418);
+    self->p90 = GuiWidget_FindChild_charP(self, D_0048B410);
+    p = GuiWidget_FindChild_charP(self, D_0048B418);
     p = (p && p->IsA(D_004A9880)) ? p : 0;
     self->p94 = p;
     if (self->p94)
         self->p94->f84 = 15;
-    p = GuiWidget_FindChildByName(self, D_0048B420);
+    p = GuiWidget_FindChild_charP(self, D_0048B420);
     p = (p && p->IsA(D_004A9870)) ? p : 0;
     self->p98 = p;
-    p = GuiWidget_FindChildByName(self, D_0048B428);
+    p = GuiWidget_FindChild_charP(self, D_0048B428);
     p = (p && p->IsA(D_004A7520)) ? p : 0;
     self->pA0 = p;
     if (self->pA0)
-        GuiTextWidget_SetText(self->pA0, Loc_LookupText(D_004A96F8), 0);
+        GuiTextWidget_SetText(self->pA0, nGlobalization_GetString_charP(D_004A96F8), 0);
     if (self->p98)
-        GuiTextWidget_SetText(self->p98, Loc_LookupText(D_004A9718), 0);
+        GuiTextWidget_SetText(self->p98, nGlobalization_GetString_charP(D_004A9718), 0);
     self->bAD = 0;
     if (!D_004FFC04->b265)
         self->p20 = self->p98;
@@ -315,8 +315,8 @@ extern "C" void GuiAccountLogin_Init(S_28A5C0* self)
 typedef struct { int words[3]; } SsoString;
 typedef struct { char unused; } Allocator; /* empty allocator object passed by value */
 extern int strlen(const char* s); /* strlen */
-extern void String_Reserve(SsoString* s, int capacity);
-extern void* String_Replace(SsoString* s, int pos, int count, const char* first, const char* last, Allocator alloc);
+extern void std_basic_string_char_char_traits_char_reserve(SsoString* s, int capacity);
+extern void* std_basic_string_char_char_traits_char_do_replace(SsoString* s, int pos, int count, const char* first, const char* last, Allocator alloc);
 
 /* String constructor from a C string. */
 SsoString* String_CtorCStr(SsoString* self, const char* text)
@@ -327,8 +327,8 @@ SsoString* String_CtorCStr(SsoString* self, const char* text)
     self->words[1] = 0;
     self->words[2] = 0;
     len = strlen(text);
-    String_Reserve(self, len);
-    String_Replace(self, 0, 0, text, text + len, alloc);
+    std_basic_string_char_char_traits_char_reserve(self, len);
+    std_basic_string_char_char_traits_char_do_replace(self, 0, 0, text, text + len, alloc);
     return self;
 }
 #pragma pop /* merge_units */
@@ -341,7 +341,7 @@ SsoString* String_CtorCStr(SsoString* self, const char* text)
 
 extern "C" { char D_004A97C0[] = "basic_string: out_of_range"; }
 extern "C" { char D_004A97E0[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_0028A860, D_004A97C0, D_004A97E0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_0048B430, D_0048B438, Libc_Memmove, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_0028A860, D_004A97C0, D_004A97E0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_0048B430, D_0048B438, Libc_Memmove, std_basic_string_char_char_traits_char_assign_charP_charP_intP)
 #pragma pop /* merge_units */
 /* merge_units: end func_0028A860 */
 

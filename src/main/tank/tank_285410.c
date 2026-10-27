@@ -17,23 +17,23 @@ extern unsigned char D_005721C0;
 extern char D_00506260[];
 extern char D_004DCF50[];
 extern char D_004DCF10[];
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, void* target, int immediate);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 }
 static inline int IsAuth285410(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
-extern "C" void cNetUpdateTankMsg_Send(Tank285410* self) {
+extern "C" void cTank_StopFiring(Tank285410* self) {
     if (self->sub) self->sub->b54 = 1;
     if (g_IsMultiplayer && IsAuth285410()) {
         Msg285410 m;
-        Event_Construct(&m, D_00506260);
+        cMessage_ctor_cMessageNameR(&m, D_00506260);
         m.vtable = D_004DCF50;
         m.b24 = 4;
 m.b20 = 4;
 m.f1C = 0x40;
 m.f2C = 0;
 m.f28 = 0;
-        Event_Send(&m, self, 0);
+        QueueMessage_cMessageR_cSystemP_int(&m, self, 0);
         m.vtable = D_004DCF10;
         cMessage_dtor(&m, 0);
     }
@@ -50,19 +50,19 @@ struct Msg2854D0 { void* vtable; char base[0x18]; int f1C; unsigned char b20; ch
 extern "C" {
 }
 static inline int IsAuth2854D0(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
-extern "C" void cNetUpdateTankMsg_Send_2854D0(Tank2854D0* self) {
+extern "C" void cTank_ResumeAiming(Tank2854D0* self) {
     if (self->sub) self->sub->b54 = 0;
     self->b70 = 1;
     if (g_IsMultiplayer && IsAuth2854D0()) {
         Msg2854D0 m;
-        Event_Construct(&m, D_00506260);
+        cMessage_ctor_cMessageNameR(&m, D_00506260);
         m.vtable = D_004DCF50;
         m.f2C = 0;
 m.b24 = 2;
 m.f28 = 0;
 m.b20 = 4;
 m.f1C = 0x40;
-        Event_Send(&m, self, 0);
+        QueueMessage_cMessageR_cSystemP_int(&m, self, 0);
         m.vtable = D_004DCF10;
         cMessage_dtor(&m, 0);
     }
@@ -81,7 +81,7 @@ extern "C" {
 }
 static inline int IsAuth285590(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 static inline void SetT285590(Sub285590* s, Obj285590* t) { int none; s->tgt = t; s->tid = *(t ? &t->id : (none = -1, &none)); }
-extern "C" void cTank_SetEnemy(Tank285590* self, Obj285590* t) {
+extern "C" void cTank_AimAt(Tank285590* self, Obj285590* t) {
     if (self->sub) {
         self->sub->b54 = 0;
         SetT285590(self->sub, t);
@@ -89,14 +89,14 @@ extern "C" void cTank_SetEnemy(Tank285590* self, Obj285590* t) {
     self->b70 = 0;
     if (g_IsMultiplayer && IsAuth285590()) {
         Msg285590 m;
-        Event_Construct(&m, D_00506260);
+        cMessage_ctor_cMessageNameR(&m, D_00506260);
         m.vtable = D_004DCF50;
         m.f28 = t;
 m.b20 = 4;
 m.b24 = 0;
 m.f1C = 0x40;
 m.f2C = 0;
-        Event_Send(&m, self, 0);
+        QueueMessage_cMessageR_cSystemP_int(&m, self, 0);
         m.vtable = D_004DCF10;
         cMessage_dtor(&m, 0);
     }

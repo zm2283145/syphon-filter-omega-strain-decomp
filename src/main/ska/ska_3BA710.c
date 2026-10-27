@@ -15,7 +15,7 @@ typedef struct { unsigned char pad[0x180]; Q_3BA710 accumT; Q_3BA710 accumR; } B
 
 #pragma peephole off
 #pragma opt_propagation off
-void Bone_ResetAccumulators(Bone_3BA710* b)
+void cBone_AnimationClearAccumulation(Bone_3BA710* b)
 {
     __int128* p;
     p = &b->accumT.q; *p = 0;
@@ -33,7 +33,7 @@ static inline void merge_flush_func_003BA710(void) {}
 typedef struct { __int128 q[4]; } MBA730_;
 typedef struct { char pad[0xD0]; MBA730_ m; } SBA730_;
 #pragma peephole off
-void SkelNode_SetInverseBind(SBA730_* dst, MBA730_* src)
+void cBone_SetMeshSpaceToBoneSpaceMatrix(SBA730_* dst, MBA730_* src)
 {
     MBA730_* d = &dst->m;
     __int128 qa, qb;
@@ -66,7 +66,7 @@ struct SkelSA {
     XfSA* xf;
 };
 extern "C" char g_IdentityMatrix[];
-extern "C" void SkelNode_AttachParent(SkelSA* n, void* parent)
+extern "C" void cBone_SetParent(SkelSA* n, void* parent)
 {
     XfSA* xf;
     if (parent) {

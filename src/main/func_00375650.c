@@ -4,12 +4,12 @@ typedef struct {
     int pad0; B375650* curA; B375650* curB; char padC[0x20]; char bufs[0xA4];
     B375650* lastA; B375650* lastB; int aD8; int padDC; int idxA; int idxB; int padE8; int sizeA; int sizeB;
 } S375650;
-extern void Vif1Packet_Kick(S375650* o, int a);
-extern void Mem_PumpDeferredFrees(void);
-void Vif1Packet_Flip(S375650* o)
+extern void cDmaMan_Kick(S375650* o, int a);
+extern void DELETE_DELAYS(void);
+void cDmaMan_NextFrame(S375650* o)
 {
     B375650* p;
-    Vif1Packet_Kick(o, 1);
+    cDmaMan_Kick(o, 1);
     o->sizeA = (o->curA->end - o->curA->start) * 8;
     o->lastA = o->curA;
     o->idxA ^= 1;
@@ -26,7 +26,7 @@ void Vif1Packet_Flip(S375650* o)
     p->end = p->start;
     p->count = 0;
     p->open = 0;
-    Mem_PumpDeferredFrees();
+    DELETE_DELAYS();
     if (o->aD8 >= 0) o->aD8 = -1;
 }
 

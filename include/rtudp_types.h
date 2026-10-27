@@ -3,7 +3,7 @@
 
 /*
  * RtUdp peer-connection object (network lib, functions around
- * 0x002F9000-0x00307FFF such as RtUdp_SendToPeers). ~28 src/lib files
+ * 0x002F9000-0x00307FFF such as rt_p2p_send). ~28 src/lib files
  * re-derive it as UpnpObj / UpnpEnt / UpnpSlot; same layout here.
  * Plain C for ee-gcc 2.96 (lib); also fine in MW.
  * Every API function returns 2 for a NULL object, 0 on success.

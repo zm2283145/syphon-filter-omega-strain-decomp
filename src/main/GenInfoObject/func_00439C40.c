@@ -7,7 +7,7 @@
 #include "types.h"
 #include "GenInfoObject_types.h"
 
-extern GioListPos* List_InsertBefore(GioListPos* result, void* list, GioListPos* pos, int value);
+extern GioListPos* std_list_deleter_voidPtr_insert(GioListPos* result, void* list, GioListPos* pos, int value);
 
 /* push_back on a list whose sentinel node is at +4. */
 GioListPos* std_list_tGenInfoPtr_push_back(void* list, int value) {
@@ -15,5 +15,5 @@ GioListPos* std_list_tGenInfoPtr_push_back(void* list, int value) {
     GioListPos result;
 
     end.node = (char*)list + 4;
-    return List_InsertBefore(&result, list, &end, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &end, value);
 }

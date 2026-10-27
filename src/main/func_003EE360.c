@@ -12,7 +12,7 @@ typedef struct Node {
 int std_list_imp_voidPtr_size(void* obj);
 int cInterfaceModel_IsInstanced(Node* self);
 int func_003EE5E0(Node* self, Vec4* v);
-void IeNode_PropagateColour(Node* self, Vec4* v)
+void cInterfaceModel_FilterChildren(Node* self, Vec4* v)
 {
     int i;
     for (i = 0; i < self->count; i++) {

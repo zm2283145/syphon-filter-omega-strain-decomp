@@ -10,7 +10,7 @@
 /* merge_units: begin func_00188E60 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x3204]; int flags; } O_188E60;
-int Actor_GetStance(O_188E60* o)
+int cHuman_GetMovementState(O_188E60* o)
 {
     int f = o->flags;
     if ((f >> 5) & 1) return 2;
@@ -43,25 +43,25 @@ typedef struct {
 } __attribute__((aligned(16))) E4Ev;
 extern char g_Game[];
 extern char D_004DAE30[];
-extern void SoundRequest_Ctor(E4Req* r, int a, char* b, int c, int d);
-extern void SoundEvent_CtorFromPreset(E4Ev* e, E4Req* r, int preset);
-extern void Event_Send(E4Ev* e, char* tgt, int n);
-extern void FileMan_Release(E4Str* s, int flag);
+extern void cSndFx_ctor_int_charP_cGOBJP_int(E4Req* r, int a, char* b, int c, int d);
+extern void cPlaySoundMsg_ctor_cSndFxR(E4Ev* e, E4Req* r, int preset);
+extern void QueueMessage_cMessageR_cSystemP_int(E4Ev* e, char* tgt, int n);
+extern void cFileMan_dtor(E4Str* s, int flag);
 extern void cMessage_dtor(E4Ev* e, int flag);
-void Actor_SendSoundImmediate(int preset)
+void cHuman_HandleLadderStepEvent(int preset)
 {
     E4Req req;
     E4Ev ev;
-    SoundRequest_Ctor(&req, 0, "F_LADDER_M", 0, 0);
-    SoundEvent_CtorFromPreset(&ev, &req, preset);
+    cSndFx_ctor_int_charP_cGOBJP_int(&req, 0, "F_LADDER_M", 0, 0);
+    cPlaySoundMsg_ctor_cSndFxR(&ev, &req, preset);
     ev.flag = 1;
-    Event_Send(&ev, g_Game, 1);
+    QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 1);
     ev.vt = D_004DAE30;
-    FileMan_Release(&ev.s114, -1);
-    FileMan_Release(&ev.s78, -1);
+    cFileMan_dtor(&ev.s114, -1);
+    cFileMan_dtor(&ev.s78, -1);
     cMessage_dtor(&ev, 0);
-    FileMan_Release(&req.sE4, -1);
-    FileMan_Release(&req.s48, -1);
+    cFileMan_dtor(&req.sE4, -1);
+    cFileMan_dtor(&req.s48, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00188F00(void) {}
@@ -123,46 +123,46 @@ extern char D_0049D960[];
 extern float g_NegFltMax;
 extern float D_0049CF40;
 extern float D_0049CF38;
-float ActorPhysical_QueryWaterHeight(Ground* g);
-void ActorPhysical_ProbeSurface(V* hit, Ground* g, unsigned char* ok, int n, float r);
-Mat* Material_Lookup(void* ref);
-char* String_CStr_189540(void* p);
+float cHumanCollisionRoutine_GetWaterDepth(Ground* g);
+void cHumanCollisionRoutine_GetFloorContactPoint(V* hit, Ground* g, unsigned char* ok, int n, float r);
+Mat* cCollisionModel_FaceProperties_GetMaterialProperties(void* ref);
+char* cString_CStr(void* p);
 #if 0 /* merge_units */
-void SoundRequest_Ctor(SReq* r, int a, char* b, int c, int d);
+void cSndFx_ctor_int_charP_cGOBJP_int(SReq* r, int a, char* b, int c, int d);
 #endif /* merge_units */
-#define SoundRequest_Ctor(a0, a1, a2, a3, a4) (SoundRequest_Ctor((E4Req *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define cSndFx_ctor_int_charP_cGOBJP_int(a0, a1, a2, a3, a4) (cSndFx_ctor_int_charP_cGOBJP_int((E4Req *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
-void SoundPosRequest_Ctor(SEv* e, SReq* r, V* pos);
+void cPlaySoundMsg_ctor_cSndFxR_cGOBJP(SEv* e, SReq* r, V* pos);
 #if 0 /* merge_units */
-void SoundEvent_CtorFromPreset(SEv* e, SReq* r, Actor* a);
+void cPlaySoundMsg_ctor_cSndFxR(SEv* e, SReq* r, Actor* a);
 #endif /* merge_units */
-#define SoundEvent_CtorFromPreset(a0, a1, a2) (SoundEvent_CtorFromPreset((E4Ev *)(a0), (E4Req *)(a1), (int)(a2))) /* merge_units */
-
-#if 0 /* merge_units */
-void Event_Send(SEv* e, char* tgt, int n);
-#endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((E4Ev *)(a0), (a1), (a2))) /* merge_units */
+#define cPlaySoundMsg_ctor_cSndFxR(a0, a1, a2) (cPlaySoundMsg_ctor_cSndFxR((E4Ev *)(a0), (E4Req *)(a1), (int)(a2))) /* merge_units */
 
 #if 0 /* merge_units */
-void FileMan_Release(SStr* s, int flag);
+void QueueMessage_cMessageR_cSystemP_int(SEv* e, char* tgt, int n);
 #endif /* merge_units */
-#define FileMan_Release(a0, a1) (FileMan_Release((E4Str *)(a0), (a1))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((E4Ev *)(a0), (a1), (a2))) /* merge_units */
+
+#if 0 /* merge_units */
+void cFileMan_dtor(SStr* s, int flag);
+#endif /* merge_units */
+#define cFileMan_dtor(a0, a1) (cFileMan_dtor((E4Str *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 void cMessage_dtor(SEv* e, int flag);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((E4Ev *)(a0), (a1))) /* merge_units */
 
-void Vec4_Cross(V* out, const V* a, const V* b);
-int Vec4_IsZeroXYZ(const V* v);
-void Vec4_NormalizeXYZ_132060(V* out, const V* v);
-V* Vec4_NormalizeXYZInPlace(V* v);
-void Vec4_Assign(V* d, const V* s);
-V* Vec4_Set(V* out, float x, float y, float z, float w);
-void Mtx_FromRowsAndTranslation(M* m, V* a, V* b, V* c, V* t);
-void Mtx_FrameFromAxis(M* m, V* v);
-void Mtx_SetIdentity(M* m);
-void Effect_CreateInstance(int id, M* m);
+void cVector_Cross(V* out, const V* a, const V* b);
+int cVector_IsZeroXYZ(const V* v);
+void cVector_GetNormalized_void(V* out, const V* v);
+V* cVector_Normalize_void(V* v);
+void cVector_ctor_cVectorR(V* d, const V* s);
+V* cVector_ctor_float_float_float_float(V* out, float x, float y, float z, float w);
+void cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(M* m, V* a, V* b, V* c, V* t);
+void cMatrix_MakeLookAtMatrix_cVectorR(M* m, V* v);
+void cMatrix_SetUnit(M* m);
+void SfxParticleEffect_int_cMatrixR(int id, M* m);
 }
 static inline GB* GetB(Ground* g) { return (GB*)((char*)g + 0x100); }
 static inline MatSub* Sub(Mat* m, unsigned char i) { return &m->e[i]; }
@@ -171,28 +171,28 @@ static inline void FrameFromNormal(M* m, V* n)
 {
     V up(0.0f, 0.0f, 1.0f, 0.0f);
     V c;
-    Vec4_Cross(&c, n, &up);
-    if (!Vec4_IsZeroXYZ(&c)) {
+    cVector_Cross(&c, n, &up);
+    if (!cVector_IsZeroXYZ(&c)) {
         V b;
         V a;
         V d;
         V t;
-        Vec4_NormalizeXYZ_132060(&b, n);
-        Vec4_Assign(&a, Vec4_NormalizeXYZInPlace(&c));
-        Vec4_Cross(&d, &a, &b);
-        Mtx_FromRowsAndTranslation(m, &a, &b, &d, Vec4_Set(&t, 0.0f, 0.0f, 0.0f, 1.0f));
-    } else if (!Vec4_IsZeroXYZ(n)) {
-        Mtx_FrameFromAxis(m, n);
+        cVector_GetNormalized_void(&b, n);
+        cVector_ctor_cVectorR(&a, cVector_Normalize_void(&c));
+        cVector_Cross(&d, &a, &b);
+        cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(m, &a, &b, &d, cVector_ctor_float_float_float_float(&t, 0.0f, 0.0f, 0.0f, 1.0f));
+    } else if (!cVector_IsZeroXYZ(n)) {
+        cMatrix_MakeLookAtMatrix_cVectorR(m, n);
     } else {
-        Mtx_SetIdentity(m);
+        cMatrix_SetUnit(m);
     }
 }
-extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int force)
+extern "C" void cHuman_HandleFootstepEvent(Actor* a, unsigned char mode, int force)
 {
     if (a->g == 0)
         return;
     unsigned char water = a->g->fE4 != g_NegFltMax;
-    float depth = ActorPhysical_QueryWaterHeight(a->g);
+    float depth = cHumanCollisionRoutine_GetWaterDepth(a->g);
     if (!water) {
         V hit;
         unsigned char ok;
@@ -201,9 +201,9 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
             n = 1;
         else
             n = 2;
-        ActorPhysical_ProbeSurface(&hit, a->g, &ok, n, 2.25f);
+        cHumanCollisionRoutine_GetFloorContactPoint(&hit, a->g, &ok, n, 2.25f);
         if (ok) {
-            Mat* mat = Material_Lookup(GetB(a->g)->ref);
+            Mat* mat = cCollisionModel_FaceProperties_GetMaterialProperties(GetB(a->g)->ref);
             int idx = Crouched(a) ? 4 : 1;
             int snd = mat->e[(unsigned char)idx].snd;
             if (snd != -1) {
@@ -211,23 +211,23 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
                 int f = a->flags;
                 char* nm;
                 if (((f >> 2) & 1) || ((f >> 1) & 1) || ((f >> 4) & 1) || a->state == 0x15 || force) {
-                    nm = String_CStr_189540(Sub(mat, idx)->name);
+                    nm = cString_CStr(Sub(mat, idx)->name);
                 } else {
                     snd = 1;
                     nm = D_0049D920;
                 }
                 SReq req;
                 SEv ev;
-                SoundRequest_Ctor(&req, snd, nm, 0, 0);
-                SoundPosRequest_Ctor(&ev, &req, &hit);
+                cSndFx_ctor_int_charP_cGOBJP_int(&req, snd, nm, 0, 0);
+                cPlaySoundMsg_ctor_cSndFxR_cGOBJP(&ev, &req, &hit);
                 ev.flag = 1;
-                Event_Send(&ev, g_Game, 0);
+                QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 0);
                 ev.vt = D_004DAE30;
-                FileMan_Release(&ev.s114, -1);
-                FileMan_Release(&ev.s78, -1);
+                cFileMan_dtor(&ev.s114, -1);
+                cFileMan_dtor(&ev.s78, -1);
                 cMessage_dtor(&ev, 0);
-                FileMan_Release(&req.sE4, -1);
-                FileMan_Release(&req.s48, -1);
+                cFileMan_dtor(&req.sE4, -1);
+                cFileMan_dtor(&req.s48, -1);
                 }
             } else {
                 int f = a->flags;
@@ -242,16 +242,16 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
                 }
                 SReq req;
                 SEv ev;
-                SoundRequest_Ctor(&req, k, nm, 0, 0);
-                SoundEvent_CtorFromPreset(&ev, &req, a);
+                cSndFx_ctor_int_charP_cGOBJP_int(&req, k, nm, 0, 0);
+                cPlaySoundMsg_ctor_cSndFxR(&ev, &req, a);
                 ev.flag = 1;
-                Event_Send(&ev, g_Game, 1);
+                QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 1);
                 ev.vt = D_004DAE30;
-                FileMan_Release(&ev.s114, -1);
-                FileMan_Release(&ev.s78, -1);
+                cFileMan_dtor(&ev.s114, -1);
+                cFileMan_dtor(&ev.s78, -1);
                 cMessage_dtor(&ev, 0);
-                FileMan_Release(&req.sE4, -1);
-                FileMan_Release(&req.s48, -1);
+                cFileMan_dtor(&req.sE4, -1);
+                cFileMan_dtor(&req.s48, -1);
             }
             int fx = mat->e[(unsigned char)idx].fx;
             if (fx != -1 && fx != -2) {
@@ -272,7 +272,7 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
                 M m;
                 FrameFromNormal(&m, &nrm);
                 m.t = hit;
-                Effect_CreateInstance(fx, &m);
+                SfxParticleEffect_int_cMatrixR(fx, &m);
             }
         }
     }
@@ -286,22 +286,22 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
             nm = D_0049D960;
         SReq req;
         SEv ev;
-        SoundRequest_Ctor(&req, 0, nm, 0, 0);
-        SoundEvent_CtorFromPreset(&ev, &req, a);
+        cSndFx_ctor_int_charP_cGOBJP_int(&req, 0, nm, 0, 0);
+        cPlaySoundMsg_ctor_cSndFxR(&ev, &req, a);
         ev.flag = 1;
-        Event_Send(&ev, g_Game, 1);
+        QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 1);
         ev.vt = D_004DAE30;
-        FileMan_Release(&ev.s114, -1);
-        FileMan_Release(&ev.s78, -1);
+        cFileMan_dtor(&ev.s114, -1);
+        cFileMan_dtor(&ev.s78, -1);
         cMessage_dtor(&ev, 0);
-        FileMan_Release(&req.sE4, -1);
-        FileMan_Release(&req.s48, -1);
+        cFileMan_dtor(&req.sE4, -1);
+        cFileMan_dtor(&req.s48, -1);
     }
 }
-#undef SoundRequest_Ctor /* merge_units */
-#undef SoundEvent_CtorFromPreset /* merge_units */
-#undef Event_Send /* merge_units */
-#undef FileMan_Release /* merge_units */
+#undef cSndFx_ctor_int_charP_cGOBJP_int /* merge_units */
+#undef cPlaySoundMsg_ctor_cSndFxR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
+#undef cFileMan_dtor /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00188FB0(void) {}

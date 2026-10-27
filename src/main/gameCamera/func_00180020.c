@@ -19,6 +19,6 @@ float cSplinedMotion_Scalar_InitPos(void) {
     return 0.0f;
 }
 
-float Curve_ReturnZero(void) {
+float cSplinedMotion_Scalar_ZeroVel(void) {
     return 0.0f;
 }

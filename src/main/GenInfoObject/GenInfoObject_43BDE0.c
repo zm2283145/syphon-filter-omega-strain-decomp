@@ -11,20 +11,20 @@
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int GuiWidget_BroadcastEvent(char * , int, int, int);                 
-int GuiWidget_BaseWake();                                  
+int GuiWidget_SendChildrenMessage(char * , int, int, int);                 
+int GuiWidget_onWake();                                  
 
-void GuiScrollBarWidget_Wake(char * arg0) {
+void GuiScrollBarWidget_onWake(char * arg0) {
     float r;
     int temp_t1;
     int temp_t0;
 
-    GuiWidget_BaseWake();
+    GuiWidget_onWake();
     if (F_(arg0, 0x48, unsigned char) != 0) {
         temp_t1 = F_(arg0, 0x5C, int);
         temp_t0 = F_(arg0, 0x4C, int);
         r = (float) (F_(arg0, 0x58, int) - temp_t1) / (float) (F_(arg0, 0x60, int) - temp_t1);
-        GuiWidget_BroadcastEvent(arg0, 0xA, temp_t0 + (int) (r * (float) (F_(arg0, 0x50, int) - temp_t0)), 0);
+        GuiWidget_SendChildrenMessage(arg0, 0xA, temp_t0 + (int) (r * (float) (F_(arg0, 0x50, int) - temp_t0)), 0);
     }
 }
 #pragma pop /* merge_units */
@@ -34,16 +34,16 @@ void GuiScrollBarWidget_Wake(char * arg0) {
 #pragma push /* merge_units */
 typedef struct { char p[0x10]; int f10; int f14; } D43BE70;
 typedef struct { char p[0x48]; unsigned char b48; char p49[3]; int f4C; int f50; } W43BE70;
-extern void GuiWidget_Init(W43BE70* w);
-extern int GuiWidget_SendEvent(W43BE70* w, W43BE70* src, int kind, int a, int out);
+extern void GuiWidget_onAdd(W43BE70* w);
+extern int GuiWidget_SendMessage(W43BE70* w, W43BE70* src, int kind, int a, int out);
 extern char D_004BFFA8[];
 static int D_004976A0 = (int)D_004BFFA8;
-void GuiScrollBarWidget_Init(W43BE70* w)
+void GuiScrollBarWidget_onAdd(W43BE70* w)
 {
     D43BE70* d[1];
-    GuiWidget_Init(w);
+    GuiWidget_onAdd(w);
     d[0] = 0;
-    if (GuiWidget_SendEvent(w, w, 4, D_004976A0, (int)d) && d[0]) {
+    if (GuiWidget_SendMessage(w, w, 4, D_004976A0, (int)d) && d[0]) {
         w->b48 = 1;
         w->f4C = d[0]->f10;
         w->f50 = d[0]->f14;

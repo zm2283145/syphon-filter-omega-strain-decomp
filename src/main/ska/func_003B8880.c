@@ -13,8 +13,8 @@ BaDeq* _cdeque_imp_cSkaSystem_RequestPtr_1_ctor(BaDeq* self, unsigned int n, cha
 BaDeq* _cdeque_imp_cSkaSystem_RequestPtr_1_opAssign(BaDeq* self, const BaDeq* x);
 void _cdeque_deleter_int_1_reserve(BaDeq* self, unsigned int n);
 void _cdeque_deleter_int_1_push_back(BaDeq* self, char** value);
-void* Mem_PlacementNew(unsigned int size, void* p);
-void BlendRecord_CopyConstruct(void* self, const void* src);
+void* opNew_uint_voidP(unsigned int size, void* p);
+void cSkaSystem_Request_ctor(void* self, const void* src);
 void _cdeque_deleter_common_int_swap(BaDeq* x, BaDeq* y);
 void _cdeque_imp_cSkaSystem_RequestPtr_1_dtor(BaDeq* self, short flag);
 BlockArray* alloc_ptr_cSkaSystem_Request_int_allocator(BaGuard* g);
@@ -23,7 +23,7 @@ int alloc_ptr_cSkaSystem_Request_int_capacity(BaGuard* g);
 void cAllocator_cSkaSystem_Request_deallocate(BlockArray* owner, char* p, int n);
 BaDeq* details_compressed_pair_imp_cAllocator_int_int_1_second(BlockArray* self);
 }
-extern "C" void BlockArray_Append(BlockArray* self, const void* src)
+extern "C" void std_deque_deleter_cSkaSystem_Request_push_back(BlockArray* self, const void* src)
 {
     unsigned int idx = self->first + self->count;
     if (idx == (self->blocks.size == 0 ? 0 : (self->blocks.size - 1) * 8)) {
@@ -61,9 +61,9 @@ extern "C" void BlockArray_Append(BlockArray* self, const void* src)
                 _cdeque_deleter_int_1_push_back(&tmp, &z);
             }
             {
-                void* o = Mem_PlacementNew(0xF8, nb);
+                void* o = opNew_uint_voidP(0xF8, nb);
                 if (o)
-                    BlendRecord_CopyConstruct(o, src);
+                    cSkaSystem_Request_ctor(o, src);
             }
             g.p = 0;
             _cdeque_deleter_common_int_swap(&tmp, &self->blocks);
@@ -84,9 +84,9 @@ extern "C" void BlockArray_Append(BlockArray* self, const void* src)
     {
         BaDeq* d = details_compressed_pair_imp_cAllocator_int_int_1_second(self);
         char* blk = self->blocks.data[(self->blocks.start + (idx >> 3)) % d->cap];
-        void* o = Mem_PlacementNew(0xF8, blk + (idx & 7) * 0xF8);
+        void* o = opNew_uint_voidP(0xF8, blk + (idx & 7) * 0xF8);
         if (o)
-            BlendRecord_CopyConstruct(o, src);
+            cSkaSystem_Request_ctor(o, src);
         self->count++;
     }
 }

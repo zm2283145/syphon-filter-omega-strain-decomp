@@ -16,7 +16,7 @@
 #include "loose01_types.h"
 
 extern int D_00506390;
-extern int GuiAgentCreate_DrawModelCallback(int);
+extern int GuiAgentCreate_ManRender(int);
 
 Rel* std_vector_imp_cSkeletonBBoxContributionPtr_1_ctor(Rel* r) {
     r->a = 0;
@@ -31,7 +31,7 @@ Word* cArrayCapacity_ctor(Word* self, int value) {
 }
 
 int ManRenderWrapper(void) {
-    return GuiAgentCreate_DrawModelCallback(D_00506390);
+    return GuiAgentCreate_ManRender(D_00506390);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00290B90 */
@@ -68,8 +68,8 @@ struct Sub290C30 { char pad[0x10]; Q290C30 pos; };
 struct T290C30 { V290C30 v; char pad4[0xC]; Sub290C30 sub; char pad40[0x20]; unsigned char b50; };
 struct A290C30 { char pad[0x50]; T290C30* t; char pad54[0x10]; float heading; };
 extern "C" {
-float Math_Atan2f(float y, float x);
-void Actor_BaseLogicUpdate(A290C30* a, float dt);
+float Libc_Atan2f(float y, float x);
+void cGOBJ_NextFrame(A290C30* a, float dt);
 }
 extern "C" void func_00290C30(A290C30* a, float dt)
 {
@@ -79,8 +79,8 @@ extern "C" void func_00290C30(A290C30* a, float dt)
         t->v.v20();
     Sub290C30* s = (Sub290C30*)((char*)t + 0x10);
     V4Copy(&p, &s->pos);
-    a->heading = Math_Atan2f(p.f.x, *(volatile float*)&p.f.y);
-    Actor_BaseLogicUpdate(a, dt);
+    a->heading = Libc_Atan2f(p.f.x, *(volatile float*)&p.f.y);
+    cGOBJ_NextFrame(a, dt);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00290C30 */

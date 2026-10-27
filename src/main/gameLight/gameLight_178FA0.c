@@ -89,20 +89,20 @@ extern int D_004EE8D8;   /* cGameDirectionalLight class type id */
 extern int D_004EE8E0;   /* cGameDirectionalLight script type */
 extern int D_004EE898;   /* cGameLight class type id (parent) */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
-extern void ScriptType_SetParent(int type, int parentType);
+extern int cScriptInterpreter_CallEvent(void* filter, int a0, int a1);
+extern void cScriptBase_declareParent(int type, int parentType);
 
 /* Registers the cGameDirectionalLight script type under its parent type. */
-void ScriptType_cGameDirectionalLight_Init(void) {
-    ScriptType_SetParent(D_004EE8E0, D_004EE898);
+void cGameDirectionalLight_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004EE8E0, D_004EE898);
 }
 
-int cGameDirectionalLight_v0B(void) {
+int cGameDirectionalLight_getSOBJClassId(void) {
     return D_004EE8D8;
 }
 
-int cGameDirectionalLight_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cGameDirectionalLight_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00179000(void) {}
@@ -190,16 +190,16 @@ extern int D_004EE8B8;   /* cGameSceneLight class type id */
 extern int D_004EE8C0;   /* cGameSceneLight script type */
 
 /* Registers the cGameSceneLight script type under its parent type. */
-void ScriptType_cGameSceneLight_Init(void) {
-    ScriptType_SetParent(D_004EE8C0, D_004EE898);
+void cGameSceneLight_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004EE8C0, D_004EE898);
 }
 
-int cGameSceneLight_v0B(void) {
+int cGameSceneLight_getSOBJClassId(void) {
     return D_004EE8B8;
 }
 
-int cGameSceneLight_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cGameSceneLight_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001790B0(void) {}
@@ -284,21 +284,21 @@ static inline void merge_flush_func_00179130(void) {}
 
 
 extern int D_004EE8A0;   /* cGameLight script type */
-extern int* cGOBJ_GetScriptTypeKeyPtr(void);
+extern int* cGOBJ_SOBJ_getClassId(void);
 
 /* Registers the cGameLight script type under its parent type. */
-void ScriptType_cGameLight_Init(void) {
-    int* parent = cGOBJ_GetScriptTypeKeyPtr();
+void cGameLight_SOBJ_init(void) {
+    int* parent = cGOBJ_SOBJ_getClassId();
 
-    ScriptType_SetParent(D_004EE8A0, *parent);
+    cScriptBase_declareParent(D_004EE8A0, *parent);
 }
 
-int cGameLight_v0B(void) {
+int cGameLight_getSOBJClassId(void) {
     return D_004EE898;
 }
 
-int cGameLight_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cGameLight_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00179160(void) {}

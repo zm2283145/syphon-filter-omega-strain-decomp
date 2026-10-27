@@ -17,11 +17,11 @@
 #pragma opt_propagation off
 #pragma cplusplus on
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void Script_LookupResource(void* p, int v);
-void* NpcPerception_Construct(void* p, void* owner);
-void* NpcPath_Construct(void* p, void* owner, int n, int v);
-int Random_Next(void);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cScriptVars_initScriptlet(void* p, int v);
+void* cAITarget_ctor(void* p, void* owner);
+void* cPathNavigator_ctor(void* p, void* owner, int n, int v);
+int Libc_Rand(void);
 extern char D_0049C088[];
 extern char D_0049B670[];
 }
@@ -36,8 +36,8 @@ struct Trk_8BC0 {
         void* p;
         if (g_ProfileLockEnabled) Alloc_Lock(9);
         g_ProfileLockDepth++;
-        p = Mem_Alloc(0, sz, D_0049C088, line);
-        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        p = cMemMan_Allocate(0, sz, D_0049C088, line);
+        if (g_ProfileLockEnabled) EnableIntc(9);
         g_ProfileLockDepth--;
         return p;
     }
@@ -48,8 +48,8 @@ static inline void* NpcNew_8BC0(int sz, int line)
     void* p;
     if (g_ProfileLockEnabled) Alloc_Lock(9);
     g_ProfileLockDepth++;
-    p = Mem_Alloc(0, sz, D_0049B670, line);
-    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    p = cMemMan_Allocate(0, sz, D_0049B670, line);
+    if (g_ProfileLockEnabled) EnableIntc(9);
     g_ProfileLockDepth--;
     return p;
 }
@@ -133,23 +133,23 @@ struct NpcD_8BC0 {
 };
 
 union U4 { int i; float f; };
-extern "C" void NpcAi_Construct(Npc_8BC0* self, Own_8BC0* own)
+extern "C" void cNPC_Init(Npc_8BC0* self, Own_8BC0* own)
 {
     char* t = (char*)self;
     if (own->x3264) {
         if (!*(Trk_8BC0**)(t + 0x18)) {
             *(Trk_8BC0**)(t + 0x18) = new (0x49) Trk_8BC0;
         }
-        Script_LookupResource(*(Trk_8BC0**)(t + 0x18), own->x3264);
+        cScriptVars_initScriptlet(*(Trk_8BC0**)(t + 0x18), own->x3264);
     }
     if (!*(void**)(t + 0x1AC)) {
         void* p = NpcNew_8BC0(0x60, 0x741);
-        if (p) p = NpcPerception_Construct(p, self);
+        if (p) p = cAITarget_ctor(p, self);
         *(void**)(t + 0x1AC) = p;
     }
     if (!*(void**)(t + 0x1B0)) {
         void* p = NpcNew_8BC0(0x80, 0x745);
-        if (p) p = NpcPath_Construct(p, own, 100, own->x3548);
+        if (p) p = cPathNavigator_ctor(p, own, 100, own->x3548);
         *(void**)(t + 0x1B0) = p;
     }
     own->x3524[0x99] = 1;
@@ -181,7 +181,7 @@ extern "C" void NpcAi_Construct(Npc_8BC0* self, Own_8BC0* own)
     *(unsigned char*)(t + 0x1A4) = 0;
     *(int*)(t + 0x1A0) = 0;
     *(unsigned char*)(t + 0x1AA) = 0;
-    *(float*)(t + 0x6C) = 0.25f + 0.5f * (Random_Next() / 2147483648.0f);
+    *(float*)(t + 0x6C) = 0.25f + 0.5f * (Libc_Rand() / 2147483648.0f);
     self->v85(0x14, 0.0f, 200.0f);
     *(int*)(t + 0x7C) = 0;
     *(float*)(t + 0x78) = -1.0f;
@@ -324,10 +324,10 @@ extern unsigned char g_IsMultiplayer;
 void std_list_cNPCPtr_begin(It_A* out, NpcList_A* l);
 void std_list_cNPCPtr_end(It_A* out, NpcList_A* l);
 It_A* cLListIterator_cNPCPtr_ctor_listR(It_A* dst, It_A* src);
-CamHolder_A** List_Front(void* v);
+CamHolder_A** cLList_cCAMERA_GOBJPtr_Front(void* v);
 int func_00159570(void* v);
-Actor_A* PlayerSlots_Get(int i);
-float Math_Cos(float a);
+Actor_A* cNetObj_GetPlayer(int i);
+float Libc_Cosf(float a);
 }
 
 static inline bool Eq(int x, int y) { return x == y; }
@@ -377,7 +377,7 @@ extern "C" bool Npc_IsDeadRemovalAllowed(Npc_A* self)
         if (found != self->actor) {
             float maxSq = g_LevelFarDistance * g_LevelFarDistance;
             V_A pos = self->actor->GetPos(-1);
-            Cam_A* c = (func_00159570(g_CameraObject) ? *List_Front(g_CameraObject) : 0)->cam;
+            Cam_A* c = (func_00159570(g_CameraObject) ? *cLList_cCAMERA_GOBJPtr_Front(g_CameraObject) : 0)->cam;
             if (c->b50)
                 c->Update();
             pos.Sub(c->pos);
@@ -386,7 +386,7 @@ extern "C" bool Npc_IsDeadRemovalAllowed(Npc_A* self)
                 ok = false;
             } else if (g_IsMultiplayer) {
                 for (int i = 0; i < 4; i++) {
-                    Actor_A* p = PlayerSlots_Get(i);
+                    Actor_A* p = cNetObj_GetPlayer(i);
                     if (p && !p->b14) {
                         pos = self->actor->GetPos(-1);
                         pos.Sub3(pos, p->GetPos(-1));
@@ -397,7 +397,7 @@ extern "C" bool Npc_IsDeadRemovalAllowed(Npc_A* self)
                         if (pos.LenSq() < maxSq) {
                             V_A fwd = p->GetMtx().Up();
                             pos.Normalize();
-                            if (!(fwd.Dot(pos) + (1.0f - Math_Cos(0.7853982f)) <= 1.0f)) {
+                            if (!(fwd.Dot(pos) + (1.0f - Libc_Cosf(0.7853982f)) <= 1.0f)) {
                                 ok = false;
                                 break;
                             }

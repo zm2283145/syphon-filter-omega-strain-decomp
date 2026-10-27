@@ -47,7 +47,7 @@ static inline void EquipAnim_Clear(EquipAnim* s)
     s->cur = 0;
 }
 
-void Equip_Init(Equip* e)
+void cMan_UpdateHandMorphs(Equip* e)
 {
     if (e->secondary != 0) {
         EquipAnim_Set(e, &e->secondaryAnim, D_00571528, e->secondary->animA, e->secondary->animA + 1);

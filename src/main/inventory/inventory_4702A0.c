@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_004702A0 */
 #pragma push /* merge_units */
@@ -29,10 +29,10 @@ void func_004719A0(void*);
 
 static inline void Pt2_Free(void* p) {
     AllocGuard g;
-    Mem_Free(0, p, "inventory.cc", 0xD8);
+    cMemMan_Deallocate(0, p, "inventory.cc", 0xD8);
 }
 #pragma opt_strength_reduction off
-extern "C" void ItemTable_GetModel(void) {
+extern "C" void cInventory_UnloadShapes(void) {
     int i;
     for (i = 0; i < D_00587FF4; i++) {
         ActorModel_Release(D_00587FF8[i].model);
@@ -54,14 +54,14 @@ extern E4703B0* D_00587FF8;
 #endif /* merge_units */
 #define D_00587FF8 (*(E4703B0 **)&D_00587FF8) /* merge_units */
 
-extern void WeaponDb_LoadModel(void* m, void* a, void* b, int c, int d, int e, int f);
+extern void cWeaponDB_LoadGun(void* m, void* a, void* b, int c, int d, int e, int f);
 #pragma push
 #pragma opt_strength_reduction off
-void ItemTable_LoadModels(void)
+void cInventory_LoadShapes(void)
 {
     void* m = g_WeaponDatabase;
     int i;
-    for (i = 0; i < D_00587FF4; i++) WeaponDb_LoadModel(m, D_00587FF8[i].m8, D_00587FF8[i].m28, -1, 0, 0, 0);
+    for (i = 0; i < D_00587FF4; i++) cWeaponDB_LoadGun(m, D_00587FF8[i].m8, D_00587FF8[i].m28, -1, 0, 0, 0);
 }
 #pragma pop
 #undef D_00587FF8 /* merge_units */

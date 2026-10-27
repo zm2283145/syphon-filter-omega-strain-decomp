@@ -11,7 +11,7 @@ extern int cDrawAndHolsterWeapon_ActionManager_UnInitStatics(void);
 extern int cDrawAndHolsterWeapon_ActionManager_InitStatics(void);
 
 /* Rec24 constructor (+0x08 is left untouched). */
-Rec24* Secondary_MotionRecordCtor(Rec24* r) {
+Rec24* cSkaAnimDataIterator_ctor_void(Rec24* r) {
     r->unk00 = 0;
     r->unk04 = 0;
     r->unk0C = 0.0f;

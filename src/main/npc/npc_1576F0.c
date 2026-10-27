@@ -36,11 +36,11 @@ public:
     VPAD32(a) VPAD8(b) VPAD4(c) VPAD2(d)
     virtual void Reset();
 };
-extern "C" void NpcAi_GetPlayerRecord(NPC_77B0* self, int a, int b);
+extern "C" void cNPC_SetEnabled(NPC_77B0* self, int a, int b);
 extern "C" int cNPC_GetEnabled(NPC_77B0* self, int a);
-extern "C" void cNPC_v2F(NPC_77B0* self, int a)
+extern "C" void cNPC_DeactivateLocal(NPC_77B0* self, int a)
 {
-    NpcAi_GetPlayerRecord(self, a, 0);
+    cNPC_SetEnabled(self, a, 0);
     if (!cNPC_GetEnabled(self, -1))
         self->Reset();
 }
@@ -95,7 +95,7 @@ void cNPCInfoObject_dtor(int* t, int f);
 }
 static inline unsigned char G3IsA(G3Gen157* g) { unsigned char r = 0; if (g->sub && g->sub->IsA()) r = 1; return r; }
 static inline unsigned char G3IsB(G3Gen157* g) { unsigned char r = 0; if (g->sub && g->sub->IsB()) r = 1; return r; }
-extern "C" void NpcAi_ActivateForPlayer(G3Npc157* n, G3Gen157* g)
+extern "C" void cNPC_Activate_cGOBJP(G3Npc157* n, G3Gen157* g)
 {
     if (g_IsMultiplayer) {
         if (n->IsAlive()) {
@@ -133,11 +133,11 @@ int cNPC_GetEnabled(void* self, int a);
 #define cNPC_GetEnabled(a0, a1) (cNPC_GetEnabled((NPC_77B0 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void NpcAi_GetPlayerRecord(void* self, int a, int b);
+void cNPC_SetEnabled(void* self, int a, int b);
 #endif /* merge_units */
-#define NpcAi_GetPlayerRecord(a0, a1, a2) (NpcAi_GetPlayerRecord((NPC_77B0 *)(a0), (a1), (a2))) /* merge_units */
+#define cNPC_SetEnabled(a0, a1, a2) (cNPC_SetEnabled((NPC_77B0 *)(a0), (a1), (a2))) /* merge_units */
 
-void NetGame_InitLocalSlot(int* p, int v);
+void NetGetMyClientIndex(int* p, int v);
 void cNetObjectMgr_AddActivate(void* ctl, int v);
 }
 typedef struct { char pad[0xC]; unsigned int flags; } Obj_7940;
@@ -153,19 +153,19 @@ static inline int DefaultBody()
     int a = D_005721A8;
     if (g_IsMultiplayer) {
         if (D_00494178 == -1)
-            NetGame_InitLocalSlot(&D_00494178, a);
+            NetGetMyClientIndex(&D_00494178, a);
         return D_00494178;
     }
     return 0;
 }
-extern "C" void NpcAi_ActivateMultiplayer(NPC_7940* self, int v)
+extern "C" void cNPC_Activate_int(NPC_7940* self, int v)
 {
     int r = cNPC_GetEnabled(self, -1);
     if (v >= 0) {
-        NpcAi_GetPlayerRecord(self, v, 1);
+        cNPC_SetEnabled(self, v, 1);
     } else {
         Obj_7940* o;
-        NpcAi_GetPlayerRecord(self, -1, 1);
+        cNPC_SetEnabled(self, -1, 1);
         o = self->GetBody();
         if (o) {
             v = ((o->flags & 0x7F000000) >> 24) - 1;
@@ -177,7 +177,7 @@ extern "C" void NpcAi_ActivateMultiplayer(NPC_7940* self, int v)
         cNetObjectMgr_AddActivate(self->ctl, v);
 }
 #undef cNPC_GetEnabled /* merge_units */
-#undef NpcAi_GetPlayerRecord /* merge_units */
+#undef cNPC_SetEnabled /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00157940(void) {}
 #pragma pop /* merge_units */
@@ -186,7 +186,7 @@ static inline void merge_flush_func_00157940(void) {}
 /* merge_units: begin func_00157A40 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-/* NpcAi_IsAliveOrEligible: false while the actor is in state 2/3 and the NPC is busy */
+/* cNPC_WantsToBeActive: false while the actor is in state 2/3 and the NPC is busy */
 struct Pt1SbActor {
     VPAD32(a) VPAD32(b)
     virtual unsigned char GetMoveState();
@@ -204,7 +204,7 @@ static inline unsigned char Pt1Sb_Moving(Pt1SbNpc* n)
 }
 static inline int Pt1Sb_Not(bool x) { return x ^ 1; }
 static inline int Pt1Sb_NotI(int x) { return (x != 0) ^ 1; }
-extern "C" unsigned char NpcAi_IsAliveOrEligible(Pt1SbNpc* n)
+extern "C" unsigned char cNPC_WantsToBeActive(Pt1SbNpc* n)
 {
     unsigned char r = 1;
     if (!Pt1Sb_Not(Pt1Sb_Moving(n)))

@@ -12,6 +12,6 @@ Word* std_list_cActiveListItemPtr_generic_iterator_1_ctor(Word* self, int value)
     return self;
 }
 
-void List_Begin_16E880(Iter* out, PtrVec* v) {
+void std_list_deleter_voidPtr_begin_void_2(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

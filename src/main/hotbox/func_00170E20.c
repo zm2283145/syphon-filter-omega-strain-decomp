@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
-/* Hotbox_CreateRuntime: create a runtime hotbox sized from an actor's bounds and register it */
+/* cHotboxMan_CreateInteractBox: create a runtime hotbox sized from an actor's bounds and register it */
 struct V4H { float x, y, z, w; V4H() {} // 128-bit lq/sq quadword copy idiom
     V4H& operator=(const V4H& o) { V4H* d = this; const V4H* s = &o; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); return *this; } V4H(const V4H& o) { V4H* d = this; const V4H* s = &o; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); } } __attribute__((aligned(16)));
 struct BoxH { V4H lo; V4H hi; BoxH() {} BoxH& operator=(const BoxH& o) { __int128 a; __int128 b; BoxH* d = this; const BoxH* s = &o; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); sq %1, 0x10(%2)" : "=&r"(a), "=&r"(b) : "r"(d), "r"(s) : "memory"); return *this; } };
@@ -19,15 +19,15 @@ extern signed char D_004E1D88;
 extern V4H D_004E1D90;
 extern char D_0049C878[];
 extern char g_HotboxList[];
-void IdMgr_Allocate(int* id, int kind);
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void nGobjManager_GetNextId(int* id, int kind);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 /* the two V4 parameters are by value: the caller passes pointers to its own copies */
-HotboxH* cHotbox_ctor2(void* self, int* gid, unsigned char type, V4H* mn, V4H* mx);
-BoxH Hotbox_ComputeNpcBounds(void* o, int flag);
-void Hotbox_AddToGlobalList(void* list, HotboxH** h);
-void Object_Register(void* o);
+HotboxH* cHotbox_ctor_cObjectIdR_int_cVector_cVector(void* self, int* gid, unsigned char type, V4H* mn, V4H* mx);
+BoxH CalculateInteractBoxDimensionsAndLocation(void* o, int flag);
+void cLList_cHotboxPtr_PushBackActual(void* list, HotboxH** h);
+void nGobjManager_AddGOBJ(void* o);
 void cHotbox_AddTarget(HotboxH* h, void* o);
-HotboxH* Hotbox_CreateRuntime(void* unused, void* o, int flag, int big);
+HotboxH* cHotboxMan_CreateInteractBox(void* unused, void* o, int flag, int big);
 }
 static inline V4H& Zero()
 {
@@ -37,18 +37,18 @@ static inline V4H& Zero()
     }
     return D_004E1D90;
 }
-HotboxH* Hotbox_CreateRuntime(void* unused, void* o, int flag, int big)
+HotboxH* cHotboxMan_CreateInteractBox(void* unused, void* o, int flag, int big)
 {
 
     int id;
     int kind;
     void* p;
     HotboxH* h;
-    IdMgr_Allocate(&id, 244);
+    nGobjManager_GetNextId(&id, 244);
     if (big) { kind = 18; } else { kind = 8; asm { .set reorder } }
     {
         AllocGuard g;
-        p = Mem_Alloc(0, 0xB0, D_0049C878, 0x391);
+        p = cMemMan_Allocate(0, 0xB0, D_0049C878, 0x391);
     }
     h = (HotboxH*)p;
     if (h) {
@@ -62,14 +62,14 @@ HotboxH* Hotbox_CreateRuntime(void* unused, void* o, int flag, int big)
         pn = (V4H*)(int)&mn;
         mx = Zero();
         px = (V4H*)(int)&mx;
-        h = cHotbox_ctor2(h, &id, kind, pn, px);
+        h = cHotbox_ctor_cObjectIdR_int_cVector_cVector(h, &id, kind, pn, px);
     }
-    h->box = Hotbox_ComputeNpcBounds(o, flag);
+    h->box = CalculateInteractBoxDimensionsAndLocation(o, flag);
     {
         HotboxH* t = h;
-        Hotbox_AddToGlobalList(g_HotboxList, &t);
+        cLList_cHotboxPtr_PushBackActual(g_HotboxList, &t);
     }
-    Object_Register(h);
+    nGobjManager_AddGOBJ(h);
     cHotbox_AddTarget(h, o);
     h->Activate(0);
     return h;

@@ -9,21 +9,21 @@
 
 extern ScriptManager D_00555070;
 extern int strlen(void* obj);
-extern int ScriptSlot_ResizeBuffer(ScriptBound* self, int binding);
-extern int ScriptMgr_LookupResource(ScriptManager* manager, void* obj, int* key, int* out);
+extern int cScriptVars_extend(ScriptBound* self, int binding);
+extern int cScriptInterpreter_FindScriptObj(ScriptManager* manager, void* obj, int* key, int* out);
 
 /* Address of slot i in a word table. */
-int* ScriptHolder_GetEntityStorage(int** table, int i) {
+int* cScriptVars_getExtVar(int** table, int i) {
     return *table + i;
 }
 
-/* Looks up obj's script binding in the script manager (D_00555070) and hands it to ScriptSlot_ResizeBuffer. */
-void Script_LookupResource(ScriptBound* self, void* obj) {
+/* Looks up obj's script binding in the script manager (D_00555070) and hands it to cScriptVars_extend. */
+void cScriptVars_initScriptlet(ScriptBound* self, void* obj) {
     int binding;
 
     if (obj != 0 && strlen(obj) != 0) {
         binding = 0;
-        ScriptMgr_LookupResource(&D_00555070, obj, &self->key, &binding);
-        ScriptSlot_ResizeBuffer(self, binding);
+        cScriptInterpreter_FindScriptObj(&D_00555070, obj, &self->key, &binding);
+        cScriptVars_extend(self, binding);
     }
 }

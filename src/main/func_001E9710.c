@@ -7,35 +7,35 @@ struct V {
     V& operator=(const V& o) { V* pd = this; const V* ps = &o; __int128 q; asm volatile { lq q, 0(ps); sq q, 0(pd) } return *this; }
 } __attribute__((aligned(16)));
 struct VC;
-extern "C" VC* Vec4_Assign(VC* d, const VC* s);
+extern "C" VC* cVector_ctor_cVectorR(VC* d, const VC* s);
 struct VC {
     float x, y, z, w;
-    VC(const VC& o) { Vec4_Assign(this, &o); }
+    VC(const VC& o) { cVector_ctor_cVectorR(this, &o); }
 } __attribute__((aligned(16)));
 struct Mtx;
 struct Node;
 struct Obj8 { char pad[0x14]; unsigned char m14; char pad2[3]; char skel[0x10]; Node* m28; };
 struct Self { char pad[8]; Obj8* m8; char pad2[0xE8 - 0xC]; unsigned char mE8; char pad3[7]; char plane[0x10]; };
 extern "C" {
-void* Skeleton_NodeAt(void*, long);
+void* cArray_cBone_opIndex_int(void*, long);
 void* cBone_Xform(void*);
 VC* cXform_GetTranslation(void*);
-Mtx* Transform_GetUpdated(Node*);
-VC Mtx_MulVec4(VC* v, Mtx* m);
+Mtx* cXform_GetMatrix(Node*);
+VC cVector_GetTransformed(VC* v, Mtx* m);
 float cPlane_C(void*);
 float Plane_HeightAt(void*, V*);
-V* Vec4_Set(V* o, float x, float y, float z, float w);
+V* cVector_ctor_float_float_float_float(V* o, float x, float y, float z, float w);
 }
 static inline V Unit() { V l0; V* q1 = &l0; asm { sqc2 vf0, 0x0(q1) } return l0; }
 static inline long NodeId(int m) { signed char n; if (m == 1) n = 7; else n = 11; return n; }
-static inline float H2(void* pl, float x, float y) { V t; return Plane_HeightAt(pl, Vec4_Set(&t, x, y, 0.0f, 1.0f)); }
+static inline float H2(void* pl, float x, float y) { V t; return Plane_HeightAt(pl, cVector_ctor_float_float_float_float(&t, x, y, 0.0f, 1.0f)); }
 static inline float H1(void* pl, float x, float y) { return -H2(pl, x, y); }
 static inline VC GetPos(Obj8* o, long n)
 {
-    if (o->m14) return Mtx_MulVec4(cXform_GetTranslation(cBone_Xform(Skeleton_NodeAt(o->skel, n))), Transform_GetUpdated(o->m28));
+    if (o->m14) return cVector_GetTransformed(cXform_GetTranslation(cBone_Xform(cArray_cBone_opIndex_int(o->skel, n))), cXform_GetMatrix(o->m28));
     return *cXform_GetTranslation(o->m28);
 }
-extern "C" V ActorPhysical_ProbeSurface(Self* self, bool* hit, int mode, float thresh)
+extern "C" V cHumanCollisionRoutine_GetFloorContactPoint(Self* self, bool* hit, int mode, float thresh)
 {
     V r = Unit();
     int m;

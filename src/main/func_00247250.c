@@ -9,12 +9,12 @@
 
 extern void* D_004F7E58;
 extern PtrMsg* cMenuChoiceMsg_SOBJ_convert(void*);
-extern int* Message_GetScriptTypeKeyPtr(void);
-extern int Script_ObjToValue(void*);
-extern void ScriptType_SetParent(void*, int);
+extern int* cMessage_SOBJ_getClassId(void);
+extern int cSystem_SOBJ_toInt(void*);
+extern void cScriptBase_declareParent(void*, int);
 
 int Script_cMenuChoiceMsg_Who(ScriptArg* args) {
-    return Script_ObjToValue(cMenuChoiceMsg_SOBJ_convert(args[0].p)->who);
+    return cSystem_SOBJ_toInt(cMenuChoiceMsg_SOBJ_convert(args[0].p)->who);
 }
 
 int Script_cMenuChoiceMsg_Choice(ScriptArg* args) {
@@ -22,6 +22,6 @@ int Script_cMenuChoiceMsg_Choice(ScriptArg* args) {
     return choice;
 }
 
-void ScriptType_cMenuChoiceMsg_Init(void) {
-    ScriptType_SetParent(D_004F7E58, *Message_GetScriptTypeKeyPtr());
+void cMenuChoiceMsg_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004F7E58, *cMessage_SOBJ_getClassId());
 }

@@ -11,10 +11,10 @@ extern RbTree D_00582720;
 void std_map_cString_cConsCommandPtr_begin(TransferTimerIterator* result, RbTree* tree);
 TransferTimerIterator std_map_cString_cConsCommandPtr_end_void_2(RbTree* tree);
 void func_0042D0E0(TransferTimerIterator* result, const TransferTimerIterator& source);
-void Tree_Successor(TransferTimerIterator* position);
+void std_red_black_tree_1_increment(TransferTimerIterator* position);
 void cNPCInfoObject_ctor(int* shared);
 void cNPCInfoObject_dtor(int* shared, short flags);
-cGOBJ* Object_LookupById(const GobjId* id);
+cGOBJ* nGobjManager_LookupGOBJ_cObjectIdR(const GobjId* id);
 int cNPCInfoObject_GetOwner_uint(int* shared, unsigned int id);
 void cNPCInfoObject_SetOwner_cObjectIdR_int(int* shared, const GobjId* id, int peer);
 void func_004344C0(int* shared, const GobjId* id, int peer);
@@ -37,10 +37,10 @@ extern "C" void func_0042CF30(void)
     TransferTimerNode* node;
     while (func_0042D0E0(&end, std_map_cString_cConsCommandPtr_end_void_2(&D_00582720)),
            node = position.node, (node == end.node) ^ 1) {
-        Tree_Successor(&position);
+        std_red_black_tree_1_increment(&position);
         if (node->deadline < now) {
             key.word = node->id.word;
-            cGOBJ* object = Object_LookupById(&key);
+            cGOBJ* object = nGobjManager_LookupGOBJ_cObjectIdR(&key);
             if (object) {
                 int peer = cNPCInfoObject_GetOwner_uint(&shared, node->id.word);
                 cNPCInfoObject_SetOwner_cObjectIdR_int(&shared, &((GobjEntry*)object)->id, -1);

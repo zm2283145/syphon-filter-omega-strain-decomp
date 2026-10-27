@@ -10,17 +10,17 @@ extern char D_004B8748[];
 extern char D_004B8758[];
 extern char D_004B8768[];
 extern char D_004B8778[];
-int Agent_GetSelected(void*, int);
-int Loc_LookupText(char*);
-void String_Copy(char*, char*);
+int cGameSystem_GetAgentData(void*, int);
+int nGlobalization_GetString_charP(char*);
+void Libc_Strcpy(char*, char*);
 int GuiSlideShow_AddSlide(Menu6DE0*, int, char*, int, char*);
-void GuiSlideShow_AddCategory(Menu6DE0*, int);
+void GuiSlideShow_AddSection(Menu6DE0*, int);
 void std_vector_deleter_Section_clear(void*);
-int AgentData_HasZeus(int, int, int, int);
-int Hog_FindFileNoCase(int, char*, int);
+int cAgentData_HasZeusItem(int, int, int, int);
+int cHogFile_GetBlockIndex(int, char*, int);
 int sprintf(char*, const char*, ...);
 static inline Grp6DE0* G(Menu6DE0* m, int i) { return &m->groups[i]; }
-void GuiSlideShow_Load(Menu6DE0* self, int cat, int selIdx, int selVal, int flag)
+void GuiSlideShow_BuildZeusSlideShow(Menu6DE0* self, int cat, int selIdx, int selVal, int flag)
 {
     int i;
     int j;
@@ -35,17 +35,17 @@ void GuiSlideShow_Load(Menu6DE0* self, int cat, int selIdx, int selVal, int flag
     if (cat <= 0 || cat > 18) return;
     db = D_004FFC04->db;
     if (db == 0) return;
-    agent = Agent_GetSelected(g_Game, -1);
+    agent = cGameSystem_GetAgentData(g_Game, -1);
     for (i = 0; i < 5; i++) {
         sprintf(buf, D_004B8748, i);
-        GuiSlideShow_AddCategory(self, Loc_LookupText(buf));
+        GuiSlideShow_AddSection(self, nGlobalization_GetString_charP(buf));
         for (j = 1; ; j++) {
             sprintf(buf, D_004B8758, cat, i + 1, j);
-            if (Hog_FindFileNoCase(db, buf, 1) == -1) break;
+            if (cHogFile_GetBlockIndex(db, buf, 1) == -1) break;
             ok = 1;
-            if (!AgentData_HasZeus(agent, cat, i, j - 1)) {
+            if (!cAgentData_HasZeusItem(agent, cat, i, j - 1)) {
                 if (flag) continue;
-                String_Copy(buf, D_004B8768);
+                Libc_Strcpy(buf, D_004B8768);
                 ok = 0;
             }
             if (ok) {

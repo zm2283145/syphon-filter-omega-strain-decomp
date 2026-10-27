@@ -18,14 +18,14 @@ struct Mtx { V4 r0, r1, r2, r3; };
 
 struct Elem { VPAD16(a) VPAD4(b) virtual void Sync(); char pad04[0xC]; Mtx m; unsigned char b50; };
 extern "C" {
-void Quat_Assign(V4*, V4*);
-void QuatCurve_Timer(void*, float);
+void cQuaternion_opAssign(V4*, V4*);
+void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cQuaternion_cQuaternion_NextFrame(void*, float);
 int func_0017D510(void*);
-void QuatCurve_Sample(V4*, void*);
+void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cQuaternion_cQuaternion_Evaluate(V4*, void*);
 void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_NextFrame(void*, float);
 int cSplinedMotion_cVector_IsTransitionInProgress(void*);
 void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_Evaluate(V4*, void*);
-void Vec4_Copy(V4*, V4*);
+void cVector_opAssign(V4*, V4*);
 }
 struct QCtl {
     VPAD4(a) virtual void Begin(); virtual void End(); virtual void Step(float t, float u);
@@ -37,16 +37,16 @@ struct QCtl {
     char pad50[0x60];
     char filt[0x20];/* 0xB0 */
     void Update(float t, float u) {
-        Quat_Assign(&prev, &cur);
+        cQuaternion_opAssign(&prev, &cur);
         Begin();
-        QuatCurve_Timer(filt, t);
+        cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cQuaternion_cQuaternion_NextFrame(filt, t);
         if (func_0017D510(this)) {
             V4 tmp;
-            QuatCurve_Sample(&tmp, filt);
-            Quat_Assign(&cur, &tmp);
+            cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cQuaternion_cQuaternion_Evaluate(&tmp, filt);
+            cQuaternion_opAssign(&cur, &tmp);
             End();
         } else {
-            Quat_Assign(&cur, &target);
+            cQuaternion_opAssign(&cur, &target);
         }
         Step(t, u);
     }
@@ -61,16 +61,16 @@ struct PCtl {
     char pad50[0x60];
     char filt[0x20];/* 0xB0 */
     void Update(float t, float u) {
-        Vec4_Copy(&prev, &cur);
+        cVector_opAssign(&prev, &cur);
         Begin();
         cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_NextFrame(filt, t);
         if (cSplinedMotion_cVector_IsTransitionInProgress(this)) {
             V4 tmp;
             cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_Evaluate(&tmp, filt);
-            Vec4_Copy(&cur, &tmp);
+            cVector_opAssign(&cur, &tmp);
             End();
         } else {
-            Vec4_Copy(&cur, &target);
+            cVector_opAssign(&cur, &target);
         }
         Step(t, u);
     }
@@ -87,9 +87,9 @@ struct S {
 extern "C" {
 Elem* std_vector_cBone_opIndex(void* arr, int index);
 void cQuaternion_ctor_void(V*);
-void Quat_Multiply(V*, V*, V*);
+void cQuaternion_VU0Multiply(V*, V*, V*);
 void cQuaternion_ctor_cQuaternionR(V*, V*);
-void UpperBodyLayer_Update(S* s, void* arr, float t, float u);
+void cIkTargetWithSplinedTransition_NextFrame(S* s, void* arr, float t, float u);
 }
 static inline Elem* GetElem(void* arr, const signed char& i) { return std_vector_cBone_opIndex(arr, i); }static inline Plc4* MtxToPlc(Mtx* m, Plc4* out) {
     Plc4* o = out;
@@ -244,7 +244,7 @@ static inline void VAdd3(V* s, V* d) {
     }
 }
 
-void UpperBodyLayer_Update(S* s, void* arr, float t, float u)
+void cIkTargetWithSplinedTransition_NextFrame(S* s, void* arr, float t, float u)
 {
     Plc4* src;
     if (s->idx != -1) {
@@ -263,7 +263,7 @@ void UpperBodyLayer_Update(S* s, void* arr, float t, float u)
         V r;
         V q;
         cQuaternion_ctor_void(&q);
-        Quat_Multiply(&q, &pi->rot, &p.rot);
+        cQuaternion_VU0Multiply(&q, &pi->rot, &p.rot);
         cQuaternion_ctor_cQuaternionR(&r, &q);
         p.rot = r;
         QRot(&p.pos, &pi->rot);

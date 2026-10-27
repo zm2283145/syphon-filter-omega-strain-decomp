@@ -3,31 +3,31 @@
 extern "C" {
 extern "C" void GuiSaveAgentWidget_SaveDone();
 extern "C" void GuiMissionSetup_GetClassName();
-extern "C" void GuiMissionSetup_IsType();
-extern "C" void GuiMissionSetup_HandleEvent();
-extern "C" void GuiMissionSetup_HandleInput();
+extern "C" void GuiMissionSetup_IsClass();
+extern "C" void GuiMissionSetup_onMessage();
+extern "C" void GuiMissionSetup_onInput();
 extern "C" void GuiMissionSetup_Deactivate();
 extern "C" void GuiMissionSetup_Activate();
 extern "C" void GuiScreen_PollLobby();
-extern "C" void GuiScreen_Update();
+extern "C" void GuiLobbyScreen_onAdvanceTime();
 extern "C" void GuiScreen_Sleep();
 extern "C" void GuiScreen_Wake();
-extern "C" void GuiScreen_Init();
-extern "C" void GuiWidget_FocusPrev();
-extern "C" void GuiWidget_FocusNext();
-extern "C" void GuiWidget_FocusLast();
-extern "C" void GuiWidget_FocusFirst();
-extern "C" void GuiWidget_BubbleActivate();
-extern "C" void GuiWidget_BubbleType1();
-extern "C" void GuiWidget_BubbleType0();
-extern "C" void GuiWidget_Draw();
-extern "C" void GuiWidget_ClearFlag4();
-extern "C" void GuiWidget_SetFlag4();
-extern "C" void GuiWidget_Deinit();
+extern "C" void GuiLobbyScreen_onAdd();
+extern "C" void GuiWidget_FindPrevFocus();
+extern "C" void GuiWidget_FindNextFocus();
+extern "C" void GuiWidget_FindLastFocus();
+extern "C" void GuiWidget_FindFirstFocus();
+extern "C" void GuiWidget_onAction();
+extern "C" void GuiWidget_onLoseFocus();
+extern "C" void GuiWidget_onGainFocus();
+extern "C" void GuiWidget_onRender();
+extern "C" void GuiWidget_onDeactivate();
+extern "C" void GuiWidget_onActivate();
+extern "C" void GuiWidget_onRemove();
 extern "C" void GuiWidget_Load();
 extern void * const GuiMissionSetup_vtable[];
-void* LobbyArray_dtor(void* self, short deleteFlag);
-void* GuiScreen_dtor(void* self, short deleteFlag);
+void* SFOLobbyList_dtor(void* self, short deleteFlag);
+void* GuiLobbyScreen_dtor(void* self, short deleteFlag);
 void operator_delete(void* allocation);
 }
 struct O002A0CF0 { void* vtable; char pad[0x84]; char m0[0x1C]; char m1[0x1C]; char m2[4]; };
@@ -35,13 +35,13 @@ extern "C" O002A0CF0* GuiMissionSetup_dtor(O002A0CF0* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)GuiMissionSetup_vtable);
-        LobbyArray_dtor(self->m2, -1);
-        LobbyArray_dtor(self->m1, -1);
-        LobbyArray_dtor(self->m0, -1);
-        GuiScreen_dtor(self, 0);
+        SFOLobbyList_dtor(self->m2, -1);
+        SFOLobbyList_dtor(self->m1, -1);
+        SFOLobbyList_dtor(self->m0, -1);
+        GuiLobbyScreen_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const GuiMissionSetup_vtable[28] = { (void*)0x0, (void*)0x0, (void*)GuiMissionSetup_dtor, (void*)GuiScreen_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScreen_Wake, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiMissionSetup_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)GuiMissionSetup_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiMissionSetup_GetClassName, (void*)GuiMissionSetup_IsType, (void*)GuiSaveAgentWidget_SaveDone, (void*)GuiScreen_PollLobby, (void*)GuiMissionSetup_Activate, (void*)GuiMissionSetup_Deactivate, (void*)0x0 };
+void * const GuiMissionSetup_vtable[28] = { (void*)0x0, (void*)0x0, (void*)GuiMissionSetup_dtor, (void*)GuiLobbyScreen_onAdd, (void*)GuiWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiWidget_onDeactivate, (void*)GuiScreen_Wake, (void*)GuiScreen_Sleep, (void*)GuiWidget_onGainFocus, (void*)GuiWidget_onLoseFocus, (void*)GuiMissionSetup_onInput, (void*)GuiWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiLobbyScreen_onAdvanceTime, (void*)GuiMissionSetup_onMessage, (void*)GuiWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiMissionSetup_GetClassName, (void*)GuiMissionSetup_IsClass, (void*)GuiSaveAgentWidget_SaveDone, (void*)GuiScreen_PollLobby, (void*)GuiMissionSetup_Activate, (void*)GuiMissionSetup_Deactivate, (void*)0x0 };

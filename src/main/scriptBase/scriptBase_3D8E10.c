@@ -18,7 +18,7 @@ Rel* std_vector_imp_int_1_ctor(Rel* r); /* gsynth: defined below */
  */
 
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int value);
 #if 0 /* merge_units */
 extern OwnedVec* std_vector_imp_int_1_ctor(OwnedVec* v);
 #endif /* merge_units */
@@ -27,7 +27,7 @@ extern OwnedVec* std_vector_imp_int_1_ctor(OwnedVec* v);
 
 /* push_back: inserts one value at the end. */
 int std_vector_ClassDefPtr_push_back(PtrVec* v, int value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 
 OwnedVec* cArray_int_ctor(OwnedVec* v) {
@@ -67,12 +67,12 @@ extern void std_vector_imp_MemberFuncPtr_1_ctor(ObjC0*);
 #endif /* merge_units */
 #define std_vector_imp_MemberFuncPtr_1_ctor(a0) ((void)std_vector_imp_MemberFuncPtr_1_ctor((void *)(a0))) /* merge_units */
 
-extern void PtrVec_Reserve(ObjC0*, int);
+extern void std_vector_pod_int_reserve(ObjC0*, int);
 
-/* Constructor: base init, then PtrVec_Reserve(self, *src) and flag byte at +0xC. */
+/* Constructor: base init, then std_vector_pod_int_reserve(self, *src) and flag byte at +0xC. */
 ObjC0* cArray_MemberFuncPtr_ctor(ObjC0* o, int* src, int flag) {
     std_vector_imp_MemberFuncPtr_1_ctor(o);
-    PtrVec_Reserve(o, *src);
+    std_vector_pod_int_reserve(o, *src);
     o->flag = flag;
     return o;
 }
@@ -100,19 +100,19 @@ static inline void merge_flush_func_003D8ED0(void) {}
 typedef struct { char pad[0xC]; unsigned char flag; } Obj003D8EF0;
 extern void std_vector_imp_FieldDefPtr_1_ctor(Obj003D8EF0* obj, int* src, unsigned char flag);
 #if 0 /* merge_units */
-extern void PtrVec_Reserve(Obj003D8EF0* obj, int value);
+extern void std_vector_pod_int_reserve(Obj003D8EF0* obj, int value);
 #endif /* merge_units */
-#define PtrVec_Reserve(a0, a1) (PtrVec_Reserve((void *)(a0), (a1))) /* merge_units */
+#define std_vector_pod_int_reserve(a0, a1) (std_vector_pod_int_reserve((void *)(a0), (a1))) /* merge_units */
 
 /* Construct from src and flag; returns obj. */
 Obj003D8EF0* cArray_FieldDefPtr_ctor(Obj003D8EF0* obj, int* src, unsigned char flag)
 {
     std_vector_imp_FieldDefPtr_1_ctor(obj, src, flag);
-    PtrVec_Reserve(obj, *src);
+    std_vector_pod_int_reserve(obj, *src);
     obj->flag = flag;
     return obj;
 }
-#undef PtrVec_Reserve /* merge_units */
+#undef std_vector_pod_int_reserve /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003D8EF0(void) {}
 #pragma pop /* merge_units */

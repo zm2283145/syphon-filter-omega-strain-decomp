@@ -19,7 +19,7 @@ typedef struct S00139D30 {
     int w0, w1, w2, w3;     /* 0xD0 */
 } S00139D30;
 
-extern int Vec4_Assign(Vec4*, Vec4*);
+extern int cVector_ctor_cVectorR(Vec4*, Vec4*);
 extern int cCollisionFace_ctor_cCollisionFaceR(LosHitInfo*, LosHitInfo*);
 
 /* GCC-style volatile lq/sq quad copy (c57da idiom) */
@@ -27,7 +27,7 @@ static inline void V4_Copy(void* d, const void* s) { __int128 q; __asm__ volatil
 static inline void R_Copy(LosResult* dst0, const LosResult* src) {
     LosResult* dst = dst0;
     dst->status = src->status;
-    Vec4_Assign(&dst->point, (Vec4*)&src->point);
+    cVector_ctor_cVectorR(&dst->point, (Vec4*)&src->point);
     cCollisionFace_ctor_cCollisionFaceR(&dst->hit, (LosHitInfo*)&src->hit);
     dst->unk90 = src->unk90;
 }

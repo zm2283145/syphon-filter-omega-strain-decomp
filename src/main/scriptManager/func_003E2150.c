@@ -26,25 +26,25 @@ extern "C" {
 extern char D_004BD4C0[];
 extern int D_004938D8;
 extern int D_004938E0;
-void Mem_Free(int, void*, char*, int);
+void cMemMan_Deallocate(int, void*, char*, int);
 void cTimerDisable_dtor(G_E2150* g, int f);
 void cTimerDisable_ctor(G_E2150* g);
 void Script_ClearSchedules_3DFB20(void);
 void func_003E2640(It_E2150*, void*);
 void func_003E2630(It_E2150*, void*);
-void Tree_Successor(It_E2150*);
+void std_red_black_tree_1_increment(It_E2150*);
 void cArray_FuncDefPtr_dtor(void*, int);
 void cAssocArray_int_cArray_FuncDefPtrPtr_dtor(void*, int);
-void ActiveList_EraseMatching(void*, Pred_E2150);
+void std_list_imp_voidPtr_remove_if(void*, Pred_E2150);
 void cScriptInterpreter_SymbolTable_dtor(void*, int);
 void nArray_InitSlots_intP_int_int_intR(int*, int, int, int*);
 void cArray_FixedCapacity_int_5000_ResizeActual(FA_E2150*, unsigned int, int*);
 void** std_vector_cGroupPtr_opIndex(PV_E2150*, int);
 void std_vector_deleter_cObjectId_dtor(void*, int);
-void ScriptStr_Release(Mgr_E2150*, void*);
-void PtrVec_Reserve(PV_E2150*, int);
-void Script_TrimSymbolsToMarks(void);
-void ObjectList_EraseRange_3E3320(int*, Mgr_E2150*, int*, int*);
+void cScriptInterpreter_removeString(Mgr_E2150*, void*);
+void std_vector_pod_int_reserve(PV_E2150*, int);
+void cScriptBase_FreeScriptSyms(void);
+void std_list_deleter_PopVar_erase(int*, Mgr_E2150*, int*, int*);
 }
 struct G_E2150 { char c; G_E2150() { cTimerDisable_ctor(this); } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~G_E2150() { cTimerDisable_dtor(this, -1); } };
 static inline int PNe_E2150(Node_E2150* a, Node_E2150* b) { return (a == b) ^ 1; }
@@ -56,12 +56,12 @@ static inline void D2_E2150(void* p) { if (p) D3_E2150(p); }
 static inline void D1_E2150(void* p) { if (p) D2_E2150(p); }
 static inline void D0_E2150(void* p) { if (p) D1_E2150(p); }
 static inline void* Back_E2150(PV_E2150* v) { return v->data[v->count - 1]; }
-static inline void DelL0_E2150(void* l) { G_E2150 g; cArray_FuncDefPtr_dtor(l, -1); Mem_Free(0, l, D_004BD4C0, 0x7F); }
-static inline void DelM0_E2150(void* mp) { G_E2150 g; cAssocArray_int_cArray_FuncDefPtrPtr_dtor(mp, -1); Mem_Free(0, mp, D_004BD4C0, 0x81); }
+static inline void DelL0_E2150(void* l) { G_E2150 g; cArray_FuncDefPtr_dtor(l, -1); cMemMan_Deallocate(0, l, D_004BD4C0, 0x7F); }
+static inline void DelM0_E2150(void* mp) { G_E2150 g; cAssocArray_int_cArray_FuncDefPtrPtr_dtor(mp, -1); cMemMan_Deallocate(0, mp, D_004BD4C0, 0x81); }
 static inline void DelL_E2150(void* l) { DelL0_E2150(l); }
 static inline void DelM_E2150(void* l) { DelM0_E2150(l); }
-static inline void DelO_E2150(void* p) { AllocGuard g; cScriptInterpreter_SymbolTable_dtor(p, -1); Mem_Free(0, p, D_004BD4C0, 0x88); }
-static inline void DelS_E2150(void* p) { AllocGuard g; if (p) { if (p) { if (p) { if (p) std_vector_deleter_cObjectId_dtor(p, 0); } } } Mem_Free(0, p, D_004BD4C0, 0x92); }
+static inline void DelO_E2150(void* p) { AllocGuard g; cScriptInterpreter_SymbolTable_dtor(p, -1); cMemMan_Deallocate(0, p, D_004BD4C0, 0x88); }
+static inline void DelS_E2150(void* p) { AllocGuard g; if (p) { if (p) { if (p) { if (p) std_vector_deleter_cObjectId_dtor(p, 0); } } } cMemMan_Deallocate(0, p, D_004BD4C0, 0x92); }
 
 static inline void ListClear_E2150(Mgr_E2150* m)
 {
@@ -70,10 +70,10 @@ static inline void ListClear_E2150(Mgr_E2150* m)
     int last;
     last = (int)&m->x4;
     first = m->x8;
-    ObjectList_EraseRange_3E3320(&r, m, &first, &last);
+    std_list_deleter_PopVar_erase(&r, m, &first, &last);
 }
 
-extern "C" void Script_Cleanup(Mgr_E2150* m)
+extern "C" void cScriptInterpreter_Reset(Mgr_E2150* m)
 {
     It_E2150 it;
     void* o;
@@ -93,19 +93,19 @@ extern "C" void Script_Cleanup(Mgr_E2150* m)
         }
         while (PNe_E2150(it.p, end.p)) {
             DelL_E2150(it.p->val);
-            Tree_Successor(&it);
+            std_red_black_tree_1_increment(&it);
         }
     }
     DelM_E2150(m->map);
     m->map = 0;
     while (m->alCount > m->x4E60) {
         o = m->alHead->val;
-        ActiveList_EraseMatching(&m->alCount, MakePred_E2150(&o));
+        std_list_imp_voidPtr_remove_if(&m->alCount, MakePred_E2150(&o));
         {
             void* p = o;
             AllocGuard g;
             cScriptInterpreter_SymbolTable_dtor(p, -1);
-            Mem_Free(0, p, D_004BD4C0, 0x88);
+            cMemMan_Deallocate(0, p, D_004BD4C0, 0x88);
         }
     }
     {
@@ -122,13 +122,13 @@ extern "C" void Script_Cleanup(Mgr_E2150* m)
         void* p = *std_vector_cGroupPtr_opIndex(&m->objs, i);
         AllocGuard g;
         if (p) { if (p) { if (p) { if (p) std_vector_deleter_cObjectId_dtor(p, 0); } } }
-        Mem_Free(0, p, D_004BD4C0, 0x92);
+        cMemMan_Deallocate(0, p, D_004BD4C0, 0x92);
     }
     while (*(volatile int*)&m->strs.count > 0)
-        ScriptStr_Release(m, Back_E2150(&m->strs));
-    PtrVec_Reserve(&m->strs, 0x80);
+        cScriptInterpreter_removeString(m, Back_E2150(&m->strs));
+    std_vector_pod_int_reserve(&m->strs, 0x80);
     m->objs.count = 0;
-    PtrVec_Reserve(&m->objs, 0x100);
+    std_vector_pod_int_reserve(&m->objs, 0x100);
     m->x4E70 = m->x4E6C + m->x4E78;
     m->x4E7C = 0;
     m->x4E90 = 0;
@@ -138,13 +138,13 @@ extern "C" void Script_Cleanup(Mgr_E2150* m)
     m->x4EA0 = 0;
     m->x4E84 = 0;
     m->x4E80 = 0;
-    Script_TrimSymbolsToMarks();
+    cScriptBase_FreeScriptSyms();
     {
         int r;
         int first;
         int last;
         last = (int)&m->x4;
         first = m->x8;
-        ObjectList_EraseRange_3E3320(&r, m, &first, &last);
+        std_list_deleter_PopVar_erase(&r, m, &first, &last);
     }
 }

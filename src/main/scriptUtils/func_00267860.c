@@ -16,9 +16,9 @@ extern char D_004F8580[];
 extern char D_004DCB90[];
 extern char D_004DCF10[];
 extern char* g_Hud;
-char* Loc_LookupText(char* s);
-int Loc_FindKeyThunk(char* s);
-void HudTimer_Start(char* t, char* text, float time);
+char* nGlobalization_GetString_charP(char* s);
+int nGlobalization_GetStringIndex(char* s);
+void cHud_cHudTimer_ScheduleExpiration(char* t, char* text, float time);
 }
 #pragma opt_propagation off
 extern "C" void Global_SetPersonalTimer(Obj_7860* obj, char* text, float time)
@@ -27,17 +27,17 @@ extern "C" void Global_SetPersonalTimer(Obj_7860* obj, char* text, float time)
     if (obj->net && obj->net->IsActive()) net = 1;
     if (net) {
         if (obj->local) {
-            HudTimer_Start(g_Hud + 0x6AC, text ? Loc_LookupText(text) : 0, time + *(float*)(g_Hud + 0x6DC));
+            cHud_cHudTimer_ScheduleExpiration(g_Hud + 0x6AC, text ? nGlobalization_GetString_charP(text) : 0, time + *(float*)(g_Hud + 0x6DC));
         } else {
             TimerMsg_7860 m;
             TimerMsg_7860* p = &m;
-            Event_Construct(p, D_004F8580);
+            cMessage_ctor_cMessageNameR(p, D_004F8580);
             m.vtable = D_004DCB90;
             m.secs = time;
-            p->key = Loc_FindKeyThunk(text);
+            p->key = nGlobalization_GetStringIndex(text);
             m.kind = 8;
             m.flags = 0x40;
-            Event_Send(p, obj, 0);
+            QueueMessage_cMessageR_cSystemP_int(p, obj, 0);
             m.vtable = D_004DCF10;
             cMessage_dtor(p, 0);
         }

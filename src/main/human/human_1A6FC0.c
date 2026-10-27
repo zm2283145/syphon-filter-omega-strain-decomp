@@ -61,7 +61,7 @@ int std_vector_pod_int_begin(char* self) {
     return *(int*)(self + 8);
 }
 
-void* Root_IdentityAccessor(void* self) {
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(void* self) {
     return self;
 }
 /* merge_units: generate this block's code under its own pragmas */

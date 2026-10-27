@@ -5,12 +5,12 @@ typedef struct { char pad0[0x14]; int size; short type; char pad1A[2]; char item
 typedef struct { E090 e[0x540 / 0x38]; int mode; char pad1[0x558 - 0x544]; void* buf; char pad55C[4]; int count; int sel; char pad2[0x59C - 0x568]; unsigned char failed; unsigned char pad3; unsigned char ready; unsigned char present; unsigned char done; } P090;
 typedef struct { P090* p; unsigned char busy; char pad[3]; void (*cb)(void); unsigned char state; } C090;
 extern int MemCard_MemCardMain(P090* p);
-extern int MemCardWrap_MatchName(void* key, void* item);
+extern int WildcardCompare(void* key, void* item);
 
 static inline int e090find(P090* p, void* key) {
     int i;
     for (i = 0; i < p->count; i++) {
-        if (!((MemCardWrap_MatchName(key, p->e[i].item) != 0) ^ 1))
+        if (!((WildcardCompare(key, p->e[i].item) != 0) ^ 1))
             return i;
     }
     return -1;
@@ -19,7 +19,7 @@ static inline int e090add(P090* p, void* key, int size) {
     if (p->count < 18) {
         if (e090find(p, key) < 0) {
             int k = p->count;
-            String_Copy(p->e[k].item, key);
+            Libc_Strcpy(p->e[k].item, key);
             p->e[k].size = size;
             p->e[k].type = 3;
             return k;
@@ -28,7 +28,7 @@ static inline int e090add(P090* p, void* key, int size) {
     return -1;
 }
 /* Writes buf as the entry matching key (creating it when absent); optionally waits for the state machine. */
-int MemCardWrap_Write(C090* c, void* key, void* buf, int size, unsigned char wait) {
+int cMemCard_SaveFile(C090* c, void* key, void* buf, int size, unsigned char wait) {
     P090* p = c->p;
     int i;
     int mode;

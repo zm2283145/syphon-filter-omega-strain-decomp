@@ -4,7 +4,7 @@ typedef struct { char pad[0x180]; V4 v180; } B2250;
 #pragma push
 #pragma opt_common_subs off
 #pragma peephole off
-void Bone_AccumTranslation(B2250* b, V4* d, float s) {
+void cBone_AnimationAccumulateOffset(B2250* b, V4* d, float s) {
     V4* p = &b->v180;
     int t;
     /* VU0: p += d * s (xyz) */

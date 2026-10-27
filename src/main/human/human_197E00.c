@@ -18,7 +18,7 @@ typedef struct { int a; Name_198760 name; short s84; int i88; int i8C; int i90; 
 S_198760* cFileMan_opAssign(S_198760* d, S_198760* s); /* gsynth: defined below */typedef struct { int a[4]; } C5Dq;
 typedef struct { char pad[0x3C]; C5Dq sel; } C5Motion;
 float MotionCtrl_GetSelectorMetric(C5Motion* m, void* arg); /* gsynth: defined below */
-/* Actor_UpdateAnimationEvents (0x00197E00), mw38 MATCH.
+/* cHuman_DetectForAnimationEvents (0x00197E00), mw38 MATCH.
  * Key: the SReq ctor's mask is built with a GCC-style __asm__ pcpyld (MW-style asm{} kept the
  * null-handle Set(0) folded); the handle clear is SReq::SetH(0, none) with the -1 passed in as a
  * parameter, which leaves retail's constant branch + dead 'li 0xC' arm. UNDEF __dl__FPv from the
@@ -30,14 +30,14 @@ float MotionCtrl_GetSelectorMetric(C5Motion* m, void* arg); /* gsynth: defined b
 #pragma opt_strength_reduction off
 #pragma opt_rotateloops off
 extern "C" {
-void Resource_Construct(void* s);
-void FileMan_Release(void* s, int flag);
+void cFileMan_ctor_void(void* s);
+void cFileMan_dtor(void* s, int flag);
 #if 0 /* merge_units */
 void* cFileMan_opAssign(void* d, const void* s);
 #endif /* merge_units */
 #define cFileMan_opAssign(a0, a1) ((void *)cFileMan_opAssign((S_198760 *)(a0), (S_198760 *)(a1))) /* merge_units */
 
-void Vec4_Copy(void* d, const void* s);
+void cVector_opAssign(void* d, const void* s);
 }
 struct FStr {
     int a; char d[0x98];
@@ -48,7 +48,7 @@ struct HObj { int q[3]; int id; };
 static inline int& Neg1(int& d) { d = -1; return d; }
 struct V4 {
     float x, y, z, w;
-    V4& operator=(const V4& o) { Vec4_Copy(this, &o); return *this; }
+    V4& operator=(const V4& o) { cVector_opAssign(this, &o); return *this; }
 } __attribute__((aligned(16)));
 struct VP { HObj* a; H b; void Set(HObj* o) { a = o; int d; b.v = *(o ? &o->id : (d = -1, &d)); } void Clear() { Set(0); } };
 static inline __int128 Dup(int v) { __int128 r; __asm__ volatile("pcpyld %0, %1, %1" : "=r"(r) : "r"(v)); return r; }
@@ -56,7 +56,7 @@ static inline HObj* NullObj() { return 0; }
 
 
 struct SReq;
-extern "C" void SoundRequest_Ctor(SReq* r, int type, char* name, int voice, int x180);
+extern "C" void cSndFx_ctor_int_charP_cGOBJP_int(SReq* r, int type, char* name, int voice, int x180);
 struct SReq {
     int id;
     __int128 mask;
@@ -74,8 +74,8 @@ struct SReq {
         SReq* p = this;
         p->f20.b.v = -2;
         p->f20.a = (HObj*)0;
-        Resource_Construct(&p->s48);
-        Resource_Construct(&p->sE4);
+        cFileMan_ctor_void(&p->s48);
+        cFileMan_ctor_void(&p->sE4);
         HObj* o = 0;
         int none = -1;
         p->id = none;
@@ -88,8 +88,8 @@ struct SReq {
         p->x180 = 0;
         p->x186 = 0;
     }
-    SReq(int type, char* name, int voice, int x) { SoundRequest_Ctor(this, type, name, voice, x); }
-    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~SReq() { FileMan_Release(&sE4, -1); FileMan_Release(&s48, -1); }
+    SReq(int type, char* name, int voice, int x) { cSndFx_ctor_int_charP_cGOBJP_int(this, type, name, voice, x); }
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~SReq() { cFileMan_dtor(&sE4, -1); cFileMan_dtor(&s48, -1); }
 };
 struct SEv {
     void* vt;
@@ -165,20 +165,20 @@ extern int g_NoneWord;
 extern char D_004DAE30[];
 extern char g_Game[];
 int MotionCtrl_IsSelectorPlaying(void* ctrl, Key* k);
-float Actor_GetGaitPhase(void* ctrl, Key* k);
+float cSkaParams_GetPlaybackWeight(void* ctrl, Key* k);
 #if 0 /* merge_units */
 float MotionCtrl_GetSelectorMetric(void* ctrl, Key* k);
 #endif /* merge_units */
 #define MotionCtrl_GetSelectorMetric(a0, a1) (MotionCtrl_GetSelectorMetric((C5Motion *)(a0), (void *)(a1))) /* merge_units */
 
-void Actor_SurfaceSoundEffects(ActorX* a, int foot, int force);
+void cHuman_HandleFootstepEvent(ActorX* a, int foot, int force);
 float Secondary_MotionPhase(void* sec, const Str48* name);
-void WeaponInv_LaunchProjectile(int weapon, int* target, int* b, float speed);
-void Actor_InfraredSwitch(ActorX* a, unsigned char on);
-void* Object_LookupById(int* id);
+void cWeapon_Throw(int weapon, int* target, int* b, float speed);
+void cHuman_EquipGoggles(ActorX* a, unsigned char on);
+void* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
 void Melee_ApplyHit(int weapon, void* obj, int c);
-void SoundEvent_CtorFromPreset(SEv* e, SReq* r, ActorX* a);
-void Event_Send(SEv* e, char* tgt, int n);
+void cPlaySoundMsg_ctor_cSndFxR(SEv* e, SReq* r, ActorX* a);
+void QueueMessage_cMessageR_cSystemP_int(SEv* e, char* tgt, int n);
 void cMessage_dtor(SEv* e, int flag);
 }
 static inline bool HasCtl(ActorX* a) { Ctl* c = a->ctl; bool r = 0; if (c) { if (c->dd) { r = 1; asm { .set reorder } } } return r; }
@@ -187,15 +187,15 @@ static inline void* Ctrl(ActorX* a) { return (char*)a + 0x2ED0; }
 static inline void PlayEv(SReq* r, ActorX* a, int now)
 {
     SEv ev;
-    SoundEvent_CtorFromPreset(&ev, r, a);
+    cPlaySoundMsg_ctor_cSndFxR(&ev, r, a);
     ev.flag = 1;
-    Event_Send(&ev, g_Game, now);
+    QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, now);
     ev.vt = D_004DAE30;
-    FileMan_Release(&ev.s114, -1);
-    FileMan_Release(&ev.s78, -1);
+    cFileMan_dtor(&ev.s114, -1);
+    cFileMan_dtor(&ev.s78, -1);
     cMessage_dtor(&ev, 0);
 }
-extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
+extern "C" void cHuman_DetectForAnimationEvents(ActorX* a)
 {
     Key k1(0);
     Key k2(5);
@@ -204,7 +204,7 @@ extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
     if (MotionCtrl_IsSelectorPlaying(root + 0x10, &k1) && HasCtl(a)) {
         float p1;
         float h;
-        float ph = Actor_GetGaitPhase(root + 0x10, &k1);
+        float ph = cSkaParams_GetPlaybackWeight(root + 0x10, &k1);
         int foot;
         if (a->b3260 == 1) {
             float o = 0.325f; ph += o;
@@ -225,7 +225,7 @@ extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
         if ((unsigned char)foot) {
             a->foot = foot;
             if (!(MotionCtrl_GetSelectorMetric(root + 0x10, &k1) <= 0.5f))
-                Actor_SurfaceSoundEffects(a, foot, 0);
+                cHuman_HandleFootstepEvent(a, foot, 0);
         }
         a->phase1 = ph;
     } else {
@@ -234,7 +234,7 @@ extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
     if (MotionCtrl_IsSelectorPlaying(root + 0x10, &k2)) {
         float p2;
         float t;
-        float ph = Actor_GetGaitPhase(root + 0x10, &k2);
+        float ph = cSkaParams_GetPlaybackWeight(root + 0x10, &k2);
         p2 = a->phase2; t = 0.11f; if (p2 < t && !(ph < t)) goto hit;
         p2 = a->phase2; t = 0.3f; if (p2 < t && !(ph < t)) goto hit;
         p2 = a->phase2; t = 0.46f; if (p2 < t && !(ph < t)) goto hit;
@@ -254,38 +254,38 @@ extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
     }
     if (snd) {
         SEv ev;
-        SoundEvent_CtorFromPreset(&ev, snd, a);
+        cPlaySoundMsg_ctor_cSndFxR(&ev, snd, a);
         int now = 1;
         ev.flag = now;
-        Event_Send(&ev, g_Game, now);
+        QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, now);
         ev.vt = D_004DAE30;
-        FileMan_Release(&ev.s114, -1);
-        FileMan_Release(&ev.s78, -1);
+        cFileMan_dtor(&ev.s114, -1);
+        cFileMan_dtor(&ev.s78, -1);
         cMessage_dtor(&ev, 0);
     }
     if (a->sec && a->st33E4 == 1) {
         float t = Secondary_MotionPhase(a->sec, &Str48(D_0049E000));
         if (t != -1.0f) {
             if (!(t <= D_0048A250)) {
-                WeaponInv_LaunchProjectile(a->weapon, &a->target, &a->x33D0, a->speed);
+                cWeapon_Throw(a->weapon, &a->target, &a->x33D0, a->speed);
                 a->target = g_NoneWord;
                 a->st33E4 = 2;
             }
         } else {
             t = Secondary_MotionPhase(a->sec, &Str48(D_0049DFE0));
             if (t != -1.0f && !(t <= D_0048A250)) {
-                WeaponInv_LaunchProjectile(a->weapon, &a->target, &a->x33D0, D_0048A280);
+                cWeapon_Throw(a->weapon, &a->target, &a->x33D0, D_0048A280);
                 a->target = g_NoneWord;
                 a->st33E4 = 2;
                 {
                     SReq r(1, D_0049E060, 0, 0);
                     SEv ev;
-                    SoundEvent_CtorFromPreset(&ev, &r, a);
+                    cPlaySoundMsg_ctor_cSndFxR(&ev, &r, a);
                     ev.flag = 1;
-                    Event_Send(&ev, g_Game, 0);
+                    QueueMessage_cMessageR_cSystemP_int(&ev, g_Game, 0);
                     ev.vt = D_004DAE30;
-                    FileMan_Release(&ev.s114, -1);
-                    FileMan_Release(&ev.s78, -1);
+                    cFileMan_dtor(&ev.s114, -1);
+                    cFileMan_dtor(&ev.s78, -1);
                     cMessage_dtor(&ev, 0);
                 }
             }
@@ -294,7 +294,7 @@ extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
     if (a->sec && a->st33E5 == 1) {
         float t = Secondary_MotionPhase(a->sec, &Str48(D_0049E070));
         if (t != -1.0f && !(t <= D_0048A258)) {
-            Actor_InfraredSwitch(a, a->ir33E6);
+            cHuman_EquipGoggles(a, a->ir33E6);
             a->st33E5 = 2;
         }
     }
@@ -302,7 +302,7 @@ extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
         float t = Secondary_MotionPhase(a->sec, &Str48(D_0049DFC8));
         if (t != -1.0f) {
             if (!(t <= D_0048A260)) {
-                void* o = Object_LookupById(&a->target);
+                void* o = nGobjManager_LookupGOBJ_cObjectIdR(&a->target);
                 if (o)
                     Melee_ApplyHit(a->weapon, o, 0);
                 a->st33E8 = 2;
@@ -310,7 +310,7 @@ extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
         } else {
             t = Secondary_MotionPhase(a->sec, &Str48(D_0049DFB8));
             if (t != -1.0f && !(t <= D_0048A270)) {
-                void* o = Object_LookupById(&a->target);
+                void* o = nGobjManager_LookupGOBJ_cObjectIdR(&a->target);
                 if (o)
                     Melee_ApplyHit(a->weapon, o, 0);
                 a->st33E8 = 2;

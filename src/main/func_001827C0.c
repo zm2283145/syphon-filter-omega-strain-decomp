@@ -17,11 +17,11 @@ typedef struct E3CgObj { int unk0; E3CgHolder* holder; } E3CgObj;
 
 extern int cCollisionModel_Data_GetTreeRootNode(E3CgTree* t);
 extern int cCollisionModel_Data_GetTreeSoleLeaf(E3CgTree* t);
-extern void ColTree_VisitNode(E3CgTree* t, E3CgQuery* q, int node, int arg);
-extern void ColTree_VisitLeaf(E3CgTree* t, E3CgQuery* q, int leaf, int arg);
+extern void cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeNodeR_cBoxR(E3CgTree* t, E3CgQuery* q, int node, int arg);
+extern void cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeLeafR_cBoxR(E3CgTree* t, E3CgQuery* q, int leaf, int arg);
 
 /* Gathers collision from an 'F' tree, by node or by leaf. */
-void ColGather_GatherWrapper(E3CgObj* obj, E3CgVec* pos, int arg) {
+void cCollisionModel_GetNearFaces_cCollisionFaceCollector_cBoxR(E3CgObj* obj, E3CgVec* pos, int arg) {
     E3CgQuery query;
     E3CgTree* tree;
     query.pos = *pos;
@@ -29,9 +29,9 @@ void ColGather_GatherWrapper(E3CgObj* obj, E3CgVec* pos, int arg) {
     tree = obj->holder->tree;
     if (tree->kind == 0x46) {
         if (tree->nodeCount > 0) {
-            ColTree_VisitNode(tree, &query, cCollisionModel_Data_GetTreeRootNode(tree), arg);
+            cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeNodeR_cBoxR(tree, &query, cCollisionModel_Data_GetTreeRootNode(tree), arg);
         } else {
-            ColTree_VisitLeaf(tree, &query, cCollisionModel_Data_GetTreeSoleLeaf(tree), arg);
+            cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelTreeLeafR_cBoxR(tree, &query, cCollisionModel_Data_GetTreeSoleLeaf(tree), arg);
         }
     }
 }

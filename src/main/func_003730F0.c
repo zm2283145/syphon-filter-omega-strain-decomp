@@ -16,16 +16,16 @@ typedef struct Pt1LcGather {
     int count;
     Pt1LcList* list;
 } Pt1LcGather;
-extern void Sphere_FromCenter(Pt1LcVec* out, Pt1LcVec* a, Pt1LcVec* b);
-extern void Vec4_Assign(Pt1LcVec* out, Pt1LcVec* src);
-extern void Vec4_NormalizeXYZ_132060(Pt1LcVec* out, Pt1LcVec* src);
-extern float Vec4_Dot3(Pt1LcVec* a, Pt1LcVec* b);
+extern void cVector_opSub(Pt1LcVec* out, Pt1LcVec* a, Pt1LcVec* b);
+extern void cVector_ctor_cVectorR(Pt1LcVec* out, Pt1LcVec* src);
+extern void cVector_GetNormalized_void(Pt1LcVec* out, Pt1LcVec* src);
+extern float cVector_Dot(Pt1LcVec* a, Pt1LcVec* b);
 extern float cSceneLight_GetFalloffAngleCos(void* light);
 extern Pt1LcVec* cSceneLight_GetDirection(void* light);
 extern float func_00372AE0(void* light);
 extern float cVector_GetLengthSquared(Pt1LcVec* v);
 
-void LightMgr_TestPointSpot(Pt1LcGather* g, Pt1LcEntry* e, Pt1LcVec* pos)
+void cLightMan_AddLightScore(Pt1LcGather* g, Pt1LcEntry* e, Pt1LcVec* pos)
 {
     Pt1LcVec dir;
     Pt1LcVec n;
@@ -37,7 +37,7 @@ void LightMgr_TestPointSpot(Pt1LcGather* g, Pt1LcEntry* e, Pt1LcVec* pos)
     void* light;
 
     if (e->flags & 0x14) {
-        Sphere_FromCenter(&d, pos, &e->pos);
+        cVector_opSub(&d, pos, &e->pos);
         key = cVector_GetLengthSquared(&d);
         if (key < e->range * e->range) {
             ok = 1;
@@ -45,11 +45,11 @@ void LightMgr_TestPointSpot(Pt1LcGather* g, Pt1LcEntry* e, Pt1LcVec* pos)
             if (e->flags == 0x10) {
                 light = e->light;
                 if (func_00372AE0(light) != 1.0f) {
-                    Vec4_Assign(&dir, cSceneLight_GetDirection(light));
-                    Sphere_FromCenter(&v, &e->pos, pos);
-                    Vec4_NormalizeXYZ_132060(&n, &v);
+                    cVector_ctor_cVectorR(&dir, cSceneLight_GetDirection(light));
+                    cVector_opSub(&v, &e->pos, pos);
+                    cVector_GetNormalized_void(&n, &v);
                     outer = 1.0f - cSceneLight_GetFalloffAngleCos(light);
-                    if (!(1.0f - Vec4_Dot3(&dir, &n) <= outer))
+                    if (!(1.0f - cVector_Dot(&dir, &n) <= outer))
                         ok = 0;
                 }
             }

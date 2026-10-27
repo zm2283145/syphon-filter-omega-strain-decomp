@@ -77,9 +77,9 @@ void std_tree_pair_int_value_compare_begin_void_3(TransferReferenceIterator* res
 
 TransferReferenceIterator std_map_int_tNetActivateTerrainObjectPtr_end(RbTree* tree);
 void cAssocArray_int_tNetActivateTerrainObjectPtr_Iterator_ctor(TransferReferenceIterator* result, const TransferReferenceIterator& source);
-void Tree_Successor(TransferReferenceIterator* position);
+void std_red_black_tree_1_increment(TransferReferenceIterator* position);
 void std_tree_pair_int_value_compare_erase_tree_4(RbTree* tree, TransferReferenceIterator* position);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void func_0042CF30(void);
 }
 
@@ -143,7 +143,7 @@ extern "C" void cNetObjectMgr_NextFrame(void)
     while (reference_end(&end),
            node = position.node, (node == end.node) ^ 1) {
         object = referenced_object(node->reference);
-        Tree_Successor(&position);
+        std_red_black_tree_1_increment(&position);
         if (object) {
             if (!transfer_active(object) && object->attached &&
                 controller(object)->transfer_mode() == 2 &&
@@ -151,7 +151,7 @@ extern "C" void cNetObjectMgr_NextFrame(void)
                 TransferReference* reference = node->reference;
                 {
                     AllocGuard guard;
-                    Mem_Free(0, reference, D_004BFB00, 0x40);
+                    cMemMan_Deallocate(0, reference, D_004BFB00, 0x40);
                 }
                 erase_reference(node);
             }
@@ -159,7 +159,7 @@ extern "C" void cNetObjectMgr_NextFrame(void)
             TransferReference* reference = node->reference;
             {
                 AllocGuard guard;
-                Mem_Free(0, reference, D_004BFB00, 0x4A);
+                cMemMan_Deallocate(0, reference, D_004BFB00, 0x4A);
             }
             erase_reference(node);
         }
@@ -197,25 +197,25 @@ template <class Node> static inline void find_id(Node** result, RbTree* tree,
 }
 
 /* Find an exact object-map ID, returning the map's sentinel when absent. */
-extern "C" void ObjMap_Find_42EDF0(TransferObjectIterator* result, RbTree* tree, const GobjId* id)
+extern "C" void std_tree_pair_int_value_compare_find_intR_3(TransferObjectIterator* result, RbTree* tree, const GobjId* id)
 {
     find_id(&result->node, tree, id);
 }
 
 /* Find an exact pending-message ID, returning the map's sentinel when absent. */
-extern "C" void ObjMap_Find_42EE70(PendingTransferIterator* result, RbTree* tree, const GobjId* id)
+extern "C" void std_tree_pair_int_value_compare_find_uintR(PendingTransferIterator* result, RbTree* tree, const GobjId* id)
 {
     find_id(&result->node, tree, id);
 }
 
 /* Find an exact registered-reference ID, returning the map's sentinel when absent. */
-extern "C" void ObjMap_Find_42EEF0(TransferReferenceIterator* result, RbTree* tree, const GobjId* id)
+extern "C" void std_tree_pair_int_value_compare_find_uintR_2(TransferReferenceIterator* result, RbTree* tree, const GobjId* id)
 {
     find_id(&result->node, tree, id);
 }
 
 /* Find an exact timer ID, returning the map's sentinel when absent. */
-extern "C" void ObjMap_Find_42EF70(TransferTimerIterator* result, RbTree* tree, const GobjId* id)
+extern "C" void std_tree_pair_int_value_compare_find_uintR_3(TransferTimerIterator* result, RbTree* tree, const GobjId* id)
 {
     find_id(&result->node, tree, id);
 }

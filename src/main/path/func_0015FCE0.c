@@ -1,6 +1,6 @@
 #pragma opt_propagation off
 #include "types.h"
-/* NpcPath_GetHeight: height along the current path segment (node height, interpolated, or clamped) */
+/* cPathNavigator_PathFloorZ: height along the current path segment (node height, interpolated, or clamped) */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) Pt1PhV4;
 typedef struct Pt1PhPath {
     char pad0[0x8];
@@ -15,17 +15,17 @@ typedef struct Pt1PhPath {
     int segB;
     int segA;
 } Pt1PhPath;
-extern void* NpcPath_GetNode(int node);
-extern void Node_GetTranslation(Pt1PhV4* out, void* node);
+extern void* cAIPathData_GetNode(int node);
+extern void cNode_GetLoc(Pt1PhV4* out, void* node);
 static inline float Pt1Ph_Min(float a, float b) { float r; asm { min.s r, a, b } return r; }
 #pragma fp_contract off
 static inline float Mul(float x,float y) {return x*y;}
-float NpcPath_GetHeight(Pt1PhPath* p, int clamp, int useNode)
+float cPathNavigator_PathFloorZ(Pt1PhPath* p, int clamp, int useNode)
 {
     float r;
     if (p->node >= 0 && !useNode) {
         Pt1PhV4 v;
-        Node_GetTranslation(&v, NpcPath_GetNode(p->node));
+        cNode_GetLoc(&v, cAIPathData_GetNode(p->node));
         r = v.z;
     } else if (p->segA >= 0 && p->segB >= 0) {
         float d;

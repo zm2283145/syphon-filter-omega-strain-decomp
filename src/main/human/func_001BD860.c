@@ -2,4 +2,4 @@
 #include "word_vector_erase.h"
 
 /* Erase a range from a vector of 4-byte elements. */
-DEFINE_WORD_VECTOR_ERASE(PtrVector_Erase)
+DEFINE_WORD_VECTOR_ERASE(std_vector_pod_int_erase)

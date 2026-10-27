@@ -15,7 +15,7 @@ struct XformNode {
 };
 
 /* Brings the cached transform up to date (virtual +0x58) if dirty and returns it. */
-extern "C" void* Transform_GetUpdated(XformNode* self)
+extern "C" void* cXform_GetMatrix(XformNode* self)
 {
     if (self->dirty)
         self->Update();

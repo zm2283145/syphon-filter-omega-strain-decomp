@@ -12,7 +12,7 @@ extern signed char* D_005061D0;
 extern int D_004EF038;
 
 /* Serialize: write the one-byte payload. */
-void cNetForceHolsterMsg_v04(FlagMsg* msg) {
+void cNetForceHolsterMsg_Pack(FlagMsg* msg) {
     *D_005061D0 = msg->value;
     D_005061D0 = D_005061D0 + 1;
 }

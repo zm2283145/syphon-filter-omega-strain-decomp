@@ -43,7 +43,7 @@ void cNPCInfoObject_dtor(int* t, int f);
 }
 static inline unsigned char G2IsA(G2Gen157* g) { unsigned char r = 0; if (g->sub && g->sub->IsA()) r = 1; return r; }
 static inline unsigned char G2IsB(G2Gen157* g) { unsigned char r = 0; if (g->sub && g->sub->IsB()) r = 1; return r; }
-extern "C" void cNPC_Deactivate(G2Npc157* n, G2Gen157* g)
+extern "C" void cNPC_Deactivate_cGOBJP(G2Npc157* n, G2Gen157* g)
 {
     if (n->dead) return;
     if (g_IsMultiplayer) {
@@ -81,12 +81,12 @@ extern char D_00572198[];
 extern char D_00582760[];
 extern char D_004E0E80[];
 extern char D_004E0F00[];
-void NpcAi_GetPlayerRecord(void* self, int a, int b);
-void NetGame_InitLocalSlot(int* p, int v);
-void NetObjectMgr_Remove(void* o);
+void cNPC_SetEnabled(void* self, int a, int b);
+void NetGetMyClientIndex(int* p, int v);
+void cNetObjectMgr_RemoveFromTerrainActivation(void* o);
 void cDeactivateMsg_SendDeactivated(void* m, int a, int b);
-void Event_Construct(void* m, void* type);
-void Transport_Send(int a, void* m, int b, int c);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void cNetObj_SendMessage_int_cMessageR_int_int(int a, void* m, int b, int c);
 void cMessage_dtor(void* m, int f);
 }
 class Body_7510 {
@@ -108,38 +108,38 @@ static inline int LocalId_7510(void)
     int a = D_005721A8;
     if (g_IsMultiplayer) {
         if (D_00494178 == -1)
-            NetGame_InitLocalSlot(&D_00494178, a);
+            NetGetMyClientIndex(&D_00494178, a);
         return D_00494178;
     }
     return 0;
 }
 static inline bool CanActivate_7510(Body_7510* b) { return b->b2D && b->b2C && !b->b2E; }
-extern "C" void NpcAi_DeactivateAnon(Npc_7510* self)
+extern "C" void cNPC_DeactivateGlobal(Npc_7510* self)
 {
     Body_7510* b;
     int i;
     unsigned char* p;
-    NpcAi_GetPlayerRecord(self, -1, 0);
+    cNPC_SetEnabled(self, -1, 0);
     b = self->body;
     if (CanActivate_7510(b))
         b->SetActive(1);
-    NetObjectMgr_Remove(self->body);
+    cNetObjectMgr_RemoveFromTerrainActivation(self->body);
     if (!self->body->IsLocal()) {
         for (i = 0, p = D_0055C780; i < 4; i++, p++) {
             if (*p == 2) {
                 if (i != LocalId_7510()) {
                     Msg1_7510 m1;
                     Msg2_7510 m2;
-                    Event_Construct(&m1, D_00572198);
+                    cMessage_ctor_cMessageNameR(&m1, D_00572198);
                     m1.vt = D_004E0E80;
                     cDeactivateMsg_SendDeactivated(&m1, self->body->cC, i);
                     m1.vt = D_004E0E80;
                     cMessage_dtor(&m1, 0);
-                    Event_Construct(&m2, D_00582760);
+                    cMessage_ctor_cMessageNameR(&m2, D_00582760);
                     m2.vt = D_004E0F00;
                     m2.f24 = -1;
                     m2.b28 = 1;
-                    Transport_Send(self->body->cC, &m2, -1, i);
+                    cNetObj_SendMessage_int_cMessageR_int_int(self->body->cC, &m2, -1, i);
                     m2.vt = D_004E0F00;
                     cMessage_dtor(&m2, 0);
                 }

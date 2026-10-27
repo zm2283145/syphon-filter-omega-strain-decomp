@@ -25,7 +25,7 @@ typedef struct cTimerExpiredMsg {
     int timerId;                    /* 0x24 nonzero when the timer is personal */
 } cTimerExpiredMsg;
 
-/* Base component (constructor Component_BaseInit). */
+/* Base component (constructor cGameGobjController_ctor). */
 typedef struct Component {
     void* vtable;                   /* 0x00 */
     char pad04[0x34];

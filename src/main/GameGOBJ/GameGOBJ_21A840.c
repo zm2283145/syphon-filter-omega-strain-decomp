@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Push the value to the linked target and refresh it. */
-DEFINE_LINKED_TARGET_REFRESH(cGameGOBJ_Draw)
+DEFINE_LINKED_TARGET_REFRESH(cGameGOBJ_Render)
 #pragma pop /* merge_units */
 /* merge_units: end func_0021A840 */
 
@@ -29,6 +29,6 @@ DEFINE_LINKED_TARGET_REFRESH(cGameGOBJ_Draw)
 #pragma cplusplus on
 
 /* Call slot 16 unless the object is active. */
-DEFINE_GOBJ_FLAG_SLOT16(GObj_Tick)
+DEFINE_GOBJ_FLAG_SLOT16(cGameGOBJ_CriticalNextFrame)
 #pragma pop /* merge_units */
 /* merge_units: end func_0021A8C0 */

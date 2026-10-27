@@ -16,9 +16,9 @@ struct Obj_959C0 { char pad0[0xC]; int id; char pad10[0x50 - 0x10]; Elem* elem; 
 struct Ref_959C0 { int kind; int id; char pad08[8]; Plc4 p; };
 
 extern "C" {
-void Mtx_InvertRigid_13ECA0(Mtx* d, Mtx* s);
-Plc4* VecPair_Copy(Plc4* d, const Plc4* s);
-Plc4* Placement_Compose(Plc4* a, Plc4* b);
+void cMatrix_Copy_InvertRotTrans(Mtx* d, Mtx* s);
+Plc4* cQuatVec_ctor_cQuatVecR(Plc4* d, const Plc4* s);
+Plc4* cQuatVec_Transform(Plc4* a, Plc4* b);
 }
 
 static inline Plc4* MtxToPlc(Mtx* m, Plc4* out) {
@@ -146,7 +146,7 @@ static inline Plc4* MtxToPlc(Mtx* m, Plc4* out) {
 
 
 static inline void Q16b(void* d0, const void* s0) { const void* s = s0; void* d = d0; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
-extern "C" Ref_959C0* Ledge_ToObjectPlacement(Ref_959C0* out, int kind, Plc4* in, Obj_959C0* obj)
+extern "C" Ref_959C0* cInteractParams_ctor_int_cQuatVecR_cGOBJP(Ref_959C0* out, int kind, Plc4* in, Obj_959C0* obj)
 {
     Elem* e;
     Plc4* src;
@@ -167,9 +167,9 @@ extern "C" Ref_959C0* Ledge_ToObjectPlacement(Ref_959C0* out, int kind, Plc4* in
         if (e->b50) {
             e->Sync();
         }
-        Mtx_InvertRigid_13ECA0(&inv, &e->m);
+        cMatrix_Copy_InvertRotTrans(&inv, &e->m);
         MtxToPlc(&inv, &pl);
-        VecPair_Copy(&res, Placement_Compose(VecPair_Copy(&t, in), &pl));
+        cQuatVec_ctor_cQuatVecR(&res, cQuatVec_Transform(cQuatVec_ctor_cQuatVecR(&t, in), &pl));
         src = &res;
     } else {
         src = in;

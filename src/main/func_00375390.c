@@ -14,7 +14,7 @@ typedef struct {
 extern int D_00539254;
 extern float D_0053824C;
 extern float D_00538250;
-void Renderer_OrthoCameraProjection(Cam375* c) {
+void cXViewport_BuildOrtho(Cam375* c) {
     float sx = 2.0f * ((D_00539254 != -1) ? 1.0f : D_0053824C);
     float sy = 2.0f * ((D_00539254 != -1) ? 1.0f : D_00538250);
     c->m[0][0] = sx / c->width;

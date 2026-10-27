@@ -9,7 +9,7 @@ extern void std_list_cTargetAwarenessPtr_end_void(E_C590* out, void* map);
 extern void std_list_cTargetAwarenessPtr_begin(E_C590* out, void* map);
 extern void cLListIterator_cTargetAwarenessPtr_ctor(It_C590* out, E_C590* in);
 /* Clears the "seen" flag of every record (or only of the records targeting who). */
-void NpcPerception_ResendAwareness(Own_C590* self, Tgt_C590* who)
+void cAITarget_ResendNewAwarenessMessage(Own_C590* self, Tgt_C590* who)
 {
     It_C590 it;
     It_C590 b;

@@ -22,8 +22,8 @@ static inline V4* NormXYZ_(V4* v, float* len) {
     *(int*)len = t;
     return v;
 }
-extern "C" void Vec4_NormalizeXYZ_Div(V4* out, V4* in, float* len);
-void Vec4_NormalizeXYZ_Div(V4* out, V4* in, float* len)
+extern "C" void cVector_GetNormalized_floatR(V4* out, V4* in, float* len);
+void cVector_GetNormalized_floatR(V4* out, V4* in, float* len)
 {
     V4 t;
     V4* p = &t;

@@ -22,7 +22,7 @@ extern "C" {
 static const unsigned int dat_0048A320[2] = { 0x1, 0x0 };
 static const unsigned int dat_0048A328[2] = { 0 };
 int std_basic_string_char_char_traits_char_compare_basicstringR(const K1C4770* a, const K1C4770* b);
-N1C4770* Tree_Insert_1C4F20(T1C4770* t, N1C4770* parent, bool left, bool leftmost, const K1C4770* k); }
+N1C4770* std_tree_pair_cString_value_compare_insert_node_at_nodeP_bool_bool_pairR_2(T1C4770* t, N1C4770* parent, bool left, bool leftmost, const K1C4770* k); }
 static inline int K1C4770_less(const K1C4770* a, const K1C4770* b) { int r = std_basic_string_char_char_traits_char_compare_basicstringR(a, b) < 0; return r; }
 extern "C" void std_tree_pair_cString_value_compare_insert_one_pairR_2(R1C4770* out, T1C4770* t, const K1C4770* k)
 {
@@ -50,7 +50,7 @@ extern "C" void std_tree_pair_cString_value_compare_insert_one_pairR_2(R1C4770* 
         }
     }
     if (j == 0 || K1C4770_less(&j->key, k)) {
-        out->node = Tree_Insert_1C4F20(t, y, left, leftmost, k);
+        out->node = std_tree_pair_cString_value_compare_insert_node_at_nodeP_bool_bool_pairR_2(t, y, left, leftmost, k);
         out->inserted = (*(unsigned char*)dat_0048A320);
     } else {
         out->node = j;

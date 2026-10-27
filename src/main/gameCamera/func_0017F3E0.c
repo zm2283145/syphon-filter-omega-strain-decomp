@@ -6,7 +6,7 @@ struct Crv_F3E0 { Key_F3E0 k[2]; float dur; float inv; };
 /* constant curve: both keys = (*a, *b * dur), store duration and its inverse */
 #pragma push
 #pragma opt_unroll_loops off
-extern "C" Crv_F3E0* Curve_InitConstant(Crv_F3E0* c, float* a, float* b, float dur)
+extern "C" Crv_F3E0* cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_float(Crv_F3E0* c, float* a, float* b, float dur)
 {
     float va = *a; float vs = *b * dur;
     { Key_F3E0* e = c->k; do { new (e) Key_F3E0; } while (++e != c->k + 2); }

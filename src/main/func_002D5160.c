@@ -33,34 +33,34 @@ struct Self {
 struct Msg : CMsg { unsigned char b24; char p25[0xB]; char data[0x40]; };
 struct CV : V4 { CV(float a, float b, float c) { x = a; y = b; z = c; w = 1.0f; } };
 struct FMsg : CMsg { unsigned char b24; char p25[3]; int x28;
-    FMsg() { FMsg* f = this; Event_Construct(f, D_004EE550); f->vtable = D_004D9340; f->b24 = 2; f->x28 = -1; }
+    FMsg() { FMsg* f = this; cMessage_ctor_cMessageNameR(f, D_004EE550); f->vtable = D_004D9340; f->b24 = 2; f->x28 = -1; }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~FMsg() { vtable = D_004D9340; cMessage_dtor(this, 0); } };
 extern "C" {
 
-Obj* Object_LookupById(int*);
-Ctl* AiController_GetActor(Self*);
-int Weapon_CanAttack(Inv*);
+Obj* nGobjManager_LookupGOBJ_cObjectIdR(int*);
+Ctl* cNPC_Human(Self*);
+int cWeapon_Ready(Inv*);
 void cNetNPC_AimFireWeapon(Self*, Obj*);
-float Vec4_GetX(V4*);
-float Vec4_GetY(V4*);
-float Vec4_GetZ(V4*);
-void Mtx_MakeAxisRotation(M4*, float, float, float, float);
-V4 Node_GetTranslation(PNode*);
-int TeleportMsg_IsMode3(Msg* m);
+float cVector_X_void(V4*);
+float cVector_Y_void(V4*);
+float cVector_Z_void(V4*);
+void cMatrix_SetWithAxisAngle(M4*, float, float, float, float);
+V4 cNode_GetLoc(PNode*);
+int cMoveMsg_Template_1_HasDeltaPosition(Msg* m);
 void* func_00133EC0(void* obj);
 void cVector_Copy_WSet0(V4* out, void* v);
-void Vec4_CopyAsPoint(V4* out, void* v);
-void Mtx_SetRotationTranslation(void* data, void* obj, V4* v);
-void NpcPath_HoldAtRouteNode(Path*, int);
-void NpcAi_ModeFollow(Self*, FMsg*);
-M4* Mtx_GetIdentity();
+void cVector_Copy_WSet1(V4* out, void* v);
+void cMatrix_ctor_cMatrixR_cVectorR(void* data, void* obj, V4* v);
+void cPathNavigator_ResolvePathAfterTeleport(Path*, int);
+void cNPC_Follow_cMessageR(Self*, FMsg*);
+M4* cMatrix_GetUnit();
 int cPathNavigator_GetRelativePathPosition(Path*, int);
-PNode* NpcPath_GetNode(int);
+PNode* cAIPathData_GetNode(int);
 void cNetObjectMgr_TerrainActivation(Obj*);
-void NpcThinkList_RemoveActor(Obj*);
-void NpcAi_AddToDeadList(void*, Self**);
+void cNPC_RemoveFromActiveList(Obj*);
+void std_list_cNPCPtr_push_back(void*, Self**);
 int Npc_IsDeadRemovalAllowed(Self*);
-void NpcAi_RunLocomotion(Self*);
+void cNPC_UpdateMovement(Self*);
 Word* cLListIterator_cNPCPtr_ctor_listR(Word* dst, Word* src);
 void std_list_cNPCPtr_end(Iter* out, void* v);
 Word* cLListIterator_cNPCPtr_ctor_cLListIteratorR(Word* dst, Word* src);
@@ -100,7 +100,7 @@ static inline int IsZero(V4* v) {
     }
     return r;
 }
-/* the sw stays in the asm: retail stores through a register len pointer (as in Projectile_SolveBallistic.c) */
+/* the sw stays in the asm: retail stores through a register len pointer (as in nPhysics_CalculateInitialVelocityForTrajectory.c) */
 static inline void Normalize(float* len, V4* v) {
     int t;
     __asm__ volatile("lqc2 $vf1, 0x0(%1); vmul.xyz $vf2, $vf1, $vf1; vmulax.w $ACC, $vf0, $vf2x; vmadday.w $ACC, $vf0, $vf2y; vmaddz.w $vf3, $vf0, $vf2z; vsqrt $Q, $vf3w; vwaitq; vaddq.x $vf4, $vf0, $Q; vdiv $Q, $vf0w, $vf4x; vwaitq; vmulq.xyz $vf1, $vf1, $Q; sqc2 $vf1, 0x0(%1); qmfc2.ni %0, $vf4; sw %0, 0(%2)" : "=&r"(t) : "r"(v), "r"(len) : "memory");
@@ -113,7 +113,7 @@ static inline float Len(V4* a) {
 static inline const V4* Ad(const V4& v) { return &v; }
 static inline const M4* AdM(const M4& v) { return &v; }
 static inline void SetT(M4* m, const V4& v) { V4_Copy(&m->r[3], &v); }
-static inline void SetTgtPos(Self* s, const V4& v) { Tgt* t2 = AiController_GetActor(s)->tgt; t2->px = v.x; t2->py = v.y; t2->pz = v.z; }
+static inline void SetTgtPos(Self* s, const V4& v) { Tgt* t2 = cNPC_Human(s)->tgt; t2->px = v.x; t2->py = v.y; t2->pz = v.z; }
 inline V4& V4::operator-=(const V4& o) { V4* d = this; V4* a = this; Sub(d, a, (V4*)&o); return *this; }
 static inline bool Idle(Obj* o) { return !(o->b2E != 0); }
 static inline bool Active(Obj* o) { bool b = 0; bool a = 0; if (o->b2D && o->b2C) a = 1; if (a && Idle(o)) b = 1; return b; }
@@ -125,9 +125,9 @@ static inline bool NodeActive(PNode* n) { Obj* o = n->obj; bool r = 0; if (o) { 
 
 
 
-static inline void SetMtx(Msg* m, M4* mtx) { V4 a2; V4 b2; V4* v; if (TeleportMsg_IsMode3(m)) { cVector_Copy_WSet0(&a2, func_00133EC0(mtx)); v = &a2; } else { Vec4_CopyAsPoint(&b2, func_00133EC0(mtx)); v = &b2; } Mtx_SetRotationTranslation(m->data, mtx, v); }
-static inline void SetPt(Msg* m, M4* id, V4* p) { V4 pt; Vec4_CopyAsPoint(&pt, p); Mtx_SetRotationTranslation(m->data, id, &pt); }
-static inline void MakeRot(M4* m, const V4& ax, float a) { Mtx_MakeAxisRotation(m, Vec4_GetX((V4*)&ax), Vec4_GetY((V4*)&ax), Vec4_GetZ((V4*)&ax), a); }
+static inline void SetMtx(Msg* m, M4* mtx) { V4 a2; V4 b2; V4* v; if (cMoveMsg_Template_1_HasDeltaPosition(m)) { cVector_Copy_WSet0(&a2, func_00133EC0(mtx)); v = &a2; } else { cVector_Copy_WSet1(&b2, func_00133EC0(mtx)); v = &b2; } cMatrix_ctor_cMatrixR_cVectorR(m->data, mtx, v); }
+static inline void SetPt(Msg* m, M4* id, V4* p) { V4 pt; cVector_Copy_WSet1(&pt, p); cMatrix_ctor_cMatrixR_cVectorR(m->data, id, &pt); }
+static inline void MakeRot(M4* m, const V4& ax, float a) { cMatrix_SetWithAxisAngle(m, cVector_X_void((V4*)&ax), cVector_Y_void((V4*)&ax), cVector_Z_void((V4*)&ax), a); }
 extern "C" void cNetNPC_NextFrame(Self* self, float dt)
 {
     float len;
@@ -158,24 +158,24 @@ extern "C" void cNetNPC_NextFrame(Self* self, float dt)
         Obj* o;
         int c;
         id = self->ref->id;
-        tgt = Object_LookupById(&id);
+        tgt = nGobjManager_LookupGOBJ_cObjectIdR(&id);
         o = tgt;
         if (!self->flag->on || (tgt && !Active(tgt)) || Dying(self->obj)) o = 0;
         c = self->ref->c;
-        self->f60(o, CurId(AiController_GetActor(self)->inv), c);
+        self->f60(o, CurId(cNPC_Human(self)->inv), c);
     }
     if (!Dying(self->obj)) {
-        if (Weapon_CanAttack(AiController_GetActor(self)->inv)) {
+        if (cWeapon_Ready(cNPC_Human(self)->inv)) {
             if (self->f88 > 0.0f) self->f88 -= dt;
             if (self->f84 > 0.0f) self->f84 -= dt;
         }
         cNetNPC_AimFireWeapon(self, tgt);
-        if (AiController_GetActor(self)->tgt) {
+        if (cNPC_Human(self)->tgt) {
             Tgt* t;
             float base;
             Ctl* ctl;
             len = 0.0f;
-            t = AiController_GetActor(self)->tgt;
+            t = cNPC_Human(self)->tgt;
             pos.x = t->px;
             pos.y = t->py;
             pos.z = t->pz;
@@ -185,19 +185,19 @@ extern "C" void cNetNPC_NextFrame(Self* self, float dt)
             if (!IsZero(&diff)) Normalize(&len, &diff);
             if (self->bf2) {
                 if (self->node) {
-                    float ang = AiController_GetActor(self)->tgt->ang;
+                    float ang = cNPC_Human(self)->tgt->ang;
                     Msg* m;
                     MakeRot(&mtx, CV(0.0f, 0.0f, 1.0f), ang);
-                    SetT(&mtx, Node_GetTranslation(self->node));
+                    SetT(&mtx, cNode_GetLoc(self->node));
                     m = &msg;
-                    Event_Construct(m, g_TeleportMsgClass);
+                    cMessage_ctor_cMessageNameR(m, g_TeleportMsgClass);
                     m->vtable = D_004D9360;
                     m->b24 = 2;
                     SetMtx(m, &mtx);
                     msg.kind = 1;
-                    Event_Send(&msg, self->obj, 1);
-                    NpcPath_HoldAtRouteNode(self->path, self->x208);
-                    SetTgtPos(self, Node_GetTranslation(self->node));
+                    QueueMessage_cMessageR_cSystemP_int(&msg, self->obj, 1);
+                    cPathNavigator_ResolvePathAfterTeleport(self->path, self->x208);
+                    SetTgtPos(self, cNode_GetLoc(self->node));
                     self->b1EE = 0;
                     msg.vtable = D_004D9360;
                     cMessage_dtor(&msg, 0);
@@ -206,24 +206,24 @@ extern "C" void cNetNPC_NextFrame(Self* self, float dt)
             } else if (self->bf0) {
                 self->b1EE = 1;
                 id2 = self->xF4;
-                Object_LookupById(&id2);
-                NpcAi_ModeFollow(self, (FMsg*)&(const FMsg&)FMsg());
+                nGobjManager_LookupGOBJ_cObjectIdR(&id2);
+                cNPC_Follow_cMessageR(self, (FMsg*)&(const FMsg&)FMsg());
             } else {
                 self->b1EE = 0;
-                if (len > 4.0f && AiController_GetActor(self)->x320C != 0x10 && (self->obj->x38 == 0x80 || HasReady(AiController_GetActor(self)))) {
+                if (len > 4.0f && cNPC_Human(self)->x320C != 0x10 && (self->obj->x38 == 0x80 || HasReady(cNPC_Human(self)))) {
                     Msg* m2;
-                    Tgt* t3 = AiController_GetActor(self)->tgt;
+                    Tgt* t3 = cNPC_Human(self)->tgt;
                     p2.x = t3->px;
                     p2.y = t3->py;
                     p2.z = t3->pz;
                     m2 = &msg2;
-                    Event_Construct(m2, g_TeleportMsgClass);
+                    cMessage_ctor_cMessageNameR(m2, g_TeleportMsgClass);
                     m2->vtable = D_004D9360;
                     m2->b24 = 0;
-                    SetPt(m2, Mtx_GetIdentity(), &p2);
+                    SetPt(m2, cMatrix_GetUnit(), &p2);
                     msg2.kind = 1;
-                    Event_Send(&msg2, self->obj, 1);
-                    NpcPath_HoldAtRouteNode(self->path, self->x208);
+                    QueueMessage_cMessageR_cSystemP_int(&msg2, self->obj, 1);
+                    cPathNavigator_ResolvePathAfterTeleport(self->path, self->x208);
                     self->b1EE = 0;
                     msg2.vtable = D_004D9360;
                     cMessage_dtor(&msg2, 0);
@@ -236,14 +236,14 @@ extern "C" void cNetNPC_NextFrame(Self* self, float dt)
                             self->b1EE = 1;
                         } else if (self->path->x50 >= 0) {
                             V4_Copy(&d, &pos);
-                            d -= Node_GetTranslation(NpcPath_GetNode(self->path->x50));
+                            d -= cNode_GetLoc(cAIPathData_GetNode(self->path->x50));
                             if (Len(&d) > self->path->f40) self->b1EE = 2;
                             else self->b1EE = 1;
                         }
                     }
                 }
             }
-            ctl = AiController_GetActor(self);
+            ctl = cNPC_Human(self);
             base = ctl->tgt ? ctl->tgt->f3C : ctl->f30E0;
             if (self->b1EE == 1) {
                 if (self->f200 < base) self->f200 = base;
@@ -256,7 +256,7 @@ extern "C" void cNetNPC_NextFrame(Self* self, float dt)
             } else {
                 self->f200 = base;
             }
-            if (self->x150 == 0 && !((AiController_GetActor(self)->x3210 >> 22) & 1)) {
+            if (self->x150 == 0 && !((cNPC_Human(self)->x3210 >> 22) & 1)) {
                 if (self->b158 == 0 && !(self->node && NodeActive(self->node))) {
                     if (self->f204 > 1.0f) {
                         self->obj->f60(1);
@@ -284,31 +284,31 @@ extern "C" void cNetNPC_NextFrame(Self* self, float dt)
             cLListIterator_cNPCPtr_ctor_listR(&w3, (Word*)&end2);
             y = w3;
             if (x.value == y.value) {
-                NpcThinkList_RemoveActor(self->obj);
-                NpcAi_AddToDeadList(g_NpcDeadList, &self);
+                cNPC_RemoveFromActiveList(self->obj);
+                std_list_cNPCPtr_push_back(g_NpcDeadList, &self);
             }
-        } else if (AiController_GetActor(self) && AiController_GetActor(self)->tgt) {
-            Tgt* t4 = AiController_GetActor(self)->tgt;
+        } else if (cNPC_Human(self) && cNPC_Human(self)->tgt) {
+            Tgt* t4 = cNPC_Human(self)->tgt;
             pos3.x = t4->px;
             pos3.y = t4->py;
             pos3.z = t4->pz;
             V4_Copy(&diff3, &pos3);
             diff3 -= self->obj->Mtx().T();
             diff3.w = 1.0f;
-            if (Len(&diff3) > 4.0f && self->obj->x38 == 0x80 && !((AiController_GetActor(self)->x3210 >> 22) & 1)) {
+            if (Len(&diff3) > 4.0f && self->obj->x38 == 0x80 && !((cNPC_Human(self)->x3210 >> 22) & 1)) {
                 Msg* m4;
-                Tgt* t5 = AiController_GetActor(self)->tgt;
+                Tgt* t5 = cNPC_Human(self)->tgt;
                 p4.x = t5->px;
                 p4.y = t5->py;
                 p4.z = t5->pz;
                 m4 = &msg4;
-                Event_Construct(m4, g_TeleportMsgClass);
+                cMessage_ctor_cMessageNameR(m4, g_TeleportMsgClass);
                 m4->vtable = D_004D9360;
                 m4->b24 = 0;
-                SetPt(m4, Mtx_GetIdentity(), &p4);
+                SetPt(m4, cMatrix_GetUnit(), &p4);
                 msg4.kind = 1;
-                Event_Send(&msg4, self->obj, 1);
-                NpcPath_HoldAtRouteNode(self->path, self->x208);
+                QueueMessage_cMessageR_cSystemP_int(&msg4, self->obj, 1);
+                cPathNavigator_ResolvePathAfterTeleport(self->path, self->x208);
                 self->b1EE = 0;
                 msg4.vtable = D_004D9360;
                 cMessage_dtor(&msg4, 0);
@@ -319,7 +319,7 @@ extern "C" void cNetNPC_NextFrame(Self* self, float dt)
             done = 1;
         }
     }
-    if (!done) NpcAi_RunLocomotion(self);
+    if (!done) cNPC_UpdateMovement(self);
 }
 
 

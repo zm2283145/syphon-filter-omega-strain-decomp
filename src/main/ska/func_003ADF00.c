@@ -11,7 +11,7 @@ static inline float clamp_3ADF00(float x, float lo, float hi) {
     }
     return lo;
 }
-void AnimPhase_SetCurrent(AnimPhase_3ADF00* p, float t) {
+void cSkaPlaybackGroup_cPlaybackPosWithHistory_SetCurr(AnimPhase_3ADF00* p, float t) {
     p->cur = t;
     if (p->clamp01)
         p->cur = clamp_3ADF00(p->cur, 0.0f, 1.0f);

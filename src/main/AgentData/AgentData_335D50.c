@@ -30,20 +30,20 @@ struct AE50 {
     char padB2C[0xB5C - 0xB2C];
     int iB5C;
 };
-extern "C" void awards_SetAwardsAndBonuses(AE50* self, int x, int reset); /* gsynth: defined below */
+extern "C" void cAgentData_SetBonusBits(AE50* self, int x, int reset); /* gsynth: defined below */
 #pragma pop
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
 #if 0 /* merge_units */
-int awards_SetAwardsAndBonuses(char * , int, int);
+int cAgentData_SetBonusBits(char * , int, int);
 #endif /* merge_units */
-#define awards_SetAwardsAndBonuses(a0, a1, a2) (awards_SetAwardsAndBonuses((void *)(a0), (a1), (a2))) /* merge_units */
+#define cAgentData_SetBonusBits(a0, a1, a2) (cAgentData_SetBonusBits((void *)(a0), (a1), (a2))) /* merge_units */
          
 int AgentData_CopyShownUnlocks();                                
 
-void AgentData_StartLevel(char * arg0, int arg1) {
+void cAgentData_StartLevel(char * arg0, int arg1) {
     int var_a0;
     int var_s2;
     char * var_s1;
@@ -62,7 +62,7 @@ void AgentData_StartLevel(char * arg0, int arg1) {
         var_v1 += 0x18;
     } while (var_a0 < 0x19);
     F_(((char *)(var_a0 * 4) + (int)(arg0)), 0x8, int) = 0;
-    awards_SetAwardsAndBonuses(arg0, 1, arg1);
+    cAgentData_SetBonusBits(arg0, 1, arg1);
     F_(arg0, 0xA4, int) = 0;
     var_s2 = 0;
     F_(arg0, 0xA8, int) = 0;
@@ -78,7 +78,7 @@ void AgentData_StartLevel(char * arg0, int arg1) {
     F_(arg0, 0xB54, int) = F_(arg0, 0xB50, int);
     F_(arg0, 0xD4, int) = 0xBF800000;
 }
-#undef awards_SetAwardsAndBonuses /* merge_units */
+#undef cAgentData_SetBonusBits /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00335D50(void) {}
 #pragma pop /* merge_units */
@@ -96,12 +96,12 @@ extern char D_00555070[];
 extern char D_004B92E0[];
 extern LvlE50 *D_00532AF8;
 extern PairE50 *D_00532B98;
-char *Loc_GetStoredKey(int name);
-void AgentData_CountObjectives(AE50 *agent, char *s, RecE50 *st);
-void AgentData_AwardPass(AE50 *agent, int x);
-int ScriptMgr_CallFunction(void *mgr, char *name, int n, ...);
+char *nGlobalization_GetStringTag(int name);
+void cAgentData_UpdateLevelObjectives(AE50 *agent, char *s, RecE50 *st);
+void cAgentData_UpdateAchievements(AE50 *agent, int x);
+int cScriptInterpreter_CallFunction(void *mgr, char *name, int n, ...);
 }
-extern "C" void awards_SetAwardsAndBonuses(AE50 *self, int x, int reset)
+extern "C" void cAgentData_SetBonusBits(AE50 *self, int x, int reset)
 {
     int i;
     RecE50 *rec;
@@ -112,9 +112,9 @@ extern "C" void awards_SetAwardsAndBonuses(AE50 *self, int x, int reset)
         self->n48 = 0;
     }
     for (i = 0; i < self->nLevels - 1; i++) {
-        char *name = Loc_GetStoredKey(D_00532AF8[(unsigned)i].name);
+        char *name = nGlobalization_GetStringTag(D_00532AF8[(unsigned)i].name);
         rec = &self->recs[(unsigned)i];
-        AgentData_CountObjectives(self, name, rec);
+        cAgentData_UpdateLevelObjectives(self, name, rec);
         rec->tC = D_00532B98[(unsigned)i].b;
         rec->t8 = D_00532B98[(unsigned)i].a;
         if (rec->tC <= 0) rec->t4 = -1;
@@ -127,10 +127,10 @@ extern "C" void awards_SetAwardsAndBonuses(AE50 *self, int x, int reset)
     }
     { int j; for (j = 0; j < 9; j++) self->unkB08[j] = 0; }
     self->iB5C = 0;
-    ScriptMgr_CallFunction(D_00555070, D_004B92E0, 1, self);
-    AgentData_AwardPass(self, x);
-    ScriptMgr_CallFunction(D_00555070, D_004B92E0, 1, self);
-    AgentData_AwardPass(self, x);
+    cScriptInterpreter_CallFunction(D_00555070, D_004B92E0, 1, self);
+    cAgentData_UpdateAchievements(self, x);
+    cScriptInterpreter_CallFunction(D_00555070, D_004B92E0, 1, self);
+    cAgentData_UpdateAchievements(self, x);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00335E50(void) {}
@@ -143,7 +143,7 @@ extern char D_00532990[];
 extern char D_00532991[];
 extern char D_00532992[];
 extern char D_00499C71[];
-char *AgentData_GetLevelShortName(int unused, char *s)
+char *cAgentData_GetLevelPrefix(int unused, char *s)
 {
     int i = 0;
     int len = strlen(s) - 1;
@@ -169,7 +169,7 @@ static inline void merge_flush_func_00336060(void) {}
 typedef struct { char pad[0xB50]; int* p; } T36110;
 extern void* D_004FFC04;
 extern char* App_GetAgentRankGate(void* p);
-extern char* Loc_LookupText(char* key);
+extern char* nGlobalization_GetString_charP(char* key);
 char* AgentData_GetRankText(T36110* self)
 {
     char buf[16];
@@ -177,7 +177,7 @@ char* AgentData_GetRankText(T36110* self)
     if (r)
         return r;
     sprintf(buf, "S_%s", *self->p);
-    return Loc_LookupText(buf);
+    return nGlobalization_GetString_charP(buf);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00336110(void) {}

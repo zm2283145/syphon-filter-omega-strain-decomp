@@ -39,14 +39,14 @@ typedef struct {
     char pad[8]; Str_416F70 s8; Str_416F70 s14; char pad20[8]; unsigned char b28; char pad29[7];
     char m30[0x40]; char v70[4]; int n74; E_416F70* v78;
 } O_416F70;
-void* Gui_GetScreenList(void);
-char* String_CStr(void* s);
-void String_CtorCStr_13B480(Str_416F70* s, char* c);
-void String_AssignString(Str_416F70* d, Str_416F70* s);
+void* Gui_Manager(void);
+char* std_basic_string_char_char_traits_char_c_str(void* s);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_416F70* s, char* c);
+void std_basic_string_char_char_traits_char_assign_basicstringR(Str_416F70* d, Str_416F70* s);
 void String_Dtor(void* s, int f);
-void Mtx_SetBasis(void* m, V4_416F70* a, V4_416F70* b, V4_416F70* c);
-void Mtx_SetTranslation(void* m, V4_416F70* t);
-void String_CtorEmpty(E_416F70* e);
+void cMatrix_SetAxes(void* m, V4_416F70* a, V4_416F70* b, V4_416F70* c);
+void cMatrix_SetTranslation(void* m, V4_416F70* t);
+void cString_ctor_void(E_416F70* e);
 void std_vector_imp_GuiAnimationTrack_insert(void* v, E_416F70* pos, int n, E_416F70* e);
 
 static inline float RdF_416F70(char** c) { float* p = (float*)*c; *c = (char*)(p + 1); return *p; }
@@ -74,16 +74,16 @@ int GuiInterfaceDecorator_Load(O_416F70* o, char** cur)
     unsigned short n;
     s = *cur;
     while (*(*cur)++ != 0);
-    if (s == 0 || *s == 0) s = String_CStr((char*)Gui_GetScreenList() + 0x2C);
+    if (s == 0 || *s == 0) s = std_basic_string_char_char_traits_char_c_str((char*)Gui_Manager() + 0x2C);
     else o->b28 = 1;
-    String_CtorCStr_13B480(&t1, s);
-    String_AssignString(&o->s8, &t1);
+    std_basic_string_char_char_traits_char_ctor_charP(&t1, s);
+    std_basic_string_char_char_traits_char_assign_basicstringR(&o->s8, &t1);
     String_Dtor(&t1, 0);
     s = *cur;
     while (*(*cur)++ != 0);
     if (s != 0 && *s != 0) {
-        String_CtorCStr_13B480(&t2, s);
-        String_AssignString(&o->s14, &t2);
+        std_basic_string_char_char_traits_char_ctor_charP(&t2, s);
+        std_basic_string_char_char_traits_char_assign_basicstringR(&o->s14, &t2);
         String_Dtor(&t2, 0);
     }
     *cur = (char*)(((int)*cur + 3) & ~3);
@@ -91,15 +91,15 @@ int GuiInterfaceDecorator_Load(O_416F70* o, char** cur)
     RdV_416F70(cur, &b, 0.0f);
     RdV_416F70(cur, &c, 0.0f);
     RdV_416F70(cur, &d, 1.0f);
-    Mtx_SetBasis(o->m30, &a, &b, &c);
-    Mtx_SetTranslation(o->m30, &d);
+    cMatrix_SetAxes(o->m30, &a, &b, &c);
+    cMatrix_SetTranslation(o->m30, &d);
     n = Rd16_416F70(cur);
     for (i = 0; i < n; i++) {
-        String_CtorEmpty(&e);
+        cString_ctor_void(&e);
         s = *cur;
         while (*(*cur)++ != 0);
-        String_CtorCStr_13B480(&t3, s);
-        String_AssignString(&e.name, &t3);
+        std_basic_string_char_char_traits_char_ctor_charP(&t3, s);
+        std_basic_string_char_char_traits_char_assign_basicstringR(&e.name, &t3);
         String_Dtor(&t3, 0);
         *cur = (char*)(((int)*cur + 3) & ~3);
         e.b = Rd16_416F70(cur);

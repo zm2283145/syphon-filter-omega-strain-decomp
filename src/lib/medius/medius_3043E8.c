@@ -9,7 +9,7 @@ typedef struct { int type; int f4; int f8; int pad[7]; } UpnpEnt;
 typedef struct { char pad[0x180]; int h180; UpnpEnt *ent; int count; int f18C; int f190; } UpnpObj;
 typedef struct { char pad[0x40]; char a40[16]; char a50[16]; unsigned short p60; unsigned short p62; } UpnpAddr;
 extern int rt_p2p_get_peer_address(UpnpObj *o, int peer, int mode, char *addr, unsigned short *port);
-extern int String_CompareN(const char *, const char *, unsigned int);
+extern int Libc_Strncmp(const char *, const char *, unsigned int);
 
 int rt_p2p_get_peer_by_address(UpnpObj *o, UpnpAddr *a, int *out)
 {
@@ -23,9 +23,9 @@ int rt_p2p_get_peer_by_address(UpnpObj *o, UpnpAddr *a, int *out)
     if (a == 0) return 2;    for (i = 0; i < o->count; i++) {
         match = 0;
         rt_p2p_get_peer_address(o, i, 0, addr, &port);
-        String_CompareN(addr, a->a40, 16);
+        Libc_Strncmp(addr, a->a40, 16);
         rt_p2p_get_peer_address(o, i, 1, addr, &port);
-        if (String_CompareN(addr, a->a50, 16) == 0) match = (port == a->p62);
+        if (Libc_Strncmp(addr, a->a50, 16) == 0) match = (port == a->p62);
         if (match) { *out = i; break; }
     }
     return 0;
@@ -139,11 +139,11 @@ typedef struct {
     void (*cb1AC)(void *addr, unsigned short port, void *data, unsigned short len);
 } UpnpObj_00304800;
 extern void *memcpy(void *, const void *, unsigned int);
-extern int RtUdp_Read(int h, int ep, void *buf, int size, int *len);
+extern int rt_udp_recv(int h, int ep, void *buf, int size, int *len);
 extern int rt_p2p_process_internal_message(UpnpObj_00304800 *o, int peer, void *data, int len);
 extern int rt_udp_get_address(int h, int ep, void *addr, unsigned short *port);
 
-int RtUdp_DrainReceive(UpnpObj_00304800 *o)
+int rt_p2p_receive_messages(UpnpObj_00304800 *o)
 {
     char addr[16];
     unsigned short port;
@@ -158,7 +158,7 @@ int RtUdp_DrainReceive(UpnpObj_00304800 *o)
             got = 0;
             if (o->ent[i].f4 != -1) {
                 magic = 0;
-                if (RtUdp_Read(o->h180, o->ent[i].f4, o->buf, o->size, &len) == 0 && len != 0) {
+                if (rt_udp_recv(o->h180, o->ent[i].f4, o->buf, o->size, &len) == 0 && len != 0) {
                     memcpy(&magic, o->buf, 4);
                     if (magic != (int)0xEFF0CDAB) {
                         o->cb1A8(i, o->buf, len);
@@ -172,7 +172,7 @@ int RtUdp_DrainReceive(UpnpObj_00304800 *o)
             }
             if (o->ent[i].f8 != -1) {
                 magic = 0;
-                if (RtUdp_Read(o->h180, o->ent[i].f8, o->buf, o->size, &len) == 0 && len != 0) {
+                if (rt_udp_recv(o->h180, o->ent[i].f8, o->buf, o->size, &len) == 0 && len != 0) {
                     memcpy(&magic, o->buf, 4);
                     if (magic != (int)0xEFF0CDAB) {
                         o->cb1A8(i, o->buf, len);
@@ -191,7 +191,7 @@ int RtUdp_DrainReceive(UpnpObj_00304800 *o)
     while (o->b194 != 0) {
         if (rt_udp_get_address(o->h180, -2, addr, &port) != 0)
             return 7;
-        if (RtUdp_Read(o->h180, -2, o->buf, o->size, &len) == 0 && len != 0)
+        if (rt_udp_recv(o->h180, -2, o->buf, o->size, &len) == 0 && len != 0)
             o->cb1AC(addr, port, o->buf, len);
         else
             o->b194 = 0;

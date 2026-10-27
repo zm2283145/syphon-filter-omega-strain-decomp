@@ -12,14 +12,14 @@
 typedef struct { float v[4]; } Vec4_002440D0;
 typedef struct { char pad[0x10]; float m[4][4]; } Obj;
 extern int D_004F7DA0[];
-extern Vec4_002440D0 IeNode_GetRect(int a, float b);
+extern Vec4_002440D0 cInterfaceModel_GetBounds(int a, float b);
 
 void Hud_InitCalloutRects(Obj* p)
 {
     int i;
     Vec4_002440D0 v;
     for (i = 0; i < 4; i++) {
-        v = IeNode_GetRect(D_004F7DA0[i], 10.0f);
+        v = cInterfaceModel_GetBounds(D_004F7DA0[i], 10.0f);
         p->m[i][0] = v.v[0];
         p->m[i][1] = v.v[1];
         p->m[i][2] = v.v[2];
@@ -33,12 +33,12 @@ static inline void merge_flush_func_002440D0(void) {}
 
 /* merge_units: begin func_00244180 */
 #pragma push /* merge_units */
-extern void IeElement_Fade(void* p, float x);
+extern void cAnimator_AnimateTo(void* p, float x);
 typedef struct { char pad[0x70]; void* meter; } D6Hud;
-void Hud_SetArmorMeter(D6Hud* hud, int cur, int max)
+void cHud_SetArmor(D6Hud* hud, int cur, int max)
 {
     if (hud->meter) {
-        IeElement_Fade(hud->meter, 45.0f * (((float)max - (float)cur) / (float)max));
+        cAnimator_AnimateTo(hud->meter, 45.0f * (((float)max - (float)cur) / (float)max));
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -50,16 +50,16 @@ static inline void merge_flush_func_00244180(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x6C]; void* widget; } H_2441E0;
 #if 0 /* merge_units */
-extern void IeElement_Fade(void* w, float v);
+extern void cAnimator_AnimateTo(void* w, float v);
 #endif /* merge_units */
-#define IeElement_Fade(a0, a1) (IeElement_Fade((a0), (a1))) /* merge_units */
+#define cAnimator_AnimateTo(a0, a1) (cAnimator_AnimateTo((a0), (a1))) /* merge_units */
 
-void Hud_SetHealthMeter(H_2441E0* h, int cur, int max) {
+void cHud_SetHealth(H_2441E0* h, int cur, int max) {
     if (h->widget != 0) {
-        IeElement_Fade(h->widget, 45.0f * (((float)max - (float)cur) / (float)max));
+        cAnimator_AnimateTo(h->widget, 45.0f * (((float)max - (float)cur) / (float)max));
     }
 }
-#undef IeElement_Fade /* merge_units */
+#undef cAnimator_AnimateTo /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002441E0(void) {}
 #pragma pop /* merge_units */
@@ -67,15 +67,15 @@ static inline void merge_flush_func_002441E0(void) {}
 
 /* merge_units: begin func_00244240 */
 #pragma push /* merge_units */
-void Hud_ClearTargetLock(int arg0); /* gsynth: defined below */
+void cHud_ClearTarget(int arg0); /* gsynth: defined below */
 #if 0 /* merge_units */
-extern void Hud_ClearTargetLock(int);
+extern void cHud_ClearTarget(int);
 #endif /* merge_units */
-#define Hud_ClearTargetLock(a0) (Hud_ClearTargetLock((a0))) /* merge_units */
+#define cHud_ClearTarget(a0) (cHud_ClearTarget((a0))) /* merge_units */
 
 extern void HudLockTracker_Changed(int);
 
-void Hud_OnTargetChanged(int a0) {
+void cHud_ClearTargetNow(int a0) {
     int s0;
     int cond;
 
@@ -86,11 +86,11 @@ void Hud_OnTargetChanged(int a0) {
     HudLockTracker_Changed(a0);
 L00244268:;
     a0 = s0;
-    Hud_ClearTargetLock(a0);
+    cHud_ClearTarget(a0);
     goto ret;
 ret:;
 }
-#undef Hud_ClearTargetLock /* merge_units */
+#undef cHud_ClearTarget /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00244240(void) {}
 #pragma pop /* merge_units */
@@ -99,24 +99,24 @@ static inline void merge_flush_func_00244240(void) {}
 /* merge_units: begin func_00244280 */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int IeElement_Release(int);                               
-int HudTracker_Kill(int);                               
+int cInterfaceElement_Destroy(int);                               
+int cIE_GOBJ_AnimateOff(int);                               
 
 #pragma opt_common_subs off
-void Hud_ClearTargetLock(int arg0) {
+void cHud_ClearTarget(int arg0) {
     int temp_a0;
     int temp_a0_2;
 
     temp_a0 = F_(arg0, 0x68, int);
     if (temp_a0 != 0) {
         if (F_(arg0, 0x64, int) == 0) {
-            IeElement_Release(temp_a0);
+            cInterfaceElement_Destroy(temp_a0);
         }
         F_(arg0, 0x68, int) = 0;
     }
     temp_a0_2 = F_(arg0, 0x64, int);
     if (temp_a0_2 != 0) {
-        HudTracker_Kill(temp_a0_2);
+        cIE_GOBJ_AnimateOff(temp_a0_2);
         F_(arg0, 0x64, int) = 0;
     }
 }
@@ -129,17 +129,17 @@ static inline void merge_flush_func_00244280(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x68]; void* p68; } Obj_42E0;
 typedef struct { float v[4]; } Buf_42E0;
-extern void Hud_GetLockColour(Buf_42E0* out, float t);
-extern void IeElement_SetColour(void* p, Buf_42E0* b);
-extern void IeElement_EvaluateAt(void* p, float f);
+extern void nHud_ComputeColor(Buf_42E0* out, float t);
+extern void cInterfaceElement_SetFilterColor(void* p, Buf_42E0* b);
+extern void viBufGetTs(void* p, float f);
 
-void Hud_SetLockProgress(Obj_42E0* o, float t) {
+void cHud_SetToHit(Obj_42E0* o, float t) {
     Buf_42E0 b;
     if (o->p68) {
-        Hud_GetLockColour(&b, 1.0f - t);
-        IeElement_SetColour(o->p68, &b);
-        if (t < 0.95f) IeElement_EvaluateAt(o->p68, 15.0f * t);
-        else IeElement_EvaluateAt(o->p68, 15.0f);
+        nHud_ComputeColor(&b, 1.0f - t);
+        cInterfaceElement_SetFilterColor(o->p68, &b);
+        if (t < 0.95f) viBufGetTs(o->p68, 15.0f * t);
+        else viBufGetTs(o->p68, 15.0f);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

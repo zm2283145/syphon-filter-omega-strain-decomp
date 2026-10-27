@@ -35,7 +35,7 @@ extern int libnetb_block_create_space(Ctx *p, int size, int *avail, unsigned cha
 extern int libnetb_trans_data(void *a, void *b, int n);
 extern void *memcpy(void *d, const void *s, unsigned int n);
 
-int IopRing_Send(Obj *o, void *src, int size, int p3, Name16 *p4, int p5, int *out, int *err)
+int libnetb_send_to(Obj *o, void *src, int size, int p3, Name16 *p4, int p5, int *out, int *err)
 {
     unsigned char ready;
     int avail;

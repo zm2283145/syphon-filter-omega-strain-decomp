@@ -12,48 +12,48 @@ struct Ident { char pad[0x50]; Plc orient; V pos; Plc pose; unsigned char d160; 
 struct Root { char pad[0xB0]; Root* owner; char children[4]; };
 
 extern "C" {
-int Root_GetParent(Root* r);
-void Root_RefreshWorldCache(Root* r);
-char* Root_Identity(Root* r);
+int cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(Root* r);
+void cSkaAnimAnchor_TreeNode_UpdateTransform(Root* r);
+char* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(Root* r);
 void cSkaAnimAnchor_TreeNode_UpdateDeltaPos(Root* r);
-void Root_GetWorldPose(Root* r);
+void cSkaAnimAnchor_TreeNode_UpdateSkeletonTarget(Root* r);
 void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Remove_OrderNotPreserved(void* vec, Root** value);
-Ident* Root_IdentityAccessor(Root* r);
-void Transform_SetOrientation(Plc* d, Plc* s);
+Ident* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(Root* r);
+void cQuatVec_opAssign(Plc* d, Plc* s);
 int cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(Root* r);
 void cQuatVec_ctor_void(Plc* p);
-Plc* Root_GetParentInverse(Root* r, Plc* tmp);
-void Placement_Compose(Plc* d, Plc* s);
-void Root_PropagateChildren(Root* r);
-void Vec4_Copy(V* d, V* s);
+Plc* cSkaAnimAnchor_TreeNode_GetParentInverseTransform(Root* r, Plc* tmp);
+void cQuatVec_Transform(Plc* d, Plc* s);
+void cSkaAnimAnchor_TreeNode_TellChildrenNeedToUpdate(Root* r);
+void cVector_opAssign(V* d, V* s);
 void cQuaternion_ctor_void(V* q);
 V* cSkaAnimAnchor_TreeNode_GetParentInverseRotation(Root* r, V* out);
-void Quat_RotateVector(V* a, V* b);
+void cVector_Rotate_cQuaternionR(V* a, V* b);
 }
 
 static inline Plc* WorldOrient(Root* r)
 {
-    if (Root_GetParent(r)) {
-        Root_RefreshWorldCache(r);
-        return (Plc*)Root_Identity(r);
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(r)) {
+        cSkaAnimAnchor_TreeNode_UpdateTransform(r);
+        return (Plc*)cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r);
     }
-    return (Plc*)(Root_Identity(r) + 0x50);
+    return (Plc*)(cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r) + 0x50);
 }
 static inline V* WorldPos(Root* r)
 {
-    if (Root_GetParent(r)) {
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(r)) {
         cSkaAnimAnchor_TreeNode_UpdateDeltaPos(r);
-        return (V*)(Root_Identity(r) + 0x20);
+        return (V*)(cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r) + 0x20);
     }
-    return (V*)(Root_Identity(r) + 0x70);
+    return (V*)(cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r) + 0x70);
 }
 static inline Plc* WorldPose(Root* r)
 {
-    if (Root_GetParent(r)) {
-        Root_GetWorldPose(r);
-        return (Plc*)(Root_Identity(r) + 0x30);
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(r)) {
+        cSkaAnimAnchor_TreeNode_UpdateSkeletonTarget(r);
+        return (Plc*)(cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r) + 0x30);
     }
-    return (Plc*)(Root_Identity(r) + 0x80);
+    return (Plc*)(cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r) + 0x80);
 }
 static inline void Detach(Root* self)
 {
@@ -65,34 +65,34 @@ static inline void Detach(Root* self)
 }
 static inline void SetOrient(Root* self, Plc* o)
 {
-    Transform_SetOrientation(&Root_IdentityAccessor(self)->orient, o);
+    cQuatVec_opAssign(&cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(self)->orient, o);
     if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(self)) {
         Plc tmp;
         cQuatVec_ctor_void(&tmp);
-        Placement_Compose(&Root_IdentityAccessor(self)->orient, Root_GetParentInverse(self, &tmp));
+        cQuatVec_Transform(&cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(self)->orient, cSkaAnimAnchor_TreeNode_GetParentInverseTransform(self, &tmp));
     }
-    Root_IdentityAccessor(self)->d160 = 1;
-    Root_PropagateChildren(self);
+    cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(self)->d160 = 1;
+    cSkaAnimAnchor_TreeNode_TellChildrenNeedToUpdate(self);
 }
 static inline void SetPos(Root* self, V* p)
 {
-    Vec4_Copy(&Root_IdentityAccessor(self)->pos, p);
+    cVector_opAssign(&cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(self)->pos, p);
     if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(self)) {
         V q;
         cQuaternion_ctor_void(&q);
-        Quat_RotateVector(&Root_IdentityAccessor(self)->pos, cSkaAnimAnchor_TreeNode_GetParentInverseRotation(self, &q));
+        cVector_Rotate_cQuaternionR(&cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(self)->pos, cSkaAnimAnchor_TreeNode_GetParentInverseRotation(self, &q));
     }
-    Root_IdentityAccessor(self)->d161 = 1;
+    cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(self)->d161 = 1;
 }
 static inline void SetPose(Root* self, Plc* o)
 {
-    Transform_SetOrientation(&Root_IdentityAccessor(self)->pose, o);
+    cQuatVec_opAssign(&cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(self)->pose, o);
     if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(self)) {
         Plc tmp;
         cQuatVec_ctor_void(&tmp);
-        Placement_Compose(&Root_IdentityAccessor(self)->pose, Root_GetParentInverse(self, &tmp));
+        cQuatVec_Transform(&cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(self)->pose, cSkaAnimAnchor_TreeNode_GetParentInverseTransform(self, &tmp));
     }
-    Root_IdentityAccessor(self)->d162 = 1;
+    cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(self)->d162 = 1;
 }
 
 extern "C" void cSkaAnimAnchor_TreeNode_DetachParent(Root* self)

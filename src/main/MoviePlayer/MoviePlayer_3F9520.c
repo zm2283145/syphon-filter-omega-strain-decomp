@@ -25,7 +25,7 @@ void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(voi
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 int String_CompareNoCase(int, int);
-int Hog_Unload(int);
+int cHogFile_CloseHog(int);
 #if 0 /* merge_units */
 int details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(int);
 #endif /* merge_units */
@@ -34,7 +34,7 @@ int details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(int);
 int std_list_deleter_cHogFile_generic_iterator_ctor(int *, int);
 int std_list_deleter_cHogFile_tail(int);
 
-void ArchiveList_CloseNamed(int arg0, int arg1) {
+void cHogList_Close(int arg0, int arg1) {
     int sp4C;
     int var_s0;
 
@@ -43,7 +43,7 @@ void ArchiveList_CloseNamed(int arg0, int arg1) {
     if (var_s0 != sp4C) {
         do {
             if (String_CompareNoCase(var_s0 + 8, arg1) == 0) {
-                Hog_Unload(var_s0 + 8);
+                cHogFile_CloseHog(var_s0 + 8);
             }
             var_s0 = F_(var_s0, 0x4, int);
             std_list_deleter_cHogFile_generic_iterator_ctor(&sp4C, std_list_deleter_cHogFile_tail(arg0));

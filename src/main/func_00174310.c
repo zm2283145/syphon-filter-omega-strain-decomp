@@ -7,9 +7,9 @@ extern int D_0048A138;
 extern Vec_74310* std_vector_int_ctor_int_int(Vec_74310* v, int n, int value);
 extern int* std_vector_int_opIndex_uint_2(Vec_74310* v, int i);
 extern void func_0013A040(void* v, int flag);
-extern void KeyVector_Reserve(Vec_74310* v, int n);
-extern void KeyVector_PushBack(Vec_74310* v, int* pos, int n, int* key);
-void Terrain_ReadActRecord(Ter_74310* self, Strm_74310* s)
+extern void std_vector_imp_cObjectId_reserve(Vec_74310* v, int n);
+extern void std_vector_imp_cObjectId_insert(Vec_74310* v, int* pos, int n, int* key);
+void cTerrain_InitializeActivation_cPopulationR(Ter_74310* self, Strm_74310* s)
 {
     int n;
     int i;
@@ -29,11 +29,11 @@ void Terrain_ReadActRecord(Ter_74310* self, Strm_74310* s)
             int* p = std_vector_int_opIndex_uint_2(&t.v, i);
             *p = *(int*)s->cur; s->cur += 4;
         }
-        KeyVector_Reserve(&self->keys, (int)((unsigned int)self->keys.size + n / 2));
+        std_vector_imp_cObjectId_reserve(&self->keys, (int)((unsigned int)self->keys.size + n / 2));
         for (i = 0; i < n; i += 2) {
             int lo = *std_vector_int_opIndex_uint_2(&t.v, i + 1);
             k = lo | (*std_vector_int_opIndex_uint_2(&t.v, i) << 16);
-            KeyVector_PushBack(&self->keys, self->keys.data + self->keys.size, 1, &k);
+            std_vector_imp_cObjectId_insert(&self->keys, self->keys.data + self->keys.size, 1, &k);
         }
         func_0013A040(&t, -1);
     }

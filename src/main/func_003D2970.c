@@ -1,9 +1,9 @@
 static inline float FABS(float x) { float r; __asm__("abs.s %0, %1" : "=f"(r) : "f"(x)); return r; }
-extern float Math_Tan(float x);
-void Shadow_Perspective(float m[4][4], float* lo, float* hi, float fov, float x0, float x1, float y0, float y1, float zn, float zf, float aspect, float ay, float depth)
+extern float Libc_Tanf(float x);
+void BuildProjection(float m[4][4], float* lo, float* hi, float fov, float x0, float x1, float y0, float y1, float zn, float zf, float aspect, float ay, float depth)
 {
-    float ta = Math_Tan(fov);
-    float tb = Math_Tan(fov);
+    float ta = Libc_Tanf(fov);
+    float tb = Libc_Tanf(fov);
     float h;
     float w;
     m[0][0] = (2.0f * zn) / (aspect * ((2.0f * zn) * ta));

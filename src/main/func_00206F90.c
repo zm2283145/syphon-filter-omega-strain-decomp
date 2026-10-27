@@ -7,10 +7,10 @@ extern int BuildAnimationNode_ForRotatingANonTranslatingAnimation(void*, void*, 
 extern void cString_ctor_charP(void*, void*);
 extern int opAdd_cStringR_cStringR(void*, void*, void*);
 extern void* cSkaPlaybackGroupId_ctor_int(void*, void*);
-extern void MotionSelNode_Ctor(void*, void*, void*, void*);
+extern void cSkaAnimationBlend_ctor(void*, void*, void*, void*);
 extern void* cString16N_2_ctor_cStringR(void*, void*);
-extern void MotionRegistry_Register(void*, void*, void*);
-extern void MotionNodeWrapper_Dtor(void*, int);
+extern void cSkaAnimationSet_CreateAnimationBlend(void*, void*, void*);
+extern void cSkaAnimationBlend_dtor(void*, int);
 extern void String_Dtor_138350(void*, int);
 /* Builds the "blend" selector node over the graph made by BuildAnimationNode_ForRotatingANonTranslatingAnimation and registers it. */
 #pragma optimization_level 1
@@ -27,9 +27,9 @@ int BuildAnimationBlend_ForRotatingANonTranslatingAnimation(void* p0, void* p1, 
     BuildAnimationNode_ForRotatingANonTranslatingAnimation(&v70, p1, p2, p3, p4, p5, p6, f0, f1, p7);
     cString_ctor_charP(&vF0, "blend");
     opAdd_cStringR_cStringR(&vE0, &vF0, p2);
-    MotionSelNode_Ctor(&vC8, &v70, p1, cSkaPlaybackGroupId_ctor_int(&vD8, p7));
-    MotionRegistry_Register(p1, cString16N_2_ctor_cStringR(&v50, &vE0), &vC8);
-    MotionNodeWrapper_Dtor(&vC8, -1);
+    cSkaAnimationBlend_ctor(&vC8, &v70, p1, cSkaPlaybackGroupId_ctor_int(&vD8, p7));
+    cSkaAnimationSet_CreateAnimationBlend(p1, cString16N_2_ctor_cStringR(&v50, &vE0), &vC8);
+    cSkaAnimationBlend_dtor(&vC8, -1);
     String_Dtor_138350(&vE0, -1);
     String_Dtor_138350(&vF0, -1);
     cString_ctor_charP(&vB8, "blend");

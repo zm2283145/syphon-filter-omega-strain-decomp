@@ -11,11 +11,11 @@ struct It_2D00 { Node_2D00* node; It_2D00() {} };
 extern "C" {
 extern char D_00582B50[];
 extern char D_004BFCA0[];
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 void std_tree_pair_tNPCInfoPtr_value_compare_begin(It_2D00* r, void* map);
 It_2D00 std_map_tNPCInfoPtr_bool_end(void* map);
 void cAssocArray_tNPCInfoPtr_bool_Iterator_ctor(It_2D00* r, const It_2D00& s);
-void Tree_Successor(It_2D00* it);
+void std_red_black_tree_1_increment(It_2D00* it);
 void std_tree_pair_tNPCInfoPtr_value_compare_erase(void* map, Node_2D00** n);
 }
 static inline unsigned char Ne_2D00(It_2D00* a, It_2D00* b) { return !(a->node == b->node); }
@@ -32,7 +32,7 @@ extern "C" void cNPCInfoObject_DoPendingActiveTerrain(void* self, NpcInfoRec* ar
         e = cur->e;
         flag = cur->flag;
         found = 0;
-        Tree_Successor(&it);
+        std_red_black_tree_1_increment(&it);
         if (key == e->f10) {
             int i;
             for (i = 0; i != 29; i++) {
@@ -41,7 +41,7 @@ extern "C" void cNPCInfoObject_DoPendingActiveTerrain(void* self, NpcInfoRec* ar
             if (found) found->aA[NetLocalId()] = flag;
             {
                 AllocGuard g;
-                Mem_Free(0, e, D_004BFCA0, 0x6B6);
+                cMemMan_Deallocate(0, e, D_004BFCA0, 0x6B6);
             }
             {
                 Node_2D00* c = cur;

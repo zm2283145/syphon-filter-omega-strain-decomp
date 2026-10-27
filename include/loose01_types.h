@@ -6,18 +6,18 @@
  * Field names are placeholders (unkXX) unless a function name justifies more.
  */
 
-/* Object whose first word points at a handle; IeNode_SetShown(*handle, 0, 1) is used on it. */
+/* Object whose first word points at a handle; cInterfaceModel_Activate(*handle, 0, 1) is used on it. */
 typedef struct HandleHolder {
     int* handle;
 } HandleHolder;
 
-/* Owner of a handle plus 14 slots released with IeScreen_RemoveElementIfSet (>= 0x3C bytes). */
+/* Owner of a handle plus 14 slots released with DestroyElement (>= 0x3C bytes). */
 typedef struct SlotTable14 {
     int* handle;     /* 0x00 */
     int slots[14];   /* 0x04 */
 } SlotTable14;
 
-/* 12-byte collection header initialized by ScalarCollection_Init. */
+/* 12-byte collection header initialized by std_list_deleter_voidPtr_ctor_void. */
 typedef struct ScalarCollection {
     int unk00;
     int unk04;
@@ -65,12 +65,12 @@ typedef struct ListIter {
     ListNode* node;
 } ListIter;
 
-/* Base of the motion-graph nodes (built by MotionNode_BaseCtor, 0x20 bytes). */
+/* Base of the motion-graph nodes (built by cSkaNode_ctor_eType_cQuaternionR, 0x20 bytes). */
 typedef struct MotionNode {
     void* vtable;          /* 0x00 */
     char type;             /* 0x04: 2 = slider, 3 = node built by cSkaSwitch_ctor */
     char pad05[0xB];
-    int name;              /* 0x10: initialized by cQuaternion_ctor_cQuaternionR, copied by Quat_Assign */
+    int name;              /* 0x10: initialized by cQuaternion_ctor_cQuaternionR, copied by cQuaternion_opAssign */
     char pad14[0xC];
 } MotionNode;
 
@@ -83,13 +83,13 @@ typedef struct MotionSlider {
     unsigned char unk35;            /* 0x35 */
 } MotionSlider;
 
-/* Two-float threshold pair copied by MotionSliderChild_CopyThresholds. */
+/* Two-float threshold pair copied by cSkaBlendSequenceExtents_ctor_cSkaBlendSequenceExtentsR. */
 typedef struct FloatPair {
     float a;
     float b;
 } FloatPair;
 
-/* Element built by MotionEntry_Ctor (0x24 bytes, stored in 36-byte-stride arrays). */
+/* Element built by cSkaTransBLEND_ctor_float_bool_bool (0x24 bytes, stored in 36-byte-stride arrays). */
 typedef struct MotionEntry24 {
     ObjVec list;           /* 0x00 */
     float unk10;           /* 0x10 */
@@ -145,7 +145,7 @@ typedef struct MarkerTarget {
     int markerKey;         /* 0x0C */
 } MarkerTarget;
 
-/* Event/message object built on Event_Construct: payload byte at +0x24. */
+/* Event/message object built on cMessage_ctor_cMessageNameR: payload byte at +0x24. */
 typedef struct ByteEvent {
     void* vtable;          /* 0x00 */
     char pad04[0x20];
@@ -199,7 +199,7 @@ typedef struct IdFlag {
     char flag;             /* 0x04 */
 } IdFlag;
 
-/* Object cleared by VisionFxTimer_Reset: two flag bytes, an int and a float rectangle (0x18 bytes). */
+/* Object cleared by cVisionFxMan_cFxTimer_Reset: two flag bytes, an int and a float rectangle (0x18 bytes). */
 typedef struct Unk260940 {
     unsigned char unk00;   /* 0x00 */
     unsigned char unk01;   /* 0x01 */
@@ -211,7 +211,7 @@ typedef struct Unk260940 {
     float unk14;           /* 0x14 */
 } Unk260940;
 
-/* Object with four words cleared by PickupMenuEntry_ctor. */
+/* Object with four words cleared by cPickupMenu_PickupEntry_ctor. */
 typedef struct Unk251350 {
     char pad00[0xC];
     int unk0C;             /* 0x0C */
@@ -236,7 +236,7 @@ typedef struct Unk28A430 {
     unsigned char pending; /* 0x80 */
 } Unk28A430;
 
-/* Object built by FrontEndScene_ctor on top of ListReceiver_Ctor (member at +0x2C). */
+/* Object built by cFrontendSystem_ctor on top of cSystemContainer_ctor_void (member at +0x2C). */
 typedef struct Unk229E60 {
     void* vtable;          /* 0x00 */
     char pad04[0x28];
@@ -249,7 +249,7 @@ typedef struct Unk489738 {
     int unk0C;             /* 0x0C */
 } Unk489738;
 
-/* Object with fields cleared by HudMap_Reset. */
+/* Object with fields cleared by cMap_ResetCamera. */
 typedef struct Unk26C130 {
     char pad00[0x60];
     int unk60;             /* 0x60 */
@@ -259,13 +259,13 @@ typedef struct Unk26C130 {
     int unk94;             /* 0x94 */
 } Unk26C130;
 
-/* Motion selection node (MotionSelNode_Ctor): looked-up motion, then a group pair at +4. */
+/* Motion selection node (cSkaAnimationBlend_ctor): looked-up motion, then a group pair at +4. */
 typedef struct MotionSelNode {
     int unk00;             /* 0x00 */
-    int pair;              /* 0x04: copied by MotionGroup_CopyPair (size unknown) */
+    int pair;              /* 0x04: copied by cSkaPlaybackGroupId_ctor_cSkaPlaybackGroupIdR (size unknown) */
 } MotionSelNode;
 
-/* Object whose word at +0x3C is returned by HudMarkers_GetHighlight. */
+/* Object whose word at +0x3C is returned by cHudTargetManager_GetObjectiveTarget. */
 typedef struct Unk272AC0 {
     char pad00[0x3C];
     int unk3C;             /* 0x3C */

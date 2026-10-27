@@ -23,13 +23,13 @@ public:
     float cur;
     unsigned char wrap;
 };
-extern "C" float Math_FMod(float, float);
-extern "C" int AnimChannel_IsFreshSegment(Ch364D20*);
-extern "C" int Curve_HasRemaining(Ch364D20*);
-extern "C" void AnimChannel_RebuildSegment(void*, float*, float*, float*, float*);
-extern "C" void AnimChannel_UpdateEndpoint(void*, int, float*, float*);
+extern "C" float Libc_Fmodf(float, float);
+extern "C" int cSplinedMotion_float_HasTransitionJustBeenStarted(Ch364D20*);
+extern "C" int cSplinedMotion_float_IsTransitionInProgress(Ch364D20*);
+extern "C" void cHermiteSplineWithScaledDuration_float_Reset(void*, float*, float*, float*, float*);
+extern "C" void cHermiteSplineWithScaledDuration_float_ResetPoint(void*, int, float*, float*);
 extern "C" void func_0017CA90(void* p, float d, int n);
-extern "C" void* Mem_PlacementNew(int kind, void* p);
+extern "C" void* opNew_uint_voidP(int kind, void* p);
 extern "C" void cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(void* p, float s, void* a, void* b, void* c, float* r);
 extern float D_00492ED0;
 extern float D_00492ED8;
@@ -40,7 +40,7 @@ static inline float Wrap_364D20(Ch364D20* p, float d)
     if (!p->wrap) {
         return d;
     }
-    r = Math_FMod(d, 1.0f);
+    r = Libc_Fmodf(d, 1.0f);
     if (r < 0.5f) {
         r += 1.0f;
     } else if (r > 0.5f) {
@@ -52,12 +52,12 @@ static inline void Set_364D20(Pair364D20* q, float a, float b) { q->a = a; q->b 
 extern "C" void func_00364D20(Ch364D20* o)
 {
     if (!o->wrap) {
-        if (AnimChannel_IsFreshSegment(o)) {
+        if (cSplinedMotion_float_HasTransitionJustBeenStarted(o)) {
             float r = o->GetRate();
-            AnimChannel_RebuildSegment(&o->b18, &o->b8, &o->bc, &o->b10, &r);
-        } else if (Curve_HasRemaining(o)) {
+            cHermiteSplineWithScaledDuration_float_Reset(&o->b18, &o->b8, &o->bc, &o->b10, &r);
+        } else if (cSplinedMotion_float_IsTransitionInProgress(o)) {
             float r = o->GetRate();
-            AnimChannel_UpdateEndpoint(&o->b18, 1, &o->b10, &r);
+            cHermiteSplineWithScaledDuration_float_ResetPoint(&o->b18, 1, &o->b10, &r);
         }
     } else {
         unsigned char flag = 0;
@@ -69,7 +69,7 @@ extern "C" void func_00364D20(Ch364D20* o)
             float d = Wrap_364D20(o, o->b10 - o->b8);
             o->b10 = o->b8 + d;
             func_0017CA90(&o->b18, d, -1);
-            p = Mem_PlacementNew(0x18, &o->b18);
+            p = opNew_uint_voidP(0x18, &o->b18);
             if (p) {
                 cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_floatR_floatR_etc(p, o->scale, &o->b8, &o->bc, &o->b10, &D_00492ED0);
             }

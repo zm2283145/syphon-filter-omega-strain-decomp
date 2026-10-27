@@ -81,7 +81,7 @@ static inline void Set(X6F6E0* x, M6F6E0* s)
 }
 #pragma opt_common_subs off
 #pragma opt_rotateloops off
-extern "C" void Xform_SetRotation(X6F6E0* self, M6F6E0* rot)
+extern "C" void cXformNode_SetRotationMatrix(X6F6E0* self, M6F6E0* rot)
 {
     X6F6E0* p = self->parent;
     if (p) {

@@ -62,7 +62,7 @@ struct VObj_0014D340 {
     virtual Ret_0014D340 Get(); /* +0xE4 */
 };
 
-extern "C" Ret_0014D340 Object_GetEye(VObj_0014D340* obj)
+extern "C" Ret_0014D340 cGOBJ_GetTargetPosition(VObj_0014D340* obj)
 {
     return obj->Get();
 }

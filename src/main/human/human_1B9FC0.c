@@ -27,7 +27,7 @@
         NetMsgHeader* p;                                                      \
         {                                                                     \
             AllocGuard guard;                                                 \
-            p = (NetMsgHeader*)Mem_Alloc(0, (size), fileSym, (line));         \
+            p = (NetMsgHeader*)cMemMan_Allocate(0, (size), fileSym, (line));         \
         }                                                                     \
         if (p) {                                                              \
             p->vtable = D_004DFD80;                                           \

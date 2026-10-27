@@ -8,7 +8,7 @@
 extern int D_00585FA8;
 
 /* Constructor: clears the record; dirty defaults to 1. */
-LobbyRecord1C* LobbyArray_ctor(LobbyRecord1C* self) {
+LobbyRecord1C* SFOLobbyList_ctor(LobbyRecord1C* self) {
     self->elemSize = 0;
     self->grow = 0;
     self->initialCapacity = 0;

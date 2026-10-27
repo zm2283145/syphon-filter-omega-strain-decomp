@@ -7,9 +7,9 @@ struct LHead { LNode* prev; LNode* next; };
 struct LSelf { int count; LHead header; int unkC; int unk10; };
 
 extern "C" {
-void Mem_Free(int, void*, char*, int);
-void ObjectList_EraseRange(int*, void*, LNode**, LNode**);
-void Fstream_StartRequest(void*, int);
+void cMemMan_Deallocate(int, void*, char*, int);
+void std_list_deleter_voidPtr_erase_listdeleter_listdeleter(int*, void*, LNode**, LNode**);
+void cFSData_FreeStream(void*, int);
 void std_list_cFSDataPtr_begin(LNode** it, LSelf* self);
 void std_advance_listR_int(LNode** it, int n);
 void** std_list_cFSDataPtr_generic_iterator_opMul(LNode** it);
@@ -33,16 +33,16 @@ static inline void* At(LSelf* s, int i) {
     return *std_list_cFSDataPtr_generic_iterator_opMul(&it);
 }
 
-extern "C" void FStream_CancelRequests(LSelf* self) {
+extern "C" void cFileStreamMan_Purge(LSelf* self) {
     int n = self->count;
     int i;
     for (i = 0; i < n; i++) {
         void* p;
-        Fstream_StartRequest(ListAt(self, i), 0);
+        cFSData_FreeStream(ListAt(self, i), 0);
         p = At(self, i);
         {
             AllocGuard g;
-            Mem_Free(0, p, D_004BE010, 0x1B9);
+            cMemMan_Deallocate(0, p, D_004BE010, 0x1B9);
         }
     }
     {
@@ -51,7 +51,7 @@ extern "C" void FStream_CancelRequests(LSelf* self) {
         LNode* last;
         last = (LNode*)&self->header;
         first = self->header.next;
-        ObjectList_EraseRange(&res, self, &first, &last);
+        std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&res, self, &first, &last);
     }
     self->unkC = 0;
     D_00493990 = 0;

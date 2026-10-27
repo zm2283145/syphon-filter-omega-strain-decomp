@@ -2,7 +2,7 @@
 #define GUARDED_NEW_H
 
 /*
- * Object factories ("new T"): Mem_Alloc(0, size, fileSym, 42) under the
+ * Object factories ("new T"): cMemMan_Allocate(0, size, fileSym, 42) under the
  * allocator guard, then construct when the allocation succeeded.
  *   DEFINE_GUARDED_NEW_CTOR(name, size, fileSym, ctor)
  *       out-of-line constructor ctor(p), its result is returned
@@ -15,7 +15,7 @@
  */
 #include "alloc_guard.h"
 
-extern "C" void* Mem_Alloc(int pool, int size, char* file, int line);
+extern "C" void* cMemMan_Allocate(int pool, int size, char* file, int line);
 
 struct GuardedNewObject {
     void* vtable;
@@ -31,7 +31,7 @@ struct GuardedNewObject {
         void* p;                                                              \
         {                                                                     \
             AllocGuard guard;                                                 \
-            p = Mem_Alloc(0, (size), fileSym, 0x2A);                          \
+            p = cMemMan_Allocate(0, (size), fileSym, 0x2A);                          \
         }                                                                     \
         if (p)                                                                \
             p = ctor(p);                                                      \
@@ -49,7 +49,7 @@ struct GuardedNewObject {
         GuardedNewObject* p;                                                  \
         {                                                                     \
             AllocGuard guard;                                                 \
-            p = (GuardedNewObject*)Mem_Alloc(0, (size), fileSym, 0x2A);       \
+            p = (GuardedNewObject*)cMemMan_Allocate(0, (size), fileSym, 0x2A);       \
         }                                                                     \
         if (p) {                                                              \
             baseCtor(p);                                                      \
@@ -70,7 +70,7 @@ struct GuardedNewObject {
         GuardedNewObject* p;                                                  \
         {                                                                     \
             AllocGuard guard;                                                 \
-            p = (GuardedNewObject*)Mem_Alloc(0, (size), fileSym, 0x2A);       \
+            p = (GuardedNewObject*)cMemMan_Allocate(0, (size), fileSym, 0x2A);       \
         }                                                                     \
         if (p) {                                                              \
             baseCtor(p);                                                      \

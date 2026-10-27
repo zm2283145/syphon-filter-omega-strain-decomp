@@ -5,7 +5,7 @@ extern int D_0048C3D8;
 extern int D_0048C3DC;
 extern int D_0048C384;
 extern int iTerminateString_void(void *, int);
-extern int Net_SendLocked(int, int, int, int, int, int, void *);
+extern int NetSendMessage(int, int, int, int, int, int, void *);
 int __attribute__((weak, section(".dtors_drop"))) MGCLGetServerType(void) { return 0; }
 extern int MGCLGetServerPort(void);
 extern int NetSetDefaultResolveAddrParams(void *);
@@ -37,6 +37,6 @@ int MGCLAuthenticationSend(Msg_F078 *a, int b)
     NetGetMyIpAddress(a->f20);
     a->f30 = MGCLGetServerPort();
     a->f34 = 0;
-    return Net_SendLocked(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C384, 0x4C, a) ? -5 : 0;
+    return NetSendMessage(0x40, D_0048C3D8, 0xFFFF, 3, D_0048C384, 0x4C, a) ? -5 : 0;
 }
 

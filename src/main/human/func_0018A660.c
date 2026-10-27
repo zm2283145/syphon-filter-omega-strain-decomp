@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int* Registry_At(PtrVec* v, int i) {
+int* cArray_cSkaNodePtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }

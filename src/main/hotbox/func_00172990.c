@@ -10,5 +10,5 @@ int* std_vector_cGOBJPtr_opIndex(PtrVec* v, int i) {
     return v->data + i;
 }
 
-void cHotbox_v14(void) {
+void cHotbox_Render(void) {
 }

@@ -31,7 +31,7 @@ typedef struct { char pad[0x14]; E_5630* e; } S_5630;
 extern int strstr(char* a, char* b);
 extern void String_CompareNoCase(char* a, char* b);
 extern void WeaponDb_FreeModel(S_5630* self, R_5630* r);
-void WeaponDb_Unload(S_5630* self, int idx, int release)
+void cWeaponDB_UnloadWeapon(S_5630* self, int idx, int release)
 {
     E_5630* e = &self->e[idx];
     e->count--;
@@ -56,8 +56,8 @@ static inline void merge_flush_func_00145630(void) {}
 typedef struct { char pad[0x41C]; int refs; } R_5710;
 typedef struct { char pad[0xCC]; unsigned char cc; char pad2[0x108 - 0xCD]; unsigned char x108; char pad3[0x138 - 0x109]; unsigned char count; char mode; char pad4[2]; R_5710* res; } E_5710;
 typedef struct { char pad[0x14]; E_5710* e; } S_5710;
-extern void WeaponDb_LoadModel(S_5710* self, E_5710* e, R_5710** out, int idx, int z, int cc, int x108);
-void WeaponDb_Preload(S_5710* self, int idx, char mode)
+extern void cWeaponDB_LoadGun(S_5710* self, E_5710* e, R_5710** out, int idx, int z, int cc, int x108);
+void cWeaponDB_LoadWeapon(S_5710* self, int idx, char mode)
 {
     E_5710* e = &self->e[idx];
     e->count++;
@@ -66,7 +66,7 @@ void WeaponDb_Preload(S_5710* self, int idx, char mode)
     if (e->count < 2) {
         e->mode = mode;
         if (!e->res) {
-            WeaponDb_LoadModel(self, e, &e->res, idx, 0, e->cc, e->x108);
+            cWeaponDB_LoadGun(self, e, &e->res, idx, 0, e->cc, e->x108);
             if (e->res)
                 e->res->refs++;
         }

@@ -36,14 +36,14 @@ E20* std_copy_backward_Section_copy_backward(E20* first, E20* last, E20* result)
 #include "types.h"
 #include "loose02_types.h"
 
-extern void* String_CopyCtor(void* dst, void* src);
+extern void* std_basic_string_char_char_traits_char_ctor_basicstringR(void* dst, void* src);
 extern Rel* std_vector_Slide_ctor(Rel* dst, Rel* src);
 
 /* Copy constructor. */
 Rec32A050* GuiSlideShow_Section_ctor(Rec32A050* self, Rec32A050* src) {
     OwnedRel* vec;
 
-    String_CopyCtor(self, src);
+    std_basic_string_char_char_traits_char_ctor_basicstringR(self, src);
     vec = &self->vec;
     std_vector_Slide_ctor(&vec->vec, &src->vec.vec);
     vec->owned = src->vec.owned;

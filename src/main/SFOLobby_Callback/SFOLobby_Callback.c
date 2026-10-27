@@ -31,7 +31,7 @@ int SFOLobby_ContactConfirmation(SFOLobby* self, Arg_00446560* arg, int ok)
 {
     Msg_00446560 m;
     memset(&m, 0, sizeof(m));
-    String_Copy(m.messageId, "1");
+    Libc_Strcpy(m.messageId, "1");
     strncpy(m.sessionKey, self->sessionKey, 0x11);
     m.requestId = arg->id;
     m.f34 = 1;
@@ -53,17 +53,17 @@ static inline void merge_flush_func_00446560(void) {}
 typedef struct { char pad[0x18]; int kind; char name[1]; } Request;
 typedef struct { int type; int pad; int kind; char name[0xA0]; } Record;
 extern SFOLobby* D_00585E60;
-extern int LobbyArray_Append(LobbyArray* list, Record* rec);
+extern int SFOLobbyList_Append(LobbyArray* list, Record* rec);
 /* Reply callback: queues a type-1 inbox entry built from the message. */
 void SFOLobby_Callback_BuddyConfirmationRequest(void* a0, void* a1, void* a2, Request* req)
 {
     Record rec;
-    if (SFOLobby_NoInstance(a0, a1, a2) == 0) {
+    if (SFOLobby_IgnoreCallbacks(a0, a1, a2) == 0) {
         memset(&rec, 0, sizeof(rec));
         rec.type = 1;
         rec.kind = req->kind;
-        String_Copy(rec.name, req->name);
-        LobbyArray_Append(&D_00585E60->inbox, &rec);
+        Libc_Strcpy(rec.name, req->name);
+        SFOLobbyList_Append(&D_00585E60->inbox, &rec);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -76,7 +76,7 @@ static inline void merge_flush_func_00446640(void) {}
 /* Reply callback: flags gotReply230. */
 void func_004466B0(void)
 {
-    if (!SFOLobby_NoInstance())
+    if (!SFOLobby_IgnoreCallbacks())
         D_00585E60->gotReply230 = 1;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -89,7 +89,7 @@ static inline void merge_flush_func_004466B0(void) {}
 /* Reply callback: flags gotReply238 and records whether the status was MediusSuccess. */
 void SFOLobby_Callback_RemoveFromBuddyList(void* a, void* b, void* c, LobbyReply* d)
 {
-    if (!SFOLobby_NoInstance(a, b, c, d)) {
+    if (!SFOLobby_IgnoreCallbacks(a, b, c, d)) {
         D_00585E60->gotReply238 = 1;
         D_00585E60->reply238Ok = d->statusCode == MediusSuccess;
     }
@@ -104,9 +104,9 @@ static inline void merge_flush_func_004466F0(void) {}
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #pragma mpwc_relax on
 #if 0 /* merge_units */
-int LobbyArray_Append(LobbyArray * , int *);
+int SFOLobbyList_Append(LobbyArray * , int *);
 #endif /* merge_units */
-#define LobbyArray_Append(a0, a1) (LobbyArray_Append((a0), (void *)(a1))) /* merge_units */
+#define SFOLobbyList_Append(a0, a1) (SFOLobbyList_Append((a0), (void *)(a1))) /* merge_units */
 
 
 /* Reply callback: flags gotReply22C when the end-of-list byte (+0x44) is set and
@@ -114,7 +114,7 @@ int LobbyArray_Append(LobbyArray * , int *);
 void SFOLobby_Callback_GetBuddyInvitations(int d0, int d1, int d2, char * arg3) {
     struct { int f20[2]; int f28; int f2C[41]; } sl;
 
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         if (F_(arg3, 0x44, signed char) != 0) {
             D_00585E60->gotReply22C = 1;
         }
@@ -122,12 +122,12 @@ void SFOLobby_Callback_GetBuddyInvitations(int d0, int d1, int d2, char * arg3) 
             memset(sl.f20, 0, 0xAC);
             sl.f20[0] = 1;
             sl.f28 = F_(arg3, 0x1C, int);
-            String_Copy(sl.f2C, arg3 + 0x20);
-            LobbyArray_Append(&D_00585E60->inbox, sl.f20);
+            Libc_Strcpy(sl.f2C, arg3 + 0x20);
+            SFOLobbyList_Append(&D_00585E60->inbox, sl.f20);
         }
     }
 }
-#undef LobbyArray_Append /* merge_units */
+#undef SFOLobbyList_Append /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00446740(void) {}
 #pragma pop /* merge_units */
@@ -137,12 +137,12 @@ static inline void merge_flush_func_00446740(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x18]; int statusCode; char accountName[0x2C]; LobbyPlayerInfo info; } S67D0;
 extern int atoi(S67D0* s);
-extern void SFOLobby_CacheAccount(SFOLobby* h, int r, void* p, int q, int t);
+extern void SFOLobby_RefreshAgentData(SFOLobby* h, int r, void* p, int q, int t);
 /* Reply callback: on success caches the player's info in accountCache. */
 void SFOLobby_Callback_GetPlayerInfo_ForBuddyList(int a, int b, int c, S67D0* s) {
-    if (SFOLobby_NoInstance(a, b, c, s) == 0 && s->statusCode == 0) {
+    if (SFOLobby_IgnoreCallbacks(a, b, c, s) == 0 && s->statusCode == 0) {
         int r = atoi(s);
-        SFOLobby_CacheAccount(D_00585E60, r, s->accountName, s->info.ip, (int)&s->info);
+        SFOLobby_RefreshAgentData(D_00585E60, r, s->accountName, s->info.ip, (int)&s->info);
     }
 }
 /* merge_units: generate this block's code before the language mode changes */
@@ -156,12 +156,12 @@ static inline void merge_flush_func_004467D0(void) {}
 #define NULL 0
 extern "C" {
 char *SFOLobby_FindGameData(SFOLobby *, int, int *);
-void LobbyArray_Copy(LobbyArray *, LobbyArray *);
-void LobbyArray_SetDirty(LobbyArray *, int);
+void SFOLobbyList_CopyListFrom(LobbyArray *, LobbyArray *);
+void SFOLobbyList_SetUpdateFlag(LobbyArray *, int);
 #if 0 /* merge_units */
-int LobbyArray_Append(LobbyArray *, void *);
+int SFOLobbyList_Append(LobbyArray *, void *);
 #endif /* merge_units */
-#define LobbyArray_Append(a0, a1) (LobbyArray_Append((a0), (Record *)(a1))) /* merge_units */
+#define SFOLobbyList_Append(a0, a1) (SFOLobbyList_Append((a0), (Record *)(a1))) /* merge_units */
 
 extern char D_004C0CC8[]; /* "" */
 }
@@ -200,13 +200,13 @@ extern "C" void SFOLobby_Callback_GetBuddyList(int d0, int d1, int d2, Msg446830
     Buddy446830 req;
     LobbyArray *list;
     char *e;
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         list = &D_00585E60->buddyList;
         if (list != NULL) {
             if (msg->statusCode == MediusSuccess) {
                 memset(&req, 0, 0x50);
                 req.accountId = msg->accountId;
-                String_Copy(req.name, (char *)msg->accountName);
+                Libc_Strcpy(req.name, (char *)msg->accountName);
                 req.f30 = 0;
                 req.f34 = -1;
                 req.f38 = -1;
@@ -237,21 +237,21 @@ extern "C" void SFOLobby_Callback_GetBuddyList(int d0, int d1, int d2, Msg446830
                     }
                     break;
                 }
-                LobbyArray_Append(list, &req);
+                SFOLobbyList_Append(list, &req);
             }
             if (msg->endOfList != 0) {
-                LobbyArray_SetRefreshing(list, 0);
+                SFOLobbyList_SetBusy(list, 0);
                 if (list->count > 0)
-                    LobbyArray_SetDirty(list, 1);
+                    SFOLobbyList_SetUpdateFlag(list, 1);
                 if (D_00585E60->outBuddyList != NULL)
-                    LobbyArray_Copy(D_00585E60->outBuddyList, list);
-                LobbyArray_Copy(&D_00585E60->pool150, list);
+                    SFOLobbyList_CopyListFrom(D_00585E60->outBuddyList, list);
+                SFOLobbyList_CopyListFrom(&D_00585E60->pool150, list);
             }
             *(Msg446830 *)&D_00585E60->buddyListReply = *msg;
         }
     }
 }
-#undef LobbyArray_Append /* merge_units */
+#undef SFOLobbyList_Append /* merge_units */
 /* merge_units: generate this block's code before the language mode changes */
 static inline void merge_flush_func_00446830(void) {}
 #pragma pop /* merge_units */
@@ -261,7 +261,7 @@ static inline void merge_flush_func_00446830(void) {}
 #pragma push /* merge_units */
 extern int SFOLobby_RefreshGameData(SFOLobby* self, int a, int b, int c, int d, void* e);/* Reply callback: on success forwards the record's fields to SFOLobby_RefreshGameData. */
 void SFOLobby_Callback_RefreshGameInfo(int a0, int a1, int a2, char* m) {
-    if (SFOLobby_NoInstance() == 0 && F_(m, 0x18, int) == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0 && F_(m, 0x18, int) == 0) {
         SFOLobby_RefreshGameData(D_00585E60, F_(m, 0x3C, int), F_(m, 0x30, int), F_(m, 0x24, int), F_(m, 0x184, int), m + 0x34);
     }
 }
@@ -280,7 +280,7 @@ typedef struct { S21 name; int a18, a1C, a20, a24, a28, a2C, a30; S256 s; S64 t;
 /* Reply callback: flags gotReply20C, forwards a successful record to SFOLobby_RefreshGameData
  * and keeps a copy in reply1D08. */
 void func_00446B40(int d0, int d1, int d2, R46B *src) {
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         R46B *d;
         D_00585E60->gotReply20C = 1;
         if (src->a18 == 0) {
@@ -318,7 +318,7 @@ static inline void merge_flush_func_00446B40(void) {}
 extern "C" int SFOLobby_Callback_SetGameListFilter(void) {
     int tmp0;
 
-    tmp0 = SFOLobby_NoInstance();
+    tmp0 = SFOLobby_IgnoreCallbacks();
     return tmp0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -331,7 +331,7 @@ static inline void merge_flush_func_00446CA0(void) {}
 /* Reply callback: flags gotReply208 (awaited by SFOLobby_UpdateStats). */
 void SFOLobby_Callback_UpdateStats(void)
 {
-    if (!SFOLobby_NoInstance())
+    if (!SFOLobby_IgnoreCallbacks())
         D_00585E60->gotReply208 = 1;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -341,7 +341,7 @@ static inline void merge_flush_func_00446CC0(void) {}
 
 /* merge_units: begin func_00446D00 */
 #pragma push /* merge_units */
-/* Reply to the own-IP request (SFOLobby_RequestMyIp). */
+/* Reply to the own-IP request (SFOLobby_GetMyIP). */
 typedef struct LobbyMyIpReply {
     char messageId[0x15];
     char ip[0x2C - 0x15];           /* 0x15 */
@@ -350,10 +350,10 @@ typedef struct LobbyMyIpReply {
 
 /* Own-IP reply callback: flags gotMyIp and stores the address on success. */
 void SFOLobby_Callback_GetMyIP(int a0, int a1, int a2, LobbyMyIpReply* info) {
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         D_00585E60->gotMyIp = 1;
         if (info->statusCode == MediusSuccess) {
-            String_Copy(D_00585E60->myIp, info->ip);
+            Libc_Strcpy(D_00585E60->myIp, info->ip);
         }
     }
 }
@@ -367,7 +367,7 @@ static inline void merge_flush_func_00446D00(void) {}
 /* Reply callback: flags gotReply1D0 and keeps the 0x5C-byte reply in replyFD8. */
 void SFOLobby_Callback_TextFilter(void* a0, void* a1, void* a2, void* data)
 {
-    if (SFOLobby_NoInstance(a0, a1, a2) == 0) {
+    if (SFOLobby_IgnoreCallbacks(a0, a1, a2) == 0) {
         D_00585E60->gotReply1D0 = 1;
         memcpy(D_00585E60->replyFD8, data, 0x5C);
     }
@@ -379,10 +379,10 @@ static inline void merge_flush_func_00446D60(void) {}
 
 /* merge_units: begin func_00446DB0 */
 #pragma push /* merge_units */
-/* Account-info reply callback (request SFOLobby_RequestAccountInfo): flags gotAccountInfo and
+/* Account-info reply callback (request SFOLobby_GetAgentDetails): flags gotAccountInfo and
  * keeps the reply. */
 void SFOLobby_Callback_GetPlayerInfo(int a, int b, int c, void* data) {
-    if (!SFOLobby_NoInstance(a, b, c, data)) {
+    if (!SFOLobby_IgnoreCallbacks(a, b, c, data)) {
         D_00585E60->gotAccountInfo = 1;
         memcpy(&D_00585E60->accountInfoReply, data, 0x148);
     }
@@ -394,10 +394,10 @@ static inline void merge_flush_func_00446DB0(void) {}
 
 /* merge_units: begin func_00446E00 */
 #pragma push /* merge_units */
-/* Account-id-by-name reply callback (request SFOLobby_LookupAccountId): flags gotAccountId
+/* Account-id-by-name reply callback (request SFOLobby_GetAgentID): flags gotAccountId
  * and keeps the reply. */
 void SFOLobby_Callback_AccountGetID(void* a0, int a1, int a2, void* src) {
-    if (SFOLobby_NoInstance(a0, a1, a2, (int)src) == 0) {
+    if (SFOLobby_IgnoreCallbacks(a0, a1, a2, (int)src) == 0) {
         D_00585E60->gotAccountId = 1;
         memcpy(&D_00585E60->accountIdReply, src, 0x20);
     }
@@ -412,7 +412,7 @@ static inline void merge_flush_func_00446E00(void) {}
 /* Reply callback: flags gotReply1B0 and keeps the 0x1C-byte reply in reply400. */
 void SFOLobby_Callback_PickLocation(int a, int b, int c, void* src)
 {
-    if (!SFOLobby_NoInstance(a, b, c)) {
+    if (!SFOLobby_IgnoreCallbacks(a, b, c)) {
         D_00585E60->gotReply1B0 = 1;
         memcpy(D_00585E60->reply400, src, 0x1C);
     }
@@ -426,27 +426,27 @@ static inline void merge_flush_func_00446E50(void) {}
 #pragma push /* merge_units */
 #pragma mpwc_relax on
 #if 0 /* merge_units */
-int LobbyArray_Append(LobbyArray *, int *);
+int SFOLobbyList_Append(LobbyArray *, int *);
 #endif /* merge_units */
-#define LobbyArray_Append(a0, a1) (LobbyArray_Append((a0), (void *)(a1))) /* merge_units */
+#define SFOLobbyList_Append(a0, a1) (SFOLobbyList_Append((a0), (void *)(a1))) /* merge_units */
 
 /* Reply callback: flags gotReply1AC, appends {id, name} to lobbyList when the
  * record's +0x5C field is 0, and keeps the reply in reply39C. */
 void SFOLobby_Callback_GetLocations(int d0, int d1, int d2, char * arg3) {
     struct { int f20; int f24[19]; } sl;
     int temp_v0;
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         D_00585E60->gotReply1AC = 1;
         temp_v0 = F_(arg3, 0x5C, int);
         if ((temp_v0 != 1) && (temp_v0 == 0)) {
             sl.f20 = F_(arg3, 0x18, int);
-            String_Copy(sl.f24, arg3 + 0x1C);
-            LobbyArray_Append(D_00585E60->lobbyList, &sl.f20);
+            Libc_Strcpy(sl.f24, arg3 + 0x1C);
+            SFOLobbyList_Append(D_00585E60->lobbyList, &sl.f20);
         }
         memcpy(D_00585E60->reply39C, arg3, 0x64);
     }
 }
-#undef LobbyArray_Append /* merge_units */
+#undef SFOLobbyList_Append /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00446EA0(void) {}
 #pragma pop /* merge_units */
@@ -456,7 +456,7 @@ static inline void merge_flush_func_00446EA0(void) {}
 #pragma push /* merge_units */
 /* Reply callback: flags gotReply200 and keeps the 0x64-byte reply in reply1BCC. */
 void SFOLobby_Callback_ChannelInfo(int a, int b, int c, int msg) {
-    if (!SFOLobby_NoInstance(a, b, c, msg)) {
+    if (!SFOLobby_IgnoreCallbacks(a, b, c, msg)) {
         D_00585E60->gotReply200 = 1;
         memcpy(D_00585E60->reply1BCC, msg, 100);
     }
@@ -471,7 +471,7 @@ static inline void merge_flush_func_00446F30(void) {}
 /* Reply callback: flags gotReply1F8 and keeps the 0x20-byte reply in reply1B1C. */
 void SFOLobby_Callback_CreateChannel(int a, int b, int c, const char* name)
 {
-    if (!SFOLobby_NoInstance(a, b, c)) {
+    if (!SFOLobby_IgnoreCallbacks(a, b, c)) {
         D_00585E60->gotReply1F8 = 1;
         memcpy(D_00585E60->reply1B1C, name, 0x20);
     }
@@ -484,7 +484,7 @@ static inline void merge_flush_func_00446F80(void) {}
 /* merge_units: begin func_00446FD0 */
 #pragma push /* merge_units */
 /* Reply callback: flags gotReply1C0 and keeps the 0xB8-byte reply in reply9B0. */
-void SFOLobby_Callback_JoinChannel(void* a, void* b, void* c, void* src) { if (!SFOLobby_NoInstance(a, b, c, src)) { D_00585E60->gotReply1C0 = 1; memcpy(D_00585E60->reply9B0, src, 0xB8); } }
+void SFOLobby_Callback_JoinChannel(void* a, void* b, void* c, void* src) { if (!SFOLobby_IgnoreCallbacks(a, b, c, src)) { D_00585E60->gotReply1C0 = 1; memcpy(D_00585E60->reply9B0, src, 0xB8); } }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00446FD0(void) {}
 #pragma pop /* merge_units */
@@ -495,7 +495,7 @@ static inline void merge_flush_func_00446FD0(void) {}
 /* Reply callback: flags gotReply1FC and keeps the 0x90-byte reply in reply1B3C. */
 void SFOLobby_Callback_FindChannel(int a, int b, int c, void* src)
 {
-    if (SFOLobby_NoInstance(a, b, c) == 0) {
+    if (SFOLobby_IgnoreCallbacks(a, b, c) == 0) {
         D_00585E60->gotReply1FC = 1;
         memcpy(D_00585E60->reply1B3C, src, 0x90);
     }
@@ -509,32 +509,32 @@ static inline void merge_flush_func_00447020(void) {}
 #pragma push /* merge_units */
 #pragma mpwc_relax on
 #if 0 /* merge_units */
-int LobbyArray_Append(LobbyArray *, char *);
+int SFOLobbyList_Append(LobbyArray *, char *);
 #endif /* merge_units */
-#define LobbyArray_Append(a0, a1) (LobbyArray_Append((a0), (void *)(a1))) /* merge_units */
+#define SFOLobbyList_Append(a0, a1) (SFOLobbyList_Append((a0), (void *)(a1))) /* merge_units */
 
 /* Reply callback (second callback of SFOLobby_UniverseInformationRequest): flags gotReply1A0, appends a
  * LobbyUniverseEntry to universeList on success and keeps the 0x230-byte reply in reply18EC. */
 void SFOLobby_Callback_UniverseStatusList(int d0, int d1, int d2, char * arg3) {
     struct { int f20[32]; int fA0[32]; int f120; int f124[64]; int f224; int f228; int f22C; } sl;
     int temp_v0;
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         D_00585E60->gotReply1A0 = 1;
         temp_v0 = F_(arg3, 0x18, int);
         if ((temp_v0 != 1) && (temp_v0 == 0)) {
-            String_Copy(sl.f20, arg3 + 0x1C);
-            String_Copy(sl.fA0, arg3 + 0x9C);
-            String_Copy(sl.f124, arg3 + 0x120);
+            Libc_Strcpy(sl.f20, arg3 + 0x1C);
+            Libc_Strcpy(sl.fA0, arg3 + 0x9C);
+            Libc_Strcpy(sl.f124, arg3 + 0x120);
             sl.f120 = F_(arg3, 0x11C, int);
             sl.f224 = F_(arg3, 0x220, int);
             sl.f228 = F_(arg3, 0x224, int);
             sl.f22C = F_(arg3, 0x228, int);
-            LobbyArray_Append(D_00585E60->universeList, sl.f20);
+            SFOLobbyList_Append(D_00585E60->universeList, sl.f20);
         }
         memcpy(D_00585E60->reply18EC, arg3, 0x230);
     }
 }
-#undef LobbyArray_Append /* merge_units */
+#undef SFOLobbyList_Append /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00447070(void) {}
 #pragma pop /* merge_units */
@@ -544,24 +544,24 @@ static inline void merge_flush_func_00447070(void) {}
 #pragma push /* merge_units */
 #pragma mpwc_relax on
 #if 0 /* merge_units */
-int LobbyArray_Append(LobbyArray *, char *);
+int SFOLobbyList_Append(LobbyArray *, char *);
 #endif /* merge_units */
-#define LobbyArray_Append(a0, a1) (LobbyArray_Append((a0), (void *)(a1))) /* merge_units */
+#define SFOLobbyList_Append(a0, a1) (SFOLobbyList_Append((a0), (void *)(a1))) /* merge_units */
 
 /* Reply callback (first callback of SFOLobby_UniverseInformationRequest): flags gotReply19C, appends the
  * record's string to outList2404 on success and keeps the reply in reply17CC. */
 void SFOLobby_Callback_UniverseNews(int d0, int d1, int d2, char * arg3) {
     int sp20[64];
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         D_00585E60->gotReply19C = 1;
         if (F_(arg3, 0x18, int) == 0) {
-            String_Copy(sp20, arg3 + 0x1C);
-            LobbyArray_Append(D_00585E60->outList2404, sp20);
+            Libc_Strcpy(sp20, arg3 + 0x1C);
+            SFOLobbyList_Append(D_00585E60->outList2404, sp20);
         }
         memcpy(D_00585E60->reply17CC, arg3, 0x120);
     }
 }
-#undef LobbyArray_Append /* merge_units */
+#undef SFOLobbyList_Append /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00447130(void) {}
 #pragma pop /* merge_units */
@@ -569,11 +569,11 @@ static inline void merge_flush_func_00447130(void) {}
 
 /* merge_units: begin func_004471B0 */
 #pragma push /* merge_units */
-/* Reply callback (request SFOLobby_BeginSession): flags gotReply1A4 and keeps the 0x30-byte
+/* Reply callback (request SFOLobby_SessionBeginRequest): flags gotReply1A4 and keeps the 0x30-byte
  * reply in reply350. */
 void SFOLobby_Callback_SessionBegin(void* a0, void* a1, void* a2, void* data)
 {
-    if (SFOLobby_NoInstance(a0, a1, a2) == 0) {
+    if (SFOLobby_IgnoreCallbacks(a0, a1, a2) == 0) {
         D_00585E60->gotReply1A4 = 1;
         memcpy(&D_00585E60->reply350, data, 0x30);
     }
@@ -591,7 +591,7 @@ static inline void merge_flush_func_004471B0(void) {}
 extern "C" int SFOLobby_Callback_ReassignGameMediusWorldID(void) {
     int tmp0;
 
-    tmp0 = SFOLobby_NoInstance();
+    tmp0 = SFOLobby_IgnoreCallbacks();
     return tmp0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -601,10 +601,10 @@ static inline void merge_flush_func_00447200(void) {}
 
 /* merge_units: begin func_00447220 */
 #pragma push /* merge_units */
-/* Connect callback (SFOLobby_ConnectDir/SFOLobby_ConnectAuth/SFOLobby_ConnectLobby): flags gotConnect
+/* Connect callback (SFOLobby_MediusConnectMUIS/SFOLobby_MediusConnectMAS/SFOLobby_MediusConnectMLS): flags gotConnect
  * and stores the connection handle when it is valid. */
 void SFOLobby_Callback_MediusConnect(int handle) {
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         D_00585E60->gotConnect = 1;
         if (handle > 0) {
             D_00585E60->connHandle = handle;
@@ -620,7 +620,7 @@ static inline void merge_flush_func_00447220(void) {}
 #pragma push /* merge_units */
 /* Reply callback: flags gotReply198 and keeps the reply in reply314. */
 void SFOLobby_Callback_AccountRegistration(int a, int b, int c, void* data) {
-    if (!SFOLobby_NoInstance(a, b, c, data)) {
+    if (!SFOLobby_IgnoreCallbacks(a, b, c, data)) {
         D_00585E60->gotReply198 = 1;
         memcpy(&D_00585E60->reply314, data, 0x20);
     }
@@ -634,20 +634,20 @@ static inline void merge_flush_func_00447270(void) {}
 #pragma push /* merge_units */
 typedef struct { int x; char s[0x3EC]; } E4472C0;
 char D_004C0CD0[] = "{SFOLOBBY_SETTINGS}"; /* defined here: the unit's data (0x004C0CD0) */
-extern int String_CompareN(const char* a, const char* b, int n);
-extern void SFOLobby_ParseSettings(SFOLobby* g, char* s, int n, int f);
+extern int Libc_Strncmp(const char* a, const char* b, int n);
+extern void SFOLobby_ParseConfigFile(SFOLobby* g, char* s, int n, int f);
 #if 0 /* merge_units */
-extern int LobbyArray_Append(LobbyArray* a, E4472C0* e);
+extern int SFOLobbyList_Append(LobbyArray* a, E4472C0* e);
 #endif /* merge_units */
-#define LobbyArray_Append(a0, a1) (LobbyArray_Append((a0), (void *)(a1))) /* merge_units */
+#define SFOLobbyList_Append(a0, a1) (SFOLobbyList_Append((a0), (void *)(a1))) /* merge_units */
 
 #pragma opt_propagation off
 /* Reply callback: flags gotReply1BC. A text record starting with
- * "{SFOLOBBY_SETTINGS}" is handed (without the prefix) to SFOLobby_ParseSettings; any other
+ * "{SFOLOBBY_SETTINGS}" is handed (without the prefix) to SFOLobby_ParseConfigFile; any other
  * record goes to outList2400. On error the end-of-list byte (+0x408) is forced. */
 void SFOLobby_OnSettings(int d0, int d1, int d2, char* msg)
 {
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         D_00585E60->gotReply1BC = 1;
         if (F_(msg, 0x18, int) != 0) {
             F_(msg, 0x408, char) = 1;
@@ -656,19 +656,19 @@ void SFOLobby_OnSettings(int d0, int d1, int d2, char* msg)
             char* pfx;
             int n;
             e.x = F_(msg, 0x1C, int);
-            String_Copy(e.s, msg + 0x20);
+            Libc_Strcpy(e.s, msg + 0x20);
             pfx = D_004C0CD0;
             n = strlen(pfx);
-            if (String_CompareN(e.s, pfx, n) == 0) {
-                SFOLobby_ParseSettings((SFOLobby*)D_00585E60, e.s + n, strlen(e.s) - n, 1);
+            if (Libc_Strncmp(e.s, pfx, n) == 0) {
+                SFOLobby_ParseConfigFile((SFOLobby*)D_00585E60, e.s + n, strlen(e.s) - n, 1);
             } else {
-                LobbyArray_Append(D_00585E60->outList2400, &e);
+                SFOLobbyList_Append(D_00585E60->outList2400, &e);
             }
         }
         memcpy(D_00585E60->reply5A4, msg, 0x40C);
     }
 }
-#undef LobbyArray_Append /* merge_units */
+#undef SFOLobbyList_Append /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_004472C0(void) {}
 #pragma pop /* merge_units */
@@ -678,26 +678,26 @@ static inline void merge_flush_func_004472C0(void) {}
 #pragma push /* merge_units */
 #pragma mpwc_relax on
 #if 0 /* merge_units */
-int LobbyArray_Append(LobbyArray *, char * );
+int SFOLobbyList_Append(LobbyArray *, char * );
 #endif /* merge_units */
-#define LobbyArray_Append(a0, a1) (LobbyArray_Append((a0), (void *)(a1))) /* merge_units */
+#define SFOLobbyList_Append(a0, a1) (SFOLobbyList_Append((a0), (void *)(a1))) /* merge_units */
 
 /* Reply callback: flags gotReply1B8 and files the record under outUsageList when
  * its first string is "USAGE", else under outList23FC. */
-void SFOLobby_OnGetPolicy(int d0, int d1, int d2, char * arg3) {
-    if (SFOLobby_NoInstance() == 0) {
+void SFOLobby_Callback_GetPolicy(int d0, int d1, int d2, char * arg3) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         D_00585E60->gotReply1B8 = 1;
         if (F_(arg3, 0x18, int) != 0) {
             F_(arg3, 0x11C, signed char) = 1;
         } else if (strcmp(arg3, "USAGE") == 0) {
-            LobbyArray_Append(D_00585E60->outUsageList, arg3 + 0x1C);
+            SFOLobbyList_Append(D_00585E60->outUsageList, arg3 + 0x1C);
         } else {
-            LobbyArray_Append(D_00585E60->outList23FC, arg3 + 0x1C);
+            SFOLobbyList_Append(D_00585E60->outList23FC, arg3 + 0x1C);
         }
         memcpy(D_00585E60->reply484, arg3, 0x120);
     }
 }
-#undef LobbyArray_Append /* merge_units */
+#undef SFOLobbyList_Append /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_004473C0(void) {}
 #pragma pop /* merge_units */
@@ -705,9 +705,9 @@ static inline void merge_flush_func_004473C0(void) {}
 
 /* merge_units: begin func_00447470 */
 #pragma push /* merge_units */
-/* Reply callback (request SFOLobby_EndSession): flags gotReply1A8 and keeps the reply. */
+/* Reply callback (request SFOLobby_SessionEndRequest): flags gotReply1A8 and keeps the reply. */
 void SFOLobby_Callback_SessionEnd(void* a0, int a1, int a2, void* src) {
-    if (SFOLobby_NoInstance(a0, a1, a2, (int)src) == 0) {
+    if (SFOLobby_IgnoreCallbacks(a0, a1, a2, (int)src) == 0) {
         D_00585E60->gotReply1A8 = 1;
         memcpy(&D_00585E60->reply380, src, 0x1C);
     }
@@ -722,7 +722,7 @@ static inline void merge_flush_func_00447470(void) {}
 extern char D_004C0CB0; /* "SFOLobby_Callback.cc" */
 /* Reply callback: flags gotReply190 and reports server-side failures as error 1. */
 void SFOLobby_Callback_AccountLogout(int d0, int d1, int d2, LobbyReply *src) {
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         int e;
         D_00585E60->gotReply190 = 1;
         e = src->statusCode;
@@ -757,8 +757,8 @@ static inline void merge_flush_func_004474C0(void) {}
 /* Login reply callback: flags gotLogin, maps the Medius status to a lobby error
  * (0x3A bad password, 0x3B unknown account, 0x3C already logged in, else 1),
  * stores the account id and keeps the reply. */
-void SFOLobby_OnAccountLogin(int d0, int d1, int d2, LobbyLoginReply *src) {
-    if (SFOLobby_NoInstance() == 0) {
+void SFOLobby_Callback_AccountLogin(int d0, int d1, int d2, LobbyLoginReply *src) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         D_00585E60->gotLogin = 1;
         switch (src->statusCode) {
         case MediusSuccess:

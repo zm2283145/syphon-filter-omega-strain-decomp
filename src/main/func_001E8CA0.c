@@ -5,8 +5,8 @@ typedef struct RNode RNode;
 typedef struct { RNode** data; int count; } RVec;
 typedef struct { RNode** p; } RIt;
 struct RNode { int f0; RNode* parent; RVec children; };
-extern int RelNode_HasChildren(RNode* n);
-extern unsigned char Relation_FindDescendant(RNode* n, RNode* t);
+extern int cTreeNode_cSkaSystemPtr_HasChildren(RNode* n);
+extern unsigned char cTreeNode_cSkaSystemPtr_IsAttached_SearchDown(RNode* n, RNode* t);
 extern int func_001E8F60(RIt* a, RIt* b);
 extern RIt* func_001E8F80(RIt* it);
 extern RIt std_vector_cTreeNode_cSkaSystemPtrPtr_end(RVec* v);
@@ -19,18 +19,18 @@ extern RIt* func_001E9010(RIt* it);
 extern RNode** func_001E9030(RIt* w);
 extern void cArray_cTreeNode_cSkaSystemPtrPtr_End_void_2(RIt* out, RVec* v);
 extern void func_001E9060(RIt* out, RVec* v);
-unsigned char Relation_SameHierarchy(RNode* n, RNode* t);
+unsigned char cTreeNode_cSkaSystemPtr_IsAttached(RNode* n, RNode* t);
 }
 
 static inline bool Check(RNode* n, RNode* t) {
     if (n == t) return 1;
-    if (RelNode_HasChildren(n)) {
+    if (cTreeNode_cSkaSystemPtr_HasChildren(n)) {
         bool found = 0;
         RIt it, end;
         func_001E9060(&it, &n->children);
         cArray_cTreeNode_cSkaSystemPtrPtr_End_void_2(&end, &n->children);
         while (cArray_cTreeNode_cSkaSystemPtrPtr_ConstIterator_opNe(&it, &end)) {
-            if (Relation_FindDescendant(*func_001E9030(&it), t)) { found = 1; break; }
+            if (cTreeNode_cSkaSystemPtr_IsAttached_SearchDown(*func_001E9030(&it), t)) { found = 1; break; }
             func_001E9010(&it);
         }
         return found;
@@ -39,8 +39,8 @@ static inline bool Check(RNode* n, RNode* t) {
 }
 
 static inline unsigned char Up2(RNode* g, RNode* t) {
-    if (g->parent) return Relation_SameHierarchy(g->parent, t);
-    return Relation_FindDescendant(g, t);
+    if (g->parent) return cTreeNode_cSkaSystemPtr_IsAttached(g->parent, t);
+    return cTreeNode_cSkaSystemPtr_IsAttached_SearchDown(g, t);
 }
 
 static inline unsigned char Up1(RNode* p, RNode* t) {
@@ -66,7 +66,7 @@ static inline bool Search(RNode* n, RNode* t) {
     return 0;
 }
 
-extern "C" unsigned char Relation_SameHierarchy(RNode* n, RNode* t) {
+extern "C" unsigned char cTreeNode_cSkaSystemPtr_IsAttached(RNode* n, RNode* t) {
     if (n->parent) return Up1(n->parent, t);
     return Search(n, t);
 }

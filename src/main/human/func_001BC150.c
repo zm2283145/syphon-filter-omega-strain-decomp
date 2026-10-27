@@ -8,7 +8,7 @@
 #include "human_types.h"
 
 /* Store a 3x4 block into rows 1..3 of a 4x4 matrix (xyz first, then w). */
-void Mtx44_SetRows123FromMtx34(Mtx44* dst, Mtx34* src) {
+void cXform_SetRotationMatrix(Mtx44* dst, Mtx34* src) {
     dst->m[1][0] = src->m[0][0];
     dst->m[1][1] = src->m[0][1];
     dst->m[1][2] = src->m[0][2];

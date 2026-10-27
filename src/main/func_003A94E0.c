@@ -15,49 +15,49 @@ struct SkelNodesT {
 };
 
 extern "C" {
-void SkelNode_Construct(SNode* n);
+void cBone_ctor_void(SNode* n);
 void std_vector_imp_cBone_resize(SArr* a, unsigned int n, const SNode& fill);
 void cBone_dtor(SNode* n, int flag);
-void SkelNode_InitFromRecord(SNode* n, SRec* r);
-void SkelNode_AttachParent(SNode* n, SNode* parent);
+void cBone_Init(SNode* n, SRec* r);
+void cBone_SetParent(SNode* n, SNode* parent);
 SArr* cSkeleton_GetBoneList(SkelNodesT* s);
-SNode* SkelNodes_GetAt(SArr* a, int i);
+SNode* cArray_cBone_opIndex_int_2(SArr* a, int i);
 int cArray_cBone_Size(SArr* a);
-void* Node_GetTransform(SNode* n);
-void Mtx_InvertRigid_13ECA0(SMtx* out, void* in);
-void SkelNode_SetInverseBind(SNode* n, SMtx* m);
-void SkelNodes_ApplyScale(SkelNodesT* s);
-void SkelNodes_Construct(SkelNodesT* s);
+void* cBone_GetMatrix(SNode* n);
+void cMatrix_Copy_InvertRotTrans(SMtx* out, void* in);
+void cBone_SetMeshSpaceToBoneSpaceMatrix(SNode* n, SMtx* m);
+void cSkeleton_SetupBoneScaleMatrices(SkelNodesT* s);
+void cSkeleton_CreateBones(SkelNodesT* s);
 }
 
-void SkelNodes_Construct(SkelNodesT* s)
+void cSkeleton_CreateBones(SkelNodesT* s)
 {
     SNode tmp;
     SMtx m;
     int i;
 
-    SkelNode_Construct(&tmp);
+    cBone_ctor_void(&tmp);
     std_vector_imp_cBone_resize(&s->nodes, s->hdr->count, tmp);
     cBone_dtor(&tmp, -1);
     for (i = 0; i < s->nodes.count; i++) {
-        SkelNode_InitFromRecord(&s->nodes.At(i), &s->hdr->recs[i]);
+        cBone_Init(&s->nodes.At(i), &s->hdr->recs[i]);
     }
     for (i = 0; i < s->nodes.Size(); i++) {
         SNode* n = &s->nodes.At(i);
         unsigned char p = **(unsigned char**)(n->b + 0xC0);
         if (p != 0xFF)
-            SkelNode_AttachParent(n, &s->nodes.At(p));
+            cBone_SetParent(n, &s->nodes.At(p));
         else
-            SkelNode_AttachParent(n, 0);
+            cBone_SetParent(n, 0);
     }
     if (s->flag) {
         SArr* a = cSkeleton_GetBoneList(s);
-        SNode* n = SkelNodes_GetAt(a, 0);
+        SNode* n = cArray_cBone_opIndex_int_2(a, 0);
         for (i = 0; i < cArray_cBone_Size(a); i++) {
-            Mtx_InvertRigid_13ECA0(&m, Node_GetTransform(n));
-            SkelNode_SetInverseBind(n, &m);
+            cMatrix_Copy_InvertRotTrans(&m, cBone_GetMatrix(n));
+            cBone_SetMeshSpaceToBoneSpaceMatrix(n, &m);
             n++;
         }
     }
-    SkelNodes_ApplyScale(s);
+    cSkeleton_SetupBoneScaleMatrices(s);
 }

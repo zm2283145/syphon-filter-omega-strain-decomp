@@ -1,9 +1,9 @@
 #include "types.h"
 typedef struct { float x, y, z; } Vec3_003ED040;
-extern float Math_Cos(float a);
-extern float Math_Sin(float a);
+extern float Libc_Cosf(float a);
+extern float Libc_Sinf(float a);
 /* Build a rotation matrix from Euler angles (x, y, z). */
-Mtx44* Mtx_FromEuler(Mtx44* m, Vec3_003ED040* angles)
+Mtx44* cMatrix_ctor_cEulerAngleTR_2(Mtx44* m, Vec3_003ED040* angles)
 {
     /* declaration order chosen to reproduce the original register allocation */
     float z;
@@ -22,12 +22,12 @@ Mtx44* Mtx_FromEuler(Mtx44* m, Vec3_003ED040* angles)
     x = angles->x;
     y = angles->y;
     z = angles->z;
-    cx = Math_Cos(x);
-    sx = Math_Sin(x);
-    cy = Math_Cos(y);
-    sy = Math_Sin(y);
-    cz = Math_Cos(z);
-    sz = Math_Sin(z);
+    cx = Libc_Cosf(x);
+    sx = Libc_Sinf(x);
+    cy = Libc_Cosf(y);
+    sy = Libc_Sinf(y);
+    cz = Libc_Cosf(z);
+    sz = Libc_Sinf(z);
     czsx = cz * sx;
     szsx = sz * sx;
     szcx = sz * cx;

@@ -22,7 +22,7 @@ extern char * D_00585E60;
 void SFOLobby_Callback_CellRevokeClanInvitation(int d0, int d1, int d2, char * arg3) {
     int temp_a0;
 
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         F_(D_00585E60, 0x224, int) = 1;
         temp_a0 = F_(arg3, 0x18, int);
         switch (temp_a0) {                          
@@ -55,7 +55,7 @@ void SFOLobby_Callback_DisbandClan(int d0, int d1, int d2, signed char *arg3) {
     signed char *var_a1;
     int var_a0;
 
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         F_(D_00585E60, 0x1F0, int) = 1;
         temp_a0 = F_(arg3, 0x18, int);
         switch (temp_a0) {                          
@@ -92,7 +92,7 @@ typedef struct { char c[32]; } S32;
 typedef struct { char c[256]; } S256;
 typedef struct { S21 name; int a; int b; int c; S32 d; S256 e; int f; } R47;
 void SFOLobby_Callback_GetClanByName(int d0, int d1, int d2, R47 *src) {
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         R47 *d;
         *(int *)(D_00585E60 + 0x1EC) = 1;
         switch (src->a) {
@@ -123,7 +123,7 @@ void SFOLobby_Callback_GetClanByName(int d0, int d1, int d2, R47 *src) {
 #pragma push /* merge_units */
 typedef struct { S21 name; int a; int b; S32 c; int d; S32 e; S256 f; int g; } R48A;
 void func_00448050(int d0, int d1, int d2, R48A *src) {
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         R48A *d;
         *(int *)(D_00585E60 + 0x1EC) = 1;
         switch (src->a) {
@@ -161,7 +161,7 @@ void func_00448050(int d0, int d1, int d2, R48A *src) {
 void SFOLobby_Callback_CellRespondToInvitation(int d0, int d1, int d2, char * arg3) {
     int temp_a0;
 
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         F_(D_00585E60, 0x1DC, int) = 1;
         temp_a0 = F_(arg3, 0x18, int);
         switch (temp_a0) {                          
@@ -189,16 +189,16 @@ extern SFOLobby* D_00585E60;
 #endif /* merge_units */
 #define D_00585E60 (*(SFOLobby **)&D_00585E60) /* merge_units */
 
-extern int LobbyArray_Append(LobbyRecord1C* pool, const LobbyPoolResult* result);
+extern int SFOLobbyList_Append(LobbyRecord1C* pool, const LobbyPoolResult* result);
 
 /* Apply a successful result to the configured pool and record completion. */
 void SFOLobby_Callback_CellGetSentInvitations(int unused0, int unused1, int unused2, const LobbyPoolResult* result)
 {
-    if (!SFOLobby_NoInstance()) {
+    if (!SFOLobby_IgnoreCallbacks()) {
         LobbyRecord1C* pool = &D_00585E60->pool70;
         if (pool->elemSize > 0) {
             if (result->status == 0)
-                LobbyArray_Append(pool, result);
+                SFOLobbyList_Append(pool, result);
             if (result->complete == 1)
                 D_00585E60->gotReply1F4 = 1;
         }
@@ -210,12 +210,12 @@ void SFOLobby_Callback_CellGetSentInvitations(int unused0, int unused1, int unus
 
 /* merge_units: begin func_004482E0 */
 #pragma push /* merge_units */
-int LobbyArray_Append();
+int SFOLobbyList_Append();
 typedef struct { int st; int f4; int id; } E48;
 typedef struct { int f40; int f44; int f48; char s4C[0x20]; char s6C[0x20]; char rest[0x60]; } L48;
 typedef struct { char p[0x18]; int a; int b; char q[8]; char s28[0xC8]; int id; char sF4[0x20]; } R482;
 void SFOLobby_Callback_GetCellInvites(int d0, int d1, int d2, R482 *src) {
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         int i;
         int n;
         switch (src->a) {
@@ -233,7 +233,7 @@ void SFOLobby_Callback_GetCellInvites(int d0, int d1, int d2, R482 *src) {
         }
         n = *(int *)(D_00585E60 + 0x20);
         for (i = 0; i < n; i++) {
-            E48 *e = (E48 *)LobbyArray_At(D_00585E60 + 0x1C, i);
+            E48 *e = (E48 *)SFOLobbyList_GetSlot(D_00585E60 + 0x1C, i);
             if (e != 0 && e->st == 0 && e->id == src->id) return;
         }
         if (src->id >= 0 && src->id != *(int *)(D_00585E60 + 0xEAC)) {
@@ -244,7 +244,7 @@ void SFOLobby_Callback_GetCellInvites(int d0, int d1, int d2, R482 *src) {
                 l.f48 = src->b;
                 strncpy(l.s4C, src->sF4, 0x20);
                 strncpy(l.s6C, src->s28, 0x20);
-                LobbyArray_Append(D_00585E60 + 0x1C, &l);
+                SFOLobbyList_Append(D_00585E60 + 0x1C, &l);
             }
         }
     }
@@ -263,7 +263,7 @@ extern SFOLobby* D_00585E60;
 /* Mark the pending cell event when the lobby gate returns zero. */
 void SFOLobby_Callback_CellDeleteMessage(void)
 {
-    if (!SFOLobby_NoInstance())
+    if (!SFOLobby_IgnoreCallbacks())
         D_00585E60->gotReply21C = 1;
 }
 #undef D_00585E60 /* merge_units */
@@ -278,14 +278,14 @@ int Libc_Sscanf();
 /* the "%x" literal (0x004C0D28); retail places it 8-aligned, after 4 bytes of padding */
 static char merge_str_004C0D28[] __attribute__((aligned(8))) = "%x";
 void SFOLobby_Callback_CellGetAllMessage(int d0, int d1, int d2, R48 *src) {
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         R48 *d;
         switch (src->a) {
         case 0: {
             int h[1];
             h[0] = 0;
             Libc_Sscanf(src, merge_str_004C0D28, h);
-            LobbyArray_Append(h[0], src);
+            SFOLobbyList_Append(h[0], src);
             break;
         }
         case 1:
@@ -311,19 +311,19 @@ void SFOLobby_Callback_CellGetAllMessage(int d0, int d1, int d2, R48 *src) {
 typedef struct { S21 name; int a; int b; S200 data; char e8; } R45;
 const unsigned int D_004C0D30[2] = { 0x0, 0x0 };
 void SFOLobby_Callback_CellGetMessage(int d0, int d1, int d2, R45 *src) {
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         R45 *d;
         switch (src->a) {
         case 0:
             break;
         case 1:
-            String_Copy(&src->data, &(*(char*)D_004C0D30));
+            Libc_Strcpy(&src->data, &(*(char*)D_004C0D30));
             break;
         case -991:
         case -989:
         default:
             SFOLobby_SetError(D_00585E60, 1, &D_004C0D10, 0x854);
-            String_Copy(&src->data, &(*(char*)D_004C0D30));
+            Libc_Strcpy(&src->data, &(*(char*)D_004C0D30));
             break;
         }
         strncpy(D_00585E60 + 0x2594, &src->data, 0xC8);
@@ -346,7 +346,7 @@ void SFOLobby_Callback_CellGetMessage(int d0, int d1, int d2, R45 *src) {
 void SFOLobby_Callback_CellSetMessage(int d0, int d1, int d2, char * arg3) {
     int temp_a0;
 
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         temp_a0 = F_(arg3, 0x18, int);
         switch (temp_a0) {                          
         case 0:
@@ -420,17 +420,17 @@ typedef struct {
 } CellPlayer;
 
 extern "C" {
-extern char* Net_FormatIPv4(unsigned int);
+extern char* SFOLobby_UnpackIPAddress(unsigned int);
 extern CellPlayer* SFOLobby_FindGameData(char*, int);
 extern int SFOLobby_FindAgent(char*, int, int);
 #if 0 /* merge_units */
-extern int LobbyArray_Append(char*, void*);
+extern int SFOLobbyList_Append(char*, void*);
 #endif /* merge_units */
-#define LobbyArray_Append(a0, a1) (LobbyArray_Append((LobbyRecord1C *)(a0), (const LobbyPoolResult *)(a1))) /* merge_units */
+#define SFOLobbyList_Append(a0, a1) (SFOLobbyList_Append((LobbyRecord1C *)(a0), (const LobbyPoolResult *)(a1))) /* merge_units */
 
-extern void SFOLobby_CacheAccount(char*, int, char*, unsigned int, CellSub*);
-extern void LobbyArray_SetDirty(char*, int);
-extern void LobbyArray_Copy(void*, char*);
+extern void SFOLobby_RefreshAgentData(char*, int, char*, unsigned int, CellSub*);
+extern void SFOLobbyList_SetUpdateFlag(char*, int);
+extern void SFOLobbyList_CopyListFrom(void*, char*);
 #if 0 /* merge_units */
 extern char D_004C0D10[];
 #endif /* merge_units */
@@ -439,14 +439,14 @@ extern char D_004C0D10[];
 }
 
 extern "C" void SFOLobby_Callback_CellGetMemberList(int a0, int a1, int a2, CellInfo* info) {
-    if (SFOLobby_NoInstance()) return;
+    if (SFOLobby_IgnoreCallbacks()) return;
     if (info->id >= 0 && info->status == 0) {
         CellEntry e;
         CellSub* sub;
         CellPlayer* p;
         memset(&e, 0, sizeof(e));
         e.id = info->id;
-        String_Copy(e.name, info->name);
+        Libc_Strcpy(e.name, info->name);
         e.f30 = 0;
         e.f34 = -1;
         e.f38 = -1;
@@ -456,7 +456,7 @@ extern "C" void SFOLobby_Callback_CellGetMemberList(int a0, int a1, int a2, Cell
         e.f28 = 2;
         e.f24 = 3;
         sub = (CellSub*)info->sub;
-        e.addr = Net_FormatIPv4(sub->ip);
+        e.addr = SFOLobby_UnpackIPAddress(sub->ip);
         switch (info->kind[0]) {
         case 0:
             e.f24 = 3;
@@ -483,14 +483,14 @@ extern "C" void SFOLobby_Callback_CellGetMemberList(int a0, int a1, int a2, Cell
             break;
         }
         if (!SFOLobby_FindAgent(D_00585E60 + 0xC4, e.id, 0))
-            LobbyArray_Append(D_00585E60 + 0xC4, &e);
+            SFOLobbyList_Append(D_00585E60 + 0xC4, &e);
         {
             /* Preserve the host, entry id, and subrecord IP read order. */
             char* host = *(char* volatile*)&D_00585E60;
             char* nm = e.name;
             int eid = *(volatile int*)&e.id;
             unsigned int ip = *(volatile unsigned int*)&sub->ip;
-            SFOLobby_CacheAccount(host, eid, nm, ip, sub);
+            SFOLobby_RefreshAgentData(host, eid, nm, ip, sub);
         }
     }
     switch (info->status) {
@@ -504,15 +504,15 @@ extern "C" void SFOLobby_Callback_CellGetMemberList(int a0, int a1, int a2, Cell
         break;
     }
     if (info->flag) {
-        LobbyArray_SetRefreshing(D_00585E60 + 0xC4, 0);
-        LobbyArray_SetDirty(D_00585E60 + 0xC4, 1);
+        SFOLobbyList_SetBusy(D_00585E60 + 0xC4, 0);
+        SFOLobbyList_SetUpdateFlag(D_00585E60 + 0xC4, 1);
         if (*(int*)(D_00585E60 + 0x23E4))
-            LobbyArray_Copy(*(void**)(D_00585E60 + 0x23E4), D_00585E60 + 0xC4);
-        LobbyArray_Copy(D_00585E60 + 0x134, D_00585E60 + 0xC4);
+            SFOLobbyList_CopyListFrom(*(void**)(D_00585E60 + 0x23E4), D_00585E60 + 0xC4);
+        SFOLobbyList_CopyListFrom(D_00585E60 + 0x134, D_00585E60 + 0xC4);
     }
     *(CellInfo*)(D_00585E60 + 0x1050) = *info;
 }
-#undef LobbyArray_Append /* merge_units */
+#undef SFOLobbyList_Append /* merge_units */
 #undef D_004C0D10 /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_004487A0 */
@@ -521,7 +521,7 @@ extern "C" void SFOLobby_Callback_CellGetMemberList(int a0, int a1, int a2, Cell
 #pragma push /* merge_units */
 typedef struct { S21 name; int a; int b; int c; S32 d; int e; S32 f; S256 g; int h; signed char flag; } R4B;
 void SFOLobby_Callback_CellMemberGetMyCell(int d0, int d1, int d2, R4B *src) {
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         switch (src->a) {
         case 0:
             break;
@@ -558,7 +558,7 @@ void SFOLobby_Callback_CellMemberGetMyCell(int d0, int d1, int d2, R4B *src) {
 #pragma push /* merge_units */
 typedef struct { S21 name; int a; } R4D;
 void SFOLobby_Callback_CellMemberInvite(int d0, int d1, int d2, R4D *src) {
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         R4D *d;
         *(int *)(D_00585E60 + 0x1D8) = 1;
         if (src->a != 0) SFOLobby_SetError(D_00585E60, 1, &D_004C0D10, 0x718);
@@ -596,7 +596,7 @@ void SFOLobby_Callback_CellMemberRemove(int d0, int d1, int d2, signed char *arg
     signed char *var_a2;
     int var_a0;
 
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         var_a0 = 0x15;
         var_a2 = arg3;
         F_(D_00585E60, 0x1D4, int) = 1;
@@ -613,7 +613,7 @@ void SFOLobby_Callback_CellMemberRemove(int d0, int d1, int d2, signed char *arg
 #pragma push /* merge_units */
 typedef struct { S21 name; int a; int b; } R4E;
 void SFOLobby_Callback_CellCreate(int d0, int d1, int d2, R4E *src) {
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         R4E *d;
         *(int *)(D_00585E60 + 0x1CC) = 1;
         switch (src->a) {
@@ -685,17 +685,17 @@ char* func_00449070(S449070* s, int arg)
     int h;
 
     memset(&req, 0, sizeof(req));
-    String_Copy(req.a, D_004C0D38);
-    String_Copy(req.b, s->name);
+    Libc_Strcpy(req.a, D_004C0D38);
+    Libc_Strcpy(req.b, s->name);
     req.arg = arg;
     req.f58 = s->f2480;
     MediusGetClanByID(&req, func_00448050);
     s->f1244 = -0x3C6;
-    h = Lobby_GetTime();
+    h = SFOLobby_GetMillisecs();
     s->done = 0;
     s->busy = 1;
     while (s->done == 0) {
-        SFOLobby_CallUpdateHook(s, 0, 0);
+        SFOLobby_GuiCallback(s, 0, 0);
         if (SFOLobby_Poll(s, h, D_00497890, 0) == 0) {
             SFOLobby_SetError(s, 2, D_004C0D10, 0x683);
             break;
@@ -760,7 +760,7 @@ int func_00449180(S449180* s)
     struct { char a[0x15]; char b[0x13]; int x; } req;
     int h;
     int last = s->f2588;
-    int elapsed = Lobby_GetTime() - last;
+    int elapsed = SFOLobby_GetMillisecs() - last;
 
     if (last == 0 || D_00497800 < elapsed)
         SFOLobby_CellGetInfo(s);
@@ -769,7 +769,7 @@ int func_00449180(S449180* s)
         return 0;
     }
     memset(&req, 0, sizeof(req));
-    String_Copy(req.a, D_004C0D38);
+    Libc_Strcpy(req.a, D_004C0D38);
     strncpy(req.b, s->name, 0x11);
     req.x = s->fE84;
     s->done = 0;
@@ -780,9 +780,9 @@ int func_00449180(S449180* s)
         return 0;
     }
     s->busy = 1;
-    h = Lobby_GetTime();
+    h = SFOLobby_GetMillisecs();
     while (s->done == 0) {
-        SFOLobby_CallUpdateHook(s, 0, 0);
+        SFOLobby_GuiCallback(s, 0, 0);
         if (s->f24C != 0) {
             SFOLobby_SetError(s, 1, D_004C0D10, 0x645);
             s->busy = 0;
@@ -842,7 +842,7 @@ int SFOLobby_CellRespondToInvitation(S449360* s, int a, int b, char* msg)
     int h;
 
     memset(&req, 0, sizeof(req));
-    String_Copy(req.a, D_004C0D38);
+    Libc_Strcpy(req.a, D_004C0D38);
     strncpy(req.b, s->name, 0x11);
     req.x = a;
     req.y = b;
@@ -853,11 +853,11 @@ int SFOLobby_CellRespondToInvitation(S449360* s, int a, int b, char* msg)
         SFOLobby_SetError(s, 1, D_004C0D10, 0x5ED);
         return 0;
     }
-    h = Lobby_GetTime();
+    h = SFOLobby_GetMillisecs();
     s->done = 0;
     s->busy = 1;
     while (s->done == 0) {
-        SFOLobby_CallUpdateHook(s, 0, 0);
+        SFOLobby_GuiCallback(s, 0, 0);
         if (s->f24C != 0) {
             SFOLobby_SetError(s, 1, D_004C0D10, 0x5FB);
             s->busy = 0;
@@ -900,21 +900,21 @@ static inline int NonZero449510(int v) { return v != 0; }
 int SFOLobby_CellGetSentInvites(S449510* s)
 {
     struct { char a[0x15]; char b[0x13]; int x; int y; } req;
-    LobbyArray_Clear(s->f70);
+    SFOLobbyList_ClearList(s->f70);
     memset(&req, 0, sizeof(req));
-    String_Copy(req.a, D_004C0D38);
+    Libc_Strcpy(req.a, D_004C0D38);
     strncpy(req.b, s->name, 0x11);
     req.x = 1;
     req.y = 0x100;
     s->done = 0;
-    s->t0 = Lobby_GetTime();
+    s->t0 = SFOLobby_GetMillisecs();
     s->f24C = MediusGetClanInvitationsSent(&req, SFOLobby_Callback_CellGetSentInvitations);
     if (s->f24C != 0) {
         SFOLobby_SetError(s, 1, D_004C0D10, 0x5AC);
         return 0;
     }
     while (NonZero449510(s->done) ^ 1) {
-        SFOLobby_CallUpdateHook(s, 0, 0);
+        SFOLobby_GuiCallback(s, 0, 0);
         if (s->f24C != 0) {
             SFOLobby_SetError(s, 1, D_004C0D10, 0x5B8);
             s->busy = 0;
@@ -954,15 +954,15 @@ void SFOLobby_CellRevokeInvite(S449660* s, int arg)
     struct { char a[0x15]; char b[0x13]; int arg; } req;
 
     memset(&req, 0, sizeof(req));
-    String_Copy(req.a, D_004C0D38);
+    Libc_Strcpy(req.a, D_004C0D38);
     strncpy(req.b, s->name, 0x11);
     req.arg = arg;
     s->done = 0;
     s->f24C = MediusRevokeClanInvitation(&req, SFOLobby_Callback_CellRevokeClanInvitation);
     if (s->f24C == 0) {
-        s->t0 = Lobby_GetTime();
+        s->t0 = SFOLobby_GetMillisecs();
         while (NonZero449660(s->done) ^ 1) {
-            SFOLobby_CallUpdateHook(s, 0, 0);
+            SFOLobby_GuiCallback(s, 0, 0);
             if (SFOLobby_Poll(s, s->t0, D_00497890, 0) == 0) {
                 SFOLobby_SetError(s, 2, D_004C0D10, 0x584);
                 s->busy = 0;
@@ -986,24 +986,24 @@ extern int SFOLobby_CellGetSentInvites(S449770*);
 #endif /* merge_units */
 #define SFOLobby_CellGetSentInvites(a0) (SFOLobby_CellGetSentInvites((void *)(a0))) /* merge_units */
 
-#define LobbyArray_At(a0, a1) ((E449770 *)LobbyArray_At((a0), (a1))) /* merge_units */
+#define SFOLobbyList_GetSlot(a0, a1) ((E449770 *)SFOLobbyList_GetSlot((a0), (a1))) /* merge_units */
 #if 0 /* merge_units */
 extern void SFOLobby_CellRevokeInvite(S449770*, int);
 #endif /* merge_units */
 #define SFOLobby_CellRevokeInvite(a0, a1) (SFOLobby_CellRevokeInvite((void *)(a0), (a1))) /* merge_units */
 
-extern unsigned char SFOLobby_FormatError(S449770*, int);
+extern unsigned char SFOLobby_GetErrorDetails(S449770*, int);
 int SFOLobby_CellRevokeAllInvites(S449770* s)
 {
     int i;
     func_00451AE0(s);
     SFOLobby_CellGetSentInvites(s);
     for (i = 0; i < s->n74; i++) {
-        SFOLobby_CellRevokeInvite(s, LobbyArray_At(s->f70, i)->f1C);
+        SFOLobby_CellRevokeInvite(s, SFOLobbyList_GetSlot(s->f70, i)->f1C);
     }
-    return SFOLobby_FormatError(s, 0) == 0;
+    return SFOLobby_GetErrorDetails(s, 0) == 0;
 }
-#undef LobbyArray_At /* merge_units */
+#undef SFOLobbyList_GetSlot /* merge_units */
 #undef SFOLobby_CellGetSentInvites /* merge_units */
 #undef SFOLobby_CellRevokeInvite /* merge_units */
 #pragma pop /* merge_units */
@@ -1049,16 +1049,16 @@ extern int D_00497818;
 void SFOLobby_CellUpdateMemberList(S449800* s, int arg1)
 {
     int last = s->last;
-    int dt = Lobby_GetTime() - last;
+    int dt = SFOLobby_GetMillisecs() - last;
     if (s->state == 7) {
         if (last == 0 || dt > D_00497800) {
             SFOLobby_CellGetMemberList(s, arg1);
             SFOLobby_CellGetMessage_Raw(s);
-            s->last = Lobby_GetTime();
+            s->last = SFOLobby_GetMillisecs();
         }
     } else if (last == 0 || dt > D_00497818) {
         SFOLobby_CellGetMemberList(s, arg1);
-        s->last = Lobby_GetTime();
+        s->last = SFOLobby_GetMillisecs();
     }
 }
 #pragma pop
@@ -1088,10 +1088,10 @@ void SFOLobby_CellUpdateClanInvitations(char * arg0) {
     int temp_s1;
 
     temp_s1 = F_(arg0, 0x2584, int);
-    temp_a0 = Lobby_GetTime() - temp_s1;
+    temp_a0 = SFOLobby_GetMillisecs() - temp_s1;
     if ((temp_s1 == 0) || (D_004977E8 < temp_a0)) {
         memset(&sl, 0, 0x30);
-        String_Copy(sl.name, &D_004C0D38);
+        Libc_Strcpy(sl.name, &D_004C0D38);
         strncpy(sl.ip, arg0 + 0x2418, 0x11);
         sl.f58 = 1;
         sl.f5C = 0x3E7;
@@ -1099,7 +1099,7 @@ void SFOLobby_CellUpdateClanInvitations(char * arg0) {
         if (F_(arg0, 0x24C, int) != 0) {
             SFOLobby_SetError(arg0, 1, &D_004C0D10, 0x53F);
         }
-        F_(arg0, 0x2584, int) = Lobby_GetTime();
+        F_(arg0, 0x2584, int) = SFOLobby_GetMillisecs();
     }
 }
 #pragma pop
@@ -1127,7 +1127,7 @@ extern int SFOLobby_CellGetInfo(LobbyCell* cell);
 /* Refreshes the cell when it was never updated or the refresh interval has passed. */
 void func_004499A0(LobbyCell* cell) {
     int last = cell->lastUpdate;
-    int elapsed = Lobby_GetTime() - last;
+    int elapsed = SFOLobby_GetMillisecs() - last;
     if (last == 0 || D_00497800 < elapsed) {
         SFOLobby_CellGetInfo(cell);
     }
@@ -1154,23 +1154,23 @@ extern char D_004C0D10[];
 extern "C" int SFOLobby_CellGetInfo(S449A00* s)
 {
     struct { char a[0x15]; char b[0x13]; int x; int y; } req;
-    int now = Lobby_GetTime();
+    int now = SFOLobby_GetMillisecs();
     if (s->f2588 && now - s->f2588 < 50) return 1;
-    s->f2588 = Lobby_GetTime();
+    s->f2588 = SFOLobby_GetMillisecs();
     memset(&req, 0, sizeof(req));
     memset(&s->cur, 0, sizeof(s->cur));
     s->cur.b = -1;
     s->cur.d = -1;
-    String_Copy(req.a, D_004C0D38);
-    String_Copy(req.b, s->name);
+    Libc_Strcpy(req.a, D_004C0D38);
+    Libc_Strcpy(req.b, s->name);
     req.x = 1;
     req.y = 999;
     s->done = 0;
-    s->t0 = Lobby_GetTime();
+    s->t0 = SFOLobby_GetMillisecs();
     s->f24C = MediusGetMyClans(&req, SFOLobby_Callback_CellMemberGetMyCell);
     s->busy = 1;
     while (s->done == 0) {
-        SFOLobby_CallUpdateHook(s, 0, 0);
+        SFOLobby_GuiCallback(s, 0, 0);
         if (s->f24C != 0) {
             SFOLobby_SetError(s, 1, D_004C0D10, 0x4AE);
             s->f2484 = -1;
@@ -1241,16 +1241,16 @@ int SFOLobby_CellGetMemberList(S449D20* s, int wait)
 {
     struct { char a[0x18]; int x; int y; int z; } req;
     int last = s->f2588;
-    int elapsed = Lobby_GetTime() - last;
+    int elapsed = SFOLobby_GetMillisecs() - last;
 
     if (last == 0 || D_00497800 < elapsed)
         SFOLobby_CellGetInfo(s);
     if (s->f265D == 0)
         return 1;
-    LobbyArray_Clear(s->fC4);
-    LobbyArray_SetRefreshing(s->fC4, 0);
+    SFOLobbyList_ClearList(s->fC4);
+    SFOLobbyList_SetBusy(s->fC4, 0);
     last = s->f2588;
-    elapsed = Lobby_GetTime() - last;
+    elapsed = SFOLobby_GetMillisecs() - last;
     if (last == 0 || D_00497800 < elapsed)
         SFOLobby_CellGetInfo(s);
     if (s->fE84 < 0) {
@@ -1259,8 +1259,8 @@ int SFOLobby_CellGetMemberList(S449D20* s, int wait)
     }
     memset(&req, 0, sizeof(req));
     memset(s->f1050, 0, 0x1DC);
-    s->f2410 = Lobby_GetTime();
-    String_Copy(req.a, D_004C0D38);
+    s->f2410 = SFOLobby_GetMillisecs();
+    Libc_Strcpy(req.a, D_004C0D38);
     req.x = s->fE84;
     req.y = 0;
     req.z = 0;
@@ -1271,7 +1271,7 @@ int SFOLobby_CellGetMemberList(S449D20* s, int wait)
     }
     if (wait) {
         while (s->f1228 != 1) {
-            SFOLobby_CallUpdateHook(s, 0, 0);
+            SFOLobby_GuiCallback(s, 0, 0);
             if (s->f24C != 0) {
                 SFOLobby_SetError(s, 1, D_004C0D10, 0x46D);
                 s->busy = 0;
@@ -1312,17 +1312,17 @@ char* SFOLobby_CellGetCellByName(S449F40* s, char* arg1)
     int h;
 
     memset(&req, 0, sizeof(req));
-    String_Copy(req.f30, D_004C0D38);
-    String_Copy(req.f45, s->name);
-    String_Copy(req.f5C, arg1);
+    Libc_Strcpy(req.f30, D_004C0D38);
+    Libc_Strcpy(req.f45, s->name);
+    Libc_Strcpy(req.f5C, arg1);
     req.f58 = s->f1EA8;
     s->f24C = MediusGetClanByName(&req, SFOLobby_Callback_GetClanByName);
-    h = Lobby_GetTime();
+    h = SFOLobby_GetMillisecs();
     s->done = 0;
     s->f13AC = -0x3C6;
     s->busy = 1;
     while (s->done == 0) {
-        SFOLobby_CallUpdateHook(s, 0, 0);
+        SFOLobby_GuiCallback(s, 0, 0);
         if (SFOLobby_Poll(s, h, D_00497890, 0) == 0) {
             SFOLobby_SetError(s, 2, D_004C0D10, 0x3D4);
             break;
@@ -1357,7 +1357,7 @@ extern int SFOLobby_CellGetInfo(LobbyCell* cell);
 void* SFOLobby_CellGetName(LobbyCell* cell)
 {
     int last = cell->lastUpdate;
-    int elapsed = Lobby_GetTime() - last;
+    int elapsed = SFOLobby_GetMillisecs() - last;
     if (last == 0 || D_00497800 < elapsed)
         SFOLobby_CellGetInfo(cell);
     return cell->unk0E8C;
@@ -1392,16 +1392,16 @@ extern int SFOLobby_FindAgent(void*, int, int);
 static inline void Tick44A0D0(S44A0D0* s, int arg1)
 {
     int last = s->last;
-    int dt = Lobby_GetTime() - last;
+    int dt = SFOLobby_GetMillisecs() - last;
     if (s->state == 7) {
         if (last == 0 || dt > D_00497800) {
             SFOLobby_CellGetMemberList(s, arg1);
             SFOLobby_CellGetMessage_Raw(s);
-            s->last = Lobby_GetTime();
+            s->last = SFOLobby_GetMillisecs();
         }
     } else if (last == 0 || dt > D_00497818) {
         SFOLobby_CellGetMemberList(s, arg1);
-        s->last = Lobby_GetTime();
+        s->last = SFOLobby_GetMillisecs();
     }
 }
 #pragma push
@@ -1433,7 +1433,7 @@ extern int SFOLobby_CellGetInfo(LobbyCell* cell);
 /* Returns byte +0x265C after refreshing the cell if it is stale. */
 int SFOLobby_CellIsPlayerCellLeader(LobbyCell* cell) {
     int last = cell->lastUpdate;
-    int elapsed = Lobby_GetTime() - last;
+    int elapsed = SFOLobby_GetMillisecs() - last;
     if (last == 0 || D_00497800 < elapsed) {
         SFOLobby_CellGetInfo(cell);
     }
@@ -1441,9 +1441,9 @@ int SFOLobby_CellIsPlayerCellLeader(LobbyCell* cell) {
 }
 
 /* Returns byte +0x265D after refreshing the cell if it is stale. */
-int SFOLobby_CheckAgencyCell(LobbyCell* cell) {
+int SFOLobby_CellIsPlayerInCell(LobbyCell* cell) {
     int last = cell->lastUpdate;
-    int elapsed = Lobby_GetTime() - last;
+    int elapsed = SFOLobby_GetMillisecs() - last;
     if (last == 0 || D_00497800 < elapsed) {
         SFOLobby_CellGetInfo(cell);
     }
@@ -1468,12 +1468,12 @@ char* SFOLobby_CellGetMessage_Raw(S44A290* s)
     struct { char f0[0x15]; char f15[0x13]; int f28; int f2C; int f30; } req;
 
     memset(&req, 0, sizeof(req));
-    String_Copy(req.f0, D_004C0D38);
-    String_Copy(req.f15, s->name);
+    Libc_Strcpy(req.f0, D_004C0D38);
+    Libc_Strcpy(req.f15, s->name);
     req.f28 = s->fE84;
     req.f2C = 1;
     req.f30 = 1;
-    s->f2410 = Lobby_GetTime();
+    s->f2410 = SFOLobby_GetMillisecs();
     memset(s->f15F0, 0, 0xEC);
     s->f24C = MediusGetMyClanMessages(&req, SFOLobby_Callback_CellGetMessage);
     if (s->f24C != 0) {
@@ -1482,7 +1482,7 @@ char* SFOLobby_CellGetMessage_Raw(S44A290* s)
     }
     s->busy = 1;
     while (s->f16D8 != 1) {
-        SFOLobby_CallUpdateHook(s, 0, 0);
+        SFOLobby_GuiCallback(s, 0, 0);
         if (s->f24C != 0) {
             SFOLobby_SetError(s, 1, D_004C0D10, 0x305);
             s->busy = 0;
@@ -1508,16 +1508,16 @@ char* SFOLobby_CellGetMessage_Raw(S44A290* s)
 #pragma push /* merge_units */
 typedef struct { char p0[0x21C]; int f21C; int f220; char p224[0x24C - 0x224]; int f24C; char p250[0x16DC - 0x250]; char f16DC[0xEC]; signed char f17C8; char p17C9[0x2410 - 0x17C9]; int f2410; char p2414[4]; char name[0x17C]; char out[0xC8]; } S44A420;
 typedef struct { int f0; int count; char p8[8]; int f10; int f14; signed char f18; } List44A420;
-extern int SFOLobby_CheckText(S44A420*, char*, int);
+extern int SFOLobby_ServerTextFilter(S44A420*, char*, int);
 #if 0 /* merge_units */
-extern int SFOLobby_FormatError(S44A420*, int);
+extern int SFOLobby_GetErrorDetails(S44A420*, int);
 #endif /* merge_units */
-#define SFOLobby_FormatError(a0, a1) ((int)SFOLobby_FormatError((void *)(a0), (a1))) /* merge_units */
+#define SFOLobby_GetErrorDetails(a0, a1) ((int)SFOLobby_GetErrorDetails((void *)(a0), (a1))) /* merge_units */
 
-extern List44A420* LobbyArray_ctor(List44A420*);
-extern void LobbyArray_Init(List44A420*, int, int, int);
-#define LobbyArray_At(a0, a1) ((int *)LobbyArray_At((a0), (a1))) /* merge_units */
-extern void LobbyArray_dtor(List44A420*, int);
+extern List44A420* SFOLobbyList_ctor(List44A420*);
+extern void SFOLobbyList_AllocList(List44A420*, int, int, int);
+#define SFOLobbyList_GetSlot(a0, a1) ((int *)SFOLobbyList_GetSlot((a0), (a1))) /* merge_units */
+extern void SFOLobbyList_dtor(List44A420*, int);
 extern int MediusGetAllClanMessages(void*, void*);
 extern int MediusDeleteClanMessage(void*, void*);
 extern int MediusSendClanMessage(void*, void*);
@@ -1547,39 +1547,39 @@ int SFOLobby_CellSetMessage(S44A420* s, char* msg)
     int i;
 
     func_00451AE0();
-    if (SFOLobby_CheckText(s, msg, 0) == 0) {
+    if (SFOLobby_ServerTextFilter(s, msg, 0) == 0) {
         SFOLobby_SetError(s, 3, D_004C0D10, 0x268);
         return 0;
     }
-    LobbyArray_ctor(&list);
-    LobbyArray_Init(&list, 0x20, 0, 0xF0);
+    SFOLobbyList_ctor(&list);
+    SFOLobbyList_AllocList(&list, 0x20, 0, 0xF0);
     memset(&req1, 0, sizeof(req1));
     sprintf(req1.f0, D_004C0D28, &list);
-    String_Copy(req1.f15, s->name);
+    Libc_Strcpy(req1.f15, s->name);
     req1.f28 = 1;
     req1.f2C = 0x1E;
-    s->f2410 = Lobby_GetTime();
+    s->f2410 = SFOLobby_GetMillisecs();
     memset(s->f16DC, 0, 0xF0);
     s->f24C = MediusGetAllClanMessages(&req1, SFOLobby_Callback_CellGetAllMessage);
     if (s->f24C == 0) {
         while (s->f17C8 != 1) {
-            SFOLobby_CallUpdateHook(s, 0, 0);
+            SFOLobby_GuiCallback(s, 0, 0);
             if (SFOLobby_Poll(s, s->f2410, D_00497890, 0) == 0)
                 break;
         }
     }
     for (i = 0; i < list.count; i++) {
-        int* e = LobbyArray_At(&list, i);
+        int* e = SFOLobbyList_GetSlot(&list, i);
         memset(&req2, 0, sizeof(req2));
-        String_Copy(req2.f0, D_004C0D38);
-        String_Copy(req2.f15, s->name);
+        Libc_Strcpy(req2.f0, D_004C0D38);
+        Libc_Strcpy(req2.f15, s->name);
         req2.f28 = e[7];
-        s->f2410 = Lobby_GetTime();
+        s->f2410 = SFOLobby_GetMillisecs();
         s->f21C = 0;
         s->f24C = MediusDeleteClanMessage(&req2, SFOLobby_Callback_CellDeleteMessage);
         if (s->f24C == 0) {
             while ((s->f21C != 0) ^ 1) {
-                SFOLobby_CallUpdateHook(s, 0, 0);
+                SFOLobby_GuiCallback(s, 0, 0);
                 if (SFOLobby_Poll(s, s->f2410, D_00497890, 0) == 0) {
                     i = 0x3E7;
                     break;
@@ -1588,40 +1588,40 @@ int SFOLobby_CellSetMessage(S44A420* s, char* msg)
         }
     }
     memset(&req3, 0, sizeof(req3));
-    String_Copy(req3.f0, D_004C0D38);
-    String_Copy(req3.f15, s->name);
+    Libc_Strcpy(req3.f0, D_004C0D38);
+    Libc_Strcpy(req3.f15, s->name);
     strncpy(req3.f26, msg, 0xC7);
     s->f220 = 0;
-    s->f2410 = Lobby_GetTime();
+    s->f2410 = SFOLobby_GetMillisecs();
     s->f24C = MediusSendClanMessage(&req3, SFOLobby_Callback_CellSetMessage);
     if (s->f24C != 0) {
         SFOLobby_SetError(s, 1, D_004C0D10, 0x2BB);
-        LobbyArray_dtor(&list, -1);
+        SFOLobbyList_dtor(&list, -1);
         return 0;
     }
     while ((s->f220 != 0) ^ 1) {
-        SFOLobby_CallUpdateHook(s, 0, 0);
+        SFOLobby_GuiCallback(s, 0, 0);
         if (SFOLobby_Poll(s, s->f2410, D_00497890, 0) == 0) {
             SFOLobby_SetError(s, 2, D_004C0D10, 0x2C6);
-            LobbyArray_dtor(&list, -1);
+            SFOLobbyList_dtor(&list, -1);
             return 0;
         }
     }
     memset(s->out, 0, 0xC8);
     strncpy(s->out, msg, 0xC7);
-    if (SFOLobby_FormatError(s, 0)) {
-        LobbyArray_dtor(&list, -1);
+    if (SFOLobby_GetErrorDetails(s, 0)) {
+        SFOLobbyList_dtor(&list, -1);
         return 0;
     }
-    LobbyArray_dtor(&list, -1);
+    SFOLobbyList_dtor(&list, -1);
     return 1;
 }
 #pragma pop
-#undef LobbyArray_At /* merge_units */
+#undef SFOLobbyList_GetSlot /* merge_units */
 #undef SFOLobby_Callback_CellGetAllMessage /* merge_units */
 #undef SFOLobby_Callback_CellDeleteMessage /* merge_units */
 #undef SFOLobby_Callback_CellSetMessage /* merge_units */
-#undef SFOLobby_FormatError /* merge_units */
+#undef SFOLobby_GetErrorDetails /* merge_units */
 #undef D_004C0D10 /* merge_units */
 #undef SFOLobby_Callback_CellDeleteMessage /* merge_units */
 #pragma pop /* merge_units */
@@ -1683,16 +1683,16 @@ void SFOLobby_Callback_CellMemberRemove(); /* gsynth: address taken */
 static inline void Tick44A810(S44A810* s, int arg1)
 {
     int last = s->f258C;
-    int dt = Lobby_GetTime() - last;
+    int dt = SFOLobby_GetMillisecs() - last;
     if (s->state == 7) {
         if (last == 0 || dt > D_00497800) {
             SFOLobby_CellGetMemberList(s, arg1);
             SFOLobby_CellGetMessage_Raw(s);
-            s->f258C = Lobby_GetTime();
+            s->f258C = SFOLobby_GetMillisecs();
         }
     } else if (last == 0 || dt > D_00497818) {
         SFOLobby_CellGetMemberList(s, arg1);
-        s->f258C = Lobby_GetTime();
+        s->f258C = SFOLobby_GetMillisecs();
     }
 }
 static inline unsigned char Known44A810(S44A810* s, int key, int update)
@@ -1707,7 +1707,7 @@ static inline unsigned char Known44A810(S44A810* s, int key, int update)
 static inline int Online44A810(S44A810* s)
 {
     int last = s->f2588;
-    int elapsed = Lobby_GetTime() - last;
+    int elapsed = SFOLobby_GetMillisecs() - last;
     if (last == 0 || D_00497800 < elapsed) {
         SFOLobby_CellGetInfo(s);
     }
@@ -1732,12 +1732,12 @@ int SFOLobby_CellRemoveAgent(S44A810* s, int id)
     }
     if (!Online44A810(s) || id != s->f2480) {
         memset(&req, 0, sizeof(req));
-        String_Copy(req.f0, D_004C0D38);
-        String_Copy(req.f15, s->name);
+        Libc_Strcpy(req.f0, D_004C0D38);
+        Libc_Strcpy(req.f15, s->name);
         req.f28 = id;
         req.f2C = s->fE84;
         s->f1D4 = 0;
-        s->f2410 = Lobby_GetTime();
+        s->f2410 = SFOLobby_GetMillisecs();
         s->f24C = MediusRemovePlayerFromClan(&req, SFOLobby_Callback_CellMemberRemove);
         if (s->f24C != 0) {
             SFOLobby_SetError(s, 1, D_004C0D10, 0x203);
@@ -1745,7 +1745,7 @@ int SFOLobby_CellRemoveAgent(S44A810* s, int id)
         }
         s->busy = 1;
         while (s->f1D4 == 0) {
-            SFOLobby_CallUpdateHook(s, 0, 0);
+            SFOLobby_GuiCallback(s, 0, 0);
             if (s->f24C != 0) {
                 SFOLobby_SetError(s, 1, D_004C0D10, 0x20E);
                 s->busy = 0;
@@ -1809,9 +1809,9 @@ extern int SFOLobby_CellGetSentInvites(S44AC10*);
 #define SFOLobby_CellGetSentInvites(a0) (SFOLobby_CellGetSentInvites((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern unsigned char SFOLobby_FormatError(S44AC10*, int);
+extern unsigned char SFOLobby_GetErrorDetails(S44AC10*, int);
 #endif /* merge_units */
-#define SFOLobby_FormatError(a0, a1) (SFOLobby_FormatError((void *)(a0), (a1))) /* merge_units */
+#define SFOLobby_GetErrorDetails(a0, a1) (SFOLobby_GetErrorDetails((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void SFOLobby_CellGetMessage_Raw(S44AC10*);
@@ -1835,16 +1835,16 @@ void SFOLobby_Callback_CellMemberInvite(); /* gsynth: address taken */
 static inline void Tick44AC10(S44AC10* s, int arg1)
 {
     int last = s->f258C;
-    int dt = Lobby_GetTime() - last;
+    int dt = SFOLobby_GetMillisecs() - last;
     if (s->state == 7) {
         if (last == 0 || dt > D_00497800) {
             SFOLobby_CellGetMemberList(s, arg1);
             SFOLobby_CellGetMessage_Raw(s);
-            s->f258C = Lobby_GetTime();
+            s->f258C = SFOLobby_GetMillisecs();
         }
     } else if (last == 0 || dt > D_00497818) {
         SFOLobby_CellGetMemberList(s, arg1);
-        s->f258C = Lobby_GetTime();
+        s->f258C = SFOLobby_GetMillisecs();
     }
 }
 static inline unsigned char Known44AC10(S44AC10* s, int key, int update)
@@ -1859,7 +1859,7 @@ static inline unsigned char Known44AC10(S44AC10* s, int key, int update)
 static inline int Online44AC10(S44AC10* s)
 {
     int last = s->f2588;
-    int elapsed = Lobby_GetTime() - last;
+    int elapsed = SFOLobby_GetMillisecs() - last;
     if (last == 0 || D_00497800 < elapsed) {
         SFOLobby_CellGetInfo(s);
     }
@@ -1884,19 +1884,19 @@ int SFOLobby_CellInviteAgent(S44AC10* s, int id)
         return 0;
     }
     memset(&req, 0, sizeof(req));
-    String_Copy(req.f0, D_004C0D38);
-    String_Copy(req.f15, s->name);
+    Libc_Strcpy(req.f0, D_004C0D38);
+    Libc_Strcpy(req.f15, s->name);
     req.f28 = id;
     strncpy(req.f2C, s->fE8C, 0xC8);
     s->f1D8 = 0;
-    s->f2410 = Lobby_GetTime();
+    s->f2410 = SFOLobby_GetMillisecs();
     s->f24C = MediusInvitePlayerToClan(&req, SFOLobby_Callback_CellMemberInvite);
     if (s->f24C != 0) {
         SFOLobby_SetError(s, 1, D_004C0D10, 0x183);
         return 0;
     }
     while (s->f1D8 == 0) {
-        SFOLobby_CallUpdateHook(s, 0, 0);
+        SFOLobby_GuiCallback(s, 0, 0);
         if (s->f24C != 0) {
             SFOLobby_SetError(s, 1, D_004C0D10, 0x18E);
             s->busy = 0;
@@ -1910,7 +1910,7 @@ int SFOLobby_CellInviteAgent(S44AC10* s, int id)
     }
     s->busy = 0;
     if (s->fC08 < 0) {
-        if (SFOLobby_FormatError(s, 0) == 0x2A) {
+        if (SFOLobby_GetErrorDetails(s, 0) == 0x2A) {
             SFOLobby_CellGetSentInvites(s);
             if (s->f74 != 0) {
                 SFOLobby_SetError(s, 0x3F, D_004C0D10, 0x1A6);
@@ -1927,7 +1927,7 @@ int SFOLobby_CellInviteAgent(S44AC10* s, int id)
 #undef SFOLobby_CellGetInfo /* merge_units */
 #undef SFOLobby_CellGetMemberList /* merge_units */
 #undef SFOLobby_CellGetSentInvites /* merge_units */
-#undef SFOLobby_FormatError /* merge_units */
+#undef SFOLobby_GetErrorDetails /* merge_units */
 #undef SFOLobby_CellGetMessage_Raw /* merge_units */
 #undef SFOLobby_FindAgent /* merge_units */
 #undef D_004C0D10 /* merge_units */
@@ -1939,9 +1939,9 @@ int SFOLobby_CellInviteAgent(S44AC10* s, int id)
 #define strlen(a0) ((unsigned int)strlen((a0))) /* merge_units */
 typedef struct { char p0[0x1CC]; int done; char p1D0[0x7C]; int f24C; char p250[0x21B8]; signed char busy; char p2409[7]; int f2410; char p2414[4]; char name[0x14C]; unsigned char b2564; } S44AF60;
 #if 0 /* merge_units */
-extern int SFOLobby_CheckText(S44AF60*, char*, int);
+extern int SFOLobby_ServerTextFilter(S44AF60*, char*, int);
 #endif /* merge_units */
-#define SFOLobby_CheckText(a0, a1, a2) (SFOLobby_CheckText((void *)(a0), (a1), (a2))) /* merge_units */
+#define SFOLobby_ServerTextFilter(a0, a1, a2) (SFOLobby_ServerTextFilter((void *)(a0), (a1), (a2))) /* merge_units */
 
 extern int MediusCreateClan(void*, void*);
 extern int KM_GetSoftwareID(void);
@@ -1984,22 +1984,22 @@ int SFOLobby_CellCreate(S44AF60* s, char* arg1)
         SFOLobby_SetError(s, 0x1A, D_004C0D10, 0xF1);
         return 0;
     }
-    if (SFOLobby_CheckText(s, arg1, 0) == 0) {
+    if (SFOLobby_ServerTextFilter(s, arg1, 0) == 0) {
         SFOLobby_SetError(s, 3, D_004C0D10, 0xF7);
         return 0;
     }
     memset(&req, 0, sizeof(req));
-    String_Copy(req.f30, D_004C0D38);
-    String_Copy(req.f45, s->name);
+    Libc_Strcpy(req.f30, D_004C0D38);
+    Libc_Strcpy(req.f45, s->name);
     strncpy(req.f5C, arg1, 0x20);
     req.f58 = KM_GetSoftwareID();
     s->done = 0;
-    s->f2410 = Lobby_GetTime();
+    s->f2410 = SFOLobby_GetMillisecs();
     s->f24C = MediusCreateClan(&req, SFOLobby_Callback_CellCreate);
     SFOLobby_SetError(s, 0, D_004C0D10, 0x113);
     s->busy = 1;
     while (s->done == 0) {
-        SFOLobby_CallUpdateHook(s, 0, 0);
+        SFOLobby_GuiCallback(s, 0, 0);
         if (s->f24C != 0) {
             s->busy = 0;
             return 0;
@@ -2019,7 +2019,7 @@ int SFOLobby_CellCreate(S44AF60* s, char* arg1)
 }
 #pragma pop
 #undef SFOLobby_Callback_CellCreate /* merge_units */
-#undef SFOLobby_CheckText /* merge_units */
+#undef SFOLobby_ServerTextFilter /* merge_units */
 #undef SFOLobby_CellGetCellByName /* merge_units */
 #undef SFOLobby_CellSetMessage /* merge_units */
 #undef SFOLobby_CellGetInfo /* merge_units */
@@ -2070,29 +2070,29 @@ void SFOLobby_CellScreenIntel(Cell * c) { char* arg0 = (char*)c;
     if (st == 7 && c->f2409 == 0) {
         SFOLobby_AudioOnFrame(arg0);
         temp_s1 = c->t88;
-        temp_a0 = Lobby_GetTime() - temp_s1;
+        temp_a0 = SFOLobby_GetMillisecs() - temp_s1;
         if ((temp_s1 == 0) || (D_00497800 < temp_a0)) {
             SFOLobby_CellGetInfo(arg0);
         }
         temp_s1 = c->t8C;
-        temp_a0 = Lobby_GetTime() - temp_s1;
+        temp_a0 = SFOLobby_GetMillisecs() - temp_s1;
         if (c->st == 7) {
             if ((temp_s1 == 0) || (D_00497800 < temp_a0)) {
                 SFOLobby_CellGetMemberList(arg0, 0);
                 SFOLobby_CellGetMessage_Raw(arg0);
-                c->t8C = Lobby_GetTime();
+                c->t8C = SFOLobby_GetMillisecs();
             }
         } else {
             if ((temp_s1 == 0) || (D_00497818 < temp_a0)) {
                 SFOLobby_CellGetMemberList(arg0, 0);
-                c->t8C = Lobby_GetTime();
+                c->t8C = SFOLobby_GetMillisecs();
             }
         }
         temp_s1 = c->t84;
-        temp_a0 = Lobby_GetTime() - temp_s1;
+        temp_a0 = SFOLobby_GetMillisecs() - temp_s1;
         if ((temp_s1 == 0) || (D_004977E8 < temp_a0)) {
             memset((char*)&sl, 0, 0x30);
-            String_Copy(sl.name, &D_004C0D38);
+            Libc_Strcpy(sl.name, &D_004C0D38);
             strncpy(sl.ip, arg0 + 0x2418, 0x11);
             sl.f58 = 1;
             sl.f5C = 0x3E7;
@@ -2100,7 +2100,7 @@ void SFOLobby_CellScreenIntel(Cell * c) { char* arg0 = (char*)c;
             if (c->f24C != 0) {
                 SFOLobby_SetError(arg0, 1, &D_004C0D10, 0x53F);
             }
-            c->t84 = Lobby_GetTime();
+            c->t84 = SFOLobby_GetMillisecs();
         }
         func_00451B30(arg0);
         SFOLobby_PingIntel(arg0, arg0 + 0xC4);
@@ -2144,11 +2144,11 @@ extern void SFOLobby_CellGetMessage_Raw(SLB*);
 extern void SFOLobby_SetCallback(SLB*, int);
 extern void SFOLobby_AudioShutdown(SLB*);
 extern void SFOLobbyList_FreeList(void*);
-extern void LobbyArray_Free(void*);
+extern void SFOLobbyList_ClearAndCompactList(void*);
 #if 0 /* merge_units */
-extern void LobbyArray_Init(void*, int, int, int);
+extern void SFOLobbyList_AllocList(void*, int, int, int);
 #endif /* merge_units */
-#define LobbyArray_Init(a0, a1, a2, a3) (LobbyArray_Init((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define SFOLobbyList_AllocList(a0, a1, a2, a3) (SFOLobbyList_AllocList((void *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 extern int SFOLobby_FindChannel(SLB*, char*);
 extern int SFOLobby_CreateChannel(SLB*, char*, char*);
@@ -2163,9 +2163,9 @@ extern char D_004C0D10[];
 extern char D_004C0D40[];
 static inline void ClearLists(SLB* s)
 {
-    if (s->f23E4) LobbyArray_Free(s->f23E4);
+    if (s->f23E4) SFOLobbyList_ClearAndCompactList(s->f23E4);
     s->f23E4 = 0;
-    if (s->f23EC) LobbyArray_Free(s->f23EC);
+    if (s->f23EC) SFOLobbyList_ClearAndCompactList(s->f23EC);
     s->f23EC = 0;
 }void SFOLobby_CellScreenExit(SLB* s)
 {
@@ -2185,7 +2185,7 @@ static inline void ClearLists(SLB* s)
 #undef SFOLobby_CellGetInfo /* merge_units */
 #undef SFOLobby_CellGetMemberList /* merge_units */
 #undef SFOLobby_CellGetMessage_Raw /* merge_units */
-#undef LobbyArray_Init /* merge_units */
+#undef SFOLobbyList_AllocList /* merge_units */
 #undef D_004C0D10 /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0044B370 */
@@ -2208,9 +2208,9 @@ extern void SFOLobby_CellGetMessage_Raw(SLB*);
 #define SFOLobby_CellGetMessage_Raw(a0) ((void)SFOLobby_CellGetMessage_Raw((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void LobbyArray_Init(void*, int, int, int);
+extern void SFOLobbyList_AllocList(void*, int, int, int);
 #endif /* merge_units */
-#define LobbyArray_Init(a0, a1, a2, a3) (LobbyArray_Init((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define SFOLobbyList_AllocList(a0, a1, a2, a3) (SFOLobbyList_AllocList((void *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
 extern char D_004C0D10[];
@@ -2219,7 +2219,7 @@ extern char D_004C0D10[];
 static inline int Online2(SLB* s)
 {
     int last = s->f2588;
-    int elapsed = Lobby_GetTime() - last;
+    int elapsed = SFOLobby_GetMillisecs() - last;
     if (last == 0 || D_00497800 < elapsed) {
         SFOLobby_CellGetInfo(s);
     }
@@ -2239,8 +2239,8 @@ int func_0044B420(SLB* s, int mode, void* a, void* b)
     SFOLobby_SetCallback(s, mode);
     s->f23E4 = a;
     s->f23EC = b;
-    LobbyArray_Init(s->f23EC, s->f1EA4, 0, 0x68);
-    LobbyArray_Init(s->f23E4, 0x40, 0x20, 0x50);
+    SFOLobbyList_AllocList(s->f23EC, s->f1EA4, 0, 0x68);
+    SFOLobbyList_AllocList(s->f23E4, 0x40, 0x20, 0x50);
     s->f2588 = 0;
     if (!SFOLobby_CellGetInfo(s)) {
         ClearLists(s);
@@ -2253,7 +2253,7 @@ int func_0044B420(SLB* s, int mode, void* a, void* b)
     if (Online2(s) && s->f26A8 != 3) {
         s->f26A8 = 0;
         func_00454010(key);
-        String_Copy(name, D_004C0D30);
+        Libc_Strcpy(name, D_004C0D30);
         sprintf(path, D_004C0D40, s->fE84);
         if (!SFOLobby_FindChannel(s, path)) {
             if (!SFOLobby_CreateChannel(s, path, name)) {
@@ -2287,7 +2287,7 @@ int func_0044B420(SLB* s, int mode, void* a, void* b)
 #undef SFOLobby_CellGetInfo /* merge_units */
 #undef SFOLobby_CellGetMemberList /* merge_units */
 #undef SFOLobby_CellGetMessage_Raw /* merge_units */
-#undef LobbyArray_Init /* merge_units */
+#undef SFOLobbyList_AllocList /* merge_units */
 #undef D_004C0D10 /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0044B420 */

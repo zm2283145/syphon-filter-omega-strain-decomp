@@ -13,7 +13,7 @@
 #include "vc_copy.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00160CE0 */
 #pragma push /* merge_units */
@@ -26,24 +26,24 @@ struct CxStartMsg{void*vt;char pad[0x28];int a,b;int unk34;float x,y,z;};
 extern "C" {
 extern unsigned char g_IsMultiplayer;
 extern char D_0051F0C0[],D_004DE510[];
-void Event_Construct(CxStartMsg*,void*);
+void cMessage_ctor_cMessageNameR(CxStartMsg*,void*);
 void cMessage_dtor(CxStartMsg*,int);
 void cNetPathMsg_SendPath(CxStartMsg*,int,CxStartRoute*);
-void NpcPath_HoldNode(CxStartPath*,int);
-int NpcRoute_Step(CxStartPath*);
+void cPathNavigator_SetNodeIndex(CxStartPath*,int);
+int cPathNavigator_NextPathSegment(CxStartPath*);
 }
-static inline void CxStart_Construct(CxStartMsg*m,CxStartMsg*loc){Event_Construct(m,D_0051F0C0);loc->x=-1.0f;loc->vt=D_004DE510;loc->y=-1.0f;loc->z=-1.0f;m->a=-1;m->b=-1;}
+static inline void CxStart_Construct(CxStartMsg*m,CxStartMsg*loc){cMessage_ctor_cMessageNameR(m,D_0051F0C0);loc->x=-1.0f;loc->vt=D_004DE510;loc->y=-1.0f;loc->z=-1.0f;m->a=-1;m->b=-1;}
 static inline void CxStart_Destroy(CxStartMsg*m,CxStartMsg*loc){loc->vt=D_004DE510;cMessage_dtor(m,0);}
 #pragma opt_propagation off
-extern "C" int NpcRoute_Start(CxStartPath*self){
+extern "C" int cPathNavigator_NewPath(CxStartPath*self){
  if(g_IsMultiplayer && self->actor->networked){CxStartMsg msg;CxStartMsg*m=&msg;CxStart_Construct(m,&msg);cNetPathMsg_SendPath(m,self->actor->id,self->route);CxStart_Destroy(m,&msg);}
- if(self->hold){self->hold=0;NpcPath_HoldNode(self,-1);}
+ if(self->hold){self->hold=0;cPathNavigator_SetNodeIndex(self,-1);}
  self->remaining=self->route->count;
  int n=self->remaining;
 if(n>1){int*end;int seg;seg=self->segA;unsigned offset=n<<2;end=(int*)(offset+(unsigned)self->route->nodes);if(seg==end[-1] && self->segB==end[-2])self->remaining=n-1;}
  self->segB=-1;
  self->type=self->route->type;
- self->stopped=!NpcRoute_Step(self);
+ self->stopped=!cPathNavigator_NextPathSegment(self);
  return !self->stopped;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -59,7 +59,7 @@ struct S_0E60 { char pad[0x74]; T_0E60* t; };
 extern "C" {
 extern char D_0049C1B8[];
 }
-extern "C" void NpcRoute_ReleaseBuffer(S_0E60* self)
+extern "C" void cPathNavigator_Deactivate(S_0E60* self)
 {
     T_0E60* t = self->t;
     if (t) {
@@ -74,7 +74,7 @@ extern "C" void NpcRoute_ReleaseBuffer(S_0E60* self)
         if (a) {
             {
                 AllocGuard g;
-                Mem_Free(0, a, D_0049C1B8, 0x508);
+                cMemMan_Deallocate(0, a, D_0049C1B8, 0x508);
             }
             t->ids = 0;
             t->n = 0;
@@ -114,16 +114,16 @@ extern char D_004ED9B8[];
 extern char D_004D9760[];
 extern char g_Game[];
 extern char g_NpcRouteMgr[];
-void* Mem_Alloc(int pool, int size, void* file, int line);
-void* Service_Lookup(void*, void*);
+void* cMemMan_Allocate(int pool, int size, void* file, int line);
+void* cSystemContainer_GetSystem(void*, void*);
 }
 struct Route {
     char pad0[0x10];
     int x10; int x14; int x18; char pad1C[4];
     int* nodes; int cap; int count; char pad2C[4];
     Route(int c) { cap = c; nodes = 0; count = 0; x14 = -1; x10 = -1; }
-    void* operator new(unsigned int sz) { void* p; AllocGuard g; p = Mem_Alloc(0, sz, D_0049C1B8, 0x5CC); return p; }
-    void Reserve() { if (!nodes) { int sz = cap * 4; int* q; { AllocGuard g; q = (int*)Mem_Alloc(0, sz, D_0049C1B8, 0x4F2); } nodes = q; } }
+    void* operator new(unsigned int sz) { void* p; AllocGuard g; p = cMemMan_Allocate(0, sz, D_0049C1B8, 0x5CC); return p; }
+    void Reserve() { if (!nodes) { int sz = cap * 4; int* q; { AllocGuard g; q = (int*)cMemMan_Allocate(0, sz, D_0049C1B8, 0x4F2); } nodes = q; } }
 };
 struct PNode { char pad[0x64]; int flags; char pad68[0x14]; int f7C; };
 struct Path {
@@ -150,28 +150,28 @@ struct Path {
 };
 struct Msg { void* vt; char pad[0x20]; unsigned char kind; char pad25[3]; int id; char pad2c[4]; };
 extern "C" {
-PNode* NpcPath_GetNode(int id);
+PNode* cAIPathData_GetNode(int id);
 #if 0 /* merge_units */
-void Event_Construct(void* m, void* type);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((CxStartMsg *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((CxStartMsg *)(a0), (a1))) /* merge_units */
 
-void Event_Send(void* m, Actor* to, int flags);
+void QueueMessage_cMessageR_cSystemP_int(void* m, Actor* to, int flags);
 #if 0 /* merge_units */
 void cMessage_dtor(void* m, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((CxStartMsg *)(a0), (a1))) /* merge_units */
 
-unsigned char NpcPath_SetSegment(Path* p, int seg);
+unsigned char cPathNavigator_StartPathSegment_int(Path* p, int seg);
 #if 0 /* merge_units */
-void NpcPath_HoldNode(Path* p, int node);
+void cPathNavigator_SetNodeIndex(Path* p, int node);
 #endif /* merge_units */
-#define NpcPath_HoldNode(a0, a1) (NpcPath_HoldNode((CxStartPath *)(a0), (a1))) /* merge_units */
+#define cPathNavigator_SetNodeIndex(a0, a1) (cPathNavigator_SetNodeIndex((CxStartPath *)(a0), (a1))) /* merge_units */
 
-int NpcPath_NextPatrolNode(int seg);
-unsigned char NpcPath_RebuildRoute(void* r, int to, int from, Route* obj);
+int cAIPathData_GetNextPatrolPathNodeIndex(int seg);
+unsigned char cPathSystem_RestorePath(void* r, int to, int from, Route* obj);
 }
-static inline void Construct(Msg* m, unsigned char kind, int id) { Event_Construct(m, D_004ED9B8); m->vt = D_004D9760; m->kind = kind; m->id = id; }
+static inline void Construct(Msg* m, unsigned char kind, int id) { cMessage_ctor_cMessageNameR(m, D_004ED9B8); m->vt = D_004D9760; m->kind = kind; m->id = id; }
 static inline void Destroy(Msg* loc) { loc->vt = D_004D9760; cMessage_dtor(loc, 0); }
 static inline void Notify(Path* p, unsigned char kind, int id)
 {
@@ -179,7 +179,7 @@ static inline void Notify(Path* p, unsigned char kind, int id)
     Msg* m = &msg;
     Construct(m, kind, id);
     Actor* a = p->actor; Actor* o = a->owner; Actor* to = a; if (!o) { asm { .set reorder } } else to = o;
-    Event_Send(&msg, to, 0);
+    QueueMessage_cMessageR_cSystemP_int(&msg, to, 0);
     Destroy(&msg);
 }
 static inline void Copy(V4* d, V4* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(s)); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(d) : "memory"); }
@@ -189,21 +189,21 @@ static inline void GetPos(V4* out, Path* p)
 }
 #pragma opt_propagation off
 
-extern "C" void NpcPath_Start(Path* self)
+extern "C" void cPathNavigator_Activate(Path* self)
 {
     if (self->b6) {
         { int z = 0; self->b6 = z; }
         if (self->node >= 0) {
-            PNode* n = NpcPath_GetNode(self->node);
-            NpcPath_HoldNode(self, self->node);
+            PNode* n = cAIPathData_GetNode(self->node);
+            cPathNavigator_SetNodeIndex(self, self->node);
             Copy(&self->pos, &self->x20);
             if (n->flags & 8) {
                 self->b0 = 1;
                 self->b1 = 1;
-                int next = NpcPath_NextPatrolNode(self->node);
+                int next = cAIPathData_GetNextPatrolPathNodeIndex(self->node);
                 if (next >= 0) {
                     self->seg = self->node;
-                    self->b3 = !NpcPath_SetSegment(self, next);
+                    self->b3 = !cPathNavigator_StartPathSegment_int(self, next);
                     { int z = 0; self->b4 = z; }
                     if (!self->b3)
                         Notify(self, 4, -1);
@@ -221,11 +221,11 @@ extern "C" void NpcPath_Start(Path* self)
     Route* r = self->route;
     r->Reserve();
     if (r->x14 >= 0)
-        NpcPath_RebuildRoute(Service_Lookup(g_Game, g_NpcRouteMgr), r->x14, r->x18, r);
+        cPathSystem_RestorePath(cSystemContainer_GetSystem(g_Game, g_NpcRouteMgr), r->x14, r->x18, r);
 }
-#undef Event_Construct /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
 #undef cMessage_dtor /* merge_units */
-#undef NpcPath_HoldNode /* merge_units */
+#undef cPathNavigator_SetNodeIndex /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00160F60(void) {}
 #pragma pop /* merge_units */
@@ -236,26 +236,26 @@ static inline void merge_flush_func_00160F60(void) {}
 typedef struct { char pad[0x7C]; int x7C; } Node_12D0;
 typedef struct { char pad[0x4C]; int start; char pad2[0x5C - 0x50]; int val; unsigned char flags; } S_12D0;
 #if 0 /* merge_units */
-extern int NpcPath_NextPatrolNode(int id);
+extern int cAIPathData_GetNextPatrolPathNodeIndex(int id);
 #endif /* merge_units */
-#define NpcPath_NextPatrolNode(a0) (NpcPath_NextPatrolNode((a0))) /* merge_units */
+#define cAIPathData_GetNextPatrolPathNodeIndex(a0) (cAIPathData_GetNextPatrolPathNodeIndex((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern Node_12D0* NpcPath_GetNode(int id);
+extern Node_12D0* cAIPathData_GetNode(int id);
 #endif /* merge_units */
-#define NpcPath_GetNode(a0) ((Node_12D0 *)NpcPath_GetNode((a0))) /* merge_units */
+#define cAIPathData_GetNode(a0) ((Node_12D0 *)cAIPathData_GetNode((a0))) /* merge_units */
 
-int NpcRoute_StartRegion(S_12D0* self)
+int cPathNavigator_GetGroupIndexForPatrolPath(S_12D0* self)
 {
     int r = self->val;
     if (r < 0 && (self->flags & 1)) {
         int id = self->start;
         while (id >= 0 && r < 0) {
-            id = NpcPath_NextPatrolNode(id);
+            id = cAIPathData_GetNextPatrolPathNodeIndex(id);
             if (id == self->start)
                 break;
             if (id >= 0) {
-                int v = NpcPath_GetNode(id)->x7C;
+                int v = cAIPathData_GetNode(id)->x7C;
                 if (v)
                     r = v;
             }
@@ -263,8 +263,8 @@ int NpcRoute_StartRegion(S_12D0* self)
     }
     return r;
 }
-#undef NpcPath_NextPatrolNode /* merge_units */
-#undef NpcPath_GetNode /* merge_units */
+#undef cAIPathData_GetNextPatrolPathNodeIndex /* merge_units */
+#undef cAIPathData_GetNode /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001612D0(void) {}
 #pragma pop /* merge_units */
@@ -273,7 +273,7 @@ static inline void merge_flush_func_001612D0(void) {}
 /* merge_units: begin func_00161370 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x60]; unsigned char lo:4; unsigned char a:1; unsigned char b:1; } PfD4;
-void NpcPath_ArrivalInput(PfD4* p, int v)
+void cPathNavigator_SetDestinationReached(PfD4* p, int v)
 {
     if (p->b != (unsigned char)v) {
         p->a = v;
@@ -428,19 +428,19 @@ static inline void QCopy_14C0(void* dst, void* src, int n0)
 extern "C" {
 typedef struct { char pad[0x14]; int id; int arg; int pad1c; void* buf; int count; } S_14C0;
 #if 0 /* merge_units */
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 #endif /* merge_units */
-#define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (a1), (void *)(a2), (a3))) /* merge_units */
+#define cMemMan_Allocate(a0, a1, a2, a3) (cMemMan_Allocate((a0), (a1), (void *)(a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
-void* Service_Lookup(void* reg, void* key);
+void* cSystemContainer_GetSystem(void* reg, void* key);
 #endif /* merge_units */
-#define Service_Lookup(a0, a1) (Service_Lookup((a0), (a1))) /* merge_units */
+#define cSystemContainer_GetSystem(a0, a1) (cSystemContainer_GetSystem((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-unsigned char NpcPath_RebuildRoute(void* svc, int id, int arg, S_14C0* s);
+unsigned char cPathSystem_RestorePath(void* svc, int id, int arg, S_14C0* s);
 #endif /* merge_units */
-#define NpcPath_RebuildRoute(a0, a1, a2, a3) (NpcPath_RebuildRoute((a0), (a1), (a2), (Route *)(a3))) /* merge_units */
+#define cPathSystem_RestorePath(a0, a1, a2, a3) (cPathSystem_RestorePath((a0), (a1), (a2), (Route *)(a3))) /* merge_units */
 
 }
 #pragma opt_common_subs off
@@ -452,16 +452,16 @@ extern "C" void cPathTransfer_Put(void* src, S_14C0* self)
         void* p;
         {
             AllocGuard g;
-            p = Mem_Alloc(0, size, D_0049C1B8, 0x4F2);
+            p = cMemMan_Allocate(0, size, D_0049C1B8, 0x4F2);
         }
         self->buf = p;
     }
     if (self->id >= 0)
-        NpcPath_RebuildRoute(Service_Lookup(g_Game, g_NpcRouteMgr), self->id, self->arg, self);
+        cPathSystem_RestorePath(cSystemContainer_GetSystem(g_Game, g_NpcRouteMgr), self->id, self->arg, self);
 }
-#undef Mem_Alloc /* merge_units */
-#undef Service_Lookup /* merge_units */
-#undef NpcPath_RebuildRoute /* merge_units */
+#undef cMemMan_Allocate /* merge_units */
+#undef cSystemContainer_GetSystem /* merge_units */
+#undef cPathSystem_RestorePath /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001614C0(void) {}
 #pragma pop /* merge_units */
@@ -514,7 +514,7 @@ S_1680* func_00161680(S_1680* self, short flag)
             int g[1];
             cTimerDisable_ctor(g);
             cPathNavigator_dtor(p, -1);
-            Mem_Free(0, p, D_0049C1B8, 0x542);
+            cMemMan_Deallocate(0, p, D_0049C1B8, 0x542);
             cTimerDisable_dtor(g, -1);
         }
         if (flag > 0)
@@ -549,7 +549,7 @@ extern "C" T_1720* cPathNavigator_dtor(T_1720* t, short del)
         if (a) {
             {
                 AllocGuard g;
-                Mem_Free(0, a, D_0049C1B8, 0x508);
+                cMemMan_Deallocate(0, a, D_0049C1B8, 0x508);
             }
             t->ids = 0;
             t->n = 0;
@@ -578,7 +578,7 @@ typedef struct {
     char pad61[0x70 - 0x61];
     int x70; int x74; int x78;
 } S_1840;
-S_1840* NpcPath_Construct(S_1840* self, int a, int b, int c)
+S_1840* cPathNavigator_ctor(S_1840* self, int a, int b, int c)
 {
     self->x4C = c;
     self->x70 = a;

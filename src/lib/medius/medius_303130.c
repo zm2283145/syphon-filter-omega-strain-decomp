@@ -20,7 +20,7 @@ extern int GetKeyMaster(int a);
 extern int GetKeyChain(int a, int peer);
 extern void KM_CreateRandomRCKey(void *buf);
 extern int KM_AddSymmetricKey(int a, int peer, void *buf);
-extern int String_CompareN(const char *a, const char *b, int n);
+extern int Libc_Strncmp(const char *a, const char *b, int n);
 extern char *strncpy(char *d, const char *s, unsigned int n);
 extern int rt_udp_pre_accept(int h, UpnpAddr *a, int *out);
 int rt_p2p_incoming_peer(UpnpObj *o, UpnpInfo *info)
@@ -50,7 +50,7 @@ int rt_p2p_incoming_peer(UpnpObj *o, UpnpInfo *info)
                             KM_CreateRandomRCKey(buf);
                             KM_AddSymmetricKey(-1, idx, buf);
                             s.peer = idx;
-                            if (String_CompareN(info->a, info->b, 16) == 0 && info->pa == info->pb) {
+                            if (Libc_Strncmp(info->a, info->b, 16) == 0 && info->pa == info->pb) {
                                 info->a[0] = 0;
                                 info->pa = 0;
                             }
@@ -121,7 +121,7 @@ int rt_p2p_connect(UpnpObj_00303348 *o, UpnpInfo *info, void *cb)
     e->f24 = GetKeyChain(GetKeyMaster(-1), 0);
     KM_CreateRandomRCKey(buf);
     KM_AddSymmetricKey(-1, 0, buf);
-    if (String_CompareN(info->a, info->b, 16) == 0 && info->pa == info->pb) {
+    if (Libc_Strncmp(info->a, info->b, 16) == 0 && info->pa == info->pb) {
         info->a[0] = 0;
         info->pa = 0;
     }

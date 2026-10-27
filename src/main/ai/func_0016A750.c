@@ -5,7 +5,7 @@ struct TeamRel {
     unsigned char hostile : 1;
 };
 
-extern "C" void TeamRelations_SetDefaults(TeamRel (*r)[16])
+extern "C" void cTeam_InitTeamData(TeamRel (*r)[16])
 {
     int i, j;
     for (i = 0; i < 4; i++) {

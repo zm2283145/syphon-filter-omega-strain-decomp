@@ -11,7 +11,7 @@ typedef struct { int magic; char a4[0x10]; char a14[0x10]; unsigned short p24; u
 extern int rt_p2p_get_my_peer_status(UpnpObj *o, int *type, int *idx);
 extern int rt_p2p_get_peer_by_connection(UpnpObj *o, int key, int *out);
 extern int rt_p2p_fill_new_peer_struct(UpnpObj *o, int peer, UpnpRec *r);
-extern int RtUdp_SendToPeerEndpoint(UpnpObj *o, int peer, unsigned char type, void *data, unsigned short len);
+extern int rt_p2p_isend(UpnpObj *o, int peer, unsigned char type, void *data, unsigned short len);
 extern int rt_p2p_send_my_broadcast_flag(UpnpObj *o, int idx);
 extern void rt_udp_disconnect(int h, int key);
 
@@ -43,26 +43,26 @@ void rt_p2p_handle_connected_event(UpnpObj *o, int key)
             if (peer != 0) {
                 if ((ret = rt_p2p_fill_new_peer_struct(o, peer, &rec)) != 0)
                     return;
-                if ((ret = RtUdp_SendToPeerEndpoint(o, idx, 7, &rec, 0x70)) != 0)
+                if ((ret = rt_p2p_isend(o, idx, 7, &rec, 0x70)) != 0)
                     return;
             }
             for (i = 0; i < o->count; i++) {
                 if (o->ent[i].type == 3 && i != idx) {
                     rt_p2p_fill_new_peer_struct(o, i, &rec);
-                    if ((ret = RtUdp_SendToPeerEndpoint(o, idx, 7, &rec, 0x70)) != 0)
+                    if ((ret = rt_p2p_isend(o, idx, 7, &rec, 0x70)) != 0)
                         return;
                 }
             }
             if ((ret = rt_p2p_fill_new_peer_struct(o, idx, &rec)) != 0)
                 return;
             rec.b2D = 1;
-            if ((ret = RtUdp_SendToPeerEndpoint(o, idx, 7, &rec, 0x70)) != 0)
+            if ((ret = rt_p2p_isend(o, idx, 7, &rec, 0x70)) != 0)
                 return;
             if ((ret = rt_p2p_fill_new_peer_struct(o, idx, &rec)) != 0)
                 return;
             for (i = 0; i < o->count; i++) {
                 if (o->ent[i].type == 3 && i != idx) {
-                    if ((ret = RtUdp_SendToPeerEndpoint(o, i, 7, &rec, 0x70)) != 0)
+                    if ((ret = rt_p2p_isend(o, i, 7, &rec, 0x70)) != 0)
                         return;
                 }
             }

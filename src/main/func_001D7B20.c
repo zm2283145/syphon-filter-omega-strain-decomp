@@ -15,7 +15,7 @@ extern void InitializeStaticDataIfNotInitialized(V_7B20* v);
 extern T_7B20* cJointInfo_ctor(T_7B20* d, V4_7B20* s, V4_7B20* q);
 extern void cJointInfo_opAssign(void* d, T_7B20* s);
 extern void cJointInfo_dtor(T_7B20* t, int f);
-void UpperBody_BuildChainTable(V_7B20* v)
+void cHumanIkRoutine_InitializeStaticDataAndWorkspaceIfNotInitialized(V_7B20* v)
 {
     InitializeStaticDataIfNotInitialized(v);
     if (!D_004F47B0) {

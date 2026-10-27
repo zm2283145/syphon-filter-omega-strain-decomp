@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int Collision_GatherScene(int, int, int, int);
+extern int cCollisionModelList_CollectFaces_MainCode_cArrayR_cBoxR_int(int, int, int, int);
 
-int Collision_GatherSceneThunk(int a0, int a1, int a2, int a3) {
-    return Collision_GatherScene(a0, a1, a2, a3);
+int cCollisionModelList_CollectFaces_cArrayR_cBoxR_int(int a0, int a1, int a2, int a3) {
+    return cCollisionModelList_CollectFaces_MainCode_cArrayR_cBoxR_int(a0, a1, a2, a3);
 }

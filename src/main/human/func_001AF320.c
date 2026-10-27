@@ -11,7 +11,7 @@ float cSkeletonCenterOfMassContribution_Weight(char* self) {
 }
 
 /* Address of 464-byte skeleton node i. */
-char* SkelNodes_GetAt(PtrVec* v, int i) {
+char* cArray_cBone_opIndex_int_2(PtrVec* v, int i) {
     char* data = (char*)v->data;
 
     return data + i * 464;

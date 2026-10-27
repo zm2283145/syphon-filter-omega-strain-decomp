@@ -2,7 +2,7 @@ typedef struct E { unsigned char* ptr; unsigned int n; unsigned char data[1]; } 
 typedef struct X { char pad[0x58]; char* tab; char pad2[0x68-0x5C]; unsigned int flags; } X;
 typedef struct A { int a0; X* x; } A;
 
-void Model_SetPatchBit(A* a, int idx, unsigned char on) {
+void cVU1Model_UpdateLighting(A* a, int idx, unsigned char on) {
     unsigned char cur;
     E* e;
     cur = (a->x->flags >> idx) & 1;

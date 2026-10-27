@@ -21,7 +21,7 @@ typedef struct Desc_E0D90 {
 extern Vec_E0D90* D_00554F20;
 int String_CompareNoCase(char*, char*);
 #pragma opt_strength_reduction off
-Ent_E0D90* ScriptDesc_Find(void* self, Desc_E0D90* d) {
+Ent_E0D90* cScriptInterpreter_findFunc_FuncDefInitP(void* self, Desc_E0D90* d) {
     char* name = d->name;
     int count = d->count;
     int* vals = d->vals;
@@ -75,7 +75,7 @@ struct FE:Ft { FE(const Ft& i) { cArray_FuncDefPtr_Iterator_ctor(this,&i); } };
 static inline FE beginF() { return FE(std_vector_FuncDefPtr_begin(D_00554F20)); }
 static inline FE endF() { return FE(std_vector_FuncDefPtr_end(D_00554F20)); }
 static inline int neqF(const Ft& a,const Ft& b) { return (a.p == b.p)^1; }
-extern "C" Func* Script_FindFunction(void* self, char* name, int type) {
+extern "C" Func* cScriptInterpreter_findFunc_charP_int(void* self, char* name, int type) {
     Ft f=beginF();
     while(neqF(f,endF())) {
         Func* p=*f.p;

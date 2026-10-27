@@ -16,7 +16,7 @@ extern char g_AgentPartCache[];
 extern int FindTex__7MonsterF1(void *t, __int128 key);
 extern void Monster_FindTheTexture(void *t, __int128 key, E *e, short *a, short *b, unsigned char u, signed char s);
 
-void GuiAgentModify_AdvancePatchA(O *o, int idx)
+void GuiAgentModify_CheckSmallPatch(O *o, int idx)
 {
     Key k;
     char *lo, *hi, *b;

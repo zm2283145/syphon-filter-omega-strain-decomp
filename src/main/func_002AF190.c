@@ -4,20 +4,20 @@ typedef struct { int kind; String name; } Src;
 typedef struct { char pad[0x100]; int kind; String name; } Item;
 extern void* D_004FFC04;
 extern char D_004ABCD0[];
-extern void String_CtorCStr_13B480(String* dst, String* src);
-extern void String_AssignString(String* dst, String* src);
+extern void std_basic_string_char_char_traits_char_ctor_charP(String* dst, String* src);
+extern void std_basic_string_char_char_traits_char_assign_basicstringR(String* dst, String* src);
 extern void String_Dtor(String* s, int flags);
-extern int GuiScreen_GetLobbyString(Item* it, int id, String* name, int a, int b, int c);
-extern void FrontEnd_OpenPopup(void* mgr, int a, char* fmt, int v, Item* it, int b);
+extern int GuiLobbyScreen_GetLobbyString(Item* it, int id, String* name, int a, int b, int c);
+extern void cGameFrontEnd_PushMessageBox(void* mgr, int a, char* fmt, int v, Item* it, int b);
 /* Copies kind and name from src, then registers the item. */
 void GuiNetAgencyCell_SelectAgentRemove(Item* it, Src* src)
 {
     String tmp;
     void* mgr;
     it->kind = src->kind;
-    String_CtorCStr_13B480(&tmp, &src->name);
-    String_AssignString(&it->name, &tmp);
+    std_basic_string_char_char_traits_char_ctor_charP(&tmp, &src->name);
+    std_basic_string_char_char_traits_char_assign_basicstringR(&it->name, &tmp);
     String_Dtor(&tmp, 0);
     mgr = D_004FFC04;
-    FrontEnd_OpenPopup(mgr, 5, D_004ABCD0, GuiScreen_GetLobbyString(it, 0x51, &src->name, 0, 0, 0), it, 0x12);
+    cGameFrontEnd_PushMessageBox(mgr, 5, D_004ABCD0, GuiLobbyScreen_GetLobbyString(it, 0x51, &src->name, 0, 0, 0), it, 0x12);
 }

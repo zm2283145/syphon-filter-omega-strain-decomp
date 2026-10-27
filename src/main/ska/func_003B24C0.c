@@ -14,7 +14,7 @@ int cSkaAnimDataFrame_ConstIterator_Quaternion(char* self) {
 }
 
 /* angular += rate * dt */
-void AnimRoot_AccumAngular(SkaAnimRoot* root, float rate, float dt) {
+void cSkaAnimAnchor_AccumulateDeltaRot(SkaAnimRoot* root, float rate, float dt) {
     root->angular = root->angular + rate * dt;
 }
 
@@ -23,7 +23,7 @@ int cSkaAnimDataFrame_ConstIterator_Scalar(char* self) {
 }
 
 /* Build an XYZ vector with W = 0 from the source's +8/+0xC/+0x10 floats. */
-void SkelBone_GetLocalOffset(SkaVec4* out, SkaPoseSrc* src) {
+void cBoneData_PositionOffset(SkaVec4* out, SkaPoseSrc* src) {
     float z = src->z;
     float y = src->y;
     float x = src->x;

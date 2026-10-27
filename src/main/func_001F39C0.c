@@ -7,9 +7,9 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern void ScalarCollection_Init(ScalarCollection*);
+extern void std_list_deleter_voidPtr_ctor_void(ScalarCollection*);
 
 ScalarCollection* std_list_imp_voidPtr_ctor(ScalarCollection* self) {
-    ScalarCollection_Init(self);
+    std_list_deleter_voidPtr_ctor_void(self);
     return self;
 }

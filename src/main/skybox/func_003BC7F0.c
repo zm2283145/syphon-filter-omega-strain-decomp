@@ -41,12 +41,12 @@ extern float D_005392E0;
 extern float D_005392E4;
 extern float D_005392E8;
 extern float D_005392EC;
-float Math_Atan2f(float y, float x);
+float Libc_Atan2f(float y, float x);
 void cMatrix_ctor_void(TM* m);
-void Mtx_MakeAxisRotation(TM* m, float x, float y, float z, float a);
-void Mtx_Multiply(M* a, TM* b);
-void Model_Draw(void* model, int mode, M* m);
-void SkyLayer_Draw(Sky* o);
+void cMatrix_SetWithAxisAngle(TM* m, float x, float y, float z, float a);
+void cMatrix_Rotate(M* a, TM* b);
+void cVU1Model_Render(void* model, int mode, M* m);
+void cSLayer_Render(Sky* o);
 }
 
 #define STK(i) ((M*)(g_Video + 0xA80 + (i) * 0x40))
@@ -57,8 +57,8 @@ static inline void Rot2(M* m, const V& ax, float a)
 {
     TM t;
     cMatrix_ctor_void(&t);
-    Mtx_MakeAxisRotation(&t, ax.x, ax.y, ax.z, a);
-    Mtx_Multiply(m, &t);
+    cMatrix_SetWithAxisAngle(&t, ax.x, ax.y, ax.z, a);
+    cMatrix_Rotate(m, &t);
 }
 static inline void Rot(M* m, const V& ax, float a) { Rot2(m, ax, a); }
 static inline float AbsF(float a) { float r; __asm__ ("abs.s %0, %1" : "=f"(r) : "f"(a)); return r; }
@@ -74,7 +74,7 @@ static inline void SetFog(const V& c)
 #define PI 3.1415927f
 #define HPI 1.5707964f
 
-void SkyLayer_Draw(Sky* o)
+void cSLayer_Render(Sky* o)
 {
     int dm = g_DrawMode;
     if (o->flags & 0x10) {
@@ -88,7 +88,7 @@ void SkyLayer_Draw(Sky* o)
     }
     if (o->flags & 8) {
         V row(STK(D_00538C64)->r(1));
-        float a = Math_Atan2f(row.y, row.x);
+        float a = Libc_Atan2f(row.y, row.x);
         float prev = o->heading;
         if (prev != a) {
             float na = a;
@@ -109,5 +109,5 @@ void SkyLayer_Draw(Sky* o)
     Rot(&mm, V(0.0f, 1.0f, 0.0f, 0.0f), o->rot.y);
     Rot(&mm, V(0.0f, 0.0f, 1.0f, 0.0f), o->rot.z);
     CpV((V*)mm.m[3], &o->dir);
-    Model_Draw(o->model, 2, &mm);
+    cVU1Model_Render(o->model, 2, &mm);
 }

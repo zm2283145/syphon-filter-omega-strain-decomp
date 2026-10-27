@@ -58,7 +58,7 @@ static inline bool CxCa_Area(CxCaArea*a,CxCaReq*r){
     if(selfEqual)if(a->flags==r->flags)result=true;
     return result;
 }
-extern "C" CxCaReq*NpcRoute_NodeSearchCached(CxCaManager*self,CxCaActor*actor,int kind,CxCaV4*from,CxCaV4*to,int mask,CxCaArea*area){
+extern "C" CxCaReq*cPathSystem_FindSimilarPastRequest_cGOBJP_eRequestType_cVectorR_cVectorR_etc(CxCaManager*self,CxCaActor*actor,int kind,CxCaV4*from,CxCaV4*to,int mask,CxCaArea*area){
     CxCaIt cur=CxCa_Begin(&self->cache);
     for(;cur.link!=CxCa_End(&self->cache);cur.link=cur.link->prev){
         CxCaReq* req=cur.Req();
@@ -84,14 +84,14 @@ typedef struct CxPathNode { char pad[0x7C]; int region; } CxPathNode;
 typedef struct CxPathFollower { char pad[0x5C]; int current; char gap60[0x10]; void* actor; void* buffer; } CxPathFollower;
 extern char g_Game[];
 extern char g_NpcRouteMgr[];
-extern void* Service_Lookup(void*, void*);
-extern CxPathNode* NpcPath_GetNode(int);
-extern int NpcRoute_Request(void*,void*,int,int,int,int,int,int,long long);
+extern void* cSystemContainer_GetSystem(void*, void*);
+extern CxPathNode* cAIPathData_GetNode(int);
+extern int cPathSystem_RequestPath(void*,void*,int,int,int,int,int,int,long long);
 int cPathNavigator_Request_int_int_cVectorP(CxPathFollower* self,int start,int destination,int useRegion) {
     int region=-1;
-    void* manager=Service_Lookup(g_Game,g_NpcRouteMgr);
-    if(useRegion && destination>=0) region=NpcPath_GetNode(destination)->region;
-    return NpcRoute_Request(manager,self->actor,start,-1,self->current,destination,region,useRegion,(long long)(int)self->buffer);
+    void* manager=cSystemContainer_GetSystem(g_Game,g_NpcRouteMgr);
+    if(useRegion && destination>=0) region=cAIPathData_GetNode(destination)->region;
+    return cPathSystem_RequestPath(manager,self->actor,start,-1,self->current,destination,region,useRegion,(long long)(int)self->buffer);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0015F9B0(void) {}
@@ -107,14 +107,14 @@ typedef struct CxPathFollower2 {
     char pad64[12];
     void* actor; void* buffer;
 } CxPathFollower2;
-unsigned char NpcPath_RequestRoute(CxPathFollower2* self,int kind,int region) {
-    void* manager=Service_Lookup(g_Game,g_NpcRouteMgr);
+unsigned char cPathNavigator_Request_cVectorR_int(CxPathFollower2* self,int kind,int region) {
+    void* manager=cSystemContainer_GetSystem(g_Game,g_NpcRouteMgr);
     int start=self->start;
     int previous=-1;
     if(self->flags.first || self->flags.second) {
         if(start<0) {start=self->fallback;previous=self->previous;}
     }
-    return NpcRoute_Request(manager,self->actor,start,previous,self->current,-1,region,kind,(long long)(int)self->buffer);
+    return cPathSystem_RequestPath(manager,self->actor,start,previous,self->current,-1,region,kind,(long long)(int)self->buffer);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0015FA70(void) {}
@@ -129,13 +129,13 @@ typedef struct {
     char pad61[0x70 - 0x61]; int a1arg; int stackArg;
 } Route_e1;
 #if 0 /* merge_units */
-extern int NpcRoute_Request(void*, int, int, int, int, int, int, int, int);
+extern int cPathSystem_RequestPath(void*, int, int, int, int, int, int, int, int);
 #endif /* merge_units */
-#define NpcRoute_Request(a0, a1, a2, a3, a4, a5, a6, a7, a8) (NpcRoute_Request((a0), (void *)(a1), (a2), (a3), (a4), (a5), (a6), (a7), (long long)(a8))) /* merge_units */
+#define cPathSystem_RequestPath(a0, a1, a2, a3, a4, a5, a6, a7, a8) (cPathSystem_RequestPath((a0), (void *)(a1), (a2), (a3), (a4), (a5), (a6), (a7), (long long)(a8))) /* merge_units */
 
-unsigned char NpcRoute_RequestToNode(Route_e1* self, int arg)
+unsigned char cPathNavigator_Request_int(Route_e1* self, int arg)
 {
-    void* svc = Service_Lookup(g_Game, g_NpcRouteMgr);
+    void* svc = cSystemContainer_GetSystem(g_Game, g_NpcRouteMgr);
     int node = self->node;
     int extra = -1;
     if (self->b1 || self->b2) {
@@ -144,9 +144,9 @@ unsigned char NpcRoute_RequestToNode(Route_e1* self, int arg)
             extra = self->altArg;
         }
     }
-    return NpcRoute_Request(svc, self->a1arg, node, extra, self->t0arg, arg, -1, 0, self->stackArg);
+    return cPathSystem_RequestPath(svc, self->a1arg, node, extra, self->t0arg, arg, -1, 0, self->stackArg);
 }
-#undef NpcRoute_Request /* merge_units */
+#undef cPathSystem_RequestPath /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0015FB20(void) {}
 #pragma pop /* merge_units */

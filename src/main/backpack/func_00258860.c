@@ -16,15 +16,15 @@ static inline int read32(void)
 }
 
 typedef struct { char pad[0x20]; unsigned char received; char pad21[3]; int a; int b; char item[1]; } cInventoryMsg;
-extern void NetStream_ReadObject(void* item);
-extern void Event_Send(cInventoryMsg* msg, void* target, int flags);
+extern void cNetMsg_GetGOBJ(void* item);
+extern void QueueMessage_cMessageR_cSystemP_int(cInventoryMsg* msg, void* target, int flags);
 
 /* cInventoryMsg receive: reads the item and two 32-bit values, then dispatches to target. */
-void cCrateInteractMsg_Apply(cInventoryMsg* self, void* target)
+void cCrateInteractMsg_UnpackAndProcess(cInventoryMsg* self, void* target)
 {
-    NetStream_ReadObject(self->item);
+    cNetMsg_GetGOBJ(self->item);
     self->a = read32();
     self->b = read32();
     self->received = 1;
-    Event_Send(self, target, 0);
+    QueueMessage_cMessageR_cSystemP_int(self, target, 0);
 }

@@ -2,7 +2,7 @@
 #include "types.h"
 #include "vslot_pad.h"
 #pragma inline_depth(8)
-/* HudRadar_Update: radar heading, waypoint arrow (direction, fade by distance) and the player facing marker */
+/* cHudRadar_Update: radar heading, waypoint arrow (direction, fade by distance) and the player facing marker */
 struct M;
 struct V {
     V Minus(V o) const { V r; V* rp = &r; const V* ap = this; const V* bp = &o; __asm__ volatile("lqc2 $vf1, 0x0(%1); lqc2 $vf2, 0x0(%2); vsub.xyzw $vf1, $vf1, $vf2; sqc2 $vf1, 0x0(%0)" : : "r"(rp), "r"(ap), "r"(bp) : "memory"); return r; }
@@ -58,15 +58,15 @@ extern float D_0048B0C8;
 extern int D_0048B0D8;
 extern int D_004F8298;
 int func_00159570(void*);
-void** List_Front(void*);
-Obj* HudTargets_GetWaypoint(void* o);
-void IeElement_SetRotation(void* e, V3* r);
-void IeElement_SetShown(void* e, int v);
-void IeElement_Fade(void* e, float v);
-float Math_Atan2f(float y, float x);
-void* Camera_GetNode(void* c);
-M Transform_GetInverseMatrix(void* n);
-void HudRadar_Update(Radar* r, Obj* pl);
+void** cLList_cCAMERA_GOBJPtr_Front(void*);
+Obj* cHudTargetManager_GetWaypoint(void* o);
+void cInterfaceElement_SetRotation(void* e, V3* r);
+void cInterfaceElement_Activate(void* e, int v);
+void cAnimator_AnimateTo(void* e, float v);
+float Libc_Atan2f(float y, float x);
+void* cGOBJ_GetXform_void(void* c);
+M cXform_GetInverseMatrix(void* n);
+void cHudRadar_Update(Radar* r, Obj* pl);
 }
 // VU0 macro-mode vector op (COP2), not expressible in C
 static inline float Len(V* a) { int rv0; float ret = 0.0f; asm { lqc2 vf1, 0x0(a); vmul.xyz vf2, vf1, vf1; vmulax.w ACC, vf0, vf2x; vmadday.w ACC, vf0, vf2y; vmaddz.w vf3, vf0, vf2z; vsqrt Q, vf3w; vwaitq; vaddq.x vf4, vf0, Q; qmfc2.ni rv0, vf4; mtc1 rv0, ret } return ret; }
@@ -79,34 +79,34 @@ static inline float MinF(float a, float b) { float r = 0.0f; __asm__ volatile("m
 static inline V SubV(V a, V b) { V r; V* rp = &r; const V* ap = &a; const V* bp = &b; __asm__ volatile("lqc2 $vf1, 0x0(%1); lqc2 $vf2, 0x0(%2); vsub.xyzw $vf1, $vf1, $vf2; sqc2 $vf1, 0x0(%0)" : : "r"(rp), "r"(ap), "r"(bp) : "memory"); return r; }
 /* the unused xx reproduces retail's dead addiu of the matrix temporary's address */
 static inline void RotBy(V* v, M m) { void* xx = &m; Rotate(v, &m, v); }
-static inline void* GetCam() { if (func_00159570(g_CameraObject)) return *List_Front(g_CameraObject); return 0; }
-void HudRadar_Update(Radar* r, Obj* pl)
+static inline void* GetCam() { if (func_00159570(g_CameraObject)) return *cLList_cCAMERA_GOBJPtr_Front(g_CameraObject); return 0; }
+void cHudRadar_Update(Radar* r, Obj* pl)
 {
     Cam* cam = (Cam*)GetCam();
     V3 rot(0.0f, -cam->yaw, 0.0f);
-    IeElement_SetRotation(r->ring, &rot);
+    cInterfaceElement_SetRotation(r->ring, &rot);
     if (r->arrow) {
-        if (HudTargets_GetWaypoint(r->owner)) {
-            V d = pl->GetPos().Minus(HudTargets_GetWaypoint(r->owner)->GetPos());
+        if (cHudTargetManager_GetWaypoint(r->owner)) {
+            V d = pl->GetPos().Minus(cHudTargetManager_GetWaypoint(r->owner)->GetPos());
             float len = Len(&d);
             float rad = D_0048B0C8;
             if (!(len <= rad)) {
-                { float ny = -d.y; float nx = -d.x; rot.y += Math_Atan2f(nx, ny); }
-                IeElement_SetRotation(r->arrow, &rot);
+                { float ny = -d.y; float nx = -d.x; rot.y += Libc_Atan2f(nx, ny); }
+                cInterfaceElement_SetRotation(r->arrow, &rot);
                 len -= rad;
                 int k = D_0048B0D8 - D_004F8298;
                 len = MinF(len, rad);
                 float a = (float)D_0048B0D8 - len * (float)k / rad;
-                IeElement_SetShown(r->arrow, 1);
-                IeElement_Fade(r->arrow, a);
+                cInterfaceElement_Activate(r->arrow, 1);
+                cAnimator_AnimateTo(r->arrow, a);
             } else {
-                IeElement_SetShown(r->arrow, 0);
+                cInterfaceElement_Activate(r->arrow, 0);
             }
         } else {
-            IeElement_SetShown(r->arrow, 0);
+            cInterfaceElement_Activate(r->arrow, 0);
         }
     }
     V fwd = ((Player*)pl)->node->Mtx().Row1();
-    RotBy(&fwd, Transform_GetInverseMatrix(Camera_GetNode(cam)));
-    IeElement_SetRotation(r->face, &V3(0.0f, -Math_Atan2f(-fwd.x, fwd.y), 0.0f));
+    RotBy(&fwd, cXform_GetInverseMatrix(cGOBJ_GetXform_void(cam)));
+    cInterfaceElement_SetRotation(r->face, &V3(0.0f, -Libc_Atan2f(-fwd.x, fwd.y), 0.0f));
 }

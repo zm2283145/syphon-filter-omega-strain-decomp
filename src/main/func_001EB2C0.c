@@ -1,6 +1,6 @@
 #include "types.h"
 
-int HumanColMask_Ctor(int a0, int a1) {
+int cBitArray_19_ctor_bool(int a0, int a1) {
     int v0, v1;
     int cond;
 

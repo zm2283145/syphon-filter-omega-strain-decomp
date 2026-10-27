@@ -6,9 +6,9 @@
 #include "types.h"
 #include "weapon_types.h"
 
-extern int Vector_Insert_147CD0(WeaponRec24Vec* v, WeaponRec24* pos, int n, WeaponRec24* value);
+extern int std_vector_imp_Record_insert(WeaponRec24Vec* v, WeaponRec24* pos, int n, WeaponRec24* value);
 
 /* push_back on a vector of 24-byte elements. */
 int cArray_Record_PushBackActual(WeaponRec24Vec* v, WeaponRec24* value) {
-    return Vector_Insert_147CD0(v, v->data + v->count, 1, value);
+    return std_vector_imp_Record_insert(v, v->data + v->count, 1, value);
 }

@@ -26,8 +26,8 @@ struct It { SNode* p; It() {} It(const It& o) { p = o.p; } It& operator=(const I
 struct SWord { int v; };
 struct AiRec { char p0[0x30]; char list[0x10]; Handle h; };
 extern "C" {
-Obj* ActorRef_Copy(Handle* h);
-SWord List_Begin_16E880(void* list);
+Obj* cSafePtr_cGOBJ_opCast_cGOBJPtr(Handle* h);
+SWord std_list_deleter_voidPtr_begin_void_2(void* list);
 It std_list_cTargetAwarenessPtr_generic_iterator_1_ctor(int v);
 SWord std_list_cTargetAwarenessPtr_end_void_2(void* list);
 It cConstLListIterator_cTargetAwarenessPtr_ctor(const SWord& w);
@@ -79,8 +79,8 @@ void cAiTargetTransfer_Get(void* dst, AiRec* src, int* id, SRec* recs)
 {
     It it;
     QCopy(dst, src, 0x30);
-    if (WGet(&src->h)) *id = ActorRef_Copy(&src->h)->id; else { volatile int t = -1; *id = t; }
-    it = std_list_cTargetAwarenessPtr_generic_iterator_1_ctor(List_Begin_16E880(src->list).v);
+    if (WGet(&src->h)) *id = cSafePtr_cGOBJ_opCast_cGOBJPtr(&src->h)->id; else { volatile int t = -1; *id = t; }
+    it = std_list_cTargetAwarenessPtr_generic_iterator_1_ctor(std_list_deleter_voidPtr_begin_void_2(src->list).v);
     if (!D_004EE558) {
         D_0049C588 = -1;
         D_004EE558 = 1;

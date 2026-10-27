@@ -15,7 +15,7 @@ typedef struct {
     int f1C; int f20; int f24;
 } AnimTrans_f3;
 typedef struct { char pad[0x6C]; int list; } AnimSel_f3;
-AnimTrans_f3* AnimSelector_BeginTransition(AnimSel_f3* sel, int a, int b, int target); /* gsynth: defined below */
+AnimTrans_f3* cSkaParams_StartTransPlayback(AnimSel_f3* sel, int a, int b, int target); /* gsynth: defined below */
 #pragma cplusplus on
 #pragma always_inline on
 #pragma inline_depth(8)
@@ -71,14 +71,14 @@ int cSkaSwitchValue_NextGoalState(void* p);
 int cSkaSwitchValue_CurrGoalState(void* p);
 int cSkaSwitch_GetTransPlayback(Sel* s, Ctx* c);
 #if 0 /* merge_units */
-void* AnimSelector_BeginTransition(Ctx* c, int a, int b, Sel* s);
+void* cSkaParams_StartTransPlayback(Ctx* c, int a, int b, Sel* s);
 #endif /* merge_units */
-#define AnimSelector_BeginTransition(a0, a1, a2, a3) ((void *)AnimSelector_BeginTransition((AnimSel_f3 *)(a0), (a1), (a2), (int)(a3))) /* merge_units */
+#define cSkaParams_StartTransPlayback(a0, a1, a2, a3) ((void *)cSkaParams_StartTransPlayback((AnimSel_f3 *)(a0), (a1), (a2), (int)(a3))) /* merge_units */
 
-void AnimSelector_Evaluate(Sel* self, float t, const V* q, Ctx* ctx);
+void cSkaSwitch_UpdateNodes(Sel* self, float t, const V* q, Ctx* ctx);
 }
 
-void AnimSelector_Evaluate(Sel* self, float t, const V* q, Ctx* ctx)
+void cSkaSwitch_UpdateNodes(Sel* self, float t, const V* q, Ctx* ctx)
 {
     if (t < D_004BCD68) return;
     const V* r = Pick(self, q);
@@ -94,9 +94,9 @@ void AnimSelector_Evaluate(Sel* self, float t, const V* q, Ctx* ctx)
     int from = cSkaSwitchValue_NextGoalState(p);
     int to = cSkaSwitchValue_CurrGoalState(p);
     if (from != to && !cSkaSwitch_GetTransPlayback(self, ctx))
-        AnimSelector_BeginTransition(ctx, from, to, self);
+        cSkaParams_StartTransPlayback(ctx, from, to, self);
 }
-#undef AnimSelector_BeginTransition /* merge_units */
+#undef cSkaParams_StartTransPlayback /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003AFCB0(void) {}
 #pragma pop /* merge_units */
@@ -107,20 +107,20 @@ static inline void merge_flush_func_003AFCB0(void) {}
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 extern void Alloc_Lock(int);
-extern void Alloc_Unlock(int);
-extern void* Mem_Alloc(int, int, char*, int);
+extern void EnableIntc(int);
+extern void* cMemMan_Allocate(int, int, char*, int);
 extern void std_list_cSkaTransPlaybackPtr_push_back(int* list, AnimTrans_f3** item);
 static inline void* AllocL_f3(int size, char* file, int line)
 {
     void* p;
     if (g_ProfileLockEnabled) Alloc_Lock(9);
     g_ProfileLockDepth++;
-    p = Mem_Alloc(0, size, file, line);
-    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    p = cMemMan_Allocate(0, size, file, line);
+    if (g_ProfileLockEnabled) EnableIntc(9);
     g_ProfileLockDepth--;
     return p;
 }
-AnimTrans_f3* AnimSelector_BeginTransition(AnimSel_f3* sel, int a, int b, int target)
+AnimTrans_f3* cSkaParams_StartTransPlayback(AnimSel_f3* sel, int a, int b, int target)
 {
     AnimTrans_f3* t[1];
     AnimTrans_f3* p;

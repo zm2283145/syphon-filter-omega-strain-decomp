@@ -9,10 +9,10 @@ struct V {
 };
 struct M;
 struct Obj;
-extern "C" int Shadow_ClipCode(Obj*, M*, V*);
+extern "C" int XLib_GetOutCode(Obj*, M*, V*);
 /* Writes the 8 corners of an AABB to the scratchpad and classifies them against the view clip
    planes: 0x80 all outside one plane, 4 any behind (0x20), 1 fully inside, 2 straddling; |0x10 if any 0x40. */
-extern "C" int Model_BoundsIntersect(Obj* o, M* m, const V* mn, const V* mx)
+extern "C" int XLib_TestBBox_cMatrixR_cVectorR_cVectorR(Obj* o, M* m, const V* mn, const V* mx)
 {
     V* sp = (V*)0x70000000;
     int orAll = 0;
@@ -29,7 +29,7 @@ extern "C" int Model_BoundsIntersect(Obj* o, M* m, const V* mn, const V* mx)
     sp[6] = V(mn->x, mn->y, mx->z, 1.0f);
     sp[7] = V(mx->x, mx->y, mx->z, 1.0f);
     for (i = 0; i < 8; i++) {
-        int c = Shadow_ClipCode(o, m, &sp[i]);
+        int c = XLib_GetOutCode(o, m, &sp[i]);
         orAll |= c;
         andAll &= c;
         cnt += c & 0x20;

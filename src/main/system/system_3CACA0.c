@@ -8,7 +8,7 @@ extern "C" void std_list_deleter_voidPtr_end_void(LIt_ca0* out, void* list);
 extern "C" LIt_ca0* std_list_cSystemPtr_generic_iterator_ctor(LIt_ca0* dst, LIt_ca0* src);
 extern "C" void std_list_cSystemPtr_begin(LIt_ca0* out, void* list);
 extern "C" LIt_ca0* cLListIterator_cSystemPtr_ctor(LIt_ca0* dst, LIt_ca0* src);
-extern "C" bool Object_BroadcastToChildren(Obj_ca0* self, int msg) {
+extern "C" bool cSystemContainer_HandleMessage(Obj_ca0* self, int msg) {
     bool r = false;
     LIt_ca0 it;
     LIt_ca0 beg;

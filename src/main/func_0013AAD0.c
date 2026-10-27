@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-void LosResult_SetStatus(LosResult* self, char value) {
+void cLosResult_SetLosBlocked(LosResult* self, char value) {
     self->status = value;
 }
 
@@ -20,6 +20,6 @@ Unk0013AAE0* cCollisionFace_ctor_void(Unk0013AAE0* self) {
     return self;
 }
 
-void* Ptr_Identity(void* self) {
+void* cVector_ctor_void(void* self) {
     return self;
 }

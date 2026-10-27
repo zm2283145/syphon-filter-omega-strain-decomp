@@ -27,7 +27,7 @@ static inline void merge_flush_func_00425BB0(void) {}
 char D_004BF900[] = "GuiTextArrayWidget"; /* "GuiTextArrayWidget" */
 
 /* GuiTextArrayWidget::IsA: returns 1 if the given class name is "GuiTextArrayWidget". */
-int GuiTextArrayWidget_IsType(void* self, const char* name)
+int GuiTextArrayWidget_IsClass(void* self, const char* name)
 {
     return strcmp(D_004BF900, name) == 0;
 }
@@ -40,11 +40,11 @@ static inline void merge_flush_func_00425BC0(void) {}
 #pragma push /* merge_units */
 #include "guiTextArrayWidget_types.h"
 
-extern TextArrayCell* GuiTextArrayWidget_GetCell(guiTextArrayWidget* self, int row, int col);
+extern TextArrayCell* GuiTextArrayWidget_GetTextElement(guiTextArrayWidget* self, int row, int col);
 
 /* Clears flag bit 2 of the addressed cell. */
 void GuiTextArrayWidget_ClearElementTextColor(guiTextArrayWidget* self, int row, int col) {
-    TextArrayCell* cell = GuiTextArrayWidget_GetCell(self, row, col);
+    TextArrayCell* cell = GuiTextArrayWidget_GetTextElement(self, row, col);
 
     if (cell != 0) {
         cell->flags &= ~4;
@@ -65,15 +65,15 @@ typedef struct Node425 {
 } Node425;
 
 #if 0 /* merge_units */
-extern Node425* GuiTextArrayWidget_GetCell(int a, int b, int c);
+extern Node425* GuiTextArrayWidget_GetTextElement(int a, int b, int c);
 #endif /* merge_units */
-#define GuiTextArrayWidget_GetCell(a0, a1, a2) ((Node425 *)GuiTextArrayWidget_GetCell((guiTextArrayWidget *)(a0), (a1), (a2))) /* merge_units */
+#define GuiTextArrayWidget_GetTextElement(a0, a1, a2) ((Node425 *)GuiTextArrayWidget_GetTextElement((guiTextArrayWidget *)(a0), (a1), (a2))) /* merge_units */
 
 
 
 /* Looks up a node and, if found, sets its 4-float value and flag bit 2. */
-void GuiTextArrayWidget_SetCellRgba(int a, int b, int c, float* value) {
-    Node425* node = GuiTextArrayWidget_GetCell(a, b, c);
+void GuiTextArrayWidget_SetElementTextColor(int a, int b, int c, float* value) {
+    Node425* node = GuiTextArrayWidget_GetTextElement(a, b, c);
     if (node) {
         node->value[0] = value[0];
         node->value[1] = value[1];
@@ -84,7 +84,7 @@ void GuiTextArrayWidget_SetCellRgba(int a, int b, int c, float* value) {
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00425C30(void) {}
-#undef GuiTextArrayWidget_GetCell /* merge_units */
+#undef GuiTextArrayWidget_GetTextElement /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00425C30 */
 
@@ -92,7 +92,7 @@ static inline void merge_flush_func_00425C30(void) {}
 #pragma push /* merge_units */
 /* Clears flag bit 0 of the addressed cell. */
 void GuiTextArrayWidget_ClearElementTextFormat(guiTextArrayWidget* self, int row, int col) {
-    TextArrayCell* cell = GuiTextArrayWidget_GetCell(self, row, col);
+    TextArrayCell* cell = GuiTextArrayWidget_GetTextElement(self, row, col);
 
     if (cell != 0) {
         cell->flags &= ~1;
@@ -106,32 +106,32 @@ static inline void merge_flush_func_00425C90(void) {}
 /* merge_units: begin func_00425CD0 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern TextArrayCell* GuiTextArrayWidget_GetCell(guiTextArrayWidget* widget, int row, int column);
+extern TextArrayCell* GuiTextArrayWidget_GetTextElement(guiTextArrayWidget* widget, int row, int column);
 #endif /* merge_units */
-#define GuiTextArrayWidget_GetCell(a0, a1, a2) (GuiTextArrayWidget_GetCell((a0), (a1), (a2))) /* merge_units */
+#define GuiTextArrayWidget_GetTextElement(a0, a1, a2) (GuiTextArrayWidget_GetTextElement((a0), (a1), (a2))) /* merge_units */
 
 
 /* Set a cell's byte attribute and mark that attribute as present. */
-void GuiTextArrayWidget_SetCellHAlign(guiTextArrayWidget* widget, int row, int column, int attribute)
+void GuiTextArrayWidget_SetElementTextFormat(guiTextArrayWidget* widget, int row, int column, int attribute)
 {
-    TextArrayCell* cell = GuiTextArrayWidget_GetCell(widget, row, column);
+    TextArrayCell* cell = GuiTextArrayWidget_GetTextElement(widget, row, column);
     if (cell) {
         cell->attribute = attribute;
         cell->flags |= 1;
     }
 }
-#undef GuiTextArrayWidget_GetCell /* merge_units */
+#undef GuiTextArrayWidget_GetTextElement /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00425CD0 */
 
 /* merge_units: begin func_00425D10 */
 #pragma push /* merge_units */
-extern void* Gui_GetScreenList(void);
-extern int GuiFont_Find(void* strings, int id);
+extern void* Gui_Manager(void);
+extern int GuiManager_GetFont(void* strings, int id);
 
 /* Clears flag bit 1 of the addressed cell. */
 void GuiTextArrayWidget_ClearElementFont(guiTextArrayWidget* self, int row, int col) {
-    TextArrayCell* cell = GuiTextArrayWidget_GetCell(self, row, col);
+    TextArrayCell* cell = GuiTextArrayWidget_GetTextElement(self, row, col);
 
     if (cell != 0) {
         cell->flags &= ~2;
@@ -140,10 +140,10 @@ void GuiTextArrayWidget_ClearElementFont(guiTextArrayWidget* self, int row, int 
 
 /* Sets the text of the addressed cell from string id and marks it as having text. */
 void GuiTextArrayWidget_SetElementFont(guiTextArrayWidget* self, int row, int col, int id) {
-    TextArrayCell* cell = GuiTextArrayWidget_GetCell(self, row, col);
+    TextArrayCell* cell = GuiTextArrayWidget_GetTextElement(self, row, col);
 
     if (cell != 0) {
-        cell->text = GuiFont_Find(Gui_GetScreenList(), id);
+        cell->text = GuiManager_GetFont(Gui_Manager(), id);
         cell->flags |= 2;
     }
 }
@@ -156,17 +156,17 @@ static inline void merge_flush_func_00425D10(void) {}
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } Vec4f;
 typedef struct { char pad[0x90]; void* target; char pad2[0xC]; Vec4f color; } Obj;
-extern void TextObj_SetColour(void* target, Vec4f* color);
+extern void cTextArea_SetColor(void* target, Vec4f* color);
 
 /* Stores a colour and pushes it to the attached target. */
-void TextArrayCell_SetColour(Obj* self, Vec4f* color)
+void GuiTextArrayWidget_SetTextColor(Obj* self, Vec4f* color)
 {
     self->color.x = color->x;
     self->color.y = color->y;
     self->color.z = color->z;
     self->color.w = color->w;
     if (self->target) {
-        TextObj_SetColour(self->target, &self->color);
+        cTextArea_SetColor(self->target, &self->color);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

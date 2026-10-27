@@ -9,7 +9,7 @@ extern int sprintf(char* buf, const char* fmt, ...);
 extern int* func_003583F0();
 extern int sceInsockGetErrnoMode();
 extern int* Newlib_Errno();
-extern void String_Copy(char* d, char* s);
+extern void Libc_Strcpy(char* d, char* s);
 char* inet_ntop4(unsigned char* a, char* dst, unsigned int size)
 {
     char buf[16];
@@ -21,7 +21,7 @@ char* inet_ntop4(unsigned char* a, char* dst, unsigned int size)
         }
         return 0;
     }
-    String_Copy(dst, buf);
+    Libc_Strcpy(dst, buf);
     return dst;
 }
 /* merge_units: end func_00357938 */
@@ -94,7 +94,7 @@ char* inet_ntop6(unsigned char* src, char* dst, unsigned int size)
         }
         return 0;
     }
-    String_Copy(dst, tmp);
+    Libc_Strcpy(dst, tmp);
     return dst;
 }
 /* merge_units: end func_003579D8 */

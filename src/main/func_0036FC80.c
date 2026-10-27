@@ -8,7 +8,7 @@ extern char D_004DF6A0[];
 void operator_delete(void* allocation);
 }
 struct O36FC80 { void* vtable; };
-extern "C" O36FC80* TransformNode_dtor(O36FC80* self, short deleteFlag)
+extern "C" O36FC80* cXform_dtor(O36FC80* self, short deleteFlag)
 {
     if (self) {
         self->vtable = D_004DF6A0;

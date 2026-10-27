@@ -41,45 +41,45 @@ typedef struct { void* vt; char p0[0x24]; int count; N415F00* head; char p1[0x54
 extern "C" {
 extern "C" void GuiCanvas_GetClassName();
 extern "C" void GuiCanvas_IsType();
-extern "C" void GuiCanvas_FinishDeferredPop();
-extern "C" void GuiCanvas_PopScreen();
-extern "C" void GuiCanvas_PushScreen();
-extern "C" void GuiCanvas_Navigate();
-extern "C" void GuiCanvas_DispatchInput();
-extern "C" void GuiCanvas_UpdateStack();
-extern "C" void GuiFrontendCanvas_Draw();
-extern "C" void GuiWidget_FocusPrev();
-extern "C" void GuiWidget_FocusNext();
-extern "C" void GuiWidget_FocusLast();
-extern "C" void GuiWidget_FocusFirst();
-extern "C" void GuiWidget_BubbleActivate();
-extern "C" void GuiWidget_BubbleType1();
-extern "C" void GuiWidget_BubbleType0();
-extern "C" void GuiWidget_Update();
-extern "C" void GuiWidget_Draw();
-extern "C" void GuiWidget_BaseSleep();
-extern "C" void GuiWidget_BaseWake();
-extern "C" void GuiWidget_ClearFlag4();
-extern "C" void GuiWidget_SetFlag4();
-extern "C" void GuiWidget_Deinit();
-extern "C" void GuiWidget_Init();
+extern "C" void GuiCanvas_onMessage();
+extern "C" void GuiCanvas_PopGui();
+extern "C" void GuiCanvas_PushGui();
+extern "C" void GuiCanvas_onInput();
+extern "C" void GuiCanvas_ProcessInputEvent();
+extern "C" void GuiCanvas_NextFrame();
+extern "C" void GuiCanvas_Render();
+extern "C" void GuiWidget_FindPrevFocus();
+extern "C" void GuiWidget_FindNextFocus();
+extern "C" void GuiWidget_FindLastFocus();
+extern "C" void GuiWidget_FindFirstFocus();
+extern "C" void GuiWidget_onAction();
+extern "C" void GuiWidget_onLoseFocus();
+extern "C" void GuiWidget_onGainFocus();
+extern "C" void GuiWidget_onAdvanceTime();
+extern "C" void GuiWidget_onRender();
+extern "C" void GuiWidget_onSleep();
+extern "C" void GuiWidget_onWake();
+extern "C" void GuiWidget_onDeactivate();
+extern "C" void GuiWidget_onActivate();
+extern "C" void GuiWidget_onRemove();
+extern "C" void GuiWidget_onAdd();
 extern "C" void GuiWidget_Load();
 extern void * const D_004E08D0[];
 void cLList_GuiWidgetPtr_dtor(void* p, int f);
-void GuiWidget_Destroy(T415F00* p, int f);
+void GuiWidget_dtor(T415F00* p, int f);
 void operator_delete(void* p);
 }
-extern "C" T415F00* GuiCanvas_PopAll(T415F00* self, short flag) {
+extern "C" T415F00* GuiCanvas_dtor(T415F00* self, short flag) {
     if (self) {
         self->vt = ((char*)D_004E08D0);
         while (self->count) ((V415F00*)self)->s24(self->head->arg);
         if (self->sub) cLList_GuiWidgetPtr_dtor(self->sub, 0);
-        GuiWidget_Destroy(self, 0);
+        GuiWidget_dtor(self, 0);
         if (flag > 0) operator_delete(self);
     }
     return self;
 }
-void * const D_004E08D0[28] = { (void*)0x0, (void*)0x0, (void*)GuiCanvas_PopAll, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiWidget_BaseWake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiCanvas_Navigate, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiCanvas_FinishDeferredPop, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiCanvas_GetClassName, (void*)GuiCanvas_IsType, (void*)GuiFrontendCanvas_Draw, (void*)GuiCanvas_UpdateStack, (void*)GuiCanvas_PushScreen, (void*)GuiCanvas_PopScreen, (void*)GuiCanvas_DispatchInput };
+void * const D_004E08D0[28] = { (void*)0x0, (void*)0x0, (void*)GuiCanvas_dtor, (void*)GuiWidget_onAdd, (void*)GuiWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiWidget_onDeactivate, (void*)GuiWidget_onWake, (void*)GuiWidget_onSleep, (void*)GuiWidget_onGainFocus, (void*)GuiWidget_onLoseFocus, (void*)GuiCanvas_onInput, (void*)GuiWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiWidget_onAdvanceTime, (void*)GuiCanvas_onMessage, (void*)GuiWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiCanvas_GetClassName, (void*)GuiCanvas_IsType, (void*)GuiCanvas_Render, (void*)GuiCanvas_NextFrame, (void*)GuiCanvas_PushGui, (void*)GuiCanvas_PopGui, (void*)GuiCanvas_ProcessInputEvent };
 #pragma pop /* merge_units */
 /* merge_units: end func_00415F00 */
 
@@ -118,7 +118,7 @@ extern char D_004E08D0[];         /* GuiWidget4160A0 vtable */
 #endif /* merge_units */
 #define D_004E08D0 ((char*)&D_004E08D0) /* merge_units */
 
-extern int ScalarCollection_Init(L4ScalarCollection*);
+extern int std_list_deleter_voidPtr_ctor_void(L4ScalarCollection*);
 extern GuiWidget* GuiWidget_ctor(GuiWidget*);
 
 /* Constructor of a GuiWidget subclass; clears flag bit 2 of the base. */
@@ -127,7 +127,7 @@ GuiWidget4160A0* GuiCanvas_ctor(GuiWidget4160A0* self) {
 
     GuiWidget_ctor(&self->base);
     self->base.vtable = D_004E08D0;
-    ScalarCollection_Init(&self->unk54);
+    std_list_deleter_voidPtr_ctor_void(&self->unk54);
     self->unk50 = 0;
     self->unk48 = 0;
     self->unk4C = 0;

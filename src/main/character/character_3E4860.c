@@ -36,7 +36,7 @@ T80* cDestinationParams_ctor_cVectorR_cPlaneR_float_float(T80* t, const V* a, co
 /* merge_units: begin func_003E48C0 */
 #pragma push /* merge_units */
 /* Converts an unsigned fixed-point value with 15 fractional bits to float. */
-float UFixed15ToFloat(unsigned int value) {
+float cCharActionMsg_DestinationParams_UnpackSpeedOfMotion(unsigned int value) {
     return (1.0f / 32768.0f) * (float)value;
 }
 #pragma pop /* merge_units */
@@ -45,7 +45,7 @@ float UFixed15ToFloat(unsigned int value) {
 /* merge_units: begin func_003E4900 */
 #pragma push /* merge_units */
 /* Converts a fixed-point value with 13 fractional bits to float. */
-float Fixed13ToFloat(int value) {
+float cCharActionMsg_DestinationParams_UnpackDestinationRotZ(int value) {
     return (1.0f / 8192.0f) * (float)value;
 }
 #pragma pop /* merge_units */
@@ -63,7 +63,7 @@ float Fixed13ToFloat(int value) {
 
 extern char D_004E0840[];         /* Msg3E43D0 vtable */
 extern char g_ActorActionMsgClass[];         /* Msg3E43D0 type descriptor */
-extern void* cMessage_ctor5(void* self, void* type, void* arg);
+extern void* cMessage_ctor_cMessageNameR_messagebaseR(void* self, void* type, void* arg);
 
 Vec4* cPlane_ctor_float_float_float_float(Vec4* v, float x, float y, float z, float w) {
     v->x = x;
@@ -75,7 +75,7 @@ Vec4* cPlane_ctor_float_float_float_float(Vec4* v, float x, float y, float z, fl
 
 /* Builds the message from explicit values. */
 Msg3E43D0* cCharActionMsg_ctor_messagebaseR_int_eParamType(Msg3E43D0* self, void* arg, int a, int b) {
-    cMessage_ctor5(self, g_ActorActionMsgClass, arg);
+    cMessage_ctor_cMessageNameR_messagebaseR(self, g_ActorActionMsgClass, arg);
     self->vtable = D_004E0840;
     self->unk24 = a;
     self->unk28 = b;
@@ -97,10 +97,10 @@ typedef struct Msg { void* vt; char p4[0x20]; int a24; unsigned char a28; char p
 extern unsigned char D_005723C8, D_005721D0; extern char g_ActorActionMsgClass[], D_004E0840[], D_004E0120[];
 extern "C" {
 #if 0 /* merge_units */
-void cMessage_ctor5(Msg*, void*, Packet*);
+void cMessage_ctor_cMessageNameR_messagebaseR(Msg*, void*, Packet*);
 #endif /* merge_units */
-#define cMessage_ctor5(a0, a1, a2) ((void)cMessage_ctor5((void *)(a0), (a1), (void *)(a2))) /* merge_units */
-void** NetMap_Lookup(int); void MsgQueue_QueueClone(Msg*, void*, int, int); void cMessage_dtor(Msg*, int); }
+#define cMessage_ctor_cMessageNameR_messagebaseR(a0, a1, a2) ((void)cMessage_ctor_cMessageNameR_messagebaseR((void *)(a0), (a1), (void *)(a2))) /* merge_units */
+void** cNetObj_GetNetSystem(int); void QueueMessage_cMessageR_cSystemP_int_int(Msg*, void*, int, int); void cMessage_dtor(Msg*, int); }
 static inline V4* V4_Set(V4* v, float x, float y, float z, float w) { v->x = x; v->y = y; v->z = z; v->w = w; return v; }
 /* GCC-style volatile lq/sq quad copy (c57da idiom): keeps the unfolded address registers */
 static inline void V4_Copy(V4* d, V4* s) { __int128 q; __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
@@ -112,21 +112,21 @@ extern "C" int cCharActionMsg_MotionParams_NetCharActionMotionParamsReq(int a, i
         Packet* p = p0;
         void** obj;
         Msg* m = &msg;
-        cMessage_ctor5(m, g_ActorActionMsgClass, p);
+        cMessage_ctor_cMessageNameR_messagebaseR(m, g_ActorActionMsgClass, p);
         m->vt = D_004E0840;
         m->a24 = p->a8;
         m->a28 = p->a9;
         { bool fl = p->b24 != 0; Sub* ps = &m->sub; Sub_Set(&m->sub, V4_Set(&v, p->x, p->y, p->z, p->w), p->f1C, p->f20, fl, &ps->v); }
         m->vt = D_004E0120;
-        obj = NetMap_Lookup(p->id);
-        if (obj) MsgQueue_QueueClone(&msg, *obj, 0, 0);
+        obj = cNetObj_GetNetSystem(p->id);
+        if (obj) QueueMessage_cMessageR_cSystemP_int_int(&msg, *obj, 0, 0);
         msg.vt = D_004E0840;
         cMessage_dtor(&msg, 0);
     }
     D_005723C8 = 0;
     return 0x28;
 }
-#undef cMessage_ctor5 /* merge_units */
+#undef cMessage_ctor_cMessageNameR_messagebaseR /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E49B0 */
 
@@ -137,13 +137,13 @@ extern "C" int cCharActionMsg_MotionParams_NetCharActionMotionParamsReq(int a, i
 typedef struct Packet_003E4AF0{int kind,id;unsigned char action,on;char pad[2];int a,b;float time;unsigned char enabled;}Packet_003E4AF0;
 typedef struct Msg_003E4AF0{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];int a,b;float time;unsigned char enabled;char p39[3];}Msg_003E4AF0;extern char g_ActorActionMsgClass[],D_004E0840[],D_004E0160[];
 #if 0 /* merge_units */
-void cMessage_ctor5(Msg_003E4AF0*,void*,Packet_003E4AF0*);
+void cMessage_ctor_cMessageNameR_messagebaseR(Msg_003E4AF0*,void*,Packet_003E4AF0*);
 #endif /* merge_units */
-#define cMessage_ctor5(a0, a1, a2) ((void)cMessage_ctor5((void *)(a0), (a1), (void *)(a2))) /* merge_units */
+#define cMessage_ctor_cMessageNameR_messagebaseR(a0, a1, a2) ((void)cMessage_ctor_cMessageNameR_messagebaseR((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 #if 0 /* merge_units */
-void MsgQueue_QueueClone(Msg_003E4AF0*,void*,int,int);
+void QueueMessage_cMessageR_cSystemP_int_int(Msg_003E4AF0*,void*,int,int);
 #endif /* merge_units */
-#define MsgQueue_QueueClone(a0, a1, a2, a3) (MsgQueue_QueueClone((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
 #if 0 /* merge_units */
 void cMessage_dtor(Msg_003E4AF0*,int);
 #endif /* merge_units */
@@ -152,13 +152,13 @@ void cMessage_dtor(Msg_003E4AF0*,int);
 int cCharActionMsg_ObjectId_Int_Scalar_Bool_NetCharActionNetObjectIdIntScalarBoolReq(int a,int b,int c,Packet_003E4AF0*p0){
  Msg_003E4AF0 msg;Packet_003E4AF0*p;
  if(!D_005723C8)D_005723C8=1;
- p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0160;msg.a=p->a;msg.b=p->b;msg.time=p->time;msg.enabled=p->enabled;
- obj=NetMap_Lookup(p->id);if(obj)MsgQueue_QueueClone(&msg,*obj,0,0);
+ p=p0;if(D_005721D0){void**obj;cMessage_ctor_cMessageNameR_messagebaseR(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0160;msg.a=p->a;msg.b=p->b;msg.time=p->time;msg.enabled=p->enabled;
+ obj=cNetObj_GetNetSystem(p->id);if(obj)QueueMessage_cMessageR_cSystemP_int_int(&msg,*obj,0,0);
  msg.vt=D_004E0840;cMessage_dtor(&msg,0);}
  D_005723C8=0;return 0x1C;
 }
-#undef cMessage_ctor5 /* merge_units */
-#undef MsgQueue_QueueClone /* merge_units */
+#undef cMessage_ctor_cMessageNameR_messagebaseR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E4AF0 */
@@ -170,13 +170,13 @@ int cCharActionMsg_ObjectId_Int_Scalar_Bool_NetCharActionNetObjectIdIntScalarBoo
 typedef struct Packet_003E4BE0{int kind,id;unsigned char action,on;char pad[2];int a,b;}Packet_003E4BE0;
 typedef struct Msg_003E4BE0{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];int a,b;char p34[4];}Msg_003E4BE0;extern char g_ActorActionMsgClass[],D_004E0840[],D_004E0180[];
 #if 0 /* merge_units */
-void cMessage_ctor5(Msg_003E4BE0*,void*,Packet_003E4BE0*);
+void cMessage_ctor_cMessageNameR_messagebaseR(Msg_003E4BE0*,void*,Packet_003E4BE0*);
 #endif /* merge_units */
-#define cMessage_ctor5(a0, a1, a2) ((void)cMessage_ctor5((void *)(a0), (a1), (void *)(a2))) /* merge_units */
+#define cMessage_ctor_cMessageNameR_messagebaseR(a0, a1, a2) ((void)cMessage_ctor_cMessageNameR_messagebaseR((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 #if 0 /* merge_units */
-void MsgQueue_QueueClone(Msg_003E4BE0*,void*,int,int);
+void QueueMessage_cMessageR_cSystemP_int_int(Msg_003E4BE0*,void*,int,int);
 #endif /* merge_units */
-#define MsgQueue_QueueClone(a0, a1, a2, a3) (MsgQueue_QueueClone((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
 #if 0 /* merge_units */
 void cMessage_dtor(Msg_003E4BE0*,int);
 #endif /* merge_units */
@@ -185,13 +185,13 @@ void cMessage_dtor(Msg_003E4BE0*,int);
 int cCharActionMsg_ObjectId_Int_NetCharActionNetObjectIdIntReq(int a,int b,int c,Packet_003E4BE0*p0){
  Msg_003E4BE0 msg;Packet_003E4BE0*p;
  if(!D_005723C8)D_005723C8=1;
- p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0180;msg.a=p->a;msg.b=p->b;
- obj=NetMap_Lookup(p->id);if(obj)MsgQueue_QueueClone(&msg,*obj,0,0);
+ p=p0;if(D_005721D0){void**obj;cMessage_ctor_cMessageNameR_messagebaseR(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0180;msg.a=p->a;msg.b=p->b;
+ obj=cNetObj_GetNetSystem(p->id);if(obj)QueueMessage_cMessageR_cSystemP_int_int(&msg,*obj,0,0);
  msg.vt=D_004E0840;cMessage_dtor(&msg,0);}
  D_005723C8=0;return 0x14;
 }
-#undef cMessage_ctor5 /* merge_units */
-#undef MsgQueue_QueueClone /* merge_units */
+#undef cMessage_ctor_cMessageNameR_messagebaseR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E4BE0 */
@@ -203,13 +203,13 @@ int cCharActionMsg_ObjectId_Int_NetCharActionNetObjectIdIntReq(int a,int b,int c
 typedef struct Packet_003E4CC0{int kind,id;unsigned char action,on;char pad[2];int a,b;}Packet_003E4CC0;
 typedef struct Msg_003E4CC0{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];int a,b;char p34[4];}Msg_003E4CC0;extern char g_ActorActionMsgClass[],D_004E0840[],D_004E01A0[];
 #if 0 /* merge_units */
-void cMessage_ctor5(Msg_003E4CC0*,void*,Packet_003E4CC0*);
+void cMessage_ctor_cMessageNameR_messagebaseR(Msg_003E4CC0*,void*,Packet_003E4CC0*);
 #endif /* merge_units */
-#define cMessage_ctor5(a0, a1, a2) ((void)cMessage_ctor5((void *)(a0), (a1), (void *)(a2))) /* merge_units */
+#define cMessage_ctor_cMessageNameR_messagebaseR(a0, a1, a2) ((void)cMessage_ctor_cMessageNameR_messagebaseR((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 #if 0 /* merge_units */
-void MsgQueue_QueueClone(Msg_003E4CC0*,void*,int,int);
+void QueueMessage_cMessageR_cSystemP_int_int(Msg_003E4CC0*,void*,int,int);
 #endif /* merge_units */
-#define MsgQueue_QueueClone(a0, a1, a2, a3) (MsgQueue_QueueClone((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
 #if 0 /* merge_units */
 void cMessage_dtor(Msg_003E4CC0*,int);
 #endif /* merge_units */
@@ -218,13 +218,13 @@ void cMessage_dtor(Msg_003E4CC0*,int);
 int cCharActionMsg_ObjectId_NetCharActionNetObjectIDReq(int a,int b,int c,Packet_003E4CC0*p0){
  Msg_003E4CC0 msg;Packet_003E4CC0*p;
  if(!D_005723C8)D_005723C8=1;
- p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01A0;msg.a=p->a;
- obj=NetMap_Lookup(p->id);if(obj)MsgQueue_QueueClone(&msg,*obj,0,0);
+ p=p0;if(D_005721D0){void**obj;cMessage_ctor_cMessageNameR_messagebaseR(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01A0;msg.a=p->a;
+ obj=cNetObj_GetNetSystem(p->id);if(obj)QueueMessage_cMessageR_cSystemP_int_int(&msg,*obj,0,0);
  msg.vt=D_004E0840;cMessage_dtor(&msg,0);}
  D_005723C8=0;return 0x10;
 }
-#undef cMessage_ctor5 /* merge_units */
-#undef MsgQueue_QueueClone /* merge_units */
+#undef cMessage_ctor_cMessageNameR_messagebaseR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E4CC0 */
@@ -237,13 +237,13 @@ typedef struct V4Local{float x,y,z,w;}V4Local;
 typedef struct Packet_003E4DA0{int kind,id;unsigned char action,on;char pad[2];V4Local vec;}Packet_003E4DA0;
 typedef struct Msg_003E4DA0{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];char p2c[4];V4Local vec;char p40[8];}Msg_003E4DA0;extern char g_ActorActionMsgClass[],D_004E0840[],D_004E0140[];
 #if 0 /* merge_units */
-void cMessage_ctor5(Msg_003E4DA0*,void*,Packet_003E4DA0*);
+void cMessage_ctor_cMessageNameR_messagebaseR(Msg_003E4DA0*,void*,Packet_003E4DA0*);
 #endif /* merge_units */
-#define cMessage_ctor5(a0, a1, a2) ((void)cMessage_ctor5((void *)(a0), (a1), (void *)(a2))) /* merge_units */
+#define cMessage_ctor_cMessageNameR_messagebaseR(a0, a1, a2) ((void)cMessage_ctor_cMessageNameR_messagebaseR((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 #if 0 /* merge_units */
-void MsgQueue_QueueClone(Msg_003E4DA0*,void*,int,int);
+void QueueMessage_cMessageR_cSystemP_int_int(Msg_003E4DA0*,void*,int,int);
 #endif /* merge_units */
-#define MsgQueue_QueueClone(a0, a1, a2, a3) (MsgQueue_QueueClone((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
 #if 0 /* merge_units */
 void cMessage_dtor(Msg_003E4DA0*,int);
 #endif /* merge_units */
@@ -254,13 +254,13 @@ static inline void CopyV(V4Local*d,V4Local*s){float y;float z;float w;float x;w=
 int cCharActionMsg_Vector_NetCharActionVectorReq(int a,int b,int c,Packet_003E4DA0*p0){
  Msg_003E4DA0 msg;Packet_003E4DA0*p;
  if(!D_005723C8)D_005723C8=1;
- p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0140;CopyV(&msg.vec,&p->vec);
- obj=NetMap_Lookup(p->id);if(obj)MsgQueue_QueueClone(&msg,*obj,0,0);
+ p=p0;if(D_005721D0){void**obj;cMessage_ctor_cMessageNameR_messagebaseR(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0140;CopyV(&msg.vec,&p->vec);
+ obj=cNetObj_GetNetSystem(p->id);if(obj)QueueMessage_cMessageR_cSystemP_int_int(&msg,*obj,0,0);
  msg.vt=D_004E0840;cMessage_dtor(&msg,0);}
  D_005723C8=0;return 0x1C;
 }
-#undef cMessage_ctor5 /* merge_units */
-#undef MsgQueue_QueueClone /* merge_units */
+#undef cMessage_ctor_cMessageNameR_messagebaseR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E4DA0 */
@@ -272,13 +272,13 @@ int cCharActionMsg_Vector_NetCharActionVectorReq(int a,int b,int c,Packet_003E4D
 typedef struct Packet_003E4E90{int kind,id;unsigned char action,on;char pad[2];float a;int b;}Packet_003E4E90;
 typedef struct Msg_003E4E90{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];float a;int b;char p34[4];}Msg_003E4E90;extern char g_ActorActionMsgClass[],D_004E0840[],D_004E01C0[];
 #if 0 /* merge_units */
-void cMessage_ctor5(Msg_003E4E90*,void*,Packet_003E4E90*);
+void cMessage_ctor_cMessageNameR_messagebaseR(Msg_003E4E90*,void*,Packet_003E4E90*);
 #endif /* merge_units */
-#define cMessage_ctor5(a0, a1, a2) ((void)cMessage_ctor5((void *)(a0), (a1), (void *)(a2))) /* merge_units */
+#define cMessage_ctor_cMessageNameR_messagebaseR(a0, a1, a2) ((void)cMessage_ctor_cMessageNameR_messagebaseR((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 #if 0 /* merge_units */
-void MsgQueue_QueueClone(Msg_003E4E90*,void*,int,int);
+void QueueMessage_cMessageR_cSystemP_int_int(Msg_003E4E90*,void*,int,int);
 #endif /* merge_units */
-#define MsgQueue_QueueClone(a0, a1, a2, a3) (MsgQueue_QueueClone((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
 #if 0 /* merge_units */
 void cMessage_dtor(Msg_003E4E90*,int);
 #endif /* merge_units */
@@ -287,13 +287,13 @@ void cMessage_dtor(Msg_003E4E90*,int);
 int cCharActionMsg_Scalar_NetCharActionScalarReq(int a,int b,int c,Packet_003E4E90*p0){
  Msg_003E4E90 msg;Packet_003E4E90*p;
  if(!D_005723C8)D_005723C8=1;
- p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01C0;msg.a=p->a;
- obj=NetMap_Lookup(p->id);if(obj)MsgQueue_QueueClone(&msg,*obj,0,0);
+ p=p0;if(D_005721D0){void**obj;cMessage_ctor_cMessageNameR_messagebaseR(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01C0;msg.a=p->a;
+ obj=cNetObj_GetNetSystem(p->id);if(obj)QueueMessage_cMessageR_cSystemP_int_int(&msg,*obj,0,0);
  msg.vt=D_004E0840;cMessage_dtor(&msg,0);}
  D_005723C8=0;return 0x10;
 }
-#undef cMessage_ctor5 /* merge_units */
-#undef MsgQueue_QueueClone /* merge_units */
+#undef cMessage_ctor_cMessageNameR_messagebaseR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E4E90 */
@@ -305,13 +305,13 @@ int cCharActionMsg_Scalar_NetCharActionScalarReq(int a,int b,int c,Packet_003E4E
 typedef struct Packet_003E4F70{int kind,id;unsigned char action,on;char pad[2];float a;int b;}Packet_003E4F70;
 typedef struct Msg_003E4F70{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];int a,b;char p34[4];}Msg_003E4F70;extern char g_ActorActionMsgClass[],D_004E0840[],D_004E01E0[];
 #if 0 /* merge_units */
-void cMessage_ctor5(Msg_003E4F70*,void*,Packet_003E4F70*);
+void cMessage_ctor_cMessageNameR_messagebaseR(Msg_003E4F70*,void*,Packet_003E4F70*);
 #endif /* merge_units */
-#define cMessage_ctor5(a0, a1, a2) ((void)cMessage_ctor5((void *)(a0), (a1), (void *)(a2))) /* merge_units */
+#define cMessage_ctor_cMessageNameR_messagebaseR(a0, a1, a2) ((void)cMessage_ctor_cMessageNameR_messagebaseR((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 #if 0 /* merge_units */
-void MsgQueue_QueueClone(Msg_003E4F70*,void*,int,int);
+void QueueMessage_cMessageR_cSystemP_int_int(Msg_003E4F70*,void*,int,int);
 #endif /* merge_units */
-#define MsgQueue_QueueClone(a0, a1, a2, a3) (MsgQueue_QueueClone((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
 #if 0 /* merge_units */
 void cMessage_dtor(Msg_003E4F70*,int);
 #endif /* merge_units */
@@ -320,13 +320,13 @@ void cMessage_dtor(Msg_003E4F70*,int);
 int cCharActionMsg_Int_NetCharActionIntReq(int a,int b,int c,Packet_003E4F70*p0){
  Msg_003E4F70 msg;Packet_003E4F70*p;
  if(!D_005723C8)D_005723C8=1;
- p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01E0;msg.a=(int)p->a;
- obj=NetMap_Lookup(p->id);if(obj)MsgQueue_QueueClone(&msg,*obj,0,0);
+ p=p0;if(D_005721D0){void**obj;cMessage_ctor_cMessageNameR_messagebaseR(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01E0;msg.a=(int)p->a;
+ obj=cNetObj_GetNetSystem(p->id);if(obj)QueueMessage_cMessageR_cSystemP_int_int(&msg,*obj,0,0);
  msg.vt=D_004E0840;cMessage_dtor(&msg,0);}
  D_005723C8=0;return 0x10;
 }
-#undef cMessage_ctor5 /* merge_units */
-#undef MsgQueue_QueueClone /* merge_units */
+#undef cMessage_ctor_cMessageNameR_messagebaseR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E4F70 */
@@ -334,7 +334,7 @@ int cCharActionMsg_Int_NetCharActionIntReq(int a,int b,int c,Packet_003E4F70*p0)
 /* merge_units: begin func_003E5060 */
 #pragma push /* merge_units */
 extern int NetRegisterMessageStart(void* reg);
-extern int Event_UnpackHeader(void* desc);
+extern int cMessage_RegisterFields(void* desc);
 extern int cCharActionMsg_RegisterFields(void);
 extern int NetMessageField(void* desc, void* field, int size, int count);
 extern int NetRegisterApplicationMessage(void* t, void* fn);

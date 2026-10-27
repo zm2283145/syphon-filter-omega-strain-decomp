@@ -33,7 +33,7 @@ extern void videoDecDelete(void* obj);
 extern void audioDecDelete(void* obj);
 extern void strFileClose(void* part);
 extern void snd_CloseMovieSound(void);
-extern void SubtitleTrack_Destroy(void* obj);
+extern void cMovieSubtitles_Purge(void* obj);
 
 /* Shuts the subsystem down: stops the device, releases semaphores and handlers, clears the DMA flag. */
 void cMoviePlayer_Purge(Sys3F83* sys) {
@@ -51,7 +51,7 @@ void cMoviePlayer_Purge(Sys3F83* sys) {
     strFileClose(sys->part58);
     *(volatile unsigned int*)0x1000E000 &= ~2;
     snd_CloseMovieSound();
-    SubtitleTrack_Destroy(D_00571CF0);
+    cMovieSubtitles_Purge(D_00571CF0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003F8390 */
@@ -120,10 +120,10 @@ extern void ClearVram(int a, int b, int c, int d);
 extern void cTexMan_AllocStaticVram(int a, int b, int c, int d);
 extern int strlen(const char* s);
 extern char* strncpy(char* d, const char* s, int n);
-extern void String_Copy(char* d, const char* s);
+extern void Libc_Strcpy(char* d, const char* s);
 extern void cFileMan_ctor_charP_cFileManR(Obj8450* o, char* path, void* p);
-extern void FileMan_Release(Obj8450* o, int f);
-extern void MovieSubtitles_Load(void* a, Obj8450* o, int b);
+extern void cFileMan_dtor(Obj8450* o, int f);
+extern void cMovieSubtitles_Init(void* a, Obj8450* o, int b);
 extern void Alloc_Lock(int id);
 extern int GetThreadId(void);
 extern void ChangeThreadPriority(int tid, int prio);
@@ -150,9 +150,9 @@ extern void cMoviePlayer_VideoCallback(void);
 extern void cMoviePlayer_PcmCallback(void);
 extern void cMoviePlayer_DefMain(void);
 extern void videoDecMain(void);
-extern void MoviePlayer_PresentVblank(void);
+extern void vblankHandler(void);
 extern void handler_endimage(void);
-void MoviePlayer_Start(Sys8450* s)
+void cMoviePlayer_Init(Sys8450* s)
 {
     char path[0x80];
     Obj8450 obj;
@@ -166,9 +166,9 @@ void MoviePlayer_Start(Sys8450* s)
     name = s->name;
     len = strlen(name);
     strncpy(path, name, len);
-    String_Copy(path + len - 3, D_004BE1D8);
+    Libc_Strcpy(path + len - 3, D_004BE1D8);
     cFileMan_ctor_charP_cFileManR(&obj, path, s->part190);
-    MovieSubtitles_Load(D_00571CF0, &obj, s->f22C);
+    cMovieSubtitles_Init(D_00571CF0, &obj, s->f22C);
     *(volatile int*)0x10003010 = 0;
     Alloc_Lock(5);
     ChangeThreadPriority(GetThreadId(), 5);
@@ -217,7 +217,7 @@ void MoviePlayer_Start(Sys8450* s)
     tp.option = 0;
     s->f50 = CreateThread(&tp);
     StartThread(s->f50, D_0055C480);
-    sceGsSyncVCallback(MoviePlayer_PresentVblank);
+    sceGsSyncVCallback(vblankHandler);
     D_0055C530 = AddDmacHandler(2, handler_endimage, 0);
     EnableDmac(2);
     if (!strFileOpen(s->part58, s->part190)) {
@@ -226,7 +226,7 @@ void MoviePlayer_Start(Sys8450* s)
     s->f188 = s->f60;
     s->f18C = s->f60;
     s->f230 = 0;
-    FileMan_Release(&obj, -1);
+    cFileMan_dtor(&obj, -1);
 }
 #undef sceGsSyncVCallback /* merge_units */
 #pragma pop /* merge_units */
@@ -238,12 +238,12 @@ void MoviePlayer_Start(Sys8450* s)
 #include "alloc_guard.h"
 #include "movie_player.h"
 extern "C" {
-void Mem_Free(int heap, void* p, char* file, int line);
+void cMemMan_Deallocate(int heap, void* p, char* file, int line);
 }
-/* Mem_Free from heap 1 under the allocator lock; line is the MoviePlayer.cc source line. */
-static inline void MovieFree(void* p, int line) { AllocGuard g; Mem_Free(1, p, "MoviePlayer.cc", line); }
+/* cMemMan_Deallocate from heap 1 under the allocator lock; line is the MoviePlayer.cc source line. */
+static inline void MovieFree(void* p, int line) { AllocGuard g; cMemMan_Deallocate(1, p, "MoviePlayer.cc", line); }
 /* Releases the ten work buffers allocated by MoviePlayer_AllocBuffers. */
-extern "C" void MoviePlayer_FreeBuffers(MovieBuffers* self)
+extern "C" void cMoviePlayer_PurgeBuffers(MovieBuffers* self)
 {
     MovieFree(self->buf[0].raw, 0x7E);
     MovieFree(self->buf[1].raw, 0x7F);
@@ -264,10 +264,10 @@ extern "C" void MoviePlayer_FreeBuffers(MovieBuffers* self)
 #pragma cplusplus on
 extern "C" {
 extern char MoviePlayer_srcFile[];
-void* Mem_Alloc(int heap, int size, char* file, int line);
+void* cMemMan_Allocate(int heap, int size, char* file, int line);
 }
-/* Mem_Alloc from heap 1 under the allocator lock; line is the MoviePlayer.cc source line. */
-static inline char* MovieAlloc(int size, int line) { AllocGuard g; return (char*)Mem_Alloc(1, size, MoviePlayer_srcFile, line); }
+/* cMemMan_Allocate from heap 1 under the allocator lock; line is the MoviePlayer.cc source line. */
+static inline char* MovieAlloc(int size, int line) { AllocGuard g; return (char*)cMemMan_Allocate(1, size, MoviePlayer_srcFile, line); }
 /* Allocates the ten work buffers (64-byte aligned except the last). */
 extern "C" void MoviePlayer_AllocBuffers(MovieBuffers* self)
 {

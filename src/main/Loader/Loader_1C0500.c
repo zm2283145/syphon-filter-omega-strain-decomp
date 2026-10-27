@@ -16,13 +16,13 @@
  */
 
 
-extern int String_CopyCtor(LoaderObj* obj, int a1);
+extern int std_basic_string_char_char_traits_char_ctor_basicstringR(LoaderObj* obj, int a1);
 
-/* Initialise via String_CopyCtor, then store a2 in unk0C. */
+/* Initialise via std_basic_string_char_char_traits_char_ctor_basicstringR, then store a2 in unk0C. */
 int std_make_pair_cString_cSkaAnimationSetP(LoaderObj* obj, int a1, int a2) {
     int result;
 
-    result = String_CopyCtor(obj, a1);
+    result = std_basic_string_char_char_traits_char_ctor_basicstringR(obj, a1);
     obj->unk0C = a2;
     return result;
 }

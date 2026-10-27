@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-void Vec4_Scale_1E5920(V4* a, V4* b, float s) {
+void cVector_VU0Scale(V4* a, V4* b, float s) {
     int rv1;
     asm {
         .set noreorder

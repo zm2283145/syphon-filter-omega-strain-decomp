@@ -10,8 +10,8 @@ struct V {
     V& operator=(const V& o) { const V* s = &o; V* d = this; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); return *this; }
 } __attribute__((aligned(16)));
 struct Plc;
-extern "C" void VecPair_Copy(Plc* d, const Plc* s);
-struct Plc { V rot; V pos; Plc() {} Plc(const Plc& o) { VecPair_Copy(this, &o); void* xx = this; } };
+extern "C" void cQuatVec_ctor_cQuatVecR(Plc* d, const Plc* s);
+struct Plc { V rot; V pos; Plc() {} Plc(const Plc& o) { cQuatVec_ctor_cQuatVecR(this, &o); void* xx = this; } };
 struct Src { V a; V b; signed char c; };
 struct Key { unsigned char a; unsigned char b; };
 struct Pair { Key key; char pad2[0xE]; Src v[2]; };
@@ -25,14 +25,14 @@ extern Plc D_00497F00;
 extern Ent* D_004F2D80;
 extern void* D_004F2D88;
 extern float D_0049F720;
-void Quat_SetIdentity(V* q);
-void Vec4_SetOrigin(V* v);
-void Placement_GetIdentity(Plc* p, V* q, V* v);
+void cQuaternion_GetIdentity(V* q);
+void cVector_Get0001(V* v);
+void cQuatVec_ctor_cQuaternionR_cVectorR(Plc* p, V* q, V* v);
 void std_tree_pair_cWeaponSlotPair_value_compare_find(MIter* out, void* t, const Key* k);
 void std_map_cWeaponSlotPair_cIkTarget_LeftRight_end(MIter* out, void* t);
 MIter* cAssocArray_cWeaponSlotPair_cIkTarget_LeftRight_Iterator_ctor(MIter* d, MIter* s);
 void* cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(void* base, int index);
-void SecondaryAim_SetLayerSource(void* self, float w, Src* src);
+void cIkTargetWithSplinedTransition_TransitionToNewTarget(void* self, float w, Src* src);
 void cDrawAndHolsterWeapon_ActionManager_StartTransitionIfNecessary(Self* s, void* aim);
 }
 static inline void MkKey(Key* k, int a, int b)
@@ -48,9 +48,9 @@ static inline Plc Ident()
 {
     if (!D_004E1D80) {
         V q; V v;
-        Quat_SetIdentity(&q);
-        Vec4_SetOrigin(&v);
-        Placement_GetIdentity(&D_00497F00, &q, &v);
+        cQuaternion_GetIdentity(&q);
+        cVector_Get0001(&v);
+        cQuatVec_ctor_cQuaternionR_cVectorR(&D_00497F00, &q, &v);
         D_004E1D80 = 1;
     }
     return D_00497F00;
@@ -91,25 +91,25 @@ void cDrawAndHolsterWeapon_ActionManager_StartTransitionIfNecessary(Self* s, voi
         }
         if (src) {
             if (mode == 0 || mode == 2) {
-                SecondaryAim_SetLayerSource(cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(aim, 0), D_0049F720, src);
+                cIkTargetWithSplinedTransition_TransitionToNewTarget(cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(aim, 0), D_0049F720, src);
             } else {
                 Src t;
                 Plc p = Ident();
                 t.a = p.rot;
                 t.b = p.pos;
                 t.c = 0x13;
-                SecondaryAim_SetLayerSource(cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(aim, 0), D_0049F720, &t);
+                cIkTargetWithSplinedTransition_TransitionToNewTarget(cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(aim, 0), D_0049F720, &t);
             }
             if (mode == 1 || mode == 2) {
                 Src* s1p = src + 1;
-                SecondaryAim_SetLayerSource(cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(aim, 1), D_0049F720, s1p);
+                cIkTargetWithSplinedTransition_TransitionToNewTarget(cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(aim, 1), D_0049F720, s1p);
             } else {
                 Src t;
                 Plc p = Ident();
                 t.a = p.rot;
                 t.b = p.pos;
                 t.c = 0x14;
-                SecondaryAim_SetLayerSource(cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(aim, 1), D_0049F720, &t);
+                cIkTargetWithSplinedTransition_TransitionToNewTarget(cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(aim, 1), D_0049F720, &t);
             }
         }
         s->active = 0;

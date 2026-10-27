@@ -38,8 +38,8 @@ typedef struct {
 typedef struct { PathObj_f3* obj; int target; } PathArgs_f3;
 extern char D_004F5450[];
 extern char D_004DAE90[];
-extern void Event_Construct(PathMsg_f3* m, void* type);
-extern void Event_Send(PathMsg_f3* m, void* target, int immediate);
+extern void cMessage_ctor_cMessageNameR(PathMsg_f3* m, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int(PathMsg_f3* m, void* target, int immediate);
 extern void cMessage_dtor(PathMsg_f3* m, int flags);
 static inline void PathObj_SetPos_f3(int idx, PathObj_f3* o)
 {
@@ -54,11 +54,11 @@ static inline void PathObj_SetPos_f3(int idx, PathObj_f3* o)
         o->path->target = idx;
         o->posCC = idx;
         o->bDC = 0;
-        Event_Construct(&msg, D_004F5450);
+        cMessage_ctor_cMessageNameR(&msg, D_004F5450);
         msg.vtable = D_004DAE90;
         msg.kind = 1;
         msg.index = idx;
-        Event_Send(&msg, o, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, o, 0);
         msg.vtable = D_004DAE90;
         cMessage_dtor(&msg, 0);
     }

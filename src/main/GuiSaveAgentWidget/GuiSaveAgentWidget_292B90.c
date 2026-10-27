@@ -24,16 +24,16 @@ extern char g_Game[];
 extern Mgr_00292B90* D_004FFC04;
 extern char D_00493A60;
 extern Blk_00292B90 D_0055D510;
-char* Loc_LookupText(char* key);
-char* String_CStr(Str_00292B90* s);
+char* nGlobalization_GetString_charP(char* key);
+char* std_basic_string_char_char_traits_char_c_str(Str_00292B90* s);
 int atoi(char* s);
-Agent_00292B90* Agent_GetSelected(void* a, int b);
-unsigned char AgentData_Load(Agent_00292B90* a, char* s, int id);
-void* Gui_GetScreenList(void);
-void* GuiManager_FindOrLoad(void* a, char* b, char* c);
-void* Gui_GetScreenStack(void);
-void GuiStack_SwapScreens(void* a, void* b, void* c);
-int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
+Agent_00292B90* cGameSystem_GetAgentData(void* a, int b);
+unsigned char cAgentData_Load(Agent_00292B90* a, char* s, int id);
+void* Gui_Manager(void);
+void* GuiManager_OpenGui(void* a, char* b, char* c);
+void* Gui_Canvas(void);
+void GuiCanvas_Transition(void* a, void* b, void* c);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, char* c, void* d, int e);
 int GuiSaveAgentWidget_OnEvent(void* self, Obj_00292B90* o, int msg);
 }
 
@@ -50,7 +50,7 @@ static inline void QCopy(void* d0, void* s0, int n0) { int n = n0; void* d = d0;
         .set reorder
     }
 }
-extern "C" int GuiAgentLoad_HandleEvent(void* self, Obj_00292B90* o, int msg)
+extern "C" int GuiAgentLoad_onMessage(void* self, Obj_00292B90* o, int msg)
 {
     if ((msg & 0xFFFF) == 2) {
         Obj_00292B90* p;
@@ -66,29 +66,29 @@ extern "C" int GuiAgentLoad_HandleEvent(void* self, Obj_00292B90* o, int msg)
         }
         o = p;
         if (o) {
-            int id = atoi(String_CStr(&o->s4));
-            Agent_00292B90* ag = (Agent_00292B90*)Agent_GetSelected(g_Game, -1);
-            unsigned char r = AgentData_Load(ag, String_CStr(&o->s48), id);
+            int id = atoi(std_basic_string_char_char_traits_char_c_str(&o->s4));
+            Agent_00292B90* ag = (Agent_00292B90*)cGameSystem_GetAgentData(g_Game, -1);
+            unsigned char r = cAgentData_Load(ag, std_basic_string_char_char_traits_char_c_str(&o->s48), id);
             if (r == 0) {
                 void* pg;
                 D_00493A60 = 0;
                 QCopy(&D_0055D510, ag->p9A4, 0x44);
                 if (D_004FFC04->b2E) {
                     asm { .set reorder }
-                    pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9CA0, D_004A9CB8);
+                    pg = GuiManager_OpenGui(Gui_Manager(), D_004A9CA0, D_004A9CB8);
                 } else {
                     asm { .set reorder }
-                    pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9CD0, D_004A9CE8);
+                    pg = GuiManager_OpenGui(Gui_Manager(), D_004A9CD0, D_004A9CE8);
                 }
-                GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
+                GuiCanvas_Transition(Gui_Canvas(), self, pg);
             } else if (r == 2) {
                 Mgr_00292B90* ui = D_004FFC04;
-                char* t = Loc_LookupText(D_004A9D38);
-                FrontEnd_OpenPopup(ui, 2, t, Loc_LookupText(D_004A9D48), self, -1);
+                char* t = nGlobalization_GetString_charP(D_004A9D38);
+                cGameFrontEnd_PushMessageBox(ui, 2, t, nGlobalization_GetString_charP(D_004A9D48), self, -1);
             } else {
                 Mgr_00292B90* ui = D_004FFC04;
-                char* t = Loc_LookupText(D_004A9D38);
-                FrontEnd_OpenPopup(ui, 2, t, Loc_LookupText(D_004A9D58), self, -1);
+                char* t = nGlobalization_GetString_charP(D_004A9D38);
+                cGameFrontEnd_PushMessageBox(ui, 2, t, nGlobalization_GetString_charP(D_004A9D58), self, -1);
             }
         }
         return 1;

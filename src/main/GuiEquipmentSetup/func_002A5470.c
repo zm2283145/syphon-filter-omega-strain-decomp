@@ -14,12 +14,12 @@ typedef struct Widget {
     char pad2C[0x34 - 0x2C];
     float x, y;
 } Widget;
-extern "C" void List_Begin(ListIter* out, NodeList* list);
+extern "C" void std_list_deleter_voidPtr_begin_void(ListIter* out, NodeList* list);
 extern "C" void std_list_GuiWidgetPtr_generic_iterator_ctor(ListIter* out, ListIter* in);
 extern "C" void std_list_GuiWidgetPtr_end(ListIter* out, NodeList* list);
 extern "C" void cLListIterator_GuiWidgetPtr_ctor_listR(ListIter* out, ListIter* in);
-extern "C" void GuiWidget_SetPos(Widget* w, float x, float y);
-static inline void SetPos(Widget* w, Vec2 v) { GuiWidget_SetPos(w, v.x, v.y); }
+extern "C" void GuiWidget_SetPosition(Widget* w, float x, float y);
+static inline void SetPos(Widget* w, Vec2 v) { GuiWidget_SetPosition(w, v.x, v.y); }
 extern "C" void func_002A5470(Widget* w, Vec2 off)
 {
     ListIter last;
@@ -33,7 +33,7 @@ extern "C" void func_002A5470(Widget* w, Vec2 off)
         p += off;
         SetPos(w, p);
         list = &w->children;
-        List_Begin(&beginIt, list);
+        std_list_deleter_voidPtr_begin_void(&beginIt, list);
         std_list_GuiWidgetPtr_generic_iterator_ctor(&it, &beginIt);
         node = it.node;
         std_list_GuiWidgetPtr_end(&endIt, list);

@@ -50,11 +50,11 @@ struct W_415170 {
     char pad30[0x14];
     C_415170* comp;
 };
-extern "C" void GuiWidget_SendEventUp(W_415170* w, int msg, int a, int b);
+extern "C" void GuiWidget_SendParentsMessage(W_415170* w, int msg, int a, int b);
 
 static inline bool IsPress_415170(Ev_415170* e) { return e->type == 1 && e->dev == 0 && e->action == 0; }
 
-extern "C" int GuiCanvas_Navigate(W_415170* o, Ev_415170* ev)
+extern "C" int GuiCanvas_onInput(W_415170* o, Ev_415170* ev)
 {
     if (IsPress_415170(ev)) {
         unsigned short k = ev->key;
@@ -63,7 +63,7 @@ extern "C" int GuiCanvas_Navigate(W_415170* o, Ev_415170* ev)
             if (o->on == 0 || o->focus == 0) return 0;
             if (k == 0x1000) n = o->h->root->Next(o->focus, 1);
             else n = o->h->root->Prev(o->focus, 1);
-            if (n && n != o->focus) GuiWidget_SendEventUp(n, 0x10, 0, 0);
+            if (n && n != o->focus) GuiWidget_SendParentsMessage(n, 0x10, 0, 0);
             if (n != o->focus) {
                 if (o->focus) o->focus->comp->Unfocus();
                 o->focus = n;
@@ -107,7 +107,7 @@ struct O_415310 {
 #pragma bool off
 static inline int IsZero_415310(void* c) { return ((int)c != 0) ^ 1; }
 #pragma opt_rotateloops off
-extern "C" void GuiCanvas_DispatchInput(O_415310* o, void* arg)
+extern "C" void GuiCanvas_ProcessInputEvent(O_415310* o, void* arg)
 {
     unsigned char r = 0;
     if (o->on) {
@@ -147,14 +147,14 @@ struct W_4153F0 {
     char pad[0x4E];
     unsigned char b52;
 };
-extern "C" unsigned char UsbKbd_TranslateKey(int c, int flags);
-extern "C" unsigned char UsbKbd_GetCode(Kb_4153F0* k);
-extern "C" int UsbKbd_Poll(Kb_4153F0* k, int n);
+extern "C" unsigned char cUSBKeybd_KeyToAscii(int c, int flags);
+extern "C" unsigned char cUSBKeybd_GetAsciiKey(Kb_4153F0* k);
+extern "C" int cUSBKeybd_Read(Kb_4153F0* k, int n);
 
-extern "C" void GuiCanvas_KeyboardInput(W_4153F0* w, Kb_4153F0* kb)
+extern "C" void GuiCanvas_ProcessInput_cUSBKeybdR(W_4153F0* w, Kb_4153F0* kb)
 {
-    while (UsbKbd_Poll(kb, 1)) {
-        int c = UsbKbd_GetCode(kb);
+    while (cUSBKeybd_Read(kb, 1)) {
+        int c = cUSBKeybd_GetAsciiKey(kb);
         if (c) {
             int f = kb->flags;
             KeyEv_4153F0 ev;
@@ -164,7 +164,7 @@ extern "C" void GuiCanvas_KeyboardInput(W_4153F0* w, Kb_4153F0* kb)
             ev.c = 0;
             ev.key = c;
             ev.flags = f;
-            if (w->b52) ev.ch = UsbKbd_TranslateKey(c, f);
+            if (w->b52) ev.ch = cUSBKeybd_KeyToAscii(c, f);
             else ev.ch = c;
             w->Event(&ev);
         }
@@ -228,7 +228,7 @@ static inline int DivTime(long n)
     return q;
 }
 
-extern "C" void GuiCanvas_PadClock(W_415510* w, Pad_415510* pads)
+extern "C" void GuiCanvas_ProcessInput_cJoystickR(W_415510* w, Pad_415510* pads)
 {
     int now;
     int p;

@@ -4,7 +4,7 @@
 
 /* AnimCtl_Update: updates every motion group of the controller's deque, evaluates the transition
  * chain between begin and end, runs the transitions, then advances every group. Iterator idiom of
- * src/main/ska/ska_3ABB10.c (MotionGraph_ClearActive). */
+ * src/main/ska/ska_3ABB10.c (cSkaRequestStream_ClearCurrentlyPlayingItems). */
 struct Ring { int** cur; int** begin; int** x8; int** end; };
 struct DqIt {
     Ring ring; char* elem; char* bend;
@@ -29,7 +29,7 @@ struct BlockArray { int cap; int size; int start; int** data; int first; int cou
 struct SkaWords6 { int w[6]; };
 struct AnimGroup;
 struct AnimCtx;
-extern "C" void AnimGroup_Update(AnimGroup* g, AnimCtx* ctx);
+extern "C" void cSkaPlaybackList_NextFrame(AnimGroup* g, AnimCtx* ctx);
 struct AnimCtl { char pad0[4]; unsigned char busy; char pad5[0x13]; BlockArray arr; };
 extern "C" {
 void std_deque_deleter_common_cSkaSystem_Request_make_iterator(DqIt* out, BlockArray* a, int n);
@@ -37,8 +37,8 @@ void cSkaPlaybackList_StartOfFrameUpdate(void* g);
 void std_deque_cSkaSystem_Request_rend(SkaWords6* self, BlockArray* a);
 SkaWords6* cDequeue_cSkaSystem_Request_ReverseIterator_ctor(SkaWords6* dst, SkaWords6* src);
 void std_deque_cSkaSystem_Request_rbegin(SkaWords6* self, BlockArray* a);
-void AnimCtl_Evaluate(void* a0, void* a1, SkaWords6* q, SkaWords6* req, unsigned char flag, float w, float t);
-void AnimCtl_UpdateTransitions(AnimCtl* c, float t);
+void cSkaRequestStream_ProcessCurrentlyPlayingItems(void* a0, void* a1, SkaWords6* q, SkaWords6* req, unsigned char flag, float w, float t);
+void cSkaRequestStream_ReorderLists(AnimCtl* c, float t);
 void AnimCtl_Update(AnimCtl* c, void* m, float dt);
 }
 
@@ -68,20 +68,20 @@ extern "C" void AnimCtl_Update(AnimCtl* c, void* m, float dt)
     cDequeue_cSkaSystem_Request_ReverseIterator_ctor(&fin, &t1);
     std_deque_cSkaSystem_Request_rend(&t2, &c->arr);
     cDequeue_cSkaSystem_Request_ReverseIterator_ctor(&beg, &t2);
-    AnimCtl_Evaluate(c, m, &fin, &beg, 0, 1.0f, dt);
-    AnimCtl_UpdateTransitions(c, dt);
+    cSkaRequestStream_ProcessCurrentlyPlayingItems(c, m, &fin, &beg, 0, 1.0f, dt);
+    cSkaRequestStream_ReorderLists(c, dt);
     c->busy = 0;
     std_deque_deleter_common_cSkaSystem_Request_make_iterator(&b2, &c->arr, 0);
     it2 = b2;
     std_deque_deleter_common_cSkaSystem_Request_make_iterator(&r2, &c->arr, c->arr.count);
     e = r2.elem;
     while (it2.Ne(e)) {
-        AnimGroup_Update((AnimGroup*)(it2.elem + 0xE8), (AnimCtx*)m);
+        cSkaPlaybackList_NextFrame((AnimGroup*)(it2.elem + 0xE8), (AnimCtx*)m);
         ++it2;
     }
 }
 
-/* AnimGroup_Update: pushes the group's time scale, then advances the phase of every active
+/* cSkaPlaybackList_NextFrame: pushes the group's time scale, then advances the phase of every active
  * contribution (wrapping or clamping at 1) and samples each of its clips. */
 typedef struct { int w; } Clip;
 typedef struct { int cap; int count; int* data; } IntVec;
@@ -113,7 +113,7 @@ struct V {
     V(const V& o) { V* pd = this; const V* ps = &o; __int128 t; asm volatile { lq t, 0(ps); sq t, 0(pd) } }
 } __attribute__((aligned(16)));
 extern "C" {
-Raw List_Begin(AnimGroup* g);
+Raw std_list_deleter_voidPtr_begin_void(AnimGroup* g);
 void std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(LIt* out, const Raw& r);
 Raw std_list_cSkaPlaybackGroupPtr_end(AnimGroup* g);
 void cLListIterator_cSkaPlaybackGroupPtr_ctor(LIt* out, const Raw& r);
@@ -125,24 +125,24 @@ int cArray_cSkaPlaybackItem_Iterator_opArrow(VIt* a);
 void cArray_cSkaPlaybackItem_Iterator_opInc(VIt* a);
 int cSkaPlaybackItem_GetAnimation(int c);
 V cSkaPlaybackItem_GetSummedAndNormalizedOffsetRootRotation(int o);
-void AnimContext_PushTime(AnimCtx* s, float t);
-void AnimGroup_ResetInactive(Contrib* c);
-float AnimPhase_GetCurrent(int* p);
-void AnimPhase_SetPrevious(int* p, float v);
-void AnimPhase_SetCurrent(int* p, float t);
-float FloatStack_Top(AnimCtx* s);
-void AnimTime_Pop(AnimCtx* s);
-void SkaClip_SampleFrames(int clip, Contrib* c, float w, const V& q, AnimCtx* ctx);
-void AnimGroup_Update(AnimGroup* g, AnimCtx* ctx);
+void cSkaParams_PushTimeStep(AnimCtx* s, float t);
+void cSkaPlaybackGroup_Rewind(Contrib* c);
+float cSkaPlaybackGroup_cPlaybackPosWithHistory_Curr(int* p);
+void cSkaPlaybackGroup_cPlaybackPosWithHistory_SetPrev(int* p, float v);
+void cSkaPlaybackGroup_cPlaybackPosWithHistory_SetCurr(int* p, float t);
+float cSkaParams_TimeStep(AnimCtx* s);
+void cSkaParams_PopTimeStep(AnimCtx* s);
+void cSkaAnim_ProcessAnimData(int clip, Contrib* c, float w, const V& q, AnimCtx* ctx);
+void cSkaPlaybackList_NextFrame(AnimGroup* g, AnimCtx* ctx);
 }
 
-static inline void LBegin(LIt* o, AnimGroup* g) { std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(o, List_Begin(g)); }
+static inline void LBegin(LIt* o, AnimGroup* g) { std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(o, std_list_deleter_voidPtr_begin_void(g)); }
 static inline void LEnd0(LIt* o, AnimGroup* g) { cLListIterator_cSkaPlaybackGroupPtr_ctor(o, std_list_cSkaPlaybackGroupPtr_end(g)); }
 static inline void LEnd(LIt* o, AnimGroup* g) { LEnd0(o, g); }
-/* FloatStack_Top; the volatile read keeps this count load separate from Push's (retail loads
+/* cSkaParams_TimeStep; the volatile read keeps this count load separate from Push's (retail loads
  * the count twice: once for the top value, once for the push test and index). */
 static inline float Top(AnimCtx* s) { float* p = &s->vals[*(volatile int*)&s->count - 1]; return *p; }
-/* AnimContext_PushTime, inlined. */
+/* cSkaParams_PushTimeStep, inlined. */
 static inline void Push(AnimCtx* s, float t)
 {
     if ((unsigned int)s->count < 4) {
@@ -160,7 +160,7 @@ static inline void SampleClips(Contrib* c, AnimCtx* ctx)
     while (cArray_cSkaPlaybackItem_Iterator_opNe(&vi, &ve)) {
         int clip = cSkaPlaybackItem_GetAnimation(cArray_cSkaPlaybackItem_Iterator_opArrow(&vi));
         float w = cSkaPlaybackItem_GetSummedWeight(cArray_cSkaPlaybackItem_Iterator_opArrow(&vi));
-        SkaClip_SampleFrames(clip, c, w, cSkaPlaybackItem_GetSummedAndNormalizedOffsetRootRotation(cArray_cSkaPlaybackItem_Iterator_opArrow(&vi)), ctx);
+        cSkaAnim_ProcessAnimData(clip, c, w, cSkaPlaybackItem_GetSummedAndNormalizedOffsetRootRotation(cArray_cSkaPlaybackItem_Iterator_opArrow(&vi)), ctx);
         cArray_cSkaPlaybackItem_Iterator_opInc(&vi);
     }
 }
@@ -184,7 +184,7 @@ static inline float Wrap(Contrib* c, float next, float cur, float* d)
     }
     return next;
 }
-extern "C" void AnimGroup_Update(AnimGroup* g, AnimCtx* ctx)
+extern "C" void cSkaPlaybackList_NextFrame(AnimGroup* g, AnimCtx* ctx)
 {
     Contrib* c;
     LNode* n;
@@ -194,24 +194,24 @@ extern "C" void AnimGroup_Update(AnimGroup* g, AnimCtx* ctx)
     LBegin(&it, g);
     for (n = it.p; LEnd(&end, g), n != end.p; n = n->next) {
         c = n->c;
-        if (c->f33) AnimContext_PushTime(ctx, 0.0f);
+        if (c->f33) cSkaParams_PushTimeStep(ctx, 0.0f);
         if (!c->active) {
-            AnimGroup_ResetInactive(c);
+            cSkaPlaybackGroup_Rewind(c);
         } else {
-            float cur = AnimPhase_GetCurrent(c->f20);
+            float cur = cSkaPlaybackGroup_cPlaybackPosWithHistory_Curr(c->f20);
             float r;
             float d;
             float next;
-            AnimPhase_SetPrevious(c->f20, cur);
+            cSkaPlaybackGroup_cPlaybackPosWithHistory_SetPrev(c->f20, cur);
             r = Rate(c);
-            if (r != 0.0f) d = FloatStack_Top(ctx) / r;
+            if (r != 0.0f) d = cSkaParams_TimeStep(ctx) / r;
             else d = c->f32 ? 0.0f : 1.0f;
             next = Wrap(c, cur + d, cur, &d);
             c->f2C = d;
-            AnimPhase_SetCurrent(c->f20, next);
+            cSkaPlaybackGroup_cPlaybackPosWithHistory_SetCurr(c->f20, next);
             SampleClips(c, ctx);
         }
-        if (c->f33) AnimTime_Pop(ctx);
+        if (c->f33) cSkaParams_PopTimeStep(ctx);
     }
     g->unkC = 0;
     if (ctx->count) ctx->count--;

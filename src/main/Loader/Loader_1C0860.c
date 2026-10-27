@@ -18,8 +18,8 @@ extern SkNames_c7 D_0048A310;
 extern char D_0048B2F8[];
 extern char D_0053BB70[];
 extern int cHogList_OpenProtected(void* a, char* path, int b);
-extern int Skel_Load(int* out, void* skel, char* name, int hog);
-void Skel_LoadCommonModels(void* self, void* fs) {
+extern int cSkeletonDataBank_AddSkeletonData_charP_cHogFileR(int* out, void* skel, char* name, int hog);
+void cLoader_LoadSkeletons(void* self, void* fs) {
     char path[128];
     SkNames_c7 names;
     int out;
@@ -29,7 +29,7 @@ void Skel_LoadCommonModels(void* self, void* fs) {
     sprintf(path, "%s\\COMMON\\SKEL.HOG", D_0048B2F8);
     hog = cHogList_OpenProtected(fs, path, 0);
     for (p = names.n; **p != 0; p++) {
-        Skel_Load(&out, D_0053BB70, *p, hog);
+        cSkeletonDataBank_AddSkeletonData_charP_cHogFileR(&out, D_0053BB70, *p, hog);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -44,22 +44,22 @@ static inline void merge_flush_func_001C0860(void) {}
 struct PopReader_1C0920 { int unk0; int size; unsigned int base; char* cur; };
 extern "C" {
 extern char D_0049EE88[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void Object_Register(void* o);
-int Pop_FindTag(PopReader_1C0920* r, int tag);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void nGobjManager_AddGOBJ(void* o);
+int cPopulation_SeekBlock(PopReader_1C0920* r, int tag);
 void* Camera_ConstructStream(void* p, PopReader_1C0920* r);
-void Loader_UpdateLoadingScreen(void* a, char* name, int x);
-void* App_GetInstance(void);
+void cMachine_ShowLoadingScreen(void* a, char* name, int x);
+void* GetMachine(void);
 }
-extern "C" void Loader_InitPopulatedCameras(void* a0, PopReader_1C0920* r)
+extern "C" void cLoader_LoadCameras(void* a0, PopReader_1C0920* r)
 {
     if (r->cur) {
         int mis;
-        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Populated Cameras...", 0);
+        cMachine_ShowLoadingScreen(GetMachine(), "Initializing Populated Cameras...", 0);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;
-        if ((unsigned char)Pop_FindTag(r, 0x3A4D4143)) {
+        if ((unsigned char)cPopulation_SeekBlock(r, 0x3A4D4143)) {
             int n;
             int i = 0;
             n = *(int*)r->cur;
@@ -68,11 +68,11 @@ extern "C" void Loader_InitPopulatedCameras(void* a0, PopReader_1C0920* r)
                 void* p;
                 {
                     AllocGuard g;
-                    p = Mem_Alloc(0, 0xCF0, D_0049EE88, 0x5C5);
+                    p = cMemMan_Allocate(0, 0xCF0, D_0049EE88, 0x5C5);
                 }
                 if (p)
                     p = Camera_ConstructStream(p, r);
-                Object_Register(p);
+                nGobjManager_AddGOBJ(p);
             }
         }
     }
@@ -88,21 +88,21 @@ static inline void merge_flush_func_001C0920(void) {}
 struct PopReader_1C0A90 { int unk0; int size; unsigned int base; char* cur; };
 extern "C" {
 #if 0 /* merge_units */
-int Pop_FindTag(PopReader_1C0A90* r, int tag);
+int cPopulation_SeekBlock(PopReader_1C0A90* r, int tag);
 #endif /* merge_units */
-#define Pop_FindTag(a0, a1) (Pop_FindTag((PopReader_1C0920 *)(a0), (a1))) /* merge_units */
+#define cPopulation_SeekBlock(a0, a1) (cPopulation_SeekBlock((PopReader_1C0920 *)(a0), (a1))) /* merge_units */
 
-void* cFireObj_ctor2(void* p, PopReader_1C0A90* r);
+void* cFireObj_ctor_cPopulationR(void* p, PopReader_1C0A90* r);
 }
-extern "C" void Loader_InitFireObjects(void* a0, PopReader_1C0A90* r)
+extern "C" void cLoader_LoadFireObjs(void* a0, PopReader_1C0A90* r)
 {
     if (r->cur) {
         int mis;
-        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Fire Objects...", 0);
+        cMachine_ShowLoadingScreen(GetMachine(), "Initializing Fire Objects...", 0);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;
-        if ((unsigned char)Pop_FindTag(r, 0x3A524946)) {
+        if ((unsigned char)cPopulation_SeekBlock(r, 0x3A524946)) {
             int n;
             int i = 0;
             n = *(int*)r->cur;
@@ -111,16 +111,16 @@ extern "C" void Loader_InitFireObjects(void* a0, PopReader_1C0A90* r)
                 void* p;
                 {
                     AllocGuard g;
-                    p = Mem_Alloc(0, 0xA0, D_0049EE88, 0x5A2);
+                    p = cMemMan_Allocate(0, 0xA0, D_0049EE88, 0x5A2);
                 }
                 if (p)
-                    p = cFireObj_ctor2(p, r);
-                Object_Register(p);
+                    p = cFireObj_ctor_cPopulationR(p, r);
+                nGobjManager_AddGOBJ(p);
             }
         }
     }
 }
-#undef Pop_FindTag /* merge_units */
+#undef cPopulation_SeekBlock /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C0A90(void) {}
 #pragma pop /* merge_units */
@@ -133,34 +133,34 @@ extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 extern char g_HotboxList[];
 void Alloc_Lock(int id);
-void Alloc_Unlock(int id);
+void EnableIntc(int id);
 #if 0 /* merge_units */
-void* Mem_Alloc(int heap, int size, char* file, int line);
+void* cMemMan_Allocate(int heap, int size, char* file, int line);
 #endif /* merge_units */
-#define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
+#define cMemMan_Allocate(a0, a1, a2, a3) (cMemMan_Allocate((a0), (a1), (a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
-int App_GetInstance(void);
+int GetMachine(void);
 #endif /* merge_units */
-#define App_GetInstance() ((int)App_GetInstance()) /* merge_units */
+#define GetMachine() ((int)GetMachine()) /* merge_units */
 
 #if 0 /* merge_units */
-void Loader_UpdateLoadingScreen(int a, char* b, int c);
+void cMachine_ShowLoadingScreen(int a, char* b, int c);
 #endif /* merge_units */
-#define Loader_UpdateLoadingScreen(a0, a1, a2) (Loader_UpdateLoadingScreen((void *)(a0), (a1), (a2))) /* merge_units */
+#define cMachine_ShowLoadingScreen(a0, a1, a2) (cMachine_ShowLoadingScreen((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-int Pop_FindTag(Pop_001C0C00* r, int tag);
+int cPopulation_SeekBlock(Pop_001C0C00* r, int tag);
 #endif /* merge_units */
-#define Pop_FindTag(a0, a1) (Pop_FindTag((void *)(a0), (a1))) /* merge_units */
+#define cPopulation_SeekBlock(a0, a1) (cPopulation_SeekBlock((void *)(a0), (a1))) /* merge_units */
 
-void* TriggerZone_ctor(void* p, Pop_001C0C00* r);
-void* cHotbox_ctor(void* p, Pop_001C0C00* r, int type);
-void Hotbox_AddToGlobalList(void* vec, void** val);
+void* cBuddyHotbox_ctor(void* p, Pop_001C0C00* r);
+void* cHotbox_ctor_cPopulationR_int(void* p, Pop_001C0C00* r, int type);
+void cLList_cHotboxPtr_PushBackActual(void* vec, void** val);
 #if 0 /* merge_units */
-void Object_Register(void* p);
+void nGobjManager_AddGOBJ(void* p);
 #endif /* merge_units */
-#define Object_Register(a0) (Object_Register((a0))) /* merge_units */
+#define nGobjManager_AddGOBJ(a0) (nGobjManager_AddGOBJ((a0))) /* merge_units */
 
 static inline void Align_001C0C00(Pop_001C0C00* r)
 {
@@ -179,17 +179,17 @@ static inline void* Alloc_001C0C00(int size, int line)
     void* p;
     if (g_ProfileLockEnabled) Alloc_Lock(9);
     g_ProfileLockDepth++;
-    p = Mem_Alloc(0, size, D_0049EE88, line);
-    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    p = cMemMan_Allocate(0, size, D_0049EE88, line);
+    if (g_ProfileLockEnabled) EnableIntc(9);
     g_ProfileLockDepth--;
     return p;
 }
-void Loader_InitHotboxes(void* self, Pop_001C0C00* r)
+void cLoader_LoadHotboxes(void* self, Pop_001C0C00* r)
 {
     if (r->cur) {
-        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Hotboxes...", 0);
+        cMachine_ShowLoadingScreen(GetMachine(), "Initializing Hotboxes...", 0);
         Align_001C0C00(r);
-        if ((unsigned char)Pop_FindTag(r, 0x3A584F42)) {
+        if ((unsigned char)cPopulation_SeekBlock(r, 0x3A584F42)) {
             int n = ReadInt_001C0C00(r);
             void* p;
             int i;
@@ -202,7 +202,7 @@ void Loader_InitHotboxes(void* self, Pop_001C0C00* r)
                         {
                             void* t = Alloc_001C0C00(0xB0, 0x576);
                             if (t)
-                                t = TriggerZone_ctor(t, r);
+                                t = cBuddyHotbox_ctor(t, r);
                             p = t;
                         }
                         break;
@@ -210,7 +210,7 @@ void Loader_InitHotboxes(void* self, Pop_001C0C00* r)
                         {
                             void* t = Alloc_001C0C00(0xB0, 0x57A);
                             if (t)
-                                t = cHotbox_ctor(t, r, type);
+                                t = cHotbox_ctor_cPopulationR_int(t, r, type);
                             p = t;
                         }
                         break;
@@ -219,22 +219,22 @@ void Loader_InitHotboxes(void* self, Pop_001C0C00* r)
                     {
                         void* t = Alloc_001C0C00(0xB0, 0x57F);
                         if (t)
-                            t = cHotbox_ctor(t, r, -1);
+                            t = cHotbox_ctor_cPopulationR_int(t, r, -1);
                         p = t;
                     }
                 }
                 tmp[0] = p;
-                Hotbox_AddToGlobalList(g_HotboxList, tmp);
-                Object_Register(p);
+                cLList_cHotboxPtr_PushBackActual(g_HotboxList, tmp);
+                nGobjManager_AddGOBJ(p);
             }
         }
     }
 }
-#undef Mem_Alloc /* merge_units */
-#undef App_GetInstance /* merge_units */
-#undef Loader_UpdateLoadingScreen /* merge_units */
-#undef Pop_FindTag /* merge_units */
-#undef Object_Register /* merge_units */
+#undef cMemMan_Allocate /* merge_units */
+#undef GetMachine /* merge_units */
+#undef cMachine_ShowLoadingScreen /* merge_units */
+#undef cPopulation_SeekBlock /* merge_units */
+#undef nGobjManager_AddGOBJ /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C0C00(void) {}
 #pragma pop /* merge_units */
@@ -248,28 +248,28 @@ typedef struct { int cap; int count; char* data; } VV_1C0EE0;
 extern int D_004FFBE4;
 extern VV_1C0EE0* D_004FFBE8;
 #if 0 /* merge_units */
-extern int Pop_FindTag(PopReader_1C0EE0* r, int tag);
+extern int cPopulation_SeekBlock(PopReader_1C0EE0* r, int tag);
 #endif /* merge_units */
-#define Pop_FindTag(a0, a1) (Pop_FindTag((void *)(a0), (a1))) /* merge_units */
+#define cPopulation_SeekBlock(a0, a1) (cPopulation_SeekBlock((void *)(a0), (a1))) /* merge_units */
 
-extern void Loader_UpdateLoadingScreen(void* a, char* name, int x);
-extern void* App_GetInstance(void);
+extern void cMachine_ShowLoadingScreen(void* a, char* name, int x);
+extern void* GetMachine(void);
 extern void std_vector_int_ctor_void(Inner_1C0EE0* t);
 extern void std_vector_imp_cArray_int_resize(VV_1C0EE0* v, int n, Inner_1C0EE0* fill);
 extern void func_0013A040(Inner_1C0EE0* t, int flags);
-extern void PtrVec_Reserve(void* v, int n);
-extern void PtrVec_PushBack_1C1080(void* v, int* x);
+extern void std_vector_pod_int_reserve(void* v, int n);
+extern void std_vector_int_push_back(void* v, int* x);
 #pragma opt_strength_reduction off
-void Loader_InitNodeGroups(void* a0, PopReader_1C0EE0* r)
+void cLoader_LoadNodeGroups(void* a0, PopReader_1C0EE0* r)
 {
     D_004FFBE4 = 0;
     if (r->cur) {
         int mis;
-        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Node Groups...", 0);
+        cMachine_ShowLoadingScreen(GetMachine(), "Initializing Node Groups...", 0);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;
-        if ((unsigned char)Pop_FindTag(r, 0x3A505247)) {
+        if ((unsigned char)cPopulation_SeekBlock(r, 0x3A505247)) {
             int n;
             n = *(int*)r->cur;
             r->cur += 4;
@@ -289,12 +289,12 @@ void Loader_InitNodeGroups(void* a0, PopReader_1C0EE0* r)
                     int off = i * 16;
                     m = *(int*)r->cur;
                     r->cur += 4;
-                    PtrVec_Reserve(vv->data + off, m);
+                    std_vector_pod_int_reserve(vv->data + off, m);
                     for (j = 0; j < m; j++) {
                         int v[1];
                         v[0] = *(int*)r->cur;
                         r->cur += 4;
-                        PtrVec_PushBack_1C1080(vv->data + off, v);
+                        std_vector_int_push_back(vv->data + off, v);
                     }
                 }
             }
@@ -302,7 +302,7 @@ void Loader_InitNodeGroups(void* a0, PopReader_1C0EE0* r)
     }
 }
 #pragma opt_strength_reduction reset
-#undef Pop_FindTag /* merge_units */
+#undef cPopulation_SeekBlock /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C0EE0(void) {}
 #pragma pop /* merge_units */

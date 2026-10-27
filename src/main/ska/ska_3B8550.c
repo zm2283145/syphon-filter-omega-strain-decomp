@@ -14,16 +14,16 @@ typedef struct Node_3B8550 { struct Node_3B8550* left; struct Node_3B8550* right
 typedef struct { int pad; Node_3B8550* root; } Tree_3B8550;
 typedef struct { Node_3B8550* node; bool inserted; } Res_3B8550;
 extern "C" {
-int Name_Compare48(const char* a, const char* b, int n);
+int Libc_Memcmp(const char* a, const char* b, int n);
 Node_3B8550* std_tree_pair_cString16N_value_compare_cAllocator_pair_insert_node_at_nodeP_bool_bool_pairR_2(Tree_3B8550* t, Node_3B8550* y, bool comp, bool leftmost, const char* key);
 static bool D_00493508 = true;
 extern const bool D_00493510;
 }
 static inline bool Less_3B8550(const char* a, const char* b)
 {
-    return !(a[0] == 0 && b[0] == 0) && Name_Compare48(a, b, 0x20) < 0;
+    return !(a[0] == 0 && b[0] == 0) && Libc_Memcmp(a, b, 0x20) < 0;
 }
-extern "C" void MotionRegistry_MapInsert(Res_3B8550* out, Tree_3B8550* t, const char* key)
+extern "C" void std_tree_pair_cString16N_value_compare_cAllocator_pair_insert_one_pairR_2(Res_3B8550* out, Tree_3B8550* t, const char* key)
 {
     Node_3B8550* lb = 0;
     Node_3B8550* y = (Node_3B8550*)&t->root;
@@ -61,16 +61,16 @@ static inline void merge_flush_func_003B8550(void) {}
 typedef struct C6It_3B86D0 { Q q[2]; } C6It_3B86D0;
 typedef struct C6Arr_3B86D0 { int pad0; unsigned int state; int index; void** items; int result; int live; } C6Arr_3B86D0;
 extern void std_deque_deleter_common_cSkaSystem_Request_make_iterator(C6It_3B86D0*, C6Arr_3B86D0*, int);
-extern void Array_DestroyRange(C6Arr_3B86D0*, C6It_3B86D0*, C6It_3B86D0*);
+extern void std_deque_deleter_cSkaSystem_Request_destroy(C6Arr_3B86D0*, C6It_3B86D0*, C6It_3B86D0*);
 extern void opDelete_cSkaSystemRequestP_int_bool_charP_etc(void*, int, int, char*, int);
 extern void _cdeque_deleter_int_1_pop_front(C6Arr_3B86D0*);
 extern char D_004BC4D0[];
-void MotionArray_Clear(C6Arr_3B86D0* self) {
+void std_deque_deleter_cSkaSystem_Request_clear(C6Arr_3B86D0* self) {
     C6It_3B86D0 first;
     C6It_3B86D0 last;
     std_deque_deleter_common_cSkaSystem_Request_make_iterator(&last, self, self->live);
     std_deque_deleter_common_cSkaSystem_Request_make_iterator(&first, self, 0);
-    Array_DestroyRange(self, &first, &last);
+    std_deque_deleter_cSkaSystem_Request_destroy(self, &first, &last);
     self->live = 0;
     if (self->state > 1) {
         while (self->state > 2) {
@@ -92,9 +92,9 @@ static inline void merge_flush_func_003B86D0(void) {}
 #pragma push /* merge_units */
 typedef struct Deq_3B87A0 { unsigned int count; int unk4; unsigned int first; void** blocks; unsigned int pos; int size; } Deq_3B87A0;
 #if 0 /* merge_units */
-extern void MotionArray_Clear(Deq_3B87A0*);
+extern void std_deque_deleter_cSkaSystem_Request_clear(Deq_3B87A0*);
 #endif /* merge_units */
-#define MotionArray_Clear(a0) (MotionArray_Clear((void *)(a0))) /* merge_units */
+#define std_deque_deleter_cSkaSystem_Request_clear(a0) (std_deque_deleter_cSkaSystem_Request_clear((void *)(a0))) /* merge_units */
 
 extern void* std_deque_deleter_common_cSkaSystem_Request_front(Deq_3B87A0*);
 extern void func_00397400(void*, int);
@@ -105,7 +105,7 @@ extern void _cdeque_deleter_int_1_pop_front(Deq_3B87A0*);
 
 void std_deque_deleter_cSkaSystem_Request_pop_front(Deq_3B87A0* self) {
     if (self->size == 1) {
-        MotionArray_Clear(self);
+        std_deque_deleter_cSkaSystem_Request_clear(self);
     } else {
         func_00397400(std_deque_deleter_common_cSkaSystem_Request_front(self), -1);
         self->size--;
@@ -118,7 +118,7 @@ void std_deque_deleter_cSkaSystem_Request_pop_front(Deq_3B87A0* self) {
         }
     }
 }
-#undef MotionArray_Clear /* merge_units */
+#undef std_deque_deleter_cSkaSystem_Request_clear /* merge_units */
 #undef _cdeque_deleter_int_1_pop_front /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B87A0(void) {}

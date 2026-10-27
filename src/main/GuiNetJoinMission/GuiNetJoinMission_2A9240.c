@@ -33,8 +33,8 @@ extern "C" char D_004AB668[];
 static void * const dat_0048BBB0[2] = { (void*)D_004AB648, (void*)0x0 };
 static void * const dat_0048BBB8[2] = { (void*)D_004AB658, (void*)0x0 };
 static void * const dat_0048BBC0[2] = { (void*)D_004AB668, (void*)0x0 };
-extern "C" void GuiMenuScreen_Init(Screen* self);
-extern "C" Obj* GuiWidget_FindChildByName(Screen* self, const char* name);
+extern "C" void GuiMissionLobbyScreen_onAdd(Screen* self);
+extern "C" Obj* GuiWidget_FindChild_charP(Screen* self, const char* name);
 
 /* Returns obj when it is a D_004A9870-type widget, else 0. */
 static inline Obj* AsLabel(Obj* obj)
@@ -47,10 +47,10 @@ static inline Obj* AsLabel(Obj* obj)
 /* Screen init: base init, then looks up the three named child widgets (kept only if D_004A9870-type). */
 extern "C" void GuiNetJoinMission_Init(Screen* self)
 {
-    GuiMenuScreen_Init(self);
-    self->item0 = AsLabel(GuiWidget_FindChildByName(self, (*(const char**)dat_0048BBB0)));
-    self->item1 = AsLabel(GuiWidget_FindChildByName(self, (*(const char**)dat_0048BBB8)));
-    self->item2 = AsLabel(GuiWidget_FindChildByName(self, (*(const char**)dat_0048BBC0)));
+    GuiMissionLobbyScreen_onAdd(self);
+    self->item0 = AsLabel(GuiWidget_FindChild_charP(self, (*(const char**)dat_0048BBB0)));
+    self->item1 = AsLabel(GuiWidget_FindChild_charP(self, (*(const char**)dat_0048BBB8)));
+    self->item2 = AsLabel(GuiWidget_FindChild_charP(self, (*(const char**)dat_0048BBC0)));
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002A9240 */
@@ -66,11 +66,11 @@ extern "C" void GuiNetJoinMission_Init(Screen* self)
 #include "loose02_types.h"
 
 extern char D_004DDA50[];   /* GuiNetJoinMission vtable */
-extern GuiMenuScreen* GuiMenuScreen_ctor(GuiMenuScreen* self);
+extern GuiMenuScreen* GuiMissionLobbyScreen_ctor(GuiMenuScreen* self);
 
 /* GuiNetJoinMission constructor. */
 GuiNetListScreen* GuiNetJoinMission_ctor(GuiNetListScreen* self) {
-    GuiMenuScreen_ctor(&self->base);
+    GuiMissionLobbyScreen_ctor(&self->base);
     self->base.base.base.base.vtable = D_004DDA50;
     self->base.base.screenId = 2;
     self->unk160 = 0;

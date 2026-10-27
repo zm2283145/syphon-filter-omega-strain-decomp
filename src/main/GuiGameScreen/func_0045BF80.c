@@ -26,10 +26,10 @@ typedef struct NotifyMsg {
 extern int D_004F7E48;
 extern int D_004DC330;
 extern void GuiTextListWidget_Clear(int);
-extern void Event_Construct(NotifyMsg*, void*);
-extern void Event_Send(NotifyMsg*, void*, int);
+extern void cMessage_ctor_cMessageNameR(NotifyMsg*, void*);
+extern void QueueMessage_cMessageR_cSystemP_int(NotifyMsg*, void*, int);
 extern void cMessage_dtor(NotifyMsg*, int);
-extern void GuiGameScreen_Refocus(ObjF0*);
+extern void GuiGameScreen_ReleaseInput(ObjF0*);
 
 /* Closes the attached widget, notifies the owner (code -255) and detaches. */
 void GuiGameScreen_CloseChooseMenu(ObjF0* o) {
@@ -40,15 +40,15 @@ void GuiGameScreen_CloseChooseMenu(ObjF0* o) {
     GuiTextListWidget_Clear(o->handle);
     owner = o->owner;
     if (owner != 0) {
-        Event_Construct(&msg, &D_004F7E48);
+        cMessage_ctor_cMessageNameR(&msg, &D_004F7E48);
         msg.owner = owner;
         msg.vtable = &D_004DC330;
         msg.code = -0xFF;
-        Event_Send(&msg, o->target, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, o->target, 0);
         msg.vtable = &D_004DC330;
         cMessage_dtor(&msg, 0);
     }
     o->target = 0;
     o->owner = 0;
-    GuiGameScreen_Refocus(o);
+    GuiGameScreen_ReleaseInput(o);
 }

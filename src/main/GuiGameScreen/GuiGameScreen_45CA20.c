@@ -21,17 +21,17 @@ typedef struct { char pad[0x6A8]; unsigned char busy; } G_45CA20;
 extern G_45CA20* g_Hud;
 extern int D_00497ACC[];
 extern int D_00497AEC[];
-void GuiGameScreen_GatherWeapons(S_45CA20* o);
-long long Time_GetMilliseconds(void);
-void GuiGameScreen_FillWeaponPanels(S_45CA20* o);
-void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
-void* Gui_GetScreenStack(void);
-void GuiScreen_SetFocus(void* mgr, void* w);
+void GuiGameScreen_BuildWeaponSelectList(S_45CA20* o);
+long long cTimer_GetMillisecondTime(void);
+void GuiGameScreen_UpdateWeaponPanels(S_45CA20* o);
+void GuiWidget_SendMessage(void* a, void* b, int kind, int v, int f);
+void* Gui_Canvas(void);
+void GuiCanvas_SetFocus(void* mgr, void* w);
 static inline float fmin_45CA20(float a, float b) { float r; asm { min.s r, a, b } return r; }
 
 static inline unsigned char Has_45CA20(unsigned short* p, int m) { return (*p & m) != 0; }
 static inline void Set_45CA20(unsigned short* p, int m) { *p |= m; }
-void GuiGameScreen_ToggleWeaponSelect(S_45CA20* o, int on)
+void GuiGameScreen_ActivateWeaponSelect(S_45CA20* o, int on)
 {
     W_45CA20* w = o->w;
     unsigned short* pf;
@@ -42,32 +42,32 @@ void GuiGameScreen_ToggleWeaponSelect(S_45CA20* o, int on)
         if (g_Hud->busy) return;
         Set_45CA20(pf, 2);
         o->w->flags |= 4;
-        GuiGameScreen_GatherWeapons(o);
+        GuiGameScreen_BuildWeaponSelectList(o);
         o->f94 = o->f90;
-        o->f98 = Time_GetMilliseconds();
+        o->f98 = cTimer_GetMillisecondTime();
         o->f9C = 0;
-        GuiGameScreen_FillWeaponPanels(o);
-        if (o->fD4 == 0 && o->fD0 == 0) GuiWidget_SendEvent(o, o->fA4, 0xA, D_00497ACC[o->fDC], 0);
+        GuiGameScreen_UpdateWeaponPanels(o);
+        if (o->fD4 == 0 && o->fD0 == 0) GuiWidget_SendMessage(o, o->fA4, 0xA, D_00497ACC[o->fDC], 0);
         o->fD4 = 1;
         o->fD0 = 2;
-        GuiWidget_SendEvent(o, o->fA4, 0xB, D_00497AEC[o->fDC], 0);
-        GuiWidget_SendEvent(o, o->fA0, 6, (int)"onWake", 0);
+        GuiWidget_SendMessage(o, o->fA4, 0xB, D_00497AEC[o->fDC], 0);
+        GuiWidget_SendMessage(o, o->fA0, 6, (int)"onWake", 0);
         o->w->flags |= 0x80;
-        GuiScreen_SetFocus(Gui_GetScreenStack(), o->w);
-        GuiWidget_SendEvent(o->w, Gui_GetScreenStack(), 0x10, 2, 0);
+        GuiCanvas_SetFocus(Gui_Canvas(), o->w);
+        GuiWidget_SendMessage(o->w, Gui_Canvas(), 0x10, 2, 0);
     } else {
         float v;
         o->fD4 = 0;
         o->fD0 = 2;
         v = 0;
-        GuiWidget_SendEvent(o, o->fA4, 9, (int)&v, 0);
+        GuiWidget_SendMessage(o, o->fA4, 9, (int)&v, 0);
         v = fmin_45CA20((float)D_00497AEC[o->fDC], v);
-        GuiWidget_SendEvent(o, o->fA4, 0xC, (int)v, D_00497ACC[o->fDC]);
+        GuiWidget_SendMessage(o, o->fA4, 0xC, (int)v, D_00497ACC[o->fDC]);
         o->w->flags &= ~4;
-        GuiWidget_SendEvent(o, o->fA0, 6, (int)"onSleep", 0);
+        GuiWidget_SendMessage(o, o->fA0, 6, (int)"onSleep", 0);
         o->w->flags &= ~0x80;
-        GuiScreen_SetFocus(Gui_GetScreenStack(), o);
-        GuiWidget_SendEvent(o->w, Gui_GetScreenStack(), 0x10, 3, 0);
+        GuiCanvas_SetFocus(Gui_Canvas(), o);
+        GuiWidget_SendMessage(o->w, Gui_Canvas(), 0x10, 3, 0);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -107,11 +107,11 @@ extern char D_004C2210[];
 extern char D_004C2228[];
 extern void* g_WeaponDatabase;
 extern void* D_00497AC0;
-extern W_45CC90* GuiFactory_CreateWidget(char*);
-extern W_45CC90* GuiWidget_FindChildByName(W_45CC90*, char*);
-extern void GuiWidget_SetPos(W_45CC90*, float, float);
+extern W_45CC90* AbstractWidgetClassRep_Create(char*);
+extern W_45CC90* GuiWidget_FindChild_charP(W_45CC90*, char*);
+extern void GuiWidget_SetPosition(W_45CC90*, float, float);
 extern void GuiWidget_AddChild(W_45CC90*, W_45CC90*);
-extern void WeaponDb_LoadModel(void* m, void* a, void* b, int c, int d, int e, int f);
+extern void cWeaponDB_LoadGun(void* m, void* a, void* b, int c, int d, int e, int f);
 
 static inline void SetSize(W_45CC90* w, float x, float y)
 {
@@ -139,17 +139,17 @@ void GuiGameScreen_InitWeaponSelect(S_45CC90* self)
         W_45CC90* ref;
         Vec2_45CC90 p;
         Vec2_45CC90 s;
-        self->items[i] = GuiFactory_CreateWidget(D_004C2210);
+        self->items[i] = AbstractWidgetClassRep_Create(D_004C2210);
         sprintf(buf, D_004C2228, i + 1);
-        ref = GuiWidget_FindChildByName(self->root, buf);
+        ref = GuiWidget_FindChild_charP(self->root, buf);
         p = ref->pos;
-        GuiWidget_SetPos(self->items[i], p.x, p.y);
+        GuiWidget_SetPosition(self->items[i], p.x, p.y);
         s = ref->size;
         SetSize(self->items[i], s.x, s.y);
         GuiWidget_AddChild(self->root, self->items[i]);
         self->items[i]->fA4 = 0;
     }
-    WeaponDb_LoadModel(g_WeaponDatabase, D_00497AC0, self->fD8, -1, 0, 0, 0);
+    cWeaponDB_LoadGun(g_WeaponDatabase, D_00497AC0, self->fD8, -1, 0, 0, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0045CC90(void) {}

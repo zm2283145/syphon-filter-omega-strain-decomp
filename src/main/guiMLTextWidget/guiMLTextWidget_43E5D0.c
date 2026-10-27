@@ -11,11 +11,11 @@ unsigned int D_004C0104[1] = { 0x0 };
 unsigned int D_004C0108[1] = { 0x0 };
 unsigned int D_004C010C[1] = { 0x0 };
 extern char D_004E1040[]; /* vtable */
-extern int ScalarCollection_Init(List* list);
+extern int std_list_deleter_voidPtr_ctor_void(List* list);
 extern void GuiWidget_ctor(void* self);
 
 /* Constructor: base widget, empty line list, default color. */
-GuiWidget43E5D0* MLTextWidget_ctor(GuiWidget43E5D0* self) {
+GuiWidget43E5D0* GuiMLTextWidget_ctor(GuiWidget43E5D0* self) {
     float r;
     float g;
     float b;
@@ -23,7 +23,7 @@ GuiWidget43E5D0* MLTextWidget_ctor(GuiWidget43E5D0* self) {
 
     GuiWidget_ctor(self);
     self->base.vtable = D_004E1040;
-    ScalarCollection_Init(&self->lines);
+    std_list_deleter_voidPtr_ctor_void(&self->lines);
     self->unk48 = 0;
     self->unk4C = 0;
     self->unk60 = 0;

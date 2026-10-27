@@ -36,8 +36,8 @@ extern char D_004AA640[];
 extern char D_004AAE00[];
 extern char D_004C1D10[];
 extern Color D_00587D40;
-extern "C" void GuiWidget_Init(Screen* self);
-extern "C" Obj* GuiWidget_FindChildByName(Screen* self, const char* name);
+extern "C" void GuiWidget_onAdd(Screen* self);
+extern "C" Obj* GuiWidget_FindChild_charP(Screen* self, const char* name);
 
 static inline Obj* AsPanel(Obj* obj)
 {
@@ -66,19 +66,19 @@ static inline void SetColor(Panel* panel, Color color)
 }
 
 /* Screen init: binds the panel (with its icon, label and default colour) and the list child widgets. */
-extern "C" void GuiRadioLog_Init(Screen* self)
+extern "C" void GuiRadioLog_onAdd(Screen* self)
 {
-    GuiWidget_Init(self);
-    self->panel = (Panel*)AsPanel(GuiWidget_FindChildByName(self, "radio_log_list"));
+    GuiWidget_onAdd(self);
+    self->panel = (Panel*)AsPanel(GuiWidget_FindChild_charP(self, "radio_log_list"));
     if (self->panel) {
         Obj* widget;
         self->panel->visible = 1;
         SetColor(self->panel, D_00587D40);
-        self->panel->icon = AsIcon(GuiWidget_FindChildByName(self, D_004C19B0));
-        widget = GuiWidget_FindChildByName(self, "select_config_select");
+        self->panel->icon = AsIcon(GuiWidget_FindChild_charP(self, D_004C19B0));
+        widget = GuiWidget_FindChild_charP(self, "select_config_select");
         self->panel->label = widget;
         if (widget)
             widget->flags &= ~0x80;
     }
-    self->list = AsList(GuiWidget_FindChildByName(self, "sub_titles"));
+    self->list = AsList(GuiWidget_FindChild_charP(self, "sub_titles"));
 }

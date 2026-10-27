@@ -7,8 +7,8 @@ extern char* D_00506458;
 extern char* D_00506460;
 extern char D_00506448[], D_004DD600[];
 extern char cNetKickMsg_NetReceive[];
-extern int NetMsgTable_Add(void* fn, void* a, void* b);
-extern void FreeList_Push(void* p);
+extern int cNetMsg_RegisterMsg(void* fn, void* a, void* b);
+extern void AbstractWidgetClassRep_AddClassRep(void* p);
 void StaticInit_GuiGameOptions(void)
 {
     D_00506420 = D_0048B8B0;
@@ -20,8 +20,8 @@ void StaticInit_GuiGameOptions(void)
     D_00506438 = D_0048B8E8;
     D_0050643C = D_0048B8F0;
     D_00506440 = "cNetKickMsg";
-    D_00506450 = NetMsgTable_Add(cNetKickMsg_NetReceive, D_00506448, "cNetKickMsg");
+    D_00506450 = cNetMsg_RegisterMsg(cNetKickMsg_NetReceive, D_00506448, "cNetKickMsg");
     D_00506460 = D_004DD600;
     D_00506458 = "GuiGameOptions";
-    FreeList_Push(&D_00506458);
+    AbstractWidgetClassRep_AddClassRep(&D_00506458);
 }

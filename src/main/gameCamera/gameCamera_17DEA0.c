@@ -20,10 +20,10 @@ public:
     DSeg* f30; float f34; float f38; float f3C;
 };
 static const float dat_0048A168[2] = { 0.0f, 0.0f };
-extern "C" int Curve_CountDown(void*, float);
-extern "C" int Curve_HasRemaining(void*);
-extern "C" float Curve_Hermite(void*);
-extern "C" void KickCurve_Advance(DCurve* p, float dt, float b) {
+extern "C" int cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_NextFrame(void*, float);
+extern "C" int cSplinedMotion_float_IsTransitionInProgress(void*);
+extern "C" float cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_Evaluate(void*);
+extern "C" void cCameraShake_cPulsedShakeMagnitude_NextFrame(DCurve* p, float dt, float b) {
     if (!(p->f38 <= 0.0f)) {
         p->f38 -= dt;
         if (p->f38 <= 0.0f) {
@@ -45,9 +45,9 @@ extern "C" void KickCurve_Advance(DCurve* p, float dt, float b) {
     }
     p->f4 = p->f8;
     p->v4();
-    Curve_CountDown(&p->f30, dt);
-    if (Curve_HasRemaining(p)) {
-        p->f8 = Curve_Hermite(&p->f30);
+    cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_NextFrame(&p->f30, dt);
+    if (cSplinedMotion_float_IsTransitionInProgress(p)) {
+        p->f8 = cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_Evaluate(&p->f30);
         p->v5();
     } else {
         p->f8 = p->f10;
@@ -104,7 +104,7 @@ static inline float SC_Hermite(SCurve* c) {
     h3 = t3 - t2;
     return h0 * s->p0 + h1 * s->p1 + h2 * s->m0 + h3 * s->m1;
 }
-extern "C" bool ScalarCurve_Advance(SCurve* p, float dt, float b) {
+extern "C" bool cSplinedMotion_float_NextFrame(SCurve* p, float dt, float b) {
     bool done;
     p->f4 = p->f8;
     p->v4();

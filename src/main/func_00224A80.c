@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-void LosRegionArray_Begin(Iter* out, PtrVec* v) {
+void cArray_cTerrainPtr_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-void LosRegionArray_End(Iter* out, PtrVec* v) {
+void cArray_cTerrainPtr_End(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 

@@ -3,7 +3,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 /*fc*/
-int GroupPayload_Destroy();             
+int opDelete_cSkaPlaybackGroupP_int_bool_charP_etc();             
 int cMessage_dtor();                         
 int func_00189FD0();                            
 int cArray_FixedSize_cSkaAnimEvent_7_dtor();                            
@@ -31,7 +31,7 @@ char * func_00397400(char * arg0, short arg1) {
             cLList_cSkaPlaybackGroupPtr_End(&sp38, arg0 + 0xE8);
             if (opNe_cLListIteratorR_cLListIteratorR_9(&sp3C, &sp38) != 0) {
                 do {
-                    GroupPayload_Destroy(*cLListIterator_cSkaPlaybackGroupPtr_opMul(&sp3C), 0, 1, &D_004BC528, 205);
+                    opDelete_cSkaPlaybackGroupP_int_bool_charP_etc(*cLListIterator_cSkaPlaybackGroupPtr_opMul(&sp3C), 0, 1, &D_004BC528, 205);
                     cLListIterator_cSkaPlaybackGroupPtr_opInc(&sp3C);
                     cLList_cSkaPlaybackGroupPtr_End(&sp38, arg0 + 0xE8);
                 } while (opNe_cLListIteratorR_cLListIteratorR_9(&sp3C, &sp38) != 0);

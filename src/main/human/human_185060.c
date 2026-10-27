@@ -22,7 +22,7 @@ int cGOBJ_CheckSubclassID(char* self, int* key) {
     return *(int*)(self + 76) == *key;
 }
 
-void* Actor_GetHumanClassKeyPtr(void) {
+void* cHuman_SubclassId(void) {
     return g_HumanActorClassKey;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -42,7 +42,7 @@ static inline short read16(void)
 }
 
 /* Reads a little-endian 32-bit float from the network read cursor. */
-void NetRead_Float(float* out)
+void cNetMsg_GetFloat_floatR(float* out)
 {
     int bits[1];
     unsigned short lo = read16();

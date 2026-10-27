@@ -9,13 +9,13 @@ extern unsigned char D_004908EC;
 extern unsigned short D_004908F0;
 extern NcConn **D_004908F4;
 extern void *memcpy(void *, const void *, unsigned int);
-extern int Net_AllocZeroed(void *, int);
+extern int rt_memory_allocate_init_zero(void *, int);
 extern void rt_memory_free(void *);
 extern int rt_msg_client_change_state(NcConn *, int);
 extern int rt_circ_buf_create(void *, unsigned int, int);
 extern int rt_msg_client_set_scratch_buf_min_size(unsigned int);
 
-int NetConn_Allocate(unsigned short *out, unsigned int kind, unsigned int rx, unsigned int tx)
+int rt_msg_client_create_new_connection_index(unsigned short *out, unsigned int kind, unsigned int rx, unsigned int tx)
 {
     NcConn **tab = 0;
     NcSock *s = 0;
@@ -35,7 +35,7 @@ int NetConn_Allocate(unsigned short *out, unsigned int kind, unsigned int rx, un
     if (i == D_004908F0) {
         n = D_004908F0 + 10;
         tab = 0;
-        if (Net_AllocZeroed(&tab, n * 4)) return 8;
+        if (rt_memory_allocate_init_zero(&tab, n * 4)) return 8;
         if (D_004908F4) {
             memcpy(tab, D_004908F4, D_004908F0 * 4);
             rt_memory_free(&D_004908F4);
@@ -43,7 +43,7 @@ int NetConn_Allocate(unsigned short *out, unsigned int kind, unsigned int rx, un
         D_004908F0 = n;
         D_004908F4 = tab;
     }
-    if (Net_AllocZeroed(&tab, 0x98)) return 8;
+    if (rt_memory_allocate_init_zero(&tab, 0x98)) return 8;
     D_004908F4[i] = (NcConn *)tab;
     D_004908F4[i]->id = i;
     D_004908F4[i]->kind = kind;
@@ -56,7 +56,7 @@ int NetConn_Allocate(unsigned short *out, unsigned int kind, unsigned int rx, un
     if (tx < 0x248) tx = 0x248;
     if (kind < 2) {
         s = 0;
-        if (Net_AllocZeroed(&s, 0x2D4)) return 8;
+        if (rt_memory_allocate_init_zero(&s, 0x2D4)) return 8;
         if (!s) return 9;
         s->kind = 1;
         s->id = i;
@@ -69,7 +69,7 @@ int NetConn_Allocate(unsigned short *out, unsigned int kind, unsigned int rx, un
     }
     if (kind == 1) {
         s = 0;
-        if (Net_AllocZeroed(&s, 0x2D4)) return 8;
+        if (rt_memory_allocate_init_zero(&s, 0x2D4)) return 8;
         if (!s) return 9;
         s->kind = kind;
         s->id = i;

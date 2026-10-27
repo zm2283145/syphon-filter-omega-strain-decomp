@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 extern "C" { void cInterfaceManager_Reset(void* self); void cInterfaceManager_Entry_dtor(void); void __destroy_array(void* p, void* dtor, int size, int n); void operator_delete(void* p); }
-extern "C" void* InterfaceMgr_dtor(void* self, short deleteFlag)
+extern "C" void* cInterfaceManager_dtor(void* self, short deleteFlag)
 {
     if (self) {
         cInterfaceManager_Reset(self);

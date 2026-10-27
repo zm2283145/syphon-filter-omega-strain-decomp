@@ -5,7 +5,7 @@ typedef struct { char pad[0x110]; V4 v[1]; } A_2290;
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-void AnimRoot_AccumMotion(A_2290* a, V4* v, unsigned char i, float s) {
+void cSkaAnimAnchor_AccumulateDeltaPos(A_2290* a, V4* v, unsigned char i, float s) {
     V4 u;
     V4* d;
     V4* e;

@@ -6,7 +6,7 @@
 /* One manager slot (0x18 bytes). */
 typedef struct IfMgrSlot {
     char pad00[0x0C];
-    int unk0C;          /* 0x0C: returned by GuiManager_ResolveInterface */
+    int unk0C;          /* 0x0C: returned by cInterfaceManager_GetInterface */
     char pad10[0x08];
 } IfMgrSlot;
 

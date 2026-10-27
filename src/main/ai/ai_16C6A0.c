@@ -12,17 +12,17 @@
 typedef struct { char pad[0x24]; float f24; } B7_6A0Val;
 typedef struct { char pad[8]; B7_6A0Val* val; } B7_6A0Node;
 typedef struct { char pad[0x30]; char map[1]; } B7_6A0Owner;
-extern void NpcPerception_FindRecord(B7_6A0Node** out, void* map, int key);
+extern void cAITarget_cAwareList_Find(B7_6A0Node** out, void* map, int key);
 extern void std_list_cTargetAwarenessPtr_end_void(B7_6A0Node** out, void* map);
 extern void cLListIterator_cTargetAwarenessPtr_ctor(B7_6A0Node** out, B7_6A0Node** in);
-B7_6A0Val* NpcPerception_SensedRecord(B7_6A0Owner* p, int key)
+B7_6A0Val* cAITarget_GetAwareness(B7_6A0Owner* p, int key)
 {
     B7_6A0Val* r = 0;
     B7_6A0Node* it;
     B7_6A0Node* end;
     B7_6A0Node* tmp;
     B7_6A0Node* n;
-    NpcPerception_FindRecord(&it, p->map, key);
+    cAITarget_cAwareList_Find(&it, p->map, key);
     n = it;
     std_list_cTargetAwarenessPtr_end_void(&tmp, p->map);
     cLListIterator_cTargetAwarenessPtr_ctor(&end, &tmp);
@@ -42,18 +42,18 @@ static inline void merge_flush_func_0016C6A0(void) {}
 /* merge_units: begin func_0016C730 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern int NpcPerception_SensedRecord(int, int);
+extern int cAITarget_GetAwareness(int, int);
 #endif /* merge_units */
-#define NpcPerception_SensedRecord(a0, a1) ((int)NpcPerception_SensedRecord((void *)(a0), (a1))) /* merge_units */
+#define cAITarget_GetAwareness(a0, a1) ((int)cAITarget_GetAwareness((void *)(a0), (a1))) /* merge_units */
 
 
-float NpcPerception_IsEnemy(void) {
+float cAITarget_GetAwarenessThreat(void) {
     int a0, a1, v0;
     float f0, f20;
     int cond;
 
     f20 = 0.0f;
-    v0 = NpcPerception_SensedRecord(a0, a1);
+    v0 = cAITarget_GetAwareness(a0, a1);
     cond = v0 == 0;
     if (cond) goto L0016C758;
     f20 = *(float*)((char*)v0 + 48);
@@ -63,7 +63,7 @@ L0016C758:;
 ret:
     return f0;
 }
-#undef NpcPerception_SensedRecord /* merge_units */
+#undef cAITarget_GetAwareness /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0016C730(void) {}
 #pragma pop /* merge_units */
@@ -75,9 +75,9 @@ typedef struct { char pad[0x20]; unsigned char f20; char p21[3]; float f24; char
 typedef struct { char pad[8]; Rec_770* val; } Node_770;
 typedef struct { char pad[0x30]; char map[1]; } Owner_770;
 #if 0 /* merge_units */
-extern void NpcPerception_FindRecord(Node_770** out, void* map, int key);
+extern void cAITarget_cAwareList_Find(Node_770** out, void* map, int key);
 #endif /* merge_units */
-#define NpcPerception_FindRecord(a0, a1, a2) (NpcPerception_FindRecord((void *)(a0), (a1), (a2))) /* merge_units */
+#define cAITarget_cAwareList_Find(a0, a1, a2) (cAITarget_cAwareList_Find((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void std_list_cTargetAwarenessPtr_end_void(Node_770** out, void* map);
@@ -89,19 +89,19 @@ extern void cLListIterator_cTargetAwarenessPtr_ctor(Node_770** out, Node_770** i
 #endif /* merge_units */
 #define cLListIterator_cTargetAwarenessPtr_ctor(a0, a1) (cLListIterator_cTargetAwarenessPtr_ctor((void *)(a0), (void *)(a1))) /* merge_units */
 
-extern void NpcPerception_AddAwareness(Owner_770* p, int key, int kind, float amt);
-void NpcPerception_RegisterSighting(Owner_770* p, int key, unsigned char a, unsigned char b)
+extern void cAITarget_AddAwareness(Owner_770* p, int key, int kind, float amt);
+void cAITarget_SetAwarenessVisible(Owner_770* p, int key, unsigned char a, unsigned char b)
 {
     int both = (a & b) != 0;
     Node_770* it;
     Node_770* end;
     Node_770* tmp;
-    NpcPerception_FindRecord(&it, p->map, key);
+    cAITarget_cAwareList_Find(&it, p->map, key);
     std_list_cTargetAwarenessPtr_end_void(&tmp, p->map);
     cLListIterator_cTargetAwarenessPtr_ctor(&end, &tmp);
     if (it != end) {
         if (both && !it->val->f3C) {
-            NpcPerception_AddAwareness(p, key, 6, 0.0f);
+            cAITarget_AddAwareness(p, key, 6, 0.0f);
         } else {
             it->val->f38 = b;
             it->val->f39 = a;
@@ -116,10 +116,10 @@ void NpcPerception_RegisterSighting(Owner_770* p, int key, unsigned char a, unsi
             }
         }
     } else if (both) {
-        NpcPerception_AddAwareness(p, key, 6, 0.0f);
+        cAITarget_AddAwareness(p, key, 6, 0.0f);
     }
 }
-#undef NpcPerception_FindRecord /* merge_units */
+#undef cAITarget_cAwareList_Find /* merge_units */
 #undef std_list_cTargetAwarenessPtr_end_void /* merge_units */
 #undef cLListIterator_cTargetAwarenessPtr_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

@@ -1,4 +1,4 @@
-/* SoundMgr_GetVolumePan: volume (0..1024, by distance between the slot's
+/* cGameSound_CalcVolPan: volume (0..1024, by distance between the slot's
  * near/far range from the local player) and pan angle (degrees, relative to
  * the camera heading) of a voice positioned at its object or fixed point. */
 #pragma cplusplus on
@@ -37,9 +37,9 @@ struct SoundMgr { char p0[0x30]; Slot slots[50]; };
 extern "C" {
 extern Holder* g_LocalPlayer;
 extern char g_CameraObject[];
-Obj** List_Front(void* l);
-float Math_Atan2f(float y, float x);
-void SoundMgr_GetVolumePan(SoundMgr* self, Inst* in, int* vol, int* pan);
+Obj** cLList_cCAMERA_GOBJPtr_Front(void* l);
+float Libc_Atan2f(float y, float x);
+void cGameSound_CalcVolPan(SoundMgr* self, Inst* in, int* vol, int* pan);
 }
 static inline bool Eq(int a, int b) { return a == b; }
 /* weak reference: object if its serial still matches, else 0 */
@@ -54,7 +54,7 @@ static inline const V& WorldPos(Obj* o) { XNode* n = o->node; if (n->dirty) n->U
 static inline V operator-(const V& a, const V& b) { V r; V* pr = &r; const V* pa = &a; const V* pb = &b; asm { lqc2 vf1, 0(pa); lqc2 vf2, 0(pb); vsub.xyzw vf1, vf1, vf2; sqc2 vf1, 0(pr) } return r; }
 static inline V operator-(const V& a) { V r; V* pr = &r; const V* pa = &a; asm { lqc2 vf1, 0(pa); vmulax.xyzw ACC, vf0, vf0x; vmsubw.xyzw vf1, vf1, vf0w; sqc2 vf1, 0(pr) } return r; }
 static inline float Deg(float r) { return 57.295776f * r; }
-static inline float Atan2(float x, float y) { return Math_Atan2f(x, y); }
+static inline float Atan2(float x, float y) { return Libc_Atan2f(x, y); }
 static inline float Length(const V& v)
 {
     float r = 0.0f;
@@ -75,7 +75,7 @@ static inline float Length(const V& v)
     return r;
 }
 
-void SoundMgr_GetVolumePan(SoundMgr* self, Inst* in, int* vol, int* pan)
+void cGameSound_CalcVolPan(SoundMgr* self, Inst* in, int* vol, int* pan)
 {
     Obj* o = Get(&in->ref);
     V pos = in->pos;
@@ -122,13 +122,13 @@ void SoundMgr_GetVolumePan(SoundMgr* self, Inst* in, int* vol, int* pan)
         } else {
             *vol = 1024;
         }
-        if (*List_Front(g_CameraObject)) {
-            V cp = WorldPos(*List_Front(g_CameraObject));
+        if (*cLList_cCAMERA_GOBJPtr_Front(g_CameraObject)) {
+            V cp = WorldPos(*cLList_cCAMERA_GOBJPtr_Front(g_CameraObject));
             rel = pos - cp;
         }
         {
             float a = Atan2(rel.x, rel.y);
-            a -= *List_Front(g_CameraObject) ? (*List_Front(g_CameraObject))->heading : 0.0f;
+            a -= *cLList_cCAMERA_GOBJPtr_Front(g_CameraObject) ? (*cLList_cCAMERA_GOBJPtr_Front(g_CameraObject))->heading : 0.0f;
             *pan = (int)(a < 0.0f ? 360.0f + Deg(a) : Deg(a));
         }
     }

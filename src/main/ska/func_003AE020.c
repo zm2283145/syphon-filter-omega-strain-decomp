@@ -8,7 +8,7 @@
 extern void std_deque_deleter_common_cSkaSystem_Request_make_iterator(SkaWords6* out, int a1, int a2);
 
 /* Push a time value if the four-slot stack is not full. */
-void AnimContext_PushTime(SkaTimeStack* s, float t) {
+void cSkaParams_PushTimeStep(SkaTimeStack* s, float t) {
     if ((unsigned int)s->count < 4) {
         s->times[s->count] = t;
         s->count = s->count + 1;

@@ -2,7 +2,7 @@ extern short D_0048C414;
 extern int D_0048C3D8;
 extern int NetDisconnect(int);
 extern void printf(char *, int);
-int Medius_DisconnectServer(void)
+int MGCLDisconnect(void)
 {
     int r;
     if (D_0048C414 != 1) return -0xC;

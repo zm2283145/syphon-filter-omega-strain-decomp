@@ -1,5 +1,5 @@
 /* std_vector_imp_Slide_insert: vector<T>::insert(pos, n, value) for a 0x2C-byte element holding two strings
- * (copy-constructed by String_CopyCtor); same shape as std_vector_imp_GuiAnimationTrack_insert. */
+ * (copy-constructed by std_basic_string_char_char_traits_char_ctor_basicstringR); same shape as std_vector_imp_GuiAnimationTrack_insert. */
 #pragma cplusplus on
 #include "tstr_types.h"
 
@@ -8,7 +8,7 @@ struct V_3292C0 { unsigned int cap; unsigned int count; E_3292C0* data; };
 extern "C" {
 extern char D_004B8810[];
 extern char D_004B88C0[];
-void String_CopyCtor(void* d, const void* s);
+void std_basic_string_char_char_traits_char_ctor_basicstringR(void* d, const void* s);
 E_3292C0* std_copy_backward_Slide_copy_backward(E_3292C0* first, E_3292C0* last, E_3292C0* result);
 void std_fill_n_Slide_int_fill_n(E_3292C0* p, unsigned int n, const E_3292C0* v);
 void std_swap_vectordeleterR_vectordeleterR_26(V_3292C0* a, V_3292C0* b);
@@ -18,9 +18,9 @@ void std_vector_deleter_Slide_dtor(V_3292C0* v, int f);
 static inline void construct(E_3292C0* p, const E_3292C0* s)
 {
     if (p) {
-        String_CopyCtor(p, s);
+        std_basic_string_char_char_traits_char_ctor_basicstringR(p, s);
         p->x0C = s->x0C;
-        String_CopyCtor(p->t, s->t);
+        std_basic_string_char_char_traits_char_ctor_basicstringR(p->t, s->t);
         p->x1C = s->x1C;
         p->x20 = s->x20;
         p->x24 = s->x24;

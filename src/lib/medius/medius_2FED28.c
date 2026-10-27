@@ -1,7 +1,7 @@
 typedef struct { unsigned char a; unsigned char pad; unsigned short b; } H2FED28;
 extern unsigned char D_004908EC;
 extern int rt_msg_client_is_valid_channel(void);
-extern int NetPacket_WritePrefix(char *, H2FED28 *, unsigned short *);
+extern int rt_msg_client_set_header(char *, H2FED28 *, unsigned short *);
 extern int rt_msg_client_send_buffer(int, char *, unsigned short, int);
 int rt_msg_client_send_disconnect(int conn)
 {
@@ -15,7 +15,7 @@ int rt_msg_client_send_disconnect(int conn)
     if (v != st) return 2;
     h.a = v;
     h.b = 0;
-    r = NetPacket_WritePrefix(buf, &h, &len);
+    r = rt_msg_client_set_header(buf, &h, &len);
     if (r) return r;
     return rt_msg_client_send_buffer(conn, buf, len, 0x2710);
 }

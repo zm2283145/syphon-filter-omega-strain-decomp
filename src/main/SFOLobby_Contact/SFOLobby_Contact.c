@@ -12,14 +12,14 @@ char *strncpy(void *, const void *, int);
 /* merge_units: begin func_0044D860 */
 #pragma push /* merge_units */
 #include "SFOLobby.h"
-extern void String_Copy(char*, char*);
-extern int Lobby_GetTime(void);
+extern void Libc_Strcpy(char*, char*);
+extern int SFOLobby_GetMillisecs(void);
 extern int SFOLobby_SetError(SFOLobby*, int, char*, int);
-extern void SFOLobby_CallUpdateHook(SFOLobby*, int, int);
+extern void SFOLobby_GuiCallback(SFOLobby*, int, int);
 extern int SFOLobby_Poll(SFOLobby*, int, int, int);
 extern int MediusGetBuddyList_ExtraInfo(void*, void*);
-extern void LobbyArray_Clear(LobbyArray*);
-extern void LobbyArray_SetRefreshing(LobbyArray*, int);
+extern void SFOLobbyList_ClearList(LobbyArray*);
+extern void SFOLobbyList_SetBusy(LobbyArray*, int);
 extern int D_00497890;     /* request timeout */
 extern char D_004C0EC0[];  /* "1" (message id) */
 extern char D_004C0ED0[];  /* "SFOLobby_Contact.cc" */
@@ -34,16 +34,16 @@ int SFOLobby_RequestBuddyList(SFOLobby* s, int wait)
     memset(&s->buddyListReply, 0, 0xD0);
     s->buddyListReply.accountId = -1;
     memset(messageId, 0, sizeof(messageId));
-    String_Copy(messageId, D_004C0EC0);
+    Libc_Strcpy(messageId, D_004C0EC0);
     s->requestResult = MediusGetBuddyList_ExtraInfo(messageId, SFOLobby_Callback_GetBuddyList);
     if (s->requestResult != 0) {
         return 0;
     }
-    LobbyArray_Clear(&s->buddyList);
-    LobbyArray_SetRefreshing(&s->buddyList, 1);
+    SFOLobbyList_ClearList(&s->buddyList);
+    SFOLobbyList_SetBusy(&s->buddyList, 1);
     if (wait) {
         while (s->buddyListReply.endOfList != 1) {
-            SFOLobby_CallUpdateHook(s, 0, 0);
+            SFOLobby_GuiCallback(s, 0, 0);
             if (s->requestResult != 0) {
                 SFOLobby_SetError(s, 1, D_004C0ED0, 0x1A7);
                 s->busy = 0;
@@ -56,7 +56,7 @@ int SFOLobby_RequestBuddyList(SFOLobby* s, int wait)
             }
         }
     }
-    s->buddyListTime = Lobby_GetTime();
+    s->buddyListTime = SFOLobby_GetMillisecs();
     return 1;
 }
 #pragma pop /* merge_units */
@@ -81,7 +81,7 @@ int func_0044D9C0(SFOLobby* o, int accountId) {
         return 1;
     }
     memset(&rec, 0, 0x2C);
-    String_Copy(rec.messageId, D_004C0EC0);
+    Libc_Strcpy(rec.messageId, D_004C0EC0);
     strncpy(rec.sessionKey, o->sessionKey, 0x11);
     rec.accountId = accountId;
     o->requestResult = MediusRemoveFromBuddyList(&rec, SFOLobby_Callback_RemoveFromBuddyList);
@@ -89,11 +89,11 @@ int func_0044D9C0(SFOLobby* o, int accountId) {
         SFOLobby_SetError(o, 1, D_004C0ED0, 0x15A);
         return 0;
     }
-    accountId = Lobby_GetTime();
+    accountId = SFOLobby_GetMillisecs();
     o->gotReply238 = 0;
     o->busy = 1;
     while (o->gotReply238 == 0) {
-        SFOLobby_CallUpdateHook(o, 0, 0);
+        SFOLobby_GuiCallback(o, 0, 0);
         if (!SFOLobby_Poll(o, accountId, D_00497890, 0)) {
             o->busy = 0;
             SFOLobby_SetError(o, 2, D_004C0ED0, 0x16A);
@@ -132,16 +132,16 @@ int SFOLobby_RequestBuddyList(SFOLobby* self, int a);
 #define SFOLobby_RequestBuddyList(a0, a1) (SFOLobby_RequestBuddyList((a0), (a1))) /* merge_units */
 
 int SFOLobby_FindAgent(LobbyArray* list, int id, int a);
-int SFOLobby_RequestAccountInfo(SFOLobby* self, int id);
+int SFOLobby_GetAgentDetails(SFOLobby* self, int id);
 #if 0 /* merge_units */
 int SFOLobby_SetError(SFOLobby* self, int code, char* file, int line);
 #endif /* merge_units */
 #define SFOLobby_SetError(a0, a1, a2, a3) (SFOLobby_SetError((a0), (a1), (a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
-void String_Copy(char* d, char* s);
+void Libc_Strcpy(char* d, char* s);
 #endif /* merge_units */
-#define String_Copy(a0, a1) (String_Copy((a0), (a1))) /* merge_units */
+#define Libc_Strcpy(a0, a1) (Libc_Strcpy((a0), (a1))) /* merge_units */
 
 int MediusBuddyGetPermission(void* req, void* cb);
 void func_004466B0(void);
@@ -162,8 +162,8 @@ static inline bool Has_44DB60(SFOLobby* self, int id)
 
 /* Adds account `id` as a buddy (MediusBuddyGetPermission, MediusAddBuddy-style request with
  * add type 1) after checking it is not ourselves or already a buddy, and after
- * fetching its account info (SFOLobby_RequestAccountInfo). */
-extern "C" int SFOLobby_AddBuddy(SFOLobby* self, int id)
+ * fetching its account info (SFOLobby_GetAgentDetails). */
+extern "C" int SFOLobby_ContactInviteAgent(SFOLobby* self, int id)
 {
     Req_44DB60 req;
     bool found;
@@ -176,20 +176,20 @@ extern "C" int SFOLobby_AddBuddy(SFOLobby* self, int id)
         SFOLobby_SetError(self, 0x25, &D_004C0ED0, 0xD6);
         return 0;
     }
-    Lobby_GetTime();
+    SFOLobby_GetMillisecs();
     SFOLobby_RequestBuddyList(self, 1);
-    self->buddyListTime = Lobby_GetTime();
+    self->buddyListTime = SFOLobby_GetMillisecs();
     found = Has_44DB60(self, id);
     if (found) {
         SFOLobby_SetError(self, 0x1E, &D_004C0ED0, 0xDD);
         return 0;
     }
-    if (!SFOLobby_RequestAccountInfo(self, id)) {
+    if (!SFOLobby_GetAgentDetails(self, id)) {
         SFOLobby_SetError(self, 1, &D_004C0ED0, 0xE5);
         return 0;
     }
     memset(&req, 0, sizeof(req));
-    String_Copy(req.messageId, &D_004C0EC0);
+    Libc_Strcpy(req.messageId, &D_004C0EC0);
     strncpy(req.sessionKey, self->sessionKey, 0x11);
     req.addType = 1;
     req.accountId = id;
@@ -205,27 +205,27 @@ extern "C" int SFOLobby_AddBuddy(SFOLobby* self, int id)
 #undef D_004C0EC0 /* merge_units */
 #undef SFOLobby_RequestBuddyList /* merge_units */
 #undef SFOLobby_SetError /* merge_units */
-#undef String_Copy /* merge_units */
+#undef Libc_Strcpy /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0044DB60 */
 
 /* merge_units: begin func_0044DD20 */
 #pragma push /* merge_units */
-extern void SFOLobby_SetCallback(); /* (SFOLobby *, int); SFOLobby_EnterContactsState passes only the first argument */
-extern void LobbyArray_Free(LobbyArray*);
+extern void SFOLobby_SetCallback(); /* (SFOLobby *, int); SFOLobby_ContactScreenStart passes only the first argument */
+extern void SFOLobbyList_ClearAndCompactList(LobbyArray*);
 
 /* Leaves the CONTACTS state (6; state 10 is left unchanged), releasing the
- * caller-supplied lists set up by SFOLobby_EnterContactsState. */
-void SFOLobby_LeaveContactsState(SFOLobby* s)
+ * caller-supplied lists set up by SFOLobby_ContactScreenStart. */
+void SFOLobby_ContactScreenExit(SFOLobby* s)
 {
     int st = s->state;
     if (st == SFOLOBBY_STATE_IDLE) return;
     if (st == SFOLOBBY_STATE_CONTACTS || st == SFOLOBBY_STATE_10) {
         if (st != SFOLOBBY_STATE_10) s->state = SFOLOBBY_STATE_IDLE;
         SFOLobby_SetCallback(s, 0);
-        if (s->outList23EC) LobbyArray_Free(s->outList23EC);
+        if (s->outList23EC) SFOLobbyList_ClearAndCompactList(s->outList23EC);
         s->outList23EC = 0;
-        if (s->outBuddyList) LobbyArray_Free(s->outBuddyList);
+        if (s->outBuddyList) SFOLobbyList_ClearAndCompactList(s->outBuddyList);
         s->outBuddyList = 0;
     }
 }
@@ -240,7 +240,7 @@ extern "C" {
 extern int D_004977B8;  /* buddy list refresh interval */
 extern int D_004977D0;  /* buddy info refresh interval */
 extern char D_004C0EE8; /* "%d" */
-int Lobby_GetTime(void);
+int SFOLobby_GetMillisecs(void);
 #if 0 /* merge_units */
 int SFOLobby_RequestBuddyList(SFOLobby* self, int a);
 #endif /* merge_units */
@@ -250,8 +250,8 @@ void SFOLobby_CellUpdateClanInvitations(SFOLobby* self);
 void func_00451B30(SFOLobby* self);
 void SFOLobby_PingIntel(SFOLobby* self, LobbyArray* list);
 void SFOLobby_CollectGameInfo(SFOLobby* self, LobbyArray* list);
-int LobbyArray_GetRefreshing(LobbyArray* list);
-LobbyBuddyEntry* LobbyArray_At(LobbyArray* list, int i);
+int SFOLobbyList_IsBusy(LobbyArray* list);
+LobbyBuddyEntry* SFOLobbyList_GetSlot(LobbyArray* list, int i);
 void SFOLobby_CellUpdateMemberList(SFOLobby* self, int a);
 int MediusGetPlayerInfo(void* req, void* cb);
 void SFOLobby_Callback_GetPlayerInfo_ForBuddyList(void);
@@ -266,7 +266,7 @@ struct Req_44DDC0 {
 /* Per-frame update of the CONTACTS state (6): periodically re-requests the buddy
  * list, and every D_004977D0 ms asks for fresh info (MediusGetPlayerInfo, callback
  * SFOLobby_Callback_GetPlayerInfo_ForBuddyList) on each buddy that is online. */
-extern "C" void SFOLobby_UpdateContacts(SFOLobby* me)
+extern "C" void SFOLobby_ContactScreenIntel(SFOLobby* me)
 {
     SFOLobby* self;
     int now;
@@ -279,23 +279,23 @@ extern "C" void SFOLobby_UpdateContacts(SFOLobby* me)
     self = me;
     if (self->state == SFOLOBBY_STATE_CONTACTS && !self->inUpdateHook) {
         last = self->buddyListTime;
-        d = Lobby_GetTime() - last;
+        d = SFOLobby_GetMillisecs() - last;
         if (!last || d > D_004977B8) {
             SFOLobby_RequestBuddyList(self, 0);
-            self->buddyListTime = Lobby_GetTime();
+            self->buddyListTime = SFOLobby_GetMillisecs();
         }
         SFOLobby_CellUpdateClanInvitations(self);
         func_00451B30(self);
         SFOLobby_PingIntel(self, &self->buddyList);
         SFOLobby_CollectGameInfo(self, &self->buddyList);
-        now = Lobby_GetTime();
+        now = SFOLobby_GetMillisecs();
         list = &self->buddyList;
-        if (now - self->buddyInfoTime > D_004977D0 && !(unsigned char)LobbyArray_GetRefreshing(list)) {
+        if (now - self->buddyInfoTime > D_004977D0 && !(unsigned char)SFOLobbyList_IsBusy(list)) {
             self->buddyInfoTime = now;
             i = 0;
             if (0 < list->count) {
                 do {
-                item = LobbyArray_At(list, i);
+                item = SFOLobbyList_GetSlot(list, i);
                 if (item->location != 3) {
                     memset(&req, 0, sizeof(req));
                     sprintf(req.messageId, &D_004C0EE8, item->accountId);
@@ -317,7 +317,7 @@ extern "C" void SFOLobby_UpdateContacts(SFOLobby* me)
 /* merge_units: begin func_0044DF80 */
 #pragma push /* merge_units */
 extern void SFOLobby_SetCallback();
-extern void LobbyArray_Init(LobbyArray*, int, int, int);
+extern void SFOLobbyList_AllocList(LobbyArray*, int, int, int);
 #if 0 /* merge_units */
 extern int SFOLobby_RequestBuddyList(SFOLobby*, int);
 #endif /* merge_units */
@@ -326,7 +326,7 @@ extern int SFOLobby_RequestBuddyList(SFOLobby*, int);
 #pragma push
 /* Enters the CONTACTS state (6) from IDLE/initial with the caller-supplied
  * output lists, then requests the buddy list. */
-int SFOLobby_EnterContactsState(SFOLobby* s, int unused, LobbyArray* list23EC, LobbyArray* buddies)
+int SFOLobby_ContactScreenStart(SFOLobby* s, int unused, LobbyArray* list23EC, LobbyArray* buddies)
 {
     if (s->state != SFOLOBBY_STATE_IDLE && s->state != SFOLOBBY_STATE_0) {
         SFOLobby_SetError(s, 1, D_004C0ED0, 0x21);
@@ -336,8 +336,8 @@ int SFOLobby_EnterContactsState(SFOLobby* s, int unused, LobbyArray* list23EC, L
     SFOLobby_SetCallback(s);
     s->outList23EC = list23EC;
     s->outBuddyList = buddies;
-    LobbyArray_Init(s->outList23EC, s->unk1EA4, 0, 0x68);
-    LobbyArray_Init(s->outBuddyList, 0x40, 0x20, sizeof(LobbyBuddyEntry));
+    SFOLobbyList_AllocList(s->outList23EC, s->unk1EA4, 0, 0x68);
+    SFOLobbyList_AllocList(s->outBuddyList, 0x40, 0x20, sizeof(LobbyBuddyEntry));
     s->buddyListTime = 0;
     s->buddyInfoTime = 0;
     SFOLobby_RequestBuddyList(s, 0);

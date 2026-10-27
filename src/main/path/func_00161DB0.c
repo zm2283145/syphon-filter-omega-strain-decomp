@@ -26,10 +26,10 @@ typedef struct Pt1RwSelf {
 } Pt1RwSelf;
 extern void cNodeRequest_SetNodeLOSResultForRestOfList(Pt1RwSelf* s, int id, int flag);
 extern void cNodeRequest_SetCompanionNodeLOSResultForRestOfList(Pt1RwSelf* s, int id, int flag);
-extern Pt1RwNode* NpcNodeSearch_PopFront(void* list, Pt1RwNode* n);
-extern void NpcRoute_RequestLosChecks(Pt1RwSelf* s, int id, int mask);
+extern Pt1RwNode* cPriorityQueue_cNodeIndex_Pop(void* list, Pt1RwNode* n);
+extern void cNodeRequest_SendLOSRequest(Pt1RwSelf* s, int id, int mask);
 
-void NpcRoute_HandleLosResult(Pt1RwSelf* s, unsigned char* flag)
+void cNodeRequest_UpdateLOSResult(Pt1RwSelf* s, unsigned char* flag)
 {
     Pt1RwNode* cur = s->cur;
     int found = 0;
@@ -45,28 +45,28 @@ void NpcRoute_HandleLosResult(Pt1RwSelf* s, unsigned char* flag)
                 s->target2 = -1;
                 s->status = 2;
             }
-            n = NpcNodeSearch_PopFront(s->list, n);
+            n = cPriorityQueue_cNodeIndex_Pop(s->list, n);
         } else if (!s->reverse) {
             if (n->c == (s->mode != 2))
                 s->reverse = 1;
             else
-                n = NpcNodeSearch_PopFront(s->list, n);
+                n = cPriorityQueue_cNodeIndex_Pop(s->list, n);
         } else {
             if (n->d != (s->mode != 2)) {
                 s->target = n->a;
                 s->target2 = n->b;
                 s->status = 2;
             }
-            n = NpcNodeSearch_PopFront(s->list, n);
+            n = cPriorityQueue_cNodeIndex_Pop(s->list, n);
             s->reverse = 0;
         }
         if (s->reverse) {
             if (n->d < 0) {
-                NpcRoute_RequestLosChecks(s, n->b, ~s->mask);
+                cNodeRequest_SendLOSRequest(s, n->b, ~s->mask);
                 found = 1;
             }
         } else if ((s->target < 0 || s->retry) && s->active && s->cur->c < 0) {
-            NpcRoute_RequestLosChecks(s, s->cur->a, s->mask);
+            cNodeRequest_SendLOSRequest(s, s->cur->a, s->mask);
             found = 1;
         }
     } while (s->status != 2 && !found && s->active);

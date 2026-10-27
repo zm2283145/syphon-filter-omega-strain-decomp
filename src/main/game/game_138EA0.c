@@ -5,4 +5,4 @@
 extern "C" { char D_0049AE70[] = "allocator.hh"; }
 
 /* Insert an int value before a list position. */
-DEFINE_LIST_INSERT_BEFORE(List_InsertBefore)
+DEFINE_LIST_INSERT_BEFORE(std_list_deleter_voidPtr_insert)

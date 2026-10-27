@@ -21,7 +21,7 @@ struct F8It_15D {
 typedef struct { char pad[0x68]; char list[4]; } F8Obj_15D;
 typedef struct { char pad[8]; F8Obj_15D** nodes; } F8Table_15D;
 extern "C" {
-F8Obj_15D* NpcPath_GetNode(int self);
+F8Obj_15D* cAIPathData_GetNode(int self);
 F8Elem_15D* std_vector_imp_tNodeLink_begin_void_2(void* c);
 F8Elem_15D* std_vector_imp_tNodeLink_end_void_2(void* c);
 F8It_15D std_vector_tNodeLink_pointer2iterator_tNodeLinkPR_2(void* c, F8Elem_15D** raw);
@@ -31,7 +31,7 @@ static inline F8It_15D F8Begin(void* c) { F8Elem_15D* b = std_vector_imp_tNodeLi
 static inline F8It_15D F8End(void* c) { F8Elem_15D* e = std_vector_imp_tNodeLink_end_void_2(c); return std_vector_tNodeLink_pointer2iterator_tNodeLinkPR_2(c, &e); }
 static inline F8It_15D F8CBegin(void* c) { F8It_15D r; r.p = F8Begin(c).p; return r; }
 static inline bool F8More(F8It_15D& it, void* c) { return it != F8End(c); }
-extern "C" int NpcPath_LinkType(int from, int to)
+extern "C" int cAIPathData_GetLinkType(int from, int to)
 {
     int r;
     void* c;
@@ -78,9 +78,9 @@ extern NodeMgr* D_004FFBE0;
 #define D_004FFBE0 (*(NodeMgr **)&D_004FFBE0) /* merge_units */
 
 extern GroupMgr* D_004FFBE8;
-void Node_GetTranslation(V* out, RNode* n);
+void cNode_GetLoc(V* out, RNode* n);
 }
-extern "C" int NpcRoute_NearestGroupNode(int group, const V* pos, int mask, int exclude)
+extern "C" int cAIPathData_GetClosestNodeIndex(int group, const V* pos, int mask, int exclude)
 {
     int best = -1;
     if (group >= 0) {
@@ -94,7 +94,7 @@ extern "C" int NpcRoute_NearestGroupNode(int group, const V* pos, int mask, int 
                 if (mask & n->flags) {
                     V d(*pos);
                     V t;
-                    Node_GetTranslation(&t, n);
+                    cNode_GetLoc(&t, n);
                     d -= t;
                     float l = d.LenSq();
                     if (l < bestd) {

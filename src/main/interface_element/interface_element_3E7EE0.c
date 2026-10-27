@@ -10,7 +10,7 @@
 /* merge_units: begin func_003E7EE0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x1A]; unsigned char r, g, b, a; } O_E7EE0;
-void IeElement_SetColour(O_E7EE0* o, float* c)
+void cInterfaceElement_SetFilterColor(O_E7EE0* o, float* c)
 {
     unsigned char g = (unsigned int)(255.0f * c[1]);
     unsigned char b = (unsigned int)(255.0f * c[2]);
@@ -30,7 +30,7 @@ static inline void merge_flush_func_003E7EE0(void) {}
 typedef struct { __int128 a, b, c, d; } M_8040;
 typedef struct { char pad[0x30]; M_8040 m; } S_8040;
 #pragma peephole off
-void IeElement_SetMatrix(S_8040* s, M_8040* m)
+void cInterfaceElement_SetView(S_8040* s, M_8040* m)
 {
     M_8040* d = &s->m;
     __int128 t0, t1;

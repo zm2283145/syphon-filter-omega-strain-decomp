@@ -1,6 +1,6 @@
 typedef struct { unsigned char state; char name[0x11]; unsigned short port; int x14[2]; int x1C[2]; } E2E5AA8;
 extern E2E5AA8 D_00520358[];
-extern int String_CompareN(unsigned char *, char *, int);
+extern int Libc_Strncmp(unsigned char *, char *, int);
 int NetFindEchoSlotForIP(unsigned char *name, unsigned int *out, unsigned short *cnt)
 {
     unsigned int i;
@@ -16,7 +16,7 @@ int NetFindEchoSlotForIP(unsigned char *name, unsigned int *out, unsigned short 
             *out = i;
             found = 1;
         }
-        if (String_CompareN(name, D_00520358[i].name, 0x10) == 0) {
+        if (Libc_Strncmp(name, D_00520358[i].name, 0x10) == 0) {
             if (!(D_00520358[i].port < *cnt)) *cnt = D_00520358[i].port + 1;
         }
     }

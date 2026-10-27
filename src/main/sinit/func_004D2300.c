@@ -13,19 +13,19 @@ extern char* g_LosCheckService;
 extern char D_004A9218[];
 extern void __construct_array(void* arr, void* ctor, void* dtor, int size, int n);
 extern void __register_global_object(void* obj, void* dtor, void* link);
-extern int Script_RegisterVariable();
+extern int cScriptBase_registerGlobalVar();
 extern int D_004A90A0, D_004A90A4, D_004A90A8, D_004A90AC, D_004A90B0, D_004A90B4, D_004A90B8, D_004A90BC, D_004A90C0, D_004A90C4, D_004A90C8, D_004A90CC, D_004A90D0, D_004A90D4, D_004A90D8, D_004A90DC, D_004A90E0, D_004A90E4, D_004A9104, D_004A90E8, D_004A90EC, D_004A90F0, D_004A90F4, D_004A90F8, D_004A90FC, D_004A9100, D_004A9108, D_004A910C, D_004A9110, D_004A9114, D_004A9118, D_004A911C, D_004A9120, D_004A9124, D_004A9144, D_004A9128, D_004A912C, D_004A9130, D_004A9134, D_004A9138, D_004A913C, D_004A9140, D_004A9148, D_004A914C, D_004A9150, D_004A9154, D_004A9158, D_004A915C, D_004A9160, D_004A9164, D_004A9184, D_004A9168, D_004A916C, D_004A9170, D_004A9174, D_004A9178, D_004A917C, D_004A9180, D_004A9188, D_004A918C, D_004A9190, D_004A9194, D_004A9198, D_004A919C;
 
-void StaticInit_RegisterBulletVars(void)
+void StaticInit_bullet(void)
 {
     __construct_array(D_004FFE60, cBullet_ctor, cBullet_dtor, 0x150, 0x32);
     __register_global_object(0, func_00278230, D_004FFE50);
-    D_00504000 = Script_RegisterVariable(D_004A91C0, (int)&D_0048B318, D_00493890);
-    D_00504008 = Script_RegisterVariable(D_004A91D0, (int)&D_0048B320, D_00493890);
-    D_00504010 = Script_RegisterVariable(D_004A91E0, (int)&D_0048B330, D_00493890);
-    D_00504018 = Script_RegisterVariable(D_004A91F0, (int)&D_0048B338, D_00493890);
-    D_00504020 = Script_RegisterVariable(D_004A9200, (int)&D_0048B340, D_00493888);
-    D_00504028 = Script_RegisterVariable(D_004A9208, (int)&D_0048B348, D_00493890);
+    D_00504000 = cScriptBase_registerGlobalVar(D_004A91C0, (int)&D_0048B318, D_00493890);
+    D_00504008 = cScriptBase_registerGlobalVar(D_004A91D0, (int)&D_0048B320, D_00493890);
+    D_00504010 = cScriptBase_registerGlobalVar(D_004A91E0, (int)&D_0048B330, D_00493890);
+    D_00504018 = cScriptBase_registerGlobalVar(D_004A91F0, (int)&D_0048B338, D_00493890);
+    D_00504020 = cScriptBase_registerGlobalVar(D_004A9200, (int)&D_0048B340, D_00493888);
+    D_00504028 = cScriptBase_registerGlobalVar(D_004A9208, (int)&D_0048B348, D_00493890);
     D_004A9098 = 0x3FA00000;
     D_00504030 = D_004DCD88;
     D_004A90A0 = 0x3F800000;

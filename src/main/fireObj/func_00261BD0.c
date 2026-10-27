@@ -5,11 +5,11 @@
 
 #include "types.h"
 
-void cFireObj_v0E(void) {
+void cFireObj_Init(void) {
 }
 
-void cFireObj_v0F(void) {
+void cFireObj_Load(void) {
 }
 
-void cFireObj_v14(void) {
+void cFireObj_Render(void) {
 }

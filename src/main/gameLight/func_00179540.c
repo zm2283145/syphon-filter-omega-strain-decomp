@@ -1,6 +1,6 @@
 #pragma cplusplus on
 #include "types.h"
-/* LevelLight_InitPoint: point-light variant of LevelLight_CreateDirectional (LevelLight_CreateDirectional.c) */
+/* cLightSrc_ctor_eLightSrcTypes_tRGBAR_cVectorR_uint: point-light variant of cLightSrc_ctor_eLightSrcTypes_tRGBAR (cLightSrc_ctor_eLightSrcTypes_tRGBAR.c) */
 struct V4c { float x, y, z, w; };
 // VU0 macro-mode squared length (COP2), not expressible in C
 static inline float LenSqP(const V4c* a) { int t; float r = 0.0f; __asm__ volatile("lqc2 $vf1, 0x0(%2); vaddw.x $vf3, $vf0, $vf0w; vmul.xyz $vf2, $vf1, $vf1; vmulax.x $ACC, $vf3, $vf2x; vmadday.x $ACC, $vf3, $vf2y; vmaddz.x $vf4, $vf3, $vf2z; qmfc2.ni %1, $vf4; mtc1 %1, %0" : "+f"(r), "=&r"(t) : "r"(a) : "memory"); return r; }
@@ -28,7 +28,7 @@ extern char D_004D9280[];
 extern signed char D_0048A150;
 extern unsigned char g_LevelLightsDirty;
 }
-extern "C" DirLight* LevelLight_InitPoint(DirLight* l, unsigned char a, V4c* c, V4c* pos, unsigned char b)
+extern "C" DirLight* cLightSrc_ctor_eLightSrcTypes_tRGBAR_cVectorR_uint(DirLight* l, unsigned char a, V4c* c, V4c* pos, unsigned char b)
 {
     V4c v;
     float x, y, z, w;

@@ -29,7 +29,7 @@ typedef struct {
 extern char D_004E1620[];
 extern void GuiWidget_ctor(Widget0045E540* w);
 extern void std_vector_int_ctor_void(List0045E540* list);
-extern void PtrVec_Reserve(List0045E540* list, int n);
+extern void std_vector_pod_int_reserve(List0045E540* list, int n);
 /* Constructor. */
 Widget0045E540* GuiGameScreen_ctor(Widget0045E540* w)
 {
@@ -53,8 +53,8 @@ Widget0045E540* GuiGameScreen_ctor(Widget0045E540* w)
     w->unkE4 = 0;
     w->unkE8 = 0;
     w->unkEC = 0;
-    PtrVec_Reserve(b, 8);
-    PtrVec_Reserve(a, 8);
+    std_vector_pod_int_reserve(b, 8);
+    std_vector_pod_int_reserve(a, 8);
     w->unkD8 = 0;
     return w;
 }
@@ -72,21 +72,21 @@ static inline void merge_flush_func_0045E540(void) {}
  */
 
 
-extern void* GObj_IdentityB(void* obj);
-extern int Global_ClearInteract(void* obj);
-extern void Global_DisplayInteract(int text, int flag);
-extern int Global_DisplayInteract_2(void* obj, int text, int flag);
-extern void GameScreen_ClearInteractLocal(void);
+extern void* cGOBJ_SOBJ_convert(void* obj);
+extern int ClearInteract_cGOBJP(void* obj);
+extern void DisplayInteract_charP_eJoystickButton(int text, int flag);
+extern int DisplayInteract_cGOBJP_charP_eJoystickButton(void* obj, int text, int flag);
+extern void ClearInteract_void(void);
 
 /* Script native: ClearInteract(obj). */
 int Script_ClearInteract_2(ScriptArg* args) {
-    Global_ClearInteract(GObj_IdentityB(args[0].p));
+    ClearInteract_cGOBJP(cGOBJ_SOBJ_convert(args[0].p));
     return 0;
 }
 
 /* Script native: ClearInteract(). */
 int Script_ClearInteract(void) {
-    GameScreen_ClearInteractLocal();
+    ClearInteract_void();
     return 0;
 }
 
@@ -96,7 +96,7 @@ int Script_DisplayInteract_4(ScriptArg* args) {
     int flag = (unsigned char)args[2].i;
 
     text[0] = args[1].i;
-    Global_DisplayInteract_2(GObj_IdentityB(args[0].p), STACK_COPY(text), flag);
+    DisplayInteract_cGOBJP_charP_eJoystickButton(cGOBJ_SOBJ_convert(args[0].p), STACK_COPY(text), flag);
     return 0;
 }
 
@@ -105,7 +105,7 @@ int Script_DisplayInteract_3(ScriptArg* args) {
     int text[1];
 
     text[0] = args[1].i;
-    Global_DisplayInteract_2(GObj_IdentityB(args[0].p), STACK_COPY(text), 1);
+    DisplayInteract_cGOBJP_charP_eJoystickButton(cGOBJ_SOBJ_convert(args[0].p), STACK_COPY(text), 1);
     return 0;
 }
 
@@ -115,7 +115,7 @@ int Script_DisplayInteract_2(ScriptArg* args) {
     int flag = (unsigned char)args[1].i;
 
     text[0] = args[0].i;
-    Global_DisplayInteract(STACK_COPY(text), flag);
+    DisplayInteract_charP_eJoystickButton(STACK_COPY(text), flag);
     return 0;
 }
 
@@ -124,7 +124,7 @@ int Script_DisplayInteract(ScriptArg* args) {
     int text[1];
 
     text[0] = args[0].i;
-    Global_DisplayInteract(STACK_COPY(text), 1);
+    DisplayInteract_charP_eJoystickButton(STACK_COPY(text), 1);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

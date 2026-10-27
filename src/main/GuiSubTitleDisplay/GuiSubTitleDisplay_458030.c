@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00458030 */
 #pragma push /* merge_units */
@@ -29,7 +29,7 @@ typedef struct S458030 {
 
 static inline float* End458030(S458030* s) { return s->arr + s->n; }
 
-int GuiSubTitleDisplay_Hide(S458030* s)
+int GuiSubTitleDisplay_IsFinishedPlaying(S458030* s)
 {
     return s->n == 0 || End458030(s)[-1] < s->t;
 }
@@ -45,13 +45,13 @@ static inline void merge_flush_func_00458030(void) {}
 /* Release the owned record at +0xA0 (string member at +0x14) under the allocator guard, clear +0xA0/+0xA4. */
 extern "C" {
 void* String_Dtor(void* self, short flags);
-void GuiWidget_BaseSleep(void* self);
+void GuiWidget_onSleep(void* self);
 }
 struct O348AD0 { char pad[0x48]; char* aA0; int aA4; };
-extern "C" void GuiSubTitleDisplay_OnSleep(O348AD0* o)
+extern "C" void GuiSubTitleDisplay_onSleep(O348AD0* o)
 {
     char* p;
-    GuiWidget_BaseSleep(o);
+    GuiWidget_onSleep(o);
     p = o->aA0;
     {
         AllocGuard guard;
@@ -60,7 +60,7 @@ extern "C" void GuiSubTitleDisplay_OnSleep(O348AD0* o)
             if (s)
                 String_Dtor(s, 0);
         }
-        Mem_Free(0, p, "GuiSubTitleDisplay.cc", 0x15E);
+        cMemMan_Deallocate(0, p, "GuiSubTitleDisplay.cc", 0x15E);
     }
     o->aA0 = 0;
 
@@ -76,28 +76,28 @@ static inline void merge_flush_func_00458080(void) {}
 typedef struct { char pad[0x10]; unsigned char b10; char pad2[0x47]; unsigned char b58; } C458;
 typedef struct { char pad[0x3C]; float f3c; float f40; char pad2[4]; C458* f48; int f4c; char pad3[0x28]; int f78; } W458;
 extern "C" {
-extern void GuiWidget_BaseWake(W458*);
-extern int Gui_GetScreenList(void);
-extern int GuiFont_Find(int, char*);
-extern void* Mem_Alloc(int, int, char*, int);
+extern void GuiWidget_onWake(W458*);
+extern int Gui_Manager(void);
+extern int GuiManager_GetFont(int, char*);
+extern void* cMemMan_Allocate(int, int, char*, int);
 extern char D_004C1EB0[];
 extern char D_00587D70[];
-extern C458* TextObj_Construct(void*, int, int, int, int, int, char*);
-extern int Font_GetLineHeight(int);
+extern C458* cTextArea_ctor(void*, int, int, int, int, int, char*);
+extern int cFont_GetCharH(int);
 }
-extern "C" void GuiSubTitleDisplay_OnWake(W458* w) {
+extern "C" void GuiSubTitleDisplay_onWake(W458* w) {
     C458* obj;
-    GuiWidget_BaseWake(w);
-    w->f4c = GuiFont_Find(Gui_GetScreenList(), "callout");
+    GuiWidget_onWake(w);
+    w->f4c = GuiManager_GetFont(Gui_Manager(), "callout");
     {
         AllocGuard g;
-        obj = (C458*)Mem_Alloc(0, 0x60, D_004C1EB0, 0x154);
+        obj = (C458*)cMemMan_Allocate(0, 0x60, D_004C1EB0, 0x154);
     }
-    if (obj) obj = TextObj_Construct(obj, 0, 0, (int)w->f3c, (int)w->f40, w->f4c, D_00587D70);
+    if (obj) obj = cTextArea_ctor(obj, 0, 0, (int)w->f3c, (int)w->f40, w->f4c, D_00587D70);
     w->f48 = obj;
     w->f48->b10 = 0;
     w->f48->b58 = 1;
-    w->f78 = (int)(w->f40 / (float)Font_GetLineHeight(w->f4c));
+    w->f78 = (int)(w->f40 / (float)cFont_GetCharH(w->f4c));
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00458140(void) {}

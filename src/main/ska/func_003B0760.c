@@ -48,18 +48,18 @@ static inline const V* Pick(Sel* self, const V* q) {
 
 extern "C" {
 extern float D_004BCD68;
-float AnimChannel_GetCurrent(Ctx* c, int i);
-Elem** MotionChildArr_GetData(void* v);
-void MotionSlider_Evaluate(Sel* self, float t, const V* q, Ctx* ctx);
+float cSkaParams_GetSliderValue(Ctx* c, int i);
+Elem** std_vector_deleter_cSkaBlendSequenceItem_data_void_2(void* v);
+void cSkaSlider_UpdateNodes(Sel* self, float t, const V* q, Ctx* ctx);
 }
 
-void MotionSlider_Evaluate(Sel* self, float t, const V* q, Ctx* ctx)
+void cSkaSlider_UpdateNodes(Sel* self, float t, const V* q, Ctx* ctx)
 {
     if (t < D_004BCD68) return;
     const V* r = Pick(self, q);
-    float pos = AnimChannel_GetCurrent(ctx, self->idx);
+    float pos = cSkaParams_GetSliderValue(ctx, self->idx);
     unsigned int n = self->n;
-    It cur = Begin2(MotionChildArr_GetData(&self->vec));
+    It cur = Begin2(std_vector_deleter_cSkaBlendSequenceItem_data_void_2(&self->vec));
     It next = cur;
     next.Inc();
     float start = cur->start;

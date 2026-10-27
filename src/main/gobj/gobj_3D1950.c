@@ -38,10 +38,10 @@ typedef struct {
     float timer;
 } Seq;
 extern AnimTbl* g_TextureMgr;
-int Random_Next(void);
-static inline float RandF() { return (float)Random_Next() / 2147483648.0f; }
+int Libc_Rand(void);
+static inline float RandF() { return (float)Libc_Rand() / 2147483648.0f; }
 
-void TexFrameAnim_Update(Seq* s, float dt)
+void cCellAnimTexture_Update(Seq* s, float dt)
 {
     Anim* a;
     int v;
@@ -77,7 +77,7 @@ void TexFrameAnim_Update(Seq* s, float dt)
             }
             break;
         case 5:
-            { int r = Random_Next(); s->value = (int)((float)s->range * ((float)r / 2147483648.0f)); }
+            { int r = Libc_Rand(); s->value = (int)((float)s->range * ((float)r / 2147483648.0f)); }
             break;
         }
     }
@@ -110,7 +110,7 @@ extern M3D1B60* g_TextureMgr;
 #define g_TextureMgr (*(M3D1B60 **)&g_TextureMgr) /* merge_units */
 
 class C3D1B60 { public: int id; void* a; int b; int c; virtual void s0(); virtual void s1(); };
-extern "C" S3D1B60* Material_Animate(S3D1B60* o, A3D1B60* a, int b, int c, int id) {
+extern "C" S3D1B60* cCellAnimTexture_ctor(S3D1B60* o, A3D1B60* a, int b, int c, int id) {
     o->vt = &D_004E0080;
     o->id = id;
     o->a = a;
@@ -171,7 +171,7 @@ static inline void Wrap(V& v)
     if (v.y < -1.0f) v.y += 1.0f;
 }
 
-extern "C" void UvScrollAnim_Update(Scroll* s, float dt)
+extern "C" void cScrollAnimTexture_Update(Scroll* s, float dt)
 {
     float du = s->du * dt;
     float dv = s->dv * dt;
@@ -202,7 +202,7 @@ typedef struct Link2 {
 } Link2;
 
 /* Clears the two words at +0x10/+0x14 of both linked objects. */
-void UvScrollAnim_Init(Link2* l) {
+void cScrollAnimTexture_Reset(Link2* l) {
     Pair10* a = l->first;
     Pair10* b = l->second;
     a->a = 0;

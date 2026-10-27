@@ -10,7 +10,7 @@
 extern int details_compressed_pair_imp_cAllocator_voidPtr_int_1_first(List*);
 
 /* Constructs an empty list (sentinel at +4). */
-List* LinkList_Ctor_3ECAF0(List* l) {
+List* std_list_cSfxSchedulerPtr_ctor(List* l) {
     l->count = 0;
     details_compressed_pair_imp_cAllocator_voidPtr_int_1_first(l);
     l->last = &l->first;

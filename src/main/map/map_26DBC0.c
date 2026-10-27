@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_0026DBC0 */
 #pragma push /* merge_units */
@@ -64,43 +64,43 @@ extern float D_004FF040;
 extern float D_004FF048;
 extern float D_004FF050;
 
-void IeNode_SetShown(int h, int a, int b);
-int IeElement_Create(int h);
-void IeElement_SetColour(int h, char* name);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void HudTracker_Construct(Obj26DBC0* o, int h, char* p);
-void HudMap_UpdateCamera(float t, Self26DBC0* self);
-void HudMap_AddPlayerCallouts(Self26DBC0* self);
-void HudTicker_GetLevel(char* p, int n);
-void HudMap_Commit(Self26DBC0* self);
+void cInterfaceModel_Activate(int h, int a, int b);
+int cInterfaceModel_CreateInstance(int h);
+void cInterfaceElement_SetFilterColor(int h, char* name);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cIE_GOBJ_ctor(Obj26DBC0* o, int h, char* p);
+void cMap_UpdateModelPerspective(float t, Self26DBC0* self);
+void cMap_AddCallouts(Self26DBC0* self);
+void cInfoBar_SetMinPriority(char* p, int n);
+void cMap_ObjectiveSelected(Self26DBC0* self);
 }
 
-extern "C" void HudMap_Open(Self26DBC0* self)
+extern "C" void cMap_Activate(Self26DBC0* self)
 {
     int h;
     Holder26DBC0* hd;
     Cam26DBC0* c;
 
-    IeNode_SetShown(*self->x8, 1, 0);
-    IeNode_SetShown(D_004FFD70, 1, 1);
-    IeNode_SetShown(D_004FFD68, 1, 1);
-    h = IeElement_Create(D_004FFD70);
-    IeElement_SetColour(h, D_004FF0B0);
+    cInterfaceModel_Activate(*self->x8, 1, 0);
+    cInterfaceModel_Activate(D_004FFD70, 1, 1);
+    cInterfaceModel_Activate(D_004FFD68, 1, 1);
+    h = cInterfaceModel_CreateInstance(D_004FFD70);
+    cInterfaceElement_SetFilterColor(h, D_004FF0B0);
     hd = g_LocalPlayer;
     if (hd && hd->x30) {
         Obj26DBC0* o;
         {
             AllocGuard g;
-            o = (Obj26DBC0*)Mem_Alloc(0, 0x90, D_004A8808, 0x14A);
+            o = (Obj26DBC0*)cMemMan_Allocate(0, 0x90, D_004A8808, 0x14A);
         }
         if (o) {
-            HudTracker_Construct(o, h, hd->x30 + 0xC);
+            cIE_GOBJ_ctor(o, h, hd->x30 + 0xC);
             o->vt = D_004E0360;
         }
         self->xC = o;
     }
-    HudMap_UpdateCamera(0.0f, self);
-    HudMap_AddPlayerCallouts(self);
+    cMap_UpdateModelPerspective(0.0f, self);
+    cMap_AddCallouts(self);
     c = g_Hud;
     D_004FF030 = c->x620;
     D_004FF038 = c->x624;
@@ -116,8 +116,8 @@ extern "C" void HudMap_Open(Self26DBC0* self)
         t.z = 0.25f;
         *(V3_26DBC0*)&c->x614 = t;
     }
-    HudTicker_GetLevel(c->x100, 2);
-    HudMap_Commit(self);
+    cInfoBar_SetMinPriority(c->x100, 2);
+    cMap_ObjectiveSelected(self);
     self->x64 = 0;
     self->x60 = self->x64;
     self->x94 = 0;
@@ -133,7 +133,7 @@ static inline void merge_flush_func_0026DBC0(void) {}
 #pragma cplusplus on
 extern "C" {
 void operator_delete(void* allocation);
-void Interface_Dtor(void* p, int flag);
+void cInterface_dtor(void* p, int flag);
 int* std_vector_cVUM_GOBJPtr_opIndex_uint(PtrVec* v, int i);
 void std_vector_cVUM_GOBJPtr_dtor(PtrVec* v, int flag);
 extern char D_004DCBB0[];
@@ -158,8 +158,8 @@ extern "C" Holder* cMap_dtor(Holder* self, short deleteFlag) {
         {
             void* p = self->p;
             AllocGuard guard;
-            Interface_Dtor(p, -1);
-            Mem_Free(0, p, D_004A8808, 0x133);
+            cInterface_dtor(p, -1);
+            cMemMan_Deallocate(0, p, D_004A8808, 0x133);
         }
         {
             int i;
@@ -167,7 +167,7 @@ extern "C" Holder* cMap_dtor(Holder* self, short deleteFlag) {
                 Elem* e = *(Elem**)std_vector_cVUM_GOBJPtr_opIndex_uint(&self->list, i);
                 AllocGuard guard;
                 e->Destroy(-1);
-                Mem_Free(0, e, D_004A8808, 0x137);
+                cMemMan_Deallocate(0, e, D_004A8808, 0x137);
             }
         }
         self->list.count = 0;

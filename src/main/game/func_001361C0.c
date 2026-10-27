@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-extern int Vector_Reserve_139920(int, int);
+extern int std_vector_imp_cCollisionFace_reserve(int, int);
 
-int Vector_Reserve_139920_Thunk(int a0, int a1) {
-    return Vector_Reserve_139920(a0, a1);
+int std_vector_cCollisionFace_reserve(int a0, int a1) {
+    return std_vector_imp_cCollisionFace_reserve(a0, a1);
 }
 
 int cArrayCapacity_Int(char* self) {

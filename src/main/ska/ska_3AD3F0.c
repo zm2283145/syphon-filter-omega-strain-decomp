@@ -24,35 +24,35 @@ typedef struct {
     char trans[0x10];
 } F6Sel;
 typedef struct { char pad[0x18]; char a18[0x14]; int n2C; char a30[0x14]; int n44; } F6Ctl;
-extern F6Sel* Array_GetLast_3AD3A0(void* arr);
+extern F6Sel* std_deque_deleter_common_cSkaSystem_Request_back_void_2(void* arr);
 extern signed char D_00542B70;
 extern char D_00542B78[];
 extern F6Sel D_00542B90;
-extern void TransitionReq_Reset(void*);
+extern void cSkaSystem_Transition_ctor_void(void*);
 extern void cSkaPlaybackGroupId_ctor_int(void*, int);
-extern void AnimEvent_Construct(void*);
+extern void cSkaAnimEndedMessage_ctor_void(void*);
 extern void cSkaAnimCheckpoints_ctor_void(void*);
 extern void TransitionReq_Construct(void*, float);
 extern void __register_global_object(void*, void*, void*);
 extern void func_00397400(void);
 #pragma opt_propagation off
-F6Sel* AnimCtl_GetSelected(F6Ctl* c)
+F6Sel* cSkaRequestStream_GetLatestRequest(F6Ctl* c)
 {
     if (c->n44) {
-        return Array_GetLast_3AD3A0(c->a30);
+        return std_deque_deleter_common_cSkaSystem_Request_back_void_2(c->a30);
     }
     if (c->n2C) {
-        return Array_GetLast_3AD3A0(c->a18);
+        return std_deque_deleter_common_cSkaSystem_Request_back_void_2(c->a18);
     }
     if (!D_00542B70) {
         F6Sel* s = &D_00542B90;
         D_00542B90.b0 = 0;
         D_00542B90.b1 = 0;
         D_00542B90.i4 = 0;
-        TransitionReq_Reset(D_00542B90.req);
+        cSkaSystem_Transition_ctor_void(D_00542B90.req);
         cSkaPlaybackGroupId_ctor_int(D_00542B90.x1C, -1);
-        AnimEvent_Construct(D_00542B90.ev1);
-        AnimEvent_Construct(D_00542B90.ev2);
+        cSkaAnimEndedMessage_ctor_void(D_00542B90.ev1);
+        cSkaAnimEndedMessage_ctor_void(D_00542B90.ev2);
         cSkaAnimCheckpoints_ctor_void(s->x94);
         s->fE0 = -1.0f;
         s->iE4 = 0;
@@ -86,8 +86,8 @@ typedef struct {
     char trans[0x10];
 } D5Sel;
 extern D5F5* cSkaSystem_Transition_ctor_cSkaSystemTransitionR(D5F5* dst, D5F5* src);
-extern void MotionGroup_CopyPair(void* dst, void* src);
-extern void AnimEvent_Copy(void* dst, void* src);
+extern void cSkaPlaybackGroupId_ctor_cSkaPlaybackGroupIdR(void* dst, void* src);
+extern void cSkaAnimEndedMessage_ctor_cSkaAnimEndedMessageR(void* dst, void* src);
 extern void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(void* dst, void* src);
 #if 0 /* merge_units */
 extern void TransitionReq_Construct(void* self, float t);
@@ -97,9 +97,9 @@ extern void TransitionReq_Construct(void* self, float t);
 extern void AnimCtl_Install(void* c, D5Sel* r, unsigned char mode);
 extern void func_00396910(void* p, int f);
 extern void cSkaAnimCheckpoints_dtor(void* p, int f);
-extern void AnimEvent_dtor(void* p, int f);
+extern void cSkaAnimEndedMessage_dtor(void* p, int f);
 #pragma opt_propagation off
-void AnimCtl_InstallMotion(void* ctl, int id, unsigned char mode, D5F4* range, void* pair, void* m1, void* m2, void* x, float f0, float f1)
+void cSkaRequestStream_AddRequest(void* ctl, int id, unsigned char mode, D5F4* range, void* pair, void* m1, void* m2, void* x, float f0, float f1)
 {
     D5Sel s;
     D5F5 t;
@@ -113,9 +113,9 @@ void AnimCtl_InstallMotion(void* ctl, int id, unsigned char mode, D5F4* range, v
     s.b1 = 0;
     s.i4 = id;
     cSkaSystem_Transition_ctor_cSkaSystemTransitionR(&s.req, &t);
-    MotionGroup_CopyPair(s.x1C, pair);
-    AnimEvent_Copy(s.ev1, m1);
-    AnimEvent_Copy(s.ev2, m2);
+    cSkaPlaybackGroupId_ctor_cSkaPlaybackGroupIdR(s.x1C, pair);
+    cSkaAnimEndedMessage_ctor_cSkaAnimEndedMessageR(s.ev1, m1);
+    cSkaAnimEndedMessage_ctor_cSkaAnimEndedMessageR(s.ev2, m2);
     cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(p->x94, x);
     p->fE0 = f0;
     p->iE4 = 0;
@@ -123,8 +123,8 @@ void AnimCtl_InstallMotion(void* ctl, int id, unsigned char mode, D5F4* range, v
     AnimCtl_Install(ctl, &s, mode);
     func_00396910(s.trans, -1);
     cSkaAnimCheckpoints_dtor(s.x94, -1);
-    AnimEvent_dtor(s.ev2, -1);
-    AnimEvent_dtor(s.ev1, -1);
+    cSkaAnimEndedMessage_dtor(s.ev2, -1);
+    cSkaAnimEndedMessage_dtor(s.ev1, -1);
 }
 #undef TransitionReq_Construct /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

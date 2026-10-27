@@ -8,10 +8,10 @@ struct Desc { char pad[0x10];Param**p; };
 struct Ev { int x0,x4;void*vtable;char*args;int count;Desc*desc; };
 extern "C" {
 extern char D_004BD4C0[],D_004D9DE0[],D_004E00C0[];
-void Mem_Free(int,void*,char*,int);void operator_delete(void*);
+void cMemMan_Deallocate(int,void*,char*,int);void operator_delete(void*);
 }
-static inline void Free(void*p,int line){AllocGuard g;Mem_Free(0,p,D_004BD4C0,line);}
-extern "C" Ev* ScriptEvent_Destruct(Ev*self,short flag){
+static inline void Free(void*p,int line){AllocGuard g;cMemMan_Deallocate(0,p,D_004BD4C0,line);}
+extern "C" Ev* SchedCallback_dtor(Ev*self,short flag){
  if(self){
  self->vtable=D_004E00C0;
  int i=0,off;

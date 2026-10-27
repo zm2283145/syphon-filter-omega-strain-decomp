@@ -25,10 +25,10 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cBaseObjListPtr_1_dtor)
 
 #include "types.h"
 
-extern int PtrVec_Reserve(int, int);
+extern int std_vector_pod_int_reserve(int, int);
 
 int std_vector_cBaseObjListPtr_reserve(int a0, int a1) {
-    return PtrVec_Reserve(a0, a1);
+    return std_vector_pod_int_reserve(a0, a1);
 }
 
 Rel* std_vector_cBaseObjListPtr_ctor(Rel* r) {
@@ -48,7 +48,7 @@ extern GobjEntry* D_00571770;
 extern GobjId D_00571774;
 
 /* Publish the local player and retain its ID for subsequent validity checks. */
-void Player_SetLocal(GobjEntry* player)
+void nGobjManager_SetPlayer(GobjEntry* player)
 {
     GobjId missing;
     const GobjId* id;
@@ -73,7 +73,7 @@ extern Ref40BF10 D_00571770;
 #endif /* merge_units */
 #define D_00571770 (*(Ref40BF10*)&D_00571770) /* merge_units */
 
-Tgt40BF10* Player_GetCached(void) {
+Tgt40BF10* nGobjManager_GetPlayer(void) {
     Tgt40BF10* obj = D_00571770.obj;
     unsigned char valid = 1;
     if (!((obj != 0) ^ 1)) {

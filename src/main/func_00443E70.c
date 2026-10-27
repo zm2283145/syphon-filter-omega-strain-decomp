@@ -1,9 +1,9 @@
 #include "types.h"
 
-extern int Time_GetMilliseconds(void);
+extern int cTimer_GetMillisecondTime(void);
 
-/* Calls Time_GetMilliseconds and returns its result. */
-long long Lobby_GetTime(void)
+/* Calls cTimer_GetMillisecondTime and returns its result. */
+long long SFOLobby_GetMillisecs(void)
 {
-    return Time_GetMilliseconds();
+    return cTimer_GetMillisecondTime();
 }

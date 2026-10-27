@@ -66,7 +66,7 @@ static inline V SubV(const V& a, const V& b) { V r; Sub(&a, &r, &b); return r; }
 static inline void SetNormalized(V* d, V v) { *d = v; Normalize(d); }
 static inline float DotV(const V& a, V b) { return Dot3(&a, &b); }
 #pragma opt_common_subs off
-extern "C" V Edge_OutwardNormal(Edge* e)
+extern "C" V CalculateUnitEdgeOutwardXYNormal(Edge* e)
 {
     V n; const V& en = e->n; V up(0.0f, 0.0f, 1.0f, 0.0f);
     SetNormalized(&n, CrossV(en, up));

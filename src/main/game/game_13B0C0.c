@@ -62,7 +62,7 @@ Word* std_list_cLosRequest_cCollisionModelList_GamePtr_generic_iterator_ctor(Wor
     return dst;
 }
 
-void List_Begin(Iter* out, PtrVec* v) {
+void std_list_deleter_voidPtr_begin_void(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 #pragma pop /* merge_units */
@@ -74,7 +74,7 @@ void List_Begin(Iter* out, PtrVec* v) {
 #include "payload_message_clone.h"
 
 extern "C" { char D_0049AED0[] = "los.hh"; }
-DEFINE_PAYLOAD_MESSAGE_CLONE(LosResultEvent_Clone, 0xD0, D_0049AED0, 0x1A8, D_004D91C0, cLosResult_ctor_cLosResultR)
+DEFINE_PAYLOAD_MESSAGE_CLONE(cLosResultReadyMessage_Clone, 0xD0, D_0049AED0, 0x1A8, D_004D91C0, cLosResult_ctor_cLosResultR)
 #pragma pop /* merge_units */
 /* merge_units: end func_0013B190 */
 

@@ -10,7 +10,7 @@
 /* merge_units: begin func_001BC330 */
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-void Xform_Translate_1BC330(V4* a, V4* b) {
+void cXform_Translate(V4* a, V4* b) {
     char* pv1 = (char*)a + 0x10;
     asm {
         lqc2 vf1, 0x30(pv1)
@@ -104,20 +104,20 @@ static inline void SetPos(Plc* p, V4* v) { V4* dd = &p->pos; QC(dd, v); }
 static inline void SetPos2(V4* d, V4* v) { V4* dd = d; QC(dd, v); }
 struct Nd { char pad[0x80]; Plc p; char padA0[2]; unsigned char dirty; char padA3[0xD]; int bB0; };
 extern "C" {
-void* Root_GetParent(Nd* n);
-Plc* Root_GetWorldPlacement(void* r);
-void Transform_SetOrientation(Plc* d, Plc* s);
-void Placement_Invert(Plc* p);
-void SceneRoot_SetPoseCachePos(Nd* self, V4* pos);
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(Nd* n);
+Plc* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void* r);
+void cQuatVec_opAssign(Plc* d, Plc* s);
+void cQuatVec_InvertAssumingUnitQuat(Plc* p);
+void cSkaAnimAnchor_TreeNode_SetSkeletonTargetPosition_WorldSpace(Nd* self, V4* pos);
 }
 #pragma opt_propagation off
-void SceneRoot_SetPoseCachePos(Nd* self, V4* pos)
+void cSkaAnimAnchor_TreeNode_SetSkeletonTargetPosition_WorldSpace(Nd* self, V4* pos)
 {
     { Plc* d = &self->p; V4* dd = &d->pos; QC(dd, pos); }
     if (self->bB0) {
         Plc inv; Plc* ip; Plc* p; V4* ipos; V4* v;
-        Transform_SetOrientation(&inv, Root_GetWorldPlacement(Root_GetParent(self)));
-        Placement_Invert(&inv);
+        cQuatVec_opAssign(&inv, cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(self)));
+        cQuatVec_InvertAssumingUnitQuat(&inv);
         p = &self->p;
         ip = &inv;
         v = &p->pos;
@@ -142,7 +142,7 @@ static inline void merge_flush_func_001BC350(void) {}
 
 /* merge_units: begin func_001BC490 */
 #pragma push /* merge_units */
-V4* Actor_AddTeleportXyz(V4* a, V4* b) {
+V4* cVector_Translate(V4* a, V4* b) {
     asm {
         lqc2 vf1, 0x0(a)
         lqc2 vf2, 0x0(b)

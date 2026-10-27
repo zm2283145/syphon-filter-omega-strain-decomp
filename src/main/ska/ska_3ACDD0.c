@@ -50,7 +50,7 @@ typedef struct { unsigned char enabled; unsigned char pad[0x3B]; Vec_3ACEA0 phas
 
 extern "C" {
 Phase_3ACEA0** cSkaPlaybackGroup_PlaybackPosWithHistory(Vec_3ACEA0* v);
-int Phase_Overlaps(void* a, Phase_3ACEA0* b);
+int cSkaAnimCheckpoints_cTimedEvent_IsTimeToTriggerEvent(void* a, Phase_3ACEA0* b);
 void cSkaAnimEvent_Trigger(void* p);
 }
 
@@ -64,7 +64,7 @@ extern "C" void cSkaAnimCheckpoints_TriggerScheduledEvents(Obj_3ACEA0* o, void* 
         it = *cSkaPlaybackGroup_PlaybackPosWithHistory(&o->phases);
         end = *cSkaPlaybackGroup_PlaybackPosWithHistory(&o->phases) + o->phases.count;
         for (; Ne_3ACEA0(it, end); it++) {
-            if (Phase_Overlaps(phase, it))
+            if (cSkaAnimCheckpoints_cTimedEvent_IsTimeToTriggerEvent(phase, it))
                 cSkaAnimEvent_Trigger(it->sub);
         }
     }

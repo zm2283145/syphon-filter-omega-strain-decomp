@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* Placement_GetQuat(void* self) {
+void* cQuatVec_Rotation(void* self) {
     return self;
 }

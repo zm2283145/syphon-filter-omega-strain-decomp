@@ -12,35 +12,35 @@ extern char D_00542B60[];
 extern char D_0049E070[];
 extern char D_004EEE80[];
 extern char D_004DCF10[];
-extern void Message_GetScriptTypeKey();
+extern void cMessage_getSOBJClassId();
 extern void cEquipGogglesMsg_dtor();
-extern void cEquipGogglesMsg_v01();
-extern void cEquipGogglesMsg_v04();
+extern void cEquipGogglesMsg_Clone();
+extern void cEquipGogglesMsg_Pack();
 extern void cEquipGogglesMsg_v05();
 extern void cNetMsg_Pack();
-void * const D_004DA8B0[8] = { (void*)0x0, (void*)0x0, (void*)cEquipGogglesMsg_dtor, (void*)cEquipGogglesMsg_v01, (void*)cNetMsg_Pack, (void*)Message_GetScriptTypeKey, (void*)cEquipGogglesMsg_v04, (void*)cEquipGogglesMsg_v05 };
+void * const D_004DA8B0[8] = { (void*)0x0, (void*)0x0, (void*)cEquipGogglesMsg_dtor, (void*)cEquipGogglesMsg_Clone, (void*)cNetMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)cEquipGogglesMsg_Pack, (void*)cEquipGogglesMsg_v05 };
 extern unsigned char g_IsMultiplayer;
-extern Message* Event_Construct(Message*, void*);
+extern Message* cMessage_ctor_cMessageNameR(Message*, void*);
 extern void cMessage_dtor(void* msg, int flags);
 extern int Secondary_RequestOneShot(int target, Key_1992B0* key, int n, AnimEvent* ev);
-extern void Event_Send(Msg3_1992B0* m, void* o, int x);
-extern void* WeaponInv_GetSlot6Record(void* w);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg3_1992B0* m, void* o, int x);
+extern void* cWeapon_GetGoggleEntry(void* w);
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
 #pragma opt_propagation off
-void Goggles_SetMode(O_1992B0* o, unsigned char on, int f)
+void cHuman_RequestEquipGoggles(O_1992B0* o, unsigned char on, int f)
 {
     if (o->b33E5 == 2) return;
-    if (WeaponInv_GetSlot6Record(o->weapons) || f) {
+    if (cWeapon_GetGoggleEntry(o->weapons) || f) {
         if (o->target && !o->b33E5) {
             Msg3_1992B0 m;
             Key_1992B0 key;
             AnimEvent ev;
             unsigned char r;
             AnimEvent* pe = &ev;
-            Event_Construct(&pe->base, D_00542B60);
+            cMessage_ctor_cMessageNameR(&pe->base, D_00542B60);
             pe->base.vtable = D_004DA930;
             pe->unk24 = 3;
             pe->unk28 = 0;
@@ -55,13 +55,13 @@ void Goggles_SetMode(O_1992B0* o, unsigned char on, int f)
                 o->b33E5 = 1;
                 if (g_IsMultiplayer && !f) {
                     Msg3_1992B0* pm = &m;
-                    Event_Construct(&pm->base, D_004EEE80);
+                    cMessage_ctor_cMessageNameR(&pm->base, D_004EEE80);
                     pm->base.vtable = D_004DCF10;
                     pm->base.vtable = ((char*)D_004DA8B0);
                     pm->on = on;
                     m.base.unk20 = 4;
                     m.base.unk1C = 0x40;
-                    Event_Send(pm, o, 0);
+                    QueueMessage_cMessageR_cSystemP_int(pm, o, 0);
                     m.base.vtable = D_004DCF10;
                     cMessage_dtor(pm, 0);
                 }

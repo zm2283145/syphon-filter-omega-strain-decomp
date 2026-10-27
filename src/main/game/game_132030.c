@@ -11,7 +11,7 @@
 /* merge_units: begin func_00132030 */
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-V4* Vec4_NormalizeXYZInPlace(V4* a) {
+V4* cVector_Normalize_void(V4* a) {
     asm {
         lqc2 vf1, 0x0(a)
         vmul.xyz vf2, vf1, vf1
@@ -36,7 +36,7 @@ static inline void merge_flush_func_00132030(void) {}
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-V4 Vec4_NormalizeXYZ_132060(V4 v) {
+V4 cVector_GetNormalized_void(V4 v) {
     V4* p = &v;
     asm {
         lqc2 vf1, 0x0(p)
@@ -59,7 +59,7 @@ static inline void merge_flush_func_00132060(void) {}
 
 /* merge_units: begin func_001320B0 */
 #pragma push /* merge_units */
-int Vec4_IsZeroXYZ(void* v) {
+int cVector_IsZeroXYZ(void* v) {
     return VU0_IsZero3(v);
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -71,7 +71,7 @@ static inline void merge_flush_func_001320B0(void) {}
 #pragma push /* merge_units */
 #pragma push
 #pragma opt_common_subs off
-V4 Vec4_Cross(V4* b, V4* c) {
+V4 cVector_Cross(V4* b, V4* c) {
     V4 l0;
     V4* q1 = &l0;
     asm {

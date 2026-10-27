@@ -9,7 +9,7 @@ typedef struct StdList {
     int header;     /* 0x04: sentinel node (layout not recovered) */
 } StdList;
 
-/* Pair of iterators kept on the stack around List_InsertBefore. */
+/* Pair of iterators kept on the stack around std_list_deleter_voidPtr_insert. */
 typedef struct ListInsertArgs {
     int* pos;       /* where to insert (end() for push_back) */
     int* result;    /* iterator to the new node */

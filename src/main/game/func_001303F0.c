@@ -8,7 +8,7 @@
 
 extern "C" {
 /*fc*/
-char * Mem_Alloc(...);                      
+char * cMemMan_Allocate(...);                      
 int strncpy(...);                            
 extern char D_0049A890;
 extern unsigned char g_ProfileLockEnabled;
@@ -16,7 +16,7 @@ extern unsigned char g_ProfileLockEnabled;
 typedef struct { char p0[172]; int fAC; } PS0_001303F0;
 #pragma push
 #pragma opt_common_subs off
-extern "C" void GameFlow_QueueMovie(PS0_001303F0 *arg0, int arg1) {
+extern "C" void cGameSystem_QueueMovie(PS0_001303F0 *arg0, int arg1) {
     char * temp_a0;
     char * temp_s0;
     int var_a1;
@@ -26,7 +26,7 @@ extern "C" void GameFlow_QueueMovie(PS0_001303F0 *arg0, int arg1) {
     if (arg0->fAC == NULL) {
         {
             AllocGuard g;
-        temp_s0 = (char *)(Mem_Alloc(0, 0x808, &D_0049A890, 0x9FD));
+        temp_s0 = (char *)(cMemMan_Allocate(0, 0x808, &D_0049A890, 0x9FD));
         }
         if (temp_s0 != NULL) {
             var_a1 = 0;

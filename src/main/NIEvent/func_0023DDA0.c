@@ -11,16 +11,16 @@ public:
     char pad[0x12C];
     unsigned char flag;
 };
-extern "C" void NiEvent_ComputeWorld(Info0023DDA0* out, Obj0023DDA0* self);
-extern "C" void NiEvent_UpdateNode(Obj0023DDA0* self)
+extern "C" void cNIEventBase_ParentXform(Info0023DDA0* out, Obj0023DDA0* self);
+extern "C" void cNIEventBase_ForceMatUpdate(Obj0023DDA0* self)
 {
     if (self->flag) {
         Info0023DDA0 a;
-        NiEvent_ComputeWorld(&a, self);
+        cNIEventBase_ParentXform(&a, self);
         self->onA(&a);
     } else {
         Info0023DDA0 b;
-        NiEvent_ComputeWorld(&b, self);
+        cNIEventBase_ParentXform(&b, self);
         self->onB(&b);
     }
 }

@@ -23,7 +23,7 @@ struct RbNode {
 #define PARENT(n) ((n)->parent())
 
 extern "C" {
-void Tree_Successor(RbNode **it);
+void std_red_black_tree_1_increment(RbNode **it);
 void std_red_black_tree_1_rotate_left(RbNode *x, RbNode **root);
 void std_red_black_tree_1_rotate_right(RbNode *x, RbNode **root);
 void std_red_black_tree_1_balance_erase(RbNode *z, RbNode *root);
@@ -38,7 +38,7 @@ void std_red_black_tree_1_balance_erase(RbNode *z, RbNode *root)
     bool rebalance;
 
     if (z->left != 0 && z->right != 0)
-        Tree_Successor(&y);
+        std_red_black_tree_1_increment(&y);
     {
         RbNode *t = y;
         x = t->left ? t->left : t->right;

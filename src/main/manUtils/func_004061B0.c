@@ -1,5 +1,5 @@
 #include "types.h"
-/* AgentPacking_AddBlankPairs: appends to the appearance's part-pair list (out[2..]) every
+/* SKL_AddBlankParts: appends to the appearance's part-pair list (out[2..]) every
  * mesh key of the part cache that matches the blank pattern (m60/m10) for the body's lod
  * digit ('1'/'2') and is not yet listed, then every colour key likewise, pairing each with
  * the first matching mesh key; returns the new pair count. The digit scan of ToneOf is
@@ -63,7 +63,7 @@ typedef struct {
     __int128 ckeys[0x300];
 } PartCache;
 extern PartCache g_AgentPartCache;
-int Appearance_GetBodyKind(void* app);
+int SKL_FindSex(void* app);
 static inline signed char ToneOf(KOut* out)
 {
     signed char* b; int i; KOut* o;
@@ -78,7 +78,7 @@ static inline signed char ToneOf(KOut* out)
     }
     return '_';
 }
-int AgentPacking_AddBlankPairs(KOut* out, int n)
+int SKL_AddBlankParts(KOut* out, int n)
 {
     int mode;
     signed char t;
@@ -91,7 +91,7 @@ int AgentPacking_AddBlankPairs(KOut* out, int n)
     int found2;
     unsigned int m;
     unsigned int idx;
-    mode = Appearance_GetBodyKind(out);
+    mode = SKL_FindSex(out);
     t = ToneOf(out);
     if (mode == 1)
         v = kfrom(50);

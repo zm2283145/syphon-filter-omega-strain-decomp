@@ -32,7 +32,7 @@ extern char D_0055C7D4[];
 extern unsigned char D_005724B0;
 void printf(void* fmt, int a, int b);
 int NetGetClientIpAddress(void* slot, int addr, int idx);
-void Net_OnRemoteClientJoined(Join_AAB0* j)
+void cNetObj_RemoteClientJoinCallback(Join_AAB0* j)
 {
     if (j->busy == 0) {
         int s;
@@ -67,7 +67,7 @@ extern unsigned char D_00493A10[];
 extern unsigned char D_0055C780[];
 extern unsigned int D_0055C990;
 extern unsigned char D_005721D0;
-extern unsigned int Net_GetClock(int);
+extern unsigned int cDME_GetTime(int);
 extern void cNetObj_SendLocalSystems(int i);
 
 void cNetObj_Update(unsigned char* flag)
@@ -75,8 +75,8 @@ void cNetObj_Update(unsigned char* flag)
     unsigned char f = flag ? *flag : 0;
     unsigned int t = D_0055C990;
     int i;
-    if (t > Net_GetClock(1)) return;
-    D_0055C990 = Net_GetClock(1) + 100;
+    if (t > cDME_GetTime(1)) return;
+    D_0055C990 = cDME_GetTime(1) + 100;
     for (i = 0; i != 4; i++) {
         unsigned char s = D_00493A10[i];
         if (s == 0 || (f && s == 1)) {

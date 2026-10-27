@@ -3,7 +3,7 @@ typedef struct { int f0; unsigned char slot; unsigned char f5; char pad[2]; } M;
 extern E D_0058D188[];
 extern unsigned short D_0058C0B0;
 extern int D_005983DC;
-extern int Net_SendLocked(int, int, int, int, int, int, void *);
+extern int NetSendMessage(int, int, int, int, int, int, void *);
 extern int FindFreePingSlot(void);
 extern int NetGetClientInfo(unsigned int, unsigned int, void **);
 extern void *NetGetServerIpAddress(unsigned int);
@@ -26,7 +26,7 @@ int NetIPing(unsigned int a0, unsigned int a1, void *cb)
     m.f5 = 1;
     m.f0 = 0;
     m.slot = slot;
-    Net_SendLocked(-0x80, a0, a1, 0, D_005983DC, 8, &m);
+    NetSendMessage(-0x80, a0, a1, 0, D_005983DC, 8, &m);
     if (a1 == 0xFFFF) {
         r = NetIIpStringToBinary(&D_0058D188[slot], NetGetServerIpAddress(a0));
         if (r != 0) return r;

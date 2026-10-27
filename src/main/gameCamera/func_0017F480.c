@@ -20,7 +20,7 @@ extern "C" char D_004DA380[];
 /* constructor: vtable, initial values from a/b, an inline constant curve (zero duration) */
 #pragma push
 #pragma opt_unroll_loops off
-extern "C" Phys_F480* PhysicalBase_Construct(Phys_F480* p, float* a, float* b)
+extern "C" Phys_F480* cSplinedMotion_float_ctor_floatR_floatR(Phys_F480* p, float* a, float* b)
 {
     p->vt = D_004DA380;
     p->a = *a;

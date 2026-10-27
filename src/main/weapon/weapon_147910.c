@@ -17,14 +17,14 @@
 
 extern char g_WeaponDatabase[];
 extern int Global_ReloadWeapons(void);
-extern int WeaponDb_LoadReloadVariant(int);
-extern int Resource_Construct(void*);
+extern int cWeaponDB_Reload(int);
+extern int cFileMan_ctor_void(void*);
 extern int cDB_ctor(void*);
 
 /* Constructor: base init, sub-object at +0x1C, then clear the fields. */
 Unk00147910* cWeaponDB_ctor(Unk00147910* self) {
     cDB_ctor(self);
-    Resource_Construct(&self->unk1C);
+    cFileMan_ctor_void(&self->unk1C);
     self->unk14 = 0;
     self->unk18 = 0;
     self->unkD4 = 0;
@@ -48,7 +48,7 @@ int Global_ReloadWeapons(void) {
     int db;
 
     db = *(int*)g_WeaponDatabase;
-    return WeaponDb_LoadReloadVariant(db);
+    return cWeaponDB_Reload(db);
 }
 
 void func_001479A0(void) {

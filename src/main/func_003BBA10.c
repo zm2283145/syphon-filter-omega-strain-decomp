@@ -29,10 +29,10 @@ typedef struct Tex {
     int n64;
 } Tex;
 
-extern void String_Copy(char* d, const char* s);
+extern void Libc_Strcpy(char* d, const char* s);
 static inline int HasClut(Tex* t) { return (*(TexHdr**)((char*)t + 0x44))->n10 > 0; }
 
-void Tex_BuildGsRegisters(Tex* self, const char* name, TexHdr* hdr, int flags)
+void cTexture_Init_charP_tTDXHeaderP_uint(Tex* self, const char* name, TexHdr* hdr, int flags)
 {
     if (hdr) {
         unsigned char tcc;
@@ -40,7 +40,7 @@ void Tex_BuildGsRegisters(Tex* self, const char* name, TexHdr* hdr, int flags)
         int tw;
         int th;
         int v;
-        String_Copy(self->name, name);
+        Libc_Strcpy(self->name, name);
         self->hdr = hdr;
         self->count = 0;
         self->flags = flags;

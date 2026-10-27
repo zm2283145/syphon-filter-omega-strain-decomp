@@ -6,7 +6,7 @@
 #include "loose03_types.h"
 
 /* Copy a 3x4 matrix into self->mtx (xyz of each row first, then the w column). */
-void Mtx44_SetRows123FromMtx34_370000(Obj370000* self, Mtx34* src) {
+void cXform_SetRotationMatrix_ParentRelative(Obj370000* self, Mtx34* src) {
     self->mtx.m[0][0] = src->m[0][0];
     self->mtx.m[0][1] = src->m[0][1];
     self->mtx.m[0][2] = src->m[0][2];

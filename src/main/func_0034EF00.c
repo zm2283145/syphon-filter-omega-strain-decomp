@@ -5,9 +5,9 @@
 
 #include "loose03_types.h"
 
-extern int GuiPersonnelScreen_HandleEvent(GuiPersonnelScreen* self, int a1, int msg, int value, int t0);
+extern int GuiPersonnelScreen_onMessage(GuiPersonnelScreen* self, int a1, int msg, int value, int t0);
 
 /* Forwards to the GuiPersonnelScreen handler. */
-int GuiOmegaStrain_HandleEvent(GuiPersonnelScreen* self, int a1, int msg, int value, int t0) {
-    return GuiPersonnelScreen_HandleEvent(self, a1, msg, value, t0);
+int GuiOmegaStrain_onMessage(GuiPersonnelScreen* self, int a1, int msg, int value, int t0) {
+    return GuiPersonnelScreen_onMessage(self, a1, msg, value, t0);
 }

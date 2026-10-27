@@ -6,6 +6,6 @@
 #include "npc_types.h"
 
 /* vtable slot 0x20. */
-int cNPC_v20(void) {
+int cNPC_GetControllerType(void) {
     return 1;
 }

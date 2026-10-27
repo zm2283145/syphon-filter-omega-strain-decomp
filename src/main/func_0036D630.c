@@ -6,11 +6,11 @@
 
 #include "loose03_types.h"
 
-extern int FileHal_CtorDefault(void*);
+extern int cFileIO_ctor_void(void*);
 
 /* Constructor: builds the sub-object at +0x80 and clears the remaining state. */
 Obj36D630* cHogFile_ctor(Obj36D630* self) {
-    FileHal_CtorDefault(self->unk80);
+    cFileIO_ctor_void(self->unk80);
     self->unk148 = 0;
     self->unk158 = 0;
     self->unk15C = 0;

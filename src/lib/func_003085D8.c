@@ -13,7 +13,7 @@ extern unsigned char D_00491324[];
 extern void *memset(void *, int, unsigned int);
 extern void *memcpy(void *, const void *, unsigned int);
 extern void func_0030ED28(void *);
-int __attribute__((weak, section(".dtors_drop"))) RtUdp_UpdateRegular(RtTr *o) { return 0; } /* stub: defined in the same original TU */
+int __attribute__((weak, section(".dtors_drop"))) rt_udp_event_process(RtTr *o) { return 0; } /* stub: defined in the same original TU */
 extern int rt_time_elapsed(void *, unsigned int *);
 extern int rt_list_buf_clear(void *);
 extern void rt_list_buf_destroy(void *);
@@ -22,7 +22,7 @@ extern int rt_list_buf_get_data_size(RtPkt *);
 extern void *rt_list_buf_get_data_ptr(RtPkt *);
 extern RtPkt *rt_list_buf_get_next(RtPkt *);
 
-int RtUdp_UpdateTransport(RtTr *o)
+int rt_udp_event_check(RtTr *o)
 {
     RtSeqHdr h;
     unsigned int el;
@@ -37,7 +37,7 @@ int RtUdp_UpdateTransport(RtTr *o)
         if (D_00491324[0]) return 0;
     } else if (o->b45)
         return 0;
-    r = RtUdp_UpdateRegular(o);
+    r = rt_udp_event_process(o);
     if (r) return r;
     for (i = 0; i < o->count; i++) {
         e = &o->ents[i];

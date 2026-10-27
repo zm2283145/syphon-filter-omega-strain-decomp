@@ -16,9 +16,9 @@ struct C6AiComp_e8_1588D0 : C6B1_e8_1588D0, C6B2_e8_1588D0 {
     int m1CC;
 };
 extern "C" void cAI_ctor(C6AiComp_e8_1588D0*, void*, int);
-extern "C" void NpcAi_Construct(C6AiComp_e8_1588D0*, void*);
+extern "C" void cNPC_Init(C6AiComp_e8_1588D0*, void*);
 extern "C" char D_004D9380[];
-extern "C" C6AiComp_e8_1588D0* AiComponent_ConstructAlt(C6AiComp_e8_1588D0* self, void* owner) {
+extern "C" C6AiComp_e8_1588D0* cNPC_ctor_cGOBJR(C6AiComp_e8_1588D0* self, void* owner) {
     cAI_ctor(self, owner, 0);
     C6B2_e8_1588D0& b = *self;
     b.Clear();
@@ -30,6 +30,6 @@ extern "C" C6AiComp_e8_1588D0* AiComponent_ConstructAlt(C6AiComp_e8_1588D0* self
     self->m1C8 = 0;
     self->m1B0 = 0;
     self->m1AC = 0;
-    NpcAi_Construct(self, owner);
+    cNPC_Init(self, owner);
     return self;
 }

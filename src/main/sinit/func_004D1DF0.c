@@ -5,7 +5,7 @@ extern int D_004A8DA4;
 extern int D_004A8DA8;
 extern int D_004A8DAC;
 
-void StaticInit_LoadingColour(void) {
+void StaticInit_hud_loading(void) {
     D_004A8DA0 = 0x3F800000;
     D_004A8DA4 = 0x3F800000;
     D_004A8DA8 = 0x3F800000;

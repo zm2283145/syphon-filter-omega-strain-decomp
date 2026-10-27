@@ -8,25 +8,25 @@ typedef struct {
     E_328310* v50;
 } O_328310;
 extern char D_004B8790[];
-void String_CtorEmpty(void* s);
+void cString_ctor_void(void* s);
 void cArray_Slide_ctor(void* s);
-void String_CtorCStr_13B480(Str_328310* s, char* c);
-void String_AssignString(Str_328310* d, Str_328310* s);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_328310* s, char* c);
+void std_basic_string_char_char_traits_char_assign_basicstringR(Str_328310* d, Str_328310* s);
 void String_Dtor(void* s, int f);
 void std_vector_imp_Section_insert(void* v, E_328310* pos, int n, E_328310* e);
 void std_vector_deleter_Slide_dtor(void* s, int f);
 
-int GuiSlideShow_AddCategory(O_328310* o, char* s)
+int GuiSlideShow_AddSection(O_328310* o, char* s)
 {
     E_328310 e;
     Str_328310 t;
     int r;
     Sub_328310* m;
-    String_CtorEmpty(&e);
+    cString_ctor_void(&e);
     m = &e.sub;
     cArray_Slide_ctor(m);
-    { Str_328310* p = &t; String_CtorCStr_13B480(p, s ? s : D_004B8790); }
-    String_AssignString(&e.name, &t);
+    { Str_328310* p = &t; std_basic_string_char_char_traits_char_ctor_charP(p, s ? s : D_004B8790); }
+    std_basic_string_char_char_traits_char_assign_basicstringR(&e.name, &t);
     String_Dtor(&t, 0);
     e.x = 0;
     std_vector_imp_Section_insert(o->v48, o->v50 + o->n4C, 1, &e);

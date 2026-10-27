@@ -17,7 +17,7 @@ typedef struct {
     int f1B4;
 } O;
 typedef struct { unsigned short f0; int f4; int f8; int fC; int f10; int f14; int f18; int f1C; void *f20; O *f24; } P;
-extern int Net_AllocZeroed(void *, int);
+extern int rt_memory_allocate_init_zero(void *, int);
 extern void *memset(void *, int, unsigned int);
 extern int rt_udp_event_cb();
 extern int func_002FB2D8(void *, unsigned long long);
@@ -34,7 +34,7 @@ int rt_p2p_create(Cfg *cfg, O **out)
     if (cfg == 0) return 2;
     if (out == 0) return 2;
     if (cfg->max > 0x100) return 2;
-    r = Net_AllocZeroed(&o, 0x1B8);
+    r = rt_memory_allocate_init_zero(&o, 0x1B8);
     if (o == 0) return 3; if (r != 0) return 3;
     for (i = 0; i < 32; i++) o->e[i].a = -1;
     *out = o;
@@ -59,7 +59,7 @@ int rt_p2p_create(Cfg *cfg, O **out)
     p.f1C = cfg->f18;
     p.f20 = rt_udp_event_cb;
     p.f24 = o;
-    r2 = Net_AllocZeroed(&o->tbl, 0x2800);
+    r2 = rt_memory_allocate_init_zero(&o->tbl, 0x2800);
     if (o == 0) return 3; if (r2 != 0) return 3;
     for (i = 0; i < 256; i++) {
         o->tbl[i].f4 = -1;

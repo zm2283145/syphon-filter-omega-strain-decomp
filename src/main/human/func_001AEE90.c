@@ -24,22 +24,22 @@ typedef struct IntPair2 {
     int a, b;
 } IntPair2;
 
-extern void RootCollection_InitFromModel(void* roots, void* src);
-extern void AnimChannel_Construct(AnimChannel* ch);
-extern void AnimChannels_ClearCount(AnimChannel* ch, float t);
-extern void ChannelVector_Resize(void* vec, int count, AnimChannel* fill);
+extern void cSkaAnimAnchorList_Reset(void* roots, void* src);
+extern void cSplinedMotion_Scalar0To1_ctor(AnimChannel* ch);
+extern void cSkaSliderValue_opAssign(AnimChannel* ch, float t);
+extern void std_vector_imp_cSkaSliderValue_resize(void* vec, int count, AnimChannel* fill);
 extern void cSplinedMotion_Scalar0To1_dtor(AnimChannel* ch, int flags);
 extern void std_vector_imp_cSkaSwitchValue_resize(void* vec, int count, IntPair2* fill);
 
 /* Attaches a model definition: roots, animation channels and pair table. */
-void Model_Attach(ModelInst* inst, ModelDef* def) {
+void cSkaParams_HandleNewAnimationSet(ModelInst* inst, ModelDef* def) {
     AnimChannel ch;
     IntPair2 pair;
     inst->def = def;
-    RootCollection_InitFromModel(inst->roots, def->roots);
-    AnimChannel_Construct(&ch);
-    AnimChannels_ClearCount(&ch, 0.0f);
-    ChannelVector_Resize(inst->channels, def->channelCount, &ch);
+    cSkaAnimAnchorList_Reset(inst->roots, def->roots);
+    cSplinedMotion_Scalar0To1_ctor(&ch);
+    cSkaSliderValue_opAssign(&ch, 0.0f);
+    std_vector_imp_cSkaSliderValue_resize(inst->channels, def->channelCount, &ch);
     cSplinedMotion_Scalar0To1_dtor(&ch, -1);
     pair.a = 0;
     pair.b = 0;

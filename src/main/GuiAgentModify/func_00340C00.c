@@ -2,18 +2,18 @@
 extern char g_AgentPartCache[];
 extern char D_004B9ED0[];
 extern char D_004B9EE8[];
-extern void AgentPartCache_Unlock(void* a);
-extern void World_ClearPendingIfLoaded(void);
-extern void* Gui_GetScreenList(void);
-extern int GuiManager_FindOrLoad(void* a, const char* b, const char* c);
-extern void* Gui_GetScreenStack(void);
-extern void GuiStack_SwapScreens(void* a, int b, int c);
+extern void Monster_RestoreLockedPartsTex(void* a);
+extern void cMotionManager_FlushUpdateList(void);
+extern void* Gui_Manager(void);
+extern int GuiManager_OpenGui(void* a, const char* b, const char* c);
+extern void* Gui_Canvas(void);
+extern void GuiCanvas_Transition(void* a, int b, int c);
 /* Look up an entry and register it with `arg`. */
 void GuiAgentModify_NextScreen(int arg)
 {
     int entry;
-    AgentPartCache_Unlock(g_AgentPartCache);
-    World_ClearPendingIfLoaded();
-    entry = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004B9ED0, D_004B9EE8);
-    GuiStack_SwapScreens(Gui_GetScreenStack(), arg, entry);
+    Monster_RestoreLockedPartsTex(g_AgentPartCache);
+    cMotionManager_FlushUpdateList();
+    entry = GuiManager_OpenGui(Gui_Manager(), D_004B9ED0, D_004B9EE8);
+    GuiCanvas_Transition(Gui_Canvas(), arg, entry);
 }

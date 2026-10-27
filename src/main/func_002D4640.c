@@ -7,10 +7,10 @@
 #include "types.h"
 #include "loose02_types.h"
 
-extern float WeaponInv_RandomizeDroppedAmmo(int arg);
-extern int NpcPerception_Clear(int arg);
+extern float cWeapon_SetAmmoNpcDeath(int arg);
+extern int cAITarget_dtor(int arg);
 
 int func_002D4640(Controller2D* self) {
-    WeaponInv_RandomizeDroppedAmmo(self->owner->unk3524);
-    return NpcPerception_Clear(self->unk1AC);
+    cWeapon_SetAmmoNpcDeath(self->owner->unk3524);
+    return cAITarget_dtor(self->unk1AC);
 }

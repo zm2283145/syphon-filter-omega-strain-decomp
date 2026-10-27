@@ -14,10 +14,10 @@
 
 #include "types.h"
 
-extern int PtrVec_Reserve(int, int);
+extern int std_vector_pod_int_reserve(int, int);
 
 int std_vector_VarDefPtr_reserve(int a0, int a1) {
-    return PtrVec_Reserve(a0, a1);
+    return std_vector_pod_int_reserve(a0, a1);
 }
 
 Rel* std_vector_VarDefPtr_ctor(Rel* r) {
@@ -28,7 +28,7 @@ Rel* std_vector_VarDefPtr_ctor(Rel* r) {
 }
 
 int std_vector_FuncDefPtr_reserve(int a0, int a1) {
-    return PtrVec_Reserve(a0, a1);
+    return std_vector_pod_int_reserve(a0, a1);
 }
 
 Rel* std_vector_FuncDefPtr_ctor(Rel* r) {
@@ -54,7 +54,7 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_FuncDefPtr_1_dtor)
 /* merge_units: begin func_003D8490 */
 #pragma push /* merge_units */
 int std_vector_EnumDefPtr_reserve(int a0, int a1) {
-    return PtrVec_Reserve(a0, a1);
+    return std_vector_pod_int_reserve(a0, a1);
 }
 
 Rel* std_vector_EnumDefPtr_ctor(Rel* r) {
@@ -65,7 +65,7 @@ Rel* std_vector_EnumDefPtr_ctor(Rel* r) {
 }
 
 int std_vector_ClassDefPtr_reserve(int a0, int a1) {
-    return PtrVec_Reserve(a0, a1);
+    return std_vector_pod_int_reserve(a0, a1);
 }
 
 Rel* std_vector_ClassDefPtr_ctor(Rel* r) {
@@ -89,13 +89,13 @@ extern char D_004BD3B0[];
 typedef struct { char pad[8]; char** tab; } ScrMgr;
 extern ScrMgr* D_00554F28;
 void Alloc_Lock(int id);
-void Alloc_Unlock(int id);
-void* Mem_Alloc(int a, int size, char* file, int line);
+void EnableIntc(int id);
+void* cMemMan_Allocate(int a, int size, char* file, int line);
 void* MemberFunc_ctor(void* p, int a3, int a1, int a2, int count, int* args);
 void std_vector_MemberFuncPtr_push_back(char* list, void** item);
 void cScriptBase_addGameFunc(int a3, int a1, int a2, int count, int* args, int flag);
 
-int Script_RegisterNative(int id, int a1, int a2, int a3, int count, ...)
+int cScriptBase_registerFunc_int_intPintPint_intP_charP_etc(int id, int a1, int a2, int a3, int count, ...)
 {
     char* o;
     void* item;
@@ -111,8 +111,8 @@ int Script_RegisterNative(int id, int a1, int a2, int a3, int count, ...)
     }
     if (g_ProfileLockEnabled) Alloc_Lock(9);
     g_ProfileLockDepth++;
-    p = Mem_Alloc(0, 0x1C, D_004BD3B0, 0xCA);
-    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    p = cMemMan_Allocate(0, 0x1C, D_004BD3B0, 0xCA);
+    if (g_ProfileLockEnabled) EnableIntc(9);
     g_ProfileLockDepth--;
     if (p) p = MemberFunc_ctor(p, a3, a1, a2, count, args);
     item = p;

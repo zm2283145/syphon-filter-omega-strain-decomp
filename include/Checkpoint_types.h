@@ -16,20 +16,20 @@ typedef union CheckpointScriptArg {
 
 /*
  * Script type registration helpers:
- *  cGOBJ_GetScriptTypeKeyPtr returns the address of the cGObj script type key,
- *  Message_GetScriptTypeKeyPtr returns the address of the message base type key,
- *  ScriptType_SetParent(type, parent) records the parent type of a script type.
+ *  cGOBJ_SOBJ_getClassId returns the address of the cGObj script type key,
+ *  cMessage_SOBJ_getClassId returns the address of the message base type key,
+ *  cScriptBase_declareParent(type, parent) records the parent type of a script type.
  */
-extern int* cGOBJ_GetScriptTypeKeyPtr(void);
-extern int* Message_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int type, int parentType);
+extern int* cGOBJ_SOBJ_getClassId(void);
+extern int* cMessage_SOBJ_getClassId(void);
+extern void cScriptBase_declareParent(int type, int parentType);
 
 /* Global script filter used by v0C dispatch slots. */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
+extern int cScriptInterpreter_CallEvent(void* filter, int a1, int a2);
 
 /* Script object handle -> object (identity in retail). */
-extern int GObj_IdentityB(int handle);
+extern int cGOBJ_SOBJ_convert(int handle);
 extern int cPlayer_SOBJ_convert(int handle);
 
 #endif

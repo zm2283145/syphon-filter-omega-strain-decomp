@@ -19,7 +19,7 @@ extern void std_vector_TaserPoint_ctor(Sub*);
 extern void std_list_deleter_TaserPulse_ctor(void*);
 extern void std_vector_cAirTaserPtr_push_back(void* registry, S** self);
 /* Constructor: initialises members and registers the object in the global registry. */
-S* HeldItem_Construct(S* self, int owner)
+S* cAirTaser_ctor(S* self, int owner)
 {
     Sub* sub = &self->sub;
     std_vector_TaserPoint_ctor(sub);

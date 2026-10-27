@@ -22,14 +22,14 @@ DEFINE_TRIVIAL_DTOR(cHermiteSplineWithScaledDuration_float_dtor)
 #pragma push
 #pragma peephole off
 #pragma opt_propagation off
-CURVE_RETIME_FUNC(Curve_Retime1s)
+CURVE_RETIME_FUNC(cSplinedMotion_cQuaternion_RestartTransition)
 #pragma pop
 #pragma pop /* merge_units */
 /* merge_units: end func_0017D840 */
 
 /* merge_units: begin func_0017D8E0 */
 #pragma push /* merge_units */
-void Curve_Sample(char* arg0, char* arg1, float farg0); /* gsynth: defined below */
+void cHermiteSplineWithScaledDuration_cVector_Evaluate(char* arg0, char* arg1, float farg0); /* gsynth: defined below */
 #pragma cplusplus on
 struct V {
     float x, y, z, w;
@@ -44,9 +44,9 @@ struct W {
 } __attribute__((aligned(16)));
 extern "C" float cHermiteSplineWithScaledDuration_cVector_Duration(void* c);
 #if 0 /* merge_units */
-extern "C" void Curve_Sample(V* out, void* c, float t);
+extern "C" void cHermiteSplineWithScaledDuration_cVector_Evaluate(V* out, void* c, float t);
 #endif /* merge_units */
-#define Curve_Sample(a0, a1, a2) (Curve_Sample((char *)(a0), (char *)(a1), (a2))) /* merge_units */
+#define cHermiteSplineWithScaledDuration_cVector_Evaluate(a0, a1, a2) (cHermiteSplineWithScaledDuration_cVector_Evaluate((char *)(a0), (char *)(a1), (a2))) /* merge_units */
 
 static inline float CR_Max(float a, float b) { float r; asm { max.s r, a, b } return r; }
 static inline bool Pos(float f) { return f > 0.0f; }
@@ -70,7 +70,7 @@ struct VC {
     bool Zero() const { return t == 0.0f; }
     bool NotZero() const { return !Zero(); }
 };
-extern "C" bool VectorCurve_Advance(VC* self, float dt, float x)
+extern "C" bool cSplinedMotion_cVector_NextFrame(VC* self, float dt, float x)
 {
     bool done;
     self->v10 = self->v20;
@@ -86,7 +86,7 @@ extern "C" bool VectorCurve_Advance(VC* self, float dt, float x)
     }
     if (self->NotZero()) {
         V tmp;
-        Curve_Sample(&tmp, self->curve, cHermiteSplineWithScaledDuration_cVector_Duration(self->curve) - self->t);
+        cHermiteSplineWithScaledDuration_cVector_Evaluate(&tmp, self->curve, cHermiteSplineWithScaledDuration_cVector_Duration(self->curve) - self->t);
         { void* xx = &tmp; /* dead on purpose: retail keeps this addiu */ }
         self->v20 = (W&)tmp;
         self->Changed();
@@ -96,7 +96,7 @@ extern "C" bool VectorCurve_Advance(VC* self, float dt, float x)
     self->Update(dt, x);
     return done;
 }
-#undef Curve_Sample /* merge_units */
+#undef cHermiteSplineWithScaledDuration_cVector_Evaluate /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0017D8E0(void) {}
 #pragma pop /* merge_units */
@@ -108,13 +108,13 @@ static inline void merge_flush_func_0017D8E0(void) {}
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int Vec4_Add(char *, char *, char *);                          
+int cVector_opAdd(char *, char *, char *);                          
 int cHermiteSplineControlPoint_cVector_Tangent(int);                             
 int opMul(float, char *, int);                     
 int cHermiteSplineControlPoint_cVector_Position(int);                             
 int cArray_FixedSize_cHermiteSplineControlPoint_cVector_2_opIndex(char * , int);                       
 
-void Curve_Sample(char *arg0, char * arg1, float farg0) {
+void cHermiteSplineWithScaledDuration_cVector_Evaluate(char *arg0, char * arg1, float farg0) {
     int sp90[4];
     int sp80[4];
     int sp70[4];
@@ -136,11 +136,11 @@ void Curve_Sample(char *arg0, char * arg1, float farg0) {
     temp_f23 = 3.0f * temp_f22;
     opMul(1.0f + ((2.0f * temp_f21) - temp_f23), sp70, cHermiteSplineControlPoint_cVector_Position(cArray_FixedSize_cHermiteSplineControlPoint_cVector_2_opIndex(arg1, 0)));
     opMul((-2.0f * temp_f21) + temp_f23, sp60, cHermiteSplineControlPoint_cVector_Position(cArray_FixedSize_cHermiteSplineControlPoint_cVector_2_opIndex(arg1, 1)));
-    Vec4_Add(sp80, sp70, sp60);
+    cVector_opAdd(sp80, sp70, sp60);
     opMul(var_f20 + (temp_f21 - (2.0f * temp_f22)), sp50, cHermiteSplineControlPoint_cVector_Tangent(cArray_FixedSize_cHermiteSplineControlPoint_cVector_2_opIndex(arg1, 0)));
-    Vec4_Add(sp90, sp80, sp50);
+    cVector_opAdd(sp90, sp80, sp50);
     opMul(temp_f21 - temp_f22, sp40, cHermiteSplineControlPoint_cVector_Tangent(cArray_FixedSize_cHermiteSplineControlPoint_cVector_2_opIndex(arg1, 1)));
-    Vec4_Add(arg0, sp90, sp40);
+    cVector_opAdd(arg0, sp90, sp40);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0017DA60(void) {}

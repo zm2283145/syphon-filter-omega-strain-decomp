@@ -52,7 +52,7 @@ extern unsigned long long D_0053B690;
 extern unsigned long long D_0053B698;
 
 /* Resets the object and the four global register slots (GS register tags 0x44/0x68/0x48/0x46). */
-void ParticleSystem_Construct(Obj3A39* obj, int target) {
+void cParticleSystem_Init(Obj3A39* obj, int target) {
     obj->target = target;
     obj->unk14 = 0;
     obj->unk1C = 0;

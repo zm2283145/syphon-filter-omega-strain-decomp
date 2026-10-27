@@ -21,11 +21,11 @@ typedef struct {
     unsigned char b5A;
     unsigned char b5B;
 } T04C0;
-extern int String_Length(void* s);
-extern char* String_CStr(void* s);
+extern int cString_Length(void* s);
+extern char* std_basic_string_char_char_traits_char_c_str(void* s);
 extern char* strchr(const char* s, int c);
 extern int strlen(const char* s);
-extern int Font_GetStringWidth(void* font, const char* s, int n);
+extern int cFont_GetStringWidth(void* font, const char* s, int n);
 
 int TextObj_GetLineCount(T04C0* t)
 {
@@ -35,10 +35,10 @@ int TextObj_GetLineCount(T04C0* t)
     char* q;
     int lines, cnt, wd, i, len, w;
 
-    if (!String_Length(t->str) || t->b58)
+    if (!cString_Length(t->str) || t->b58)
         return 1;
     if (t->b5B) {
-        char* s = String_CStr(t->str);
+        char* s = std_basic_string_char_char_traits_char_c_str(t->str);
         int n = 1;
         if (s) {
             do {
@@ -54,7 +54,7 @@ int TextObj_GetLineCount(T04C0* t)
     x = (float)t->x0;
     w = t->w > 0 ? t->w : -t->w;
     right = x + (float)w;
-    p = String_CStr(t->str);
+    p = std_basic_string_char_char_traits_char_c_str(t->str);
     lines = 0;
     do {
         lim = x + (1.0f - t->align) * (right - x);
@@ -73,14 +73,14 @@ int TextObj_GetLineCount(T04C0* t)
                 cnt = next - p;
             else
                 cnt = strlen(p) + 1;
-            wd = Font_GetStringWidth(t->font, p, cnt);
+            wd = cFont_GetStringWidth(t->font, p, cnt);
             if (x + wd < right || (x == (float)t->x0 && t->align == 1.0f)) {
                 p = next;
                 x += wd;
             } else if (t->align != 1.0f && x <= lim) {
                 q = p;
                 for (i = 0; i < cnt; i++) {
-                    if (!(x + Font_GetStringWidth(t->font, p, i + 1) < right))
+                    if (!(x + cFont_GetStringWidth(t->font, p, i + 1) < right))
                         break;
                     q++;
                 }
@@ -106,7 +106,7 @@ int TextObj_GetLineCount(T04C0* t)
 /* merge_units: begin func_003D0810 */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-void TextObj_SetColour(int arg0, int arg1) {
+void cTextArea_SetColor(int arg0, int arg1) {
     if (F_(arg0, 0x59, unsigned char) == 0) {
         F_(arg0, 0x30, float) = F_(arg1, 0x0, float);
         F_(arg0, 0x34, float) = F_(arg1, 0x4, float);
@@ -120,7 +120,7 @@ void TextObj_SetColour(int arg0, int arg1) {
 /* merge_units: begin func_003D0850 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x3C]; float f3C; char pad40[0xC]; float f4C; float f50; char pad54[5]; char b59; } S3D0850;
-void TextObj_StartFade(S3D0850* s, float x, float t) {
+void cTextArea_FadeTo(S3D0850* s, float x, float t) {
     if (t == 0.0f) {
         s->f3C = x;
         s->b59 = 0;
@@ -138,18 +138,18 @@ void TextObj_StartFade(S3D0850* s, float x, float t) {
 #define NULL 0
 #pragma mpwc_relax on
 /*fc*/
-int String_CtorCStr_13B480();                      
+int std_basic_string_char_char_traits_char_ctor_charP();                      
 typedef struct { char c; } Tag_08B0;
-int String_Replace(void*, int, int, int, int, Tag_08B0);                  
+int std_basic_string_char_char_traits_char_do_replace(void*, int, int, int, int, Tag_08B0);                  
 int String_Dtor();                            
-int String_AssignString();                          
+int std_basic_string_char_char_traits_char_assign_basicstringR();                          
 
-void TextObj_SetText(char * arg0, int arg1) {
+void cTextArea_SetText(char * arg0, int arg1) {
     int sp20[3];
 
     if (arg1 != 0) {
-        String_CtorCStr_13B480(sp20);
-        String_AssignString(arg0 + 0x14, sp20);
+        std_basic_string_char_char_traits_char_ctor_charP(sp20);
+        std_basic_string_char_char_traits_char_assign_basicstringR(arg0 + 0x14, sp20);
         String_Dtor(sp20, 0);
         F_(arg0, 0x44, int) = 0;
         F_(arg0, 0x40, float) = (float) -F_(arg0, 0x8, int);
@@ -158,7 +158,7 @@ void TextObj_SetText(char * arg0, int arg1) {
         F_(arg0, 0x5A, signed char) = 0;
         return;
     }
-    { Tag_08B0 tag; String_Replace(arg0 + 0x14, 0, -1, 0, 0, tag); }
+    { Tag_08B0 tag; std_basic_string_char_char_traits_char_do_replace(arg0 + 0x14, 0, -1, 0, 0, tag); }
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003D08B0 */
@@ -171,10 +171,10 @@ extern M3D1020 D_00543760;
 extern char D_00543764[];
 extern char D_00543770[];
 extern char D_00543748[];
-extern char TextManager_Destroy[];
+extern char cTextSystem_dtor[];
 extern int D_004937F0;
-extern void List_InitEmpty(void* p);
-extern void ScalarCollection_Init(void* p);
+extern void std_list_deleter_cText_ctor(void* p);
+extern void std_list_deleter_voidPtr_ctor_void(void* p);
 extern void __register_global_object(void* o, void* d, void* l);
 #pragma push
 #pragma opt_propagation off
@@ -183,10 +183,10 @@ static inline M3D1020* Def_3D0940(void)
     if (!D_00543740) {
         M3D1020* m = &D_00543760;
         D_00543760.f0 = 0;
-        List_InitEmpty(D_00543764);
-        ScalarCollection_Init(D_00543770);
+        std_list_deleter_cText_ctor(D_00543764);
+        std_list_deleter_voidPtr_ctor_void(D_00543770);
         m->b1C = 1;
-        __register_global_object(m, TextManager_Destroy, D_00543748);
+        __register_global_object(m, cTextSystem_dtor, D_00543748);
         D_00543740 = 1;
     }
     return &D_00543760;
@@ -206,7 +206,7 @@ typedef struct S3D0940 {
     float f54;
     unsigned char b58, b59, b5A, b5B;
 } S3D0940;
-S3D0940* TextObj_Construct(S3D0940* s, int a, int b, int c, int d, int e, V4_940* v)
+S3D0940* cTextArea_ctor(S3D0940* s, int a, int b, int c, int d, int e, V4_940* v)
 {
     s->a0 = a;
     s->a4 = b;
@@ -246,7 +246,7 @@ S3D0940* TextObj_Construct(S3D0940* s, int a, int b, int c, int d, int e, V4_940
 #include "obj_list_dtor.h"
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(ReceiverList_Dtor_3D0A90)
+DEFINE_OBJ_LIST_DTOR(std_list_cTextAreaPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003D0A90 */
 

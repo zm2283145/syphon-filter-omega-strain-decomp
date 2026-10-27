@@ -42,7 +42,7 @@ extern void std_tree_pair_int_value_compare_find_intR_2(PendingEvent** outIt, vo
 extern void std_map_int_SchedCallbackPtr_end(int* outEnd, void* map);
 extern void cAssocArray_int_SchedCallbackPtr_Iterator_ctor(PendingEvent** out, int* end);
 extern void std_tree_pair_int_value_compare_erase_tree_2(void* map, PendingEvent** it);
-extern void EventQueue_Remove(void* queued);
+extern void nCallback_RemoveCallback(void* queued);
 
 /* Unschedule(id): removes a pending scheduled event. */
 void Script_Unschedule(int id) {
@@ -58,7 +58,7 @@ void Script_Unschedule(int id) {
     std_map_int_SchedCallbackPtr_end(&endRaw, D_0055A0F0);
     cAssocArray_int_SchedCallbackPtr_Iterator_ctor(&end, &endRaw);
     if ((it == end) ^ 1) {
-        EventQueue_Remove(it->queued);
+        nCallback_RemoveCallback(it->queued);
         eraseIt = it;
         std_tree_pair_int_value_compare_erase_tree_2(D_0055A0F0, &eraseIt);
     }

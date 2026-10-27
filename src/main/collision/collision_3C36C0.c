@@ -17,13 +17,13 @@ struct C5TriIt { C5Tri* p; C5TriIt() {} C5TriIt(C5Tri* q) : p(q) {} };
 inline bool operator==(const C5TriIt& a, const C5TriIt& b) { return a.p == b.p; }
 inline bool operator!=(const C5TriIt& a, const C5TriIt& b) { return !(a == b); }
 extern "C" C5Tri** std_vector_deleter_cCollisionFace_data_void(C5TriVec* v);
-extern "C" void Col_SegmentVsTriangle(C5Trace* t, C5Tri* tri);
-extern "C" bool Col_TraceFloorTriangles(C5Trace* t, C5TriVec* v) {
+extern "C" void cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR(C5Trace* t, C5Tri* tri);
+extern "C" bool cCollisionProbe_Ray_DetectForCollision_cArrayR(C5Trace* t, C5TriVec* v) {
     C5TriIt it(*std_vector_deleter_cCollisionFace_data_void(v));
     const C5TriIt& end = C5TriIt(*std_vector_deleter_cCollisionFace_data_void(v) + v->count);
     for (; it != end; it.p++) {
         if ((unsigned char)(it.p->flags & t->reject) == 0 && t->want == (unsigned char)(it.p->flags & t->want))
-            Col_SegmentVsTriangle(t, it.p);
+            cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR(t, it.p);
     }
     return t->hit != 0;
 }
@@ -44,9 +44,9 @@ extern "C" C6Rec_3C37A0** std_vector_deleter_cCollisionFace_data_void(C6Coll_3C3
 #endif /* merge_units */
 #define std_vector_deleter_cCollisionFace_data_void(a0) ((C6Rec_3C37A0 * *)std_vector_deleter_cCollisionFace_data_void((C5TriVec *)(a0))) /* merge_units */
 
-extern "C" void Los_IntersectRecord(C6Query_3C37A0*, C6Rec_3C37A0*);
+extern "C" void cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_3(C6Query_3C37A0*, C6Rec_3C37A0*);
 static inline int C6Eq(C6Rec_3C37A0* a, C6Rec_3C37A0* b) { return a == b; }
-extern "C" int Los_TraceTriangles(C6Query_3C37A0* q, C6Coll_3C37A0* coll) {
+extern "C" int cCollisionProbe_Ray_DetectForCollision_cArrayR_2(C6Query_3C37A0* q, C6Coll_3C37A0* coll) {
     C6Rec_3C37A0** pend;
     C6Rec_3C37A0* end;
     C6Rec_3C37A0* it;
@@ -56,7 +56,7 @@ extern "C" int Los_TraceTriangles(C6Query_3C37A0* q, C6Coll_3C37A0* coll) {
     for (; C6Eq(it, *pend) ^ 1; it++) {
         unsigned char f = it->flags;
         if ((unsigned char)(f & q->reject) == 0 && q->require == (unsigned char)(f & q->require))
-            Los_IntersectRecord(q, it);
+            cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_3(q, it);
     }
     return q->hit != 0;
 }
@@ -77,9 +77,9 @@ extern Pt2_LRec** std_vector_deleter_cCollisionFace_data_void(Pt2_LVec*);
 #define std_vector_deleter_cCollisionFace_data_void(a0) ((Pt2_LRec * *)std_vector_deleter_cCollisionFace_data_void((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Col_SegmentVsTriangle(Pt2_LQ*, Pt2_LRec*);
+extern void cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR(Pt2_LQ*, Pt2_LRec*);
 #endif /* merge_units */
-#define Col_SegmentVsTriangle(a0, a1) (Col_SegmentVsTriangle((void *)(a0), (void *)(a1))) /* merge_units */
+#define cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR(a0, a1) (cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR((void *)(a0), (void *)(a1))) /* merge_units */
 
 extern void cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_2(Pt2_LQ*, Pt2_LRec*);
 static inline int Pt2_Ne(Pt2_LRec* a, Pt2_LRec** b) { return !(a == *b); }
@@ -96,7 +96,7 @@ int cCollisionProbe_Ray_DetectForCollision_cArrayR_3(Pt2_LQ* q, Pt2_LVec* v) {
             unsigned char m = it->mask;
             if (!(unsigned char)(m & q->excl)) {
                 if (q->want == (unsigned char)(m & q->want)) {
-                    if (!(unsigned char)(m & q->alt)) Col_SegmentVsTriangle(q, it);
+                    if (!(unsigned char)(m & q->alt)) cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR(q, it);
                     else deferred = 1;
                 }
             }
@@ -120,7 +120,7 @@ int cCollisionProbe_Ray_DetectForCollision_cArrayR_3(Pt2_LQ* q, Pt2_LVec* v) {
     return q->hit != 0;
 }
 #undef std_vector_deleter_cCollisionFace_data_void /* merge_units */
-#undef Col_SegmentVsTriangle /* merge_units */
+#undef cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003C3880(void) {}
 #pragma pop /* merge_units */
@@ -134,13 +134,13 @@ extern Pt2_LRec** std_vector_deleter_cCollisionFace_data_void(Pt2_LVec*);
 #define std_vector_deleter_cCollisionFace_data_void(a0) ((Pt2_LRec * *)std_vector_deleter_cCollisionFace_data_void((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Los_IntersectRecord(Pt2_LQ*, Pt2_LRec*);
+extern void cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_3(Pt2_LQ*, Pt2_LRec*);
 #endif /* merge_units */
-#define Los_IntersectRecord(a0, a1) (Los_IntersectRecord((void *)(a0), (void *)(a1))) /* merge_units */
+#define cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_3(a0, a1) (cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_3((void *)(a0), (void *)(a1))) /* merge_units */
 
-extern void Los_TraceWaterSurfaces(Pt2_LQ*, Pt2_LRec*);
+extern void cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_4(Pt2_LQ*, Pt2_LRec*);
 
-int Los_TraceWithWater(Pt2_LQ* q, Pt2_LVec* v) {
+int cCollisionProbe_Ray_DetectForCollision_cArrayR_4(Pt2_LQ* q, Pt2_LVec* v) {
     unsigned char deferred = 0;
     {
         Pt2_LRec* end[1];
@@ -152,7 +152,7 @@ int Los_TraceWithWater(Pt2_LQ* q, Pt2_LVec* v) {
             unsigned char m = it->mask;
             if (!(unsigned char)(m & q->excl)) {
                 if (q->want == (unsigned char)(m & q->want)) {
-                    if (!(unsigned char)(m & q->alt)) Los_IntersectRecord(q, it);
+                    if (!(unsigned char)(m & q->alt)) cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_3(q, it);
                     else deferred = 1;
                 }
             }
@@ -168,7 +168,7 @@ int Los_TraceWithWater(Pt2_LQ* q, Pt2_LVec* v) {
             unsigned char m = it->mask;
             if ((unsigned char)(m & q->alt)) {
                 if (!(unsigned char)(m & q->excl)) {
-                    if (q->want == (unsigned char)(m & q->want)) Los_TraceWaterSurfaces(q, it);
+                    if (q->want == (unsigned char)(m & q->want)) cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_4(q, it);
                 }
             }
         }
@@ -176,7 +176,7 @@ int Los_TraceWithWater(Pt2_LQ* q, Pt2_LVec* v) {
     return q->hit != 0;
 }
 #undef std_vector_deleter_cCollisionFace_data_void /* merge_units */
-#undef Los_IntersectRecord /* merge_units */
+#undef cCollisionProbe_Ray_DetectForCollision_cCollisionFaceR_3 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003C3A60(void) {}
 #pragma pop /* merge_units */

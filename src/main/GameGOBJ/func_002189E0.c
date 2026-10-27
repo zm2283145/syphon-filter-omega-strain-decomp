@@ -26,10 +26,10 @@ struct Src {
 struct Obj;
 extern "C" {
 void PathObj_GetPoint(Obj* o, V4* out, int i);
-void Mtx_InvertRigid_13ECA0(Mtx* out, Mtx* in);
+void cMatrix_Copy_InvertRotTrans(Mtx* out, Mtx* in);
 Elem16* func_002181C0(void* v, int i);
 int func_002181D0(void* v);
-void PathObj_PropagateMovement(Obj* o, Mtx m, int f);
+void cPathedGOBJ_TransformAttached(Obj* o, Mtx m, int f);
 void cPathedGOBJ_TeleportToPathPoint(Obj* self, int idx);
 }
 struct Obj {
@@ -131,7 +131,7 @@ void cPathedGOBJ_TeleportToPathPoint(Obj* self, int idx) {
     { Src* s = self->src; if (s->dirty) s->Refresh(); VCopyFF(&oldPos, &s->xform.r[3]); }
     PathObj_GetPoint(self, &pt, idx);
     pt.w = 1.0f;
-    Mtx_InvertRigid_13ECA0(&inv, GetXform(self->src));
+    cMatrix_Copy_InvertRotTrans(&inv, GetXform(self->src));
     i = idx;
     if (idx < 0) i = 0;
     if (i < func_002181D0(self->vecA4)) q = func_002181C0(self->vecA4, i);
@@ -143,7 +143,7 @@ void cPathedGOBJ_TeleportToPathPoint(Obj* self, int idx) {
     p.m[0][3] = mat.r[0].w; p.m[1][3] = mat.r[1].w; p.m[2][3] = mat.r[2].w;
     VCopyN(&p.pos, &pt);
     self->SetPlacement(&p);
-    { Mtx m; Mtx t; Mul(&t, (Mtx*)&p, &inv); MCopy(&m, &t); PathObj_PropagateMovement(self, m, 1); }
+    { Mtx m; Mtx t; Mul(&t, (Mtx*)&p, &inv); MCopy(&m, &t); cPathedGOBJ_TransformAttached(self, m, 1); }
     *self->pD0 = idx;
     self->fE0 = 1.0f;
 }

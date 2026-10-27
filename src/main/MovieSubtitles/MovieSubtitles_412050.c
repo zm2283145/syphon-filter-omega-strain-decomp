@@ -116,7 +116,7 @@ static inline void merge_flush_func_00412130(void) {}
 /* merge_units: begin func_00412150 */
 #pragma push /* merge_units */
 /* Copies a four-float vector. */
-SubVec4* SubtitleTrack_LoadCue(SubVec4* dst, SubVec4* src) {
+SubVec4* tRGBA_opAssign(SubVec4* dst, SubVec4* src) {
     dst->x = src->x;
     dst->y = src->y;
     dst->z = src->z;

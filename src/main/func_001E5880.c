@@ -10,7 +10,7 @@ struct Ctx_5880 { char pad[0x28]; Mdl_5880* model; char pad2c[0x24]; V_5880 pos;
 #pragma push
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" V_5880 ModelCtx_GetAnchor(Ctx_5880* self)
+extern "C" V_5880 cSkeleton_GetCenterOfMass(Ctx_5880* self)
 {
     Mdl_5880* m = self->model;
     if (m->dirty) m->Update();

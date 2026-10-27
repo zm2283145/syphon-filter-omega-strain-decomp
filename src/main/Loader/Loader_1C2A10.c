@@ -17,21 +17,21 @@ int sprintf(void *, const void *, ...);
 /* merge_units: begin func_001C2A10 */
 #pragma push /* merge_units */
 typedef struct { int unk0; int size; unsigned int base; char* cur; } PopReader_1C2A10;
-extern int Pop_FindTag(PopReader_1C2A10* r, int tag);
-extern void Loader_UpdateLoadingScreen(void* a, char* name, int x);
-extern void* App_GetInstance(void);
-extern void Backpack_CreateFromRecord(PopReader_1C2A10* r);
-void Loader_LoadInventoryDefs(void* a0, PopReader_1C2A10* r)
+extern int cPopulation_SeekBlock(PopReader_1C2A10* r, int tag);
+extern void cMachine_ShowLoadingScreen(void* a, char* name, int x);
+extern void* GetMachine(void);
+extern void cBackpack_NewBackpack_cPopulationR(PopReader_1C2A10* r);
+void cLoader_LoadWeaponCrates(void* a0, PopReader_1C2A10* r)
 {
-    if ((unsigned char)Pop_FindTag(r, 0x3A564E49)) {
+    if ((unsigned char)cPopulation_SeekBlock(r, 0x3A564E49)) {
         int n;
         int i;
         int mis;
         n = *(int*)r->cur;
         r->cur += 4;
-        Loader_UpdateLoadingScreen(App_GetInstance(), "Loading Inventory defs...", 0);
+        cMachine_ShowLoadingScreen(GetMachine(), "Loading Inventory defs...", 0);
         for (i = 0; i < n; i++)
-            Backpack_CreateFromRecord(r);
+            cBackpack_NewBackpack_cPopulationR(r);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;
@@ -69,45 +69,45 @@ struct Gen_1C2AE0 {
 };
 extern "C" {
 extern char D_0049EE88[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void Object_Register(void* o);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void nGobjManager_AddGOBJ(void* o);
 #if 0 /* merge_units */
-int Pop_FindTag(PopReader_1C2AE0* r, int tag);
+int cPopulation_SeekBlock(PopReader_1C2AE0* r, int tag);
 #endif /* merge_units */
-#define Pop_FindTag(a0, a1) (Pop_FindTag((PopReader_1C2A10 *)(a0), (a1))) /* merge_units */
+#define cPopulation_SeekBlock(a0, a1) (cPopulation_SeekBlock((PopReader_1C2A10 *)(a0), (a1))) /* merge_units */
 
 Gen_1C2AE0* cGenerator_ctor(void* p, PopReader_1C2AE0* r);
-void Loader_UpdateLoadingScreen(void* a, char* name, int x);
-void* App_GetInstance(void);
-void* LosRegion_FindGlobal(void* region);
-void ZoneMgr_Associate(void* reg, Gen_1C2AE0* g, int a, int b);
+void cMachine_ShowLoadingScreen(void* a, char* name, int x);
+void* GetMachine(void);
+void* nActivation_GetClosestTerrainPiece(void* region);
+void cTerrain_AddActivation(void* reg, Gen_1C2AE0* g, int a, int b);
 }
-extern "C" void Loader_LoadGeneratorDefs(void* a0, PopReader_1C2AE0* r)
+extern "C" void cLoader_LoadGenerators(void* a0, PopReader_1C2AE0* r)
 {
-    if ((unsigned char)Pop_FindTag(r, 0x3A4E4547)) {
+    if ((unsigned char)cPopulation_SeekBlock(r, 0x3A4E4547)) {
         int n;
         int i;
         int mis;
         n = *(int*)r->cur;
         r->cur += 4;
-        Loader_UpdateLoadingScreen(App_GetInstance(), "Loading Generator defs...", 0);
+        cMachine_ShowLoadingScreen(GetMachine(), "Loading Generator defs...", 0);
         for (i = 0; i < n; i++) {
             Gen_1C2AE0* p;
             {
                 AllocGuard g;
-                p = (Gen_1C2AE0*)Mem_Alloc(0, 0xD4, D_0049EE88, 0x250);
+                p = (Gen_1C2AE0*)cMemMan_Allocate(0, 0xD4, D_0049EE88, 0x250);
             }
             if (p)
                 p = cGenerator_ctor(p, r);
-            Object_Register(p);
+            nGobjManager_AddGOBJ(p);
             if (r->version < 0x32) {
                 Ctl_1C2AE0* c = p->ctl;
                 void* reg;
                 if (c->dirty)
                     c->Refresh();
-                reg = LosRegion_FindGlobal(c->region);
+                reg = nActivation_GetClosestTerrainPiece(c->region);
                 if (reg)
-                    ZoneMgr_Associate(reg, p, 1, 0);
+                    cTerrain_AddActivation(reg, p, 1, 0);
                 else
                     p->Attach(1);
             }
@@ -117,7 +117,7 @@ extern "C" void Loader_LoadGeneratorDefs(void* a0, PopReader_1C2AE0* r)
             r->cur += 4 - mis;
     }
 }
-#undef Pop_FindTag /* merge_units */
+#undef cPopulation_SeekBlock /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C2AE0(void) {}
 #pragma pop /* merge_units */
@@ -136,19 +136,19 @@ extern char D_0048B2F8[];
 extern char g_LevelDirName[];
 extern void* D_004FFD48;
 #if 0 /* merge_units */
-int Pop_FindTag(PopReader_1C2CB0* r, int tag);
+int cPopulation_SeekBlock(PopReader_1C2CB0* r, int tag);
 #endif /* merge_units */
-#define Pop_FindTag(a0, a1) (Pop_FindTag((PopReader_1C2A10 *)(a0), (a1))) /* merge_units */
+#define cPopulation_SeekBlock(a0, a1) (cPopulation_SeekBlock((PopReader_1C2A10 *)(a0), (a1))) /* merge_units */
 
-int Archive_Open(void* a, char* name, int b, int c);
+int cHogList_Open(void* a, char* name, int b, int c);
 void std_vector_cTerrainPtr_ctor(TerList_1C2CB0* l);
-Ter_1C2CB0* Terrain_Construct(void* p, PopReader_1C2CB0* r, void* a1, int h);
-void ObjRegistry_AppendRecursive(void* reg, Ter_1C2CB0* t);
+Ter_1C2CB0* cTerrain_ctor(void* p, PopReader_1C2CB0* r, void* a1, int h);
+void cBaseObjList_Add(void* reg, Ter_1C2CB0* t);
 void std_vector_cTerrainPtr_push_back(TerList_1C2CB0* l, Ter_1C2CB0** item);
 }
-extern "C" void Pop_LoadTER(Level_1C2CB0* l, void* a1, PopReader_1C2CB0* r, void* arc)
+extern "C" void cLoader_LoadVUMs(Level_1C2CB0* l, void* a1, PopReader_1C2CB0* r, void* arc)
 {
-    if ((unsigned char)Pop_FindTag(r, 0x3A524554)) {
+    if ((unsigned char)cPopulation_SeekBlock(r, 0x3A524554)) {
         Ter_1C2CB0* item[1];
         int n;
         char name[128];
@@ -158,12 +158,12 @@ extern "C" void Pop_LoadTER(Level_1C2CB0* l, void* a1, PopReader_1C2CB0* r, void
         int mis;
         n = *(int*)r->cur;
         r->cur += 4;
-        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Terrain Data...", 0);
+        cMachine_ShowLoadingScreen(GetMachine(), "Initializing Terrain Data...", 0);
         sprintf(name, D_0049F018, D_0048B2F8, g_LevelDirName, g_LevelDirName);
-        h = Archive_Open(arc, name, 0, 0);
+        h = cHogList_Open(arc, name, 0, 0);
         {
             AllocGuard g;
-            list = (TerList_1C2CB0*)Mem_Alloc(0, 0x10, D_0049EE88, 0x230);
+            list = (TerList_1C2CB0*)cMemMan_Allocate(0, 0x10, D_0049EE88, 0x230);
         }
         if (list) {
             std_vector_cTerrainPtr_ctor(list);
@@ -174,14 +174,14 @@ extern "C" void Pop_LoadTER(Level_1C2CB0* l, void* a1, PopReader_1C2CB0* r, void
             Ter_1C2CB0* t;
             {
                 AllocGuard g;
-                t = (Ter_1C2CB0*)Mem_Alloc(0, 0x260, D_0049EE88, 0x233);
+                t = (Ter_1C2CB0*)cMemMan_Allocate(0, 0x260, D_0049EE88, 0x233);
             }
             if (t)
-                t = Terrain_Construct(t, r, a1, h);
+                t = cTerrain_ctor(t, r, a1, h);
             item[0] = t;
             void* reg = D_004FFD48;
             t->reg = reg;
-            ObjRegistry_AppendRecursive(reg, t);
+            cBaseObjList_Add(reg, t);
             std_vector_cTerrainPtr_push_back(l->ters, item);
         }
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
@@ -189,7 +189,7 @@ extern "C" void Pop_LoadTER(Level_1C2CB0* l, void* a1, PopReader_1C2CB0* r, void
             r->cur += 4 - mis;
     }
 }
-#undef Pop_FindTag /* merge_units */
+#undef cPopulation_SeekBlock /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C2CB0(void) {}
 #pragma pop /* merge_units */

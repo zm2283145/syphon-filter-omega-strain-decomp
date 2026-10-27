@@ -12,31 +12,31 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 int __destroy_array(int , int *, int, int);               
-int Backpack_Finish(int);                               
-int IeElement_Release(int);                               
+int cBackpack_Unlock(int);                               
+int cInterfaceElement_Destroy(int);                               
 int operator_delete(int );                          
-extern int PickupMenuEntry_dtor;
+extern int cPickupMenu_PickupEntry_dtor;
 
-int PickupMenu_Destroy(int arg0, long long arg1) {
+int cPickupMenu_dtor(int arg0, long long arg1) {
     int temp_a0;
     int temp_a0_2;
 
     if (arg0 != NULL) {
-        Backpack_Finish(F_(arg0, 0x0, int));
-        IeElement_Release(F_(arg0, 0x9C, int));
-        IeElement_Release(F_(arg0, 0xA0, int));
-        IeElement_Release(F_(arg0, 0xA4, int));
-        IeElement_Release(F_(arg0, 0xA8, int));
-        IeElement_Release(F_(arg0, 0xAC, int));
+        cBackpack_Unlock(F_(arg0, 0x0, int));
+        cInterfaceElement_Destroy(F_(arg0, 0x9C, int));
+        cInterfaceElement_Destroy(F_(arg0, 0xA0, int));
+        cInterfaceElement_Destroy(F_(arg0, 0xA4, int));
+        cInterfaceElement_Destroy(F_(arg0, 0xA8, int));
+        cInterfaceElement_Destroy(F_(arg0, 0xAC, int));
         temp_a0 = F_(arg0, 0xB0, int);
         if (temp_a0 != 0) {
-            IeElement_Release(temp_a0);
+            cInterfaceElement_Destroy(temp_a0);
         }
         temp_a0_2 = F_(arg0, 0xB4, int);
         if (temp_a0_2 != 0) {
-            IeElement_Release(temp_a0_2);
+            cInterfaceElement_Destroy(temp_a0_2);
         }
-        __destroy_array(arg0 + 4, &PickupMenuEntry_dtor, 0x1C, 5);
+        __destroy_array(arg0 + 4, &cPickupMenu_PickupEntry_dtor, 0x1C, 5);
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
             operator_delete(arg0);
         }
@@ -128,20 +128,20 @@ typedef struct Self_253070 {
 
 extern "C" {
 extern void __construct_array(void* p, void* ctor, void* dtor, int size, int n);
-extern int PickupMenuEntry_ctor;
-extern void PickupMenu_AddEntry(Item_253070* it, int kind, int id, int flag);
-extern Widget_253070* PickupMenu_FindElement(void* root, char* name);
-extern int Backpack_ListItems(Owner_253070* o, int* out, int a, int n);
+extern int cPickupMenu_PickupEntry_ctor;
+extern void cPickupMenu_PickupEntry_Activate(Item_253070* it, int kind, int id, int flag);
+extern Widget_253070* CreateElement(void* root, char* name);
+extern int cBackpack_GetWeaponDbs(Owner_253070* o, int* out, int a, int n);
 extern int cBackpack_BodyIsPickupable(Owner_253070* o);
 extern int cBackpack_BodyHasDisguise(Owner_253070* o);
-extern int IeNode_FindChild(void* root, char* name);
-extern void IeElement_EvaluateAt(Widget_253070* w, float v);
-extern void IeElement_Fade(Widget_253070* w, float v);
-extern void IeElement_SetText(Widget_253070* w, char* text);
-extern char* Loc_LookupText(char* key);
-extern int Agent_GetSelected(void* list, int idx);
-extern char* AgentData_GetName(int agent);
-extern void TextObj_SetColour(Lbl_253070* l, void* color);
+extern int cInterfaceModel_GetChild(void* root, char* name);
+extern void viBufGetTs(Widget_253070* w, float v);
+extern void cAnimator_AnimateTo(Widget_253070* w, float v);
+extern void cInterfaceElement_SetText(Widget_253070* w, char* text);
+extern char* nGlobalization_GetString_charP(char* key);
+extern int cGameSystem_GetAgentData(void* list, int idx);
+extern char* cAgentData_GetUserName(int agent);
+extern void cTextArea_SetColor(Lbl_253070* l, void* color);
 
 extern int D_0048AEF0;
 extern int D_0048AEF8;
@@ -188,7 +188,7 @@ static inline Target_253070* Handle_Get(Owner_253070* h) {
     return ok ? t : 0;
 }
 
-extern "C" Self_253070* PickupMenu_Build(Self_253070* self, void* root, Owner_253070* owner, Ctx_253070* ctx, int optA, unsigned char optB) {
+extern "C" Self_253070* cPickupMenu_ctor(Self_253070* self, void* root, Owner_253070* owner, Ctx_253070* ctx, int optA, unsigned char optB) {
     int ids[5];
     Item_253070* it;
     int n;
@@ -198,48 +198,48 @@ extern "C" Self_253070* PickupMenu_Build(Self_253070* self, void* root, Owner_25
     Target_253070* t;
 
     self->owner = owner;
-    __construct_array(self->items, &PickupMenuEntry_ctor, &PickupMenuEntry_dtor, 0x1C, 5);
+    __construct_array(self->items, &cPickupMenu_PickupEntry_ctor, &cPickupMenu_PickupEntry_dtor, 0x1C, 5);
     self->count = 0;
     it = self->items;
     self->unk94 = 0;
     self->unk98 = optB ? D_0048AF00 : 0;
-    self->w9C = PickupMenu_FindElement(root, D_004A7A40);
-    self->wA0 = PickupMenu_FindElement(root, D_004A7A50);
-    self->wA4 = PickupMenu_FindElement(root, D_004A7A60);
-    self->wA8 = PickupMenu_FindElement(self->w9C->unk70, D_004A7A70);
-    self->wAC = PickupMenu_FindElement(self->w9C->unk70, D_004A7A90);
+    self->w9C = CreateElement(root, D_004A7A40);
+    self->wA0 = CreateElement(root, D_004A7A50);
+    self->wA4 = CreateElement(root, D_004A7A60);
+    self->wA8 = CreateElement(self->w9C->unk70, D_004A7A70);
+    self->wAC = CreateElement(self->w9C->unk70, D_004A7A90);
     if (optB) {
-        self->wB0 = PickupMenu_FindElement(root, D_004A7AA0);
-        self->wB4 = PickupMenu_FindElement(root, D_004A7AB0);
+        self->wB0 = CreateElement(root, D_004A7AA0);
+        self->wB4 = CreateElement(root, D_004A7AB0);
     } else {
         self->wB4 = 0;
         self->wB0 = 0;
     }
-    n = Backpack_ListItems(self->owner, ids, ctx->unk3524, 5);
+    n = cBackpack_GetWeaponDbs(self->owner, ids, ctx->unk3524, 5);
     {
         void* r = self->w9C->unk70;
-        D_004F7E90 = IeNode_FindChild(r, D_004A7AB8);
-        D_004F7E98 = IeNode_FindChild(r, D_004A7AC0);
+        D_004F7E90 = cInterfaceModel_GetChild(r, D_004A7AB8);
+        D_004F7E98 = cInterfaceModel_GetChild(r, D_004A7AC0);
     }
     for (i = 0; i < n; i++) {
-        PickupMenu_AddEntry(it, 0, ids[i], self->unk98);
+        cPickupMenu_PickupEntry_Activate(it, 0, ids[i], self->unk98);
         it++;
         self->count++;
     }
     a = optA && cBackpack_BodyIsPickupable(self->owner);
     b = optA && cBackpack_BodyHasDisguise(self->owner);
     if (self->count + a + b < 5 && Owner_Get2E8(self->owner) > 0) {
-        PickupMenu_AddEntry(it, 2, -1, optB);
+        cPickupMenu_PickupEntry_Activate(it, 2, -1, optB);
         it++;
         self->count++;
     }
     if (a) {
-        PickupMenu_AddEntry(it, 3, -1, 0);
+        cPickupMenu_PickupEntry_Activate(it, 3, -1, 0);
         it++;
         self->count++;
     }
     if (b) {
-        PickupMenu_AddEntry(it, 4, -1, 0);
+        cPickupMenu_PickupEntry_Activate(it, 4, -1, 0);
         it++;
         self->count++;
     }
@@ -252,7 +252,7 @@ extern "C" Self_253070* PickupMenu_Build(Self_253070* self, void* root, Owner_25
             if (self->count < 5) {
                 ListEnt_253070* e = List_At(l, j);
                 if (e->enabled) {
-                    PickupMenu_AddEntry(it, 5, e->id, 0);
+                    cPickupMenu_PickupEntry_Activate(it, 5, e->id, 0);
                     it->unk8 = 0;
                     it++;
                     self->count++;
@@ -260,33 +260,33 @@ extern "C" Self_253070* PickupMenu_Build(Self_253070* self, void* root, Owner_25
             }
         }
     }
-    IeElement_EvaluateAt(self->w9C, self->unk98);
-    IeElement_Fade(self->w9C, self->unk98 + D_0048AEF8 * (self->count - 1));
-    IeElement_EvaluateAt(self->wA0, self->unk98);
-    IeElement_Fade(self->wA0, self->unk98 + D_0048AEF0);
+    viBufGetTs(self->w9C, self->unk98);
+    cAnimator_AnimateTo(self->w9C, self->unk98 + D_0048AEF8 * (self->count - 1));
+    viBufGetTs(self->wA0, self->unk98);
+    cAnimator_AnimateTo(self->wA0, self->unk98 + D_0048AEF0);
     if (optB) {
-        IeElement_SetText(self->wA4, D_004A79E8);
-        IeElement_SetText(self->wB4, Loc_LookupText(D_004A7AC8));
-        IeElement_SetText(self->wB0, Loc_LookupText(D_004A7AD0));
-        IeElement_SetText(self->wA0, D_004A79E8);
-        IeElement_SetText(self->wA8, D_004A79E8);
-        IeElement_SetText(self->wAC, D_004A79E8);
+        cInterfaceElement_SetText(self->wA4, D_004A79E8);
+        cInterfaceElement_SetText(self->wB4, nGlobalization_GetString_charP(D_004A7AC8));
+        cInterfaceElement_SetText(self->wB0, nGlobalization_GetString_charP(D_004A7AD0));
+        cInterfaceElement_SetText(self->wA0, D_004A79E8);
+        cInterfaceElement_SetText(self->wA8, D_004A79E8);
+        cInterfaceElement_SetText(self->wAC, D_004A79E8);
     } else {
         Lbl_253070* l;
-        IeElement_SetText(self->wA0, Loc_LookupText(D_004A7AD8));
-        IeElement_SetText(self->wA4, Loc_LookupText(D_004A7AE0));
-        IeElement_SetText(self->wA8, AgentData_GetName(Agent_GetSelected(g_Game, -1)));
+        cInterfaceElement_SetText(self->wA0, nGlobalization_GetString_charP(D_004A7AD8));
+        cInterfaceElement_SetText(self->wA4, nGlobalization_GetString_charP(D_004A7AE0));
+        cInterfaceElement_SetText(self->wA8, cAgentData_GetUserName(cGameSystem_GetAgentData(g_Game, -1)));
         l = self->wA8->unk74;
         l->unk10 = 2;
-        TextObj_SetColour(l, g_PickupTextColour);
+        cTextArea_SetColor(l, g_PickupTextColour);
         l->unk5B = 1;
-        IeElement_SetText(self->wAC, Loc_LookupText(D_004A7AE8));
+        cInterfaceElement_SetText(self->wAC, nGlobalization_GetString_charP(D_004A7AE8));
         l = self->wAC->unk74;
         l->unk10 = 2;
-        TextObj_SetColour(l, g_PickupTextColour);
+        cTextArea_SetColor(l, g_PickupTextColour);
     }
-    IeElement_EvaluateAt(self->wA4, self->unk98);
-    IeElement_Fade(self->wA4, self->unk98 + D_0048AEF0);
+    viBufGetTs(self->wA4, self->unk98);
+    cAnimator_AnimateTo(self->wA4, self->unk98 + D_0048AEF0);
     return self;
 }
 /* merge_units: generate this block's code under its own pragmas */

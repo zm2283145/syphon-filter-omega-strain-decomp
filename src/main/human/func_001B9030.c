@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-float AnimChannel_DirectValueZero(void) {
+float cSplinedMotion_Scalar0To1_InitPos(void) {
     return 0.0f;
 }
 
-float AnimChannel_DirectDerivedZero(void) {
+float cSplinedMotion_Scalar0To1_ZeroVel(void) {
     return 0.0f;
 }

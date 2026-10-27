@@ -32,7 +32,7 @@ typedef struct SsoString {
 typedef struct { char unused; } Allocator; /* empty allocator object passed by value */
 
 /* Replaces count characters at pos with the range [first, last). */
-extern void* String_Replace(SsoString* str, int pos, int count, const char* first, const char* last, Allocator alloc);
+extern void* std_basic_string_char_char_traits_char_do_replace(SsoString* str, int pos, int count, const char* first, const char* last, Allocator alloc);
 
 /* Assigns the range [first, last) to the string (replaces the whole contents). */
 void* func_002A7A10(SsoString* str, const char* first, const char* last)
@@ -43,7 +43,7 @@ void* func_002A7A10(SsoString* str, const char* first, const char* last)
         len = (unsigned char)str->h.s.shortLen;
     else
         len = str->longLen;
-    return String_Replace(str, 0, len, first, last, alloc);
+    return std_basic_string_char_char_traits_char_do_replace(str, 0, len, first, last, alloc);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002A7A10 */
@@ -56,38 +56,38 @@ void* func_002A7A10(SsoString* str, const char* first, const char* last)
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
 extern "C" {
 extern "C" void GuiMessageBox_GetClassName();
-extern "C" void GuiMessageBox_IsType();
-extern "C" void GuiMessageBox_HandleInput();
-extern "C" void GuiMessageBox_HandleEvent();
-extern "C" void GuiMessageBox_Init();
-extern "C" void GuiMessageBox_Sleep();
-extern "C" void GuiMessageBox_Wake();
-extern "C" void GuiWidget_FocusPrev();
-extern "C" void GuiWidget_FocusNext();
-extern "C" void GuiWidget_FocusLast();
-extern "C" void GuiWidget_FocusFirst();
-extern "C" void GuiWidget_BubbleActivate();
-extern "C" void GuiWidget_BubbleType1();
-extern "C" void GuiWidget_BubbleType0();
-extern "C" void GuiWidget_Update();
-extern "C" void GuiWidget_Draw();
-extern "C" void GuiWidget_ClearFlag4();
-extern "C" void GuiWidget_SetFlag4();
-extern "C" void GuiWidget_Deinit();
+extern "C" void GuiMessageBox_IsClass();
+extern "C" void GuiMessageBox_onInput();
+extern "C" void GuiMessageBox_onMessage();
+extern "C" void GuiMessageBox_onAdd();
+extern "C" void GuiMessageBox_onSleep();
+extern "C" void GuiMessageBox_onWake();
+extern "C" void GuiWidget_FindPrevFocus();
+extern "C" void GuiWidget_FindNextFocus();
+extern "C" void GuiWidget_FindLastFocus();
+extern "C" void GuiWidget_FindFirstFocus();
+extern "C" void GuiWidget_onAction();
+extern "C" void GuiWidget_onLoseFocus();
+extern "C" void GuiWidget_onGainFocus();
+extern "C" void GuiWidget_onAdvanceTime();
+extern "C" void GuiWidget_onRender();
+extern "C" void GuiWidget_onDeactivate();
+extern "C" void GuiWidget_onActivate();
+extern "C" void GuiWidget_onRemove();
 extern "C" void GuiWidget_Load();
 extern void * const D_004DD9D0[];
-void* GuiWidget_Destroy(void* self, short deleteFlag);
+void* GuiWidget_dtor(void* self, short deleteFlag);
 }
 extern "C" VtableObject* GuiMessageBox_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DD9D0);
-        GuiWidget_Destroy(self, 0);
+        GuiWidget_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004DD9D0[24] = { (void*)0x0, (void*)0x0, (void*)GuiMessageBox_dtor, (void*)GuiMessageBox_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiMessageBox_Wake, (void*)GuiMessageBox_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiMessageBox_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiMessageBox_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiMessageBox_GetClassName, (void*)GuiMessageBox_IsType, (void*)0x0 };
+void * const D_004DD9D0[24] = { (void*)0x0, (void*)0x0, (void*)GuiMessageBox_dtor, (void*)GuiMessageBox_onAdd, (void*)GuiWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiWidget_onDeactivate, (void*)GuiMessageBox_onWake, (void*)GuiMessageBox_onSleep, (void*)GuiWidget_onGainFocus, (void*)GuiWidget_onLoseFocus, (void*)GuiMessageBox_onInput, (void*)GuiWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiWidget_onAdvanceTime, (void*)GuiMessageBox_onMessage, (void*)GuiWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiMessageBox_GetClassName, (void*)GuiMessageBox_IsClass, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_002A7A60 */

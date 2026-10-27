@@ -26,18 +26,18 @@ extern int D_005721A8;
 extern unsigned char D_005721C0;
 extern unsigned char g_IsMultiplayer;
 void cGOBJ_ctor(Part_59D0*, int*, int, void*);
-void* Resource_Construct(void* entry);
-void* FileMan_Release(void* entry, int flags);
-void Mtx_FromRowsAndTranslation(Mtx* m, const V4& a, const V4& b, const V4& c, const V4& t);
-void Mtx_SetBasis(Mtx* m, V4* a, V4* b, V4* c);
-void Mtx_SetTranslation(Mtx* m, V4* t);
-int IdMgr_FindCollision(int, int);
-void ZoneMgr_Associate(int, Part_59D0*, int, int);
-int NetMap_BindReceiver(int, int, Part_59D0*);
-int NetGame_InitLocalSlot(int*, int);
+void* cFileMan_ctor_void(void* entry);
+void* cFileMan_dtor(void* entry, int flags);
+void cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(Mtx* m, const V4& a, const V4& b, const V4& c, const V4& t);
+void cMatrix_SetAxes(Mtx* m, V4* a, V4* b, V4* c);
+void cMatrix_SetTranslation(Mtx* m, V4* t);
+int nGobjManager_LookupGOBJ_int_int(int, int);
+void cTerrain_AddActivation(int, Part_59D0*, int, int);
+int cNetObj_AddSystem(int, int, Part_59D0*);
+int NetGetMyClientIndex(int*, int);
 int NetGetPeerToPeerHostClientIndex(int, int*);
 }
-static inline void FromRows(Mtx* m, const V4& a, const V4& b, const V4& c, const V4& t) { const V4* pa = &a; Mtx_FromRowsAndTranslation(m, *pa, b, c, t); }
+static inline void FromRows(Mtx* m, const V4& a, const V4& b, const V4& c, const V4& t) { const V4* pa = &a; cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(m, *pa, b, c, t); }
 static inline void XfSet(Xf* d, const V4* p, const Mtx* m) { d->pos = *p; d->m = *m; }
 static inline void Q1(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
 static inline void Q4(void* d, const void* s) { __int128 qb, qa; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
@@ -59,8 +59,8 @@ static inline void ReadV(Reader* r, V4* v, float w)
 }
 static inline unsigned char IsLocal() {unsigned char r;if(g_IsMultiplayer)r=D_005721C0;else {r=1; asm { .set reorder }}return r;}
 #pragma inline_depth(10)
-static inline int LocalId() { int r=0;int a=D_005721A8;if(*(volatile unsigned char*)&g_IsMultiplayer) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { asm { .set reorder } }return r; }
-extern "C" Part_59D0* Loader_ReadParticleRecord(Part_59D0* self, Reader* r)
+static inline int LocalId() { int r=0;int a=D_005721A8;if(*(volatile unsigned char*)&g_IsMultiplayer) { if(D_00494178==-1)NetGetMyClientIndex(&D_00494178,a);r=D_00494178; }else { asm { .set reorder } }return r; }
+extern "C" Part_59D0* cGameParticle_ctor_cPopulationR(Part_59D0* self, Reader* r)
 {
     FEnt fe;
     Xf x;
@@ -82,7 +82,7 @@ extern "C" Part_59D0* Loader_ReadParticleRecord(Part_59D0* self, Reader* r)
     self->f70 = 1.0f;
     self->b2F = 1;
     *(void**)self = D_004DAA10;
-    Resource_Construct(&fe);
+    cFileMan_ctor_void(&fe);
     {
         V4 zz;
         Mtx m;
@@ -117,13 +117,13 @@ extern "C" Part_59D0* Loader_ReadParticleRecord(Part_59D0* self, Reader* r)
     ReadV(r, &b, 0.0f);
     ReadV(r, &c, 0.0f);
     t.x = 0.0f; t.y = 0.0f; t.z = 0.0f; t.w = 1.0f;
-    Mtx_SetBasis(&x.m, &a, &b, &c);
-    Mtx_SetTranslation(&x.m, &t);
+    cMatrix_SetAxes(&x.m, &a, &b, &c);
+    cMatrix_SetTranslation(&x.m, &t);
     self->SetXf(&x);
     self->SetName(pn);
     if (s2 != -1 && s1 != -1) {
-        int col = IdMgr_FindCollision(s2, s1);
-        if (col) ZoneMgr_Associate(col, self, 1, col);
+        int col = nGobjManager_LookupGOBJ_int_int(s2, s1);
+        if (col) cTerrain_AddActivation(col, self, 1, col);
     }
     if (g_IsMultiplayer) {
         if (!IsLocal()) self->b14 = 0;
@@ -131,10 +131,10 @@ extern "C" Part_59D0* Loader_ReadParticleRecord(Part_59D0* self, Reader* r)
             int h = self->h10.v;
             int nid;
             if (IsLocal()) nid = LocalId(); else { NetGetPeerToPeerHostClientIndex(D_005721A8, &tmp); nid = tmp; }
-            NetMap_BindReceiver(h, nid, self);
+            cNetObj_AddSystem(h, nid, self);
         }
     }
-    FileMan_Release(&fe, -1);
+    cFileMan_dtor(&fe, -1);
     return self;
 }
 

@@ -4,13 +4,13 @@ typedef struct AmmoEntry{AmmoPair v;int item,count;}AmmoEntry;
 typedef struct AmmoSlot{unsigned char kind;char pad[3];AmmoEntry entries[5];int count;unsigned char active;char padD1[3];}AmmoSlot;
 typedef struct BackpackQuery{char pad[0x64];AmmoSlot slots[3];}BackpackQuery;
 extern int g_WeaponDatabase;
-int WeaponInv_SlotOfItem(int);
-unsigned char* WeaponDb_Get(int, int);
+int cWeapon_GetWeaponSlot(int);
+unsigned char* cWeaponDB_GetEntry(int, int);
 static inline int Min(int a, int b) {
     if (b < a) return b;
     return a;
 }
-int Backpack_RemoveAmmo(BackpackQuery* self, int item, int amount) {
+int cBackpack_TakeAmmo(BackpackQuery* self, int item, int amount) {
     AmmoSlot* slot;
     AmmoEntry* entry;
     int total;
@@ -20,7 +20,7 @@ int Backpack_RemoveAmmo(BackpackQuery* self, int item, int amount) {
     int i;
     int j;
     int kind;
-    kind = WeaponInv_SlotOfItem(item);
+    kind = cWeapon_GetWeaponSlot(item);
     slot = self->slots;
     i = 0;
     goto outer_test;
@@ -30,7 +30,7 @@ outer_body:
         for (j = 0; j < slot->count; j++, entry++) {
             if (entry->item == item) {
                 total = 0;
-                w = WeaponDb_Get(g_WeaponDatabase, item);
+                w = cWeaponDB_GetEntry(g_WeaponDatabase, item);
                 for (k = 0; ((amount != 0) ^ 1) == 0 && k < entry->count; k++) {
                     take = Min(entry->v.primary[k], amount);
                     amount -= take;

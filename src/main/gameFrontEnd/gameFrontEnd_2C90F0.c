@@ -22,8 +22,8 @@ extern char D_004ACBF8[];
 extern char D_004ACC08[];
 extern char D_004ACC18[];
 static void * const dat_0048C1B0[20] = { (void*)0x0, (void*)0x0, (void*)0x0, (void*)D_004ACBE8, (void*)0x0, (void*)0x0, (void*)D_004ACBF8, (void*)0x0, (void*)0x0, (void*)0x0, (void*)D_004ACC08, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)D_004ACC18, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0 };
-extern char* Loc_LookupText(char* key);
-char* App_GetAgentNameGate(Obj9070* o)
+extern char* nGlobalization_GetString_charP(char* key);
+char* cGameFrontEnd_GetPlayerLevelName(Obj9070* o)
 {
     int i;
     char* key;
@@ -32,7 +32,7 @@ char* App_GetAgentNameGate(Obj9070* o)
         if (i != -1) {
             key = ((char**)dat_0048C1B0)[i];
             if (key)
-                return Loc_LookupText(key);
+                return nGlobalization_GetString_charP(key);
         }
     }
     return 0;
@@ -53,7 +53,7 @@ public:
 };
 struct Obj9170 { char pad[0xC]; unsigned int flags; char pad2[0x48]; Ctl9170* ctl; };
 extern "C" {
-Obj9170* PlayerSlots_Get(int i);
+Obj9170* cNetObj_GetPlayer(int i);
 #if 0 /* merge_units */
 void Hud_AppendCalloutName(int a, Obj9170* o, int key, int c);
 #endif /* merge_units */
@@ -64,7 +64,7 @@ extern "C" void Hud_FormatPlayerCalloutName(int a, int key, int c)
 {
     int i;
     for (i = 0; i < 4; i++) {
-        Obj9170* o = PlayerSlots_Get(i);
+        Obj9170* o = cNetObj_GetPlayer(i);
         int k;
         if (!o)
             continue;
@@ -94,9 +94,9 @@ static inline void merge_flush_func_002C9170(void) {}
 /* merge_units: begin func_002C9270 */
 #pragma push /* merge_units */
 #pragma opt_propagation off
-extern void* Player_GetAgentData(int id);
-extern char* AgentData_GetName(void* p);
-extern char* Game_GetPlayerNameSlot(void* tbl, int id);
+extern void* cHuman_GetAgentData(int id);
+extern char* cAgentData_GetUserName(void* p);
+extern char* cGameSystem_GetClientPlayerName(void* tbl, int id);
 extern char g_Game[];
 extern char D_004ACF28[];
 
@@ -131,11 +131,11 @@ void Hud_AppendCalloutName(char* buf, int id, int nameId, int newline)
 {
     char tmp[0x70];
     char c;
-    if (Player_GetAgentData(id) && ((Ent9270*)Player_GetAgentData(id))->active) {
-        Append(buf, AgentData_GetName(Player_GetAgentData(id)));
+    if (cHuman_GetAgentData(id) && ((Ent9270*)cHuman_GetAgentData(id))->active) {
+        Append(buf, cAgentData_GetUserName(cHuman_GetAgentData(id)));
     }
     c = newline ? '\n' : ' ';
-    sprintf(tmp, D_004ACF28, (char)c, 0x11, Game_GetPlayerNameSlot(g_Game, nameId), 0x10);
+    sprintf(tmp, D_004ACF28, (char)c, 0x11, cGameSystem_GetClientPlayerName(g_Game, nameId), 0x10);
     Append(buf, tmp);
 }
 /* merge_units: generate this block's code under its own pragmas */

@@ -25,8 +25,8 @@ extern "C" {
 extern V_AC5 D_00535D40;
 extern unsigned char D_00535D60;
 extern unsigned char D_00535D61;
-void ActorModel_DrawLod(void* a, int b, void* c, int d);
-void ThrownProjectile_Draw(O_AC5* o);
+void gunList_GunRender(void* a, int b, void* c, int d);
+void cGrenade_Render(O_AC5* o);
 }
 static inline unsigned char eq4_(V_AC5* a, V_AC5* b) {
     int k, f, r;
@@ -54,7 +54,7 @@ static inline unsigned char eq4_(V_AC5* a, V_AC5* b) {
 #pragma bool off
 #pragma opt_common_subs off
 
-void ThrownProjectile_Draw(O_AC5* o)
+void cGrenade_Render(O_AC5* o)
 {
     if (!o->xE4) {
         void* m; R_AC5* r; V_AC5 p = o->GetPos();
@@ -67,7 +67,7 @@ void ThrownProjectile_Draw(O_AC5* o)
         if (m) {
             r = o->x50;
             if (r->x50) r->Update();
-            ActorModel_DrawLod(m, o->x38, (void*)((int)r + 0x10), 0);
+            gunList_GunRender(m, o->x38, (void*)((int)r + 0x10), 0);
         }
     }
 }

@@ -61,14 +61,14 @@ extern "C" {
 extern char D_0049F4A0[];
 extern char D_004D9DE0[];
 extern void * const D_004DAC30[];
-void* Mem_Alloc(int, int, char*, int);
-void EventQueue_Admit(SndEv_7E00*);
+void* cMemMan_Allocate(int, int, char*, int);
+void nCallback_SetCallback(SndEv_7E00*);
 void snd_AutoVol(int, int, int, int);
 void snd_ContinueAllSoundsInGroup(int);
 void snd_PauseAllSoundsInGroup(int);
 }
 
-extern "C" void SoundMgr_Pause(Self_7E00* self, int on)
+extern "C" void cGameSound_PauseMusic(Self_7E00* self, int on)
 {
     Slot_7E00* found = 0;
     int i;
@@ -87,7 +87,7 @@ extern "C" void SoundMgr_Pause(Self_7E00* self, int on)
             snd_AutoVol(found->handle, 0, 0x1F4, 2);
             {
                 AllocGuard g;
-                e = (SndEv_7E00*)Mem_Alloc(0, 0x10, D_0049F4A0, 0x591);
+                e = (SndEv_7E00*)cMemMan_Allocate(0, 0x10, D_0049F4A0, 0x591);
             }
             if (e) {
                 e->vt = D_004D9DE0;
@@ -97,7 +97,7 @@ extern "C" void SoundMgr_Pause(Self_7E00* self, int on)
                 e->vt = (void*)D_004DAC30;
                 e->on = 1;
             }
-            EventQueue_Admit(e);
+            nCallback_SetCallback(e);
         } else {
             snd_PauseAllSoundsInGroup(2);
         }
@@ -109,7 +109,7 @@ extern "C" void SoundMgr_Pause(Self_7E00* self, int on)
             snd_AutoVol(found->handle, 0x400, 0x1F4, 2);
             {
                 AllocGuard g;
-                e = (SndEv_7E00*)Mem_Alloc(0, 0x10, D_0049F4A0, 0x5A2);
+                e = (SndEv_7E00*)cMemMan_Allocate(0, 0x10, D_0049F4A0, 0x5A2);
             }
             if (e) {
                 e->vt = D_004D9DE0;
@@ -119,7 +119,7 @@ extern "C" void SoundMgr_Pause(Self_7E00* self, int on)
                 e->vt = (void*)D_004DAC30;
                 e->on = 0;
             }
-            EventQueue_Admit(e);
+            nCallback_SetCallback(e);
         } else {
             snd_ContinueAllSoundsInGroup(2);
         }
@@ -136,7 +136,7 @@ static inline void merge_flush_func_001C7E00(void) {}
 typedef struct { char pad[0xC]; unsigned char on; } S1C80B0;
 extern void snd_PauseAllSoundsInGroup(int);
 extern void snd_ContinueAllSoundsInGroup(int);
-void SoundPauseEvent_Fire(S1C80B0* s) { if (s->on) snd_PauseAllSoundsInGroup(2); else snd_ContinueAllSoundsInGroup(2); }
+void cPauseMusicCB_Call(S1C80B0* s) { if (s->on) snd_PauseAllSoundsInGroup(2); else snd_ContinueAllSoundsInGroup(2); }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C80B0(void) {}
 #pragma pop /* merge_units */
@@ -170,10 +170,10 @@ extern "C" {
 extern char D_0049F4B0[];
 extern char D_0049F4F0[];
 int String_CompareNoCase(char*, char*);
-void SoundMgr_TransitionMusic(Self_80F0*, signed char, int, int);
+void cGameSound_StopVAG(Self_80F0*, signed char, int, int);
 }
 
-extern "C" void GameSound_StopSound(Self_80F0* self, Slot_80F0* d)
+extern "C" void cGameSound_StopSound(Self_80F0* self, Slot_80F0* d)
 {
     int matched;
     int mode;
@@ -182,11 +182,11 @@ extern "C" void GameSound_StopSound(Self_80F0* self, Slot_80F0* d)
     Slot_80F0* s;
     int i;
     if (d->type == 5) {
-        SoundMgr_TransitionMusic(self, d->type, 0, 0);
+        cGameSound_StopVAG(self, d->type, 0, 0);
         return;
     }
     if (d->type == 4) {
-        SoundMgr_TransitionMusic(self, d->type, 0, 1);
+        cGameSound_StopVAG(self, d->type, 0, 1);
         return;
     }
     matched = 0;

@@ -22,21 +22,21 @@ typedef struct {
     char pad6c[4];
     E2WaterSub sub;
 } E2WaterFx;
-extern int* SpecFx_GetEffectDef(int);
-extern void List_Init(E2List*);
+extern int* nSfxLoader_GetHandle(int);
+extern void std_list_deleter_tNode_ctor(E2List*);
 extern E2ModelTable* g_TextureMgr;
 #pragma opt_propagation off
-E2WaterFx* WaterFxRecord_Construct(E2WaterFx* s) {
+E2WaterFx* cWaterFx_tBody_ctor(E2WaterFx* s) {
     E2WaterSub* sub;
     float z;
     s->f4 = -2;
     s->f0 = 0;
     s->f40 = 0;
-    s->f68 = *SpecFx_GetEffectDef(0x28);
+    s->f68 = *nSfxLoader_GetHandle(0x28);
     sub = &s->sub;
     sub->rate = 0.0375f;
-    List_Init(&sub->list);
-    sub->model = *SpecFx_GetEffectDef(0x27);
+    std_list_deleter_tNode_ctor(&sub->list);
+    sub->model = *nSfxLoader_GetHandle(0x27);
     z = 0.0f;
     sub->count = g_TextureMgr->models[sub->model]->info->count;
     sub->f10 = 0;

@@ -26,7 +26,7 @@ extern int buildNameWithPrefix(const char*);
 extern void cScriptBase_addGameFunc(char*, int, int, int, int*, int);
 extern char D_004BD3C8[];
 
-int Script_RegisterNative_2(int a0, int a1, const char* name, int count, ...)
+int cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(int a0, int a1, const char* name, int count, ...)
 {
     int args[20];
     char buf[0x100];
@@ -60,7 +60,7 @@ extern "C" {
 extern Pt2_NReg* D_00554F28;
 extern signed char D_00499C71[];
 extern char D_004BD3B0[];
-void* Mem_Alloc(int, int, char*, int);
+void* cMemMan_Allocate(int, int, char*, int);
 void std_vector_FieldDefPtr_push_back(void*, Pt2_NEnt**);
 }
 extern "C" void cScriptBase_registerField(int type, char* name, int a, int b) {
@@ -71,7 +71,7 @@ extern "C" void cScriptBase_registerField(int type, char* name, int a, int b) {
     { int i = type - 100; t = D_00554F28->types[i]; }
     {
         AllocGuard g;
-        e = (Pt2_NEnt*)Mem_Alloc(0, 0xC, D_004BD3B0, 0x96);
+        e = (Pt2_NEnt*)cMemMan_Allocate(0, 0xC, D_004BD3B0, 0x96);
     }
     if (e) {
         e->a = a;

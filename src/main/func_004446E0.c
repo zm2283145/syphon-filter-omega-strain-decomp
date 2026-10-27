@@ -26,13 +26,13 @@ extern char D_00585E70[];
 extern int D_00585E80;
 extern char D_00585E90[];
 int MGCLUpdate(void);
-void String_Copy(char*, char*);
-int Medius_SendServerReport(char*);
+void Libc_Strcpy(char*, char*);
+int MGCLSendServerReport(char*);
 void NetGetLocalTime(int*);
 void NetGetTime(int*);
 int NetGetValidClientCount(int*, int);
 int func_003A6BC0(void);
-void SFOLobby_Update(Mgr6E0*);
+void SFOLobby_Intel(Mgr6E0*);
 int func_00453F30(int);
 void MediusSendPlayerReport(Msg46A9*);
 void MediusSendWorldReport(char*);
@@ -55,7 +55,7 @@ int SFOMGCL_Update(int update)
     if (update && now >= D_005842D4 + 15000) {
         D_005842D4 = now;
         memset(&msg, 0, sizeof(msg));
-        String_Copy(msg.name, D_00584220);
+        Libc_Strcpy(msg.name, D_00584220);
         msg.ver = D_004976D8;
         memcpy(msg.data, D_00585E90, sizeof(msg.data));
         MediusSendPlayerReport(&msg);
@@ -69,7 +69,7 @@ int SFOMGCL_Update(int update)
             D_00584390 = status;
             D_0058438E = 1;
             NetGetTime(&tmp);
-            ret = Medius_SendServerReport(D_00584378);
+            ret = MGCLSendServerReport(D_00584378);
             if (ret) {
                 return ret;
             }
@@ -84,7 +84,7 @@ int SFOMGCL_Update(int update)
                 status = 1;
             }
             D_005843B0 = status;
-            String_Copy(D_00584398, D_00584220);
+            Libc_Strcpy(D_00584398, D_00584220);
             D_005843AC = D_004976D8;
             D_00584514 = func_003A6BC0() ? 1 : 3;
             D_00584508 = *(volatile int*)&D_00584514;
@@ -95,7 +95,7 @@ int SFOMGCL_Update(int update)
     ret = MGCLUpdate();
     if (ret == 0) {
         if (!update) {
-            SFOLobby_Update(D_00585E60);
+            SFOLobby_Intel(D_00585E60);
         }
     } else if (func_00453F30(2) == 0) {
         D_005723B8 = 1;

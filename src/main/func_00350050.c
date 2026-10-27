@@ -22,15 +22,15 @@ public:
 extern "C" {
 extern char* D_00492BC8;
 extern char D_004BAB40[];
-char* String_CStr(Str* s);
-void GuiTextArrayWidget_SetCellText(Tbl* t, int col, int row, char* s);
-void String_Copy(char* d, char* s);
+char* std_basic_string_char_char_traits_char_c_str(Str* s);
+void GuiTextArrayWidget_SetText(Tbl* t, int col, int row, char* s);
+void Libc_Strcpy(char* d, char* s);
 int sprintf(char* buf, const char* fmt, ...);
-void GuiMissionStatList_Fill(Tbl* self);
+void GuiMissionStatList_StatsUpdated(Tbl* self);
 }
 
 #pragma opt_strength_reduction off
-void GuiMissionStatList_Fill(Tbl* self)
+void GuiMissionStatList_StatsUpdated(Tbl* self)
 {
     char buf[128];
     unsigned int i;
@@ -39,36 +39,36 @@ void GuiMissionStatList_Fill(Tbl* self)
     for (i = 0; i < self->rows; i++) {
         Item* it = &self->list->data[i];
         int v;
-        GuiTextArrayWidget_SetCellText(self, 0, i, String_CStr(&it->name));
+        GuiTextArrayWidget_SetText(self, 0, i, std_basic_string_char_char_traits_char_c_str(&it->name));
         v = it->r[0].b;
-        if (v == -1) String_Copy(buf, D_00492BC8);
+        if (v == -1) Libc_Strcpy(buf, D_00492BC8);
         else sprintf(buf, D_004BAB40, v / 60, v % 60);
-        GuiTextArrayWidget_SetCellText(self, 1, i, buf);
+        GuiTextArrayWidget_SetText(self, 1, i, buf);
         v = it->r[0].a;
-        if (v == -1) String_Copy(buf, D_00492BC8);
+        if (v == -1) Libc_Strcpy(buf, D_00492BC8);
         else sprintf(buf, D_004BAB40, v / 60, v % 60);
-        GuiTextArrayWidget_SetCellText(self, 2, i, buf);
+        GuiTextArrayWidget_SetText(self, 2, i, buf);
         v = it->r[1].b;
-        if (v == -1) String_Copy(buf, D_00492BC8);
+        if (v == -1) Libc_Strcpy(buf, D_00492BC8);
         else sprintf(buf, D_004BAB40, v / 60, v % 60);
-        GuiTextArrayWidget_SetCellText(self, 4, i, buf);
+        GuiTextArrayWidget_SetText(self, 4, i, buf);
         v = it->r[1].a;
-        if (v == -1) String_Copy(buf, D_00492BC8);
+        if (v == -1) Libc_Strcpy(buf, D_00492BC8);
         else sprintf(buf, D_004BAB40, v / 60, v % 60);
-        GuiTextArrayWidget_SetCellText(self, 5, i, buf);
-        if (it->r[2].a == -1) String_Copy(buf, D_00492BC8);
+        GuiTextArrayWidget_SetText(self, 5, i, buf);
+        if (it->r[2].a == -1) Libc_Strcpy(buf, D_00492BC8);
         else sprintf(buf, "%d", it->r[2].a);
-        GuiTextArrayWidget_SetCellText(self, 7, i, buf);
+        GuiTextArrayWidget_SetText(self, 7, i, buf);
         {
             int a = it->r[3].a;
             int b = it->r[3].b;
-            if (a == -1) String_Copy(buf, D_00492BC8);
+            if (a == -1) Libc_Strcpy(buf, D_00492BC8);
             else sprintf(buf, "%d/%d", a, b);
         }
-        GuiTextArrayWidget_SetCellText(self, 9, i, buf);
-        if (it->r[4].a == -1) String_Copy(buf, D_00492BC8);
+        GuiTextArrayWidget_SetText(self, 9, i, buf);
+        if (it->r[4].a == -1) Libc_Strcpy(buf, D_00492BC8);
         else sprintf(buf, "%d", it->r[4].a);
-        GuiTextArrayWidget_SetCellText(self, 0xA, i, buf);
+        GuiTextArrayWidget_SetText(self, 0xA, i, buf);
     }
 }
 

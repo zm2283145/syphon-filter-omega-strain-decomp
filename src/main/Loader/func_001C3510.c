@@ -1,20 +1,20 @@
 #pragma cplusplus on
 #include "alloc_guard.h"
-/* Pop_LoadGOB: reads the "GOB:" block of a pop file and creates one game
+/* cLoader_LoadGOBJs: reads the "GOB:" block of a pop file and creates one game
  * object per record (kind 1/4 generic, 2 path, 3 lift, 5 interact, 6 kind-6
- * GOBJ), registering each; same reader/allocator shape as Loader_InitHotboxes. */
+ * GOBJ), registering each; same reader/allocator shape as cLoader_LoadHotboxes. */
 struct PopReader_3510 { int version; int size; unsigned int base; char* cur; };
 extern "C" {
 extern char D_0049EE88[];
-void* Mem_Alloc(int heap, int size, char* file, int line);
-void* App_GetInstance(void);
-void Loader_UpdateLoadingScreen(void* app, const char* text, int n);
-int Pop_FindTag(PopReader_3510* r, int tag);
-void Object_Register(void* p);
+void* cMemMan_Allocate(int heap, int size, char* file, int line);
+void* GetMachine(void);
+void cMachine_ShowLoadingScreen(void* app, const char* text, int n);
+int cPopulation_SeekBlock(PopReader_3510* r, int tag);
+void nGobjManager_AddGOBJ(void* p);
 void* cGameGOBJ_ctor(void* p, int h, PopReader_3510* r, int kind);
-void* PathObj_Ctor(void* p, int h, PopReader_3510* r);
-void* Lift_Ctor(void* p, int h, PopReader_3510* r);
-void* cGameGOBJ_CtorKind6(void* p, int h, PopReader_3510* r);
+void* cPathedGOBJ_ctor(void* p, int h, PopReader_3510* r);
+void* cElevatorGOBJ_ctor(void* p, int h, PopReader_3510* r);
+void* cFacingGOBJ_ctor(void* p, int h, PopReader_3510* r);
 void* cInteractGOBJ_ctor(void* p, int h, PopReader_3510* r);
 }
 
@@ -23,21 +23,21 @@ static inline void* GAlloc(int size, int line)
     void* p;
     {
         AllocGuard g;
-        p = Mem_Alloc(0, size, D_0049EE88, line);
+        p = cMemMan_Allocate(0, size, D_0049EE88, line);
     }
     return p;
 }
 
-extern "C" void Pop_LoadGOB(void* l, PopReader_3510* r, int h)
+extern "C" void cLoader_LoadGOBJs(void* l, PopReader_3510* r, int h)
 {
-    if ((unsigned char)Pop_FindTag(r, 0x3A424F47)) {
+    if ((unsigned char)cPopulation_SeekBlock(r, 0x3A424F47)) {
         int n;
         int i;
         int mis;
         n = *(int*)r->cur;
         r->cur += 4;
         if (n) {
-            Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing GOBJs...", 0);
+            cMachine_ShowLoadingScreen(GetMachine(), "Initializing GOBJs...", 0);
             for (i = 0; i < n; i++) {
                 int type = *(int*)r->cur;
                 void* p;
@@ -56,7 +56,7 @@ extern "C" void Pop_LoadGOB(void* l, PopReader_3510* r, int h)
                     {
                         void* t = GAlloc(0xE8, 0x183);
                         if (t)
-                            t = PathObj_Ctor(t, h, r);
+                            t = cPathedGOBJ_ctor(t, h, r);
                         p = t;
                     }
                     break;
@@ -64,7 +64,7 @@ extern "C" void Pop_LoadGOB(void* l, PopReader_3510* r, int h)
                     {
                         void* t = GAlloc(0x7A0, 0x187);
                         if (t)
-                            t = Lift_Ctor(t, h, r);
+                            t = cElevatorGOBJ_ctor(t, h, r);
                         p = t;
                     }
                     break;
@@ -72,7 +72,7 @@ extern "C" void Pop_LoadGOB(void* l, PopReader_3510* r, int h)
                     {
                         void* t = GAlloc(0x94, 0x18B);
                         if (t)
-                            t = cGameGOBJ_CtorKind6(t, h, r);
+                            t = cFacingGOBJ_ctor(t, h, r);
                         p = t;
                     }
                     break;
@@ -87,7 +87,7 @@ extern "C" void Pop_LoadGOB(void* l, PopReader_3510* r, int h)
                 default:
                     return;
                 }
-                Object_Register(p);
+                nGobjManager_AddGOBJ(p);
             }
             mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
             if (mis)

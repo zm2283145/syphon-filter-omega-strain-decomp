@@ -19,7 +19,7 @@ extern "C" M_29A0* cHermiteSpline_cVector_ctor_cVectorR_cVectorR_cVectorR_cVecto
 #pragma pop
 typedef struct { float x, y, z, w; } B8V_1B28E0;
 typedef struct { char pad[0x40]; float s; float inv; } B8S_1B28E0;
-extern void Vec4_Scale(B8V_1B28E0* out, B8V_1B28E0* in, float s);
+extern void cVector_opMul(B8V_1B28E0* out, B8V_1B28E0* in, float s);
 #if 0 /* merge_units */
 extern void cHermiteSpline_cVector_ctor_cVectorR_cVectorR_cVectorR_cVectorR(B8S_1B28E0* p, int a, B8V_1B28E0* b, int c, B8V_1B28E0* d);
 #endif /* merge_units */
@@ -33,8 +33,8 @@ void cHermiteSplineWithScaledDuration_cVector_Reset(void* pv, int a, B8V_1B28E0*
     B8S_1B28E0* p = (B8S_1B28E0*)pv;
     if (p) {
         s = ((B8S_1B28E0*)pv)->s;
-        Vec4_Scale(&v1, b, s);
-        Vec4_Scale(&v2, d, s);
+        cVector_opMul(&v1, b, s);
+        cVector_opMul(&v2, d, s);
         cHermiteSpline_cVector_ctor_cVectorR_cVectorR_cVectorR_cVectorR(p, a, &v1, c, &v2);
         p->s = s;
         inv = (s != 0.0f) ? 1.0f / s : 0.0f;
@@ -84,8 +84,8 @@ static inline void merge_flush_func_001B29A0(void) {}
 struct V4_1B2A00 { __int128 q; V4_1B2A00() {} };
 extern "C" {
 void cHermiteSplineWithScaledDuration_cVector_dtor(void* p, int f);
-void* Mem_PlacementNew(unsigned int size, void* p);
-void Curve_SetTangents(void* c, V4_1B2A00* a, V4_1B2A00* b, V4_1B2A00* d, V4_1B2A00* e, float t);
+void* opNew_uint_voidP(unsigned int size, void* p);
+void cHermiteSplineWithScaledDuration_cVector_ctor_cVectorR_cVectorR_cVectorR_cVectorR_etc(void* c, V4_1B2A00* a, V4_1B2A00* b, V4_1B2A00* d, V4_1B2A00* e, float t);
 }
 class VC_1B2A00 {
 public:
@@ -107,15 +107,15 @@ static inline V4_1B2A00 Get_(VC_1B2A00* v) { return v->s3(); }
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" void VecCurve_Reset(Obj_1B2A00* o, const V4_1B2A00* a)
+extern "C" void cSplinedMotion_cVector_ResetCurrValWhileRetainingVelocity(Obj_1B2A00* o, const V4_1B2A00* a)
 {
     V4_1B2A00* d = &o->a;
     V4Copy(d, a);
     {
         V4_1B2A00 r = Get_(o);
         cHermiteSplineWithScaledDuration_cVector_dtor(o->curve, -1);
-        void* cv = Mem_PlacementNew(0x50, o->curve);
-        if (cv) Curve_SetTangents(cv, &o->a, &o->b, &o->c, &r, o->t);
+        void* cv = opNew_uint_voidP(0x50, o->curve);
+        if (cv) cHermiteSplineWithScaledDuration_cVector_ctor_cVectorR_cVectorR_cVectorR_cVectorR_etc(cv, &o->a, &o->b, &o->c, &r, o->t);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

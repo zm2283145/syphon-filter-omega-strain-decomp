@@ -26,51 +26,51 @@ struct Arr { Pt* data; Pt& operator[](int i) { Arr* t = this; return t->data[i];
     Pt& Back(int n) { Arr* t = this; Pt* e = t->data + n; return e[-1]; } };
 struct Obj { char pad[0x14]; int n; Arr arr; char pad1c[0x44]; M m; };
 extern "C" {
-V* Vec4_Set(V* v, float x, float y, float z, float w);
-void Vec4_NormalizeXYZ_132060(V* out, V* v);
-void Vec4_Cross(V* out, V* a, V* b);
-int Vec4_IsZeroXYZ(V* v);
-V* Vec4_NormalizeXYZInPlace(V* v);
-V* Vec4_Assign(V* d, V* s);
-void Mtx_FromRowsAndTranslation(M* m, V* a, V* b, V* c, V* t);
-void Mtx_FrameFromAxis(M* m, V* a);
-void Mtx_SetIdentity(M* m);
-void Mtx_Transpose3x3(M* m);
-int Mtx_IsTranslationZero(M* m);
+V* cVector_ctor_float_float_float_float(V* v, float x, float y, float z, float w);
+void cVector_GetNormalized_void(V* out, V* v);
+void cVector_Cross(V* out, V* a, V* b);
+int cVector_IsZeroXYZ(V* v);
+V* cVector_Normalize_void(V* v);
+V* cVector_ctor_cVectorR(V* d, V* s);
+void cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(M* m, V* a, V* b, V* c, V* t);
+void cMatrix_MakeLookAtMatrix_cVectorR(M* m, V* a);
+void cMatrix_SetUnit(M* m);
+void cMatrix_InvertRot(M* m);
+int cMatrix_IsZeroTranslation(M* m);
 V* func_00133EC0(M* m);
-void Vec3_Negate(V* v);
-void Mtx_TransformByTranspose(V* v, M* m);
-void Mtx_SetTranslation(M* m, V* v);
+void cVector_NegateXYZ(V* v);
+void cVector_Rotate_cMatrixR(V* v, M* m);
+void cMatrix_SetTranslation(M* m, V* v);
 void cAirTaser_PointsToLocal(Obj* s, V* p);
 }
 static inline void LookFrame(M* m, V* dir, V* up)
 {
     V c;
-    Vec4_Cross(&c, dir, up);
-    if (!Vec4_IsZeroXYZ(&c)) {
+    cVector_Cross(&c, dir, up);
+    if (!cVector_IsZeroXYZ(&c)) {
         V f;
         V r;
         V u;
         V w;
-        Vec4_NormalizeXYZ_132060(&f, dir);
-        Vec4_Assign(&r, Vec4_NormalizeXYZInPlace(&c));
-        Vec4_Cross(&u, &r, &f);
-        Mtx_FromRowsAndTranslation(m, &r, &f, &u, Vec4_Set(&w, 0.0f, 0.0f, 0.0f, 1.0f));
-    } else if (!Vec4_IsZeroXYZ(dir)) {
-        Mtx_FrameFromAxis(m, dir);
+        cVector_GetNormalized_void(&f, dir);
+        cVector_ctor_cVectorR(&r, cVector_Normalize_void(&c));
+        cVector_Cross(&u, &r, &f);
+        cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(m, &r, &f, &u, cVector_ctor_float_float_float_float(&w, 0.0f, 0.0f, 0.0f, 1.0f));
+    } else if (!cVector_IsZeroXYZ(dir)) {
+        cMatrix_MakeLookAtMatrix_cVectorR(m, dir);
     } else {
-        Mtx_SetIdentity(m);
+        cMatrix_SetUnit(m);
     }
 }
 static inline void InvertRigid(M* m)
 {
-    Mtx_Transpose3x3(m);
-    if (!Mtx_IsTranslationZero(m)) {
+    cMatrix_InvertRot(m);
+    if (!cMatrix_IsZeroTranslation(m)) {
         V t;
-        Vec4_Assign(&t, func_00133EC0(m));
-        Vec3_Negate(&t);
-        Mtx_TransformByTranspose(&t, m);
-        Mtx_SetTranslation(m, &t);
+        cVector_ctor_cVectorR(&t, func_00133EC0(m));
+        cVector_NegateXYZ(&t);
+        cVector_Rotate_cMatrixR(&t, m);
+        cMatrix_SetTranslation(m, &t);
     }
 }
 void cAirTaser_PointsToLocal(Obj* s, V* p)

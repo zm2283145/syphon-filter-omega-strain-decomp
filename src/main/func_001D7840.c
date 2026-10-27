@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-/* Copy a Rec24 (0x24-byte record, see Secondary_MotionRecordCtor for its constructor). */
+/* Copy a Rec24 (0x24-byte record, see cSkaAnimDataIterator_ctor_void for its constructor). */
 Rec24* cSkaAnimDataIterator_opAssign(Rec24* d, Rec24* s) {
     d->unk00 = s->unk00;
     d->unk04 = s->unk04;

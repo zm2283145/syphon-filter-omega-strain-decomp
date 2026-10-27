@@ -9,7 +9,7 @@
 
 /* merge_units: begin func_003F3E70 */
 #pragma push /* merge_units */
-/* IeScalarTrack_Construct: piecewise-linear curve evaluation (interface_model area). */
+/* cKeyframeAnimation_float_Update: piecewise-linear curve evaluation (interface_model area). */
 typedef struct { float t; float v; } Key;
 typedef struct {
     char pad0[0x18];
@@ -25,7 +25,7 @@ static inline Key* Last(Curve* c) { return c->keys + c->count - 1; }
 
 #pragma opt_strength_reduction off
 #pragma opt_propagation off
-void IeScalarTrack_Construct(Curve* c, float t)
+void cKeyframeAnimation_float_Update(Curve* c, float t)
 {
     /* Local declaration order matters for register allocation.
      * `cc` (an un-propagated alias of c) makes the second scan loop reload

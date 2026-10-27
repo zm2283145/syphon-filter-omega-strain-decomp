@@ -20,42 +20,42 @@ typedef struct { void* fn[32]; } VT346;
 typedef struct { VT346* vt; char pad[0x88]; W346* w8c; W346* w90; W346* w94; int p98; int p9c; W346* wa0; W346* wa4; } O346;
 typedef struct { int type; char pad[8]; char name[0x20]; char text[0x20]; } I346;
 typedef struct { int a[4]; } S346;
-extern int DME_GetLobby(void);
+extern int cDME_GetLobby(void);
 extern void GuiTextWidget_SetText(W346*, char*, int);
-extern char* Loc_LookupText(char*);
-extern void String_CtorCStr_13B480(S346*, char*);
+extern char* nGlobalization_GetString_charP(char*);
+extern void std_basic_string_char_char_traits_char_ctor_charP(S346*, char*);
 extern void func_003FD740(S346*);
-extern char* String_CStr(S346*);
+extern char* std_basic_string_char_char_traits_char_c_str(S346*);
 extern void String_Dtor(S346*, int);
-extern char* GuiScreen_GetLobbyString(O346*, int, char*, char*, int, int);
+extern char* GuiLobbyScreen_GetLobbyString(O346*, int, char*, char*, int, int);
 
-extern int Gui_GetScreenStack(void);
-extern void GuiScreen_SetFocus(int, int);
+extern int Gui_Canvas(void);
+extern void GuiCanvas_SetFocus(int, int);
 extern char D_004BA338[];
 }
-extern "C" void GuiWidget_SendEvent(O346*, W346*, int, int, int);
+extern "C" void GuiWidget_SendMessage(O346*, W346*, int, int, int);
 extern "C" void GuiNetMessages_MessageSelected(O346* self, I346* info) {
     S346 s;
     char buf[0x80];
     int b0, b1, b2;
     unsigned short mask;
     if (!self->w8c || !self->w90 || !self->w94) return;
-    if (!DME_GetLobby()) return;
+    if (!cDME_GetLobby()) return;
     b0 = (self->w8c->flags & 2) != 0;
     b1 = (self->w90->flags & 2) != 0;
     b2 = (self->w94->flags & 2) != 0;
     if (info) {
         switch (info->type) {
         case 0: case 1:
-            GuiTextWidget_SetText(self->w8c, Loc_LookupText("MB_Decline"), 0);
-            GuiTextWidget_SetText(self->w90, Loc_LookupText("MB_Accept"), 0);
+            GuiTextWidget_SetText(self->w8c, nGlobalization_GetString_charP("MB_Decline"), 0);
+            GuiTextWidget_SetText(self->w90, nGlobalization_GetString_charP("MB_Accept"), 0);
             mask = ~2;
             self->w8c->flags |= 2;
             self->w90->flags |= 2;
             self->w94->flags &= ~2;
             break;
         default:
-            GuiTextWidget_SetText(self->w94, Loc_LookupText("MB_OK"), 0);
+            GuiTextWidget_SetText(self->w94, nGlobalization_GetString_charP("MB_OK"), 0);
             mask = ~2;
             self->w8c->flags &= ~2;
             self->w90->flags &= ~2;
@@ -66,9 +66,9 @@ extern "C" void GuiNetMessages_MessageSelected(O346* self, I346* info) {
             sprintf(buf, "[%c%s%c] - %s", 0x11, info->name, 0x10, info->text);
             GuiTextWidget_SetText(self->wa0, buf, 0);
         } else if (info->type == 10) {
-            String_CtorCStr_13B480(&s, info->text);
+            std_basic_string_char_char_traits_char_ctor_charP(&s, info->text);
             func_003FD740(&s);
-            GuiTextWidget_SetText(self->wa0, String_CStr(&s), 0);
+            GuiTextWidget_SetText(self->wa0, std_basic_string_char_char_traits_char_c_str(&s), 0);
             String_Dtor(&s, 0);
         } else {
             int c = -1;
@@ -86,7 +86,7 @@ extern "C" void GuiNetMessages_MessageSelected(O346* self, I346* info) {
             case 11: c = 0x87; break;
             }
             if (c == -1) t = D_004BA338;
-            else t = GuiScreen_GetLobbyString(self, (unsigned char)c, info->name, info->text, 0, 0);
+            else t = GuiLobbyScreen_GetLobbyString(self, (unsigned char)c, info->name, info->text, 0, 0);
             GuiTextWidget_SetText(self->wa0, t, 0);
         }
         self->wa4->flags &= mask;
@@ -97,13 +97,13 @@ extern "C" void GuiNetMessages_MessageSelected(O346* self, I346* info) {
         GuiTextWidget_SetText(self->wa0, D_004BA338, 0);
         self->wa4->flags |= 2;
     }
-    if ((self->w8c->flags & 2) && !b0) GuiWidget_SendEvent(self, self->w8c, 6, (int)"onWake", 0);
-    if ((self->w90->flags & 2) && !b1) GuiWidget_SendEvent(self, self->w90, 6, (int)"onWake", 0);
-    if ((self->w94->flags & 2) && !b2) GuiWidget_SendEvent(self, self->w94, 6, (int)"onWake", 0);
-    GuiScreen_SetFocus(Gui_GetScreenStack(), 0);
+    if ((self->w8c->flags & 2) && !b0) GuiWidget_SendMessage(self, self->w8c, 6, (int)"onWake", 0);
+    if ((self->w90->flags & 2) && !b1) GuiWidget_SendMessage(self, self->w90, 6, (int)"onWake", 0);
+    if ((self->w94->flags & 2) && !b2) GuiWidget_SendMessage(self, self->w94, 6, (int)"onWake", 0);
+    GuiCanvas_SetFocus(Gui_Canvas(), 0);
     {
-        int r = Gui_GetScreenStack();
-        GuiScreen_SetFocus(r, ((V346*)self)->v15());
+        int r = Gui_Canvas();
+        GuiCanvas_SetFocus(r, ((V346*)self)->v15());
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -125,9 +125,9 @@ struct S_3473E0 { char pad[0x88]; P_3473E0* p88; };
 struct Ev_3473E0 { unsigned short type; unsigned short b2; char pad4[2]; unsigned short b6; unsigned short btn; };
 extern "C" {
 extern int D_00532FD0;
-int GuiScreen_Navigate(S_3473E0* o, int v);
-int GuiScreen_HandleInput(S_3473E0* o);
-int GuiNetMessages_HandleInput(S_3473E0* o, Ev_3473E0* ev);
+int GuiLobbyScreen_PushLobbyScreen(S_3473E0* o, int v);
+int GuiLobbyScreen_onInput(S_3473E0* o);
+int GuiNetMessages_onInput(S_3473E0* o, Ev_3473E0* ev);
 }
 static inline unsigned char Down_3473E0(Ev_3473E0* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Btn_3473E0(Ev_3473E0* e, int b) { unsigned char r = 0; if (Down_3473E0(e) && e->btn == b) r = 1; return r; }
@@ -136,17 +136,17 @@ static inline bool Down2_3473E0(Ev_3473E0* e) { return e->type == 1 && e->b2 == 
 static inline bool Btn2_3473E0(Ev_3473E0* e, int b) { return Down2_3473E0(e) && e->btn == b; }
 static inline bool Plain2_3473E0(Ev_3473E0* e, int b) { return Btn2_3473E0(e, b) && e->b6 == 0; }
 
-int GuiNetMessages_HandleInput(S_3473E0* o, Ev_3473E0* ev)
+int GuiNetMessages_onInput(S_3473E0* o, Ev_3473E0* ev)
 {
     if (Plain_3473E0(ev, 0x10)) {
-        if (!GuiScreen_Navigate(o, D_00532FD0)) GuiScreen_Navigate(o, 1);
+        if (!GuiLobbyScreen_PushLobbyScreen(o, D_00532FD0)) GuiLobbyScreen_PushLobbyScreen(o, 1);
         return 1;
     }
     if (Plain2_3473E0(ev, 0x1000) && o->p88) return o->p88->obj->Activate();
     if (Plain2_3473E0(ev, 0x4000) && o->p88) return o->p88->obj->Activate();
     if (Plain2_3473E0(ev, 0x2000)) ev->btn = 0x1000;
     else if (Plain2_3473E0(ev, 0x8000)) ev->btn = 0x4000;
-    return (ev->type == 1 && ev->b2 == 0 && ev->btn == 0x800 && ev->b6 == 0) ? 1 : GuiScreen_HandleInput(o);
+    return (ev->type == 1 && ev->b2 == 0 && ev->btn == 0x800 && ev->b6 == 0) ? 1 : GuiLobbyScreen_onInput(o);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003473E0(void) {}

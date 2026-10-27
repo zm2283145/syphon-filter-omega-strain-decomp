@@ -16,21 +16,21 @@ typedef struct { char pad[0x68]; unsigned int a68; } M342F00;
 typedef struct { char pad[0xB68]; unsigned char aB68; char padB69[9]; unsigned char aB72; } A342F00;
 extern G342F00* D_004FFC04;
 extern char g_Game[];
-extern void GuiWidget_BaseWake(S342F00* o);
-extern void GuiWidget_SendEvent(void* self, void* w, int a, int b, int c);
-extern M342F00* Gui_GetScreenStack(void);
-extern A342F00* Agent_GetSelected(void* list, int idx);
-void GuiAgentModify_Wake(S342F00* o)
+extern void GuiWidget_onWake(S342F00* o);
+extern void GuiWidget_SendMessage(void* self, void* w, int a, int b, int c);
+extern M342F00* Gui_Canvas(void);
+extern A342F00* cGameSystem_GetAgentData(void* list, int idx);
+void GuiAgentModify_onWake(S342F00* o)
 {
     M342F00* m;
     A342F00* ag;
     D_004FFC04->a2F = 1;
-    GuiWidget_BaseWake(o);
-    if (o->a78) GuiWidget_SendEvent(o, o->a78, 10, 0, 0);
+    GuiWidget_onWake(o);
+    if (o->a78) GuiWidget_SendMessage(o, o->a78, 10, 0, 0);
     if (o->a78) o->a78->a14 &= ~2;
-    m = Gui_GetScreenStack();
+    m = Gui_Canvas();
     m->a68 |= 0xC;
-    ag = Agent_GetSelected(g_Game, -1);
+    ag = cGameSystem_GetAgentData(g_Game, -1);
     ag->aB68 = 0;
     ag->aB72 = 1;
     o->a158 = 0;
@@ -54,7 +54,7 @@ typedef struct {
 } Sub;
 typedef struct { char pad[0x60]; Sub sub; } P;
 typedef struct { char pad[0x8C]; P *p; } O;
-void GuiAgentModify_AdvancePatchB(O* o, int idx); /* gsynth: defined below */
+void GuiAgentModify_CheckBigPatch(O* o, int idx); /* gsynth: defined below */
 #pragma cplusplus on
 struct W_342FA0 {
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
@@ -79,86 +79,86 @@ extern char D_004B9F58[]; extern char D_004B9F50[]; extern char D_004B9F60[]; ex
 extern char D_004B9F20[];
 extern char D_004A9870[]; extern char D_004A9C40[]; extern char D_004A7520[]; extern char D_004B88F0[]; extern char D_004A9BF0[];
 extern O_342FA0* D_005331D0;
-void GuiWidget_Init(O_342FA0* o);
-int Appearance_FindPairByType(void* p, char* name);
-void GuiAgentModify_AdvancePatchA(O_342FA0* o, int v);
+void GuiWidget_onAdd(O_342FA0* o);
+int SKL_FindPartIndex(void* p, char* name);
+void GuiAgentModify_CheckSmallPatch(O_342FA0* o, int v);
 #if 0 /* merge_units */
-void GuiAgentModify_AdvancePatchB(O_342FA0* o, int v);
+void GuiAgentModify_CheckBigPatch(O_342FA0* o, int v);
 #endif /* merge_units */
-#define GuiAgentModify_AdvancePatchB(a0, a1) (GuiAgentModify_AdvancePatchB((O *)(a0), (a1))) /* merge_units */
+#define GuiAgentModify_CheckBigPatch(a0, a1) (GuiAgentModify_CheckBigPatch((O *)(a0), (a1))) /* merge_units */
 
-W_342FA0* GuiWidget_FindChildByName(void* o, char* name);
-void GuiAgentModify_GroupHide(O_342FA0* o, W_342FA0* w);
+W_342FA0* GuiWidget_FindChild_charP(void* o, char* name);
+void GuiAgentModify_MakeChildrenInvisible(O_342FA0* o, W_342FA0* w);
 void AgentRenderWrapper(void);
 #if 0 /* merge_units */
-A_342FA0* Agent_GetSelected(void* p, int i);
+A_342FA0* cGameSystem_GetAgentData(void* p, int i);
 #endif /* merge_units */
-#define Agent_GetSelected(a0, a1) ((A_342FA0 *)Agent_GetSelected((a0), (a1))) /* merge_units */
+#define cGameSystem_GetAgentData(a0, a1) ((A_342FA0 *)cGameSystem_GetAgentData((a0), (a1))) /* merge_units */
 
-char* AgentData_GetName(A_342FA0* a);
+char* cAgentData_GetUserName(A_342FA0* a);
 char* AgentData_GetRankText(A_342FA0* a);
 void GuiTextWidget_SetText(W_342FA0* w, char* s, int f);
-int Loc_FindKeyThunk(char* k);
-char* Loc_GetTextById(int id);
-void GuiAgentModify_UpdateAvailability(O_342FA0* o);
-void GuiAgentModify_Init(O_342FA0* o);
+int nGlobalization_GetStringIndex(char* k);
+char* nGlobalization_GetString_int(int id);
+void GuiAgentModify_TattooPatchesLockout(O_342FA0* o);
+void GuiAgentModify_onAdd(O_342FA0* o);
 }
 static inline W_342FA0* Cast_342FA0(W_342FA0* w, void* t) { return w && w->IsA(t) ? w : 0; }
 
-void GuiAgentModify_Init(O_342FA0* o)
+void GuiAgentModify_onAdd(O_342FA0* o)
 {
     W_342FA0* p;
     W_342FA0* a;
     W_342FA0* b;
-    GuiWidget_Init(o);
-    o->f114 = Appearance_FindPairByType(o->f8C->fA0, "TATT1");
-    o->f118 = Appearance_FindPairByType(o->f8C->fA0, "TATT2");
-    o->f11C = Appearance_FindPairByType(o->f8C->fA0, "TATT3");
-    o->f120 = Appearance_FindPairByType(o->f8C->fA0, "PATC1");
-    o->f124 = Appearance_FindPairByType(o->f8C->fA0, "PATC2");
-    o->f128 = Appearance_FindPairByType(o->f8C->fA0, "PATC3");
-    GuiAgentModify_AdvancePatchA(o, o->f120);
-    GuiAgentModify_AdvancePatchA(o, o->f124);
-    GuiAgentModify_AdvancePatchB(o, o->f128);
-    o->f12C = Cast_342FA0(GuiWidget_FindChildByName(o, "leftarm"), D_004A9870);
-    o->f130 = Cast_342FA0(GuiWidget_FindChildByName(o, "rightarm"), D_004A9870);
-    o->f134 = Cast_342FA0(GuiWidget_FindChildByName(o, "back"), D_004A9870);
-    o->f138 = Cast_342FA0(GuiWidget_FindChildByName(o, "leftarm2"), D_004A9870);
-    o->f13C = Cast_342FA0(GuiWidget_FindChildByName(o, "rightarm2"), D_004A9870);
-    o->f140 = Cast_342FA0(GuiWidget_FindChildByName(o, "hat2"), D_004A9870);
-    o->f144 = Cast_342FA0(GuiWidget_FindChildByName(o, D_004B9F58), D_004A9870);
-    o->f148 = Cast_342FA0(GuiWidget_FindChildByName(o, D_004B9F50), D_004A9870);
-    o->f14C = Cast_342FA0(GuiWidget_FindChildByName(o, D_004B9F60), D_004A9870);
-    o->f150 = Cast_342FA0(GuiWidget_FindChildByName(o, D_004B9F68), D_004A9870);
-    o->f154 = GuiWidget_FindChildByName(o, "createagent_grp");
-    o->f78 = Cast_342FA0(GuiWidget_FindChildByName(o, "selectindicator"), D_004A9C40);
-    o->f7C = Cast_342FA0(GuiWidget_FindChildByName(o, "value_slot"), D_004A7520);
-    o->f88 = Cast_342FA0(GuiWidget_FindChildByName(o, "beard"), D_004A9870);
-    o->f80 = Cast_342FA0(GuiWidget_FindChildByName(o, "bitmap_preview"), D_004B88F0);
-    o->f84 = Cast_342FA0(GuiWidget_FindChildByName(o, "value_name"), D_004A7520);
-    GuiAgentModify_GroupHide(o, o->f144);
-    GuiAgentModify_GroupHide(o, o->f148);
-    GuiAgentModify_GroupHide(o, o->f14C);
-    GuiAgentModify_GroupHide(o, o->f150);
-    p = Cast_342FA0(GuiWidget_FindChildByName(o, "playercharacter"), D_004A9BF0);
+    GuiWidget_onAdd(o);
+    o->f114 = SKL_FindPartIndex(o->f8C->fA0, "TATT1");
+    o->f118 = SKL_FindPartIndex(o->f8C->fA0, "TATT2");
+    o->f11C = SKL_FindPartIndex(o->f8C->fA0, "TATT3");
+    o->f120 = SKL_FindPartIndex(o->f8C->fA0, "PATC1");
+    o->f124 = SKL_FindPartIndex(o->f8C->fA0, "PATC2");
+    o->f128 = SKL_FindPartIndex(o->f8C->fA0, "PATC3");
+    GuiAgentModify_CheckSmallPatch(o, o->f120);
+    GuiAgentModify_CheckSmallPatch(o, o->f124);
+    GuiAgentModify_CheckBigPatch(o, o->f128);
+    o->f12C = Cast_342FA0(GuiWidget_FindChild_charP(o, "leftarm"), D_004A9870);
+    o->f130 = Cast_342FA0(GuiWidget_FindChild_charP(o, "rightarm"), D_004A9870);
+    o->f134 = Cast_342FA0(GuiWidget_FindChild_charP(o, "back"), D_004A9870);
+    o->f138 = Cast_342FA0(GuiWidget_FindChild_charP(o, "leftarm2"), D_004A9870);
+    o->f13C = Cast_342FA0(GuiWidget_FindChild_charP(o, "rightarm2"), D_004A9870);
+    o->f140 = Cast_342FA0(GuiWidget_FindChild_charP(o, "hat2"), D_004A9870);
+    o->f144 = Cast_342FA0(GuiWidget_FindChild_charP(o, D_004B9F58), D_004A9870);
+    o->f148 = Cast_342FA0(GuiWidget_FindChild_charP(o, D_004B9F50), D_004A9870);
+    o->f14C = Cast_342FA0(GuiWidget_FindChild_charP(o, D_004B9F60), D_004A9870);
+    o->f150 = Cast_342FA0(GuiWidget_FindChild_charP(o, D_004B9F68), D_004A9870);
+    o->f154 = GuiWidget_FindChild_charP(o, "createagent_grp");
+    o->f78 = Cast_342FA0(GuiWidget_FindChild_charP(o, "selectindicator"), D_004A9C40);
+    o->f7C = Cast_342FA0(GuiWidget_FindChild_charP(o, "value_slot"), D_004A7520);
+    o->f88 = Cast_342FA0(GuiWidget_FindChild_charP(o, "beard"), D_004A9870);
+    o->f80 = Cast_342FA0(GuiWidget_FindChild_charP(o, "bitmap_preview"), D_004B88F0);
+    o->f84 = Cast_342FA0(GuiWidget_FindChild_charP(o, "value_name"), D_004A7520);
+    GuiAgentModify_MakeChildrenInvisible(o, o->f144);
+    GuiAgentModify_MakeChildrenInvisible(o, o->f148);
+    GuiAgentModify_MakeChildrenInvisible(o, o->f14C);
+    GuiAgentModify_MakeChildrenInvisible(o, o->f150);
+    p = Cast_342FA0(GuiWidget_FindChild_charP(o, "playercharacter"), D_004A9BF0);
     if (p) {
         D_005331D0 = o;
         p->f48 = (void*)AgentRenderWrapper;
     }
-    a = Cast_342FA0(GuiWidget_FindChildByName(o, "value_agent"), D_004A7520);
-    b = Cast_342FA0(GuiWidget_FindChildByName(o, "value_rank"), D_004A7520);
-    if (Agent_GetSelected(g_Game, -1)->bB70) {
-        GuiTextWidget_SetText(a, AgentData_GetName(Agent_GetSelected(g_Game, -1)), 0);
-        GuiTextWidget_SetText(b, AgentData_GetRankText(Agent_GetSelected(g_Game, -1)), 0);
+    a = Cast_342FA0(GuiWidget_FindChild_charP(o, "value_agent"), D_004A7520);
+    b = Cast_342FA0(GuiWidget_FindChild_charP(o, "value_rank"), D_004A7520);
+    if (cGameSystem_GetAgentData(g_Game, -1)->bB70) {
+        GuiTextWidget_SetText(a, cAgentData_GetUserName(cGameSystem_GetAgentData(g_Game, -1)), 0);
+        GuiTextWidget_SetText(b, AgentData_GetRankText(cGameSystem_GetAgentData(g_Game, -1)), 0);
     } else {
         GuiTextWidget_SetText(a, "Player", 0);
-        GuiTextWidget_SetText(b, Loc_GetTextById(Loc_FindKeyThunk("Rank_00") + 1), 0);
+        GuiTextWidget_SetText(b, nGlobalization_GetString_int(nGlobalization_GetStringIndex("Rank_00") + 1), 0);
     }
     if (o->f7C) GuiTextWidget_SetText(o->f7C, D_004B9F20, 0);
-    GuiAgentModify_UpdateAvailability(o);
+    GuiAgentModify_TattooPatchesLockout(o);
 }
-#undef GuiAgentModify_AdvancePatchB /* merge_units */
-#undef Agent_GetSelected /* merge_units */
+#undef GuiAgentModify_CheckBigPatch /* merge_units */
+#undef cGameSystem_GetAgentData /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00342FA0(void) {}
 #pragma pop /* merge_units */
@@ -176,7 +176,7 @@ extern char g_AgentPartCache[];
 extern int FindTex__7MonsterF1(void *t, __int128 key);
 extern void Monster_FindTheTexture(void *t, __int128 key, E *e, short *a, short *b, unsigned char u, signed char s);
 
-void GuiAgentModify_AdvancePatchB(O *o, int idx)
+void GuiAgentModify_CheckBigPatch(O *o, int idx)
 {
     Key k;
     char *lo, *hi, *b;

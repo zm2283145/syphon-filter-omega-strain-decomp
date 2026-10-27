@@ -10,7 +10,7 @@
 extern int std_vector_imp_cSkaBlendSequenceItem_push_back(ObjVec*, int);
 extern char* std_vector_imp_cSkaBlendSequenceItem_end_void(ObjVec*);
 extern char** std_vector_deleter_cSkaBlendSequenceItem_data_void(ObjVec*);
-extern int Vector_Insert_20A080(ObjVec*, char*, int, int);
+extern int std_vector_imp_cSkaBlendSequenceItem_insert(ObjVec*, char*, int, int);
 
 void std_vector_cSkaBlendSequenceItem_push_back(ObjVec* v, int value) {
     std_vector_imp_cSkaBlendSequenceItem_push_back(v, value);
@@ -18,7 +18,7 @@ void std_vector_cSkaBlendSequenceItem_push_back(ObjVec* v, int value) {
 
 /* Append one element at the end. */
 int std_vector_imp_cSkaBlendSequenceItem_push_back(ObjVec* v, int value) {
-    return Vector_Insert_20A080(v, std_vector_imp_cSkaBlendSequenceItem_end_void(v), 1, value);
+    return std_vector_imp_cSkaBlendSequenceItem_insert(v, std_vector_imp_cSkaBlendSequenceItem_end_void(v), 1, value);
 }
 
 /* End pointer for 12-byte elements. */

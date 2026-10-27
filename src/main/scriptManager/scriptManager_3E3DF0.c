@@ -60,9 +60,9 @@ T3F80* cAssocArray_int_SchedCallbackPtr_dtor(T3F80* t, short del)
 #pragma push /* merge_units */
 extern void std_vector_cGroupPtr_dtor(void* self, short del);
 extern void std_vector_StringPtr_dtor(void* self, short del);
-extern void ReceiverList_Dtor_3E2C20(void* self, short del);
+extern void std_list_SymbolTablePtr_dtor(void* self, short del);
 extern void std_list_PopVar_dtor(void* self, short del);
-void* ScriptInterpreter_dtor(void* self, short del)
+void* cScriptInterpreter_dtor(void* self, short del)
 {
     if (self) {
         void* a = (char*)self + 0x4E4C;
@@ -75,7 +75,7 @@ void* ScriptInterpreter_dtor(void* self, short del)
             std_vector_StringPtr_dtor(b, -1);
         c = (char*)self + 0xC;
         if (c)
-            ReceiverList_Dtor_3E2C20(c, 0);
+            std_list_SymbolTablePtr_dtor(c, 0);
         if (self)
             std_list_PopVar_dtor(self, 0);
         if (del > 0)

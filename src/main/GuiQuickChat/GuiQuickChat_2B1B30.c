@@ -10,21 +10,21 @@
 
 typedef struct { char pad[0x4C]; int id; } Slot;
 extern int sprintf(char* buf, const char* fmt, ...);
-extern int GuiWidget_FindChildByName(void* self, const char* name);
-extern void GuiWidget_Init(void* self);
+extern int GuiWidget_FindChild_charP(void* self, const char* name);
+extern void GuiWidget_onAdd(void* self);
 
 /* Looks up four numbered children by name into the ids at +0x4C, then finishes setup. */
-void GuiQuickChat_Init(void* self)
+void GuiQuickChat_onAdd(void* self)
 {
     char buf[0x20];
     Slot* slot;
     int i;
     for (i = 0, slot = (Slot*)self; i < 4; i++) {
         sprintf(buf, "dpad%d", i);
-        slot->id = GuiWidget_FindChildByName(self, buf);
+        slot->id = GuiWidget_FindChild_charP(self, buf);
         slot = (Slot*)((int*)slot + 1);
     }
-    GuiWidget_Init(self);
+    GuiWidget_onAdd(self);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002B1B30 */

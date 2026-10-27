@@ -10,7 +10,7 @@
         NetMsgHeader* p;                                                      \
         {                                                                     \
             AllocGuard guard;                                                 \
-            p = (NetMsgHeader*)Mem_Alloc(0, (size), fileSym, (line));         \
+            p = (NetMsgHeader*)cMemMan_Allocate(0, (size), fileSym, (line));         \
         }                                                                     \
         if (p) {                                                              \
             p->vtable = D_004DFD80;                                           \
@@ -28,4 +28,4 @@
         return p;                                                             \
     }
 extern "C" { char D_004B3560[] = "NetScoreMsg.hh"; }
-DEFINE_NET_MSG_CLONE1(cNetScoreMsg_v01, 0x30, D_004B3560, 0x17, D_004DE5D0, NMC_W(0x24); NMC_W(0x28); NMC_W(0x2C))
+DEFINE_NET_MSG_CLONE1(cNetScoreMsg_Clone, 0x30, D_004B3560, 0x17, D_004DE5D0, NMC_W(0x24); NMC_W(0x28); NMC_W(0x2C))

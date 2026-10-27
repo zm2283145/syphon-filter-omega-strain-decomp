@@ -2,8 +2,8 @@
 typedef struct { int key; int recv; int id; unsigned char flag; int a; int b; } C3NrPair;
 typedef struct C3NrNode { struct C3NrNode* left; struct C3NrNode* right; int pad; C3NrPair v; } C3NrNode;
 typedef struct { int pad; C3NrNode* root; } C3NrMap;
-extern C3NrNode* Tree_Insert_2D1430(C3NrMap* m, C3NrNode* parent, unsigned char left, unsigned char leftmost, C3NrPair* v);
-C3NrPair* NetRecvMap_Insert(C3NrMap* m, int* key)
+extern C3NrNode* std_tree_pair_int_value_compare_insert_node_at_nodeP_bool_bool_pairR(C3NrMap* m, C3NrNode* parent, unsigned char left, unsigned char leftmost, C3NrPair* v);
+C3NrPair* std_tree_pair_int_value_compare_find_or_insert(C3NrMap* m, int* key)
 {
     C3NrNode* cand = 0;
     C3NrNode* parent = (C3NrNode*)&m->root;
@@ -30,7 +30,7 @@ C3NrPair* NetRecvMap_Insert(C3NrMap* m, int* key)
         p.flag = 0;
         p.a = 0;
         p.b = 0;
-        return &Tree_Insert_2D1430(m, parent, left, leftmost, &p)->v;
+        return &std_tree_pair_int_value_compare_insert_node_at_nodeP_bool_bool_pairR(m, parent, left, leftmost, &p)->v;
     }
     return &cand->v;
 }

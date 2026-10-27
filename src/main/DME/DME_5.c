@@ -55,12 +55,12 @@ void NetSetDefaultJoinParams(NetHostCfg_A1B0* cfg);
 int NetJoin(NetHostCfg_A1B0* cfg, NetHostOut_A1B0* out);
 int NetGetLocalTime(int* t);
 int DME_Update(void);
-void DME_OnJoinResult(void);
-void Net_OnRemoteClientJoined(void);
+void cDME_LocalJoinCallback(void);
+void cNetObj_RemoteClientJoinCallback(void);
 int cHeadSet_ShutdownAudio(void);
 int NetLeave(int);
 int NetDisconnect(int);
-void Net_ResetSession(void);
+void cDME_ExitGame(void);
 char* strncpy(char* d, const char* s, unsigned int n);
 int sprintf(char* d, const char* f, ...);
 }
@@ -74,14 +74,14 @@ static inline void AbortJoin(void)
     cHeadSet_ShutdownAudio();
     NetLeave(0);
     NetDisconnect(0);
-    Net_ResetSession();
+    cDME_ExitGame();
     D_005721D8 = 1;
     sprintf(D_005721E0, D_004BFA18);
 }
 #pragma opt_propagation off
 /* Stops the DME thread, then joins the game and polls DME_Update until the join
-   completes (DME_OnJoinResult) or 15 s pass. */
-extern "C" void DME_JoinGame(void)
+   completes (cDME_LocalJoinCallback) or 15 s pass. */
+extern "C" void cDME_JoinGame(void)
 {
     NetHostOut_A1B0 out;
     NetHostCfg_A1B0 cfg;
@@ -118,9 +118,9 @@ extern "C" void DME_JoinGame(void)
     cfg.unk14 = 0x1F4;
     cfg.unk18 = 0;
     cfg.unk1C = IsHost() ? ROLE_HOST_A1B0 : ROLE_CLIENT_A1B0;
-    cfg.onJoinResult = DME_OnJoinResult;
+    cfg.onJoinResult = cDME_LocalJoinCallback;
     cfg.unk24 = 0;
-    cfg.onClientJoined = Net_OnRemoteClientJoined;
+    cfg.onClientJoined = cNetObj_RemoteClientJoinCallback;
     cfg.unk2C = 0;
     err = NetJoin(&cfg, &out);
     if (err == 0) {
@@ -160,9 +160,9 @@ extern signed char D_005724C0; /* set on first use (lazy-init guard) */
 static unsigned int dat_004941A0[4] = { 0x1, 0x0, 0x0, 0x0 }; /* byte 0: restart from the list head */
 extern NetworkGameList D_005724A0;
 extern NetworkGameIterator g_DmeGameIter;
-void PtrVec_Begin_42A670(NetworkGameIterator* result, NetworkGameList* list);
-void PtrVec_End_42A640(NetworkGameIterator* result, NetworkGameList* list);
-void Iter_Copy_42A660(NetworkGameIterator* destination, const NetworkGameIterator* source);
+void std_vector_tServerPtr_begin(NetworkGameIterator* result, NetworkGameList* list);
+void std_vector_tServerPtr_end(NetworkGameIterator* result, NetworkGameList* list);
+void cArray_tServerPtr_Iterator_ctor(NetworkGameIterator* destination, const NetworkGameIterator* source);
 char* strncpy(char* destination, const char* source, unsigned int count);
 }
 
@@ -172,7 +172,7 @@ static inline int different_iterator(const NetworkGameIterator& first, const Net
 }
 
 /* Enumerate a game address and restart from the beginning after reaching the end. */
-extern "C" bool DME_NextGameAddress(NetworkGameAddress* destination)
+extern "C" bool cDME_GetServerFromList(NetworkGameAddress* destination)
 {
     NetworkGameIterator begin;
     NetworkGameIterator end;
@@ -182,13 +182,13 @@ extern "C" bool DME_NextGameAddress(NetworkGameAddress* destination)
         D_005724C0 = 1;
     bool found = false;
     if ((*(unsigned char*)dat_004941A0)) {
-        PtrVec_Begin_42A670(&rawBegin, &D_005724A0);
-        Iter_Copy_42A660(&begin, &rawBegin);
+        std_vector_tServerPtr_begin(&rawBegin, &D_005724A0);
+        cArray_tServerPtr_Iterator_ctor(&begin, &rawBegin);
         g_DmeGameIter = begin;
         (*(unsigned char*)dat_004941A0) = 0;
     }
-    PtrVec_End_42A640(&rawEnd, &D_005724A0);
-    Iter_Copy_42A660(&end, &rawEnd);
+    std_vector_tServerPtr_end(&rawEnd, &D_005724A0);
+    cArray_tServerPtr_Iterator_ctor(&end, &rawEnd);
     if (different_iterator(g_DmeGameIter, end)) {
         strncpy(destination->name, (*g_DmeGameIter.entry)->name, 16);
         destination->value = (*g_DmeGameIter.entry)->value;

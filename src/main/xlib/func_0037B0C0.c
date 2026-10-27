@@ -8,19 +8,19 @@
 
 extern "C" {
 /*fc*/
-int Mem_Free(...);                       
+int cMemMan_Deallocate(...);                       
 int std_list_deleter_tDataDelRec_generic_iterator_ctor(...);                        
 int std_list_deleter_tDataDelRec_tail(...);                          
 char * details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_9(...);                        
-int List_Erase_37FBA0(...);              
+int std_list_deleter_tDataDelRec_erase_listdeleter(...);              
 extern unsigned char g_ProfileLockEnabled;
 }
 #pragma inline_depth(10)
 static inline int ite0(char *l) { int r; std_list_deleter_tDataDelRec_generic_iterator_ctor(&r, std_list_deleter_tDataDelRec_tail(l)); return r; }
-static inline void er0(char *l, char *n) { int sp84; char *sp80; sp80 = n; List_Erase_37FBA0(&sp84, l, &sp80); }
+static inline void er0(char *l, char *n) { int sp84; char *sp80; sp80 = n; std_list_deleter_tDataDelRec_erase_listdeleter(&sp84, l, &sp80); }
 static inline void er1(char *l, char *n) { er0(l, n); }
 static inline int ite1(char *l) { return ite0(l); }
-extern "C" void Video_FreeDeferredBuffers(char * arg0, int arg1) {
+extern "C" void XLib_DeferDeleteDmaData(char * arg0, int arg1) {
     int temp_s3;
     char * var_s2;
     char * temp_s1;
@@ -39,13 +39,13 @@ temp_s0 = F_(temp_s1, 0xC, int);
                         temp_s0_2 = F_(temp_s1, 0x8, int);
                         {
                             AllocGuard g;
-                        Mem_Free(0, temp_s0_2, "xlib.cc", 0x812);
+                        cMemMan_Deallocate(0, temp_s0_2, "xlib.cc", 0x812);
                         }
                     } else {
                         temp_s3 = F_(temp_s1, 0x8, int);
                         {
                             AllocGuard g;
-                        Mem_Free(temp_s0, temp_s3, "xlib.cc", 0x814);
+                        cMemMan_Deallocate(temp_s0, temp_s3, "xlib.cc", 0x814);
                         }
                     }
                     er0(arg0 + 0x1108, temp_s1);

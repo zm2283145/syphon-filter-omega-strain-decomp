@@ -7,16 +7,16 @@
 /* merge_units: begin func_003D0B90 */
 #pragma push /* merge_units */
 #include "types.h"
-extern void ReceiverList_Dtor_3D0A90(void* self, short del);
+extern void std_list_cTextAreaPtr_dtor(void* self, short del);
 extern void std_list_cText_dtor(void* self, short del);
 extern void operator_delete(void* p);
-void* TextManager_Destroy(void* self, short del)
+void* cTextSystem_dtor(void* self, short del)
 {
     if (self) {
         void* a = (char*)self + 0x10;
         void* b;
         if (a)
-            ReceiverList_Dtor_3D0A90(a, 0);
+            std_list_cTextAreaPtr_dtor(a, 0);
         b = (char*)self + 4;
         if (b)
             std_list_cText_dtor(b, 0);
@@ -53,12 +53,12 @@ extern Word_003D0C10* std_list_deleter_cText_generic_iterator_ctor_nodebaseP(Wor
 extern void std_list_cTextAreaPtr_begin(Word_003D0C10* w, void* v);
 extern Word_003D0C10* cLListIterator_cTextAreaPtr_ctor(Word_003D0C10* d, Word_003D0C10* s);
 extern void std_list_cTextAreaPtr_end(Word_003D0C10* w, void* v);
-extern int String_CStr_189540(void* p);
-extern void Font_DrawString(int a0, int a1, void* a2, float x, float y, float z, float p, float q, float r);
+extern int cString_CStr(void* p);
+extern void cFont_Display_charP_tRGBAR_float_float_etc(int a0, int a1, void* a2, float x, float y, float z, float p, float q, float r);
 extern void TextObj_Draw(int c);
 extern void std_list_deleter_cText_erase(Word_003D0C10* out, int* size, Word_003D0C10* first, Word_003D0C10* last);
 static inline int ne3D(Node3D* n, Word_003D0C10* w) { return n != (Node3D*)w->value; }
-void TextManager_DrawImmediate(Obj3D* o)
+void cTextSystem_Render(Obj3D* o)
 {
     Word_003D0C10 end, end2, b, d, it, e, out, first, last, a, c;
     Word_003D0C10* pe;
@@ -73,7 +73,7 @@ void TextManager_DrawImmediate(Obj3D* o)
         pe = &end;
         for (; ne3D(n, pe); n = n->next) {
             int* s = (int*)((char*)n + 0x10);
-            Font_DrawString(s[3], String_CStr_189540(s), s + 4, *(float*)(s + 8), *(float*)(s + 9), 0.001f, 0.0f, 0.0f, 0.0f);
+            cFont_Display_charP_tRGBAR_float_float_etc(s[3], cString_CStr(s), s + 4, *(float*)(s + 8), *(float*)(s + 9), 0.001f, 0.0f, 0.0f, 0.0f);
         }
         std_list_cTextAreaPtr_begin(&a, o->vec);
         cLListIterator_cTextAreaPtr_ctor(&b, &a);

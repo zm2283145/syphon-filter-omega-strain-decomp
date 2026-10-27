@@ -9,7 +9,7 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
-extern "C" void* Mem_Alloc(int pool, int size, char* file, int line);
+extern "C" void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern "C" {
 extern char D_004E1490[];
 void GuiWidget_ctor(void* self);
@@ -20,7 +20,7 @@ extern "C" GN457510* GuiStartMenuBackdrop_Create(void)
     GN457510* p;
     {
         AllocGuard guard;
-        p = (GN457510*)Mem_Alloc(0, 0x48, "guiWidget.hh", 0x2A);
+        p = (GN457510*)cMemMan_Allocate(0, 0x48, "guiWidget.hh", 0x2A);
     }
     if (p) {
         GuiWidget_ctor(p);
@@ -44,9 +44,9 @@ extern "C" {
 /*fc*/
 int GuiObjectives_ctor(...);                 
 #if 0 /* merge_units */
-char * Mem_Alloc(int, int, char *, int);
+char * cMemMan_Allocate(int, int, char *, int);
 #endif /* merge_units */
-#define Mem_Alloc(a0, a1, a2, a3) ((char *)Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
+#define cMemMan_Allocate(a0, a1, a2, a3) ((char *)cMemMan_Allocate((a0), (a1), (a2), (a3))) /* merge_units */
                       
 extern char D_004C1CA0;
 extern char D_004E1430;
@@ -57,7 +57,7 @@ extern "C" char * GuiStartMenu_Create(void) {
 
     {
         AllocGuard g;
-    temp_s0 = (char *)(Mem_Alloc(0, 0xB4, &D_004C1CA0, 0x2A));
+    temp_s0 = (char *)(cMemMan_Allocate(0, 0xB4, &D_004C1CA0, 0x2A));
     }
     if (temp_s0 != NULL) {
         GuiObjectives_ctor(temp_s0, 1, 1);
@@ -73,7 +73,7 @@ extern "C" char * GuiStartMenu_Create(void) {
     }
     return temp_s0;
 }
-#undef Mem_Alloc /* merge_units */
+#undef cMemMan_Allocate /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_004575D0 */
 
@@ -84,7 +84,7 @@ extern "C" char * GuiStartMenu_Create(void) {
 
 /* Factory: allocate, run the base constructor, set the vtable. */
 extern "C" { char D_004C1CB0[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_VT(GuiBriefingPane_Create, 0x4C, D_004C1CB0, GuiWidget_ctor, D_004E13D0)
+DEFINE_GUARDED_NEW_VT(ConcreteWidgetClassRep_GuiBriefingPane_Create, 0x4C, D_004C1CB0, GuiWidget_ctor, D_004E13D0)
 #pragma pop /* merge_units */
 /* merge_units: end func_004576C0 */
 
@@ -93,7 +93,7 @@ DEFINE_GUARDED_NEW_VT(GuiBriefingPane_Create, 0x4C, D_004C1CB0, GuiWidget_ctor, 
 #pragma cplusplus on
 
 extern "C" { char D_004C1CC0[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_VT(GuiWeaponStats_Create, 0xC0, D_004C1CC0, guiTextArrayWidget_ctor, D_004E1350)
+DEFINE_GUARDED_NEW_VT(ConcreteWidgetClassRep_GuiWeaponStats_Create, 0xC0, D_004C1CC0, GuiTextArrayWidget_ctor, D_004E1350)
 #pragma pop /* merge_units */
 /* merge_units: end func_00457780 */
 
@@ -102,7 +102,7 @@ DEFINE_GUARDED_NEW_VT(GuiWeaponStats_Create, 0xC0, D_004C1CC0, guiTextArrayWidge
 #pragma cplusplus on
 
 extern "C" { char D_004C1CD0[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_VT(GuiEquipmentPane_Create, 0x58, D_004C1CD0, GuiWidget_ctor, D_004E12F0)
+DEFINE_GUARDED_NEW_VT(ConcreteWidgetClassRep_GuiEquipmentPane_Create, 0x58, D_004C1CD0, GuiWidget_ctor, D_004E12F0)
 #pragma pop /* merge_units */
 /* merge_units: end func_00457840 */
 
@@ -111,16 +111,16 @@ DEFINE_GUARDED_NEW_VT(GuiEquipmentPane_Create, 0x58, D_004C1CD0, GuiWidget_ctor,
 #pragma cplusplus on
 extern "C" {
 #if 0 /* merge_units */
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 #endif /* merge_units */
-#define Mem_Alloc(a0, a1, a2, a3) ((void *)Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
+#define cMemMan_Allocate(a0, a1, a2, a3) ((void *)cMemMan_Allocate((a0), (a1), (a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
 void GuiWidget_ctor(void*);
 #endif /* merge_units */
 #define GuiWidget_ctor(a0) (GuiWidget_ctor((a0))) /* merge_units */
 
-void Resource_Construct(void*);
+void cFileMan_ctor_void(void*);
 int* cSystem_GetObjectID_void(void*);
 int* cObjectId_ctor_uint(int*, int);
 extern char D_004C1CE0[];
@@ -152,8 +152,8 @@ static inline void SndReq_Ctor(SndReq* p, void* voice) {
     int tmp;
     p->voiceId = -2;
     p->voice = 0;
-    Resource_Construct(p->a);
-    Resource_Construct(p->b);
+    cFileMan_ctor_void(p->a);
+    cFileMan_ctor_void(p->b);
     p->type = -1;
     p->name = -1;
     p->voice = voice;
@@ -167,11 +167,11 @@ static inline void SndReq_Ctor(SndReq* p, void* voice) {
     p->x186 = 0;
 }
 #pragma opt_dead_code off
-extern "C" W57900* GuiRadioLog_Create(void) {
+extern "C" W57900* ConcreteWidgetClassRep_GuiRadioLog_Create(void) {
     W57900* p;
     {
         AllocGuard g;
-        p = (W57900*)Mem_Alloc(0, 0x1E0, D_004C1CE0, 0x2A);
+        p = (W57900*)cMemMan_Allocate(0, 0x1E0, D_004C1CE0, 0x2A);
     }
     if (p) {
         GuiWidget_ctor(p);
@@ -181,7 +181,7 @@ extern "C" W57900* GuiRadioLog_Create(void) {
     }
     return p;
 }
-#undef Mem_Alloc /* merge_units */
+#undef cMemMan_Allocate /* merge_units */
 #undef GuiWidget_ctor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00457900 */
@@ -192,6 +192,6 @@ extern "C" W57900* GuiRadioLog_Create(void) {
 #include "two_member_dtor.h"
 
 /* Destructor: destroy two members, optionally delete. */
-DEFINE_TWO_MEMBER_DTOR(cSndFx_dtor, FileMan_Release, 0x48, 0xE4)
+DEFINE_TWO_MEMBER_DTOR(cSndFx_dtor, cFileMan_dtor, 0x48, 0xE4)
 #pragma pop /* merge_units */
 /* merge_units: end func_00457A30 */

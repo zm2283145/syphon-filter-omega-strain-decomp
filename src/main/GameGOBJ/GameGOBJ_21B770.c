@@ -44,11 +44,11 @@ typedef struct TriggerEventMsg {
 
 extern int g_TriggerMsgKey;
 extern int D_004DAF10;
-extern void Event_Construct(TriggerEventMsg*, void*);
+extern void cMessage_ctor_cMessageNameR(TriggerEventMsg*, void*);
 
 /* Constructor: cGOBJTriggerEventMsg(event, param, source, other). */
 TriggerEventMsg* cGOBJTriggerEventMsg_ctor(TriggerEventMsg* m, int event, int param, Gobj* source, Gobj* other) {
-    Event_Construct(m, &g_TriggerMsgKey);
+    cMessage_ctor_cMessageNameR(m, &g_TriggerMsgKey);
     m->vtable = &D_004DAF10;
     m->event = event;
     m->param = param;

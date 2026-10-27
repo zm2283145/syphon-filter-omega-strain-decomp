@@ -7,7 +7,7 @@
 #include "types.h"
 #include "hudTargets_types.h"
 
-extern int ObjMarkerMgr_Remove(ObjMarkerMgr* mgr, int* id, int send);
+extern int cHudTargetManager_Remove(ObjMarkerMgr* mgr, int* id, int send);
 
 Word* cLListIterator_cHudTargetInfoPtr_ctor_cLListIteratorR(Word* dst, Word* src) {
     dst->value = src->value;
@@ -75,6 +75,6 @@ void std_list_cHudTargetInfoPtr_begin_void_2(Iter* out, PtrVec* v) {
 }
 
 /* Removes the marker for object id (map marker kinds). */
-int ObjMarkerMgr_RemoveDefault(ObjMarkerMgr* mgr, int* id) {
-    return ObjMarkerMgr_Remove(mgr, id, 1);
+int cHudTargetManager_RemoveObjective(ObjMarkerMgr* mgr, int* id) {
+    return cHudTargetManager_Remove(mgr, id, 1);
 }

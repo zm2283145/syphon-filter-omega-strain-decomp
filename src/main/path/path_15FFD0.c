@@ -23,9 +23,9 @@ typedef struct {
     char pad61[0x13];
     T_FFD0* t;
 } S_FFD0;
-int NpcRoute_Step(S_FFD0* self, int i);
-void NpcPath_HoldNode(S_FFD0* self, int id);
-void NpcPath_HoldAtRouteNode(S_FFD0* self, int id)
+int cPathNavigator_NextPathSegment(S_FFD0* self, int i);
+void cPathNavigator_SetNodeIndex(S_FFD0* self, int id);
+void cPathNavigator_ResolvePathAfterTeleport(S_FFD0* self, int id)
 {
     if (!self->flag && id != self->cur && id != self->other) {
         T_FFD0* t = self->t;
@@ -35,12 +35,12 @@ void NpcPath_HoldAtRouteNode(S_FFD0* self, int id)
             if (id == t->ids[i]) {
                 self->idx = i;
                 self->cur = id;
-                self->flag = !NpcRoute_Step(self, i);
+                self->flag = !cPathNavigator_NextPathSegment(self, i);
                 break;
             }
         }
     }
-    NpcPath_HoldNode(self, id);
+    cPathNavigator_SetNodeIndex(self, id);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0015FFD0(void) {}
@@ -117,7 +117,7 @@ static inline void VSub(V4* r, V4* a, V4* b)
 {
     __asm__ volatile("lqc2 $vf1, 0x0(%1); lqc2 $vf2, 0x0(%2); vsub.xyzw $vf1, $vf1, $vf2; sqc2 $vf1, 0x0(%0)" : : "r"(r), "r"(a), "r"(b) : "memory");
 }
-/* vector length idiom (VU0 vsqrt + qmfc2/mtc1), same as src\main\Vec4_Length.c */
+/* vector length idiom (VU0 vsqrt + qmfc2/mtc1), same as src\main\cVector_GetLength.c */
 static inline float Length(V4* a)
 {
     int t; float r = 0.0f;
@@ -126,7 +126,7 @@ static inline float Length(V4* a)
 }
 
 #undef Path
-extern "C" float NpcRoute_Distance(NR* self)
+extern "C" float cPathNavigator_DistanceToDestination(NR* self)
 {
     float r = 0.0f;
     if (self->target) {
@@ -154,7 +154,7 @@ static inline void merge_flush_func_00160130(void) {}
 typedef struct { int pad[2]; void** items; } Reg_01E0;
 typedef struct { char pad[0x4C]; int a; int pad50; int b; } S_01E0;
 extern Reg_01E0* D_004FFBE0;
-void* NpcPath_ReferenceNode(S_01E0* self)
+void* cPathNavigator_GetLastNodeReached(S_01E0* self)
 {
     int id = self->a;
     void* r = 0;

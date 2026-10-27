@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_00582760;
 
-void StaticInit_NetTerrainActivationMsgName(void) {
+void StaticInit_NetTerrainActivation(void) {
     D_00582760 = "NetTerrainActivationMsg";
 }

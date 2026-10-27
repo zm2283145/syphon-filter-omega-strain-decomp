@@ -20,13 +20,13 @@ struct Widget {
     int unk94; /* +0x94 */
 };
 
-extern "C" void GuiArrayWidget_Select(Widget* self, int a, int b);
+extern "C" void GuiArrayWidget_SetSelected(Widget* self, int a, int b);
 
-/* Calls virtual +0x5C(1, +0x94) then GuiArrayWidget_Select(self, 0, 0). */
-extern "C" void GuiTextListWidget_Refresh(Widget* self)
+/* Calls virtual +0x5C(1, +0x94) then GuiArrayWidget_SetSelected(self, 0, 0). */
+extern "C" void GuiTextListWidget_UpdateSize(Widget* self)
 {
     self->Method5C(1, self->unk94);
-    GuiArrayWidget_Select(self, 0, 0);
+    GuiArrayWidget_SetSelected(self, 0, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_004213E0 */
@@ -35,14 +35,14 @@ extern "C" void GuiTextListWidget_Refresh(Widget* self)
 #pragma push /* merge_units */
 #include "guiTextListWidget_types.h"
 
-extern char* String_CStr(const void* text);
+extern char* std_basic_string_char_char_traits_char_c_str(const void* text);
 
 /* Return the selected entry's string data, or null for an invalid index. */
 char* GuiTextListWidget_GetItemText(TextListWidget* self, int index) {
     if (index < 0 || index >= self->entries.count) {
         return 0;
     }
-    return String_CStr(&self->entries.data[index]);
+    return std_basic_string_char_char_traits_char_c_str(&self->entries.data[index]);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00421430(void) {}
@@ -65,7 +65,7 @@ int GuiTextListWidget_GetItemId(TextListWidget* self, int index)
 }
 
 /* Change the signed byte only for an existing list entry. */
-void GuiTextListWidget_SetStyle(TextListWidget* self, int index, signed char value)
+void GuiTextListWidget_SetItemState(TextListWidget* self, int index, signed char value)
 {
     if (index < 0 || index >= self->entries.count)
         return;
@@ -73,7 +73,7 @@ void GuiTextListWidget_SetStyle(TextListWidget* self, int index, signed char val
 }
 
 /* Preserve the distinct 255 sentinel for invalid indices. */
-int GuiTextListWidget_GetStyle(TextListWidget* self, int index)
+int GuiTextListWidget_GetItemState(TextListWidget* self, int index)
 {
     if (index < 0 || index >= self->entries.count)
         return 255;
@@ -89,17 +89,17 @@ static inline void merge_flush_func_00421480(void) {}
 typedef struct { char d[20]; } E421540;
 typedef struct { char p[0x94]; int count; E421540* items; } O421540;
 #if 0 /* merge_units */
-extern char* String_CStr(E421540* e);
+extern char* std_basic_string_char_char_traits_char_c_str(E421540* e);
 #endif /* merge_units */
-#define String_CStr(a0) (String_CStr((const void *)(a0))) /* merge_units */
+#define std_basic_string_char_char_traits_char_c_str(a0) (std_basic_string_char_char_traits_char_c_str((const void *)(a0))) /* merge_units */
 
 
 #pragma opt_strength_reduction off
-int GuiTextListWidget_FindByText(O421540* o, const char* name)
+int GuiTextListWidget_FindItem_charP(O421540* o, const char* name)
 {
     int i;
     for (i = 0; i < o->count; i++) {
-        if (strcmp(name, String_CStr(&o->items[i])) == 0) {
+        if (strcmp(name, std_basic_string_char_char_traits_char_c_str(&o->items[i])) == 0) {
             return i;
         }
     }
@@ -107,7 +107,7 @@ int GuiTextListWidget_FindByText(O421540* o, const char* name)
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00421540(void) {}
-#undef String_CStr /* merge_units */
+#undef std_basic_string_char_char_traits_char_c_str /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00421540 */
 
@@ -117,7 +117,7 @@ typedef struct { char p[0xC]; int id; char p10[4]; } E4215E0;
 typedef struct { char p[0x94]; int count; E4215E0* items; } L4215E0;
 #pragma push
 #pragma opt_common_subs off
-int GuiTextListWidget_FindById(L4215E0* l, int id)
+int GuiTextListWidget_FindItem_int(L4215E0* l, int id)
 {
     int i;
     for (i = 0; i < l->count; i++) if (((E4215E0*)((char*)l->items + i * sizeof(E4215E0)))->id == id) return i;

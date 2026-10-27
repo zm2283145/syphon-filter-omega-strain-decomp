@@ -36,7 +36,7 @@ typedef struct GroupingPair {
 } GroupingPair;
 
 /* Fills (clip, grouping); clip is NULL unless the clip's grouping is -1. */
-void SkaClip_GetGroupingPair(GroupingPair* out, SkaClip* clip) {
+void cSkaAnim_PlaybackGroupId(GroupingPair* out, SkaClip* clip) {
     out->clip = clip->grouping == -1 ? clip : 0;
     out->grouping = clip->grouping;
 }

@@ -7,7 +7,7 @@ struct BitsD8D0 {
     BitsD8D0& operator=(const BitsD8D0& o) { for (int i = 0; i < 1; i++) w[i] = o.w[i]; return *this; }
     BitsD8D0& operator&=(const BitsD8D0& o) { for (int i = 0; i < 1; i++) w[i] &= o.w[i]; return *this; }
 };
-extern "C" int HumanColMask_And(BitsD8D0* out, const BitsD8D0& a, const BitsD8D0& b) {
+extern "C" int cBitArray_19_opAnd(BitsD8D0* out, const BitsD8D0& a, const BitsD8D0& b) {
     BitsD8D0 t(a);
     t &= b;
     *out = t;

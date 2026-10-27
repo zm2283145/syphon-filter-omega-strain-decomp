@@ -13,21 +13,21 @@ extern M3D1020 D_00543760;
 extern char D_00543764[];
 extern char D_00543770[];
 extern char D_00543748[];
-extern char TextManager_Destroy[];
-extern void List_InitEmpty(void* p);
-extern void ScalarCollection_Init(void* p);
+extern char cTextSystem_dtor[];
+extern void std_list_deleter_cText_ctor(void* p);
+extern void std_list_deleter_voidPtr_ctor_void(void* p);
 extern void __register_global_object(void* o, void* d, void* l);
 #pragma push
 #pragma opt_propagation off
-M3D1020* TextManager_Get(void)
+M3D1020* GetTextSystem(void)
 {
     if (!D_00543740) {
         M3D1020* m = &D_00543760;
         D_00543760.f0 = 0;
-        List_InitEmpty(D_00543764);
-        ScalarCollection_Init(D_00543770);
+        std_list_deleter_cText_ctor(D_00543764);
+        std_list_deleter_voidPtr_ctor_void(D_00543770);
         m->b1C = 1;
-        __register_global_object(m, TextManager_Destroy, D_00543748);
+        __register_global_object(m, cTextSystem_dtor, D_00543748);
         D_00543740 = 1;
     }
     return &D_00543760;

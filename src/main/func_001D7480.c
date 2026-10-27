@@ -46,11 +46,11 @@ struct Self {
 extern "C" {
 extern signed char D_004E9FB0;
 extern Key D_004E9FC0;
-int NodeNameMap_Find(Owner* m, Key* k);
-Item** Registry_At(int* reg, int idx);
-void Secondary_MakeMotionSlot(Slot* s, int clip, int owner);
+int cSkaAnimationSet_GetNodeId(Owner* m, Key* k);
+Item** cArray_cSkaNodePtr_opIndex(int* reg, int idx);
+void cSkaAnimDataIterator_ctor_cSkaAnimDataR_cSkeletonDataR(Slot* s, int clip, int owner);
 void cSkaAnimDataIterator_opAssign(Slot* d, Slot* s);
-void Secondary_MotionRecordDtor(Slot* s, int f);
+void cSkaAnimDataIterator_dtor(Slot* s, int f);
 }
 
 static inline void QZero_7480(void* dd, int nn)
@@ -129,13 +129,13 @@ static inline bool KeyNe(const Key& a, const Key& b) { return !KeyEq(a, b); }
 static inline void Load1(Slot* cur, int clip, int owner)
 {
     SlotBuf s;
-    Secondary_MakeMotionSlot((Slot*)&s, clip, owner);
+    cSkaAnimDataIterator_ctor_cSkaAnimDataR_cSkeletonDataR((Slot*)&s, clip, owner);
     cSkaAnimDataIterator_opAssign(cur, (Slot*)&s);
-    Secondary_MotionRecordDtor((Slot*)&s, -1);
+    cSkaAnimDataIterator_dtor((Slot*)&s, -1);
 }
 static inline void Load2(Slot* cur, int clip, int owner) { Load1(cur, clip, owner); }
 
-extern "C" void Secondary_InstallMotionSlots(Self* self, int savePrev, int load, int saveAfter)
+extern "C" void cHumanIkRoutine_ResetAnimationIterators(Self* self, int savePrev, int load, int saveAfter)
 {
     if (savePrev) self->prev = self->cur;
     if (load) {
@@ -147,7 +147,7 @@ extern "C" void Secondary_InstallMotionSlots(Self* self, int savePrev, int load,
         QZero_7480(&empty, 3);
         if (KeyNe(key, empty)) {
             Owner* o = self->pC->owner;
-            Item* it = *Registry_At(&o->reg, NodeNameMap_Find(o, &key));
+            Item* it = *cArray_cSkaNodePtr_opIndex(&o->reg, cSkaAnimationSet_GetNodeId(o, &key));
             int clip;
             bool en = it->disabled == 0;
             it = en ? it : 0;

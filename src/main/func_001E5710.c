@@ -74,8 +74,8 @@ static inline void QRot(V* v, V* q) {
     }
 }
 
-extern "C" void Placement_Invert_1E5710(Plc* o, Plc* in);
-void Placement_Invert_1E5710(Plc* o, Plc* in)
+extern "C" void cQuatVec_Copy_Invert(Plc* o, Plc* in);
+void cQuatVec_Copy_Invert(Plc* o, Plc* in)
 {
     Plc t = *in;
     Plc* a = &t;

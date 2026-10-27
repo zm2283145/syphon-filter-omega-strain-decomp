@@ -11,7 +11,7 @@ struct E3ZIt {
     E3ZIt& operator++() { p.n = p.n->next; return *this; }
 };
 
-extern "C" E3ZIt* List_End_13D890(E3ZIt* out, E3ZList* l);
+extern "C" E3ZIt* std_list_deleter_voidPtr_end_void_2(E3ZIt* out, E3ZList* l);
 extern "C" E3ZIt* std_list_cScenePtr_generic_iterator_1_ctor(E3ZIt* out, E3ZNode* n);
 extern "C" E3ZIt* std_list_cScenePtr_begin(E3ZIt* out, E3ZList* l);
 extern "C" E3ZIt* cConstLListIterator_cScenePtr_ctor(E3ZIt* out, E3ZIt* src);
@@ -24,7 +24,7 @@ extern "C" E3ZItem* cSceneManager_GetSceneBelongingTo(E3ZList* l, int key) {
     E3ZIt a;
     E3ZIt b;
     E3ZNode* end;
-    List_End_13D890(&a, l);
+    std_list_deleter_voidPtr_end_void_2(&a, l);
     std_list_cScenePtr_generic_iterator_1_ctor(&e, a.p.n);
     end = e.p.n;
     std_list_cScenePtr_begin(&b, l);

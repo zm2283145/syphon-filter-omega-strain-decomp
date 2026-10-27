@@ -1,6 +1,6 @@
 #include "types.h"
 
-void SkelNode_ClearWeight(int a0) {
+void cBone_SkeletonCenterOfMassContribution_Clear(int a0) {
     int cond;
 
     cond = a0 == 0;

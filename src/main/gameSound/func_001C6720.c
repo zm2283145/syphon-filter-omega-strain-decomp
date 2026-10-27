@@ -15,23 +15,23 @@ typedef struct SoundMsg {
 
 extern char g_Game[];
 extern char D_004DAE10[];
-extern void SoundRequest_Ctor(SoundRequest* req, int kind, int a, int b, int c);
+extern void cSndFx_ctor_int_charP_cGOBJP_int(SoundRequest* req, int kind, int a, int b, int c);
 extern void SoundMsg_WrapAction(SoundMsg* msg, SoundRequest* req);
-extern void Event_Send(SoundMsg* msg, void* target, int flags);
-extern void FileMan_Release(void* part, int flags);
+extern void QueueMessage_cMessageR_cSystemP_int(SoundMsg* msg, void* target, int flags);
+extern void cFileMan_dtor(void* part, int flags);
 extern void cMessage_dtor(SoundMsg* msg, int flags);
 
 /* Builds a quip sound request and broadcasts it as a sound message. */
-void Global_PlayQuip(int a, int b, int c) {
+void nGameSound_PlayQuip_charP_cGOBJP_int(int a, int b, int c) {
     SoundMsg msg;
     SoundRequest req;
-    SoundRequest_Ctor(&req, 4, a, b, c);
+    cSndFx_ctor_int_charP_cGOBJP_int(&req, 4, a, b, c);
     SoundMsg_WrapAction(&msg, &req);
-    Event_Send(&msg, g_Game, 0);
+    QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 0);
     msg.vtbl = D_004DAE10;
-    FileMan_Release(msg.partB, -1);
-    FileMan_Release(msg.partA, -1);
+    cFileMan_dtor(msg.partB, -1);
+    cFileMan_dtor(msg.partA, -1);
     cMessage_dtor(&msg, 0);
-    FileMan_Release(req.partB, -1);
-    FileMan_Release(req.partA, -1);
+    cFileMan_dtor(req.partB, -1);
+    cFileMan_dtor(req.partA, -1);
 }

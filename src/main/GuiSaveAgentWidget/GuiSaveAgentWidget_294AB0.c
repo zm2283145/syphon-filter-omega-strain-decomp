@@ -4,7 +4,7 @@ typedef struct { char pad[0x14]; unsigned short flags; } Part294;
 typedef struct { char pad[0x1D4]; unsigned char unk1D4; char pad2[3]; Part294* parts[6]; } Obj294;
 
 /* Clears flag bits 1 and 2 on all six parts, then sets them on the first part. */
-void GuiCommandCenter_Reset(Obj294* self)
+void GuiCommandCenter_ResetGroups(Obj294* self)
 {
     Obj294* p; /* walks self by one part slot per iteration so p->parts[0] is part i */
     int i;

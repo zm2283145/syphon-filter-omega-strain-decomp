@@ -10,7 +10,7 @@
 #include "types.h"
 #include "vslot_pad.h"
 
-/* GuiScoresEquip_Init: bind the scores/equipment screen widgets: the figure view (render callback),
+/* GuiScoresEquip_onAdd: bind the scores/equipment screen widgets: the figure view (render callback),
  * the 4x20 equipment grid, the optional player tabs (with the multiplayer stats query) and the
  * 4 pairs of row labels. */
 
@@ -49,32 +49,32 @@ extern char D_004BB5E0[];
 extern char D_00492D10[20][20];
 extern Screen* D_00533760;
 extern unsigned char g_IsMultiplayer;
-void GuiWidget_Init(Screen* s);
-W* GuiWidget_FindChildByName(void* self, char* name);
-void GuiScoresEquip_FigureCallback(void);
+void GuiWidget_onAdd(Screen* s);
+W* GuiWidget_FindChild_charP(void* self, char* name);
+void SE_ManRenderWrapper(void);
 void func_0041C0D0(W* w, int on);
 void GuiTextWidget_SetDisableWrap(W* w, int on);
 int sprintf(char* buf, const char* fmt, ...);
-void GuiWidget_SendEvent(Screen* s, W* to, int ev, int name, int data);
-void GuiScoresEquip_Init(Screen* s);
+void GuiWidget_SendMessage(Screen* s, W* to, int ev, int name, int data);
+void GuiScoresEquip_onAdd(Screen* s);
 }
 
 static inline W* FindAs(void* self, char* name, char* type)
 {
-    W* w = GuiWidget_FindChildByName(self, name);
+    W* w = GuiWidget_FindChild_charP(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
 
-void GuiScoresEquip_Init(Screen* s)
+void GuiScoresEquip_onAdd(Screen* s)
 {
     int i;
     int j;
-    GuiWidget_Init(s);
+    GuiWidget_onAdd(s);
     {
         W* f = FindAs(s, D_004BB590, D_004A9BF0);
         if (f) {
             D_00533760 = s;
-            f->cb = (void*)GuiScoresEquip_FigureCallback;
+            f->cb = (void*)SE_ManRenderWrapper;
         }
     }
     for (i = 0; i < 4; i++) {
@@ -91,12 +91,12 @@ void GuiScoresEquip_Init(Screen* s)
         for (i = 0; i < 4; i++) {
             char buf[0x1C];
             sprintf(buf, D_004BB5A0, i + 1);
-            s->tab[i] = GuiWidget_FindChildByName(s, buf);
+            s->tab[i] = GuiWidget_FindChild_charP(s, buf);
             if (s->tab[i]) s->tab[i]->flags &= ~2;
         }
         if (g_IsMultiplayer && s->tab[0]) {
             Stats* r = 0;
-            GuiWidget_SendEvent(s, s->tab[0], 4, (int)D_004BB5B8, (int)&r);
+            GuiWidget_SendMessage(s, s->tab[0], 4, (int)D_004BB5B8, (int)&r);
             if (r) {
                 s->x58 = r->a;
                 s->x5C = r->b;
@@ -113,8 +113,8 @@ void GuiScoresEquip_Init(Screen* s)
     loop:
         a[0] = '1' + k;
         b[0] = '1' + k;
-        s->rows[k].a = GuiWidget_FindChildByName(s, a);
-        s->rows[k].b = GuiWidget_FindChildByName(s, b);
+        s->rows[k].a = GuiWidget_FindChild_charP(s, a);
+        s->rows[k].b = GuiWidget_FindChild_charP(s, b);
         k++;
     test:
         if (k < 4) goto loop;
@@ -173,11 +173,11 @@ extern char D_004BB530[];
 extern char D_004BB540[];
 extern char D_004A9870[];
 #if 0 /* merge_units */
-W35D0A0* GuiWidget_FindChildByName(void* self, char* name);
+W35D0A0* GuiWidget_FindChild_charP(void* self, char* name);
 #endif /* merge_units */
-#define GuiWidget_FindChildByName(a0, a1) ((W35D0A0 *)GuiWidget_FindChildByName((a0), (a1))) /* merge_units */
+#define GuiWidget_FindChild_charP(a0, a1) ((W35D0A0 *)GuiWidget_FindChild_charP((a0), (a1))) /* merge_units */
 
-char* Loc_LookupText(char* key);
+char* nGlobalization_GetString_charP(char* key);
 void GuiTextWidget_SetText(W35D0A0* w, char* text, int flags);
 void GuiScoresEquip_SetScreen(S35D0A0* o, int mode);
 }
@@ -192,8 +192,8 @@ void GuiScoresEquip_SetScreen(S35D0A0* o, int mode)
     W35D0A0* b;
     W35D0A0* c;
     o->a224 = mode;
-    a = GuiWidget_FindChildByName(o, D_004BB4D8);
-    b = GuiWidget_FindChildByName(o, D_004BB4E8);
+    a = GuiWidget_FindChild_charP(o, D_004BB4D8);
+    b = GuiWidget_FindChild_charP(o, D_004BB4E8);
     if (a) {
         if (!mode) a->a14 |= 2;
         else a->a14 &= ~2;
@@ -202,13 +202,13 @@ void GuiScoresEquip_SetScreen(S35D0A0* o, int mode)
         if (mode) b->a14 |= 2;
         else b->a14 &= ~2;
     }
-    c = cast35D0A0(GuiWidget_FindChildByName(o, D_004BB500));
+    c = cast35D0A0(GuiWidget_FindChild_charP(o, D_004BB500));
     if (c) {
-        char* t = Loc_LookupText(mode == 0 ? D_004BB520 : D_004BB540);
+        char* t = nGlobalization_GetString_charP(mode == 0 ? D_004BB520 : D_004BB540);
         GuiTextWidget_SetText(c, t ? t : D_004BB530, 0);
     }
 }
-#undef GuiWidget_FindChildByName /* merge_units */
+#undef GuiWidget_FindChild_charP /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0035D0A0 */
 
@@ -224,18 +224,18 @@ extern char g_AgentPartCache[];
 extern char D_004DF140[];
 extern char D_004E1220[];
 extern int D_00506500;
-void Mem_Free(int pool, void* p, char* file, int line);
-void AgentPartCache_Unlock(void* p);
-void World_ClearPendingIfLoaded(void);
-void GuiEquipmentModify_RingRelease(void* p);
-void GuiWidget_Destroy(void* p, int f);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+void Monster_RestoreLockedPartsTex(void* p);
+void cMotionManager_FlushUpdateList(void);
+void GuiEquipmentModify_EmptyQue(void* p);
+void GuiWidget_dtor(void* p, int f);
 void operator_delete(void* p);
 }
 static inline void Del0035D1F0(V0035D1F0* o, int line)
 {
     AllocGuard g;
     o->v0(-1);
-    Mem_Free(0, o, "GuiScoresEquip.cc", line);
+    cMemMan_Deallocate(0, o, "GuiScoresEquip.cc", line);
 }
 extern "C" O0035D1F0* GuiScoresEquip_dtor(O0035D1F0* self, short del)
 {
@@ -249,8 +249,8 @@ extern "C" O0035D1F0* GuiScoresEquip_dtor(O0035D1F0* self, short del)
             self->items[i]->v22(1);
             Del0035D1F0(self->items[i], 0xBF);
         }
-        World_ClearPendingIfLoaded();
-        GuiWidget_Destroy(self, 0);
+        cMotionManager_FlushUpdateList();
+        GuiWidget_dtor(self, 0);
         if (del > 0)
             operator_delete(self);
     }
@@ -380,46 +380,46 @@ extern void* D_004FFC04;
 extern void* D_004F77A0;
 void FrontEnd_GetCharacterData(void* p);
 void GuiWidget_ctor(Self_D430* self);
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void cGOBJ_ctor(void* p, int* a, int b, int* c);
-void Object_AttachTransform(void* p, void* t, int a);
-Model_D430* DisplayActor_Construct(void* p, int* idx);
-float Math_SinThunk(float a);
-float Math_CosThunk(float a);
-void Mtx44_SetRotation(M4_D430* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
-int Appearance_GetBodyKind(void* app);
-void Appearance_ReorderParts(Man_D430* m);
-void cVUM_GOBJ_InitModel(Model_D430* m, char* name);
+void cGOBJ_CreateXform(void* p, void* t, int a);
+Model_D430* cSKM_GOBJ_ctor_cObjectIdR(void* p, int* idx);
+float SIN(float a);
+float COS(float a);
+void cMatrix_Set_ColumnMajorForm(M4_D430* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
+int SKL_FindSex(void* app);
+void cMan_SortParts(Man_D430* m);
+void cSKM_GOBJ_ResetSkeleton(Model_D430* m, char* name);
 void cAssocArray_cString_cSkaAnimationSetPtr_Find(It_D430* it, void* tab, char* key);
 void cAssocArray_cString_cSkaAnimationSetPtr_End(It_D430* it, void* tab);
 int cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opNe(It_D430* a, It_D430* b);
 void** cAssocArray_cString_cSkaAnimationSetPtr_Iterator_opMul(It_D430* it);
-void Model_Attach(void* a, void* b);
-void AnimModel_InitAnim(void* a);
-void MotionTokens_Init(Arr7_D430* a);
+void cSkaParams_HandleNewAnimationSet(void* a, void* b);
+void cSkaSystem_SetInitialAnimation(void* a);
+void cArray_FixedSize_cSkaAnimEvent_7_ctor_void(Arr7_D430* a);
 void cArray_cTimedEvent_ctor_void(Y_D430* y);
-void MotionRequest_Construct(void* mr, Str_D430* s);
+void cString16N_3_ctor_cString16NR(void* mr, Str_D430* s);
 void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(Sel_D430* d, Sel_D430* s);
 void func_001BE5A0(Y_D430* y, int f);
 void __destroy_array(void* a, void* dtor, int size, int n);
 void func_0018A210(void* p, int f);
 void cSkaPlaybackGroupId_ctor_int(Word_D430* w, int a);
-void Actor_ResolveMotionSelection(Req_D430* r, int* sel, Word_D430* w, void* m);
-float Model_GetFirstFloat(void* m);
-V4_D430* AnimRate_Init(Rate_D430* r, float f);
-void Vec4_Copy_18A350(Rate_D430* d, V4_D430* s);
-void AnimEvent_Construct(Ev_D430* e);
-int MotionRequest_GetMode(Req_D430* r);
+void cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(Req_D430* r, int* sel, Word_D430* w, void* m);
+float cSkaAnimationSet_DefaultCrossFadeDuration(void* m);
+V4_D430* cSkaCrossFadeDuration_ctor_float(Rate_D430* r, float f);
+void cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(Rate_D430* d, V4_D430* s);
+void cSkaAnimEndedMessage_ctor_void(Ev_D430* e);
+int cSkaRequestStream_AnimationPacket_GetInstruction(Req_D430* r);
 int cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(Req_D430* r);
 float cSkaRequestStream_AnimationPacket_GetDuration(Req_D430* r);
 float func_0018A2C0(Req_D430* r);
-void AnimCtl_InstallMotion(Anim_D430* a, int sel, int b, Rate_D430* r, Word_D430* w, Ev_D430* e0, Ev_D430* e1, int c, float f0, float f1);
-void AnimEvent_dtor(Ev_D430* e, int f);
-void Model_HardMeshAttachPoints(Man_D430* m);
+void cSkaRequestStream_AddRequest(Anim_D430* a, int sel, int b, Rate_D430* r, Word_D430* w, Ev_D430* e0, Ev_D430* e1, int c, float f0, float f1);
+void cSkaAnimEndedMessage_dtor(Ev_D430* e, int f);
+void cMan_SetGunOffsets(Man_D430* m);
 void cMan_GetTextureIDs(Man_D430* m);
-void ActorModel_Setup(Man_D430* m, int flag);
-void Skel_ApplyScalePreset(Man_D430* m, int a);
-Self_D430* GuiScoresEquip_BuildActor(Self_D430* self);
+void cMan_BuildMan(Man_D430* m, int flag);
+void cMan_SetBoneSet(Man_D430* m, int a);
+Self_D430* GuiScoresEquip_ctor(Self_D430* self);
 }
 
 static inline void QCopy_D430(void* d0, void* s0, int n0) { int n = n0; void* d = d0; void* s = s0;
@@ -441,10 +441,10 @@ static inline void G_D430(void* p, int a, int n, int b) { int* pa = &a; cGOBJ_ct
 struct V4C_D430 { float x, y, z, w; V4C_D430() {} V4C_D430(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; } V4C_D430(float a, float b, float c) { x = a; y = b; z = c; } } __attribute__((aligned(16)));
 static inline void Q3_D430(void* a0, const void* b0, void* c0, float z) { void* d1 = a0; const void* s1 = b0; void* d2 = c0; __int128 q = 0; q = *(const __int128*)s1; *(__int128*)d1 = q; { V4C_D430 r(0.0f, 0.0f, z); const void* s2 = &r; q = *(const __int128*)s2; *(__int128*)d2 = q; } }
 static inline void Q3B_D430(void* a0, const void* b0, void* c0, const void* e0) { void* d1 = a0; const void* s1 = b0; void* d2 = c0; __int128 q = 0; q = *(const __int128*)s1; *(__int128*)d1 = q; { const void* s2 = e0; q = *(const __int128*)s2; *(__int128*)d2 = q; } }
-static inline void Q3C_D430(void* a0, const void* b0, void* c0, V4C_D430* e0, float z) { void* d1 = a0; const void* s1 = b0; void* d2 = c0; __int128 q = 0; q = *(const __int128*)s1; *(__int128*)d1 = q; { V4C_D430* rr = e0; rr->x = 0.0f; rr->y = 0.0f; rr->z = z; { const void* s2 = rr; q = *(const __int128*)s2; *(__int128*)d2 = q; } } } static inline void Q3D_D430(void* a0, const void* b0, void* c0, V4C_D430& rr, float z) { void* d1 = a0; const void* s1 = b0; void* d2 = c0; __int128 q = 0; q = *(const __int128*)s1; *(__int128*)d1 = q; { rr.x = 0.0f; rr.y = 0.0f; rr.z = z; { const void* s2 = &rr; q = *(const __int128*)s2; *(__int128*)d2 = q; } } } static inline void* Alloc_D430(int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004BB600, line); }
+static inline void Q3C_D430(void* a0, const void* b0, void* c0, V4C_D430* e0, float z) { void* d1 = a0; const void* s1 = b0; void* d2 = c0; __int128 q = 0; q = *(const __int128*)s1; *(__int128*)d1 = q; { V4C_D430* rr = e0; rr->x = 0.0f; rr->y = 0.0f; rr->z = z; { const void* s2 = rr; q = *(const __int128*)s2; *(__int128*)d2 = q; } } } static inline void Q3D_D430(void* a0, const void* b0, void* c0, V4C_D430& rr, float z) { void* d1 = a0; const void* s1 = b0; void* d2 = c0; __int128 q = 0; q = *(const __int128*)s1; *(__int128*)d1 = q; { rr.x = 0.0f; rr.y = 0.0f; rr.z = z; { const void* s2 = &rr; q = *(const __int128*)s2; *(__int128*)d2 = q; } } } static inline void* Alloc_D430(int n, int line) { AllocGuard g; return cMemMan_Allocate(0, n, D_004BB600, line); }
 
-static inline void SelInit_D430(Sel_D430* s0) { Sel_D430* s = s0; s->b0 = 0; MotionTokens_Init(&s->arr); cArray_cTimedEvent_ctor_void(&s->y); }
-static inline void ReqInit2_D430(Req_D430* r0, Str_D430* str0, Sel_D430* sel) { Str_D430* str = str0; Req_D430* r = r0; r->b0 = 0; MotionRequest_Construct(r->mr, str); r->b48 = 3; cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&r->sel, sel); r->f98 = -1.0f; FLD(r, int, 0x9C) = 0; }
+static inline void SelInit_D430(Sel_D430* s0) { Sel_D430* s = s0; s->b0 = 0; cArray_FixedSize_cSkaAnimEvent_7_ctor_void(&s->arr); cArray_cTimedEvent_ctor_void(&s->y); }
+static inline void ReqInit2_D430(Req_D430* r0, Str_D430* str0, Sel_D430* sel) { Str_D430* str = str0; Req_D430* r = r0; r->b0 = 0; cString16N_3_ctor_cString16NR(r->mr, str); r->b48 = 3; cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(&r->sel, sel); r->f98 = -1.0f; FLD(r, int, 0x9C) = 0; }
 static inline void Install_D430(Anim_D430* an, int* selp, Req_D430* rq, Word_D430* wp)
 {
                 Rate_D430 rate;
@@ -453,14 +453,14 @@ static inline void Install_D430(Anim_D430* an, int* selp, Req_D430* rq, Word_D43
                 Ev_D430 e1;
                 V4_D430* v;
                 if (an->b5) v = (V4_D430*)an->v8;
-                else { v = AnimRate_Init(&tmp, Model_GetFirstFloat(an->f0)); asm { .set reorder } }
-                Vec4_Copy_18A350(&rate, v);
+                else { v = cSkaCrossFadeDuration_ctor_float(&tmp, cSkaAnimationSet_DefaultCrossFadeDuration(an->f0)); asm { .set reorder } }
+                cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(&rate, v);
                 an->b5 = 0;
-                AnimEvent_Construct(&e0);
-                AnimEvent_Construct(&e1);
-                AnimCtl_InstallMotion(an, *selp, MotionRequest_GetMode(rq), &rate, wp, &e0, &e1, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(rq), cSkaRequestStream_AnimationPacket_GetDuration(rq), func_0018A2C0(rq));
-                AnimEvent_dtor(&e1, -1);
-                AnimEvent_dtor(&e0, -1);
+                cSkaAnimEndedMessage_ctor_void(&e0);
+                cSkaAnimEndedMessage_ctor_void(&e1);
+                cSkaRequestStream_AddRequest(an, *selp, cSkaRequestStream_AnimationPacket_GetInstruction(rq), &rate, wp, &e0, &e1, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(rq), cSkaRequestStream_AnimationPacket_GetDuration(rq), func_0018A2C0(rq));
+                cSkaAnimEndedMessage_dtor(&e1, -1);
+                cSkaAnimEndedMessage_dtor(&e0, -1);
 }
 static inline void FindAnim_D430(Self_D430* self, int i, int kind)
 {
@@ -475,9 +475,9 @@ static inline void FindAnim_D430(Self_D430* self, int i, int kind)
             else { a = 0; asm { .set reorder } }
             {
                 void** an = (void**)((char*)self->models[i] + 0x2EC0);
-                Model_Attach(an + 4, a);
+                cSkaParams_HandleNewAnimationSet(an + 4, a);
                 *an = a;
-                AnimModel_InitAnim(an);
+                cSkaSystem_SetInitialAnimation(an);
             }
 }
 
@@ -488,7 +488,7 @@ static inline void Motion_D430(Model_D430* md, Req_D430* rq)
             int sel;
             Word_D430 w[3];
             cSkaPlaybackGroupId_ctor_int(w, -1);
-            Actor_ResolveMotionSelection(rq, &sel, w, an->f0);
+            cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(rq, &sel, w, an->f0);
             if (sel) {
                 Install_D430(an, &sel, rq, w);
             }
@@ -540,7 +540,7 @@ static inline void Tail_D430(Self_D430* self, int i)
 {
             { Model_D430* mm = self->models[i]; FLD(mm, float, 0x2450) = 1.0f; }
             FLD(self->models[i], float, 0x2454) = 0.0f;
-            Model_HardMeshAttachPoints(MAN(self->models[i]));
+            cMan_SetGunOffsets(MAN(self->models[i]));
             {
                 V4_D430 v;
                 Man_D430* m;
@@ -554,7 +554,7 @@ static inline void Tail_D430(Self_D430* self, int i)
             }
             { Man_D430* mm = MAN(self->models[i]); FLD(mm, unsigned char, 0x2DA0) = 1; }
 }
-extern "C" Self_D430* GuiScoresEquip_BuildActor(Self_D430* p0)
+extern "C" Self_D430* GuiScoresEquip_ctor(Self_D430* p0)
 {
     Self_D430* self = p0;
     int kind;
@@ -573,7 +573,7 @@ extern "C" Self_D430* GuiScoresEquip_BuildActor(Self_D430* p0)
             *(char**)p = D_004DA470;
             ((int*)p)[0x60 / 4] = 0;
             ((int*)p)[0x64 / 4] = 0;
-            Object_AttachTransform(p, g_IdentityMatrix, 0);
+            cGOBJ_CreateXform(p, g_IdentityMatrix, 0);
             ((int*)p)[0x30 / 4] = 0;
         }
         self->gobj = p;
@@ -612,7 +612,7 @@ extern "C" Self_D430* GuiScoresEquip_BuildActor(Self_D430* p0)
                 p = (Model_D430*)Alloc_D430(0x3030, 0x6C);
                 if (p) {
                     x = i;
-                    p = DisplayActor_Construct(p, &x);
+                    p = cSKM_GOBJ_ctor_cObjectIdR(p, &x);
                 }
                 self->models[i] = p;
             }
@@ -624,34 +624,34 @@ extern "C" Self_D430* GuiScoresEquip_BuildActor(Self_D430* p0)
             {
                 Xf_D430* xf = self->models[i]->xf;
                 M4_D430 rot;
-                float s = Math_SinThunk(0.0f);
-                float c = Math_CosThunk(0.0f);
-                { M4_D430* pr = &rot; float z = 0.0f; Mtx44_SetRotation(pr, c, -s, z, s, c, z, z, z, 1.0f); }
+                float s = SIN(0.0f);
+                float c = COS(0.0f);
+                { M4_D430* pr = &rot; float z = 0.0f; cMatrix_Set_ColumnMajorForm(pr, c, -s, z, s, c, z, z, z, 1.0f); }
                 { M4_D430* pr = &rot; xf->SetMtx(pr); }
             }
             { int n = 0x44; int j = D_00493A60; Model_D430* m = self->models[i]; Man_D430* mn = MAN(m); QCopy_D430(APP_D430(mn), (Blk_D430*)((int)D_0055D510 + j * 0x440), n); }
-            Appearance_ReorderParts(MAN(self->models[i]));
-            kind = Appearance_GetBodyKind(APP_D430(MAN(self->models[i])));
+            cMan_SortParts(MAN(self->models[i]));
+            kind = SKL_FindSex(APP_D430(MAN(self->models[i])));
             {
                 char* nm; if (kind == 0) nm = D_004BB618; else { nm = D_004BB628; asm { .set reorder } }
-                cVUM_GOBJ_InitModel(self->models[i], nm);
-                String_Copy(NAME_D430(MAN(self->models[i])), nm);
+                cSKM_GOBJ_ResetSkeleton(self->models[i], nm);
+                Libc_Strcpy(NAME_D430(MAN(self->models[i])), nm);
             }
             self->models[i]->Init(1);
             if (g_GameState == 2) {
                 void* a = D_004F77A0;
                 void** an = (void**)((char*)self->models[i] + 0x2EC0);
-                Model_Attach(an + 4, a);
+                cSkaParams_HandleNewAnimationSet(an + 4, a);
                 *an = a;
-                AnimModel_InitAnim(an);
+                cSkaSystem_SetInitialAnimation(an);
             } else {
                 Else_D430(self, i, kind, &tbl, &req);
             }
             Tail_D430(self, i);
             cMan_GetTextureIDs(MAN(self->models[i]));
             { Model_D430* mm = self->models[i]; FLD(mm, int, 0x2C30) = 1; }
-            ActorModel_Setup(MAN(self->models[i]), 1);
-            Skel_ApplyScalePreset(MAN(self->models[i]), -1);
+            cMan_BuildMan(MAN(self->models[i]), 1);
+            cMan_SetBoneSet(MAN(self->models[i]), -1);
             FLD(self->models[i], short, 0x2DF4) = 0;
             self->b220[i] = 0;
         }

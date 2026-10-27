@@ -13,7 +13,7 @@
 #pragma cplusplus off
 
 /* 0x00129360: strcpy-style copy; callers ignore the result. */
-char *String_Copy(void *dst, const void *src);
+char *Libc_Strcpy(void *dst, const void *src);
 
 /* 0x00451B00: record an error code with the source file and line.  The
    definition takes the code as `unsigned char`; callers pass an int. */
@@ -22,7 +22,7 @@ void SFOLobby_SetError(void *self, int err, const char *file, int line);
 /* 0x004505C0: nonzero when no lobby instance exists.  Defined `(void)`, but
    the network callbacks call it with their own arguments still in a0..a3, so
    it is declared without a prototype. */
-int SFOLobby_NoInstance();
+int SFOLobby_IgnoreCallbacks();
 
 /* 0x00451AE0: clear the lobby's error state (byte 0x2564) unless it is 5.
    Takes the lobby; some callers still have it in a0 and pass nothing, so no
@@ -33,24 +33,24 @@ void func_00451AE0();
    caller passes only the lobby, so no prototype. */
 void SFOLobby_SetCallback();
 
-/* 0x00443E70: the current time (Time_GetMilliseconds's result).  Defined returning
+/* 0x00443E70: the current time (cTimer_GetMillisecondTime's result).  Defined returning
    `long long`; every caller declares and uses it as int. */
-int Lobby_GetTime(void);
+int SFOLobby_GetMillisecs(void);
 
 /* 0x00452F70: run the update hook while waiting for a request. */
-void SFOLobby_CallUpdateHook(void *self, int a, int b);
+void SFOLobby_GuiCallback(void *self, int a, int b);
 
 /* 0x004534A0: poll a pending request; 0 on timeout. */
 int SFOLobby_Poll(void *self, int start, int timeout, int flag);
 
 /* LobbyArray: growable array of records. */
-void LobbyArray_Clear(void *array);
-void LobbyArray_SetRefreshing(void *array, int on);
+void SFOLobbyList_ClearList(void *array);
+void SFOLobbyList_SetBusy(void *array, int on);
 
 /* 0x0044F290: the address of record `index` of a LobbyArray.  Blocks view the
    result as their own record type (a casting macro per block); one caller
    passes only the array, so no prototype. */
-void *LobbyArray_At();
+void *SFOLobbyList_GetSlot();
 
 #pragma pop
 

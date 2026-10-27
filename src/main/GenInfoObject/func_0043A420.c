@@ -20,7 +20,7 @@ extern "C" void cGenInfoObject_Activate(void* self, int* key)
                NetOwn_Ne(&it, &end)) {
             NetOwnVal* v = &it.node->v;
             if (v->first->key == *key) { v->second = (1); break; }
-            Tree_Successor(&it);
+            std_red_black_tree_1_increment(&it);
         }
         cAssocArray_tGenInfoPtr_bool_Iterator_ctor(&end2, std_map_tGenInfoPtr_bool_end(D_00583900));
         if (it.node == end2.node) {
@@ -28,7 +28,7 @@ extern "C" void cGenInfoObject_Activate(void* self, int* key)
             NET_OWN_SET(e->hi, 1 << NetLocalId());
             {
                 AllocGuard g;
-                n = (NetOwnEnt*)Mem_Alloc(0, 8, D_004BFD60, (0x173));
+                n = (NetOwnEnt*)cMemMan_Allocate(0, 8, D_004BFD60, (0x173));
             }
             if (n) { n->key = *key; n->lo = 0xF; n->hi = 0; }
             pv.first = n;

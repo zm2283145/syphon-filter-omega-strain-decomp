@@ -79,50 +79,50 @@ typedef struct Actor {
 
 extern char D_004DF740[];
 extern void cGOBJ_ctor(Actor* self, int* name, int type, int* extra);
-extern void ManModel_ClearAttachPoints(void*);
+extern void cMan_ctor(void*);
 extern void cArray_cBoneScale_ctor(void*);
-extern void SkelNode_Construct(SkelNode*);
+extern void cBone_ctor_void(SkelNode*);
 extern void cArray_cBone_ctor(void*, int, SkelNode*);
 extern void cBone_dtor(SkelNode*, int);
-extern void Bounds_SetEmpty(void*);
-extern void Vec4_SetOrigin(V4*);
-extern void Vec4_Assign(V4*, V4*);
+extern void cBox_ctor_void(void*);
+extern void cVector_Get0001(V4*);
+extern void cVector_ctor_cVectorR(V4*, V4*);
 extern void cSkaParams_ctor(void*, void*, void*);
 extern void cTreeNode_cSkaSystemPtr_ctor(void*, Anim**);
-extern void AnimModel_InitAnim(Anim*);
+extern void cSkaSystem_SetInitialAnimation(Anim*);
 
 static inline void Anim_ctor(Anim* a, void* owner)
 {
     a->x0 = 0;
     cSkaParams_ctor(a->x10, owner, 0);
     cTreeNode_cSkaSystemPtr_ctor(a->x100, &a);
-    AnimModel_InitAnim(a);
+    cSkaSystem_SetInitialAnimation(a);
 }
 
-Actor* DisplayActor_Construct(Actor* me, int* name)
+Actor* cSKM_GOBJ_ctor_cObjectIdR(Actor* me, int* name)
 {
     int z = 0;
     Sub2E50* s;
     Actor* self = me;
     cGOBJ_ctor(me, name, 2, &z);
     self->vt = D_004DF740;
-    ManModel_ClearAttachPoints(self->x60);
+    cMan_ctor(self->x60);
     s = &self->x2E50;
     s->x0 = 0;
     cArray_cBoneScale_ctor(s->x4);
     s->x14 = 0;
     {
         SkelNode n;
-        SkelNode_Construct(&n);
+        cBone_ctor_void(&n);
         cArray_cBone_ctor(s->x18, 0, &n);
         cBone_dtor(&n, -1);
     }
     s->x28 = 0;
-    Bounds_SetEmpty(s->x30);
+    cBox_ctor_void(s->x30);
     {
         V4 v;
-        Vec4_SetOrigin(&v);
-        Vec4_Assign(&s->x50, &v);
+        cVector_Get0001(&v);
+        cVector_ctor_cVectorR(&s->x50, &v);
     }
     self->x2EB0 = 0xDEADBEEF;
     Anim_ctor(&self->x2EC0, &self->x2E50);
@@ -138,7 +138,7 @@ static inline void merge_flush_func_00393FF0(void) {}
 
 /* merge_units: begin func_00394140 */
 #pragma push /* merge_units */
-extern int ParticleInst_GetPosition(int, int);
+extern int cParticle_GetEvent(int, int);
 
 int cPARTICLE_GOBJ_GetEvent(int a0) {
     int a1, v0;
@@ -148,7 +148,7 @@ int cPARTICLE_GOBJ_GetEvent(int a0) {
     cond = a0 == 0;
     v0 = 0;
     if (cond) goto L00394160;
-    v0 = ParticleInst_GetPosition(a0, a1);
+    v0 = cParticle_GetEvent(a0, a1);
 L00394160:;
     goto ret;
 ret:

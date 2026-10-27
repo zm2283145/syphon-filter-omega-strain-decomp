@@ -128,14 +128,14 @@ int cCharActionMsg_TargetInfo_Pack(void) {
 typedef struct Obj {char pad[0x30];struct Obj*target;} Obj;
 typedef struct ActionMsg {void*vt;char pad[0x18];int kind;char flag;char p21[3];int action;char on;char p29[3];int count;} ActionMsg;
 extern char g_ActorActionMsgClass[],D_004E01E0[],D_004E0840[];extern int D_0055A840;
-Obj*Script_ValueToObj(int);int*Receiver_GetOwner(Obj*);
-void Event_Construct(ActionMsg*,void*);void Event_Send(ActionMsg*,Obj*,int);void cMessage_dtor(ActionMsg*,int);
+Obj*cSystem_SOBJ_convert(int);int*cSystem_GetName(Obj*);
+void cMessage_ctor_cMessageNameR(ActionMsg*,void*);void QueueMessage_cMessageR_cSystemP_int(ActionMsg*,Obj*,int);void cMessage_dtor(ActionMsg*,int);
 int Script_StopPerformingAction(int*args){
- ActionMsg msg;Obj*obj=Script_ValueToObj(*args);
- int type=*Receiver_GetOwner(obj);if(type==D_0055A840)obj=obj->target;
- Event_Construct(&msg,g_ActorActionMsgClass);
+ ActionMsg msg;Obj*obj=cSystem_SOBJ_convert(*args);
+ int type=*cSystem_GetName(obj);if(type==D_0055A840)obj=obj->target;
+ cMessage_ctor_cMessageNameR(&msg,g_ActorActionMsgClass);
  msg.action=0x28;msg.on=2;msg.vt=D_004E01E0;msg.count=1;msg.flag=8;msg.kind=0x40;
- Event_Send(&msg,obj,0);msg.vt=D_004E0840;cMessage_dtor(&msg,0);return 0;
+ QueueMessage_cMessageR_cSystemP_int(&msg,obj,0);msg.vt=D_004E0840;cMessage_dtor(&msg,0);return 0;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003E6300 */
@@ -143,18 +143,18 @@ int Script_StopPerformingAction(int*args){
 /* merge_units: begin func_003E63C0 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-int Script_ValueToObj(int);
+int cSystem_SOBJ_convert(int);
 #endif /* merge_units */
-#define Script_ValueToObj(a0) ((int)Script_ValueToObj((a0))) /* merge_units */
-int GObj_IdentityB(int);
-void Global_PerformAction_WithObject(int,signed char,int,float,int,int);
+#define cSystem_SOBJ_convert(a0) ((int)cSystem_SOBJ_convert((a0))) /* merge_units */
+int cGOBJ_SOBJ_convert(int);
+void nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_charP_etc(int,signed char,int,float,int,int);
 int Script_PerformAction_WithObject_4(int*args){
  int on;volatile int action;int timeBits;signed char kind;float time;int obj;on=args[5]!=0;timeBits=args[4];action=args[3];kind=(signed char)args[1];
  time=*(float*)&timeBits;
- obj=Script_ValueToObj(args[0]);
- Global_PerformAction_WithObject(obj,kind,GObj_IdentityB(args[2]),time,action,on);
+ obj=cSystem_SOBJ_convert(args[0]);
+ nCAS_PerformAction_WithObject_cSystemP_eAction_cGOBJP_charP_etc(obj,kind,cGOBJ_SOBJ_convert(args[2]),time,action,on);
  return 0;
 }
-#undef Script_ValueToObj /* merge_units */
+#undef cSystem_SOBJ_convert /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E63C0 */

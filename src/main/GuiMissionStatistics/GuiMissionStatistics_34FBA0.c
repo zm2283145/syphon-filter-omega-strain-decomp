@@ -24,33 +24,33 @@ extern "C" char D_004BAA90[];
 static void * const dat_00492BD0[2] = { (void*)D_004BAA78, (void*)0x0 };
 static void * const dat_00492BD8[2] = { (void*)D_004BAA90, (void*)0x0 };
 extern char D_004BAD80[];
-void GuiPersonnelScreen_Init(S34FBA0* o);
-void GuiMissionStatistics_BuildRows(S34FBA0* o);
-W34FBA0* GuiWidget_FindChildByName(void* self, char* name);
-void GuiArrayWidget_Select(void* w, int a, int b);
-void GuiArrayWidget_ColumnWidth(void* w, int i, int v);
-void GuiMissionStatistics_Init(S34FBA0* o);
+void GuiPersonnelScreen_onAdd(S34FBA0* o);
+void GuiMissionStatistics_SetupMissionStats(S34FBA0* o);
+W34FBA0* GuiWidget_FindChild_charP(void* self, char* name);
+void GuiArrayWidget_SetSelected(void* w, int a, int b);
+void GuiArrayWidget_SetColumnWidth(void* w, int i, int v);
+void GuiMissionStatistics_onAdd(S34FBA0* o);
 }
 static inline W34FBA0* cast34FBA0(W34FBA0* w)
 {
     return (w && w->IsA(D_004BAD80)) ? w : 0;
 }
-void GuiMissionStatistics_Init(S34FBA0* o)
+void GuiMissionStatistics_onAdd(S34FBA0* o)
 {
-    GuiPersonnelScreen_Init(o);
+    GuiPersonnelScreen_onAdd(o);
     o->a80 = 0;
-    GuiMissionStatistics_BuildRows(o);
-    o->a6C = cast34FBA0(GuiWidget_FindChildByName(o, (*(char**)dat_00492BD0)));
+    GuiMissionStatistics_SetupMissionStats(o);
+    o->a6C = cast34FBA0(GuiWidget_FindChild_charP(o, (*(char**)dat_00492BD0)));
     if (o->a6C) {
         W34FBA0* w;
         int i;
-        o->a6C->a88 = GuiWidget_FindChildByName(o, (*(char**)dat_00492BD8));
+        o->a6C->a88 = GuiWidget_FindChild_charP(o, (*(char**)dat_00492BD8));
 
         w = o->a6C;
         w->aC0 = &o->v70;
         w->f5C(0xB, &o->v70 ? o->v70.count : 0);
-        GuiArrayWidget_Select(w, 0, 0);
-        for (i = 0; i < 11; i++) GuiArrayWidget_ColumnWidth(w, i, w->aC4[i]);
+        GuiArrayWidget_SetSelected(w, 0, 0);
+        for (i = 0; i < 11; i++) GuiArrayWidget_SetColumnWidth(w, i, w->aC4[i]);
     }
 }
 #pragma pop /* merge_units */
@@ -108,6 +108,6 @@ DEFINE_BASE_DTOR_CHAIN(std_vector_MissionStats_dtor, std_vector_deleter_MissionS
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(GuiPersonnelScreen_dtor_34FDE0, D_004DF0B0, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(GuiPersonnelScreen_dtor_34FDE0, D_004DF0B0, GuiWidget_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0034FDE0 */

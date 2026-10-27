@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-int AgentData_GetSaveSize(void) {
+int cAgentData_GetNumSavedBytes(void) {
     return 16000;
 }

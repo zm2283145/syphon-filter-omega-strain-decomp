@@ -19,23 +19,23 @@ typedef struct {
     char pad13D[0x1B0 - 0x13D];
     NpcAi_14DD50* ai;
 } Npc_14DD50;
-extern void NpcLook_Begin(Npc_14DD50* n, int a, int b, int c);
-extern void NpcLook_AddNodePoints(Npc_14DD50* n, int a, int b, int c, float f);
+extern void cNPC_NewLookAtList(Npc_14DD50* n, int a, int b, int c);
+extern void cNPC_AddLinkedNodesToLookAt(Npc_14DD50* n, int a, int b, int c, float f);
 
-void cNPC_v4B(Npc_14DD50* n, int a)
+void cNPC_LookAround(Npc_14DD50* n, int a)
 {
     NpcSt_14DD50* st = n->st;
     int id;
     int ok = st->b2D && st->b2C && !st->b2E;
     if (ok) {
         id = -1;
-        NpcLook_Begin(n, 0, 1, a);
+        cNPC_NewLookAtList(n, 0, 1, a);
         if (n->b13C == 1)
             id = n->ai->x54;
         if (n->ai->x4C >= 0)
-            NpcLook_AddNodePoints(n, -1, n->ai->x4C, id, 1.0f);
+            cNPC_AddLinkedNodesToLookAt(n, -1, n->ai->x4C, id, 1.0f);
         else
-            NpcLook_AddNodePoints(n, n->ai->x5C, -1, id, 1.0f);
+            cNPC_AddLinkedNodesToLookAt(n, n->ai->x5C, -1, id, 1.0f);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -47,7 +47,7 @@ static inline void merge_flush_func_0014DD50(void) {}
 #pragma push /* merge_units */
 typedef struct { int time; unsigned char active; char pad[0x14 - 5]; } E_DE30;
 typedef struct { char pad[0x178]; E_DE30 e[3]; } S_DE30;
-void cNPC_v4D(S_DE30* self, int t)
+void cNPC_ResumeAILookAt(S_DE30* self, int t)
 {
     int i = 0;
     S_DE30* p = self;

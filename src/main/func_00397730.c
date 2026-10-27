@@ -3,22 +3,22 @@
 #include "alloc_guard.h"
 extern "C" {
 extern char D_004BC4C0[];
-void Mem_Free(int, void*, char*, int);
+void cMemMan_Deallocate(int, void*, char*, int);
 }
 struct GrpG { char pad[8]; void* buf; };
-extern "C" void MotionGroup_ClearContributions(GrpG* g);
+extern "C" void std_vector_deleter_cSkaPlaybackItem_clear(GrpG* g);
 extern "C" void operator_delete(void* p);
 extern "C" GrpG* Group_Clear(GrpG* g, short flags)
 {
     if (g) {
         if (g) {
             void* b;
-            MotionGroup_ClearContributions(g);
+            std_vector_deleter_cSkaPlaybackItem_clear(g);
             b = g->buf;
             if (b) {
                 if (b) {
                     AllocGuard g2;
-                    Mem_Free(0, b, D_004BC4C0, 100);
+                    cMemMan_Deallocate(0, b, D_004BC4C0, 100);
                 }
             }
         }

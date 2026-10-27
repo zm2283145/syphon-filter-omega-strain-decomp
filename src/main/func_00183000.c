@@ -8,7 +8,7 @@
 #include "loose00_types.h"
 
 /* Set w = 1.0 (homogeneous position). */
-Vec4* Vec_SetPositionW1(Vec4* v) {
+Vec4* cVector_WSet1(Vec4* v) {
     v->w = 1.0f;
     return v;
 }

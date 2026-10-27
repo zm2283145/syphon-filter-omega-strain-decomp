@@ -10,13 +10,13 @@
 /* merge_units: begin func_00244960 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x68]; void* obj; } O4960;
-extern void Hud_GetLockColour(void* tmp);
-extern void IeElement_SetColour(void* obj, void* tmp);
-void Hud_SetLockMeter(O4960* self) {
+extern void nHud_ComputeColor(void* tmp);
+extern void cInterfaceElement_SetFilterColor(void* obj, void* tmp);
+void cHud_SetAimCursorColor(O4960* self) {
     if (self->obj) {
         char tmp[16];
-        Hud_GetLockColour(tmp);
-        IeElement_SetColour(self->obj, tmp);
+        nHud_ComputeColor(tmp);
+        cInterfaceElement_SetFilterColor(self->obj, tmp);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -26,9 +26,9 @@ static inline void merge_flush_func_00244960(void) {}
 
 /* merge_units: begin func_002449A0 */
 #pragma push /* merge_units */
-extern void IeElement_SetShown(int, int);
+extern void cInterfaceElement_Activate(int, int);
 
-void Hud_HideNoFire(int a0) {
+void cHud_DeactivateNoFireIcon(int a0) {
     int a1;
     int cond;
 
@@ -36,7 +36,7 @@ void Hud_HideNoFire(int a0) {
     cond = a0 == 0;
     a1 = 0;
     if (cond) goto L002449C0;
-    IeElement_SetShown(a0, a1);
+    cInterfaceElement_Activate(a0, a1);
 L002449C0:;
     goto ret;
 ret:;
@@ -48,7 +48,7 @@ static inline void merge_flush_func_002449A0(void) {}
 
 /* merge_units: begin func_002449D0 */
 #pragma push /* merge_units */
-void Hud_ShowNoFire(int a0) {
+void cHud_ActivateNoFireIcon(int a0) {
     int a1;
     int cond;
 
@@ -56,7 +56,7 @@ void Hud_ShowNoFire(int a0) {
     cond = a0 == 0;
     a1 = 0 + 1;
     if (cond) goto L002449F0;
-    IeElement_SetShown(a0, a1);
+    cInterfaceElement_Activate(a0, a1);
 L002449F0:;
     goto ret;
 ret:;

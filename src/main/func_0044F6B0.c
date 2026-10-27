@@ -3,7 +3,7 @@
 int SFOLobbyList_CompactList();                                  
 
 #pragma opt_common_subs off
-void LobbyArray_Free(int arg0) {
+void SFOLobbyList_ClearAndCompactList(int arg0) {
     int temp_v1;
 
     temp_v1 = F_(arg0, 0x14, int);

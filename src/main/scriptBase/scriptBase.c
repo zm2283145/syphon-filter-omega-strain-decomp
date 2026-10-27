@@ -79,7 +79,7 @@ struct AList {
     AIter begin() { return AIter(head.next); }
     AIter end() { return AIter(&head); }
 };
-extern "C" void ObjectList_EraseRange_383420(AIter*, AList*, AIter*, AIter*);
+extern "C" void std_list_deleter_int_erase_listdeleter_listdeleter(AIter*, AList*, AIter*, AIter*);
 
 extern "C" void std_list_imp_int_remove_if(AList* l, APred pred)
 {
@@ -92,7 +92,7 @@ extern "C" void std_list_imp_int_remove_if(AList* l, APred pred)
             {
                 AIter r, a, b;
                 a = i; b = j;
-                ObjectList_EraseRange_383420(&r, l, &a, &b);
+                std_list_deleter_int_erase_listdeleter_listdeleter(&r, l, &a, &b);
                 i = r;
             }
             if (i == e) break;
@@ -108,7 +108,7 @@ extern "C" void std_list_imp_int_remove_if(AList* l, APred pred)
 #pragma cplusplus on
 #include "alloc_guard.h"
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 void std_vector_intPtr_dtor(void* p, int flags);
 void operator_delete(void* p);
 }
@@ -118,7 +118,7 @@ extern "C" void* FuncDef_dtor(void* self, short flag)
         void* b = *(void**)self;
         {
             AllocGuard g;
-            Mem_Free(0, b, "scriptBase.cc", 0x222);
+            cMemMan_Deallocate(0, b, "scriptBase.cc", 0x222);
         }
         {
             void* m = (char*)self + 8;
@@ -142,7 +142,7 @@ extern "C" void* FuncDef_dtor(void* self, short flag)
 
 
 extern "C" {
-int Mem_Alloc(...);                      
+int cMemMan_Allocate(...);                      
 int std_vector_intPtr_ctor(...);                            
 int memcpy(...);                            
 int strlen(...);                                    
@@ -164,7 +164,7 @@ extern "C" char * FuncDef_ctor_charP_voidP_intP(char * arg0, int arg1, int arg2,
         temp_v1 = strlen(arg1) + 1; temp_s0_2 = (temp_v1 + 0x1F) / 32 * 32;
         {
             AllocGuard g;
-        var_s1 = Mem_Alloc(0, temp_s0_2, &D_004BD3B0, 0x130);
+        var_s1 = cMemMan_Allocate(0, temp_s0_2, &D_004BD3B0, 0x130);
         }
         memcpy(var_s1, arg1, temp_s0_2);
     }

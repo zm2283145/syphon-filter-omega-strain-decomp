@@ -9,16 +9,16 @@ extern "C" {
 extern char g_CameraObject[];
 extern void* D_004FFC10;
 int func_00159570(void*);
-void** List_Front(void*);
-void Hud_CrosshairDefault(Hud*);
-void Hud_CrosshairRelease(Hud*);
-void Hud_HideNoFire(Hud*);
+void** cLList_cCAMERA_GOBJPtr_Front(void*);
+void cHud_ActivateAimCursor(Hud*);
+void cHud_DeactivateAimCursor(Hud*);
+void cHud_DeactivateNoFireIcon(Hud*);
 Spr** std_vector_cInterfaceElementPtr_opIndex(SprVec*, int);
-void IeElement_SetShown(Spr*, int);
-void IeElement_EvaluateAt(Spr*, float);
-void IeElement_Fade(Spr*, float);
+void cInterfaceElement_Activate(Spr*, int);
+void viBufGetTs(Spr*, float);
+void cAnimator_AnimateTo(Spr*, float);
 }
-static inline void* GetCam() { if (func_00159570(g_CameraObject)) return *List_Front(g_CameraObject); return 0; }
+static inline void* GetCam() { if (func_00159570(g_CameraObject)) return *cLList_cCAMERA_GOBJPtr_Front(g_CameraObject); return 0; }
 static inline bool IsNoCross(Ent* e) {
     unsigned char b = 0;
     unsigned int k = e->type - 3;
@@ -27,30 +27,30 @@ static inline bool IsNoCross(Ent* e) {
 }
 static inline void Select(Hud* h, int idx) {
     if (idx >= 0) {
-        if (idx == 0) Hud_CrosshairDefault(h);
+        if (idx == 0) cHud_ActivateAimCursor(h);
         else {
             Spr* s = h->v.data[(unsigned)(idx - 1)];
             if (s) {
-                IeElement_SetShown(s, 1);
-                IeElement_EvaluateAt(s, 1.0f);
-                IeElement_Fade(s, 10.0f);
+                cInterfaceElement_Activate(s, 1);
+                viBufGetTs(s, 1.0f);
+                cAnimator_AnimateTo(s, 10.0f);
             }
-            Hud_CrosshairRelease(h);
+            cHud_DeactivateAimCursor(h);
         }
     }
 }
 static inline void Unselect(Hud* h, int c) {
     if (c >= 0) {
-        if (c == 0) Hud_CrosshairRelease(h);
+        if (c == 0) cHud_DeactivateAimCursor(h);
         else {
             Spr* s = h->v.data[(unsigned)(c - 1)];
-            if (s) IeElement_Fade(s, 0.0f);
+            if (s) cAnimator_AnimateTo(s, 0.0f);
         }
     }
 }
 #pragma push
 #pragma opt_strength_reduction off
-extern "C" int Hud_UpdateCrosshair(Hud* h, int on, int a2_, Ent* e, Tgt* t)
+extern "C" int cHud_SetScope(Hud* h, int on, int a2_, Ent* e, Tgt* t)
 {
     int idx = -1;
     int a2 = a2_;
@@ -71,11 +71,11 @@ extern "C" int Hud_UpdateCrosshair(Hud* h, int on, int a2_, Ent* e, Tgt* t)
         Select(h, idx);
         Unselect(h, h->cur);
     }
-    if (idx < 0) Hud_HideNoFire(h);
-    if (e && e->type == 1) Hud_HideNoFire(h);
+    if (idx < 0) cHud_DeactivateNoFireIcon(h);
+    if (e && e->type == 1) cHud_DeactivateNoFireIcon(h);
     for (int i = 0; i < h->v.n; i++) {
         if (i != idx - 1 && h->v.data[i]->f4 == 0.0f)
-            IeElement_SetShown(*std_vector_cInterfaceElementPtr_opIndex(&h->v, i), 0);
+            cInterfaceElement_Activate(*std_vector_cInterfaceElementPtr_opIndex(&h->v, i), 0);
     }
     h->cur = idx;
     return a2;

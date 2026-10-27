@@ -8,8 +8,8 @@ public:
     virtual void v10();
 };
 struct C6Own_179B70 { char pad[0x60]; C6Obj_179B70* obj; };
-extern "C" void Object_Deactivate(C6Own_179B70*);
-extern "C" void cGameSceneLight_Deactivate(C6Own_179B70* self) {
-    Object_Deactivate(self);
+extern "C" void cGOBJ_Deactivate(C6Own_179B70*);
+extern "C" void cGameLight_Deactivate(C6Own_179B70* self) {
+    cGOBJ_Deactivate(self);
     self->obj->v10();
 }

@@ -5,10 +5,10 @@
 
 #include "loose05_types.h"
 
-void LobbyArray_SetRefreshing(LobbyRecord1C* self, char value) {
+void SFOLobbyList_SetBusy(LobbyRecord1C* self, char value) {
     self->refreshing = value;
 }
 
-unsigned char LobbyArray_GetRefreshing(LobbyRecord1C* self) {
+unsigned char SFOLobbyList_IsBusy(LobbyRecord1C* self) {
     return self->refreshing;
 }

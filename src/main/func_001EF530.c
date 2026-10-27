@@ -6,12 +6,12 @@ struct E1EF530 { int w[4]; };
 struct V1EF530 { unsigned int cap; unsigned int count; E1EF530* data; };
 extern "C" {
 extern char D_004A0558[];
-void* Mem_PlacementNew(unsigned int size, void* p);
+void* opNew_uint_voidP(unsigned int size, void* p);
 void cEdgeGroup_ctor_cEdgeGroupR(void* dst, const E1EF530* src);
 void std_swap_vectordeleterR_vectordeleterR_12(V1EF530* a, V1EF530* b);
-void HumanColBufA_Dtor(V1EF530* a, int f);
+void std_vector_deleter_cEdgeGroup_dtor(V1EF530* a, int f);
 }
-extern "C" void HumanColBufA_Reserve(V1EF530* v, unsigned int n)
+extern "C" void std_vector_imp_cEdgeGroup_reserve(V1EF530* v, unsigned int n)
 {
     if (v->cap < n) {
         if (n > 0x600000) {
@@ -28,11 +28,11 @@ extern "C" void HumanColBufA_Reserve(V1EF530* v, unsigned int n)
         E1EF530* s = v->data;
         E1EF530* e = s + v->count;
         for (; s < e; s++, d++) {
-            void* o = Mem_PlacementNew(sizeof(E1EF530), d);
+            void* o = opNew_uint_voidP(sizeof(E1EF530), d);
             if (o) cEdgeGroup_ctor_cEdgeGroupR(o, s);
             tmp.count++;
         }
         std_swap_vectordeleterR_vectordeleterR_12(&tmp, v);
-        HumanColBufA_Dtor(&tmp, -1);
+        std_vector_deleter_cEdgeGroup_dtor(&tmp, -1);
     }
 }

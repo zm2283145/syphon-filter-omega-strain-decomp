@@ -13,7 +13,7 @@ typedef struct { char d[0x180]; } RootElem_3AECE0;
 typedef struct { int pad0; int count; RootElem_3AECE0* data; unsigned char flag; } RootColl_3AECE0;
 typedef struct { signed char c; } Tag_3AECE0;
 extern void std_vector_imp_cSkaAnimAnchorListEntry_do_assign(RootColl_3AECE0* self, RootElem_3AECE0* first, RootElem_3AECE0* last, Tag_3AECE0 tag);
-RootColl_3AECE0* RootCollection_Copy(RootColl_3AECE0* self, RootColl_3AECE0* o) {
+RootColl_3AECE0* cArray_cSkaAnimAnchorListEntry_opAssign(RootColl_3AECE0* self, RootColl_3AECE0* o) {
     if (self != o) {
         Tag_3AECE0 tag;
         std_vector_imp_cSkaAnimAnchorListEntry_do_assign(self, o->data, o->data + o->count, tag);
@@ -39,23 +39,23 @@ struct V {
     V& operator=(const V& o) { void* xx = this; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(this), "r"(&o) : "memory"); return *this; }
 } __attribute__((aligned(16)));
 struct Plc;
-extern "C" void VecPair_Copy(Plc* d, const Plc* s);
-struct Plc { V rot; V pos; Plc() {} Plc(const Plc& o) { VecPair_Copy(this, &o); void* xx = this; } };
+extern "C" void cQuatVec_ctor_cQuatVecR(Plc* d, const Plc* s);
+struct Plc { V rot; V pos; Plc() {} Plc(const Plc& o) { cQuatVec_ctor_cQuatVecR(this, &o); void* xx = this; } };
 extern "C" {
 extern signed char D_004E1D80;
 extern Plc D_00497F00;
-void Quat_SetIdentity(V* q);
-void Vec4_SetOrigin(V* v);
-void Placement_GetIdentity(Plc* p, V* q, V* v);
+void cQuaternion_GetIdentity(V* q);
+void cVector_Get0001(V* v);
+void cQuatVec_ctor_cQuaternionR_cVectorR(Plc* p, V* q, V* v);
 void std_vector_cSkaAnimAnchorListEntry_ctor(void* self);
 }
 static inline Plc Ident()
 {
     if (!D_004E1D80) {
         V q; V v;
-        Quat_SetIdentity(&q);
-        Vec4_SetOrigin(&v);
-        Placement_GetIdentity(&D_00497F00, &q, &v);
+        cQuaternion_GetIdentity(&q);
+        cVector_Get0001(&v);
+        cQuatVec_ctor_cQuaternionR_cVectorR(&D_00497F00, &q, &v);
         D_004E1D80 = 1;
     }
     return D_00497F00;
@@ -66,12 +66,12 @@ Wd* cString4_ctor(Wd* dst, Wd* src);
 void* std_vector_deleter_cString4_data(void* self);
 int std_vector_cSkaAnimAnchorListEntry_reserve(void* a0, int a1);
 int cArrayCapacity_Int(int* n);
-void AnimRoot_Construct(void* p);
+void cSkaAnimAnchor_ctor(void* p);
 struct Elem;
-void RootCollection_Append(void* self, void* pos, int n, const Elem& v);
+void std_vector_imp_cSkaAnimAnchorListEntry_insert(void* self, void* pos, int n, const Elem& v);
 void* cSkaAnimAnchor_dtor(void* self, short flags);
 }
-/* RootCollection_Construct: Elem dtor uses the weak .dtors_drop idiom (include/alloc_guard.h); "Elem* t = this" keeps the element address in s0; iterators default-constructed then assigned give retail's temp+copy stack slots */
+/* cSkaAnimAnchorList_ctor_cArrayR: Elem dtor uses the weak .dtors_drop idiom (include/alloc_guard.h); "Elem* t = this" keeps the element address in s0; iterators default-constructed then assigned give retail's temp+copy stack slots */
 struct It {
     Wd* p;
     It() {}
@@ -86,10 +86,10 @@ struct WVec {
     It end() { return It(*(Wd**)std_vector_deleter_cString4_data(this) + size); }
 };
 #pragma define_section ELEM_DTOR ".dtors_drop" far_absolute RX
-struct Elem { Wd w; char pad[0xC]; char root[0x170]; Elem(Wd& x) { Elem* t = this; cString4_ctor(&t->w, &x); AnimRoot_Construct(t->root); } __declspec(weak) __declspec(ELEM_DTOR) ~Elem() { cSkaAnimAnchor_dtor(root, -1); } } __attribute__((aligned(16)));
+struct Elem { Wd w; char pad[0xC]; char root[0x170]; Elem(Wd& x) { Elem* t = this; cString4_ctor(&t->w, &x); cSkaAnimAnchor_ctor(t->root); } __declspec(weak) __declspec(ELEM_DTOR) ~Elem() { cSkaAnimAnchor_dtor(root, -1); } } __attribute__((aligned(16)));
 struct S { int x0; int size; char* data; unsigned char bC; Plc p10; Plc p30; };
-extern "C" S* RootCollection_Construct(S* s, WVec* src);
-S* RootCollection_Construct(S* s, WVec* src)
+extern "C" S* cSkaAnimAnchorList_ctor_cArrayR(S* s, WVec* src);
+S* cSkaAnimAnchorList_ctor_cArrayR(S* s, WVec* src)
 {
     It it; It e;
     int n = src->size;
@@ -101,7 +101,7 @@ S* RootCollection_Construct(S* s, WVec* src)
     it = src->begin();
     e = src->end();
     while (it != e) {
-        RootCollection_Append(s, s->data + s->size * 0x180, 1, Elem(*it.p));
+        std_vector_imp_cSkaAnimAnchorListEntry_insert(s, s->data + s->size * 0x180, 1, Elem(*it.p));
         ++it;
     }
     return s;

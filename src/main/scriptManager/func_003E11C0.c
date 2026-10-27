@@ -7,14 +7,14 @@ char D_004BD888[] __attribute__((aligned(8))) = "."; /* 8-aligned in the origina
 
 
 char*strrchr(char*,int);int sprintf(char*,char*,...);
-void String_Copy(char*,char*);void Libc_Strcat(char*,char*);
-char*ScriptMgr_BuildScriptPath(struct Script*self,char*name,char*extension,int moduleOnly){
+void Libc_Strcpy(char*,char*);void Libc_Strcat(char*,char*);
+char*cScriptInterpreter_scriptFileName(struct Script*self,char*name,char*extension,int moduleOnly){
  char*last;
  last=strrchr(name,'\\');if(last)name=last+1;
  if(moduleOnly)sprintf(D_00559FE0,D_004BD868,self->module,name);
  else sprintf(D_00559FE0,D_004BD878,self->module,self->line,name);
  last=strrchr(D_00559FE0,'.');
- if(last)String_Copy(last+1,extension);
+ if(last)Libc_Strcpy(last+1,extension);
  else {Libc_Strcat(D_00559FE0,D_004BD888);Libc_Strcat(D_00559FE0,extension);}
  return D_00559FE0;
 }

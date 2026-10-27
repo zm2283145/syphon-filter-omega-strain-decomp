@@ -7,7 +7,7 @@
 /* merge_units: begin func_00358480 */
 typedef struct N8480 { struct N8480 *next; int a; int id; } N8480;
 unsigned int D_00492CD8[1] = { 0x0 };
-N8480 *Insck_FindSocket(int id)
+N8480 *socket_info(int id)
 {
     N8480 *n;
     for (n = (*(N8480 **)D_00492CD8); n; n = n->next)

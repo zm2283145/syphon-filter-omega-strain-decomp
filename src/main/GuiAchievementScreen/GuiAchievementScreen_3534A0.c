@@ -8,12 +8,12 @@
 #pragma push /* merge_units */
 typedef struct { char pad[0x64]; int a; int b; char pad2[0x7C - 0x6C]; unsigned char kind; char pad3[3]; char text[4]; } O3534A0;
 typedef struct { char d[12]; } Str3534A0;
-extern void *Gui_GetScreenList(void);
-extern O3534A0 *GuiManager_FindOrLoad(void *mgr, char *type, char *name);
-extern void String_CtorCStr_13B480(Str3534A0 *s, char *c);
-extern void String_AssignString(void *dst, Str3534A0 *s);
+extern void *Gui_Manager(void);
+extern O3534A0 *GuiManager_OpenGui(void *mgr, char *type, char *name);
+extern void std_basic_string_char_char_traits_char_ctor_charP(Str3534A0 *s, char *c);
+extern void std_basic_string_char_char_traits_char_assign_basicstringR(void *dst, Str3534A0 *s);
 extern void String_Dtor(Str3534A0 *s, int flags);
-O3534A0 *GuiPersonnel_OpenAchievement(unsigned char kind)
+O3534A0 *GuiAchievementScreen_Construct(unsigned char kind)
 {
     char *name;
     char *text;
@@ -39,14 +39,14 @@ O3534A0 *GuiPersonnel_OpenAchievement(unsigned char kind)
     default:
         return 0;
     }
-    o = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiAchievementScreen", name);
+    o = GuiManager_OpenGui(Gui_Manager(), "GuiAchievementScreen", name);
     if (o == 0)
         return 0;
     o->kind = kind;
     {
         Str3534A0 s;
-        String_CtorCStr_13B480(&s, text);
-        String_AssignString(o->text, &s);
+        std_basic_string_char_char_traits_char_ctor_charP(&s, text);
+        std_basic_string_char_char_traits_char_assign_basicstringR(o->text, &s);
         String_Dtor(&s, 0);
     }
     o->a = a;
@@ -64,19 +64,19 @@ typedef struct {
     char pad74[8]; signed char a7C; char pad7D[3]; char s80[0xC];
 } S3535D0;
 extern int GuiTextListWidget_GetItemId(int list);
-extern char* String_CStr(void* str);
-extern void* Gui_GetScreenStack(void);
-extern void GuiWidget_SendEvent(void* self, void* mgr, int a, int b, int c);
-extern void GuiPersonnelScreen_OpenMenu(void* self, char* s, int a, int b, int c, int d);
-void GuiAchievementScreen_Select(S3535D0* o, int arg)
+extern char* std_basic_string_char_char_traits_char_c_str(void* str);
+extern void* Gui_Canvas(void);
+extern void GuiWidget_SendMessage(void* self, void* mgr, int a, int b, int c);
+extern void GuiPersonnelScreen_OpenSubMenu(void* self, char* s, int a, int b, int c, int d);
+void GuiAchievementScreen_ItemAction(S3535D0* o, int arg)
 {
     int i = GuiTextListWidget_GetItemId(o->a48);
     if (i == -1 || i >= o->a70) {
-        GuiWidget_SendEvent(o, Gui_GetScreenStack(), 0x10, 4, 0);
+        GuiWidget_SendMessage(o, Gui_Canvas(), 0x10, 4, 0);
         return;
     }
-    GuiPersonnelScreen_OpenMenu(o, String_CStr(o->s80), o->a7C, arg, o->a64, i + o->a68);
-    GuiWidget_SendEvent(o, Gui_GetScreenStack(), 0x10, 0, 0);
+    GuiPersonnelScreen_OpenSubMenu(o, std_basic_string_char_char_traits_char_c_str(o->s80), o->a7C, arg, o->a64, i + o->a68);
+    GuiWidget_SendMessage(o, Gui_Canvas(), 0x10, 0, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003535D0 */
@@ -85,11 +85,11 @@ void GuiAchievementScreen_Select(S3535D0* o, int arg)
 #pragma push /* merge_units */
 typedef struct { int pad[3]; int aC; int pad10; } E3536A0;
 typedef struct { char pad[0x48]; int a48; char pad4C[0x28]; E3536A0* a74; } S3536A0;
-extern void GuiPersonnelScreen_ShowItem(S3536A0* o, int i, int v);
-void GuiAchievementScreen_Show(S3536A0* o)
+extern void GuiPersonnelScreen_SetupPreviewWidgets(S3536A0* o, int i, int v);
+void GuiAchievementScreen_ItemGainFocus(S3536A0* o)
 {
     int i = GuiTextListWidget_GetItemId(o->a48);
-    if (i != -1) GuiPersonnelScreen_ShowItem(o, i, ((E3536A0*)((char*)o->a74 + i * 20))->aC);
+    if (i != -1) GuiPersonnelScreen_SetupPreviewWidgets(o, i, ((E3536A0*)((char*)o->a74 + i * 20))->aC);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003536A0 */
@@ -118,7 +118,7 @@ typedef struct {
 extern "C" void GuiTextListWidget_AddItem(void* t, int id, int i, Mode3700 m);
 
 /* MW folds `c ? 0 : 1` on ints into sltiu; enum constants keep the movz select. */
-extern "C" void GuiAchievementScreen_Fill(O3700* self)
+extern "C" void GuiAchievementScreen_PopulateList(O3700* self)
 {
     int i;
     for (i = 0; i < self->count; i++) {
@@ -134,14 +134,14 @@ extern "C" void GuiAchievementScreen_Fill(O3700* self)
 typedef struct { char b[0xC]; } String;
 typedef struct { char pad[0x64]; int unk64; int unk68; char pad2[0x10]; char kind; char pad3[3]; String name; } Obj353;
 #if 0 /* merge_units */
-extern void String_CtorCStr_13B480(String* s, const char* text);
+extern void std_basic_string_char_char_traits_char_ctor_charP(String* s, const char* text);
 #endif /* merge_units */
-#define String_CtorCStr_13B480(a0, a1) (String_CtorCStr_13B480((Str3534A0 *)(a0), (char *)(a1))) /* merge_units */
+#define std_basic_string_char_char_traits_char_ctor_charP(a0, a1) (std_basic_string_char_char_traits_char_ctor_charP((Str3534A0 *)(a0), (char *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void String_AssignString(String* dst, String* src);
+extern void std_basic_string_char_char_traits_char_assign_basicstringR(String* dst, String* src);
 #endif /* merge_units */
-#define String_AssignString(a0, a1) (String_AssignString((void *)(a0), (Str3534A0 *)(a1))) /* merge_units */
+#define std_basic_string_char_char_traits_char_assign_basicstringR(a0, a1) (std_basic_string_char_char_traits_char_assign_basicstringR((void *)(a0), (Str3534A0 *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void String_Dtor(String* s, int flag);
@@ -154,14 +154,14 @@ void GuiAchievementScreen_SetInfo(Obj353* o, char kind, const char* name, int a,
 {
     String tmp;
     o->kind = kind;
-    String_CtorCStr_13B480(&tmp, name);
-    String_AssignString(&o->name, &tmp);
+    std_basic_string_char_char_traits_char_ctor_charP(&tmp, name);
+    std_basic_string_char_char_traits_char_assign_basicstringR(&o->name, &tmp);
     String_Dtor(&tmp, 0);
     o->unk64 = a;
     o->unk68 = b;
 }
-#undef String_CtorCStr_13B480 /* merge_units */
-#undef String_AssignString /* merge_units */
+#undef std_basic_string_char_char_traits_char_ctor_charP /* merge_units */
+#undef std_basic_string_char_char_traits_char_assign_basicstringR /* merge_units */
 #undef String_Dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00353790 */
@@ -175,17 +175,17 @@ void GuiAchievementScreen_SetInfo(Obj353* o, char kind, const char* name, int a,
 
 #include "loose03_types.h"
 
-extern int Agent_GetSelected(void* agents, int index);
+extern int cGameSystem_GetAgentData(void* agents, int index);
 extern char g_Game[];       /* agent list */
 extern void std_vector_deleter_tAchievementInfo_clear(void*);
-extern int AgentData_GetAwardRows(int agent, int a1, void* a2);
-extern void GuiPersonnelScreen_Wake(GuiAchievementScreen*);  /* GuiPersonnelScreen slot 5 */
+extern int cAgentData_GetAchievements(int agent, int a1, void* a2);
+extern void GuiPersonnelScreen_onWake(GuiAchievementScreen*);  /* GuiPersonnelScreen slot 5 */
 
-/* GuiAchievementScreen vtable slot 5: refresh unk6C, pass it with unk7C to the selected agent, then call GuiPersonnelScreen_Wake. */
-void GuiAchievementScreen_Wake(GuiAchievementScreen* self) {
+/* GuiAchievementScreen vtable slot 5: refresh unk6C, pass it with unk7C to the selected agent, then call GuiPersonnelScreen_onWake. */
+void GuiAchievementScreen_onWake(GuiAchievementScreen* self) {
     std_vector_deleter_tAchievementInfo_clear(self->unk6C);
-    AgentData_GetAwardRows(Agent_GetSelected(g_Game, -1), self->unk7C, self->unk6C);
-    GuiPersonnelScreen_Wake(self);
+    cAgentData_GetAchievements(cGameSystem_GetAgentData(g_Game, -1), self->unk7C, self->unk6C);
+    GuiPersonnelScreen_onWake(self);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00353800 */
@@ -195,16 +195,16 @@ void GuiAchievementScreen_Wake(GuiAchievementScreen* self) {
 typedef struct { int words[3]; } String_00353850; /* 12-byte short-string-optimized string */
 typedef struct { char pad[0x64]; int unk64; int unk68; char pad6C[0x7C - 0x6C]; unsigned char unk7C; char pad7D[3]; String_00353850 name; } Obj80;
 static const unsigned int dat_004BAF98[2] = { 0x0, 0x0 };
-extern void GuiPersonnelScreen_Init(Obj80* self);
+extern void GuiPersonnelScreen_onAdd(Obj80* self);
 #if 0 /* merge_units */
-extern void String_CtorCStr_13B480(String_00353850* s, const char* text);   /* String(const char*) */
+extern void std_basic_string_char_char_traits_char_ctor_charP(String_00353850* s, const char* text);   /* String(const char*) */
 #endif /* merge_units */
-#define String_CtorCStr_13B480(a0, a1) (String_CtorCStr_13B480((Str3534A0 *)(a0), (char *)(a1))) /* merge_units */
+#define std_basic_string_char_char_traits_char_ctor_charP(a0, a1) (std_basic_string_char_char_traits_char_ctor_charP((Str3534A0 *)(a0), (char *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void String_AssignString(String_00353850* dst, String_00353850* src);       /* String::operator= */
+extern void std_basic_string_char_char_traits_char_assign_basicstringR(String_00353850* dst, String_00353850* src);       /* String::operator= */
 #endif /* merge_units */
-#define String_AssignString(a0, a1) (String_AssignString((void *)(a0), (Str3534A0 *)(a1))) /* merge_units */
+#define std_basic_string_char_char_traits_char_assign_basicstringR(a0, a1) (std_basic_string_char_char_traits_char_assign_basicstringR((void *)(a0), (Str3534A0 *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void String_Dtor(String_00353850* s, int flags);           /* ~String */
@@ -213,19 +213,19 @@ extern void String_Dtor(String_00353850* s, int flags);           /* ~String */
 
 
 /* Resets the object: base reset, clears the flag, sets the name to ((char*)dat_004BAF98) and zeroes +0x64/+0x68. */
-void GuiAchievementScreen_Init(Obj80* self)
+void GuiAchievementScreen_onAdd(Obj80* self)
 {
     String_00353850 tmp;
-    GuiPersonnelScreen_Init(self);
+    GuiPersonnelScreen_onAdd(self);
     self->unk7C = 0;
-    String_CtorCStr_13B480(&tmp, ((char*)dat_004BAF98));
-    String_AssignString(&self->name, &tmp);
+    std_basic_string_char_char_traits_char_ctor_charP(&tmp, ((char*)dat_004BAF98));
+    std_basic_string_char_char_traits_char_assign_basicstringR(&self->name, &tmp);
     String_Dtor(&tmp, 0);
     self->unk64 = 0;
     self->unk68 = 0;
 }
-#undef String_CtorCStr_13B480 /* merge_units */
-#undef String_AssignString /* merge_units */
+#undef std_basic_string_char_char_traits_char_ctor_charP /* merge_units */
+#undef std_basic_string_char_char_traits_char_assign_basicstringR /* merge_units */
 #undef String_Dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00353850 */
@@ -236,8 +236,8 @@ typedef struct { char tag; } Alloc;
 typedef struct { char* begin; char* end; char* cap; } String_003538B0;
 
 extern int strlen(const char* s); /* strlen */
-extern void String_Reserve(String_003538B0* self, int n);
-extern void String_Replace(String_003538B0* self, char* at, int unused, const char* first, const char* last, Alloc alloc);
+extern void std_basic_string_char_char_traits_char_reserve(String_003538B0* self, int n);
+extern void std_basic_string_char_char_traits_char_do_replace(String_003538B0* self, char* at, int unused, const char* first, const char* last, Alloc alloc);
 
 /* Constructs a string from a C string; returns self. */
 String_003538B0* String_CtorCStr_3538B0(String_003538B0* self, const char* s)
@@ -248,8 +248,8 @@ String_003538B0* String_CtorCStr_3538B0(String_003538B0* self, const char* s)
     self->end = 0;
     self->cap = 0;
     len = strlen(s);
-    String_Reserve(self, len);
-    String_Replace(self, 0, 0, s, s + len, alloc);
+    std_basic_string_char_char_traits_char_reserve(self, len);
+    std_basic_string_char_char_traits_char_do_replace(self, 0, 0, s, s + len, alloc);
     return self;
 }
 #pragma pop /* merge_units */
@@ -262,7 +262,7 @@ String_003538B0* String_CtorCStr_3538B0(String_003538B0* self, const char* s)
 
 extern "C" { char D_004BAFA0[] = "basic_string: out_of_range"; }
 extern "C" { char D_004BAFC0[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_00353930, D_004BAFA0, D_004BAFC0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00492C38, D_00492C40, Libc_Memmove, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_00353930, D_004BAFA0, D_004BAFC0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00492C38, D_00492C40, Libc_Memmove, std_basic_string_char_char_traits_char_assign_charP_charP_intP)
 #pragma pop /* merge_units */
 /* merge_units: end func_00353930 */
 

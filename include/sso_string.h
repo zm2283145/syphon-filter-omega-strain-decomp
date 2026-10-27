@@ -14,8 +14,8 @@
  * the string functions themselves - use this one in callers.
  *
  * Usual caller idiom:
- *   SsoString s;  String_CtorCStr_13B480(&s, "text");
- *   ... String_CStr(&s) (data) ...;  String_Dtor(&s, 0);  (dtor)
+ *   SsoString s;  std_basic_string_char_char_traits_char_ctor_charP(&s, "text");
+ *   ... std_basic_string_char_char_traits_char_c_str(&s) (data) ...;  String_Dtor(&s, 0);  (dtor)
  *
  * Prototypes take void* so local string types still convert; define
  * SSO_STRING_NO_PROTOS to keep typed local declarations instead.
@@ -42,11 +42,11 @@ LAYOUT_SIZE(SsoString, 0xC);
 #ifdef __cplusplus
 extern "C" {
 #endif
-void* String_CtorCStr_13B480(void* str, const char* cstr);      /* ctor from C string */
+void* std_basic_string_char_char_traits_char_ctor_charP(void* str, const char* cstr);      /* ctor from C string */
 void* String_Dtor(void* str, int flags);                      /* dtor (frees long data) */
-char* String_CStr(void* str);                                 /* data() / c_str() */
-void* String_AssignString(void* dst, const void* src);                /* operator= */
-void String_Reserve(void* str, unsigned int n);                 /* 0x0013B970 */
+char* std_basic_string_char_char_traits_char_c_str(void* str);                                 /* data() / c_str() */
+void* std_basic_string_char_char_traits_char_assign_basicstringR(void* dst, const void* src);                /* operator= */
+void std_basic_string_char_char_traits_char_reserve(void* str, unsigned int n);                 /* 0x0013B970 */
 #ifdef __cplusplus
 }
 #endif

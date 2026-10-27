@@ -4,9 +4,9 @@
 #pragma opt_propagation off
 #include "tstr_types.h"
 /* std_vector_imp_cCollisionEdge_insert: vector<E>::insert(pos, n, value) for the 0x60-byte human collision buffer
- * element of Vector_Reserve_1EF6C0 (Vector_Reserve_1EF6C0.c): in-place shift/fill, or grow, copy
+ * element of std_vector_imp_cCollisionEdge_reserve (std_vector_imp_cCollisionEdge_reserve.c): in-place shift/fill, or grow, copy
  * and swap. */
-/* Quadword member copies: lq/sq through volatile asm, as in Vector_Reserve_1EF6C0.c (no C form keeps
+/* Quadword member copies: lq/sq through volatile asm, as in std_vector_imp_cCollisionEdge_reserve.c (no C form keeps
  * retail's 128-bit moves); the unused xx keeps retail's dead member-address addiu. The local
  * declaration order in each copy picks retail's registers. */
 struct V4q {
@@ -45,7 +45,7 @@ extern "C" {
 extern char D_004BD0B0[];
 extern char D_004A0548[];
 void std_swap_vectordeleterR_vectordeleterR_13(V1EF6C0* a, V1EF6C0* b);
-void HumanColBufB_Dtor(V1EF6C0* a, int f);
+void std_vector_deleter_cCollisionEdge_dtor(V1EF6C0* a, int f);
 void std_vector_imp_cCollisionEdge_insert(V1EF6C0* v, E1EF6C0* pos, unsigned int n, const E1EF6C0* value);
 }
 inline void* operator new(unsigned int, void* p) { return p; }
@@ -134,6 +134,6 @@ extern "C" void std_vector_imp_cCollisionEdge_insert(V1EF6C0* v, T* pos, unsigne
             tmp.count++;
         }
         std_swap_vectordeleterR_vectordeleterR_13(&tmp, v);
-        HumanColBufB_Dtor(&tmp, -1);
+        std_vector_deleter_cCollisionEdge_dtor(&tmp, -1);
     }
 }

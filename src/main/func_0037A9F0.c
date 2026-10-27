@@ -45,16 +45,16 @@ typedef struct GsCtx37A9F0 {
     Rt37A9F0 rt[6];       /* 0x1068 */
 } GsCtx37A9F0;
 
-extern void Video_FrameFlag8(GsCtx37A9F0*);
-extern void RenderTarget_Release(Rt37A9F0*);
-extern void Renderer_ClearRect(GsCtx37A9F0*, int, int, int*, int, int);
-extern void Display_SetPmode(GsCtx37A9F0*);
+extern void XLib_NextFrameSlave(GsCtx37A9F0*);
+extern void cUserFrameEnv_ReleaseVram(Rt37A9F0*);
+extern void XLib_ClearActiveBuffer(GsCtx37A9F0*, int, int, int*, int, int);
+extern void XLib_DisplayLastFrame(GsCtx37A9F0*);
 extern void cTexMan_TermTextureStream(int);
-extern void Vif1Packet_Flip(void*);
-extern void Video_FreeDeferredBuffers(GsCtx37A9F0*, int);
-extern void Video_RollFrameStats(GsCtx37A9F0*);
-extern void Video_BuildFrameClearPacket(GsCtx37A9F0*);
-extern void ListenerList_Update(void*, float);
+extern void cDmaMan_NextFrame(void*);
+extern void XLib_DeferDeleteDmaData(GsCtx37A9F0*, int);
+extern void XLib_NextPrimFrame(GsCtx37A9F0*);
+extern void XLib_ClearScreen_void(GsCtx37A9F0*);
+extern void cAnimTexMan_NextFrame(void*, float);
 extern void cTexMan_StartFrame(int);
 extern char D_00537F80[];
 extern int g_TimerAccum;
@@ -82,16 +82,16 @@ static inline void GsCtx_SetBufferRegs(GsCtx37A9F0* c, unsigned int w, unsigned 
     c->dirty = 1;
 }
 
-void Video_BeginFrame(GsCtx37A9F0* c)
+void XLib_NextFrame(GsCtx37A9F0* c)
 {
     int i;
     unsigned int t;
     if (c->flags & 8) {
-        Video_FrameFlag8(c);
+        XLib_NextFrameSlave(c);
         return;
     }
     for (i = 0; i < 6; i++) {
-        RenderTarget_Release(&c->rt[i]);
+        cUserFrameEnv_ReleaseVram(&c->rt[i]);
     }
     if (c->clear0) {
         int col[4];
@@ -99,7 +99,7 @@ void Video_BeginFrame(GsCtx37A9F0* c)
         col[0] = 0x80;
         col[1] = 0x80;
         col[2] = 0x80;
-        Renderer_ClearRect(c, c->w, c->h, col, 0, 2);
+        XLib_ClearActiveBuffer(c, c->w, c->h, col, 0, 2);
     }
     if (c->clear1) {
         int col[4];
@@ -107,7 +107,7 @@ void Video_BeginFrame(GsCtx37A9F0* c)
         col[0] = 0x80;
         col[1] = 0x80;
         col[2] = 0x80;
-        Renderer_ClearRect(c, c->w, c->h, col, 0, 3);
+        XLib_ClearActiveBuffer(c, c->w, c->h, col, 0, 3);
     }
     while ((*(volatile int*)0x10009000 & 0x100) || (*(volatile int*)0x10003C00 & 3) ||
            (*(volatile int*)0x10003C00 & 0x1F000000))
@@ -137,7 +137,7 @@ void Video_BeginFrame(GsCtx37A9F0* c)
         T0_COUNT = 0;
         *(volatile int*)0x10000810 = 0x82;
         g_TimerAccum = 0;
-        Display_SetPmode(c);
+        XLib_DisplayLastFrame(c);
     } else {
         t = T0_COUNT + g_TimerAccum;
         g_TickCounter64 += (int)((float)t / 5.76f);
@@ -146,14 +146,14 @@ void Video_BeginFrame(GsCtx37A9F0* c)
         g_TimerAccum = 0;
     }
     cTexMan_TermTextureStream(c->dev);
-    Vif1Packet_Flip(D_00537F80);
-    Video_FreeDeferredBuffers(c, 0);
-    Video_RollFrameStats(c);
+    cDmaMan_NextFrame(D_00537F80);
+    XLib_DeferDeleteDmaData(c, 0);
+    XLib_NextPrimFrame(c);
     c->buf ^= 1;
     c->frames++;
     GsCtx_SetBufferRegs(c, c->w, c->h, c->psm, c->fbp[c->buf], c->fbmsk, c->zpsm, c->zbp, c->zmsk, c->field);
     ((unsigned char*)c)[c->slot * 0x110 + 0x2F6] = 1;
-    Video_BuildFrameClearPacket(c);
-    ListenerList_Update(c->listeners, c->dt);
+    XLib_ClearScreen_void(c);
+    cAnimTexMan_NextFrame(c->listeners, c->dt);
     cTexMan_StartFrame(c->dev);
 }

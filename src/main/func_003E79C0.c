@@ -7,10 +7,10 @@
 #include "types.h"
 #include "loose04_types.h"
 
-extern int IeNode_Update(int handle, float frames);
+extern int cInterfaceModel_NextFrame(int handle, float frames);
 
-/* Forwards a time in seconds to IeNode_Update as 30 Hz frames. */
-int IeScreen_Update(Word* self, float seconds) {
-    IeNode_Update(self->value, 30.0f * seconds);
+/* Forwards a time in seconds to cInterfaceModel_NextFrame as 30 Hz frames. */
+int cInterface_NextFrame(Word* self, float seconds) {
+    cInterfaceModel_NextFrame(self->value, 30.0f * seconds);
     return 1;
 }

@@ -4,7 +4,7 @@
 /*
  * SFOLobby: the online lobby layer (SFOLobby_*.cc). It wraps the Medius online
  * SDK: every request starts with a MessageID string and the session key, is sent
- * with a reply callback, and the caller then polls (SFOLobby_CallUpdateHook/SFOLobby_Poll)
+ * with a reply callback, and the caller then polls (SFOLobby_GuiCallback/SFOLobby_Poll)
  * until the callback has set the matching gotReply* flag.
  *
  * The single instance is reached through the global D_00585E60 (callbacks) or a
@@ -23,9 +23,9 @@
  *   D_004C0CC8 ""
  */
 
-/* Growable array of fixed-size elements (LobbyArray_Init init, LobbyArray_Append append,
- * LobbyArray_At element at, LobbyArray_RemoveAt remove at, LobbyArray_Clear clear,
- * LobbyArray_Free free). */
+/* Growable array of fixed-size elements (SFOLobbyList_AllocList init, SFOLobbyList_Append append,
+ * SFOLobbyList_GetSlot element at, SFOLobbyList_DeleteSlot remove at, SFOLobbyList_ClearList clear,
+ * SFOLobbyList_ClearAndCompactList free). */
 typedef struct LobbyArray {
     int capacity;                   /* 0x00 at least 5 */
     int count;                      /* 0x04 */
@@ -34,7 +34,7 @@ typedef struct LobbyArray {
     int elemSize;                   /* 0x10 */
     char* data;                     /* 0x14 */
     signed char dirty;              /* 0x18 set when the contents change */
-    char refreshing;                /* 0x19 set while a refresh request is outstanding (LobbyArray_SetRefreshing) */
+    char refreshing;                /* 0x19 set while a refresh request is outstanding (SFOLobbyList_SetBusy) */
     unsigned char unique;           /* 0x1A append skips elements that compare equal */
 } LobbyArray;
 
@@ -64,10 +64,10 @@ enum MediusPlayerStatus {
 /* SFOLobby::state values. */
 enum SFOLobbyState {
     SFOLOBBY_STATE_0 = 0,
-    SFOLOBBY_STATE_NETWORK = 1,     /* network configuration (SFOLobby_EnterNetworkState .. SFOLobby_LeaveNetworkState) */
+    SFOLOBBY_STATE_NETWORK = 1,     /* network configuration (SFOLobby_ConfigScreenStart .. SFOLobby_ConfigScreenExit) */
     SFOLOBBY_STATE_ONLINE = 4,      /* per-frame update runs (SFOLobby_MissionScreenIntel) */
     SFOLOBBY_STATE_5 = 5,
-    SFOLOBBY_STATE_CONTACTS = 6,    /* buddy list (SFOLobby_EnterContactsState .. SFOLobby_LeaveContactsState) */
+    SFOLOBBY_STATE_CONTACTS = 6,    /* buddy list (SFOLobby_ContactScreenStart .. SFOLobby_ContactScreenExit) */
     SFOLOBBY_STATE_7 = 7,
     SFOLOBBY_STATE_IDLE = 9,        /* no mode active */
     SFOLOBBY_STATE_10 = 10
@@ -121,7 +121,7 @@ typedef struct LobbyBuddyEntry {
     int f4C;                        /* 0x4C */
 } LobbyBuddyEntry;
 
-/* Account id lookup by name (SFOLobby_LookupAccountId, callback SFOLobby_Callback_AccountGetID). */
+/* Account id lookup by name (SFOLobby_GetAgentID, callback SFOLobby_Callback_AccountGetID). */
 typedef struct LobbyAccountIdReply {
     char messageId[0x15];           /* 0x00 */
     char pad15[3];
@@ -143,11 +143,11 @@ typedef struct LobbyPlayerInfo {
     int wE8;                        /* 0xE8 */
     int wEC;                        /* 0xEC */
     int wF0;                        /* 0xF0 */
-    int ip;                         /* 0xF4 IPv4 address (Net_ParseIPv4) */
+    int ip;                         /* 0xF4 IPv4 address (SFOLobby_PackIPAddress) */
     unsigned char bF8, bF9;         /* 0xF8 */
 } LobbyPlayerInfo;
 
-/* Account info by id (SFOLobby_RequestAccountInfo, callback SFOLobby_Callback_GetPlayerInfo). */
+/* Account info by id (SFOLobby_GetAgentDetails, callback SFOLobby_Callback_GetPlayerInfo). */
 typedef struct LobbyAccountInfoReply {
     char head[0x1C];                /* 0x00 */
     char accountName[0x2C];         /* 0x1C */
@@ -155,7 +155,7 @@ typedef struct LobbyAccountInfoReply {
     char pad144[4];
 } LobbyAccountInfoReply;
 
-/* accountCache element (0x140 bytes; SFOLobby_CacheAccount adds/updates, SFOLobby_FindAgentData finds). */
+/* accountCache element (0x140 bytes; SFOLobby_RefreshAgentData adds/updates, SFOLobby_FindAgentData finds). */
 typedef struct LobbyAccountEntry {
     int accountId;                  /* 0x00 */
     char name[0x20];                /* 0x04 */
@@ -211,7 +211,7 @@ typedef struct LobbyConnectParams {
     void* unkFC;                    /* 0xFC */
 } LobbyConnectParams;
 
-/* Login reply (callback SFOLobby_OnAccountLogin), Medius AccountLoginResponse layout. */
+/* Login reply (callback SFOLobby_Callback_AccountLogin), Medius AccountLoginResponse layout. */
 typedef struct LobbyLoginReply {
     char messageId[0x15];           /* 0x00 */
     char pad15[3];
@@ -244,7 +244,7 @@ typedef struct SFOLobby {
     LobbyArray listA8;                      /* 0xA8 refreshed while mode == 1 (func_00450B30) */
     LobbyArray poolC4;                      /* 0xC4 elem 0x50 bytes */
     LobbyArray buddyList;                   /* 0xE0 LobbyBuddyEntry (0x50), filled by the buddy-list reply callback SFOLobby_Callback_GetBuddyList */
-    LobbyArray accountCache;                /* 0xFC LobbyAccountEntry (0x140) keyed by account id (SFOLobby_CacheAccount) */
+    LobbyArray accountCache;                /* 0xFC LobbyAccountEntry (0x140) keyed by account id (SFOLobby_RefreshAgentData) */
     LobbyArray pool118;                     /* 0x118 elem 0x2C bytes */
     LobbyArray pool134;                     /* 0x134 elem 0x50 bytes */
     LobbyArray pool150;                     /* 0x150 elem 0x50 bytes; copy of buddyList */
@@ -257,7 +257,7 @@ typedef struct SFOLobby {
     int connHandle;                         /* 0x180 connection handle from the connect callback SFOLobby_Callback_MediusConnect; -1 = none */
     int gotConnect;                         /* 0x184 set when SFOLobby_Callback_MediusConnect fires */
     int gotReply188;                        /* 0x188 func_00445F40 */
-    int gotLogin;                           /* 0x18C login reply SFOLobby_OnAccountLogin */
+    int gotLogin;                           /* 0x18C login reply SFOLobby_Callback_AccountLogin */
     int gotReply190;                        /* 0x190 SFOLobby_Callback_AccountLogout */
     int gotReply194;                        /* 0x194 */
     int gotReply198;                        /* 0x198 SFOLobby_Callback_AccountRegistration (reply314) */
@@ -268,7 +268,7 @@ typedef struct SFOLobby {
     int gotReply1AC;                        /* 0x1AC SFOLobby_Callback_GetLocations (reply39C) */
     int gotReply1B0;                        /* 0x1B0 SFOLobby_Callback_PickLocation (reply400) */
     int gotReply1B4;                        /* 0x1B4 */
-    int gotReply1B8;                        /* 0x1B8 SFOLobby_OnGetPolicy (reply484) */
+    int gotReply1B8;                        /* 0x1B8 SFOLobby_Callback_GetPolicy (reply484) */
     int gotReply1BC;                        /* 0x1BC SFOLobby_OnSettings (reply5A4) */
     int gotReply1C0;                        /* 0x1C0 SFOLobby_Callback_JoinChannel (reply9B0) */
     int gotAccountId;                       /* 0x1C4 SFOLobby_Callback_AccountGetID (accountIdReply) */
@@ -351,30 +351,30 @@ typedef struct SFOLobby {
     int list8CTime;                         /* 0x1E98 time of the last list8C refresh */
     int listA8Time;                         /* 0x1E9C time of the last listA8 refresh */
     int mode;                               /* 0x1EA0 selects which list is refreshed (SFOLobby_LobbyScreenIntel) */
-    int unk1EA4;                            /* 0x1EA4 initial capacity of outList23EC (SFOLobby_EnterContactsState) */
-    int unk1EA8;                            /* 0x1EA8 > 0: network already started (SFOLobby_EnterNetworkState) */
+    int unk1EA4;                            /* 0x1EA4 initial capacity of outList23EC (SFOLobby_ContactScreenStart) */
+    int unk1EA8;                            /* 0x1EA8 > 0: network already started (SFOLobby_ConfigScreenStart) */
     int list8CId;                           /* 0x1EAC id sent with the list8C refresh request */
     char pad1EB0[0x1F38 - 0x1EB0];
-    int lobbyWorldId;                       /* 0x1F38 id of the joined lobby (SFOLobby_JoinLobby) */
-    LobbyBlock40 serverKey;                 /* 0x1F3C connect params serverKey for auth/lobby connects (SFOLobby_ConnectDir/SFOLobby_ConnectAuth) */
-    char authHostName[0x80];                /* 0x1F7C resolved into authServer by SFOLobby_ResolveHost */
-    char authServer[0x80];                  /* 0x1FFC auth server IP string, connected with authPort by SFOLobby_ConnectAuth */
+    int lobbyWorldId;                       /* 0x1F38 id of the joined lobby (SFOLobby_RegionSelect) */
+    LobbyBlock40 serverKey;                 /* 0x1F3C connect params serverKey for auth/lobby connects (SFOLobby_MediusConnectMUIS/SFOLobby_MediusConnectMAS) */
+    char authHostName[0x80];                /* 0x1F7C resolved into authServer by SFOLobby_DNSLookup */
+    char authServer[0x80];                  /* 0x1FFC auth server IP string, connected with authPort by SFOLobby_MediusConnectMAS */
     int authPort;                           /* 0x207C */
     char dirHostName[0x80];                 /* 0x2080 directory (universe list) server host name; resolved into dirServer */
-    char dirServer[0x80];                   /* 0x2100 directory server IP string, connected with dirPort by SFOLobby_ConnectDir */
+    char dirServer[0x80];                   /* 0x2100 directory server IP string, connected with dirPort by SFOLobby_MediusConnectMUIS */
     int dirPort;                            /* 0x2180 */
     unsigned char directAuth;               /* 0x2184 set: use authHostName directly (one dummy universe); clear: fetch the universe list (SFOLobby_StartNetwork) */
     char pad2185[0x2188 - 0x2185];
-    int dnasArg;                            /* 0x2188 first DNAS auth argument (SFOLobby_DnasAuth) */
+    int dnasArg;                            /* 0x2188 first DNAS auth argument (SFOLobby_ConfigVerifyDNAS) */
     char dnasData[0x200];                   /* 0x218C DNAS auth data */
     unsigned short dnasDataLen;             /* 0x238C */
-    char password[0x22];                    /* 0x238E from DNAS (SFOLobby_DnasAuth); filled with '*' when empty (SFOLobby_Authenticate) */
+    char password[0x22];                    /* 0x238E from DNAS (SFOLobby_ConfigVerifyDNAS); filled with '*' when empty (SFOLobby_Authenticate) */
     int passwordLen;                        /* 0x23B0 */
-    unsigned char useDnas;                  /* 0x23B4 password comes from DNAS (SFOLobby_DnasAuth) rather than the default */
+    unsigned char useDnas;                  /* 0x23B4 password comes from DNAS (SFOLobby_ConfigVerifyDNAS) rather than the default */
     char pad23B5[0x23D5 - 0x23B5];
     unsigned char unk23D5;                  /* 0x23D5 */
     char pad23D6[0x23D8 - 0x23D6];
-    LobbyArray* netConfigList;              /* 0x23D8 network configurations (0x13C0-byte entries, SFOLobby_ListNetConfigs); this and the following lists are caller-supplied */
+    LobbyArray* netConfigList;              /* 0x23D8 network configurations (0x13C0-byte entries, SFOLobby_ConfigGetList); this and the following lists are caller-supplied */
     LobbyArray* universeList;               /* 0x23DC 0x210-byte entries: name, host name +0x80, port +0x100, description +0x104 (SFOLobby_Callback_UniverseStatusList) */
     LobbyArray* lobbyList;                  /* 0x23E0 entries: world id, name +4 (SFOLobby_Callback_GetLocations) */
     char pad23E4[0x23E8 - 0x23E4];
@@ -382,12 +382,12 @@ typedef struct SFOLobby {
     LobbyArray* outList23EC;                /* 0x23EC */
     LobbyArray* outList23F0;                /* 0x23F0 */
     LobbyArray* outList23F4;                /* 0x23F4 */
-    LobbyArray* outUsageList;               /* 0x23F8 "USAGE" entries (SFOLobby_OnGetPolicy) */
-    LobbyArray* outList23FC;                /* 0x23FC other entries (SFOLobby_OnGetPolicy) */
+    LobbyArray* outUsageList;               /* 0x23F8 "USAGE" entries (SFOLobby_Callback_GetPolicy) */
+    LobbyArray* outList23FC;                /* 0x23FC other entries (SFOLobby_Callback_GetPolicy) */
     LobbyArray* outList2400;                /* 0x2400 SFOLobby_OnSettings */
     LobbyArray* outList2404;                /* 0x2404 SFOLobby_Callback_UniverseNews */
     char busy;                              /* 0x2408 */
-    unsigned char inUpdateHook;             /* 0x2409 set while the update hook runs (SFOLobby_CallUpdateHook) */
+    unsigned char inUpdateHook;             /* 0x2409 set while the update hook runs (SFOLobby_GuiCallback) */
     char pad240A[0x2410 - 0x240A];
     int waitStart;                          /* 0x2410 start time of the current wait loop */
     int unk2414;                            /* 0x2414 */
@@ -397,10 +397,10 @@ typedef struct SFOLobby {
     int accountId;                          /* 0x2480 own account id (login reply); -1 = none */
     int unk2484;                            /* 0x2484 -1 = none */
     char pad2488[0x248C - 0x2488];
-    char wantedUniverse[0x80];              /* 0x248C universe to join, matched against universeList names (SFOLobby_AutoJoin) */
+    char wantedUniverse[0x80];              /* 0x248C universe to join, matched against universeList names (SFOLobby_ServerSelect) */
     char wantedLobby[0x40];                 /* 0x250C lobby to join, matched against lobbyList names */
     char pad254C[0x2550 - 0x254C];
-    void* updateHook;                       /* 0x2550 called by SFOLobby_CallUpdateHook */
+    void* updateHook;                       /* 0x2550 called by SFOLobby_GuiCallback */
     char pad2554[0x255C - 0x2554];
     int state;                              /* 0x255C SFOLOBBY_STATE_* */
     char pad2560[0x2564 - 0x2560];
@@ -412,12 +412,12 @@ typedef struct SFOLobby {
     char pad2574[0x2578 - 0x2574];
     int unk2578;                            /* 0x2578 */
     int buddyListTime;                      /* 0x257C time of the last buddy list request (SFOLobby_RequestBuddyList) */
-    int buddyInfoTime;                      /* 0x2580 time of the last buddy info refresh (SFOLobby_UpdateContacts) */
+    int buddyInfoTime;                      /* 0x2580 time of the last buddy info refresh (SFOLobby_ContactScreenIntel) */
     char pad2584[0x2590 - 0x2584];
     int unk2590;                            /* 0x2590 */
     char pad2594[0x2660 - 0x2594];
     int unk2660;                            /* 0x2660 */
-    char libnetCtx[0x40];                   /* 0x2664 sceLibnet context for host name lookups (SFOLobby_ResolveHost) */
+    char libnetCtx[0x40];                   /* 0x2664 sceLibnet context for host name lookups (SFOLobby_DNSLookup) */
     int unk26A4;                            /* 0x26A4 */
     char pad26A8[0x26A8 - 0x26A8];
 } SFOLobby;

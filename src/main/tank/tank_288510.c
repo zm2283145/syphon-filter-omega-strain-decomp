@@ -17,7 +17,7 @@ extern Wrap_288510 g_MemCard;
 extern char D_00499C70[];
 Vec_288510* std_vector_charPtr_ctor_void_2(Vec_288510* v);
 void std_vector_charPtr_dtor_void_2(Vec_288510* v, short del);
-void MemCardWrap_Enumerate(Wrap_288510* o, Vec_288510* v);
+void cMemCard_GetFilenames(Wrap_288510* o, Vec_288510* v);
 char** std_vector_charPtr_opIndex_uint_2(Vec_288510* v, int i);
 char* strchr(const char* s, int c);
 int AgentFile_DecodeName(const unsigned char* in, char* out, int* digit, int max);
@@ -34,7 +34,7 @@ extern "C" unsigned char GuiTitleScreen_SavedAgentExists(void)
         ok = 0;
         std_vector_charPtr_ctor_void_2(&v);
         v.owns = 1;
-        MemCardWrap_Enumerate(w, &v);
+        cMemCard_GetFilenames(w, &v);
         for (i = 0; i < v.Size(); i++) {
             if (!strchr(v.data[i], '.') && ((D_00499C70 + 1)[**std_vector_charPtr_opIndex_uint_2(&v, i)] & 4) &&
                 AgentFile_DecodeName((unsigned char*)v.data[i], name, &digit, 0x10)) {

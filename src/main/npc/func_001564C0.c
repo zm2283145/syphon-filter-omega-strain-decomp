@@ -2,7 +2,7 @@
 #pragma inline_depth(8)
 #include "types.h"
 #include "vslot_pad.h"
-/* NpcAi_ModeTakeCover: take-cover message handler - settle into the cover node (crouch/peek by
+/* cNPC_TakeCover: take-cover message handler - settle into the cover node (crouch/peek by
    cover height), move to a better cover node when exposed, ask for ammo, and react to perception. */
 /* quadword copy (lq/sq): a 128-bit move C cannot express, the retail vector copy */
 static inline void Q16(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
@@ -59,30 +59,30 @@ extern int D_004EE550;
 extern int D_004ED9B8;
 extern int D_00489E20[4];
 extern char g_ActorActionMsgClass[], D_004E0840[];
-int* Event_GetType(Ev* ev);
-int WeaponInv_GetClip(Inv* inv, int slot);
-int WeaponInv_AllowsAction(Inv* inv);
-int WeaponInv_IsReadyToFire(Inv* inv, int b);
-int Actor_IsArmed(GObj* o);
-float NpcRoute_Distance(Route* r);
-unsigned char NpcPerception_SightTest(Ai* t, V* p, int x, int mode);
-PNode* NpcPath_GetNode(int n);
-void NpcAi_RequestAction(Npc* self, int type, int prio, float f);
-void NpcAi_RequestMode(void* brain, int mode, int arg);
-void NpcAi_SetMovementState(Npc* self, int a, int b);
-void NpcAi_CoverSearch(Npc* self);
-void NpcAi_FiringPositionSearch(Npc* self);
-void NpcAi_LosCheckFromDestination(Npc* self);
-void Event_Construct(void*, void*);
-void Event_Send(void*, void*, int);
+int* cMessage_Name(Ev* ev);
+int cWeapon_GetClipAmmo(Inv* inv, int slot);
+int cWeapon_CanReload(Inv* inv);
+int cWeapon_ReadyToFire(Inv* inv, int b);
+int cHuman_IsHoldingGun(GObj* o);
+float cPathNavigator_DistanceToDestination(Route* r);
+unsigned char cAITarget_TestPointInViewCone(Ai* t, V* p, int x, int mode);
+PNode* cAIPathData_GetNode(int n);
+void cNPC_DoAction(Npc* self, int type, int prio, float f);
+void cStateMachine_ChangeState(void* brain, int mode, int arg);
+void cNPC_SetMoveMode(Npc* self, int a, int b);
+void cNPC_MoveToCoverNode(Npc* self);
+void cNPC_MoveToAttackFromCoverNode(Npc* self);
+void cNPC_CheckLOSDestinationFromTarget(Npc* self);
+void cMessage_ctor_cMessageNameR(void*, void*);
+void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 void cMessage_dtor(void*, int);
-unsigned char NpcAi_ModeTakeCover(Npc* self, Ev* ev);
+unsigned char cNPC_TakeCover(Npc* self, Ev* ev);
 }
 
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
 struct MsgB {
     void* vtable; void* type; int pad8[5]; int flags; unsigned char kind; char pad21[3];
-    MsgB(void* t) { Event_Construct(this, t); }
+    MsgB(void* t) { cMessage_ctor_cMessageNameR(this, t); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); }
 };
 struct MsgI : MsgB {
@@ -113,17 +113,17 @@ static inline unsigned char Exposed(Npc* self)
     }
     return r;
 }
-static inline bool LowAmmo(Npc* self) { bool low = 1; Inv* inv = self->obj->inv; if (!inv->bA0 && !(WeaponInv_GetClip(inv, 6) < self->clipMin)) low = 0; return low; }
+static inline bool LowAmmo(Npc* self) { bool low = 1; Inv* inv = self->obj->inv; if (!inv->bA0 && !(cWeapon_GetClipAmmo(inv, 6) < self->clipMin)) low = 0; return low; }
 /* cover-height thresholds: a native 128-bit copy (lq/sq by the compiler) of D_00489E20 */
 struct F4 { union { __int128 q; float v[4]; }; };
 static inline float CoverLimit(unsigned int h) { F4 t = *(F4*)D_00489E20; return t.v[h & 0xFF]; }
 static inline void Peek(Npc* self, int n)
 {
-    if ((NpcPath_GetNode(n)->flags & 4) && !self->b141)
-        NpcAi_RequestAction(self, 1, 0, 0.0f);
+    if ((cAIPathData_GetNode(n)->flags & 4) && !self->b141)
+        cNPC_DoAction(self, 1, 0, 0.0f);
 }
 
-unsigned char NpcAi_ModeTakeCover(Npc* self0, Ev* ev0)
+unsigned char cNPC_TakeCover(Npc* self0, Ev* ev0)
 {
     Npc* self; Ev* ev; unsigned char handled; GObj* obj; int t; Inv* inv;
     self = self0;
@@ -131,20 +131,20 @@ unsigned char NpcAi_ModeTakeCover(Npc* self0, Ev* ev0)
     handled = 0;
     obj = self->obj;
     inv = obj->inv;
-    t = *Event_GetType(ev);
+    t = *cMessage_Name(ev);
     if (t == D_004EE550) {
         if ((unsigned char)ev->kind == 2) {
             if ((unsigned char)self->Busy() == 1) {
                 Route* r = self->route;
                 if (r->f58 >= 0 && r->f58 == r->f50) {
-                    if (NpcRoute_Distance(r) < 3.0f) {
+                    if (cPathNavigator_DistanceToDestination(r) < 3.0f) {
                         self->SetStance(0, 0);
                     } else {
                         float lim = CoverLimit(self->CoverHeight());
                         if (self->route->f40 > lim && self->route->f40 < 1.0f + lim && obj->f320C != 2 &&
-                            NpcPerception_SightTest(self->target, &self->route->pos, 0, 0)) {
+                            cAITarget_TestPointInViewCone(self->target, &self->route->pos, 0, 0)) {
                             Peek(self, self->route->f58);
-                            NpcAi_RequestAction(self, 2, 0, 0.0f);
+                            cNPC_DoAction(self, 2, 0, 0.0f);
                         }
                     }
                 }
@@ -162,10 +162,10 @@ unsigned char NpcAi_ModeTakeCover(Npc* self0, Ev* ev0)
                         self->fEC = 2;
                 }
             }
-            if (self->fEC == 1 && WeaponInv_AllowsAction(inv)) {
+            if (self->fEC == 1 && cWeapon_CanReload(inv)) {
                 {
                     MsgI m(60, 0);
-                    Event_Send(&m, self->obj, 0);
+                    QueueMessage_cMessageR_cSystemP_int(&m, self->obj, 0);
                 }
                 self->fEC = 2;
             }
@@ -174,8 +174,8 @@ unsigned char NpcAi_ModeTakeCover(Npc* self0, Ev* ev0)
             self->fE8 = 30;
             if (!(unsigned char)self->Busy()) {
                 Inv* w = obj->inv;
-                if (Actor_IsArmed(self->obj) && WeaponInv_IsReadyToFire(w, 0)) {
-                    NpcAi_FiringPositionSearch(self);
+                if (cHuman_IsHoldingGun(self->obj) && cWeapon_ReadyToFire(w, 0)) {
+                    cNPC_MoveToAttackFromCoverNode(self);
                     self->pair = Pair(2, 3);
                 }
                 if (Engaged(self->target))
@@ -190,12 +190,12 @@ unsigned char NpcAi_ModeTakeCover(Npc* self0, Ev* ev0)
             self->fE8 = 40;
         } else if ((unsigned char)ev->kind == 6) {
             if (ev->f28 && Engaged(self->target) && (unsigned char)self->Busy()) {
-                NpcAi_SetMovementState(self, 0, 20);
+                cNPC_SetMoveMode(self, 0, 20);
                 self->fE8 = 30;
             }
         } else if ((unsigned char)ev->kind == 0) {
             if (self->f13F != 2 && self->f140 != 2)
-                NpcAi_CoverSearch(self);
+                cNPC_MoveToCoverNode(self);
             if ((unsigned char)self->Busy())
                 self->fE8 = -1;
             else
@@ -207,10 +207,10 @@ unsigned char NpcAi_ModeTakeCover(Npc* self0, Ev* ev0)
             handled = 1;
         }
     } else {
-        int t2 = *Event_GetType(ev);
+        int t2 = *cMessage_Name(ev);
         if (t2 == D_004ED9B8) {
             if ((unsigned char)ev->kind == 5) {
-                NpcAi_LosCheckFromDestination(self);
+                cNPC_CheckLOSDestinationFromTarget(self);
             } else if ((unsigned char)ev->kind == 6) {
                 int n = ev->f28;
                 if (n >= 0 && !self->brain.b0C)
@@ -219,10 +219,10 @@ unsigned char NpcAi_ModeTakeCover(Npc* self0, Ev* ev0)
                 self->fE8 = 40;
             } else if ((unsigned char)ev->kind == 1) {
                 if (self->pair.b == 2)
-                    NpcAi_RequestMode(&self->brain, 4, 0);
+                    cStateMachine_ChangeState(&self->brain, 4, 0);
             } else if ((unsigned char)ev->kind == 2) {
                 if (self->pair.a == 2)
-                    NpcAi_RequestMode(&self->brain, self->pair.b, 0);
+                    cStateMachine_ChangeState(&self->brain, self->pair.b, 0);
             } else if ((unsigned char)ev->kind == 3) {
                 self->fE8 = 30;
             }

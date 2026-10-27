@@ -2,7 +2,7 @@
 
 extern char D_005721D8[];
 
-int NetGame_ConsumeQuitRequest(void) {
+int cDME_Quit(void) {
     int v0;
     int cond;
 

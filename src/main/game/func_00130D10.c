@@ -4,9 +4,9 @@
 #pragma mpwc_relax on
 /*fc*/
 int Alloc_Lock(int);                                    
-int Alloc_Unlock(int);                                  
-int *Mem_Alloc(int, int, char *, int);                     
-int String_Copy(int *, int);                          
+int EnableIntc(int);                                  
+int *cMemMan_Allocate(int, int, char *, int);                     
+int Libc_Strcpy(int *, int);                          
 int std_vector_tVUMNamePairPtr_push_back(int, int **);                       
 int strlen(int);                                    
 extern char D_0049A890;
@@ -26,33 +26,33 @@ void cGameSystem_AddVUMGOBJ(int arg0, int arg1, int arg2, int arg3) {
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    temp_s3_2 = (char *)(Mem_Alloc(0, temp_s3, &D_0049A890, 0x92C));
+    temp_s3_2 = (char *)(cMemMan_Allocate(0, temp_s3, &D_0049A890, 0x92C));
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     var_s4 = NULL;
     g_ProfileLockDepth -= 1;
-    String_Copy(temp_s3_2, arg2);
+    Libc_Strcpy(temp_s3_2, arg2);
     if (arg3 != 0) {
         temp_s4 = strlen(arg3) + 1;
         if (g_ProfileLockEnabled != 0) {
             Alloc_Lock(9);
         }
         g_ProfileLockDepth += 1;
-        var_s4 = (char *)(Mem_Alloc(0, temp_s4, &D_0049A890, 0x933));
+        var_s4 = (char *)(cMemMan_Allocate(0, temp_s4, &D_0049A890, 0x933));
         if (g_ProfileLockEnabled != 0) {
-            Alloc_Unlock(9);
+            EnableIntc(9);
         }
         g_ProfileLockDepth -= 1;
-        String_Copy(var_s4, arg3);
+        Libc_Strcpy(var_s4, arg3);
     }
     if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    temp_s2 = (char *)(Mem_Alloc(0, 0xC, &D_0049A890, 0x937));
+    temp_s2 = (char *)(cMemMan_Allocate(0, 0xC, &D_0049A890, 0x937));
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     sp6C = temp_s2;
     g_ProfileLockDepth -= 1;

@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_0016DB40 */
 #pragma push /* merge_units */
@@ -26,7 +26,7 @@ extern void std_list_cTargetAwarenessPtr_generic_iterator_ctor(It_DB40* out, E_D
 extern void std_list_cTargetAwarenessPtr_end_void(E_DB40* out, void* map);
 extern void std_list_cTargetAwarenessPtr_begin(E_DB40* out, void* map);
 extern void cLListIterator_cTargetAwarenessPtr_ctor(It_DB40* out, E_DB40* in);
-void NpcPerception_FindRecord(It_DB40* out, void* map, Tgt_DB40* key)
+void cAITarget_cAwareList_Find(It_DB40* out, void* map, Tgt_DB40* key)
 {
     It_DB40 it;
     It_DB40 b;
@@ -90,12 +90,12 @@ void cLListIterator_cTargetAwarenessPtr_ctor(It_DC60* out, E_DC60* in);
 #endif /* merge_units */
 #define cLListIterator_cTargetAwarenessPtr_ctor(a0, a1) (cLListIterator_cTargetAwarenessPtr_ctor((It_DB40 *)(a0), (E_DB40 *)(a1))) /* merge_units */
 
-void ObjectList_EraseRange(int* out, void* map, char** first, char** last);
+void std_list_deleter_voidPtr_erase_listdeleter_listdeleter(int* out, void* map, char** first, char** last);
 }
 static inline void Free_DC60(void* v)
 {
     AllocGuard g;
-    Mem_Free(0, v, D_0049C650, 0x235);
+    cMemMan_Deallocate(0, v, D_0049C650, 0x235);
 }
 static inline void Begin0_DC60(It_DC60* out, void* map) { E_DC60 t; std_list_cTargetAwarenessPtr_begin(&t, map); cLListIterator_cTargetAwarenessPtr_ctor(out, &t); }
 static inline void End0_DC60(It_DC60* out, void* map) { E_DC60 t; std_list_cTargetAwarenessPtr_end_void(&t, map); cLListIterator_cTargetAwarenessPtr_ctor(out, &t); }
@@ -108,13 +108,13 @@ static inline void Erase_DC60(Perc_DC60* self)
     char* last;
     last = self->hdr;
     first = self->first;
-    ObjectList_EraseRange(&res, self->map, &first, &last);
+    std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&res, self->map, &first, &last);
 }
 typedef struct It_DC60 It_DC60;
 typedef struct E_DC60 E_DC60;
 typedef struct Perc_DC60 Perc_DC60;
 #pragma cplusplus off
-void NpcPerception_Clear(Perc_DC60* self)
+void cAITarget_dtor(Perc_DC60* self)
 {
     It_DC60 it;
     It_DC60 b;
@@ -162,9 +162,9 @@ typedef struct {
 } Perc_DDB0;
 extern "C" char g_TargetVisMgr[];
 #if 0 /* merge_units */
-extern "C" void NpcPerception_FindRecord(Node_DDB0** out, void* map, Tgt_DDB0* key);
+extern "C" void cAITarget_cAwareList_Find(Node_DDB0** out, void* map, Tgt_DDB0* key);
 #endif /* merge_units */
-#define NpcPerception_FindRecord(a0, a1, a2) (NpcPerception_FindRecord((It_DB40 *)(a0), (a1), (Tgt_DB40 *)(a2))) /* merge_units */
+#define cAITarget_cAwareList_Find(a0, a1, a2) (cAITarget_cAwareList_Find((It_DB40 *)(a0), (a1), (Tgt_DB40 *)(a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern "C" void std_list_cTargetAwarenessPtr_end_void(Node_DDB0** out, void* map);
@@ -176,9 +176,9 @@ extern "C" void cLListIterator_cTargetAwarenessPtr_ctor(Node_DDB0** out, Node_DD
 #endif /* merge_units */
 #define cLListIterator_cTargetAwarenessPtr_ctor(a0, a1) (cLListIterator_cTargetAwarenessPtr_ctor((It_DB40 *)(a0), (E_DB40 *)(a1))) /* merge_units */
 
-extern "C" void NpcPerception_SetLastKnown(Perc_DDB0* self, Tgt_DDB0* t, void* pos, int f);
-extern "C" void TargetVis_Register(void* mgr, Tgt_DDB0* t);
-extern "C" void NpcPerception_SetTarget(Perc_DDB0* self, Tgt_DDB0* t, int prio)
+extern "C" void cAITarget_SetTargetPositionLastSeen(Perc_DDB0* self, Tgt_DDB0* t, void* pos, int f);
+extern "C" void cTargetManager_AddGobj(void* mgr, Tgt_DDB0* t);
+extern "C" void cAITarget_SetTarget(Perc_DDB0* self, Tgt_DDB0* t, int prio)
 {
     Node_DDB0* it;
     Node_DDB0* end;
@@ -211,18 +211,18 @@ extern "C" void NpcPerception_SetTarget(Perc_DDB0* self, Tgt_DDB0* t, int prio)
     self->flags.b2 = v;
     self->flags.b6 = v;
     if (t) {
-        NpcPerception_FindRecord(&it, self->map, t);
+        cAITarget_cAwareList_Find(&it, self->map, t);
         std_list_cTargetAwarenessPtr_end_void(&tmp, self->map);
         cLListIterator_cTargetAwarenessPtr_ctor(&end, &tmp);
         if (it != end) {
             self->flags.b3 = it->val->b3A;
-            NpcPerception_SetLastKnown(self, t, it->val->pos, 0);
+            cAITarget_SetTargetPositionLastSeen(self, t, it->val->pos, 0);
         }
         if (t->f58 == 0)
-            TargetVis_Register(g_TargetVisMgr, t);
+            cTargetManager_AddGobj(g_TargetVisMgr, t);
     }
 }
-#undef NpcPerception_FindRecord /* merge_units */
+#undef cAITarget_cAwareList_Find /* merge_units */
 #undef std_list_cTargetAwarenessPtr_end_void /* merge_units */
 #undef cLListIterator_cTargetAwarenessPtr_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

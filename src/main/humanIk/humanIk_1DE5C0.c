@@ -12,14 +12,14 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_001DE5C0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 
 extern "C" {
-void* Mem_Alloc(int, int, char*, int);
+void* cMemMan_Allocate(int, int, char*, int);
 extern char D_004A0170[];
 }
 
@@ -39,7 +39,7 @@ extern "C" void ReorderList_uint_cJointLimitsP_uintP(unsigned int n, V3* data, u
     unsigned int j;
     {
         AllocGuard g;
-        tmp = (unsigned int*)Mem_Alloc(0, n * 4, D_004A0170, 0x7AF);
+        tmp = (unsigned int*)cMemMan_Allocate(0, n * 4, D_004A0170, 0x7AF);
     }
     for (i = 0; i < n; i++)
         tmp[i] = order[i];
@@ -51,7 +51,7 @@ extern "C" void ReorderList_uint_cJointLimitsP_uintP(unsigned int n, V3* data, u
     }
     {
         AllocGuard g;
-        Mem_Free(0, tmp, D_004A0170, 0x7C3);
+        cMemMan_Deallocate(0, tmp, D_004A0170, 0x7C3);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -81,7 +81,7 @@ extern "C" void ReorderList_uint_floatP_uintP(unsigned int n, float* data, unsig
     unsigned int j;
     {
         AllocGuard g;
-        tmp = (unsigned int*)Mem_Alloc(0, n * 4, D_004A0170, 0x7AF);
+        tmp = (unsigned int*)cMemMan_Allocate(0, n * 4, D_004A0170, 0x7AF);
     }
     for (i = 0; i < n; i++)
         tmp[i] = order[i];
@@ -93,7 +93,7 @@ extern "C" void ReorderList_uint_floatP_uintP(unsigned int n, float* data, unsig
     }
     {
         AllocGuard g;
-        Mem_Free(0, tmp, D_004A0170, 0x7C3);
+        cMemMan_Deallocate(0, tmp, D_004A0170, 0x7C3);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -116,7 +116,7 @@ extern "C" void ReorderList_uint_boolP_uintP(unsigned int n, unsigned char* data
     unsigned int j;
     {
         AllocGuard g;
-        tmp = (unsigned int*)Mem_Alloc(0, n * 4, D_004A0170, 0x7AF);
+        tmp = (unsigned int*)cMemMan_Allocate(0, n * 4, D_004A0170, 0x7AF);
     }
     for (i = 0; i < n; i++)
         tmp[i] = order[i];
@@ -128,7 +128,7 @@ extern "C" void ReorderList_uint_boolP_uintP(unsigned int n, unsigned char* data
     }
     {
         AllocGuard g;
-        Mem_Free(0, tmp, D_004A0170, 0x7C3);
+        cMemMan_Deallocate(0, tmp, D_004A0170, 0x7C3);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -154,7 +154,7 @@ extern "C" void ReorderList_uint_eAnimSourceP_uintP(unsigned int n, E1DED30* dat
     unsigned int j;
     {
         AllocGuard g;
-        tmp = (unsigned int*)Mem_Alloc(0, n * 4, D_004A0170, 0x7AF);
+        tmp = (unsigned int*)cMemMan_Allocate(0, n * 4, D_004A0170, 0x7AF);
     }
     for (i = 0; i < n; i++)
         tmp[i] = order[i];
@@ -166,7 +166,7 @@ extern "C" void ReorderList_uint_eAnimSourceP_uintP(unsigned int n, E1DED30* dat
     }
     {
         AllocGuard g;
-        Mem_Free(0, tmp, D_004A0170, 0x7C3);
+        cMemMan_Deallocate(0, tmp, D_004A0170, 0x7C3);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -192,7 +192,7 @@ extern "C" void ReorderList_uint_eAnimSourceP_uintP_2(unsigned int n, E1DEF90* d
     unsigned int j;
     {
         AllocGuard g;
-        tmp = (unsigned int*)Mem_Alloc(0, n * 4, D_004A0170, 0x7AF);
+        tmp = (unsigned int*)cMemMan_Allocate(0, n * 4, D_004A0170, 0x7AF);
     }
     for (i = 0; i < n; i++)
         tmp[i] = order[i];
@@ -204,7 +204,7 @@ extern "C" void ReorderList_uint_eAnimSourceP_uintP_2(unsigned int n, E1DEF90* d
     }
     {
         AllocGuard g;
-        Mem_Free(0, tmp, D_004A0170, 0x7C3);
+        cMemMan_Deallocate(0, tmp, D_004A0170, 0x7C3);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

@@ -13,16 +13,16 @@
 typedef struct { int a; int id; int b; int count; } S141240;
 typedef struct { char pad[0xF0]; unsigned char kind; } W141240;
 extern void* g_WeaponDatabase;
-extern W141240* WeaponDb_Get(void*, int);
-extern int WeaponInv_IsReadyToFire(void*, int);
-int Weapon_CanAttack(char* self) {
+extern W141240* cWeaponDB_GetEntry(void*, int);
+extern int cWeapon_ReadyToFire(void*, int);
+int cWeapon_Ready(char* self) {
     unsigned char i = *(unsigned char*)(self + 0x84);
     S141240* s;
     if (i != 6) {
         s = (S141240*)(self + (i << 4) + 4);
-        switch (WeaponDb_Get(g_WeaponDatabase, s->id)->kind) {
+        switch (cWeaponDB_GetEntry(g_WeaponDatabase, s->id)->kind) {
         case 0: case 8: case 9:
-            return WeaponInv_IsReadyToFire(self, 0);
+            return cWeapon_ReadyToFire(self, 0);
         case 1: case 7:
             return s->count > 0;
         case 3: case 4: case 5: case 10:
@@ -59,30 +59,30 @@ extern char D_004F27F0[];
 extern char D_004F2990[];
 extern char D_004F2B30[];
 #if 0 /* merge_units */
-W_1300* WeaponDb_Get(void* db, int id);
+W_1300* cWeaponDB_GetEntry(void* db, int id);
 #endif /* merge_units */
-#define WeaponDb_Get(a0, a1) ((W_1300 *)WeaponDb_Get((a0), (a1))) /* merge_units */
+#define cWeaponDB_GetEntry(a0, a1) ((W_1300 *)cWeaponDB_GetEntry((a0), (a1))) /* merge_units */
 
-void Event_Construct(void* e, void* type);
-void Event_Send(void* e, void* target, int a);
+void cMessage_ctor_cMessageNameR(void* e, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* e, void* target, int a);
 void cMessage_dtor(void* e, int f);
-void SoundEvent_CtorFromPreset(void* e, void* preset, void* src);
-void FileMan_Release(void* p, int a);
+void cPlaySoundMsg_ctor_cSndFxR(void* e, void* preset, void* src);
+void cFileMan_dtor(void* p, int a);
 }
-extern "C" int Weapon_DryFire(S_1300* self)
+extern "C" int cWeapon_ReloadIfOutOfAmmo(S_1300* self)
 {
     SEv_1300 se;
     Ev_1300 e;
     if (self->cur != 6) {
         Slot_1300* s = &self->slots[self->cur];
-        W_1300* w = WeaponDb_Get(g_WeaponDatabase, s->id);
+        W_1300* w = cWeaponDB_GetEntry(g_WeaponDatabase, s->id);
         if (!w->fF0 && !s->f8) {
             if (s->count > 0) {
-                Event_Construct(&e, g_ActorActionMsgClass);
+                cMessage_ctor_cMessageNameR(&e, g_ActorActionMsgClass);
                 e.f28 = 0;
                 e.vt = D_004E0840;
                 e.id = 0x3C;
-                Event_Send(&e, self->own, 0);
+                QueueMessage_cMessageR_cSystemP_int(&e, self->own, 0);
                 e.vt = D_004E0840;
                 cMessage_dtor(&e, 0);
                 return 1;
@@ -106,12 +106,12 @@ extern "C" int Weapon_DryFire(S_1300* self)
                         break;
                     }
                     if (preset) {
-                        SoundEvent_CtorFromPreset(&se, preset, self->own);
+                        cPlaySoundMsg_ctor_cSndFxR(&se, preset, self->own);
                         se.f20 = 1;
-                        Event_Send(&se, g_Game, 0);
+                        QueueMessage_cMessageR_cSystemP_int(&se, g_Game, 0);
                         se.vt = D_004DAE30;
-                        FileMan_Release(se.f114, -1);
-                        FileMan_Release(se.f78, -1);
+                        cFileMan_dtor(se.f114, -1);
+                        cFileMan_dtor(se.f78, -1);
                         cMessage_dtor(&se, 0);
                     }
                 }
@@ -120,7 +120,7 @@ extern "C" int Weapon_DryFire(S_1300* self)
     }
     return 0;
 }
-#undef WeaponDb_Get /* merge_units */
+#undef cWeaponDB_GetEntry /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00141300(void) {}
 #pragma pop /* merge_units */

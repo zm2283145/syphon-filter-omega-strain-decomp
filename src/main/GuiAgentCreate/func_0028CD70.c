@@ -8,7 +8,7 @@ typedef struct {
     signed char preset;
     char pad4[0x2DF0 - 0x2C11];
 } __attribute__((aligned(16))) S28C;
-extern void Skel_ApplyScalePreset(S28C* s, int preset);
+extern void cMan_SetBoneSet(S28C* s, int preset);
 static inline void QCopy_28C(void* d0, void* s0) { int n = 0x2DF; void* s = s0; void* d = d0;
     asm {
         .set noreorder
@@ -23,12 +23,12 @@ static inline void QCopy_28C(void* d0, void* s0) { int n = 0x2DF; void* s = s0; 
         .set reorder
     }
 }
-void AgentCreateModel_Copy(void* unused, S28C* s, S28C* src)
+void GuiAgentCreate_CloneMan(void* unused, S28C* s, S28C* src)
 {
     __int128 q = s->save70;
     int k = s->keep;
     QCopy_28C(s, src);
     s->keep = k;
-    Skel_ApplyScalePreset(s, s->preset);
+    cMan_SetBoneSet(s, s->preset);
     s->save70 = q;
 }

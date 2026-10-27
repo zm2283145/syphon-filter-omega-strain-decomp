@@ -6,12 +6,12 @@
 #include "types.h"
 #include "tank_types.h"
 
-extern void* GObj_IdentityB(int);
-extern int cTank_SetEnemy(cTank* tank, void* target);
+extern void* cGOBJ_SOBJ_convert(int);
+extern int cTank_AimAt(cTank* tank, void* target);
 
 int Script_cTank_AimAt(TankScriptArg* args) {
     cTank* tank = (cTank*)args[0].p;
 
-    cTank_SetEnemy(tank, GObj_IdentityB(args[1].i));
+    cTank_AimAt(tank, cGOBJ_SOBJ_convert(args[1].i));
     return 0;
 }

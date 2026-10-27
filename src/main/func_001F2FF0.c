@@ -6,13 +6,13 @@
 
 #include "types.h"
 
-extern void Vector_Reserve_20C2A0_Thunk_1F3010(void);
+extern void std_vector_cSkaSwitchItem_reserve(void);
 extern void std_vector_deleter_cSkaSwitchItem_clear(int);
 
 void std_vector_imp_cSkaSwitchItem_clear(int a0) {
     std_vector_deleter_cSkaSwitchItem_clear(a0);
 }
 
-void Vector_Reserve_20C2A0_Thunk(void) {
-    Vector_Reserve_20C2A0_Thunk_1F3010();
+void cArray_cSkaSwitchItem_ReserveActual(void) {
+    std_vector_cSkaSwitchItem_reserve();
 }

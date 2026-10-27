@@ -16,7 +16,7 @@ extern void EIntr(void); /* EI */
 extern void DeleteSema(int sema);
 
 /* Stops DMA channel 4 (with the DMAC suspended), clears its registers and signals the semaphore. */
-int Dma4_Stop(Dev40* self)
+int viBufDelete(Dev40* self)
 {
     DIntr();
     DMAC_ENABLEW = DMAC_ENABLER | 0x10000;

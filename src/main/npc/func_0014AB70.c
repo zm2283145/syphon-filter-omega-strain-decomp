@@ -5,7 +5,7 @@
 
 #include "npc_types.h"
 
-extern Iter* List_InsertBefore(Iter* out, Tree* t, Iter* hint, int value);
+extern Iter* std_list_deleter_voidPtr_insert(Iter* out, Tree* t, Iter* hint, int value);
 
 Word* cLListIterator_cActiveListItemPtr_ctor(Word* dst, Word* src) {
     dst->value = src->value;
@@ -17,11 +17,11 @@ void std_list_cActiveListItemPtr_end_void(Iter* out, Tree* t) {
 }
 
 /* map insert(value): inserts with an end() hint, result iterator in out[1]. */
-Iter* NpcAi_AddToDeadList(Tree* t, int value) {
+Iter* std_list_cNPCPtr_push_back(Tree* t, int value) {
     Iter it[2];
 
     it[0].p = &t->header;
-    return List_InsertBefore(&it[1], t, &it[0], value);
+    return std_list_deleter_voidPtr_insert(&it[1], t, &it[0], value);
 }
 
 Word* std_list_cActiveListItemPtr_generic_iterator_ctor(Word* dst, Word* src) {

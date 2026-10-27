@@ -7,10 +7,10 @@
 /* merge_units: begin func_002756E0 */
 #pragma push /* merge_units */
 #include "bullet_types.h"
-extern void PtrVector_Resize(PtrVec* v, int n, int* fill);
+extern void std_vector_pod_int_resize(PtrVec* v, int n, int* fill);
 #pragma opt_strength_reduction off
 /* Removes every occurrence of 'value' from owner->list (swap with the last element), then shrinks it. */
-void Bullet_LeavePartnerLists(BulletOwner* owner, int value) {
+void cBullet_RemoveBlastSibling(BulletOwner* owner, int value) {
     int i;
     int last = owner->list.count - 1;
     int fill;
@@ -22,7 +22,7 @@ void Bullet_LeavePartnerLists(BulletOwner* owner, int value) {
         }
     }
     fill = 0;
-    PtrVector_Resize(&owner->list, last + 1, &fill);
+    std_vector_pod_int_resize(&owner->list, last + 1, &fill);
 }
 #pragma opt_strength_reduction reset
 #pragma pop /* merge_units */
@@ -37,20 +37,20 @@ void Bullet_LeavePartnerLists(BulletOwner* owner, int value) {
  */
 
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int* value);
-extern int PtrVec_PushBack_275780(PtrVec* v, int* value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int* value);
+extern int std_vector_cBulletPtr_push_back(PtrVec* v, int* value);
 
 /* Appends 'value' to the list at +0x78. */
-void BulletPool_Link(BulletOwner* owner, int value) {
+void cBullet_AddBlastSibling(BulletOwner* owner, int value) {
     int tmp[1];
 
     tmp[0] = value;
-    PtrVec_PushBack_275780(&owner->list, tmp);
+    std_vector_cBulletPtr_push_back(&owner->list, tmp);
 }
 
-/* push_back(v, *value): PtrVec_Insert at the end */
-int PtrVec_PushBack_275780(PtrVec* v, int* value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+/* push_back(v, *value): std_vector_pod_int_insert at the end */
+int std_vector_cBulletPtr_push_back(PtrVec* v, int* value) {
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00275750 */
@@ -172,15 +172,15 @@ extern G_002757A0 D_00539210;
 extern char g_Video[];
 extern long long D_005381F8;
 extern V4 D_004A90A0[];
-void ParticleInst_Draw(int h, int k, void* p);
-void Renderer_BindTexture(void* m, int idx);
+void cParticle_Render(int h, int k, void* p);
+void cTexMan_SetActive(void* m, int idx);
 void XLib_NewStrip(void* s);
 void XLib_NextBatchVert(void* s);
-void Vec4_Copy(V4* d, const V4* s);
-void GuiBatch_AddVertexColor(V4* d, const V4* s);
-float GuiBatch_AddVertexUV(void);
-V4* Vec4_Set(V4* o, float x, float y, float z, float w);
-void Renderer_FlushBatch(void* s);
+void cVector_opAssign(V4* d, const V4* s);
+void tIRGBA_opAssign_tRGBAR(V4* d, const V4* s);
+float tVifFloatToInt_short_4_Bias(void);
+V4* cVector_ctor_float_float_float_float(V4* o, float x, float y, float z, float w);
+void XLib_DrawStrip(void* s);
 }
 #define D_00539220 (D_00539210.f20)
 #define D_00539224 (D_00539210.f24)
@@ -202,17 +202,17 @@ struct V4c_002757A0 {
 static inline V4* UV_002757A0(const V4& uv)
 {
     V4 tmp;
-    float u = uv.x + GuiBatch_AddVertexUV();
-    return Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w);
+    float u = uv.x + tVifFloatToInt_short_4_Bias();
+    return cVector_ctor_float_float_float_float(&tmp, u, uv.y + tVifFloatToInt_short_4_Bias(), uv.z, uv.w);
 }
 static inline void Emit_002757A0(const V4& pos, const V4c_002757A0& col, const V4& uv)
 {
     Ent_002757A0* e;
     XLib_NextBatchVert(g_Video);
     e = &RS_002757A0->ents[D_00539210.f10];
-    Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
-    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V4*)&col);
-    Vec4_Copy(&e->c34[D_00539224 - 1], UV_002757A0(uv));
+    cVector_opAssign(&e->pos[D_00539224 - 1], &pos);
+    tIRGBA_opAssign_tRGBAR(&e->c30[D_00539224 - 1], (V4*)&col);
+    cVector_opAssign(&e->c34[D_00539224 - 1], UV_002757A0(uv));
     D_005381F8 = 6LL << 32;
 }
 static inline unsigned char Prim_002757A0(void) { if (g_DrawMode & 1) return 3; return 2; }
@@ -240,7 +240,7 @@ static inline void Restart_002757A0(void)
 
 extern "C" void cBullet_Render(Bullet_002757A0* b)
 {
-    if (b->f115 && b->f110) ParticleInst_Draw(b->f110, 2, b->f20);
+    if (b->f115 && b->f110) cParticle_Render(b->f110, 2, b->f20);
     if (b->f116 && b->f110 == 0) {
         V4* pos = &b->pos;
         V4 tail = *pos - Mul2(b->dir, b->len);
@@ -261,7 +261,7 @@ extern "C" void cBullet_Render(Bullet_002757A0* b)
         Ent_002757A0* e;
         int saved = g_DrawMode;
         g_DrawMode = 5;
-        Renderer_BindTexture(g_TextureMgr, b->tex);
+        cTexMan_SetActive(g_TextureMgr, b->tex);
         D_00539238 = Prim_002757A0();
         D_0053923C = Mode_002757A0();
         D_00539228 = 0;
@@ -282,7 +282,7 @@ extern "C" void cBullet_Render(Bullet_002757A0* b)
         Emit_002757A0(p5, c1, D_004A90A0[b->uv + 1]);
         Emit_002757A0(p6, c2, D_004A90A0[b->uv + 2]);
         Emit_002757A0(p7, c2, D_004A90A0[b->uv + 3]);
-        Renderer_FlushBatch(g_Video);
+        XLib_DrawStrip(g_Video);
         g_DrawMode = saved;
     }
 }
@@ -459,74 +459,74 @@ extern char D_004DAE30[];
 extern char D_004A91A0[];
 extern char D_004A91B0[];
 extern void* g_DecalMgr;
-void ParticleEmitter_SetRate(Emitter* e, float r);
-void ParticleInst_Update(Emitter* e, float dt, M* m, int z);
-void ParticleInst_Kill(Emitter* e, int f);
-void Projectile_QueryCandidates(Query* q);
-Material* Material_Lookup(void* ref);
-const char* String_CStr_189540(void* s);
-void SoundRequest_Ctor(SoundRequest* req, int kind, const char* name, int a, int b);
-void SoundPosRequest_Ctor(SoundMsg* msg, SoundRequest* req, V* pos);
-void Event_Send(void* msg, void* target, int flags);
-void FileMan_Release(void* part, int flags);
+void cParticle_SetScale(Emitter* e, float r);
+void cParticle_NextFrame(Emitter* e, float dt, M* m, int z);
+void cParticle_dtor(Emitter* e, int f);
+void CheckBulletCollisions(Query* q);
+Material* cCollisionModel_FaceProperties_GetMaterialProperties(void* ref);
+const char* cString_CStr(void* s);
+void cSndFx_ctor_int_charP_cGOBJP_int(SoundRequest* req, int kind, const char* name, int a, int b);
+void cPlaySoundMsg_ctor_cSndFxR_cGOBJP(SoundMsg* msg, SoundRequest* req, V* pos);
+void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int flags);
+void cFileMan_dtor(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
 #if 0 /* merge_units */
-V* Vec4_Set(V* v, float x, float y, float z, float w);
+V* cVector_ctor_float_float_float_float(V* v, float x, float y, float z, float w);
 #endif /* merge_units */
-#define Vec4_Set(a0, a1, a2, a3, a4) ((V *)Vec4_Set((V4 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define cVector_ctor_float_float_float_float(a0, a1, a2, a3, a4) ((V *)cVector_ctor_float_float_float_float((V4 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
-float Vec4_GetZ(V* v);
+float cVector_Z_void(V* v);
 float Math_Fabs(float f);
-void Vec4_NormalizeXYZ_132060(V* out, V* in);
-void Vec4_Cross(V* out, V* a, V* b);
-V* Vec4_NormalizeXYZInPlace(V* v);
-void Vec4_Assign(V* d, V* s);
-void Mtx_FromRowsAndTranslation(M* m, V* a, V* b, V* c, V* t);
-void Effect_CreateInstance(int id, void* m);
-void Effect_SpawnById(int id, void* m);
-void DecalMgr_AddBulletDecal(void* r, M* m, int id, signed char size, Obj* o, float f);
-int* SpecFx_GetEffectDef(int id);
-void* Service_Lookup(void* a, void* b);
-void AiSound_SendImpactNoise(void* msg, float a, float b, int* id, V* pos, signed char kind);
-void DecalMgr_AddBloodDecal(void* r, V* p, int id, int z, float f);
+void cVector_GetNormalized_void(V* out, V* in);
+void cVector_Cross(V* out, V* a, V* b);
+V* cVector_Normalize_void(V* v);
+void cVector_ctor_cVectorR(V* d, V* s);
+void cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(M* m, V* a, V* b, V* c, V* t);
+void SfxParticleEffect_int_cMatrixR(int id, void* m);
+void SfxParticleEffect_eEffectName_cMatrixR(int id, void* m);
+void cDecalMan_AddDecal(void* r, M* m, int id, signed char size, Obj* o, float f);
+int* nSfxLoader_GetHandle(int id);
+void* cSystemContainer_GetSystem(void* a, void* b);
+void cAISoundSystemGOBJPositionMessage_ctor(void* msg, float a, float b, int* id, V* pos, signed char kind);
+void cDecalMan_AddProjectedDecal(void* r, V* p, int id, int z, float f);
 void Blast_Prepare(Obj* o, int a, int b, V* p, int c, int d, float e, float f, float g);
-char* Agent_GetSelected(void* list, int idx);
-void Stats_Add(char* agent, int stat, int n);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void Mem_Free(int pool, void* p, char* file, int line);
-void AreaEffect_Construct(void* self, Obj* o, V pos, Type* t, int f);
+char* cGameSystem_GetAgentData(void* list, int idx);
+void cAgentData_AddScore(char* agent, int stat, int n);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+void cAreaEffect_ctor(void* self, Obj* o, V pos, Type* t, int f);
 #if 0 /* merge_units */
-void Bullet_LeavePartnerLists(Bullet* b, Bullet* self);
+void cBullet_RemoveBlastSibling(Bullet* b, Bullet* self);
 #endif /* merge_units */
-#define Bullet_LeavePartnerLists(a0, a1) (Bullet_LeavePartnerLists((BulletOwner *)(a0), (int)(a1))) /* merge_units */
+#define cBullet_RemoveBlastSibling(a0, a1) (cBullet_RemoveBlastSibling((BulletOwner *)(a0), (int)(a1))) /* merge_units */
 
 }
 
 struct AiMsg {
     void* vt; char d[0x4C];
-    AiMsg(float a, float b, int* id, V* pos, signed char k) { AiSound_SendImpactNoise(this, a, b, id, pos, k); }
+    AiMsg(float a, float b, int* id, V* pos, signed char k) { cAISoundSystemGOBJPositionMessage_ctor(this, a, b, id, pos, k); }
     AiMsg() {}
     inline AiMsg& Init(struct Bullet* s);
-    void Send(void* to) { Event_Send(this, to, 0); }
+    void Send(void* to) { QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~AiMsg() { vt = D_004D92A0; cMessage_dtor(this, 0); }
 };
 
 struct AreaEffect {
     char d[0xE0];
-    AreaEffect(Obj* o, const V& p, Type* t) { AreaEffect_Construct(this, o, p, t, 1); }
+    AreaEffect(Obj* o, const V& p, Type* t) { cAreaEffect_ctor(this, o, p, t, 1); }
     static void* operator new(unsigned int sz, int line)
     {
         void* p;
         if (g_ProfileLockEnabled) Alloc_Lock(9);
         g_ProfileLockDepth++;
-        p = Mem_Alloc(0, sz, D_004A91A0, line);
-        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        p = cMemMan_Allocate(0, sz, D_004A91A0, line);
+        if (g_ProfileLockEnabled) EnableIntc(9);
         g_ProfileLockDepth--;
         return p;
     }
 };
 
-static inline void BuildFrame(M* m, V* n, V* ref) { V up; V right; V fwd; V c1; V t0; Vec4_NormalizeXYZ_132060(&up, n); Vec4_Cross(&c1, n, ref); Vec4_Assign(&right, Vec4_NormalizeXYZInPlace(&c1)); Vec4_Cross(&fwd, &right, &up); Mtx_FromRowsAndTranslation(m, &right, &up, &fwd, Vec4_Set(&t0, 0.0f, 0.0f, 0.0f, 1.0f)); }
+static inline void BuildFrame(M* m, V* n, V* ref) { V up; V right; V fwd; V c1; V t0; cVector_GetNormalized_void(&up, n); cVector_Cross(&c1, n, ref); cVector_ctor_cVectorR(&right, cVector_Normalize_void(&c1)); cVector_Cross(&fwd, &right, &up); cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(m, &right, &up, &fwd, cVector_ctor_float_float_float_float(&t0, 0.0f, 0.0f, 0.0f, 1.0f)); }
 static inline void BF2(M* m, V* n, V* ref) { BuildFrame(m, n, ref); }
 static inline void BF3(M* m, V* n, V* ref) { BF2(m, n, ref); }
 static inline void BF4(M* m, V* n, V* ref) { BF3(m, n, ref); }
@@ -539,17 +539,17 @@ enum MI { MI0, MI1, MI2, MI3 };
 static inline float Pow(float b, int n) { float r = 1.0f; int i; for (i = 0; i < n; i++) r *= b; return r; }
 
 static inline bool SameTeam(Obj* o) { int* p = g_HumanActorClassKey; int t = p[0]; return o->team == t; }
-inline AiMsg& AiMsg::Init(Bullet* s) { AiSound_SendImpactNoise(this, 1.0f, s->type->noise, &HGet(&s->h68)->serial, &s->pos, 4); return *this; }
+inline AiMsg& AiMsg::Init(Bullet* s) { cAISoundSystemGOBJPositionMessage_ctor(this, 1.0f, s->type->noise, &HGet(&s->h68)->serial, &s->pos, 4); return *this; }
 static inline V Scl(V* d) { return *d * 0.2f; }
-extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
+extern "C" void cBullet_Move(Bullet* s, float dt)
 {
     if (s->emitter) {
         Type* ty = s->type;
         if (ty->cls == 8) {
             float r = 1.0f; float b = s->age / (float)ty->t3C; for (int i = 0; i < D_0048B340; i++) r *= b;
-            ParticleEmitter_SetRate(s->emitter, D_0048B330 + r * (D_0048B338 - D_0048B330));
+            cParticle_SetScale(s->emitter, D_0048B330 + r * (D_0048B338 - D_0048B330));
         }
-        ParticleInst_Update(s->emitter, dt, (M*)&s->m0, 0);
+        cParticle_NextFrame(s->emitter, dt, (M*)&s->m0, 0);
     }
     if (s->active) {
         float step = dt * s->speed;
@@ -577,7 +577,7 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
             q.f78 = 0.2f;
             q.b7C = s->b119;
             q.b7D = s->type->kind == 1;
-            Projectile_QueryCandidates(&q);
+            CheckBulletCollisions(&q);
             s->n10 = q.n74;
         } else {
             q.hit = 0;
@@ -591,7 +591,7 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
         Translate((M*)&s->m0, &sv);
         V delta = s->m3 - old;
         if (clamped && HGet(&s->h70) && !q.hit && s->type->kind != 4) {
-            Material* mat = Material_Lookup(s->matref);
+            Material* mat = cCollisionModel_FaceProperties_GetMaterialProperties(s->matref);
             MI mi = MI0;
             if (s->type) {
                 switch (*((unsigned char*)s->type + 0x48)) {
@@ -613,35 +613,35 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                         SoundRequest req;
                         SoundMsg msg;
                         unsigned char j = fb ? 0 : mi;
-                        SoundRequest_Ctor(&req, snd, String_CStr_189540(mat->e[j].name), 0, 0);
-                        SoundPosRequest_Ctor(&msg, &req, &s->pos);
+                        cSndFx_ctor_int_charP_cGOBJP_int(&req, snd, cString_CStr(mat->e[j].name), 0, 0);
+                        cPlaySoundMsg_ctor_cSndFxR_cGOBJP(&msg, &req, &s->pos);
                         msg.flag = 1;
-                        Event_Send(&msg, g_Game, 0);
+                        QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 0);
                         msg.vtbl = D_004DAE30;
-                        FileMan_Release(msg.partB, -1);
-                        FileMan_Release(msg.partA, -1);
+                        cFileMan_dtor(msg.partB, -1);
+                        cFileMan_dtor(msg.partA, -1);
                         cMessage_dtor(&msg, 0);
-                        FileMan_Release(req.partB, -1);
-                        FileMan_Release(req.partA, -1);
+                        cFileMan_dtor(req.partB, -1);
+                        cFileMan_dtor(req.partA, -1);
                     }
                 } else {
                     SoundMsg msg;
-                    SoundPosRequest_Ctor(&msg, &D_004EF590, &s->pos);
+                    cPlaySoundMsg_ctor_cSndFxR_cGOBJP(&msg, &D_004EF590, &s->pos);
                     msg.flag = 1;
-                    Event_Send(&msg, g_Game, 0);
+                    QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 0);
                     msg.vtbl = D_004DAE30;
-                    FileMan_Release(msg.partB, -1);
-                    FileMan_Release(msg.partA, -1);
+                    cFileMan_dtor(msg.partB, -1);
+                    cFileMan_dtor(msg.partA, -1);
                     cMessage_dtor(&msg, 0);
                 }
             }
             {
                 V n = s->normal;
                 if (Dot3(&n, &delta) > 0.0f) Neg(&n);
-                if (D_004E1DA0 == 0) { Vec4_Set(&D_00497F20, 1.0f, 0.0f, 0.0f, 0.0f); D_004E1DA0 = 1; }
-                if (D_004E1DA8 == 0) { Vec4_Set(&D_00497F30, 0.0f, 0.0f, 1.0f, 0.0f); D_004E1DA8 = 1; }
+                if (D_004E1DA0 == 0) { cVector_ctor_float_float_float_float(&D_00497F20, 1.0f, 0.0f, 0.0f, 0.0f); D_004E1DA0 = 1; }
+                if (D_004E1DA8 == 0) { cVector_ctor_float_float_float_float(&D_00497F30, 0.0f, 0.0f, 1.0f, 0.0f); D_004E1DA8 = 1; }
                 V* ref;
-                if (Math_Fabs(Vec4_GetZ(&n)) < 0.707f) ref = &D_00497F30;
+                if (Math_Fabs(cVector_Z_void(&n)) < 0.707f) ref = &D_00497F30;
                 else ref = &D_00497F20;
                 M m;
                 BF4(&m, &n, ref);
@@ -651,9 +651,9 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                 int fx = mat->e[mi].fx;
                 if (fx == -1 && mi != 0) fx = mat->e[0].fx;
                 if (fx != -1) {
-                    if (fx != -2) Effect_CreateInstance(fx, &m);
+                    if (fx != -2) SfxParticleEffect_int_cMatrixR(fx, &m);
                 } else {
-                    Effect_SpawnById(4, &m);
+                    SfxParticleEffect_eEffectName_cMatrixR(4, &m);
                 }
                 int fx2 = mat->e[mi].fx2;
                 if (fx2 == -1 && mi != 0) { mi = MI0; fx2 = mat->e[mi].fx2; }
@@ -662,14 +662,14 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                         float sc = mat->e[mi].scale;
                         S3 sz = D_0048B350;
                         signed char z = sz.c[mat->e[mi].size];
-                        DecalMgr_AddBulletDecal(g_DecalMgr, &m, fx2, z, HGet(&s->h70), sc);
+                        cDecalMan_AddDecal(g_DecalMgr, &m, fx2, z, HGet(&s->h70), sc);
                     }
                 } else {
-                    int id = *SpecFx_GetEffectDef(0x24); DecalMgr_AddBulletDecal(g_DecalMgr, &m, id, 8, HGet(&s->h70), 0.2f);
+                    int id = *nSfxLoader_GetHandle(0x24); cDecalMan_AddDecal(g_DecalMgr, &m, id, 8, HGet(&s->h70), 0.2f);
                 }
             }
             if (HGet(&s->h68)) {
-                void* svc = Service_Lookup(g_Game, D_004EE5C0);
+                void* svc = cSystemContainer_GetSystem(g_Game, D_004EE5C0);
                 AiMsg().Init(s).Send(svc);
                 Obj* tgt = HGet(&s->h70);
                 Obj* src = HGet(&s->h68);
@@ -680,49 +680,49 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
         if (q.hit || (HGet(&s->h70) && clamped)) {
             if (s->type->kind != 4) {
                 if (q.hit && q.kind == 2 && HGet(&s->h70) && s->type->kind != 7 && s->range < D_0048B318 && SameTeam(q.hit)) {
-                    int id = *SpecFx_GetEffectDef(0x26);
+                    int id = *nSfxLoader_GetHandle(0x26);
                     if (id > -1) {
                         V a = s->pos; int z = 0;
                         V d = s->m3 - s->pos;
                         a += Scl(&d);
-                        DecalMgr_AddBloodDecal(g_DecalMgr, &a, id, z, D_0048B320);
+                        cDecalMan_AddProjectedDecal(g_DecalMgr, &a, id, z, D_0048B320);
                     }
                 }
                 if (s->type->rC4 > 0.0f) {
-                    if (s->type->fxD8 != -1) Effect_CreateInstance(s->type->fxD8, (M*)&s->m0);
+                    if (s->type->fxD8 != -1) SfxParticleEffect_int_cMatrixR(s->type->fxD8, (M*)&s->m0);
                     V a; a = s->pos;
                     a += s->m1.Mul2(D_0048B348);
                     V b = a;
                     Blast_Prepare(HGet(&s->h68), s->type->d64, 1, &b, 0, 1, 1.0f, s->type->rC4, s->type->rC8);
-                    int id = *SpecFx_GetEffectDef(0x25);
-                    if (id > -1) { int z = 0; DecalMgr_AddBloodDecal(g_DecalMgr, &a, id, z, D_0048B328); }
+                    int id = *nSfxLoader_GetHandle(0x25);
+                    if (id > -1) { int z = 0; cDecalMan_AddProjectedDecal(g_DecalMgr, &a, id, z, D_0048B328); }
                 }
             }
         }
         if (q.hit || clamped) {
             unsigned char c = s->type->cls;
             if (c == 9 || (c == 8 && (q.hit || HGet(&s->h70)))) {
-                if (s->type->fxD8 != -1) Effect_CreateInstance(s->type->fxD8, (M*)&s->m0);
+                if (s->type->fxD8 != -1) SfxParticleEffect_int_cMatrixR(s->type->fxD8, (M*)&s->m0);
                 if (q.hit) {
                     if (HasCtl(HGet(&s->h68)) && HGet(&s->h68)->b14 && s->type->cls == 9 && !HasCtl(q.hit) && SameTeam(q.hit))
-                        Stats_Add(Agent_GetSelected(g_Game, -1), 0xA, 1);
+                        cAgentData_AddScore(cGameSystem_GetAgentData(g_Game, -1), 0xA, 1);
                 }
-                AreaEffect* ae = (AreaEffect*)AreaEffect::operator new(0xE0, 0x1F5); if (ae) AreaEffect_Construct(ae, HGet(&s->h68), s->m3, s->type, 1);
+                AreaEffect* ae = (AreaEffect*)AreaEffect::operator new(0xE0, 0x1F5); if (ae) cAreaEffect_ctor(ae, HGet(&s->h68), s->m3, s->type, 1);
                 V b; b = s->m3;
                 Blast_Prepare(HGet(&s->h68), 1, 1, &b, 1, 1, 0.0f, 10.0f, 10.0f);
                 if (s->type->cls == 9) {
                     SoundRequest req;
                     SoundMsg msg;
-                    SoundRequest_Ctor(&req, 1, D_004A91B0, 0, 0);
-                    SoundPosRequest_Ctor(&msg, &req, &s->pos);
+                    cSndFx_ctor_int_charP_cGOBJP_int(&req, 1, D_004A91B0, 0, 0);
+                    cPlaySoundMsg_ctor_cSndFxR_cGOBJP(&msg, &req, &s->pos);
                     msg.flag = 1;
-                    Event_Send(&msg, g_Game, 0);
+                    QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 0);
                     msg.vtbl = D_004DAE30;
-                    FileMan_Release(msg.partB, -1);
-                    FileMan_Release(msg.partA, -1);
+                    cFileMan_dtor(msg.partB, -1);
+                    cFileMan_dtor(msg.partA, -1);
                     cMessage_dtor(&msg, 0);
-                    FileMan_Release(req.partB, -1);
-                    FileMan_Release(req.partA, -1);
+                    cFileMan_dtor(req.partB, -1);
+                    cFileMan_dtor(req.partA, -1);
                 }
             }
             if (q.hit && s->b119) {
@@ -738,19 +738,19 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
             if (e->busy == 0) {
                 {
                     AllocGuard g;
-                    ParticleInst_Kill(e, -1);
-                    Mem_Free(0, e, D_004A91A0, 0x216);
+                    cParticle_dtor(e, -1);
+                    cMemMan_Deallocate(0, e, D_004A91A0, 0x216);
                 }
                 s->emitter = 0;
             }
         } else {
             int i;
             s->b115 = 0;
-            for (i = 0; i < s->count; i++) Bullet_LeavePartnerLists(s->list[i], s);
+            for (i = 0; i < s->count; i++) cBullet_RemoveBlastSibling(s->list[i], s);
         }
     }
 }
-#undef Vec4_Set /* merge_units */
-#undef Bullet_LeavePartnerLists /* merge_units */
+#undef cVector_ctor_float_float_float_float /* merge_units */
+#undef cBullet_RemoveBlastSibling /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00276460 */

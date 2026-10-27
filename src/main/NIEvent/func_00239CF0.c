@@ -15,7 +15,7 @@ struct Track_239CF0 {
 };
 extern "C" void std_vector_imp_FloatKey_resize(Vec_239CF0* v, unsigned int n, const Key_239CF0& value);
 static inline void Assign_239CF0(Vec_239CF0* v, unsigned int n, const Key_239CF0& fill = Key_239CF0()) { std_vector_imp_FloatKey_resize(v, 0, Key_239CF0()); std_vector_imp_FloatKey_resize(v, n, fill); }
-extern "C" void NiEvent_ReadFloatTrack(Track_239CF0* self, float f)
+extern "C" void cNIEventFloatTrack_Init_float(Track_239CF0* self, float f)
 {
     Assign_239CF0(&self->keys, 1);
     self->keys.data[0].a = 0;

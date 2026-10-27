@@ -30,14 +30,14 @@ extern char D_004C2930[];
 extern char D_004C2948[];
 int String_CompareNoCase(char* a, char* b);
 int cGameFrontEnd_IsMessageBoxAwake_void_2(void* p);
-int GuiGameScreen_IsChooseMenuVisible(void* p);
-M_4651F0* Gui_GetScreenStack(void);
+int GuiGameScreen_IsChooseMenuActive(void* p);
+M_4651F0* Gui_Canvas(void);
 }
-static inline bool NotBusy(void) { return !g_Hud->b6AA && !GuiGameScreen_IsChooseMenuVisible(g_Hud->f6A4); }
+static inline bool NotBusy(void) { return !g_Hud->b6AA && !GuiGameScreen_IsChooseMenuActive(g_Hud->f6A4); }
 extern "C" unsigned char func_004651F0(O_4651F0* o)
 {
     unsigned char r;
-    M_4651F0* m = Gui_GetScreenStack();
+    M_4651F0* m = Gui_Canvas();
     L_4651F0* l = &m->l;
     r = 0;
     if (l->n) {
@@ -68,18 +68,18 @@ extern "C" unsigned char func_004651F0(O_4651F0* o)
 extern char g_Game[];
 extern unsigned char D_00572400;
 extern char D_00587310[], D_005874B0[], D_00587650[], D_005877F0[], D_00587990[];
-void Game_EndLevel(void*, int);
-extern int GuiSound_Play(void*, void*);
-extern int GuiSound_Stop(void*, void*);
+void cGameSystem_Restart(void*, int);
+extern int PlayGuiSound(void*, void*);
+extern int StopGuiSound(void*, void*);
 extern int GuiCommonCanvas_onMessage(void*, void*, unsigned short, int, int);
-int GuiGameCanvas_OnEvent(void* self, void* b, unsigned short type, int idx, int e)
+int GuiGameCanvas_onMessage(void* self, void* b, unsigned short type, int idx, int e)
 {
     if (type == 0x1A && idx == 0x667) {
-        Game_EndLevel(g_Game, D_00572400 ? 2 : 3);
+        cGameSystem_Restart(g_Game, D_00572400 ? 2 : 3);
         return 1;
     }
     if (type == 0x1A && idx == 0x668) {
-        Game_EndLevel(g_Game, 3);
+        cGameSystem_Restart(g_Game, 3);
         return 1;
     }
     if (type == 0x10 || type == 0x11) {
@@ -93,8 +93,8 @@ int GuiGameCanvas_OnEvent(void* self, void* b, unsigned short type, int idx, int
         }
         if (t) {
             int r;
-            if (type == 0x10) r = GuiSound_Play(b, t);
-            else r = GuiSound_Stop(b, t);
+            if (type == 0x10) r = PlayGuiSound(b, t);
+            else r = StopGuiSound(b, t);
             return r;
         }
     }
@@ -106,10 +106,10 @@ int GuiGameCanvas_OnEvent(void* self, void* b, unsigned short type, int idx, int
 /* merge_units: begin func_00465500 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x6C]; float t; } T465500;
-extern void GuiCanvas_CheckControllers(T465500* p);
-void GuiCanvas_Update(T465500* p, float dt) {
+extern void GuiCommonCanvas_NextFrame(T465500* p);
+void GuiFrontendCanvas_NextFrame(T465500* p, float dt) {
     float v;
-    GuiCanvas_CheckControllers(p);
+    GuiCommonCanvas_NextFrame(p);
     v = p->t + 30.0f * dt;
     p->t = v;
     if (v > 300.0f) p->t = v - 300.0f;

@@ -14,12 +14,12 @@ typedef struct {
     int cur;
 } R1E0;
 extern char D_00537F80[];
-extern u64_t* DmaPacket_Reserve(void* q, int a, int b, int c, int d, int e);
+extern u64_t* cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(void* q, int a, int b, int c, int d, int e);
 
 void XLib_ClearZBuffer(R1E0* o)
 {
     unsigned int tbp = o->tbp[o->cur];
-    GsQ* q = (GsQ*)DmaPacket_Reserve(D_00537F80, 1, 1, 8, 0, 1);
+    GsQ* q = (GsQ*)cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(D_00537F80, 1, 1, 8, 0, 1);
     q->lo = 0x11000000ULL | ((u64_t)0x50000008 << 32);
     q->hi = 0x8007ULL | ((u64_t)0x10000000 << 32);
     q++;

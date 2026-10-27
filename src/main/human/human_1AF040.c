@@ -23,7 +23,7 @@ struct AnimSlot {
 };
 
 /* Resets the slot start/current/target to v and re-evaluates its value; returns the slot. */
-extern "C" AnimSlot* AnimChannels_ClearCount(AnimSlot* self, float v)
+extern "C" AnimSlot* cSkaSliderValue_opAssign(AnimSlot* self, float v)
 {
     self->target = v;
     self->current = v;
@@ -45,8 +45,8 @@ static inline void merge_flush_func_001AF040(void) {}
  */
 
 
-extern int Curve_Bind(void* binding, CurveSegment* segment);
-extern int Curve_InitConstant(CurveSegment*, int, int, float);
+extern int cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_ctor(void* binding, CurveSegment* segment);
+extern int cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_float(CurveSegment*, int, int, float);
 static const float dat_0048A198[2] = { 0.0f, 0.0f };
 static const float dat_0048A1A0[2] = { 0.0f, 0.0f };
 extern char D_004DA380[];   /* CurveChannel base vtable */
@@ -54,15 +54,15 @@ extern char D_004DA840[];   /* AnimChannel vtable */
 extern void std_tree_pair_cString_value_compare_find_cStringR_2(int*, int, int);
 
 /* AnimChannel constructor: zero scalars, constant segment, wrapping off. */
-AnimChannel* AnimChannel_Construct(AnimChannel* self) {
+AnimChannel* cSplinedMotion_Scalar0To1_ctor(AnimChannel* self) {
     self->base.vtable = D_004DA380;
     self->base.previous = (*(float*)dat_0048A198);
     self->base.current = (*(float*)dat_0048A198);
     self->base.target = (*(float*)dat_0048A1A0);
     self->base.rate = (*(float*)dat_0048A198);
     self->base.damping = 0.0f;
-    Curve_InitConstant(&self->base.segment, (int)&(*(float*)dat_0048A198), (int)&(*(float*)dat_0048A1A0), 0.0f);
-    Curve_Bind(self->base.binding, &self->base.segment);
+    cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_float(&self->base.segment, (int)&(*(float*)dat_0048A198), (int)&(*(float*)dat_0048A1A0), 0.0f);
+    cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_ctor(self->base.binding, &self->base.segment);
     self->base.vtable = D_004DA840;
     self->wrap = 0;
     return self;

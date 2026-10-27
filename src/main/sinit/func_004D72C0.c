@@ -1,5 +1,5 @@
 #include "types.h"
-extern void FreeList_Push(void*);
+extern void AbstractWidgetClassRep_AddClassRep(void*);
 extern int D_004BF6B0;
 extern int D_004BF6B4;
 extern int D_004BF6B8;
@@ -15,7 +15,7 @@ extern int D_004BF6DC;
 extern char D_004E0D98;
 extern void* D_00572168;
 extern void* D_00572170;
-void StaticInit_GuiArrayWidgetFactory(void) {
+void StaticInit_guiArrayWidget(void) {
     D_004BF6B4 = 0;
     D_004BF6B8 = 0;
     D_004BF6B0 = 1065353216;
@@ -30,5 +30,5 @@ void StaticInit_GuiArrayWidgetFactory(void) {
     D_004BF6D8 = 1065353216;
     D_004BF6D0 = 0;
     D_004BF6D4 = 0;
-    FreeList_Push(&D_00572168);
+    AbstractWidgetClassRep_AddClassRep(&D_00572168);
 }

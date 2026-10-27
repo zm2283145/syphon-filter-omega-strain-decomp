@@ -23,7 +23,7 @@ extern unsigned char D_0048C2C8;
 extern RomanDigit D_0048C2D0[];
 extern char D_004ACF20[];
 
-char* Format_RomanNumeral(int n, char* buf, int size) {
+char* cGameFrontEnd_ConvertIntToRomanNumeral(int n, char* buf, int size) {
     int len = 0;
     int i = 0;
     if (n > 3999) return 0;
@@ -50,7 +50,7 @@ static inline void merge_flush_func_002C8EC0(void) {}
 /* merge_units: begin func_002C8FD0 */
 #pragma push /* merge_units */
 static const unsigned int dat_0048C2B0[6] = { 0xA, 0x14, 0x23, 0x32, 0x3C, 0x0 };
-int WeaponStats_RatingB(int x)
+int cGameFrontEnd_GetConvertedWeaponDamage(int x)
 {
  int i;
  for (i = 0; i < 5; i++) { if (x <= ((int*)dat_0048C2B0)[i]) return i + 1; } return 5;

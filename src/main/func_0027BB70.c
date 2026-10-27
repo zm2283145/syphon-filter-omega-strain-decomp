@@ -16,11 +16,11 @@ typedef struct {
 typedef struct { char pad[0x4C]; int kind; char pad2[0x3524 - 0x50]; int* held; } T_0027BB70;
 extern signed char* D_005061D0;
 extern int g_HumanActorClassKey[];
-extern "C" void NetStream_ReadObject(int* out);
-extern "C" float Script_ReadFloat(void);
-extern "C" void HeldItem_Release(int h);
+extern "C" void cNetMsg_GetGOBJ(int* out);
+extern "C" float cNetMsg_GetFloat_void(void);
+extern "C" void cAirTaser_Release(int h);
 extern "C" void cAirTaser_BeginShocking_cHumanP_int_cVector(int h, int target, int a, Vec4_27BB70 v);
-extern "C" void HeldItem_LaunchDart(int h, int target, unsigned char b, int c, Vec4_27BB70 v);
+extern "C" void cAirTaser_Shoot_cGOBJP_bool_int_cVector(int h, int target, unsigned char b, int c, Vec4_27BB70 v);
 
 static inline int Key0() { int* p = g_HumanActorClassKey; return *p; }
 static inline int Held(T_0027BB70* t) { int* h = t->held; return *h; }
@@ -31,15 +31,15 @@ static inline signed char ReadS8(void)
     return v;
 }
 
-extern "C" void cNetTaserMsg_Apply(cNetTaserMsg* self, T_0027BB70* t);
-void cNetTaserMsg_Apply(cNetTaserMsg* self, T_0027BB70* t)
+extern "C" void cNetTaserMsg_UnpackAndProcess(cNetTaserMsg* self, T_0027BB70* t);
+void cNetTaserMsg_UnpackAndProcess(cNetTaserMsg* self, T_0027BB70* t)
 {
     self->mode = ReadS8();
     if (self->mode != 2) {
-        NetStream_ReadObject(&self->target);
-        self->pos.x = Script_ReadFloat();
-        self->pos.y = Script_ReadFloat();
-        self->pos.z = Script_ReadFloat();
+        cNetMsg_GetGOBJ(&self->target);
+        self->pos.x = cNetMsg_GetFloat_void();
+        self->pos.y = cNetMsg_GetFloat_void();
+        self->pos.z = cNetMsg_GetFloat_void();
         self->pos.w = 1.0f;
         self->a = ReadS8();
         self->b = ReadS8() != 0;
@@ -47,15 +47,15 @@ void cNetTaserMsg_Apply(cNetTaserMsg* self, T_0027BB70* t)
     }
     if (t && t->kind == Key0()) {
         if (self->mode == 2) {
-            HeldItem_Release(*t->held);
+            cAirTaser_Release(*t->held);
         } else if (self->mode == 1) {
             if (self->target == 0) {
-                HeldItem_Release(*t->held);
+                cAirTaser_Release(*t->held);
             } else {
                 cAirTaser_BeginShocking_cHumanP_int_cVector(Held(t), self->target, self->a, self->pos);
             }
         } else if (self->mode == 0) {
-            HeldItem_LaunchDart(Held(t), self->target, self->b, self->c, self->pos);
+            cAirTaser_Shoot_cGOBJP_bool_int_cVector(Held(t), self->target, self->b, self->c, self->pos);
         }
     }
 }

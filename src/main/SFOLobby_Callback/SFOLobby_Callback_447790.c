@@ -11,13 +11,13 @@
 #define NULL 0
 #pragma cplusplus on
 extern "C" {
-int String_Copy(char *, char *);
+int Libc_Strcpy(char *, char *);
 int Libc_Sscanf(char *, char *, ...);
-void LobbyArray_SetRefreshing(char *, int);
-void LobbyArray_Copy(int, char *);
-int LobbyArray_Append(char *, void *);
-int SFOLobby_NoInstance();
-void SFOLobby_CacheAccount(char *, int, char *, int, int);
+void SFOLobbyList_SetBusy(char *, int);
+void SFOLobbyList_CopyListFrom(int, char *);
+int SFOLobbyList_Append(char *, void *);
+int SFOLobby_IgnoreCallbacks();
+void SFOLobby_RefreshAgentData(char *, int, char *, int, int);
 void *memset(void *, int, int);
 unsigned int strlen(char *);
 extern char D_004C0CF0[];
@@ -55,7 +55,7 @@ extern "C" void func_00447790(int d0, int d1, int d2, char *arg3)
     int i;
     char *p;
 
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         list = D_00585E60 + 0xA8;
         if (list != NULL) {
             if (F_(arg3, 0x18, int) == 0) {
@@ -63,7 +63,7 @@ extern "C" void func_00447790(int d0, int d1, int d2, char *arg3)
                 n4 = n3 = n2 = n1 = 0;
                 char name[0x40] = {0};
                 char buf[0x40];
-                String_Copy(buf, arg3 + 0x20);
+                Libc_Strcpy(buf, arg3 + 0x20);
                 i = 0;
                 p = buf;
                 while (!IsNul(*p) && *p != 9 && i < 0x40) {
@@ -92,8 +92,8 @@ extern "C" void func_00447790(int d0, int d1, int d2, char *arg3)
                 if (n3 < 0 || (unsigned int)n3 >= 6)
                     ok = false;
                 if (ok) {
-                    SFOLobby_CacheAccount(D_00585E60, n4, name, 0, 0);
-                    String_Copy(req.name, name);
+                    SFOLobby_RefreshAgentData(D_00585E60, n4, name, 0, 0);
+                    Libc_Strcpy(req.name, name);
                     req.f30 = F_(arg3, 0x60, int);
                     req.f34 = F_(arg3, 0x68, int);
                     req.f38 = n1;
@@ -102,13 +102,13 @@ extern "C" void func_00447790(int d0, int d1, int d2, char *arg3)
                     req.f40 = n2;
                     req.f44 = n3;
                     req.pad24 = 0;
-                    LobbyArray_Append(list, &req);
+                    SFOLobbyList_Append(list, &req);
                 }
             }
             if (F_(arg3, 0x6C, signed char) != 0) {
-                LobbyArray_SetRefreshing(list, 0);
+                SFOLobbyList_SetBusy(list, 0);
                 if (F_(D_00585E60, 0x23F0, int) != 0)
-                    LobbyArray_Copy(F_(D_00585E60, 0x23F0, int), list);
+                    SFOLobbyList_CopyListFrom(F_(D_00585E60, 0x23F0, int), list);
             }
         }
     }
@@ -121,9 +121,9 @@ extern "C" void func_00447790(int d0, int d1, int d2, char *arg3)
 #pragma cplusplus on
 extern "C" {
 #if 0 /* merge_units */
-void LobbyArray_Append(char *, void *);
+void SFOLobbyList_Append(char *, void *);
 #endif /* merge_units */
-#define LobbyArray_Append(a0, a1) ((void)LobbyArray_Append((a0), (a1))) /* merge_units */
+#define SFOLobbyList_Append(a0, a1) ((void)SFOLobbyList_Append((a0), (a1))) /* merge_units */
 
 }
 
@@ -149,13 +149,13 @@ extern "C" void SFOLobby_Callback_GetLobbyPlayerNames_ExtraInfo(int d0, int d1, 
     char *list;
     bool ok;
 
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         list = D_00585E60 + 0x8C;
         if (list != NULL) {
             if (F_(arg3, 0x18, int) == 0) {
                 memset(&req, 0, 0x50);
                 req.id = F_(arg3, 0x1C, int);
-                String_Copy(req.name, arg3 + 0x20);
+                Libc_Strcpy(req.name, arg3 + 0x20);
                 req.f30 = 0;
                 req.f34 = -1;
                 req.f44 = 5;
@@ -173,17 +173,17 @@ extern "C" void SFOLobby_Callback_GetLobbyPlayerNames_ExtraInfo(int d0, int d1, 
                 case 3: req.f24 = 1; break;
                 }
                 if (ok)
-                    LobbyArray_Append(list, &req);
-                SFOLobby_CacheAccount(D_00585E60, req.id, (char*)&req + 4, 0, 0);
+                    SFOLobbyList_Append(list, &req);
+                SFOLobby_RefreshAgentData(D_00585E60, req.id, (char*)&req + 4, 0, 0);
             }
             if (F_(arg3, 0xCC, signed char) != 0) {
-                LobbyArray_SetRefreshing(list, 0);
+                SFOLobbyList_SetBusy(list, 0);
                 if (F_(D_00585E60, 0x23F4, int) != 0)
-                    LobbyArray_Copy(F_(D_00585E60, 0x23F4, int), list);
+                    SFOLobbyList_CopyListFrom(F_(D_00585E60, 0x23F4, int), list);
             }
         }
     }
 }
-#undef LobbyArray_Append /* merge_units */
+#undef SFOLobbyList_Append /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00447A30 */

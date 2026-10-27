@@ -21,13 +21,13 @@ extern "C" {
 extern char D_004EE6B8[];
 extern char D_004D9AC0[];
 void cGOBJ_ctor(void* self, int* gid, int n, char* cls);
-void PtrVec_InitEmpty(ItemsH* v);
+void std_vector_cGOBJPtr_ctor_void(ItemsH* v);
 }
-extern "C" HotboxH* cHotbox_ctor2(HotboxH* self, int* gid, int type, V4H* mn, V4H* mx)
+extern "C" HotboxH* cHotbox_ctor_cObjectIdR_int_cVector_cVector(HotboxH* self, int* gid, int type, V4H* mn, V4H* mx)
 {
     cGOBJ_ctor(self, gid, 8, D_004EE6B8);
     self->vt = D_004D9AC0;
-    { ItemsH* it = &self->items; PtrVec_InitEmpty(it); it->bC = 1; }
+    { ItemsH* it = &self->items; std_vector_cGOBJPtr_ctor_void(it); it->bC = 1; }
     self->bmin.x = 3.4028235e38f;
     self->bmin.y = 3.4028235e38f;
     self->bmin.z = 3.4028235e38f;

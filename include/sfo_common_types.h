@@ -56,7 +56,7 @@ typedef struct SfGameObject {
     unsigned char removed; /* +0x2E */
     char pad002F[0x11];
     float health; /* +0x40 actors and damageable objects */
-    int stealth; /* +0x44 actor: darkness 0..100 written each frame by Actor_UpdateStealthLight */
+    int stealth; /* +0x44 actor: darkness 0..100 written each frame by UpdateDarkness */
     char pad0048[0x1];
     unsigned char classByte; /* +0x49 ? hotbox 8 */
     char pad004A[0x2];
@@ -84,7 +84,7 @@ typedef struct SfObjMsg {
     int arg2C; /* +0x2C route result: second node; hotbox: 0 */
 } SfObjMsg; /* size 0x30 */
 
-/* cHotboxMsg sent by Hotbox_UpdateTracker. */
+/* cHotboxMsg sent by cHotboxMan_Update. */
 typedef struct SfHotboxMsg {
     SfMessage base; /* +0x0 */
     int action; /* +0x24 0 enter, 2 exit (cHotboxMsg) */

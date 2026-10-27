@@ -53,7 +53,7 @@ int func_001112E0(void){
 /* merge_units: end func_001112E0 */
 
 /* merge_units: begin func_001114E8 */
-extern int Name_Compare48(const char *, const char *, int);
+extern int Libc_Memcmp(const char *, const char *, int);
 extern char D_004E5F28[];
 extern char D_0048618C[];
 extern char D_00498B68[];
@@ -64,8 +64,8 @@ int _fs_version(void)
     char *b = D_0048618C;
     char *a = D_004E5F28;
     int r = 0;
-    if (Name_Compare48(a, b, 4) && Name_Compare48(a, (*(char **)dat_00486250), 4))
-        r = Name_Compare48(b, (*(char **)dat_00486250), 4) != 0;
+    if (Libc_Memcmp(a, b, 4) && Libc_Memcmp(a, (*(char **)dat_00486250), 4))
+        r = Libc_Memcmp(b, (*(char **)dat_00486250), 4) != 0;
     return r;
 }
 /* merge_units: end func_001114E8 */

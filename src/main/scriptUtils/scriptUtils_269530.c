@@ -18,22 +18,22 @@ void* cNodeList_SOBJ_convert(void* self); /* gsynth: defined below */
  */
 
 
-extern ListPos* List_InsertBefore(ListPos* result, void* list, ListPos* pos, int value);
-extern int cNode_Identity(void* obj);
+extern ListPos* std_list_deleter_voidPtr_insert(ListPos* result, void* list, ListPos* pos, int value);
+extern int cNode_SOBJ_toInt(void* obj);
 #if 0 /* merge_units */
 extern cNodeList* cNodeList_SOBJ_convert(void* obj);
 #endif /* merge_units */
 #define cNodeList_SOBJ_convert(a0) ((cNodeList *)cNodeList_SOBJ_convert((a0))) /* merge_units */
 
-extern void* Group_GetAt(ScriptGroup* group, int index);
+extern void* cGroup_Get(ScriptGroup* group, int index);
 
 /* push_back on a list whose sentinel node is at +4. */
-ListPos* List_PushBack_269530(void* list, int value) {
+ListPos* std_list_cNodeListPtr_push_back(void* list, int value) {
     ListPos end;
     ListPos result;
 
     end.node = (char*)list + 4;
-    return List_InsertBefore(&result, list, &end, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &end, value);
 }
 
 /* Script native: cNodeList.Get(index = args[1]); returns the element's script handle.
@@ -42,7 +42,7 @@ int Script_cNodeList_Get(ScriptArg* args) {
     volatile int arg1 = args[1].i;
     int index = arg1;
 
-    return cNode_Identity(Group_GetAt(cNodeList_SOBJ_convert(args[0].p)->group, index));
+    return cNode_SOBJ_toInt(cGroup_Get(cNodeList_SOBJ_convert(args[0].p)->group, index));
 }
 
 /* Script native: cNodeList.GetSize(). volatile mirrors the original stack temporary. */
@@ -63,18 +63,18 @@ typedef struct NodeList {
     void* group;
 } NodeList;
 
-extern int ScriptNode_Identity(int);
+extern int cNode_SOBJ_convert(int);
 #if 0 /* merge_units */
 extern NodeList* cNodeList_SOBJ_convert(void*);
 #endif /* merge_units */
 #define cNodeList_SOBJ_convert(a0) ((NodeList *)cNodeList_SOBJ_convert((a0))) /* merge_units */
 
-extern int Group_FindByObject(void*, int);
+extern int cGroup_Find_cSystemP(void*, int);
 
 /* Script: cNodeList.Contains(node). */
 int Script_cNodeList_Contains(ScriptArg* args) {
-    int node = ScriptNode_Identity(args[1].i);
-    return Group_FindByObject(cNodeList_SOBJ_convert(args[0].p)->group, node) != -1;
+    int node = cNode_SOBJ_convert(args[1].i);
+    return cGroup_Find_cSystemP(cNodeList_SOBJ_convert(args[0].p)->group, node) != -1;
 }
 #undef cNodeList_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -86,9 +86,9 @@ static inline void merge_flush_func_002695E0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x60]; void* list; } Obj00269630;
 #if 0 /* merge_units */
-extern int ScriptNode_Identity(int handle);
+extern int cNode_SOBJ_convert(int handle);
 #endif /* merge_units */
-#define ScriptNode_Identity(a0) (ScriptNode_Identity((a0))) /* merge_units */
+#define cNode_SOBJ_convert(a0) (cNode_SOBJ_convert((a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern Obj00269630* cNodeList_SOBJ_convert(int handle);
@@ -96,20 +96,20 @@ extern Obj00269630* cNodeList_SOBJ_convert(int handle);
 #define cNodeList_SOBJ_convert(a0) ((Obj00269630 *)cNodeList_SOBJ_convert((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int Group_FindByObject(void* list, int key);
+extern int cGroup_Find_cSystemP(void* list, int key);
 #endif /* merge_units */
-#define Group_FindByObject(a0, a1) (Group_FindByObject((a0), (a1))) /* merge_units */
+#define cGroup_Find_cSystemP(a0, a1) (cGroup_Find_cSystemP((a0), (a1))) /* merge_units */
 
 /* Script: cNodeList.Find(key). */
 int Script_cNodeList_Find(int* args)
 {
-    int key = ScriptNode_Identity(args[1]);
-    volatile int result = Group_FindByObject(cNodeList_SOBJ_convert(args[0])->list, key);
+    int key = cNode_SOBJ_convert(args[1]);
+    volatile int result = cGroup_Find_cSystemP(cNodeList_SOBJ_convert(args[0])->list, key);
     return result;
 }
-#undef ScriptNode_Identity /* merge_units */
+#undef cNode_SOBJ_convert /* merge_units */
 #undef cNodeList_SOBJ_convert /* merge_units */
-#undef Group_FindByObject /* merge_units */
+#undef cGroup_Find_cSystemP /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00269630(void) {}
 #pragma pop /* merge_units */
@@ -118,12 +118,12 @@ static inline void merge_flush_func_00269630(void) {}
 /* merge_units: begin func_00269680 */
 #pragma push /* merge_units */
 extern int D_004F8400;  /* cNodeList script type id (>= 100) */
-extern void Group_AddObject(ScriptGroup* group, void* obj);
-extern int Group_RemoveObject(ScriptGroup* group, void* obj);
+extern void cGroup_Add(ScriptGroup* group, void* obj);
+extern int cGroup_Remove(ScriptGroup* group, void* obj);
 #if 0 /* merge_units */
-extern void* ScriptNode_Identity(int handle);
+extern void* cNode_SOBJ_convert(int handle);
 #endif /* merge_units */
-#define ScriptNode_Identity(a0) ((void *)ScriptNode_Identity((a0))) /* merge_units */
+#define cNode_SOBJ_convert(a0) ((void *)cNode_SOBJ_convert((a0))) /* merge_units */
 
 extern int cNodeList_SOBJ_toInt(int value);
 #if 0 /* merge_units */
@@ -131,42 +131,42 @@ extern cNodeList* cNodeList_SOBJ_convert(void* obj);
 #endif /* merge_units */
 #define cNodeList_SOBJ_convert(a0) ((cNodeList *)cNodeList_SOBJ_convert((a0))) /* merge_units */
 
-extern int* cSystem_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int typeId, int value);
-extern float Group_Shuffle(ScriptGroup* group);
-extern int Group_AddObjectDup(ScriptGroup* group, void* obj);
+extern int* cSystem_SOBJ_getClassId(void);
+extern void cScriptBase_declareParent(int typeId, int value);
+extern float cGroup_Randomize(ScriptGroup* group);
+extern int cGroup_AddDup(ScriptGroup* group, void* obj);
 
 /* Script native: cNodeList.Randomize(). */
 int Script_cNodeList_Randomize(ScriptArg* args) {
-    Group_Shuffle(cNodeList_SOBJ_convert(args[0].p)->group);
+    cGroup_Randomize(cNodeList_SOBJ_convert(args[0].p)->group);
     return 0;
 }
 
 /* Script native: cNodeList.Remove(obj handle = args[1]). */
 int Script_cNodeList_Remove(ScriptArg* args) {
-    void* obj = ScriptNode_Identity(args[1].i);
-    Group_RemoveObject(cNodeList_SOBJ_convert(args[0].p)->group, obj);
+    void* obj = cNode_SOBJ_convert(args[1].i);
+    cGroup_Remove(cNodeList_SOBJ_convert(args[0].p)->group, obj);
     return 0;
 }
 
 /* Script native: cNodeList.AddDup(obj handle = args[1]). */
 int Script_cNodeList_AddDup(ScriptArg* args) {
-    void* obj = ScriptNode_Identity(args[1].i);
-    Group_AddObjectDup(cNodeList_SOBJ_convert(args[0].p)->group, obj);
+    void* obj = cNode_SOBJ_convert(args[1].i);
+    cGroup_AddDup(cNodeList_SOBJ_convert(args[0].p)->group, obj);
     return 0;
 }
 
 /* Script native: cNodeList.Add(obj handle = args[1]). */
 int Script_cNodeList_Add(ScriptArg* args) {
-    void* obj = ScriptNode_Identity(args[1].i);
-    Group_AddObject(cNodeList_SOBJ_convert(args[0].p)->group, obj);
+    void* obj = cNode_SOBJ_convert(args[1].i);
+    cGroup_Add(cNodeList_SOBJ_convert(args[0].p)->group, obj);
     return 0;
 }
 
-/* Registers the cNodeList script type with the value returned by cSystem_GetScriptTypeKeyPtr. */
-void ScriptType_cNodeList_Init(void) {
-    int* key = cSystem_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F8400, *key);
+/* Registers the cNodeList script type with the value returned by cSystem_SOBJ_getClassId. */
+void cNodeList_SOBJ_init(void) {
+    int* key = cSystem_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F8400, *key);
 }
 
 int func_002697D0(int value) {
@@ -182,7 +182,7 @@ int cNodeList_SOBJ_toInt(int value) {
 cNodeList* func_00269800(void* obj) {
     return cNodeList_SOBJ_convert(obj);
 }
-#undef ScriptNode_Identity /* merge_units */
+#undef cNode_SOBJ_convert /* merge_units */
 #undef cNodeList_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00269680(void) {}
@@ -193,7 +193,7 @@ static inline void merge_flush_func_00269680(void) {}
 #pragma push /* merge_units */
 extern int D_004F83F8;  /* cNodeList script type key */
 extern char D_00555070[];  /* script manager */
-extern int ScriptFilter_Dispatch(void* manager, void* receiver, void* event);
+extern int cScriptInterpreter_CallEvent(void* manager, void* receiver, void* event);
 extern int* cNodeList_SOBJ_getClassId(void);
 
 /* Cast from script object to cNodeList (identity). */
@@ -215,8 +215,8 @@ int cNodeList_v0B(void) {
 }
 
 /* Script event filter: dispatches to script handlers through the script manager. */
-int cNodeList_v0C(void* self, void* event) {
-    return ScriptFilter_Dispatch(D_00555070, self, event);
+int cNodeList_ScriptHandleMessage(void* self, void* event) {
+    return cScriptInterpreter_CallEvent(D_00555070, self, event);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00269810(void) {}

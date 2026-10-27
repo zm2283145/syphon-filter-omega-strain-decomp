@@ -6,7 +6,7 @@
 #include "npc_types.h"
 
 /* Address of the second word of the vector's first element. */
-int* List_Front(PtrVec* v) {
+int* cLList_cCAMERA_GOBJPtr_Front(PtrVec* v) {
     return v->data + 2;
 }
 

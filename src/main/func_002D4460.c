@@ -49,15 +49,15 @@ extern char D_004A4A68[];
 extern char D_004DB600[];
 extern char D_004DB660[];
 extern char g_NpcDeadList[];
-void NpcThinkList_RemoveActor(Actor_4460* a);
-void ActiveList_EraseMatching(void* v, Pred_4460 p);
-Obj_4460* Object_LookupById(unsigned short* id);
-void Event_Construct(void* msg, void* type);
-void Event_Send(void* msg, void* target, int immediate);
+void cNPC_RemoveFromActiveList(Actor_4460* a);
+void std_list_imp_voidPtr_remove_if(void* v, Pred_4460 p);
+Obj_4460* nGobjManager_LookupGOBJ_cObjectIdR(unsigned short* id);
+void cMessage_ctor_cMessageNameR(void* msg, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int immediate);
 void cMessage_dtor(void* msg, int flags);
 void cNPCInfoObject_ctor(int* t);
 int cNPCInfoObject_GetOwner_cObjectIdR(int* t, void* id);
-void NetObjectMgr_Remove(Actor_4460* a);
+void cNetObjectMgr_RemoveFromTerrainActivation(Actor_4460* a);
 void cNPCInfoObject_dtor(int* t, int f);
 }
 
@@ -73,25 +73,25 @@ extern "C" void cNetNPC_Deactivate(cNPC_4460* self)
             a->SetActive(1);
             return;
         }
-        NpcThinkList_RemoveActor(a);
-            ActiveList_EraseMatching(g_NpcDeadList, Pred_4460(e, &self));
+        cNPC_RemoveFromActiveList(a);
+            std_list_imp_voidPtr_remove_if(g_NpcDeadList, Pred_4460(e, &self));
         if (self->id) {
-            Obj_4460* o = Object_LookupById(&self->id);
+            Obj_4460* o = nGobjManager_LookupGOBJ_cObjectIdR(&self->id);
             if (o && o->magic == 0xBEBAAFDE) {
                 Msg_4460 m;
                 Actor_4460* act = self->actor;
-                Event_Construct(&m, D_004A4A68);
+                cMessage_ctor_cMessageNameR(&m, D_004A4A68);
                 m.vtable = D_004DB600;
                 m.flag = 1;
                 m.actor = act;
-                Event_Send(&m, o, 0);
+                QueueMessage_cMessageR_cSystemP_int(&m, o, 0);
                 m.vtable = D_004DB660;
                 cMessage_dtor(&m, 0);
             }
         } else if (self->IsLocal()) {
             cNPCInfoObject_ctor(&t);
             cNPCInfoObject_GetOwner_cObjectIdR(&t, (char*)self->actor + 0xC);
-            if (self->net) NetObjectMgr_Remove(self->actor);
+            if (self->net) cNetObjectMgr_RemoveFromTerrainActivation(self->actor);
             cNPCInfoObject_dtor(&t, -1);
         }
         self->done = 1;

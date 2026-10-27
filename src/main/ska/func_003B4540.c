@@ -22,7 +22,7 @@ struct SkaClip {
     int f40;
     unsigned char b44, b45, b46;
 };
-extern "C" SkaClip* SkaClip_Construct(SkaClip* self, ClipHdr* c)
+extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimDataR(SkaClip* self, ClipHdr* c)
 {
     V t = Unit();
     self->vt = D_004DFC50;

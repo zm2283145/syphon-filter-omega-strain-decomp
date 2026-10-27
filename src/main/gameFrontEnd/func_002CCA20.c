@@ -8,7 +8,7 @@
 #include "gameFrontEnd_types.h"
 
 extern char D_005723D0;     /* setup guard byte */
-extern int Loc_GetCurrentLanguageName(void);
+extern int nGlobalization_GetLanguageName_void(void);
 
 void FrontEnd_SetOnlineMode(FeItem* item, int value) {
     D_005723D0 = 0;
@@ -16,5 +16,5 @@ void FrontEnd_SetOnlineMode(FeItem* item, int value) {
 }
 
 int Loc_GetCurrentLanguageName_Thunk(void) {
-    return Loc_GetCurrentLanguageName();
+    return nGlobalization_GetLanguageName_void();
 }

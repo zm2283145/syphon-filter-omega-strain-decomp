@@ -63,7 +63,7 @@ Quad* cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_cMasks_opAssign(Quad* 
 
 /* Configure a collision preset: selector, four candidate masks, the
  * height/distance/cosine ranges and flags; resets per-frame state. */
-HumanColPreset* HumanColPreset_SetConfig(HumanColPreset* p, int selector, int* mask0, int* mask1,
+HumanColPreset* cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_ctor_eLedgeSubtype_cBitArrayR_cBitArrayR_cBitArrayR_etc(HumanColPreset* p, int selector, int* mask0, int* mask1,
                                          int* mask2, int* mask3, HumanColPresetCfg* cfg, int enabled) {
     p->selector = selector;
     p->masks[0].bits = *mask0;

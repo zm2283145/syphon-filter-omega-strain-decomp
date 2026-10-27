@@ -11,16 +11,16 @@ extern void cArray_cObjectId_Begin(It_173D60* out, Vec_173D60* v);
 extern void cArray_cObjectId_End_void(It_173D60* out, Vec_173D60* v);
 extern int cArray_cObjectId_Iterator_opNe(It_173D60* a, It_173D60* b);
 extern int* cArray_cObjectId_Iterator_opMul(It_173D60* it);
-extern int ObjectKey_Equals(int* a, int* b);
+extern int opEq(int* a, int* b);
 extern void cArray_cObjectId_Iterator_ctor(It_173D60* out, It_173D60* src);
 extern void cArray_cObjectId_Iterator_opInc(It_173D60* it);
 extern int* std_vector_imp_cObjectId_end(Vec_173D60* v);
 extern void std_vector_cObjectId_pointer2iterator(It_173D60* out, Vec_173D60* v, int** p);
-extern void KeyVector_Reserve(Vec_173D60* v, int n);
-extern void KeyVector_PushBack(Vec_173D60* v, int* pos, int n, int* key);
-extern Obj_173D60* Object_LookupById(int* id);
+extern void std_vector_imp_cObjectId_reserve(Vec_173D60* v, int n);
+extern void std_vector_imp_cObjectId_insert(Vec_173D60* v, int* pos, int n, int* key);
+extern Obj_173D60* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
 
-void ZoneMgr_Associate(Zm_173D60* self, char* zone, int recurse, char* other)
+void cTerrain_AddActivation(Zm_173D60* self, char* zone, int recurse, char* other)
 {
     int* key = (int*)(zone + 0xC);
     It_173D60 r1;
@@ -33,7 +33,7 @@ void ZoneMgr_Associate(Zm_173D60* self, char* zone, int recurse, char* other)
         cArray_cObjectId_Begin(&it, &self->zones);
         cArray_cObjectId_End_void(&end, &self->zones);
         while (cArray_cObjectId_Iterator_opNe(&it, &end)) {
-            if (ObjectKey_Equals(cArray_cObjectId_Iterator_opMul(&it), key)) {
+            if (opEq(cArray_cObjectId_Iterator_opMul(&it), key)) {
                 cArray_cObjectId_Iterator_ctor(&r1, &it);
                 goto found1;
             }
@@ -50,7 +50,7 @@ void ZoneMgr_Associate(Zm_173D60* self, char* zone, int recurse, char* other)
         cArray_cObjectId_Begin(&it, &self->zones);
         cArray_cObjectId_End_void(&end, &self->zones);
         while (cArray_cObjectId_Iterator_opNe(&it, &end)) {
-            if (ObjectKey_Equals(cArray_cObjectId_Iterator_opMul(&it), key2)) {
+            if (opEq(cArray_cObjectId_Iterator_opMul(&it), key2)) {
                 cArray_cObjectId_Iterator_ctor(&r2, &it);
                 goto found2;
             }
@@ -64,16 +64,16 @@ void ZoneMgr_Associate(Zm_173D60* self, char* zone, int recurse, char* other)
         int* p = std_vector_imp_cObjectId_end(&self->zones);
         std_vector_cObjectId_pointer2iterator(&e, &self->zones, &p);
         if (r1.p == e.p) {
-            KeyVector_Reserve(&self->zones, self->zones.size + 1);
-            KeyVector_PushBack(&self->zones, self->zones.data + self->zones.size, 1, key);
+            std_vector_imp_cObjectId_reserve(&self->zones, self->zones.size + 1);
+            std_vector_imp_cObjectId_insert(&self->zones, self->zones.data + self->zones.size, 1, key);
         }
     }
     if (recurse) {
         int i;
         for (i = 0; i < self->zones.size; i++) {
-            Obj_173D60* o = Object_LookupById(&self->zones.data[i]);
+            Obj_173D60* o = nGobjManager_LookupGOBJ_cObjectIdR(&self->zones.data[i]);
             if (o && o != (Obj_173D60*)self && o->type == D_004EE780)
-                ZoneMgr_Associate((Zm_173D60*)o, zone, 0, other);
+                cTerrain_AddActivation((Zm_173D60*)o, zone, 0, other);
         }
     }
 }

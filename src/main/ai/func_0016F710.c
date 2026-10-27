@@ -3,10 +3,10 @@
 #include "alloc_guard.h"
 extern "C" {
 extern char D_004D9850[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void cMessage_ctor2(void* self, void* other);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cAISoundSystemGOBJMessage_ctor_cAISoundSystemGOBJMessageR(void* self, void* other);
 void cObjectId_ctor_cObjectIdR(void* dst, void* src);
-void Vec4_Assign(void* dst, void* src);
+void cVector_ctor_cVectorR(void* dst, void* src);
 }
 struct Msg_0016F710 {
     void* vtable;
@@ -19,13 +19,13 @@ extern "C" Msg_0016F710* cAISoundSystemGOBJPositionMessage_Clone(Msg_0016F710* s
     Msg_0016F710* p;
     {
         AllocGuard guard;
-        p = (Msg_0016F710*)Mem_Alloc(0, 0x50, "ai.hh", 0x164);
+        p = (Msg_0016F710*)cMemMan_Allocate(0, 0x50, "ai.hh", 0x164);
     }
     if (p) {
-        cMessage_ctor2(p, self);
+        cAISoundSystemGOBJMessage_ctor_cAISoundSystemGOBJMessageR(p, self);
         p->vtable = D_004D9850;
         cObjectId_ctor_cObjectIdR(p->a, self->a);
-        Vec4_Assign(p->v, self->v);
+        cVector_ctor_cVectorR(p->v, self->v);
     }
     return p;
 }

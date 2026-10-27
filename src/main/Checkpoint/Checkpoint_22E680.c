@@ -20,7 +20,7 @@ char *strncpy(void *, const void *, int);
 #pragma push /* merge_units */
 #define PACK_BODY(e, b) MP_I(b, 8) = MP_I(MP_P(e, 0x24), 0xC); strncpy(b + 0xC, MP_P(e, 0x28), 0x40);
 
-DEFINE_MESSAGE_PACK(cAddCheckpointMsg_v02, 76, D_004F7948, PACK_BODY)
+DEFINE_MESSAGE_PACK(cAddCheckpointMsg_Pack, 76, D_004F7948, PACK_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_0022E680 */
 
@@ -34,8 +34,8 @@ typedef struct { char pad[0x10]; void* val; } Node0022E710;
 typedef struct { void* vt; char p4[0x28]; } Evt0022E710;
 typedef struct { char q0[0x4]; int a4; } Arg0022E710;
 extern "C" {
-extern void Event_Construct(Evt0022E710* e, void* type);
-extern void MsgQueue_QueueClone(Evt0022E710* e, void* obj, int a, int b);
+extern void cMessage_ctor_cMessageNameR(Evt0022E710* e, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int_int(Evt0022E710* e, void* obj, int a, int b);
 extern void cMessage_dtor(Evt0022E710* e, int f);
 extern char D_0055C7A0[];
 extern void std_tree_pair_int_value_compare_find_intR(Node0022E710** out, void* map, int* key);
@@ -53,7 +53,7 @@ static inline int Eq0022E710(Node0022E710* a, Node0022E710* b) { return a == b; 
 #pragma push
 #pragma bool off
 #pragma opt_propagation off
-extern "C" int cAddCheckpointMsg_NetReceive(int a0, int a1, int a2, Arg0022E710* arg) {
+extern "C" int cAddCheckpointMsg_AddCheckpointCallback(int a0, int a1, int a2, Arg0022E710* arg) {
     NetRecvGuard g;
     Arg0022E710* a; a = arg;
     if (D_005721D0) {
@@ -70,7 +70,7 @@ extern "C" int cAddCheckpointMsg_NetReceive(int a0, int a1, int a2, Arg0022E710*
         n = it[0];
         std_map_int_netSystemField_end(tmp, D_0055C7A0);
         cAssocArray_int_netSystemField_Iterator_ctor(end, tmp);
-        if (Eq0022E710(n, end[0]) ^ 1) MsgQueue_QueueClone(&e, n->val, 0, 0);
+        if (Eq0022E710(n, end[0]) ^ 1) QueueMessage_cMessageR_cSystemP_int_int(&e, n->val, 0, 0);
         e.vt = D_004DB8D0;
         cMessage_dtor(&e, 0);
     }
@@ -90,21 +90,21 @@ extern int g_ProfileLockDepth;
 extern char D_004F7930[];
 extern char D_004A6698[];
 #if 0 /* merge_units */
-extern void Event_Construct(void*, void*);
+extern void cMessage_ctor_cMessageNameR(void*, void*);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
 
-extern void* Object_LookupById(int*);
+extern void* nGobjManager_LookupGOBJ_cObjectIdR(int*);
 extern void Alloc_Lock(int);
-extern void Alloc_Unlock(int);
-extern void* Mem_Alloc(int, int, char*, int);
+extern void EnableIntc(int);
+extern void* cMemMan_Allocate(int, int, char*, int);
 static inline void* AllocL_f4(int size, char* file, int line)
 {
     void* p;
     if (g_ProfileLockEnabled) Alloc_Lock(9);
     g_ProfileLockDepth++;
-    p = Mem_Alloc(0, size, file, line);
-    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    p = cMemMan_Allocate(0, size, file, line);
+    if (g_ProfileLockEnabled) EnableIntc(9);
     g_ProfileLockDepth--;
     return p;
 }
@@ -112,16 +112,16 @@ CkMsg_f4* cAddCheckpointMsg_ctor(CkMsg_f4* self, CkSrc_f4* src)
 {
     int id[1];
     int n;
-    Event_Construct(self, D_004F7930);
+    cMessage_ctor_cMessageNameR(self, D_004F7930);
     self->vt = D_004DB8D0;
     id[0] = src->id;
-    self->node = Object_LookupById(id);
+    self->node = nGobjManager_LookupGOBJ_cObjectIdR(id);
     n = strlen(src->name) + 1;
     self->label = AllocL_f4(n, D_004A6698, 0x81);
     strncpy(self->label, src->name, n);
     return self;
 }
-#undef Event_Construct /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0022E800(void) {}
 #pragma pop /* merge_units */
@@ -132,11 +132,11 @@ static inline void merge_flush_func_0022E800(void) {}
 typedef struct { char pad[0x6C]; float timer; int text; } B8_Ckpt;
 typedef struct { char pad[0x280]; int fonts[1]; } B8_Res;
 extern char D_004F7960;
-extern B8_Res* App_GetInstance(void);
-extern int Font_GetStringWidth(int font, int text, int flags);
-extern int TextManager_Get(void);
-extern void TextManager_QueueText(int ctx, int text, int font, float* col, int x, int y);
-void cCheckpoint_v10(B8_Ckpt* p, float dt) {
+extern B8_Res* GetMachine(void);
+extern int cFont_GetStringWidth(int font, int text, int flags);
+extern int GetTextSystem(void);
+extern void cTextSystem_Print_charP_cFontR_tRGBAR_int_etc(int ctx, int text, int font, float* col, int x, int y);
+void cCheckpoint_NextFrame(B8_Ckpt* p, float dt) {
     float col[4];
     int w;
     int font;
@@ -149,9 +149,9 @@ void cCheckpoint_v10(B8_Ckpt* p, float dt) {
     col[2] = 1.0f;
     col[3] = a;
     idx = D_004F7960;
-    font = *(int*)((unsigned char)idx * 4 + (int)App_GetInstance() + 0x280);
-    w = Font_GetStringWidth(font, p->text, 0x200);
-    TextManager_QueueText(TextManager_Get(), p->text, font, col, -(w / 2), 0);
+    font = *(int*)((unsigned char)idx * 4 + (int)GetMachine() + 0x280);
+    w = cFont_GetStringWidth(font, p->text, 0x200);
+    cTextSystem_Print_charP_cFontR_tRGBAR_int_etc(GetTextSystem(), p->text, font, col, -(w / 2), 0);
     p->timer -= dt;
 }
 /* merge_units: generate this block's code under its own pragmas */

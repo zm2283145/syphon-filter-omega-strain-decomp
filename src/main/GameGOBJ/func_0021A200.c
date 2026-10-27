@@ -62,22 +62,22 @@ extern float D_0048A9A0;
 extern float D_0048A9A8;
 extern float D_0048A9B0;
 extern int g_HumanActorClassKey;
-void Event_Construct(void* m, void* type);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
 void cMessage_dtor(void* m, int flags);
-void Transport_Send(int target, BlastMsg* msg, int a, int b);
-void VisionFx_RequestFlash(void* fx, V* v, float a, float b, float c, float d);
-void* World_GetActorArray(void);
+void cNetObj_SendMessage_int_cMessageR_int_int(int target, BlastMsg* msg, int a, int b);
+void cTremorManager_AddTremor(void* fx, V* v, float a, float b, float c, float d);
+void* nGobjManager_GetGOBJList(void);
 Vec* cObjList_cGOBJPtr_GetList(void* arr);
-void PtrVec_Begin(It* out, Vec* v);
-void PtrVec_End(It* out, Vec* v);
+void cArray_cGOBJPtr_Begin(It* out, Vec* v);
+void cArray_cGOBJPtr_End(It* out, Vec* v);
 void cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(It* out, It* in);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void SchedEvent_Init(void* e, int t, int a, int b);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cCBData_ctor(void* e, int t, int a, int b);
 void cSafePtr_cGOBJ_ctor_void(Handle* h);
-void Ptr_Identity(V* v);
-void ObjHandle_Set(Handle* h, Obj* o);
-void Vec4_Copy(V* d, V* s);
-void EventQueue_Admit(void* e);
+void cVector_ctor_void(V* v);
+void cSafePtr_cGOBJ_opAssign_cGOBJP(Handle* h, Obj* o);
+void cVector_opAssign(V* d, V* s);
+void nCallback_SetCallback(void* e);
 }
 struct BlastEvent {
     char base[8];
@@ -94,20 +94,20 @@ static inline BlastEvent* NewBlast(int t, Obj* a, int dmg, Obj* src, unsigned ch
     void* p;
     {
         AllocGuard g;
-        p = Mem_Alloc(0, 0x40, D_004A4550, 0x1D4);
+        p = cMemMan_Allocate(0, 0x40, D_004A4550, 0x1D4);
     }
     BlastEvent* e = (BlastEvent*)p;
     if (e) {
-        SchedEvent_Init(e, t, 1, 0);
+        cCBData_ctor(e, t, 1, 0);
         e->vt = D_004DAEB0;
         cSafePtr_cGOBJ_ctor_void(&e->tgt);
         cSafePtr_cGOBJ_ctor_void(&e->src);
-        Ptr_Identity(&e->pos);
-        ObjHandle_Set(&e->tgt, a);
+        cVector_ctor_void(&e->pos);
+        cSafePtr_cGOBJ_opAssign_cGOBJP(&e->tgt, a);
         e->dmg = dmg;
-        ObjHandle_Set(&e->src, src);
+        cSafePtr_cGOBJ_opAssign_cGOBJP(&e->src, src);
         e->kind = kind;
-        Vec4_Copy(&e->pos, pos);
+        cVector_opAssign(&e->pos, pos);
     }
     return e;
 }
@@ -118,8 +118,8 @@ static inline bool Standing(Obj* o) { bool r = false; if (o->b2D && o->b2C) r = 
 static inline bool Alive(Obj* o) { bool r = false; if (Standing(o) && ((o->b2E != 0) ^ 1)) r = true; return r; }
 static inline bool DeadOk(void) { unsigned char r; if (g_IsMultiplayer) r = D_005721C0; else r = true; return r; }
 static inline int HumanKey(void) { int* p = &g_HumanActorClassKey; return *p; }
-static inline void GetBegin(It* o, Vec* v) { It tb; PtrVec_Begin(&tb, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &tb); }
-static inline void GetEnd(It* o, Vec* v) { It te; PtrVec_End(&te, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &te); }
+static inline void GetBegin(It* o, Vec* v) { It tb; cArray_cGOBJPtr_Begin(&tb, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &tb); }
+static inline void GetEnd(It* o, Vec* v) { It te; cArray_cGOBJPtr_End(&te, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &te); }
 /* the extra inline level orders the iterator temps like retail */
 static inline void GetBegin2(It* o, Vec* v) { GetBegin(o, v); }
 static inline void GetEnd2(It* o, Vec* v) { GetEnd(o, v); }
@@ -130,7 +130,7 @@ extern "C" void Blast_Prepare(Obj* obj, int dmg, float fdmg, float r0, float r1,
         BlastMsg msg;
         BlastMsg* p = &msg;
         Ref* r = &obj->ref;
-        Event_Construct(p, D_0051EE68);
+        cMessage_ctor_cMessageNameR(p, D_0051EE68);
         p->vt = D_004DE130;
         p->src = r->Get();
         p->dmg = dmg;
@@ -141,7 +141,7 @@ extern "C" void Blast_Prepare(Obj* obj, int dmg, float fdmg, float r0, float r1,
         p->b3C = flag;
         msg.kind = 4;
         msg.size = 0x40;
-        Transport_Send(0, &msg, -1, -1);
+        cNetObj_SendMessage_int_cMessageR_int_int(0, &msg, -1, -1);
         msg.vt = D_004DE130;
         cMessage_dtor(&msg, 0);
     }
@@ -153,8 +153,8 @@ extern "C" void Blast_Prepare(Obj* obj, int dmg, float fdmg, float r0, float r1,
         c = t;
     }
     void* fx = g_TremorList;
-    VisionFx_RequestFlash(fx, &c, 1.0f, 1.0f, r0 * D_0048A9A0, r1 * D_0048A9A8);
-    void* arr = World_GetActorArray();
+    cTremorManager_AddTremor(fx, &c, 1.0f, 1.0f, r0 * D_0048A9A0, r1 * D_0048A9A8);
+    void* arr = nGobjManager_GetGOBJList();
     It it;
     It end;
     Obj* a;
@@ -194,7 +194,7 @@ extern "C" void Blast_Prepare(Obj* obj, int dmg, float fdmg, float r0, float r1,
                     kind = 2;
                 }
                 float delay = 1000.0f * (dist / D_0048A9B0);
-                EventQueue_Admit(NewBlast((int)delay, a, (int)id, obj, kind, &c));
+                nCallback_SetCallback(NewBlast((int)delay, a, (int)id, obj, kind, &c));
             }
         }
     next:

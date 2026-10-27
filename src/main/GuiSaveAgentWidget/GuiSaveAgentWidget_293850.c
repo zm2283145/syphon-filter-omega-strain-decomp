@@ -28,7 +28,7 @@ char* GuiAgentLoad_GetClassName(void) {
 extern void* strcmp(void* key);
 
 /* Returns whether the lookup of "GuiAgentLoad" yields null. */
-int GuiAgentLoad_IsType(void) {
+int GuiAgentLoad_IsClass(void) {
     return strcmp("GuiAgentLoad") == 0;
 }
 #pragma pop /* merge_units */
@@ -47,7 +47,7 @@ void GuiSaveAgentWidget_SaveDone(void) {
 #include "vtable2_base_dtor.h"
 
 /* Two-level destructor: restore vtables, run base destructor, optionally delete. */
-DEFINE_VTABLE2_BASE_DTOR(GuiAgentDirectoryWidget_dtor, D_004DD460, D_004E1220, GuiWidget_Destroy)
+DEFINE_VTABLE2_BASE_DTOR(GuiAgentDirectoryWidget_dtor, D_004DD460, D_004E1220, GuiWidget_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002938A0 */
 

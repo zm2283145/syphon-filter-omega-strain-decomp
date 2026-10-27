@@ -38,7 +38,7 @@ extern char D_004D9280[];
 extern signed char D_0048A148;
 extern unsigned char g_LevelLightsDirty;
 }
-extern "C" DirLight* LevelLight_CreateDirectional(DirLight* l, unsigned char a, V4c* c)
+extern "C" DirLight* cLightSrc_ctor_eLightSrcTypes_tRGBAR(DirLight* l, unsigned char a, V4c* c)
 {
     V4c v;
     float y, z, w, x;

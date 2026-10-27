@@ -1,4 +1,4 @@
-// UpperBodyIk_Position: copy the source position into the object transform, then apply the parent rotation/translation (VU0).
+// cBoneIk_LimbPose_CalculateSkelSpacePos: copy the source position into the object transform, then apply the parent rotation/translation (VU0).
 #pragma cplusplus on
 #include "types.h"
 #pragma always_inline on
@@ -29,7 +29,7 @@ static inline void ScaleTo(V* d, const V* s, float k) { int r; V* dd = d; asm {
         .set reorder
     } }
 inline V V::operator*(float k) const { V t; ScaleTo(&t, this, k); return t; }
-extern "C" V* Placement_TransformPoint(V* pp, const V* q, const V* pos)
+extern "C" V* cVector_Transform_cQuaternionR_cVectorR(V* pp, const V* q, const V* pos)
 {
     V& p = *pp;
     p.Rotate(*q);

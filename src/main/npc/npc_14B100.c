@@ -25,7 +25,7 @@ typedef struct { float m[3][4]; } R_B160;
 typedef struct { __int128 q; } V_B160;
 typedef struct { float m[3][4]; V_B160 p; } M_B160;
 #pragma peephole off
-M_B160* Mtx_SetRotationTranslation(M_B160* self, R_B160* r, V_B160* p)
+M_B160* cMatrix_ctor_cMatrixR_cVectorR(M_B160* self, R_B160* r, V_B160* p)
 {
     self->m[0][0] = r->m[0][0];
     self->m[0][1] = r->m[0][1];
@@ -53,7 +53,7 @@ static inline void merge_flush_func_0014B160(void) {}
 #pragma peephole off
 #pragma opt_common_subs off
 #pragma opt_propagation off
-Vec4 Vec4_CopyAsPoint(Vec4* src)
+Vec4 cVector_Copy_WSet1(Vec4* src)
 {
     Vec4 t;
     Vec4* p;

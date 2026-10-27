@@ -8,7 +8,7 @@ typedef struct { char p0[0x40]; V_9300 a; char p50[0x20]; V_9300 b; char p80[0x2
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-void Actor_AddTeleportLanes(Act_9300* act, V_9300* dv)
+void cHumanCollisionRoutine_Move(Act_9300* act, V_9300* dv)
 {
     V_9300 t;
     {

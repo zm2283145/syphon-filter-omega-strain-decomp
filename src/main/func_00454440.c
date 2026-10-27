@@ -7,11 +7,11 @@ typedef struct { char pad[0x48]; Box_454440* box; void* f4C; char f50[4]; } S_45
 extern List_454440* g_Hud;
 extern char g_Game[];
 extern char D_004DADF0[];
-extern void String_Copy(char*, char*);
+extern void Libc_Strcpy(char*, char*);
 extern void GuiSubTitleDisplay_Clear(void*);
-extern void GuiRadioLog_Play(S_454440*, char*);
-extern void GuiTextListWidget_SetStyle(Box_454440*, int, int);
-extern int GuiWidget_OnEvent(S_454440*, void*, unsigned short, int, int);
+extern void GuiRadioLog_StartPlayback(S_454440*, char*);
+extern void GuiTextListWidget_SetItemState(Box_454440*, int, int);
+extern int GuiWidget_onMessage(S_454440*, void*, unsigned short, int, int);
 
 #pragma push
 #pragma opt_propagation off
@@ -21,14 +21,14 @@ int GuiRadioLog_HandleEvent(S_454440* self, void* ev, unsigned short code, int a
     SoundEvent msg;
 
     if (code == 0x14) {
-        SoundEvent_Ctor(&msg, self->f50, 0);
+        cStopSoundMsg_ctor_cSndFxR_bool(&msg, self->f50, 0);
         msg.kind = 1;
-        Event_Send(&msg, g_Game, 1);
+        QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 1);
         if (self->f4C)
             GuiSubTitleDisplay_Clear(self->f4C);
         msg.vtable = D_004DADF0;
-        FileMan_Release(&msg.req.b, -1);
-        FileMan_Release(&msg.req.a, -1);
+        cFileMan_dtor(&msg.req.b, -1);
+        cFileMan_dtor(&msg.req.a, -1);
         cMessage_dtor(&msg, 0);
         return 1;
     }
@@ -36,15 +36,15 @@ int GuiRadioLog_HandleEvent(S_454440* self, void* ev, unsigned short code, int a
         List_454440* l = g_Hud;
         buf[0] = 0;
         if (l && idx < l->count) {
-            String_Copy(buf, l->items[idx].name);
+            Libc_Strcpy(buf, l->items[idx].name);
             l->items[idx].flag = 1;
         }
-        GuiRadioLog_Play(self, buf);
+        GuiRadioLog_StartPlayback(self, buf);
         if (self->box && idx < self->box->count)
-            GuiTextListWidget_SetStyle(self->box, idx, 1);
+            GuiTextListWidget_SetItemState(self->box, idx, 1);
         return 1;
     }
-    return GuiWidget_OnEvent(self, ev, code, a3, idx);
+    return GuiWidget_onMessage(self, ev, code, a3, idx);
 }
 #pragma pop
 

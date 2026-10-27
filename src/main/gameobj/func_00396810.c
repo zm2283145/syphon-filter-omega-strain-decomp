@@ -8,9 +8,9 @@
 
 
 extern "C" {
-int Mem_Free(...);                           
+int cMemMan_Deallocate(...);                           
 int cSkaAnimCheckpoints_dtor(...);                            
-int AnimEvent_dtor(...);                            
+int cSkaAnimEndedMessage_dtor(...);                            
 int func_00396910(...);                            
 extern unsigned char g_ProfileLockEnabled;
 }
@@ -20,9 +20,9 @@ extern "C" void opDelete_cSkaSystemRequestP_int_bool_charP_etc(int arg0, int arg
     if ((arg2 != 0) && (arg0 != 0)) {
         func_00396910(arg0 + 0xE8, -1);
         cSkaAnimCheckpoints_dtor(arg0 + 0x94, -1);
-        AnimEvent_dtor(arg0 + 0x5C, -1);
-        AnimEvent_dtor(arg0 + 0x24, -1);
+        cSkaAnimEndedMessage_dtor(arg0 + 0x5C, -1);
+        cSkaAnimEndedMessage_dtor(arg0 + 0x24, -1);
     }
-    Mem_Free(arg1, arg0, arg3, arg4);
+    cMemMan_Deallocate(arg1, arg0, arg3, arg4);
     }
 }

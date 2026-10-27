@@ -8,18 +8,18 @@
 
 extern PtrVec g_RuntimeHotboxes;  /* list of created hotboxes */
 extern void* g_HotboxTracker;
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int* value);
-extern int Hotbox_CreateRuntime(void* owner, void* gobj, int a2, int a3);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int* value);
+extern int cHotboxMan_CreateInteractBox(void* owner, void* gobj, int a2, int a3);
 
 /* push_back on a pointer vector. */
-int HotboxList_PushBack(PtrVec* v, int* value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+int std_vector_cHotboxPtr_push_back(PtrVec* v, int* value) {
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 
 /* Creates a hotbox for a game object and records it in g_RuntimeHotboxes. */
 int Global_MakeGOBJInteractable(void* gobj) {
-    int hotbox = Hotbox_CreateRuntime(g_HotboxTracker, gobj, 0, 0);
+    int hotbox = cHotboxMan_CreateInteractBox(g_HotboxTracker, gobj, 0, 0);
 
-    HotboxList_PushBack(&g_RuntimeHotboxes, &hotbox);
+    std_vector_cHotboxPtr_push_back(&g_RuntimeHotboxes, &hotbox);
     return hotbox;
 }

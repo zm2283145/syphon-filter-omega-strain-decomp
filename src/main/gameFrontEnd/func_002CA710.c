@@ -1,21 +1,21 @@
-extern int DME_GetLobby(void);
+extern int cDME_GetLobby(void);
 extern int Iop_LoadNetModules(int a);
 extern void sceSifMInitRpc(int a);
 extern void NetRegisterMallocFreeCallbacks(void* a, void* b);
-extern void DME_CreateLobby(void);
-extern char* GameIni_GetString(int id);
+extern void cDME_CreateLobby(void);
+extern char* cSFOini_GetKeyValue(int id);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char* Libc_Strcat(char* d, const char* s);
 extern unsigned int strlen(const char* s);
-extern char* Agent_GetSelected(void* a, int idx);
-extern void String_Copy(char* d, const char* s);
+extern char* cGameSystem_GetAgentData(void* a, int idx);
+extern void Libc_Strcpy(char* d, const char* s);
 extern void SFOLobby_Init(char* o, int a, void* info, char* text, int len, int flag);
 extern void func_00442670(char* o, int v);
 extern unsigned char Loc_GetLanguage(void);
 extern void SFOLobby_SetStatsCallback(char* o, void* cb);
 extern void func_002C7FC0(void* self);
 extern int Sfo_Malloc();
-extern int sfo_malloc_2CA9B0();
+extern int sfo_free();
 extern int cGameFrontEnd_LobbyStatsCallback();
 
 typedef struct {
@@ -37,7 +37,7 @@ extern int g_OnlineMissionTable[];
 extern char g_Game[];
 extern unsigned char D_0051EEA8;
 
-int FrontEnd_StartOnline(void* self)
+int cGameFrontEnd_LobbyCreate(void* self)
 {
     Ids ids;
     char text[0x400];
@@ -50,7 +50,7 @@ int FrontEnd_StartOnline(void* self)
     int len;
     char* ag;
 
-    if (DME_GetLobby()) {
+    if (cDME_GetLobby()) {
         return 0;
     }
     if (D_0048C250) {
@@ -62,30 +62,30 @@ int FrontEnd_StartOnline(void* self)
             return 0;
         }
     }
-    NetRegisterMallocFreeCallbacks(Sfo_Malloc, sfo_malloc_2CA9B0);
-    DME_CreateLobby();
-    o = (char*)DME_GetLobby();
+    NetRegisterMallocFreeCallbacks(Sfo_Malloc, sfo_free);
+    cDME_CreateLobby();
+    o = (char*)cDME_GetLobby();
     p = ids.v;
     ids = D_0048C260;
     text[0] = 0;
     for (i = 0; i < 10; i++, p++) {
-        char* s = GameIni_GetString(*p);
+        char* s = cSFOini_GetKeyValue(*p);
         if (s && *s) {
             sprintf(line, D_004ACFA0, *p, s);
             Libc_Strcat(text, line);
         }
     }
     len = strlen(text);
-    ag = Agent_GetSelected(g_Game, -1) + 0x8DC;
+    ag = cGameSystem_GetAgentData(g_Game, -1) + 0x8DC;
     __clear((char*)&info, 0xC4);
 
     {
-        char* s = GameIni_GetString((int)D_004ACFA8);
+        char* s = cSFOini_GetKeyValue((int)D_004ACFA8);
         if (s) {
-            String_Copy(info.name, s);
+            Libc_Strcpy(info.name, s);
         }
     }
-    String_Copy(info.name2, ag + 0x80);
+    Libc_Strcpy(info.name2, ag + 0x80);
     SFOLobby_Init(o, 0, &info, text, len, 1);
     {
         int* q = g_OnlineMissionTable;

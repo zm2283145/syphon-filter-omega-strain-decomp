@@ -5,11 +5,11 @@
 
 #include "types.h"
 
-extern int Loader_InitNIEventLights(int a0, int a1);
-extern int Loader_InitNIEventObjects(int a0, int a1, int a2);
+extern int cLoader_LoadNILights(int a0, int a1);
+extern int cLoader_LoadNIObjs(int a0, int a1, int a2);
 
 /* Initialise NI event lights, then NI event objects. */
-int Loader_InitNIEvents(int a0, int a1, int a2) {
-    Loader_InitNIEventLights(a0, a1);
-    return Loader_InitNIEventObjects(a0, a1, a2);
+int cLoader_LoadNIEvents(int a0, int a1, int a2) {
+    cLoader_LoadNILights(a0, a1);
+    return cLoader_LoadNIObjs(a0, a1, a2);
 }

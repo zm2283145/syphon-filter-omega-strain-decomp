@@ -11,21 +11,21 @@ typedef struct { void* vtable; char pad4[0x18]; int flags; char pad20[4]; unsign
 extern char D_0052AF10[];
 extern char D_004DE6F0[];
 extern char D_004DCF10[];
-extern void* GObj_IdentityB(int handle);
-extern void Event_Construct(Msg00326AF0* ev, void* desc);
-extern void Event_Send(Msg00326AF0* ev, void* target, int flags);
+extern void* cGOBJ_SOBJ_convert(int handle);
+extern void cMessage_ctor_cMessageNameR(Msg00326AF0* ev, void* desc);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg00326AF0* ev, void* target, int flags);
 extern void cMessage_dtor(Msg00326AF0* ev, int flags);
 /* Script: EnableSuperJump(obj, enable). */
 int Script_EnableSuperJump_2(int* args)
 {
     Msg00326AF0 ev;
     unsigned char enable = args[1] != 0;
-    void* obj = GObj_IdentityB(args[0]);
-    Event_Construct(&ev, D_0052AF10);
+    void* obj = cGOBJ_SOBJ_convert(args[0]);
+    cMessage_ctor_cMessageNameR(&ev, D_0052AF10);
     ev.vtable = D_004DE6F0;
     ev.flags = 0x40;
     ev.enable = enable;
-    Event_Send(&ev, obj, 0);
+    QueueMessage_cMessageR_cSystemP_int(&ev, obj, 0);
     ev.vtable = D_004DCF10;
     cMessage_dtor(&ev, 0);
     return 0;
@@ -50,19 +50,19 @@ typedef struct ScriptArgs1 {
 } ScriptArgs1;
 
 #if 0 /* merge_units */
-extern int GObj_IdentityB(int handle);
+extern int cGOBJ_SOBJ_convert(int handle);
 #endif /* merge_units */
-#define GObj_IdentityB(a0) ((int)GObj_IdentityB((a0))) /* merge_units */
+#define cGOBJ_SOBJ_convert(a0) ((int)cGOBJ_SOBJ_convert((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Event_Construct(Msg* msg, void* name);
+extern void cMessage_ctor_cMessageNameR(Msg* msg, void* name);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((Msg00326AF0 *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((Msg00326AF0 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Event_Send(Msg* msg, int target, int flags);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg* msg, int target, int flags);
 #endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((Msg00326AF0 *)(a0), (void *)(a1), (a2))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((Msg00326AF0 *)(a0), (void *)(a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(Msg* msg, int flags);
@@ -73,19 +73,19 @@ extern void cMessage_dtor(Msg* msg, int flags);
 /* Script native: EnableSuperJump(target) - sends an enable message to the target. */
 int Script_EnableSuperJump(ScriptArgs1* args) {
     Msg msg;
-    int target = GObj_IdentityB(args->target);
-    Event_Construct(&msg, D_0052AF10);
+    int target = cGOBJ_SOBJ_convert(args->target);
+    cMessage_ctor_cMessageNameR(&msg, D_0052AF10);
     msg.vtable = D_004DE6F0;
     msg.enable = 1;
     msg.size = 0x40;
-    Event_Send(&msg, target, 0);
+    QueueMessage_cMessageR_cSystemP_int(&msg, target, 0);
     msg.vtable = D_004DCF10;
     cMessage_dtor(&msg, 0);
     return 0;
 }
-#undef GObj_IdentityB /* merge_units */
-#undef Event_Construct /* merge_units */
-#undef Event_Send /* merge_units */
+#undef cGOBJ_SOBJ_convert /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00326B80 */

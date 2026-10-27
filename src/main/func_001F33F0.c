@@ -7,13 +7,13 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern int ListIter_NotEqual(ListIter*, ListIter*);
-extern ListIter* ListIter_Next(ListIter*);
+extern int std_opNe_listdeleterR_listdeleterR(ListIter*, ListIter*);
+extern ListIter* std_list_deleter_voidPtr_generic_iterator_1_opInc(ListIter*);
 extern ListIter* std_list_cSkaTransBLENDPtr_generic_iterator_1_opInc(ListIter*);
 extern void std_vector_cSkaTransBLEND_push_back(void);
 
-int ListIter_NotEqual_Thunk_1F33F0(ListIter* a, ListIter* b) {
-    return ListIter_NotEqual(a, b);
+int std_opNe_listR_listR_2(ListIter* a, ListIter* b) {
+    return std_opNe_listdeleterR_listdeleterR(a, b);
 }
 
 ListIter* cConstLListIterator_cSkaTransBLENDPtr_opInc(ListIter* it) {
@@ -22,7 +22,7 @@ ListIter* cConstLListIterator_cSkaTransBLENDPtr_opInc(ListIter* it) {
 }
 
 ListIter* std_list_cSkaTransBLENDPtr_generic_iterator_1_opInc(ListIter* it) {
-    ListIter_Next(it);
+    std_list_deleter_voidPtr_generic_iterator_1_opInc(it);
     return it;
 }
 

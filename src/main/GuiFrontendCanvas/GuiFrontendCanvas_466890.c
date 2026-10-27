@@ -11,7 +11,7 @@
 #include "alloc_guard.h"
 extern "C" {
 extern char D_004E1A20[]; extern char D_004E1940[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void GuiCanvas_ctor(void* self);
 }
 struct G00466890 { void* vtable; };
@@ -22,7 +22,7 @@ extern "C" G00466890* GuiGameCanvas_Create(void)
     G00466890* p;
     {
         AllocGuard guard;
-        p = (G00466890*)Mem_Alloc(0, 0x78, "guiWidget.hh", 0x2A);
+        p = (G00466890*)cMemMan_Allocate(0, 0x78, "guiWidget.hh", 0x2A);
     }
     if (p) {
         GuiCanvas_ctor(p);
@@ -39,12 +39,12 @@ extern "C" G00466890* GuiGameCanvas_Create(void)
 extern "C" {
 extern char D_004C2B38[];extern char D_004E19B0[];
 }
-struct G00466960 { void* vtable; };extern "C" G00466960* GuiFrontendCanvas_ctor(void)
+struct G00466960 { void* vtable; };extern "C" G00466960* ConcreteWidgetClassRep_GuiFrontendCanvas_Create(void)
 {
     G00466960* p;
     {
         AllocGuard guard;
-        p = (G00466960*)Mem_Alloc(0, 0x70, D_004C2B38, 0x2A);
+        p = (G00466960*)cMemMan_Allocate(0, 0x70, D_004C2B38, 0x2A);
     }
     if (p) {
         GuiCanvas_ctor(p);

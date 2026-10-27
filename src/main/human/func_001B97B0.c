@@ -12,7 +12,7 @@ extern signed char* D_005061D0;
 extern int D_004EEE88;
 
 /* Serialize: write the one-byte payload to the network stream. */
-void cEquipGogglesMsg_v04(ByteMsg* msg) {
+void cEquipGogglesMsg_Pack(ByteMsg* msg) {
     *D_005061D0 = msg->b0;
     D_005061D0 = D_005061D0 + 1;
 }

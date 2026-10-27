@@ -24,10 +24,10 @@ typedef struct F860 {
 } F860;
 
 extern int D_00497B20[][3];
-extern void GuiWidget_SendEvent(F860* self, F860W* w, int a, int b, int c);
-extern void GuiWidget_SetPos(float x, float y, F860W* w);
+extern void GuiWidget_SendMessage(F860* self, F860W* w, int a, int b, int c);
+extern void GuiWidget_SetPosition(float x, float y, F860W* w);
 
-void GuiEndGameAwards_Layout(F860* self) {
+void GuiEndGameAwards_PositionAwards(F860* self) {
     int i;
     F860Slot* s;
     F860X* a;
@@ -46,7 +46,7 @@ void GuiEndGameAwards_Layout(F860* self) {
     for (i = 0; i < 15; i++) {
         if (self->slots[i].w) {
             self->slots[i].w->flags &= ~2;
-            GuiWidget_SendEvent(self, self->slots[i].w, 10, 0, 0);
+            GuiWidget_SendMessage(self, self->slots[i].w, 10, 0, 0);
         } else {
             return;
         }
@@ -68,7 +68,7 @@ void GuiEndGameAwards_Layout(F860* self) {
         x = 120.0f;
         x = ((5 - n) * x) / 2.0f;
         for (c = 0; c < n; c++) {
-            GuiWidget_SetPos(ax + x, ay + y, self->slots[k].w);
+            GuiWidget_SetPosition(ax + x, ay + y, self->slots[k].w);
             k++;
             x += 120.0f;
         }

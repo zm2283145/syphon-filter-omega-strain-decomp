@@ -17,39 +17,39 @@ typedef struct { char pad[0x68]; Sub_5CE10* sub; } Scr_5CE10;
 extern char g_Game[];
 extern char D_004DAE10[];
 extern char D_004C21F8[];
-extern char* Loc_LookupText(char* key);
-extern int GuiSubTitleDisplay_SetText(Sub_5CE10* d, char* text);
-extern void GuiWidget_SendEvent(Scr_5CE10* w, Sub_5CE10* to, int ev, int name, int x);
-extern void SoundRequest_Ctor(SoundRequest* req, int kind, char* name, int a, int b);
+extern char* nGlobalization_GetString_charP(char* key);
+extern int GuiSubTitleDisplay_AddMessage(Sub_5CE10* d, char* text);
+extern void GuiWidget_SendMessage(Scr_5CE10* w, Sub_5CE10* to, int ev, int name, int x);
+extern void cSndFx_ctor_int_charP_cGOBJP_int(SoundRequest* req, int kind, char* name, int a, int b);
 extern void SoundMsg_WrapAction(SoundMsg* msg, SoundRequest* req);
-extern void Event_Send(SoundMsg* msg, void* target, int flags);
-extern void FileMan_Release(void* part, int flags);
+extern void QueueMessage_cMessageR_cSystemP_int(SoundMsg* msg, void* target, int flags);
+extern void cFileMan_dtor(void* part, int flags);
 extern void cMessage_dtor(SoundMsg* msg, int flags);
-void GuiGameScreen_ShowSubtitle(Scr_5CE10* self, char* name, int unused, int sound)
+void GuiGameScreen_AddXAAudio(Scr_5CE10* self, char* name, int unused, int sound)
 {
     char* text;
     if (!name || !*name || !self->sub) {
         self->sub->flags &= ~2;
         return;
     }
-    text = Loc_LookupText(name);
-    if (text && GuiSubTitleDisplay_SetText(self->sub, text)) {
-        if (!(self->sub->flags & 2)) GuiWidget_SendEvent(self, self->sub, 6, (int)D_004C21F8, 0);
+    text = nGlobalization_GetString_charP(name);
+    if (text && GuiSubTitleDisplay_AddMessage(self->sub, text)) {
+        if (!(self->sub->flags & 2)) GuiWidget_SendMessage(self, self->sub, 6, (int)D_004C21F8, 0);
         self->sub->x78 = 4;
         self->sub->flags |= 2;
     }
     if (sound) {
         SoundMsg msg;
         SoundRequest req;
-        SoundRequest_Ctor(&req, 4, name, 0, 100);
+        cSndFx_ctor_int_charP_cGOBJP_int(&req, 4, name, 0, 100);
         SoundMsg_WrapAction(&msg, &req);
-        FileMan_Release(req.partB, -1);
-        FileMan_Release(req.partA, -1);
+        cFileMan_dtor(req.partB, -1);
+        cFileMan_dtor(req.partA, -1);
         msg.flag = 1;
-        Event_Send(&msg, g_Game, 1);
+        QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 1);
         msg.vtbl = D_004DAE10;
-        FileMan_Release(msg.partB, -1);
-        FileMan_Release(msg.partA, -1);
+        cFileMan_dtor(msg.partB, -1);
+        cFileMan_dtor(msg.partA, -1);
         cMessage_dtor(&msg, 0);
     }
 }

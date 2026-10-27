@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00410C10 */
 #pragma push /* merge_units */
@@ -40,11 +40,11 @@ typedef struct {
 
 extern "C" {
 extern char D_004BEE90[];
-int FileMan_FindMember(void* file);
-int FileMan_GetSize(void* file);
-void FileMan_LoadMemberSync(void* file, char** out, int z);
+int cFileMan_Open(void* file);
+int cFileMan_GetSize(void* file);
+void cFileMan_Read_charPP_int(void* file, char** out, int z);
 void cFileMan_Close(void* file);
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 void cSubtitleFeed_ParseINI(Subs410C20* self, const char* s, const char* end);
 }
 
@@ -83,17 +83,17 @@ static inline void MemClear_410C20(void* d0, int n0) { int n = n0; void* dst = d
 static inline char* Alloc_410C20(int size)
 {
     AllocGuard g;
-    return (char*)Mem_Alloc(0, size, D_004BEE90, 0x2A9);
+    return (char*)cMemMan_Allocate(0, size, D_004BEE90, 0x2A9);
 }
 
 static inline void Free_410C20(void* p)
 {
     AllocGuard g;
-    Mem_Free(0, p, D_004BEE90, 0x2C6);
+    cMemMan_Deallocate(0, p, D_004BEE90, 0x2C6);
 }
 
 #pragma opt_propagation off
-extern "C" void MovieSubtitles_ParseFeed(Subs410C20* self, void* file, int lang)
+extern "C" void cSubtitleFeed_LoadINI(Subs410C20* self, void* file, int lang)
 {
     int size;
     char* volatile buf;
@@ -101,11 +101,11 @@ extern "C" void MovieSubtitles_ParseFeed(Subs410C20* self, void* file, int lang)
     char* e;
     self->lang = lang;
     self->mode = 0;
-    if ((unsigned char)FileMan_FindMember(file)) return;
-    size = FileMan_GetSize(file);
+    if ((unsigned char)cFileMan_Open(file)) return;
+    size = cFileMan_GetSize(file);
     buf = Alloc_410C20(size);
     MemClear_410C20(buf, size);
-    FileMan_LoadMemberSync(file, (char**)&buf, 0);
+    cFileMan_Read_charPP_int(file, (char**)&buf, 0);
     cFileMan_Close(file);
     {
     unsigned char* u = (unsigned char*)buf;

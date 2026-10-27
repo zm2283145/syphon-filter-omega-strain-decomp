@@ -26,7 +26,7 @@
 #define SF_DMG_FIRE 4
 #define SF_DMG_KNOCKOUT 7
 
-/* Flashlight object at actor +0x33EC (Flashlight_Construct, created for roles 1 and 3). */
+/* Flashlight object at actor +0x33EC (cFlashlight_ctor, created for roles 1 and 3). */
 typedef struct SfFlashlight {
     unsigned char on; /* +0x0 */
     char pad0001[0x3];
@@ -114,7 +114,7 @@ typedef struct SfActor {
     char pad33E9[0x3];
     SfFlashlight* flashlight; /* +0x33EC roles 1 and 3 only */
     SfCheckpoint checkpoint; /* +0x33F0 */
-    void* backpack; /* +0x3464 world inventory object (Backpack_Construct) */
+    void* backpack; /* +0x3464 world inventory object (cBackpack_NewBackpack_cHumanP_bool_cObjectIdP) */
     unsigned char pickupable; /* +0x3468 corpse stays a perceivable body (SetPickupable) */
     char pad3469[0x1];
     unsigned char stunImmune; /* +0x346A */
@@ -139,7 +139,7 @@ typedef struct SfActor {
     void* items; /* +0x3528 mission item list (ItemInv_*) */
     float shake; /* +0x352C screen-shake amount */
     char pad3530[0x18];
-    int startNode; /* +0x3548 ? hold node handed to NpcPath_Construct */
+    int startNode; /* +0x3548 ? hold node handed to cPathNavigator_ctor */
     SfWeakHandle effectSlots[3]; /* +0x354C ? effect objects (count inferred) */
     char pad3564[0x20];
     void* playerRecord; /* +0x3584 per-player record (shot counter) */

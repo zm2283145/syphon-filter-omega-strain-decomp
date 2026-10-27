@@ -23,8 +23,8 @@ extern cOutOfAmmoMsg* func_001450B0(void* self);
 #endif /* merge_units */
 #define func_001450B0(a0) ((cOutOfAmmoMsg *)func_001450B0((a0))) /* merge_units */
 
-extern int* Message_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int type, int parentType);
+extern int* cMessage_SOBJ_getClassId(void);
+extern void cScriptBase_declareParent(int type, int parentType);
 
 /* volatile mirrors the original stack temporary. */
 int Script_cOutOfAmmoMsg_Weapon(WeaponScriptArg* args) {
@@ -34,9 +34,9 @@ int Script_cOutOfAmmoMsg_Weapon(WeaponScriptArg* args) {
 
 /* Registers the cOutOfAmmoMsg script type under its parent type. */
 void ScriptType_cOutOfAmmoMsg_Init(void) {
-    int* parent = Message_GetScriptTypeKeyPtr();
+    int* parent = cMessage_SOBJ_getClassId();
 
-    ScriptType_SetParent(D_004EA160, *parent);
+    cScriptBase_declareParent(D_004EA160, *parent);
 }
 #undef func_001450B0 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

@@ -38,21 +38,21 @@ typedef struct {
 } Event; /* 0x1D0-byte stack object */
 extern char g_Game[];
 extern char D_004DADF0[]; /* vtable used while tearing down */
-extern void SoundStopMsg_Ctor(Event* e, void* src, void* arg);
-extern void Event_Send(Event* e, const char* name, int enable);
-extern void FileMan_Release(SubObj* s, int flags);
+extern void cStopSoundMsg_ctor_cSndFxR_cGOBJP(Event* e, void* src, void* arg);
+extern void QueueMessage_cMessageR_cSystemP_int(Event* e, const char* name, int enable);
+extern void cFileMan_dtor(SubObj* s, int flags);
 extern void cMessage_dtor(Event* e, int flags);
 
 /* Builds a temporary event from self+0x10 and arg, dispatches it as g_Game, then destroys it. */
 void cStopSndFXKey_Execute(char* self, void* arg)
 {
     Event e;
-    SoundStopMsg_Ctor(&e, self + 0x10, arg);
+    cStopSoundMsg_ctor_cSndFxR_cGOBJP(&e, self + 0x10, arg);
     e.flag = 1;
-    Event_Send(&e, g_Game, 1);
+    QueueMessage_cMessageR_cSystemP_int(&e, g_Game, 1);
     e.vtable = D_004DADF0;
-    FileMan_Release(&e.b, -1);
-    FileMan_Release(&e.a, -1);
+    cFileMan_dtor(&e.b, -1);
+    cFileMan_dtor(&e.a, -1);
     cMessage_dtor(&e, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */

@@ -8,10 +8,10 @@ struct Heap36B250 { char b[0x804]; char* blk; int f808; int f80C; int f810; int 
 extern "C" {
 extern Heap36B250 D_00533CB0[];
 extern char D_004BBE50[];
-void Mem_HeapFree(Heap36B250* heap, void* p, char* file, int line);
-void Heap_ReleaseSlot(int h);
+void cMemBin_Deallocate(Heap36B250* heap, void* p, char* file, int line);
+void cMemMan_ReleaseBin(int h);
 }
-void Heap_ReleaseSlot(int h)
+void cMemMan_ReleaseBin(int h)
 {
     if (D_00533CB0[h].id != -1) {
         char* p = D_00533CB0[h].blk;
@@ -19,7 +19,7 @@ void Heap_ReleaseSlot(int h)
             AllocGuard guard;
             if (p) {
                 char heap = p[-12] & 0xF;
-                Mem_HeapFree(&D_00533CB0[heap], p, D_004BBE50, 0x244);
+                cMemBin_Deallocate(&D_00533CB0[heap], p, D_004BBE50, 0x244);
             }
         }
         D_00533CB0[h].f808 = 0;

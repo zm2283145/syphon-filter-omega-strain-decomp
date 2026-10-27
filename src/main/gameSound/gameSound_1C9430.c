@@ -54,7 +54,7 @@ static inline void merge_flush_func_001C94D0(void) {}
 /* merge_units: begin func_001C9540 */
 #pragma push /* merge_units */
 extern void snd_SetMasterVolume(int, int);
-void SoundMgr_SetChannelVolume(void* self, unsigned char kind, int v)
+void cGameSound_SetMasterVolume(void* self, unsigned char kind, int v)
 {
     switch (kind) {
     case 0: snd_SetMasterVolume(0, v); snd_SetMasterVolume(3, v); break;
@@ -74,7 +74,7 @@ struct E1C95D0 { int type; char pad4[0xC]; char name[0x34]; unsigned char active
 struct S1C95D0 { char pad[0x50]; E1C95D0 slots[50]; };
 extern "C" int String_CompareNoCase(const char* a, const char* b);
 static inline bool B1C95D0_eq(unsigned char a, int b) { return a == b; }
-extern "C" bool SoundMgr_IsQuipPlaying(S1C95D0* s, const char* name)
+extern "C" bool cGameSound_IsVAGPlaying(S1C95D0* s, const char* name)
 {
     int i;
     for (i = 0; i < 50; i++) {

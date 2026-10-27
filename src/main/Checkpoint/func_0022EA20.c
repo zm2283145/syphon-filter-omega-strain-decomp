@@ -7,16 +7,16 @@
 
 
 extern "C" {
-int Loc_LookupText(...);                            
-int Mem_Alloc(...);                      
-int Mem_Free(...);                         
-int String_Copy(...);                            
+int nGlobalization_GetString_charP(...);                            
+int cMemMan_Allocate(...);                      
+int cMemMan_Deallocate(...);                         
+int Libc_Strcpy(...);                            
 int strlen(...);                                    
 extern char D_004A6698;
 extern unsigned char g_ProfileLockEnabled;
 }
 #pragma opt_common_subs off
-extern "C" void Checkpoint_SetLabel(char * arg0, int arg1) {
+extern "C" void cCheckpoint_SetString(char * arg0, int arg1) {
     int temp_s2;
     int temp_s2_2;
     int temp_s2_3;
@@ -26,20 +26,20 @@ extern "C" void Checkpoint_SetLabel(char * arg0, int arg1) {
     if (temp_s2 != 0) {
         {
             AllocGuard g;
-        Mem_Free(0, temp_s2, &D_004A6698, 0x3F);
+        cMemMan_Deallocate(0, temp_s2, &D_004A6698, 0x3F);
         }
     }
     if (arg1 != 0) {
         F_(arg0, 0x70, int) = arg1;
     } else {
-        temp_v0 = Loc_LookupText("Checkpoint");
+        temp_v0 = nGlobalization_GetString_charP("Checkpoint");
         temp_s2_2 = strlen(temp_v0) + 1;
         {
             AllocGuard g;
-        temp_s2_3 = Mem_Alloc(0, temp_s2_2, &D_004A6698, 0x47);
+        temp_s2_3 = cMemMan_Allocate(0, temp_s2_2, &D_004A6698, 0x47);
         }
         F_(arg0, 0x70, int) = temp_s2_3;
-        String_Copy(F_(arg0, 0x70, int), temp_v0);
+        Libc_Strcpy(F_(arg0, 0x70, int), temp_v0);
     }
     F_(arg0, 0x6C, int) = 0x40A00000;
 }

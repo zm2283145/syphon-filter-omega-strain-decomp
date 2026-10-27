@@ -4,4 +4,4 @@
 #define NMC_UB(off) (*(unsigned char*)((char*)p + (off)) = *(unsigned char*)((char*)self + (off)))
 #define NMC_F(off) (*(float*)((char*)p + (off)) = *(float*)((char*)self + (off)))
 extern "C" { char D_0049ED98[] = "human.cc"; }
-DEFINE_NET_MSG_CLONE(cNetSetFlagMsg_v01, 0x28, D_0049ED98, 0x2FCE, D_004DA9D0, NMC_B(0x24); NMC_B(0x25))
+DEFINE_NET_MSG_CLONE(cNetUpdateStatsMsg_Clone_void_2, 0x28, D_0049ED98, 0x2FCE, D_004DA9D0, NMC_B(0x24); NMC_B(0x25))

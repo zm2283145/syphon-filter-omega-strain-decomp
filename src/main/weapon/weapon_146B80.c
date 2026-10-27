@@ -16,7 +16,7 @@
 #pragma cplusplus on
 extern "C" {
 extern char D_0049B1D0[];
-extern void *Mem_Alloc(int, int, char *, int);
+extern void *cMemMan_Allocate(int, int, char *, int);
 }
 struct Sub6B { char p[0x20]; };
 struct Blk6B {
@@ -37,12 +37,12 @@ struct Blk6B {
     char p41A[2];
     int f41C;
     Blk6B() { Sub6B *p = sub; Sub6B *pe = sub + 12; do { p++; } while (p != pe); mn[0] = 0x7F7FFFFF; mn[1] = 0x7F7FFFFF; mn[2] = 0x7F7FFFFF; mn[3] = 0x3F800000; mx[0] = 0xFF7FFFFF; mx[1] = 0xFF7FFFFF; mx[2] = 0xFF7FFFFF; mx[3] = 0x3F800000; }
-    void *operator new(unsigned int sz, int line) { AllocGuard g; return Mem_Alloc(0, sz, D_0049B1D0, line); }
+    void *operator new(unsigned int sz, int line) { AllocGuard g; return cMemMan_Allocate(0, sz, D_0049B1D0, line); }
 };
 typedef struct { char name[0xCC]; unsigned char fCC; char pCD[0x3B]; unsigned char f108; char p109[3]; int f10C; char p110[0xC]; Blk6B *f11C; char name2[0x1C]; Blk6B *f13C; } Ent6B;
 typedef struct { int f0; unsigned short f4; } Res6B;
 typedef struct { char p0[4]; int *f4; char p8[0xC]; Ent6B *f14; } Wpn6B;
-extern "C" Res6B *WeaponDb_GetShellRecord(Wpn6B *, int);
+extern "C" Res6B *cWeaponDB_GetShellCasing(Wpn6B *, int);
 
 static inline int Cmp6B(char *a, char *b) {
     int ca, cb;
@@ -102,7 +102,7 @@ extern "C" int WeaponDb_CloneModel(Wpn6B *w, char *name, void *src) {
             e->f13C->f40A = i;
             e->f13C->f40D = e->fCC;
             e->f13C->f40E = e->f108;
-            r = WeaponDb_GetShellRecord(w, e->f10C);
+            r = cWeaponDB_GetShellCasing(w, e->f10C);
             if (r != 0) {
                 e->f13C->f404 = r->f0;
                 e->f13C->f408 = r->f4;
@@ -130,7 +130,7 @@ static inline void merge_flush_func_00146B80(void) {}
 typedef struct { char pad[0x40A]; short f40A; char p40C[0xB]; signed char f417; char p418; unsigned char f419; } BlkV;
 typedef struct { char p0[0x11C]; BlkV *f11C; char p120[0x18]; unsigned char f138; char p139[3]; BlkV *f13C; } Ent;
 typedef struct { char p0[0x14]; Ent *f14; } Wpn;
-extern void ActorModel_LoadFromHog(BlkV* b, int x);
+extern void gunList_LoadGunHog(BlkV* b, int x);
 extern void WeaponDb_PropagateModel(Wpn* w, BlkV* name, BlkV* src);
 extern void WeaponDb_FreeModel(Wpn* w, BlkV* b);
 void WeaponDb_OnModelLoaded(Wpn* w, BlkV* b, int x)
@@ -139,7 +139,7 @@ void WeaponDb_OnModelLoaded(Wpn* w, BlkV* b, int x)
     unsigned char kind = b->f419;
     if (idx == -1) {
         if (b->f417 == -1) {
-            ActorModel_LoadFromHog(b, x);
+            gunList_LoadGunHog(b, x);
             WeaponDb_PropagateModel(w, b, b);
         } else {
             WeaponDb_FreeModel(w, b);
@@ -151,7 +151,7 @@ void WeaponDb_OnModelLoaded(Wpn* w, BlkV* b, int x)
         if (!kind) {
             if (e->f13C) {
                 if (e->f13C->f417 == -1) {
-                    ActorModel_LoadFromHog(e->f13C, x);
+                    gunList_LoadGunHog(e->f13C, x);
                     WeaponDb_PropagateModel(w, b, b);
                 } else {
                     WeaponDb_FreeModel(w, e->f13C);
@@ -161,7 +161,7 @@ void WeaponDb_OnModelLoaded(Wpn* w, BlkV* b, int x)
         } else {
             if (e->f11C && e->f138) {
                 if (e->f11C->f417 == -1) {
-                    ActorModel_LoadFromHog(e->f11C, x);
+                    gunList_LoadGunHog(e->f11C, x);
                     WeaponDb_PropagateModel(w, b, b);
                 } else {
                     WeaponDb_FreeModel(w, e->f11C);

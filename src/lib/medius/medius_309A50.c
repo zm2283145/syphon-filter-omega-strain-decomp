@@ -10,7 +10,7 @@ extern int rt_udp_send_reset(ScfSock *s, ScfPeer *e);
 extern int KM_CompareSymmetricKey(int a, int b, ScfBlk64 *blk);
 extern int KM_AddSymmetricKey(int a, int b, ScfBlk64 *blk);
 extern int KM_GetSymmetricKey(int a, int b, ScfBlk64 *blk);
-extern int RtUdp_QueueAck(ScfSock *s, ScfPeer *e, ScfInfo *info);
+extern int rt_udp_send_ack(ScfSock *s, ScfPeer *e, ScfInfo *info);
 extern int rt_udp_send_peerkey(ScfSock *s, ScfPeer *e, ScfBlk64 *data);
 
 int rt_udp_process_peerkey(ScfSock *s, ScfPeer *e, ScfInfo *info, ScfBlk64 *data, unsigned short len)
@@ -41,16 +41,16 @@ int rt_udp_process_peerkey(ScfSock *s, ScfPeer *e, ScfInfo *info, ScfBlk64 *data
     blk = *data;
     r = KM_CompareSymmetricKey(-1, h, &blk);
     if (r == 0) {
-        r = RtUdp_QueueAck(s, e, info);
+        r = rt_udp_send_ack(s, e, info);
         if (r != 0) return r;
     } else {
         if (r > 0) {
             KM_AddSymmetricKey(-1, h, &blk);
-            r = RtUdp_QueueAck(s, e, info);
+            r = rt_udp_send_ack(s, e, info);
             if (r != 0) return r;
         } else {
             KM_GetSymmetricKey(-1, h, &blk);
-            r = RtUdp_QueueAck(s, e, info);
+            r = rt_udp_send_ack(s, e, info);
             if (r != 0) return r;
         }
         if (e->type != 11 && e->type != 12) {

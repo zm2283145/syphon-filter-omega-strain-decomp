@@ -1,4 +1,4 @@
-/* Npc_ConstructSpawned / Actor_Construct2: the two NPC constructors of this unit. They share one
+/* cHuman_ctor_cMatrix_int_charP_int_etc / cHuman_ctor_cMatrix_int_charP_int_etc_2: the two NPC constructors of this unit. They share one
    member-initialisation body; the first allocates its object id (category 69), the second takes it. */
 #pragma cplusplus on
 #include "types.h"
@@ -28,34 +28,34 @@ extern int D_005721A8;
 extern unsigned char g_IsMultiplayer;
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
-void IdMgr_Allocate(int* id, int cat);
-void Actor_Construct(void* self, int* id, char* name);
+void nGobjManager_GetNextId(int* id, int cat);
+void cSKM_GOBJ_ctor_cObjectIdR_cSubclassIdR(void* self, int* id, char* name);
 void cStatesWithHistory_1_ctor(void* p);
-V4_1B7B00* Vec4_GetZero(void);
-void Vec4_Assign(void* d, V4_1B7B00* s);
-void AngleCurve_Construct(void* p);
+V4_1B7B00* cVector_GetZero(void);
+void cVector_ctor_cVectorR(void* d, V4_1B7B00* s);
+void cSplinedMotion_Angle_ctor(void* p);
 void cHumanMotionParams_cTargetZRotationStack_ctor(void* p);
-void Curve_Construct(void* p);
+void cSplinedMotion_Vector_ctor(void* p);
 int cHumanMotionParams_PushTargetZRotationOnStack(void* p, float a, float b);
-void AngleCurve_SetDamping(void* p, float d);
-void VecCurve_SetDamping(void* p, float d);
+void cSplinedMotion_float_SetDamp(void* p, float d);
+void cSplinedMotion_cVector_SetDamp(void* p, float d);
 void cBitArray_8_ctor(void* p, int v);
 void func_001B75B0(void* p, int v);
 void func_001B7580(void* p, int v);
 void cCollisionModelList_ctor(void* p, int* a, int* b);
 void cActivationTracker_ctor(void* p);
 void cCheckpoint_ctor(void* p);
-void Root_BaseConstruct(Pair_1B7B00* p);
-void VecPair_Copy(void* d, Pair_1B7B00* s);
-void Vec4_SetOrigin(V4_1B7B00* v);
+void cQuatVec_GetUnit(Pair_1B7B00* p);
+void cQuatVec_ctor_cQuatVecR(void* d, Pair_1B7B00* s);
+void cVector_Get0001(V4_1B7B00* v);
 void Alloc_Lock(int id);
-void Alloc_Unlock(int id);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void* WeaponInv_Construct(void* p, void* owner, int local);
-void NetGame_InitLocalSlot(int* slot, int session);
-int Npc_Initialize(void* a, void* mtx, char* name, int health, int maxh, int* weap, int s2, unsigned char type, char* label);
-void* Npc_ConstructSpawned(void* self, void* mtx, int x, char* name, int health, int* weap, unsigned char type, char* label, int flag, int tag);
-void* Actor_Construct2(void* self, void* mtx, int x, char* name, int health, int* weap, unsigned char type, char* label, int* idp, int flag, int tag, Blk_1B7B00* src);
+void EnableIntc(int id);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void* cWeapon_ctor(void* p, void* owner, int local);
+void NetGetMyClientIndex(int* slot, int session);
+int cHuman_InitHuman(void* a, void* mtx, char* name, int health, int maxh, int* weap, int s2, unsigned char type, char* label);
+void* cHuman_ctor_cMatrix_int_charP_int_etc(void* self, void* mtx, int x, char* name, int health, int* weap, unsigned char type, char* label, int flag, int tag);
+void* cHuman_ctor_cMatrix_int_charP_int_etc_2(void* self, void* mtx, int x, char* name, int health, int* weap, unsigned char type, char* label, int* idp, int flag, int tag, Blk_1B7B00* src);
 }
 
 struct Obj_1B7B00 { char pad[12]; int id; };
@@ -116,8 +116,8 @@ static inline void Body_1B7B00(void* self, int x, unsigned char type, int flag, 
         char* a = (char*)self + 12336;
         cStatesWithHistory_1_ctor(a);
         B_(a, 12) = 1;
-        Vec4_Assign(a + 16, Vec4_GetZero());
-        AngleCurve_Construct(a + 32);
+        cVector_ctor_cVectorR(a + 16, cVector_GetZero());
+        cSplinedMotion_Angle_ctor(a + 32);
         cHumanMotionParams_cTargetZRotationStack_ctor(a + 88);
         W_(a, 108) = 0;
         W_(a, 112) = 0;
@@ -125,11 +125,11 @@ static inline void Body_1B7B00(void* self, int x, unsigned char type, int flag, 
         W_(a, 120) = 0;
         B_(a, 124) = 0;
         B_(a, 125) = 0;
-        Vec4_Assign(a + 128, Vec4_GetZero());
+        cVector_ctor_cVectorR(a + 128, cVector_GetZero());
         W_(a, 144) = 0;
-        Vec4_Assign(a + 160, Vec4_GetZero());
+        cVector_ctor_cVectorR(a + 160, cVector_GetZero());
         W_(a, 176) = 0;
-        Curve_Construct(a + 192);
+        cSplinedMotion_Vector_ctor(a + 192);
         B_(a, 384) = 0;
         B_(a, 385) = 0;
         B_(a, 386) = 0;
@@ -138,7 +138,7 @@ static inline void Body_1B7B00(void* self, int x, unsigned char type, int flag, 
         B_(a, 389) = 0;
         B_(a, 390) = 0;
         B_(a, 391) = 0;
-        Vec4_Assign(a + 400, Vec4_GetZero());
+        cVector_ctor_cVectorR(a + 400, cVector_GetZero());
         W_(a, 416) = 0;
         W_(a, 420) = 0;
         W_(a, 424) = 0;
@@ -146,8 +146,8 @@ static inline void Body_1B7B00(void* self, int x, unsigned char type, int flag, 
         B_(a, 429) = 0;
         W_(a, 432) = 0;
         W_(a, 104) = cHumanMotionParams_PushTargetZRotationOnStack(a, 0.0f, -1.0f);
-        AngleCurve_SetDamping(a + 32, 15.0f);
-        VecCurve_SetDamping(a + 192, 10.0f);
+        cSplinedMotion_float_SetDamp(a + 32, 15.0f);
+        cSplinedMotion_cVector_SetDamp(a + 192, 10.0f);
     }
     *(char**)self = D_004DA690;
     Tag_1B7B00((char*)self + 12784, tag);
@@ -179,7 +179,7 @@ static inline void Body_1B7B00(void* self, int x, unsigned char type, int flag, 
         cCollisionModelList_ctor(d, &t1, &t2);
         *(char**)d = D_004DA2F0;
         W_(d, 32) = 0;
-        Vec4_Assign(d + 48, Vec4_GetZero());
+        cVector_ctor_cVectorR(d + 48, cVector_GetZero());
         cActivationTracker_ctor(d + 64);
         W_(d, 96) = 0;
     }
@@ -214,15 +214,15 @@ static inline void Body_1B7B00(void* self, int x, unsigned char type, int flag, 
     B_(self, 13456) = 0;
     {
         Pair_1B7B00 pr;
-        Root_BaseConstruct(&pr);
-        VecPair_Copy((char*)self + 13472, &pr);
+        cQuatVec_GetUnit(&pr);
+        cQuatVec_ctor_cQuatVecR((char*)self + 13472, &pr);
     }
     {
         V4_1B7B00 org;
-        Vec4_SetOrigin(&org);
-        Vec4_Assign((char*)self + 13504, &org);
+        cVector_Get0001(&org);
+        cVector_ctor_cVectorR((char*)self + 13504, &org);
     }
-    Vec4_Assign((char*)self + 13520, Vec4_GetZero());
+    cVector_ctor_cVectorR((char*)self + 13520, cVector_GetZero());
     W_(self, 13588) = -1;
     *(signed char*)((char*)self + 13592) = -1;
     W_(self, 13596) = 0;
@@ -265,26 +265,26 @@ static inline void Body_1B7B00(void* self, int x, unsigned char type, int flag, 
         void* p;
         if (g_ProfileLockEnabled) Alloc_Lock(9);
         g_ProfileLockDepth++;
-        p = Mem_Alloc(0, 248, D_0049D8D0, line);
-        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        p = cMemMan_Allocate(0, 248, D_0049D8D0, line);
+        if (g_ProfileLockEnabled) EnableIntc(9);
         g_ProfileLockDepth--;
-        if (p) { int l = type == 1; if (!l) l = type == 3; p = WeaponInv_Construct(p, self, l); }
+        if (p) { int l = type == 1; if (!l) l = type == 3; p = cWeapon_ctor(p, self, l); }
         W_(self, 13604) = (int)p;
         W_(self, 13620) = W_(self, 13604);
     }
 }
 
-void* Npc_ConstructSpawned(void* self, void* mtx, int x, char* name, int health, int* weap, unsigned char type, char* label, int flag, int tag)
+void* cHuman_ctor_cMatrix_int_charP_int_etc(void* self, void* mtx, int x, char* name, int health, int* weap, unsigned char type, char* label, int flag, int tag)
 {
     int id;
-    IdMgr_Allocate(&id, 69);
-    Actor_Construct(self, &id, g_HumanActorClassKey);
+    nGobjManager_GetNextId(&id, 69);
+    cSKM_GOBJ_ctor_cObjectIdR_cSubclassIdR(self, &id, g_HumanActorClassKey);
     Body_1B7B00(self, x, type, flag, tag, 540);
     if (flag) {
         int s = D_005721A8;
         int id = 0;
         if (g_IsMultiplayer) {
-            if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, s);
+            if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, s);
             id = D_00494178;
         } else {
             asm { .set reorder } /* scheduling barrier: keeps the empty else block (b + nop) */
@@ -297,14 +297,14 @@ void* Npc_ConstructSpawned(void* self, void* mtx, int x, char* name, int health,
             g_ActorSerialCounter = g_ActorSerialCounter + 1;
         }
     }
-    Npc_Initialize(self, mtx, name, health, 0, weap, flag, type, label);
+    cHuman_InitHuman(self, mtx, name, health, 0, weap, flag, type, label);
     W_(self, 48) = 1;
     return self;
 }
 
-void* Actor_Construct2(void* self, void* mtx, int x, char* name, int health, int* weap, unsigned char type, char* label, int* idp, int flag, int tag, Blk_1B7B00* src)
+void* cHuman_ctor_cMatrix_int_charP_int_etc_2(void* self, void* mtx, int x, char* name, int health, int* weap, unsigned char type, char* label, int* idp, int flag, int tag, Blk_1B7B00* src)
 {
-    Actor_Construct(self, idp, g_HumanActorClassKey);
+    cSKM_GOBJ_ctor_cObjectIdR_cSubclassIdR(self, idp, g_HumanActorClassKey);
     Body_1B7B00(self, x, type, flag, tag, 448);
     if (src) {
         { Sub60_1B7B00* sb = (Sub60_1B7B00*)((char*)self + 96); QCopyN_1B7B00(&sb->blk, src, 68); }
@@ -318,7 +318,7 @@ void* Actor_Construct2(void* self, void* mtx, int x, char* name, int health, int
             g_ActorSerialCounter = g_ActorSerialCounter + 1;
         }
     }
-    Npc_Initialize(self, mtx, name, health, 0, weap, flag, type, label);
+    cHuman_InitHuman(self, mtx, name, health, 0, weap, flag, type, label);
     W_(self, 48) = 1;
     return self;
 }

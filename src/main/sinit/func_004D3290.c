@@ -1,10 +1,10 @@
 #include "types.h"
-extern void FreeList_Push(void*);
+extern void AbstractWidgetClassRep_AddClassRep(void*);
 extern char D_004DDCA0;
 extern void* D_005065C8;
 extern void* D_005065D0;
-void StaticInit_GuiNetContactsFactory(void) {
+void StaticInit_GuiChatWindow(void) {
     D_005065D0 = &D_004DDCA0;
     D_005065C8 = "GuiNetContacts";
-    FreeList_Push(&D_005065C8);
+    AbstractWidgetClassRep_AddClassRep(&D_005065C8);
 }

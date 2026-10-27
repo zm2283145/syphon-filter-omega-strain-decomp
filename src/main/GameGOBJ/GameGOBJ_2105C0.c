@@ -21,14 +21,14 @@ DEFINE_VTABLE_BASE_DTOR(cPathedNotice_dtor, D_004DAE90, cMessage_dtor)
 
 /* merge_units: begin func_00210620 */
 #pragma push /* merge_units */
-#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int Lift_SeekFloor(int, int, int, int);                     
-int Object_LookupById(int *, int);                  
+int cElevatorGOBJ_SeekFloor(int, int, int, int);                     
+int nGobjManager_LookupGOBJ_cObjectIdR(int *, int);                  
 int NetGetObject(void **);                         
-int NetGame_InitLocalSlot(int *, int);                        
+int NetGetMyClientIndex(int *, int);                        
 extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char g_IsMultiplayer;
@@ -51,9 +51,9 @@ void func_00210620(void) {
         o = sl.f18;
         if (F_(o, 0x4, int) == var_a1) {
             sl.f14 = *F_(o, 0x1C, int*);
-            temp_v0 = Object_LookupById(&sl.f14, var_a1);
+            temp_v0 = nGobjManager_LookupGOBJ_cObjectIdR(&sl.f14, var_a1);
             if (temp_v0 != 0) {
-                { int k = 1; Lift_SeekFloor(temp_v0, -1, k, k); }
+                { int k = 1; cElevatorGOBJ_SeekFloor(temp_v0, -1, k, k); }
             }
         }
     }

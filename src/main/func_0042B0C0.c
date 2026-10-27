@@ -9,12 +9,12 @@ extern "C" {
 extern unsigned char D_005721D0;
 void* nGobjManager_GetGOBJAndNodeList(void);
 Vec42B* cObjList_cGOBJPtr_GetList(void* arr);
-void PtrVec_Begin(It42B* out, Vec42B* v);
-void PtrVec_End(It42B* out, Vec42B* v);
+void cArray_cGOBJPtr_Begin(It42B* out, Vec42B* v);
+void cArray_cGOBJPtr_End(It42B* out, Vec42B* v);
 void cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(It42B* out, It42B* in);
 }
-static inline void GetBegin(It42B* o, Vec42B* v) { It42B tb; PtrVec_Begin(&tb, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &tb); }
-static inline void GetEnd(It42B* o, Vec42B* v) { It42B te; PtrVec_End(&te, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &te); }
+static inline void GetBegin(It42B* o, Vec42B* v) { It42B tb; cArray_cGOBJPtr_Begin(&tb, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &tb); }
+static inline void GetEnd(It42B* o, Vec42B* v) { It42B te; cArray_cGOBJPtr_End(&te, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &te); }
 
 extern "C" void cDME_SetNetReady(void)
 {

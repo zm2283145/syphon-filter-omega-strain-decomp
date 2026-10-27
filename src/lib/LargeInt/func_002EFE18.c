@@ -1,4 +1,4 @@
-void LargeInt_AddInt(unsigned int *a, unsigned int b)
+void lintIncrement(unsigned int *a, unsigned int b)
 {
     unsigned int i;
     i = 0;

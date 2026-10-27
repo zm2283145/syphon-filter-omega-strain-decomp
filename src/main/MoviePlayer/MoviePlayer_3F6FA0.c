@@ -72,7 +72,7 @@ extern void sceGsSetHalfOffset(unsigned long draw, short cx, short cy, short hal
 extern void* sceDmaGetChan(int);
 extern void sceDmaSend(void* d, void* tag);
 extern int* voBufGetTag(T5EA0* q);
-extern void MovieSubtitles_PatchVblank(void* db, int i, int j);
+extern void cMovieSubtitles_PatchDma(void* db, int i, int j);
 extern void sceGsSwapDBuff(void* p, int);
 
 /* sync + ei (enable interrupts) have no C equivalent */
@@ -80,7 +80,7 @@ static inline void EI3F7060(void) { asm { sync }
     asm { ei } }
 
 #pragma opt_propagation off
-int MoviePlayer_PresentVblank(void)
+int vblankHandler(void)
 {
     volatile int field;
     volatile int r;
@@ -114,13 +114,13 @@ int MoviePlayer_PresentVblank(void)
             q = &D_0055C460;
             { int h = q->head; idx = (q->size + (h - q->count)) % q->size; }
             if (field == 0 && *buf == 2) {
-                MovieSubtitles_PatchVblank(D_00571CF0, idx, 0);
+                cMovieSubtitles_PatchDma(D_00571CF0, idx, 0);
                 sceGsSwapDBuff(D_0055C230, 0);
                 sceGsSyncPath(0, 0);
                 sceDmaSend(d, (char*)buf + 0x40);
                 *buf = 1;
             } else if (field == 1 && *buf == 1) {
-                MovieSubtitles_PatchVblank(D_00571CF0, idx, 1);
+                cMovieSubtitles_PatchDma(D_00571CF0, idx, 1);
                 sceGsSwapDBuff(D_0055C230, 1);
                 sceGsSyncPath(0, 0);
                 sceDmaSend(d, (char*)buf + 0x26740);
@@ -309,8 +309,8 @@ void readBufCreate(BigBuf* self)
 #pragma push /* merge_units */
 typedef struct { unsigned char volume; unsigned char a; unsigned char b; } PlayParams;
 typedef struct { int unk0; int active; char pad[8]; int cursor; } Stream3F7;
-extern void Cd_Read(int pos, int blocks, void* data, PlayParams* params);
-extern void Cd_Sync(int a);
+extern void snd_StreamSafeCdRead(int pos, int blocks, void* data, PlayParams* params);
+extern void snd_StreamSafeCdSync(int a);
 
 /* Submits size bytes (in 2 KB blocks) of data to the active stream and advances its cursor; returns size or 0. */
 int strFileRead(Stream3F7* s, void* data, int size)
@@ -323,9 +323,9 @@ int strFileRead(Stream3F7* s, void* data, int size)
         params.a = 0;
         params.b = 0;
         blocks = size >> 11;
-        Cd_Read(s->cursor, blocks, data, &params);
+        snd_StreamSafeCdRead(s->cursor, blocks, data, &params);
         s->cursor += blocks;
-        Cd_Sync(0);
+        snd_StreamSafeCdSync(0);
         result = size;
     }
     return result;
@@ -364,17 +364,17 @@ typedef struct FileInfo {
 } FileInfo;
 
 extern void cFileMan_EncodeFilename_charP_cFileManR(void* file, char* name, char* src);
-extern int FileMan_FindMember(void* file);
-extern int FileMan_GetSize(void* file);
+extern int cFileMan_Open(void* file);
+extern int cFileMan_GetSize(void* file);
 extern int sceSifAllocIopHeap(int size);
 extern int cFileMan_GetCDSector(void* file);
 
 /* Opens the file named at src+4 and caches its size/buffer/handle; returns success. */
 unsigned char strFileOpen(FileInfo* self, char* src) {
     cFileMan_EncodeFilename_charP_cFileManR(self->file, src + 4, src);
-    self->ok = (unsigned char)FileMan_FindMember(self->file) == 0;
+    self->ok = (unsigned char)cFileMan_Open(self->file) == 0;
     if (self->ok) {
-        self->size = FileMan_GetSize(self->file);
+        self->size = cFileMan_GetSize(self->file);
         self->open = 1;
         self->buffer = sceSifAllocIopHeap(0x40010);
         self->handle = cFileMan_GetCDSector(self->file);
@@ -772,7 +772,7 @@ extern char D_0055C540[];
 #define D_0055C540 ((char*)&D_0055C540) /* merge_units */
 
 extern "C" {
-extern void MovieSubtitles_Update(void* p);
+extern void cMovieSubtitles_NextFrame(void* p);
 extern int videoDecGetState(void* p);
 #if 0 /* merge_units */
 extern void cMoviePlayer_ReadMpeg(Sys3F82* s, void* r, int a, void* b);
@@ -789,13 +789,13 @@ extern void RotateThreadReadyQueue(int n);
 extern void endDisplay(void);
 extern void audioDecReset(void* p);
 extern void cMoviePlayer_Purge(Sys3F82* s);
-extern void MoviePlayer_Start(Sys3F82* s);
-bool MoviePlayer_Update(Sys3F82* s);
+extern void cMoviePlayer_Init(Sys3F82* s);
+bool cMoviePlayer_NextFrame(Sys3F82* s);
 }
 
-bool MoviePlayer_Update(Sys3F82* s)
+bool cMoviePlayer_NextFrame(Sys3F82* s)
 {
-    MovieSubtitles_Update(D_00571CF0);
+    cMovieSubtitles_NextFrame(D_00571CF0);
     if (!s->done) {
         if (s->f234) {
             s->done = 1;
@@ -819,7 +819,7 @@ bool MoviePlayer_Update(Sys3F82* s)
         }
         if (s->f234) {
             cMoviePlayer_Purge(s);
-            MoviePlayer_Start(s);
+            cMoviePlayer_Init(s);
             s->f234 = 0;
             s->done = 0;
         }

@@ -1,4 +1,4 @@
-/* World_Destruct: world destructor - frees the owned subsystems, then destroys the members and the base. */
+/* cGameSystem_dtor: world destructor - frees the owned subsystems, then destroys the members and the base. */
 #pragma cplusplus on
 #include "alloc_guard.h"
 struct VObj_36DF0 { virtual void Destroy(int f); };
@@ -33,26 +33,26 @@ typedef struct World_36DF0 {
 
 extern "C" {
 void Alloc_Lock(int id);
-void Alloc_Unlock(int id);
+void EnableIntc(int id);
 extern char D_0049A890[];
 extern char D_004D9060[];
-void Mem_Free(int pool, void* p, char* file, int line);
-VObj_36DF0** PtrVec_At(PtrVec_36DF0* v, int i);
-void HudObject_dtor(void* p, int f);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+VObj_36DF0** std_vector_cNodePtr_opIndex(PtrVec_36DF0* v, int i);
+void cHud_dtor(void* p, int f);
 void cVisionFxMan_dtor(void* p, int f);
-void WaterFx_Destroy(void* p, int f);
-void DecalMgr_dtor(void* p, int f);
+void cWaterFx_dtor(void* p, int f);
+void cDecalMan_dtor(void* p, int f);
 void cLoader_DeallocateAllAnimationBuffers(void* p);
 void cTimerDisable_ctor(Guard_36DF0* g);
 void cEnvMan_dtor(void* p, int f);
 void cTimerDisable_dtor(Guard_36DF0* g, int f);
-void TremorList_Free(void* p, int f);
+void cTremorManager_dtor(void* p, int f);
 void cWeaponDB_dtor(void* p, int f);
 void cAgentData_dtor(void* p, int f);
 void cGameSystem_ClearNodeList(World_36DF0* w);
 void cGameSystem_ClearNodeGroups(World_36DF0* w);
 void cGameSystem_DestroyAnimationSets(World_36DF0* w);
-void World_UnloadSkelHog(World_36DF0* w);
+void cGameSystem_DestroySkeletons(World_36DF0* w);
 void cGameSystem_DestroyPlayerCameraAndScene(World_36DF0* w);
 void std_list_cCAMERA_GOBJPtr_dtor(void* p, int f);
 void std_list_cGOBJPtr_dtor(void* p, int f);
@@ -60,48 +60,48 @@ void std_map_cString_cSkaAnimationSetPtr_dtor(void* p, int f);
 void String_Dtor(void* p, int f);
 void cLList_cHogFile_dtor(void* p, int f);
 void std_vector_tVUMNamePairPtr_dtor(void* p, int f);
-void ListReceiver_Dtor(World_36DF0* w, int f);
+void cSystemContainer_dtor(World_36DF0* w, int f);
 void operator_delete(void* p);
 }
 
 /* allocator lock taken without a guard object (no stack slot) */
 #define LOCKC_36DF0() { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; }
-#define UNLOCKC_36DF0() { if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
+#define UNLOCKC_36DF0() { if (g_ProfileLockEnabled) EnableIntc(9); g_ProfileLockDepth--; }
 #define DELETE_36DF0(p, dtor, line) \
-    { void* q = (p); if (q) { LOCKC_36DF0() dtor(q, -1); Mem_Free(0, q, D_0049A890, line); UNLOCKC_36DF0() } }
+    { void* q = (p); if (q) { LOCKC_36DF0() dtor(q, -1); cMemMan_Deallocate(0, q, D_0049A890, line); UNLOCKC_36DF0() } }
 
-extern "C" World_36DF0* World_Destruct(World_36DF0* self, short del)
+extern "C" World_36DF0* cGameSystem_dtor(World_36DF0* self, short del)
 {
     if (self) {
         self->vt = D_004D9060;
-        DELETE_36DF0(self->pDC, HudObject_dtor, 0xCA)
+        DELETE_36DF0(self->pDC, cHud_dtor, 0xCA)
         DELETE_36DF0(self->pE0, cVisionFxMan_dtor, 0xCD)
-        DELETE_36DF0(self->pE4, WaterFx_Destroy, 0xCF)
+        DELETE_36DF0(self->pE4, cWaterFx_dtor, 0xCF)
         {
             void* q = self->pE8;
-            if (q) { AllocGuard g; Mem_Free(0, q, D_0049A890, 0xD1); }
+            if (q) { AllocGuard g; cMemMan_Deallocate(0, q, D_0049A890, 0xD1); }
         }
-        DELETE_36DF0(self->pEC, DecalMgr_dtor, 0xD3)
+        DELETE_36DF0(self->pEC, cDecalMan_dtor, 0xD3)
         if (self->objs) {
             int i;
             for (i = self->objs->count - 1; i >= 0; i--) {
-                VObj_36DF0* q = *PtrVec_At(self->objs, i);
+                VObj_36DF0* q = *std_vector_cNodePtr_opIndex(self->objs, i);
                 AllocGuard g;
                 q->Destroy(-1);
-                Mem_Free(0, q, D_0049A890, 0xD7);
+                cMemMan_Deallocate(0, q, D_0049A890, 0xD7);
             }
         }
         {
             VObj_36DF0* q = self->p80;
             AllocGuard g;
             q->Destroy(-1);
-            Mem_Free(0, q, D_0049A890, 0xD9);
+            cMemMan_Deallocate(0, q, D_0049A890, 0xD9);
         }
         {
             void* q = self->p88;
             AllocGuard g;
             if (q) cLoader_DeallocateAllAnimationBuffers(q);
-            Mem_Free(0, q, D_0049A890, 0xDA);
+            cMemMan_Deallocate(0, q, D_0049A890, 0xDA);
         }
         {
             /* this block's allocator guard was not inlined: explicit calls to its out-of-line ctor/dtor */
@@ -109,15 +109,15 @@ extern "C" World_36DF0* World_Destruct(World_36DF0* self, short del)
             void* q = self->p84;
             cTimerDisable_ctor(&g);
             cEnvMan_dtor(q, -1);
-            Mem_Free(0, q, D_0049A890, 0xDB);
+            cMemMan_Deallocate(0, q, D_0049A890, 0xDB);
             cTimerDisable_dtor(&g, -1);
         }
-        DELETE_36DF0(self->p8C, TremorList_Free, 0xDE)
+        DELETE_36DF0(self->p8C, cTremorManager_dtor, 0xDE)
         {
             void* q = self->p1E0;
             AllocGuard g;
             cWeaponDB_dtor(q, -1);
-            Mem_Free(0, q, D_0049A890, 0xE0);
+            cMemMan_Deallocate(0, q, D_0049A890, 0xE0);
         }
         int i;
         void** pp;
@@ -126,13 +126,13 @@ extern "C" World_36DF0* World_Destruct(World_36DF0* self, short del)
             if (q) {
                 AllocGuard g;
                 cAgentData_dtor(q, -1);
-                Mem_Free(0, q, D_0049A890, 0xE4);
+                cMemMan_Deallocate(0, q, D_0049A890, 0xE4);
             }
         }
         cGameSystem_ClearNodeList(self);
         cGameSystem_ClearNodeGroups(self);
         cGameSystem_DestroyAnimationSets(self);
-        World_UnloadSkelHog(self);
+        cGameSystem_DestroySkeletons(self);
         cGameSystem_DestroyPlayerCameraAndScene(self);
         /* member destructors (the null tests are the compiler's this-checks) */
         if (self->mC4) std_list_cCAMERA_GOBJPtr_dtor(self->mC4, 0);
@@ -141,7 +141,7 @@ extern "C" World_36DF0* World_Destruct(World_36DF0* self, short del)
         if (self->m54) String_Dtor(self->m54, 0);
         if (self->m3C) cLList_cHogFile_dtor(self->m3C, -1);
         if (self->m2C) std_vector_tVUMNamePairPtr_dtor(self->m2C, -1);
-        ListReceiver_Dtor(self, 0);
+        cSystemContainer_dtor(self, 0);
         if (del > 0)
             operator_delete(self);
     }

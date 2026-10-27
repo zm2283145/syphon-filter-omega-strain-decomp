@@ -44,17 +44,17 @@ float func_00372AF0(Light* l);
 float func_00372AE0(Light* l);
 V* cSceneLight_GetDirection(Light* l);
 float cSceneLight_GetFalloffAngleCos(Light* l);
-void Vec4_Copy(V* d, const V* s);
-void Sphere_FromCenter(V* o, const V* a, const V* b);
-float Vec4_Length(const V* v);
-float Vec4_Dot3(const V* a, const V* b);
-V* Ptr_Identity(V* v);
-float Math_MaxF(float a, float b);
+void cVector_opAssign(V* d, const V* s);
+void cVector_opSub(V* o, const V* a, const V* b);
+float cVector_GetLength(const V* v);
+float cVector_Dot(const V* a, const V* b);
+V* cVector_ctor_void(V* v);
+float MAX(float a, float b);
 float Math_MinF(float a, float b);
 }
 static inline float Falloff(Light* l, float len)
 {
-    float a = Math_MaxF(0.0f, len - func_00372B00(l));
+    float a = MAX(0.0f, len - func_00372B00(l));
     float r = func_00372AF0(l) - func_00372B00(l);
     if (a < r) return 1.0f - a / r;
     return 0.0f;
@@ -64,12 +64,12 @@ static inline float Intensity(Light* l, Ctx* c, V* d)
     float k = 1.0f;
     switch (func_00372B30(l)) {
     case 2:
-        if (d) Vec4_Copy(d, cParallelLight_GetDirection(l));
+        if (d) cVector_opAssign(d, cParallelLight_GetDirection(l));
         break;
     case 4: {
         V t;
-        Sphere_FromCenter(&t, cLightSrc_GetPosition(l), &c->pos);
-        k = Vec4_Length(&t);
+        cVector_opSub(&t, cLightSrc_GetPosition(l), &c->pos);
+        k = cVector_GetLength(&t);
         if (d) {
             d->x = t.x / k;
             d->y = t.y / k;
@@ -81,18 +81,18 @@ static inline float Intensity(Light* l, Ctx* c, V* d)
     }
     case 0x10: {
         V t;
-        Sphere_FromCenter(&t, cLightSrc_GetPosition(l), &c->pos);
-        float len = Vec4_Length(&t);
+        cVector_opSub(&t, cLightSrc_GetPosition(l), &c->pos);
+        float len = cVector_GetLength(&t);
         V n;
-        Ptr_Identity(&n);
+        cVector_ctor_void(&n);
         n.w = 0.0f;
         n.x = t.x / len;
         n.y = t.y / len;
         n.z = t.z / len;
-        if (d) Vec4_Copy(d, &n);
+        if (d) cVector_opAssign(d, &n);
         k = Falloff(l, len);
         if (func_00372AE0(l) != 1.0f) {
-            float dot = Vec4_Dot3(cSceneLight_GetDirection(l), &n);
+            float dot = cVector_Dot(cSceneLight_GetDirection(l), &n);
             float lo = cSceneLight_GetFalloffAngleCos(l);
             if (!(dot <= lo)) {
                 float hi = func_00372AE0(l);
@@ -109,11 +109,11 @@ static inline float Intensity(Light* l, Ctx* c, V* d)
         break;
     }
     }
-    k = Math_MaxF(k, 0.0f);
+    k = MAX(k, 0.0f);
     k = Math_MinF(k, 1.0f);
     return k;
 }
-extern "C" void LightMgr_BuildLightSlots(Ctx* c, unsigned int mask, unsigned int flags)
+extern "C" void cLightMan_UpdateSources(Ctx* c, unsigned int mask, unsigned int flags)
 {
     if (flags & 2) c->n48 = 0;
     if (flags & 4) c->n2130 = 0;

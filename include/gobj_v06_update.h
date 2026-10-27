@@ -4,7 +4,7 @@
 /*
  * Virtual method 6 shared by several GOBJ classes (identical bodies):
  * notify the attached object at +0x64 (its slot 21 with 1), run
- * cNode_v06 on self, then call self's virtual slot 47.
+ * cGOBJ_NetActivate on self, then call self's virtual slot 47.
  * C++ only (#pragma cplusplus on before including).
  */
 #include "vslot_classes.h"
@@ -15,7 +15,7 @@ struct GobjV06 {
     VSlotsInt22* attached;
 };
 
-extern "C" void cNode_v06(GobjV06* self);
+extern "C" void cGOBJ_NetActivate(GobjV06* self);
 
 #define DEFINE_GOBJ_V06_UPDATE(name)                                          \
     extern "C" void name(GobjV06* self)                                       \
@@ -23,7 +23,7 @@ extern "C" void cNode_v06(GobjV06* self);
         VSlotsInt22* a = self->attached;                                      \
         if (a)                                                                \
             a->slot21(1);                                                     \
-        cNode_v06(self);                                                  \
+        cGOBJ_NetActivate(self);                                                  \
         ((VSlots67*)self)->slot47();                                          \
     }
 

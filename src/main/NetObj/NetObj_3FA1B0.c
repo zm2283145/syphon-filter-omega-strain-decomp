@@ -9,7 +9,7 @@
 #include "types.h"
 typedef struct { char p[0x10]; unsigned char b10; } H3FA1B0;
 typedef struct { char p[0x50C]; H3FA1B0* h; } M3FA1B0;
-void HudTicker_SetStyle(M3FA1B0* m, int on)
+void cInfoBar_SetScrolling(M3FA1B0* m, int on)
 {
     if (m->h) m->h->b10 = on ? 3 : 2;
 }
@@ -20,8 +20,8 @@ void HudTicker_SetStyle(M3FA1B0* m, int on)
 #pragma push /* merge_units */
 typedef struct { char p[0x91]; unsigned char b91; char p92[0xE]; } Sl3FA1E0;
 typedef struct { Sl3FA1E0 s[8]; Sl3FA1E0* cur; char p504[8]; void* h; unsigned char b510, b511, b512; } M3FA1E0;
-extern void TextObj_SetText(void* h, void* c);
-extern void TextObj_StartFade(void* h, float a, float b);
+extern void cTextArea_SetText(void* h, void* c);
+extern void cTextArea_FadeTo(void* h, float a, float b);
 extern char D_004BE220[];
 void HudTicker_Reset(M3FA1E0* m)
 {
@@ -31,8 +31,8 @@ void HudTicker_Reset(M3FA1E0* m)
         if (s == m->cur) {
             m->cur->b91 = 0;
             m->cur = 0;
-            TextObj_SetText(m->h, D_004BE220);
-            TextObj_StartFade(m->h, 1.0f, 0.0f);
+            cTextArea_SetText(m->h, D_004BE220);
+            cTextArea_FadeTo(m->h, 1.0f, 0.0f);
             m->b512 = 0;
             m->b511 = 0;
             m->b510 = 0;
@@ -46,7 +46,7 @@ void HudTicker_Reset(M3FA1E0* m)
 #pragma push /* merge_units */
 typedef struct { char p[0x90]; unsigned char b90; unsigned char b91; char p92[0xE]; } Sl3FA280;
 typedef struct { Sl3FA280 s[8]; Sl3FA280* cur; char p504[8]; void* h; unsigned char b510, b511, b512; char p513[9]; float f51C; } M3FA280;
-void HudTicker_Clear(M3FA280* m, unsigned char type, int flag)
+void cInfoBar_ClearPriorityMessages(M3FA280* m, unsigned char type, int flag)
 {
     Sl3FA280* s = m->s;
     int i;
@@ -56,8 +56,8 @@ void HudTicker_Clear(M3FA280* m, unsigned char type, int flag)
                 if (flag) {
                     m->cur->b91 = 0;
                     m->cur = 0;
-                    TextObj_SetText(m->h, D_004BE220);
-                    TextObj_StartFade(m->h, 1.0f, 0.0f);
+                    cTextArea_SetText(m->h, D_004BE220);
+                    cTextArea_FadeTo(m->h, 1.0f, 0.0f);
                     m->b512 = 0;
                     m->b511 = 0;
                     m->b510 = 0;
@@ -65,7 +65,7 @@ void HudTicker_Clear(M3FA280* m, unsigned char type, int flag)
                     m->b511 = 0;
                     m->b510 = 0;
                     m->b512 = 1;
-                    TextObj_StartFade(m->h, 0.0f, m->f51C);
+                    cTextArea_FadeTo(m->h, 0.0f, m->f51C);
                 }
             } else s->b91 = 0;
         }
@@ -78,13 +78,13 @@ void HudTicker_Clear(M3FA280* m, unsigned char type, int flag)
 #pragma push /* merge_units */
 typedef struct { char p[0x90]; unsigned char lvl; } L3FA380;
 typedef struct { char p[0x500]; L3FA380* l; unsigned char b504; char p505[7]; void* h; unsigned char b510, b511, b512; char p513[0x9]; float f51C; } S3FA380;
-void HudTicker_GetLevel(S3FA380* s, unsigned char v)
+void cInfoBar_SetMinPriority(S3FA380* s, unsigned char v)
 {
     if (s->l && s->l->lvl < v) {
         s->b511 = 0;
 s->b510 = 0;
 s->b512 = 1;
-        TextObj_StartFade(s->h, 0.0f, s->f51C);
+        cTextArea_FadeTo(s->h, 0.0f, s->f51C);
     }
     s->b504 = v;
 }
@@ -95,17 +95,17 @@ s->b512 = 1;
 #pragma push /* merge_units */
 typedef struct { char name[0x80]; float v[4]; unsigned char kind; unsigned char used; short pad; int a94; int a98; int pad2; } C4Note3FA;
 #if 0 /* merge_units */
-extern void HudTicker_Clear(C4Note3FA* n, unsigned char kind, int z);
+extern void cInfoBar_ClearPriorityMessages(C4Note3FA* n, unsigned char kind, int z);
 #endif /* merge_units */
-#define HudTicker_Clear(a0, a1, a2) (HudTicker_Clear((M3FA280 *)(a0), (a1), (a2))) /* merge_units */
+#define cInfoBar_ClearPriorityMessages(a0, a1, a2) (cInfoBar_ClearPriorityMessages((M3FA280 *)(a0), (a1), (a2))) /* merge_units */
 
-extern void String_Copy(char* d, const char* s);
-void Notify_Insert(C4Note3FA* n, const char* name, float* v, unsigned char kind, int flush) {
+extern void Libc_Strcpy(char* d, const char* s);
+void cInfoBar_AddMessage(C4Note3FA* n, const char* name, float* v, unsigned char kind, int flush) {
     int i;
-    if (flush) HudTicker_Clear(n, kind, 0);
+    if (flush) cInfoBar_ClearPriorityMessages(n, kind, 0);
     for (i = 0; i < 8; i++, n++) {
         if (!n->used) {
-            String_Copy(n->name, name);
+            Libc_Strcpy(n->name, name);
             n->v[0] = v[0];
             n->v[1] = v[1];
             n->v[2] = v[2];
@@ -118,7 +118,7 @@ void Notify_Insert(C4Note3FA* n, const char* name, float* v, unsigned char kind,
         }
     }
 }
-#undef HudTicker_Clear /* merge_units */
+#undef cInfoBar_ClearPriorityMessages /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003FA3F0 */
 
@@ -177,12 +177,12 @@ extern int D_004BE220[];
 #define D_004BE220 ((int*)&D_004BE220) /* merge_units */
 
 #if 0 /* merge_units */
-extern void TextObj_SetText(Sub* s, void* p);
+extern void cTextArea_SetText(Sub* s, void* p);
 #endif /* merge_units */
-#define TextObj_SetText(a0, a1) (TextObj_SetText((void *)(a0), (a1))) /* merge_units */
+#define cTextArea_SetText(a0, a1) (cTextArea_SetText((void *)(a0), (a1))) /* merge_units */
 
 
-Obj* HudTicker_Init(Obj* o, Sub* s, int v)
+Obj* cInfoBar_ctor(Obj* o, Sub* s, int v)
 {
     int i;
     o->x508 = s;
@@ -194,7 +194,7 @@ Obj* HudTicker_Init(Obj* o, Sub* s, int v)
     o->x520 = 1.5f;
     o->x524 = D_004BE218;
     o->x500 = 0;
-    TextObj_SetText(o->x50C, D_004BE220);
+    cTextArea_SetText(o->x50C, D_004BE220);
     o->x50C->x20 = v;
     o->x512 = 0;
     o->x511 = 0;
@@ -203,7 +203,7 @@ Obj* HudTicker_Init(Obj* o, Sub* s, int v)
     return o;
 }
 #undef D_004BE220 /* merge_units */
-#undef TextObj_SetText /* merge_units */
+#undef cTextArea_SetText /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003FA500 */
 
@@ -216,10 +216,10 @@ struct O_A5D0 { VPAD4(a) VPAD1(b) virtual void F1C(int i); char pad[0x10]; unsig
 struct It_A5D0 { O_A5D0** p; };
 struct Vec_A5D0;
 extern "C" {
-void* World_GetActorArray(void);
+void* nGobjManager_GetGOBJList(void);
 Vec_A5D0* cObjList_cGOBJPtr_GetList(void* arr);
-void PtrVec_Begin(It_A5D0* out, Vec_A5D0* v);
-void PtrVec_End(It_A5D0* out, Vec_A5D0* v);
+void cArray_cGOBJPtr_Begin(It_A5D0* out, Vec_A5D0* v);
+void cArray_cGOBJPtr_End(It_A5D0* out, Vec_A5D0* v);
 void cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(It_A5D0* out, It_A5D0* in);
 void printf(char* fmt, int i);
 extern char D_004BE240[];
@@ -228,7 +228,7 @@ extern unsigned char D_005724B0;
 }
 static inline bool Ok_A5D0(O_A5D0* o) { bool r = false; C_A5D0* c = o->c58; if (c) { if (c->F54()) r = true; } return r; }
 static inline int Ne_A5D0(It_A5D0* a, It_A5D0* b) { return (a->p == b->p) ^ 1; }
-extern "C" void NetObj_LoadNetworkData(void)
+extern "C" void cNetObj_LoadNetworkData(void)
 {
     int i;
     void* arr;
@@ -240,10 +240,10 @@ extern "C" void NetObj_LoadNetworkData(void)
                 It_A5D0 end;
                 It_A5D0 tb;
                 It_A5D0 te;
-                arr = World_GetActorArray();
-                PtrVec_Begin(&tb, cObjList_cGOBJPtr_GetList(arr));
+                arr = nGobjManager_GetGOBJList();
+                cArray_cGOBJPtr_Begin(&tb, cObjList_cGOBJPtr_GetList(arr));
                 cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&it, &tb);
-                for (PtrVec_End(&te, cObjList_cGOBJPtr_GetList(arr)), cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&end, &te); Ne_A5D0(&it, &end); PtrVec_End(&te, cObjList_cGOBJPtr_GetList(arr)), cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&end, &te)) {
+                for (cArray_cGOBJPtr_End(&te, cObjList_cGOBJPtr_GetList(arr)), cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&end, &te); Ne_A5D0(&it, &end); cArray_cGOBJPtr_End(&te, cObjList_cGOBJPtr_GetList(arr)), cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&end, &te)) {
                     if (Ok_A5D0(*it.p)) {
                         O_A5D0* o = *it.p;
                         if (o->b14) {
@@ -271,7 +271,7 @@ extern char D_0055C7A0[];
 extern void std_tree_pair_int_value_compare_begin_void_2(Node3FA780** out, void* map);
 extern void std_map_int_netSystemField_end(void* out, void* map);
 extern void cAssocArray_int_netSystemField_Iterator_ctor(Node3FA780** out, void* in);
-extern void Tree_Successor(Node3FA780** it);
+extern void std_red_black_tree_1_increment(Node3FA780** it);
 }
 static inline int Eq3FA780(Node3FA780* a, Node3FA780* b) { return a == b; }
 static inline int Has3FA780(Node3FA780* n) { return n->b != 0; }
@@ -296,7 +296,7 @@ extern "C" bool cNetObj_GetDelayedMsgs(int* outA, unsigned char* outFlag, int* o
                 it[0]->b = 0;
                 break;
             }
-            Tree_Successor(it);
+            std_red_black_tree_1_increment(it);
         }
     }
     return found;

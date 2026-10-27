@@ -15,32 +15,32 @@ int sprintf(void *, const void *, ...);
 extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern char g_Game[];
-extern void DME_StartThread(void);
-extern void TeamRelations_Create(void);
-extern void World_Setup(void* w);
-extern void DME_JoinGame(void);
+extern void cDME_StartUpdateThread(void);
+extern void cTeam_Init(void);
+extern void cGameSystem_Init(void* w);
+extern void cDME_JoinGame(void);
 extern void cDME_SetNetReady(void);
 extern void cHuman_LoadNetworkData(void);
-extern void NetObj_LoadNetworkData(void);
+extern void cNetObj_LoadNetworkData(void);
 extern void DME_Update(void);
 static inline int IsHostGR(void)
 {
     if (g_IsMultiplayer) return D_005721C0;
     return 1;
 }
-void Game_Reset(void)
+void cMachine_NetInit(void)
 {
-    if (g_IsMultiplayer) DME_StartThread();
-    TeamRelations_Create();
-    World_Setup(g_Game);
+    if (g_IsMultiplayer) cDME_StartUpdateThread();
+    cTeam_Init();
+    cGameSystem_Init(g_Game);
     if (g_IsMultiplayer) {
-        DME_JoinGame();
+        cDME_JoinGame();
         cDME_SetNetReady();
         if (!IsHostGR()) {
             cHuman_LoadNetworkData();
-            NetObj_LoadNetworkData();
+            cNetObj_LoadNetworkData();
         } else {
-            TeamRelations_Create();
+            cTeam_Init();
         }
     }
     if (g_IsMultiplayer) DME_Update();
@@ -61,15 +61,15 @@ extern char D_004FFB8C[];
 extern char g_AgentPartCache[];
 extern void Iop_LoadMcUsbModules(void);
 extern void cMachine_InitUSB(O169*);
-extern int ScriptMgr_ExportSymbols(char*, char*, char*);
-extern int Archive_Open(char*, char*, int, int);
+extern int cScriptInterpreter_Init(char*, char*, char*);
+extern int cHogList_Open(char*, char*, int, int);
 extern void cScriptInterpreter_SetHog(char*, int);
-extern void ScriptMgr_InitClient(char*);
-extern void PartsTable_Load(int);
-extern void ArchiveList_CloseNamed(char*, char*);
-extern void ManUtils_LoadSKL(char*);
-extern void Heap_AllocSlot(int, int, int);
-extern void NellyWrap_Init(void);
+extern void cScriptInterpreter_ExecClientScripts(char*);
+extern void cAgentData_LoadPartData(int);
+extern void cHogList_Close(char*, char*);
+extern void Monster_MonsterInit(char*);
+extern void cMemMan_Init_int_uint_uint(int, int, int);
+extern void cNellyMoser_nmsCreate(void);
 #pragma opt_propagation off
 void App_BindIopRpc(O169* o) {
     char buf[0x40];
@@ -77,20 +77,20 @@ void App_BindIopRpc(O169* o) {
     D_0048A010 = 0;
     Iop_LoadMcUsbModules();
     cMachine_InitUSB(o);
-    if (ScriptMgr_ExportSymbols(D_00555070, D_0048B2F8, g_LevelDirName)) {
+    if (cScriptInterpreter_Init(D_00555070, D_0048B2F8, g_LevelDirName)) {
         char* arc;
         int h;
         sprintf(buf, "%s\\COMMON\\SCRIPTS.HOG", D_0048B2F8);
         arc = D_004FFB8C;
-        h = Archive_Open(arc, buf, 0, 0);
+        h = cHogList_Open(arc, buf, 0, 0);
         cScriptInterpreter_SetHog(D_00555070, h);
-        ScriptMgr_InitClient(D_00555070);
-        PartsTable_Load(h);
-        ArchiveList_CloseNamed(arc, buf);
+        cScriptInterpreter_ExecClientScripts(D_00555070);
+        cAgentData_LoadPartData(h);
+        cHogList_Close(arc, buf);
     }
-    ManUtils_LoadSKL(g_AgentPartCache);
-    Heap_AllocSlot(2, 0xC1C00, 16);
-    NellyWrap_Init();
+    Monster_MonsterInit(g_AgentPartCache);
+    cMemMan_Init_int_uint_uint(2, 0xC1C00, 16);
+    cNellyMoser_nmsCreate();
     o->b278 = 1;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -113,12 +113,12 @@ extern void* GetThreadId(void);
 extern void ChangeThreadPriority(void* p, int n);
 extern void SFOLibInit(int n);
 extern void cMachine_InitTimers(F1Game1695* g);
-extern void Game_LoadIni(F1Game1695* g);
-extern void Loc_LoadCommonPool(char* name);
+extern void cMachine_InitINI(F1Game1695* g);
+extern void nGlobalization_LoadCommonStrings(char* name);
 extern void Iop_LoadPadSoundModules(void);
 extern void cMachine_InitJoystick(F1Game1695* g);
-extern void Renderer_Init(void* p, int a, int b, int c, int d, int e, int f, int g);
-extern void Boot_LoadFonts(F1Game1695* g);
+extern void XLib_Init(void* p, int a, int b, int c, int d, int e, int f, int g);
+extern void cMachine_InitFonts(F1Game1695* g);
 extern void FrontEnd_CreateCanvas(void* p, int n);
 extern void FrontEnd_SetLoadingScreen(void* p, int a, void* b, int c);
 void StringPool_Load(F1Game1695* g)
@@ -126,15 +126,15 @@ void StringPool_Load(F1Game1695* g)
     ChangeThreadPriority(GetThreadId(), 10);
     SFOLibInit(1);
     cMachine_InitTimers(g);
-    Game_LoadIni(g);
-    Loc_LoadCommonPool(D_0048B2F8);
+    cMachine_InitINI(g);
+    nGlobalization_LoadCommonStrings(D_0048B2F8);
     Iop_LoadPadSoundModules();
     cMachine_InitJoystick(g);
     if (g_GameState == 9) {
-        Renderer_Init(g_Video, g->x254, g->x258, 0x20, 0x10, g->b250, 4000, 500);
+        XLib_Init(g_Video, g->x254, g->x258, 0x20, 0x10, g->b250, 4000, 500);
         D_005383D4 = g->x260;
         D_005383C0 = (unsigned char)(int)(D_004C1FC8 * g_OptionsRecord->scale);
-        Boot_LoadFonts(g);
+        cMachine_InitFonts(g);
         FrontEnd_CreateCanvas(D_004FFC04, 0);
         FrontEnd_SetLoadingScreen(D_004FFC04, 1, "ROOT", 0);
     }

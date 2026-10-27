@@ -43,11 +43,11 @@ static inline bool NotUnit(const V& v) { return !IsUnit(v); }
 struct AnimContribution { char pad[0x20]; };
 struct Ctx { char pad[0x14]; char stack[4]; };
 extern "C" float D_004BCD68;
-extern "C" void AnimContribution_Init(AnimContribution* c, SkaClip* clip, const V* q, float w);
+extern "C" void cSkaPlaybackItem_ctor(AnimContribution* c, SkaClip* clip, const V* q, float w);
 extern "C" int AnimContext_GetCount(void* s);
 extern "C" void** PtrStack_Top(void* s);
 extern "C" void* AnimBlend_GetGroupCollection(void* b);
-extern "C" void AnimGroup_AddContribution(void* g, AnimContribution* c, int id, float w);
+extern "C" void cSkaPlaybackList_Add(void* g, AnimContribution* c, int id, float w);
 extern "C" void cSkaPlaybackItem_dtor(AnimContribution* c, int f);
 static inline void Submit(SkaClip* self, const V* r, Ctx* ctx, float w)
 {
@@ -57,15 +57,15 @@ static inline void Submit(SkaClip* self, const V* r, Ctx* ctx, float w)
         void* blend = *PtrStack_Top(ctx->stack);
         if (blend) {
             AnimContribution c;
-            AnimContribution_Init(&c, self, r, w);
-            AnimGroup_AddContribution(AnimBlend_GetGroupCollection(blend), &c, id, wt);
+            cSkaPlaybackItem_ctor(&c, self, r, w);
+            cSkaPlaybackList_Add(AnimBlend_GetGroupCollection(blend), &c, id, wt);
             cSkaPlaybackItem_dtor(&c, -1);
         }
     }
 }
 static inline void Submit2(SkaClip* self, const V* r, Ctx* ctx, float w) { Submit(self, r, ctx, w); }
 static inline const V* In1(const V* a, const V* b) { if (NotUnit(*a)) { V x(QMulR(a, b)); V t(x); return &t; } return b; }
-extern "C" void SkaClip_Submit(SkaClip* self, const V* q, Ctx* ctx, float w)
+extern "C" void cSkaAnim_UpdateNodes(SkaClip* self, const V* q, Ctx* ctx, float w)
 {
     if (w < D_004BCD68)
         return;

@@ -23,7 +23,7 @@ extern char g_DmeThreadStack; /* 0x10000 bytes */
 
 /* Starts the DME worker thread at `entry`; g_DmeThreadId holds the caller's
    thread id until it is replaced by the new thread. */
-int DME_CreateThread(int entry) {
+int cThreadMgr_AddThread(int entry) {
     /* kernel ThreadParam; the array members keep retail's stack layout */
     struct { int status; int entry; char * stack; int stackSize; char * gp; int prio[4]; int wait[2]; int wakeupCount; } param;
 
@@ -51,22 +51,22 @@ int DME_CreateThread(int entry) {
 /* merge_units: begin func_00429430 */
 #pragma push /* merge_units */
 #pragma mpwc_relax on
-int Alloc_Unlock(int);
+int EnableIntc(int);
 int AddIntcHandler(int, char *, int);
 extern int g_DmeTimerHandlerId;
-extern char DME_TimerHandler;
+extern char cThreadMgr_ThreadInterruptHandler;
 
-/* Programs EE Timer 0 and installs DME_TimerHandler on its interrupt line. */
-unsigned char DME_InstallTimer(void) {
+/* Programs EE Timer 0 and installs cThreadMgr_ThreadInterruptHandler on its interrupt line. */
+unsigned char cThreadMgr_Init(void) {
     unsigned char installed = 0;
 
     T0_MODE = 0xC00; /* clear EQUF/OVFF */
     T0_COMP = 0x24A;
     T0_COUNT = 0;
     T0_MODE = 0x382; /* BUSCLK/256, CUE, CMPE, OVFE */
-    g_DmeTimerHandlerId = AddIntcHandler(INTC_TIM0, &DME_TimerHandler, 0);
+    g_DmeTimerHandlerId = AddIntcHandler(INTC_TIM0, &cThreadMgr_ThreadInterruptHandler, 0);
     if (g_DmeTimerHandlerId != -1) {
-        Alloc_Unlock(INTC_TIM0); /* enables the interrupt */
+        EnableIntc(INTC_TIM0); /* enables the interrupt */
         installed = 1;
     }
     return installed;
@@ -80,7 +80,7 @@ unsigned char DME_InstallTimer(void) {
 extern int g_DmeLobby;
 extern unsigned char g_DmeLobbyActive;
 /* The SFOLobby instance, or 0 when lobby updates are disabled. */
-extern "C" int DME_GetLobby(void)
+extern "C" int cDME_GetLobby(void)
 {
     unsigned char ok = 0; if (g_DmeLobby && g_DmeLobbyActive) ok = 1; return ok ? g_DmeLobby : 0;
 }
@@ -102,7 +102,7 @@ extern char g_DmeLobbyActive[];
 #define g_DmeLobbyActive ((char*)&g_DmeLobbyActive) /* merge_units */
 
 
-void DME_SetLobbyActive(int a0) {
+void cDME_ActivateLobby(int a0) {
     *(char*)g_DmeLobbyActive = a0;
 }
 #undef g_DmeLobbyActive /* merge_units */

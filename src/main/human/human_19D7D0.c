@@ -19,7 +19,7 @@ public:
 typedef struct { unsigned char pad[0x80]; Chan_b6* ch; } Anim_b6;
 static inline float fmax_b6(float a, float b) { float r; asm { max.s r, a, b } return r; }
 static inline float fmin_b6(float a, float b) { float r; asm { min.s r, a, b } return r; }
-extern "C" void AnimChannel_Approach(Anim_b6* a, int idx, int wrap, float target, float step)
+extern "C" void cSkaParams_SetSliderValue_int_float_float_bool(Anim_b6* a, int idx, int wrap, float target, float step)
 {
     Chan_b6* c = &a->ch[idx];
     float v = c->cur;

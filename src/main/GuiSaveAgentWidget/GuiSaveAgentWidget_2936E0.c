@@ -17,18 +17,18 @@
 
 extern char D_004DD460[];   /* GuiSaveAgentWidget vtable */
 extern char D_004E1220[];   /* GuiItem vtable */
-extern int AgentOpen_BuildSlotList(GuiSaveAgentWidget* self);
-extern int GuiWidget_BaseWake(GuiWidget* self);
+extern int GuiAgentDirectoryWidget_UpdateNameList(GuiSaveAgentWidget* self);
+extern int GuiWidget_onWake(GuiWidget* self);
 extern void GuiWidget_ctor(GuiWidget* self);
 
 /* GuiSaveAgentWidget vtable slot 5: own update, then the base widget's. */
 int GuiAgentDirectoryWidget_onWake(GuiSaveAgentWidget* self) {
-    AgentOpen_BuildSlotList(self);
-    return GuiWidget_BaseWake(&self->base.base);
+    GuiAgentDirectoryWidget_UpdateNameList(self);
+    return GuiWidget_onWake(&self->base.base);
 }
 
 /* GuiSaveAgentWidget constructor (GuiItem constructor inlined). */
-GuiSaveAgentWidget* GuiSaveAgentWidget_ctor(GuiSaveAgentWidget* self, unsigned char arg) {
+GuiSaveAgentWidget* GuiAgentDirectoryWidget_ctor(GuiSaveAgentWidget* self, unsigned char arg) {
     GuiWidget_ctor(&self->base.base);
     self->base.base.vtable = D_004E1220;
     self->base.unk48 = -2;
@@ -46,7 +46,7 @@ GuiSaveAgentWidget* GuiSaveAgentWidget_ctor(GuiSaveAgentWidget* self, unsigned c
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(GuiSaveAgentWidget_dtor, D_004E1220, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(GuiSaveAgentWidget_dtor, D_004E1220, GuiWidget_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00293770 */
 
@@ -57,29 +57,29 @@ DEFINE_VTABLE_BASE_DTOR(GuiSaveAgentWidget_dtor, D_004E1220, GuiWidget_Destroy)
 
 /* Three-level destructor: restore vtables, run base destructor, optionally delete. */
 extern "C" {
-extern "C" void GuiAgentLoad_HandleInput();
-extern "C" void GuiAgentLoad_HandleEvent();
-extern "C" void GuiAgentLoad_Wake();
-extern "C" void GuiAgentLoad_Update();
+extern "C" void GuiAgentLoad_onInput();
+extern "C" void GuiAgentLoad_onMessage();
+extern "C" void GuiAgentLoad_onWake();
+extern "C" void GuiAgentDirectoryWidget_onAdvanceTime();
 extern "C" void GuiAgentLoad_GetClassName();
-extern "C" void GuiAgentLoad_IsType();
+extern "C" void GuiAgentLoad_IsClass();
 extern "C" void GuiSaveAgentWidget_SaveDone();
-extern "C" void GuiWidget_FocusPrev();
-extern "C" void GuiWidget_FocusNext();
-extern "C" void GuiWidget_FocusLast();
-extern "C" void GuiWidget_FocusFirst();
-extern "C" void GuiWidget_BubbleActivate();
-extern "C" void GuiWidget_BubbleType1();
-extern "C" void GuiWidget_BubbleType0();
-extern "C" void GuiWidget_Draw();
-extern "C" void GuiWidget_BaseSleep();
-extern "C" void GuiWidget_ClearFlag4();
-extern "C" void GuiWidget_SetFlag4();
-extern "C" void GuiWidget_Deinit();
-extern "C" void GuiWidget_Init();
+extern "C" void GuiWidget_FindPrevFocus();
+extern "C" void GuiWidget_FindNextFocus();
+extern "C" void GuiWidget_FindLastFocus();
+extern "C" void GuiWidget_FindFirstFocus();
+extern "C" void GuiWidget_onAction();
+extern "C" void GuiWidget_onLoseFocus();
+extern "C" void GuiWidget_onGainFocus();
+extern "C" void GuiWidget_onRender();
+extern "C" void GuiWidget_onSleep();
+extern "C" void GuiWidget_onDeactivate();
+extern "C" void GuiWidget_onActivate();
+extern "C" void GuiWidget_onRemove();
+extern "C" void GuiWidget_onAdd();
 extern "C" void GuiWidget_Load();
 extern void * const D_004DD400[];
-void* GuiWidget_Destroy(void* self, short deleteFlag);
+void* GuiWidget_dtor(void* self, short deleteFlag);
 }
 extern "C" Vtable3Object* GuiAgentLoad_dtor(Vtable3Object* self, short deleteFlag)
 {
@@ -89,7 +89,7 @@ extern "C" Vtable3Object* GuiAgentLoad_dtor(Vtable3Object* self, short deleteFla
             self->vtable = D_004DD460;
             if (self) {
                 self->vtable = D_004E1220;
-                GuiWidget_Destroy(self, 0);
+                GuiWidget_dtor(self, 0);
             }
         }
         if (deleteFlag > 0)
@@ -97,6 +97,6 @@ extern "C" Vtable3Object* GuiAgentLoad_dtor(Vtable3Object* self, short deleteFla
     }
     return self;
 }
-void * const D_004DD400[24] = { (void*)0x0, (void*)0x0, (void*)GuiAgentLoad_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiAgentLoad_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiAgentLoad_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiAgentLoad_Update, (void*)GuiAgentLoad_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAgentLoad_GetClassName, (void*)GuiAgentLoad_IsType, (void*)GuiSaveAgentWidget_SaveDone };
+void * const D_004DD400[24] = { (void*)0x0, (void*)0x0, (void*)GuiAgentLoad_dtor, (void*)GuiWidget_onAdd, (void*)GuiWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiWidget_onDeactivate, (void*)GuiAgentLoad_onWake, (void*)GuiWidget_onSleep, (void*)GuiWidget_onGainFocus, (void*)GuiWidget_onLoseFocus, (void*)GuiAgentLoad_onInput, (void*)GuiWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiAgentDirectoryWidget_onAdvanceTime, (void*)GuiAgentLoad_onMessage, (void*)GuiWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiAgentLoad_GetClassName, (void*)GuiAgentLoad_IsClass, (void*)GuiSaveAgentWidget_SaveDone };
 #pragma pop /* merge_units */
 /* merge_units: end func_002937D0 */

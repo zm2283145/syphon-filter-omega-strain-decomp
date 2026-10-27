@@ -2,7 +2,7 @@
 #include "types.h"
 #include "alloc_guard.h"
 #include "pop_reader.h"
-/* WeaponDb_PreloadLevel: upper-case the agent model names, load the level's morph/sort data,
+/* cWeaponDB_LoadLevelSpecific: upper-case the agent model names, load the level's morph/sort data,
    collect the weapon ids the population uses and preload them, build the agent models, then
    resolve every weapon entry's skeleton, model and particle names. */
 struct Arc_1457C0;
@@ -21,28 +21,28 @@ extern char D_0049B248[];
 extern char D_0053B540[];
 extern char g_AgentPartCache[];
 extern char g_LevelDirName[];
-void* App_GetInstance(void);
-void Loader_UpdateLoadingScreen(void* app, const char* msg, int z);
+void* GetMachine(void);
+void cMachine_ShowLoadingScreen(void* app, const char* msg, int z);
 int sprintf(char* buf, const char* fmt, ...);
-Arc_1457C0* Archive_Open(void* list, char* name, int a, int b);
-void Skf_Register(void* cache, Arc_1457C0* arc);
-void Appearance_LoadPartSortTable(void* cache, char* name);
-void* Mem_Alloc(int pool, int size, char* file, int line);
+Arc_1457C0* cHogList_Open(void* list, char* name, int a, int b);
+void Monster_LoadFaceHog(void* cache, Arc_1457C0* arc);
+void Monster_ReadSortTable(void* cache, char* name);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void std_vector_charPtr_ctor_void(void* p);
-void SklRegistry_LoadMission(char* a, char* b);
+void SKLHog_LoadIdentities(char* a, char* b);
 void WeaponDb_LoadShellsArchive(Db_1457C0* self, Arc_1457C0* arc);
-void Hog_Register(void* hog, char* name, Arc_1457C0* arc, int z);
-void TexCache_RegisterNpcTex(void* cache, Arc_1457C0* arc);
-void MeshCache_RegisterNpcSkm(void* cache, Arc_1457C0* arc);
-void WeaponDb_Preload(Db_1457C0* self, int idx, char mode);
-void ManModel_ctor(Model_1457C0* m, char* name, int idx, int a, int b, int c, int d, int e);
+void cFileMan_EncodeFilename_charP_cHogFileR_bool(void* hog, char* name, Arc_1457C0* arc, int z);
+void Monster_LoadTexHog(void* cache, Arc_1457C0* arc);
+void Monster_LoadParts(void* cache, Arc_1457C0* arc);
+void cWeaponDB_LoadWeapon(Db_1457C0* self, int idx, char mode);
+void gunList_LoadGunInit(Model_1457C0* m, char* name, int idx, int a, int b, int c, int d, int e);
 int String_CompareNoCase(char* a, char* b);
 void std_vector_charPtr_push_back_charPR(Vec_1457C0* v, char** s);
 int strlen(const char* s);
 char* strstr(char* a, char* b);
-void WeaponDb_LoadModel(Db_1457C0* self, char* name, void** out, int idx, int z, int cc, int x108);
-void ParticleLib_Request(char* lib, char* name, int* out);
-void WeaponDb_PreloadLevel(Db_1457C0* self, PopReader* r, void* list);
+void cWeaponDB_LoadGun(Db_1457C0* self, char* name, void** out, int idx, int z, int cc, int x108);
+void cParticleSystem_RequestEffectLoad(char* lib, char* name, int* out);
+void cWeaponDB_LoadLevelSpecific(Db_1457C0* self, PopReader* r, void* list);
 }
 struct Arc_1457C0 { char pad[0x14C]; unsigned char loaded; };
 struct Vec_1457C0 { int cap; int n; char** data; };
@@ -56,7 +56,7 @@ struct Model_1457C0 {
     float mx[4];
     char pad400[0x41C - 0x400];
     int refs;
-    static void* operator new(unsigned int sz) { AllocGuard g; return Mem_Alloc(0, sz, D_0049B1D0, 848); }
+    static void* operator new(unsigned int sz) { AllocGuard g; return cMemMan_Allocate(0, sz, D_0049B1D0, 848); }
     Model_1457C0() {
         *(int*)&mn[0] = 0x7F7FFFFF;
         *(int*)&mn[1] = 0x7F7FFFFF;
@@ -93,7 +93,7 @@ struct Db_1457C0 {
     Vec_1457C0* skl;     /* 0xD4 */
 };
 
-void WeaponDb_PreloadLevel(Db_1457C0* self, PopReader* r, void* list)
+void cWeaponDB_LoadLevelSpecific(Db_1457C0* self, PopReader* r, void* list)
 {
     char* nm;
     char buf[0x80];
@@ -119,7 +119,7 @@ void WeaponDb_PreloadLevel(Db_1457C0* self, PopReader* r, void* list)
     int c;
     n = 0;
     cnt = 0;
-    Loader_UpdateLoadingScreen(App_GetInstance(), "Loading Level Specific Weapon Data...", 0);
+    cMachine_ShowLoadingScreen(GetMachine(), "Loading Level Specific Weapon Data...", 0);
     for (i = 0; i < 7; i++) {
         char* p = D_00489CC0[i];
         while (*p) {
@@ -130,27 +130,27 @@ void WeaponDb_PreloadLevel(Db_1457C0* self, PopReader* r, void* list)
         self->models[i] = 0;
     }
     sprintf(buf, "%s\\COMMON\\MORPH.HOG", D_0048B2F8);
-    arc = Archive_Open(list, buf, 0, 0);
+    arc = cHogList_Open(list, buf, 0, 0);
     if (arc->loaded)
-        Skf_Register(g_AgentPartCache, arc);
+        Monster_LoadFaceHog(g_AgentPartCache, arc);
     sprintf(buf, "%s\\FRONTEND\\MANSORT2.TXT", D_0048B2F8);
-    Appearance_LoadPartSortTable(g_AgentPartCache, buf);
+    Monster_ReadSortTable(g_AgentPartCache, buf);
     {
         Skl_1457C0* s;
-        { AllocGuard g; s = (Skl_1457C0*)Mem_Alloc(0, 16, D_0049B1D0, 736); }
+        { AllocGuard g; s = (Skl_1457C0*)cMemMan_Allocate(0, 16, D_0049B1D0, 736); }
         if (s) {
             std_vector_charPtr_ctor_void(s);
             s->ready = 1;
         }
         self->skl = (Vec_1457C0*)s;
     }
-    SklRegistry_LoadMission(D_0048B2F8, g_LevelDirName);
+    SKLHog_LoadIdentities(D_0048B2F8, g_LevelDirName);
     ids[cnt++] = 103;
     if (r) {
         int mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;
-        if ((unsigned char)Pop_FindTag(r, 0x3A4E5057)) {
+        if ((unsigned char)cPopulation_SeekBlock(r, 0x3A4E5057)) {
             n = *(int*)r->cur;
             r->cur += 4;
         }
@@ -173,26 +173,26 @@ void WeaponDb_PreloadLevel(Db_1457C0* self, PopReader* r, void* list)
         }
         if (cnt) {
             sprintf(buf2, "%s\\%s\\WPN.HOG", D_0048B2F8, g_LevelDirName);
-            arc = Archive_Open(list, buf2, 0, 0);
+            arc = cHogList_Open(list, buf2, 0, 0);
             if (arc->loaded)
                 WeaponDb_LoadShellsArchive(self, arc);
             sprintf(buf2, D_0049B210, D_0048B2F8);
-            Hog_Register(self->hog, D_0049B228, Archive_Open(list, buf2, 1, 0), 0);
+            cFileMan_EncodeFilename_charP_cHogFileR_bool(self->hog, D_0049B228, cHogList_Open(list, buf2, 1, 0), 0);
             sprintf(buf3, "%s\\%s\\NPCTEX.HOG", D_0048B2F8, g_LevelDirName);
-            arc = Archive_Open(list, buf3, 0, 0);
+            arc = cHogList_Open(list, buf3, 0, 0);
             if (arc->loaded)
-                TexCache_RegisterNpcTex(g_AgentPartCache, arc);
+                Monster_LoadTexHog(g_AgentPartCache, arc);
             sprintf(buf4, "%s\\%s\\NPCSKM.HOG", D_0048B2F8, g_LevelDirName);
-            arc = Archive_Open(list, buf4, 0, 0);
+            arc = cHogList_Open(list, buf4, 0, 0);
             if (arc->loaded)
-                MeshCache_RegisterNpcSkm(g_AgentPartCache, arc);
+                Monster_LoadParts(g_AgentPartCache, arc);
             for (pl = 0; pl < cnt; pl++)
-                WeaponDb_Preload(self, ids[pl], 1);
+                cWeaponDB_LoadWeapon(self, ids[pl], 1);
             for (mi = 0; mi < 7; mi++) {
                 if (!self->models[mi]) {
                     mdl = new Model_1457C0;
                     self->models[mi] = mdl;
-                    ManModel_ctor(self->models[mi], D_00489CC0[mi], mi, 0, 0, 0, 0, -1);
+                    gunList_LoadGunInit(self->models[mi], D_00489CC0[mi], mi, 0, 0, 0, 0, -1);
                     self->models[mi]->refs++;
                 }
             }
@@ -217,14 +217,14 @@ void WeaponDb_PreloadLevel(Db_1457C0* self, PopReader* r, void* list)
         if (strlen(e->mdl)) {
             if (strstr(e->mdl, D_0049B238) || strstr(e->mdl, D_0049B240)) {
                 if (!e->model)
-                    WeaponDb_LoadModel(self, e->mdl, &e->model, li, 1, -1, -1);
+                    cWeaponDB_LoadGun(self, e->mdl, &e->model, li, 1, -1, -1);
             } else {
-                ParticleLib_Request(D_0053B540, e->mdl, &e->fx2);
+                cParticleSystem_RequestEffectLoad(D_0053B540, e->mdl, &e->fx2);
             }
         }
         if (!String_CompareNoCase(e->fx, D_0049B248))
             e->particle = -1;
         else
-            ParticleLib_Request(D_0053B540, e->fx, &e->particle);
+            cParticleSystem_RequestEffectLoad(D_0053B540, e->fx, &e->particle);
     }
 }

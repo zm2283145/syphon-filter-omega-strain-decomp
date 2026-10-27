@@ -4,9 +4,9 @@
 #pragma mpwc_relax on
 /*fc*/
 int Alloc_Lock();                                    
-int Alloc_Unlock();                                  
-int Mem_Alloc();                      
-int ScalarCollection_Init();                       
+int EnableIntc();                                  
+int cMemMan_Allocate();                      
+int std_list_deleter_voidPtr_ctor_void();                       
 int cArrayCapacity_Int();                           
 int std_vector_cGroupPtr_reserve();                       
 int std_vector_cGroupPtr_ctor();                            
@@ -19,7 +19,7 @@ extern int g_ProfileLockDepth;
 
 #pragma push
 #pragma opt_common_subs off
-char * ScriptInterpreter_ctor(char * arg0, int arg1) {
+char * cScriptInterpreter_ctor(char * arg0, int arg1) {
     struct { char pad40[8]; int f48; int f4C; } sl;
     int temp_s1_3;
     int temp_s1_4;
@@ -27,7 +27,7 @@ char * ScriptInterpreter_ctor(char * arg0, int arg1) {
     char * temp_s1_2;
 
     std_list_deleter_PopVar_ctor();
-    ScalarCollection_Init(arg0 + 0xC);
+    std_list_deleter_voidPtr_ctor_void(arg0 + 0xC);
     sl.f4C = 0x12C;
     temp_s1 = arg0 + 0x18;
     std_vector_StringPtr_ctor(temp_s1);
@@ -45,9 +45,9 @@ char * ScriptInterpreter_ctor(char * arg0, int arg1) {
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    temp_s1_4 = Mem_Alloc(0, temp_s1_3, &D_004BD4C0, 0x34);
+    temp_s1_4 = cMemMan_Allocate(0, temp_s1_3, &D_004BD4C0, 0x34);
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     g_ProfileLockDepth -= 1;
     F_(arg0, 0x4E6C, int) = temp_s1_4;

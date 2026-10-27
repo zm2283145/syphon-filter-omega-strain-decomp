@@ -41,7 +41,7 @@ static inline Key_239DF0* Zero_239DF0(void* d0, int n0) { void* dst = d0; int n 
     return r;
 }
 extern "C" void std_vector_imp_FloatKey_resize(Vec_239DF0* v, unsigned int n, const Key_239DF0* value);
-extern "C" void NiEvent_ReadKeyedTrack4(Track_239DF0* self, Reader_239DF0* r)
+extern "C" void cNIEventFloatTrack_Init_cPopulationR(Track_239DF0* self, Reader_239DF0* r)
 {
     Key_239DF0 k1;
     Key_239DF0 k0;
@@ -92,7 +92,7 @@ struct Ev00239FA0 {
     char padDD[0x140 - 0xDD];
     Tgt00239FA0* target;
 };
-extern "C" void cNIEventOBJ_v14(Ev00239FA0* self)
+extern "C" void cNIEventOBJ_Render(Ev00239FA0* self)
 {
     if (self->enabled) {
         self->target->value = self->value;

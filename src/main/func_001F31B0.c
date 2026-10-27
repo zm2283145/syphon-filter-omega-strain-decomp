@@ -14,7 +14,7 @@ void* cAllocator_cSkaSwitchItem_ctor_void(void* self) {
     return self;
 }
 
-MotionNode* MotionNode_BaseCtor(MotionNode* self, int type, int name) {
+MotionNode* cSkaNode_ctor_eType_cQuaternionR(MotionNode* self, int type, int name) {
     self->vtable = &D_004DFC50;
     self->type = type;
     cQuaternion_ctor_cQuaternionR(&self->name, name);

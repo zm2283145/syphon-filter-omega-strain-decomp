@@ -10,7 +10,7 @@ static inline int Min5600(int a, int b) { int r; if (a < b) { r = a; asm { .set 
 #pragma opt_rotateloops off
 #pragma opt_common_subs off
 
-void Shadow_AddGroundEntry(S5600* s, Q5600* pos, Q5600* v, float dist)
+void cShadowMan_AddReflectionSource(S5600* s, Q5600* pos, Q5600* v, float dist)
 {
     if (g_DrawMode & 0x40) {
         G5600* g;

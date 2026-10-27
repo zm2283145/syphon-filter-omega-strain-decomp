@@ -5,8 +5,8 @@ typedef struct { char pad[0x10]; void* val; } Node21D240;
 typedef struct { void* vt; char p4[0x20]; int f24; signed char f28; char p29[3]; } Evt21D240;
 typedef struct { int kind; int id; signed char b8; char p9[3]; int fC; } Arg21D240;
 extern "C" {
-extern void Event_Construct(Evt21D240* e, void* type);
-extern void MsgQueue_QueueClone(Evt21D240* e, void* obj, int a, int b);
+extern void cMessage_ctor_cMessageNameR(Evt21D240* e, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int_int(Evt21D240* e, void* obj, int a, int b);
 extern void cMessage_dtor(Evt21D240* e, int f);
 extern char D_0055C7A0[];
 extern void std_tree_pair_int_value_compare_find_intR(Node21D240** out, void* map, int* key);
@@ -37,11 +37,11 @@ Node21D240* n;
         cAssocArray_int_netSystemField_Iterator_ctor(end, tmp);
         if (Eq21D240(n, end[0]) ^ 1) {
             Evt21D240 e;
-            Event_Construct(&e, D_004A4A78);
+            cMessage_ctor_cMessageNameR(&e, D_004A4A78);
             e.vt = D_004DB5E0;
             e.f28 = a->b8;
             e.f24 = a->fC;
-            MsgQueue_QueueClone(&e, n->val, 0, 0);
+            QueueMessage_cMessageR_cSystemP_int_int(&e, n->val, 0, 0);
             e.vt = D_004DB5E0;
             cMessage_dtor(&e, 0);
         }

@@ -14,7 +14,7 @@ typedef struct { char pad[0x30]; Q q; char pad2[0x28]; signed char value; } Obj;
 
 /* Optionally copies the vector at +0x30 out and returns the byte at +0x68. */
 #pragma peephole off
-signed char ParticleInst_GetPosition(Obj* self, Q* out)
+signed char cParticle_GetEvent(Obj* self, Q* out)
 {
     if (out) {
         *out = self->q;
@@ -41,7 +41,7 @@ int cParticle_EventHappened(ParticleEmitter* e) {
 }
 
 /* Sets the rate to base scaled by (1 + rateScale). */
-void ParticleEmitter_SetRate(ParticleEmitter* e, float base) {
+void cParticle_SetScale(ParticleEmitter* e, float base) {
     e->rate = base + base * e->rateScale;
 }
 /* merge_units: generate this block's code under its own pragmas */

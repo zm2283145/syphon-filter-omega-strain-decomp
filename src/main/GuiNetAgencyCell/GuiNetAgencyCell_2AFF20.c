@@ -8,11 +8,11 @@
 #include "loose02_types.h"
 
 extern char D_004DDD40[];   /* GuiNetAgencyCell vtable */
-extern GuiMenuScreen* GuiMenuScreen_ctor(GuiMenuScreen* self);
+extern GuiMenuScreen* GuiMissionLobbyScreen_ctor(GuiMenuScreen* self);
 
 /* GuiNetAgencyCell constructor. */
 GuiNetAgencyCell* GuiNetAgencyCell_ctor(GuiNetAgencyCell* self) {
-    GuiMenuScreen_ctor(&self->base);
+    GuiMissionLobbyScreen_ctor(&self->base);
     self->base.base.base.base.vtable = D_004DDD40;
     self->unk174 = 0;
     self->unk178 = 0;

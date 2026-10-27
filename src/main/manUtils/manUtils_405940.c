@@ -9,7 +9,7 @@
 
 /* library prototypes shared by the blocks below (C linkage) */
 #include "SFOLobby_helpers.h"
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00405940 */
 #pragma push /* merge_units */
@@ -19,27 +19,27 @@ extern char D_004BE910[];
 extern char D_004BE920[];
 extern char g_AgentPartCache[];
 extern char D_0057124C[];
-extern int String_CompareN(char* a, char* b, int n);
-extern int Appearance_GetBodyKind(HM_Pack* p);
-extern int MeshCache_Load(void* cache, __int128 name, void* ctx, void* arg);
+extern int Libc_Strncmp(char* a, char* b, int n);
+extern int SKL_FindSex(HM_Pack* p);
+extern int Monster_LoadAPart(void* cache, __int128 name, void* ctx, void* arg);
 /* Requests the hard mesh (slot 2) when asked, then every pair's part mesh; returns the part count. */
-int Appearance_RequestHardMesh(HM_Pack* p, int hard, void* arg)
+int SKL_LoadSKLParts(HM_Pack* p, int hard, void* arg)
 {
     int i;
     if (hard) {
-        if (String_CompareN((char*)&p->q20 + 1, D_004BE910, 4) == 0) {
-            MeshCache_Load(g_AgentPartCache, p->q20, D_0057124C, arg);
+        if (Libc_Strncmp((char*)&p->q20 + 1, D_004BE910, 4) == 0) {
+            Monster_LoadAPart(g_AgentPartCache, p->q20, D_0057124C, arg);
         } else {
-            String_Copy(&p->q20, D_004BE920);
-            if (Appearance_GetBodyKind(p) == 0)
+            Libc_Strcpy(&p->q20, D_004BE920);
+            if (SKL_FindSex(p) == 0)
                 *(char*)&p->q20 = '2';
             else
                 *(char*)&p->q20 = '1';
-            MeshCache_Load(g_AgentPartCache, p->q20, D_0057124C, arg);
+            Monster_LoadAPart(g_AgentPartCache, p->q20, D_0057124C, arg);
         }
     }
     for (i = 0; p->pairs[i].a; i++)
-        MeshCache_Load(g_AgentPartCache, p->pairs[i].a, D_0057124C, arg);
+        Monster_LoadAPart(g_AgentPartCache, p->pairs[i].a, D_0057124C, arg);
     return i;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -50,13 +50,13 @@ static inline void merge_flush_func_00405940(void) {}
 /* merge_units: begin func_00405A60 */
 #pragma push /* merge_units */
 typedef struct { int pad; int count; char** names; } List5E10;
-void Appearance_ClearPartKey(void* self, List5E10* list, __int128* keys, int n); /* gsynth: defined below */
+void SKL_HideLockedTex(void* self, List5E10* list, __int128* keys, int n); /* gsynth: defined below */
 typedef struct { __int128 name; char pad[0x10]; } Ent5F10;
 typedef struct { char pad[0x50]; Ent5F10 ent[1]; } Obj5F10;
-void AgentPacking_StepPatch3Texture(Obj5F10* o, int idx, __int128* keys, int n); /* gsynth: defined below */
+void SKL_UpgradeBigPatch(Obj5F10* o, int idx, __int128* keys, int n); /* gsynth: defined below */
 typedef struct { __int128 name; char pad[0x10]; } Ent6040;
 typedef struct { char pad[0x50]; Ent6040 ent[1]; } Obj6040;
-void AgentPacking_StepPatchTexture(Obj6040* o, int idx, __int128* keys, int n); /* gsynth: defined below */
+void SKL_UpgradeSmallPatch(Obj6040* o, int idx, __int128* keys, int n); /* gsynth: defined below */
 #pragma cplusplus on
 #include "alloc_guard.h"
 typedef union { __int128 q; struct { char tag; char name[15]; } s; } A60Name;
@@ -70,49 +70,49 @@ extern char D_004BE930[];
 extern char D_004BE938[];
 extern char D_004BE940[];
 extern A60Hog* D_00571248;
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void Hog_Load(A60Hog* h, A60Hog* t, int a, int b);
-void Hog_Unload(A60Hog* h);
-char* Archive_GetMemberName(A60Hog* h, int i);
-void Appearance_RegistryKey(char* dst, int n, char* src);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cHogFile_OpenHog(A60Hog* h, A60Hog* t, int a, int b);
+void cHogFile_CloseHog(A60Hog* h);
+char* cHogFile_GetBlockName(A60Hog* h, int i);
+void strCpyPad(char* dst, int n, char* src);
 #if 0 /* merge_units */
-int String_CompareN(const char* a, const char* b, int n);
+int Libc_Strncmp(const char* a, const char* b, int n);
 #endif /* merge_units */
-#define String_CompareN(a0, a1, a2) (String_CompareN((char *)(a0), (char *)(a1), (a2))) /* merge_units */
+#define Libc_Strncmp(a0, a1, a2) (Libc_Strncmp((char *)(a0), (char *)(a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-void Appearance_ClearPartKey(A60Obj* o, void* list, __int128* keys, int n);
+void SKL_HideLockedTex(A60Obj* o, void* list, __int128* keys, int n);
 #endif /* merge_units */
-#define Appearance_ClearPartKey(a0, a1, a2, a3) (Appearance_ClearPartKey((void *)(a0), (List5E10 *)(a1), (a2), (a3))) /* merge_units */
+#define SKL_HideLockedTex(a0, a1, a2, a3) (SKL_HideLockedTex((void *)(a0), (List5E10 *)(a1), (a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
-void AgentPacking_StepPatchTexture(A60Obj* o, int idx, __int128* keys, int n);
+void SKL_UpgradeSmallPatch(A60Obj* o, int idx, __int128* keys, int n);
 #endif /* merge_units */
-#define AgentPacking_StepPatchTexture(a0, a1, a2, a3) (AgentPacking_StepPatchTexture((Obj6040 *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define SKL_UpgradeSmallPatch(a0, a1, a2, a3) (SKL_UpgradeSmallPatch((Obj6040 *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
-void AgentPacking_StepPatch3Texture(A60Obj* o, int idx, __int128* keys, int n);
+void SKL_UpgradeBigPatch(A60Obj* o, int idx, __int128* keys, int n);
 #endif /* merge_units */
-#define AgentPacking_StepPatch3Texture(a0, a1, a2, a3) (AgentPacking_StepPatch3Texture((Obj5F10 *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define SKL_UpgradeBigPatch(a0, a1, a2, a3) (SKL_UpgradeBigPatch((Obj5F10 *)(a0), (a1), (a2), (a3))) /* merge_units */
 
-void Appearance_PatchParts(A60Obj* o, void* list);
+void SKL_UpgradePatches(A60Obj* o, void* list);
 }
 static inline int a60find(A60Obj* o, const char* key) {
     int i = 0;
     A60Pair* p = o->pairs;
     while ((long long)p->a.q != 0) {
-        if (String_CompareN(p->a.s.name, key, 5) == 0)
+        if (Libc_Strncmp(p->a.s.name, key, 5) == 0)
             return i;
         p++;
         i++;
     }
-    if (String_CompareN(p->b.s.name, key, 5) == 0)
+    if (Libc_Strncmp(p->b.s.name, key, 5) == 0)
         return i;
     i = -1;
     return i;
 }
 /* Builds the registry key list from the appearance HOG and applies the three typed variant merges. */
-void Appearance_PatchParts(A60Obj* o, void* list)
+void SKL_UpgradePatches(A60Obj* o, void* list)
 {
     int n;
     A60Hog* h;
@@ -123,33 +123,33 @@ void Appearance_PatchParts(A60Obj* o, void* list)
     h = D_00571248;
     if (!h->loaded) {
         unload = 1;
-        Hog_Load(h, h, unload, 0);
+        cHogFile_OpenHog(h, h, unload, 0);
     }
     n = h->dir->count;
     {
         AllocGuard g;
-        keys = (__int128*)Mem_Alloc(0, n * 16, D_004BE7F0, 0x40B);
+        keys = (__int128*)cMemMan_Allocate(0, n * 16, D_004BE7F0, 0x40B);
     }
     for (i = 0; i < n; i++)
-        Appearance_RegistryKey((char*)&keys[i], 15, Archive_GetMemberName(h, i));
-    Appearance_ClearPartKey(o, list, keys, n);
+        strCpyPad((char*)&keys[i], 15, cHogFile_GetBlockName(h, i));
+    SKL_HideLockedTex(o, list, keys, n);
     if (unload)
-        Hog_Unload(h);
+        cHogFile_CloseHog(h);
     k0 = a60find(o, D_004BE930);
     k1 = a60find(o, D_004BE938);
     k2 = a60find(o, D_004BE940);
-    if (k0 != -1) AgentPacking_StepPatchTexture(o, k0, keys, n);
-    if (k1 != -1) AgentPacking_StepPatchTexture(o, k1, keys, n);
-    if (k2 != -1) AgentPacking_StepPatch3Texture(o, k2, keys, n);
+    if (k0 != -1) SKL_UpgradeSmallPatch(o, k0, keys, n);
+    if (k1 != -1) SKL_UpgradeSmallPatch(o, k1, keys, n);
+    if (k2 != -1) SKL_UpgradeBigPatch(o, k2, keys, n);
     {
         AllocGuard g;
-        Mem_Free(0, keys, D_004BE7F0, 0x41F);
+        cMemMan_Deallocate(0, keys, D_004BE7F0, 0x41F);
     }
 }
-#undef String_CompareN /* merge_units */
-#undef Appearance_ClearPartKey /* merge_units */
-#undef AgentPacking_StepPatchTexture /* merge_units */
-#undef AgentPacking_StepPatch3Texture /* merge_units */
+#undef Libc_Strncmp /* merge_units */
+#undef SKL_HideLockedTex /* merge_units */
+#undef SKL_UpgradeSmallPatch /* merge_units */
+#undef SKL_UpgradeBigPatch /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00405A60(void) {}
 #pragma pop /* merge_units */
@@ -161,7 +161,7 @@ typedef union { __int128 q; char s[16]; } Key5E10;
 
 extern __int128 D_005716E0;
 extern char* strchr(const char*, int);
-extern void Appearance_RegistryKey(char* dst, int n, char* src);
+extern void strCpyPad(char* dst, int n, char* src);
 static inline int k5e10eq(__int128 a, __int128 b) {
     __int128 t;
     long long r;
@@ -189,13 +189,13 @@ static inline void k5e10clear(__int128* keys, int n, __int128 key) {
 }
 #pragma push
 #pragma opt_strength_reduction off
-void Appearance_ClearPartKey(void* self, List5E10* list, __int128* keys, int n) {
+void SKL_HideLockedTex(void* self, List5E10* list, __int128* keys, int n) {
     int i;
     int total = list->count;
     for (i = 0; i < total; i++) {
         if (strchr(list->names[i], '.') == 0) {
             Key5E10 key;
-            Appearance_RegistryKey(key.s, 15, list->names[i]);
+            strCpyPad(key.s, 15, list->names[i]);
             k5e10clear(keys, n, key.q);
         }
     }
@@ -232,7 +232,7 @@ static inline int k5f10find(__int128* keys, int n, __int128 key) {
     }
     return -1;
 }
-void AgentPacking_StepPatch3Texture(Obj5F10* o, int idx, __int128* keys, int n) {
+void SKL_UpgradeBigPatch(Obj5F10* o, int idx, __int128* keys, int n) {
     __int128 key;
     char* s;
     char* lo;
@@ -288,7 +288,7 @@ static inline int k6040find(__int128* keys, int n, __int128 key) {
     }
     return -1;
 }
-void AgentPacking_StepPatchTexture(Obj6040* o, int idx, __int128* keys, int n) {
+void SKL_UpgradeSmallPatch(Obj6040* o, int idx, __int128* keys, int n) {
     __int128 key;
     char* s;
     char* lo;

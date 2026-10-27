@@ -6,14 +6,14 @@ typedef struct { int a; void* b; } Ent2D1810;
 typedef struct { void* vt; char p4[0x28]; int f2C; int f30; char p34[4]; } Evt2D1810;
 typedef struct { int kind; int id; int f8; int fC; } Arg2D1810;
 extern "C" {
-extern void Event_Construct(Evt2D1810* e, void* type);
-extern void MsgQueue_QueueClone(Evt2D1810* e, void* obj, int a, int b);
+extern void cMessage_ctor_cMessageNameR(Evt2D1810* e, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int_int(Evt2D1810* e, void* obj, int a, int b);
 extern void cMessage_dtor(Evt2D1810* e, int f);
 extern char D_0055C7A0[];
 extern void std_tree_pair_int_value_compare_find_intR(Node2D1810** out, void* map, int* key);
 extern void std_map_int_netSystemField_end(void* out, void* map);
 extern void cAssocArray_int_netSystemField_Iterator_ctor(Node2D1810** out, void* in);
-extern Ent2D1810* NetRecvMap_Insert(void* map, int* key);
+extern Ent2D1810* std_tree_pair_int_value_compare_find_or_insert(void* map, int* key);
 extern char D_004DE260[];
 extern char D_0051F068[];
 extern unsigned char D_005721D0;
@@ -34,7 +34,7 @@ int tmp[1];
         Node2D1810* n;
         Arg2D1810* a = arg;
         void* m = D_0055C7A0;
-        Event_Construct(&e, D_0051F068);
+        cMessage_ctor_cMessageNameR(&e, D_0051F068);
         e.vt = D_004DE260;
         e.f2C = a->f8;
         e.f30 = a->fC;
@@ -45,7 +45,7 @@ int tmp[1];
         cAssocArray_int_netSystemField_Iterator_ctor(end, tmp);
         if (Eq2D1810(n, end[0]) ^ 1) {
             k2[0] = a->id;
-            MsgQueue_QueueClone(&e, NetRecvMap_Insert(m, k2)->b, 0, 0);
+            QueueMessage_cMessageR_cSystemP_int_int(&e, std_tree_pair_int_value_compare_find_or_insert(m, k2)->b, 0, 0);
         }
         e.vt = D_004DE260;
         cMessage_dtor(&e, 0);

@@ -8,23 +8,23 @@
 #include "types.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00381000 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x10]; int count; } E2List;
-extern void Resource_Construct(void*);
+extern void cFileMan_ctor_void(void*);
 extern void cFileMan_EncodeFilename_charP_cFileIOP_bool(void*, void*, int, int);
-extern int TexMan_FindOrLoad(E2List*, void*);
-extern void FileMan_Release(void*, int);
-int TexCache_LoadErrorTexture(E2List* s) {
+extern int cTexMan_AddTextureFromFile_cFileManR(E2List*, void*);
+extern void cFileMan_dtor(void*, int);
+int cTexMan_UseMrYuckTexture(E2List* s) {
     char buf[0xA0];
     int r;
-    Resource_Construct(buf);
+    cFileMan_ctor_void(buf);
     cFileMan_EncodeFilename_charP_cFileIOP_bool(buf, "GAMEDATA\\COMMON\\ERROR.TDX", 0, 0);
-    r = TexMan_FindOrLoad(s, buf);
+    r = cTexMan_AddTextureFromFile_cFileManR(s, buf);
     if (r == -1) r = s->count - 1;
-    FileMan_Release(buf, -1);
+    cFileMan_dtor(buf, -1);
     return r;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -47,13 +47,13 @@ typedef struct {
 extern "C" {
 extern char D_004BC2B8[];
 void cTexture_dtor(Obj_381080* o, int flags);
-void ObjectList_EraseRange_383420(ListNode_381080** result, List_381080* list, ListNode_381080** first, ListNode_381080** last);
+void std_list_deleter_int_erase_listdeleter_listdeleter(ListNode_381080** result, List_381080* list, ListNode_381080** first, ListNode_381080** last);
 }
 static inline void Free_381080(Obj_381080* o)
 {
     AllocGuard g;
     cTexture_dtor(o, -1);
-    Mem_Free(0, o, D_004BC2B8, 0x3D1);
+    cMemMan_Deallocate(0, o, D_004BC2B8, 0x3D1);
 }
 static inline void ListClear_381080(List_381080* self)
 {
@@ -62,7 +62,7 @@ static inline void ListClear_381080(List_381080* self)
     ListNode_381080* last;
     last = (ListNode_381080*)&self->sentinelPrev;
     first = self->first;
-    ObjectList_EraseRange_383420(&result, self, &first, &last);
+    std_list_deleter_int_erase_listdeleter_listdeleter(&result, self, &first, &last);
 }
 static inline void Reset_381080(Mgr_381080* m)
 {
@@ -153,7 +153,7 @@ static inline void merge_flush_func_00381260(void) {}
 extern "C" {
 extern char D_004BC300[];
 int cTexture_GetRefCount(void* t);
-void Tex_DestroyRecord(void* t, int a, int b, char* file, int line);
+void opDelete_cTextureP_int_bool_charP_etc(void* t, int a, int b, char* file, int line);
 void cTexMan_EraseDeletedTID(Obj_3812D0* o, int v);
 void cLList_int_PushBackActual(void* list, int* value);
 }
@@ -164,7 +164,7 @@ extern "C" void cTexMan_FlushDeletedTextures(Obj_3812D0* o)
         int v = o->head->value;
         int idx = v;
         if (o->tex[v] && cTexture_GetRefCount(o->tex[idx]) <= 0) {
-            Tex_DestroyRecord(o->tex[idx], 0, 1, D_004BC300, 0x39E);
+            opDelete_cTextureP_int_bool_charP_etc(o->tex[idx], 0, 1, D_004BC300, 0x39E);
             o->tex[idx] = 0;
             cTexMan_EraseDeletedTID(o, idx);
             cLList_int_PushBackActual(o->freeA, &idx);
@@ -189,7 +189,7 @@ typedef struct {
 } Obj_3813A0;
 
 extern "C" {
-void TexEntry_Release(void* t);
+void cTexture_DecRefCount(void* t);
 #if 0 /* merge_units */
 void cTexMan_EraseDeletedTID(Obj_3813A0* o, int v);
 #endif /* merge_units */
@@ -197,11 +197,11 @@ void cTexMan_EraseDeletedTID(Obj_3813A0* o, int v);
 
 }
 
-extern "C" void Tex_Release(Obj_3813A0* o, int idx, int keep)
+extern "C" void cTexMan_RemoveTexture(Obj_3813A0* o, int idx, int keep)
 {
     int i = idx;
     if (o->tex[idx]) {
-        TexEntry_Release(o->tex[idx]);
+        cTexture_DecRefCount(o->tex[idx]);
         if (cTexture_GetRefCount(o->tex[i]) == 0) {
             cLList_int_PushBackActual(o->list428, &i);
         }
@@ -209,7 +209,7 @@ extern "C" void Tex_Release(Obj_3813A0* o, int idx, int keep)
     if (keep == 0) {
         int j = idx;
         if (o->tex[idx] && cTexture_GetRefCount(o->tex[idx]) <= 0) {
-            Tex_DestroyRecord(o->tex[j], 0, 1, D_004BC300, 0x39E);
+            opDelete_cTextureP_int_bool_charP_etc(o->tex[j], 0, 1, D_004BC300, 0x39E);
             o->tex[j] = 0;
             cTexMan_EraseDeletedTID(o, j);
             cLList_int_PushBackActual(o->freeA, &j);

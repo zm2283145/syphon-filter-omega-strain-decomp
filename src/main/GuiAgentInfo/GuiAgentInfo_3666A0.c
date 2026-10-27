@@ -27,9 +27,9 @@ typedef struct Tag {
     signed char unused;
 } Tag;
 
-extern void String_Replace(String*, int, int, int, int, Tag);
+extern void std_basic_string_char_char_traits_char_do_replace(String*, int, int, int, int, Tag);
 
-/* Calls String_Replace(str, 0, size(str), a, b, tag). */
+/* Calls std_basic_string_char_char_traits_char_do_replace(str, 0, size(str), a, b, tag). */
 void func_003666A0(String* str, int a, int b) {
     Tag tag;
     int size;
@@ -38,7 +38,7 @@ void func_003666A0(String* str, int a, int b) {
     } else {
         size = (unsigned char)str->s.size;
     }
-    String_Replace(str, 0, size, a, b, tag);
+    std_basic_string_char_char_traits_char_do_replace(str, 0, size, a, b, tag);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003666A0 */

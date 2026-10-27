@@ -5,10 +5,10 @@
 
 #include "types.h"
 
-extern void Appearance_PackText(int dst, int text, int a2);
-extern int FileMan_ReadData(int a0);
+extern void SKL_ConvertSKL(int dst, int text, int a2);
+extern int cFileMan_Read_void(int a0);
 
-/* Convert a1 with FileMan_ReadData and pack the result with Appearance_PackText. */
-void Skeleton_BuildInFrame(int dst, int a1, int a2) {
-    Appearance_PackText(dst, FileMan_ReadData(a1), a2);
+/* Convert a1 with cFileMan_Read_void and pack the result with SKL_ConvertSKL. */
+void SKL_ReadSKL(int dst, int a1, int a2) {
+    SKL_ConvertSKL(dst, cFileMan_Read_void(a1), a2);
 }

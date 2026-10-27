@@ -21,24 +21,24 @@ extern int D_004F7A28;      /* cTimerExpiredMsg script type id */
 extern int D_004F7A38;      /* script type key */
 extern int D_004F7A40;      /* cGameGobjController script type id */
 extern char D_00555070[];   /* global script filter */
-extern int GObj_IdentityA(int gobj);
-extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
-extern int* Message_GetScriptTypeKeyPtr(void);
-extern int* cSystem_GetScriptTypeKeyPtr(void);
-extern int ScriptType_AddAccepted(int type, int iface);
-extern void ScriptType_SetParent(int type, int parentType);
+extern int cGOBJ_SOBJ_toInt(int gobj);
+extern int cScriptInterpreter_CallEvent(void* filter, int a1, int a2);
+extern int* cMessage_SOBJ_getClassId(void);
+extern int* cSystem_SOBJ_getClassId(void);
+extern int cScriptBase_declareMsgUse(int type, int iface);
+extern void cScriptBase_declareParent(int type, int parentType);
 extern int* cWeaponVisChangeMsg_GetScriptTypeKeyPtr(void);
 
 /* Gobj(controller): the controlled game object. */
 int Script_cGameGobjController_Gobj(GgcScriptArg* args) {
     cGameGobjController* ctrl = args[0].p;
-    return GObj_IdentityA(ctrl->gobj);
+    return cGOBJ_SOBJ_toInt(ctrl->gobj);
 }
 
-void ScriptType_cGameGobjController_Init(void) {
-    ScriptType_SetParent(D_004F7A40, *cSystem_GetScriptTypeKeyPtr());
-    ScriptType_AddAccepted(D_004F7A40, *cWeaponVisChangeMsg_GetScriptTypeKeyPtr());
-    ScriptType_AddAccepted(D_004F7A40, D_004F7A20);
+void cGameGobjController_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004F7A40, *cSystem_SOBJ_getClassId());
+    cScriptBase_declareMsgUse(D_004F7A40, *cWeaponVisChangeMsg_GetScriptTypeKeyPtr());
+    cScriptBase_declareMsgUse(D_004F7A40, D_004F7A20);
 }
 
 int* func_0022F170(void) {
@@ -49,8 +49,8 @@ int cGameGobjController_v0B(void) {
     return D_004F7A38;
 }
 
-int cGameGobjController_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cGameGobjController_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 
 /* IsPersonal(msg) */
@@ -60,8 +60,8 @@ int Script_cTimerExpiredMsg_IsPersonal(GgcScriptArg* args) {
 }
 
 /* cTimerExpiredMsg derives from the message base type. */
-void ScriptType_cTimerExpiredMsg_Init(void) {
-    ScriptType_SetParent(D_004F7A28, *Message_GetScriptTypeKeyPtr());
+void cTimerExpiredMsg_SOBJ_init(void) {
+    cScriptBase_declareParent(D_004F7A28, *cMessage_SOBJ_getClassId());
 }
 
 int* func_0022F1F0(void) {
@@ -92,18 +92,18 @@ extern char* D_005061D0; /* read cursor */
 extern char D_004F7A08[];
 extern char D_004DBA00[]; /* message vtable */
 extern char D_004DCF10[]; /* base message vtable */
-extern void Event_Construct(Msg* msg, void* name);
-extern void Event_Send(Msg* msg, void* target, int flags);
+extern void cMessage_ctor_cMessageNameR(Msg* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg* msg, void* target, int flags);
 extern void cMessage_dtor(Msg* msg, int flags);
 
 /* Sends target a message carrying the next byte read from the D_005061D0 cursor. */
 void cTimerExpiredMsg_NetReceive(void* target) {
     Msg msg;
-    Event_Construct(&msg, D_004F7A08);
+    cMessage_ctor_cMessageNameR(&msg, D_004F7A08);
     msg.vtable = D_004DBA00;
     msg.value = *D_005061D0++;
     msg.flag = 1;
-    Event_Send(&msg, target, 0);
+    QueueMessage_cMessageR_cSystemP_int(&msg, target, 0);
     msg.vtable = D_004DCF10;
     cMessage_dtor(&msg, 0);
 }

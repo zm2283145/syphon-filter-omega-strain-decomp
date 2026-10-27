@@ -7,6 +7,6 @@
 #include "types.h"
 #include "human_types.h"
 
-void* Actor_GetFloorRoot2(Actor* actor) {
+void* cHuman_GetFloorAnchor_void_2(Actor* actor) {
     return actor->floorRoot;
 }

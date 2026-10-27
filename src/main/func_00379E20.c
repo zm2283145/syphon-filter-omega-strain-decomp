@@ -5,7 +5,7 @@ typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 typedef struct { V4 r[4]; } M4_9E20;
 typedef struct { char p[0x1B8]; float nearz; } O_9E20;
 /* VU0 clip test against the VU0-memory near plane: hand-scheduled block emitted as written */
-int Shadow_ClipCode(O_9E20* o, M4_9E20* m, V4* v) {
+int XLib_GetOutCode(O_9E20* o, M4_9E20* m, V4* v) {
     int r; float* vm; float n; float z;
     asm {
         .set noreorder

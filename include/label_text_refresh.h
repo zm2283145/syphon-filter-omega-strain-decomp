@@ -4,7 +4,7 @@
 /*
  * Screen refresh: clear the global flag byte (+0x2F of *D_004FFC04), find
  * the child widget D_004A9CF8 and, when it is a text widget, set its text
- * to the localized textKey; then run AgentOpen_BuildSlotList and the base update.
+ * to the localized textKey; then run GuiAgentDirectoryWidget_UpdateNameList and the base update.
  * C++ only (#pragma cplusplus on before including).
  */
 #include "vslot_pad.h"
@@ -21,11 +21,11 @@ extern "C" {
 extern LtrGlobal* D_004FFC04;
 extern char D_004A9CF8[];
 extern char D_004A7520[];
-LtrWidget* GuiWidget_FindChildByName(void* self, char* name);
-char* Loc_LookupText(char* key);
+LtrWidget* GuiWidget_FindChild_charP(void* self, char* name);
+char* nGlobalization_GetString_charP(char* key);
 void GuiTextWidget_SetText(LtrWidget* w, char* text, int flags);
-void AgentOpen_BuildSlotList(void* self);
-void GuiWidget_BaseWake(void* self);
+void GuiAgentDirectoryWidget_UpdateNameList(void* self);
+void GuiWidget_onWake(void* self);
 }
 
 static inline LtrWidget* Ltr_Cast(LtrWidget* w)
@@ -39,11 +39,11 @@ static inline LtrWidget* Ltr_Cast(LtrWidget* w)
     {                                                                         \
         LtrWidget* w;                                                         \
         D_004FFC04->flag2F = 0;                                               \
-        w = Ltr_Cast(GuiWidget_FindChildByName(self, D_004A9CF8));                        \
+        w = Ltr_Cast(GuiWidget_FindChild_charP(self, D_004A9CF8));                        \
         if (w)                                                                \
-            GuiTextWidget_SetText(w, Loc_LookupText(textKey), 0);                     \
-        AgentOpen_BuildSlotList(self);                                                  \
-        GuiWidget_BaseWake(self);                                                  \
+            GuiTextWidget_SetText(w, nGlobalization_GetString_charP(textKey), 0);                     \
+        GuiAgentDirectoryWidget_UpdateNameList(self);                                                  \
+        GuiWidget_onWake(self);                                                  \
     }
 
 #endif /* LABEL_TEXT_REFRESH_H */

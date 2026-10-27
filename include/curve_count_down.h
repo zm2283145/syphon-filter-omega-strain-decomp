@@ -2,7 +2,7 @@
 #define CURVE_COUNT_DOWN_H
 
 /*
- * Curve count-down (same body as the matched QuatCurve_Timer): subtract dt
+ * Curve count-down (same body as the matched cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cQuaternion_cQuaternion_NextFrame): subtract dt
  * from the remaining time at +4, clamp at 0 with max.s, and report whether
  * it was running and has just reached 0. Plain C.
  */

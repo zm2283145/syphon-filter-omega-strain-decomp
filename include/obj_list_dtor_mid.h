@@ -3,7 +3,7 @@
 
 /*
  * Object-list destructor variant with two null tests on self:
- * erase [first, sentinel) through ObjectList_EraseRange, then delete when
+ * erase [first, sentinel) through std_list_deleter_voidPtr_erase_listdeleter_listdeleter, then delete when
  * deleteFlag > 0. C++ only (#pragma cplusplus on before including).
  */
 #include "obj_list_dtor.h"
@@ -18,7 +18,7 @@
                 ObjListNode* last;                                            \
                 last = (ObjListNode*)&self->sentinelPrev;                     \
                 first = self->first;                                          \
-                ObjectList_EraseRange(&result, self, &first, &last);          \
+                std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&result, self, &first, &last);          \
             }                                                                 \
             if (deleteFlag > 0)                                               \
                 operator_delete(self);                                        \

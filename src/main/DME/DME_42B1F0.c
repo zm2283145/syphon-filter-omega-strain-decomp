@@ -36,7 +36,7 @@ extern int D_00572428;
 extern int D_0057242C;
 extern int D_00572430;
 extern char D_00572468;
-extern void Net_ResetSession(void);
+extern void cDME_ExitGame(void);
 extern int NetFreeAllObjects(void);
 extern int NetLeave(int);
 extern int NetDisconnect(int);
@@ -47,11 +47,11 @@ void Net_CleanupGame(void) {
     cHeadSet_ShutdownAudio();
     NetLeave(0);
     NetDisconnect(0);
-    Net_ResetSession();
+    cDME_ExitGame();
 }
 
 /* Clears the session flags and ids back to their defaults. */
-void Net_ResetSession(void) {
+void cDME_ExitGame(void) {
     D_005721D8 = 0;
     D_005723B8 = 0;
     D_005721A8 = -1;
@@ -96,7 +96,7 @@ typedef struct NetworkPeerSamples {
 
 extern "C" {
 extern NetworkPeerSamples D_00572270[];
-int PlayerSlots_Get(void);
+int cNetObj_GetPlayer(void);
 }
 
 /* Average nonzero peer samples and cap the result with the retail NaN behavior. */
@@ -104,7 +104,7 @@ extern "C" float cDME_GetConnectionStatus(int peer)
 {
     float sum = 0.0f;
     int count = 0;
-    if (!PlayerSlots_Get())
+    if (!cNetObj_GetPlayer())
         return sum;
     for (int index = 0; index < 20; ++index) {
         unsigned int value = D_00572270[peer].values[index];

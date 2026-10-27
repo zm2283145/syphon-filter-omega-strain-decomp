@@ -5,9 +5,9 @@
 struct Raw_2B10 { int p; };
 struct Ent_2B10 { int key; unsigned char b4, b5, b6, b7, b8, b9; char pad[6]; };
 extern "C" {
-void Mem_Free(int, void*, char*, int);
-void List_Erase(int*, char*, int*);
-Raw_2B10 List_Begin(void*);
+void cMemMan_Deallocate(int, void*, char*, int);
+void std_list_deleter_voidPtr_erase_listdeleter(int*, char*, int*);
+Raw_2B10 std_list_deleter_voidPtr_begin_void(void*);
 Raw_2B10 std_list_tNPCInfoPtr_end(void*);
 void std_list_tNPCInfoPtr_generic_iterator_ctor(char**, const Raw_2B10&);
 void cLListIterator_tNPCInfoPtr_ctor(char**, const Raw_2B10&);
@@ -16,7 +16,7 @@ int cNPCInfoObject_Find(int*, int);
 extern char D_004BFCA0;
 extern char D_00582AF0;
 }
-#define Begin_2B10(o) std_list_tNPCInfoPtr_generic_iterator_ctor(o, List_Begin(&D_00582AF0))
+#define Begin_2B10(o) std_list_tNPCInfoPtr_generic_iterator_ctor(o, std_list_deleter_voidPtr_begin_void(&D_00582AF0))
 #define End_2B10(o) cLListIterator_tNPCInfoPtr_ctor(o, std_list_tNPCInfoPtr_end(&D_00582AF0))
 extern "C" void cNPCInfoObject_DoPendingAdds(int d0, Ent_2B10* tbl) {
     int k[1];
@@ -47,7 +47,7 @@ extern "C" void cNPCInfoObject_DoPendingAdds(int d0, Ent_2B10* tbl) {
                     t->b9 = e->b9;
                     {
                         AllocGuard g;
-                        Mem_Free(0, e, &D_004BFCA0, 0x6EC);
+                        cMemMan_Deallocate(0, e, &D_004BFCA0, 0x6EC);
                     }
                     {
                         char* c;
@@ -55,7 +55,7 @@ extern "C" void cNPCInfoObject_DoPendingAdds(int d0, Ent_2B10* tbl) {
                         int pos;
                         c = cur;
                         std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&pos, &c);
-                        List_Erase(&res, &D_00582AF0, &pos);
+                        std_list_deleter_voidPtr_erase_listdeleter(&res, &D_00582AF0, &pos);
                     }
                 }
             }

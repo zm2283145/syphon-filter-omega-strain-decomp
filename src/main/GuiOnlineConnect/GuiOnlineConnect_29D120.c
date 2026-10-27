@@ -10,29 +10,29 @@ struct S_0029D120 {
 extern "C" {
 extern void* D_004FFC04;
 extern char D_004AABF0[];
-void* DME_GetLobby(void);
-void App_CardWaitPoll(void);
-int SFOLobby_EnterNetworkState(void* g, void* cb, void* a, void* b, void* c);
+void* cDME_GetLobby(void);
+void cGameFrontEnd_LobbyCallback(void);
+int SFOLobby_ConfigScreenStart(void* g, void* cb, void* a, void* b, void* c);
 void GuiTextListWidget_Clear(L_0029D120* l);
-E_0029D120* LobbyArray_At(void* v, int i);
+E_0029D120* SFOLobbyList_GetSlot(void* v, int i);
 void GuiTextListWidget_AddItem(L_0029D120* l, char* s, int i, int a);
-void GuiArrayWidget_Select(L_0029D120* l, int a, int b);
+void GuiArrayWidget_SetSelected(L_0029D120* l, int a, int b);
 void GuiOnlineConnect_ShowGroup(S_0029D120* self, int a);
-void SFOLobby_LeaveNetworkState(void* g);
-unsigned char SFOLobby_FormatError(void* g, int a);
-void FrontEnd_LeaveOnline(void* ui, int a);
-char* GuiScreen_GetLobbyString(S_0029D120* self, int a, int b, int c, int d, int e);
-void String_CtorCStr_13B480(Str_0029D120* s, const char* c);
-char* String_CStr(Str_0029D120* s);
-int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_0029D120* d, int e);
+void SFOLobby_ConfigScreenExit(void* g);
+unsigned char SFOLobby_GetErrorDetails(void* g, int a);
+void cGameFrontEnd_LobbyDestroy(void* ui, int a);
+char* GuiLobbyScreen_GetLobbyString(S_0029D120* self, int a, int b, int c, int d, int e);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_0029D120* s, const char* c);
+char* std_basic_string_char_char_traits_char_c_str(Str_0029D120* s);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, char* c, S_0029D120* d, int e);
 void String_Dtor(Str_0029D120* s, int flags);
 }
 extern "C" void GuiOnlineConnect_ListConfigs(S_0029D120* self)
 {
-    void* g = DME_GetLobby();
+    void* g = cDME_GetLobby();
     if (!g)
         return;
-    if (SFOLobby_EnterNetworkState(g, (void*)App_CardWaitPoll, self->f98, self->fB4, self->fD0)) {
+    if (SFOLobby_ConfigScreenStart(g, (void*)cGameFrontEnd_LobbyCallback, self->f98, self->fB4, self->fD0)) {
         int sel;
         int i;
         self->b94 = 1;
@@ -40,29 +40,29 @@ extern "C" void GuiOnlineConnect_ListConfigs(S_0029D120* self)
         GuiTextListWidget_Clear(self->pEC);
         sel = -1;
         for (i = 0; i < self->f9C; i++) {
-            E_0029D120* e = LobbyArray_At(self->f98, i);
+            E_0029D120* e = SFOLobbyList_GetSlot(self->f98, i);
             GuiTextListWidget_AddItem(self->pEC, e->name, i, 0);
             if (e->b0)
                 sel = i;
         }
         if (sel != -1)
-            GuiArrayWidget_Select(self->pEC, 0, sel);
+            GuiArrayWidget_SetSelected(self->pEC, 0, sel);
         GuiOnlineConnect_ShowGroup(self, 0);
     } else {
         unsigned char r;
-        SFOLobby_LeaveNetworkState(g);
+        SFOLobby_ConfigScreenExit(g);
         self->b94 = 0;
-        r = SFOLobby_FormatError(g, 0);
+        r = SFOLobby_GetErrorDetails(g, 0);
         if (r == 0x2F || r == 0x30) {
             Str_0029D120 a;
             Str_0029D120 b;
             self->f88 = 3;
-            FrontEnd_LeaveOnline(D_004FFC04, 1);
-            String_CtorCStr_13B480(&a, GuiScreen_GetLobbyString(self, 6, 0, 0, 0, 0));
-            String_CtorCStr_13B480(&b, GuiScreen_GetLobbyString(self, r == 0x2F ? 8 : 0x83, 0, 0, 0, 0));
+            cGameFrontEnd_LobbyDestroy(D_004FFC04, 1);
+            std_basic_string_char_char_traits_char_ctor_charP(&a, GuiLobbyScreen_GetLobbyString(self, 6, 0, 0, 0, 0));
+            std_basic_string_char_char_traits_char_ctor_charP(&b, GuiLobbyScreen_GetLobbyString(self, r == 0x2F ? 8 : 0x83, 0, 0, 0, 0));
             {
-                char* tb = String_CStr(&b);
-                FrontEnd_OpenPopup(D_004FFC04, 5, String_CStr(&a), tb, self, 0);
+                char* tb = std_basic_string_char_char_traits_char_c_str(&b);
+                cGameFrontEnd_PushMessageBox(D_004FFC04, 5, std_basic_string_char_char_traits_char_c_str(&a), tb, self, 0);
             }
             String_Dtor(&b, 0);
             String_Dtor(&a, 0);
@@ -70,7 +70,7 @@ extern "C" void GuiOnlineConnect_ListConfigs(S_0029D120* self)
             void* ui;
             self->f88 = 4;
             ui = D_004FFC04;
-            FrontEnd_OpenPopup(ui, 2, D_004AABF0, GuiScreen_GetLobbyString(self, 5, 0, 0, 0, 0), self, 0);
+            cGameFrontEnd_PushMessageBox(ui, 2, D_004AABF0, GuiLobbyScreen_GetLobbyString(self, 5, 0, 0, 0, 0), self, 0);
         }
     }
 }

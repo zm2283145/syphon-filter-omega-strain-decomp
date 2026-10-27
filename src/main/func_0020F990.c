@@ -19,20 +19,20 @@ static inline void Req_Init(SoundRequest* p, int type, __int128 name, Voice_F190
 static inline void Req_Default(SoundRequest* p) {
     p->voiceId = -2;
     p->voice = 0;
-    Resource_Construct(&p->a);
-    Resource_Construct(&p->b);
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
 }
-SoundEvent* SoundEvent_CtorFromPreset(SoundEvent* ev, Src_F190* src, Voice_F190* voice) {
+SoundEvent* cPlaySoundMsg_ctor_cSndFxR(SoundEvent* ev, Src_F190* src, Voice_F190* voice) {
     SoundRequest* p;
-    Event_Construct(ev, g_PlaySndMsgClass);
+    cMessage_ctor_cMessageNameR(ev, g_PlaySndMsgClass);
     ev->vtable = D_004DAE30;
     p = &ev->req;
     p->voiceId = -2;
     p->voice = 0;
-    Resource_Construct(&p->a);
-    Resource_Construct(&p->b);
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
     Req_Init(&ev->req, src->type, src->name, voice, src->x180);

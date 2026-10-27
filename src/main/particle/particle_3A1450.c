@@ -43,12 +43,12 @@ struct Self {
 
 extern char D_0053B540[];
 extern "C" {
-int ParticleDefs_FindByName(void*, void*);
-Self* ParticleEmitter_SpawnChildren(float, int, Self*, int, void*);
+int GetEffectID__15cParticleSystemCFRC1(void*, void*);
+Self* cParticle_AddChild(float, int, Self*, int, void*);
 }
 
 /* Fires each pending timed entry whose next time has been reached, marking linked peers. */
-extern "C" void ParticleEmitter_SpawnChild(Self* self, float t, int arg)
+extern "C" void cParticleBase_ActivateChildren(Self* self, float t, int arg)
 {
     int k = 0;
     int i;
@@ -58,8 +58,8 @@ extern "C" void ParticleEmitter_SpawnChild(Self* self, float t, int arg)
             float tm = self->GetDef()->entries[i].times[self->idx[i]];
             if (tm >= 0.0f) {
                 while (t >= tm) {
-                    int r = ParticleDefs_FindByName(D_0053B540, &self->GetDef()->entries[i]);
-                    Self* o = ParticleEmitter_SpawnChildren(tm + self->f64, arg, self, r, self->GetDef()->entries[i].extra);
+                    int r = GetEffectID__15cParticleSystemCFRC1(D_0053B540, &self->GetDef()->entries[i]);
+                    Self* o = cParticle_AddChild(tm + self->f64, arg, self, r, self->GetDef()->entries[i].extra);
                     if (o && self->GetDef() == o->GetDef()) {
                         int j;
                         for (j = 0; j < self->GetDef()->count; j++) {
@@ -119,11 +119,11 @@ extern "C" unsigned char D_00535D61;
 extern "C" char g_LightMgr[];
 extern "C" V4 D_00537D80;
 #if 0 /* merge_units */
-extern "C" void ParticleEmitter_SpawnChild(Self_003A1760* self, float t, int arg);
+extern "C" void cParticleBase_ActivateChildren(Self_003A1760* self, float t, int arg);
 #endif /* merge_units */
-#define ParticleEmitter_SpawnChild(a0, a1, a2) (ParticleEmitter_SpawnChild((Self *)(a0), (a1), (a2))) /* merge_units */
+#define cParticleBase_ActivateChildren(a0, a1, a2) (cParticleBase_ActivateChildren((Self *)(a0), (a1), (a2))) /* merge_units */
 
-extern "C" void LightMgr_GatherModelLights(void* m, unsigned int mask, unsigned int flags, void* out);
+extern "C" void cLightMan_Update(void* m, unsigned int mask, unsigned int flags, void* out);
 
 static inline int Vec4_Equal_(V4* a, V4* b) {
     int k, fl;
@@ -150,9 +150,9 @@ static inline int Vec4_Equal_(V4* a, V4* b) {
 }
 static inline bool Neq(V4* a, V4* b) { return !Vec4_Equal_(a, b); }
 
-extern "C" void ParticleEmitterBase_Update(Self_003A1760* self, float t, int arg, Src* src)
+extern "C" void cParticleBase_NextFrame(Self_003A1760* self, float t, int arg, Src* src)
 {
-    ParticleEmitter_SpawnChild(self, t - self->f64, arg);
+    cParticleBase_ActivateChildren(self, t - self->f64, arg);
     if (self->GetDef()->w8F0 && !(t - self->f68 <= 0.25f)) {
         V4* p = &src->pos;
         if (Neq(&D_00535D40, p)) {
@@ -161,7 +161,7 @@ extern "C" void ParticleEmitterBase_Update(Self_003A1760* self, float t, int arg
             D_00535D60 = 1;
             D_00535D61 = 1;
         }
-        LightMgr_GatherModelLights(g_LightMgr, 0x16, 1, 0);
+        cLightMan_Update(g_LightMgr, 0x16, 1, 0);
         void* xx = &self->col; /* dead on purpose: retail keeps this addiu */
         SQ(&self->col, LQ(&D_00537D80)); /* split lq/sq: retail interleaves the address setup */
         self->col.x = 0.0078125f * (self->col.x * self->GetDef()->s[0]);
@@ -171,7 +171,7 @@ extern "C" void ParticleEmitterBase_Update(Self_003A1760* self, float t, int arg
     }
     self->b84 = 1;
 }
-#undef ParticleEmitter_SpawnChild /* merge_units */
+#undef cParticleBase_ActivateChildren /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003A1760(void) {}
 #pragma pop /* merge_units */
@@ -217,7 +217,7 @@ typedef struct {
     unsigned char x84;
 } Self3A1990;
 
-Self3A1990* ParticleEmitterBase_Construct(Self3A1990* self, int a, Info3A1990* info, float f)
+Self3A1990* cParticleBase_ctor(Self3A1990* self, int a, Info3A1990* info, float f)
 {
     int i;
     self->vt = D_004DFAD8;
@@ -313,8 +313,8 @@ extern float D_00538380;
 extern float D_00538370;
 extern Ids* g_TextureMgr;
 void cDmaMan_InsertChain(void* a, int b, int c, int d);
-void Renderer_UpdateCameraMatrices(void* r);
-void Renderer_SetDrawState(void* r, M* m, int a, int f);
+void XLib_UpdateCompMat(void* r);
+void XLib_SetModelContext(void* r, M* m, int a, int f);
 void cTexMan_EndBatch(Ids* p);
 }
 #define RS ((Rs*)g_Video)
@@ -340,7 +340,7 @@ static inline void PushMul(M* m)
     MulBy(&RS->mtx[D_00538C64], m);
     D_00538C68 = 1;
 }
-extern "C" void ParticleInst_Draw(Obj2* o, int flags, M* mtx)
+extern "C" void cParticle_Render(Obj2* o, int flags, M* mtx)
 {
     Obj* self = (Obj*)o;
     if (flags == 0x80) return;
@@ -363,7 +363,7 @@ extern "C" void ParticleInst_Draw(Obj2* o, int flags, M* mtx)
             D_0053BAC0 = 1;
             D_0053BAD0.x = 0.0f; D_0053BAD0.y = 0.0f; D_0053BAD0.z = 0.0f; D_0053BAD0.w = 1.0f;
         }
-        Renderer_UpdateCameraMatrices(g_Video);
+        XLib_UpdateCompMat(g_Video);
         V q;
         V p = D_0053BAD0;
         M* mm = &D_005390F0;
@@ -391,7 +391,7 @@ extern "C" void ParticleInst_Draw(Obj2* o, int flags, M* mtx)
     D_005381D0 = D_0053BAF0;
     int st = 0x100005;
     if (n->GetDef()->b64) st |= 0x2000;
-    Renderer_SetDrawState(g_Video, mtx, 2, st);
+    XLib_SetModelContext(g_Video, mtx, 2, st);
     M* cur = 0;
     while (n != &self->end) {
         if (!n->b84 || !n->f6C) { n = n->next; continue; }
@@ -423,9 +423,9 @@ extern "C" void ParticleInst_Draw(Obj2* o, int flags, M* mtx)
         }
         if (dirty) {
             if (cur)
-                Renderer_SetDrawState(g_Video, cur, 2, st);
+                XLib_SetModelContext(g_Video, cur, 2, st);
             else
-                Renderer_SetDrawState(g_Video, mtx, 2, st);
+                XLib_SetModelContext(g_Video, mtx, 2, st);
         }
         n->Draw(o->f50, a, o->f54, 2, o->f5C);
         n = n->next;

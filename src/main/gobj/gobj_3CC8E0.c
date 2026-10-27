@@ -20,7 +20,7 @@ struct VC003CC8E0 { virtual int v0(); virtual int v1(); virtual int v2(); virtua
 extern "C" {
 
 }
-extern "C" int TeamTable_AreEnemies(char * arg0, char * arg1) {
+extern "C" int cGOBJ_Enemy(char * arg0, char * arg1) {
     int var_v0;
     void **temp_a0;
     void **temp_s0;
@@ -46,7 +46,7 @@ static inline void merge_flush_func_003CC8E0(void) {}
 #pragma cplusplus on
 class C003CC950 { public: VPAD16(p0) VPAD8(p1)  virtual int f(); };
 struct O003CC950 { char pad[0x58]; C003CC950* m; };
-extern "C" int Controller_NotifySeen(O003CC950* self)
+extern "C" int cGOBJ_Team(O003CC950* self)
 {
     C003CC950* m = self->m;
     int r = -0x1;

@@ -6,13 +6,13 @@
 #include "types.h"
 #include "weapon_types.h"
 
-extern int WeaponInv_ClipsForActor(void* a0, int key);
+extern int cHuman_AdjustMaxClips(void* a0, int key);
 
-/* def->unk70 * WeaponInv_ClipsForActor(inv->unk88, def->unk74) - slot->unkC for the given slot. */
-int WeaponInv_GetSpareRoom(Inventory* inv, unsigned char index) {
+/* def->unk70 * cHuman_AdjustMaxClips(inv->unk88, def->unk74) - slot->unkC for the given slot. */
+int cWeapon_NeededAmmo(Inventory* inv, unsigned char index) {
     WeaponDef* def;
     InventorySlot* slot = &inv->slots[index];
 
-    def = WeaponDb_Get(g_WeaponDatabase, slot->id);
-    return def->unk70 * WeaponInv_ClipsForActor(inv->unk88, def->unk74) - slot->unkC;
+    def = cWeaponDB_GetEntry(g_WeaponDatabase, slot->id);
+    return def->unk70 * cHuman_AdjustMaxClips(inv->unk88, def->unk74) - slot->unkC;
 }

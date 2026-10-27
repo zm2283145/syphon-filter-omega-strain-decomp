@@ -16,9 +16,9 @@
 
 struct VC00456600 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(...); };
 extern "C" {
-int Loc_LookupText(...);                             
+int nGlobalization_GetString_charP(...);                             
 int GuiTextWidget_SetText(...);                   
-void **GuiWidget_FindChildByName(...);                          
+void **GuiWidget_FindChild_charP(...);                          
 int sprintf(...);                           
 extern int D_004A7520;
 extern int D_004C1A38;
@@ -29,11 +29,11 @@ extern "C" void GuiStartMenu_SetCurrentOption(int arg0, int arg1) {
     void **var_s0;
 
     F_(arg0, 0xB0, int) = arg1;
-    var_s0 = GuiWidget_FindChildByName(arg0, ((int*)"label_to_map"));
+    var_s0 = GuiWidget_FindChild_charP(arg0, ((int*)"label_to_map"));
     var_s0 = ((var_s0 != NULL) && (((VC00456600 *)(var_s0))->v20(&D_004A7520) != 0)) ? var_s0 : NULL;
     if (var_s0 != NULL) {
         sprintf(sp30, ((int*)"StartMenuOpt%d"), arg1);
-        temp_v0 = Loc_LookupText(sp30);
+        temp_v0 = nGlobalization_GetString_charP(sp30);
         if (temp_v0 != NULL) {
             GuiTextWidget_SetText(var_s0, temp_v0, 0);
             return;
@@ -55,31 +55,31 @@ extern "C" {
 extern void* g_Hud;
 extern unsigned char D_004FFBB7;
 extern char g_Game[];
-Mgr_4566D0* Gui_GetScreenStack(void);
-void Hud_ClosePauseMenu(void* p);
-void Game_SetPaused(void* p, int v);
-int GuiObjectives_HandleInput(O_4566D0* o, Ev_4566D0* ev);
-int GuiStartMenu_OnInput(O_4566D0* o, Ev_4566D0* ev);
+Mgr_4566D0* Gui_Canvas(void);
+void cHud_DeactivateObjectiveMenu(void* p);
+void cGameSystem_PauseGame(void* p, int v);
+int GuiObjectives_onInput(O_4566D0* o, Ev_4566D0* ev);
+int GuiStartMenu_onInput(O_4566D0* o, Ev_4566D0* ev);
 }
 static inline bool Down2_4566D0(Ev_4566D0* e) { return e->type == 1 && e->b2 == 0; }
 static inline bool Btn2_4566D0(Ev_4566D0* e, int b) { return Down2_4566D0(e) && e->btn == b; }
 static inline bool Plain2_4566D0(Ev_4566D0* e, int b) { return Btn2_4566D0(e, b) && e->b6 == 0; }
 
-int GuiStartMenu_OnInput(O_4566D0* o, Ev_4566D0* ev)
+int GuiStartMenu_onInput(O_4566D0* o, Ev_4566D0* ev)
 {
-    if (Plain2_4566D0(ev, 0x10) && Gui_GetScreenStack()->sel->f1C == o->fAC) {
-        Hud_ClosePauseMenu(g_Hud);
+    if (Plain2_4566D0(ev, 0x10) && Gui_Canvas()->sel->f1C == o->fAC) {
+        cHud_DeactivateObjectiveMenu(g_Hud);
         if (D_004FFBB7)
-            Game_SetPaused(g_Game, 0);
+            cGameSystem_PauseGame(g_Game, 0);
         return 1;
     }
     if (Plain2_4566D0(ev, 0x800)) {
-        Hud_ClosePauseMenu(g_Hud);
+        cHud_DeactivateObjectiveMenu(g_Hud);
         if (D_004FFBB7)
-            Game_SetPaused(g_Game, 0);
+            cGameSystem_PauseGame(g_Game, 0);
         return 1;
     }
-    return GuiObjectives_HandleInput(o, ev);
+    return GuiObjectives_onInput(o, ev);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_004566D0 */

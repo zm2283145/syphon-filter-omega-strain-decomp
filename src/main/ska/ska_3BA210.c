@@ -21,7 +21,7 @@ typedef struct ObjB0 {
     char sub[4];
 } ObjB0;
 
-extern void AnimRoot_ConstructBase(TmpB0*);
+extern void cSkaAnimAnchor_TreeNodeData_ctor_void(TmpB0*);
 extern void cSkaAnimAnchor_TreeNodeData_ctor_cSkaAnimAnchorTreeNodeDataR(ObjB0*, TmpB0*);
 #if 0 /* merge_units */
 extern void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor_void(void*);
@@ -32,7 +32,7 @@ extern void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor_void(void*);
 /* Constructor: initializes from a default temporary and sets up the sub-object at +0xB4. */
 ObjB0* cSkaAnimAnchor_TreeNode_ctor_void(ObjB0* o) {
     TmpB0 tmp;
-    AnimRoot_ConstructBase(&tmp);
+    cSkaAnimAnchor_TreeNodeData_ctor_void(&tmp);
     cSkaAnimAnchor_TreeNodeData_ctor_cSkaAnimAnchorTreeNodeDataR(o, &tmp);
     o->unkB0 = 0;
     cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor_void(o->sub);

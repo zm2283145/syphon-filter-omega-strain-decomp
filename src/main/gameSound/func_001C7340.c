@@ -1,9 +1,9 @@
 #include "types.h"
 typedef struct { void* vt; char pad[0x20]; int id; int arg; char pad2c[4]; } Msg_7340;
-int Event_Construct(Msg_7340*, void*);
-int Stream_ReadU32(int*);
+int cMessage_ctor_cMessageNameR(Msg_7340*, void*);
+int cNetMsg_GetInt(int*);
 int cMessage_dtor(Msg_7340*, int);
-void* Loc_GetStoredKey(int);
+void* nGlobalization_GetStringTag(int);
 int Voice_PlayQuip(void*, int, int);
 extern char D_004DCF10[];
 extern char D_004DAC70[];
@@ -14,11 +14,11 @@ void cPlayQuipMsg_NetReceive(void)
 {
     Msg_7340 m;
     void* p;
-    Event_Construct(&m, D_004F2D00);
+    cMessage_ctor_cMessageNameR(&m, D_004F2D00);
     m.vt = D_004DAC70;
-    Stream_ReadU32(&m.id);
-    Stream_ReadU32(&m.arg);
-    p = (m.id != -1) ? Loc_GetStoredKey(m.id) : 0;
+    cNetMsg_GetInt(&m.id);
+    cNetMsg_GetInt(&m.arg);
+    p = (m.id != -1) ? nGlobalization_GetStringTag(m.id) : 0;
     if (p) Voice_PlayQuip(p, m.arg, 1);
     m.vt = D_004DCF10;
     cMessage_dtor(&m, 0);

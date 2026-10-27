@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* Actor_GetBounds(char* self) {
+void* cHuman_GetBBox(char* self) {
     return self + 11904;
 }

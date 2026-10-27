@@ -24,16 +24,16 @@ struct Path {
 typedef struct cPathedGOBJ { char pad[0x64]; Path* path; /* +0x64 */ } cPathedGOBJ;
 
 extern char g_TargetVisMgr[];
-extern "C" void Object_Deactivate(cPathedGOBJ* self, void* arg);
-extern "C" void TargetVis_Unregister(void* list, cPathedGOBJ* obj);
+extern "C" void cGOBJ_Deactivate(cPathedGOBJ* self, void* arg);
+extern "C" void cTargetManager_RemoveGobj(void* list, cPathedGOBJ* obj);
 
-/* Notifies the path (virtual +0x60), runs the base handler, then TargetVis_Unregister(g_TargetVisMgr, self). */
-extern "C" void cGameGOBJ_v16(cPathedGOBJ* self, void* arg)
+/* Notifies the path (virtual +0x60), runs the base handler, then cTargetManager_RemoveGobj(g_TargetVisMgr, self). */
+extern "C" void cGameGOBJ_Deactivate(cPathedGOBJ* self, void* arg)
 {
     if (self->path)
         self->path->Method60();
-    Object_Deactivate(self, arg);
-    TargetVis_Unregister(g_TargetVisMgr, self);
+    cGOBJ_Deactivate(self, arg);
+    cTargetManager_RemoveGobj(g_TargetVisMgr, self);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0021ABC0(void) {}
@@ -67,14 +67,14 @@ struct cGameGOBJ {
     Door* door; /* +0x64 */
 };
 
-extern "C" void Object_Activate(cGameGOBJ* self, void* arg);
+extern "C" void cGOBJ_Activate(cGameGOBJ* self, void* arg);
 
-/* Notifies the door object (+0x64, virtual +0x5C), runs Object_Activate and virtual +0xC4. */
-extern "C" void cGameGOBJ_v15(cGameGOBJ* self, void* arg)
+/* Notifies the door object (+0x64, virtual +0x5C), runs cGOBJ_Activate and virtual +0xC4. */
+extern "C" void cGameGOBJ_Activate(cGameGOBJ* self, void* arg)
 {
     if (self->door)
     self->door->Method5C();
-    Object_Activate(self, arg);
+    cGOBJ_Activate(self, arg);
     self->MethodC4();
 }
 /* merge_units: generate this block's code under its own pragmas */

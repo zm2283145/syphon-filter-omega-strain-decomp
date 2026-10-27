@@ -13,11 +13,11 @@ int cArray_cNIEventBasePtr_Size(Vec*);
 Obj** std_vector_imp_cNIEventBasePtr_1_opIndex(Vec*, int);
 Obj** std_vector_cNIEventBasePtr_opIndex(Vec*, int);
 Obj** cArray_cNIEventBasePtr_opIndex(Vec*, int);
-void cNIEventOBJ_SetSpeedRecursive(Obj* o, float t);
+void cNIEventBase_SetSpeed(Obj* o, float t);
 }
 #pragma push
 #pragma opt_strength_reduction off
-extern "C" void cNIEventOBJ_SetSpeedRecursive(Obj* o, float t)
+extern "C" void cNIEventBase_SetSpeed(Obj* o, float t)
 {
     o->f134 = t;
     for (int i = 0; i < o->v.n; i++) {
@@ -33,7 +33,7 @@ extern "C" void cNIEventOBJ_SetSpeedRecursive(Obj* o, float t)
                     Obj* d = *cArray_cNIEventBasePtr_opIndex(&c->v, l);
                     d->f134 = t;
                     for (int m = 0; m < cArray_cNIEventBasePtr_Size(&d->v); m++)
-                        cNIEventOBJ_SetSpeedRecursive(*cArray_cNIEventBasePtr_opIndex(&d->v, m), t);
+                        cNIEventBase_SetSpeed(*cArray_cNIEventBasePtr_opIndex(&d->v, m), t);
                 }
             }
         }

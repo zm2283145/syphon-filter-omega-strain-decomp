@@ -16,7 +16,7 @@ typedef struct E3PopReader {
 } E3PopReader;
 
 /* Scans the population buffer for a tag word; leaves the cursor just after it. */
-int Pop_FindTag(E3PopReader* r, int tag) {
+int cPopulation_SeekBlock(E3PopReader* r, int tag) {
     int off;
     int v;
     v = *r->cur;
@@ -67,18 +67,18 @@ void cPopulation_Rewind(Unk0013BDE0* self, int amount) {
 #pragma cplusplus on
 #include "alloc_guard.h"
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 void operator_delete(void* p);
 }
 #include "population.h"
 /* flag > 0: also delete the object (-1 = destroy in place). */
-extern "C" Population* Population_Dtor(Population* self, short flag)
+extern "C" Population* cPopulation_dtor(Population* self, short flag)
 {
     if (self) {
         if (self->ownsData) {
             void* b = self->data;
             AllocGuard g;
-            Mem_Free(1, b, "population.cc", 0x43);
+            cMemMan_Deallocate(1, b, "population.cc", 0x43);
         }
         if (flag > 0)
             operator_delete(self);
@@ -96,49 +96,49 @@ typedef struct { int a[0x28]; } H178;
 extern "C" {
 extern int sprintf(char*, const char*, ...);
 extern void cFileMan_ctor_charP_cHogFileR_bool(H178*, char*, void*, int);
-extern int FileMan_FindMember(H178*);
+extern int cFileMan_Open(H178*);
 extern void cFileMan_EncodeFilename_charP_cFileIOP_bool(H178*, char*, int, int);
-extern int FileMan_GetSize(H178*);
-extern void* Mem_Alloc(int, int, char*, int);
+extern int cFileMan_GetSize(H178*);
+extern void* cMemMan_Allocate(int, int, char*, int);
 extern char D_0049CDA0[];
 extern char D_0048B2F8[];
-extern void FileMan_LoadMemberSync(H178*, void**, int);
+extern void cFileMan_Read_charPP_int(H178*, void**, int);
 extern void cFileMan_Close(H178*);
-extern void* FileMan_ReadData(H178*);
-extern void FileMan_Release(H178*, int);
+extern void* cFileMan_Read_void(H178*);
+extern void cFileMan_dtor(H178*, int);
 }
-extern "C" Population* Population_Load(Population* p, char* name, void* arg) {
+extern "C" Population* cPopulation_ctor(Population* p, char* name, void* arg) {
     char buf[0x90];
     H178 h;
     sprintf(buf, "%s.pop", name);
     cFileMan_ctor_charP_cHogFileR_bool(&h, buf, arg, 0);
-    if ((unsigned char)FileMan_FindMember(&h)) {
+    if ((unsigned char)cFileMan_Open(&h)) {
         void* m;
         sprintf(buf, "%s\\%s\\DATA.POP", D_0048B2F8, name, name);
         cFileMan_EncodeFilename_charP_cFileIOP_bool(&h, buf, 0, 0);
-        FileMan_FindMember(&h);
-        p->size = FileMan_GetSize(&h);
+        cFileMan_Open(&h);
+        p->size = cFileMan_GetSize(&h);
         p->ownsData = 1;
         {
         int sz = p->size;
         if (g_ProfileLockEnabled) Alloc_Lock(9);
         g_ProfileLockDepth++;
-        m = Mem_Alloc(1, sz, D_0049CDA0, 0x27);
+        m = cMemMan_Allocate(1, sz, D_0049CDA0, 0x27);
         }
-        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        if (g_ProfileLockEnabled) EnableIntc(9);
         g_ProfileLockDepth--;
         p->data = m;
-        FileMan_LoadMemberSync(&h, &p->data, p->size);
+        cFileMan_Read_charPP_int(&h, &p->data, p->size);
         cFileMan_Close(&h);
     } else {
         p->ownsData = 0;
-        p->data = FileMan_ReadData(&h);
-        p->size = FileMan_GetSize(&h);
+        p->data = cFileMan_Read_void(&h);
+        p->size = cFileMan_GetSize(&h);
     }
     p->cursor = p->data;
     p->count = *(int*)p->cursor;
     p->cursor = (char*)p->cursor + 4;
-    FileMan_Release(&h, -1);
+    cFileMan_dtor(&h, -1);
     return p;
 }
 #pragma pop /* merge_units */

@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { char pad[0x324]; float a; float b; } S1CA7D0;
-void SecondaryAim_RequestRecoil(S1CA7D0* p, float a, float b)
+void cHumanIkRoutine_ApplyGunRecoil_float_float(S1CA7D0* p, float a, float b)
 {
     p->a = a;
     if (b <= 4.0f) {

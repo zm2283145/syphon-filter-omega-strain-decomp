@@ -37,18 +37,18 @@ extern char D_004B9F70[];
 extern char D_004B9F78[];
 extern int strcmp(const char* a, const char* b);
 extern int sprintf(char* buf, const char* fmt, ...);
-extern int AgentPartCache_FindMesh(void* db, __int128 key);
-extern int AgentPartCache_FindTexture(void* db, __int128 key);
-extern void GuiAgentModify_Refresh(S_341C50* o);
+extern int FindPartNumber__7MonsterF1(void* db, __int128 key);
+extern int FindTextureNumber__7MonsterF1(void* db, __int128 key);
+extern void GuiAgentModify_CountSelections(S_341C50* o);
 extern void GuiTextWidget_SetText(W_341C50* w, char* text, int flags);
-extern void GuiWidget_SendEvent(S_341C50* o, W_341C50* w, int kind, int v, int f);
+extern void GuiWidget_SendMessage(S_341C50* o, W_341C50* w, int kind, int v, int f);
 
 static inline void Slider_341C50(S_341C50* o, W_341C50* w, int kind, int v, int f)
 {
-    if (w) GuiWidget_SendEvent(o, w, kind, v, f);
+    if (w) GuiWidget_SendMessage(o, w, kind, v, f);
 }
 
-void GuiAgentModify_SelectCategory(S_341C50* o, char* name)
+void GuiAgentModify_UserInterfaceNextButton(S_341C50* o, char* name)
 {
     char buf[0x10];
     int i;
@@ -67,9 +67,9 @@ void GuiAgentModify_SelectCategory(S_341C50* o, char* name)
                 return;
             }
             o->mode = D_00492A00[o->cur].mode;
-            o->v100 = AgentPartCache_FindMesh(g_AgentPartCache, o->items->e[o->slot].a);
-            o->v104 = AgentPartCache_FindTexture(g_AgentPartCache, o->items->e[o->slot].b);
-            GuiAgentModify_Refresh(o);
+            o->v100 = FindPartNumber__7MonsterF1(g_AgentPartCache, o->items->e[o->slot].a);
+            o->v104 = FindTextureNumber__7MonsterF1(g_AgentPartCache, o->items->e[o->slot].b);
+            GuiAgentModify_CountSelections(o);
             if (o->count) o->pos = o->pos % o->count;
             else o->pos = 0;
             *(short*)((char*)D_00492A02 + o->cur * 4) = o->pos;

@@ -12,12 +12,12 @@
 #pragma push /* merge_units */
 typedef struct { char pad[0xC]; char f0C[4]; } Gen00221460;
 extern unsigned char g_IsMultiplayer;
-extern void Object_Deactivate(Gen00221460* self, int a);
+extern void cGOBJ_Deactivate(Gen00221460* self, int a);
 extern void cGenInfoObject_ctor(void* msg);
 extern void cGenInfoObject_Deactivate(void* msg, void* target);
-void cGenerator_v16(Gen00221460* self)
+void cGenerator_Deactivate(Gen00221460* self)
 {
-    Object_Deactivate(self, 0);
+    cGOBJ_Deactivate(self, 0);
     if (g_IsMultiplayer) {
         int msg[1];
         cGenInfoObject_ctor(msg);
@@ -35,8 +35,8 @@ static inline void merge_flush_func_00221460(void) {}
 extern "C" {}
 typedef struct { char pad[0xC]; char key[0x20]; unsigned char b2C; unsigned char b2D; unsigned char b2E; char pad2F[0x9D]; unsigned int maskCC; } Gen_12D0;
 extern "C" {
-void cNode_v06(void);
-void Object_Activate(void* o, int on);
+void cGOBJ_NetActivate(void);
+void cGOBJ_Activate(void* o, int on);
 #if 0 /* merge_units */
 void cGenInfoObject_ctor(void* ctx);
 #endif /* merge_units */
@@ -49,7 +49,7 @@ void cGenInfoObject_Activate(void* ctx, void* key);
 extern "C" void cGenerator_v15(Gen_12D0* g)
 {
     char ctx[4];
-    Object_Activate(g, 0);
+    cGOBJ_Activate(g, 0);
     if (g_IsMultiplayer) {
     int ok = g->b2D != 0;
     ok = ok ? g->b2C != 0 : ok;
@@ -127,14 +127,14 @@ extern int D_004F56C0;
 extern int g_ActorList;
 extern char D_00555070[];
 extern unsigned char D_005721C0;
-int* Event_GetType(void* ev);
+int* cMessage_Name(void* ev);
 #if 0 /* merge_units */
 void cGenInfoObject_ctor(void* ctx);
 #endif /* merge_units */
 #define cGenInfoObject_ctor(a0) (cGenInfoObject_ctor((a0))) /* merge_units */
 
 void cGenerator_NetSpawn(Gen_221610* self, void* m);
-Tgt_221610* Object_LookupById(int* id);
+Tgt_221610* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
 void* cLListIterator_cSafePtr_cGOBJ_ctor_void(It_221610* it);
 void cLList_cSafePtr_cGOBJ_Begin(It_221610* out, List_221610* l);
 It_221610* cLListIterator_cSafePtr_cGOBJ_opAssign(It_221610* dst, It_221610* src);
@@ -147,14 +147,14 @@ It_221610* cLListIterator_cSafePtr_cGOBJ_ctor_cLListIteratorR(It_221610* dst, It
 void* std_list_deleter_cSafePtr_cGOBJ_tail(List_221610* l);
 It_221610* std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(It_221610* it, void* n);
 void std_list_deleter_cSafePtr_cGOBJ_erase_listdeleter(It_221610* ret, List_221610* l, It_221610* pos);
-void ActorWorld_RequestRemove(int a, Tgt_221610* o);
-void Script_DropFromGroups(void* a, Tgt_221610* o);
-void Object_DeleteLater(Tgt_221610* o, float f);
+void cBaseObjList_Remove(int a, Tgt_221610* o);
+void cScriptInterpreter_RemoveFromAllGroups(void* a, Tgt_221610* o);
+void cSystem_ActualScheduleDelete(Tgt_221610* o, float f);
 }
-static inline bool IsType_221610(void* m, int* cls) { int t = *Event_GetType(m); return t == *cls; }
+static inline bool IsType_221610(void* m, int* cls) { int t = *cMessage_Name(m); return t == *cls; }
 static inline bool IsDying_221610(Tgt_221610* o) { unsigned char s = o->State(); return s == 2 || s == 3; }
 static inline int IsAuth_221610(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
-extern "C" bool cGenerator_v01(Gen_221610* self, void* msg)
+extern "C" bool cGenerator_HandleMessage(Gen_221610* self, void* msg)
 {
     char ctx[4];
     int id;
@@ -189,7 +189,7 @@ extern "C" bool cGenerator_v01(Gen_221610* self, void* msg)
     } else if (IsType_221610(m, &D_0051F068)) {
         Tgt_221610* o;
         id = ((Ev2_221610*)m)->id;
-        o = Object_LookupById(&id);
+        o = nGobjManager_LookupGOBJ_cObjectIdR(&id);
         if (o) {
             bool pl = 0;
             if (o->ctl && o->ctl->IsPlayer())
@@ -239,10 +239,10 @@ extern "C" bool cGenerator_v01(Gen_221610* self, void* msg)
                     std_list_deleter_cSafePtr_cGOBJ_erase_listdeleter(&ret1, &self->list90, &arg1);
                 }
             }
-            ActorWorld_RequestRemove(g_ActorList, o);
-            Script_DropFromGroups(D_00555070, o);
+            cBaseObjList_Remove(g_ActorList, o);
+            cScriptInterpreter_RemoveFromAllGroups(D_00555070, o);
             if (o->magic == (int)0xBEBAAFDE)
-                Object_DeleteLater(o, 1.0f);
+                cSystem_ActualScheduleDelete(o, 1.0f);
         }
         r = 1;
     } else if (IsType_221610(m, &D_004A4A78)) {

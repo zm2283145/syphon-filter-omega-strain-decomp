@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* VecList_GetData(char* self) {
+void* std_vector_deleter_cVector_data(char* self) {
     return self + 8;
 }

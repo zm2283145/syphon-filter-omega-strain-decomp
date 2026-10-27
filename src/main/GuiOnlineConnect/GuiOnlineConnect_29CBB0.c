@@ -18,27 +18,27 @@ struct S_0029CBB0 {
 extern "C" {
 extern Ui_0029CBB0* D_004FFC04;
 extern char D_004AABF0[];
-char* Loc_LookupText(char* key);
+char* nGlobalization_GetString_charP(char* key);
 void GuiTextWidget_SetText(void* w, char* s, int a);
-void* Gui_GetScreenStack(void);
-void GuiScreen_SetFocus(void* mgr, int a);
-int GuiScreen_GetLobbyString(S_0029CBB0* self, int a, int b, int c, int d, int e);
-int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_0029CBB0* d, int e);
-void MLTextWidget_Clear(void* w);
-void MLTextWidget_AddText(void* w, char* s);
-Ent_0029CBB0* LobbyArray_At(NameList_0029CBB0* l, int i);
-void LobbyArray_RemoveAt(NameList_0029CBB0* l, int i);
-void LobbyArray_Clear(NameList_0029CBB0* l);
-void String_CtorCStr_13B480(Str_0029CBB0* s, const char* c);
+void* Gui_Canvas(void);
+void GuiCanvas_SetFocus(void* mgr, int a);
+int GuiLobbyScreen_GetLobbyString(S_0029CBB0* self, int a, int b, int c, int d, int e);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, int c, S_0029CBB0* d, int e);
+void GuiMLTextWidget_Clear(void* w);
+void GuiMLTextWidget_AddText(void* w, char* s);
+Ent_0029CBB0* SFOLobbyList_GetSlot(NameList_0029CBB0* l, int i);
+void SFOLobbyList_DeleteSlot(NameList_0029CBB0* l, int i);
+void SFOLobbyList_ClearList(NameList_0029CBB0* l);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_0029CBB0* s, const char* c);
 void std_basic_string_char_char_traits_char_append_basicstringR(Str_0029CBB0* d, Str_0029CBB0* s);
 void func_003FD740(Str_0029CBB0* s);
-char* String_CStr(Str_0029CBB0* s);
-int String_Length(Str_0029CBB0* s);
+char* std_basic_string_char_char_traits_char_c_str(Str_0029CBB0* s);
+int cString_Length(Str_0029CBB0* s);
 void String_Dtor(Str_0029CBB0* s, int flags);
 }
 static inline void SetText_0029CBB0(S_0029CBB0* self, char* key)
 {
-    char* t = Loc_LookupText(key);
+    char* t = nGlobalization_GetString_charP(key);
     if (self->pF0 && t)
         GuiTextWidget_SetText(self->pF0, t, 0);
 }
@@ -62,8 +62,8 @@ extern "C" void GuiOnlineConnect_ShowGroup(S_0029CBB0* self, unsigned char sel)
             self->tabs[sel]->flags |= 4;
         }
         {
-            void* mgr = Gui_GetScreenStack();
-            GuiScreen_SetFocus(mgr, self->v15());
+            void* mgr = Gui_Canvas();
+            GuiCanvas_SetFocus(mgr, self->v15());
         }
         if (sel == 1) {
             NameList_0029CBB0* l = 0;
@@ -76,39 +76,39 @@ extern "C" void GuiOnlineConnect_ShowGroup(S_0029CBB0* self, unsigned char sel)
             }
             if (!l) {
                 void* ui = D_004FFC04;
-                FrontEnd_OpenPopup(ui, 2, D_004AABF0, GuiScreen_GetLobbyString(self, 5, 0, 0, 0, 0), self, 0);
+                cGameFrontEnd_PushMessageBox(ui, 2, D_004AABF0, GuiLobbyScreen_GetLobbyString(self, 5, 0, 0, 0, 0), self, 0);
                 self->f88 = 4;
                 return;
             }
             if (self->pF4) {
-                MLTextWidget_Clear(self->pF4);
+                GuiMLTextWidget_Clear(self->pF4);
                 Str_0029CBB0 all;
                 StrInit_0029CBB0(&list1);
                 for (i = 0; i < l->count; i++) {
-                    Name_0029CBB0* e = (Name_0029CBB0*)LobbyArray_At(l, i);
+                    Name_0029CBB0* e = (Name_0029CBB0*)SFOLobbyList_GetSlot(l, i);
                     if (e && e->name) {
                         Str_0029CBB0 s;
-                        String_CtorCStr_13B480(&s, (char*)e);
+                        std_basic_string_char_char_traits_char_ctor_charP(&s, (char*)e);
                         std_basic_string_char_char_traits_char_append_basicstringR(&list1, &s);
                         String_Dtor(&s, 0);
                     }
                 }
                 func_003FD740(&list1);
-                MLTextWidget_AddText(self->pF4, String_CStr(&list1));
+                GuiMLTextWidget_AddText(self->pF4, std_basic_string_char_char_traits_char_c_str(&list1));
                 String_Dtor(&list1, 0);
             }
         } else if (sel == 2) {
             void* w = self->p100;
             NameList_0029CBB0* l = D_004FFC04->l2F8;
             if (w && l) {
-                MLTextWidget_Clear(w);
+                GuiMLTextWidget_Clear(w);
                 Str_0029CBB0 all;
                 StrInit_0029CBB0(&list2);
                 if (l->count != 0) {
                     int id;
                     unsigned char found = 0;
                     for (i = 0; i < l->count; i++) {
-                        Ent_0029CBB0* e = LobbyArray_At(l, i);
+                        Ent_0029CBB0* e = SFOLobbyList_GetSlot(l, i);
                         if (e && e->name && e->name[0]) {
                             if (!found) {
                                 id = e->id;
@@ -116,7 +116,7 @@ extern "C" void GuiOnlineConnect_ShowGroup(S_0029CBB0* self, unsigned char sel)
                             }
                             if (e->id == id) {
                                 Str_0029CBB0 s;
-                                String_CtorCStr_13B480(&s, e->name);
+                                std_basic_string_char_char_traits_char_ctor_charP(&s, e->name);
                                 std_basic_string_char_char_traits_char_append_basicstringR(&list2, &s);
                                 String_Dtor(&s, 0);
                             }
@@ -127,21 +127,21 @@ extern "C" void GuiOnlineConnect_ShowGroup(S_0029CBB0* self, unsigned char sel)
                         do {
                             removed = 0;
                             for (i = 0; i < l->count; i++) {
-                                Ent_0029CBB0* e = LobbyArray_At(l, i);
+                                Ent_0029CBB0* e = SFOLobbyList_GetSlot(l, i);
                                 if (!(e && e->name && e->name[0]) || e->id == id) {
-                                    LobbyArray_RemoveAt(l, i);
+                                    SFOLobbyList_DeleteSlot(l, i);
                                     removed = 1;
                                     break;
                                 }
                             }
                         } while (removed);
                     } else {
-                        LobbyArray_Clear(l);
+                        SFOLobbyList_ClearList(l);
                     }
                 }
-                if (String_Length(&list2)) {
+                if (cString_Length(&list2)) {
                     func_003FD740(&list2);
-                    MLTextWidget_AddText(self->p100, String_CStr(&list2));
+                    GuiMLTextWidget_AddText(self->p100, std_basic_string_char_char_traits_char_c_str(&list2));
                 }
                 String_Dtor(&list2, 0);
             }

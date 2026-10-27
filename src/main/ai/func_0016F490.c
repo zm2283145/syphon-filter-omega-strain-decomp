@@ -10,13 +10,13 @@
 extern char g_NpcRouteMgr[];
 extern char g_Game[];  /* global service registry */
 extern char g_IsMultiplayer[];  /* multiplayer flag byte */
-extern int Service_Lookup(int, int);
+extern int cSystemContainer_GetSystem(int, int);
 extern int cNPC_SystemClear(void);
-extern int NpcAi_ResetFireProgress(void);
+extern int cNPC_SystemInit(void);
 extern int cPathSystem_Clear(int);
-extern int NpcRouteMgr_AllocRequestPool(int);
+extern int cPathSystem_Init(int);
 
-void NpcAi_SetTeam(cAI* self, int value) {
+void cAI_SetTeam(cAI* self, int value) {
     AIGObj* gobj;
     AIGObjSub* sub;
 
@@ -34,10 +34,10 @@ void NpcAi_SetTeam(cAI* self, int value) {
 
 int cAI_SystemClear(void) {
     cNPC_SystemClear();
-    return cPathSystem_Clear(Service_Lookup((int)g_Game, (int)g_NpcRouteMgr));
+    return cPathSystem_Clear(cSystemContainer_GetSystem((int)g_Game, (int)g_NpcRouteMgr));
 }
 
 int cAI_SystemInit(void) {
-    NpcRouteMgr_AllocRequestPool(Service_Lookup((int)g_Game, (int)g_NpcRouteMgr));
-    return NpcAi_ResetFireProgress();
+    cPathSystem_Init(cSystemContainer_GetSystem((int)g_Game, (int)g_NpcRouteMgr));
+    return cNPC_SystemInit();
 }

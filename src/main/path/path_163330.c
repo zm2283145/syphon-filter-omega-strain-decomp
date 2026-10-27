@@ -17,7 +17,7 @@ static inline void fill_00163330(FA_00163330 *s, int n, int *v) {
     for (i = s->n; i <= (int)(n - 1); i++) *(int *)((char *)s->a + (i << 2)) = *v;
     s->n = n;
 }
-void NpcRoute_ClearRegionCandidates(FA_00163330 *s, unsigned int n, int *v) {
+void cArray_FixedCapacity_int_64_ResizeActual(FA_00163330 *s, unsigned int n, int *v) {
     if (n < 65U) {
         fill_00163330(s, n, v);
         return;
@@ -84,9 +84,9 @@ struct PNode;
 extern "C" {
 extern int D_004EA798;
 extern ROpen D_004EA7B0[];
-PNode* NpcPath_GetNode(int);
-void Node_GetTranslation(V* out, PNode* n);
-void NpcRoute_InsertSorted(void* list, ROpen* n);
+PNode* cAIPathData_GetNode(int);
+void cNode_GetLoc(V* out, PNode* n);
+void cPriorityQueue_cPathCell_Push(void* list, ROpen* n);
 }
 static inline ROpen* AllocOpen()
 {
@@ -99,14 +99,14 @@ static inline ROpen* AllocOpen()
 }
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" bool NpcRoute_OpenNode(Search* self, int node)
+extern "C" bool cPathRequest_AddStartNodeToList(Search* self, int node)
 {
     bool r = false;
     V t; V d1; V d2; V r1; V r2;
     ROpen* n = AllocOpen();
     if (n) {
         float g; float h;
-        Node_GetTranslation(&t, NpcPath_GetNode(node));
+        cNode_GetLoc(&t, cAIPathData_GetNode(node));
         {
             V* pr = &r1; const V* pa = &self->start; const V* pb = &t;
             __asm__ volatile("lqc2 $vf1, 0x0(%1); lqc2 $vf2, 0x0(%2); vsub.xyzw $vf1, $vf1, $vf2; sqc2 $vf1, 0x0(%0)" : : "r"(pr), "r"(pa), "r"(pb) : "memory");
@@ -141,7 +141,7 @@ extern "C" bool NpcRoute_OpenNode(Search* self, int node)
         n->f = g + h;
         n->parent = 0;
         n->open = 1;
-        NpcRoute_InsertSorted(self->openList, n);
+        cPriorityQueue_cPathCell_Push(self->openList, n);
         r = true;
     }
     return r;
@@ -159,26 +159,26 @@ extern unsigned char D_004ED9FD;
 extern int D_004EDE68;
 extern unsigned int D_004EE010;
 extern int D_004EE014[];
-extern void NpcRoute_HandleLosResult(void*, unsigned char*);
+extern void cNodeRequest_UpdateLOSResult(void*, unsigned char*);
 #if 0 /* merge_units */
-extern void NpcRoute_OpenNode(CxRouteSearch*, int);
+extern void cPathRequest_AddStartNodeToList(CxRouteSearch*, int);
 #endif /* merge_units */
-#define NpcRoute_OpenNode(a0, a1) ((void)NpcRoute_OpenNode((void *)(a0), (a1))) /* merge_units */
+#define cPathRequest_AddStartNodeToList(a0, a1) ((void)cPathRequest_AddStartNodeToList((void *)(a0), (a1))) /* merge_units */
 
 
-void NpcRoute_HandleRouteLosResult(CxRouteSearch* self, unsigned char* blocked) {
+void cPathRequest_UpdateLOSResult(CxRouteSearch* self, unsigned char* blocked) {
     unsigned char state = self->state;
     if (state == 2) {
         D_004ED9FD = 0;
         D_004EDE68 = (unsigned char)!*blocked;
     } else if (state == 0) {
-        NpcRoute_HandleLosResult(D_004ED9F0, blocked);
+        cNodeRequest_UpdateLOSResult(D_004ED9F0, blocked);
         if (D_004EDE68 >= 0) {
-            NpcRoute_OpenNode(self, D_004EDE68);
+            cPathRequest_AddStartNodeToList(self, D_004EDE68);
             D_004EDE68 = -1;
         }
     } else if (state == 1) {
-        NpcRoute_HandleLosResult(D_004ED9F0, blocked);
+        cNodeRequest_UpdateLOSResult(D_004ED9F0, blocked);
         if (D_004EDE68 >= 0) {
             if (D_004EE010 < 64) {
                 D_004EE014[D_004EE010] = D_004EDE68;
@@ -188,7 +188,7 @@ void NpcRoute_HandleRouteLosResult(CxRouteSearch* self, unsigned char* blocked) 
         }
     }
 }
-#undef NpcRoute_OpenNode /* merge_units */
+#undef cPathRequest_AddStartNodeToList /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00163580(void) {}
 #pragma pop /* merge_units */

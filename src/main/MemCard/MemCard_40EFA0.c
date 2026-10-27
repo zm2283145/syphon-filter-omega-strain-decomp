@@ -23,7 +23,7 @@ extern void sceMc2GetInfoAsync(int, int*);
 extern void sceMc2GetDirAsync(int, char*, int, int, void*, int*);
 extern int atoi(char*);
 
-void MemCard_InfoCycle(S40E5D0* s) {
+void MemCard_MemCardIdle(S40E5D0* s) {
     int i;
     if (s->busy) {
         s->state = s->busy;
@@ -102,9 +102,9 @@ typedef struct MemCard {
 } MemCard;
 
 extern int sceMc2CreateSocket(int* params, char* data);
-extern void String_Copy(char* dst, const char* src); /* String_Copy */
+extern void Libc_Strcpy(char* dst, const char* src); /* Libc_Strcpy */
 extern void strncpy(void* dst, const void* src, int size); /* strncpy-style copy */
-extern void MemCard_TitleToSjis(void* dst, const void* src, int size);
+extern void ConvertToSJIS(void* dst, const void* src, int size);
 extern char* D_00494008;
 extern char D_00493D84[];
 extern char D_00493D44[];
@@ -113,7 +113,7 @@ extern char D_00493C40[];
 extern char D_00493D00[];
 
 /* Resets the memory card state and builds the icon.sys header strings. */
-MemCard* MemCard_SetupIconSys(MemCard* self) {
+MemCard* MemCard_ctor(MemCard* self) {
     self->iconParams[0] = 2;
     self->iconParams[1] = 2;
     self->iconParams[2] = 0;
@@ -135,11 +135,11 @@ MemCard* MemCard_SetupIconSys(MemCard* self) {
     self->flag5A0 = 0;
     self->flag59C = 0;
     self->unk5A4 = 0;
-    String_Copy(D_00493D84, D_00494008);
-    String_Copy(D_00493D44, D_00494008);
-    String_Copy(D_00493DC4, D_00494008);
+    Libc_Strcpy(D_00493D84, D_00494008);
+    Libc_Strcpy(D_00493D44, D_00494008);
+    Libc_Strcpy(D_00493DC4, D_00494008);
     strncpy(D_00493C40, "PS2D", 4);
-    MemCard_TitleToSjis(D_00493D00, "Syphon Filter:The Omega Strain", 0x20);
+    ConvertToSJIS(D_00493D00, "Syphon Filter:The Omega Strain", 0x20);
     return self;
 }
 #pragma pop /* merge_units */

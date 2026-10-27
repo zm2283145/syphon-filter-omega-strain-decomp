@@ -28,7 +28,7 @@ static inline int IsBlank(__int128 v) {
     return PEq(x, k);
 }
 /* Removes every pair with a blank name, shifting the rest down. */
-void Appearance_RemoveBlankPairs(H2Pack* p) {
+void SKL_RemoveBlanks(H2Pack* p) {
     int i = 0;
     while ((long long)p->pairs[i].a != 0) {
         if (IsBlank(p->pairs[i].a) || IsBlank(p->pairs[i].b)) {

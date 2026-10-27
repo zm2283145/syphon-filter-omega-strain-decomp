@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern int GuiWidget_Update(void* self, float dt);
+extern int GuiWidget_onAdvanceTime(void* self, float dt);
 
 int* std_list_deleter_TextAtom_generic_iterator_ctor(int* self, int value) {
     *self = value;
@@ -22,8 +22,8 @@ void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_12(voi
 }
 
 /* Update: calls the base update, then advances the timer at +0x54 by dt/30. */
-int GuiSubTitleDisplay_Update(char* self, float dt) {
-    int result = GuiWidget_Update(self, dt);
+int GuiSubTitleDisplay_onAdvanceTime(char* self, float dt) {
+    int result = GuiWidget_onAdvanceTime(self, dt);
 
     *(float*)(self + 84) = *(float*)(self + 84) + dt / 30.0f;
     return result;

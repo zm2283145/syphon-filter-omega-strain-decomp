@@ -6,13 +6,13 @@
 #include "types.h"
 #include "hotbox_types.h"
 
-extern int List_InsertBefore(HotboxListIter* out, Tree* list, HotboxListIter* pos, int* value);
+extern int std_list_deleter_voidPtr_insert(HotboxListIter* out, Tree* list, HotboxListIter* pos, int* value);
 
 /* Inserts value with end() as the position hint; the result iterator is discarded. */
-int Hotbox_AddToGlobalList(Tree* list, int* value) {
+int cLList_cHotboxPtr_PushBackActual(Tree* list, int* value) {
     HotboxListIter end;
     HotboxListIter result;
 
     end.node = (HotboxListNode*)&list->header;
-    return List_InsertBefore(&result, list, &end, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &end, value);
 }

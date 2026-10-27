@@ -35,7 +35,7 @@ static inline void V4_Copy(V4* d, const V4* s) { __int128 q; __asm__ volatile("l
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
 struct MsgB {
     void* vtable; void* type; int pad8[5]; int flags; unsigned char kind; char pad21[3];
-    MsgB(void* t) { Event_Construct(this, t); }
+    MsgB(void* t) { cMessage_ctor_cMessageNameR(this, t); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); }
 };
 struct MsgI : MsgB {
@@ -48,7 +48,7 @@ struct MsgSerial : MsgI { int serial; MsgSerial(const int& s) : MsgI(62, 5) { vt
 struct MsgTrack : MsgI { int pad2C; int val; int id; unsigned char m38; char p39[7]; V4 v; float f50; char p54[0xC];
     MsgTrack(const int& s, int i) : MsgI(57, 11) { vtable = D_004E0200; { const V4* z = &Zero(); val = s; id = i; m38 = 0; V4_Copy(&v, z); f50 = 0.0f; } } __declspec(weak) __declspec(MSG_DTOR) ~MsgTrack() {} };
 struct MsgPos : MsgI { int pad2C; V4 v; MsgPos(const V4& p) : MsgI(57, 4) { vtable = D_004E0140; V4_Copy(&v, &p); } __declspec(weak) __declspec(MSG_DTOR) ~MsgPos() {} };
-/* the message ctors take references: MW binds them lazily, so the loads land after Event_Construct as in retail */
+/* the message ctors take references: MW binds them lazily, so the loads land after cMessage_ctor_cMessageNameR as in retail */
 struct MsgHide : MsgI { unsigned char b; char p2D[3]; MsgHide(const unsigned char& x) : MsgI(57, 1) { vtable = D_004D9320; b = x; } __declspec(weak) __declspec(MSG_DTOR) ~MsgHide() {} };
 
 static inline unsigned char Alive(Act* a)
@@ -69,43 +69,43 @@ void cNetPlayer_AimWeapon(Obj* o, Act* a)
             if (!o->info->dead) {
                 {
                     MsgSerial m(a->Serial());
-                    Event_Send(&m, o->target, 1);
+                    QueueMessage_cMessageR_cSystemP_int(&m, o->target, 1);
                 }
                 {
                     MsgTrack m(a->Serial(), o->info->id);
-                    Event_Send(&m, o->target, 1);
+                    QueueMessage_cMessageR_cSystemP_int(&m, o->target, 1);
                 }
             } else {
                 {
                     MsgI m(63, 0);
-                    Event_Send(&m, o->target, 1);
+                    QueueMessage_cMessageR_cSystemP_int(&m, o->target, 1);
                 }
                 {
                     V4 pos(o->info->x, o->info->y, o->info->z, 1.0f);
                     {
                         MsgPos m(pos);
-                        Event_Send(&m, o->target, 1);
+                        QueueMessage_cMessageR_cSystemP_int(&m, o->target, 1);
                     }
                 }
             }
         } else {
             {
                 MsgI m(63, 0);
-                Event_Send(&m, o->target, 1);
+                QueueMessage_cMessageR_cSystemP_int(&m, o->target, 1);
             }
             {
                 MsgHide m(D_0048C428[0]);
-                Event_Send(&m, o->target, 1);
+                QueueMessage_cMessageR_cSystemP_int(&m, o->target, 1);
             }
         }
     } else {
         {
             MsgI m(63, 0);
-            Event_Send(&m, o->target, 1);
+            QueueMessage_cMessageR_cSystemP_int(&m, o->target, 1);
         }
         {
             MsgHide m(D_0048C430[0]);
-            Event_Send(&m, o->target, 1);
+            QueueMessage_cMessageR_cSystemP_int(&m, o->target, 1);
         }
     }
     if (o->flags && cAimWeapon_GetFireWeapon(o->flags))

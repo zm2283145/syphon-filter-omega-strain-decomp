@@ -1,4 +1,4 @@
-/* Actor_UpdateStealthLight: for every active actor, relight its model at its
+/* UpdateDarkness: for every active actor, relight its model at its
  * current position and store a 0..100 visibility level derived from the
  * gathered light colour (0 when below the darkness threshold or when the
  * actor's flashlight is on). */
@@ -46,9 +46,9 @@ void* cObjList_cHumanPtr_GetList(Vec* v);
 void cArray_cHumanPtr_Begin(It* out, void* v);
 void cArray_cHumanPtr_End(It* out, void* v);
 It* cArray_cHumanPtr_ConstIterator_ctor(It* d, It* s);
-void LightMgr_GatherModelLights(void* m, unsigned int mask, unsigned int flags, void* out);
-int Actor_IsFlashlightOn(Actor* a);
-void Actor_UpdateStealthLight(void);
+void cLightMan_Update(void* m, unsigned int mask, unsigned int flags, void* out);
+int cHuman_FlashlightIsOn(Actor* a);
+void UpdateDarkness(void);
 }
 /* VU0 compare / length: macro-mode VU0 ops have no C equivalent (asm). */
 static inline unsigned char Eq4(V* a, V* b) {
@@ -97,7 +97,7 @@ static inline bool Player(Ctl* c) { bool yes = false; if (c) if (c->IsPlayer()) 
 static inline void Begin(It* o, Vec* v) { It t; cArray_cHumanPtr_Begin(&t, cObjList_cHumanPtr_GetList(v)); cArray_cHumanPtr_ConstIterator_ctor(o, &t); }
 static inline void End(It* o, Vec* v) { It t; cArray_cHumanPtr_End(&t, cObjList_cHumanPtr_GetList(v)); cArray_cHumanPtr_ConstIterator_ctor(o, &t); }
 
-void Actor_UpdateStealthLight(void)
+void UpdateDarkness(void)
 {
     Vec* list = g_ActorList;
     It end;
@@ -116,7 +116,7 @@ void Actor_UpdateStealthLight(void)
             }
             Model* m = a->model;
             if (m->dirty) m->Update();
-            LightMgr_GatherModelLights(g_LightMgr, 23, 3, (char*)m + 0x10);
+            cLightMan_Update(g_LightMgr, 23, 3, (char*)m + 0x10);
             c = D_00537D80;
             Scale(&s, c, 128.0f);
             int lvl = (int)(100.0f * (1.0f - Len(&s)));
@@ -125,7 +125,7 @@ void Actor_UpdateStealthLight(void)
                 lvl = 0;
             else
                 lvl = (int)(100.0f / (float)(100 - dec) * (float)(lvl - dec));
-            if (Actor_IsFlashlightOn(a)) lvl = 0;
+            if (cHuman_FlashlightIsOn(a)) lvl = 0;
             a->light = lvl;
         }
     }

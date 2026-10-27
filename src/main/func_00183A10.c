@@ -9,7 +9,7 @@
 
 /* Builds a zeroed 4-byte local and returns its first byte; always 0
  * (research COL_GATHER_NATIVE.md: no triangle or mask inspection). */
-int ColTri_FilterStub(void) {
+int tFaceFlags_GetMaskedBits(void) {
     unsigned char buf[4];
     unsigned char* p;
 

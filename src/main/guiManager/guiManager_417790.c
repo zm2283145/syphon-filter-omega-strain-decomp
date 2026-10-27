@@ -27,7 +27,7 @@ struct O_417790 {
     E_417790* cur;
     bool Done();
 };
-extern "C" void IeElement_UpdateAnimation(I_417790* i, float dt);
+extern "C" void cAnimator_NextFrame(I_417790* i, float dt);
 
 inline bool O_417790::Done()
 {
@@ -35,9 +35,9 @@ inline bool O_417790::Done()
     return false;
 }
 
-extern "C" void GuiInterfaceDecorator_Update(O_417790* o, float dt)
+extern "C" void GuiInterfaceDecorator_onAdvanceTime(O_417790* o, float dt)
 {
-    if (o->inst) IeElement_UpdateAnimation(o->inst, dt);
+    if (o->inst) cAnimator_NextFrame(o->inst, dt);
     {
         unsigned short& f = o->w->flags;
         if ((f & 0x10) && (f & 8)) {
@@ -68,16 +68,16 @@ typedef struct GuiWidget {
 } GuiWidget;
 
 extern char D_00571DC0[];
-extern "C" void IeElement_Release(void* p);
+extern "C" void cInterfaceElement_Destroy(void* p);
 extern "C" void cInterfaceManager_RemoveInterface(void* mgr, int handle);
 
-/* Notifies the child (virtual +0x10); if a handle (+0x20) is held, releases it (IeElement_Release on +0x24, cInterfaceManager_RemoveInterface) and resets it to -1. */
+/* Notifies the child (virtual +0x10); if a handle (+0x20) is held, releases it (cInterfaceElement_Destroy on +0x24, cInterfaceManager_RemoveInterface) and resets it to -1. */
 extern "C" void GuiInterfaceDecorator_onRemove(GuiWidget* self)
 {
     self->child->Method10();
     if (self->handle != -1) {
     if (self->unk24)
-    IeElement_Release(self->unk24);
+    cInterfaceElement_Destroy(self->unk24);
     cInterfaceManager_RemoveInterface(D_00571DC0, self->handle);
     self->handle = -1;
     }
@@ -132,30 +132,30 @@ struct O_4178E0 {
     char f30[4];
 };
 extern "C" {
-char* String_CStr(Str_4178E0* s);
-int String_Length(Str_4178E0* s);
-int GuiManager_FindInterface(void* db, char* name);
-int* GuiManager_ResolveInterface(void* db, int id);
-void* IeNode_FindNode(int scene, char* name);
-void* IeElement_Create(void* n);
-void IeElement_SetShown(void* i, int a);
-void IeElement_SetMatrix(void* i, void* p);
+char* std_basic_string_char_char_traits_char_c_str(Str_4178E0* s);
+int cString_Length(Str_4178E0* s);
+int cInterfaceManager_AddInterface(void* db, char* name);
+int* cInterfaceManager_GetInterface(void* db, int id);
+void* cInterfaceModel_FindChild(int scene, char* name);
+void* cInterfaceModel_CreateInstance(void* n);
+void cInterfaceElement_Activate(void* i, int a);
+void cInterfaceElement_SetView(void* i, void* p);
 extern char D_004BF070[];
 }
-static inline bool Empty_4178E0(Str_4178E0* s) { return String_Length(s) == 0; }
+static inline bool Empty_4178E0(Str_4178E0* s) { return cString_Length(s) == 0; }
 
-extern "C" void GuiInterfaceDecorator_Init(O_4178E0* o)
+extern "C" void GuiInterfaceDecorator_onAdd(O_4178E0* o)
 {
     int* rec;
     o->w->Reset();
-    o->id = GuiManager_FindInterface(D_00571DC0, String_CStr(&o->file));
+    o->id = cInterfaceManager_AddInterface(D_00571DC0, std_basic_string_char_char_traits_char_c_str(&o->file));
     if (o->id == -1) return;
-    rec = GuiManager_ResolveInterface(D_00571DC0, o->id);
+    rec = cInterfaceManager_GetInterface(D_00571DC0, o->id);
     if (rec && *rec) {
         PStr_4178E0 buf;
         void* n;
         const char* s;
-        Empty_4178E0(&o->text) ? (s = String_CStr(&o->w->name)) : (s = String_CStr(&o->text));
+        Empty_4178E0(&o->text) ? (s = std_basic_string_char_char_traits_char_c_str(&o->w->name)) : (s = std_basic_string_char_char_traits_char_c_str(&o->text));
         {
             char* d = buf.text;
             int n = 0;
@@ -170,11 +170,11 @@ extern "C" void GuiInterfaceDecorator_Init(O_4178E0* o)
             buf.len = n;
         }
         if (o->w->f1C == 0) Cat_4178E0(&buf, D_004BF070);
-        n = IeNode_FindNode(*rec, (char*)&buf + 1);
+        n = cInterfaceModel_FindChild(*rec, (char*)&buf + 1);
         if (n) {
-            o->inst = IeElement_Create(n);
-            IeElement_SetShown(o->inst, 0);
-            IeElement_SetMatrix(o->inst, o->f30);
+            o->inst = cInterfaceModel_CreateInstance(n);
+            cInterfaceElement_Activate(o->inst, 0);
+            cInterfaceElement_SetView(o->inst, o->f30);
         }
     }
 }

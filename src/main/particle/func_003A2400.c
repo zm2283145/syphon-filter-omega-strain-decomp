@@ -5,7 +5,7 @@
 
 /* lq/sq quad copies and the VU0 subtract as GCC-style volatile asm; the unused xx locals keep retail's dead addius */
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 extern char D_004BC5D0[];
 }
 
@@ -76,7 +76,7 @@ struct Mgr2400 {
     unsigned char b69;
 };
 
-extern "C" void ParticleInst_Update(Mgr2400* mgr, Pos* p, void* a, float dt)
+extern "C" void cParticle_NextFrame(Mgr2400* mgr, Pos* p, void* a, float dt)
 {
     Node2400* n;
     Node2400* nx;
@@ -100,7 +100,7 @@ extern "C" void ParticleInst_Update(Mgr2400* mgr, Pos* p, void* a, float dt)
                 {
                     AllocGuard g;
                     n->Destroy(-1);
-                    Mem_Free(0, n, D_004BC5D0, 0x638);
+                    cMemMan_Deallocate(0, n, D_004BC5D0, 0x638);
                 }
             } else {
                 if (n->IsActive() && !mgr->b69) {

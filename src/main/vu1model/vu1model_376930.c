@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00376930 */
 #pragma push /* merge_units */
@@ -28,12 +28,12 @@ static inline void Del376930(void* o)
 {
     AllocGuard g;
     cAnimTexture_dtor(o, -1);
-    Mem_Free(0, o, "vu1model.cc", 0x2AA);
+    cMemMan_Deallocate(0, o, "vu1model.cc", 0x2AA);
 }
 static inline void Rel376930(void* p, int line)
 {
     AllocGuard g;
-    Mem_Free(0, p, "vu1model.cc", line);
+    cMemMan_Deallocate(0, p, "vu1model.cc", line);
 }
 extern "C" void func_00376930(S376930* s)
 {
@@ -60,10 +60,10 @@ static inline void merge_flush_func_00376930(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-void *Mem_Alloc(int, int, char *, int);
-void *UvScrollAnim_Construct(void *, void *, void *, void *, int);
-void *Material_Animate(void *, void *, void *, void *, int);
-void MaterialAnim_Register(int, void *);
+void *cMemMan_Allocate(int, int, char *, int);
+void *cScrollAnimTexture_ctor(void *, void *, void *, void *, int);
+void *cCellAnimTexture_ctor(void *, void *, void *, void *, int);
+void cAnimTexMan_Add(int, void *);
 extern char D_004BC170;
 
 
@@ -138,12 +138,12 @@ static inline void *FxAlloc(int size, int line)
     void *p;
     {
         AllocGuard g;
-        p = Mem_Alloc(0, size, &D_004BC170, line);
+        p = cMemMan_Allocate(0, size, &D_004BC170, line);
     }
     return p;
 }
 
-extern "C" void Model_SetupMaterialFx(FxModel *m)
+extern "C" void cVU1Model_BuildTex01Patchup(FxModel *m)
 {
     int n;
     int i;
@@ -161,17 +161,17 @@ extern "C" void Model_SetupMaterialFx(FxModel *m)
         if (mat->f4 & 2) {
             void *p = FxAlloc(0x1C, 0x256);
             if (p) {
-                p = UvScrollAnim_Construct(p, mat->f8, s + 0x10, s + 0x90, m->f8[mat->f38[0]]);
+                p = cScrollAnimTexture_ctor(p, mat->f8, s + 0x10, s + 0x90, m->f8[mat->f38[0]]);
             }
             m->fC[n].f4 = p;
-            MaterialAnim_Register(D_0053924C, m->fC[n].f4);
+            cAnimTexMan_Add(D_0053924C, m->fC[n].f4);
         } else if (mat->f4 & 4) {
             void *p = FxAlloc(0x34, 0x25C);
             if (p) {
-                p = Material_Animate(p, mat->f8, s + 0x10, s + 0x90, m->f8[mat->f38[0]]);
+                p = cCellAnimTexture_ctor(p, mat->f8, s + 0x10, s + 0x90, m->f8[mat->f38[0]]);
             }
             m->fC[n].f4 = p;
-            MaterialAnim_Register(D_0053924C, m->fC[n].f4);
+            cAnimTexMan_Add(D_0053924C, m->fC[n].f4);
         }
         if (mat->f58 == 1) {
             char *t = g->f8->f4;
@@ -222,7 +222,7 @@ static inline void merge_flush_func_00376AD0(void) {}
 #pragma push /* merge_units */
 typedef struct { int pad0; int value; int pad8; int padC; } E376FF0;
 typedef struct { char pad[0xC]; E376FF0* ents; int count; } S376FF0;
-int Model_GetUvScrollRecords(S376FF0* o, int* out, int max)
+int cVU1Model_GetAnimTextures(S376FF0* o, int* out, int max)
 {
     int n = 0;
     int i;

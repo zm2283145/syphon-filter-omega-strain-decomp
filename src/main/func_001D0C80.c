@@ -7,14 +7,14 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int UpperBody_FootRotation(int self, int a1, int a2, int a3);
-extern int UpperBody_LegReach(int self, int a1, int a2, int a3);
+extern int cHumanIkRoutine_OrientFoot_AfterPositionLeg(int self, int a1, int a2, int a3);
+extern int cHumanIkRoutine_PositionLeg(int self, int a1, int a2, int a3);
 
-/* Run UpperBody_LegReach with the first argument, then UpperBody_FootRotation with the second. */
-int UpperBodyIk_Legs(int self, int first, int second, int a3, int t0) {
+/* Run cHumanIkRoutine_PositionLeg with the first argument, then cHumanIkRoutine_OrientFoot_AfterPositionLeg with the second. */
+int cHumanIkRoutine_PositionLegAndOrientFoot(int self, int first, int second, int a3, int t0) {
     int result;
 
-    UpperBody_LegReach(self, first, a3, t0);
-    result = UpperBody_FootRotation(self, second, a3, t0);
+    cHumanIkRoutine_PositionLeg(self, first, a3, t0);
+    result = cHumanIkRoutine_OrientFoot_AfterPositionLeg(self, second, a3, t0);
     return result;
 }

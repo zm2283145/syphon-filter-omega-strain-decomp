@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-int cFireObj_v01(void) {
+int cFireObj_HandleMessage(void) {
     return 0;
 }

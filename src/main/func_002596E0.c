@@ -35,26 +35,26 @@ extern "C" {
 extern char g_Game[];
 extern char g_LosCheckService[];
 extern signed char g_HeadNodeCode;
-void* Service_Lookup(void* a, void* b);
-int Actor_GetSkeleton(Actor* a);
-void Model_GetSkeletonNodePos(V* out, int n, int node);
-int LosMgr_TraceBullet(void* mgr, Hit* a, Query* b, V* c, const V& d, void* e1, void* e2, int g, unsigned char h, unsigned char i, int j, unsigned char k);
+void* cSystemContainer_GetSystem(void* a, void* b);
+int cSKM_GOBJ_GetSkeleton_void(Actor* a);
+void cSkeleton_GetBoneToWorldTranslation(V* out, int n, int node);
+int cLosManager_cCollisionModelList_Game_PerformImmediateRayIntersectionTest(void* mgr, Hit* a, Query* b, V* c, const V& d, void* e1, void* e2, int g, unsigned char h, unsigned char i, int j, unsigned char k);
 }
-extern "C" bool AreaEffect_GasExposure(Eff* self, Actor* actor)
+extern "C" bool cAreaEffect_GasCheck(Eff* self, Actor* actor)
 {
     if (!actor->b346B) {
         Hit hit;
         Query q;
-        void* mgr = Service_Lookup(g_Game, g_LosCheckService);
+        void* mgr = cSystemContainer_GetSystem(g_Game, g_LosCheckService);
         for (int i = 0; i < 5; i++) {
             V from;
             V pos;
             QC(&from, i ? &self->m90[i - 1] : &self->m70);
-            Model_GetSkeletonNodePos(&pos, Actor_GetSkeleton(actor), g_HeadNodeCode);
+            cSkeleton_GetBoneToWorldTranslation(&pos, cSKM_GOBJ_GetSkeleton_void(actor), g_HeadNodeCode);
             from.z = pos.z;
             { void* xx = &pos; /* dead on purpose: retail keeps this addiu */ }
             V d(Sub(pos, from));
-            if (!(unsigned char)LosMgr_TraceBullet(mgr, &hit, &q, &from, d, 0, 0, 0, 0x58, 0, 0, 0))
+            if (!(unsigned char)cLosManager_cCollisionModelList_Game_PerformImmediateRayIntersectionTest(mgr, &hit, &q, &from, d, 0, 0, 0, 0x58, 0, 0, 0))
                 { bool r = true; return r; }
         }
     }

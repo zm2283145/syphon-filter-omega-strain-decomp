@@ -1,4 +1,4 @@
-/* NpcRoute_CollectCandidates: gather the reachable regions (start region plus
+/* cNodeRequest_AddNodesToEvaluate: gather the reachable regions (start region plus
  * linked regions, depth levels), drop the ones the NPC may not enter, then
  * score every usable node of those regions and keep the best 32 in a sorted
  * list (following link chains for linked-node mode); prune entries scoring
@@ -51,14 +51,14 @@ void cArray_int_ConstIterator_ctor(It4* out, It4* raw);
 int* std_vector_imp_tNodeLink_begin_void_2(void* c);
 int* std_vector_imp_tNodeLink_end_void_2(void* c);
 void std_vector_tNodeLink_pointer2iterator_tNodeLinkPR_2(It8* out, void* c, int** raw);
-V4 Node_GetTranslation(PNode* n);
-PNode* NpcPath_GetNode(int id);
-Obj* NpcAi_NodeReservedBy(int node);
-unsigned char NpcAi_IsRegionAllowed(Ctl* c, int region);
-float NpcRoute_ScoreCandidate(void* c, PNode* node, int idx, V4* from, V4* to, int x, float cost);
-void NpcNodeSearch_InsertSorted(SList* l, SNode* item);
-void NpcRoute_AddLinkedRegions(RouteX* self, Ent* ctx);
-void NpcRoute_CollectCandidates(Route* self, int depth);
+V4 cNode_GetLoc(PNode* n);
+PNode* cAIPathData_GetNode(int id);
+Obj* cNPC_IsNodeOccupied(int node);
+unsigned char cNPC_GroupInPathRegion(Ctl* c, int region);
+float cNodePickerParameters_Evaluate(void* c, PNode* node, int idx, V4* from, V4* to, int x, float cost);
+void cPriorityQueue_cNodeIndex_Push(SList* l, SNode* item);
+void cNodeRequest_AddNeighborsToGroupList(RouteX* self, Ent* ctx);
+void cNodeRequest_AddNodesToEvaluate(Route* self, int depth);
 }
 static inline bool Eq(int a, int b) { return a == b; }
 static inline Obj* Get(Ref* r)
@@ -92,7 +92,7 @@ static inline bool Eq8(const It8& a, const It8& b) { return a.p == b.p; }
 /* unlink entries scoring 5000 or more; returns the next entry */
 static inline SNode* Prune2(SList* l, SNode* p) { SNode* nx = p->next; if (!(p->key < 5000.0f)) { SNode* pv = p->prev; pv->next = nx; nx->prev = pv; l->count--; return nx; } return nx; }
 static inline int Masked(RouteX* x, PNode* n) { int f = n->flags; return x->nodeMask & f; }
-void NpcRoute_CollectCandidates(Route* self, int depth)
+void cNodeRequest_AddNodesToEvaluate(Route* self, int depth)
 {
     RouteX* x = (RouteX*)self;
     It4 it1;
@@ -122,7 +122,7 @@ void NpcRoute_CollectCandidates(Route* self, int depth)
             int j;
             int n = x->count;
             for (j = 0; j < n; j++)
-                NpcRoute_AddLinkedRegions(x, &x->e[j]);
+                cNodeRequest_AddNeighborsToGroupList(x, &x->e[j]);
         }
     }
     {
@@ -131,7 +131,7 @@ void NpcRoute_CollectCandidates(Route* self, int depth)
             int n = x->count;
             int j;
             for (j = 0; j < n; j++) {
-                if (!NpcAi_IsRegionAllowed(c, x->e[j].id))
+                if (!cNPC_GroupInPathRegion(c, x->e[j].id))
                     x->e[j].id = -1;
             }
         }
@@ -147,22 +147,22 @@ void NpcRoute_CollectCandidates(Route* self, int depth)
                     int id = *it1.p;
                     PNode* n = tab->data[id];
                     if (id != x->skipNode && Masked(x, n)) {
-                        Obj* r = NpcAi_NodeReservedBy(id);
+                        Obj* r = cNPC_IsNodeOccupied(id);
                         if (x->ignoreReserve || !r || r == Get(&self->ref)) {
-                            if (Length(x->target - Node_GetTranslation(n)) < x->maxDist) {
+                            if (Length(x->target - cNode_GetLoc(n)) < x->maxDist) {
                                 int link = -1;
                                 int mask = 0;
                                 float score;
                                 if (!x->ignoreReserve) {
-                                    score = NpcRoute_ScoreCandidate(x->cfg, n, 0, &x->start, &x->target, 0, x->e[k].cost);
+                                    score = cNodePickerParameters_Evaluate(x->cfg, n, 0, &x->start, &x->target, 0, x->e[k].cost);
                                 } else {
-                                    if (Abs(x->start.z - Node_GetTranslation(n).z) < 2.6f)
+                                    if (Abs(x->start.z - cNode_GetLoc(n).z) < 2.6f)
                                         score = 0.0f;
                                     else
                                         score = 5000.0f;
                                 }
                                 if (score <= 5000.0f) {
-                                    void* lk = NpcPath_GetNode(id)->links;
+                                    void* lk = cAIPathData_GetNode(id)->links;
                                     if (x->linkMode) {
                                         mask = (x->nodeMask & 0x40) ? 6 : 0x40;
                                         if (mask & n->flags)
@@ -186,7 +186,7 @@ void NpcRoute_CollectCandidates(Route* self, int depth)
                                             nd->x18 = -1;
                                             nd->x1C = -1;
                                             nd->key = c2;
-                                            NpcNodeSearch_InsertSorted(&self->list, nd);
+                                            cPriorityQueue_cNodeIndex_Push(&self->list, nd);
                                         } else {
                                             SNode* last = self->list.sent.prev;
                                             if (c2 < last->key) {
@@ -200,7 +200,7 @@ void NpcRoute_CollectCandidates(Route* self, int depth)
                                                 last->x18 = -1;
                                                 last->x1C = -1;
                                                 last->key = c2;
-                                                NpcNodeSearch_InsertSorted(&self->list, last);
+                                                cPriorityQueue_cNodeIndex_Push(&self->list, last);
                                             }
                                         }
                                         link = -1;
@@ -211,7 +211,7 @@ void NpcRoute_CollectCandidates(Route* self, int depth)
                                             link = l->id;
                                             it2.p += 2;
                                             if (type != 7) {
-                                                if (mask & NpcPath_GetNode(link)->flags)
+                                                if (mask & cAIPathData_GetNode(link)->flags)
                                                     break;
                                             } else {
                                                 link = -1;

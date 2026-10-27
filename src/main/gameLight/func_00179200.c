@@ -16,11 +16,11 @@ typedef struct SceneLight {
     Light* light; /* +0x60 */
 } SceneLight;
 
-extern "C" void Object_Activate(SceneLight* self, void* arg);
+extern "C" void cGOBJ_Activate(SceneLight* self, void* arg);
 
 /* Virtual 0x15: runs the base handler, then the light's virtual +0x2C. */
-extern "C" void cGameDirectionalLight_v15(SceneLight* self, void* arg)
+extern "C" void cGameDirectionalLight_Activate(SceneLight* self, void* arg)
 {
-    Object_Activate(self, arg);
+    cGOBJ_Activate(self, arg);
     self->light->Method2C();
 }

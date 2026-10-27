@@ -13,7 +13,7 @@ extern int strcmp(const char* a, const char* b);
 /* "GuiFrontendCanvas" */
 
 /* GuiFrontendCanvas type check: true when name equals the class name "GuiFrontendCanvas". */
-int GuiFrontendCanvas_IsType(void* self, const char* name) {
+int GuiFrontendCanvas_IsClass(void* self, const char* name) {
     return strcmp("GuiFrontendCanvas", name) == 0;
 }
 #pragma pop /* merge_units */
@@ -24,7 +24,7 @@ int GuiFrontendCanvas_IsType(void* self, const char* name) {
 #pragma cplusplus on
 #include "vtable_base_dtor.h"
 
-DEFINE_VTABLE_BASE_DTOR(GuiCommonCanvas_dtor, D_004E1A20, GuiCanvas_PopAll)
+DEFINE_VTABLE_BASE_DTOR(GuiCommonCanvas_dtor, D_004E1A20, GuiCanvas_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00465EC0 */
 
@@ -34,8 +34,8 @@ typedef struct { char tag; } Alloc;
 typedef struct { char* begin; char* end; char* cap; } String;
 
 extern int strlen(const char* s); /* strlen */
-extern void String_Reserve(String* self, int n);
-extern void String_Replace(String* self, char* at, int unused, const char* first, const char* last, Alloc alloc);
+extern void std_basic_string_char_char_traits_char_reserve(String* self, int n);
+extern void std_basic_string_char_char_traits_char_do_replace(String* self, char* at, int unused, const char* first, const char* last, Alloc alloc);
 
 /* Constructs a string from a C string; returns self. */
 String* String_CtorCStr_465F20(String* self, const char* s)
@@ -46,8 +46,8 @@ String* String_CtorCStr_465F20(String* self, const char* s)
     self->end = 0;
     self->cap = 0;
     len = strlen(s);
-    String_Reserve(self, len);
-    String_Replace(self, 0, 0, s, s + len, alloc);
+    std_basic_string_char_char_traits_char_reserve(self, len);
+    std_basic_string_char_char_traits_char_do_replace(self, 0, 0, s, s + len, alloc);
     return self;
 }
 #pragma pop /* merge_units */

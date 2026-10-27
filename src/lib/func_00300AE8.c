@@ -2,7 +2,7 @@ extern unsigned char D_004908EC;
 extern int rt_msg_client_is_valid_channel(void);
 extern int rt_time_start(void *tm);
 extern int rt_time_elapsed(void *tm, unsigned int *elapsed);
-extern int Socket_Write(int sock, unsigned char *data, int len, unsigned short *done);
+extern int rt_msg_client_channel_send_buf(int sock, unsigned char *data, int len, unsigned short *done);
 int rt_msg_client_send_buffer(int sock_, unsigned char *data, int len, unsigned int timeout)
 {
     /* pinned copy: retail keeps sock in s3 and timeout in s4 (as rt_p2p_handle_connect_event) */
@@ -17,7 +17,7 @@ int rt_msg_client_send_buffer(int sock_, unsigned char *data, int len, unsigned 
     if (data == 0) return 2;
     if (rt_time_start(tm) != 0) return 0x18;
     do {
-        r = Socket_Write(sock, data, len, &done);
+        r = rt_msg_client_channel_send_buf(sock, data, len, &done);
         if (r != 0) return r;
         len -= done;
         data += done;

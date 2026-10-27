@@ -9,7 +9,7 @@ extern char D_004AC1B8[];
 extern char D_004AC1D0[];
 extern const char D_004AC1C8[];
 extern int strcmp(const char *, const char *);
-extern int String_CompareN(const char *, const char *, int);
+extern int Libc_Strncmp(const char *, const char *, int);
 extern int func_002BC788(int);
 extern int func_002BAA38(int);
 extern int func_002BAA20(int, int *);
@@ -47,7 +47,7 @@ int _sceMcFatGetInfo(int idx, MC2Info *info)
         __builtin_memcpy(D_00512C88[idx].cwd, D_004AC1C8, 2);
         if (!_sceMcpReadSysInfo(idx)) return 0x8101006F;
         if (info) info->type = 2;
-        if (String_CompareN(sb->magic, D_004AC1D0, 0x1B)) {
+        if (Libc_Strncmp(sb->magic, D_004AC1D0, 0x1B)) {
             if (info) info->f4 = 0;
             return 0x8101002F;
         }

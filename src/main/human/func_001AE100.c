@@ -1,6 +1,6 @@
 #include "types.h"
 
-void Actor_SetLookTarget(int a0, int a1) {
+void cMan_SetEyeTarget(int a0, int a1) {
     int loc[1];
     int v1;
     int cond;

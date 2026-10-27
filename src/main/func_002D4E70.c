@@ -9,7 +9,7 @@ extern char g_ActorActionMsgClass[], D_004E0840[];
 extern int cAimWeapon_GetFireWeapon(Sub2D4E70*);
 extern void cNetNPC_AimFire(Self2D4E70*, Obj2D4E70*);
 extern void cNetNPC_AimNoFire(Self2D4E70*, Obj2D4E70*);
-extern void MsgQueue_QueueClone(void*, void*, int, int);
+extern void QueueMessage_cMessageR_cSystemP_int_int(void*, void*, int, int);
 void cNetNPC_AimFireWeapon(Self2D4E70* s, Obj2D4E70* o)
 {
     if (o) {
@@ -23,21 +23,21 @@ void cNetNPC_AimFireWeapon(Self2D4E70* s, Obj2D4E70* o)
     }
     {
         Msg2D4E70 m;
-        Event_Construct(&m, g_ActorActionMsgClass);
+        cMessage_ctor_cMessageNameR(&m, g_ActorActionMsgClass);
         m.on = 0;
         m.vtable = D_004E0840;
         m.action = 0x3A;
-        MsgQueue_QueueClone(&m, s->queue, 0, 0);
+        QueueMessage_cMessageR_cSystemP_int_int(&m, s->queue, 0, 0);
         m.vtable = D_004E0840;
         cMessage_dtor(&m, 0);
     }
     {
         Msg2D4E70 m;
-        Event_Construct(&m, g_ActorActionMsgClass);
+        cMessage_ctor_cMessageNameR(&m, g_ActorActionMsgClass);
         m.on = 0;
         m.vtable = D_004E0840;
         m.action = 0x3F;
-        MsgQueue_QueueClone(&m, s->queue, 0, 0);
+        QueueMessage_cMessageR_cSystemP_int_int(&m, s->queue, 0, 0);
         m.vtable = D_004E0840;
         cMessage_dtor(&m, 0);
     }

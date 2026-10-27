@@ -10,7 +10,7 @@ static inline short ReadShort(void) {
 }
 
 /* Reads a 32-bit float (as two 16-bit halves) from the cursor. */
-float Script_ReadFloat(void) {
+float cNetMsg_GetFloat_void(void) {
     unsigned int bits;
     unsigned short low = ReadShort();
     unsigned short high = ReadShort();

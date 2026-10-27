@@ -7,17 +7,17 @@ typedef struct {
 } T3F050;
 extern void GuiScreen_Sleep(T3F050* self);
 extern void func_002ACC80(void* p, int f);
-extern void LobbyArray_Free(L3F050* l);
-extern G3F050* Gui_GetScreenStack(void);
-void GuiMenuScreen_Sleep(T3F050* self)
+extern void SFOLobbyList_ClearAndCompactList(L3F050* l);
+extern G3F050* Gui_Canvas(void);
+void GuiMissionLobbyScreen_onSleep(T3F050* self)
 {
     GuiScreen_Sleep(self);
     self->fA8 = 0;
     if (self->p88)
         func_002ACC80(self->p88, 0);
-    LobbyArray_Free(&self->l0);
-    LobbyArray_Free(&self->l1);
-    LobbyArray_Free(&self->l2);
+    SFOLobbyList_ClearAndCompactList(&self->l0);
+    SFOLobbyList_ClearAndCompactList(&self->l1);
+    SFOLobbyList_ClearAndCompactList(&self->l2);
     self->b78 = 0;
-    Gui_GetScreenStack()->flags &= ~3;
+    Gui_Canvas()->flags &= ~3;
 }

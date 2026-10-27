@@ -9,7 +9,7 @@
  */
 #include "short_string_replace.h"
 
-extern "C" void String_Reserve(ShortStr* self, unsigned int n);
+extern "C" void std_basic_string_char_char_traits_char_reserve(ShortStr* self, unsigned int n);
 
 #define DEFINE_SHORT_STRING_COPY_CTOR(name)                                   \
     extern "C" ShortStr* name(ShortStr* self, const ShortStr* src)            \
@@ -20,9 +20,9 @@ extern "C" void String_Reserve(ShortStr* self, unsigned int n);
             self->u.l.word = 0;                                               \
             self->u.l.length = 0;                                             \
             self->u.l.data = 0;                                               \
-            String_Reserve(self, src->u.l.length);                            \
+            std_basic_string_char_char_traits_char_reserve(self, src->u.l.length);                            \
             ShortStrIterTag tag;                                              \
-            String_Replace(self, 0, 0, src->u.l.data,                         \
+            std_basic_string_char_char_traits_char_do_replace(self, 0, 0, src->u.l.data,                         \
                            src->u.l.data + src->u.l.length, tag);             \
         }                                                                     \
         return self;                                                          \

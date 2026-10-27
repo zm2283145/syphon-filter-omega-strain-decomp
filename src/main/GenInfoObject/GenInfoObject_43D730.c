@@ -11,7 +11,7 @@
 extern int strcmp(const char* a, const char* b); /* strcmp */
 
 /* Returns 1 if name equals the string "GuiMLTextWidget". */
-int MLTextWidget_IsType(void* self, const char* name)
+int GuiMLTextWidget_IsClass(void* self, const char* name)
 {
     return strcmp("GuiMLTextWidget", name) == 0;
 }
@@ -21,8 +21,8 @@ int MLTextWidget_IsType(void* self, const char* name)
 /* merge_units: begin func_0043D760 */
 #pragma push /* merge_units */
 typedef struct { char p[0x64]; int page; int pos; int f6C; int total; char p74[8]; void* sb; } L43D760;
-extern void GuiScrollBarWidget_SetRange(void* sb, unsigned char b, int v, int lo, int hi);
-void GuiMultiLineText_ScrollDown(L43D760* l, int big)
+extern void GuiScrollBarWidget_SetValues(void* sb, unsigned char b, int v, int lo, int hi);
+void GuiMLTextWidget_ScrollDown(L43D760* l, int big)
 {
     int step = l->page;
     if (l->pos < l->total - step) {
@@ -32,7 +32,7 @@ void GuiMultiLineText_ScrollDown(L43D760* l, int big)
             l->pos = l->total - l->page;
             if (l->pos < 0) l->pos = 0;
         }
-        if (l->sb) GuiScrollBarWidget_SetRange(l->sb, 0, l->pos, 0, l->total - l->page);
+        if (l->sb) GuiScrollBarWidget_SetValues(l->sb, 0, l->pos, 0, l->total - l->page);
     }
 }
 #pragma pop /* merge_units */
@@ -41,14 +41,14 @@ void GuiMultiLineText_ScrollDown(L43D760* l, int big)
 /* merge_units: begin func_0043D820 */
 #pragma push /* merge_units */
 typedef struct { char p[0x64]; int page; int pos; int f6C; int total; char p74[8]; void* sb; } L43D820;
-void GuiMultiLineText_ScrollUp(L43D820* l, int big)
+void GuiMLTextWidget_ScrollUp(L43D820* l, int big)
 {
     if (l->pos) {
         int step;
         if (big) step = l->page; else step = 1;
         l->pos -= step;
         if (l->pos < 0) l->pos = 0;
-        if (l->sb) GuiScrollBarWidget_SetRange(l->sb, 0, l->pos, 0, l->total - l->page);
+        if (l->sb) GuiScrollBarWidget_SetValues(l->sb, 0, l->pos, 0, l->total - l->page);
     }
 }
 #pragma pop /* merge_units */
@@ -94,13 +94,13 @@ extern "C" {
 extern char g_Video[];
 extern int D_00538C64;
 extern char D_00538C68;
-void GuiWidget_Draw(Self* self);
-int Font_GetLineHeight(Font* f);
-LineIter List_Begin(LineList*);
+void GuiWidget_onRender(Self* self);
+int cFont_GetCharH(Font* f);
+LineIter std_list_deleter_voidPtr_begin_void(LineList*);
 LineIter std_list_charPtr_end(LineList*);
 void std_list_charPtr_generic_iterator_ctor(LineIter*, const LineIter&);
 void cLListIterator_charPtr_ctor(LineIter*, const LineIter&);
-void TextObj_SetText(Box* b, char* text);
+void cTextArea_SetText(Box* b, char* text);
 void TextObj_Draw(Box* b);
 }
 
@@ -110,9 +110,9 @@ static inline void UM(void* p) { int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); q
 static inline V4 GetColor(Font* f) { return V4(f->r, f->g, f->b, f->a); }
 static inline void SetColor(Font* f, V4 c) { f->r = c.x; f->g = c.y; f->b = c.z; f->a = c.w; }
 
-extern "C" void GuiMultiLineText_Draw(Self* self)
+extern "C" void GuiMLTextWidget_onRender(Self* self)
 {
-    GuiWidget_Draw(self);
+    GuiWidget_onRender(self);
     if (self->textBox == 0 || self->font == 0) return;
     { int i = D_00538C64; GQR(MtxAt(i + 1), MtxAt(i)); }
     D_00538C64++;
@@ -122,7 +122,7 @@ extern "C" void GuiMultiLineText_Draw(Self* self)
         LineIter n;
         LineIter end;
         LineIter it;
-        int lineH = Font_GetLineHeight(self->font);
+        int lineH = cFont_GetCharH(self->font);
         int y = (int)self->y;
         int i = 0;
         int cnt = 1;
@@ -135,11 +135,11 @@ extern "C" void GuiMultiLineText_Draw(Self* self)
             saved.w = f->a;
         }
         self->font->SetColor(self->color);
-        std_list_charPtr_generic_iterator_ctor(&it, List_Begin(&self->lines));
+        std_list_charPtr_generic_iterator_ctor(&it, std_list_deleter_voidPtr_begin_void(&self->lines));
         for (n = it; cLListIterator_charPtr_ctor(&end, std_list_charPtr_end(&self->lines)), n.node != end.node; n.node = n.node->next) {
             if (i++ < self->scrollPos) continue;
             self->textBox->SetPos((int)self->x, y);
-            TextObj_SetText(self->textBox, n.node->text);
+            cTextArea_SetText(self->textBox, n.node->text);
             TextObj_Draw(self->textBox);
             y -= lineH;
             if (!(cnt++ < self->visibleLines)) break;

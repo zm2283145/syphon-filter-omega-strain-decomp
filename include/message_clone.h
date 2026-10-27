@@ -3,7 +3,7 @@
 
 /*
  * Clone() of cMessage-derived messages: allocate `size` bytes under the
- * allocator guard (Mem_Alloc(0, size, fileSym, line)), then run the inlined
+ * allocator guard (cMemMan_Allocate(0, size, fileSym, line)), then run the inlined
  * copy constructors: cMessage part (vtable D_004DFD80, words 0x04-0x1C and
  * the byte at 0x20), then BODY(p, self) for the derived parts (store each
  * derived vtable and copy the payload). Payload types derive from
@@ -12,7 +12,7 @@
  */
 #include "alloc_guard.h"
 
-extern "C" void* Mem_Alloc(int pool, int size, char* file, int line);
+extern "C" void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern "C" char D_004DFD80[];
 
 struct ClonedMessageBase {
@@ -34,7 +34,7 @@ struct ClonedMessageBase {
         T* p;                                                                 \
         {                                                                     \
             AllocGuard guard;                                                 \
-            p = (T*)Mem_Alloc(0, (size), fileSym, (line));                    \
+            p = (T*)cMemMan_Allocate(0, (size), fileSym, (line));                    \
         }                                                                     \
         if (p) {                                                              \
             p->vtable = D_004DFD80;                                           \

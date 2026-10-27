@@ -13,7 +13,7 @@
 #pragma mpwc_relax on
 extern int D_004DA380;
 
-int AnimChannelBase_CopyCtor(int arg0, int arg1) {
+int cSplinedMotion_float_ctor_cSplinedMotionR(int arg0, int arg1) {
     int temp_a2;
     int var_v1;
 
@@ -56,6 +56,6 @@ DEFINE_POD8_VECTOR_ERASE(std_vector_imp_cSkaSwitchValue_erase)
 #include "vector_insert_fill8.h"
 
 extern "C" { char D_0049ECE8[] = "allocator.hh"; }
-DEFINE_VECTOR_INSERT_FILL8(Vector_Insert_1BF5A0, D_0049E980, D_0049ECE8, 0x5C, std_swap_vectordeleterR_vectordeleterR_10, std_vector_deleter_cSkaSwitchValue_dtor)
+DEFINE_VECTOR_INSERT_FILL8(std_vector_imp_cSkaSwitchValue_insert, D_0049E980, D_0049ECE8, 0x5C, std_swap_vectordeleterR_vectordeleterR_10, std_vector_deleter_cSkaSwitchValue_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001BF5A0 */

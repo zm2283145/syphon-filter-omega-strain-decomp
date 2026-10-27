@@ -7,7 +7,7 @@ typedef struct {
 extern int D_00497770;
 extern char D_004C0FA0[];
 extern char D_004C0FA8[];
-extern void String_Copy(char*, char*);
+extern void Libc_Strcpy(char*, char*);
 extern char* strrchr(const char*, int);
 extern int sprintf(char*, const char*, ...);
 extern int SFOLobby_ChannelInfoRequest(S451BE0*, int);
@@ -28,10 +28,10 @@ int SFOLobby_HandleOverflowJoinChannel(S451BE0* s, int id)
             if (!SFOLobby_JoinChannel(s, id, 0))
                 return 0;
             s->f1EB4 = id;
-            String_Copy(s->f1EB8, s->f1BE8);
+            Libc_Strcpy(s->f1EB8, s->f1BE8);
             return 1;
         }
-        String_Copy(buf, s->f1BE8);
+        Libc_Strcpy(buf, s->f1BE8);
         p = strrchr(buf, '_');
         if (!p)
             return 0;
@@ -42,7 +42,7 @@ int SFOLobby_HandleOverflowJoinChannel(S451BE0* s, int id)
             if (!SFOLobby_JoinChannel(s, s->f1B38, 0))
                 return 0;
             s->f1EB4 = s->f1B38;
-            String_Copy(s->f1EB8, buf);
+            Libc_Strcpy(s->f1EB8, buf);
             return 1;
         }
         id = s->f1B80;

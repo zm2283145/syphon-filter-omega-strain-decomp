@@ -48,14 +48,14 @@ void cNetMsg_PutGOBJ(O_00282020* o) {
 
 /* merge_units: begin func_00282160 */
 #pragma push /* merge_units */
-extern void Script_ReadU32(int* handle);
-extern int Object_LookupById(int* handle);
+extern void cNetMsg_GetID(int* handle);
+extern int nGobjManager_LookupGOBJ_cObjectIdR(int* handle);
 /* Look up a handle and store the result in *out. */
-void NetStream_ReadObject(int* out)
+void cNetMsg_GetGOBJ(int* out)
 {
     int handle = -1;
-    Script_ReadU32(&handle);
-    *out = Object_LookupById(&handle);
+    cNetMsg_GetID(&handle);
+    *out = nGobjManager_LookupGOBJ_cObjectIdR(&handle);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00282160 */

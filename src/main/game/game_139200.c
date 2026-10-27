@@ -11,7 +11,7 @@
 #include "ptrvec_insert.h"
 
 extern "C" { char D_0049AB70[] = "vector::insert length error\n"; }
-DEFINE_PTRVEC_INSERT(PtrVec_Insert, 0x1800000, 0xC00000, D_0049AB70, D_0049AE50, 0x5C, D_0049AF00, 0x64)
+DEFINE_PTRVEC_INSERT(std_vector_pod_int_insert, 0x1800000, 0xC00000, D_0049AB70, D_0049AE50, 0x5C, D_0049AF00, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_00139200 */
 
@@ -21,6 +21,6 @@ DEFINE_PTRVEC_INSERT(PtrVec_Insert, 0x1800000, 0xC00000, D_0049AB70, D_0049AE50,
 #include "ptrvec_reserve.h"
 
 extern "C" { char D_0049AB90[] = "vector::reserve length error\n"; }
-DEFINE_PTRVEC_RESERVE(PtrVec_Reserve, 0x1800000, D_0049AB90, D_0049AE50, 0x5C, D_0049AF00, 0x64)
+DEFINE_PTRVEC_RESERVE(std_vector_pod_int_reserve, 0x1800000, D_0049AB90, D_0049AE50, 0x5C, D_0049AF00, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_001396D0 */

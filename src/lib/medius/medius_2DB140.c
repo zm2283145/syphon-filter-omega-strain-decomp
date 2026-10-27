@@ -6,13 +6,13 @@
 
 /* merge_units: begin func_002DB140 */
 extern void *memset(void *, int, unsigned int);
-extern char *Rt_MemoryAllocate(int);
+extern char *DMEmalloc(int);
 extern char *D_0051F0D0;
 unsigned int D_0048C440[2] = { 0x0, 0x0 };
 void NetInitializeClients(void)
 {
     char **pp = &D_0051F0D0;
-    *pp = Rt_MemoryAllocate(0x400);
+    *pp = DMEmalloc(0x400);
     (*(char*)D_0048C440) = 0;
     memset(*pp, 0, 0x400);
 }
@@ -72,9 +72,9 @@ extern Ent **D_0051F0D0;
 
 extern int NetIsValidClientIndex(unsigned int);
 #if 0 /* merge_units */
-extern Ent *Rt_MemoryAllocate(int);
+extern Ent *DMEmalloc(int);
 #endif /* merge_units */
-#define Rt_MemoryAllocate(a0) ((Ent *)Rt_MemoryAllocate((a0))) /* merge_units */
+#define DMEmalloc(a0) ((Ent *)DMEmalloc((a0))) /* merge_units */
 
 Ent *NetCreateClient(unsigned int a, unsigned int i)
 {
@@ -82,7 +82,7 @@ Ent *NetCreateClient(unsigned int a, unsigned int i)
     if (NetIsValidClientIndex(i) != 1) return 0;
     if (a < 4) {
         if (i < 0x100) {
-            p = Rt_MemoryAllocate(0x1C);
+            p = DMEmalloc(0x1C);
             D_0051F0D0[i] = p;
             p->f0 = 0;
             p->f4 = 0;
@@ -97,7 +97,7 @@ Ent *NetCreateClient(unsigned int a, unsigned int i)
     return 0;
 }
 #undef D_0051F0D0 /* merge_units */
-#undef Rt_MemoryAllocate /* merge_units */
+#undef DMEmalloc /* merge_units */
 /* merge_units: end func_002DB270 */
 
 /* merge_units: begin func_002DB320 */

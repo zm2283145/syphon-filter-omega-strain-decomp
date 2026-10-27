@@ -16,15 +16,15 @@ struct ReentGuard {
 };typedef struct { int a, b, f8; } E440;
 extern "C" {
 extern int D_00494198;
-extern int Gui_GetScreenStack(void);
-extern void GuiWidget_SendEvent(int, int, int, int, int);
+extern int Gui_Canvas(void);
+extern void GuiWidget_SendMessage(int, int, int, int, int);
 }
 extern "C" int cNetLevelInfoMsg_NetReceive(int a0, int a1, int a2, E440* ev) {
     ReentGuard g;
     if (ev->f8 == D_00494198) {
-        if (Gui_GetScreenStack()) GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 1, 0);
+        if (Gui_Canvas()) GuiWidget_SendMessage(Gui_Canvas(), Gui_Canvas(), 0x1E, 1, 0);
     } else {
-        if (Gui_GetScreenStack()) GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, (int)"F_TO_CONNECT");
+        if (Gui_Canvas()) GuiWidget_SendMessage(Gui_Canvas(), Gui_Canvas(), 0x1E, 0, (int)"F_TO_CONNECT");
     }
     return 12;
 }

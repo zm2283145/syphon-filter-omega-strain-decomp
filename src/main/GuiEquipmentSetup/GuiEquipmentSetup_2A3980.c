@@ -33,7 +33,7 @@ extern char D_0055C770[];
 void NetGetValidClientCount(int* out, int a);
 int func_002A3BA0(void*);
 int func_0042B4E0(void);
-Slot_3A10* PlayerSlots_Get(int);
+Slot_3A10* cNetObj_GetPlayer(int);
 }
 
 static inline void Lower_3A10(O_3A10* o, int v) { if (v < o->xC0) o->xC0 = v; }
@@ -58,7 +58,7 @@ extern "C" void func_002A3A10(O_3A10* o) {
         if (HostCount_3A10() < 2) o->xC0 = 0;
     }
     for (i = 0; i < 4; i++) {
-        Slot_3A10* p = PlayerSlots_Get(i);
+        Slot_3A10* p = cNetObj_GetPlayer(i);
         if (p) {
             unsigned char r = p->state();
             if (r == 0) o->xC0 = 0;

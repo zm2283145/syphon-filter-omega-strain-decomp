@@ -60,15 +60,15 @@ struct Obj_7A570 { char pad[0x50]; Node_7A570* node; };
 struct F4_7A370 { float x, y, z, w; void Set(float ax, float ay, float az, float aw) { x = ax; y = ay; z = az; w = aw; } };
 struct Rec_7A370 { int flags; char pad4[0xC]; V r0; F4_7A370 r1; V r2; V r3; float f50; int x54; Obj_7A570* parent; float f5C; };
 extern "C" {
-M* Mtx_Copy(M* d, M* s);
-M* Mtx_InvertRigid(M* m);
+M* cMatrix_ctor_cMatrixR(M* d, M* s);
+M* cMatrix_InvertRotTrans(M* m);
 Rec_7A370* DecalMgr_AddBloodRecord(Rec_7A370* r, int flags, V* pos, F4_7A370* dir, float f, float g, Obj_7A570* parent);
 }
 static inline M* GetXform(Node_7A570* s) {
     if (s->dirty) s->Refresh();
     return &s->xform;
 }
-static inline M* InvOf(M* out, Node_7A570* n) { M t; return Mtx_Copy(out, Mtx_InvertRigid(Mtx_Copy(&t, GetXform(n)))); }
+static inline M* InvOf(M* out, Node_7A570* n) { M t; return cMatrix_ctor_cMatrixR(out, cMatrix_InvertRotTrans(cMatrix_ctor_cMatrixR(&t, GetXform(n)))); }
 static inline void Apply1(V* v, M* m) { __asm__ volatile("lqc2 $vf8, 0x0(%0); lqc2 $vf4, 0x0(%1); lqc2 $vf5, 0x10(%1); lqc2 $vf6, 0x20(%1); lqc2 $vf7, 0x30(%1); vmulax.xyzw $ACC, $vf4, $vf8x; vmadday.xyzw $ACC, $vf5, $vf8y; vmaddaz.xyzw $ACC, $vf6, $vf8z; vmaddw.xyzw $vf12, $vf7, $vf8w; sqc2 $vf12, 0x0(%0)" : : "r"(v), "r"(m) : "memory"); }
 static inline V XF(const V& v, M* m) { V t = v; V* p = &t; Apply1(p, m); return *p; }
 /* XF2: pass-through layer for the second transform (register order of that call site) */

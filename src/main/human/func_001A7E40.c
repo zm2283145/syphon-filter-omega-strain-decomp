@@ -7,10 +7,10 @@
 #include "types.h"
 #include "human_types.h"
 
-void* Actor_GetEdgeRoot(Actor* actor) {
+void* cHuman_GetLedgeAnchor_void_2(Actor* actor) {
     return actor->edgeRoot;
 }
 
-void* Actor_GetFloorRoot(Actor* actor) {
+void* cHuman_GetFloorAnchor_void(Actor* actor) {
     return actor->floorRoot;
 }

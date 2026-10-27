@@ -16,16 +16,16 @@
  */
 
 
-extern int ActiveList_RemoveObject(char* world, int camera);
+extern int cGameSystem_RemoveCamera(char* world, int camera);
 extern char g_Game[]; /* world object */
-extern int World_PushObjectFromAction(char* world, int camera); /* push camera */
+extern int cGameSystem_PushCamera(char* world, int camera); /* push camera */
 
-int cNIEventOBJ_DeactivateCamera(int camera) {
-    return ActiveList_RemoveObject(g_Game, camera);
+int cGameCamera_RemoveCamera(int camera) {
+    return cGameSystem_RemoveCamera(g_Game, camera);
 }
 
-int cNIEventOBJ_ActivateCamera(int camera) {
-    return World_PushObjectFromAction(g_Game, camera);
+int cGameCamera_PushCurrent(int camera) {
+    return cGameSystem_PushCamera(g_Game, camera);
 }
 
 void* cGameCamera_GetGlobalOffset(char* self) {

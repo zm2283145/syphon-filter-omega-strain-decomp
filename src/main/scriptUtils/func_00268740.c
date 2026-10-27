@@ -5,13 +5,13 @@
 /* Global_RemoveArray: unlink a script array from the global array list and free it */
 struct It_68740 { void* n; };
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 extern char D_004A82B8[];
 }
 /* script array: frees its data buffer */
 struct Arr_68740 {
     void* data;
-    void Destroy() { void* d = data; AllocGuard g2; Mem_Free(0, d, D_004A82B8, 0x12D); }
+    void Destroy() { void* d = data; AllocGuard g2; cMemMan_Deallocate(0, d, D_004A82B8, 0x12D); }
 };
 extern "C" {
 extern char D_004F83E0[];
@@ -26,7 +26,7 @@ void cLListIterator_ArrayPtr_ctor_cLListIteratorR(It_68740* d, It_68740* s);
 void std_list_ArrayPtr_end(It_68740* out, void* l);
 void cLListIterator_ArrayPtr_ctor_listR(It_68740* d, It_68740* s);
 void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(It_68740* out, It_68740* in);
-void List_Erase(It_68740* out, void* l, It_68740* pos);
+void std_list_deleter_voidPtr_erase_listdeleter(It_68740* out, void* l, It_68740* pos);
 }
 static inline void Find(It_68740* out, void* l, Arr_68740* a)
 {
@@ -43,7 +43,7 @@ static inline void Find(It_68740* out, void* l, Arr_68740* a)
     cLListIterator_ArrayPtr_ctor_cLListIteratorR(out, &it);
 }
 static inline void EndL(It_68740* out, void* l) { It_68740 e2; std_list_ArrayPtr_end(&e2, l); cLListIterator_ArrayPtr_ctor_listR(out, &e2); }
-static inline void EraseAt(void* l, It_68740* c) { It_68740 o; It_68740 p; std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&p, c); List_Erase(&o, l, &p); }
+static inline void EraseAt(void* l, It_68740* c) { It_68740 o; It_68740 p; std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&p, c); std_list_deleter_voidPtr_erase_listdeleter(&o, l, &p); }
 /* pass-through layers: keep the find/end iterators below the erase temporaries (slot order) */
 static inline void Find2(It_68740* out, void* l, Arr_68740* a) { Find(out, l, a); }
 static inline void EndL2(It_68740* out, void* l) { EndL(out, l); }
@@ -62,7 +62,7 @@ extern "C" void Global_RemoveArray(Arr_68740* a)
         {
             AllocGuard g;
             if (a) a->Destroy();
-            Mem_Free(0, a, D_004A82B8, 0x1AD);
+            cMemMan_Deallocate(0, a, D_004A82B8, 0x1AD);
         }
     }
 }

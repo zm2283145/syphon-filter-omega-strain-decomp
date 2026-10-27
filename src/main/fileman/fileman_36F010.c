@@ -131,7 +131,7 @@ public:
     virtual D6XObj* getNode();
     virtual void attach(void* parent, int flags);
 };
-extern "C" void Xform_AddChild(void* self, D6XObj* child, int flags)
+extern "C" void cXformNode_AddChild(void* self, D6XObj* child, int flags)
 {
     D6XObj* n = child ? child->getNode() : 0;
     if (n) {
@@ -162,14 +162,14 @@ int cArray_cXformNodePtr_ConstIterator_opNe(It* a, It* b);
 void** cArray_cXformNodePtr_ConstIterator_opMul(It* it);
 void cXformNode_SetNeedsUpdate(void* p);
 void cArray_cXformNodePtr_ConstIterator_opInc(It* it);
-void PtrVector_Resize(void* v, int n, int* fill);
-M* Mtx_Transpose3x3(M* m);
-int Mtx_IsTranslationZero(M* m);
+void std_vector_pod_int_resize(void* v, int n, int* fill);
+M* cMatrix_InvertRot(M* m);
+int cMatrix_IsZeroTranslation(M* m);
 V* func_00133EC0(M* m);
-void Vec4_Assign(V* d, V* s);
-V* Vec3_Negate(V* a);
-V* Mtx_TransformByTranspose(V* a, M* b);
-void Mtx_SetTranslation(M* m, V* v);
+void cVector_ctor_cVectorR(V* d, V* s);
+V* cVector_NegateXYZ(V* a);
+V* cVector_Rotate_cMatrixR(V* a, M* b);
+void cMatrix_SetTranslation(M* m, V* v);
 }
 struct XVec { int cap; int size; struct Xform** data; };
 struct Xform {
@@ -183,7 +183,7 @@ struct Xform {
     M GetWorld() { if (dirty) Update(); const M& w = world; return w; }
     XVec kids;
 };
-extern "C" void Xform_Detach(Xform* x, int keep)
+extern "C" void cXformNode_RemoveParent(Xform* x, int keep)
 {
     Xform* p = x->parent;
     Xform* self = x;
@@ -205,7 +205,7 @@ extern "C" void Xform_Detach(Xform* x, int keep)
                 }
             }
             fill = 0;
-            PtrVector_Resize(&p->kids, last + 1, &fill);
+            std_vector_pod_int_resize(&p->kids, last + 1, &fill);
         }
         if (keep) {
             self->SetWorld(&m);

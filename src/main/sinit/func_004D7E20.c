@@ -1,9 +1,9 @@
 #include "types.h"
-int NetMsgTable_Add();
-int cGOBJ_GetScriptTypeKeyPtr();
-int Script_RegisterNative_2();
-int ScriptEnum_Register();
-int FreeList_Push();
+int cNetMsg_RegisterMsg();
+int cGOBJ_SOBJ_getClassId();
+int cScriptBase_registerFunc_intPintPint_intP_charP_int_etc();
+int cScriptBase_registerEnum();
+int AbstractWidgetClassRep_AddClassRep();
 int Script_ClearInteract_2();
 int Script_ClearInteract();
 int Script_DisplayInteract_4();
@@ -37,20 +37,20 @@ extern int D_005861B0;
 extern void* D_005861B8;
 extern void* D_005861C0;
 void StaticInit_GuiGameScreen(void) {
-    D_00586140 = ScriptEnum_Register("eJoystickButton", &D_00497A30, 12);
-    D_00586148 = Script_RegisterNative_2(Script_PlayXA, &D_00493880, "PlayXA", 1, &D_004938A0);
-    D_00586150 = Script_RegisterNative_2(Script_PlayXA_2, &D_00493880, "PlayXA", 2, &D_004938A0, &D_00493898);
+    D_00586140 = cScriptBase_registerEnum("eJoystickButton", &D_00497A30, 12);
+    D_00586148 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_PlayXA, &D_00493880, "PlayXA", 1, &D_004938A0);
+    D_00586150 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_PlayXA_2, &D_00493880, "PlayXA", 2, &D_004938A0, &D_00493898);
     D_00586158 = "cDisplayClientInteractMsg";
-    D_00586168 = NetMsgTable_Add(func_0045EBC0, &D_00586160, "cDisplayClientInteractMsg");
+    D_00586168 = cNetMsg_RegisterMsg(func_0045EBC0, &D_00586160, "cDisplayClientInteractMsg");
     D_00586170 = "cClearClientInteractMsg";
-    D_00586180 = NetMsgTable_Add(func_0045EB70, &D_00586178, "cClearClientInteractMsg");
-    D_00586188 = Script_RegisterNative_2(Script_DisplayInteract, &D_00493880, "DisplayInteract", 1, &D_00493898);
-    D_00586190 = Script_RegisterNative_2(Script_DisplayInteract_2, &D_00493880, "DisplayInteract", 2, &D_00493898, &D_00586140);
-    D_00586198 = Script_RegisterNative_2(Script_DisplayInteract_3, &D_00493880, "DisplayInteract", 2, cGOBJ_GetScriptTypeKeyPtr(), &D_004938A0);
-    D_005861A0 = Script_RegisterNative_2(Script_DisplayInteract_4, &D_00493880, "DisplayInteract", 3, cGOBJ_GetScriptTypeKeyPtr(), &D_004938A0, &D_00586140);
-    D_005861A8 = Script_RegisterNative_2(Script_ClearInteract, &D_00493880, "ClearInteract", 0);
-    D_005861B0 = Script_RegisterNative_2(Script_ClearInteract_2, &D_00493880, "ClearInteract", 1, cGOBJ_GetScriptTypeKeyPtr());
+    D_00586180 = cNetMsg_RegisterMsg(func_0045EB70, &D_00586178, "cClearClientInteractMsg");
+    D_00586188 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_DisplayInteract, &D_00493880, "DisplayInteract", 1, &D_00493898);
+    D_00586190 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_DisplayInteract_2, &D_00493880, "DisplayInteract", 2, &D_00493898, &D_00586140);
+    D_00586198 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_DisplayInteract_3, &D_00493880, "DisplayInteract", 2, cGOBJ_SOBJ_getClassId(), &D_004938A0);
+    D_005861A0 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_DisplayInteract_4, &D_00493880, "DisplayInteract", 3, cGOBJ_SOBJ_getClassId(), &D_004938A0, &D_00586140);
+    D_005861A8 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_ClearInteract, &D_00493880, "ClearInteract", 0);
+    D_005861B0 = cScriptBase_registerFunc_intPintPint_intP_charP_int_etc(Script_ClearInteract_2, &D_00493880, "ClearInteract", 1, cGOBJ_SOBJ_getClassId());
     D_005861C0 = &D_004E16C0;
     D_005861B8 = "GuiGameScreen";
-    FreeList_Push(&D_005861B8);
+    AbstractWidgetClassRep_AddClassRep(&D_005861B8);
 }

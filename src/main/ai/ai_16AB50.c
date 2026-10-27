@@ -16,7 +16,7 @@
  */
 
 
-extern int GObj_IdentityA(AIGObj*);
+extern int cGOBJ_SOBJ_toInt(AIGObj*);
 
 /* Stores the elapsed time (args[1]) on the AI; volatile mirrors the original stack temporary. */
 int Script_cAI_SendTimeElapsedMessage(AIScriptArg* args) {
@@ -26,7 +26,7 @@ int Script_cAI_SendTimeElapsedMessage(AIScriptArg* args) {
 }
 
 int Script_GetGOBJ_AI(AIScriptArg* args) {
-    return GObj_IdentityA(((cAI*)args[0].p)->gobj);
+    return cGOBJ_SOBJ_toInt(((cAI*)args[0].p)->gobj);
 }
 
 int Script_cAI_IsVisible(AIScriptArg* args) {
@@ -107,7 +107,7 @@ static inline void merge_flush_func_0016ABE0(void) {}
 extern char D_004EE5D8[];
 extern char D_004EE5E0[];
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(int, int, int);
+extern int cScriptInterpreter_CallEvent(int, int, int);
 extern int* func_0022F170(void);
 extern int* func_0026ED30(void);
 extern int* func_0026ED70(void);
@@ -121,42 +121,42 @@ extern int* cAITimeElapsedMsg_SOBJ_getClassId(void);
 extern int* cAIDeadMsg_SOBJ_getClassId(void);
 extern int* cAIDeactivatedMsg_SOBJ_getClassId(void);
 extern int* cAIActivatedMsg_SOBJ_getClassId(void);
-extern int ScriptType_AddAccepted(int, int);
-extern void ScriptType_SetParent(int, int);
+extern int cScriptBase_declareMsgUse(int, int);
+extern void cScriptBase_declareParent(int, int);
 
 /*
  * Registers the cAI script type under its parent, then registers each of the
  * message script types cAI accepts (one key getter per message type).
  */
-int ScriptType_cAI_Init(void) {
+int cAI_SOBJ_init(void) {
     int* key;
 
     key = func_0022F170();
-    ScriptType_SetParent(*(int*)D_004EE5E0, *key);
+    cScriptBase_declareParent(*(int*)D_004EE5E0, *key);
     key = cAIActivatedMsg_SOBJ_getClassId();
-    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
+    cScriptBase_declareMsgUse(*(int*)D_004EE5E0, *key);
     key = cAIDeactivatedMsg_SOBJ_getClassId();
-    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
+    cScriptBase_declareMsgUse(*(int*)D_004EE5E0, *key);
     key = cAIDeadMsg_SOBJ_getClassId();
-    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
+    cScriptBase_declareMsgUse(*(int*)D_004EE5E0, *key);
     key = cAITimeElapsedMsg_SOBJ_getClassId();
-    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
+    cScriptBase_declareMsgUse(*(int*)D_004EE5E0, *key);
     key = cAIWaypointReachedMsg_SOBJ_getClassId();
-    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
+    cScriptBase_declareMsgUse(*(int*)D_004EE5E0, *key);
     key = cAIDestinationReachedMsg_SOBJ_getClassId();
-    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
+    cScriptBase_declareMsgUse(*(int*)D_004EE5E0, *key);
     key = cAINewAwarenessMsg_SOBJ_getClassId();
-    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
+    cScriptBase_declareMsgUse(*(int*)D_004EE5E0, *key);
     key = cAIWeaponFiredMsg_SOBJ_getClassId();
-    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
+    cScriptBase_declareMsgUse(*(int*)D_004EE5E0, *key);
     key = cAIPickupableAwarenessMsg_SOBJ_getClassId();
-    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
+    cScriptBase_declareMsgUse(*(int*)D_004EE5E0, *key);
     key = cAIBodyMovedMsg_SOBJ_getClassId();
-    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
+    cScriptBase_declareMsgUse(*(int*)D_004EE5E0, *key);
     key = func_0026ED70();
-    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
+    cScriptBase_declareMsgUse(*(int*)D_004EE5E0, *key);
     key = func_0026ED30();
-    return ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
+    return cScriptBase_declareMsgUse(*(int*)D_004EE5E0, *key);
 }
 
 /* Address of the cAI script-type key. */
@@ -164,12 +164,12 @@ int cAI_SOBJ_getClassId(void) {
     return (int)D_004EE5D8;
 }
 
-int cAI_v0B(void) {
+int cAI_getSOBJClassId(void) {
     return *(int*)D_004EE5D8;
 }
 
-int cAI_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+int cAI_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent((int)D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0016AC20(void) {}

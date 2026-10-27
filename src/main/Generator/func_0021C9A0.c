@@ -5,8 +5,8 @@ typedef struct { char pad[0xC0]; int pulse; } Gen0021C9A0;
 extern unsigned char g_IsMultiplayer;
 unsigned int D_004A4A78[2] = { 0x0, 0x0 };
 extern char D_004DB5E0[];
-extern void Event_Construct(Msg0021C9A0* m, void* name);
-extern void Event_Send(Msg0021C9A0* m, void* target, int a);
+extern void cMessage_ctor_cMessageNameR(Msg0021C9A0* m, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg0021C9A0* m, void* target, int a);
 extern void cMessage_dtor(Msg0021C9A0* m, int flags);
 int Script_cGenerator_ResetPulse(Gen0021C9A0** args)
 {
@@ -14,11 +14,11 @@ int Script_cGenerator_ResetPulse(Gen0021C9A0** args)
     g->pulse = 0;
     if (g_IsMultiplayer) {
         Msg0021C9A0 m;
-        Event_Construct(&m, ((char*)D_004A4A78));
+        cMessage_ctor_cMessageNameR(&m, ((char*)D_004A4A78));
         m.vtable = D_004DB5E0;
         m.op = 2;
         m.kind = 4;
-        Event_Send(&m, g, 0);
+        QueueMessage_cMessageR_cSystemP_int(&m, g, 0);
         m.vtable = D_004DB5E0;
         cMessage_dtor(&m, 0);
     }

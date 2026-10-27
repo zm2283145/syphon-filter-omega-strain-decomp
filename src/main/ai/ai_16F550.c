@@ -20,17 +20,17 @@
 #pragma cplusplus on
 
 extern "C" {
-extern "C" void Component_AttachOwner();
-extern "C" void Controller_GetShooterMotion();
-extern "C" void Controller_IsEnemy();
-extern "C" void Controller_IsEnemyTeam();
-extern "C" void Controller_ToHit();
-extern "C" void Receiver_HandleEventBase();
-extern "C" void cAI_v0B();
-extern "C" void cAI_v0C();
-extern "C" void cAI_v0E();
-extern "C" void cAI_v10();
-extern "C" void cAI_v11();
+extern "C" void cGameGobjController_SetGobj();
+extern "C" void cGameGobjController_GetVelocity();
+extern "C" void cGameGobjController_Enemy_cGOBJP();
+extern "C" void cGameGobjController_Enemy_int();
+extern "C" void cGameGobjController_UpdateToHitProbability();
+extern "C" void cSystem_HandleMessage();
+extern "C" void cAI_getSOBJClassId();
+extern "C" void cAI_ScriptHandleMessage();
+extern "C" void cAI_NextFrame();
+extern "C" void cAI_Activate();
+extern "C" void cAI_Deactivate();
 extern "C" void cSystem_ScriptGetRealObj();
 extern "C" void cSystem_SendCreated();
 extern "C" void cSystem_NetActivate();
@@ -38,25 +38,25 @@ extern "C" void cSystem_NetDeactivate();
 extern "C" void cSystem_NetEnable();
 extern "C" void cSystem_NetDisable();
 extern "C" void cSystem_IsDeliverable();
-extern "C" void NpcAi_IsPlayer();
+extern "C" void cGobjController_IsPlayer();
 extern "C" void cSystem_IsNetworked();
 extern "C" void cGobjController_IsNPC();
 extern "C" void cGobjController_DetermineDeathType_int();
 extern "C" void cGobjController_IsNetNPC();
-extern "C" void NpcAi_GetTeam();
+extern "C" void cAI_Team();
 extern "C" void cNPC_v24();
 extern "C" void func_0015B820();
 extern "C" void cGobjController_CleanUpAfterTeleportationOfGobj();
 extern "C" void cGobjController_GetCopyMsg();
 extern "C" void cGobjController_NoticeEnvironmentalDanger();
-extern "C" void NpcAi_SetTeam();
+extern "C" void cAI_SetTeam();
 extern "C" void func_0016F9E0();
 extern "C" void PlayerComp_OnHitNop();
 extern "C" void func_0016FA00();
 extern "C" void PlayerComp_GetDeathCode();
 extern "C" void func_0016FA20();
 extern "C" void cGobjController_WantsToBeActive();
-extern "C" void Component_GetOwnerId();
+extern "C" void cGobjController_ScriptGetObjectId();
 extern void * const D_004D9890[];
 void* cGameGobjController_dtor(void* self, short deleteFlag);
 }
@@ -70,7 +70,7 @@ extern "C" VtableObject* cAI_dtor(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004D9890[44] = { (void*)0x0, (void*)0x0, (void*)cAI_dtor, (void*)Receiver_HandleEventBase, (void*)Component_GetOwnerId, (void*)cSystem_ScriptGetRealObj, (void*)cSystem_IsNetworked, (void*)cSystem_SendCreated, (void*)cSystem_NetActivate, (void*)cSystem_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cAI_v0B, (void*)cAI_v0C, (void*)func_0016F9E0, (void*)cAI_v0E, (void*)cGobjController_WantsToBeActive, (void*)cAI_v10, (void*)cAI_v11, (void*)func_0015B820, (void*)NpcAi_IsPlayer, (void*)cGobjController_IsNPC, (void*)cGobjController_IsNetNPC, (void*)Controller_ToHit, (void*)0x0, (void*)NpcAi_GetTeam, (void*)Controller_IsEnemyTeam, (void*)Controller_IsEnemy, (void*)Controller_GetShooterMotion, (void*)PlayerComp_OnHitNop, (void*)func_0016FA00, (void*)cGobjController_CleanUpAfterTeleportationOfGobj, (void*)PlayerComp_GetDeathCode, (void*)cGobjController_DetermineDeathType_int, (void*)Component_AttachOwner, (void*)func_0016FA20, (void*)cGobjController_GetCopyMsg, (void*)cNPC_v24, (void*)cGobjController_NoticeEnvironmentalDanger, (void*)NpcAi_SetTeam, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004D9890[44] = { (void*)0x0, (void*)0x0, (void*)cAI_dtor, (void*)cSystem_HandleMessage, (void*)cGobjController_ScriptGetObjectId, (void*)cSystem_ScriptGetRealObj, (void*)cSystem_IsNetworked, (void*)cSystem_SendCreated, (void*)cSystem_NetActivate, (void*)cSystem_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cAI_getSOBJClassId, (void*)cAI_ScriptHandleMessage, (void*)func_0016F9E0, (void*)cAI_NextFrame, (void*)cGobjController_WantsToBeActive, (void*)cAI_Activate, (void*)cAI_Deactivate, (void*)func_0015B820, (void*)cGobjController_IsPlayer, (void*)cGobjController_IsNPC, (void*)cGobjController_IsNetNPC, (void*)cGameGobjController_UpdateToHitProbability, (void*)0x0, (void*)cAI_Team, (void*)cGameGobjController_Enemy_int, (void*)cGameGobjController_Enemy_cGOBJP, (void*)cGameGobjController_GetVelocity, (void*)PlayerComp_OnHitNop, (void*)func_0016FA00, (void*)cGobjController_CleanUpAfterTeleportationOfGobj, (void*)PlayerComp_GetDeathCode, (void*)cGobjController_DetermineDeathType_int, (void*)cGameGobjController_SetGobj, (void*)func_0016FA20, (void*)cGobjController_GetCopyMsg, (void*)cNPC_v24, (void*)cGobjController_NoticeEnvironmentalDanger, (void*)cAI_SetTeam, (void*)0x0, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0016F550(void) {}
 #pragma pop /* merge_units */
@@ -84,8 +84,8 @@ struct AiSpawn { char p[0x58]; AiChk* chk; };
 class AiSelf { public: virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7(); virtual void s8(); virtual void s9(); virtual void s10(); virtual void s11(); virtual void s12(); virtual void s13(); virtual void s14(); virtual void s15(); virtual void s16(); virtual void s17(); virtual void s18(); virtual void s19(); virtual void s20(); virtual void s21(); virtual void s22(); virtual void s23(); virtual void s24(); virtual void s25(); virtual void s26(); virtual void s27(); virtual void s28(); virtual void s29(); virtual void s30(); virtual void s31(); virtual void s32(); virtual void s33(); virtual void s34(); virtual void s35(); virtual void s36(); virtual void s37(); virtual void SetMode(int m); };
 struct AiTimer { int a; int b; int c; unsigned char done; };
 struct AiData { void* vt; char p4[0x40]; AiTimer t; char p54[4]; float f58; unsigned char b5c, b5d; };
-extern "C" void Component_BaseInit(AiData*);
-extern "C" int Controller_NotifySeen(AiSpawn*);
+extern "C" void cGameGobjController_ctor(AiData*);
+extern "C" int cGOBJ_Team(AiSpawn*);
 #if 0 /* merge_units */
 extern "C" char D_004D9890[];
 #endif /* merge_units */
@@ -97,10 +97,10 @@ inline unsigned char AiSpawn_Ready(AiSpawn* s) { unsigned char r = 0; if (s->chk
 extern "C" AiData* cAI_ctor(AiData* self, AiSpawn* s)
 {
     int mode;
-    Component_BaseInit(self);
+    cGameGobjController_ctor(self);
     AiTimer_Init(&self->t);
     self->vt = D_004D9890;
-    if (s && AiSpawn_Ready(s)) mode = Controller_NotifySeen(s);
+    if (s && AiSpawn_Ready(s)) mode = cGOBJ_Team(s);
     else mode = 4;
     ((AiSelf*)self)->SetMode(mode);
     self->f58 = -1.0f;

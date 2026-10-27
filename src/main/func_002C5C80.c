@@ -20,4 +20,4 @@ extern void cTargetAwareness_opAssign(void* d, void* s);
     cTargetAwareness_opAssign((char*)(b) + 0x230, (char*)(e) + 0x250); \
     cTargetAwareness_opAssign((char*)(b) + 0x270, (char*)(e) + 0x290); \
     cTargetAwareness_opAssign((char*)(b) + 0x2B0, (char*)(e) + 0x2D0);
-DEFINE_MESSAGE_PACK(cNetCopyMsg_Serialize, 0x2F0, D_0051EE50, PACK_BODY)
+DEFINE_MESSAGE_PACK(cNetCopyMsg_Pack, 0x2F0, D_0051EE50, PACK_BODY)

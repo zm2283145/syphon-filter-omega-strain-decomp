@@ -35,7 +35,7 @@ typedef struct {
     unsigned char b30; unsigned char b31; char pad32[2];
     int f34; float v38; float v3C; float v40; float v44;
 } Track2609;
-void VisionMgr_SetPendingMode(Track2609* s, int id, int force) {
+void cVisionFxMan_SetMode(Track2609* s, int id, int force) {
     if (s->target != id) {
         s->current = id;
         if (force) s->target = id;
@@ -73,18 +73,18 @@ typedef struct {
 
 extern VfxFlareId D_004A7DB0[];
 extern VfxTexReg* g_TextureMgr;
-extern int* SpecFx_GetEffectDef(int id);
+extern int* nSfxLoader_GetHandle(int id);
 
 static inline int VfxTexW(int h) { return g_TextureMgr->entries[h]->info->w; }
 static inline int VfxTexH(int h) { return g_TextureMgr->entries[h]->info->h; }
 
-void VisionFx_LoadFlareTextures(VisionFx* self)
+void cVisionFxMan_UpdateTxtrIds(VisionFx* self)
 {
     int i;
     for (i = 0; i < 9; i++) {
-        self->flares[i] = *SpecFx_GetEffectDef(D_004A7DB0[i].id);
+        self->flares[i] = *nSfxLoader_GetHandle(D_004A7DB0[i].id);
     }
-    self->x1F8 = *SpecFx_GetEffectDef(0x21);
+    self->x1F8 = *nSfxLoader_GetHandle(0x21);
     {
         int t = self->x1F8;
         self->tex = t;
@@ -186,15 +186,15 @@ extern "C" Obj_260B90* cVisionFxMan_ctor(Obj_260B90* o) {
 
 /* merge_units: begin func_00260D50 */
 #pragma push /* merge_units */
-extern void* IeNode_FindChild(void* p);
-extern int IeElement_Create(void* obj);
+extern void* cInterfaceModel_GetChild(void* p);
+extern int cInterfaceModel_CreateInstance(void* obj);
 
-/* Resolves an object with IeNode_FindChild and returns IeElement_Create of it, or 0 if none. */
-int Hud_FindOrCreateElement(void* p)
+/* Resolves an object with cInterfaceModel_GetChild and returns cInterfaceModel_CreateInstance of it, or 0 if none. */
+int nHud_CreateHudElement(void* p)
 {
-    void* obj = IeNode_FindChild(p);
+    void* obj = cInterfaceModel_GetChild(p);
     if (obj)
-        return IeElement_Create(obj);
+        return cInterfaceModel_CreateInstance(obj);
     return 0;
 }
 #pragma pop /* merge_units */
@@ -209,7 +209,7 @@ extern F260D90_Key D_004F8190[];
 extern F260D90_Key D_004F80F0[];
 float D_0048B0A0 __attribute__((aligned(8))) = 0.9f;
 float D_0048B0A8 __attribute__((aligned(8))) = 0.9f;
-void Hud_GetLockColour(float* out, float x) {
+void nHud_ComputeColor(float* out, float x) {
     int i;
     unsigned char alt = D_004F8258 && D_004F8230;
     F260D90_Key* tab = alt ? D_004F8190 : D_004F80F0;
@@ -248,7 +248,7 @@ extern char D_004F8258;
 #define D_004F8258 (*(char*)&D_004F8258) /* merge_units */
 
 
-void Hud_SelectColourRamp(int value) {
+void nHud_UseNightVisionColors(int value) {
     D_004F8258 = value;
 }
 #undef D_004F8258 /* merge_units */

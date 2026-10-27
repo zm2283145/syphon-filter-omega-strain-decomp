@@ -13,16 +13,16 @@ int cGameSystem_GetClientPlayerLocation(NameSlotTable* t, int i) {
     return t->values[i];
 }
 
-void Game_SetPlayerLocation(NameSlotTable* t, int i, int value) {
+void cGameSystem_SetClientPlayerLocation(NameSlotTable* t, int i, int value) {
     t->values[i] = value;
 }
 
-char* Game_GetPlayerNameSlot(NameSlotTable* t, int i) {
+char* cGameSystem_GetClientPlayerName(NameSlotTable* t, int i) {
     return t->names[i];
 }
 
 /* Copies up to 15 characters of name into slot i and terminates it. */
-int NameSlot_SetName(NameSlotTable* t, int i, const char* name) {
+int cGameSystem_SetClientPlayerName(NameSlotTable* t, int i, const char* name) {
     int ret;
 
     ret = strncpy(t->names[i], name, 15);

@@ -6,7 +6,7 @@
 #include "types.h"
 #include "path_types.h"
 
-PathCursor* NpcFollowerBuf_Init(PathCursor* self, int owner) {
+PathCursor* cPath_ctor(PathCursor* self, int owner) {
     self->owner = owner;
     self->unk20 = 0;
     self->unk28 = 0;

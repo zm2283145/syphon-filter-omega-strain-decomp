@@ -5,32 +5,32 @@
 
 struct V;
 extern "C" {
-void* Ptr_Identity(void*);
-V* Vec4_Assign(V* d, const V* s);
-V Vec4_Add(const V& a, const V& b);
-V Vec4_Scale(const V& a, float s);
-void Vec4_Scale_1E5920(V* d, const V* s, float k);
-void Vec4_Subtract(V* d, const V* a, const V* b);
-void Vec4_Sub(V* d, const V* a, const V* b);
-V* Vec4_NormalizeXYZ_1D10C0(V* v, float* len);
-V* Vec4_NormalizeXYZInPlace(V* v);
-void Vec4_NormalizeXYZ_132060(V* d, const V* s);
-void Vec4_Cross(V* d, const V* a, const V* b);
-int Vec4_IsZeroXYZ(const V* v);
-V Sphere_FromCenter(const V& c, const V& r);
-void Vec4_CrossW0(V* d, const V* a, const V* b);
-void* Vec4_Set(void*, float, float, float, float);
-void Mtx_FromRowsAndTranslation(void* m, const V* a, const V* b, const V* c, void* t);
-void Mtx_FrameFromAxis(void* m, const V* a);
-void Mtx_SetIdentity(void* m);
-V* Mtx_DotRowsVec3(void* m, void* v);
-void* ParticleDefs_FindByName(void* a, void* b);
-void ParticleEmitter_SpawnChildren(void* a, void* b, void* c, void* m, float t);
-void ParticleEmitterBase_Update(void* o, void* a, void* b, void* c, float t);
+void* cVector_ctor_void(void*);
+V* cVector_ctor_cVectorR(V* d, const V* s);
+V cVector_opAdd(const V& a, const V& b);
+V cVector_opMul(const V& a, float s);
+void cVector_VU0Scale(V* d, const V* s, float k);
+void cVector_VU0Subtract(V* d, const V* a, const V* b);
+void cVector_VU0Add(V* d, const V* a, const V* b);
+V* cVector_Normalize_floatR(V* v, float* len);
+V* cVector_Normalize_void(V* v);
+void cVector_GetNormalized_void(V* d, const V* s);
+void cVector_Cross(V* d, const V* a, const V* b);
+int cVector_IsZeroXYZ(const V* v);
+V cVector_opSub(const V& c, const V& r);
+void cVector_VU0Cross(V* d, const V* a, const V* b);
+void* cVector_ctor_float_float_float_float(void*, float, float, float, float);
+void cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(void* m, const V* a, const V* b, const V* c, void* t);
+void cMatrix_MakeLookAtMatrix_cVectorR(void* m, const V* a);
+void cMatrix_SetUnit(void* m);
+V* cVector_InverseRotate_cMatrixR(void* m, void* v);
+void* GetEffectID__15cParticleSystemCFRC1(void* a, void* b);
+void cParticle_AddChild(void* a, void* b, void* c, void* m, float t);
+void cParticleBase_NextFrame(void* o, void* a, void* b, void* c, float t);
 void cTimerDisable_ctor(void*);
 void cTimerDisable_dtor(void*, int);
-void* Mem_Alloc(int, int, char*, int);
-void Mem_Free(int, void*, char*, int);
+void* cMemMan_Allocate(int, int, char*, int);
+void cMemMan_Deallocate(int, void*, char*, int);
 extern char D_004BC5D0[];
 extern char D_0053BB08;
 extern float D_0053BB10[4];
@@ -45,7 +45,7 @@ struct V {
     float x, y, z, w;
     V() {}
     V(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; }
-    V(const V& o) { Vec4_Assign(this, &o); }
+    V(const V& o) { cVector_ctor_cVectorR(this, &o); }
     V& operator=(const V& o) { const V* s0 = &o; V* d = this; void* xx = this; const V* s = &o; __int128 t; __asm__ volatile("lq %0, 0x0(%1); sq %0, 0x0(%2)" : "=r"(t) : "r"(s), "r"(d) : "memory"); return *this; }
     void A2(const V& o) { const V* s0 = &o; const V* s = &o; void* xx = this; V* d = this; __int128 t; __asm__ volatile("lq %0, 0x0(%1); sq %0, 0x0(%2)" : "=r"(t) : "r"(s), "r"(d) : "memory"); }
     void A3(const V& o) { const V* s = &o; const V* s0 = &o; V* d = this; void* xx = this; __int128 t; __asm__ volatile("lq %0, 0x0(%1); sq %0, 0x0(%2)" : "=r"(t) : "r"(s), "r"(d) : "memory"); }
@@ -80,11 +80,11 @@ struct U {
     void SetU(const U& o) { a = o.a; b = o.b; c = o.c; d = o.d; }
 };
 
-static inline V SubP(const V& a, const V& b) { V r; const V* p = &a; Ptr_Identity(&r); Vec4_Subtract(&r, p, &b); return r; }
-static inline V Sub(const V& a, const V& b) { V r; Ptr_Identity(&r); Vec4_Subtract(&r, &a, &b); return r; }
-static inline V Sub2(const V& a, const V& b) { V r; Ptr_Identity(&r); Vec4_Sub(&r, &a, &b); return r; }
-static inline V Mul(const V& a, float k) { V r; Ptr_Identity(&r); Vec4_Scale_1E5920(&r, &a, k); return r; }
-static inline V MulP_(const V& a, float k) { V r; const V* p = &a; Ptr_Identity(&r); Vec4_Scale_1E5920(&r, p, k); return r; }
+static inline V SubP(const V& a, const V& b) { V r; const V* p = &a; cVector_ctor_void(&r); cVector_VU0Subtract(&r, p, &b); return r; }
+static inline V Sub(const V& a, const V& b) { V r; cVector_ctor_void(&r); cVector_VU0Subtract(&r, &a, &b); return r; }
+static inline V Sub2(const V& a, const V& b) { V r; cVector_ctor_void(&r); cVector_VU0Add(&r, &a, &b); return r; }
+static inline V Mul(const V& a, float k) { V r; cVector_ctor_void(&r); cVector_VU0Scale(&r, &a, k); return r; }
+static inline V MulP_(const V& a, float k) { V r; const V* p = &a; cVector_ctor_void(&r); cVector_VU0Scale(&r, p, k); return r; }
 struct N { float x, y, z, w; N(const V& a) { __asm__ volatile("lqc2 $vf1, 0x0(%0); vmulax.xyzw $ACC, $vf0, $vf0x; vmsubw.xyzw $vf1, $vf1, $vf0w; sqc2 $vf1, 0x0(%1)" : : "r"(&a), "r"(this) : "memory"); } } __attribute__((aligned(16)));
 struct W { float x, y, z, w; W() {} void FromN(const N& o) { __int128 t; W* d = this; void* xx = this; const N* s = &o; __asm__ volatile("lq %0, 0x0(%1); sq %0, 0x0(%2)" : "=r"(t) : "r"(s), "r"(d) : "memory"); } W(const N& o) { __int128 t; W* d = this; void* xx = this; const N* s = &o; __asm__ volatile("lq %0, 0x0(%1); sq %0, 0x0(%2)" : "=r"(t) : "r"(s), "r"(d) : "memory"); } W(const V& a, int) { __asm__ volatile("lqc2 $vf1, 0x0(%1); vmulax.xyzw $ACC, $vf0, $vf0x; vmsubw.xyzw $vf1, $vf1, $vf0w; sqc2 $vf1, 0x0(%0)" : : "r"(this), "r"(&a) : "memory"); } } __attribute__((aligned(16)));
 inline W V::operator-() const { return W(N(*this)); }
@@ -97,9 +97,9 @@ inline void* operator new(unsigned int, void* p) { return p; }
 static inline void Fin(U* d, const U& u_, const W& w_, const V& f) { const_cast<W&>(w_).FromN(N(f)); const_cast<U&>(u_).SetW(w_); *d = u_; }
 static inline void Fin2(U* d, const U& u_, const W& w_, const V& f) { W* w = (W*)&w_; U* u = (U*)&u_; *w = N(f); *u = U(w->x, w->y, w->z, 0.0f); *d = *u; }
 static inline void ToUTo3(U* d, const V& f) { W w = N(f); *d = U(w.x, w.y, w.z, 0.0f); }
-static inline V F3EEF0(const V& a, const V& b) { V r; Ptr_Identity(&r); Vec4_CrossW0(&r, &a, &b); return r; }
-static inline V Normalized_(const V& a) { const V* p = &a; V v; return *Vec4_NormalizeXYZInPlace(Vec4_Assign(&v, p)); }
-static inline V NormalizedLen_(const V& a, float* len) { V v; return *Vec4_NormalizeXYZ_1D10C0(Vec4_Assign(&v, &a), len); }
+static inline V F3EEF0(const V& a, const V& b) { V r; cVector_ctor_void(&r); cVector_VU0Cross(&r, &a, &b); return r; }
+static inline V Normalized_(const V& a) { const V* p = &a; V v; return *cVector_Normalize_void(cVector_ctor_cVectorR(&v, p)); }
+static inline V NormalizedLen_(const V& a, float* len) { V v; return *cVector_Normalize_floatR(cVector_ctor_cVectorR(&v, &a), len); }
 static inline float Sqrt(float x) { float r = 0.0f; asm { sqrt.s r, x } return r; }
 static inline float SqrtI(float x) { float r = 0.0f; asm { sqrt.s x, x } return x; }
 static inline float SqrtG(float x) { float r = 0.0f; __asm__ volatile("sqrt.s %0, %1" : "=f"(r) : "f"(x)); return r; }
@@ -112,27 +112,27 @@ struct G {
     /* out-of-line copy is weak and dropped at link (merged into cTimerDisable_dtor in retail) */
     __declspec(weak) __declspec(G_DTOR) ~G() { cTimerDisable_dtor(this, -1); }
 };
-static inline void* Alloc(int size, int line) { G g; return Mem_Alloc(0, size, D_004BC5D0, line); }
-static inline void Free(void* p, int line) { G g; Mem_Free(0, p, D_004BC5D0, line); }
+static inline void* Alloc(int size, int line) { G g; return cMemMan_Allocate(0, size, D_004BC5D0, line); }
+static inline void Free(void* p, int line) { G g; cMemMan_Deallocate(0, p, D_004BC5D0, line); }
 
 static inline bool Eq(const V& a, const V& b) { return a.x == b.x && a.y == b.y && a.z == b.z; }
 static inline void Ident(V* m) { void* xx = m; __int128 t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $0; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $0; sq %0, 0x0(%1)" : "=&r"(t) : "r"(m) : "memory"); }
 static inline void FrameFrom_(V* m, const V& up, const V& n)
 {
     V c;
-    Vec4_Cross(&c, &up, &n);
-    if (!Vec4_IsZeroXYZ(&c)) {
+    cVector_Cross(&c, &up, &n);
+    if (!cVector_IsZeroXYZ(&c)) {
         V a;
-        Vec4_NormalizeXYZ_132060(&a, &up);
-        V b(*Vec4_NormalizeXYZInPlace(&c));
+        cVector_GetNormalized_void(&a, &up);
+        V b(*cVector_Normalize_void(&c));
         V d;
         V tr;
-        Vec4_Cross(&d, &b, &a);
-        Mtx_FromRowsAndTranslation(m, &b, &a, &d, Vec4_Set(&tr, 0.0f, 0.0f, 0.0f, 1.0f));
-    } else if (!Vec4_IsZeroXYZ(&up)) {
-        Mtx_FrameFromAxis(m, &up);
+        cVector_Cross(&d, &b, &a);
+        cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(m, &b, &a, &d, cVector_ctor_float_float_float_float(&tr, 0.0f, 0.0f, 0.0f, 1.0f));
+    } else if (!cVector_IsZeroXYZ(&up)) {
+        cMatrix_MakeLookAtMatrix_cVectorR(m, &up);
     } else {
-        Mtx_SetIdentity(m);
+        cMatrix_SetUnit(m);
     }
 }
 static inline void FrameFrom(V* m, const V& up, const V& n) { FrameFrom_(m, up, n); }
@@ -205,13 +205,13 @@ struct Rnd9C { int i; float t[260]; };
 extern "C" Rnd9C D_0053B6A0;
 static inline V& Rnd9CV() { return *(V*)&D_0053B6A0.t[++D_0053B6A0.i & 0xFF]; }
 
-static inline V Sc(const V& a, float k) { return Vec4_Scale(a, k); }
-static inline V Sc2(const V& a, float k) { const V* p = &a; return Vec4_Scale(*p, k); }
+static inline V Sc(const V& a, float k) { return cVector_opMul(a, k); }
+static inline V Sc2(const V& a, float k) { const V* p = &a; return cVector_opMul(*p, k); }
 static inline Emit9C& Em(Desc9C* d, int e) { return *(Emit9C*)((char*)d + e * 0xE0); }
 #define EMIT(DST) o->desc->em[DST]
 
 #define TRI(IDX, A, B, C)                                    \
-    ctr.A6(Sc2(Vec4_Add(Vec4_Add(A->p, B->p), C->p), 0.33333334f)); \
+    ctr.A6(Sc2(cVector_opAdd(cVector_opAdd(A->p, B->p), C->p), 0.33333334f)); \
     { t = &o->tris[IDX];                                \
     t->d[0].A6(Sub(A->p, ctr)); t->uv[0] = A->uv;              \
     t->d[1].A6(Sub(B->p, ctr)); t->uv[1] = B->uv;              \
@@ -219,8 +219,8 @@ static inline Emit9C& Em(Desc9C* d, int e) { return *(Emit9C*)((char*)d + e * 0x
     t->c.AC(ctr); }
 
 static inline void InitK(V* p, float a, float b, float c, float d) { p->x = a; p->y = b; p->z = c; p->w = d; }
-extern "C" void ShatterEmitter_Update(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3);
-void ShatterEmitter_Update(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
+extern "C" void cParticleShatter_NextFrame(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3);
+void cParticleShatter_NextFrame(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
 {
     o->b16C = 1;
     if (!o->b84) {
@@ -232,7 +232,7 @@ void ShatterEmitter_Update(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
             o->nx = 4;
             o->ny = 4;
             o->nz = 4;
-            V center(MulP(Vec4_Add(o->min, o->max), 0.5f));
+            V center(MulP(cVector_opAdd(o->min, o->max), 0.5f));
             V size;
             hy = (o->ny + 1) >> 1;
             size.Set(o->size);
@@ -284,7 +284,7 @@ void ShatterEmitter_Update(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
                     }
                     V r;
                     r = Rnd9CV();
-                    r = Sub2(*(V*)D_0053BB10, Vec4_Scale(r, 0.5f));
+                    r = Sub2(*(V*)D_0053BB10, cVector_opMul(r, 0.5f));
                     if (j == 0) {
                         z1 = o->min.z;
                         z0 = o->max.z;
@@ -370,7 +370,7 @@ void ShatterEmitter_Update(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
                     V dir(NormalizedLen(t->c, &len));
                     Fin(&t->n, U(), W(), F3EEF0(o->vB0, dir));
                     len *= k;
-                    t->vel = SubP(Vec4_Scale(dir, len), Vec4_Scale(o->vB0, 1.0f - len));
+                    t->vel = SubP(cVector_opMul(dir, len), cVector_opMul(o->vB0, 1.0f - len));
                     t->vel = Mul(t->vel, o->desc->f998 + o->desc->f99C * r.x);
                     t->f0 = o->desc->f9A0 + o->desc->f9A4 * r.z;
                     t->f4 = o->desc->f9A8 + o->desc->f9AC * r.w;
@@ -396,7 +396,7 @@ void ShatterEmitter_Update(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
                 t->c.w = 1.0f;
                 V p;
                 p.AE(t->c);
-                V n(Normalized(Sphere_FromCenter(t->c, o->v100)));
+                V n(Normalized(cVector_opSub(t->c, o->v100)));
                 below = t->c.z < o->f154;
                 if (below || n.Dot(o->v110) < 0.0f) {
                     int e;
@@ -420,9 +420,9 @@ void ShatterEmitter_Update(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
                             {
                                 void* r;
                                 m[3].AC(pos);
-                                r = ParticleDefs_FindByName(D_0053B540, EMIT(e).x0);
+                                r = GetEffectID__15cParticleSystemCFRC1(D_0053B540, EMIT(e).x0);
                                 o->bC = 0;
-                                ParticleEmitter_SpawnChildren(ctx, o, r, m, dt);
+                                cParticle_AddChild(ctx, o, r, m, dt);
                                 o->bC = 1;
                             }
                             if (!ctx->b68) {
@@ -438,7 +438,7 @@ void ShatterEmitter_Update(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
             }
         }
     }
-    ParticleEmitterBase_Update(o, ctx, a2, a3, dt);
+    cParticleBase_NextFrame(o, ctx, a2, a3, dt);
     if (a3) {
         V m;
         if (!(o->desc->f68 <= 0.01f)) {
@@ -446,7 +446,7 @@ void ShatterEmitter_Update(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
         asm { .set reorder } // scheduling barrier: keeps &m first so it fills the bc1t delay slot
         pm->AH(*(V*)a3);
         float k = o->desc->f68;
-        m.A6(Mul(*Mtx_DotRowsVec3(&m, a2), k));
+        m.A6(Mul(*cVector_InverseRotate_cMatrixR(&m, a2), k));
         o->v90 += m;
     }
     }

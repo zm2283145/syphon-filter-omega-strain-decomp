@@ -16,7 +16,7 @@
  */
 
 
-void SoundMgr_OnBankUserData(void) {
+void triggerSndCB(void) {
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C93F0(void) {}

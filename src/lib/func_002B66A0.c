@@ -1,7 +1,7 @@
 extern char D_00512B88[];
 extern char *D_00512B80;
 extern char D_004AC1C0[];
-char *String_Copy(char *d, const char *s);
+char *Libc_Strcpy(char *d, const char *s);
 char *strchr(const char *s, int c);
 
 char *_strtok(char *str, char *delim)
@@ -9,7 +9,7 @@ char *_strtok(char *str, char *delim)
     char *tok;
     char *e;
     if (str) {
-        String_Copy(D_00512B88, str);
+        Libc_Strcpy(D_00512B88, str);
         str = D_00512B88;
         if (str) goto have;
     }

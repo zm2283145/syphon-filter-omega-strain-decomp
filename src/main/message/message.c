@@ -5,7 +5,7 @@
  */
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003C8C70 */
 #pragma push /* merge_units */
@@ -21,9 +21,9 @@ typedef struct C8Node { struct C8Node* prev; struct C8Node* next; int key; C8Obj
 extern "C" {
 extern struct C8Node D_005435C4;
 extern C8Node* D_005435C8;
-void ObjectList_EraseRange_3C9EA0(int* out, int* self, int* first, int* last);
+void std_list_deleter_tQueuedMessage_erase(int* out, int* self, int* first, int* last);
 }
-extern "C" void MsgQueue_ClearPending(void)
+extern "C" void ClearMessages(void)
 {
     C8Obj* obj;
     int i;
@@ -41,7 +41,7 @@ extern "C" void MsgQueue_ClearPending(void)
         {
             AllocGuard g;
             obj->v0(-1);
-            Mem_Free(0, obj, D_004BD118, 0x1C2);
+            cMemMan_Deallocate(0, obj, D_004BD118, 0x1C2);
         }
     }
     {
@@ -50,7 +50,7 @@ extern "C" void MsgQueue_ClearPending(void)
         int last;
         last = (int)&D_005435C4;
         first = (int)D_005435C8;
-        ObjectList_EraseRange_3C9EA0(&r, &D_005435C0, &first, &last);
+        std_list_deleter_tQueuedMessage_erase(&r, &D_005435C0, &first, &last);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -79,7 +79,7 @@ struct TargetV {
 struct QEntry { int mode; CMsg* msg; TargetV* target; };
 struct QNode { QNode* prev; QNode* next; QEntry entry; };
 extern "C" {
-void MsgQueue_Insert(void*,void*,void*,QEntry*);
+void std_list_deleter_tQueuedMessage_insert(void*,void*,void*,QEntry*);
 extern int D_005435E0;
 #if 0 /* merge_units */
 extern QNode D_005435C4;
@@ -110,9 +110,9 @@ void std_list_deleter_tQueuedMessage_begin(QNode**,int*);
 #define std_list_deleter_tQueuedMessage_begin(a0, a1) (std_list_deleter_tQueuedMessage_begin((Iter *)(a0), (PtrVec *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void ObjectList_EraseRange_3C9EA0(int*,int*,int*,int*);
+void std_list_deleter_tQueuedMessage_erase(int*,int*,int*,int*);
 #endif /* merge_units */
-#define ObjectList_EraseRange_3C9EA0(a0, a1, a2, a3) (ObjectList_EraseRange_3C9EA0((a0), (a1), (a2), (a3))) /* merge_units */
+#define std_list_deleter_tQueuedMessage_erase(a0, a1, a2, a3) (std_list_deleter_tQueuedMessage_erase((a0), (a1), (a2), (a3))) /* merge_units */
 
 }
 static inline QEntry* PendAt2(int i) { QNode* it; std_list_deleter_tQueuedMessage_begin(&it, &D_005435C0); std_advance_listdeleterR_int(&it, i); return std_list_deleter_tQueuedMessage_generic_iterator_opMul(&it); }
@@ -125,12 +125,12 @@ static inline void PushActive(QEntry* e, TargetV* dst) {
  pos = (int)&D_005435E4;
  { TargetV** pt = &e->target; *pt = dst; }
  pos = (int)&D_005435E4;
- MsgQueue_Insert(&result, &D_005435E0, &pos, e);
+ std_list_deleter_tQueuedMessage_insert(&result, &D_005435E0, &pos, e);
 }
-static inline void ClearPend() { int r; int first; int last; last = (int)&D_005435C4; first = (int)D_005435C8; ObjectList_EraseRange_3C9EA0(&r, &D_005435C0, &first, &last); }
-static inline void ClearActive() { int r; int first; int last; last = (int)&D_005435E4; first = (int)D_005435E8; ObjectList_EraseRange_3C9EA0(&r, &D_005435E0, &first, &last); }
+static inline void ClearPend() { int r; int first; int last; last = (int)&D_005435C4; first = (int)D_005435C8; std_list_deleter_tQueuedMessage_erase(&r, &D_005435C0, &first, &last); }
+static inline void ClearActive() { int r; int first; int last; last = (int)&D_005435E4; first = (int)D_005435E8; std_list_deleter_tQueuedMessage_erase(&r, &D_005435E0, &first, &last); }
 
-extern "C" int MsgQueue_Pump(void) {
+extern "C" int DequeueMessages(void) {
  int i;
  int n = D_005435C0;
  for (i = 0; i < n; i++) {
@@ -148,7 +148,7 @@ extern "C" int MsgQueue_Pump(void) {
   { CMsg** pm = &entry.msg; CMsg** pm2 = pm; *pm2 = copy; }
   PushActive(&entry, dst);
   msg->magic = 0;
-  { AllocGuard g; ((MessageV*)msg)->Destroy(-1); Mem_Free(0, msg, D_004BD118, 0x183); }
+  { AllocGuard g; ((MessageV*)msg)->Destroy(-1); cMemMan_Deallocate(0, msg, D_004BD118, 0x183); }
  }
  ClearPend();
  int m = D_005435E0;
@@ -168,7 +168,7 @@ extern "C" int MsgQueue_Pump(void) {
    }
   } else if (dst->magic == 0xBEBAAFDE && !dst->Filter(msg)) dst->Handle(msg);
   msg->magic = 0;
-  { AllocGuard g; ((MessageV*)msg)->Destroy(-1); Mem_Free(0, msg, D_004BD118, 0x1AE); }
+  { AllocGuard g; ((MessageV*)msg)->Destroy(-1); cMemMan_Deallocate(0, msg, D_004BD118, 0x1AE); }
  }
  ClearActive();
  return 1;
@@ -178,7 +178,7 @@ extern "C" int MsgQueue_Pump(void) {
 #undef std_list_deleter_tQueuedMessage_generic_iterator_opMul /* merge_units */
 #undef std_advance_listdeleterR_int /* merge_units */
 #undef std_list_deleter_tQueuedMessage_begin /* merge_units */
-#undef ObjectList_EraseRange_3C9EA0 /* merge_units */
+#undef std_list_deleter_tQueuedMessage_erase /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003C8DE0(void) {}
 #pragma pop /* merge_units */
@@ -251,11 +251,11 @@ extern "C" char D_005435C4[];
 
 extern "C" void printf(char* msg);
 #if 0 /* merge_units */
-extern "C" void MsgQueue_Insert(void* res, void* map, void* key, EntryQC* e);
+extern "C" void std_list_deleter_tQueuedMessage_insert(void* res, void* map, void* key, EntryQC* e);
 #endif /* merge_units */
-#define MsgQueue_Insert(a0, a1, a2, a3) (MsgQueue_Insert((a0), (a1), (a2), (QEntry *)(a3))) /* merge_units */
+#define std_list_deleter_tQueuedMessage_insert(a0, a1, a2, a3) (std_list_deleter_tQueuedMessage_insert((a0), (a1), (a2), (QEntry *)(a3))) /* merge_units */
 
-extern "C" int MsgQueue_QueueClone(MsgQC* m, ObjQC* target, int mode)
+extern "C" int QueueMessage_cMessageR_cSystemP_int_int(MsgQC* m, ObjQC* target, int mode)
 {
     if (target) {
         if (mode != 1) {
@@ -270,7 +270,7 @@ extern "C" int MsgQueue_QueueClone(MsgQC* m, ObjQC* target, int mode)
                 c->magic = 0xBEBAAFDE;
                 EntryQC e(mode, c, (MsgQC*)target);
                 key = D_005435C4;
-                MsgQueue_Insert(&res, D_005435C0, &key, &e);
+                std_list_deleter_tQueuedMessage_insert(&res, D_005435C0, &key, &e);
             }
         } else {
             target->Handle(m);
@@ -280,7 +280,7 @@ extern "C" int MsgQueue_QueueClone(MsgQC* m, ObjQC* target, int mode)
 }
 #undef D_005435C0 /* merge_units */
 #undef D_005435C4 /* merge_units */
-#undef MsgQueue_Insert /* merge_units */
+#undef std_list_deleter_tQueuedMessage_insert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003C9350(void) {}
 #pragma pop /* merge_units */
@@ -303,28 +303,28 @@ extern QNode* D_005435C8;
 
 }
 extern "C" {
-int Player_GetIndex(int); void Transport_Send(int,CMsg*,int,int);
+int cNetObj_GetOwner(int); void cNetObj_SendMessage_int_cMessageR_int_int(int,CMsg*,int,int);
 #if 0 /* merge_units */
 void printf(char*);
 #endif /* merge_units */
 #define printf(a0) (printf((a0))) /* merge_units */
-void NetGame_InitLocalSlot(int*,int);
+void NetGetMyClientIndex(int*,int);
 extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char D_005721D0;
 extern char D_004BD150[];
 }
 static inline int CurrentPlayer(int id) {
- if(g_IsMultiplayer) {if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,id); return D_00494178;}return 0;
+ if(g_IsMultiplayer) {if(D_00494178==-1)NetGetMyClientIndex(&D_00494178,id); return D_00494178;}return 0;
 }
 static inline int LocalAuth(){return g_IsMultiplayer?D_005721C0:1;}
 static inline void Enqueue(int mode,CMsg* msg,TargetV* obj) {
  int result; QNode* pos; QEntry e;
  e.mode=mode;e.msg=msg;e.target=obj;
  pos=&D_005435C4;
- MsgQueue_Insert(&result,&D_005435C0,&pos,&e);
+ std_list_deleter_tQueuedMessage_insert(&result,&D_005435C0,&pos,&e);
 }
-extern "C" int Event_Send(CMsg *arg0, TargetV *arg1, int arg2) {
+extern "C" int QueueMessage_cMessageR_cSystemP_int(CMsg *arg0, TargetV *arg1, int arg2) {
     int temp_s0;
     int temp_s0_3;
     int temp_s6;
@@ -362,14 +362,14 @@ extern "C" int Event_Send(CMsg *arg0, TargetV *arg1, int arg2) {
                 temp_v1 = arg0->kind;
                 if (temp_v1 & 4) {
                     arg0->stampKind = arg2;
-                    Transport_Send(arg1->netid, temp_v0, -1, -1);
+                    cNetObj_SendMessage_int_cMessageR_int_int(arg1->netid, temp_v0, -1, -1);
                 } else if (temp_v1 & 8) {
                     temp_s6 = arg1->netid;
                     var_s0=CurrentPlayer(D_005721A8);
-                    if (var_s0 != Player_GetIndex(temp_s6)) {
+                    if (var_s0 != cNetObj_GetOwner(temp_s6)) {
                         arg0->stampKind = arg2;
                         temp_s0 = arg1->netid;
-                        Transport_Send(temp_s0, temp_v0, Player_GetIndex(temp_s0), -1);
+                        cNetObj_SendMessage_int_cMessageR_int_int(temp_s0, temp_v0, cNetObj_GetOwner(temp_s0), -1);
                     } else {
                         goto block_24;
                     }
@@ -380,7 +380,7 @@ block_24:
                         var_v0=LocalAuth();
                         if (var_v0 == 0) {
                             arg0->stampKind = arg2;
-                            Transport_Send(arg1->netid, temp_v0, -1, -1);
+                            cNetObj_SendMessage_int_cMessageR_int_int(arg1->netid, temp_v0, -1, -1);
                         } else {
                             goto block_30;
                         }
@@ -391,7 +391,7 @@ block_30:
                             var_v1=CurrentPlayer(D_005721A8);
                             if (var_v1 != (temp_s0_2 - 1)) {
                                 arg0->stampKind = arg2;
-                                Transport_Send(arg1->netid, temp_v0, ((unsigned int) (arg1->id & 0x7F000000) >> 0x18) - 1, -1);
+                                cNetObj_SendMessage_int_cMessageR_int_int(arg1->netid, temp_v0, ((unsigned int) (arg1->id & 0x7F000000) >> 0x18) - 1, -1);
                             }
                         }
                     }
@@ -402,7 +402,7 @@ block_30:
             } else if (arg0->kind & 8) {
                 temp_s0_3 = arg1->id;
                 var_s2_2=CurrentPlayer(D_005721A8);
-                if (var_s2_2 == Player_GetIndex(temp_s0_3)) {
+                if (var_s2_2 == cNetObj_GetOwner(temp_s0_3)) {
                     Enqueue(arg2,temp_v0,arg1);
                 } else {
                     goto block_52;
@@ -432,7 +432,7 @@ block_67:
                         temp_v0->magic = 0;
                         { AllocGuard guard;
                           ((MessageV*)temp_v0)->Destroy(-1);
-                          Mem_Free(0,temp_v0,D_004BD118,0x132);
+                          cMemMan_Deallocate(0,temp_v0,D_004BD118,0x132);
                         }
                     }
                 }
@@ -463,9 +463,9 @@ int Alloc_Lock(int);
 #define Alloc_Lock(a0) (Alloc_Lock((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-int Alloc_Unlock(int);
+int EnableIntc(int);
 #endif /* merge_units */
-#define Alloc_Unlock(a0) (Alloc_Unlock((a0))) /* merge_units */
+#define EnableIntc(a0) (EnableIntc((a0))) /* merge_units */
 
 }
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
@@ -516,7 +516,7 @@ extern "C" int MsgQueue_EraseFirstPending(int *arg0) {
             if (temp_a0 != NULL) {
                 F_(temp_a0, 0x8, int) = 0;
                 temp_s1 = pr->second;
-                if (g_ProfileLockEnabled != 0) Alloc_Lock(9); g_ProfileLockDepth += 1; ((VC003C99B0 *)(temp_s1))->v0(-1); Mem_Free(0, temp_s1, &D_004BD118, 0xCF); if (g_ProfileLockEnabled != 0) Alloc_Unlock(9); g_ProfileLockDepth -= 1;
+                if (g_ProfileLockEnabled != 0) Alloc_Lock(9); g_ProfileLockDepth += 1; ((VC003C99B0 *)(temp_s1))->v0(-1); cMemMan_Deallocate(0, temp_s1, &D_004BD118, 0xCF); if (g_ProfileLockEnabled != 0) EnableIntc(9); g_ProfileLockDepth -= 1;
             }
             er0(&sl, var_s0);
             return 1;
@@ -527,7 +527,7 @@ extern "C" int MsgQueue_EraseFirstPending(int *arg0) {
 }
 #pragma pop
 #undef Alloc_Lock /* merge_units */
-#undef Alloc_Unlock /* merge_units */
+#undef EnableIntc /* merge_units */
 #undef D_004BD118 /* merge_units */
 #undef D_005435C0 /* merge_units */
 #undef D_005435C4 /* merge_units */

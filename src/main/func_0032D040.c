@@ -5,7 +5,7 @@
 
 #include "loose03_types.h"
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int count, int* value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int count, int* value);
 
 Word* func_0032D040(Word* dst, Word* src) {
     dst->value = src->value;
@@ -19,7 +19,7 @@ void func_0032D050(Iter* out, PtrVec* v) {
 
 /* push_back */
 int std_vector_GuiWidgetPtr_push_back(PtrVec* v, int* value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 
 void func_0032D090(Iter* out, void* self, Iter* src) {
@@ -33,5 +33,5 @@ int* func_0032D0A0(PtrVec* v) {
 
 /* push_back */
 int func_0032D0B0(PtrVec* v, int* value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }

@@ -73,23 +73,23 @@ static inline void merge_flush_func_003BBD30(void) {}
 extern int D_00542C98;   /* cSKYBOX_GOBJ class type id */
 extern int D_00542CA0;   /* cSKYBOX_GOBJ script type */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
-extern int* cGOBJ_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int type, int parentType);
+extern int cScriptInterpreter_CallEvent(void* filter, int a0, int a1);
+extern int* cGOBJ_SOBJ_getClassId(void);
+extern void cScriptBase_declareParent(int type, int parentType);
 
 /* Registers the cSKYBOX_GOBJ script type under its parent type. */
-void ScriptType_cSKYBOX_GOBJ_Init(void) {
-    int* parent = cGOBJ_GetScriptTypeKeyPtr();
+void cSKYBOX_GOBJ_SOBJ_init(void) {
+    int* parent = cGOBJ_SOBJ_getClassId();
 
-    ScriptType_SetParent(D_00542CA0, *parent);
+    cScriptBase_declareParent(D_00542CA0, *parent);
 }
 
-int cSKYBOX_GOBJ_v0B(void) {
+int cSKYBOX_GOBJ_getSOBJClassId(void) {
     return D_00542C98;
 }
 
-int cSKYBOX_GOBJ_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cSKYBOX_GOBJ_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003BBD60(void) {}

@@ -6,7 +6,7 @@
 #pragma opt_propagation off
 #include "vslot_pad.h"
 
-/* Npc_InitModel: bind the skeleton, pick the model kind from its name, place the root from the
+/* cHuman_Load: bind the skeleton, pick the model kind from its name, place the root from the
    model matrix, reset the heading history and start the idle motion. */
 
 static inline void Q16(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
@@ -49,33 +49,33 @@ struct Npc {
 extern "C" {
 extern char D_0049E830[];
 extern char D_0049E840[];
-void Skel_Bind(Npc* a, int* desc);
+void cSKM_GOBJ_Load(Npc* a, int* desc);
 int strcmp(const char* a, const char* b);
-void Npc_SetupModel(Npc* a);
-void Root_SetWorldPlacement(Root_L* r, Plc4* p);
-float Math_Atan2f(float y, float x);
-float* History_At(char* h, int i);
-void ActorHeading_RetargetLast(char* h, float f);
-void MotionTokens_Init(void* p);
+void cHuman_InitAnimationSet(Npc* a);
+void cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(Root_L* r, Plc4* p);
+float Libc_Atan2f(float y, float x);
+float* cArray_cTargetZRotationStackSlot_opIndex(char* h, int i);
+void cHumanMotionParams_UpdateTargetZRotation_AfterChangeInStack_AndSetNewTransitionDuration(char* h, float f);
+void cArray_FixedSize_cSkaAnimEvent_7_ctor_void(void* p);
 void cArray_cTimedEvent_ctor_void(void* p);
 void cString16N_3_ctor_void(void* p);
 void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(void* d, void* s);
 void cSkaPlaybackGroupId_ctor_int(void* p, int v);
-void Actor_ResolveMotionSelection(Sel_L* sel, int* out, Y_L* y, void* model);
-float Model_GetFirstFloat(void* m);
-V4_L* AnimRate_Init(V4_L* p, float f);
-V4_L* Vec4_Copy_18A350(V4_L* d, V4_L* s);
-void AnimEvent_Construct(Ev_L* e);
-signed char MotionRequest_GetMode(Sel_L* s);
+void cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(Sel_L* sel, int* out, Y_L* y, void* model);
+float cSkaAnimationSet_DefaultCrossFadeDuration(void* m);
+V4_L* cSkaCrossFadeDuration_ctor_float(V4_L* p, float f);
+V4_L* cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(V4_L* d, V4_L* s);
+void cSkaAnimEndedMessage_ctor_void(Ev_L* e);
+signed char cSkaRequestStream_AnimationPacket_GetInstruction(Sel_L* s);
 void* cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(Sel_L* s);
 float cSkaRequestStream_AnimationPacket_GetDuration(Sel_L* s);
 float func_0018A2C0(Sel_L* s);
-void AnimCtl_InstallMotion(void* ctl, int id, signed char mode, void* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
-void AnimEvent_dtor(void* p, int f);
+void cSkaRequestStream_AddRequest(void* ctl, int id, signed char mode, void* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
+void cSkaAnimEndedMessage_dtor(void* p, int f);
 void func_001BE5A0(void* p, int f);
 void __destroy_array(void* p, void* dtor, int size, int n);
 void func_0018A210(void* p, int f);
-void Actor_ResetAnimChannels(Npc* a);
+void cHuman_ResetAnimationSliderValuesToDefaults(Npc* a);
 }
 
 static inline Plc4* MtxToPlc(Mtx* m, Plc4* out) {
@@ -204,9 +204,9 @@ static inline Plc4* MtxToPlc(Mtx* m, Plc4* out) {
 static inline float GetX(V4* v) { return v->x; }
 static inline float GetY(V4* v) { return v->y; }
 static inline float GetZ(V4* v) { return v->z; }
-static inline float H180(V4* v) { return Math_Atan2f(GetY(v), GetX(v)); }
-static inline float H170(float* v) { return Math_Atan2f(-v[0], v[1]); }
-static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; MotionTokens_Init(px->pairs); cArray_cTimedEvent_ctor_void(px->tail); return px; }
+static inline float H180(V4* v) { return Libc_Atan2f(GetY(v), GetX(v)); }
+static inline float H170(float* v) { return Libc_Atan2f(-v[0], v[1]); }
+static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; cArray_FixedSize_cSkaAnimEvent_7_ctor_void(px->pairs); cArray_cTimedEvent_ctor_void(px->tail); return px; }
 static inline void XDtor_L(X_L* x) { func_001BE5A0(x->tail, 0); __destroy_array(x->pairs, (void*)func_0018A210, 8, 7); }
 static inline void XDtorN_L(X_L* p) {
     void* t = p->tail;
@@ -225,36 +225,36 @@ static inline void Install_L(Npc* a, Sel_L* sel)
     Sys_L* sys = &a->sys;
     Anim_L* an = &sys->anim;
     cSkaPlaybackGroupId_ctor_int(&y, -1);
-    Actor_ResolveMotionSelection(sel, &out, &y, an->model);
+    cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(sel, &out, &y, an->model);
     if (out) {
         V4_L* p;
         if (an->b5)
             p = &an->v;
         else
-            p = AnimRate_Init(&rate, Model_GetFirstFloat(an->model));
-        Vec4_Copy_18A350(&vec, p);
+            p = cSkaCrossFadeDuration_ctor_float(&rate, cSkaAnimationSet_DefaultCrossFadeDuration(an->model));
+        cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(&vec, p);
         an->b5 = 0;
-        AnimEvent_Construct(&e1);
-        AnimEvent_Construct(&e2);
-        AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(sel), cSkaRequestStream_AnimationPacket_GetDuration(sel), func_0018A2C0(sel));
-        AnimEvent_dtor(&e2, -1);
-        AnimEvent_dtor(&e1, -1);
+        cSkaAnimEndedMessage_ctor_void(&e1);
+        cSkaAnimEndedMessage_ctor_void(&e2);
+        cSkaRequestStream_AddRequest(an, out, cSkaRequestStream_AnimationPacket_GetInstruction(sel), &vec, &y, &e1, &e2, cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(sel), cSkaRequestStream_AnimationPacket_GetDuration(sel), func_0018A2C0(sel));
+        cSkaAnimEndedMessage_dtor(&e2, -1);
+        cSkaAnimEndedMessage_dtor(&e1, -1);
     }
 }
-extern "C" void Npc_InitModel(Npc* a, int* desc)
+extern "C" void cHuman_Load(Npc* a, int* desc)
 {
     Mtx m;
     Plc4 pl;
     X_L x;
     Sel_L sel;
-    Skel_Bind(a, desc);
+    cSKM_GOBJ_Load(a, desc);
     char* name = a->name;
     if (!strcmp(name, D_0049E830)) {
         a->kind = 2;
     } else if (!strcmp(name, D_0049E840)) {
         a->kind = 1;
     }
-    Npc_SetupModel(a);
+    cHuman_InitAnimationSet(a);
     {
         Elem* e = a->elem;
         Root_L* r;
@@ -270,7 +270,7 @@ extern "C" void Npc_InitModel(Npc* a, int* desc)
         }
         r = a->root;
         MtxToPlc(&m, &pl);
-        Root_SetWorldPlacement(r, &pl);
+        cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(r, &pl);
         r->f160 = 0;
         {
             int idx = a->i3098;
@@ -282,9 +282,9 @@ extern "C" void Npc_InitModel(Npc* a, int* desc)
             Q16(&r1, &m.r1);
             /* Mtx_GetHeading inlined */
             if (GetZ(&r0) < GetZ(&r1)) h = H180(&r0); else h = H170(&r1.x);
-            History_At(a->hist, idx)[1] = h;
+            cArray_cTargetZRotationStackSlot_opIndex(a->hist, idx)[1] = h;
         }
-        ActorHeading_RetargetLast(a->heading, -1.0f);
+        cHumanMotionParams_UpdateTargetZRotation_AfterChangeInStack_AndSetNewTransitionDuration(a->heading, -1.0f);
     }
     XInit_L(&x);
     {
@@ -296,5 +296,5 @@ extern "C" void Npc_InitModel(Npc* a, int* desc)
         XDtorN_L((X_L*)((char*)&sel + 0x4C));
     }
     XDtor_L(&x);
-    Actor_ResetAnimChannels(a);
+    cHuman_ResetAnimationSliderValuesToDefaults(a);
 }

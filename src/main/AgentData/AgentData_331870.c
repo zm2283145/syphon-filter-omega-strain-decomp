@@ -40,14 +40,14 @@ static inline void merge_flush_func_00331870(void) {}
 #pragma push /* merge_units */
 typedef struct { int cap; int count; int* data; } PtrVec2500;
 typedef struct { char pad0[0xB58]; char awards[4]; int numAwards; char pad1[0xB68 - 0xB60]; unsigned char reduced; char pad2[3]; int best; } AgentData2500;
-extern int AgentData_TotalPoints(AgentData2500* a);
-extern void AgentData_AppendLockedParts(PtrVec2500* v, int pts);
+extern int cAgentData_GetClearancePoints(AgentData2500* a);
+extern void cAgentData_GetLockedParts_cArrayP_int(PtrVec2500* v, int pts);
 extern int* std_vector_charPtr_opIndex_uint_2(void* vec, int i);
-extern void PtrVector_Resize(PtrVec2500* v, int n, int* fill);
+extern void std_vector_pod_int_resize(PtrVec2500* v, int n, int* fill);
 #pragma opt_strength_reduction off
-void AgentData_FilterAwards(AgentData2500* a, PtrVec2500* list) {
+void cAgentData_GetLockedParts_cArrayP(AgentData2500* a, PtrVec2500* list) {
     int i;
-    AgentData_AppendLockedParts(list, AgentData_TotalPoints(a));
+    cAgentData_GetLockedParts_cArrayP_int(list, cAgentData_GetClearancePoints(a));
     for (i = 0; i < a->numAwards; i++) {
         int j;
         int last;
@@ -63,7 +63,7 @@ void AgentData_FilterAwards(AgentData2500* a, PtrVec2500* list) {
             }
         }
         fill = 0;
-        PtrVector_Resize(list, last + 1, &fill);
+        std_vector_pod_int_resize(list, last + 1, &fill);
     }
     {
         int n = list->count;
@@ -119,7 +119,7 @@ extern int cArray_charPtr_Iterator_opNe(PartIt* a, PartIt* b);
 extern PartDef** cArray_charPtr_Iterator_opMul(PartIt* it);
 extern PartIt* cArray_charPtr_Iterator_opInc(PartIt* it);
 extern PartIt* cArray_charPtr_Iterator_ctor_IteratorR(PartIt* dst, PartIt* src);
-extern void PtrVec_PushBack_330280(PartVec* v, PartDef** value);
+extern void std_vector_charPtr_push_back_charPR_2(PartVec* v, PartDef** value);
 
 void cAgentData_UnlockPart(Agent332610* self, const char* name)
 {
@@ -158,7 +158,7 @@ void cAgentData_UnlockPart(Agent332610* self, const char* name)
     rp = &res;
 done:
     if (rp->p == end.p) {
-        PtrVec_PushBack_330280(&self->parts, &found);
+        std_vector_charPtr_push_back_charPR_2(&self->parts, &found);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

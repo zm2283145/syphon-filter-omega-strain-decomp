@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void cNode_v24(int);
+extern void cGOBJ_SetRotation(int);
 
 void cGameCamera_SetRotation(int a0) {
-    cNode_v24(a0);
+    cGOBJ_SetRotation(a0);
 }

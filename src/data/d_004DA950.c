@@ -2,15 +2,15 @@
 
 extern void Actor_FireRespawnTimer();
 extern void Event_PackHeader();
-extern void Message_GetScriptTypeKey();
 extern void cCBData_IsReferencing();
 extern void cCharEventMsg_Clone();
 extern void cCharEventMsg_dtor();
 extern void cHumanRespawnCB_dtor();
+extern void cMessage_getSOBJClassId();
 
 void *D_004DA950[8] = {
     0, 0, &cCharEventMsg_dtor, &cCharEventMsg_Clone,
-    &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
+    &Event_PackHeader, &cMessage_getSOBJClassId, 0, 0,
 };
 
 void *D_004DA970[8] = {

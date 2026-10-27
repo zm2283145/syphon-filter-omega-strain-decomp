@@ -64,17 +64,17 @@ extern char* D_0048BB98;
 extern char* D_0048BBA0;
 extern char* D_0048BBA8;
 extern const unsigned int D_004AB580[4];
-char* Loc_LookupText(char* key);
+char* nGlobalization_GetString_charP(char* key);
 #if 0 /* merge_units */
 void GuiTextWidget_SetText(W7E* w, char* text, int flags);
 #endif /* merge_units */
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((void *)(a0), (const char *)(a1), (a2))) /* merge_units */
 
-St7E* Gui_GetScreenStack(void);
-void GuiScreen_SetFocus(St7E* s, W7E* w);
-void GuiWidget_SendEvent(S7E* o, St7E* s, int a, int b, int c);
+St7E* Gui_Canvas(void);
+void GuiCanvas_SetFocus(St7E* s, W7E* w);
+void GuiWidget_SendMessage(S7E* o, St7E* s, int a, int b, int c);
 }
-extern "C" void GuiMessageBox_Setup(S7E* self, int mode, char* t1, char* t2, int a4, int a5)
+extern "C" void GuiMessageBox_SetInfo(S7E* self, int mode, char* t1, char* t2, int a4, int a5)
 {
     E7E* e;
     W7E* w;
@@ -125,27 +125,27 @@ extern "C" void GuiMessageBox_Setup(S7E* self, int mode, char* t1, char* t2, int
             break;
         case 2:
             e->wC->flags |= 2;
-            GuiTextWidget_SetText(e->wC, Loc_LookupText(D_0048BB90), 0);
+            GuiTextWidget_SetText(e->wC, nGlobalization_GetString_charP(D_0048BB90), 0);
             e->w10->flags &= (unsigned short)~2;
             break;
         case 4:
         case 5:
             e->wC->flags |= 2;
-            GuiTextWidget_SetText(e->wC, Loc_LookupText(D_0048BB98), 0);
+            GuiTextWidget_SetText(e->wC, nGlobalization_GetString_charP(D_0048BB98), 0);
             e->w10->flags |= 2;
-            GuiTextWidget_SetText(e->w10, Loc_LookupText(D_0048BBA0), 0);
+            GuiTextWidget_SetText(e->w10, nGlobalization_GetString_charP(D_0048BBA0), 0);
             break;
         case 6:
             e->wC->flags |= 2;
-            GuiTextWidget_SetText(e->wC, Loc_LookupText(D_0048BB90), 0);
+            GuiTextWidget_SetText(e->wC, nGlobalization_GetString_charP(D_0048BB90), 0);
             e->w10->flags |= 2;
-            GuiTextWidget_SetText(e->w10, Loc_LookupText(D_0048BBA8), 0);
+            GuiTextWidget_SetText(e->w10, nGlobalization_GetString_charP(D_0048BBA8), 0);
             break;
         default:
             e->wC->flags |= 2;
-            GuiTextWidget_SetText(e->wC, Loc_LookupText(D_0048BB90), 0);
+            GuiTextWidget_SetText(e->wC, nGlobalization_GetString_charP(D_0048BB90), 0);
             e->w10->flags |= 2;
-            GuiTextWidget_SetText(e->w10, Loc_LookupText(D_0048BBA8), 0);
+            GuiTextWidget_SetText(e->w10, nGlobalization_GetString_charP(D_0048BBA8), 0);
             break;
         }
     }
@@ -155,8 +155,8 @@ extern "C" void GuiMessageBox_Setup(S7E* self, int mode, char* t1, char* t2, int
     if (self->flags & 8) {
         if (self->mode == 5) self->focus = self->e[self->sel].w10;
         else self->focus = self->DefFocus();
-        GuiScreen_SetFocus(Gui_GetScreenStack(), self->focus);
-        GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 2, 0);
+        GuiCanvas_SetFocus(Gui_Canvas(), self->focus);
+        GuiWidget_SendMessage(self, Gui_Canvas(), 0x10, 2, 0);
     }
 }
 #undef GuiTextWidget_SetText /* merge_units */

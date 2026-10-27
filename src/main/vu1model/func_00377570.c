@@ -1,13 +1,13 @@
 #include "types.h"
 #pragma mpwc_relax on
 int Alloc_Lock();
-int Alloc_Unlock();
-void* Mem_Alloc(int, int, char*, int);
+int EnableIntc();
+void* cMemMan_Allocate(int, int, char*, int);
 int cFileMan_EncodeFilename_charP_cFileManR();
 int cFileMan_EncodeFilename_charP_cFileIOP_bool();
-int FileMan_Release();
-int Resource_Construct();
-short TexMan_FindOrLoad(int, void*);
+int cFileMan_dtor();
+int cFileMan_ctor_void();
+short cTexMan_AddTextureFromFile_cFileManR(int, void*);
 int sprintf();
 int strlen(const char*);
 extern char D_004BC170;
@@ -34,7 +34,7 @@ typedef struct {
     int flags;
 } Mdl;
 
-void Model_BindTextures(Mdl* self, int arg1) {
+void cVU1Model_LoadTextures(Mdl* self, int arg1) {
     char buf[0x50];
     int name[0x28];
     int size;
@@ -47,24 +47,24 @@ void Model_BindTextures(Mdl* self, int arg1) {
         Alloc_Lock(9);
     }
     g_ProfileLockDepth += 1;
-    ids = Mem_Alloc(0, size, &D_004BC170, 0x131);
+    ids = cMemMan_Allocate(0, size, &D_004BC170, 0x131);
     if (g_ProfileLockEnabled != 0) {
-        Alloc_Unlock(9);
+        EnableIntc(9);
     }
     g_ProfileLockDepth -= 1;
     self->ids = ids;
     s = self->desc->names;
     for (i = 0; i < self->desc->count; i++) {
-        Resource_Construct(name);
+        cFileMan_ctor_void(name);
         sprintf(buf, &D_004BC180, s);
         cFileMan_EncodeFilename_charP_cFileManR(name, buf, arg1);
-        self->ids[i] = TexMan_FindOrLoad(g_TextureMgr, name);
+        self->ids[i] = cTexMan_AddTextureFromFile_cFileManR(g_TextureMgr, name);
         if (self->ids[i] == -1) {
             cFileMan_EncodeFilename_charP_cFileIOP_bool(name, &D_004BC190, 0, 0);
-            self->ids[i] = TexMan_FindOrLoad(g_TextureMgr, name);
+            self->ids[i] = cTexMan_AddTextureFromFile_cFileManR(g_TextureMgr, name);
         }
         s += strlen(s) + 1;
-        FileMan_Release(name, -1);
+        cFileMan_dtor(name, -1);
     }
     if (self->desc->flags & 1) {
         self->flags |= 0x400000;

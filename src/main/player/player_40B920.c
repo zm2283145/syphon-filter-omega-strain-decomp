@@ -28,8 +28,8 @@ void std_vector_cSystemPtr_ctor(A40BA10* a);
 int cArrayCapacity_Int(int* kind);
 void std_vector_cSystemPtr_reserve(A40BA10* a, int v);
 void std_vector_cObjectId_ctor_void(A40BA10* a);
-V40BA10* GobjScope_GetList(void);
-void PtrVec_PushBack_40BC70(V40BA10* v, S40BA10** e);
+V40BA10* GetPurgeList(void);
+void std_vector_cBaseObjListPtr_push_back(V40BA10* v, S40BA10** e);
 int cArray_cBaseObjListPtr_Size(V40BA10* v);
 void cArray_cBaseObjListPtr_ResizeActual(V40BA10* v, int n, S40BA10* const& fill);
 void cArray_cBaseObjListPtr_RBegin(It40BA10* out, V40BA10* v);
@@ -69,16 +69,16 @@ static inline void PushFront40BA10(V40BA10* v, S40BA10** x)
     }
     *cArray_cBaseObjListPtr_Front(v) = *x;
 }
-extern "C" S40BA10* GobjScopeBase_Ctor(S40BA10* self, int kind, int prio)
+extern "C" S40BA10* cBaseObjList_ctor(S40BA10* self, int kind, int prio)
 {
     int k = kind;
     InitA40BA10(&self->a, &k);
     InitB40BA10(&self->b);
     self->prio = prio;
     if (prio)
-        PtrVec_PushBack_40BC70(GobjScope_GetList(), &self);
+        std_vector_cBaseObjListPtr_push_back(GetPurgeList(), &self);
     else
-        PushFront40BA10(GobjScope_GetList(), &self);
+        PushFront40BA10(GetPurgeList(), &self);
     return self;
 }
 #pragma pop /* merge_units */

@@ -61,31 +61,31 @@ extern V D_004E1D90;
 void* __construct_array(void* a, void* ctor, void* dtor, unsigned int size, unsigned int n);
 void func_001D8700(void);
 void func_001B4C70(void);
-void Secondary_MotionRecordCtor(void);
-void Secondary_MotionRecordDtor(void);
+void cSkaAnimDataIterator_ctor_void(void);
+void cSkaAnimDataIterator_dtor(void);
 void cIkTargetWithSplinedTransition_ctor(void);
 void cIkTargetWithSplinedTransition_dtor(void);
-void Quat_SetIdentity(V* q);
+void cQuaternion_GetIdentity(V* q);
 void cQuaternion_GetZero(V* v);
-void CameraCurve_MakeQuaternion(CurveR* c, V* q, V* v);
-void Event_Construct(void* e, void* type);
-void UpperBodyLook_ClearRecords(LookR* l);
-ActorS* ActorSecondary_Ctor(ActorS* self);
+void cSplinedMotion_cQuaternion_ctor(CurveR* c, V* q, V* v);
+void cMessage_ctor_cMessageNameR(void* e, void* type);
+void cArray_FixedSize_cAimComponent_2_ctor(LookR* l);
+ActorS* cHumanIkRoutine_ctor(ActorS* self);
 }
 static inline void CurveCtor(CurveR* c0)
 {
     CurveR* c = c0;
     V q;
     V v;
-    Quat_SetIdentity(&q);
+    cQuaternion_GetIdentity(&q);
     cQuaternion_GetZero(&v);
-    CameraCurve_MakeQuaternion(c, &q, &v);
+    cSplinedMotion_cQuaternion_ctor(c, &q, &v);
     c->vt = D_004DA440;
     c->bC0 = 0;
 }
 static inline void EvCtor(EvR* e)
 {
-    Event_Construct(e, D_00542B60);
+    cMessage_ctor_cMessageNameR(e, D_00542B60);
     e->vt = D_004DA930;
     e->f24 = 0;
     e->b28 = 0;
@@ -138,7 +138,7 @@ inline ActorS* ActorS::Init()
     self->b8 = 1;
     self->f10 = 0;
     SlotCtor(&self->slots);
-    __construct_array(self->recs, (void*)Secondary_MotionRecordCtor, (void*)Secondary_MotionRecordDtor, 0x30, 2);
+    __construct_array(self->recs, (void*)cSkaAnimDataIterator_ctor_void, (void*)cSkaAnimDataIterator_dtor, 0x30, 2);
     self->v140 = Unit();
     self->v150 = Unit();
     CCW(self);
@@ -158,7 +158,7 @@ inline ActorS* ActorS::Init()
     self->f328 = 0;
     { EvR* e = &self->e32c; EvCtor(e); }
     { EvR* e = &self->e364; EvCtor(e); }
-    UpperBodyLook_ClearRecords(self->looks);
+    cArray_FixedSize_cAimComponent_2_ctor(self->looks);
     self->v480 = Unit();
     self->v490 = Zero();
     { SubArr* p = &self->subs; SubCtor(p); }
@@ -181,7 +181,7 @@ inline ActorS* ActorS::Init()
     self->looks[1].b4 = 1;
     return this;
 }
-ActorS* ActorSecondary_Ctor(ActorS* self)
+ActorS* cHumanIkRoutine_ctor(ActorS* self)
 {
     return self->Init();
 }

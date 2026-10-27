@@ -2,7 +2,7 @@
 #define STRING_COMPARE_RANGE_H
 
 /*
- * Clones of String_Compare(self, pos, n, s, len) for the short/long
+ * Clones of std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(self, pos, n, s, len) for the short/long
  * string: range-check pos (report msgSym through the error stream and
  * abort), clamp n and len with std::min by reference, compare the bytes,
  * then order by length. C++ only (#pragma cplusplus on before including).
@@ -16,7 +16,7 @@ extern "C" {
 extern SCRErr* D_00489738;
 void Libc_Fprintf(int stream, const char* msg);
 void Libc_Abort(void);
-int Name_Compare48(const char* a, const char* b, unsigned int n);
+int Libc_Memcmp(const char* a, const char* b, unsigned int n);
 }
 
 static inline unsigned char SCR_ShortLen(const SCRStr* s) { return s->u.s.len; }
@@ -46,7 +46,7 @@ static inline const unsigned int& SCR_Min(const unsigned int& a, const unsigned 
         }                                                                     \
         rem = sz - pos;                                                       \
         rlen = SCR_Min(rem, n);                                               \
-        int r = Name_Compare48(d + pos, s, SCR_Min(rlen, len));               \
+        int r = Libc_Memcmp(d + pos, s, SCR_Min(rlen, len));               \
         if (r == 0) {                                                         \
             if (rlen < len)                                                   \
                 return -1;                                                    \

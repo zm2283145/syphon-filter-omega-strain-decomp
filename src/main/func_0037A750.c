@@ -36,9 +36,9 @@ typedef struct GsCtx37A750 {
 typedef struct Slot37A750 { char p0[0x110]; } Slot37A750;
 
 extern void cTexMan_TermTextureStream(int);
-extern void Vif1Packet_Flip(void*);
-extern void Video_FreeDeferredBuffers(GsCtx37A750*, int);
-extern void Video_RollFrameStats(GsCtx37A750*);
+extern void cDmaMan_NextFrame(void*);
+extern void XLib_DeferDeleteDmaData(GsCtx37A750*, int);
+extern void XLib_NextPrimFrame(GsCtx37A750*);
 extern void cTexMan_StartFrame(int);
 extern char D_00537F80[];
 extern int g_TimerAccum;
@@ -63,7 +63,7 @@ static inline void GsCtx_SetBufferRegs(GsCtx37A750* c, unsigned int w, unsigned 
     c->xyoffset = GS_XYOFFSET(ofx, ofy);
     c->dirty = 1;
 }
-void Video_FrameFlag8(GsCtx37A750* c)
+void XLib_NextFrameSlave(GsCtx37A750* c)
 {
     unsigned int t;
     while ((*(volatile int*)0x10009000 & 0x100) || (*(volatile int*)0x10003C00 & 3) ||
@@ -72,10 +72,10 @@ void Video_FrameFlag8(GsCtx37A750* c)
     while ((*(volatile int*)0x1000A000 & 0x100) || (*(volatile int*)0x10003020 & 0xC00))
         ;
     cTexMan_TermTextureStream(c->dev);
-    Vif1Packet_Flip(D_00537F80);
-    Video_FreeDeferredBuffers(c, 0);
+    cDmaMan_NextFrame(D_00537F80);
+    XLib_DeferDeleteDmaData(c, 0);
     c->buf ^= 1;
-    Video_RollFrameStats(c);
+    XLib_NextPrimFrame(c);
     c->frames++;
     GsCtx_SetBufferRegs(c, c->w, c->h, c->psm, c->fbp[c->buf], c->fbmsk, c->zpsm, c->zbp, c->zmsk, c->field);
     ((unsigned char*)c)[c->slot * 0x110 + 0x2F6] = 1;

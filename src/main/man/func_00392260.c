@@ -15,14 +15,14 @@ struct Self92260 {
 
 extern "C" {
 extern char D_004BC310[];
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 void cMan_GetTextureIDs(Self92260* self);
-void ActorModel_Setup(Self92260* self, int flag);
+void cMan_BuildMan(Self92260* self, int flag);
 void cMan_FreeMan(Self92260* self);
 void operator_delete(void* p);
 }
 
-/* 16-byte block copy loop (lq/sq), as in ActorModel_RestoreBodyPacking. */
+/* 16-byte block copy loop (lq/sq), as in cMan_RemoveCostume. */
 static inline void QMove_392260(void* d0, void* s, int n0) {
     int n = n0; __int128 t; void* d = d0;
     asm {
@@ -47,11 +47,11 @@ extern "C" Self92260* cMan_dtor(Self92260* self, short flag)
             {
                 App92260* p = self->saved;
                 AllocGuard g;
-                Mem_Free(0, p, D_004BC310, 0x11F);
+                cMemMan_Deallocate(0, p, D_004BC310, 0x11F);
             }
             self->saved = 0;
             cMan_GetTextureIDs(self);
-            ActorModel_Setup(self, 1);
+            cMan_BuildMan(self, 1);
         }
         cMan_FreeMan(self);
         if (flag > 0) operator_delete(self);

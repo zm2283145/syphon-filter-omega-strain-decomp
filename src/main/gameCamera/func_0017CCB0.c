@@ -7,7 +7,7 @@ typedef struct { V4 rot; V4 pos; } P_CCB0;
 #pragma opt_propagation off
 #pragma opt_common_subs off
 #pragma opt_dead_assignments off
-P_CCB0* Placement_Invert_17CCB0(P_CCB0* p) {
+P_CCB0* cQuatVec_Invert(P_CCB0* p) {
     float d;
     int t;
     asm {

@@ -9,10 +9,10 @@ typedef struct {
     char pad100[0x11A - 0x100];
     unsigned char b11A;
 } ColQuery;
-extern void ColQuery_InitBase(ColQuery* q, int kind);
-void ColQuery_InitSphere(ColQuery* q, int kind, V4* a, V4* b)
+extern void cCollisionProbe_SphereSweptRay_Reset_CommonCode(ColQuery* q, int kind);
+void cCollisionProbe_SphereSweptRay_Reset_cArrayR_float_float_float_etc(ColQuery* q, int kind, V4* a, V4* b)
 {
-    ColQuery_InitBase(q, kind);
+    cCollisionProbe_SphereSweptRay_Reset_CommonCode(q, kind);
     { V4* d = &q->vF0; __int128 t; /* 16-byte copy; temp passed as input after dest for retail colouring */ __asm__ volatile("lq %1, 0x0(%2); sq %1, 0x0(%0)" : : "r"(d), "r"(t), "r"(a) : "memory"); }
     Q0220(&q->v80, b);
     { void* xx = &q->v80; /* dead on purpose: retail keeps this addiu */ }

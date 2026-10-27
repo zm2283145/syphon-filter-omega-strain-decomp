@@ -8,9 +8,9 @@ extern List* g_Hud;
 extern void GuiArrayWidget_GetSelected(Box*, int*, unsigned int*);
 extern void GuiTextListWidget_Clear(Box*);
 extern void GuiTextListWidget_AddItem(Box*, char*, int, int);
-extern void GuiArrayWidget_Select(Box*, int, unsigned int);
-extern char* Loc_LookupText(char*);
-void GuiRadioLog_Refill(Self* self)
+extern void GuiArrayWidget_SetSelected(Box*, int, unsigned int);
+extern char* nGlobalization_GetString_charP(char*);
+void GuiRadioLog_UpdateRadioLogList(Self* self)
 {
     int a;
     unsigned int b;
@@ -22,10 +22,10 @@ void GuiRadioLog_Refill(Self* self)
     if (l == 0) return;
     GuiTextListWidget_Clear(self->box);
     for (i = 0; i < l->count; i++) {
-        char* t = Loc_LookupText(l->items[i].name);
+        char* t = nGlobalization_GetString_charP(l->items[i].name);
         GuiTextListWidget_AddItem(self->box, t ? t : l->items[i].name, 0, l->items[i].flag ? ON1 : ON0);
     }
-    if (b < self->box->size) GuiArrayWidget_Select(self->box, 0, b);
+    if (b < self->box->size) GuiArrayWidget_SetSelected(self->box, 0, b);
 }
 
 

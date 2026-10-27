@@ -1,7 +1,7 @@
 typedef struct { int sock; char pad[0x24]; void *buf; char pad2[0xC]; unsigned short f38; char pad3[0xE]; unsigned int state; } RtCtx;
 typedef struct { int a[4]; } RtAddr;
 extern int rt_comm_receive_from(int sock, RtAddr *addr, unsigned short *port, void *buf, unsigned short size, unsigned short *len);
-extern int RtUdp_ParsePacket(RtCtx *c, RtAddr *addr, unsigned short port, unsigned short len);
+extern int rt_udp_process_message(RtCtx *c, RtAddr *addr, unsigned short port, unsigned short len);
 
 int rt_udp_receive_messages(RtCtx *c)
 {
@@ -17,7 +17,7 @@ int rt_udp_receive_messages(RtCtx *c)
             r = rt_comm_receive_from(c->sock, &addr, &port, c->buf, c->f38 + 12, &len);
         if (r == 0) {
             if (len == 0) break;
-            if (len >= 12) RtUdp_ParsePacket(c, &addr, port, len);
+            if (len >= 12) rt_udp_process_message(c, &addr, port, len);
         }
     } while (len != 0);
     return 0;

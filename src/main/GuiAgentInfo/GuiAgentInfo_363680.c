@@ -46,8 +46,8 @@ static inline void merge_flush_func_00363680(void) {}
  */
 
 
-extern int Curve_Bind(void* binding, CurveSegment* segment);
-extern int Curve_InitConstant(CurveSegment* segment, int from, int to, float t);
+extern int cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_ctor(void* binding, CurveSegment* segment);
+extern int cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_float(CurveSegment* segment, int from, int to, float t);
 #pragma explicit_zero_data on
 static float D_00492EE8 = 0.0f;
 #pragma explicit_zero_data reset
@@ -63,8 +63,8 @@ AnimChannel* AnimChannel_Ctor(AnimChannel* self) {
     self->base.target = (*(float*)dat_00492EF0);
     self->base.rate = D_00492EE8;
     self->base.damping = 0.0f;
-    Curve_InitConstant(&self->base.segment, (int)&D_00492EE8, (int)&(*(float*)dat_00492EF0), 0.0f);
-    Curve_Bind(self->base.binding, &self->base.segment);
+    cHermiteSplineWithScaledDuration_float_ctor_floatR_floatR_float(&self->base.segment, (int)&D_00492EE8, (int)&(*(float*)dat_00492EF0), 0.0f);
+    cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_float_float_ctor(self->base.binding, &self->base.segment);
     self->base.vtable = D_004DA840;
     self->wrap = 0;
     return self;

@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { float x, y; } B8P_2465B0;
 typedef struct { float x, y, w, h; } B8R_2465B0;
-unsigned char Rect_ContainsPoint(B8P_2465B0* p, B8R_2465B0* r) {
+unsigned char PointInRect(B8P_2465B0* p, B8R_2465B0* r) {
     unsigned char res = 0;
     unsigned char iny = 0;
     unsigned char inx = 0;

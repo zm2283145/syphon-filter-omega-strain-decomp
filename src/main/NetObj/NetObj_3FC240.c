@@ -83,7 +83,7 @@ char D_004BE370[] = "tree::insert length error\n";
 extern "C" {
 char D_004BE390[] = "allocator.hh";
 }
-DEFINE_TREE_INSERT_V8X(FrameTree_Insert_3FC520, TIV_003FC520, D_004BE370, D_004BE390, 0x5C, std_red_black_tree_1_balance_insert)
+DEFINE_TREE_INSERT_V8X(std_tree_pair_int_value_compare_cAllocator_pair_insert_node_at_nodeP_bool_bool_pairR_3, TIV_003FC520, D_004BE370, D_004BE390, 0x5C, std_red_black_tree_1_balance_insert)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003FC520(void) {}
 #pragma pop /* merge_units */

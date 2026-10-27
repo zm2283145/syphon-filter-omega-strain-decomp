@@ -11,7 +11,7 @@ extern "C" {
 Node_3801A0* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_10(void* header);
 void* std_list_deleter_int_tail(void* list);
 void std_list_deleter_int_generic_iterator_ctor_nodebaseP(It_3801A0* out, void* node);
-void List_Erase_383560(It_3801A0* result, void* list, It_3801A0* pos);
+void std_list_deleter_int_erase_listdeleter(It_3801A0* result, void* list, It_3801A0* pos);
 }
 
 extern "C" void cTexMan_EraseDeletedTID(Obj_3801A0* o, int v)
@@ -23,7 +23,7 @@ extern "C" void cTexMan_EraseDeletedTID(Obj_3801A0* o, int v)
     for (n = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_10(&o->header)->next; (std_list_deleter_int_generic_iterator_ctor_nodebaseP(&end, std_list_deleter_int_tail(&o->list)), n != end.p); n = n->next) {
         if (v == n->value) {
             pos.p = n;
-            List_Erase_383560(&result, &o->list, &pos);
+            std_list_deleter_int_erase_listdeleter(&result, &o->list, &pos);
             return;
         }
     }

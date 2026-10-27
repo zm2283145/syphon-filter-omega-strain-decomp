@@ -7,10 +7,10 @@
 #include "gameGobjController_types.h"
 
 extern char D_004DBA20[];   /* component vtable */
-extern int Component_ConstructBase(Component* self);
+extern int cGobjController_ctor(Component* self);
 
-Component* Component_BaseInit(Component* self) {
-    Component_ConstructBase(self);
+Component* cGameGobjController_ctor(Component* self) {
+    cGobjController_ctor(self);
     self->vtable = D_004DBA20;
     self->unk38 = 1.0f;
     self->unk3C = -1;

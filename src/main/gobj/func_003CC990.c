@@ -21,22 +21,22 @@ typedef struct ValueObj {
 extern unsigned char g_IsMultiplayer;
 extern char D_00582750[];
 extern char D_004E0EE0[];
-extern void Event_Construct(ValueMsg* msg, void* type);
-extern void Event_Send(ValueMsg* msg, void* target, int flags);
+extern void cMessage_ctor_cMessageNameR(ValueMsg* msg, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int(ValueMsg* msg, void* target, int flags);
 extern void cMessage_dtor(ValueMsg* msg, int flags);
 
 /* Sets the value; in networked mode (unless silent) broadcasts it as message kind 4. */
-void Actor_SetHealth(ValueObj* obj, int value, int silent) {
+void cGOBJ_SetHitpoints(ValueObj* obj, int value, int silent) {
     ValueMsg msg;
     obj->value = (float)value;
     if (g_IsMultiplayer && !silent) {
-        Event_Construct(&msg, D_00582750);
+        cMessage_ctor_cMessageNameR(&msg, D_00582750);
         msg.flag = 0;
         msg.vtbl = D_004E0EE0;
         msg.id = obj->id;
         msg.kind = 4;
         msg.value = value;
-        Event_Send(&msg, obj, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, obj, 0);
         msg.vtbl = D_004E0EE0;
         cMessage_dtor(&msg, 0);
     }

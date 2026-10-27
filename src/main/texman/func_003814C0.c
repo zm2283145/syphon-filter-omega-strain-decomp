@@ -6,6 +6,6 @@
 #include "types.h"
 #include "texman_types.h"
 
-void TexEntry_Release(TexEntry* e) {
+void cTexture_DecRefCount(TexEntry* e) {
     e->refCount = e->refCount + -1;
 }

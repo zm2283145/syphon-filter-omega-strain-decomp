@@ -6,13 +6,13 @@
 
 /* merge_units: begin func_00104070 */
 typedef struct { volatile int chcr; int p0[3]; volatile unsigned int madr; int p1[3]; volatile unsigned int qwc; int p2[3]; volatile unsigned int tadr; } DmaChan;
-extern void sceDmaSync(DmaChan *);
+extern void WaitDma(DmaChan *);
 extern unsigned int CheckAddress(void *);
 void sceDmaSend(DmaChan *d, void *tag)
 {
     unsigned int a = CheckAddress(tag);
     int c;
-    sceDmaSync(d);
+    WaitDma(d);
     if (d->tadr != 0xFFFFFFFF) d->tadr = a;
     c = d->chcr;
     d->qwc = 0;
@@ -25,7 +25,7 @@ void sceDmaSendN(DmaChan *d, void *addr, int qwc)
 {
     unsigned int a = CheckAddress(addr);
     int c;
-    sceDmaSync(d);
+    WaitDma(d);
     if (d->madr != 0xFFFFFFFF) d->madr = a;
     c = d->chcr;
     d->qwc = qwc;
@@ -38,7 +38,7 @@ void sceDmaSendI(DmaChan *d, void *addr, int qwc)
 {
     unsigned int a = CheckAddress(addr);
     int c;
-    sceDmaSync(d);
+    WaitDma(d);
     if (d->madr != 0xFFFFFFFF) d->madr = a;
     c = d->chcr;
     d->qwc = qwc;
@@ -49,20 +49,20 @@ void sceDmaSendI(DmaChan *d, void *addr, int qwc)
 /* merge_units: begin func_001041C8 */
 typedef struct { volatile int chcr; int p0[3]; volatile unsigned int madr; int p1[3]; volatile unsigned int qwc; } DmaChan41C8;
 #if 0 /* merge_units */
-extern void sceDmaSync(DmaChan41C8 *);
+extern void WaitDma(DmaChan41C8 *);
 #endif /* merge_units */
-#define sceDmaSync(a0) (sceDmaSync((DmaChan *)(a0))) /* merge_units */
+#define WaitDma(a0) (WaitDma((DmaChan *)(a0))) /* merge_units */
 
 
 void sceDmaRecv(DmaChan41C8 *d)
 {
     int c;
-    sceDmaSync(d);
+    WaitDma(d);
     c = d->chcr;
     d->qwc = 0;
     d->chcr = (((c & ~0xC) | 4) & ~1) | 0x100;
 }
-#undef sceDmaSync /* merge_units */
+#undef WaitDma /* merge_units */
 /* merge_units: end func_001041C8 */
 
 /* merge_units: begin func_00104210 */
@@ -70,7 +70,7 @@ void sceDmaRecvN(DmaChan *d, void *addr, int qwc)
 {
     unsigned int a = CheckAddress(addr);
     int c;
-    sceDmaSync(d);
+    WaitDma(d);
     if (d->madr != 0xFFFFFFFF) d->madr = a;
     c = d->chcr;
     d->qwc = qwc;
@@ -86,7 +86,7 @@ void sceDmaRecvI(DmaChan *d, void *addr, int qwc)
 {
     unsigned int a = CheckAddress(addr);
     int c;
-    sceDmaSync(d);
+    WaitDma(d);
     if (d->madr != 0xFFFFFFFF) d->madr = a;
     c = d->chcr;
     d->qwc = qwc;

@@ -18,9 +18,9 @@ struct Obj_236BE0 {
     void* node;
     M4b m;
 };
-extern "C" V4b* ParticleInst_ComputeBounds(void* node);
-extern "C" int Renderer_TestVisibility(void* obj, V4b* a, V4b* b);
-extern "C" void ParticleInst_Draw(void* node, int arg, M4b* m);
+extern "C" V4b* cParticle_GetBBox(void* node);
+extern "C" int XLib_TestBBox_cVectorR_cVectorR(void* obj, V4b* a, V4b* b);
+extern "C" void cParticle_Render(void* node, int arg, M4b* m);
 extern "C" char g_Video[];
 static inline void My_236BE0(V4b* a, M4b* b) {
     asm {
@@ -43,14 +43,14 @@ static inline V4b Xf_236BE0(Obj_236BE0* s, V4p v) {
     return *a;
 }
 
-extern "C" void ParticleEffectComp_Draw(Obj_236BE0* self);
-void ParticleEffectComp_Draw(Obj_236BE0* self) {
+extern "C" void cParticleFx_SfxRender(Obj_236BE0* self);
+void cParticleFx_SfxRender(Obj_236BE0* self) {
     void* n = self->node;
     if (n) {
-        V4b* v = ParticleInst_ComputeBounds(n);
+        V4b* v = cParticle_GetBBox(n);
         V4b p0 = Xf_236BE0(self, v[0]);
         V4b p1 = Xf_236BE0(self, v[1]);
-        ParticleInst_Draw(self->node, Renderer_TestVisibility(g_Video, &p0, &p1), &self->m);
+        cParticle_Render(self->node, XLib_TestBBox_cVectorR_cVectorR(g_Video, &p0, &p1), &self->m);
     }
 }
 

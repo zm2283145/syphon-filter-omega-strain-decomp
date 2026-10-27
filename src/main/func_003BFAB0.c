@@ -11,15 +11,15 @@ struct V4;
 /* plain quadword copy (lq/sq) */
 static inline void Q16(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(d), "r"(s) : "memory"); }
 extern "C" {
-V4* Ptr_Identity(V4* v);
-V4* Vec4_Assign(V4* d, const V4* s);
+V4* cVector_ctor_void(V4* v);
+V4* cVector_ctor_cVectorR(V4* d, const V4* s);
 }
-/* copy constructor out of line (Vec4_Assign); assignment is a quadword copy whose dead xx
+/* copy constructor out of line (cVector_ctor_cVectorR); assignment is a quadword copy whose dead xx
  * reproduces retail's duplicated source addiu */
 struct V4 {
     float x, y, z, w;
     V4() {}
-    V4(const V4& o) { Vec4_Assign(this, &o); }
+    V4(const V4& o) { cVector_ctor_cVectorR(this, &o); }
     V4& operator=(const V4& o) { void* xx = (void*)&o; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(this), "r"(&o) : "memory"); return *this; }
 } __attribute__((aligned(16)));
 struct V4p { float x, y, z, w; } __attribute__((aligned(16)));
@@ -39,11 +39,11 @@ struct CTri {
 struct CMesh { int x0; int count; CTri* data; };
 
 extern "C" {
-V4 Sphere_FromCenter(const V4* a, const V4* b);
-float Vec4_GetY(const V4* v);
-V4 Vec4_Scale(const V4* v, float k);
-V4 Vec4_Add(const V4* a, const V4* b);
-void Vec4_Copy(void* d, const void* s);
+V4 cVector_opSub(const V4* a, const V4* b);
+float cVector_Y_void(const V4* v);
+V4 cVector_opMul(const V4* v, float k);
+V4 cVector_opAdd(const V4* a, const V4* b);
+void cVector_opAssign(void* d, const void* s);
 void cVector_SetZero(V4* v);
 float* cVector_X_void_2(V4* v);
 float* cVector_Y_void_2(V4* v);
@@ -62,11 +62,11 @@ void func_003BFAB0(CTri* q, CMesh* mesh, int idx, V4* v, float h);
 static inline V4 ClipEdge(const V4* a, const V4* b, float h)
 {
     V4 r;
-    Ptr_Identity(&r);
-    V4 d = Sphere_FromCenter(b, a);
-    if (Vec4_GetY(&d) != 0.0f) {
-        float t = (h - Vec4_GetY(a)) / Vec4_GetY(&d);
-        Vec4_Copy(&r, &Vec4_Add(a, &Vec4_Scale(&d, t)));
+    cVector_ctor_void(&r);
+    V4 d = cVector_opSub(b, a);
+    if (cVector_Y_void(&d) != 0.0f) {
+        float t = (h - cVector_Y_void(a)) / cVector_Y_void(&d);
+        cVector_opAssign(&r, &cVector_opAdd(a, &cVector_opMul(&d, t)));
     } else {
         cVector_SetZero(&r);
     }
@@ -75,10 +75,10 @@ static inline V4 ClipEdge(const V4* a, const V4* b, float h)
 
 static inline void AssignTri(CTri* d, const CTri* s)
 {
-    Vec4_Copy(&d->v[0], &s->v[0]);
-    Vec4_Copy(&d->v[1], &s->v[1]);
-    Vec4_Copy(&d->v[2], &s->v[2]);
-    Vec4_Copy(&d->v[3], &s->v[3]);
+    cVector_opAssign(&d->v[0], &s->v[0]);
+    cVector_opAssign(&d->v[1], &s->v[1]);
+    cVector_opAssign(&d->v[2], &s->v[2]);
+    cVector_opAssign(&d->v[3], &s->v[3]);
     d->b50 = s->b50;
     cCollisionModel_FaceProperties_opAssign(&d->uv, &s->uv);
     cCollisionModel_FaceLocator_opAssign(&d->uv2, &s->uv2);

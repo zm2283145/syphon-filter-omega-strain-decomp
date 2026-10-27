@@ -1,6 +1,6 @@
 #include "types.h"
 
-void AnimTime_Pop(int a0) {
+void cSkaParams_PopTimeStep(int a0) {
     int v1;
     int cond;
 

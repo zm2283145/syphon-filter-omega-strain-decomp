@@ -7,13 +7,13 @@ extern "C" {
 extern RbTree D_005826E0;
 extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
-cGOBJ* Object_LookupById(const GobjId* id);
-void ObjMap_Find_42EE70(PendingTransferIterator* result, RbTree* tree, const GobjId* id);
+cGOBJ* nGobjManager_LookupGOBJ_cObjectIdR(const GobjId* id);
+void std_tree_pair_int_value_compare_find_uintR(PendingTransferIterator* result, RbTree* tree, const GobjId* id);
 PendingTransferIterator std_map_int_cMessagePtr_end(RbTree* tree);
 void cAssocArray_int_cMessagePtr_Iterator_ctor(PendingTransferIterator* result, const PendingTransferIterator& source);
 void func_0042F2C0(RbTree* tree, const PendingTransferIterator& position);
-int Transport_Send(unsigned int id, TransferMessage* message, int flags, short peer);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+int cNetObj_SendMessage_int_cMessageR_int_int(unsigned int id, TransferMessage* message, int flags, short peer);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void cNetObjectMgr_TerrainActivation(cGOBJ* object);
 void cNPCInfoObject_ctor(int* shared);
 void cNPCInfoObject_dtor(int* shared, short flags);
@@ -27,7 +27,7 @@ static inline PendingTransferController* controller(cGOBJ* object)
 static inline void release_message(TransferMessage* message, int line)
 {
     message->~TransferMessage();
-    Mem_Free(0, message, "NetObjectMgr.cc", line);
+    cMemMan_Deallocate(0, message, "NetObjectMgr.cc", line);
 }
 
 static inline bool needs_transfer_update(cGOBJ* object)
@@ -64,15 +64,15 @@ extern "C" void cNetObjectMgr_TransferRequest(const GobjId* id, int peer)
     GobjId key;
     PendingTransferIterator end;
     PendingTransferIterator found;
-    cGOBJ* object = Object_LookupById(id);
+    cGOBJ* object = nGobjManager_LookupGOBJ_cObjectIdR(id);
     if (object && object->attached && controller(object)->is_ready()) {
         key.word = id->word;
-        ObjMap_Find_42EE70(&found, &D_005826E0, &key);
+        std_tree_pair_int_value_compare_find_uintR(&found, &D_005826E0, &key);
         PendingTransferNode* node = found.node;
         pending_end(&end);
         if ((node == end.node) ^ 1) {
             TransferMessage* message = node->message;
-            Transport_Send(id->word, message, 0, (short)peer);
+            cNetObj_SendMessage_int_cMessageR_int_int(id->word, message, 0, (short)peer);
             {
                 AllocGuard guard;
                 release_message(message, 0x202);
@@ -82,7 +82,7 @@ extern "C" void cNetObjectMgr_TransferRequest(const GobjId* id, int peer)
                    controller(object)->can_create_message()) {
             TransferMessage* message = controller(object)->create_message();
             if (message)
-                Transport_Send(id->word, message, 0, (short)peer);
+                cNetObj_SendMessage_int_cMessageR_int_int(id->word, message, 0, (short)peer);
             {
                 AllocGuard guard;
                 release_message(message, 0x211);
@@ -101,7 +101,7 @@ extern "C" void cNetObjectMgr_TransferRequest(const GobjId* id, int peer)
                 if (!(short)peer)
                     controller(object)->apply_message(message);
                 else
-                    Transport_Send(id->word, message, 0, (short)peer);
+                    cNetObj_SendMessage_int_cMessageR_int_int(id->word, message, 0, (short)peer);
             }
             {
                 AllocGuard guard;

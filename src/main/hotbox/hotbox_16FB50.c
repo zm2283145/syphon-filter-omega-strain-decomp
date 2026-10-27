@@ -37,13 +37,13 @@ typedef struct cHotboxM {
     void* interactMessage; /* 0xA0 */
 } cHotboxM;
 
-extern void* Loc_LookupText(int id);
+extern void* nGlobalization_GetString_charP(int id);
 
 /* Script native: cHotbox.SetInteractMessage(textId). */
 int Script_cHotbox_SetInteractMessage(ScriptArg* args) {
     volatile int id = args[1].i;
     cHotboxM* hotbox = args[0].p;
-    hotbox->interactMessage = Loc_LookupText(id);
+    hotbox->interactMessage = nGlobalization_GetString_charP(id);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

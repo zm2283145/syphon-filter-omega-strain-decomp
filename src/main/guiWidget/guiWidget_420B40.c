@@ -3,26 +3,26 @@
 
 extern "C" {
 extern "C" void GuiTextWidget_UpdateText();
-extern "C" void GuiTextWidget_Draw();
-extern "C" void GuiTextWidget_OnSleep();
+extern "C" void GuiTextWidget_onRender();
+extern "C" void GuiTextWidget_onSleep();
 extern "C" void GuiTextWidget_Load();
-extern "C" void GuiWidget_FocusPrev();
-extern "C" void GuiWidget_FocusNext();
-extern "C" void GuiWidget_FocusLast();
-extern "C" void GuiWidget_FocusFirst();
-extern "C" void GuiWidget_BubbleActivate();
-extern "C" void GuiWidget_BubbleType1();
-extern "C" void GuiWidget_BubbleType0();
-extern "C" void GuiWidget_Update();
-extern "C" void GuiWidget_ClearFlag4();
-extern "C" void GuiWidget_SetFlag4();
-extern "C" void GuiWidget_Deinit();
-extern "C" void GuiWidget_Init();
+extern "C" void GuiWidget_FindPrevFocus();
+extern "C" void GuiWidget_FindNextFocus();
+extern "C" void GuiWidget_FindLastFocus();
+extern "C" void GuiWidget_FindFirstFocus();
+extern "C" void GuiWidget_onAction();
+extern "C" void GuiWidget_onLoseFocus();
+extern "C" void GuiWidget_onGainFocus();
+extern "C" void GuiWidget_onAdvanceTime();
+extern "C" void GuiWidget_onDeactivate();
+extern "C" void GuiWidget_onActivate();
+extern "C" void GuiWidget_onRemove();
+extern "C" void GuiWidget_onAdd();
 extern "C" void GuiButtonWidget_GetClassName();
-extern "C" void GuiButtonWidget_IsType();
-extern "C" void GuiButtonWidget_OnWake();
-extern "C" void GuiButtonWidget_OnEvent();
-extern "C" void GuiButtonWidget_OnInput();
+extern "C" void GuiButtonWidget_IsClass();
+extern "C" void GuiButtonWidget_onWake();
+extern "C" void GuiButtonWidget_onMessage();
+extern "C" void GuiButtonWidget_onInput();
 extern void * const D_004E0C00[];
 void* GuiTextWidget_dtor(void* self, short deleteFlag);
 }
@@ -36,4 +36,4 @@ extern "C" VtableObject* GuiButtonWidget_dtor(VtableObject* self, short deleteFl
     }
     return self;
 }
-void * const D_004E0C00[24] = { (void*)0x0, (void*)0x0, (void*)GuiButtonWidget_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiButtonWidget_OnWake, (void*)GuiTextWidget_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiButtonWidget_OnInput, (void*)GuiTextWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiButtonWidget_OnEvent, (void*)GuiTextWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiButtonWidget_GetClassName, (void*)GuiButtonWidget_IsType, (void*)GuiTextWidget_UpdateText };
+void * const D_004E0C00[24] = { (void*)0x0, (void*)0x0, (void*)GuiButtonWidget_dtor, (void*)GuiWidget_onAdd, (void*)GuiWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiWidget_onDeactivate, (void*)GuiButtonWidget_onWake, (void*)GuiTextWidget_onSleep, (void*)GuiWidget_onGainFocus, (void*)GuiWidget_onLoseFocus, (void*)GuiButtonWidget_onInput, (void*)GuiTextWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiWidget_onAdvanceTime, (void*)GuiButtonWidget_onMessage, (void*)GuiTextWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiButtonWidget_GetClassName, (void*)GuiButtonWidget_IsClass, (void*)GuiTextWidget_UpdateText };

@@ -44,20 +44,20 @@ extern char D_004BC440[];
 extern char D_004BC448[];
 extern char D_004BC450[];
 void cVUM_GOBJ_CreateModelData(Obj3951B0* self, int x);
-void String_Copy(char* d, const char* s);
+void Libc_Strcpy(char* d, const char* s);
 char* strchr(const char* s, int c);
 void cFileMan_EncodeFilename_charP_cFileManR(Res3951B0* h, char* path, Res3951B0* r);
 int String_CompareNoCase(char* a, char* b);
-int FileMan_ReadData(Res3951B0* r);
-void Hog_OpenInMemory(void* ctx, void* data, int size, int z);
-void Hog_Register(Res3951B0* h, void* data, void* ctx, int z);
-void Model_Load(Model3951B0* m, Res3951B0* a, Res3951B0* b);
-void Col_Load(void* c, Res3951B0* h);
+int cFileMan_Read_void(Res3951B0* r);
+void cHogFile_Open(void* ctx, void* data, int size, int z);
+void cFileMan_EncodeFilename_charP_cHogFileR_bool(Res3951B0* h, void* data, void* ctx, int z);
+void cVU1Model_Load(Model3951B0* m, Res3951B0* a, Res3951B0* b);
+void cCollisionModelMaster_Load(void* c, Res3951B0* h);
 }
 
-static inline void LoadCol(void* c, Res3951B0* h) { if (c) Col_Load(c, h); }
+static inline void LoadCol(void* c, Res3951B0* h) { if (c) cCollisionModelMaster_Load(c, h); }
 
-extern "C" void ModelAsset_Load(Obj3951B0* self, Desc3951B0* d)
+extern "C" void cVUM_GOBJ_Load(Obj3951B0* self, Desc3951B0* d)
 {
     char buf[0x70];
     if (d->name) self->b1F2 = 1; else self->b1F2 = 0;
@@ -77,27 +77,27 @@ extern "C" void ModelAsset_Load(Obj3951B0* self, Desc3951B0* d)
     cVUM_GOBJ_CreateModelData(self, d->xC);
     if (!d->xC) *self->res = *d->res;
     char* base = d->res->path;
-    if (d->name) String_Copy(buf, d->name); else String_Copy(buf, base);
-    String_Copy(strchr(buf, '.'), D_004BC440);
+    if (d->name) Libc_Strcpy(buf, d->name); else Libc_Strcpy(buf, base);
+    Libc_Strcpy(strchr(buf, '.'), D_004BC440);
     cFileMan_EncodeFilename_charP_cFileManR(self->h1E8, buf, self->res);
-    if (d->name) String_Copy(buf, d->name); else String_Copy(buf, base);
-    String_Copy(strchr(buf, '.'), D_004BC448);
+    if (d->name) Libc_Strcpy(buf, d->name); else Libc_Strcpy(buf, base);
+    Libc_Strcpy(strchr(buf, '.'), D_004BC448);
     cFileMan_EncodeFilename_charP_cFileManR(self->h1EC, buf, self->res);
     if (String_CompareNoCase(d->res2->name, d->res->name) == 0) {
-        String_Copy(buf, base);
-        String_Copy(strchr(buf, '.'), D_004BC450);
+        Libc_Strcpy(buf, base);
+        Libc_Strcpy(strchr(buf, '.'), D_004BC450);
         cFileMan_EncodeFilename_charP_cFileManR(self->h1E4, buf, self->res);
     } else {
         *self->h1E4 = *d->res2;
     }
     Res3951B0* r = self->res;
     if (!(r->flags & 4)) {
-        Hog_OpenInMemory(self->x74, r->path, FileMan_ReadData(r), 0);
+        cHogFile_Open(self->x74, r->path, cFileMan_Read_void(r), 0);
         if (String_CompareNoCase(self->h1E4->name, self->h1E8->name) == 0)
-            Hog_Register(self->h1E4, self->h1E4->path, self->x74, 0);
-        Hog_Register(self->h1E8, self->h1E8->path, self->x74, 0);
-        Hog_Register(self->h1EC, self->h1EC->path, self->x74, 0);
-        Model_Load(self->model, self->h1E8, self->h1E4);
+            cFileMan_EncodeFilename_charP_cHogFileR_bool(self->h1E4, self->h1E4->path, self->x74, 0);
+        cFileMan_EncodeFilename_charP_cHogFileR_bool(self->h1E8, self->h1E8->path, self->x74, 0);
+        cFileMan_EncodeFilename_charP_cHogFileR_bool(self->h1EC, self->h1EC->path, self->x74, 0);
+        cVU1Model_Load(self->model, self->h1E8, self->h1E4);
         LoadCol(self->col, self->h1EC);
         if (self->model->info->flags & 0x10) {
             self->b1F0 = 0;

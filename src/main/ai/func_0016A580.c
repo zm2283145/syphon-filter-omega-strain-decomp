@@ -7,7 +7,7 @@ extern void* D_004EE620;
 extern unsigned char D_004EE628;
 extern unsigned char D_005723C8;
 extern char D_0049C800[];
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 int NetGetObject(P_A580** out);
 }
 #pragma define_section REENT_DTOR ".dtors_drop" far_absolute RX
@@ -22,7 +22,7 @@ extern "C" void cTeam_TeamCreationCallback(void)
             void* nv = p->data;
             if (old && !D_004EE628) {
                 AllocGuard g;
-                Mem_Free(0, old, D_0049C800, 0x1FE);
+                cMemMan_Deallocate(0, old, D_0049C800, 0x1FE);
             }
             D_004EE620 = nv;
             D_004EE628 = 1;

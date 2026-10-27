@@ -7,4 +7,4 @@ struct B33_002469F0 { char a[33]; };
 struct B16_002469F0 { char a[16]; };
 union E_002469F0 { struct { B33_002469F0 m0; } c; struct { unsigned char m0; B16_002469F0 m1; B16_002469F0 m2; } a; };
 static char D_004A7450[] = "vector::insert length error\n";
-DEFINE_VECTOR_INSERT_FILL_CNT(Vector_Insert_2469F0, E_002469F0, 0x2E8BA2, 0x1745D1, D_004A7450, D_004A74F8, 0x5C, std_swap_vectordeleterR_vectordeleterR_22, void std_vector_deleter_PDAQuip_dtor(Vector_Insert_2469F0_V* v, int flags);, std_vector_deleter_PDAQuip_dtor(&tmp, -1), VIFC_ASSIGN, VIFC_COPY)
+DEFINE_VECTOR_INSERT_FILL_CNT(std_vector_imp_PDAQuip_insert, E_002469F0, 0x2E8BA2, 0x1745D1, D_004A7450, D_004A74F8, 0x5C, std_swap_vectordeleterR_vectordeleterR_22, void std_vector_deleter_PDAQuip_dtor(std_vector_imp_PDAQuip_insert_V* v, int flags);, std_vector_deleter_PDAQuip_dtor(&tmp, -1), VIFC_ASSIGN, VIFC_COPY)

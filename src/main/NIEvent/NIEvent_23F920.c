@@ -28,8 +28,8 @@ typedef struct { char pad[0x10]; void* val; } Node0023F9A0;
 typedef struct { void* vt; char p4[0x20]; int f24; char p28[0x4]; } Evt0023F9A0;
 typedef struct { char q0[0x4]; int a4; int a8; } Arg0023F9A0;
 extern "C" {
-extern void Event_Construct(Evt0023F9A0* e, void* type);
-extern void MsgQueue_QueueClone(Evt0023F9A0* e, void* obj, int a, int b);
+extern void cMessage_ctor_cMessageNameR(Evt0023F9A0* e, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int_int(Evt0023F9A0* e, void* obj, int a, int b);
 extern void cMessage_dtor(Evt0023F9A0* e, int f);
 extern char D_0055C7A0[];
 extern void std_tree_pair_int_value_compare_find_intR(Node0023F9A0** out, void* map, int* key);
@@ -53,7 +53,7 @@ extern "C" int cNIShuttle_NIShuttleCallback(int a0, int a1, int a2, Arg0023F9A0*
         int tmp[1];
         Node0023F9A0* n;
         Arg0023F9A0* a = arg;
-        Event_Construct(&e, D_004F7C28);
+        cMessage_ctor_cMessageNameR(&e, D_004F7C28);
         e.vt = D_004DC2F0;
         e.f24 = a->a8;
         k[0] = a->a4;
@@ -61,7 +61,7 @@ extern "C" int cNIShuttle_NIShuttleCallback(int a0, int a1, int a2, Arg0023F9A0*
         n = it[0];
         std_map_int_netSystemField_end(tmp, D_0055C7A0);
         cAssocArray_int_netSystemField_Iterator_ctor(end, tmp);
-        if (Eq0023F9A0(n, end[0]) ^ 1) MsgQueue_QueueClone(&e, n->val, 0, 0);
+        if (Eq0023F9A0(n, end[0]) ^ 1) QueueMessage_cMessageR_cSystemP_int_int(&e, n->val, 0, 0);
         e.vt = D_004DC2F0;
         cMessage_dtor(&e, 0);
     }

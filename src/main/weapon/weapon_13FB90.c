@@ -15,7 +15,7 @@ int sprintf(void *, const void *, ...);
 #pragma push /* merge_units */
 typedef struct { int f0; int id; int f8; int ammo; } Slot13F;
 typedef struct { int f0; Slot13F s[6]; char p64[0x20]; unsigned char f84; char p85[3]; char *f88; } PS0_0013FD20;
-int Weapon_TransferSpareRounds(PS0_0013FD20* arg0, int arg1, int arg2); /* gsynth: defined below */
+int cWeapon_StealAmmoFromInactiveWeapons(PS0_0013FD20* arg0, int arg1, int arg2); /* gsynth: defined below */
 typedef struct { char d[0x9C]; } Str_FB90;
 typedef struct {
     void* vt;
@@ -47,19 +47,19 @@ typedef struct { char pad0[0x20]; char snd[0x50]; int clipSize; char pad74[0x98]
 extern int g_WeaponDatabase;
 extern char g_Game[];
 extern char D_004DAE30[];
-Db_FB90* WeaponDb_Get(int db, int id);
+Db_FB90* cWeaponDB_GetEntry(int db, int id);
 #if 0 /* merge_units */
-int Weapon_TransferSpareRounds(W_FB90* w, int n, int kind);
+int cWeapon_StealAmmoFromInactiveWeapons(W_FB90* w, int n, int kind);
 #endif /* merge_units */
-#define Weapon_TransferSpareRounds(a0, a1, a2) (Weapon_TransferSpareRounds((void *)(a0), (a1), (a2))) /* merge_units */
+#define cWeapon_StealAmmoFromInactiveWeapons(a0, a1, a2) (cWeapon_StealAmmoFromInactiveWeapons((void *)(a0), (a1), (a2))) /* merge_units */
 
-void SoundRequest_Ctor(Req_FB90* r, int a, void* preset, int b, int c);
-void SoundEvent_CtorFromPreset(Snd_FB90* e, Req_FB90* r, void* owner);
-void Event_Send(void* msg, void* target, int immediate);
+void cSndFx_ctor_int_charP_cGOBJP_int(Req_FB90* r, int a, void* preset, int b, int c);
+void cPlaySoundMsg_ctor_cSndFxR(Snd_FB90* e, Req_FB90* r, void* owner);
+void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int immediate);
 void cMessage_dtor(void* msg, int flags);
-void FileMan_Release(Str_FB90* s, int flag);
+void cFileMan_dtor(Str_FB90* s, int flag);
 
-void Weapon_StartReload(W_FB90* self)
+void cWeapon_Reload(W_FB90* self)
 {
     Ent_FB90* e;
     Db_FB90* db;
@@ -70,11 +70,11 @@ void Weapon_StartReload(W_FB90* self)
     e = &self->ent[self->cur];
     if (e->id == -1)
         return;
-    db = WeaponDb_Get(g_WeaponDatabase, e->id);
+    db = cWeaponDB_GetEntry(g_WeaponDatabase, e->id);
     need = db->clipSize - e->clip;
     extra = 0;
     if (e->reserve < need) {
-        extra = Weapon_TransferSpareRounds(self, need - e->reserve, db->f10C);
+        extra = cWeapon_StealAmmoFromInactiveWeapons(self, need - e->reserve, db->f10C);
         need = e->reserve;
     }
     e->clip += need + extra;
@@ -87,19 +87,19 @@ void Weapon_StartReload(W_FB90* self)
     {
         Req_FB90 req;
         Snd_FB90 snd;
-        SoundRequest_Ctor(&req, 1, db->snd, 0, 0);
-        SoundEvent_CtorFromPreset(&snd, &req, self->owner);
+        cSndFx_ctor_int_charP_cGOBJP_int(&req, 1, db->snd, 0, 0);
+        cPlaySoundMsg_ctor_cSndFxR(&snd, &req, self->owner);
         snd.flag = 1;
-        Event_Send(&snd, g_Game, 0);
+        QueueMessage_cMessageR_cSystemP_int(&snd, g_Game, 0);
         snd.vt = D_004DAE30;
-        FileMan_Release(&snd.s114, -1);
-        FileMan_Release(&snd.s78, -1);
+        cFileMan_dtor(&snd.s114, -1);
+        cFileMan_dtor(&snd.s78, -1);
         cMessage_dtor(&snd, 0);
-        FileMan_Release(&req.sE4, -1);
-        FileMan_Release(&req.s48, -1);
+        cFileMan_dtor(&req.sE4, -1);
+        cFileMan_dtor(&req.s48, -1);
     }
 }
-#undef Weapon_TransferSpareRounds /* merge_units */
+#undef cWeapon_StealAmmoFromInactiveWeapons /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0013FB90(void) {}
 #pragma pop /* merge_units */
@@ -109,17 +109,17 @@ static inline void merge_flush_func_0013FB90(void) {}
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
-int Hud_PostNotification(int, char *);
-int Loc_LookupText(char *);
+int cHud_Message(int, char *);
+int nGlobalization_GetString_charP(char *);
 #if 0 /* merge_units */
-char *WeaponDb_Get(int, int);
+char *cWeaponDB_GetEntry(int, int);
 #endif /* merge_units */
-#define WeaponDb_Get(a0, a1) ((char *)WeaponDb_Get((a0), (a1))) /* merge_units */
+#define cWeaponDB_GetEntry(a0, a1) ((char *)cWeaponDB_GetEntry((a0), (a1))) /* merge_units */
 
 extern int g_Hud;
 
 
-int Weapon_TransferSpareRounds(PS0_0013FD20 *arg0, int arg1, int arg2) {
+int cWeapon_StealAmmoFromInactiveWeapons(PS0_0013FD20 *arg0, int arg1, int arg2) {
 int total;
 int i;
 Slot13F *s;
@@ -131,20 +131,20 @@ char buf[128];
         if (i == arg0->f84) continue;
         s = &arg0->s[i];
         if (s->id == -1) continue;
-        w = WeaponDb_Get(g_WeaponDatabase, s->id);
+        w = cWeaponDB_GetEntry(g_WeaponDatabase, s->id);
         if (F_(w, 0x10C, int) != arg2) continue;
         if (F_(w, 0xF0, unsigned char) != 0) continue;
         if (s->ammo <= 0) continue;
         if (arg0->f88 != NULL && F_(arg0->f88, 0x14, unsigned char) != 0) {
-            int t = Loc_LookupText(w + 0x80);
-            sprintf(buf, "%s %s", t, Loc_LookupText("TransferAmmo"));
-            Hud_PostNotification(g_Hud, buf);
+            int t = nGlobalization_GetString_charP(w + 0x80);
+            sprintf(buf, "%s %s", t, nGlobalization_GetString_charP("TransferAmmo"));
+            cHud_Message(g_Hud, buf);
         }
         { int a = s->ammo; if (arg1 < a) { total += arg1; s->ammo = a - arg1; break; } s->ammo = 0; arg1 -= a; total += a; }
     }
     return total;
 }
-#undef WeaponDb_Get /* merge_units */
+#undef cWeaponDB_GetEntry /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0013FD20(void) {}
 #pragma pop /* merge_units */
@@ -162,10 +162,10 @@ public:
 struct Own_FE80 { char pad[0x14]; unsigned char f14; char pad15[0x43]; R_FE80* recv; };
 struct S_FE80 { char pad[0x88]; Own_FE80* own; };
 extern "C" {
-void* Agent_GetSelected(void* list, int idx);
-void Stats_Add(void* agent, int stat, int n);
+void* cGameSystem_GetAgentData(void* list, int idx);
+void cAgentData_AddScore(void* agent, int stat, int n);
 }
-extern "C" void Weapon_RecordShotStats(S_FE80* self, int hit)
+extern "C" void cWeapon_AddShotStat(S_FE80* self, int hit)
 {
     Own_FE80* o = self->own;
     if (o->recv) {
@@ -174,9 +174,9 @@ extern "C" void Weapon_RecordShotStats(S_FE80* self, int hit)
         if (r && r->IsLocal())
             local = 1;
         if (local && self->own->f14) {
-            Stats_Add(Agent_GetSelected(g_Game, -1), 9, 1);
+            cAgentData_AddScore(cGameSystem_GetAgentData(g_Game, -1), 9, 1);
             if (hit)
-                Stats_Add(Agent_GetSelected(g_Game, -1), 0xB, 1);
+                cAgentData_AddScore(cGameSystem_GetAgentData(g_Game, -1), 0xB, 1);
         }
     }
 }

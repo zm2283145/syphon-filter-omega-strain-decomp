@@ -18,15 +18,15 @@ typedef struct { int pad; E_INV e[7]; char pad2[0x84 - 0x74]; unsigned char cur;
 typedef struct { char pad[0x200]; int x[64]; } WDef;
 extern void* g_WeaponDatabase;
 typedef struct { char pad[0xF4]; int xF4; } WD_2E80;
-extern WD_2E80* WeaponDb_Get(void* db, int id);
-int WeaponInv_GetCarriedValue(INV* self)
+extern WD_2E80* cWeaponDB_GetEntry(void* db, int id);
+int cWeapon_GetMostVisible(INV* self)
 {
     int best = 0;
     int i = 0;
     INV* p = self;
     do {
         if ((p->e[0].flag || i == self->cur) && p->e[0].id != -1) {
-            int v = WeaponDb_Get(g_WeaponDatabase, p->e[0].id)->xF4;
+            int v = cWeaponDB_GetEntry(g_WeaponDatabase, p->e[0].id)->xF4;
             if (best < v)
                 best = v;
         }
@@ -42,7 +42,7 @@ static inline void merge_flush_func_00142E80(void) {}
 
 /* merge_units: begin func_00142F20 */
 #pragma push /* merge_units */
-float Weapon_ZoomToFov(float arg0, float arg1); /* gsynth: defined below */
+float GetMagnificationDegs(float arg0, float arg1); /* gsynth: defined below */
 #pragma opt_dead_assignments off
 typedef struct { char d[0x9C]; } Str_2F20;
 typedef struct {
@@ -93,39 +93,39 @@ extern char g_Game[];
 extern char D_004DAE30[];
 extern char D_004DADF0[];
 #if 0 /* merge_units */
-Db_2F20* WeaponDb_Get(int db, int id);
+Db_2F20* cWeaponDB_GetEntry(int db, int id);
 #endif /* merge_units */
-#define WeaponDb_Get(a0, a1) ((Db_2F20 *)WeaponDb_Get((void *)(a0), (a1))) /* merge_units */
+#define cWeaponDB_GetEntry(a0, a1) ((Db_2F20 *)cWeaponDB_GetEntry((void *)(a0), (a1))) /* merge_units */
 
-int WeaponInv_GetHeldClass(void);
+int cWeapon_GetEquipmentType(void);
 #if 0 /* merge_units */
-float Weapon_ZoomToFov(float v, float def);
+float GetMagnificationDegs(float v, float def);
 #endif /* merge_units */
-#define Weapon_ZoomToFov(a0, a1) (Weapon_ZoomToFov((a0), (a1))) /* merge_units */
+#define GetMagnificationDegs(a0, a1) (GetMagnificationDegs((a0), (a1))) /* merge_units */
 
-void SoundEvent_CtorFromPreset(Snd_2F20* e, void* preset, void* owner);
-void SoundStopMsg_Ctor(Snd2_2F20* e, void* preset, void* owner);
-void Event_Send(void* msg, void* target, int immediate);
+void cPlaySoundMsg_ctor_cSndFxR(Snd_2F20* e, void* preset, void* owner);
+void cStopSoundMsg_ctor_cSndFxR_cGOBJP(Snd2_2F20* e, void* preset, void* owner);
+void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int immediate);
 #if 0 /* merge_units */
 void cMessage_dtor(void* msg, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void FileMan_Release(Str_2F20* s, int flag);
+void cFileMan_dtor(Str_2F20* s, int flag);
 #endif /* merge_units */
-#define FileMan_Release(a0, a1) (FileMan_Release((void *)(a0), (a1))) /* merge_units */
+#define cFileMan_dtor(a0, a1) (cFileMan_dtor((void *)(a0), (a1))) /* merge_units */
 
 
 static inline float Clamp_2F20(float x, float lo, float hi) { float r; asm { max.s r, x, lo; min.s r, r, hi } return r; }
 static inline float Abs_2F20(float x) { float r; asm { abs.s r, x } return r; }
 
-float Weapon_GetFieldOfView(W_2F20* self, unsigned char zoom, int dir, float cur, float dt)
+float cWeapon_GetFOV(W_2F20* self, unsigned char zoom, int dir, float cur, float dt)
 {
     float fov = 65.0f;
     unsigned char play = 0;
     unsigned char canZoom = 0;
-    if ((unsigned char)WeaponInv_GetHeldClass() == 1)
+    if ((unsigned char)cWeapon_GetEquipmentType() == 1)
         zoom = 0;
     if (zoom != self->fED) {
         self->fED = zoom;
@@ -134,9 +134,9 @@ float Weapon_GetFieldOfView(W_2F20* self, unsigned char zoom, int dir, float cur
     if (self->cur != 6) {
         int id = self->ent[self->cur].id;
         if (id != -1) {
-            Db_2F20* db = WeaponDb_Get(g_WeaponDatabase, id);
-            float wide = Weapon_ZoomToFov(db->f110, 65.0f);
-            float narrow = Weapon_ZoomToFov(db->f114, 65.0f);
+            Db_2F20* db = cWeaponDB_GetEntry(g_WeaponDatabase, id);
+            float wide = GetMagnificationDegs(db->f110, 65.0f);
+            float narrow = GetMagnificationDegs(db->f114, 65.0f);
             if (zoom) {
                 float d = (float)dir * dt;
                 float step = 0.0f;
@@ -173,33 +173,33 @@ float Weapon_GetFieldOfView(W_2F20* self, unsigned char zoom, int dir, float cur
     if (play) {
         if (!self->fF0) {
             Snd_2F20 snd;
-            SoundEvent_CtorFromPreset(&snd, D_004F2170, self->owner);
+            cPlaySoundMsg_ctor_cSndFxR(&snd, D_004F2170, self->owner);
             snd.flag = 1;
-            Event_Send(&snd, g_Game, 0);
+            QueueMessage_cMessageR_cSystemP_int(&snd, g_Game, 0);
             self->fF0 = 1;
             snd.vt = D_004DAE30;
-            FileMan_Release(&snd.s114, -1);
-            FileMan_Release(&snd.s78, -1);
+            cFileMan_dtor(&snd.s114, -1);
+            cFileMan_dtor(&snd.s78, -1);
             cMessage_dtor(&snd, 0);
         }
     } else if (self->fF0) {
         Snd2_2F20 snd;
-        SoundStopMsg_Ctor(&snd, D_004F2170, self->owner);
+        cStopSoundMsg_ctor_cSndFxR_cGOBJP(&snd, D_004F2170, self->owner);
         snd.flag = 1;
-        Event_Send(&snd, g_Game, 0);
+        QueueMessage_cMessageR_cSystemP_int(&snd, g_Game, 0);
         self->fF0 = 0;
         snd.vt = D_004DADF0;
-        FileMan_Release(&snd.s114, -1);
-        FileMan_Release(&snd.s78, -1);
+        cFileMan_dtor(&snd.s114, -1);
+        cFileMan_dtor(&snd.s78, -1);
         cMessage_dtor(&snd, 0);
     }
     return cur;
 }
 #undef g_WeaponDatabase /* merge_units */
-#undef WeaponDb_Get /* merge_units */
-#undef Weapon_ZoomToFov /* merge_units */
+#undef cWeaponDB_GetEntry /* merge_units */
+#undef GetMagnificationDegs /* merge_units */
 #undef cMessage_dtor /* merge_units */
-#undef FileMan_Release /* merge_units */
+#undef cFileMan_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00142F20(void) {}
 #pragma pop /* merge_units */
@@ -216,12 +216,12 @@ DEFINE_MESSAGE_TWO_MEMBER_DTOR(cStopSoundMsg_dtor, D_004DADF0)
 
 /* merge_units: begin func_00143370 */
 #pragma push /* merge_units */
-float Math_Tan(float);
-float Math_Atan(float);
-float Weapon_ZoomToFov(float arg0, float arg1) {
-    float r = Math_Tan((0.017453292f * arg1) / 2.0f);
+float Libc_Tanf(float);
+float Libc_Atanf(float);
+float GetMagnificationDegs(float arg0, float arg1) {
+    float r = Libc_Tanf((0.017453292f * arg1) / 2.0f);
     r = r / arg0;
-    r = 2.0f * Math_Atan(r); return 57.295776f * r;
+    r = 2.0f * Libc_Atanf(r); return 57.295776f * r;
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00143370(void) {}
@@ -234,10 +234,10 @@ typedef struct {
     unsigned char pad[0xA0]; unsigned char busy; unsigned char pa1[8]; unsigned char idx; unsigned char paa[2];
     float level[4]; int ptr[4]; float cc[4];
 } Unit_b6;
-extern int WeaponInv_GetClip(Unit_b6*, int);
-int WeaponInv_IsReadyToFire(Unit_b6* s, int b)
+extern int cWeapon_GetClipAmmo(Unit_b6*, int);
+int cWeapon_ReadyToFire(Unit_b6* s, int b)
 {
-    return !s->busy && s->level[s->idx] <= 0.0f && WeaponInv_GetClip(s, 6) > 0 && (b || !s->ptr[s->idx]) && !s->cc[s->idx];
+    return !s->busy && s->level[s->idx] <= 0.0f && cWeapon_GetClipAmmo(s, 6) > 0 && (b || !s->ptr[s->idx]) && !s->cc[s->idx];
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00143400(void) {}
@@ -247,7 +247,7 @@ static inline void merge_flush_func_00143400(void) {}
 /* merge_units: begin func_001434D0 */
 #pragma push /* merge_units */
 typedef struct { int unk0; int unk4; int id; int unkC; } D6InvSlot;
-int Inventory_HasAnyItem(D6InvSlot* s)
+int cWeapon_HasAnyWeapons(D6InvSlot* s)
 {
     int i;
     for (i = 0; i < 8; i++, s++) {

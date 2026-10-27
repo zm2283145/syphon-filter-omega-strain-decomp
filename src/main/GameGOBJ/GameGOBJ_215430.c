@@ -22,7 +22,7 @@ public:
     virtual void Fn(int a);
 };
 struct C4Obj215 { char pad[0x11C]; int count; C4It215** items; };
-extern "C" void Lift_DeactivateRecipients(C4Obj215* o) {
+extern "C" void cElevatorGOBJ_DisableCallboxes(C4Obj215* o) {
     int i;
     for (i = 0; i < o->count; i++) {
         o->items[i]->Fn(-1);
@@ -43,7 +43,7 @@ struct C5Item {
 };
 struct C5Lift { char pad[0x11C]; int count; C5Item** items; };
 #pragma opt_strength_reduction off
-extern "C" void Lift_ActivateRecipients(C5Lift* p) {
+extern "C" void cElevatorGOBJ_EnableCallboxes(C5Lift* p) {
     int i;
     for (i = 0; i < p->count; i++) {
         p->items[i]->Method64(-1);

@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_004F80A8;
 
-void StaticInit_RestoreBodyMsgName(void) {
+void StaticInit_RestoreBody(void) {
     D_004F80A8 = "MSGGAME_RESTORE_BODY_REQUEST";
 }

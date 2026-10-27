@@ -31,7 +31,7 @@ DEFINE_BUF_HOLDER_DTOR(std_vector_StringPtr_dtor)
 #include "obj_list_dtor.h"
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(ReceiverList_Dtor_3E2C20)
+DEFINE_OBJ_LIST_DTOR(std_list_SymbolTablePtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E2C20 */
 
@@ -39,7 +39,7 @@ DEFINE_OBJ_LIST_DTOR(ReceiverList_Dtor_3E2C20)
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { int m0; int m4; int m8; } T2CA0;
-extern void ObjectList_EraseRange_3E3320(int* out, T2CA0* self, int* first, int* last);
+extern void std_list_deleter_PopVar_erase(int* out, T2CA0* self, int* first, int* last);
 extern void operator_delete(void* p);
 T2CA0* std_list_PopVar_dtor(T2CA0* self, short del)
 {
@@ -51,7 +51,7 @@ T2CA0* std_list_PopVar_dtor(T2CA0* self, short del)
                 int last;
                 last = (int)&self->m4;
                 first = self->m8;
-                ObjectList_EraseRange_3E3320(&r, self, &first, &last);
+                std_list_deleter_PopVar_erase(&r, self, &first, &last);
             }
         }
         if (del > 0)
@@ -74,10 +74,10 @@ T2CA0* std_list_PopVar_dtor(T2CA0* self, short del)
 
 extern char D_004938D0;
 extern char D_00559F18;
-extern int PtrVec_Reserve(int, int);
+extern int std_vector_pod_int_reserve(int, int);
 
 int std_vector_cGroupPtr_reserve(int a0, int a1) {
-    return PtrVec_Reserve(a0, a1);
+    return std_vector_pod_int_reserve(a0, a1);
 }
 
 Rel* std_vector_cGroupPtr_ctor(Rel* r) {
@@ -88,7 +88,7 @@ Rel* std_vector_cGroupPtr_ctor(Rel* r) {
 }
 
 int std_vector_StringPtr_reserve(int a0, int a1) {
-    return PtrVec_Reserve(a0, a1);
+    return std_vector_pod_int_reserve(a0, a1);
 }
 
 Rel* std_vector_StringPtr_ctor(Rel* r) {
@@ -103,7 +103,7 @@ void cScriptInterpreter_SetGenerateSyms(int value) {
     D_00559F18 = value;
 }
 
-void ScriptFilter_SetGate(int value) {
+void cScriptInterpreter_SetEnabled(int value) {
     D_004938D0 = value;
 }
 #pragma pop /* merge_units */
@@ -153,7 +153,7 @@ DEFINE_VECTOR_RESIZE(std_vector_imp_EnumField_resize, Elem12_2F60, std_vector_im
 #pragma cplusplus on
 DEFINE_RESIZE_ELEMENT(Elem4_2FF0, 4)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(std_vector_imp_cObjectId_resize, Elem4_2FF0, KeyVector_PushBack, PtrVector_Erase_3E3B60)
+DEFINE_VECTOR_RESIZE(std_vector_imp_cObjectId_resize, Elem4_2FF0, std_vector_imp_cObjectId_insert, std_vector_imp_cObjectId_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_003E2FF0 */

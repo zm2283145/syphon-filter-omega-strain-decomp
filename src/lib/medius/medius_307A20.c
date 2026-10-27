@@ -6,15 +6,15 @@ typedef struct {
     unsigned char flags; unsigned char b1;
     unsigned short len; unsigned int seq4; unsigned int seq8;
 } RtHdr;
-extern int RtUdp_BuildHeader(RtUdp *r, RtPeer *e, int kind, RtHdr *hdr);
-extern int RtUdp_CopyPacket(RtPeer *e, RtHdr *hdr, void *body, int n);
-extern void RtUdp_SendPump(RtUdp *r, RtPeer *e);
+extern int rt_udp_setup_packet_header(RtUdp *r, RtPeer *e, int kind, RtHdr *hdr);
+extern int rt_udp_buffer_data_for_send(RtPeer *e, RtHdr *hdr, void *body, int n);
+extern void rt_udp_send_messages(RtUdp *r, RtPeer *e);
 extern int rt_list_buf_get_head(void *list, void **pkt);
 extern void *rt_list_buf_get_next(void *pkt);
 extern int rt_udp_append_data_to_packet(RtUdp *r, RtPeer *e, int flags, void *pkt, void *data, int len);
 extern int rt_udp_get_send_header(void *pkt, unsigned char *st);
 extern int rt_udp_get_packet_header(void *pkt, RtHdr *hdr);
-int RtUdp_QueueSend(RtUdp *r, unsigned int idx, unsigned char flags, void *data, unsigned int len)
+int rt_udp_send(RtUdp *r, unsigned int idx, unsigned char flags, void *data, unsigned int len)
 {
     RtHdr h;
     unsigned char st[4];
@@ -44,16 +44,16 @@ int RtUdp_QueueSend(RtUdp *r, unsigned int idx, unsigned char flags, void *data,
         ret = rt_udp_append_data_to_packet(r, e, flags, found, data, len);
         if (ret != 0) return ret;
     } else {
-        ret = RtUdp_BuildHeader(r, e, flags, &h);
+        ret = rt_udp_setup_packet_header(r, e, flags, &h);
         if (ret != 0) return ret;
         h.flags |= 0x40;
         h.len = len;
-        ret = RtUdp_CopyPacket(e, &h, data, len);
+        ret = rt_udp_buffer_data_for_send(e, &h, data, len);
         if (ret != 0) return ret;
         if ((unsigned char)(flags & 1)) e->f88++;
         if (e->f64 == 0 && (flags & 4)) e->f64 = h.seq8;
     }
-    RtUdp_SendPump(r, e);
+    rt_udp_send_messages(r, e);
     return 0;
 }
 

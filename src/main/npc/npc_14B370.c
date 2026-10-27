@@ -47,7 +47,7 @@ typedef struct {
     char pad3[0x1C8 - 0x142];
     Item_B410* item; int itemId;
 } NPC_B410;
-void cNPC_v65(NPC_B410* self, Item_B410* item, int flag, float f)
+void cNPC_SetGrenadeTarget(NPC_B410* self, Item_B410* item, int flag, float f)
 {
     int none;
     int* p;

@@ -28,7 +28,7 @@
 #define SF_HOLD_NOTHING 11
 #define SF_SLOT_NONE 6   /* inventory +0x84 when nothing is held */
 
-/* Weapon record (WEAPONS.WDB, WeaponDb_Get(*004FFD30, id); record 0 for out-of-range ids). */
+/* Weapon record (WEAPONS.WDB, cWeaponDB_GetEntry(*004FFD30, id); record 0 for out-of-range ids). */
 typedef struct SfWeaponRecord {
     char pad0000[0x10];
     char fireSound[16]; /* +0x10 ? inline string; also detonation sound (class 8) */
@@ -100,7 +100,7 @@ typedef struct SfWeaponSlot {
     int spare; /* +0xC */
 } SfWeaponSlot; /* size 0x10 */
 
-/* Actor weapon inventory (weapon.cc, actor +0x3524, WeaponInv_Construct). */
+/* Actor weapon inventory (weapon.cc, actor +0x3524, cWeapon_ctor). */
 typedef struct SfWeaponInventory {
     void* heldObject; /* +0x0 optional object (class-5 items) */
     SfWeaponSlot slots[8]; /* +0x4 slot 6 = current, 7 = flashlight item */
@@ -132,7 +132,7 @@ typedef struct SfWeaponInventory {
     char pad00F0[0x8];
 } SfWeaponInventory; /* size 0xF8 */
 
-/* Discharge request built by Weapon_Discharge (size inferred from the last field). */
+/* Discharge request built by cWeapon_FireIfReady (size inferred from the last field). */
 typedef struct SfShotRequest {
     SfMtx44 frame; /* +0x0 row 1 forward, row 3 origin */
     float damage; /* +0x40 float(record +0x104), then band damage */
@@ -140,7 +140,7 @@ typedef struct SfShotRequest {
     void* target; /* +0x48 designated target */
     char pad004C[0x84];
     int subtarget; /* +0xD0 -1 none, 0 head */
-    unsigned char hitRoll; /* +0xD4 Weapon_HitRoll(controller) */
+    unsigned char hitRoll; /* +0xD4 cGobjController_ShouldHitTarget(controller) */
     unsigned char aimView; /* +0xD5 */
     unsigned char tracer; /* +0xD6 */
     char pad00D7[0x1];
@@ -150,7 +150,7 @@ typedef struct SfShotRequest {
     float unkE4; /* +0xE4 1.0 */
 } SfShotRequest; /* size 0xE8 */
 
-/* Candidate scan request for Projectile_QueryCandidates (0022BA30). */
+/* Candidate scan request for CheckBulletCollisions (0022BA30). */
 typedef struct SfScanRequest {
     void* owner; /* +0x0 */
     SfMtx44* frame; /* +0x4 */
@@ -172,7 +172,7 @@ typedef struct SfScanRequest {
     int result34; /* +0x34 */
 } SfScanRequest; /* size unknown (>= 0x38); prefix only */
 
-/* Bullet pool record (stride 0x150; BulletPool_Request indexes by 336). */
+/* Bullet pool record (stride 0x150; cBulletManager_AddBullet indexes by 336). */
 typedef struct SfBullet {
     char pad0000[0xC];
     int subtarget; /* +0xC -1 */

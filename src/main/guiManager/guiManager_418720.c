@@ -26,10 +26,10 @@ DEFINE_BASE_DTOR_CHAIN(std_pair_cString_cFontPtr_dtor, String_Dtor)
 
 #include "loose04_types.h"
 
-extern int String_CopyCtor(L4WordVec*, int);
+extern int std_basic_string_char_char_traits_char_ctor_basicstringR(L4WordVec*, int);
 
 int std_make_pair_cString_cFontP(L4WordVec* v, int a1, int value) {
-    int ret = String_CopyCtor(v, a1);
+    int ret = std_basic_string_char_char_traits_char_ctor_basicstringR(v, a1);
 
     v->unk0C = value;
     return ret;
@@ -39,13 +39,13 @@ int std_make_pair_cString_cFontP(L4WordVec* v, int a1, int value) {
 
 /* merge_units: begin func_004187C0 */
 #pragma push /* merge_units */
-extern int GuiFactory_CreateWidget(void* b);
-extern void* GuiManager_LoadGui(void* a, void* c, int r);
-void* GuiManager_CreateRoot(void* a, void* b, void* c) {
-    int r = GuiFactory_CreateWidget(b);
+extern int AbstractWidgetClassRep_Create(void* b);
+extern void* GuiManager_ConstructWidget_charP_GuiWidgetP(void* a, void* c, int r);
+void* GuiManager_ConstructGui(void* a, void* b, void* c) {
+    int r = AbstractWidgetClassRep_Create(b);
     if (!r) return 0;
     /* .set reorder barrier keeps the empty then-arm */
-    return GuiManager_LoadGui(a, c ? c : b, r);
+    return GuiManager_ConstructWidget_charP_GuiWidgetP(a, c ? c : b, r);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_004187C0 */
@@ -67,10 +67,10 @@ int *cLListIterator_GuiWidgetPtr_opMul();
 int cLListIterator_GuiWidgetPtr_opAssign();                          
 int cLList_GuiWidgetPtr_Begin();                          
 int cLListIterator_GuiWidgetPtr_ctor_void();                               
-int GuiManager_UnloadRoot();                    
+int GuiManager_DestroyWidget();                    
 
 typedef struct { char pad[0x18]; unsigned short cnt; } N418;
-int GuiManager_ReleaseRoot(char *arg0, char *arg1) {
+int GuiManager_CloseGui(char *arg0, char *arg1) {
     char * sp4C;
     int sp48;
     int sp44;
@@ -110,7 +110,7 @@ loop_1:
         temp_a1->cnt--;
     }
     if (temp_a1->cnt == 0) {
-        GuiManager_UnloadRoot(arg0, temp_a1, 0);
+        GuiManager_DestroyWidget(arg0, temp_a1, 0);
     }
     return 1;
 }

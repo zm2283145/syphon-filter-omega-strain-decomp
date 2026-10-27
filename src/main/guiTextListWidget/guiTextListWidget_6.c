@@ -23,20 +23,20 @@ static void * const dat_00494140[2] = { (void*)D_004BF698, (void*)0x0 };
 extern "C" char D_004BF6A8[];
 static void * const dat_00494148[2] = { (void*)D_004BF6A8, (void*)0x0 };
 extern char D_004AAE00[];
-extern "C" void GuiWidget_Init(void* self);
-extern "C" Widget* GuiWidget_FindChildBySubstring(void* self, int id);
+extern "C" void GuiWidget_onAdd(void* self);
+extern "C" Widget* GuiWidget_FindChildPartial(void* self, int id);
 typedef struct Screen { char pad[0x88]; Widget* unk88; /* +0x88 */ Widget* unk8C; /* +0x8C */ } Screen;
 
-/* GuiWidget_Init, then caches the (*(int*)dat_00494140) child at +0x8C if it is of type D_004AAE00 (virtual +0x58), else 0, and the D_00494148 child at +0x88. */
-extern "C" void GuiArrayWidget_Init(Screen* self)
+/* GuiWidget_onAdd, then caches the (*(int*)dat_00494140) child at +0x8C if it is of type D_004AAE00 (virtual +0x58), else 0, and the D_00494148 child at +0x88. */
+extern "C" void GuiArrayWidget_onAdd(Screen* self)
 {
     Widget* child;
-    GuiWidget_Init(self);
-    child = GuiWidget_FindChildBySubstring(self, (*(int*)dat_00494140));
+    GuiWidget_onAdd(self);
+    child = GuiWidget_FindChildPartial(self, (*(int*)dat_00494140));
     if (!child || !child->IsA(D_004AAE00))
     child = 0;
     self->unk8C = child;
-    self->unk88 = GuiWidget_FindChildBySubstring(self, (*(int*)dat_00494148));
+    self->unk88 = GuiWidget_FindChildPartial(self, (*(int*)dat_00494148));
 }
 #pragma pop /* merge_units */
 /* merge_units: end guiTextListWidget_424BC0 */
@@ -52,7 +52,7 @@ extern "C" void GuiArrayWidget_Init(Screen* self)
 #include "loose04_types.h"
 
 extern char D_004E0D20[];         /* GuiWidget424C50 vtable */
-extern int PtrVec_PushBack_1C1080(L4OwnedVec*, void*);
+extern int std_vector_int_push_back(L4OwnedVec*, void*);
 extern int std_vector_int_ctor_void(L4OwnedVec*);
 extern GuiWidget* GuiWidget_ctor(GuiWidget*);
 
@@ -71,7 +71,7 @@ GuiWidget424C50* GuiArrayWidget_ctor(GuiWidget424C50* self) {
     self->unk50 = 0;
     self->unk54 = 0;
     self->unk5C = 24;
-    PtrVec_PushBack_1C1080(vec, "<");
+    std_vector_int_push_back(vec, "<");
     self->unk70 = self->unk48;
     self->unk74 = self->unk4C;
     self->unk78 = self->unk50;

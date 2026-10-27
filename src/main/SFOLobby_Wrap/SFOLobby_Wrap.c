@@ -10,13 +10,13 @@
 #include "types.h"
 #include "alloc_guard.h"
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 }
-extern "C" void SFOLobby_Free(void* node)
+extern "C" void SFOLobby_MemFree(void* node)
 {
     if (node) {
         AllocGuard guard;
-        Mem_Free(0, node, "SFOLobby_Wrap.cc", 0x3A);
+        cMemMan_Deallocate(0, node, "SFOLobby_Wrap.cc", 0x3A);
     }
 }
 #pragma pop /* merge_units */
@@ -31,12 +31,12 @@ extern "C" void SFOLobby_Free(void* node)
 
 
 extern "C" {
-int Mem_Alloc(int, int, char *, int);                      
+int cMemMan_Allocate(int, int, char *, int);                      
 int memset(int, int, int);                              
 extern char D_004C0B20;
 extern unsigned char g_ProfileLockEnabled;
 }
-extern "C" int SFOLobby_AllocZeroed(int arg0) {
+extern "C" int SFOLobby_MemAlloc(int arg0) {
     int temp_s1;
 
     if (arg0 <= 0) {
@@ -44,7 +44,7 @@ extern "C" int SFOLobby_AllocZeroed(int arg0) {
     }
     {
         AllocGuard g;
-    temp_s1 = Mem_Alloc(0, arg0, &D_004C0B20, 0x1D);
+    temp_s1 = cMemMan_Allocate(0, arg0, &D_004C0B20, 0x1D);
     }
     if (temp_s1 == 0) {
         return 0;
@@ -101,9 +101,9 @@ void* memset(void*, int, unsigned int);
 #endif /* merge_units */
 #define memset(a0, a1, a2) ((void *)memset((int)(a0), (a1), (int)(a2))) /* merge_units */
 
-void String_Copy(char*, const char*);
+void Libc_Strcpy(char*, const char*);
 int MGCLSessionEnd(char*, void*);
-int Medius_DisconnectServer(void);
+int MGCLDisconnect(void);
 #if 0 /* merge_units */
 void NetGetLocalTime(int*);
 #endif /* merge_units */
@@ -111,7 +111,7 @@ void NetGetLocalTime(int*);
 
 
 int SFOMGCL_Update(int);
-void SFOLobby_CallUpdateHook(char*, int, int);
+void SFOLobby_GuiCallback(char*, int, int);
 void func_00445230(void);
 extern unsigned char D_00584231;
 extern unsigned char D_00584237;
@@ -124,12 +124,12 @@ static inline bool Poll(void) {
     int now = 0;
     NetGetLocalTime(&now);
     if (now - D_00584528 > 30000) return false;
-    SFOLobby_CallUpdateHook(D_00585E60, 0, 0);
+    SFOLobby_GuiCallback(D_00585E60, 0, 0);
     return true;
 }
 
 static inline int Busy(void) {
-    int r = Medius_DisconnectServer();
+    int r = MGCLDisconnect();
     if (r) return r;
     return 0;
 }
@@ -139,11 +139,11 @@ extern "C" int SFOMGCL_Shutdown(int arg) {
     if (arg) {
         char buf[0x15];
         memset(buf, 0, sizeof(buf));
-        String_Copy(buf, D_004C0B38);
+        Libc_Strcpy(buf, D_004C0B38);
         if (MGCLSessionEnd(buf, (void*)func_00445230) == 0) {
             D_00584528 = 0;
             NetGetLocalTime(&D_00584528);
-            SFOLobby_CallUpdateHook(D_00585E60, 2, 1);
+            SFOLobby_GuiCallback(D_00585E60, 2, 1);
             while (D_00584237 == 0) {
                 if (!Poll()) break;
                 if (SFOMGCL_Update(0)) break;
@@ -188,11 +188,11 @@ extern short D_00584390;
 extern char D_00584378[];
 int SFOMGCL_Initialize_Module(int, int, int, int);
 int SFOMGCL_Initialize_API(void);
-int Medius_GetLibVersion(void*);
+int MGCLGetMGCLVersion(void*);
 int SFOMGCL_Connect_MAS(int, int, int, int);
 int Medius_ConnectServer(Req*, int*);
 void NetGetTime(void*);
-void Medius_SendServerReport(void*);
+void MGCLSendServerReport(void*);
 int MGCLUpdate(void);
 #if 0 /* merge_units */
 void memset(void*, int, int);
@@ -219,7 +219,7 @@ static inline int Inner_4441D0(Req* req, int* out, char* buf138) {
     D_00584390 = 0;
     D_0058438E = 1;
     NetGetTime(buf138);
-    Medius_SendServerReport(D_00584378);
+    MGCLSendServerReport(D_00584378);
     ret = MGCLUpdate();
     if (ret != 0) return ret;
     return 0;
@@ -233,7 +233,7 @@ int SFOMGCL_Startup(int a0, int a1, int a2, int a3) {
 
     if (!(unsigned char)SFOMGCL_Initialize_Module(1, 4, 1, 0)) return -12;
     if (SFOMGCL_Initialize_API() != 0) return -12;
-    if (Medius_GetLibVersion(bufF0) != 0) return -12;
+    if (MGCLGetMGCLVersion(bufF0) != 0) return -12;
     if (SFOMGCL_Connect_MAS(a0, a1, a2, a3) != 0) return -12;
     memset(&req, 0, sizeof(req));
     memset(&out, 0, 4);
@@ -272,9 +272,9 @@ extern void* memset(void* d, int c, unsigned int n);
 
 extern void* memcpy(void* d, const void* s, unsigned int n);
 #if 0 /* merge_units */
-extern void String_Copy(char* d, const char* s);
+extern void Libc_Strcpy(char* d, const char* s);
 #endif /* merge_units */
-#define String_Copy(a0, a1) (String_Copy((a0), (a1))) /* merge_units */
+#define Libc_Strcpy(a0, a1) (Libc_Strcpy((a0), (a1))) /* merge_units */
 
 
 extern int MGCLCreateGameOnMeRequest(Req444* r, void* cb);
@@ -291,9 +291,9 @@ extern int SFOMGCL_Update(int x);
 
 
 #if 0 /* merge_units */
-extern void SFOLobby_CallUpdateHook(int h, int a, int b);
+extern void SFOLobby_GuiCallback(int h, int a, int b);
 #endif /* merge_units */
-#define SFOLobby_CallUpdateHook(a0, a1, a2) (SFOLobby_CallUpdateHook((char *)(a0), (a1), (a2))) /* merge_units */
+#define SFOLobby_GuiCallback(a0, a1, a2) (SFOLobby_GuiCallback((char *)(a0), (a1), (a2))) /* merge_units */
 
 
 extern void Callback_MGCLCreateGameOnMeRequest(void);
@@ -313,17 +313,17 @@ static inline unsigned char Poll444(void) {
     int now = 0;
     NetGetLocalTime(&now);
     if (now - D_00584528 > 30000) return 0;
-    SFOLobby_CallUpdateHook(D_00585E60, 0, 0);
+    SFOLobby_GuiCallback(D_00585E60, 0, 0);
     return 1;
 }
 int SFOMGCL_CreateGameOnSelf(const char* name, const void* data, const char* str, int a, int b, int c, int d, int e,
                   int f, int g, int h, int i, int j) {
     Req444 req;
     memset(&req, 0, sizeof(req));
-    String_Copy(req.kind, D_004C0B38);
-    String_Copy(req.name, name);
+    Libc_Strcpy(req.kind, D_004C0B38);
+    Libc_Strcpy(req.name, name);
     memcpy(req.data, data, 0x18);
-    String_Copy(req.str, str);
+    Libc_Strcpy(req.str, str);
     req.one = 1;
     req.f = f;
     req.a = a;
@@ -339,12 +339,12 @@ int SFOMGCL_CreateGameOnSelf(const char* name, const void* data, const char* str
     D_005844F4 = c;
     D_005844F8 = b;
     D_005844FC = d;
-    String_Copy(D_005843B4, name);
+    Libc_Strcpy(D_005843B4, name);
     D_0058423C = 0;
     if (MGCLCreateGameOnMeRequest(&req, Callback_MGCLCreateGameOnMeRequest)) return 0;
     D_00584528 = 0;
     NetGetLocalTime(&D_00584528);
-    SFOLobby_CallUpdateHook(D_00585E60, 2, 1);
+    SFOLobby_GuiCallback(D_00585E60, 2, 1);
     while (!D_0058423C) {
         if (!Poll444()) return 0;
         if (SFOMGCL_Update(0)) return 0;
@@ -352,10 +352,10 @@ int SFOMGCL_CreateGameOnSelf(const char* name, const void* data, const char* str
     return D_0058423C == 1;
 }
 #undef memset /* merge_units */
-#undef String_Copy /* merge_units */
+#undef Libc_Strcpy /* merge_units */
 #undef NetGetLocalTime /* merge_units */
 #undef SFOMGCL_Update /* merge_units */
-#undef SFOLobby_CallUpdateHook /* merge_units */
+#undef SFOLobby_GuiCallback /* merge_units */
 #undef D_00585E60 /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00444460 */

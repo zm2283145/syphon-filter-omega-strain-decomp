@@ -2,9 +2,9 @@
 
 typedef struct { int unk0; int unk4; int unk8; } Container;
 
-extern void Player_ClearRecentTargets(int* out, Container* self, int* value, int** where);
+extern void std_list_deleter_cSafePtr_cGOBJ_erase_listdeleter_listdeleter(int* out, Container* self, int* value, int** where);
 
-/* Calls Player_ClearRecentTargets with the container's +8 value and a pointer to its +4 field. */
+/* Calls std_list_deleter_cSafePtr_cGOBJ_erase_listdeleter_listdeleter with the container's +8 value and a pointer to its +4 field. */
 void cLList_cSafePtr_cGOBJ_Clear(Container* self)
 {
     int* where;
@@ -12,5 +12,5 @@ void cLList_cSafePtr_cGOBJ_Clear(Container* self)
     int result;
     where = &self->unk4;
     value = self->unk8;
-    Player_ClearRecentTargets(&result, self, &value, &where);
+    std_list_deleter_cSafePtr_cGOBJ_erase_listdeleter_listdeleter(&result, self, &value, &where);
 }

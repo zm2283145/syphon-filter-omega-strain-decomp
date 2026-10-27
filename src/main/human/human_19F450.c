@@ -44,18 +44,18 @@ struct Actor {
     bool IsDown() { unsigned char s = GetState(); return s == 2 || s == 3; }
 };
 extern "C" {
-extern void* Root_GetWorldPlacement(void*);
-extern float* Placement_GetPosition(void*);
+extern void* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void*);
+extern float* cQuatVec_Translation(void*);
 extern float D_0049CEF0;
 extern float D_0049CEF8;
 extern float D_0049CF00;
 extern float D_0049CF08;
 extern float D_0049CF18;
 }
-extern "C" void Actor_UpdateFallState(Actor* a, int resetY)
+extern "C" void cHuman_DetectForAndHandleHarmfulFalls(Actor* a, int resetY)
 {
     if (a->active) {
-        float* p = Placement_GetPosition(Root_GetWorldPlacement(a->root));
+        float* p = cQuatVec_Translation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(a->root));
         float d = a->lastY - p[2];
         if (a->InWater()) {
             if (d > D_0049CF18) {
@@ -84,7 +84,7 @@ extern "C" void Actor_UpdateFallState(Actor* a, int resetY)
     }
     if (a->InWater()) {
         if (resetY)
-            a->lastY = Placement_GetPosition(Root_GetWorldPlacement(a->root))[2];
+            a->lastY = cQuatVec_Translation(cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(a->root))[2];
     } else {
         a->lastY = -3.4028235e38f;
     }
@@ -104,24 +104,24 @@ typedef struct {
 } C3Ag19F;
 extern void Actor_ShiftPriorityHistory(void* a, void* b);
 extern void func_0019F7E0(void* a);
-extern void Actor_ShiftBitsHistory(void* a, void* b);
+extern void cBitArray_34_opAssign(void* a, void* b);
 extern void Actor_ReactToActionChanges(C3Ag19F* p);
 extern void Actor_ClearAction(C3Ag19F* p, int idx);
-extern void Actor_UpdateJumpApex(C3Ag19F* p, float dt);
+extern void cHuman_JumpFallLand_NextFrame(C3Ag19F* p, float dt);
 static const unsigned int dat_0049D5E0[2] = { 0x15111005, 0x1F };
 static inline int C3PTest19F(C3PSet19F* s, int n)
 {
     return (*(int*)((char*)s + (n / 32) * 4 + 4) >> (n & 31)) & 1;
 }
-void Actor_UpdateAirState(C3Ag19F* p, float dt)
+void cHuman_ActionModes_NextFrame(C3Ag19F* p, float dt)
 {
     int cur;
     int i;
     Actor_ShiftPriorityHistory((char*)p + 0x3234, (char*)p + 0x3220);
     Actor_ShiftPriorityHistory((char*)p + 0x3220, (char*)p + 0x320C);
     func_0019F7E0((char*)p + 0x320C);
-    Actor_ShiftBitsHistory((char*)p + 0x3258, (char*)p + 0x3250);
-    Actor_ShiftBitsHistory((char*)p + 0x3250, (char*)p + 0x3248);
+    cBitArray_34_opAssign((char*)p + 0x3258, (char*)p + 0x3250);
+    cBitArray_34_opAssign((char*)p + 0x3250, (char*)p + 0x3248);
     Actor_ReactToActionChanges(p);
     cur = p->set.top;
     for (i = 0; i < 5; i++) {
@@ -130,7 +130,7 @@ void Actor_UpdateAirState(C3Ag19F* p, float dt)
             Actor_ClearAction(p, idx);
         }
     }
-    Actor_UpdateJumpApex(p, dt);
+    cHuman_JumpFallLand_NextFrame(p, dt);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0019F6C0(void) {}

@@ -18,18 +18,18 @@ extern "C" {
 extern char D_004BDFC8[];
 extern char g_EventQueue[];                   /* queued events */
 extern EQEvent* g_EventQueueRunning;                 /* event currently running */
-void Mem_Free(int,void*,char*,int);
-void ActiveList_EraseMatching(void*,EQPred);
-void List_Begin(EQPos*,void*);void EQList_End(EQPos*,void*);void EQList_Begin(EQPos*,void*);
+void cMemMan_Deallocate(int,void*,char*,int);
+void std_list_imp_voidPtr_remove_if(void*,EQPred);
+void std_list_deleter_voidPtr_begin_void(EQPos*,void*);void std_list_cCBDataPtr_end(EQPos*,void*);void std_list_cCBDataPtr_begin(EQPos*,void*);
 void EQPos_CopyConst(EQPos*,const EQPos*);void EQPos_Copy(EQPos*,const EQPos*);
 }
-static inline void BeginQ(EQPos*p){EQPos r;List_Begin(&r,g_EventQueue);EQPos_CopyConst(p,&r);}
-static inline void EndQ(EQPos*p){EQPos r;EQList_End(&r,g_EventQueue);EQPos_Copy(p,&r);}
-static inline void Restart(EQPos*p){EQPos r;EQList_Begin(&r,g_EventQueue);EQPos_Copy(p,&r);}
+static inline void BeginQ(EQPos*p){EQPos r;std_list_deleter_voidPtr_begin_void(&r,g_EventQueue);EQPos_CopyConst(p,&r);}
+static inline void EndQ(EQPos*p){EQPos r;std_list_cCBDataPtr_end(&r,g_EventQueue);EQPos_Copy(p,&r);}
+static inline void Restart(EQPos*p){EQPos r;std_list_cCBDataPtr_begin(&r,g_EventQueue);EQPos_Copy(p,&r);}
 static inline int Neq(const EQPos&a,const EQPos&b){return a.p!=b.p;}
 static inline EQPred MakePred(EQEvent**ev){EQCmp c;return EQPred(c,ev);}
 static inline void Destroy(EQEvent* ev){
- if(ev){ActiveList_EraseMatching(g_EventQueue,MakePred(&ev));{EQEvent*p=ev;AllocGuard guard;p->~EQEvent();Mem_Free(0,p,D_004BDFC8,0x36);}}
+ if(ev){std_list_imp_voidPtr_remove_if(g_EventQueue,MakePred(&ev));{EQEvent*p=ev;AllocGuard guard;p->~EQEvent();cMemMan_Deallocate(0,p,D_004BDFC8,0x36);}}
 }
 static inline void Run(EQEvent* e){e->run();}
 static inline void BeginQ0(EQPos* p){BeginQ(p);}
@@ -42,7 +42,7 @@ typedef struct EQPos EQPos; typedef struct EQEvent EQEvent; typedef struct EQNod
 #pragma cplusplus off
 /* Ages every queued event, then runs and destroys the expired ones.
  * One iterator serves both loops; MW splits its live ranges into two stack slots. */
-void EventQueue_Pump(int a, int b){
+void nCallback_Process(int a, int b){
  EQPos i,end,rest,rest2,end2,begin;
  if(a<0||b<0) return;
  BeginQ1(&begin); i.p=begin.p;
@@ -70,9 +70,9 @@ extern "C" {
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
-void Alloc_Unlock(int id);
-void Mem_Free(int pool, void* p, char* file, int line);
-void ActiveList_EraseMatching(void* list, EQPred pred);
+void EnableIntc(int id);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+void std_list_imp_voidPtr_remove_if(void* list, EQPred pred);
 }
 
 static inline void EQ_Delete(EQEvent* e)
@@ -81,17 +81,17 @@ static inline void EQ_Delete(EQEvent* e)
         Alloc_Lock(9);
     g_ProfileLockDepth++;
     e->~EQEvent();
-    Mem_Free(0, e, D_004BDFC8, 0x36);
+    cMemMan_Deallocate(0, e, D_004BDFC8, 0x36);
     if (g_ProfileLockEnabled)
-        Alloc_Unlock(9);
+        EnableIntc(9);
     g_ProfileLockDepth--;
 }
 /* Removes an event from the queue and destroys it (unless it is running). */
-extern "C" void EventQueue_Remove(EQEvent* ev)
+extern "C" void nCallback_RemoveCallback(EQEvent* ev)
 {
     if (g_EventQueueRunning != ev) {
         EQCmp c __attribute__((aligned(8)));
-        ActiveList_EraseMatching(g_EventQueue, EQPred(c, &ev));
+        std_list_imp_voidPtr_remove_if(g_EventQueue, EQPred(c, &ev));
         EQ_Delete(ev);
     }
 }
@@ -103,21 +103,21 @@ extern "C" void EventQueue_Remove(EQEvent* ev)
 #pragma cplusplus on
 extern "C" {
 extern unsigned char g_EventQueueClosed;            /* queue closed: drop new events */
-void List_End(void* list, void* item);      /* push_back */
+void std_list_cCBDataPtr_push_back(void* list, void* item);      /* push_back */
 }
 /* Queues an event; destroys it right away when the queue is closed. */
-extern "C" void EventQueue_Admit(EQEvent* e)
+extern "C" void nCallback_SetCallback(EQEvent* e)
 {
     if (g_EventQueueClosed) {
         EQEvent* p = e;
         if (p) {
             AllocGuard g;
             p->~EQEvent();
-            Mem_Free(0, p, D_004BDFC8, 0x27);
+            cMemMan_Deallocate(0, p, D_004BDFC8, 0x27);
         }
         return;
     }
-    List_End(g_EventQueue, &e);
+    std_list_cCBDataPtr_push_back(g_EventQueue, &e);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003EA1D0 */

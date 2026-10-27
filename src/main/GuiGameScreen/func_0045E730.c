@@ -10,18 +10,18 @@ struct Ent_E730 { char pad[0xC]; unsigned int h; char pad10[0x48]; Ctl_E730* ctl
 typedef struct { char* vt; char pad[0x18]; int f1C; signed char f20; char pad21[0xF]; } Msg_E730;
 extern "C" {
 extern char D_00586170[];
-extern "C" void Message_GetScriptTypeKey();
+extern "C" void cMessage_getSOBJClassId();
 extern "C" void cClearClientInteractMsg_dtor();
-extern "C" void cClearClientInteractMsg_v01();
+extern "C" void cClearClientInteractMsg_Clone();
 extern "C" void cClearClientInteractMsg_v04();
 extern "C" void cClearClientInteractMsg_v05();
 extern "C" void cNetMsg_Pack();
-void * const D_004E16A0[8] = { (void*)0x0, (void*)0x0, (void*)cClearClientInteractMsg_dtor, (void*)cClearClientInteractMsg_v01, (void*)cNetMsg_Pack, (void*)Message_GetScriptTypeKey, (void*)cClearClientInteractMsg_v04, (void*)cClearClientInteractMsg_v05 };
+void * const D_004E16A0[8] = { (void*)0x0, (void*)0x0, (void*)cClearClientInteractMsg_dtor, (void*)cClearClientInteractMsg_Clone, (void*)cNetMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)cClearClientInteractMsg_v04, (void*)cClearClientInteractMsg_v05 };
 extern char D_004DCF10[];
-void Event_Construct(Msg_E730* m, void* type);
-void Transport_Send(int to, Msg_E730* m, int a, int b);
+void cMessage_ctor_cMessageNameR(Msg_E730* m, void* type);
+void cNetObj_SendMessage_int_cMessageR_int_int(int to, Msg_E730* m, int a, int b);
 void cMessage_dtor(Msg_E730* m, int flags);
-void GameScreen_ClearInteractLocal(void);
+void ClearInteract_void(void);
 }
 static inline int OwnerOf_E730(Ent_E730* e)
 {
@@ -34,25 +34,25 @@ static inline int OwnerOf_E730(Ent_E730* e)
     }
     return 0;
 }
-extern "C" void Global_ClearInteract(Ent_E730* e)
+extern "C" void ClearInteract_cGOBJP(Ent_E730* e)
 {
     Msg_E730 m;
     if (g_IsMultiplayer) {
-        Event_Construct(&m, D_00586170);
+        cMessage_ctor_cMessageNameR(&m, D_00586170);
         m.vt = ((char*)D_004E16A0);
         m.f1C = 0x40;
         if (!e) {
             m.f20 = 4;
-            Transport_Send(0, &m, -1, -1);
-            GameScreen_ClearInteractLocal();
+            cNetObj_SendMessage_int_cMessageR_int_int(0, &m, -1, -1);
+            ClearInteract_void();
         } else {
             int own = OwnerOf_E730(e);
-            if (own != NetLocalId()) Transport_Send(0, &m, 0, own);
-            else GameScreen_ClearInteractLocal();
+            if (own != NetLocalId()) cNetObj_SendMessage_int_cMessageR_int_int(0, &m, 0, own);
+            else ClearInteract_void();
         }
         m.vt = D_004DCF10;
         cMessage_dtor(&m, 0);
     } else {
-        GameScreen_ClearInteractLocal();
+        ClearInteract_void();
     }
 }

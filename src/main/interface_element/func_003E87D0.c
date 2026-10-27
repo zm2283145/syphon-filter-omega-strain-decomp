@@ -11,7 +11,7 @@ extern char D_00538C64[];   /* int counter */
 extern char D_00538C68[];   /* char flag */
 
 /* Decrement the global counter and set the companion flag. */
-void IeElement_PopMatrix(void) {
+void cInterfaceElement_UnsetupView(void) {
     int count;
 
     count = *(int*)D_00538C64;

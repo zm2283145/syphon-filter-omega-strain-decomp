@@ -6,12 +6,12 @@
 
 #include "types.h"
 
-void ControlHistory_Clear(char* self) {
+void cStatesWithHistory_1_ClearAllStates(char* self) {
     *(int*)(self + 8) = 0;
 }
 
 /* Shift the three-entry history down by one. */
-void ControlHistory_Shift(int* history) {
+void cStatesWithHistory_1_NextFrame(int* history) {
     history[0] = history[1];
     history[1] = history[2];
 }

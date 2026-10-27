@@ -40,7 +40,7 @@ extern char D_004A8250[];
 extern char D_004A8260[];
 void std_swap_vectordeleterR_vectordeleterR_24(V_00266BA0* a, V_00266BA0* b);
 }
-extern "C" void Vector_Insert_266BA0(V_00266BA0* v, E_00266BA0* pos, unsigned int n, const E_00266BA0* value)
+extern "C" void std_vector_imp_TaserPoint_insert(V_00266BA0* v, E_00266BA0* pos, unsigned int n, const E_00266BA0* value)
 {
     unsigned int maxN;
     if (n == 0)

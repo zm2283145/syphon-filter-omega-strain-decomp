@@ -50,7 +50,7 @@ Iter* std_list_cScenePtr_generic_iterator_1_ctor(Iter* out, int* node) {
     return out;
 }
 
-void List_End_13D890(Iter* out, Tree* t) {
+void std_list_deleter_voidPtr_end_void_2(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 #pragma pop /* merge_units */

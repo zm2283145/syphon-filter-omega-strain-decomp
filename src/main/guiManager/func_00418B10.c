@@ -34,18 +34,18 @@ struct W_418B10 {
     W_418B10* f24;
 };
 extern "C" {
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 int strcmp(const char* a, const char* b);
-W_418B10* GuiFactory_CreateWidget(char* name);
+W_418B10* AbstractWidgetClassRep_Create(char* name);
 W_418B10* GuiInterfaceDecorator_ctor(void* p);
-void func_004169D0(W_418B10* x, W_418B10* w);
+void GuiDecorator_Decorate(W_418B10* x, W_418B10* w);
 void GuiWidget_AddChild(W_418B10* w, W_418B10* c);
 extern char D_004BF110[];
 extern char D_004BF120[];
 extern char D_004BF138[];
 }
 
-extern "C" W_418B10* GuiManager_LoadNode(void* ctx, char** cur, W_418B10* parent)
+extern "C" W_418B10* GuiManager_LoadWidget(void* ctx, char** cur, W_418B10* parent)
 {
     PStr_418B10 type;
     PStr_418B10 extra;
@@ -59,7 +59,7 @@ extern "C" W_418B10* GuiManager_LoadNode(void* ctx, char** cur, W_418B10* parent
     if (parent) {
         if (strcmp(type.text, D_004BF110) == 0) w = parent;
     } else {
-        w = GuiFactory_CreateWidget(type.text);
+        w = AbstractWidgetClassRep_Create(type.text);
     }
     if (!w) return 0;
     w->f24 = w;
@@ -68,7 +68,7 @@ extern "C" W_418B10* GuiManager_LoadNode(void* ctx, char** cur, W_418B10* parent
         void* p;
         {
             AllocGuard g;
-            p = Mem_Alloc(0, 0x90, D_004BF138, 0x100);
+            p = cMemMan_Allocate(0, 0x90, D_004BF138, 0x100);
         }
         if (p) p = GuiInterfaceDecorator_ctor(p);
         x = (W_418B10*)p;
@@ -76,13 +76,13 @@ extern "C" W_418B10* GuiManager_LoadNode(void* ctx, char** cur, W_418B10* parent
         x = 0;
     }
     if (x) {
-        func_004169D0(x, w);
+        GuiDecorator_Decorate(x, w);
         x->Load(cur);
     }
     n = *(unsigned short*)*cur;
     *cur += 2;
     for (i = 0; i < n; i++) {
-        W_418B10* c = GuiManager_LoadNode(ctx, cur, 0);
+        W_418B10* c = GuiManager_LoadWidget(ctx, cur, 0);
         if (c) {
             c->f24 = w;
             GuiWidget_AddChild(w, c);

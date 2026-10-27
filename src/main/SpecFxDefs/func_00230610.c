@@ -6,7 +6,7 @@ typedef union ScriptArg {
     void* p;
 } ScriptArg;
 
-extern void* GObj_IdentityB(void*);
+extern void* cGOBJ_SOBJ_convert(void*);
 extern void Global_SpawnLight(void*, int, float, float);
 
 /* Script: SpawnLight(owner, a, b); arguments are staged through the stack. */
@@ -18,7 +18,7 @@ int Script_SpawnLight(ScriptArg* args) {
     b[0] = args[2].i;
     a[0] = args[1].i;
     bValue = *(float*)b;
-    owner = GObj_IdentityB(args[0].p);
+    owner = cGOBJ_SOBJ_convert(args[0].p);
     Global_SpawnLight(owner, 1, *(float*)a, bValue);
     return 0;
 }

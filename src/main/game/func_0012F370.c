@@ -8,12 +8,12 @@
 
 extern signed char* D_005061D0; /* read cursor into a byte stream */
 
-int NpcAi_IsPlayer(void) {
+int cGobjController_IsPlayer(void) {
     return 0;
 }
 
 /* Reads one byte from the stream and stores it as a bool (nonzero -> 1). */
-void Stream_ReadBool(char* out) {
+void cNetMsg_GetChar(char* out) {
     signed char* p;
     signed char b;
 

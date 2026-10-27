@@ -3,7 +3,7 @@
 
 /*
  * Types for gameSound.cc: sound script natives and the sound manager
- * receiver (constructor 0x001C9EA0, message handler SoundMgr_OnMessage
+ * receiver (constructor 0x001C9EA0, message handler cGameSound_HandleMessage
  * 0x001C9D00, which forwards voice actions to 0x001C8770).
  */
 

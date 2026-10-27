@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0051F0B0;
 
-void StaticInit_NetObjectiveMsgName(void) {
+void StaticInit_NetObjectiveMsg(void) {
     D_0051F0B0 = "MSGGAME_NET_OBJECTIVE_MESSAGE";
 }

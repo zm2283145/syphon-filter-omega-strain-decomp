@@ -15,40 +15,40 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern void cNode_v07(cGOBJ* obj);
-extern void cNode_v06(cGOBJ* obj);
+extern void cGOBJ_NetDeactivate(cGOBJ* obj);
+extern void cGOBJ_NetActivate(cGOBJ* obj);
 
-void cHotbox_v0E(void) {
+void cHotbox_Init(void) {
 }
 
-void cHotbox_v0F(void) {
+void cHotbox_Load(void) {
 }
 
-void* Hotbox_GetBounds(char* self) {
+void* cHotbox_GetBBox(char* self) {
     return self + 112;
 }
 
 /* Set the object's +0x2C flag. */
-void Hotbox_Enable_173670(cGOBJ* obj) {
+void cHotbox_NetEnable(cGOBJ* obj) {
     obj->unk2C = 1;
 }
 
 /* Clear the object's +0x2C flag. */
-void cHotbox_v09(cGOBJ* obj) {
+void cHotbox_NetDisable(cGOBJ* obj) {
     obj->unk2C = 0;
 }
 
-void cHotbox_v06(cGOBJ* obj) {
+void cHotbox_NetActivate(cGOBJ* obj) {
     obj->unk2C = 1;
-    cNode_v06(obj);
+    cGOBJ_NetActivate(obj);
 }
 
-void cHotbox_v07(cGOBJ* obj) {
+void cHotbox_NetDeactivate(cGOBJ* obj) {
     obj->unk2C = 0;
-    cNode_v07(obj);
+    cGOBJ_NetDeactivate(obj);
 }
 
-int cHotbox_v04(void) {
+int cHotbox_IsNetworked(void) {
     return 1;
 }
 #pragma pop /* merge_units */

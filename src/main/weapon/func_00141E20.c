@@ -1,4 +1,4 @@
-/* WeaponInv_LaunchProjectile: spawn a projectile at the muzzle transform and launch it at the target or aim point */
+/* cWeapon_Throw: spawn a projectile at the muzzle transform and launch it at the target or aim point */
 #pragma cplusplus on
 #include "types.h"
 #include "vslot_pad.h"
@@ -52,43 +52,43 @@ extern char g_Game[];
 extern char D_004EE5C0[];
 extern char D_004D92A0[];
 extern char D_0049B1D0[];
-Obj* Object_LookupById(int* id);
-void* Actor_GetSkeleton(Actor* a);
-M Model_GetComponentTransform(void* skel, int code);
-void Equip_ClearSlot(void* e, int z);
-W* WeaponDb_Get(void* db, int id);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-Proj* Projectile_Construct(void* p, Actor* owner, M* m, W* w);
-void Projectile_Launch(Proj* p, V* to, float k);
-void* Service_Lookup(void* a, void* b);
-void AiSound_SendFireNoise(void* msg, int* sender, int action, float a, float b);
-void Event_Send(void* msg, void* to, int imm);
+Obj* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+void* cSKM_GOBJ_GetSkeleton_void(Actor* a);
+M cSkeleton_GetBoneToWorldMatrix(void* skel, int code);
+void cMan_RemoveGun(void* e, int z);
+W* cWeaponDB_GetEntry(void* db, int id);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+Proj* cGrenade_ctor(void* p, Actor* owner, M* m, W* w);
+void cGrenade_SetInitialVelocity(Proj* p, V* to, float k);
+void* cSystemContainer_GetSystem(void* a, void* b);
+void cAISoundSystemGOBJMessage_ctor_cObjectIdR_eCauseForAwareness_float_float(void* msg, int* sender, int action, float a, float b);
+void QueueMessage_cMessageR_cSystemP_int(void* msg, void* to, int imm);
 void cMessage_dtor(void* msg, int f);
-void Weapon_RecordShotStats(Self* self, unsigned char b);
-void WeaponInv_LaunchProjectile(Self* self, int* id, V* at, float k);
+void cWeapon_AddShotStat(Self* self, unsigned char b);
+void cWeapon_Throw(Self* self, int* id, V* at, float k);
 }
 struct FireMsg {
     void* vt; char d[0x34];
-    FireMsg(int* id, int act, float a, float b) { int* i = id; AiSound_SendFireNoise(this, i, act, a, b); }
-    void Send(void* to) { Event_Send(this, to, 0); }
+    FireMsg(int* id, int act, float a, float b) { int* i = id; cAISoundSystemGOBJMessage_ctor_cObjectIdR_eCauseForAwareness_float_float(this, i, act, a, b); }
+    void Send(void* to) { QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~FireMsg() { vt = D_004D92A0; cMessage_dtor(this, 0); }
 };
-void WeaponInv_LaunchProjectile(Self* self, int* id, V* at, float k)
+void cWeapon_Throw(Self* self, int* id, V* at, float k)
 {
     Slot* s = &self->slots[self->cur];
-    Obj* tgt = Object_LookupById(id);
+    Obj* tgt = nGobjManager_LookupGOBJ_cObjectIdR(id);
     W* w;
     Proj* p;
     Actor* a = self->actor;
     char* eq = a->equip;
-    M xf = Model_GetComponentTransform(Actor_GetSkeleton(a), D_0049D02C);
-    Equip_ClearSlot(eq, 0);
-    w = WeaponDb_Get(g_WeaponDatabase, s->id);
+    M xf = cSkeleton_GetBoneToWorldMatrix(cSKM_GOBJ_GetSkeleton_void(a), D_0049D02C);
+    cMan_RemoveGun(eq, 0);
+    w = cWeaponDB_GetEntry(g_WeaponDatabase, s->id);
     {
         AllocGuard guard;
-        p = (Proj*)Mem_Alloc(0, 0x130, D_0049B1D0, 0x91C);
+        p = (Proj*)cMemMan_Allocate(0, 0x130, D_0049B1D0, 0x91C);
     }
-    if (p) p = Projectile_Construct(p, self->actor, &xf, w);
+    if (p) p = cGrenade_ctor(p, self->actor, &xf, w);
     if (!tgt || *id == g_NoneWord) {
         V dst = *at;
         if (dst.w == 0.0f) {
@@ -96,19 +96,19 @@ void WeaponInv_LaunchProjectile(Self* self, int* id, V* at, float k)
             M m = self->actor->GetMatrix();
             Apply(&dst, &m, &dst);
         }
-        Projectile_Launch(p, &dst, k);
+        cGrenade_SetInitialVelocity(p, &dst, k);
     } else {
         V pos = tgt->GetPos();
-        Projectile_Launch(p, &pos, k);
+        cGrenade_SetInitialVelocity(p, &pos, k);
     }
     if (self->actor->ctl && self->actor->ctl->Active()) {
         self->actor->ctl->Fired(tgt, 0);
-        void* svc = Service_Lookup(g_Game, D_004EE5C0);
+        void* svc = cSystemContainer_GetSystem(g_Game, D_004EE5C0);
         FireMsg m(&self->actor->id, 4, 1.0f, w->fB8);
         m.Send(svc);
     }
     if (!self->b99) s->count--;
-    if (w->fF0 == 7) { bool b = at->w == 1.0f; Weapon_RecordShotStats(self, b); }
+    if (w->fF0 == 7) { bool b = at->w == 1.0f; cWeapon_AddShotStat(self, b); }
 }
 
 

@@ -60,7 +60,7 @@ extern int D_004EEAD8;
 extern int D_004EEADC;
 extern char cSkeletonCenterOfMassContribution_dtor;
 
-void HumanCentroid_GetTable(int arg0) {
+void InitStatics_CenterOfMass(int arg0) {
     int var_s2;
     int *sp4C;
     int *var_s1;

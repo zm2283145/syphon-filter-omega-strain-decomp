@@ -5,7 +5,7 @@ extern void std_vector_float_push_back(void *v, float *value);
 
 static inline char *At(char *self, int i) { return (*(char ***)(self + 0x60))[i]; }
 #pragma opt_strength_reduction off
-void GuiSubTitleDisplay_ComputeTimings(char *self)
+void GuiSubTitleDisplay_CalcLineTimes(char *self)
 {
     float sum;
     int end;

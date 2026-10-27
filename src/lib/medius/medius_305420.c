@@ -32,7 +32,7 @@ int rt_p2p_determine_new_host(Owner5420 *o, int *out)
 typedef struct { int type; int f4; int f8; unsigned char bC, bD, bE, bF; int pad[6]; } UpnpEnt;
 typedef struct { char pad[0x180]; int h180; UpnpEnt *ent; int count; int f18C; int f190; } UpnpObj;
 typedef struct { unsigned int magic; int n; int pad; } UpnpMsg3;
-extern int RtUdp_SendToPeerEndpoint(UpnpObj *o, int peer, unsigned char type, void *data, unsigned short len);
+extern int rt_p2p_isend(UpnpObj *o, int peer, unsigned char type, void *data, unsigned short len);
 
 int rt_p2p_send_broadcast_disconnect(UpnpObj *o, int n, int base)
 {
@@ -53,7 +53,7 @@ int rt_p2p_send_broadcast_disconnect(UpnpObj *o, int n, int base)
     if (!found) {
         for (i = 0; i < o->count; i++) {
             if (o->ent[i].type - 3 < 2u) {
-                RtUdp_SendToPeerEndpoint(o, i, 7, &m, 12);
+                rt_p2p_isend(o, i, 7, &m, 12);
             }
         }
     }
@@ -71,7 +71,7 @@ extern int rt_udp_set_peer_id(int h, int ep, int val);
 extern void KM_CreateRandomRCKey(void *buf);
 extern int KM_AddSymmetricKey(int a, int peer, void *buf);
 extern int rt_udp_accept(int h, int ep);
-extern int String_CompareN(const char *a, const char *b, int n);
+extern int Libc_Strncmp(const char *a, const char *b, int n);
 extern char *strncpy(char *d, const char *s, unsigned int n);
 
 int rt_p2p_find_backlog_connection(UpnpObj_003055E8 *o, PeerInfo *in, PeerOut *out)
@@ -85,7 +85,7 @@ int rt_p2p_find_backlog_connection(UpnpObj_003055E8 *o, PeerInfo *in, PeerOut *o
     do {
         if (o->slot[i].h == -1) continue;
         if (rt_udp_get_address(o->h180, o->slot[i].h, addr, &port) != 0) break;
-        if (String_CompareN(addr, in->a, 16) == 0 && port == in->pa && port != 0) {
+        if (Libc_Strncmp(addr, in->a, 16) == 0 && port == in->pa && port != 0) {
             char buf[64];
             rt_udp_set_peer_id(o->h180, o->slot[i].h, in->f28);
             KM_CreateRandomRCKey(buf);
@@ -98,7 +98,7 @@ int rt_p2p_find_backlog_connection(UpnpObj_003055E8 *o, PeerInfo *in, PeerOut *o
             o->slot[i].h = -1;
             return 1;
         }
-        if (String_CompareN(addr, in->b, 16) == 0 && port == in->pb && port != 0) {
+        if (Libc_Strncmp(addr, in->b, 16) == 0 && port == in->pb && port != 0) {
             char buf[64];
             rt_udp_set_peer_id(o->h180, o->slot[i].h, in->f28);
             KM_CreateRandomRCKey(buf);

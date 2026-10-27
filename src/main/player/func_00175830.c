@@ -14,8 +14,8 @@ typedef struct Actor {
 } Actor;
 
 extern int g_HumanActorClassKey;
-extern Actor* GObj_IdentityB(void*);
-extern int Global_PlayerGetItemCount(void*, int);
+extern Actor* cGOBJ_SOBJ_convert(void*);
+extern int cInventory_GetCount_charP(void*, int);
 
 /* Script: PlayerGetItemCount(actor, item) -> count, 0 for non-players. */
 int Script_PlayerGetItemCount(ScriptArg* args) {
@@ -26,9 +26,9 @@ int Script_PlayerGetItemCount(ScriptArg* args) {
     int count;
     item[0] = args[1].i;
     itemValue = *(int*)item;
-    actor = GObj_IdentityB(args[0].p);
+    actor = cGOBJ_SOBJ_convert(args[0].p);
     if (actor->type == g_HumanActorClassKey) {
-        count = Global_PlayerGetItemCount(actor->items, itemValue);
+        count = cInventory_GetCount_charP(actor->items, itemValue);
     } else {
         count = 0;
     }

@@ -56,11 +56,11 @@ extern char SnowField_vtable[];
 extern FxFlag D_004F7A54[];
 extern FxDef SpecFxTable[];
 extern char D_0053B544[];
-int IdMgr_Allocate(int*, int);
+int nGobjManager_GetNextId(int*, int);
 int cGOBJ_ctor(SnowSelf*, int*, int, int*);
-void ScalarCollection_Init(L_SF*);
-void ObjectList_EraseRange(int* out, L_SF* l, int* first, int** last);
-PDef** ParticleDefs_SlotForId(void* p, int n);
+void std_list_deleter_voidPtr_ctor_void(L_SF*);
+void std_list_deleter_voidPtr_erase_listdeleter_listdeleter(int* out, L_SF* l, int* first, int** last);
+PDef** cLList_cParticleDefinitionPtr_opIndex(void* p, int n);
 void RainSnowPool_Create(int w);
 }
 
@@ -75,7 +75,7 @@ static inline FxDef* GetDef(signed char id)
     return GetDef_(id);
 }
 
-extern "C" SnowSelf* SnowField_Construct(SnowSelf* self, signed char id, int weight, float a, float b, float c)
+extern "C" SnowSelf* cSnowEffect_ctor(SnowSelf* self, signed char id, int weight, float a, float b, float c)
 {
     int gid;
     int z;
@@ -83,7 +83,7 @@ extern "C" SnowSelf* SnowField_Construct(SnowSelf* self, signed char id, int wei
     int first;
     int* last;
     int* lp;
-    IdMgr_Allocate(&gid, 0xE7);
+    nGobjManager_GetNextId(&gid, 0xE7);
     z = 0;
     cGOBJ_ctor(self, &gid, 4, &z);
     self->f0 = (int)D_004DF860;
@@ -93,12 +93,12 @@ extern "C" SnowSelf* SnowField_Construct(SnowSelf* self, signed char id, int wei
     self->f70 = 0x3F800000;
     self->f2F = 1;
     self->f0 = (int)SnowField_vtable;
-    ScalarCollection_Init(&self->list);
+    std_list_deleter_voidPtr_ctor_void(&self->list);
     lp = &self->list.x4;
     self->box.Init();
     last = lp;
     first = self->list.x8;
-    { int** pl = &last; int* pf = &first; int* pr = &r; L_SF* ll = &self->list; ObjectList_EraseRange(pr, ll, pf, pl); }
+    { int** pl = &last; int* pf = &first; int* pr = &r; L_SF* ll = &self->list; std_list_deleter_voidPtr_erase_listdeleter_listdeleter(pr, ll, pf, pl); }
     self->id = id;
     self->fB0 = a;
     self->size = b;
@@ -109,7 +109,7 @@ extern "C" SnowSelf* SnowField_Construct(SnowSelf* self, signed char id, int wei
     self->fBC = 0;
     self->c4 = GetDef(id)->a;
     if (self->c4 >= 0) {
-        PDef** pp = ParticleDefs_SlotForId(D_0053B544, self->c4);
+        PDef** pp = cLList_cParticleDefinitionPtr_opIndex(D_0053B544, self->c4);
         if (*pp) self->fBC = (*pp)->xC;
         RainSnowPool_Create(weight);
     }

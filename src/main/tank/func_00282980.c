@@ -9,6 +9,6 @@
 extern int D_00506268;
 
 /* Message type id for cNetUpdateTankMsg. */
-int cNetUpdateTankMsg_v05(void) {
+int cNetUpdateTankMsg_GetMsgId(void) {
     return D_00506268;
 }

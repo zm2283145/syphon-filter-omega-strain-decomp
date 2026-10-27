@@ -10,6 +10,6 @@ void* VecCurve_GetPrevious(char* self) {
     return self + 16;
 }
 
-void* VecCurve_GetCurrent(char* self) {
+void* cSplinedMotion_cVector_GetCurrVal(char* self) {
     return self + 32;
 }

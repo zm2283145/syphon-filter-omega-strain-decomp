@@ -5,7 +5,7 @@
  */
 
 /* merge_units: begin func_002E8A00 */
-extern int NetMsg_RegisterTypeInner(void *, int, void *);
+extern int NetIRegisterMessage(void *, int, void *);
 extern int D_005983E8;
 extern void ServerVersionPacketHandler(void);
 extern int D_005983DC;
@@ -53,31 +53,31 @@ void RegisterDMEmessages(void)
 {
     int local;
 
-    NetMsg_RegisterTypeInner(&D_005983E8, 0, ServerVersionPacketHandler);
-    NetMsg_RegisterTypeInner(&D_005983DC, 0, PingPacketHandler);
-    NetMsg_RegisterTypeInner(&D_005983EC, 0, PacketFragmentPacketHandler);
-    NetMsg_RegisterTypeInner(&D_005983F0, 0, FieldUpdatePacketHandler);
-    NetMsg_RegisterTypeInner(&D_005983F4, 0, NetObjectFullUpdatePacketHandler);
-    NetMsg_RegisterTypeInner(&D_005983F8, 0, DataStreamEndPacketHandler);
-    NetMsg_RegisterTypeInner(&local, 0, 0);
-    NetMsg_RegisterTypeInner(&local, 0, 0);
-    NetMsg_RegisterTypeInner(&local, 0, 0);
-    NetMsg_RegisterTypeInner(&D_005983FC, 0, AcceptClientPacketHandler);
-    NetMsg_RegisterTypeInner(&D_00598400, 0, DeleteNetObjectPacketHandler);
-    NetMsg_RegisterTypeInner(&D_00598404, 0, RequestOwnershipPacketHandler);
-    NetMsg_RegisterTypeInner(&D_005983E0, 0, GrantOwnershipPacketHandler);
-    NetMsg_RegisterTypeInner(&D_00598408, 0, ReleaseOwnershipPacketHandler);
-    NetMsg_RegisterTypeInner(&D_0059840C, 0, DataStreamUpdatePacketHandler);
-    NetMsg_RegisterTypeInner(&D_00598410, 0, ClientUpdatePacketHandler);
-    NetMsg_RegisterTypeInner(&D_00598414, 0, ClientConnectsPacketHandler);
-    NetMsg_RegisterTypeInner(&local, 0, 0);
-    NetMsg_RegisterTypeInner(&D_00598418, 0, ClientLeavesPacketHandler);
-    NetMsg_RegisterTypeInner(&D_0059841C, 0, RequestServersPacketHandler);
-    NetMsg_RegisterTypeInner(&D_005983D8, 0, ServerResponsePacketHandler);
-    NetMsg_RegisterTypeInner(&D_005983E4, 0, ArbitrateJoinPacketHandler);
-    NetMsg_RegisterTypeInner(&D_00598420, 0, UpdateClientStatusPacketHandler);
-    NetMsg_RegisterTypeInner(&D_00598424, 0, SMMigrateOrderPacketHandler);
-    NetMsg_RegisterTypeInner(&D_00598428, 0, StreamMediaClientInfoPacketHandler);
+    NetIRegisterMessage(&D_005983E8, 0, ServerVersionPacketHandler);
+    NetIRegisterMessage(&D_005983DC, 0, PingPacketHandler);
+    NetIRegisterMessage(&D_005983EC, 0, PacketFragmentPacketHandler);
+    NetIRegisterMessage(&D_005983F0, 0, FieldUpdatePacketHandler);
+    NetIRegisterMessage(&D_005983F4, 0, NetObjectFullUpdatePacketHandler);
+    NetIRegisterMessage(&D_005983F8, 0, DataStreamEndPacketHandler);
+    NetIRegisterMessage(&local, 0, 0);
+    NetIRegisterMessage(&local, 0, 0);
+    NetIRegisterMessage(&local, 0, 0);
+    NetIRegisterMessage(&D_005983FC, 0, AcceptClientPacketHandler);
+    NetIRegisterMessage(&D_00598400, 0, DeleteNetObjectPacketHandler);
+    NetIRegisterMessage(&D_00598404, 0, RequestOwnershipPacketHandler);
+    NetIRegisterMessage(&D_005983E0, 0, GrantOwnershipPacketHandler);
+    NetIRegisterMessage(&D_00598408, 0, ReleaseOwnershipPacketHandler);
+    NetIRegisterMessage(&D_0059840C, 0, DataStreamUpdatePacketHandler);
+    NetIRegisterMessage(&D_00598410, 0, ClientUpdatePacketHandler);
+    NetIRegisterMessage(&D_00598414, 0, ClientConnectsPacketHandler);
+    NetIRegisterMessage(&local, 0, 0);
+    NetIRegisterMessage(&D_00598418, 0, ClientLeavesPacketHandler);
+    NetIRegisterMessage(&D_0059841C, 0, RequestServersPacketHandler);
+    NetIRegisterMessage(&D_005983D8, 0, ServerResponsePacketHandler);
+    NetIRegisterMessage(&D_005983E4, 0, ArbitrateJoinPacketHandler);
+    NetIRegisterMessage(&D_00598420, 0, UpdateClientStatusPacketHandler);
+    NetIRegisterMessage(&D_00598424, 0, SMMigrateOrderPacketHandler);
+    NetIRegisterMessage(&D_00598428, 0, StreamMediaClientInfoPacketHandler);
 }
 /* merge_units: end func_002E8A00 */
 

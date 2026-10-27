@@ -12,7 +12,7 @@
 typedef struct { unsigned char b0; char pad[3]; int f4; int f8; char fC; } Slot49;
 typedef struct { char pad[0x13C]; void* p13C; Slot49* p140; } Owner49;
 typedef struct { char pad[0x3584]; Slot49* p3584; } Ctx49;
-void Player_MpAimViewExit(Owner49* self, Ctx49* ctx) {
+void cPlayerControls_NetDisableManualAim(Owner49* self, Ctx49* ctx) {
     if (!self->p140) self->p140 = ctx->p3584;
     if (self->p140) self->p140->b0 = 0;
 }
@@ -62,7 +62,7 @@ static inline void merge_flush_func_002494E0(void) {}
 typedef struct { unsigned short count; } Sub49b;
 typedef struct { char pad[0x13C]; Sub49b* p13C; void* p140; } Owner49b;
 typedef struct { char pad[0x3584]; char* p3584; } Ctx49b;
-void PlayerInput_WeaponBlockHelper(Owner49b* self, Ctx49b* ctx) {
+void cPlayerControls_NetShootWeapon(Owner49b* self, Ctx49b* ctx) {
     if (!self->p13C) {
         char* q = ctx->p3584;
         if (q) q += 0x1C;
@@ -82,30 +82,30 @@ typedef struct { void* vtable; char base[0x1C]; unsigned char b20; char p21[3]; 
 extern char g_ActorActionMsgClass[];
 extern char D_004E01A0[];
 extern char D_004E0840[];
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, void* target, int immediate);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
-void PlayerInput_LookAtLockAction(void* self, Obj249580* o, void* target) {
+void cPlayerControls_SetManualAimEyesTargetInHuman(void* self, Obj249580* o, void* target) {
     if (o) {
         Msg249580 m;
         int id = o->id;
-        Event_Construct(&m, g_ActorActionMsgClass);
+        cMessage_ctor_cMessageNameR(&m, g_ActorActionMsgClass);
         m.f24 = 0x3E;
 m.b28 = 5;
 m.vtable = D_004E01A0;
 m.b20 = 1;
 m.f2C = id;
-        Event_Send(&m, target, 1);
+        QueueMessage_cMessageR_cSystemP_int(&m, target, 1);
         m.vtable = D_004E0840;
         cMessage_dtor(&m, 0);
     } else {
         Msg249580 m;
-        Event_Construct(&m, g_ActorActionMsgClass);
+        cMessage_ctor_cMessageNameR(&m, g_ActorActionMsgClass);
         m.vtable = D_004E0840;
         m.f24 = 0x3F;
         m.b20 = 1;
         m.b28 = 0;
-        Event_Send(&m, target, 1);
+        QueueMessage_cMessageR_cSystemP_int(&m, target, 1);
         m.vtable = D_004E0840;
         cMessage_dtor(&m, 0);
     }

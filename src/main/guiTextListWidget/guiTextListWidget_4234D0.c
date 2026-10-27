@@ -11,7 +11,7 @@
 extern void* strcmp(void* key);
 
 /* Returns whether the lookup of "GuiArrayWidget" yields null. */
-int GuiArrayWidget_IsType(void) {
+int GuiArrayWidget_IsClass(void) {
     return strcmp("GuiArrayWidget") == 0;
 }
 #pragma pop /* merge_units */
@@ -28,13 +28,13 @@ typedef struct {
     char pad58[0x8C - 0x58];
     void* x8C;
 } S;
-extern void GuiScrollBarWidget_SetRange(void* a, int b, int c, int d, int e);
+extern void GuiScrollBarWidget_SetValues(void* a, int b, int c, int d, int e);
 
 void GuiArrayWidget_UpdateScrollBars(S* s)
 {
     if (s->x8C != 0) {
         S* t = s;
-        GuiScrollBarWidget_SetRange(t->x8C, 0, t->x54, 0, t->x4C - 1);
+        GuiScrollBarWidget_SetValues(t->x8C, 0, t->x54, 0, t->x4C - 1);
     }
 }
 #pragma pop /* merge_units */
@@ -50,13 +50,13 @@ void GuiArrayWidget_UpdateScrollBars(S* s)
 
 #include "loose04_types.h"
 
-extern int GuiWidget_SendEventUp(Unk423540*, int, int, int);
+extern int GuiWidget_SendParentsMessage(Unk423540*, int, int, int);
 
 void GuiArrayWidget_GetFixedRow(Unk423540* self, int* out) {
     *out = self->unk84;
 }
 
-void GuiArrayWidget_SetA84(Unk423540* self, int value) {
+void GuiArrayWidget_SetFixedRow(Unk423540* self, int value) {
     self->unk84 = value;
 }
 
@@ -65,7 +65,7 @@ void GuiArrayWidget_GetFirstVisibleElement(Unk423540* self, int* outA, int* outB
     *outB = self->unk7C;
 }
 
-void GuiArrayWidget_SetMargin(Unk423540* self, int a, int b) {
+void GuiArrayWidget_SetFirstVisibleElement(Unk423540* self, int a, int b) {
     self->unk78 = a;
     self->unk7C = b;
 }
@@ -75,20 +75,20 @@ void GuiArrayWidget_GetVisibleSize(Unk423540* self, int* outA, int* outB) {
     *outB = self->unk74;
 }
 
-void GuiArrayWidget_SetTable(Unk423540* self, int a, int b) {
+void GuiArrayWidget_SetVisibleSize(Unk423540* self, int a, int b) {
     self->unk70 = a;
     self->unk74 = b;
 }
 
-int GuiArrayWidget_SendEvent21(Unk423540* self, int a, int b) {
-    return GuiWidget_SendEventUp(self, 21, a, b);
+int GuiArrayWidget_onElementLoseFocus(Unk423540* self, int a, int b) {
+    return GuiWidget_SendParentsMessage(self, 21, a, b);
 }
 
-int GuiArrayWidget_SendEvent20(Unk423540* self, int a, int b) {
-    return GuiWidget_SendEventUp(self, 20, a, b);
+int GuiArrayWidget_onElementGainFocus(Unk423540* self, int a, int b) {
+    return GuiWidget_SendParentsMessage(self, 20, a, b);
 }
 
-void GuiArrayWidget_DrawCell(void) {
+void GuiArrayWidget_onElementRender(void) {
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00423540 */

@@ -1,4 +1,4 @@
-/* Actor_HandleFire: act on a fire request: throw a grenade or star, start a
+/* cHuman_ShootWeapon: act on a fire request: throw a grenade or star, start a
  * melee attack, or discharge the held weapon at the requested target. */
 #pragma cplusplus on
 #pragma inline_depth(10)
@@ -23,18 +23,18 @@ extern "C" {
 extern int g_NoneWord;
 extern char g_Game[];
 extern SecState SecondaryStateTable[];
-void* Object_LookupById(Req* r);
-int WeaponInv_GetHeldClass(void* inv);
-void Weapon_DryFire(void* inv);
-int Weapon_CanAttack(void* inv);
-void Actor_StartGrenadeThrow(Act* a, Req* r, V* p, float f);
-void Actor_StartStarThrow(Act* a, Req* r, V* p);
-void* Agent_GetSelected(void* list, int idx);
-int AgentData_HasUnlock(void* a, int k);
-void* Melee_FindTarget(void* inv, unsigned char* out);
+void* nGobjManager_LookupGOBJ_cObjectIdR(Req* r);
+int cWeapon_GetEquipmentType(void* inv);
+void cWeapon_ReloadIfOutOfAmmo(void* inv);
+int cWeapon_Ready(void* inv);
+void cHuman_ThrowGrenade(Act* a, Req* r, V* p, float f);
+void cHuman_ThrowStar(Act* a, Req* r, V* p);
+void* cGameSystem_GetAgentData(void* list, int idx);
+int cAgentData_HasSpecialBonus(void* a, int k);
+void* cWeapon_GetStabTarget(void* inv, unsigned char* out);
 void Melee_StartAttack(Act* a, void* t, unsigned char f);
-void Weapon_Discharge(void* inv, void* t, int a, unsigned char b, int c);
-void Actor_HandleFire(Act* self, Req* req);
+void cWeapon_FireIfReady(void* inv, void* t, int a, unsigned char b, int c);
+void cHuman_ShootWeapon(Act* self, Req* req);
 }
 typedef unsigned char u8;
 static inline u8 Bit2(Act* a) { return ((a->f3210 >> 2) & 1) != 0; }
@@ -56,41 +56,41 @@ static inline bool IsNone(Req* r) { return r->id == g_NoneWord; }
 static inline SecState* St(int i) { return &SecondaryStateTable[i]; }
 static inline int Ready(Sec* s) { unsigned char r = 0; if (St(s->a)->ok && St(s->b)->ok) r = 1; return r; }
 
-void Actor_HandleFire(Act* self, Req* req)
+void cHuman_ShootWeapon(Act* self, Req* req)
 {
     bool dead; unsigned char life = self->Life();
     dead = true;
     if (life != 3 && life != 2) dead = false;
     if (dead) return;
-    void* tgt = IsNone(req) ? 0 : Object_LookupById(req);
-    int cls = WeaponInv_GetHeldClass(self->inv);
+    void* tgt = IsNone(req) ? 0 : nGobjManager_LookupGOBJ_cObjectIdR(req);
+    int cls = cWeapon_GetEquipmentType(self->inv);
     u8 melee = (unsigned char)cls == 11;
     u8 hand = IsHand(cls);
-    Weapon_DryFire(self->inv);
-    if (!melee && !Weapon_CanAttack(self->inv)) return;
+    cWeapon_ReloadIfOutOfAmmo(self->inv);
+    if (!melee && !cWeapon_Ready(self->inv)) return;
     u8 busy = C4(self);
     if ((unsigned char)cls == 1) {
         if (!busy && !self->b33E4) {
             V p = req->pos;
-            Actor_StartGrenadeThrow(self, req, &p, req->f20);
+            cHuman_ThrowGrenade(self, req, &p, req->f20);
         }
     } else if ((unsigned char)cls == 7) {
         if (!busy && !self->b33E4) {
             V p = req->pos;
-            Actor_StartStarThrow(self, req, &p);
+            cHuman_ThrowStar(self, req, &p);
         }
     } else if (hand || melee) {
         if (!busy) {
-            if (melee && !AgentData_HasUnlock(Agent_GetSelected(g_Game, -1), 0)) return;
+            if (melee && !cAgentData_HasSpecialBonus(cGameSystem_GetAgentData(g_Game, -1), 0)) return;
             if (!self->b33E8) {
                 u8 f;
-                void* t = Melee_FindTarget(self->inv, &f);
+                void* t = cWeapon_GetStabTarget(self->inv, &f);
                 Melee_StartAttack(self, t, f);
             }
         }
     } else {
         if (!self->sec) return;
         if (!Ready(self->sec)) return;
-        { unsigned char b8 = req->b8; Weapon_Discharge(self->inv, tgt, req->f4, b8, 0); }
+        { unsigned char b8 = req->b8; cWeapon_FireIfReady(self->inv, tgt, req->f4, b8, 0); }
     }
 }

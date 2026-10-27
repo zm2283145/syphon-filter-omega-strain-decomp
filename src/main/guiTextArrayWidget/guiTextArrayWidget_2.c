@@ -15,11 +15,11 @@
 #include "types.h"
 #include "guiTextArrayWidget_types.h"
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int value);
 
 /* push_back on a pointer vector. */
 int std_vector_cArray_tTextElementPtr_push_back(PtrVec* v, int value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 
 Vec4* tRGBA_ctor_float_float_float_float(Vec4* v, float x, float y, float z, float w) {
@@ -53,32 +53,32 @@ Rel* std_vector_tTextElement_ctor(Rel* r) {
 extern "C" {
 extern char D_004BF790[];
 extern char D_0049AF00[];
-extern "C" void GuiTextArrayWidget_IsType();
-extern "C" void GuiWidget_FocusPrev();
-extern "C" void GuiWidget_FocusNext();
-extern "C" void GuiWidget_FocusLast();
-extern "C" void GuiWidget_FocusFirst();
-extern "C" void GuiWidget_BubbleActivate();
-extern "C" void GuiWidget_Update();
-extern "C" void GuiWidget_OnEvent();
-extern "C" void GuiWidget_ClearFlag4();
-extern "C" void GuiWidget_SetFlag4();
-extern "C" void GuiWidget_Deinit();
+extern "C" void GuiTextArrayWidget_IsClass();
+extern "C" void GuiWidget_FindPrevFocus();
+extern "C" void GuiWidget_FindNextFocus();
+extern "C" void GuiWidget_FindLastFocus();
+extern "C" void GuiWidget_FindFirstFocus();
+extern "C" void GuiWidget_onAction();
+extern "C" void GuiWidget_onAdvanceTime();
+extern "C" void GuiWidget_onMessage();
+extern "C" void GuiWidget_onDeactivate();
+extern "C" void GuiWidget_onActivate();
+extern "C" void GuiWidget_onRemove();
 extern "C" void GuiWidget_Load();
-extern "C" void GuiArrayWidget_SendEvent21();
-extern "C" void GuiArrayWidget_SendEvent20();
+extern "C" void GuiArrayWidget_onElementLoseFocus();
+extern "C" void GuiArrayWidget_onElementGainFocus();
 extern "C" void GuiArrayWidget_onRowRender();
 extern "C" void GuiArrayWidget_onColumnRender();
-extern "C" void GuiArrayWidget_Draw();
-extern "C" void GuiArrayWidget_OnInput();
-extern "C" void GuiArrayWidget_OnLoseFocus();
-extern "C" void GuiArrayWidget_OnGainFocus();
+extern "C" void GuiArrayWidget_onRender();
+extern "C" void GuiArrayWidget_onInput();
+extern "C" void GuiArrayWidget_onLoseFocus();
+extern "C" void GuiArrayWidget_onGainFocus();
 extern "C" void GuiTextArrayWidget_GetClassName();
-extern "C" void GuiTextArrayWidget_DrawCell();
-extern "C" void GuiTextArrayWidget_Sleep();
-extern "C" void GuiTextArrayWidget_Wake();
-extern "C" void GuiTextArrayWidget_Init();
-extern "C" void GuiTextArrayWidget_SetDims();
+extern "C" void GuiTextArrayWidget_onElementRender();
+extern "C" void GuiTextArrayWidget_onSleep();
+extern "C" void GuiTextArrayWidget_onWake();
+extern "C" void GuiTextArrayWidget_onAdd();
+extern "C" void GuiTextArrayWidget_SetSize();
 extern void * const D_004E0DC0[];
 extern char D_004E0D20[];
 void std_vector_deleter_tTextElement_dtor(TextArrayRow* row, int flags);
@@ -86,9 +86,9 @@ void GuiTextArrayWidget_DestroyTextArray(guiTextArrayWidget* self);
 void String_Dtor(void* string, int flags);
 TextArrayStore* std_vector_cArray_tTextElementPtr_dtor(TextArrayStore* store, short flags);
 void cArray_int_dtor(void* state, int flags);
-void GuiWidget_Destroy(guiTextArrayWidget* self, int flags);
+void GuiWidget_dtor(guiTextArrayWidget* self, int flags);
 void std_vector_imp_int_1_dtor(TextArrayStore* store, int flags);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
 }
 
@@ -119,7 +119,7 @@ static inline void release_child(TextArrayWidgetChild* child)
 {
     AllocGuard guard;
     destroy_child(child);
-    Mem_Free(0, child, D_004BF790, 0x1F);
+    cMemMan_Deallocate(0, child, D_004BF790, 0x1F);
 }
 
 static inline void destroy_store(TextArrayStore* store)
@@ -133,7 +133,7 @@ static inline void destroy_widget_base(guiTextArrayWidget* self)
     if (self) {
         self->vtable = D_004E0D20;
         cArray_int_dtor(self->baseState, -1);
-        GuiWidget_Destroy(self, 0);
+        GuiWidget_dtor(self, 0);
     }
 }
 
@@ -175,7 +175,7 @@ static inline void free_buffer(TextArrayRow** data)
 {
     if (data) {
         AllocGuard guard;
-        Mem_Free(0, data, D_0049AF00, 0x64);
+        cMemMan_Deallocate(0, data, D_0049AF00, 0x64);
     }
 }
 
@@ -215,7 +215,7 @@ extern "C" TextArrayStore* std_vector_cArray_tTextElementPtr_dtor(TextArrayStore
     }
     return self;
 }
-void * const D_004E0DC0[30] = { (void*)0x0, (void*)0x0, (void*)GuiTextArrayWidget_dtor, (void*)GuiTextArrayWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextArrayWidget_Wake, (void*)GuiTextArrayWidget_Sleep, (void*)GuiArrayWidget_OnGainFocus, (void*)GuiArrayWidget_OnLoseFocus, (void*)GuiArrayWidget_OnInput, (void*)GuiArrayWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiTextArrayWidget_GetClassName, (void*)GuiTextArrayWidget_IsType, (void*)GuiTextArrayWidget_SetDims, (void*)GuiArrayWidget_onColumnRender, (void*)GuiArrayWidget_onRowRender, (void*)GuiTextArrayWidget_DrawCell, (void*)GuiArrayWidget_SendEvent20, (void*)GuiArrayWidget_SendEvent21, (void*)0x0 };
+void * const D_004E0DC0[30] = { (void*)0x0, (void*)0x0, (void*)GuiTextArrayWidget_dtor, (void*)GuiTextArrayWidget_onAdd, (void*)GuiWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiWidget_onDeactivate, (void*)GuiTextArrayWidget_onWake, (void*)GuiTextArrayWidget_onSleep, (void*)GuiArrayWidget_onGainFocus, (void*)GuiArrayWidget_onLoseFocus, (void*)GuiArrayWidget_onInput, (void*)GuiArrayWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiWidget_onAdvanceTime, (void*)GuiWidget_onMessage, (void*)GuiWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiTextArrayWidget_GetClassName, (void*)GuiTextArrayWidget_IsClass, (void*)GuiTextArrayWidget_SetSize, (void*)GuiArrayWidget_onColumnRender, (void*)GuiArrayWidget_onRowRender, (void*)GuiTextArrayWidget_onElementRender, (void*)GuiArrayWidget_onElementGainFocus, (void*)GuiArrayWidget_onElementLoseFocus, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_004268E0 */
 
@@ -230,7 +230,7 @@ extern void* GuiArrayWidget_ctor(void* self);
 extern Rel* std_vector_cArray_tTextElementPtr_ctor(Rel* r);
 
 /* guiTextArrayWidget constructor. */
-guiTextArrayWidget* guiTextArrayWidget_ctor(guiTextArrayWidget* self) {
+guiTextArrayWidget* GuiTextArrayWidget_ctor(guiTextArrayWidget* self) {
     TextArrayStore* store;
 
     GuiArrayWidget_ctor(self);

@@ -2,7 +2,7 @@
 #define SHORT_STRING_ASSIGN_INL_H
 
 /*
- * String assignment with the replace step inlined (String_Replace called
+ * String assignment with the replace step inlined (std_basic_string_char_char_traits_char_do_replace called
  * directly): two short strings copy as a block, otherwise replace the
  * whole current contents with src's characters.
  * C++ only (#pragma cplusplus on before including).
@@ -29,7 +29,7 @@
             len = src->u.l.length;                                            \
         }                                                                     \
         ShortStrIterTag tag;                                                  \
-        return String_Replace(self, 0, n, data, data + len, tag);             \
+        return std_basic_string_char_char_traits_char_do_replace(self, 0, n, data, data + len, tag);             \
     }
 
 #endif /* SHORT_STRING_ASSIGN_INL_H */

@@ -26,16 +26,16 @@ typedef struct {
 
 extern "C" {
 extern char D_004BC2B8[], D_004BC300[];
-void List_Erase_383560(It_380DB0* result, void* list, It_380DB0* pos);
+void std_list_deleter_int_erase_listdeleter(It_380DB0* result, void* list, It_380DB0* pos);
 int cTexture_GetRefCount(void* t);
-void Tex_DestroyRecord(void* t, int a, int b, char* file, int line);
+void opDelete_cTextureP_int_bool_charP_etc(void* t, int a, int b, char* file, int line);
 void cTexMan_EraseDeletedTID(Obj_380DB0* o, int v);
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 void* cTexture_ctor(void* t);
 void cTexture_Init_charP_int_int_int_etc(void* t, int a, int b, int c, int d, int e);
 }
 
-static inline void Erase(It_380DB0* out, List_380DB0* l, It_380DB0* b) { It_380DB0 result; It_380DB0 value; value = *b; List_Erase_383560(&result, l, &value); *out = result; }
+static inline void Erase(It_380DB0* out, List_380DB0* l, It_380DB0* b) { It_380DB0 result; It_380DB0 value; value = *b; std_list_deleter_int_erase_listdeleter(&result, l, &value); *out = result; }
 
 extern "C" int cTexMan_AddTexture(Obj_380DB0* o, int a, int b, int c, int d)
 {
@@ -59,13 +59,13 @@ extern "C" int cTexMan_AddTexture(Obj_380DB0* o, int a, int b, int c, int d)
         idx = o->next++;
     }
     if (o->tex[idx] && cTexture_GetRefCount(o->tex[idx]) <= 0) {
-        Tex_DestroyRecord(o->tex[idx], 0, 1, D_004BC300, 0x39E);
+        opDelete_cTextureP_int_bool_charP_etc(o->tex[idx], 0, 1, D_004BC300, 0x39E);
         o->tex[idx] = 0;
         cTexMan_EraseDeletedTID(o, idx);
     }
     {
         AllocGuard guard;
-        t = Mem_Alloc(0, 0x70, D_004BC2B8, 0x41B);
+        t = cMemMan_Allocate(0, 0x70, D_004BC2B8, 0x41B);
     }
     if (t) {
         t = cTexture_ctor(t);
@@ -83,7 +83,7 @@ typedef struct { char pad[0x64]; int refs; } RefObj;
 typedef struct { char pad[8]; RefObj** items; char pad2[4]; int count; } RefTable;
 
 /* Increments the reference count of item index; returns 1 if the item exists. */
-unsigned char Tex_AddRef(RefTable* self, int index)
+unsigned char cTexMan_AddTextureReference(RefTable* self, int index)
 {
     unsigned char ok = 0;
     RefObj* obj;

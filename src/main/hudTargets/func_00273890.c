@@ -17,7 +17,7 @@ public:
 };
 
 extern "C" {
-int Mem_Alloc(...);
+int cMemMan_Allocate(...);
 int String_Dtor(...);
 int cLListIterator_cHudTargetsObserverPtr_ctor(...);
 int std_list_cHudTargetsObserverPtr_end(...);
@@ -25,15 +25,15 @@ int std_list_cHudTargetsObserverPtr_generic_iterator_ctor(...);
 int std_list_cHudTargetInfoPtr_end_void_2(...);
 int cLListIterator_cHudTargetInfoPtr_ctor_listR(...);
 int std_list_cHudTargetInfoPtr_begin_void_2(...);
-int List_Begin(...);
-int String_AssignString(...);
-int IeElement_SetColour(...);
-int String_CtorCStr_13B480(...);
-int ObjMarker_ConstructIcon(...);
-char* ObjMarkerRecord_Init(...);
-int ObjMarkerList_Append(...);
-char* Object_LookupById(...);
-int TeamTable_AreEnemies(...);
+int std_list_deleter_voidPtr_begin_void(...);
+int std_basic_string_char_char_traits_char_assign_basicstringR(...);
+int cInterfaceElement_SetFilterColor(...);
+int std_basic_string_char_char_traits_char_ctor_charP(...);
+int cHudTargetInfo_SetModel(...);
+char* cHudTargetInfo_ctor(...);
+int std_list_cHudTargetInfoPtr_push_back(...);
+char* nGobjManager_LookupGOBJ_cObjectIdR(...);
+int cGOBJ_Enemy(...);
 extern char* g_LocalPlayer;
 extern char D_004A8F60;
 extern char D_004A8F70;
@@ -48,12 +48,12 @@ static inline bool IsMapKind(MRec* r) { return r->kind == 1 || r->kind == 2; }
 static inline void beg0(It* o, char* l) { It r; std_list_cHudTargetInfoPtr_begin_void_2(&r, l); cLListIterator_cHudTargetInfoPtr_ctor_listR(o, &r); }
 static inline void end0(It* o, char* l) { It r; std_list_cHudTargetInfoPtr_end_void_2(&r, l); cLListIterator_cHudTargetInfoPtr_ctor_listR(o, &r); }
 static inline void end1(It* o, char* l) { It r; std_list_cHudTargetsObserverPtr_end(&r, l); cLListIterator_cHudTargetsObserverPtr_ctor(o, &r); }
-static inline void beg2(It* o, char* l) { It r; List_Begin(&r, l); std_list_cHudTargetsObserverPtr_generic_iterator_ctor(o, &r); }
+static inline void beg2(It* o, char* l) { It r; std_list_deleter_voidPtr_begin_void(&r, l); std_list_cHudTargetsObserverPtr_generic_iterator_ctor(o, &r); }
 static inline bool ne(It* a, It* b) { return a->p != b->p; }
 static inline void adv(It* a) { a->p = F_(a->p, 4, char*); }
 static inline MRec* deref(It* a) { return F_(a->p, 8, MRec*); }
 
-extern "C" int HudTargets_Add(char* mgr, int* id, int force) {
+extern "C" int cHudTargetManager_Add(char* mgr, int* id, int force) {
     It it;
     MRec* rec;
     It b;
@@ -69,22 +69,22 @@ extern "C" int HudTargets_Add(char* mgr, int* id, int force) {
     }
     end0(&e1, mgr + 0xC);
     if (!ne(&it, &e1)) {
-        char* obj = Object_LookupById(id);
+        char* obj = nGobjManager_LookupGOBJ_cObjectIdR(id);
         if (obj != NULL && (force || F_(obj, 0x58, int) != 0)) {
-            int en = (unsigned char) TeamTable_AreEnemies(F_(g_LocalPlayer, 0x30, int), obj);
+            int en = (unsigned char) cGOBJ_Enemy(F_(g_LocalPlayer, 0x30, int), obj);
             {
                 MRec* p;
                 {
                     AllocGuard g;
-                    p = (MRec*)Mem_Alloc(0, 0x34, &D_004A8F60, 0x1D6);
+                    p = (MRec*)cMemMan_Allocate(0, 0x34, &D_004A8F60, 0x1D6);
                 }
-                if (p != NULL) p = (MRec*)ObjMarkerRecord_Init(p);
+                if (p != NULL) p = (MRec*)cHudTargetInfo_ctor(p);
                 rec = p;
             }
             It b2;
             rec->id = *id;
             rec->kind = 0;
-            ObjMarker_ConstructIcon(rec, en);
+            cHudTargetInfo_SetModel(rec, en);
             {
                 beg2(&b2, mgr);
                 char* n = b2.p;
@@ -93,7 +93,7 @@ extern "C" int HudTargets_Add(char* mgr, int* id, int force) {
                     o->OnAdd(rec);
                 }
             }
-            ObjMarkerList_Append(mgr + 0xC, &rec);
+            std_list_cHudTargetInfoPtr_push_back(mgr + 0xC, &rec);
             return 1;
         }
     }

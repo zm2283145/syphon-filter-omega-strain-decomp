@@ -13,15 +13,15 @@
 
 #include "loose03_types.h"
 
-extern void GuiPersonnelScreen_Wake(GuiPersonnelScreen*);   /* GuiPersonnelScreen slot 5 */
-extern int Heap_ReleaseSlot(int);                      /* mem.cc */
-extern int Heap_AllocSlot(int, int, int);            /* mem.cc */
+extern void GuiPersonnelScreen_onWake(GuiPersonnelScreen*);   /* GuiPersonnelScreen slot 5 */
+extern int cMemMan_ReleaseBin(int);                      /* mem.cc */
+extern int cMemMan_Init_int_uint_uint(int, int, int);            /* mem.cc */
 
 /* Calls the base implementation, then two mem.cc functions. */
-int GuiPersonnelMenu_Wake(GuiPersonnelScreen* self) {
-    GuiPersonnelScreen_Wake(self);
-    Heap_ReleaseSlot(1);
-    return Heap_AllocSlot(1, 0x100000, 2048);
+int GuiPersonnelMenu_onWake(GuiPersonnelScreen* self) {
+    GuiPersonnelScreen_onWake(self);
+    cMemMan_ReleaseBin(1);
+    return cMemMan_Init_int_uint_uint(1, 0x100000, 2048);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00355790 */
@@ -38,13 +38,13 @@ int GuiPersonnelMenu_Wake(GuiPersonnelScreen* self) {
 
 struct VC003557D0 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(...); };
 extern "C" {
-int String_CtorCStr_13B480(...);                 
+int std_basic_string_char_char_traits_char_ctor_charP(...);                 
 int String_Dtor(...);                            
-int String_AssignString(...);                          
-int GuiPersonnelMenu_ToggleDetail(...);                         
-int GuiPersonnelScreen_Init(...);                                  
-void **GuiWidget_FindChildByName(...);                  
-int GuiArrayWidget_RowHeight(...);                       
+int std_basic_string_char_char_traits_char_assign_basicstringR(...);                          
+int GuiPersonnelMenu_SetMode(...);                         
+int GuiPersonnelScreen_onAdd(...);                                  
+void **GuiWidget_FindChild_charP(...);                  
+int GuiArrayWidget_SetRowHeight(...);                       
 extern "C" char D_004BB098[];
 extern "C" char D_004BB0A8[];
 extern "C" char D_004BB0B8[];
@@ -56,37 +56,37 @@ static void * const dat_00492C68[2] = { (void*)D_004BB0C8, (void*)0x0 };
 extern char D_004B88F0;
 extern char D_004BB0F8;
 }
-extern "C" void GuiPersonnelMenu_Init(char * arg0) {
+extern "C" void GuiPersonnelMenu_onAdd(char * arg0) {
     int sp40[4];
     int sp30[4];
     void **temp_v1;
     void **var_s0;
     char * temp_a0;
 
-    GuiPersonnelScreen_Init();
-    String_CtorCStr_13B480(sp40, &D_004BB0F8);
-    String_AssignString(arg0 + 0x6C, sp40);
+    GuiPersonnelScreen_onAdd();
+    std_basic_string_char_char_traits_char_ctor_charP(sp40, &D_004BB0F8);
+    std_basic_string_char_char_traits_char_assign_basicstringR(arg0 + 0x6C, sp40);
     String_Dtor(sp40, 0);
-    String_CtorCStr_13B480(sp30, &D_004BB0F8);
-    String_AssignString(arg0 + 0x78, sp30);
+    std_basic_string_char_char_traits_char_ctor_charP(sp30, &D_004BB0F8);
+    std_basic_string_char_char_traits_char_assign_basicstringR(arg0 + 0x78, sp30);
     String_Dtor(sp30, 0);
     F_(arg0, 0x84, signed char) = 0;
     F_(arg0, 0x88, int) = -1;
     F_(arg0, 0x8C, int) = 0;
     F_(arg0, 0x90, int) = 0;
-    var_s0 = GuiWidget_FindChildByName(arg0, (*(int*)dat_00492C60));
+    var_s0 = GuiWidget_FindChild_charP(arg0, (*(int*)dat_00492C60));
     F_(arg0, 0x98, int) = (int)(((var_s0 != NULL) && (((VC003557D0 *)(var_s0))->v20(&D_004B88F0) != 0)) ? var_s0 : NULL);
     temp_v1 = (void **)(F_(arg0, 0x98, int));
     if (temp_v1 != NULL) {
         F_(temp_v1, 0x70, int) = 0x42B40000;
     }
-    F_(arg0, 0x9C, int) = (int)(GuiWidget_FindChildByName(arg0, (*(int*)dat_00492C50)));
-    F_(arg0, 0xA0, int) = (int)(GuiWidget_FindChildByName(arg0, (*(int*)dat_00492C58)));
-    F_(arg0, 0xA4, int) = (int)(GuiWidget_FindChildByName(arg0, (*(int*)dat_00492C68)));
+    F_(arg0, 0x9C, int) = (int)(GuiWidget_FindChild_charP(arg0, (*(int*)dat_00492C50)));
+    F_(arg0, 0xA0, int) = (int)(GuiWidget_FindChild_charP(arg0, (*(int*)dat_00492C58)));
+    F_(arg0, 0xA4, int) = (int)(GuiWidget_FindChild_charP(arg0, (*(int*)dat_00492C68)));
     F_(arg0, 0xF4, signed char) = 0;
     temp_a0 = (char *)(F_(arg0, 0x48, int));
-    GuiArrayWidget_RowHeight(temp_a0, F_(temp_a0, 0x5C, int) - 2);
-    GuiPersonnelMenu_ToggleDetail(arg0, 0);
+    GuiArrayWidget_SetRowHeight(temp_a0, F_(temp_a0, 0x5C, int) - 2);
+    GuiPersonnelMenu_SetMode(arg0, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003557D0 */
@@ -96,8 +96,8 @@ extern "C" void GuiPersonnelMenu_Init(char * arg0) {
 typedef struct { char unused; } Alloc003491C0; /* empty allocator object passed by value */
 typedef struct { int w0, w4, w8; } Str003491C0;
 extern int strlen(const char* s);
-extern void String_Reserve(Str003491C0* str, int n);
-extern void String_Replace(Str003491C0* str, int pos, int count, const char* first, const char* last, Alloc003491C0 alloc);
+extern void std_basic_string_char_char_traits_char_reserve(Str003491C0* str, int n);
+extern void std_basic_string_char_char_traits_char_do_replace(Str003491C0* str, int pos, int count, const char* first, const char* last, Alloc003491C0 alloc);
 /* Construct a string from a C string. */
 Str003491C0* String_CtorCStr_355920(Str003491C0* str, const char* s)
 {
@@ -107,8 +107,8 @@ Str003491C0* String_CtorCStr_355920(Str003491C0* str, const char* s)
     str->w4 = 0;
     str->w8 = 0;
     n = strlen(s);
-    String_Reserve(str, n);
-    String_Replace(str, 0, 0, s, s + n, alloc);
+    std_basic_string_char_char_traits_char_reserve(str, n);
+    std_basic_string_char_char_traits_char_do_replace(str, 0, 0, s, s + n, alloc);
     return str;
 }
 #pragma pop /* merge_units */

@@ -43,7 +43,7 @@ extern "C" {
 void cString_opAssign(void* destination, const void* source);
 void std_vector_deleter_Item_clear(TextListEntryVec* entries);
 void String_Dtor_138350(TextListEntry* entries, int flags);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
 void opDelete_ItemP_int_bool_charP_etc(TextListEntry* allocation, int pool, int destroy,
                    char* file, int line);
@@ -106,7 +106,7 @@ extern "C" void opDelete_ItemP_int_bool_charP_etc(TextListEntry* allocation, int
     AllocGuard guard;
     if (destroy && allocation)
         String_Dtor_138350(allocation, -1);
-    Mem_Free(pool, allocation, file, line);
+    cMemMan_Deallocate(pool, allocation, file, line);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00422F10 */
@@ -133,8 +133,8 @@ typedef struct TextStringAllocator {
 } TextStringAllocator;
 
 extern "C" {
-void String_Reserve(TextStringValue* string, unsigned int capacity);
-TextStringValue* String_Replace(TextStringValue* string, unsigned int position,
+void std_basic_string_char_char_traits_char_reserve(TextStringValue* string, unsigned int capacity);
+TextStringValue* std_basic_string_char_char_traits_char_do_replace(TextStringValue* string, unsigned int position,
                                 unsigned int count, const char* first,
                                 const char* last, TextStringAllocator allocator);
 }
@@ -149,8 +149,8 @@ extern "C" TextStringValue* func_00423160(TextStringValue* self, const TextStrin
         self->longString.word = 0;
         self->longString.length = 0;
         self->longString.data = 0;
-        String_Reserve(self, source->longString.length);
-        String_Replace(self, 0, 0, source->longString.data,
+        std_basic_string_char_char_traits_char_reserve(self, source->longString.length);
+        std_basic_string_char_char_traits_char_do_replace(self, 0, 0, source->longString.data,
                        source->longString.data + source->longString.length, allocator);
     }
     return self;
@@ -170,7 +170,7 @@ extern "C" TextStringValue* func_004231F0(TextStringValue* self, unsigned int po
         data = source->longString.data;
         length = source->longString.length;
     }
-    return String_Replace(self, position, count, data, data + length, allocator);
+    return std_basic_string_char_char_traits_char_do_replace(self, position, count, data, data + length, allocator);
 }
 #pragma pop /* merge_units */
 /* merge_units: end guiTextListWidget_423160 */

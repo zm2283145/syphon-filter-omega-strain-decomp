@@ -1,7 +1,7 @@
 #include "types.h"
 
 /* Converts degrees to radians. */
-float Math_DegToRad(float deg)
+float Deg2Rad(float deg)
 {
     return 0.017453292f * deg;
 }

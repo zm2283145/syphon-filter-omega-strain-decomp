@@ -19,8 +19,8 @@ extern "C" {
 extern unsigned char D_0055C780[];
 extern char D_004DE158[];
 extern int D_0051EE78;
-extern void Mtx_ToEuler(V4* out, M4* m);
-extern bool NetObj_SendMessage(int a, int b, void* c, int target, int type);
+extern void cEulerAngle_T_1_2_ctor_cMatrixR(V4* out, M4* m);
+extern bool cNetObj_SendMessage_int_int_ucharP_int_etc(int a, int b, void* c, int target, int type);
 bool netCreateNPC_SendCreated(int idx, int a1, int a2, M4* m, const char* str, short* sh, unsigned char b1, unsigned char b2, int sv);
 void* memset(void* d, int c, unsigned int n);
 unsigned int strlen(const char* s);
@@ -50,7 +50,7 @@ bool netCreateNPC_SendCreated(int idx, int a1, int a2, M4* m, const char* str, s
     if (IsConnected(idx)) {
         msg.name = D_004DE158;
         msg.a1 = a1;
-        Mtx_ToEuler(&e, m);
+        cEulerAngle_T_1_2_ctor_cMatrixR(&e, m);
         msg.rot.x = e.x; msg.rot.y = e.y; msg.rot.z = e.z;
         Q1(&p, &m->r[3]);
         msg.pos.x = p.x;
@@ -62,7 +62,7 @@ bool netCreateNPC_SendCreated(int idx, int a1, int a2, M4* m, const char* str, s
         for (i = 0; i != 6; i++) msg.arr[i] = sh[i];
         msg.b1 = b1;
         msg.b2 = b2;
-        Msg7110* pm = &msg; if (NetObj_SendMessage(D_0051EE78, 0x50, pm, idx, 0x40)) ret = true;
+        Msg7110* pm = &msg; if (cNetObj_SendMessage_int_int_ucharP_int_etc(D_0051EE78, 0x50, pm, idx, 0x40)) ret = true;
     }
     return ret;
 }

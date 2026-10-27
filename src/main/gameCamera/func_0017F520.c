@@ -1,9 +1,9 @@
 #pragma cplusplus on
 #include "types.h"
-/* VecCurve_InitState: set up a vector camera curve from v0 toward v1: vtable, the
+/* cSplinedMotion_cVector_ctor: set up a vector camera curve from v0 toward v1: vtable, the
  * from/current/target/start values, t = 0, the two-key spline (cHermiteSpline_cVector_ctor_cVectorR_cVectorR) built from
- * v0 and v1 scaled by 0 (Vec4_Scale), and its cursor reset to the first key (clone of
- * CameraCurve_MakeQuaternion). */
+ * v0 and v1 scaled by 0 (cVector_opMul), and its cursor reset to the first key (clone of
+ * cSplinedMotion_cQuaternion_ctor). */
 struct V4 { float x, y, z, w; V4() {} } __attribute__((aligned(16)));
 struct Keys_F520 { V4 e[4]; };
 struct KeySet_F520 { Keys_F520 keys; int count; int cur; };
@@ -22,13 +22,13 @@ struct CamCurve_F520 {
 };
 extern "C" {
 extern char D_004DA3B0[];
-V4 Vec4_Scale(const V4* b, float s);
+V4 cVector_opMul(const V4* b, float s);
 Keys_F520* cHermiteSpline_cVector_ctor_cVectorR_cVectorR(Keys_F520* m, const V4* a, const V4* b);
-CamCurve_F520* VecCurve_InitState(CamCurve_F520* c, const V4* q0, const V4* q1);
+CamCurve_F520* cSplinedMotion_cVector_ctor(CamCurve_F520* c, const V4* q0, const V4* q1);
 }
 /* 16-byte lq/sq copy macro */
 #define QCOPY(d, s) { const V4* s_ = (s); V4* d_ = (d); __int128 q_; asm volatile { lq q_, 0(s_); sq q_, 0(d_) } }
-CamCurve_F520* VecCurve_InitState(CamCurve_F520* c, const V4* q0, const V4* q1)
+CamCurve_F520* cSplinedMotion_cVector_ctor(CamCurve_F520* c, const V4* q0, const V4* q1)
 {
     c->vt = D_004DA3B0;
     QCOPY(&c->from, q0)
@@ -38,7 +38,7 @@ CamCurve_F520* VecCurve_InitState(CamCurve_F520* c, const V4* q0, const V4* q1)
     c->t = 0.0f;
     {
         KeySet_F520* k = &c->set;
-        V4 z = Vec4_Scale(q1, 0.0f);
+        V4 z = cVector_opMul(q1, 0.0f);
         cHermiteSpline_cVector_ctor_cVectorR_cVectorR(&k->keys, q0, &z);
         k->count = 0;
         k->cur = 0;

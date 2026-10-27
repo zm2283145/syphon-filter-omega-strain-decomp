@@ -6,16 +6,16 @@ struct Think_f4 { Npc_f4* npc; int id; };
 extern "C" {
 extern char D_0049B670[];
 extern char g_NpcThinkList[];
-void* Mem_Alloc(int, int, char*, int);
+void* cMemMan_Allocate(int, int, char*, int);
 void std_list_cActiveListItemPtr_push_back(void*, Think_f4**);
 }
-extern "C" void NpcThinkList_Add(Npc_f4* npc)
+extern "C" void cNPC_AddToActiveList(Npc_f4* npc)
 {
     Think_f4* t[1];
     Think_f4* p;
     {
         AllocGuard g;
-        p = (Think_f4*)Mem_Alloc(0, 8, D_0049B670, 0x116);
+        p = (Think_f4*)cMemMan_Allocate(0, 8, D_0049B670, 0x116);
     }
     if (p) {
         int* src;

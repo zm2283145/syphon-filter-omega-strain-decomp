@@ -15,7 +15,7 @@
 #include "types.h"
 #include "loose04_types.h"
 
-extern L4Iter* List_InsertBefore(L4Iter* out, void* list, L4Iter* pos, int value);
+extern L4Iter* std_list_deleter_voidPtr_insert(L4Iter* out, void* list, L4Iter* pos, int value);
 extern int std_list_GuiWidgetPtr_push_back_GuiWidgetPR(L4ScalarCollection* coll, GuiWidget** value);
 
 /* Adds child to the widget: sets its parent and appends it to the child collection. */
@@ -32,7 +32,7 @@ L4Iter* func_0041DD90(void* list, int value) {
     L4Iter it[2];
 
     it[0].node = (L4Node*)((char*)list + 4);
-    return List_InsertBefore(&it[1], list, &it[0], value);
+    return std_list_deleter_voidPtr_insert(&it[1], list, &it[0], value);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0041DD60 */
@@ -44,7 +44,7 @@ L4Iter* func_0041DD90(void* list, int value) {
 #include "gui_traversal_types.h"
 
 extern "C" {
-void List_Begin(ChildIterator* result, ChildList* list);
+void std_list_deleter_voidPtr_begin_void(ChildIterator* result, ChildList* list);
 void std_list_GuiWidgetPtr_generic_iterator_ctor(ChildIterator* result, const ChildIterator* source);
 void std_list_GuiWidgetPtr_end(ChildIterator* result, ChildList* list);
 void cLListIterator_GuiWidgetPtr_ctor_listR(ChildIterator* result, const ChildIterator* source);
@@ -68,7 +68,7 @@ extern "C" int GuiWidget_SendSiblingMessage(TraversalWidget* self, int message, 
     TraversalWidget* parent = self->parent;
     if (!parent)
         return 0;
-    List_Begin(&rawBegin, &parent->children);
+    std_list_deleter_voidPtr_begin_void(&rawBegin, &parent->children);
     std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildList* children = &parent->children;
     ChildNode* node = begin.node;
@@ -85,13 +85,13 @@ extern "C" int GuiWidget_SendSiblingMessage(TraversalWidget* self, int message, 
 }
 
 /* Dispatch depth-first through the descendants, with each parent as sender. */
-extern "C" int GuiWidget_BroadcastEvent(TraversalWidget* self, int message, int first, int second)
+extern "C" int GuiWidget_SendChildrenMessage(TraversalWidget* self, int message, int first, int second)
 {
     ChildIterator end;
     ChildIterator begin;
     ChildIterator rawBegin;
     ChildIterator rawEnd;
-    List_Begin(&rawBegin, &self->children);
+    std_list_deleter_voidPtr_begin_void(&rawBegin, &self->children);
     std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
     std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
@@ -99,7 +99,7 @@ extern "C" int GuiWidget_BroadcastEvent(TraversalWidget* self, int message, int 
     while (node != end.node) {
         if (notify(node->widget, self, message, first, second))
             return 1;
-        if (GuiWidget_BroadcastEvent(node->widget, message, first, second))
+        if (GuiWidget_SendChildrenMessage(node->widget, message, first, second))
             return 1;
         node = node->next;
         std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
@@ -109,7 +109,7 @@ extern "C" int GuiWidget_BroadcastEvent(TraversalWidget* self, int message, int 
 }
 
 /* Bubble a message through the parent chain until a handler accepts it. */
-extern "C" int GuiWidget_SendEventUp(TraversalWidget* self, int message, int first, int second)
+extern "C" int GuiWidget_SendParentsMessage(TraversalWidget* self, int message, int first, int second)
 {
     TraversalWidget* parent = self->parent;
     while (parent) {
@@ -138,7 +138,7 @@ struct Handler {
 typedef struct Widget { char pad[0x44]; Handler* handler; /* +0x44 */ } Widget;
 
 /* Passes arg to the widget's handler (virtual +0x3C); 0 without a widget. */
-extern "C" int GuiWidget_SendEvent(void* arg, Widget* widget)
+extern "C" int GuiWidget_SendMessage(void* arg, Widget* widget)
 {
     if (widget)
         return widget->handler->Method3C(arg);
@@ -153,10 +153,10 @@ extern "C" int GuiWidget_SendEvent(void* arg, Widget* widget)
 #pragma cplusplus on
 
 extern "C" {
-GuiFocusManager* Gui_GetScreenStack(void);
-void GuiScreen_SetFocus(GuiFocusManager* manager, TraversalWidget* selected);
-void GuiWidget_CheckSleep(TraversalWidget* self);
-void GuiWidget_DrawFocusHighlight(TraversalWidget* self, const Vec4* color);
+GuiFocusManager* Gui_Canvas(void);
+void GuiCanvas_SetFocus(GuiFocusManager* manager, TraversalWidget* selected);
+void GuiWidget_CheckSleepStatus(TraversalWidget* self);
+void GuiWidget_RenderFrame(TraversalWidget* self, const Vec4* color);
 unsigned int D_004BF3C0[1] = { 0x0 };
 }
 
@@ -185,16 +185,16 @@ extern "C" void GuiWidget_Activate(TraversalWidget* self, int enabled)
     if ((unsigned char)enabled != ((self->flags & 4) != 0)) {
         if (enabled) {
             self->flags |= 4;
-            if (!Gui_GetScreenStack()->selected) {
-                GuiFocusManager* manager = Gui_GetScreenStack();
-                GuiScreen_SetFocus(manager, self->first_descendant());
+            if (!Gui_Canvas()->selected) {
+                GuiFocusManager* manager = Gui_Canvas();
+                GuiCanvas_SetFocus(manager, self->first_descendant());
             }
         } else {
-            if (Gui_GetScreenStack()->selected == self) {
+            if (Gui_Canvas()->selected == self) {
                 TraversalWidget* next = self->owner->find_forward(self, 1);
                 if (next == self)
                     next = 0;
-                GuiScreen_SetFocus(Gui_GetScreenStack(), next);
+                GuiCanvas_SetFocus(Gui_Canvas(), next);
             }
             self->flags &= ~4;
         }
@@ -202,31 +202,31 @@ extern "C" void GuiWidget_Activate(TraversalWidget* self, int enabled)
 }
 
 /* Notify ancestors with message 2, stopping when a handler accepts it. */
-extern "C" void GuiWidget_BubbleActivate(TraversalWidget* self)
+extern "C" void GuiWidget_onAction(TraversalWidget* self)
 {
     bubble_message(self, 2);
 }
 
 /* Notify ancestors with message 1, stopping when a handler accepts it. */
-extern "C" void GuiWidget_BubbleType1(TraversalWidget* self)
+extern "C" void GuiWidget_onLoseFocus(TraversalWidget* self)
 {
     bubble_message(self, 1);
 }
 
 /* Notify ancestors with message 0, stopping when a handler accepts it. */
-extern "C" void GuiWidget_BubbleType0(TraversalWidget* self)
+extern "C" void GuiWidget_onGainFocus(TraversalWidget* self)
 {
     bubble_message(self, 0);
 }
 
 /* Update every child handler before checking pending completion on the parent. */
-extern "C" void GuiWidget_Update(TraversalWidget* self, float elapsed)
+extern "C" void GuiWidget_onAdvanceTime(TraversalWidget* self, float elapsed)
 {
     ChildIterator end;
     ChildIterator begin;
     ChildIterator rawBegin;
     ChildIterator rawEnd;
-    List_Begin(&rawBegin, &self->children);
+    std_list_deleter_voidPtr_begin_void(&rawBegin, &self->children);
     std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
     std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
@@ -237,17 +237,17 @@ extern "C" void GuiWidget_Update(TraversalWidget* self, float elapsed)
         std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
         cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
-    GuiWidget_CheckSleep(self);
+    GuiWidget_CheckSleepStatus(self);
 }
 
 /* Draw visible children and optionally render the current focus indicator. */
-extern "C" void GuiWidget_Draw(TraversalWidget* self)
+extern "C" void GuiWidget_onRender(TraversalWidget* self)
 {
     ChildIterator end;
     ChildIterator begin;
     ChildIterator rawBegin;
     ChildIterator rawEnd;
-    List_Begin(&rawBegin, &self->children);
+    std_list_deleter_voidPtr_begin_void(&rawBegin, &self->children);
     std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, &rawBegin);
     ChildNode* node = begin.node;
     std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
@@ -260,8 +260,8 @@ extern "C" void GuiWidget_Draw(TraversalWidget* self)
         std_list_GuiWidgetPtr_end(&rawEnd, &self->children);
         cLListIterator_GuiWidgetPtr_ctor_listR(&end, &rawEnd);
     }
-    if ((self->flags & 0x100) && Gui_GetScreenStack()->selected == self)
-        GuiWidget_DrawFocusHighlight(self, &(*(Vec4*)D_004BF3C0));
+    if ((self->flags & 0x100) && Gui_Canvas()->selected == self)
+        GuiWidget_RenderFrame(self, &(*(Vec4*)D_004BF3C0));
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0041E130 */

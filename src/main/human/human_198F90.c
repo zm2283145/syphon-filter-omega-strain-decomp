@@ -30,8 +30,8 @@ extern unsigned char g_IsMultiplayer;
 extern char D_004EEE98[];
 extern char D_004DA9D0[]; /* message vtable */
 extern char D_004DCF10[]; /* base message vtable */
-extern void Event_Construct(HumanMsg_00198F90* msg, void* name);
-extern void Event_Send(HumanMsg_00198F90* msg, void* target, int flags);
+extern void cMessage_ctor_cMessageNameR(HumanMsg_00198F90* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(HumanMsg_00198F90* msg, void* target, int flags);
 extern void cMessage_dtor(HumanMsg_00198F90* msg, int flags);
 
 /* Stores the byte at +0x346C and, when g_IsMultiplayer is set and not silent, broadcasts it. */
@@ -39,13 +39,13 @@ void Actor_SetStunImmune(Human_00198F90* self, unsigned char value, int silent) 
     HumanMsg_00198F90 msg;
     self->value = value;
     if (g_IsMultiplayer && !silent) {
-        Event_Construct(&msg, D_004EEE98);
+        cMessage_ctor_cMessageNameR(&msg, D_004EEE98);
         msg.vtable = D_004DA9D0;
         msg.extra = 2;
         msg.kind = 4;
         msg.size = 0x40;
         msg.value = value;
-        Event_Send(&msg, self, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, self, 0);
         msg.vtable = D_004DCF10;
         cMessage_dtor(&msg, 0);
     }
@@ -74,14 +74,14 @@ typedef struct Human_00199040 {
     unsigned char value;
 } Human_00199040;
 #if 0 /* merge_units */
-extern void Event_Construct(HumanMsg_00199040* msg, void* name);
+extern void cMessage_ctor_cMessageNameR(HumanMsg_00199040* msg, void* name);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Event_Send(HumanMsg_00199040* msg, void* target, int flags);
+extern void QueueMessage_cMessageR_cSystemP_int(HumanMsg_00199040* msg, void* target, int flags);
 #endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((void *)(a0), (a1), (a2))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(HumanMsg_00199040* msg, int flags);
@@ -94,19 +94,19 @@ void Actor_SetNotGasable(Human_00199040* self, unsigned char value, int silent) 
     HumanMsg_00199040 msg;
     self->value = value;
     if (g_IsMultiplayer && !silent) {
-        Event_Construct(&msg, D_004EEE98);
+        cMessage_ctor_cMessageNameR(&msg, D_004EEE98);
         msg.vtable = D_004DA9D0;
         msg.extra = 1;
         msg.kind = 4;
         msg.size = 0x40;
         msg.value = value;
-        Event_Send(&msg, self, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, self, 0);
         msg.vtable = D_004DCF10;
         cMessage_dtor(&msg, 0);
     }
 }
-#undef Event_Construct /* merge_units */
-#undef Event_Send /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00199040(void) {}

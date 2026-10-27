@@ -21,15 +21,15 @@ typedef struct Widget {
     void* unk4C;    /* +0x4C */
 } Widget;
 
-extern "C" void HudMap_Draw(void* p);
-extern "C" void GuiWidget_Draw(Widget* self);
+extern "C" void cMap_Render(void* p);
+extern "C" void GuiWidget_onRender(Widget* self);
 
-/* Sets flag 0x2 on the +0x48 object while notifying its +0x44 child (virtual +0x30), then HudMap_Draw(+0x4C) and GuiWidget_Draw(self). */
-extern "C" void GuiMapScreen_Draw(Widget* self)
+/* Sets flag 0x2 on the +0x48 object while notifying its +0x44 child (virtual +0x30), then cMap_Render(+0x4C) and GuiWidget_onRender(self). */
+extern "C" void GuiMapScreen_onRender(Widget* self)
 {
     self->holder->flags |= 2;
     self->holder->child->Method30();
     self->holder->flags &= ~2;
-    HudMap_Draw(self->unk4C);
-    GuiWidget_Draw(self);
+    cMap_Render(self->unk4C);
+    GuiWidget_onRender(self);
 }

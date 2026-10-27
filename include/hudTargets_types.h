@@ -20,7 +20,7 @@ typedef struct ListPos {
     ListNode* node;
 } ListPos;
 
-/* 12-byte collection header (initialized by ScalarCollection_Init). */
+/* 12-byte collection header (initialized by std_list_deleter_voidPtr_ctor_void). */
 typedef struct MarkerList {
     int unk00;
     int unk04;                      /* 0x04 end sentinel */

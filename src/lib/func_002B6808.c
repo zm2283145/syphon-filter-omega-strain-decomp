@@ -2,7 +2,7 @@ extern char *strrchr(const char *, int);
 extern unsigned int strlen(const char *);
 extern int strcmp(const char *, const char *);
 extern char *strcpy(char *, const char *);
-extern void String_Copy(char *, char *);
+extern void Libc_Strcpy(char *, char *);
 extern char *_strtok(char *, char *);
 extern char *Libc_Strcat(char *, char *);
 extern char D_004AC1B0[];
@@ -13,7 +13,7 @@ int _make_path(int idx, char *path, char *out)
 {
     char *tok;
     if (strlen(path) >= 0x80) return 0;
-    String_Copy(out, D_00513490[idx].cwd);
+    Libc_Strcpy(out, D_00513490[idx].cwd);
     if (*path == '/') {
         strcpy(out, "/");
         tok = _strtok(path + 1, "/");

@@ -13,7 +13,7 @@ static inline void QCopy_18C6D0(void* d0, void* s0) { int n = 3; void* d = d0; v
         .set reorder
     }
 }
-MR_18C6D0* MotionRequest_Construct(MR_18C6D0* d, MR_18C6D0* s)
+MR_18C6D0* cString16N_3_ctor_cString16NR(MR_18C6D0* d, MR_18C6D0* s)
 {
     QCopy_18C6D0(d, s);
     return d;

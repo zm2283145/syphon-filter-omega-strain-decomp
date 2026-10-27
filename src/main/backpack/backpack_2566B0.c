@@ -13,7 +13,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_002566B0 */
 #pragma push /* merge_units */
@@ -32,9 +32,9 @@ public:
     int serial;
 };
 extern "C" {
-RT_66B0* Hotbox_CreateRuntime(int, S_66B0*, int, int);
+RT_66B0* cHotboxMan_CreateInteractBox(int, S_66B0*, int, int);
 int ItemInv_Any(int);
-void Object_Register(S_66B0*);
+void nGobjManager_AddGOBJ(S_66B0*);
 }
 extern int g_HotboxTracker;
 static inline T_66B0* Get_66B0(S_66B0* s) { T_66B0* t = s->tgt; bool ok = !t || t->serial == s->serial; return ok ? t : 0; }
@@ -65,7 +65,7 @@ static inline unsigned char CanB(S_66B0* s)
     return r;
 }
 
-extern "C" void Backpack_SetOwner(S_66B0* s, T_66B0* t)
+extern "C" void cBackpack_SetBody(S_66B0* s, T_66B0* t)
 {
     s->tgt = t;
     {
@@ -77,9 +77,9 @@ extern "C" void Backpack_SetOwner(S_66B0* s, T_66B0* t)
     if (CanA(s) || CanB(s) || (t && ItemInv_Any(t->inv))) {
         if (!s->rt) {
             s->Enable(1);
-            Object_Register(s);
+            nGobjManager_AddGOBJ(s);
             if (!s->rt) {
-                s->rt = Hotbox_CreateRuntime(g_HotboxTracker, s, 0, 1);
+                s->rt = cHotboxMan_CreateInteractBox(g_HotboxTracker, s, 0, 1);
                 s->rt->id = s->id;
             }
         }
@@ -97,8 +97,8 @@ typedef struct { int pad0; int count; A2O256** items; } A2L256;
 extern float D_004F7F70;
 extern A2L256* g_BackpackList;
 extern float D_0048AF18;
-extern void Backpack_Destroy(A2O256* o);
-void Backpack_Tick(float dt) {
+extern void cBackpack_Remove(A2O256* o);
+void cBackpack_Update(float dt) {
     A2L256* l;
     int i;
     float* t;
@@ -109,7 +109,7 @@ void Backpack_Tick(float dt) {
         if (!(*t < 0.0f)) {
             *t += dt;
             if (!(l->items[i]->t <= D_0048AF18)) {
-                Backpack_Destroy(l->items[i--]);
+                cBackpack_Remove(l->items[i--]);
             }
         }
     }
@@ -125,8 +125,8 @@ static inline void merge_flush_func_002568F0(void) {}
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 struct Raw_69C0 { int p; };
 extern "C" {
-void ObjectList_EraseRange(int*, void*, char**, char**);
-Raw_69C0 List_Begin(void*);
+void std_list_deleter_voidPtr_erase_listdeleter_listdeleter(int*, void*, char**, char**);
+Raw_69C0 std_list_deleter_voidPtr_begin_void(void*);
 Raw_69C0 std_list_CrateSavePtr_end(void*);
 void std_list_CrateSavePtr_generic_iterator_ctor(char**, const Raw_69C0&);
 void cLListIterator_CrateSavePtr_ctor(char**, const Raw_69C0&);
@@ -141,13 +141,13 @@ extern "C" void cBackpack_PurgeCrateSaves(void) {
         {
             char* n;
             char* it;
-            std_list_CrateSavePtr_generic_iterator_ctor(&it, List_Begin(&D_004F7F48));
+            std_list_CrateSavePtr_generic_iterator_ctor(&it, std_list_deleter_voidPtr_begin_void(&D_004F7F48));
             n = it;
             while ((cLListIterator_CrateSavePtr_ctor(&end, std_list_CrateSavePtr_end(&D_004F7F48)), n != end)) {
                 void* e = F_(n, 0x8, void*);
                 {
                     AllocGuard g;
-                    Mem_Free(0, e, "backpack.cc", 0x202);
+                    cMemMan_Deallocate(0, e, "backpack.cc", 0x202);
                 }
                 n = F_(n, 0x4, char*);
             }
@@ -158,7 +158,7 @@ extern "C" void cBackpack_PurgeCrateSaves(void) {
             char* last;
             last = &D_004F7F4C;
             first = D_004F7F50;
-            ObjectList_EraseRange(&res, &D_004F7F48, &first, &last);
+            std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&res, &D_004F7F48, &first, &last);
         }
     }
 }

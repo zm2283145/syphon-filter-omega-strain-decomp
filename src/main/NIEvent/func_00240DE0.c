@@ -32,7 +32,7 @@ extern char D_004A7158[];
 extern char D_004A7188[];
 void std_swap_vectordeleterR_vectordeleterR_20(V_00240DE0* a, V_00240DE0* b);
 }
-extern "C" void Vector_Insert_240DE0(V_00240DE0* v, E_00240DE0* pos, unsigned int n, const E_00240DE0* value)
+extern "C" void std_vector_imp_VectorKey_insert(V_00240DE0* v, E_00240DE0* pos, unsigned int n, const E_00240DE0* value)
 {
     unsigned int maxN;
     if (n == 0)

@@ -7,10 +7,10 @@ typedef struct Obj2D35 {
 
 extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
-extern void cNPC_v46(Obj2D35* self, int kind, int arg);
-extern void NetEvent_Send(void* owner, int msg, int len, int a, int b, int c, int d);
+extern void cNPC_SetFireMode(Obj2D35* self, int kind, int arg);
+extern void cNetNPCMsgs_SendMessage(void* owner, int msg, int len, int a, int b, int c, int d);
 
-/* Forwards to cNPC_v46 when enabled, then sends message 0xC to the owner. */
+/* Forwards to cNPC_SetFireMode when enabled, then sends message 0xC to the owner. */
 void cNetNPC_SetFireMode(Obj2D35* self, int kind, int arg) {
     int enabled;
     if (g_IsMultiplayer) {
@@ -19,7 +19,7 @@ void cNetNPC_SetFireMode(Obj2D35* self, int kind, int arg) {
         enabled = 1;
     }
     if (enabled) {
-        cNPC_v46(self, kind, arg);
+        cNPC_SetFireMode(self, kind, arg);
     }
-    NetEvent_Send(self->owner, 0xC, 8, (unsigned char)kind, arg, 0, 0);
+    cNetNPCMsgs_SendMessage(self->owner, 0xC, 8, (unsigned char)kind, arg, 0, 0);
 }

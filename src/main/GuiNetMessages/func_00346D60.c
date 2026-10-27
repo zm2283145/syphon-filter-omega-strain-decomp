@@ -5,36 +5,36 @@ extern char D_004BA310[];
 extern char D_004BA328[];
 extern char D_004BA338[];
 extern void* D_004FFC04;
-extern int Gui_GetScreenList(void);
-extern int Gui_GetScreenStack(void);
-extern void* GuiManager_FindOrLoad(int, char*, char*);
-extern void* DME_GetLobby(void);
-extern int GuiScreen_GetLobbyString(S_46D60*, int, int, int, int, int);
-extern int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, void* d, int e);
-extern void FrontEnd_ClosePopup(void* ui, int p);
-extern void FrontEnd_LeaveOnline(void* ui, int a);
-extern void GuiStack_SwapScreens(int, S_46D60*, void*);
+extern int Gui_Manager(void);
+extern int Gui_Canvas(void);
+extern void* GuiManager_OpenGui(int, char*, char*);
+extern void* cDME_GetLobby(void);
+extern int GuiLobbyScreen_GetLobbyString(S_46D60*, int, int, int, int, int);
+extern int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, int c, void* d, int e);
+extern void cGameFrontEnd_PopMessageBox(void* ui, int p);
+extern void cGameFrontEnd_LobbyDestroy(void* ui, int a);
+extern void GuiCanvas_Transition(int, S_46D60*, void*);
 extern int SFOLobby_MessageGet(void* l, int id);
 extern void GuiNetMessages_MessageSelected(S_46D60* s, int x);
 extern void SFOLobby_MessageAck(void* l, int id, int ok);
-extern void LobbyArray_SetDirty(void* l, int a);
-extern int GuiScreen_HandleEvent(S_46D60* s, void* from, unsigned short ev, int kind, int data);
-int GuiNetMessages_HandleEvent(S_46D60* self, void* from, unsigned short ev, int kind, int data)
+extern void SFOLobbyList_SetUpdateFlag(void* l, int a);
+extern int GuiLobbyScreen_onMessage(S_46D60* s, void* from, unsigned short ev, int kind, int data);
+int GuiNetMessages_onMessage(S_46D60* self, void* from, unsigned short ev, int kind, int data)
 {
     if (kind == 0x19 && ev == 0x1A) {
-        void* scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004BA310, D_004BA328);
-        if (DME_GetLobby()) {
+        void* scr = GuiManager_OpenGui(Gui_Manager(), D_004BA310, D_004BA328);
+        if (cDME_GetLobby()) {
             void* ui = D_004FFC04;
-            int p = FrontEnd_OpenPopup(ui, 0, D_004BA338, GuiScreen_GetLobbyString(self, 0x77, 0, 0, 0, 0), 0, 0);
-            FrontEnd_LeaveOnline(D_004FFC04, 1);
-            FrontEnd_ClosePopup(D_004FFC04, p);
+            int p = cGameFrontEnd_PushMessageBox(ui, 0, D_004BA338, GuiLobbyScreen_GetLobbyString(self, 0x77, 0, 0, 0, 0), 0, 0);
+            cGameFrontEnd_LobbyDestroy(D_004FFC04, 1);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, p);
         }
-        FrontEnd_ClosePopup(D_004FFC04, self->x9C);
-        GuiStack_SwapScreens(Gui_GetScreenStack(), self, scr);
+        cGameFrontEnd_PopMessageBox(D_004FFC04, self->x9C);
+        GuiCanvas_Transition(Gui_Canvas(), self, scr);
         return 1;
     }
     if (ev == 0x14) {
-        void* l = DME_GetLobby();
+        void* l = cDME_GetLobby();
         if (l) {
             self->x98 = data;
             GuiNetMessages_MessageSelected(self, SFOLobby_MessageGet(l, self->x98));
@@ -42,19 +42,19 @@ int GuiNetMessages_HandleEvent(S_46D60* self, void* from, unsigned short ev, int
         return 1;
     }
     if (ev == 2) {
-        void* l = DME_GetLobby();
+        void* l = cDME_GetLobby();
         if (l && SFOLobby_MessageGet(l, self->x98)) {
             if (from == self->x8C || from == self->x94) {
                 SFOLobby_MessageAck(l, self->x98, !(self->x90->flags & 2));
-                LobbyArray_SetDirty((char*)l + 0x1C, 1);
+                SFOLobbyList_SetUpdateFlag((char*)l + 0x1C, 1);
                 return 1;
             }
             if (from == self->x90) {
                 SFOLobby_MessageAck(l, self->x98, 1);
-                LobbyArray_SetDirty((char*)l + 0x1C, 1);
+                SFOLobbyList_SetUpdateFlag((char*)l + 0x1C, 1);
                 return 1;
             }
         }
     }
-    return GuiScreen_HandleEvent(self, from, ev, kind, data);
+    return GuiLobbyScreen_onMessage(self, from, ev, kind, data);
 }

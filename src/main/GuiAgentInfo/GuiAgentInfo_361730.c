@@ -8,23 +8,23 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { char pad[0xB8]; char sB8[0x40]; int aF8; char padFC[0x18]; int a114; int a118; } S361730;
-extern int String_CStr(void* p);
+extern int std_basic_string_char_char_traits_char_c_str(void* p);
 extern void GuiLobbyScreen_CellInviteAgent(S361730* o, int a, int b);
 extern void GuiLobbyScreen_ContactInviteAgent(S361730* o, int a, int b);
-extern int GuiScreen_HandleEvent(S361730* o);
-int GuiAgentInfo_HandleEvent(S361730* o, int id, unsigned short type)
+extern int GuiLobbyScreen_onMessage(S361730* o);
+int GuiAgentInfo_onMessage(S361730* o, int id, unsigned short type)
 {
     if (type == 2) {
         if (id == o->a118) {
-            GuiLobbyScreen_CellInviteAgent(o, o->aF8, String_CStr(o->sB8));
+            GuiLobbyScreen_CellInviteAgent(o, o->aF8, std_basic_string_char_char_traits_char_c_str(o->sB8));
             return 1;
         }
         if (id == o->a114) {
-            GuiLobbyScreen_ContactInviteAgent(o, o->aF8, String_CStr(o->sB8));
+            GuiLobbyScreen_ContactInviteAgent(o, o->aF8, std_basic_string_char_char_traits_char_c_str(o->sB8));
             return 1;
         }
     }
-    return GuiScreen_HandleEvent(o);
+    return GuiLobbyScreen_onMessage(o);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00361730 */
@@ -48,15 +48,15 @@ struct S_3617C0 { char pad[0x10]; W_3617C0* w10; char pad14[0xE8]; int fFC; char
 struct Ev_3617C0 { unsigned short type; unsigned short b2; char pad4[2]; unsigned short b6; unsigned short btn; };
 typedef struct { void* n; } It_3617C0;
 extern "C" {
-L_3617C0* Gui_GetScreenList(void);
-M_3617C0* Gui_GetScreenStack(void);
-void* GuiManager_FindOrLoad(void* mgr, char* a, char* b);
-void GuiStack_SwapScreens(void* mgr, S_3617C0* o, void* w);
+L_3617C0* Gui_Manager(void);
+M_3617C0* Gui_Canvas(void);
+void* GuiManager_OpenGui(void* mgr, char* a, char* b);
+void GuiCanvas_Transition(void* mgr, S_3617C0* o, void* w);
 void cLList_GuiWidgetPtr_Find(It_3617C0* out, void* list, W_3617C0** val);
 void cLList_GuiWidgetPtr_End(It_3617C0* out, void* list);
 int opNe_cLListIteratorR_cLListIteratorR_6(It_3617C0* a, It_3617C0* b);
-int GuiScreen_HandleInput(S_3617C0* o);
-int GuiAgentInfo_HandleInput(S_3617C0* o, Ev_3617C0* ev);
+int GuiLobbyScreen_onInput(S_3617C0* o);
+int GuiAgentInfo_onInput(S_3617C0* o, Ev_3617C0* ev);
 }
 static inline unsigned char Down_3617C0(Ev_3617C0* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Btn_3617C0(Ev_3617C0* e, int b) { unsigned char r = 0; if (Down_3617C0(e) && e->btn == b) r = 1; return r; }
@@ -65,24 +65,24 @@ static inline bool Down2_3617C0(Ev_3617C0* e) { return e->type == 1 && e->b2 == 
 static inline bool Btn2_3617C0(Ev_3617C0* e, int b) { return Down2_3617C0(e) && e->btn == b; }
 static inline bool NoMod2_3617C0(Ev_3617C0* e) { return Down2_3617C0(e) && e->b6 == 0; }
 
-int GuiAgentInfo_HandleInput(S_3617C0* o, Ev_3617C0* ev)
+int GuiAgentInfo_onInput(S_3617C0* o, Ev_3617C0* ev)
 {
     if (Plain_3617C0(ev, 0x10)) {
         if (o->fFC == 0) {
-            void* w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiDossiers", "DOSSIERS");
-            GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
+            void* w = GuiManager_OpenGui(Gui_Manager(), "GuiDossiers", "DOSSIERS");
+            GuiCanvas_Transition(Gui_Canvas(), o, w);
         } else {
             W_3617C0* w = o->w10;
             if (w) {
                 W_3617C0* val = w;
                 It_3617C0 res;
                 It_3617C0 end;
-                L_3617C0* l = Gui_GetScreenList();
+                L_3617C0* l = Gui_Manager();
                 cLList_GuiWidgetPtr_Find(&res, l->list, &val);
                 cLList_GuiWidgetPtr_End(&end, l->list);
                 if (opNe_cLListIteratorR_cLListIteratorR_6(&res, &end)) w->flags |= 2;
             }
-            Gui_GetScreenStack()->Close(o);
+            Gui_Canvas()->Close(o);
         }
         return 1;
     }
@@ -94,7 +94,7 @@ int GuiAgentInfo_HandleInput(S_3617C0* o, Ev_3617C0* ev)
         o->p120->zoom += NoMod2_3617C0(ev) ? 1.0f : -1.0f;
         return 1;
     }
-    return GuiScreen_HandleInput(o);
+    return GuiLobbyScreen_onInput(o);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003617C0 */
@@ -104,17 +104,17 @@ int GuiAgentInfo_HandleInput(S_3617C0* o, Ev_3617C0* ev)
 /*
  * Matched functions (byte-identical with the retail executable).
  * GuiAgentInfo virtual (vtable GuiAgentInfo_vtable slot 2); calls the GuiWidget
- * implementation GuiWidget_Deinit, then cGameFrontEnd_CloseCharacter(D_004FFC04, 0).
+ * implementation GuiWidget_onRemove, then cGameFrontEnd_CloseCharacter(D_004FFC04, 0).
  */
 
 #include "loose03_types.h"
 
 extern int D_004FFC04;
 extern int cGameFrontEnd_CloseCharacter(int, int);
-extern int GuiWidget_Deinit(GuiAgentInfo*);
+extern int GuiWidget_onRemove(GuiAgentInfo*);
 
-int GuiAgentInfo_Deinit(GuiAgentInfo* self) {
-    GuiWidget_Deinit(self);
+int GuiMissionLobbyScreen_onRemove(GuiAgentInfo* self) {
+    GuiWidget_onRemove(self);
     return cGameFrontEnd_CloseCharacter(D_004FFC04, 0);
 }
 #pragma pop /* merge_units */

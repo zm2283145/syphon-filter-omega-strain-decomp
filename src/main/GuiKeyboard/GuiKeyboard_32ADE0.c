@@ -11,7 +11,7 @@
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(GuiKeyboard_dtor)
+DEFINE_BUF_HOLDER_DTOR(std_vector_GuiWidgetPtr_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0032ADE0 */
 
@@ -42,7 +42,7 @@ extern int strcmp(const char* a, const char* b);
 /* "GuiKeyboard" */
 
 /* GuiKeyboard type check: true when name equals the class name "GuiKeyboard". */
-int GuiKeyboard_IsType(void* self, const char* name) {
+int GuiKeyboard_IsClass(void* self, const char* name) {
     return strcmp("GuiKeyboard", name) == 0;
 }
 #pragma pop /* merge_units */

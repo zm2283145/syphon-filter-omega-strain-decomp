@@ -22,7 +22,7 @@ typedef struct { char pad[0xC]; unsigned int id; char pad10[0x48]; F7Sub_21C* su
 typedef struct { F7Sub_21C* target; int arg; } F7Ctx_21C;
 extern "C" {
 extern unsigned char g_IsMultiplayer;
-F7Gen_21C* GObj_IdentityB(int h);
+F7Gen_21C* cGOBJ_SOBJ_convert(int h);
 void cNPCInfoObject_ctor(int* t);
 int cNPCInfoObject_GetOwner_cObjectIdR(int* t, unsigned int* id);
 void cNPCInfoObject_dtor(int* t, int f);
@@ -31,7 +31,7 @@ static inline unsigned char F7IsA(F7Gen_21C* g) { unsigned char r = 0; if (g->su
 static inline unsigned char F7IsB(F7Gen_21C* g) { unsigned char r = 0; if (g->sub && g->sub->IsB()) r = 1; return r; }
 extern "C" int Script_cGenerator_DisableBy(F7Ctx_21C* c)
 {
-    F7Gen_21C* g = GObj_IdentityB(c->arg);
+    F7Gen_21C* g = cGOBJ_SOBJ_convert(c->arg);
     F7Sub_21C* t = c->target;
     if (g_IsMultiplayer) {
         int v = -1;
@@ -71,16 +71,16 @@ typedef struct { char pad[0xC]; unsigned int id; char pad10[0x48]; F8Sub_21C* su
 typedef struct { F8Sub_21C* target; int arg; } F8Ctx_21C;
 extern "C" {
 #if 0 /* merge_units */
-F8Gen_21C* GObj_IdentityB(int h);
+F8Gen_21C* cGOBJ_SOBJ_convert(int h);
 #endif /* merge_units */
-#define GObj_IdentityB(a0) ((F8Gen_21C *)GObj_IdentityB((a0))) /* merge_units */
+#define cGOBJ_SOBJ_convert(a0) ((F8Gen_21C *)cGOBJ_SOBJ_convert((a0))) /* merge_units */
 
 }
 static inline unsigned char F8IsA(F8Gen_21C* g) { unsigned char r = 0; if (g->sub && g->sub->IsA()) r = 1; return r; }
 static inline unsigned char F8IsB(F8Gen_21C* g) { unsigned char r = 0; if (g->sub && g->sub->IsB()) r = 1; return r; }
 extern "C" int Script_cGenerator_EnableBy(F8Ctx_21C* c)
 {
-    F8Gen_21C* g = GObj_IdentityB(c->arg);
+    F8Gen_21C* g = cGOBJ_SOBJ_convert(c->arg);
     F8Sub_21C* t = c->target;
     if (g_IsMultiplayer) {
         int v = -1;
@@ -100,7 +100,7 @@ extern "C" int Script_cGenerator_EnableBy(F8Ctx_21C* c)
     }
     return 0;
 }
-#undef GObj_IdentityB /* merge_units */
+#undef cGOBJ_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0021CDD0(void) {}
 #pragma pop /* merge_units */

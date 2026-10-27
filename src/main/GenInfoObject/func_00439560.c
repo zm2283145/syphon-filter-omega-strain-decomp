@@ -3,8 +3,8 @@
 #define NULL 0
 #pragma mpwc_relax on
 int Alloc_Lock(int);                                    
-int Alloc_Unlock(int);                                  
-int Mem_Free(int, int, char *, int);                         
+int EnableIntc(int);                                  
+int cMemMan_Deallocate(int, int, char *, int);                         
 int NetGetObject(void **, int);                    
 unsigned int D_00497578[2] = { 0xFFFFFFFF, 0x0 };
 extern char D_004BFD60;
@@ -28,9 +28,9 @@ void cGenInfoObject_GenInfoCreationCallback(int d0, int arg1) {
                 Alloc_Lock(9);
             }
             g_ProfileLockDepth += 1;
-            Mem_Free(0, temp_s1, &D_004BFD60, 0x234);
+            cMemMan_Deallocate(0, temp_s1, &D_004BFD60, 0x234);
             if (g_ProfileLockEnabled != 0) {
-                Alloc_Unlock(9);
+                EnableIntc(9);
             }
             g_ProfileLockDepth -= 1;
         }

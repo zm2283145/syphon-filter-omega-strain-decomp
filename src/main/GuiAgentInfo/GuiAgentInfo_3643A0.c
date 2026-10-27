@@ -29,11 +29,11 @@ void *memset(void *, int, int);
 
 extern "C" {
 /*fc*/
-char * Mem_Alloc(...);                      
-int Object_AttachTransform(...);           
+char * cMemMan_Allocate(...);                      
+int cGOBJ_CreateXform(...);           
 int cGOBJ_ctor(...);              
-char * DisplayActor_Construct(...);                 
-int GuiWidget_Init(...);                                  
+char * cSKM_GOBJ_ctor_cObjectIdR(...);                 
+int GuiWidget_onAdd(...);                                  
 extern char D_004BBA20;
 extern char D_004DA470;
 extern unsigned char g_ProfileLockEnabled;
@@ -41,15 +41,15 @@ extern char g_IdentityMatrix;
 }
 #pragma push
 #pragma opt_common_subs off
-extern "C" void GuiAgentDisplay_Init(char * arg0) {
+extern "C" void GuiAgentDisplay_onAdd(char * arg0) {
         int x4C[1];
     char * temp_s1;
     char * var_s1;
 
-    GuiWidget_Init();
+    GuiWidget_onAdd();
     {
         AllocGuard g;
-    temp_s1 = (char *)(Mem_Alloc(0, 0x68, &D_004BBA20, 0x49));
+    temp_s1 = (char *)(cMemMan_Allocate(0, 0x68, &D_004BBA20, 0x49));
     }
     if (temp_s1 != NULL) {
         int x44[1]; int x40[1]; x40[0] = 0;
@@ -58,17 +58,17 @@ extern "C" void GuiAgentDisplay_Init(char * arg0) {
         F_(temp_s1, 0x0, int) = (int)(&D_004DA470);
         F_(temp_s1, 0x60, int) = 0;
         F_(temp_s1, 0x64, int) = 0;
-        Object_AttachTransform(temp_s1, &g_IdentityMatrix, 0);
+        cGOBJ_CreateXform(temp_s1, &g_IdentityMatrix, 0);
         F_(temp_s1, 0x30, int) = 0;
     }
     F_(arg0, 0x90, int) = (int)(temp_s1);
     {
         AllocGuard g;
-    var_s1 = (char *)(Mem_Alloc(0, 0x3030, &D_004BBA20, 0x4C));
+    var_s1 = (char *)(cMemMan_Allocate(0, 0x3030, &D_004BBA20, 0x4C));
     }
     if (var_s1 != NULL) {
         x4C[0] = 0;
-        var_s1 = (char *)(DisplayActor_Construct(var_s1, x4C));
+        var_s1 = (char *)(cSKM_GOBJ_ctor_cObjectIdR(var_s1, x4C));
     }
     F_(arg0, 0x48, int) = (int)(var_s1);
     memset(arg0 + 0xA0, 0, 0x440);

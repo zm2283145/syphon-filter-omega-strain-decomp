@@ -37,7 +37,7 @@ extern "C" {
 extern M g_IdentityMatrix;
 extern signed char D_004E1D88;
 extern V D_004E1D90;
-void Xform_Construct(SkelNode* x);
+void cXformNode_ctor_void(SkelNode* x);
 }
 static inline const V& Zero()
 {
@@ -56,9 +56,9 @@ static inline V QZero()
     __asm__ volatile("sq $0, 0x0(%0)" : : "r"(&t) : "memory");
     return t;
 }
-extern "C" SkelNode* SkelNode_Construct(SkelNode* d)
+extern "C" SkelNode* cBone_ctor_void(SkelNode* d)
 {
-    Xform_Construct(d);
+    cXformNode_ctor_void(d);
     d->fC0 = 0;
     d->mD0 = g_IdentityMatrix;
     d->m110 = g_IdentityMatrix;
@@ -83,7 +83,7 @@ typedef struct { char pad[0x60]; unsigned char a; unsigned char b; } BAE50Item;
 typedef struct { int pad[2]; BAE50Item** items; } BAE50Tbl;
 typedef struct { int i0; int i1; } BAE50Pair;
 extern BAE50Tbl* g_TextureMgr;
-int ShadowBuf_IsResident(BAE50Pair* p) {
+int cUserFrameEnv_IsVram(BAE50Pair* p) {
     BAE50Item** arr = g_TextureMgr->items;
     int r = (arr[p->i0]->a & arr[p->i0]->b) != 0;
     if (p->i1 != -1) {
@@ -174,10 +174,10 @@ extern void* g_TextureMgr;
 #endif /* merge_units */
 #define g_TextureMgr (*(void **)&g_TextureMgr) /* merge_units */
 
-extern void TexMan_ReleaseSlot(void*, int);
+extern void cTexMan_UnlockVram(void*, int);
 typedef struct { int a; int b; } Pair_003BAFC0;
 /* Applies the global handler to the first id and, if valid, the second id. */
-void RenderTarget_Release(Pair_003BAFC0* p) { TexMan_ReleaseSlot(g_TextureMgr, p->a); if (p->b != -1) TexMan_ReleaseSlot(g_TextureMgr, p->b); }
+void cUserFrameEnv_ReleaseVram(Pair_003BAFC0* p) { cTexMan_UnlockVram(g_TextureMgr, p->a); if (p->b != -1) cTexMan_UnlockVram(g_TextureMgr, p->b); }
 #undef g_TextureMgr /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003BAFC0 */

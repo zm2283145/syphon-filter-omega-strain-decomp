@@ -84,7 +84,7 @@ extern int D_0048C474;
 extern int D_0048C49C;
 extern int D_0048C4A0;
 
-extern void String_Copy(char *, const char *);
+extern void Libc_Strcpy(char *, const char *);
 extern int RtMsgToDmeConnectionIndex(int);
 extern int NetISetNATServiceAddr(int *);
 extern int NetMapMsgClientError(int, int);
@@ -168,7 +168,7 @@ int NetConnect_ClientServerTCP(Req *req0, Key *k0, int *res0)
         res[1] = 0x17;
         return 0x17;
     }
-    String_Copy(prm.name, k->name);
+    Libc_Strcpy(prm.name, k->name);
     prm.x14 = k->x18;
     prm.x16 = k->x34;
     prm.x1C = k->x38;

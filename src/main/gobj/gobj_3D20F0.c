@@ -61,7 +61,7 @@ typedef struct { char p0[0x22]; unsigned short frames; } Anim3D2190;
 typedef struct { char p0[0x44]; Anim3D2190* anim; char p48[4]; int frame; char p50[0x10]; signed char f60; signed char f61; } Tex3D2190;
 typedef struct { int idx; char p4[0x10]; unsigned int count; char p18[0x10]; int cur; } Ent3D2190;
 typedef struct { char p0[8]; Tex3D2190** list; } Mgr3D2190;
-extern int Tex_GetRecord(int, int);
+extern int cTexMan_GetTexture(int, int);
 extern int XLib_GetTexMan(char*);
 #if 0 /* merge_units */
 extern int opNe_cConstLListIteratorR_cConstLListIteratorR_5(int*, int);
@@ -108,7 +108,7 @@ extern char g_Video[];
 extern Mgr3D2190* g_TextureMgr;
 #pragma push
 #pragma opt_common_subs off
-void Global_DecTexture(int list, int name)
+void cAnimTexMan_DecTextureFrame(int list, int name)
 {
     int it[1];
     int b[1];
@@ -127,7 +127,7 @@ int db;
     while (opNe_cConstLListIteratorR_cConstLListIteratorR_5(it, cConstLListIterator_cAnimTexturePtr_ctor(e, a)) != 0) {
         ent = *cConstLListIterator_cAnimTexturePtr_opMul(it);
         db = XLib_GetTexMan(g_Video);
-        if (strcmp(cTexture_GetName(Tex_GetRecord(db, cAnimTexture_GetTextureId(ent))), name) == 0) {
+        if (strcmp(cTexture_GetName(cTexMan_GetTexture(db, cAnimTexture_GetTextureId(ent))), name) == 0) {
             found = ent;
             break;
         }
@@ -212,7 +212,7 @@ extern Mgr3D2320* g_TextureMgr;
 
 #pragma push
 #pragma opt_common_subs off
-void Global_IncTexture(int list, int name)
+void cAnimTexMan_IncTextureFrame(int list, int name)
 {
     int it[1];
     int b[1];
@@ -231,7 +231,7 @@ int db;
     while (opNe_cConstLListIteratorR_cConstLListIteratorR_5(it, cConstLListIterator_cAnimTexturePtr_ctor(e, a)) != 0) {
         ent = *cConstLListIterator_cAnimTexturePtr_opMul(it);
         db = XLib_GetTexMan(g_Video);
-        if (strcmp(cTexture_GetName(Tex_GetRecord(db, cAnimTexture_GetTextureId(ent))), name) == 0) {
+        if (strcmp(cTexture_GetName(cTexMan_GetTexture(db, cAnimTexture_GetTextureId(ent))), name) == 0) {
             found = ent;
             break;
         }
@@ -273,18 +273,18 @@ struct Obj_24B0 : Base_24B0 { virtual void Update(float); virtual void Reset(); 
 struct Raw_24B0 { int p; };
 struct S_24B0 { int a, b, c; unsigned char dirty; };
 extern "C" {
-Raw_24B0 List_Begin(void*);
+Raw_24B0 std_list_deleter_voidPtr_begin_void(void*);
 Raw_24B0 std_list_cAnimTexturePtr_end(void*);
 void std_list_cAnimTexturePtr_generic_iterator_ctor(char**, const Raw_24B0&);
 void cLListIterator_cAnimTexturePtr_ctor_listR(char**, const Raw_24B0&);
 }
-extern "C" void ListenerList_Update(S_24B0* self, float dt) {
+extern "C" void cAnimTexMan_NextFrame(S_24B0* self, float dt) {
     char* end1;
     char* end2;
     if (self->dirty) {
         char* it;
         char* n;
-        std_list_cAnimTexturePtr_generic_iterator_ctor(&it, List_Begin(self));
+        std_list_cAnimTexturePtr_generic_iterator_ctor(&it, std_list_deleter_voidPtr_begin_void(self));
         n = it;
         while ((cLListIterator_cAnimTexturePtr_ctor_listR(&end1, std_list_cAnimTexturePtr_end(self)), n != end1)) {
             F_(n, 0x8, Obj_24B0*)->Reset();
@@ -295,7 +295,7 @@ extern "C" void ListenerList_Update(S_24B0* self, float dt) {
     {
         char* it;
         char* n;
-        std_list_cAnimTexturePtr_generic_iterator_ctor(&it, List_Begin(self));
+        std_list_cAnimTexturePtr_generic_iterator_ctor(&it, std_list_deleter_voidPtr_begin_void(self));
         n = it;
         while ((cLListIterator_cAnimTexturePtr_ctor_listR(&end2, std_list_cAnimTexturePtr_end(self)), n != end2)) {
             F_(n, 0x8, Obj_24B0*)->Update(dt);

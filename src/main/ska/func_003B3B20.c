@@ -34,8 +34,8 @@ struct SkaClip : ClipBase {
 static inline void Base(SkaClip* s, signed char b, V v) { s->vt = D_004DFC50; s->b4 = b; s->v10 = v; }
 struct Item { void* vt; unsigned char b4; };
 struct NMap { char pad[0x34]; int reg; };
-extern "C" int NodeNameMap_Find(NMap* m, void* name);
-extern "C" SkaClip** Registry_At(int* reg, int idx);
+extern "C" int cSkaAnimationSet_GetNodeId(NMap* m, void* name);
+extern "C" SkaClip** cArray_cSkaNodePtr_opIndex(int* reg, int idx);
 extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_eModifier_cEulerAngleTR_eAxisOfMotion(SkaClip* d, void* c, int a, int b, int e);
 extern "C" SkaClip* cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier_cEulerAngleTR_etc(SkaClip* self, void* name, NMap* m, int a, int b, int e)
 {
@@ -45,7 +45,7 @@ extern "C" SkaClip* cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier_cEuler
     self->clip = 0;
     self->r2c.a = 0.0f;
     self->r2c.b = 1.0f;
-    c = *Registry_At(&m->reg, NodeNameMap_Find(m, name));
+    c = *cArray_cSkaNodePtr_opIndex(&m->reg, cSkaAnimationSet_GetNodeId(m, name));
     if (!((Item*)c)->b4) {
         SkaClip t;
         cSkaAnim_ctor_cSkaAnimR_eModifier_cEulerAngleTR_eAxisOfMotion(&t, c, a, b, e);

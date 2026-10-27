@@ -45,7 +45,7 @@ void netCreatePlayer_InitNet(void)
 #include "alloc_guard.h"
 
 extern "C" {
-extern void* Mem_Alloc(int pool, int size, char* file, int line);
+extern void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern char D_004AC960[];
 extern char D_004DE158[];
 extern char D_004DE168[];
@@ -76,7 +76,7 @@ struct Msg7630 : MsgMid {
     short slot;
     static void* operator new(unsigned int size) {
         AllocGuard guard;
-        return Mem_Alloc(0, size, D_004AC960, 0x2D);
+        return cMemMan_Allocate(0, size, D_004AC960, 0x2D);
     }
 };
 

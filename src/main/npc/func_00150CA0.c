@@ -58,20 +58,20 @@ extern int g_HumanActorClassKey;
 extern int D_004EA770;
 extern char g_ActorActionMsgClass[], D_004E0840[], D_004E0140[], D_004E01A0[];
 extern unsigned char g_IsMultiplayer;
-SRec* NpcPerception_SensedRecord(Ai*, Obj*);
+SRec* cAITarget_GetAwareness(Ai*, Obj*);
 V* cMatrix_GetAxis(M*, int);
-void Event_Construct(void*, void*);
-void Event_Send(void*, void*, int);
+void cMessage_ctor_cMessageNameR(void*, void*);
+void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 void cMessage_dtor(void*, int);
-unsigned char NpcAttack_WeaponPosture(Npc* self);
+unsigned char cNPC_HandleWeaponAiming(Npc* self);
 }
 
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
 
 struct MsgB {
     void* vtable; void* type; int pad8[6]; unsigned char kind; char pad21[3];
-    MsgB(void* t) { Event_Construct(this, t); }
-    void Send(void* to, int f) { kind = 1; Event_Send(this, to, f); }
+    MsgB(void* t) { cMessage_ctor_cMessageNameR(this, t); }
+    void Send(void* to, int f) { kind = 1; QueueMessage_cMessageR_cSystemP_int(this, to, f); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); }
 };
 struct MsgI : MsgB {
@@ -113,7 +113,7 @@ static inline VD Diff(const V& a, const V& b) { VD t; Sub(&t, (V*)&a, (V*)&b); r
 static inline V Scaled(const V& a, float k) { V t; Scale2(&t, (V*)&a, k); return t; }
 static inline V Sum(const V& a, const V& b) { V t; Add(&t, (V*)&a, (V*)&b); return t; }
 
-unsigned char NpcAttack_WeaponPosture(Npc* p)
+unsigned char cNPC_HandleWeaponAiming(Npc* p)
 {
     Obj* tgt;
     Npc* self = p;
@@ -136,7 +136,7 @@ unsigned char NpcAttack_WeaponPosture(Npc* p)
                 if (!Engaged(self->ai)) {
                     if (!self->ai->b3 || !self->ai->b1) {
                         if (!(Range(self) < 0.01f)) {
-                            SRec* r = NpcPerception_SensedRecord(self->ai, tgt);
+                            SRec* r = cAITarget_GetAwareness(self->ai, tgt);
                             if (!r || !(r->dist < 5.0f)) ok = 0;
                         }
                     }

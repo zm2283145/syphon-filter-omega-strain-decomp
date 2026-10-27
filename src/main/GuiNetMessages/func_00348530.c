@@ -30,13 +30,13 @@ extern char D_00587BF0[];
 extern char D_00587C00[];
 extern char D_00587C10[];
 int sprintf(void*, const void*, ...);
-char* Loc_LookupText(char* key);
-void GuiArrayWidget_DrawCell(Self* self, int col, unsigned int row, float* r);
-Msg* LobbyArray_At(Arr* a, unsigned int i);
-void GuiWidget_SetPos(IconW* w, float x, float y);
-void TextObj_SetColour(Text* c, void* p);
-char* String_CStr(void* s);
-void TextObj_SetText(Text* c, char* text);
+char* nGlobalization_GetString_charP(char* key);
+void GuiArrayWidget_onElementRender(Self* self, int col, unsigned int row, float* r);
+Msg* SFOLobbyList_GetSlot(Arr* a, unsigned int i);
+void GuiWidget_SetPosition(IconW* w, float x, float y);
+void cTextArea_SetColor(Text* c, void* p);
+char* std_basic_string_char_char_traits_char_c_str(void* s);
+void cTextArea_SetText(Text* c, char* text);
 void TextObj_Draw(Text* c);
 void GuiNetMessageArray_onElementRender(Self* self, int col, unsigned int row, float* r);
 }
@@ -56,7 +56,7 @@ static inline char* TypeName(Self* self, int n)
     char* t;
     if (n < 0 || (unsigned int)n >= 12) return 0;
     sprintf(buf, D_004BA3B8, n);
-    t = Loc_LookupText(buf);
+    t = nGlobalization_GetString_charP(buf);
     if (!t) return D_004BA338;
     return t;
 }
@@ -88,16 +88,16 @@ static inline char* TypeColour(Self* self, int k)
 extern "C" void GuiNetMessageArray_onElementRender(Self* self, int col, unsigned int row, float* r)
 {
     Msg* m;
-    GuiArrayWidget_DrawCell(self, col, row, r);
+    GuiArrayWidget_onElementRender(self, col, row, r);
     if (!self->text || !self->msgs || row >= self->msgs->count || col == 2)
         return;
-    m = LobbyArray_At(self->msgs, row);
+    m = SFOLobbyList_GetSlot(self->msgs, row);
     if (!m)
         return;
     if (col == 0) {
         IconW* w = TypeIcon(self, m->type);
         if (w) {
-            GuiWidget_SetPos(w, r[0] + (r[2] / 2.0f - w->w / 2.0f), r[1] - (r[3] / 2.0f - w->h / 2.0f));
+            GuiWidget_SetPosition(w, r[0] + (r[2] / 2.0f - w->w / 2.0f), r[1] - (r[3] / 2.0f - w->h / 2.0f));
             w->icon->Show();
         }
         return;
@@ -111,17 +111,17 @@ extern "C" void GuiNetMessageArray_onElementRender(Self* self, int col, unsigned
     SetF58(self->text, 1);
     if (col == 1) {
         if (m->type == 10)
-            TextObj_SetText(self->text, String_CStr(self->name));
+            cTextArea_SetText(self->text, std_basic_string_char_char_traits_char_c_str(self->name));
         else
-            TextObj_SetText(self->text, m->text);
+            cTextArea_SetText(self->text, m->text);
         SetF10(self->text, 2);
         SetF5B(self->text, 1);
     } else if (col == 3) {
-        TextObj_SetText(self->text, TypeName(self, m->type));
+        cTextArea_SetText(self->text, TypeName(self, m->type));
         SetF10(self->text, 0);
         SetF5B(self->text, 0);
     }
-    TextObj_SetColour(self->text, TypeColour(self, m->type));
+    cTextArea_SetColor(self->text, TypeColour(self, m->type));
     TextObj_Draw(self->text);
     D_00538C64--;
     D_00538C68 = 1;

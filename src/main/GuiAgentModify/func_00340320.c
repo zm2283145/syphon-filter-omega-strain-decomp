@@ -25,22 +25,22 @@ extern char D_004B9F40[];
 extern char g_Game[];
 extern Opts_0320* D_004FFC04;
 void GuiBitmapWidget_ClearBitmap(W_0320* w);
-void GuiBitmapWidget_SetImage(W_0320* w, char* name, int x);
+void GuiBitmapWidget_SetBitmap(W_0320* w, char* name, int x);
 void GuiTextWidget_SetText(W_0320* w, char* s, int x);
-char* String_Copy(char* d, const char* s);
-int String_CompareN(const char* a, const char* b, int n);
+char* Libc_Strcpy(char* d, const char* s);
+int Libc_Strncmp(const char* a, const char* b, int n);
 char* Libc_Strcat(char* d, const char* s);
-void* Agent_GetSelected(void* a, int b);
-void AgentData_GetAwardRows(void* ag, unsigned char k, Rel_0320* r);
-void AgentData_GetRatings(void* ag, Rel_0320* r);
+void* cGameSystem_GetAgentData(void* a, int b);
+void cAgentData_GetAchievements(void* ag, unsigned char k, Rel_0320* r);
+void cAgentData_GetRatings(void* ag, Rel_0320* r);
 void func_00296FA0(Rel_0320* r);
 void func_00299360(Rel_0320* r, int f);
-int Loc_FindKeyThunk(char* k);
-char* Loc_GetTextById(int id);
-void GuiAgentModify_ShowPatch(Self_0320* self);
+int nGlobalization_GetStringIndex(char* k);
+char* nGlobalization_GetString_int(int id);
+void GuiAgentModify_SetBigPatch(Self_0320* self);
 }
 
-extern "C" void GuiAgentModify_ShowPatch(Self_0320* self)
+extern "C" void GuiAgentModify_SetBigPatch(Self_0320* self)
 {
     char buf[0x20];
     char name[0x20];
@@ -62,8 +62,8 @@ extern "C" void GuiAgentModify_ShowPatch(Self_0320* self)
         a = -1;
         b = a;
         c = a;
-        String_Copy(buf, ((char(*)[0x20])((char*)self->f8C + 0xF0))[self->b10D]);
-        if (!String_CompareN(&buf[6], D_004B9F28, 3) && buf[10] != 'B') {
+        Libc_Strcpy(buf, ((char(*)[0x20])((char*)self->f8C + 0xF0))[self->b10D]);
+        if (!Libc_Strncmp(&buf[6], D_004B9F28, 3) && buf[10] != 'B') {
             a = buf[10] - '0';
             buf[0] = buf[10];
             buf[1] = '_';
@@ -81,15 +81,15 @@ extern "C" void GuiAgentModify_ShowPatch(Self_0320* self)
                 c = buf[12] - '1';
                 buf[5] = 's';
                 buf[6] = 0;
-            }            String_Copy(name, buf);
+            }            Libc_Strcpy(name, buf);
             Libc_Strcat(name, D_004B9F30);
             if (self->f80)
-                GuiBitmapWidget_SetImage(self->f80, name, D_004FFC04->x25C);
+                GuiBitmapWidget_SetBitmap(self->f80, name, D_004FFC04->x25C);
         } else {
-            String_Copy(name, buf);
+            Libc_Strcpy(name, buf);
             Libc_Strcat(name, D_004B9F30);
             if (self->f80)
-                GuiBitmapWidget_SetImage(self->f80, name, 0);
+                GuiBitmapWidget_SetBitmap(self->f80, name, 0);
         }
         if (self->f80)
             self->f80->flags |= 2;
@@ -107,15 +107,15 @@ extern "C" void GuiAgentModify_ShowPatch(Self_0320* self)
                     } else if (b == 4) {
                         b = 1;
                     }
-                    AgentData_GetAwardRows(Agent_GetSelected(g_Game, -1), b, &r);
+                    cAgentData_GetAchievements(cGameSystem_GetAgentData(g_Game, -1), b, &r);
                     if (c < r.count)
                         txt = r.data[c].str;
                 } else if (b == 3) {
-                    AgentData_GetRatings(Agent_GetSelected(g_Game, -1), &r);
+                    cAgentData_GetRatings(cGameSystem_GetAgentData(g_Game, -1), &r);
                     if (c < r.count)
                         txt = r.data[c].str;
                 } else if (b == 6) {
-                    txt = Loc_GetTextById(c + Loc_FindKeyThunk(D_004B9F38));
+                    txt = nGlobalization_GetString_int(c + nGlobalization_GetStringIndex(D_004B9F38));
                 }
                 if (txt)
                     GuiTextWidget_SetText(self->f84, txt, 0);

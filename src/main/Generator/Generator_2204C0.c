@@ -74,13 +74,13 @@ extern char D_004D9180[];
 LNode* std_list_deleter_cSafePtr_cGOBJ_tail(void* l);
 LNode** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(It* it, LNode* n);
 LNode** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(It* it, LNode* n);
-void Node_GetTranslation(V* out, void* node);
-Obj* PlayerSlots_Get(int i);
-Obj** List_Front(void* v);
-float Math_Cos(float a);
-Obj* Object_ClosestPlayerDistSq(void* node, int a);
-Svc* Service_Lookup(void* a, void* b);
-int Event_Construct(void* m, void* type);
+void cNode_GetLoc(V* out, void* node);
+Obj* cNetObj_GetPlayer(int i);
+Obj** cLList_cCAMERA_GOBJPtr_Front(void* v);
+float Libc_Cosf(float a);
+Obj* cGOBJ_GetClosestPlayer(void* node, int a);
+Svc* cSystemContainer_GetSystem(void* a, void* b);
+int cMessage_ctor_cMessageNameR(void* m, void* type);
 int cMessage_dtor(void* m, int flags);
 }
 static inline bool IdEq(Tgt* p, Hnd* h) { return p->id == h->id; }
@@ -93,7 +93,7 @@ static inline void End(It* o, Gen* g) { It t; std_list_deleter_cSafePtr_cGOBJ_ge
 static inline void DoRay(Svc* svc, HitRes* res, const V& start, const V& end, Obj* pl, Obj* cl) {
     RayMsg msg;
     RayMsg* m = &msg;
-    Event_Construct(m, g_LosRequestMsgClass);
+    cMessage_ctor_cMessageNameR(m, g_LosRequestMsgClass);
     m->vt = D_004D9180;
     m->f24 = 0;
     m->f28 = 0;
@@ -110,7 +110,7 @@ static inline void DoRay(Svc* svc, HitRes* res, const V& start, const V& end, Ob
     msg.vt = D_004D9180;
     cMessage_dtor(m, 0);
 }
-extern "C" int Generator_SpawnTest(Gen* self, void* node)
+extern "C" int cGenerator_CheckSpawnNode(Gen* self, void* node)
 {
     int r = self->busy;
     if (!(unsigned char)r) {
@@ -123,7 +123,7 @@ extern "C" int Generator_SpawnTest(Gen* self, void* node)
             Tgt* t = HGet(&it.n->h);
             if (t->State() != 3) {
                 V d;
-                Node_GetTranslation(&d, node);
+                cNode_GetLoc(&d, node);
                 t->GetMtx().SubT(d);
                 if (d.LenSq() < 9.0f) found = true;
             }
@@ -132,10 +132,10 @@ extern "C" int Generator_SpawnTest(Gen* self, void* node)
         r = 1;
         if (g_IsMultiplayer) {
             for (int i = 0; i < 4; i++) {
-                Obj* p = PlayerSlots_Get(i);
+                Obj* p = cNetObj_GetPlayer(i);
                 if (p) {
                     V d;
-                    Node_GetTranslation(&d, node);
+                    cNode_GetLoc(&d, node);
                     d.SubEq(SubPos(p->sub));
                     if (d.LenSq() < self->radius) {
                         r = 0;
@@ -146,33 +146,33 @@ extern "C" int Generator_SpawnTest(Gen* self, void* node)
         } else {
             Obj* p = g_LocalPlayer->obj;
             V d;
-            Node_GetTranslation(&d, node);
+            cNode_GetLoc(&d, node);
             d.SubEq(SubPos(p->sub));
             if (d.LenSq() < self->radius) r = 0;
         }
         if ((unsigned char)r == 1) {
             float ang = 0.87266463f;
             V d;
-            Node_GetTranslation(&d, node);
-            d.SubEq(SubPos((*List_Front(g_CameraObject))->sub));
+            cNode_GetLoc(&d, node);
+            d.SubEq(SubPos((*cLList_cCAMERA_GOBJPtr_Front(g_CameraObject))->sub));
             d.z = 0.0f;
             d.Normalize();
-            V f = SubMtx((*List_Front(g_CameraObject))->sub).r1;
+            V f = SubMtx((*cLList_cCAMERA_GOBJPtr_Front(g_CameraObject))->sub).r1;
             f.z = 0.0f;
             float dot = f.Dot(d);
-            if (dot + (1.0f - Math_Cos(ang)) < 1.0f) {
+            if (dot + (1.0f - Libc_Cosf(ang)) < 1.0f) {
                 r = 1;
             } else {
                 Obj* pl = g_LocalPlayer->obj;
                 Obj* cl = 0;
-                if (g_IsMultiplayer) cl = Object_ClosestPlayerDistSq(node, 0);
-                Svc* svc = Service_Lookup(g_Game, g_LosCheckService);
+                if (g_IsMultiplayer) cl = cGOBJ_GetClosestPlayer(node, 0);
+                Svc* svc = cSystemContainer_GetSystem(g_Game, g_LosCheckService);
                 V end;
                 V start;
-                Node_GetTranslation(&start, node);
+                cNode_GetLoc(&start, node);
                 start.z += 6.0f;
-                end = SubPos((*List_Front(g_CameraObject))->sub);
-                end.AddEq(SubMtx((*List_Front(g_CameraObject))->sub).r1 * 1.5f);
+                end = SubPos((*cLList_cCAMERA_GOBJPtr_Front(g_CameraObject))->sub);
+                end.AddEq(SubMtx((*cLList_cCAMERA_GOBJPtr_Front(g_CameraObject))->sub).r1 * 1.5f);
                 end.SubEq(start);
                 HitRes res;
                 DoRay(svc, &res, start, end, pl, cl);
@@ -222,17 +222,17 @@ LNode_00220BB0** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(LNo
 #define std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP(a0, a1) ((LNode_00220BB0 * *)std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP((It *)(a0), (LNode *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-int Event_Construct(void*, char*);
+int cMessage_ctor_cMessageNameR(void*, char*);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((a0), (void *)(a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((a0), (void *)(a1))) /* merge_units */
 
-int Event_Send(void*, void*, int);
+int QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 #if 0 /* merge_units */
 int cMessage_dtor(void*, int);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((a0), (a1))) /* merge_units */
 
-void Object_Deactivate(Gen_00220BB0*, int);
+void cGOBJ_Deactivate(Gen_00220BB0*, int);
 extern char D_004A4A88[];
 extern char D_004DB620[];
 extern char D_004DB660[];
@@ -248,7 +248,7 @@ static inline Tgt_00220BB0* HGet_00220BB0(Hnd_00220BB0* h) {
         valid = 0;
     return valid ? p : 0;
 }
-extern "C" void Generator_DeactivateSpawned(Gen_00220BB0* self)
+extern "C" void cGenerator_DeactivateImmediate(Gen_00220BB0* self)
 {
     Tgt_00220BB0* t;
     LNode_00220BB0* it;
@@ -260,20 +260,20 @@ extern "C" void Generator_DeactivateSpawned(Gen_00220BB0* self)
         t = HGet_00220BB0(h);
         t->Deactivate(1);
         Ev ev;
-        Event_Construct(&ev, D_004A4A88);
+        cMessage_ctor_cMessageNameR(&ev, D_004A4A88);
         ev.f24 = t;
         ev.vt = D_004DB620;
         ev.f20 = 2;
-        Event_Send(&ev, self, 0);
+        QueueMessage_cMessageR_cSystemP_int(&ev, self, 0);
         ev.vt = D_004DB660;
         cMessage_dtor(&ev, 0);
     }
-    Object_Deactivate(self, 1);
+    cGOBJ_Deactivate(self, 1);
 }
 #undef std_list_deleter_cSafePtr_cGOBJ_tail /* merge_units */
 #undef std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP /* merge_units */
 #undef std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodeP /* merge_units */
-#undef Event_Construct /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00220BB0(void) {}
@@ -291,7 +291,7 @@ typedef struct cGen00220D00 {
 } cGen00220D00;
 extern void cGenInfoObject_ctor(void* msg);
 extern void cGenInfoObject_Deactivate(void* msg, void* target);
-void cGenerator_v09(cGen00220D00* self, int bit)
+void cGenerator_NetDisable(cGen00220D00* self, int bit)
 {
     if (bit >= 0)
         self->mask &= ~(1 << bit);
@@ -314,9 +314,9 @@ static inline void merge_flush_func_00220D00(void) {}
 typedef struct { void* vtable; char pad04[0x18]; int size; signed char kind; char pad21[3]; int target; } Msg_220D70;
 typedef struct { char pad[0xC]; char sub[4]; int id; char pad14[0x18]; unsigned char state; char pad2d[0xCC - 0x2D]; int mask; } G_220D70;
 #if 0 /* merge_units */
-int Event_Construct(Msg_220D70* msg, void* type);
+int cMessage_ctor_cMessageNameR(Msg_220D70* msg, void* type);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 int cMessage_dtor(Msg_220D70* msg, int flags);
@@ -325,7 +325,7 @@ int cMessage_dtor(Msg_220D70* msg, int flags);
 
 extern char g_cDisableMsgClass[];
 extern char D_004E0860[];
-void NetMsg_Send(Msg_220D70* msg, int id, int x);
+void cDisableMsg_SendDisabled(Msg_220D70* msg, int id, int x);
 #if 0 /* merge_units */
 void cGenInfoObject_ctor(void* t);
 #endif /* merge_units */
@@ -348,19 +348,19 @@ void cGenerator_v18(G_220D70* g, int bit)
             cGenInfoObject_Deactivate(t, g->sub);
             g->state = 0;
         }
-        Event_Construct(&msg, g_cDisableMsgClass);
+        cMessage_ctor_cMessageNameR(&msg, g_cDisableMsgClass);
         msg.target = bit;
         msg.vtable = D_004E0860;
         msg.size = 0x40;
         msg.kind = 4;
-        NetMsg_Send(&msg, g->id, -1);
+        cDisableMsg_SendDisabled(&msg, g->id, -1);
         msg.vtable = D_004E0860;
         cMessage_dtor(&msg, 0);
     } else {
         g->state = 0;
     }
 }
-#undef Event_Construct /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #undef cGenInfoObject_ctor /* merge_units */
 #undef cGenInfoObject_Deactivate /* merge_units */
@@ -375,7 +375,7 @@ static inline void merge_flush_func_00220D70(void) {}
 extern "C" {}
 typedef struct { char pad[0xC]; char key[0x20]; unsigned char b2C; unsigned char b2D; unsigned char b2E; char pad2F[0x9D]; unsigned int maskCC; } Gen_12D0;
 extern "C" {
-void cNode_v06(void);
+void cGOBJ_NetActivate(void);
 #if 0 /* merge_units */
 void cGenInfoObject_ctor(void* ctx);
 #endif /* merge_units */
@@ -424,14 +424,14 @@ void cGenInfoObject_ctor(void* ctx);
 #define cGenInfoObject_ctor(a0) (cGenInfoObject_ctor((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-Own_0FD0* Object_ClosestPlayerDistSq(Gen_0FD0* g, int i);
+Own_0FD0* cGOBJ_GetClosestPlayer(Gen_0FD0* g, int i);
 #endif /* merge_units */
-#define Object_ClosestPlayerDistSq(a0, a1) ((Own_0FD0 *)Object_ClosestPlayerDistSq((void *)(a0), (a1))) /* merge_units */
+#define cGOBJ_GetClosestPlayer(a0, a1) ((Own_0FD0 *)cGOBJ_GetClosestPlayer((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-int Event_Construct(Msg_0FD0* m, void* type);
+int cMessage_ctor_cMessageNameR(Msg_0FD0* m, void* type);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
 
 void cEnableMsg_SendEnabled(Msg_0FD0* m, int id);
 #if 0 /* merge_units */
@@ -441,7 +441,7 @@ int cMessage_dtor(Msg_0FD0* m, int flags);
 
 }
 static inline int Owner_0FD0(Own_0FD0* o) { return ((o->h & 0x7F000000) >> 24) - 1; }
-extern "C" void cGenerator_v17(Gen_0FD0* g, int who)
+extern "C" void cGenerator_Enable(Gen_0FD0* g, int who)
 {
     char ctx[4];
     char ctx2[4];
@@ -454,7 +454,7 @@ extern "C" void cGenerator_v17(Gen_0FD0* g, int who)
         if (ok) {
             cGenInfoObject_ctor(ctx);
             if (who < 0) {
-                Own_0FD0* o = Object_ClosestPlayerDistSq(g, 0);
+                Own_0FD0* o = cGOBJ_GetClosestPlayer(g, 0);
                 cGenInfoObject_SetOwner(ctx, g->key, o ? Owner_0FD0(o) : NetLocalId());
             } else {
                 if (who == NetLocalId() && g->maskCC == 0) {
@@ -465,7 +465,7 @@ extern "C" void cGenerator_v17(Gen_0FD0* g, int who)
             cGenInfoObject_Activate(ctx, g->key);
         } else if (who < 0) {
             int own = -1;
-            Own_0FD0* o = Object_ClosestPlayerDistSq(g, 0);
+            Own_0FD0* o = cGOBJ_GetClosestPlayer(g, 0);
             if (o) own = Owner_0FD0(o);
             if (own != NetLocalId()) {
                 cGenInfoObject_ctor(ctx2);
@@ -473,7 +473,7 @@ extern "C" void cGenerator_v17(Gen_0FD0* g, int who)
             }
         }
         if (who >= 0) g->maskCC |= 1 << who; else g->maskCC = 0xFF;
-        Event_Construct(&msg, g_cEnableMsgClass);
+        cMessage_ctor_cMessageNameR(&msg, g_cEnableMsgClass);
         msg.f24 = who;
         msg.vt = D_004E0880;
         msg.f1C = 0x40;
@@ -484,8 +484,8 @@ extern "C" void cGenerator_v17(Gen_0FD0* g, int who)
     }
 }
 #undef cGenInfoObject_ctor /* merge_units */
-#undef Object_ClosestPlayerDistSq /* merge_units */
-#undef Event_Construct /* merge_units */
+#undef cGOBJ_GetClosestPlayer /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00220FD0(void) {}
@@ -506,7 +506,7 @@ void cGenInfoObject_ctor(void* ctx);
 extern "C" void cGenerator_v06(Gen_12D0* g)
 {
     char ctx[4];
-    cNode_v06();
+    cGOBJ_NetActivate();
     int ok = g->b2D != 0;
     ok = ok ? g->b2C != 0 : ok;
     ok = ok ? (g->b2E != 0) ^ 1 : ok;

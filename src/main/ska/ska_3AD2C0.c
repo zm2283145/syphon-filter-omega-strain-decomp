@@ -42,21 +42,21 @@ static inline void merge_flush_func_003AD2F0(void) {}
  */
 
 
-extern SkaTransitionReq* ScalarCollection_Init(SkaTransitionReq* self);
+extern SkaTransitionReq* std_list_deleter_voidPtr_ctor_void(SkaTransitionReq* self);
 
 /* True when both requests carry the same key. */
-int TransitionReq_SameKey(SkaTransitionReq* a, SkaTransitionReq* b) {
+int cDequeue_cSkaSystem_Request_ReverseIterator_opEq(SkaTransitionReq* a, SkaTransitionReq* b) {
     return a->key == b->key;
 }
 
 SkaTransitionReq* TransitionReq_Construct(SkaTransitionReq* self, float time) {
-    ScalarCollection_Init(self);
+    std_list_deleter_voidPtr_ctor_void(self);
     self->unk0C = time;
     return self;
 }
 
 /* Reset: zero words, both limits to FLT_MAX. */
-SkaTransitionReq* TransitionReq_Reset(SkaTransitionReq* self) {
+SkaTransitionReq* cSkaSystem_Transition_ctor_void(SkaTransitionReq* self) {
     self->unk00 = 0;
     self->unk04 = 0;
     self->unk08 = 3.4028235e38f;
@@ -75,7 +75,7 @@ typedef struct { char data[0xF8]; } DequeItem;
 typedef struct { unsigned int mapSize; int unk4; unsigned int start; DequeItem** map; unsigned int first; unsigned int count; } Deque;
 
 /* Returns a pointer to the last element of a block-based deque (8 items per block). */
-DequeItem* Array_GetLast_3AD3A0(Deque* self)
+DequeItem* std_deque_deleter_common_cSkaSystem_Request_back_void_2(Deque* self)
 {
     unsigned int index = self->first + self->count - 1;
     return &self->map[(self->start + (index >> 3)) % self->mapSize][index & 7];

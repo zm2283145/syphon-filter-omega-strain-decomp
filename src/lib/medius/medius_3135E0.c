@@ -1,11 +1,11 @@
 typedef struct { int a; int b; char pad[0xF8]; } ScfSlot;
 typedef struct { int f0; int f4; int f8; int fC; ScfSlot slot[64]; } ScfSlotTbl;
-extern int Net_AllocZeroed(void *pp, int size);
+extern int rt_memory_allocate_init_zero(void *pp, int size);
 ScfSlotTbl *CreateSequence(void)
 {
     ScfSlotTbl *t = 0;
     unsigned int i;
-    Net_AllocZeroed(&t, 0x4010);
+    rt_memory_allocate_init_zero(&t, 0x4010);
     if (t) {
         t->f4 = 0;
         t->f0 = 1;

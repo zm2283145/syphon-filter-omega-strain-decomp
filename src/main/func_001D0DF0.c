@@ -4,7 +4,7 @@ typedef struct V4 { float x, y, z, w; } __attribute__((aligned(16))) V4;
 struct Limit { V4 scale; V4 post; V4 pre; };
 extern "C" {
 int cQuaternion_IsZeroXYZ(V4* v);
-void Quat_Assign(V4* d, V4* s);
+void cQuaternion_opAssign(V4* d, V4* s);
 float cQuaternion_X_void_2(V4* v);
 float cQuaternion_Y_void_2(V4* v);
 float cQuaternion_Z_void_2(V4* v);
@@ -13,15 +13,15 @@ float* cQuaternion_W_void(V4* v);
 float* cQuaternion_X_void(V4* v);
 float* cQuaternion_Y_void(V4* v);
 float* cQuaternion_Z_void(V4* v);
-V4* Vec4_Set(V4* v, float x, float y, float z, float w);
-V4* Vec4_NormalizeXYZ_1D10C0(V4* v, float* len);
-V4* Vec4_Assign(V4* d, const V4* s);
+V4* cVector_ctor_float_float_float_float(V4* v, float x, float y, float z, float w);
+V4* cVector_Normalize_floatR(V4* v, float* len);
+V4* cVector_ctor_cVectorR(V4* d, const V4* s);
 float SQUARE(float x);
 float CLAMP_LOW(float a, float b);
 float SQRT(float x);
-float Vec4_GetX(V4* v);
-float Vec4_GetY(V4* v);
-float Vec4_GetZ(V4* v);
+float cVector_X_void(V4* v);
+float cVector_Y_void(V4* v);
+float cVector_Z_void(V4* v);
 }
 // 128-bit lq/sq quadword copy idiom
 static inline void Cp(void* d0, const void* s) { void* d = d0; __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(s)); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(d) : "memory"); }
@@ -58,21 +58,21 @@ extern "C" void nIk_OneBoneDirectionalIK(V4* out, V4* q, int flag, Limit* lim)
         Neg(&a, &a);
     }
     if (cQuaternion_IsZeroXYZ(&a)) {
-        Quat_Assign(out, &a);
+        cQuaternion_opAssign(out, &a);
     } else {
         float x = cQuaternion_X_void_2(&a);
         float y = cQuaternion_Y_void_2(&a);
         float z = cQuaternion_Z_void_2(&a);
-        Vec4_Assign(&axis, Vec4_NormalizeXYZ_1D10C0(Vec4_Set(&t40, x, y, z, 0.0f), &len));
+        cVector_ctor_cVectorR(&axis, cVector_Normalize_floatR(cVector_ctor_float_float_float_float(&t40, x, y, z, 0.0f), &len));
         float k = WDot(&axis, &lim->scale);
         if (SQUARE(len) > k || cQuaternion_W_void_2(&a) < 0.0f) {
             *cQuaternion_W_void(out) = SQRT(CLAMP_LOW(1.0f - k, 0.0f));
             float s = SQRT(k);
-            *cQuaternion_X_void(out) = s * Vec4_GetX(&axis);
-            *cQuaternion_Y_void(out) = s * Vec4_GetY(&axis);
-            *cQuaternion_Z_void(out) = s * Vec4_GetZ(&axis);
+            *cQuaternion_X_void(out) = s * cVector_X_void(&axis);
+            *cQuaternion_Y_void(out) = s * cVector_Y_void(&axis);
+            *cQuaternion_Z_void(out) = s * cVector_Z_void(&axis);
         } else {
-            Quat_Assign(out, &a);
+            cQuaternion_opAssign(out, &a);
         }
     }
     QMul(&t60, &lim->post, out);

@@ -13,13 +13,13 @@ int strlen(const char *);
 /* merge_units: begin func_0041BE50 */
 #pragma push /* merge_units */
 typedef struct { char p[0x48]; char m48[0x30]; void* f78; } W41BE50;
-extern void* String_CStr(void* s);
-extern void TextObj_SetText(void* o, void* s);
-extern void GuiWidget_SendEventUp(W41BE50* w, int kind, void* s, int z);
+extern void* std_basic_string_char_char_traits_char_c_str(void* s);
+extern void cTextArea_SetText(void* o, void* s);
+extern void GuiWidget_SendParentsMessage(W41BE50* w, int kind, void* s, int z);
 void GuiTextWidget_UpdateText(W41BE50* w)
 {
-    if (w->f78) TextObj_SetText(w->f78, String_CStr(w->m48));
-    GuiWidget_SendEventUp(w, 0x1C, String_CStr(w->m48), 0);
+    if (w->f78) cTextArea_SetText(w->f78, std_basic_string_char_char_traits_char_c_str(w->m48));
+    GuiWidget_SendParentsMessage(w, 0x1C, std_basic_string_char_char_traits_char_c_str(w->m48), 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0041BE50(void) {}
@@ -33,11 +33,11 @@ typedef struct { unsigned int word; int len; char* data; } Str_BEB0;
 typedef struct { char c; } Tag_BEB0;
 extern "C" {
 extern char D_004BF2C8[];
-void String_Replace(Str_BEB0* s, int pos, int n, const char* first, const char* last, Tag_BEB0 tag);
+void std_basic_string_char_char_traits_char_do_replace(Str_BEB0* s, int pos, int n, const char* first, const char* last, Tag_BEB0 tag);
 #define strlen(a0) ((unsigned int)strlen((a0))) /* merge_units */
-char* Loc_LookupText(const char* key);
-void String_CtorCStr_13B480(Str_BEB0* s, const char* c);
-void String_AssignString(Str_BEB0* d, Str_BEB0* s);
+char* nGlobalization_GetString_charP(const char* key);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_BEB0* s, const char* c);
+void std_basic_string_char_char_traits_char_assign_basicstringR(Str_BEB0* d, Str_BEB0* s);
 void String_Dtor(Str_BEB0* s, int flags);
 }
 class W_BEB0 {
@@ -55,26 +55,26 @@ extern "C" void GuiTextWidget_SetText(W_BEB0* self, const char* text, unsigned c
 {
     if (!text || !*text) {
         Tag_BEB0 tag;
-        String_Replace(&self->text, 0, -1, 0, 0, tag);
+        std_basic_string_char_char_traits_char_do_replace(&self->text, 0, -1, 0, 0, tag);
     } else if (localize && strlen(text) > 1U && text[0] == '$') {
         if (text[1] != '$') {
-            char* t = Loc_LookupText(text + 1);
+            char* t = nGlobalization_GetString_charP(text + 1);
             Str_BEB0 s;
             Str_BEB0* ps = &s;
-            String_CtorCStr_13B480(ps, t ? t : D_004BF2C8);
-            String_AssignString(&self->text, &s);
+            std_basic_string_char_char_traits_char_ctor_charP(ps, t ? t : D_004BF2C8);
+            std_basic_string_char_char_traits_char_assign_basicstringR(&self->text, &s);
             String_Dtor(&s, 0);
             return;
         } else {
             Str_BEB0 s;
-            String_CtorCStr_13B480(&s, text + 1);
-            String_AssignString(&self->text, &s);
+            std_basic_string_char_char_traits_char_ctor_charP(&s, text + 1);
+            std_basic_string_char_char_traits_char_assign_basicstringR(&self->text, &s);
             String_Dtor(&s, 0);
         }
     } else {
         Str_BEB0 s;
-        String_CtorCStr_13B480(&s, text);
-        String_AssignString(&self->text, &s);
+        std_basic_string_char_char_traits_char_ctor_charP(&s, text);
+        std_basic_string_char_char_traits_char_assign_basicstringR(&self->text, &s);
         String_Dtor(&s, 0);
     }
     self->Refresh();

@@ -11,7 +11,7 @@
 /* merge_units: begin func_0022F440 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-/* Controller_IsEnemyTeam: true when this controller's team treats `other` as an enemy */
+/* cGameGobjController_Enemy_int: true when this controller's team treats `other` as an enemy */
 typedef struct { unsigned char enemy : 1; unsigned char rest : 7; } Pt1EtRel;
 struct Pt1EtCtrl {
     VPAD16(a) VPAD8(b)
@@ -24,7 +24,7 @@ static inline int Pt1Et_IsEnemy(int a, int b)
         return D_004EE620[a][b].enemy;
     return 0;
 }
-extern "C" unsigned char Controller_IsEnemyTeam(Pt1EtCtrl* c, int other)
+extern "C" unsigned char cGameGobjController_Enemy_int(Pt1EtCtrl* c, int other)
 {
     unsigned char r = 0;
     if (c->GetTeam() >= 0 && other >= 0)
@@ -38,7 +38,7 @@ static inline void merge_flush_func_0022F440(void) {}
 
 /* merge_units: begin func_0022F510 */
 #pragma push /* merge_units */
-/* Controller_GetShooterMotion: motion block of the controlled human, or a zeroed default */
+/* cGameGobjController_GetVelocity: motion block of the controlled human, or a zeroed default */
 typedef struct Pt1SmComp { char pad[0x310]; int motion[4]; } Pt1SmComp;
 typedef struct Pt1SmActor { char pad0[0x4C]; int kind; char pad50[0x3310 - 0x50]; Pt1SmComp* comp; } Pt1SmActor;
 typedef struct Pt1SmCtrl { char pad0[0x30]; Pt1SmActor* actor; } Pt1SmCtrl;
@@ -58,7 +58,7 @@ static inline int* Pt1Sm_Default(void)
         D_004E1D9C = 0;
     }
     return &D_004E1D90;
-}int* Controller_GetShooterMotion(Pt1SmCtrl* c)
+}int* cGameGobjController_GetVelocity(Pt1SmCtrl* c)
 {
     Pt1SmActor* a = c->actor;
     a = (a && a->kind == g_HumanActorClassKey) ? a : 0;

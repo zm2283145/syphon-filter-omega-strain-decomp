@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int Newlib_SysIsatty(void) {
+int Libc_Isatty(void) {
     return 1;
 }

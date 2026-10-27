@@ -11,7 +11,7 @@
 #pragma push /* merge_units */
 extern char D_004DBAE0[];
 extern int cSfxBundle_opDelete(int);
-extern int SpecFx_dtor(int, int);
+extern int cSfxBundle_dtor(int, int);
 
 int cWeaponFx_dtor(int a0, int a1) {
     int s0, s1, v0;
@@ -24,7 +24,7 @@ int cWeaponFx_dtor(int a0, int a1) {
     a1 = 0;
     v0 = (int)D_004DBAE0;
     *(int*)((char*)s1 + 20) = v0;
-    v0 = SpecFx_dtor(a0, a1);
+    v0 = cSfxBundle_dtor(a0, a1);
     v0 = (short)s0;
     cond = v0 <= 0;
     a0 = s1;
@@ -56,7 +56,7 @@ int cParticleBundle_dtor(int a0, int a1) {
     a1 = 0;
     v0 = (int)D_004DBB00;
     *(int*)((char*)s1 + 20) = v0;
-    v0 = SpecFx_dtor(a0, a1);
+    v0 = cSfxBundle_dtor(a0, a1);
     v0 = (short)s0;
     cond = v0 <= 0;
     a0 = s1;
@@ -88,7 +88,7 @@ int cLightBundle_dtor(int a0, int a1) {
     a1 = 0;
     v0 = (int)D_004DBB20;
     *(int*)((char*)s1 + 20) = v0;
-    v0 = SpecFx_dtor(a0, a1);
+    v0 = cSfxBundle_dtor(a0, a1);
     v0 = (short)s0;
     cond = v0 <= 0;
     a0 = s1;

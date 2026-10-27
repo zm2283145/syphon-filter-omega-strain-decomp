@@ -2,7 +2,7 @@
 typedef struct { char pad[0x14]; int x14; char x18[1]; } Los13AB50;
 extern void nArray_InitSlots_cGOBJPP_int_int_cGOBJPR(void*, int, int, int*);
 extern void cArray_FixedCapacity_cGOBJPtr_2_ResizeActual(int*, int, int*);
-void LosProvider_ClearExclusions(Los13AB50* p, unsigned int n) {
+void cCollisionModelList_Resize_ExclusionList(Los13AB50* p, unsigned int n) {
     int a[1];
     int b[1];
     a[0] = 0;

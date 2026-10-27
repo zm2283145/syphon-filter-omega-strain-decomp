@@ -32,23 +32,23 @@ extern "C" {
 extern int D_004F82A0;
 extern Mtx D_004F82B0;
 extern char g_CameraObject[];
-Obj* Object_LookupById(int*);
+Obj* nGobjManager_LookupGOBJ_cObjectIdR(int*);
 int func_00159570(void*);
-Cam** List_Front(void*);
-void Mtx_FromRowsAndTranslation(Mtx* m, V* a, V* b, V* c, V* t);
-void Mtx_Transpose3x3(Mtx* m);
-int Mtx_IsTranslationZero(Mtx* m);
+Cam** cLList_cCAMERA_GOBJPtr_Front(void*);
+void cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(Mtx* m, V* a, V* b, V* c, V* t);
+void cMatrix_InvertRot(Mtx* m);
+int cMatrix_IsZeroTranslation(Mtx* m);
 V* func_00133EC0(Mtx* m);
-void Vec4_Assign(V* d, V* s);
-void Vec3_Negate(V* v);
-void Mtx_TransformByTranspose(V* v, Mtx* m);
-void Mtx_SetTranslation(Mtx* m, V* t);
+void cVector_ctor_cVectorR(V* d, V* s);
+void cVector_NegateXYZ(V* v);
+void cVector_Rotate_cMatrixR(V* v, Mtx* m);
+void cMatrix_SetTranslation(Mtx* m, V* t);
 }
-static inline Cam* GetCam() { return func_00159570(g_CameraObject) ? *List_Front(g_CameraObject) : 0; }
+static inline Cam* GetCam() { return func_00159570(g_CameraObject) ? *cLList_cCAMERA_GOBJPtr_Front(g_CameraObject) : 0; }
 
 extern "C" void HudRadar_ComputeMarkerMatrix(void)
 {
-    Obj* o = Object_LookupById(&D_004F82A0);
+    Obj* o = nGobjManager_LookupGOBJ_cObjectIdR(&D_004F82A0);
     if (o) {
         bool ok = 0;
         Ctl* c = o->ctl;
@@ -64,14 +64,14 @@ extern "C" void HudRadar_ComputeMarkerMatrix(void)
             Unit(up);
             Mtx m;
             Mtx om = o->GetMtx();
-            Mtx_FromRowsAndTranslation(&m, &fwd, &up, &z, om.T());
-            Mtx_Transpose3x3(&m);
-            if (!Mtx_IsTranslationZero(&m)) {
+            cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(&m, &fwd, &up, &z, om.T());
+            cMatrix_InvertRot(&m);
+            if (!cMatrix_IsZeroTranslation(&m)) {
                 V t;
-                Vec4_Assign(&t, func_00133EC0(&m));
-                Vec3_Negate(&t);
-                Mtx_TransformByTranspose(&t, &m);
-                Mtx_SetTranslation(&m, &t);
+                cVector_ctor_cVectorR(&t, func_00133EC0(&m));
+                cVector_NegateXYZ(&t);
+                cVector_Rotate_cMatrixR(&t, &m);
+                cMatrix_SetTranslation(&m, &t);
             }
             D_004F82B0 = m;
             return;

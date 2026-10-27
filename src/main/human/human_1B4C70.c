@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_001B4C70 */
 #pragma push /* merge_units */
@@ -28,7 +28,7 @@ extern "C" void* func_001B4C70(O_1B4C70* self, short deleteFlag)
         if (b) {
             {
                 AllocGuard guard;
-                Mem_Free(0, b, "humanIk.hh", 0x55C);
+                cMemMan_Deallocate(0, b, "humanIk.hh", 0x55C);
             }
             self->buf = 0;
         }

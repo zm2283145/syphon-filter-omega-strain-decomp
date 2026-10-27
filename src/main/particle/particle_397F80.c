@@ -34,7 +34,7 @@ DEFINE_BUF_HOLDER_DTOR(std_vector_intPtr_dtor)
 #pragma cplusplus on
 #pragma opt_strength_reduction off
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern char D_004BC5D0[];
 extern char D_004BC640[];
 extern char D_004BC650[];
@@ -63,24 +63,24 @@ extern "C" int std_vector_cEffectRequestPtr_push_back(Tbl* v, Ent* const& value)
 static inline void* New398(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004BC5D0, line);
+    return cMemMan_Allocate(0, size, D_004BC5D0, line);
 }
 
 static inline void EntInit(Ent* e, char* name, int value)
 {
     cArray_intPtr_ctor(&e->v);
     e->name = (char*)opNewArray(strlen(name) + 1, 0, D_004BC650, 0x119C);
-    String_Copy(e->name, name);
+    Libc_Strcpy(e->name, name);
     cArray_intPtr_PushBackActual(&e->v, &value);
 }
 
-extern "C" void ParticleLib_Request(void* self, const char* name, int value)
+extern "C" void cParticleSystem_RequestEffectLoad(void* self, const char* name, int value)
 {
     char buf[0x80];
     Ent* t;
     Ent* e;
     int i;
-    String_Copy(buf, name);
+    Libc_Strcpy(buf, name);
     if (!strstr(buf, D_004BC640))
         Libc_Strcat(buf, D_004BC640);
     if (!D_0053BB58) {

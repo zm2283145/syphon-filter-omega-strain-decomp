@@ -12,11 +12,11 @@ typedef struct Linked208 {
     unsigned char rest : 5;
 } Linked208;
 
-extern void* NpcPath_GetNode(int handle);
+extern void* cAIPathData_GetNode(int handle);
 
 /* Stores the handle, resolves it and marks the object linked. */
 void cNetNPC_NetTeleport(Linked208* obj, int handle) {
     obj->handle = handle;
-    obj->resolved = NpcPath_GetNode(handle);
+    obj->resolved = cAIPathData_GetNode(handle);
     obj->linked = 1;
 }

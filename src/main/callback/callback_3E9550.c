@@ -18,12 +18,12 @@ public:
 };
 typedef struct { char pad[0x60]; int target; char pad64[4]; int id; } S_9550;
 extern "C" {
-Obj_9550* Object_LookupById(int* id);
-float Vec4_GetX(V4_9550* v);
-float Vec4_GetY(V4_9550* v);
-float Vec4_GetZ(V4_9550* v);
-void Mtx_MakeAxisRotation(M4_9550* m, float x, float y, float z, float a);
-void IeElement_SetMatrix(int t, M4_9550* m);
+Obj_9550* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+float cVector_X_void(V4_9550* v);
+float cVector_Y_void(V4_9550* v);
+float cVector_Z_void(V4_9550* v);
+void cMatrix_SetWithAxisAngle(M4_9550* m, float x, float y, float z, float a);
+void cInterfaceElement_SetView(int t, M4_9550* m);
 extern float D_00493980;
 }
 static inline void Mul_9550(M4_9550* t, M4_9550* b) {
@@ -62,7 +62,7 @@ static inline void Mul_9550(M4_9550* t, M4_9550* b) {
 #pragma opt_propagation off
 extern "C" void HudMapSprite_Place(S_9550* self)
 {
-    Obj_9550* o = Object_LookupById(&self->id);
+    Obj_9550* o = nGobjManager_LookupGOBJ_cObjectIdR(&self->id);
     if (o != 0) {
         M4_9550 m = o->GetMatrix();
         M4_9550 rot;
@@ -72,7 +72,7 @@ extern "C" void HudMapSprite_Place(S_9550* self)
         axis.y = 0.0f;
         axis.z = 0.0f;
         axis.w = 0.0f;
-        Mtx_MakeAxisRotation(&rot, Vec4_GetX(&axis), Vec4_GetY(&axis), Vec4_GetZ(&axis), -1.5707964f);
+        cMatrix_SetWithAxisAngle(&rot, cVector_X_void(&axis), cVector_Y_void(&axis), cVector_Z_void(&axis), -1.5707964f);
         { M4_9550* t = &m; M4_9550* b = &rot; Mul_9550(t, b); }
         k = D_00493980;
         m.r[0].x *= k;
@@ -84,7 +84,7 @@ extern "C" void HudMapSprite_Place(S_9550* self)
         m.r[2].x *= k;
         m.r[2].y *= k;
         m.r[2].z *= k;
-        IeElement_SetMatrix(self->target, &m);
+        cInterfaceElement_SetView(self->target, &m);
     }
 }
 #pragma pop /* merge_units */
@@ -100,27 +100,27 @@ extern "C" void HudMapSprite_Place(S_9550* self)
 
 #include "loose04_types.h"
 
-extern void IeElement_SetPosition(int, void*);
-extern void HudTracker_ToCameraSpace(void*);
-extern float IeElement_Fade(int, float);
-extern void IeElement_EvaluateAt(int, float);
+extern void cInterfaceElement_SetLocation(int, void*);
+extern void cIE_GOBJ_TransformPointIntoCamera(void*);
+extern float cAnimator_AnimateTo(int, float);
+extern void viBufGetTs(int, float);
 
 void HudLockTracker_Draw(Unk3E96F0* self) {
-    HudTracker_ToCameraSpace(self->unk70);
-    IeElement_SetPosition(self->unk60, self->unk70);
+    cIE_GOBJ_TransformPointIntoCamera(self->unk70);
+    cInterfaceElement_SetLocation(self->unk60, self->unk70);
 }
 
 void HudLockTracker_Changed(Unk3E96F0* self) {
-    IeElement_EvaluateAt(self->unk60, 0.0f);
+    viBufGetTs(self->unk60, 0.0f);
     self->unk84 = 1;
 }
 
-void HudTracker_Kill(Unk3E96F0* self) {
-    IeElement_Fade(self->unk60, 0.0f);
+void cIE_GOBJ_AnimateOff(Unk3E96F0* self) {
+    cAnimator_AnimateTo(self->unk60, 0.0f);
     self->unk84 = 1;
 }
 
-void HudTracker_Attach(Unk3E96F0* self, int* value, int arg) {
+void cIE_GOBJ_SetHost(Unk3E96F0* self, int* value, int arg) {
     self->unk68 = *value;
     self->unk64 = 1;
     self->unk80 = arg;
@@ -136,15 +136,15 @@ typedef struct { char mtx[0x110]; } Cam3E97D0;
 typedef struct { char p0[0x1F0]; Cam3E97D0 cams[1]; } W3E97D0;
 typedef struct { char p0[0x60]; int h; char p64[0xC]; V3E97D0 dir; } S3E97D0;
 #if 0 /* merge_units */
-extern void HudTracker_ToCameraSpace(V3E97D0*);
+extern void cIE_GOBJ_TransformPointIntoCamera(V3E97D0*);
 #endif /* merge_units */
-#define HudTracker_ToCameraSpace(a0) (HudTracker_ToCameraSpace((void *)(a0))) /* merge_units */
+#define cIE_GOBJ_TransformPointIntoCamera(a0) (cIE_GOBJ_TransformPointIntoCamera((void *)(a0))) /* merge_units */
 
-extern void Renderer_ProjectToScreen(V3E97D0* out, void* m, V3E97D0* v);
+extern void cXViewport_GetScreenVert(V3E97D0* out, void* m, V3E97D0* v);
 #if 0 /* merge_units */
-extern void IeElement_SetPosition(int h, V3E97D0* v);
+extern void cInterfaceElement_SetLocation(int h, V3E97D0* v);
 #endif /* merge_units */
-#define IeElement_SetPosition(a0, a1) (IeElement_SetPosition((a0), (void *)(a1))) /* merge_units */
+#define cInterfaceElement_SetLocation(a0, a1) (cInterfaceElement_SetLocation((a0), (void *)(a1))) /* merge_units */
 
 extern W3E97D0 g_Video;
 extern int D_00538C60;
@@ -155,20 +155,20 @@ void HudTracker_Draw(S3E97D0* s)
 {
     V3E97D0 t;
     unsigned char neg;
-    HudTracker_ToCameraSpace(&s->dir);
+    cIE_GOBJ_TransformPointIntoCamera(&s->dir);
     neg = s->dir.y < 0.0f;
-    Renderer_ProjectToScreen(&t, g_Video.cams[D_00538C60].mtx, &s->dir);
+    cXViewport_GetScreenVert(&t, g_Video.cams[D_00538C60].mtx, &s->dir);
     {
         V3E97D0* d = &s->dir;
         V3E97D0* q = &t;
         V4Copy(d, q);
     }
     if (neg) s->dir.z = -s->dir.z;
-    IeElement_SetPosition(s->h, &s->dir);
+    cInterfaceElement_SetLocation(s->h, &s->dir);
 }
 #pragma pop
-#undef HudTracker_ToCameraSpace /* merge_units */
-#undef IeElement_SetPosition /* merge_units */
+#undef cIE_GOBJ_TransformPointIntoCamera /* merge_units */
+#undef cInterfaceElement_SetLocation /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E97D0 */
 
@@ -202,18 +202,18 @@ struct S_E98 {
 };
 extern "C" {
 #if 0 /* merge_units */
-Obj_E98* Object_LookupById(int* id);
+Obj_E98* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
 #endif /* merge_units */
-#define Object_LookupById(a0) ((Obj_E98 *)Object_LookupById((a0))) /* merge_units */
+#define nGobjManager_LookupGOBJ_cObjectIdR(a0) ((Obj_E98 *)nGobjManager_LookupGOBJ_cObjectIdR((a0))) /* merge_units */
 
-void Object_Unregister(S_E98* s);
-void Object_DeleteLater(S_E98* s, float t);
-void HudTracker_Update(S_E98* s);
+void nGobjManager_RemoveGOBJ(S_E98* s);
+void cSystem_ActualScheduleDelete(S_E98* s, float t);
+void cIE_GOBJ_NextFrame(S_E98* s);
 }
-void HudTracker_Update(S_E98* s)
+void cIE_GOBJ_NextFrame(S_E98* s)
 {
     if (s->x64) {
-        Obj_E98* o = Object_LookupById(&s->x68);
+        Obj_E98* o = nGobjManager_LookupGOBJ_cObjectIdR(&s->x68);
         if (o) {
             s->x70 = o->GetNodePos(s->x80);
         } else {
@@ -221,12 +221,12 @@ void HudTracker_Update(S_E98* s)
         }
     }
     if (s->x84 && s->x60->y < 0.5f) {
-        Object_Unregister(s);
-        Object_DeleteLater(s, 0.1f);
+        nGobjManager_RemoveGOBJ(s);
+        cSystem_ActualScheduleDelete(s, 0.1f);
         s->x84 = 0;
     }
 }
-#undef Object_LookupById /* merge_units */
+#undef nGobjManager_LookupGOBJ_cObjectIdR /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E9880 */
 
@@ -234,14 +234,14 @@ void HudTracker_Update(S_E98* s)
 #pragma push /* merge_units */
 typedef struct { void* vt; char pad[0x5C]; void* m60; } G9940;
 extern char D_004E05A0[];
-extern void IeElement_Release(void* p);
+extern void cInterfaceElement_Destroy(void* p);
 extern void cGOBJ_dtor(void* self, short del);
 extern void operator_delete(void* p);
-G9940* HudLockTracker_Delete(G9940* self, short del)
+G9940* cIE_GOBJ_dtor(G9940* self, short del)
 {
     if (self) {
         self->vt = D_004E05A0;
-        IeElement_Release(self->m60);
+        cInterfaceElement_Destroy(self->m60);
         cGOBJ_dtor(self, 0);
         if (del > 0)
             operator_delete(self);

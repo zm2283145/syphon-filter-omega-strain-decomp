@@ -10,12 +10,12 @@
 /* merge_units: begin func_00394720 */
 #pragma push /* merge_units */
 extern char D_0053B540[];
-extern void ParticleLib_Request(void* list, int value, void* item);
+extern void cParticleSystem_RequestEffectLoad(void* list, int value, void* item);
 
 /* Registers the object's +0x60 sub-object in the global list D_0053B540. */
-void ParticleGob_RequestPar(char* self, int* arg)
+void cPARTICLE_GOBJ_Load(char* self, int* arg)
 {
-    ParticleLib_Request(D_0053B540, *arg, self + 0x60);
+    cParticleSystem_RequestEffectLoad(D_0053B540, *arg, self + 0x60);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00394720(void) {}
@@ -49,7 +49,7 @@ struct Object {
 };
 
 /* Calls virtual +0x90(arg+0x10, 0), passes arg to the +0x50 object (virtual +0x14) and clears +0x64/+0x6C. */
-extern "C" void ParticleGob_ResetTime(Object* self, char* arg)
+extern "C" void cPARTICLE_GOBJ_Init(Object* self, char* arg)
 {
     self->Method90(arg + 0x10, 0);
     self->sub->Method14(arg);

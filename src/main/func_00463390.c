@@ -35,16 +35,16 @@ extern char D_004C2610[];
 extern char D_004C2608[];
 extern char D_004C25F8[];
 extern int D_00497BD8[];
-extern Agent_463390* Agent_GetSelected(void* mgr, int idx);
+extern Agent_463390* cGameSystem_GetAgentData(void* mgr, int idx);
 extern int cAgentData_GetStat(Agent_463390* agent, int stat);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern Line_463390* cQuipList_tQuip_ctor(Line_463390* line, char* voice, int duration);
 extern void cArray_tQuip_PushBackActual(void* vec, Line_463390* line);
 extern void std_vector_int_ctor_void(IntVec_463390* v);
-extern void PtrVec_PushBack_1C1080(IntVec_463390* v, int* value);
+extern void std_vector_int_push_back(IntVec_463390* v, int* value);
 extern int func_00460B50(IntVec_463390* v);
 extern int* func_00460B40(IntVec_463390* v, int i);
-extern void VoiceQueue_Push(void* vec, char* name, float seconds);
+extern void cQuipList_QueueUp(void* vec, char* name, float seconds);
 extern void func_0013A040(IntVec_463390* v, int flags);
 
 static inline int Pct_463390(Agent_463390* ag, int total, int part)
@@ -56,7 +56,7 @@ static inline int Pct_463390(Agent_463390* ag, int total, int part)
     return r;
 }
 
-void GuiEndGameStatistics_QueueVoices(Self_463390* self)
+void GuiEndGameStatistics_PlayQuips(Self_463390* self)
 {
     char buf[32];
     IntVec_463390 list;
@@ -70,10 +70,10 @@ void GuiEndGameStatistics_QueueVoices(Self_463390* self)
         int idxB = -1;
         int i;
         for (i = 0; i < 4; i++) {
-            Agent_463390* a = Agent_GetSelected(g_Game, i);
+            Agent_463390* a = cGameSystem_GetAgentData(g_Game, i);
             if (a->bB70 && a->bB74) {
-                int pa = Pct_463390(Agent_GetSelected(g_Game, i), 0x1D, 0x1E);
-                int pb = Pct_463390(Agent_GetSelected(g_Game, i), 0x1B, 0x1C);
+                int pa = Pct_463390(cGameSystem_GetAgentData(g_Game, i), 0x1D, 0x1E);
+                int pb = Pct_463390(cGameSystem_GetAgentData(g_Game, i), 0x1B, 0x1C);
                 if (bestA < pa) {
                     bestA = pa;
                     idxA = i;
@@ -108,13 +108,13 @@ void GuiEndGameStatistics_QueueVoices(Self_463390* self)
     if (g_IsMultiplayer) {
         int i;
         for (i = 0; i < 4; i++) {
-            Agent_463390* a = Agent_GetSelected(g_Game, i);
-            if (a->bB70 && a->bB74 && !cAgentData_GetStat(Agent_GetSelected(g_Game, i), 0x1A))
-                PtrVec_PushBack_1C1080(&list, &i);
+            Agent_463390* a = cGameSystem_GetAgentData(g_Game, i);
+            if (a->bB70 && a->bB74 && !cAgentData_GetStat(cGameSystem_GetAgentData(g_Game, i), 0x1A))
+                std_vector_int_push_back(&list, &i);
         }
     } else {
-        if (Agent_GetSelected(g_Game, -1)->bB74 && !cAgentData_GetStat(Agent_GetSelected(g_Game, -1), 0x1A))
-            PtrVec_PushBack_1C1080(&list, D_00497BD8);
+        if (cGameSystem_GetAgentData(g_Game, -1)->bB74 && !cAgentData_GetStat(cGameSystem_GetAgentData(g_Game, -1), 0x1A))
+            std_vector_int_push_back(&list, D_00497BD8);
     }
     n = func_00460B50(&list);
     if (n) {
@@ -122,13 +122,13 @@ void GuiEndGameStatistics_QueueVoices(Self_463390* self)
             int j;
             for (j = 0; j < func_00460B50(&list); j++) {
                 sprintf(name, D_004C2610, *func_00460B40(&list, j) + 1);
-                VoiceQueue_Push(self->lines, name, 0.0f);
+                cQuipList_QueueUp(self->lines, name, 0.0f);
             }
             sprintf(name, D_004C2608, 5);
-            VoiceQueue_Push(self->lines, name, 1.0f);
+            cQuipList_QueueUp(self->lines, name, 1.0f);
         } else {
             sprintf(name, D_004C25F8, 5, *func_00460B40(&list, 0) + 1);
-            VoiceQueue_Push(self->lines, name, 1.0f);
+            cQuipList_QueueUp(self->lines, name, 1.0f);
         }
     }
     func_0013A040(&list, -1);

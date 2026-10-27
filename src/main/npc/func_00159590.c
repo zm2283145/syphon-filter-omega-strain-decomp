@@ -138,17 +138,17 @@ struct MBase { void* vtable; };
 struct Msg : MBase { char pad[0x1C]; unsigned char kind; char pad2[3]; unsigned char b24; char pad3[0xB]; char data[0x40]; };
 extern "C" {
 extern char g_TeleportMsgClass[], D_004D9360[], D_004EE550[], D_004D9340[], D_004EE698[], D_004D9940[];
-void Event_Construct(void* m, void* type);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
 void cMessage_dtor(void* m, int flags);
 }
 struct MsgA : MBase {
     char pad[0x20]; unsigned char b24; char pad2[3]; int f28;
-    MsgA(unsigned char m) { MsgA* p = this; Event_Construct(p, D_004EE550); p->vtable = D_004D9340; p->b24 = m; p->f28 = -1; }
+    MsgA(unsigned char m) { MsgA* p = this; cMessage_ctor_cMessageNameR(p, D_004EE550); p->vtable = D_004D9340; p->b24 = m; p->f28 = -1; }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MsgA() { vtable = D_004D9340; cMessage_dtor(this, 0); }
 };
 struct MsgB : MBase {
     char pad[0x20]; int f24; int f28; int f2C; Obj* f30;
-    MsgB(int a, int b, Obj* c) { MsgB* p = this; Event_Construct(p, D_004EE698); p->vtable = D_004D9940; p->f24 = a; p->f28 = b; p->f30 = c; p->f2C = 0; }
+    MsgB(int a, int b, Obj* c) { MsgB* p = this; cMessage_ctor_cMessageNameR(p, D_004EE698); p->vtable = D_004D9940; p->f24 = a; p->f28 = b; p->f30 = c; p->f2C = 0; }
     MsgB(int a, F1B4* s, Obj* c);
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MsgB() { vtable = D_004D9940; cMessage_dtor(this, 0); }
 };
@@ -164,37 +164,37 @@ extern Tab SecondaryStateTable[];
 void std_list_cActiveListItemPtr_begin_void(Iter* out, Tree* t);
 Word* cLListIterator_cActiveListItemPtr_ctor(Word* dst, Word* src);
 void std_list_cActiveListItemPtr_end_void(Iter* out, Tree* t);
-void cAI_v0E(Npc* self, float dt);
-void NpcAi_RequestAction(Npc* self, unsigned char type, int prio, float f);
-void NpcAi_RunLocomotion(Npc* self);
-void NpcPerception_Think(Perc* p, float dt);
-Sensed* NpcPerception_SensedRecord(Perc* p, Obj* o);
-int NpcPerception_SightTest(Perc* p, Perc* q, int a, int b);
-void* NpcPath_GetNode(int id);
-void NpcPath_RelocateStuck(Path* p, int id);
-V* Vec4_Set(V* v, float x, float y, float z, float w);
-void Vec4_NormalizeXYZ_132060(V* out, V* v);
-void Vec4_Cross(V* out, V* a, V* b);
-int Vec4_IsZeroXYZ(V* v);
-V* Vec4_NormalizeXYZInPlace(V* v);
-V* Vec4_Assign(V* d, V* s);
-void Mtx_FromRowsAndTranslation(M* m, V* a, V* b, V* c, V* t);
-void Mtx_FrameFromAxis(M* m, V* a);
-void Mtx_SetIdentity(M* m);
-V Node_GetTranslation(void* node);
-void Event_Construct(void* m, void* type);
-int TeleportMsg_IsMode3(void* m);
+void cAI_NextFrame(Npc* self, float dt);
+void cNPC_DoAction(Npc* self, unsigned char type, int prio, float f);
+void cNPC_UpdateMovement(Npc* self);
+void cAITarget_Update(Perc* p, float dt);
+Sensed* cAITarget_GetAwareness(Perc* p, Obj* o);
+int cAITarget_TestPointInViewCone(Perc* p, Perc* q, int a, int b);
+void* cAIPathData_GetNode(int id);
+void cPathNavigator_AdjustPathForTeleport(Path* p, int id);
+V* cVector_ctor_float_float_float_float(V* v, float x, float y, float z, float w);
+void cVector_GetNormalized_void(V* out, V* v);
+void cVector_Cross(V* out, V* a, V* b);
+int cVector_IsZeroXYZ(V* v);
+V* cVector_Normalize_void(V* v);
+V* cVector_ctor_cVectorR(V* d, V* s);
+void cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(M* m, V* a, V* b, V* c, V* t);
+void cMatrix_MakeLookAtMatrix_cVectorR(M* m, V* a);
+void cMatrix_SetUnit(M* m);
+V cNode_GetLoc(void* node);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+int cMoveMsg_Template_1_HasDeltaPosition(void* m);
 V* func_00133EC0(M* m);
 void cVector_Copy_WSet0(V* out, V* v);
-void Vec4_CopyAsPoint(V* out, V* v);
-void Mtx_SetRotationTranslation(void* data, M* obj, V* v);
-void Event_Send(const MBase& m, void* target, int immediate);
-void NpcAttack_SelectLookAt(Npc* self, float dt);
-void NpcAttack_WeaponPosture(Npc* self);
-void NpcAttack_FiringGate(Npc* self, float dt);
-unsigned char NpcAi_DispatchMode(Npc* self, const MsgA& m);
+void cVector_Copy_WSet1(V* out, V* v);
+void cMatrix_ctor_cMatrixR_cVectorR(void* data, M* obj, V* v);
+void QueueMessage_cMessageR_cSystemP_int(const MBase& m, void* target, int immediate);
+void cNPC_UpdateLookAt(Npc* self, float dt);
+void cNPC_HandleWeaponAiming(Npc* self);
+void cNPC_HandleWeaponFiring(Npc* self, float dt);
+unsigned char cNPC_Update(Npc* self, const MsgA& m);
 int Npc_IsDeadRemovalAllowed(Npc* self);
-void cNPC_v0E(Npc* self, float dt);
+void cNPC_NextFrame(Npc* self, float dt);
 }
 
 static inline void FCopy(float* d, float* s) { float* ss = s; float* dd = d; *dd = *ss; }
@@ -249,25 +249,25 @@ static inline bool PairOk(X* x)
     if (TabOk(&SecondaryStateTable[x->b310]) && TabOk(&SecondaryStateTable[x->b311])) r = 1;
     return r;
 }
-static inline int SightSelf(Perc* p, int b) { Perc* q = p; return NpcPerception_SightTest(q, p, 1, b); }
+static inline int SightSelf(Perc* p, int b) { Perc* q = p; return cAITarget_TestPointInViewCone(q, p, 1, b); }
 static inline bool Ready(Y* y) { return y->f2C8 >= 0.5f; }
 static inline void LookFrame(M* m, V* dir, const V& up)
 {
     V c;
-    Vec4_Cross(&c, dir, (V*)&up);
-    if (!Vec4_IsZeroXYZ(&c)) {
+    cVector_Cross(&c, dir, (V*)&up);
+    if (!cVector_IsZeroXYZ(&c)) {
         V f;
         V r;
         V u;
         V w;
-        Vec4_NormalizeXYZ_132060(&f, dir);
-        Vec4_Assign(&r, Vec4_NormalizeXYZInPlace(&c));
-        Vec4_Cross(&u, &r, &f);
-        Mtx_FromRowsAndTranslation(m, &r, &f, &u, Vec4_Set(&w, 0.0f, 0.0f, 0.0f, 1.0f));
-    } else if (!Vec4_IsZeroXYZ(dir)) {
-        Mtx_FrameFromAxis(m, dir);
+        cVector_GetNormalized_void(&f, dir);
+        cVector_ctor_cVectorR(&r, cVector_Normalize_void(&c));
+        cVector_Cross(&u, &r, &f);
+        cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(m, &r, &f, &u, cVector_ctor_float_float_float_float(&w, 0.0f, 0.0f, 0.0f, 1.0f));
+    } else if (!cVector_IsZeroXYZ(dir)) {
+        cMatrix_MakeLookAtMatrix_cVectorR(m, dir);
     } else {
-        Mtx_SetIdentity(m);
+        cMatrix_SetUnit(m);
     }
 }
 static inline void TeleInit(Msg* m, M* mtx)
@@ -275,18 +275,18 @@ static inline void TeleInit(Msg* m, M* mtx)
     V a2;
     V b2;
     V* v;
-    if (TeleportMsg_IsMode3(m)) {
+    if (cMoveMsg_Template_1_HasDeltaPosition(m)) {
         cVector_Copy_WSet0(&a2, func_00133EC0(mtx));
         v = &a2;
     } else {
-        Vec4_CopyAsPoint(&b2, func_00133EC0(mtx));
+        cVector_Copy_WSet1(&b2, func_00133EC0(mtx));
         v = &b2;
     }
-    Mtx_SetRotationTranslation(m->data, mtx, v);
+    cMatrix_ctor_cMatrixR_cVectorR(m->data, mtx, v);
 }
 
-inline MsgB::MsgB(int a, F1B4* s, Obj* c) { MsgB* p = this; int b = s->f90; Event_Construct(p, D_004EE698); p->vtable = D_004D9940; p->f24 = a; p->f28 = b; p->f30 = c; p->f2C = 0; }
-extern "C" void cNPC_v0E(Npc* self, float dt)
+inline MsgB::MsgB(int a, F1B4* s, Obj* c) { MsgB* p = this; int b = s->f90; cMessage_ctor_cMessageNameR(p, D_004EE698); p->vtable = D_004D9940; p->f24 = a; p->f28 = b; p->f30 = c; p->f2C = 0; }
+extern "C" void cNPC_NextFrame(Npc* self, float dt)
 {
     LNode* it;
     int tmp;
@@ -329,12 +329,12 @@ extern "C" void cNPC_v0E(Npc* self, float dt)
         self->f7C -= dt;
         if (self->f7C <= 0.0f) self->V158();
     }
-    cAI_v0E(self, dt);
+    cAI_NextFrame(self, dt);
     if (!(self->f128 <= 0.0f)) {
         self->f128 -= dt;
-        if (self->f128 <= 0.0f && (self->f124 & 8)) NpcAi_RequestAction(self, 0xB, 0x64, 0.0f);
+        if (self->f128 <= 0.0f && (self->f124 & 8)) cNPC_DoAction(self, 0xB, 0x64, 0.0f);
     }
-    NpcAi_RunLocomotion(self);
+    cNPC_UpdateMovement(self);
     {
         Obj* tgt = GetP(self->perc);
         RecR* rec;
@@ -370,10 +370,10 @@ extern "C" void cNPC_v0E(Npc* self, float dt)
     }
     if (!self->actor->IsDead()) {
         if (leader) {
-            NpcPerception_Think(self->perc, self->f1BC);
+            cAITarget_Update(self->perc, self->f1BC);
             if (GetP(self->perc) && !self->VB4() && !self->f130 && self->perc->f20.b3) {
                 if (self->actor->f3314 ? PairOk(self->actor->f3314) : 0) {
-                    Sensed* r = NpcPerception_SensedRecord(self->perc, GetP(self->perc));
+                    Sensed* r = cAITarget_GetAwareness(self->perc, GetP(self->perc));
                     if (r && r->b39 && r->f24 < 1.0f && (r->b20 == 3 || r->b20 == 4)) {
                         if (SightSelf(self->perc, GetP(self->perc)->f44 >> 1))
                             self->V198(0.0f, self->fA4, -1);
@@ -403,20 +403,20 @@ extern "C" void cNPC_v0E(Npc* self, float dt)
                         self->f1C4 = 0.0f;
                     } else {
                         if (!(self->f1C4 <= 2.0f) && self->path->f50 >= 0) {
-                            void* node = NpcPath_GetNode(PathId(self));
-                            NpcPath_RelocateStuck(*(Path* volatile*)&self->path, PathId(self));
+                            void* node = cAIPathData_GetNode(PathId(self));
+                            cPathNavigator_AdjustPathForTeleport(*(Path* volatile*)&self->path, PathId(self));
                             fwd = self->path->v10;
                             fwd.z = 0.0f;
                             LookFrame(&mtx, &fwd, V(0.0f, 0.0f, 1.0f, 0.0f));
-                            mtx.t = Node_GetTranslation(node);
+                            mtx.t = cNode_GetLoc(node);
                             {
                                 Msg* m = &msg;
-                                Event_Construct(m, g_TeleportMsgClass);
+                                cMessage_ctor_cMessageNameR(m, g_TeleportMsgClass);
                                 m->vtable = D_004D9360;
                                 m->b24 = 2;
                                 TeleInit(m, &mtx);
                                 msg.kind = 1;
-                                Event_Send(msg, self->actor, 1);
+                                QueueMessage_cMessageR_cSystemP_int(msg, self->actor, 1);
                                 self->f1C4 = 0.0f;
                                 self->f1C0 = 999999.0f;
                                 msg.vtable = D_004D9360;
@@ -431,30 +431,30 @@ extern "C" void cNPC_v0E(Npc* self, float dt)
                 }
             }
         }
-        NpcAttack_SelectLookAt(self, dt);
-        NpcAttack_WeaponPosture(self);
-        NpcAttack_FiringGate(self, dt);
+        cNPC_UpdateLookAt(self, dt);
+        cNPC_HandleWeaponAiming(self);
+        cNPC_HandleWeaponFiring(self, dt);
         if (self->fE8 > 0) {
             self->fE8--;
-            if (self->fE8 == 0) Event_Send(MsgA(3), self, 0);
+            if (self->fE8 == 0) QueueMessage_cMessageR_cSystemP_int(MsgA(3), self, 0);
         }
-        NpcAi_DispatchMode(self, MsgA(2));
+        cNPC_Update(self, MsgA(2));
         if (leader && self->f1B4) {
             G* g = actor->f50;
             if (self->f1B4->V110(g->GetMtx()->T())) {
                 if (!self->f141.b3) {
-                    Event_Send(MsgB(0, self->f1B4->f90, actor), self->f1B4, 0);
+                    QueueMessage_cMessageR_cSystemP_int(MsgB(0, self->f1B4->f90, actor), self->f1B4, 0);
                     self->f141.b3 = 1;
                 }
             } else if (self->f141.b3) {
-                Event_Send(MsgB(2, self->f1B4, actor), self->f1B4, 0);
+                QueueMessage_cMessageR_cSystemP_int(MsgB(2, self->f1B4, actor), self->f1B4, 0);
                 self->f141.b3 = 0;
             }
         }
     } else if (Npc_IsDeadRemovalAllowed(self)) {
         self->actor->V60(1);
     } else {
-        NpcAttack_FiringGate(self, dt);
+        cNPC_HandleWeaponFiring(self, dt);
     }
     if (leader) self->f1BC = 0.0f;
     self->f1BC += dt;

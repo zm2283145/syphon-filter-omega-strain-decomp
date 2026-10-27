@@ -1,5 +1,5 @@
 extern int printf(const char *, ...);
-extern int Net_AllocZeroed(void **pp, unsigned long size);
+extern int rt_memory_allocate_init_zero(void **pp, unsigned long size);
 extern int func_002FB2D8(void **pp, unsigned long size);
 extern void rt_memory_free(void *pp);
 typedef struct { char pad[0x8000]; unsigned int size; char pad2[0x8410 - 0x8004]; int x8410; } Ctx310D40;
@@ -21,7 +21,7 @@ int RtXml_CreateParser(Ctx310D40 **out, int flags, unsigned int size)
         printf(">>>RT_XML_ASSERT in file %s on line %d due to %s\n", "/usr/local/rel-1.50/rt_xmlparse/src/rt_xmlparse.c", 0xF7, "0 != memory_ceiling");
         return 3;
     }
-    r = Net_AllocZeroed((void **)&c, 0x8C2C);
+    r = rt_memory_allocate_init_zero((void **)&c, 0x8C2C);
     if (c == 0) {
         printf(">>>RT_XML_ASSERT in file %s on line %d due to %s\n", "/usr/local/rel-1.50/rt_xmlparse/src/rt_xmlparse.c", 0xFB, "NULL != p_iparser");
         return 2;

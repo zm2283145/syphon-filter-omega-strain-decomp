@@ -7,38 +7,38 @@
 #include "types.h"
 #include "game_types.h"
 
-extern ListIter* List_InsertBefore(ListIter* out, LinkList* list, ListIter* pos, int* value);
-extern ListIter* List_PushBack(LinkList* list, int* value);
-extern int Hud_SetPlayerId(int);
+extern ListIter* std_list_deleter_voidPtr_insert(ListIter* out, LinkList* list, ListIter* pos, int* value);
+extern ListIter* std_list_cGOBJPtr_push_back(LinkList* list, int* value);
+extern int cHud_SetOwner(int);
 
 /* Inserts *value at the front of the list. */
-ListIter* List_PushFront(LinkList* list, int* value) {
+ListIter* std_list_cCAMERA_GOBJPtr_push_front(LinkList* list, int* value) {
     ListIter pos;
     ListIter result;
 
     pos.node = list->first;
-    return List_InsertBefore(&result, list, &pos, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &pos, value);
 }
 
-/* Stores the actor in world +0xBC and registers actor->+0x30 (+0xC) with Hud_SetPlayerId. */
-int World_RegisterActor(char* world, char* actor) {
+/* Stores the actor in world +0xBC and registers actor->+0x30 (+0xC) with cHud_SetOwner. */
+int cGameSystem_SetPlayer(char* world, char* actor) {
     *(char**)(world + 0xBC) = actor;
-    return Hud_SetPlayerId(*(int*)(actor + 0x30) + 12);
+    return cHud_SetOwner(*(int*)(actor + 0x30) + 12);
 }
 
 /* Appends node to the list at world +0x9C. */
-void World_RegisterNode(char* world, int node) {
+void cGameSystem_AddTeleport(char* world, int node) {
     int tmp;
 
     tmp = node;
-    List_PushBack((LinkList*)(world + 0x9C), &tmp);
+    std_list_cGOBJPtr_push_back((LinkList*)(world + 0x9C), &tmp);
 }
 
 /* Inserts *value at the back of the list (before the header node). */
-ListIter* List_PushBack(LinkList* list, int* value) {
+ListIter* std_list_cGOBJPtr_push_back(LinkList* list, int* value) {
     ListIter pos;
     ListIter result;
 
     pos.node = &list->header;
-    return List_InsertBefore(&result, list, &pos, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &pos, value);
 }

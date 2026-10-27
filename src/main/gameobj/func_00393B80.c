@@ -4,7 +4,7 @@
 
 #include "gobj_types.h"
 
-extern int ChannelVector_Resize(void* v, int a1, int a2);
+extern int std_vector_imp_cSkaSliderValue_resize(void* v, int a1, int a2);
 extern int std_vector_imp_cSkaSwitchValue_resize(void* v, int a1, int a2);
 
 int cArray_cSkaSwitchValue_ResizeActual(void* v, int a1, int a2) {
@@ -23,7 +23,7 @@ int* cSkaSwitchValue_ctor(int* p) {
 }
 
 int cArray_cSkaSliderValue_ResizeActual(void* v, int a1, int a2) {
-    return ChannelVector_Resize(v, a1, a2);
+    return std_vector_imp_cSkaSliderValue_resize(v, a1, a2);
 }
 
 int cSkaAnimationSet_SliderParamCount(char* self) {

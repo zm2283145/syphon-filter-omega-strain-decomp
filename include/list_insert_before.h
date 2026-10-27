@@ -12,8 +12,8 @@
 extern "C" {
 extern char D_0049AE70[];
 extern char D_0049AE80[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 }
 
 struct ListIntNode {
@@ -46,7 +46,7 @@ struct ListNodeHolder {
             ListIntNode* p = node;
             if (p) {
                 AllocGuard guard;
-                Mem_Free(0, p, D_0049AE80, 0x64);
+                cMemMan_Deallocate(0, p, D_0049AE80, 0x64);
             }
         }
     }
@@ -61,7 +61,7 @@ struct ListNodeHolder {
         ListInsertFlag flag;                                                  \
         {                                                                     \
             AllocGuard guard;                                                 \
-            n = (ListIntNode*)Mem_Alloc(0, 0xC, D_0049AE70, 0x5C);            \
+            n = (ListIntNode*)cMemMan_Allocate(0, 0xC, D_0049AE70, 0x5C);            \
         }                                                                     \
         ListNodeHolder h;                                                     \
         h.alloc = alloc;                                                      \

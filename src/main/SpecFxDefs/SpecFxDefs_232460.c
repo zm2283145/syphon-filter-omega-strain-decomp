@@ -21,15 +21,15 @@ typedef struct {
     char pad[0x14];
     void* vt;
 } Fx2324A0;
-Fx2324A0* SpawnerEffect_Ctor(Fx2324A0* self, FxDesc2324A0* d); /* gsynth: defined below */
+Fx2324A0* cParticleBundle_ctor(Fx2324A0* self, FxDesc2324A0* d); /* gsynth: defined below */
 #if 0 /* merge_units */
-extern int SpawnerEffect_Ctor(int, int);
+extern int cParticleBundle_ctor(int, int);
 #endif /* merge_units */
-#define SpawnerEffect_Ctor(a0, a1) ((int)SpawnerEffect_Ctor((void *)(a0), (void *)(a1))) /* merge_units */
+#define cParticleBundle_ctor(a0, a1) ((int)cParticleBundle_ctor((void *)(a0), (void *)(a1))) /* merge_units */
 
-extern int EffectService_Create(int);
+extern int cSfxBundle_opNew(int);
 
-void Effect_CreateInstance(int a0, int a1) {
+void SfxParticleEffect_int_cMatrixR(int a0, int a1) {
     int loc[2];
     int v0;
     int cond;
@@ -37,17 +37,17 @@ void Effect_CreateInstance(int a0, int a1) {
     *(int*)(char*)loc = a0;
     *(int*)((char*)loc + 4) = a1;
     a0 = 0 + 24;
-    v0 = EffectService_Create(a0);
+    v0 = cSfxBundle_opNew(a0);
     a0 = v0;
     cond = a0 == 0;
     a1 = (int)loc;
     if (cond) goto L00232490;
-    v0 = SpawnerEffect_Ctor(a0, a1);
+    v0 = cParticleBundle_ctor(a0, a1);
 L00232490:;
     goto ret;
 ret:;
 }
-#undef SpawnerEffect_Ctor /* merge_units */
+#undef cParticleBundle_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00232460(void) {}
 #pragma pop /* merge_units */
@@ -73,15 +73,15 @@ extern char D_004DBB00[];
 extern char D_004D9280[];
 extern char D_004DBE90[];
 extern signed char D_0048AD80;
-extern void SpecFx_Construct(Fx2324A0* self);
-extern FxObj2324A0* EffectComponent_Alloc(int size);
-extern void EffectService_Schedule(Fx2324A0* self, FxObj2324A0* obj, float x, float y);
+extern void cSfxBundle_ctor(Fx2324A0* self);
+extern FxObj2324A0* cSpecFx_opNew(int size);
+extern void cSfxScheduler_AddItem(Fx2324A0* self, FxObj2324A0* obj, float x, float y);
 
-Fx2324A0* SpawnerEffect_Ctor(Fx2324A0* self, FxDesc2324A0* d) {
-    SpecFx_Construct(self);
+Fx2324A0* cParticleBundle_ctor(Fx2324A0* self, FxDesc2324A0* d) {
+    cSfxBundle_ctor(self);
     self->vt = D_004DBB00;
     if (d->id >= 0) {
-        FxObj2324A0* o = EffectComponent_Alloc(0x50);
+        FxObj2324A0* o = cSpecFx_opNew(0x50);
         if (o != 0) {
             Mtx2324A0* src = d->m;
             Mtx2324A0* dst;
@@ -97,7 +97,7 @@ Fx2324A0* SpawnerEffect_Ctor(Fx2324A0* self, FxDesc2324A0* d) {
             /* retail two-register quad matrix copy idiom */
             Q4COPY_N(dst, src, qa, qb);
         }
-        EffectService_Schedule(self, o, 0.0f, 0.0f);
+        cSfxScheduler_AddItem(self, o, 0.0f, 0.0f);
     }
     return self;
 }

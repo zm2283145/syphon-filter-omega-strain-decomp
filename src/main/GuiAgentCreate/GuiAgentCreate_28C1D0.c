@@ -32,13 +32,13 @@ typedef struct Widget {
     char pad2C[0x44 - 0x2C];
     Child* child;           /* +0x44 */
 } Widget;
-extern "C" void List_Begin(ListIter* out, NodeList* list);  /* list.begin() */
+extern "C" void std_list_deleter_voidPtr_begin_void(ListIter* out, NodeList* list);  /* list.begin() */
 extern "C" void std_list_GuiWidgetPtr_generic_iterator_ctor(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
 extern "C" void std_list_GuiWidgetPtr_end(ListIter* out, NodeList* list);  /* list.end() */
 extern "C" void cLListIterator_GuiWidgetPtr_ctor_listR(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
 
 /* For every other widget in the +0x28 list: clears flag 0x2 and notifies its child (+0x44, virtual +0x20). */
-extern "C" void GuiAgentCreate_SleepChildren(Widget* self)
+extern "C" void RecurseChildrenHide(Widget* self)
 {
     ListIter endIt;
     ListIter beginIt;
@@ -47,7 +47,7 @@ extern "C" void GuiAgentCreate_SleepChildren(Widget* self)
     ListNode* node;
     NodeList* list;
     if (self) {
-    List_Begin(&beginIt, &self->children);
+    std_list_deleter_voidPtr_begin_void(&beginIt, &self->children);
     std_list_GuiWidgetPtr_generic_iterator_ctor(&it, &beginIt);
     node = it.node;
     list = &self->children;
@@ -97,9 +97,9 @@ typedef struct Widget_0028C2A0 {
     Child_0028C2A0* child;           /* +0x44 */
 } Widget_0028C2A0;
 #if 0 /* merge_units */
-extern "C" void List_Begin(ListIter_0028C2A0* out, NodeList* list);  /* list.begin() */
+extern "C" void std_list_deleter_voidPtr_begin_void(ListIter_0028C2A0* out, NodeList* list);  /* list.begin() */
 #endif /* merge_units */
-#define List_Begin(a0, a1) (List_Begin((ListIter *)(a0), (a1))) /* merge_units */
+#define std_list_deleter_voidPtr_begin_void(a0, a1) (std_list_deleter_voidPtr_begin_void((ListIter *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern "C" void std_list_GuiWidgetPtr_generic_iterator_ctor(ListIter_0028C2A0* out, ListIter_0028C2A0* in);    /* iterator -> const_iterator */
@@ -118,7 +118,7 @@ extern "C" void cLListIterator_GuiWidgetPtr_ctor_listR(ListIter_0028C2A0* out, L
 
 
 /* For every other widget in the +0x28 list: sets flag 0x2, notifies its child (+0x44, virtual +0x1C), sets 0x4 and clears 0x80. */
-extern "C" void GuiAgentCreate_WakeChildren(Widget_0028C2A0* self)
+extern "C" void RecurseChildrenVisible(Widget_0028C2A0* self)
 {
     ListIter_0028C2A0 endIt;
     ListIter_0028C2A0 beginIt;
@@ -127,7 +127,7 @@ extern "C" void GuiAgentCreate_WakeChildren(Widget_0028C2A0* self)
     ListNode_0028C2A0* node;
     NodeList* list;
     if (self) {
-    List_Begin(&beginIt, &self->children);
+    std_list_deleter_voidPtr_begin_void(&beginIt, &self->children);
     std_list_GuiWidgetPtr_generic_iterator_ctor(&it, &beginIt);
     node = it.node;
     list = &self->children;
@@ -149,7 +149,7 @@ extern "C" void GuiAgentCreate_WakeChildren(Widget_0028C2A0* self)
     }
     }
 }
-#undef List_Begin /* merge_units */
+#undef std_list_deleter_voidPtr_begin_void /* merge_units */
 #undef std_list_GuiWidgetPtr_generic_iterator_ctor /* merge_units */
 #undef std_list_GuiWidgetPtr_end /* merge_units */
 #undef cLListIterator_GuiWidgetPtr_ctor_listR /* merge_units */

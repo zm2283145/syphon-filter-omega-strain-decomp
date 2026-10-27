@@ -6,6 +6,6 @@
 
 #include "loose03_types.h"
 
-int Hog_GetMemberOffset(Obj36D630* self, int index) {
+int cHogFile_GetBlockOffset(Obj36D630* self, int index) {
     return self->unk160[index];
 }

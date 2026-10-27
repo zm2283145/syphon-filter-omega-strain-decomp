@@ -6,5 +6,5 @@ static inline int NpcAuth_IsLocal(void)
 {
     return g_IsMultiplayer ? D_005721C0 : 1;
 }
-extern void NetEvent_Send(void* ent, int id, int size, int a, int b, int c, int d);
+extern void cNetNPCMsgs_SendMessage(void* ent, int id, int size, int a, int b, int c, int d);
 #endif

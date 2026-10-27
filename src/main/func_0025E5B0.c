@@ -3,7 +3,7 @@
 typedef struct { float a; float b; float c; unsigned char d; } B8S_25E5B0;
 extern "C" int D_005383C4;
 static inline bool b8off(B8S_25E5B0* s) { return !s->d; }
-extern "C" void ActorFader_GetAlpha(B8S_25E5B0* s) {
+extern "C" void cScreenFader_Render(B8S_25E5B0* s) {
     float v = 0.0f;
     unsigned char ok = 0;
     if (b8off(s) && s->b > 0.0f) ok = 1;

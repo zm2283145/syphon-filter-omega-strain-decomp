@@ -6,28 +6,28 @@
 
 /* merge_units: begin func_00358A10 */
 #define F(p,o,T) (*(T *)((char *)(p)+(o)))
-extern void *Insck_GetThreadContext(int),*Insck_FindSocket(int);
+extern void *thread_enter(int),*socket_info(int);
 extern void unblock(void);
-extern int func_00358158(void),Insck_SetErrno(void *,int),Insck_MapLibnetError(int);
+extern int func_00358158(void),thread_leave(void *,int),conv_errno(int);
 extern int sceInetAbort(void *,int,int,int);
 static inline int finish8A10(void *ctx,int err,int site){
- int r=Insck_SetErrno(ctx,err);
+ int r=thread_leave(ctx,err);
  /* Preserve each error-return boundary without emitting instructions.
     The two list walks intentionally share their boundary (site 3). */
  __asm__ volatile("" :: "i"(site) : "memory");
  return r;
 }
-int Insck_Shutdown(int fd,int mode){
- void *ctx=Insck_GetThreadContext(0),*sock,*p;
+int sceInsockAbort(int fd,int mode){
+ void *ctx=thread_enter(0),*sock,*p;
  int r;
  if(!ctx)return -1;
- sock=Insck_FindSocket(fd);
+ sock=socket_info(fd);
  if(!sock)return finish8A10(ctx,9,0);
  if(F(sock,12,int)){
   unblock();
   r=sceInetAbort((char *)ctx+20,F(ctx,84,int),F(sock,12,int),mode);
   if(func_00358158()<0)return finish8A10(ctx,-1,1);
-  if(r<0)return finish8A10(ctx,Insck_MapLibnetError(r),2);
+  if(r<0)return finish8A10(ctx,conv_errno(r),2);
  }
  for(p=F(sock,80,void *);p;p=F(p,0,void *)){
   if(F(p,12,int)){
@@ -43,7 +43,7 @@ int Insck_Shutdown(int fd,int mode){
    if(func_00358158()<0)return finish8A10(ctx,-1,3);
   }
  }
- Insck_SetErrno(ctx,0);
+ thread_leave(ctx,0);
  return 0;
 }
 /* merge_units: end func_00358A10 */

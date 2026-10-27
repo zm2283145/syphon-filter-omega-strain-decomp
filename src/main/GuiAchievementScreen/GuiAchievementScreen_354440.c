@@ -21,7 +21,7 @@ typedef struct SsoString {
 typedef struct { char unused; } Allocator; /* empty allocator object passed by value */
 
 /* Replaces count characters at pos with the range [first, last). */
-extern void* String_Replace(SsoString* str, int pos, int count, const char* first, const char* last, Allocator alloc);
+extern void* std_basic_string_char_char_traits_char_do_replace(SsoString* str, int pos, int count, const char* first, const char* last, Allocator alloc);
 
 /* Assigns the range [first, last) to the string (replaces the whole contents). */
 void* func_00354440(SsoString* str, const char* first, const char* last)
@@ -32,7 +32,7 @@ void* func_00354440(SsoString* str, const char* first, const char* last)
         len = (unsigned char)str->h.s.shortLen;
     else
         len = str->longLen;
-    return String_Replace(str, 0, len, first, last, alloc);
+    return std_basic_string_char_char_traits_char_do_replace(str, 0, len, first, last, alloc);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00354440 */
@@ -45,24 +45,24 @@ void* func_00354440(SsoString* str, const char* first, const char* last)
 /* Factory: allocate a 0x8C-byte personnel screen and construct it inline (member at +0x6C, string at +0x80). */
 extern "C" {
 extern char D_004DEF90[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void GuiPersonnelScreen_ctor(void* self);
 void cArray_tAchievementInfo_ctor(void* m);
-void String_CtorEmpty(void* str);
+void cString_ctor_void(void* str);
 }
 struct O354490 { void* vtable; char pad4[0x68]; char m6C[0x14]; char s80[0xC]; };
-extern "C" O354490* GuiAchievementScreen_Create(void)
+extern "C" O354490* ConcreteWidgetClassRep_GuiAchievementScreen_Create(void)
 {
     O354490* p;
     {
         AllocGuard guard;
-        p = (O354490*)Mem_Alloc(0, 0x8C, "guiWidget.hh", 0x2A);
+        p = (O354490*)cMemMan_Allocate(0, 0x8C, "guiWidget.hh", 0x2A);
     }
     if (p) {
         GuiPersonnelScreen_ctor(p);
         p->vtable = D_004DEF90;
         cArray_tAchievementInfo_ctor(p->m6C);
-        String_CtorEmpty(p->s80);
+        cString_ctor_void(p->s80);
     }
     return p;
 }
@@ -94,7 +94,7 @@ extern "C" OwnedBuffer8* func_003545C0(OwnedBuffer8* self, short deleteFlag)
             if (p) {
                 if (p) {
                     AllocGuard guard;
-                    Mem_Free(0, p, D_004AA5B8, 0x64);
+                    cMemMan_Deallocate(0, p, D_004AA5B8, 0x64);
                 }
             }
         }
@@ -112,6 +112,6 @@ extern "C" OwnedBuffer8* func_003545C0(OwnedBuffer8* self, short deleteFlag)
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(GuiPersonnelScreen_dtor_3546B0, D_004DF0B0, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(GuiPersonnelScreen_dtor_3546B0, D_004DF0B0, GuiWidget_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003546B0 */

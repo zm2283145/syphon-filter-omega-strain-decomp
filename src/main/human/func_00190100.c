@@ -52,7 +52,7 @@ static inline void VAdd3_(V4* s, V4* d) {
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-Plc* Placement_Compose(Plc* a, Plc* b) {
+Plc* cQuatVec_Transform(Plc* a, Plc* b) {
     V4* v;
     { V4 t; V4* tp; t = QMul_(&a->rot, &b->rot); tp = &t; a->rot = *tp; }
     v = &a->pos;

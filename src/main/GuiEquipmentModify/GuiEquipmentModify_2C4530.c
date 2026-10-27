@@ -12,7 +12,7 @@
 
 extern "C" { char D_004AC6F0[] = "basic_string: out_of_range"; }
 extern "C" { char D_004AC710[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_002C4530, D_004AC6F0, D_004AC710, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_0048C0B0, D_0048C0B8, Libc_Memmove, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_002C4530, D_004AC6F0, D_004AC710, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_0048C0B0, D_0048C0B8, Libc_Memmove, std_basic_string_char_char_traits_char_assign_charP_charP_intP)
 #pragma pop /* merge_units */
 /* merge_units: end func_002C4530 */
 
@@ -51,7 +51,7 @@ typedef struct SsoString {
     char* longData;             /* 0x08 */
 } SsoString;
 
-extern void String_Replace(SsoString* str, int pos, int count, const char* first, const char* last, signed char tag);
+extern void std_basic_string_char_char_traits_char_do_replace(SsoString* str, int pos, int count, const char* first, const char* last, signed char tag);
 
 /* Assigns the range [first, last) to the string, replacing its whole contents. */
 void func_002C4E50(SsoString* str, const char* first, const char* last) {
@@ -62,7 +62,7 @@ void func_002C4E50(SsoString* str, const char* first, const char* last) {
     } else {
         len = (unsigned char)str->mode.bits.shortLen;
     }
-    String_Replace(str, 0, len, first, last, tag[0]);
+    std_basic_string_char_char_traits_char_do_replace(str, 0, len, first, last, tag[0]);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002C4E50 */

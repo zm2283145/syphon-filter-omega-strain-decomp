@@ -31,7 +31,7 @@ struct Msg_0021C830 : ClonedMessageBase {
 extern "C" {
 char D_004BFC50[] = "NetTerrainActivation.hh";
 }
-DEFINE_MESSAGE_CLONE(cNetTerrainActivationMsg_v01, Msg_0021C830, 0x2C, D_004BFC50, 0x17, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cNetTerrainActivation_Clone, Msg_0021C830, 0x2C, D_004BFC50, 0x17, CLONE_BODY)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00431C50(void) {}
 #pragma pop /* merge_units */
@@ -43,21 +43,21 @@ static inline void merge_flush_func_00431C50(void) {}
 typedef struct { int kind; int id; short f8; short fA; } Pk431D60;
 extern "C" {
 extern unsigned char D_005721D0;
-void* Object_LookupById(int*);
+void* nGobjManager_LookupGOBJ_cObjectIdR(int*);
 void cNetObjectMgr_TerrainActivation(void*);
-void NetObjectMgr_Remove(void*);
+void cNetObjectMgr_RemoveFromTerrainActivation(void*);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int cNetTerrainActivationMsg_NetReceive(int a0, int a1, int a2, Pk431D60* arg) {
+extern "C" int cNetTerrainActivation_NetTerrainActivationCallback(int a0, int a1, int a2, Pk431D60* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Pk431D60* p = arg;
         int id = p->id;
-        void* o = Object_LookupById(&id);
+        void* o = nGobjManager_LookupGOBJ_cObjectIdR(&id);
         if (o) {
             if (p->fA == 0) cNetObjectMgr_TerrainActivation(o);
-            else NetObjectMgr_Remove(o);
+            else cNetObjectMgr_RemoveFromTerrainActivation(o);
         }
     }
     return 0xC;

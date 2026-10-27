@@ -7,9 +7,9 @@
 #include "types.h"
 #include "hud_types.h"
 
-extern void HudTimer_Start(void* p, int a1, float f);
+extern void cHud_cHudTimer_ScheduleExpiration(void* p, int a1, float f);
 
 /* Forwards to the member at +0x6C4. */
 void HudTimer_Start_Thunk(char* self, int a1, float f) {
-    HudTimer_Start(self + 1732, a1, f);
+    cHud_cHudTimer_ScheduleExpiration(self + 1732, a1, f);
 }

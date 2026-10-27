@@ -8,8 +8,8 @@
 #pragma push /* merge_units */
 #include "types.h"
 #include "fam5_timed_retry.h"
-extern void GuiObjectives_Update(char*, float);
-DEFINE_TIMED_RETRY(GuiEndGameObjectives_Update, 0x240, 0x90, GuiObjectives_Update)
+extern void GuiObjectives_onAdvanceTime(char*, float);
+DEFINE_TIMED_RETRY(GuiEndGameObjectives_onAdvanceTime, 0x240, 0x90, GuiObjectives_onAdvanceTime)
 #pragma pop /* merge_units */
 /* merge_units: end func_00462270 */
 

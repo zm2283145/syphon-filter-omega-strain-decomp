@@ -11,8 +11,8 @@
 #include "guiTextWidget_types.h"
 
 extern "C" {
-GuiStreamString* String_CtorCStr_13B480(GuiStreamString* result, const char* text);
-void String_AssignString(GuiStreamString* destination, const GuiStreamString* source);
+GuiStreamString* std_basic_string_char_char_traits_char_ctor_charP(GuiStreamString* result, const char* text);
+void std_basic_string_char_char_traits_char_assign_basicstringR(GuiStreamString* destination, const GuiStreamString* source);
 void String_Dtor(GuiStreamString* string, int flags);
 }
 
@@ -38,8 +38,8 @@ static inline void read_flag(GuiWidgetStreamRecord* self, char** cursor, unsigne
 extern "C" int GuiWidget_Load(GuiWidgetStreamRecord* self, char** cursor)
 {
     GuiStreamString name;
-    String_CtorCStr_13B480(&name, read_string(cursor));
-    String_AssignString(&self->name, &name);
+    std_basic_string_char_char_traits_char_ctor_charP(&name, read_string(cursor));
+    std_basic_string_char_char_traits_char_assign_basicstringR(&self->name, &name);
     String_Dtor(&name, 0);
     *cursor = (char*)(((unsigned int)*cursor + 3) & ~3u);
     self->first = *(float*)*cursor;
@@ -72,7 +72,7 @@ extern "C" {
 extern char D_004E0B40[];
 extern char D_004E09B0[];
 extern int D_00572130;
-ChildIterator List_Begin(ChildList* list);
+ChildIterator std_list_deleter_voidPtr_begin_void(ChildList* list);
 void std_list_GuiWidgetPtr_generic_iterator_ctor(ChildIterator* result, const ChildIterator& source);
 ChildIterator std_list_GuiWidgetPtr_end(ChildList* list);
 void cLListIterator_GuiWidgetPtr_ctor_listR(ChildIterator* result, const ChildIterator& source);
@@ -82,14 +82,14 @@ void String_Dtor(void* string, int flags);
 #endif /* merge_units */
 #define String_Dtor(a0, a1) (String_Dtor((GuiStreamString *)(a0), (a1))) /* merge_units */
 
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
 }
 
 static inline void destroy_owned(GuiOwnedObject* object, int line)
 {
     object->~GuiOwnedObject();
-    Mem_Free(0, object, "guiWidget.cc", line);
+    cMemMan_Deallocate(0, object, "guiWidget.cc", line);
 }
 
 static inline bool has_child(ChildNode* node, ChildList* list, ChildIterator* end)
@@ -119,7 +119,7 @@ static inline void destroy_base(TraversalWidget* self)
 }
 
 /* Destroy owned children and a separate handler under the allocator guard. */
-extern "C" TraversalWidget* GuiWidget_Destroy(TraversalWidget* self, short deleteFlag)
+extern "C" TraversalWidget* GuiWidget_dtor(TraversalWidget* self, short deleteFlag)
 {
     if (self) {
         ChildIterator end;
@@ -127,7 +127,7 @@ extern "C" TraversalWidget* GuiWidget_Destroy(TraversalWidget* self, short delet
         GuiOwnedObject* child;
         ChildNode* node;
         *(void**)self = D_004E0B40;
-        std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, List_Begin(&self->children));
+        std_list_GuiWidgetPtr_generic_iterator_ctor(&begin, std_list_deleter_voidPtr_begin_void(&self->children));
         node = begin.node;
         while (has_child(node, &self->children, &end)) {
             child = (GuiOwnedObject*)node->widget;
@@ -160,7 +160,7 @@ extern "C" TraversalWidget* GuiWidget_Destroy(TraversalWidget* self, short delet
 
 extern "C" {
 void func_00135C90(ChildList* list, int flags);
-void ObjectList_EraseRange(ChildIterator* result, ChildList* list,
+void std_list_deleter_voidPtr_erase_listdeleter_listdeleter(ChildIterator* result, ChildList* list,
                           ChildIterator* first, ChildIterator* last);
 }
 
@@ -178,7 +178,7 @@ static inline void erase_all(ChildList* list)
         ChildIterator last;
         last.node = (ChildNode*)&list->sentinel;
         first.node = list->first;
-        ObjectList_EraseRange(&result, list, &first, &last);
+        std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&result, list, &first, &last);
     }
 }
 
@@ -218,7 +218,7 @@ extern "C" ChildList* func_0041F610(ChildList* self, short deleteFlag)
 #include "types.h"
 #include "loose04_types.h"
 
-extern int ScalarCollection_Init(L4ScalarCollection*);
+extern int std_list_deleter_voidPtr_ctor_void(L4ScalarCollection*);
 
 /* GuiWidget constructor. */
 GuiWidget* GuiWidget_ctor(GuiWidget* self) {
@@ -228,7 +228,7 @@ GuiWidget* GuiWidget_ctor(GuiWidget* self) {
     self->unk04 = 0;
     self->unk08 = 0;
     self->unk0C = 0;
-    ScalarCollection_Init(&self->children);
+    std_list_deleter_voidPtr_ctor_void(&self->children);
     self->unk34 = 0;
     self->unk38 = 0;
     self->unk3C = 0;

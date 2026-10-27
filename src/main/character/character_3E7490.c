@@ -1,4 +1,4 @@
-#define cMessage_ctor cMessage_ctor3
+#define cMessage_ctor_cMessageR cCharActionMsg_ctor_cCharActionMsgR
 #pragma cplusplus on
 #include "types.h"
 #include "payload_message_clone.h"

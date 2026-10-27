@@ -20,7 +20,7 @@
 #pragma opt_propagation off
 #pragma opt_common_subs off
 #pragma opt_dead_assignments off
-/* Generator_Spawn: allocate and construct one spawned NPC, register it with the generator and (online) announce it */
+/* cGenerator_Spawn: allocate and construct one spawned NPC, register it with the generator and (online) announce it */
 typedef union { __int128 q; struct { float x, y, z, w; } f; } GsV4;
 struct GsMtx { GsV4 r[3]; GsV4 t; };
 struct GsNode { VPAD16(a) VPAD4(b) virtual void Refresh(); int pad4[3]; GsMtx m; unsigned char dirty; };
@@ -41,8 +41,8 @@ struct GsActor { char pad0[0x78]; int route; int Route() const { return route; }
 struct GsKey { int* key; int count; };
 struct GsHandle { GsObj* target; int serial; GsHandle(GsObj* o) { int none; int m = -1; serial = m; target = o; serial = *(o ? &o->id : (none = m, &none)); } };
 struct GsIt { void* p; };
-struct GsList; extern "C" void WeakHandleList_Append(GsIt* out, GsList* list, GsIt* pos, const GsHandle* h);
-struct GsList { int count; char sent[8]; void push_back(const GsHandle& h) { void* s = sent; GsIt r; GsIt pos; pos.p = s; GsIt* pp = &pos; WeakHandleList_Append(&r, this, pp, &h); } };
+struct GsList; extern "C" void std_list_deleter_cSafePtr_cGOBJ_insert(GsIt* out, GsList* list, GsIt* pos, const GsHandle* h);
+struct GsList { int count; char sent[8]; void push_back(const GsHandle& h) { void* s = sent; GsIt r; GsIt pos; pos.p = s; GsIt* pp = &pos; std_list_deleter_cSafePtr_cGOBJ_insert(&r, this, pp, &h); } };
 struct GsGen {
     char pad0[0xC];
     int key;
@@ -80,29 +80,29 @@ extern void* g_ActorList;
 extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char g_IsMultiplayer;
-void* Mem_Alloc(int pool, int size, char* file, int line);
-int Random_Next(void);
-void ActorObj_BuildNodeMatrix(GsMtx* out, GsActor* a);
-GsObj* Npc_ConstructSpawned(void* p, GsMtx* m, int route, int a, int b, void* c, int d, void* e, GsKey* key, int rnd);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+int Libc_Rand(void);
+void cNode_GetNodeMatrix(GsMtx* out, GsActor* a);
+GsObj* cHuman_ctor_cMatrix_int_charP_int_etc(void* p, GsMtx* m, int route, int a, int b, void* c, int d, void* e, GsKey* key, int rnd);
 void cNPCInfoObject_ctor(void* ctx);
 void cNPCInfoObject_Add(void* ctx, int* id, int slot);
 void cNPCInfoObject_dtor(void* ctx, int v);
-int NetGame_InitLocalSlot(int* slot, int v);
-void ObjRegistry_AppendRecursive(void* reg, GsObj* o);
-int Event_Construct(void* msg, void* name);
-int Event_Send(void* msg, void* target, int immediate);
+int NetGetMyClientIndex(int* slot, int v);
+void cBaseObjList_Add(void* reg, GsObj* o);
+int cMessage_ctor_cMessageNameR(void* msg, void* name);
+int QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int immediate);
 int cMessage_dtor(void* msg, int flags);
-void Mtx_ToEuler(GsV4* out, GsMtx* m);
+void cEulerAngle_T_1_2_ctor_cMatrixR(GsV4* out, GsMtx* m);
 }
 
 static inline void Q4(void* d0, const void* s0) { void* d = d0; __int128 qa, qb; const void* s = s0; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 static inline void* QAsg0(void* d0, const void* s0) { void* d = d0; __int128 q = 0; const void* s = s0; q = *(const __int128*)s; *(__int128*)d = q; return d; }
-static inline void MsgInit(GsMsg* m, int id, int x10, int x68) { Event_Construct(m, D_0051F058); m->vt = D_004DE240; m->id = id; m->x54 = x10; m->x58 = x68; }
+static inline void MsgInit(GsMsg* m, int id, int x10, int x68) { cMessage_ctor_cMessageNameR(m, D_0051F058); m->vt = D_004DE240; m->id = id; m->x54 = x10; m->x58 = x68; }
 static inline void QZ(void* d0, const void* s0) { void* d = d0; __int128 q = 0; const void* s = s0; __asm__ volatile("lq %0, 0x0(%1)" : "+r"(q) : "r"(s) : "memory"); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(q), "r"(d) : "memory"); }
 static inline int* IdPtr(GsObj* o) { int* p = &o->id; return p; }
-static inline int NetSlot(int a) { if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a); return D_00494178; } return 0; }
-static inline int NetSlot5(int a) { int r = 0; if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a); return D_00494178; } return r; }
-extern "C" void Generator_Spawn(GsGen* gen, GsActor* actor, int idx)
+static inline int NetSlot(int a) { if (g_IsMultiplayer) { if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, a); return D_00494178; } return 0; }
+static inline int NetSlot5(int a) { int r = 0; if (g_IsMultiplayer) { if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, a); return D_00494178; } return r; }
+extern "C" void cGenerator_Spawn(GsGen* gen, GsActor* actor, int idx)
 {
     char ctx[4];
     GsKey k1;
@@ -114,20 +114,20 @@ extern "C" void Generator_Spawn(GsGen* gen, GsActor* actor, int idx)
     GsV4 e;
     int route;
     if (idx < 0) route = -1; else route = actor->Route();
-    int rnd = Random_Next();
+    int rnd = Libc_Rand();
     GsObj* obj;
     if (g_IsMultiplayer) {
         {
             AllocGuard g;
-            obj = (GsObj*)Mem_Alloc(0, 0x35A0, D_004A4A90, 0x71A);
+            obj = (GsObj*)cMemMan_Allocate(0, 0x35A0, D_004A4A90, 0x71A);
         }
         if (obj) {
             int* kp = &gen->key;
             int c = gen->count;
             k1.key = kp;
             k1.count = c;
-            ActorObj_BuildNodeMatrix(&m1, actor);
-            obj = Npc_ConstructSpawned(obj, &m1, route, gen->x64, gen->x68, gen->x6C, 2, gen->xA8, &k1, rnd);
+            cNode_GetNodeMatrix(&m1, actor);
+            obj = cHuman_ctor_cMatrix_int_charP_int_etc(obj, &m1, route, gen->x64, gen->x68, gen->x6C, 2, gen->xA8, &k1, rnd);
         }
         obj->SetNet(1);
         cNPCInfoObject_ctor(ctx);
@@ -140,21 +140,21 @@ extern "C" void Generator_Spawn(GsGen* gen, GsActor* actor, int idx)
     } else {
         {
             AllocGuard g;
-            obj = (GsObj*)Mem_Alloc(0, 0x35A0, D_004A4A90, 0x73F);
+            obj = (GsObj*)cMemMan_Allocate(0, 0x35A0, D_004A4A90, 0x73F);
         }
         if (obj) {
             int* kp = &gen->key;
             int c = gen->count;
             k2.key = kp;
             k2.count = c;
-            ActorObj_BuildNodeMatrix(&m2, actor);
-            obj = Npc_ConstructSpawned(obj, &m2, route, gen->x64, gen->x68, gen->x6C, 2, gen->xA8, &k2, rnd);
+            cNode_GetNodeMatrix(&m2, actor);
+            obj = cHuman_ctor_cMatrix_int_charP_int_etc(obj, &m2, route, gen->x64, gen->x68, gen->x6C, 2, gen->xA8, &k2, rnd);
         }
     }
     obj->spawned = 1;
     void* reg = g_ActorList;
     obj->reg = reg;
-    ObjRegistry_AppendRecursive(reg, obj);
+    cBaseObjList_Add(reg, obj);
     obj->Activate(1);
     gen->list90.push_back(GsHandle(obj));
     gen->list9C.push_back(GsHandle(obj));
@@ -167,7 +167,7 @@ extern "C" void Generator_Spawn(GsGen* gen, GsActor* actor, int idx)
         { GsMtx* src = &n->m; GsMtx* dst = &mc; Q4(dst, src); }
         GsMsg* m = &msg;
         MsgInit(m, *IdPtr(obj), obj->x10, gen->x68);
-        Mtx_ToEuler(&e, &mc);
+        cEulerAngle_T_1_2_ctor_cMatrixR(&e, &mc);
 
         QZ(&m->rot, &e);
         m->pos = mc.t;
@@ -175,7 +175,7 @@ extern "C" void Generator_Spawn(GsGen* gen, GsActor* actor, int idx)
         m->route = route;
         m->x1C = 0x40;
         msg.x20 = 4;
-        Event_Send(&msg, gen, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, gen, 0);
         msg.vt = D_004DE240;
         cMessage_dtor(m, 0);
     }
@@ -215,19 +215,19 @@ int cGenInfoObject_HasOwner(void* ctx, void* key);
 int cGenInfoObject_GetOwner(void* ctx, void* key);
 void cNetObj_SetOwner(int id, int v);
 #if 0 /* merge_units */
-int NetGame_InitLocalSlot(int*, int);
+int NetGetMyClientIndex(int*, int);
 #endif /* merge_units */
-#define NetGame_InitLocalSlot(a0, a1) (NetGame_InitLocalSlot((a0), (a1))) /* merge_units */
+#define NetGetMyClientIndex(a0, a1) (NetGetMyClientIndex((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-int Event_Construct(void*, char*);
+int cMessage_ctor_cMessageNameR(void*, char*);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((a0), (void *)(a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((a0), (void *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-int Event_Send(void*, void*, int);
+int QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 #endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((a0), (a1), (a2))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 int cMessage_dtor(void*, int);
@@ -257,7 +257,7 @@ extern "C" void cGenerator_CheckForOwnershipChange(Gen* self)
         key = &self->key;
         int a = D_005721A8;
         if (g_IsMultiplayer) {
-            if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
+            if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, a);
             id = D_00494178;
         } else id = 0;
     }
@@ -277,10 +277,10 @@ extern "C" void cGenerator_CheckForOwnershipChange(Gen* self)
                     ok = 1;
                 if (ok) {
                     Ev ev;
-                    Event_Construct(&ev, D_00582730);
+                    cMessage_ctor_cMessageNameR(&ev, D_00582730);
                     ev.vt = D_004D9300;
                     ev.f24 = 1;
-                    Event_Send(&ev, t, 1);
+                    QueueMessage_cMessageR_cSystemP_int(&ev, t, 1);
                     ev.vt = D_004D9300;
                     cMessage_dtor(&ev, 0);
                     t->x14 = 1;
@@ -308,10 +308,10 @@ extern "C" void cGenerator_CheckForOwnershipChange(Gen* self)
                     ok = 1;
                 if (ok) {
                     Ev ev;
-                    Event_Construct(&ev, D_00582730);
+                    cMessage_ctor_cMessageNameR(&ev, D_00582730);
                     ev.vt = D_004D9300;
                     ev.f24 = 2;
-                    Event_Send(&ev, t, 1);
+                    QueueMessage_cMessageR_cSystemP_int(&ev, t, 1);
                     ev.vt = D_004D9300;
                     cMessage_dtor(&ev, 0);
                     t->x14 = 0;
@@ -326,9 +326,9 @@ extern "C" void cGenerator_CheckForOwnershipChange(Gen* self)
         }
     }
 }
-#undef NetGame_InitLocalSlot /* merge_units */
-#undef Event_Construct /* merge_units */
-#undef Event_Send /* merge_units */
+#undef NetGetMyClientIndex /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0021EAA0(void) {}

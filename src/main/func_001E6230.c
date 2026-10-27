@@ -43,7 +43,7 @@ static inline void V4_Copy(V4 *d, V4 *s) {
         sq s, 0x0(d)
     }
 }
-void Col_CalcTriangleNormal(Tri *t)
+void cCollisionFace_CalculateUnitNormal(Tri *t)
 {
     V4 e1;
     V4 e2;

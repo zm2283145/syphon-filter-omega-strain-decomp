@@ -87,17 +87,17 @@ struct LIt {
 };
 struct Self { char pad[0x1F4]; LPVec list; };
 extern "C" {
-extern GObj** LosCache_End(LPVec* v);
-extern LIt CachedCollection_End(LPVec* self, GObj** const& src);
-extern LIt Iter_Begin(LPVec* v);
-extern LIt Iter_Assign(const LIt& s);
+extern GObj** std_vector_imp_cGOBJPtr_1_end_void_2(LPVec* v);
+extern LIt std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR_2(LPVec* self, GObj** const& src);
+extern LIt std_vector_cGOBJPtr_begin(LPVec* v);
+extern LIt cArray_cGOBJPtr_ConstIterator_ctor_wrapiteratorR(const LIt& s);
 extern int D_004EE780;
-GObj* LosRegion_FindLocal(const V* p, Self* self);
+GObj* nActivation_FindBestSectorInActivation(const V* p, Self* self);
 }
-static inline void EndO(LIt* o, LPVec* v) { o->q.p = CachedCollection_End(v, LosCache_End(v)).q.p; }
-static inline LIt FirstI(LPVec* v) { return Iter_Assign(Iter_Begin(v)); }
+static inline void EndO(LIt* o, LPVec* v) { o->q.p = std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR_2(v, std_vector_imp_cGOBJPtr_1_end_void_2(v)).q.p; }
+static inline LIt FirstI(LPVec* v) { return cArray_cGOBJPtr_ConstIterator_ctor_wrapiteratorR(std_vector_cGOBJPtr_begin(v)); }
 inline bool GObj::Own() { int d = D_004EE780; return x4C == d; }
-GObj* LosRegion_FindLocal(const V* p, Self* self)
+GObj* nActivation_FindBestSectorInActivation(const V* p, Self* self)
 {
     GObj* found = 0;
     if (self) {

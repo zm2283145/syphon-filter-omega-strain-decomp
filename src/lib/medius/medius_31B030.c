@@ -5,11 +5,11 @@
  */
 
 /* merge_units: begin func_0031B030 */
-extern float Math_Asinf(float x);
+extern float Libc_Asinf(float x);
 void K2ASK(unsigned int n, float *in, float *out)
 {
     while (n != 0) {
-        *out++ = Math_Asinf(*in++);
+        *out++ = Libc_Asinf(*in++);
         n--;
     }
 }

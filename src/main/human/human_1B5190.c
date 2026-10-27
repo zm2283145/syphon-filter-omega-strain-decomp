@@ -9,7 +9,7 @@
 #include "vslot_pad.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_001B5190 */
 #pragma push /* merge_units */
@@ -36,27 +36,27 @@ extern char D_0049D8D0;
 extern char g_TargetVisMgr;
 extern unsigned char g_IsMultiplayer;
 void Alloc_Lock(int);
-void Alloc_Unlock(int);
-void ActorModel_Deactivate(void*);
-void TargetVis_Unregister(void*, void*);
-void Actor_ShockReaction(Act*, unsigned char, int, float);
-void Actor_Deactivate(Act*, int);
+void EnableIntc(int);
+void cMan_UnDead(void*);
+void cTargetManager_RemoveGobj(void*, void*);
+void cHuman_SetParticleEffect(Act*, unsigned char, int, float);
+void cSKM_GOBJ_Deactivate(Act*, int);
 int cNPCInfoObject_ctor(int*);
 void cNPCInfoObject_Deactivate(int*, void*);
 int cNPCInfoObject_dtor(int*, int);
 void cNetHuman_Deactivate(void*);
-void ActorPhys_ReleaseWaterEffect(VObj*);
+void cHumanCollisionRoutine_HandleHumanDeactivation(VObj*);
 }
 
-extern "C" void Npc_Deactivate(Act* a, int arg)
+extern "C" void cHuman_Deactivate(Act* a, int arg)
 {
     int loc;
     VObj* o;
     int i;
-    ActorModel_Deactivate(a->a60);
-    TargetVis_Unregister(&g_TargetVisMgr, a);
-    for (i = 0; i < 3; i++) Actor_ShockReaction(a, i, 0, 1.0f);
-    Actor_Deactivate(a, arg);
+    cMan_UnDead(a->a60);
+    cTargetManager_RemoveGobj(&g_TargetVisMgr, a);
+    for (i = 0; i < 3; i++) cHuman_SetParticleEffect(a, i, 0, 1.0f);
+    cSKM_GOBJ_Deactivate(a, arg);
     if (g_IsMultiplayer) {
         cNPCInfoObject_ctor(&loc);
         cNPCInfoObject_Deactivate(&loc, a->a0C);
@@ -65,14 +65,14 @@ extern "C" void Npc_Deactivate(Act* a, int arg)
         }
         cNPCInfoObject_dtor(&loc, -1);
     }
-    if (a->w3310) ActorPhys_ReleaseWaterEffect(a->w3310);
+    if (a->w3310) cHumanCollisionRoutine_HandleHumanDeactivation(a->w3310);
     o = a->w3310;
     if (o) {
         if (g_ProfileLockEnabled) Alloc_Lock(9);
         g_ProfileLockDepth++;
         o->~VObj();
-        Mem_Free(0, o, &D_0049D8D0, 0x456);
-        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        cMemMan_Deallocate(0, o, &D_0049D8D0, 0x456);
+        if (g_ProfileLockEnabled) EnableIntc(9);
         g_ProfileLockDepth--;
         a->w3310 = 0;
     }
@@ -81,8 +81,8 @@ extern "C" void Npc_Deactivate(Act* a, int arg)
         if (g_ProfileLockEnabled) Alloc_Lock(9);
         g_ProfileLockDepth++;
         o->~VObj();
-        Mem_Free(0, o, &D_0049D8D0, 0x45B);
-        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        cMemMan_Deallocate(0, o, &D_0049D8D0, 0x45B);
+        if (g_ProfileLockEnabled) EnableIntc(9);
         g_ProfileLockDepth--;
         a->w3314 = 0;
     }
@@ -97,15 +97,15 @@ static inline void merge_flush_func_001B5190(void) {}
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int NetMap_BindReceiver(int, int, char * );
-int Npc_CreatePhysical();
-int Human_ApplyCentroidWeights(char * );
-int Human_ApplyBoundSpheres(char * );
-int TargetVis_Register(char *, char * );
+int cNetObj_AddSystem(int, int, char * );
+int cHuman_InitializationToDoUponActivation();
+int cHuman_SetupCenterOfMassInfo(char * );
+int cHuman_SetupSkelBBoxInfo(char * );
+int cTargetManager_AddGobj(char *, char * );
 int cNetHuman_Activate(int);
 int cNetHuman_CreateNetHuman(char * , int);
-int NetGame_InitLocalSlot(int *, int);
-int ActorModel_Activate(char * , int);
+int NetGetMyClientIndex(int *, int);
+int cSKM_GOBJ_Activate(char * , int);
 int cNetObj_SetOwner(int, int);
 int cNPCInfoObject_SetActive(char *, char * );
 #if 0 /* merge_units */
@@ -128,12 +128,12 @@ static inline int LocalId_53D0(void)
     int r;
     int a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */
     if (g_IsMultiplayer) {
-        if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
+        if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, a);
         r = D_00494178;
     } else r = 0;
     return r;
 }
-void Npc_Activate(char * arg0, int arg1) {
+void cHuman_Activate(char * arg0, int arg1) {
     int sp3C;
     int temp_a0;
     int temp_s1;
@@ -141,17 +141,17 @@ void Npc_Activate(char * arg0, int arg1) {
     int var_a1;
     int var_a1_2;
 
-    Npc_CreatePhysical();
-    ActorModel_Activate(arg0, arg1);
-    Human_ApplyBoundSpheres(arg0);
-    Human_ApplyCentroidWeights(arg0);
-    TargetVis_Register(&g_TargetVisMgr, arg0);
+    cHuman_InitializationToDoUponActivation();
+    cSKM_GOBJ_Activate(arg0, arg1);
+    cHuman_SetupSkelBBoxInfo(arg0);
+    cHuman_SetupCenterOfMassInfo(arg0);
+    cTargetManager_AddGobj(&g_TargetVisMgr, arg0);
     if (g_IsMultiplayer != 0) {
         if ((F_(arg0, 0x3584, int) == 0) && (D_005721D0 != 0)) {
             cNetHuman_CreateNetHuman(arg0 + 0xC, F_(arg0, 0x10, int));
             temp_s1 = F_(arg0, 0x10, int);
             var_a1 = LocalId_53D0();
-            NetMap_BindReceiver(temp_s1, var_a1, arg0);
+            cNetObj_AddSystem(temp_s1, var_a1, arg0);
         }
         temp_s1_2 = F_(arg0, 0x10, int);
         var_a1_2 = LocalId_53D0();

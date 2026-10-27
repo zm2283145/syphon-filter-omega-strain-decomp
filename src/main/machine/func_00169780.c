@@ -8,9 +8,9 @@
 
 extern "C" {
 /*fc*/
-int Mem_Alloc(...);                        
-int Font_ctor(...);                             
-int ListReceiver_Ctor(...);                                  
+int cMemMan_Allocate(...);                        
+int cFont_ctor(...);                             
+int cSystemContainer_ctor_void(...);                                  
 int cConsole_ctor(...);                     
 int cDME_ctor(...);                            
 extern char D_0049C390;
@@ -19,12 +19,12 @@ extern unsigned char g_ProfileLockEnabled;
 extern char D_0055A700;
 extern int g_FrameCounter;
 }
-extern "C" char * App_Ctor(char * arg0) {
+extern "C" char * cMachine_ctor(char * arg0) {
     int var_s2;
     int var_s1;
     int var_s0;
 
-    ListReceiver_Ctor();
+    cSystemContainer_ctor_void();
     F_(arg0, 0x0, int) = (int)(&D_004D97B0);
     cConsole_ctor(arg0 + 0x2C, "1.0", &D_0055A700);
     cDME_ctor(arg0 + 0x279);
@@ -40,10 +40,10 @@ extern "C" char * App_Ctor(char * arg0) {
     do {
         {
             AllocGuard g;
-        var_s1 = Mem_Alloc(0, 0x8A80, &D_0049C390, 0x97);
+        var_s1 = cMemMan_Allocate(0, 0x8A80, &D_0049C390, 0x97);
         }
         if (var_s1 != 0) {
-            var_s1 = Font_ctor(var_s1);
+            var_s1 = cFont_ctor(var_s1);
         }
         F_((arg0 + var_s0), 0x280, int) = var_s1;
         var_s2 += 1;

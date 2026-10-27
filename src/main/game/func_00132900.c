@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void TransformNode_ClearDirty(char* self) {
+void cXform_UpdateTreeNode(char* self) {
     self[80] = 0;
 }

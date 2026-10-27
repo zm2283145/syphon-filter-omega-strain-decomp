@@ -34,7 +34,7 @@ void GuiAgentModify_findFacePart(ObjCA70* self) {
     __int128 mask = kca70q(0xFFFFFFFF00);
     KeyCA70 key;
     int i;
-    String_Copy(key.s, D_004B9F80);
+    Libc_Strcpy(key.s, D_004B9F80);
     
     for (i = 0; i < self->tbl->count; i++) {
         if (kca70eq(mask, key.q, self->tbl->e[i].q)) {
@@ -58,7 +58,7 @@ typedef struct { char pad0[0xA0]; char name[0x2BC4]; P_Skl* skel; } P_App;
 typedef struct { char pad0[0x8C]; P_App* app; } P_Obj;
 extern P_Tbl D_00571300;
 extern float* cArray_cBoneScale_opIndex(void*, int);
-extern void* SkelNodes_GetAt(void*, int);
+extern void* cArray_cBone_opIndex_int_2(void*, int);
 extern void cBone_SetScaleX(void*, float);
 extern void cBone_SetScaleY(void*, float);
 extern void cBone_SetScaleZ(void*, float);
@@ -77,13 +77,13 @@ void GuiAgentModify_NextBoneSet(P_Obj* o) {
         float v;
         v = D_00571300.sc[preset][i].x; k = o->app->skel;
         cArray_cBoneScale_opIndex(k->bones, i)[0] = v;
-        if (k->hasMorph) cBone_SetScaleX(SkelNodes_GetAt(k->morph, i), v);
+        if (k->hasMorph) cBone_SetScaleX(cArray_cBone_opIndex_int_2(k->morph, i), v);
         v = D_00571300.sc[preset][i].y; k = o->app->skel;
         cArray_cBoneScale_opIndex(k->bones, i)[1] = v;
-        if (k->hasMorph) cBone_SetScaleY(SkelNodes_GetAt(k->morph, i), v);
+        if (k->hasMorph) cBone_SetScaleY(cArray_cBone_opIndex_int_2(k->morph, i), v);
         v = D_00571300.sc[preset][i].z; k = o->app->skel;
         cArray_cBoneScale_opIndex(k->bones, i)[2] = v;
-        if (k->hasMorph) cBone_SetScaleZ(SkelNodes_GetAt(k->morph, i), v);
+        if (k->hasMorph) cBone_SetScaleZ(cArray_cBone_opIndex_int_2(k->morph, i), v);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

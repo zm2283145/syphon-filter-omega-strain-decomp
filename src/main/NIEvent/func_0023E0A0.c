@@ -4,7 +4,7 @@
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-void NiEvent_MulParentMatrix(PPMtx* out, PPMtx* a, PPMtx* b) {
+void cMatrix_opMul_cMatrixR(PPMtx* out, PPMtx* a, PPMtx* b) {
     PPMtx t;
     __int128 qa; __int128 qb; PPMtx* s; PPMtx* p; p = &t;
     asm {

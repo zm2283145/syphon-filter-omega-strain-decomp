@@ -7,8 +7,8 @@
 #include "gameSound_types.h"
 
 /* SoundMgr vtable */
-extern void SoundMgr_OnMessage();
-extern void GObj_GetID();
+extern void cGameSound_HandleMessage();
+extern void cSystem_ScriptGetObjectId();
 extern void cSystem_ScriptGetRealObj();
 extern void cSystem_SendCreated();
 extern void cSystem_NetActivate();
@@ -17,21 +17,21 @@ extern void cSystem_NetEnable();
 extern void cSystem_NetDisable();
 extern void cSystem_IsDeliverable();
 extern void cSystem_IsNetworked();
-extern void SoundMgr_dtor();
-extern void Receiver_GetScriptTypeKey();
-extern void Receiver_ScriptDispatch();
-void * const D_004DACB0[16] = { (void*)0x0, (void*)0x0, (void*)SoundMgr_dtor, (void*)SoundMgr_OnMessage, (void*)GObj_GetID, (void*)cSystem_ScriptGetRealObj, (void*)cSystem_IsNetworked, (void*)cSystem_SendCreated, (void*)cSystem_NetActivate, (void*)cSystem_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };
+extern void cGameSound_dtor();
+extern void cSystem_getSOBJClassId();
+extern void cSystem_ScriptHandleMessage();
+void * const D_004DACB0[16] = { (void*)0x0, (void*)0x0, (void*)cGameSound_dtor, (void*)cGameSound_HandleMessage, (void*)cSystem_ScriptGetObjectId, (void*)cSystem_ScriptGetRealObj, (void*)cSystem_IsNetworked, (void*)cSystem_SendCreated, (void*)cSystem_NetActivate, (void*)cSystem_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cSystem_getSOBJClassId, (void*)cSystem_ScriptHandleMessage, (void*)0x0 };
 /* receiver registration data */
 extern char D_004F2CC0[];
-extern void* Receiver_Construct(void* self, void* info);
+extern void* cSystem_ctor(void* self, void* info);
 extern void* __construct_array(void* array, void* ctor, void* dtor, int size, int count);
-extern void* SoundSlot_Dtor(void* channel, int flags);
-extern void* SoundSlot_Ctor(void* channel);
+extern void* cGameSound_tSndFxPlayList_dtor(void* channel, int flags);
+extern void* cGameSound_tSndFxPlayList_ctor(void* channel);
 
-SoundMgr* SoundMgr_Construct(SoundMgr* self) {
-    Receiver_Construct(self, D_004F2CC0);
+SoundMgr* cGameSound_ctor(SoundMgr* self) {
+    cSystem_ctor(self, D_004F2CC0);
     self->vtable = ((char*)D_004DACB0);
-    __construct_array(self->channels, SoundSlot_Ctor, SoundSlot_Dtor, sizeof(SoundChannel), 50);
+    __construct_array(self->channels, cGameSound_tSndFxPlayList_ctor, cGameSound_tSndFxPlayList_dtor, sizeof(SoundChannel), 50);
     self->unk54A8 = 0;
     self->unk54AC = 0;
     self->unk54B0 = 0;

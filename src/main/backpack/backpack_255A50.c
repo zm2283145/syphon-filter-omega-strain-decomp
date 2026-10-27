@@ -11,7 +11,7 @@
 /* merge_units: begin func_00255A50 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-/* WorldInv_AddArmor: count a spawn request; on first activation register the object and create its proxy */
+/* cBackpack_AddFlakJacket: count a spawn request; on first activation register the object and create its proxy */
 struct Pt1SpProxy { char pad[0x94]; int id; };
 struct Pt1SpObj {
     VPAD16(a) VPAD4(b) VPAD1(c)
@@ -27,10 +27,10 @@ struct Pt1SpObj {
 };
 extern "C" {
 extern void* g_HotboxTracker;
-void Object_Register(Pt1SpObj* o);
-Pt1SpProxy* Hotbox_CreateRuntime(void* mgr, Pt1SpObj* o, int a, int b);
+void nGobjManager_AddGOBJ(Pt1SpObj* o);
+Pt1SpProxy* cHotboxMan_CreateInteractBox(void* mgr, Pt1SpObj* o, int a, int b);
 }
-extern "C" void WorldInv_AddArmor(Pt1SpObj* o, int a, int b)
+extern "C" void cBackpack_AddFlakJacket(Pt1SpObj* o, int a, int b)
 {
     if (!a)
         return;
@@ -41,10 +41,10 @@ extern "C" void WorldInv_AddArmor(Pt1SpObj* o, int a, int b)
     if (o->proxy)
         return;
     o->SetActive(1);
-    Object_Register(o);
+    nGobjManager_AddGOBJ(o);
     if (o->proxy)
         return;
-    o->proxy = Hotbox_CreateRuntime(g_HotboxTracker, o, 0, 1);
+    o->proxy = cHotboxMan_CreateInteractBox(g_HotboxTracker, o, 0, 1);
     o->proxy->id = o->id;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -95,28 +95,28 @@ extern int g_HotboxTracker;
 #endif /* merge_units */
 #define g_HotboxTracker (*(int*)&g_HotboxTracker) /* merge_units */
 
-int WeaponInv_SlotOfItem(int id);
+int cWeapon_GetWeaponSlot(int id);
 #if 0 /* merge_units */
-void Object_Register(BP* self);
+void nGobjManager_AddGOBJ(BP* self);
 #endif /* merge_units */
-#define Object_Register(a0) (Object_Register((Pt1SpObj *)(a0))) /* merge_units */
+#define nGobjManager_AddGOBJ(a0) (nGobjManager_AddGOBJ((Pt1SpObj *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-Link* Hotbox_CreateRuntime(int manager, BP* bp, int a2, int a3);
+Link* cHotboxMan_CreateInteractBox(int manager, BP* bp, int a2, int a3);
 #endif /* merge_units */
-#define Hotbox_CreateRuntime(a0, a1, a2, a3) ((Link *)Hotbox_CreateRuntime((void *)(a0), (Pt1SpObj *)(a1), (a2), (a3))) /* merge_units */
+#define cHotboxMan_CreateInteractBox(a0, a1, a2, a3) ((Link *)cHotboxMan_CreateInteractBox((void *)(a0), (Pt1SpObj *)(a1), (a2), (a3))) /* merge_units */
 
 }
 
 static inline void CreateLink(BP* bp) {
     if (bp->link == 0) {
-        bp->link = Hotbox_CreateRuntime(g_HotboxTracker, bp, 0, 1);
+        bp->link = cHotboxMan_CreateInteractBox(g_HotboxTracker, bp, 0, 1);
         bp->link->owner = bp->unk0C;
     }
 }
 
-extern "C" void Backpack_AddWeapon(BP* bp, int item, int amount, int extra, unsigned char flag) {
-    int kind = WeaponInv_SlotOfItem(item);
+extern "C" void cBackpack_AddWeapon(BP* bp, int item, int amount, int extra, unsigned char flag) {
+    int kind = cWeapon_GetWeaponSlot(item);
     unsigned char k = kind;
     int found = -1;
     int i;
@@ -162,13 +162,13 @@ extern "C" void Backpack_AddWeapon(BP* bp, int item, int amount, int extra, unsi
     }
     if (bp->link == 0) {
         bp->Method5C(1);
-        Object_Register(bp);
+        nGobjManager_AddGOBJ(bp);
         CreateLink(bp);
     }
 }
 #undef g_HotboxTracker /* merge_units */
-#undef Object_Register /* merge_units */
-#undef Hotbox_CreateRuntime /* merge_units */
+#undef nGobjManager_AddGOBJ /* merge_units */
+#undef cHotboxMan_CreateInteractBox /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00255AF0(void) {}
 #pragma pop /* merge_units */
@@ -206,39 +206,39 @@ extern int g_HotboxTracker;
 #define g_HotboxTracker (*(int*)&g_HotboxTracker) /* merge_units */
 
 #if 0 /* merge_units */
-void Object_Register(BP_00255CF0* self);
+void nGobjManager_AddGOBJ(BP_00255CF0* self);
 #endif /* merge_units */
-#define Object_Register(a0) (Object_Register((Pt1SpObj *)(a0))) /* merge_units */
+#define nGobjManager_AddGOBJ(a0) (nGobjManager_AddGOBJ((Pt1SpObj *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-Link* Hotbox_CreateRuntime(int manager, BP_00255CF0* bp, int a2, int a3);
+Link* cHotboxMan_CreateInteractBox(int manager, BP_00255CF0* bp, int a2, int a3);
 #endif /* merge_units */
-#define Hotbox_CreateRuntime(a0, a1, a2, a3) ((Link *)Hotbox_CreateRuntime((void *)(a0), (Pt1SpObj *)(a1), (a2), (a3))) /* merge_units */
+#define cHotboxMan_CreateInteractBox(a0, a1, a2, a3) ((Link *)cHotboxMan_CreateInteractBox((void *)(a0), (Pt1SpObj *)(a1), (a2), (a3))) /* merge_units */
 
 }
 
 static inline void CreateLink_00255CF0(BP_00255CF0* bp) {
     if (bp->link == 0) {
-        bp->link = Hotbox_CreateRuntime(g_HotboxTracker, bp, 0, 1);
+        bp->link = cHotboxMan_CreateInteractBox(g_HotboxTracker, bp, 0, 1);
         bp->link->owner = bp->unk0C;
     }
 }
 
-extern "C" void Backpack_MarkFlagSlot(BP_00255CF0* bp, int item) {
-    signed char s = WeaponInv_SlotOfItem(item);
+extern "C" void cBackpack_InitForDropping(BP_00255CF0* bp, int item) {
+    signed char s = cWeapon_GetWeaponSlot(item);
     bp->unk134 = 1;
     bp->slot = s;
     if (bp->link == 0) {
         bp->Method5C(1);
-        Object_Register(bp);
+        nGobjManager_AddGOBJ(bp);
         CreateLink_00255CF0(bp);
     }
     bp->unk2F1 = 1;
     bp->unk30C = 0;
 }
 #undef g_HotboxTracker /* merge_units */
-#undef Object_Register /* merge_units */
-#undef Hotbox_CreateRuntime /* merge_units */
+#undef nGobjManager_AddGOBJ /* merge_units */
+#undef cHotboxMan_CreateInteractBox /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00255CF0(void) {}
 #pragma pop /* merge_units */
@@ -324,10 +324,10 @@ static inline void merge_flush_func_00255E50(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x134]; unsigned char b134; char pad2[0x2F1 - 0x135]; unsigned char b2F1; unsigned char b2F2; } Obj255F;
 extern void Backpack_UpdateBoxPriority(Obj255F* s);
-extern void Backpack_CheckEmpty(Obj255F* s);
-void Backpack_Finish(Obj255F* s) {
+extern void cBackpack_CheckForRemoval(Obj255F* s);
+void cBackpack_Unlock(Obj255F* s) {
     Backpack_UpdateBoxPriority(s);
-    Backpack_CheckEmpty(s);
+    cBackpack_CheckForRemoval(s);
     s->b2F2 = 0;
     if (s->b2F1) {
         s->b134 = 0;

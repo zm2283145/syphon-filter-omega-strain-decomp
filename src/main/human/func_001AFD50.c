@@ -1,4 +1,4 @@
-/* HumanBounds_BuildTable: build the static table of bone-attached bounding spheres once
+/* InitStatics_BBox: build the static table of bone-attached bounding spheres once
    (each element registered for destruction) and push a pointer to every entry into out. */
 #pragma inline_depth(10)
 #pragma cplusplus on
@@ -22,7 +22,7 @@ struct Sphere {
 struct PtrVec;
 
 extern "C" {
-V* Vec4_Assign(V* d, const V* s);
+V* cVector_ctor_cVectorR(V* d, const V* s);
 V* cVector_SetW(V* v, float w);
 void cSkeletonBBoxContribution_dtor(Sphere* s, int flags);
 int __register_global_object(void* obj, void* dtor, void* rec);
@@ -36,7 +36,7 @@ extern Sphere D_004EEBB0[12];
 static inline V AsPoint(const V& v)
 {
     V t;
-    V* r = cVector_SetW(Vec4_Assign(&t, &v), 1.0f);
+    V* r = cVector_SetW(cVector_ctor_cVectorR(&t, &v), 1.0f);
     asm { .set reorder } /* scheduling: ends the noreorder region the VU0 test leaves open (retail order up to here) */
     return *r;
 }
@@ -73,7 +73,7 @@ static inline void InitSphere(Sphere* s, int bone, const V& off, float radius)
     s->offset = AsPoint(off);
 }
 
-extern "C" void HumanBounds_BuildTable(PtrVec* out)
+extern "C" void InitStatics_BBox(PtrVec* out)
 {
     int i;
     if (!D_004EEAE0) {

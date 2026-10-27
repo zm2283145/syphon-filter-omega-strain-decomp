@@ -33,14 +33,14 @@ extern char D_004A7520[];
 extern char g_Game[];
 extern char D_004DADF0[];
 extern char D_004DAE10[];
-extern void SoundEvent_Ctor(SoundEventMsg_45F4D0* msg, void* action, int flags);
-extern void Event_Send(void* msg, void* target, int flags);
-extern void FileMan_Release(void* part, int flags);
+extern void cStopSoundMsg_ctor_cSndFxR_bool(SoundEventMsg_45F4D0* msg, void* action, int flags);
+extern void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int flags);
+extern void cFileMan_dtor(void* part, int flags);
 extern void cMessage_dtor(void* msg, int flags);
-extern void SoundAction_CtorVoice(void* action, int kind, char* voice, int a, int b);
+extern void cSndFx_SetSndFx(void* action, int kind, char* voice, int a, int b);
 extern void SoundMsg_WrapAction(SoundMsg_45F4D0* msg, void* action);
-extern void GuiWidget_SendEvent(void* a, void* b, int c, int d, int e);
-extern Obj_45F4D0* GuiWidget_FindChildByName(void* self, char* name);
+extern void GuiWidget_SendMessage(void* a, void* b, int c, int d, int e);
+extern Obj_45F4D0* GuiWidget_FindChild_charP(void* self, char* name);
 extern void GuiTextWidget_SetText(Obj_45F4D0* obj, int arg, int c);
 }
 
@@ -48,11 +48,11 @@ static inline void StopVoice_45F4D0(Self_45F4D0* self)
 {
     SoundEventMsg_45F4D0 stop;
     self->playing = 0;
-    SoundEvent_Ctor(&stop, self->action, 0);
-    Event_Send(&stop, g_Game, 1);
+    cStopSoundMsg_ctor_cSndFxR_bool(&stop, self->action, 0);
+    QueueMessage_cMessageR_cSystemP_int(&stop, g_Game, 1);
     stop.vtbl = D_004DADF0;
-    FileMan_Release(stop.partB, -1);
-    FileMan_Release(stop.partA, -1);
+    cFileMan_dtor(stop.partB, -1);
+    cFileMan_dtor(stop.partA, -1);
     cMessage_dtor(&stop, 0);
 }
 
@@ -60,18 +60,18 @@ static inline void PlayVoice_45F4D0(Self_45F4D0* self, char* voice)
 {
     SoundMsg_45F4D0 play;
     StopVoice_45F4D0(self);
-    SoundAction_CtorVoice(self->action, 4, voice, 0, 0);
+    cSndFx_SetSndFx(self->action, 4, voice, 0, 0);
     self->playing = 0;
     SoundMsg_WrapAction(&play, self->action);
     play.flag = 1;
-    Event_Send(&play, g_Game, 1);
+    QueueMessage_cMessageR_cSystemP_int(&play, g_Game, 1);
     play.vtbl = D_004DAE10;
-    FileMan_Release(play.partB, -1);
-    FileMan_Release(play.partA, -1);
+    cFileMan_dtor(play.partB, -1);
+    cFileMan_dtor(play.partA, -1);
     cMessage_dtor(&play, 0);
 }
 
-extern "C" int GuiEndGameAwards_Next(Self_45F4D0* self)
+extern "C" int GuiEndGameAwards_ActivateNextAward(Self_45F4D0* self)
 {
     Entry_45F4D0* e;
     Obj_45F4D0* obj;
@@ -79,10 +79,10 @@ extern "C" int GuiEndGameAwards_Next(Self_45F4D0* self)
         return 0;
     }
     if (self->cur >= 0) {
-        GuiWidget_SendEvent(self, self->ent[self->cur].obj, 6, (int)"onDeactivate", 0);
+        GuiWidget_SendMessage(self, self->ent[self->cur].obj, 6, (int)"onDeactivate", 0);
     }
     self->cur++;
-    obj = GuiWidget_FindChildByName(self, "value_awardstring");
+    obj = GuiWidget_FindChild_charP(self, "value_awardstring");
     obj = (obj && obj->IsA(D_004A7520)) ? obj : 0;
     e = &self->ent[self->cur];
     if (obj != 0) {
@@ -93,7 +93,7 @@ extern "C" int GuiEndGameAwards_Next(Self_45F4D0* self)
     }
     if (e->obj != 0) {
         e->obj->flags |= 2;
-        GuiWidget_SendEvent(self, e->obj, 6, (int)"onActivate", 0);
+        GuiWidget_SendMessage(self, e->obj, 6, (int)"onActivate", 0);
     }
     return 1;
 }

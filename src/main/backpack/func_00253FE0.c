@@ -1,10 +1,10 @@
 #pragma cplusplus on
 #include "types.h"
 #include "vslot_pad.h"
-/* cBackpack_v14 (draw): while the backpack is free (no ready holder, no
+/* cBackpack_Render (draw): while the backpack is free (no ready holder, no
  * contents) it fades by its age, tracks the shared drop-marker position and
  * draws its model. Helpers follow cBackpack_v10 (backpack_2542E0.c) and
- * ThrownProjectile_Draw (grenade/ThrownProjectile_Draw.c). */
+ * cGrenade_Render (grenade/cGrenade_Render.c). */
 #pragma always_inline on
 #pragma inline_depth(8)
 struct V_3FE0 { float x, y, z, w; V_3FE0() {} } __attribute__((aligned(16)));
@@ -44,7 +44,7 @@ extern float D_0048AF18;
 extern V_3FE0 D_00535D40;
 extern unsigned char D_00535D60;
 extern unsigned char D_00535D61;
-void ActorModel_DrawLod(void* a, int b, void* c, int d);
+void gunList_GunRender(void* a, int b, void* c, int d);
 }
 static inline bool IdEq(Tgt_3FE0* p, Hnd_3FE0* h) { return p->id == h->id; }
 static inline Tgt_3FE0* HGet(Hnd_3FE0* h) {
@@ -78,7 +78,7 @@ static inline unsigned char eq4_(V_3FE0* a, V_3FE0* b) {
 /* cvt.w.s+mfc1: a C (int) cast compiles to trunc.w.s */
 static inline int F2I(float f) { int r; float t; asm { cvt.w.s t, f; mfc1 r, t } return r; }
 
-extern "C" void cBackpack_v14(Bp_3FE0* self)
+extern "C" void cBackpack_Render(Bp_3FE0* self)
 {
     Tgt_3FE0* t = self->t2F8;
     if (t && Ready(t)) {
@@ -108,7 +108,7 @@ extern "C" void cBackpack_v14(Bp_3FE0* self)
                 {
                     Sub_3FE0* r = self->sub;
                     if (r->f50) r->Sync();
-                    ActorModel_DrawLod(m, self->x38, (void*)((int)r + 0x10), 0);
+                    gunList_GunRender(m, self->x38, (void*)((int)r + 0x10), 0);
                 }
             }
         }

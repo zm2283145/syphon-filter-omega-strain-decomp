@@ -4,8 +4,8 @@
 
 extern "C" {
 extern char D_0049AE60[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 }
 inline void* operator new(unsigned int, void* p) { return p; }
 struct V4_3F9B30 { float x, y, z, w; V4_3F9B30(const V4_3F9B30& o) { float a = o.x, b = o.y, c = o.z, d = o.w; x = a; y = b; z = c; w = d; } };
@@ -34,7 +34,7 @@ struct Holder_3F9B30 {
             Node_3F9B30* p = node;
             if (p) {
                 AllocGuard guard;
-                Mem_Free(0, p, D_0049AE60, 0x64);
+                cMemMan_Deallocate(0, p, D_0049AE60, 0x64);
             }
         }
     }
@@ -49,7 +49,7 @@ extern "C" int std_list_deleter_cHogFile_insert(Node_3F9B30** result, List_3F9B3
     Flag_3F9B30 flag;
     {
         AllocGuard guard;
-        n = (Node_3F9B30*)Mem_Alloc(0, 0x174, "allocator.hh", 0x5C);
+        n = (Node_3F9B30*)cMemMan_Allocate(0, 0x174, "allocator.hh", 0x5C);
     }
     {
     Holder_3F9B30 h;

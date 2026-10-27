@@ -23,7 +23,7 @@ extern "C" {}typedef struct LNode_9D00 { struct LNode_9D00* prev; struct LNode_9
 struct LIt_9D00 { LNode_9D00* node; LIt_9D00() {} };
 extern "C" {
 extern char D_005838D8[];
-LIt_9D00 List_Begin(void* list);
+LIt_9D00 std_list_deleter_voidPtr_begin_void(void* list);
 void std_list_tGenInfoPtr_generic_iterator_ctor(LIt_9D00* r, const LIt_9D00& s);
 LIt_9D00 std_list_tGenInfoPtr_end(void* list);
 void cLListIterator_tGenInfoPtr_ctor(LIt_9D00* r, const LIt_9D00& s);
@@ -41,7 +41,7 @@ extern "C" void cGenInfoObject_SetOwner(void* self, int* key, int owner)
         LIt_9D00 it;
         int o; if (owner >= 0) o = owner; else o = 0xF;
         LNode_9D00* n;
-        std_list_tGenInfoPtr_generic_iterator_ctor(&it, List_Begin(D_005838D8));
+        std_list_tGenInfoPtr_generic_iterator_ctor(&it, std_list_deleter_voidPtr_begin_void(D_005838D8));
         n = it.node;
         while (cLListIterator_tGenInfoPtr_ctor(&end, std_list_tGenInfoPtr_end(D_005838D8)), n != end.node) {
             NetOwnEnt* d = n->data;
@@ -56,7 +56,7 @@ extern "C" void cGenInfoObject_SetOwner(void* self, int* key, int owner)
             NetOwnEnt* ne;
             {
                 AllocGuard g;
-                ne = (NetOwnEnt*)Mem_Alloc(0, 8, D_004BFD60, 0x1BB);
+                ne = (NetOwnEnt*)cMemMan_Allocate(0, 8, D_004BFD60, 0x1BB);
             }
             if (ne) { ne->key = *key; ne->lo = o; ne->hi = 0; }
             NetOwnHdl* h;
@@ -91,7 +91,7 @@ extern "C" void cGenInfoObject_Deactivate(void* self, int* key)
                NetOwn_Ne(&it, &end)) {
             NetOwnVal* v = &it.node->v;
             if (v->first->key == *key) { v->second = (0); break; }
-            Tree_Successor(&it);
+            std_red_black_tree_1_increment(&it);
         }
         cAssocArray_tGenInfoPtr_bool_Iterator_ctor(&end2, std_map_tGenInfoPtr_bool_end(D_00583900));
         if (it.node == end2.node) {
@@ -99,7 +99,7 @@ extern "C" void cGenInfoObject_Deactivate(void* self, int* key)
             NET_OWN_CLEAR(e->hi, 1 << NetLocalId());
             {
                 AllocGuard g;
-                n = (NetOwnEnt*)Mem_Alloc(0, 8, D_004BFD60, (0x196));
+                n = (NetOwnEnt*)cMemMan_Allocate(0, 8, D_004BFD60, (0x196));
             }
             if (n) { n->key = *key; n->lo = 0xF; n->hi = 0; }
             pv.first = n;

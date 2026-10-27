@@ -3,12 +3,12 @@
 
 /*
  * Deleting destructor of a message whose payload subobject at +0x20 owns
- * two members (+0x68, +0x104) destroyed by FileMan_Release, followed by the
+ * two members (+0x68, +0x104) destroyed by cFileMan_dtor, followed by the
  * base destructor func_00460EC0(self, -1); delete when deleteFlag > 0.
  * C++ only (#pragma cplusplus on before including).
  */
 extern "C" {
-void FileMan_Release(void* member, int flags);
+void cFileMan_dtor(void* member, int flags);
 void func_00460EC0(void* self, int flags);
 void operator_delete(void* allocation);
 }
@@ -26,8 +26,8 @@ struct PayloadMessage460 {
     {                                                                         \
         if (self) {                                                           \
             if (self->payload) {                                              \
-                FileMan_Release(self->memberB, -1);                             \
-                FileMan_Release(self->memberA, -1);                             \
+                cFileMan_dtor(self->memberB, -1);                             \
+                cFileMan_dtor(self->memberA, -1);                             \
             }                                                                 \
             if (self)                                                         \
                 func_00460EC0(self, -1);                                      \

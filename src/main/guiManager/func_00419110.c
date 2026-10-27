@@ -4,29 +4,29 @@
 typedef struct { char* begin; char* end; char* cap; } String;
 typedef struct { char data[0xA0]; } HogFile;     /* file object read from a HOG archive */
 
-extern void String_CtorCStr_13B480(String* s, const char* text);
-extern void String_AssignString(void* list, String* s);  /* list<String>::push_back */
+extern void std_basic_string_char_char_traits_char_ctor_charP(String* s, const char* text);
+extern void std_basic_string_char_char_traits_char_assign_basicstringR(void* list, String* s);  /* list<String>::push_back */
 extern void String_Dtor(String* s, int flags);   /* String dtor */
 extern int sprintf(char* buf, const char* fmt, ...);
-extern void Resource_Construct(HogFile* file);           /* ctor */
-extern void Hog_Register(HogFile* file, char* name, int hog, int b);
-extern int GuiManager_LoadGuiFile(GuiScreenList* self, HogFile* file, int existing);
-extern void FileMan_Release(HogFile* file, int flags); /* dtor */
+extern void cFileMan_ctor_void(HogFile* file);           /* ctor */
+extern void cFileMan_EncodeFilename_charP_cHogFileR_bool(HogFile* file, char* name, int hog, int b);
+extern int GuiManager_ConstructWidgetFromFile(GuiScreenList* self, HogFile* file, int existing);
+extern void cFileMan_dtor(HogFile* file, int flags); /* dtor */
 
 /* Remember name as loaded, open "<name>.GUI" from the given HOG and load its widget tree. */
-int GuiManager_LoadGuiFromHog(GuiScreenList* self, int hog, const char* name, int existing)
+int GuiManager_ConstructWidget_cHogFileR_charP_GuiWidgetP(GuiScreenList* self, int hog, const char* name, int existing)
 {
     HogFile file;
     char path[0x20];
     String str;
     int root;
-    String_CtorCStr_13B480(&str, name);
-    String_AssignString(self->loadedNames, &str);
+    std_basic_string_char_char_traits_char_ctor_charP(&str, name);
+    std_basic_string_char_char_traits_char_assign_basicstringR(self->loadedNames, &str);
     String_Dtor(&str, 0);
     sprintf(path, "%s.GUI", name);
-    Resource_Construct(&file);
-    Hog_Register(&file, path, hog, 0);
-    root = GuiManager_LoadGuiFile(self, &file, existing);
-    FileMan_Release(&file, -1);
+    cFileMan_ctor_void(&file);
+    cFileMan_EncodeFilename_charP_cHogFileR_bool(&file, path, hog, 0);
+    root = GuiManager_ConstructWidgetFromFile(self, &file, existing);
+    cFileMan_dtor(&file, -1);
     return root;
 }

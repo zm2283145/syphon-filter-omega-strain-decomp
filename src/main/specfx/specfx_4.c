@@ -32,10 +32,10 @@ Word* std_list_tItemPtr_generic_iterator_ctor(Word* dst, Word* src) {
 /* merge_units: begin func_003EC6C0 */
 #pragma push /* merge_units */
 typedef struct { int busy; int pad4; int pad8; unsigned char done; char padD[3]; float time; } OC6C0;
-extern void Effect_UpdateSlots(OC6C0* a, OC6C0* b);
-void Effect_Update(OC6C0* s, float dt) {
+extern void cSfxScheduler_UpdateItemList(OC6C0* a, OC6C0* b);
+void cSfxScheduler_NextFrame(OC6C0* s, float dt) {
     s->time += dt;
-    Effect_UpdateSlots(s, s);
+    cSfxScheduler_UpdateItemList(s, s);
     if (s->busy == 0) s->done = 1;
 }
 #pragma pop /* merge_units */

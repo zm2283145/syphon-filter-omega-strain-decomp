@@ -7,12 +7,12 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern int MotionGroup_CopyPair(int*, int);
-extern int Motion_Lookup(int, int);
+extern int cSkaPlaybackGroupId_ctor_cSkaPlaybackGroupIdR(int*, int);
+extern int cSkaAnimationSet_GetNode_cString16NR(int, int);
 extern int cPointer_cSkaNode_ctor_cSkaNodeP(MotionSelNode*, int);
 
-MotionSelNode* MotionSelNode_Ctor(MotionSelNode* self, int a1, int a2, int a3) {
-    cPointer_cSkaNode_ctor_cSkaNodeP(self, Motion_Lookup(a2, a1));
-    MotionGroup_CopyPair(&self->pair, a3);
+MotionSelNode* cSkaAnimationBlend_ctor(MotionSelNode* self, int a1, int a2, int a3) {
+    cPointer_cSkaNode_ctor_cSkaNodeP(self, cSkaAnimationSet_GetNode_cString16NR(a2, a1));
+    cSkaPlaybackGroupId_ctor_cSkaPlaybackGroupIdR(&self->pair, a3);
     return self;
 }

@@ -53,20 +53,20 @@ extern "C" {
 extern char g_Game[];
 extern char g_LosCheckService[];
 extern char g_TeleportMsgClass[], D_004D9360[];
-void* Service_Lookup(void* a, void* b);
+void* cSystemContainer_GetSystem(void* a, void* b);
 void* func_0014D460(Act* a);
 void* func_0014D450(void* a);
 void* func_0014D410(void* a);
 void* func_001AE360(void* a);
 void LosProvider_SeedRegion(void* p, void* r);
-int LosMgr_TraceBullet(void* mgr, Hit* a, Query* b, const V& c, const V& d, void* e1, void* e2, int g, unsigned char h, unsigned char i, int j, unsigned char k);
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, void* target, int immediate);
+int cLosManager_cCollisionModelList_Game_PerformImmediateRayIntersectionTest(void* mgr, Hit* a, Query* b, const V& c, const V& d, void* e1, void* e2, int g, unsigned char h, unsigned char i, int j, unsigned char k);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
-void* Mtx_GetIdentity(void);
-void Vec4_CopyAsPoint(V* out, const V* v);
-void Mtx_SetRotationTranslation(void* data, void* m, V* v);
-void Actor_LandFromAir(Act* a, int b);
+void* cMatrix_GetUnit(void);
+void cVector_Copy_WSet1(V* out, const V* v);
+void cMatrix_ctor_cMatrixR_cVectorR(void* data, void* m, V* v);
+void cHuman_Land(Act* a, int b);
 void Actor_LandDead(Act* a, int b);
 void NpcAi_GroundActor(Act* self, int snap, int above, float z);
 }
@@ -80,22 +80,22 @@ static inline bool Free1(Slot* s) { return !(UHas2(s) != 0); }
 static inline bool AllFree(Act* n) { bool r = 0; bool c = 0; if (Free1(n->slots[0]) && Free(n->slots[1])) c = 1; if (c && Free(n->slots[2])) r = 1; return r; }
 static inline void SetPos(Msg* m, const V* p)
 {
-    void* id = Mtx_GetIdentity();
+    void* id = cMatrix_GetUnit();
     V t;
-    Vec4_CopyAsPoint(&t, p);
+    cVector_Copy_WSet1(&t, p);
     void* d = m->data;
     asm { .set reorder } /* empty scheduling barrier: retail sets up the destination before the matrix argument */
-    Mtx_SetRotationTranslation(d, id, &t);
+    cMatrix_ctor_cMatrixR_cVectorR(d, id, &t);
 }
 static inline void Teleport(Act* self, V* pos)
 {
     Msg msg;
     Msg* m = &msg;
-    Event_Construct(m, g_TeleportMsgClass);
+    cMessage_ctor_cMessageNameR(m, g_TeleportMsgClass);
     m->vtable = D_004D9360;
     m->b24 = 0;
     SetPos(m, pos);
-    Event_Send(m, self, 1);
+    QueueMessage_cMessageR_cSystemP_int(m, self, 1);
     msg.vtable = D_004D9360;
     cMessage_dtor(&msg, 0);
 }
@@ -111,12 +111,12 @@ void NpcAi_GroundActor(Act* self, int snap, int above, float z)
             if (life != 3 && life != 2) dead = false;
             if (dead) {
                 if (!((F3034(self) >> 1) & 1)) {
-                    void* los = Service_Lookup(g_Game, g_LosCheckService);
+                    void* los = cSystemContainer_GetSystem(g_Game, g_LosCheckService);
                     void* reg = func_0014D410(func_0014D450(func_0014D460(self)));
                     if (reg) LosProvider_SeedRegion(func_001AE360(los), reg);
                     Hit hit;
                     Query q;
-                    ok = (unsigned char)LosMgr_TraceBullet(los, &hit, &q, self->GetPos2(), V(0.0f, 0.0f, -100.0f, 0.0f), self, 0, 0, 0x40, 0x80, 0, 0);
+                    ok = (unsigned char)cLosManager_cCollisionModelList_Game_PerformImmediateRayIntersectionTest(los, &hit, &q, self->GetPos2(), V(0.0f, 0.0f, -100.0f, 0.0f), self, 0, 0, 0x40, 0x80, 0, 0);
                     if (!ok) F3038(self) |= 2;
                 } else {
                     F3038(self) |= 2;
@@ -156,7 +156,7 @@ void NpcAi_GroundActor(Act* self, int snap, int above, float z)
                 QC(&p->v300, &p->v2F0);
                 QZ(&p->v310);
             }
-            if ((self->x3210 >> 10) & 1) Actor_LandFromAir(self, 0);
+            if ((self->x3210 >> 10) & 1) cHuman_Land(self, 0);
         }
         F3038(self) |= 1;
         Actor_LandDead(self, 1);

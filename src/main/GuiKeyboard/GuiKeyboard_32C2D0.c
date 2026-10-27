@@ -74,11 +74,11 @@ extern int GuiKeyboard_GetModifierIndex(Self_C390* self, Item_C390* it);
 
 extern int GuiKeyboard_IsCharAllowed(Self_C390* self, unsigned char c);
 extern int CharMap_Lookup(unsigned short key);
-extern void GuiTextEditWidget_ClampCursor(Menu_C390* m, int sel);
-extern void GuiTextEditWidget_Delete(Menu_C390* m, int sel);
-extern void GuiTextEditWidget_Insert(Menu_C390* m, char* s);
-extern void GuiWidget_SendEventUp(Self_C390* self, int a, int b, int c);
-extern int GuiWidget_OnEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, int a3, int param);
+extern void GuiTextEditWidget_SetCursorPos(Menu_C390* m, int sel);
+extern void GuiTextEditWidget_RemoveCharAtCursor(Menu_C390* m, int sel);
+extern void GuiTextEditWidget_InsertAtCursor(Menu_C390* m, char* s);
+extern void GuiWidget_SendParentsMessage(Self_C390* self, int a, int b, int c);
+extern int GuiWidget_onMessage(Self_C390* self, Arg_C390* arg, unsigned short msg, int a3, int param);
 
 static inline int StrSize(Str_C390* s) { return (s->h.w & 1) ? s->size : (unsigned char)s->h.s.len; }
 
@@ -150,18 +150,18 @@ int GuiKeyboard_HandleEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, 
                 }
                 break;
             case 0x2A:
-                if (self->menu) GuiTextEditWidget_Delete(self->menu, 0);
+                if (self->menu) GuiTextEditWidget_RemoveCharAtCursor(self->menu, 0);
                 self->cur = 0;
                 break;
             case 0x28:
                 GuiKeyboard_Close(self, 1);
                 break;
             case 0x4F:
-                GuiTextEditWidget_ClampCursor(self->menu, self->menu->sel + 1);
+                GuiTextEditWidget_SetCursorPos(self->menu, self->menu->sel + 1);
                 self->cur = 0;
                 break;
             case 0x50:
-                if (self->menu->sel != 0) GuiTextEditWidget_ClampCursor(self->menu, self->menu->sel - 1);
+                if (self->menu->sel != 0) GuiTextEditWidget_SetCursorPos(self->menu, self->menu->sel - 1);
                 self->cur = 0;
                 break;
             default:
@@ -188,7 +188,7 @@ int GuiKeyboard_HandleEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, 
                     char buf[2];
                     buf[0] = ch;
                     buf[1] = 0;
-                    GuiTextEditWidget_Insert(self->menu, buf);
+                    GuiTextEditWidget_InsertAtCursor(self->menu, buf);
                     ok = 1;
                 } else {
                     ok = 0;
@@ -197,15 +197,15 @@ int GuiKeyboard_HandleEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, 
                 self->bE1 = 0;
             }
             if (ok) {
-                GuiWidget_SendEventUp(self, 0x10, 1, 0);
+                GuiWidget_SendParentsMessage(self, 0x10, 1, 0);
             } else {
-                GuiWidget_SendEventUp(self, 0x10, 4, 0);
+                GuiWidget_SendParentsMessage(self, 0x10, 4, 0);
             }
             return 1;
         }
     }
     if (msg == 0x10 && a3 == 1) return 1;
-    return GuiWidget_OnEvent(self, arg, msg, a3, param);
+    return GuiWidget_onMessage(self, arg, msg, a3, param);
 }
 #undef GuiKeyboard_GetModifierIndex /* merge_units */
 #pragma pop /* merge_units */
@@ -225,18 +225,18 @@ typedef struct {
 } Self_32C860;
 extern unsigned char D_0055A701;
 extern Kb_32C860 D_0055A700;
-extern void GuiWidget_Update(Self_32C860* self);
+extern void GuiWidget_onAdvanceTime(Self_32C860* self);
 #if 0 /* merge_units */
 extern void GuiKeyboard_Relabel(Self_32C860* self, unsigned int flags);
 #endif /* merge_units */
 #define GuiKeyboard_Relabel(a0, a1) (GuiKeyboard_Relabel((Self_C390 *)(a0), (a1))) /* merge_units */
 
-extern void GuiKeyboard_RefreshSpecialKeys(Self_32C860* self);
+extern void GuiKeyboard_UpdateStateKeys(Self_32C860* self);
 
 void GuiKeyboard_Update(Self_32C860* self)
 {
     Kb_32C860* k;
-    GuiWidget_Update(self);
+    GuiWidget_onAdvanceTime(self);
     k = &D_0055A700;
     if (D_0055A701) {
         int m = k->mods;
@@ -264,7 +264,7 @@ void GuiKeyboard_Update(Self_32C860* self)
         self->mods = f;
         if (changed) GuiKeyboard_Relabel(self, self->flags);
     }
-    GuiKeyboard_RefreshSpecialKeys(self);
+    GuiKeyboard_UpdateStateKeys(self);
 }
 #undef GuiKeyboard_Relabel /* merge_units */
 #pragma pop /* merge_units */
@@ -273,16 +273,16 @@ void GuiKeyboard_Update(Self_32C860* self)
 /* merge_units: begin func_0032C9A0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x68]; unsigned int flags; } Mgr;
-extern void GuiWidget_BaseSleep(void* self);
-extern Mgr* Gui_GetScreenStack(void);
-extern void GuiWidget_SendEvent(void* self, Mgr* mgr, int a, int b, int c);
+extern void GuiWidget_onSleep(void* self);
+extern Mgr* Gui_Canvas(void);
+extern void GuiWidget_SendMessage(void* self, Mgr* mgr, int a, int b, int c);
 
 /* Runs base setup, clears manager flag 0x40, then registers self with the manager. */
 void GuiKeyboard_Sleep(void* self)
 {
-    GuiWidget_BaseSleep(self);
-    Gui_GetScreenStack()->flags &= ~0x40;
-    GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 3, 0);
+    GuiWidget_onSleep(self);
+    Gui_Canvas()->flags &= ~0x40;
+    GuiWidget_SendMessage(self, Gui_Canvas(), 0x10, 3, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0032C9A0 */

@@ -5,7 +5,7 @@ extern void MediusSetProcessingState(int);
 extern void MediusGetQueuedRequestType(int *);
 void __attribute__((weak, section(".dtors_drop"))) MediusGetQueuedRequest(void * a0) { }
 extern void MediusGetClientAddrList(void *);
-extern int Net_SendLocked(int, int, int, int, int, int, void *);
+extern int NetSendMessage(int, int, int, int, int, int, void *);
 int MediusCheckRequestQueue(void)
 {
     char a[0xC4];
@@ -22,12 +22,12 @@ int MediusCheckRequestQueue(void)
         case 0x2C:
             MediusGetQueuedRequest(a);
             MediusGetClientAddrList(a + 0x94);
-            r = Net_SendLocked(0x40, D_00497CC4, 0xFFFF, 1, D_0059857C, 0xC4, a);
+            r = NetSendMessage(0x40, D_00497CC4, 0xFFFF, 1, D_0059857C, 0xC4, a);
             break;
         case 0x12:
             MediusGetQueuedRequest(b);
             MediusGetClientAddrList(b + 0xBC);
-            r = Net_SendLocked(0x40, D_00497CC4, 0xFFFF, 1, D_00598564, 0xEC, b);
+            r = NetSendMessage(0x40, D_00497CC4, 0xFFFF, 1, D_00598564, 0xEC, b);
             break;
         }
     }

@@ -5,10 +5,10 @@ struct Mgr { char pad[0x20]; S20* p20; };
 extern "C" {
 extern void* D_004FFC04;
 int cGameFrontEnd_IsMessageBoxAwake_void_2(void*);
-Mgr* Gui_GetScreenStack(void);
+Mgr* Gui_Canvas(void);
 }
 /* Going through an inline wrapper keeps the bool locals from being folded. */
-static inline Mgr* M() { return Gui_GetScreenStack(); }
+static inline Mgr* M() { return Gui_Canvas(); }
 extern "C" bool Hud_IsGuiFocused(void)
 {
     bool r = 1;

@@ -7,7 +7,7 @@ typedef struct {
     void (*cb1A4)(int idx, int x);
 } UpnpObj;
 typedef struct { unsigned int magic; } UpnpMsg;
-extern int RtUdp_SendToPeerEndpoint(UpnpObj *o, int peer, unsigned char type, void *data, unsigned short len);
+extern int rt_p2p_isend(UpnpObj *o, int peer, unsigned char type, void *data, unsigned short len);
 
 int rt_p2p_complete_connection(UpnpObj *o)
 {
@@ -32,7 +32,7 @@ int rt_p2p_complete_connection(UpnpObj *o)
         for (i = 0; i < o->count; i++) {
         if (o->ent[i].type - 3 < 2u) {
             m.magic = 0xEFF0CDAB;
-            if ((r = RtUdp_SendToPeerEndpoint(o, i, 7, &m, 4)) != 0) return r;
+            if ((r = rt_p2p_isend(o, i, 7, &m, 4)) != 0) return r;
             if (o->ent[i].b11) { o->ent[i].b11 = 0; o->cb1A4(i, 0); }
         }
     }

@@ -57,19 +57,19 @@ struct SkaClip : ClipBase {
     SkaClip() {}
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~SkaClip() { vt = (void*)D_004DFC30; }
 };
-extern "C" float Math_Sin(float);
-extern "C" float Math_Cos(float);
+extern "C" float Libc_Sinf(float);
+extern "C" float Libc_Cosf(float);
 extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_bool_bool_cSkaAnimPlaybackRangeR_etc(SkaClip* self, SkaClip* src, bool a, bool b, float g, const float* range, const float* ang, int id, signed char s, unsigned char mode)
 {
     float hx = 0.5f * ang[0];
     float hy = 0.5f * ang[1];
     float hz = 0.5f * ang[2];
-    float cx = Math_Cos(hx);
-    float cy = Math_Cos(hy);
-    float cz = Math_Cos(hz);
-    float sx = Math_Sin(hx);
-    float sy = Math_Sin(hy);
-    float sz = Math_Sin(hz);
+    float cx = Libc_Cosf(hx);
+    float cy = Libc_Cosf(hy);
+    float cz = Libc_Cosf(hz);
+    float sx = Libc_Sinf(hx);
+    float sy = Libc_Sinf(hy);
+    float sz = Libc_Sinf(hz);
     V q;
     q.w = cx * (cy * cz) - sx * (sy * sz);
     q.x = sx * (cy * cz) - cx * (sy * sz);
@@ -126,12 +126,12 @@ extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_bool_bool_cSkaAnimPlaybackRangeNorma
     float hx = 0.5f * ang[0];
     float hy = 0.5f * ang[1];
     float hz = 0.5f * ang[2];
-    float cx = Math_Cos(hx);
-    float cy = Math_Cos(hy);
-    float cz = Math_Cos(hz);
-    float sx = Math_Sin(hx);
-    float sy = Math_Sin(hy);
-    float sz = Math_Sin(hz);
+    float cx = Libc_Cosf(hx);
+    float cy = Libc_Cosf(hy);
+    float cz = Libc_Cosf(hz);
+    float sx = Libc_Sinf(hx);
+    float sy = Libc_Sinf(hy);
+    float sz = Libc_Sinf(hz);
     V q;
     q.w = cx * (cy * cz) - sx * (sy * sz);
     q.x = sx * (cy * cz) - cx * (sy * sz);

@@ -34,22 +34,22 @@ public:
 };
 
 extern "C" {
-void Vec4_Assign(V4_13A* d, const V4_13A* s);
+void cVector_ctor_cVectorR(V4_13A* d, const V4_13A* s);
 void cLosResult_ctor_void(void* buf);
-Provider_13A* LosProvider_Get(void);
-void LosProvider_ClearExclusions(Provider_13A* p, int v);
-void LosProvider_AddExclusion(Provider_13A* p, int v);
-void Ptr_Identity(V4_13A* p);
+Provider_13A* cLosRequest_cCollisionModelList_Game_GetCollisionModelList(void);
+void cCollisionModelList_Resize_ExclusionList(Provider_13A* p, int v);
+void cCollisionModelList_PushBack_ExclusionList(Provider_13A* p, int v);
+void cVector_ctor_void(V4_13A* p);
 void cCollisionFace_ctor_void(Hit_13A* h);
-int Los_TraceImmediate(V4_13A* pt, Hit_13A* hit, V4_13A* from, V4_13A* to, Provider_13A* p, int a, unsigned char b, int c, long d, long e);
-void LosResult_SetStatus(void* r, unsigned char s);
-void LosResult_SetPoint(void* r, V4_13A* pt);
+int nCollision_DetectForIntersectionBetweenRayAndFaces(V4_13A* pt, Hit_13A* hit, V4_13A* from, V4_13A* to, Provider_13A* p, int a, unsigned char b, int c, long d, long e);
+void cLosResult_SetLosBlocked(void* r, unsigned char s);
+void cLosResult_SetIntersectionPoint(void* r, V4_13A* pt);
 void cLosResult_SetBlockingFace(void* r, Hit_13A* h);
 void cCollisionFace_dtor(Hit_13A* h, int f);
 void cLosResult_SetHandle(void* r, int v);
-void LosResultEvent_Ctor(Ev_13A* e, void* r);
-void Event_Send(Ev_13A* e, int target, int f);
-void LosResultEvent_dtor(Ev_13A* e, int f);
+void cLosResultReadyMessage_ctor(Ev_13A* e, void* r);
+void QueueMessage_cMessageR_cSystemP_int(Ev_13A* e, int target, int f);
+void cLosResultReadyMessage_dtor(Ev_13A* e, int f);
 void cArray_cLosRequest_cCollisionModelList_Game_Begin(It_13A* out, void* v);
 void cArray_cLosRequest_cCollisionModelList_Game_End(It_13A* out, void* v);
 int cArray_cLosRequest_cCollisionModelList_Game_Iterator_opNe(It_13A* a, It_13A* b);
@@ -79,8 +79,8 @@ struct Query_13A {
     Query_13A(const V4_13A* f, const V4_13A* t, int i, void* b, int a4, int a8, int ac)
     {
         Query_13A* self = this;
-        Vec4_Assign(&self->from, f);
-        Vec4_Assign(&self->to, t);
+        cVector_ctor_cVectorR(&self->from, f);
+        cVector_ctor_cVectorR(&self->to, t);
         self->active = 1;
         self->id = i;
         self->buf = b ? b : &self->inl;
@@ -110,33 +110,33 @@ static inline Rec_13A* FindFree(Self_13A* self, Req_13A* req)
     return 0;
 }
 
-extern "C" int LosReceiver_HandleRequest(Self_13A* self, Req_13A* req)
+extern "C" int cLosManager_cCollisionModelList_Game_HandleRequest(Self_13A* self, Req_13A* req)
 {
     if (req->mode == 0) {
         Query_13A q(&req->from, &req->to, req->id, req->buf, req->x50, req->x54, req->x58);
-        Provider_13A* p = LosProvider_Get();
+        Provider_13A* p = cLosRequest_cCollisionModelList_Game_GetCollisionModelList();
         p->SetQuery(&q);
-        LosProvider_ClearExclusions(p, 0);
-        if (q.d4) LosProvider_AddExclusion(p, q.d4);
-        if (q.d8) LosProvider_AddExclusion(p, q.d8);
+        cCollisionModelList_Resize_ExclusionList(p, 0);
+        if (q.d4) cCollisionModelList_PushBack_ExclusionList(p, q.d4);
+        if (q.d8) cCollisionModelList_PushBack_ExclusionList(p, q.d8);
         {
             V4_13A pt;
             Hit_13A hit;
-            Ptr_Identity(&pt);
+            cVector_ctor_void(&pt);
             cCollisionFace_ctor_void(&hit);
-            int st = Los_TraceImmediate(&pt, &hit, &q.from, &q.to, p, 0, *(unsigned char*)&q.dc, 0, 0, 1);
-            LosResult_SetStatus(q.buf, st);
+            int st = nCollision_DetectForIntersectionBetweenRayAndFaces(&pt, &hit, &q.from, &q.to, p, 0, *(unsigned char*)&q.dc, 0, 0, 1);
+            cLosResult_SetLosBlocked(q.buf, st);
 
-            LosResult_SetPoint(q.buf, &pt);
+            cLosResult_SetIntersectionPoint(q.buf, &pt);
             cLosResult_SetBlockingFace(q.buf, &hit);
             cCollisionFace_dtor(&hit, -1);
         }
         cLosResult_SetHandle(q.buf, q.d0);
         if (q.id) {
             Ev_13A ev;
-            LosResultEvent_Ctor(&ev, q.buf);
-            Event_Send(&ev, q.id, 1);
-            LosResultEvent_dtor(&ev, -1);
+            cLosResultReadyMessage_ctor(&ev, q.buf);
+            QueueMessage_cMessageR_cSystemP_int(&ev, q.id, 1);
+            cLosResultReadyMessage_dtor(&ev, -1);
         }
     } else {
         Rec_13A* rec = FindFree(self, req);

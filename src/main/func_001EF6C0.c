@@ -28,14 +28,14 @@ extern "C" {
 extern char D_004A04E0[];
 extern char D_004A0548[];
 void std_swap_vectordeleterR_vectordeleterR_13(V1EF6C0* a, V1EF6C0* b);
-void HumanColBufB_Dtor(V1EF6C0* a, int f);
+void std_vector_deleter_cCollisionEdge_dtor(V1EF6C0* a, int f);
 }
 inline void* operator new(unsigned int, void* p) { return p; }
 static inline void Construct1EF6C0(E1EF6C0* p, const E1EF6C0* s)
 {
     new (p) E1EF6C0(*s);
 }
-extern "C" void Vector_Reserve_1EF6C0(V1EF6C0* v, unsigned int n)
+extern "C" void std_vector_imp_cCollisionEdge_reserve(V1EF6C0* v, unsigned int n)
 {
     if (v->cap < n) {
         unsigned int mx = 0x100000;
@@ -57,7 +57,7 @@ extern "C" void Vector_Reserve_1EF6C0(V1EF6C0* v, unsigned int n)
             tmp.count++;
         }
         std_swap_vectordeleterR_vectordeleterR_13(&tmp, v);
-        HumanColBufB_Dtor(&tmp, -1);
+        std_vector_deleter_cCollisionEdge_dtor(&tmp, -1);
     }
 }
 

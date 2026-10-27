@@ -39,8 +39,8 @@ struct Mgr_CF70 { int pad0; int count; };
 extern "C" {
 extern char D_004BD4C0[];
 extern Mgr_CF70* D_00554F30;
-void* Mem_Alloc(int pool, int size, char* file, int line);
-char* Str_Duplicate(char*);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+char* cScriptBase_myStrdup(char*);
 Def_CF70* cScriptInterpreter_findEnum(int, char*);
 void cArray_EnumField_ctor(V_CF70*, int, const E_CF70&);
 void std_vector_imp_EnumField_resize(V_CF70*, int, const E_CF70&);
@@ -53,10 +53,10 @@ static inline Def_CF70* NewDef_CF70(char* name, int count, int id)
     Def_CF70* n;
     {
         AllocGuard g;
-        n = (Def_CF70*)Mem_Alloc(0, 0x18, D_004BD4C0, 0xB12);
+        n = (Def_CF70*)cMemMan_Allocate(0, 0x18, D_004BD4C0, 0xB12);
     }
     if (n) {
-        char* nm = Str_Duplicate(name);
+        char* nm = cScriptBase_myStrdup(name);
         n->v.init(count, E_CF70());
         n->name = nm;
         n->id = id;
@@ -112,13 +112,13 @@ struct Al_D2D0 { int x; Al_D2D0() {} };
 extern "C" {
 extern void* D_00554F20;
 #if 0 /* merge_units */
-void* Mem_Alloc(int, int, char*, int);
+void* cMemMan_Allocate(int, int, char*, int);
 #endif /* merge_units */
-#define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
+#define cMemMan_Allocate(a0, a1, a2, a3) (cMemMan_Allocate((a0), (a1), (a2), (a3))) /* merge_units */
 
-Scr_D2D0* ScriptDesc_Find(Mgr_D2D0*, Def_D2D0*);
+Scr_D2D0* cScriptInterpreter_findFunc_FuncDefInitP(Mgr_D2D0*, Def_D2D0*);
 Scr_D2D0* FuncDef_ctor_charP_voidP_intP(Scr_D2D0*, char*, void*, int);
-void PtrVector_Resize(PVec_D2D0*, int, int*);
+void std_vector_pod_int_resize(PVec_D2D0*, int, int*);
 void std_vector_FuncDefPtr_push_back(void*, Scr_D2D0**);
 int** cArray_intPtr_opIndex_int(PVec_D2D0*, int);
 void std_tree_pair_int_value_compare_cAllocator_pair_ctor_valuecompareR_cAllocatorR_2(Map_D2D0*, const Cmp_D2D0&, const Al_D2D0&);
@@ -139,7 +139,7 @@ static inline int* Tab_Push(Mgr_D2D0* tab, int v)
     return (int*)&tab->count + tab->count;
 }
 
-extern "C" Scr_D2D0* Script_LinkDefinition(Mgr_D2D0* tab, Def_D2D0* def, void* ctx)
+extern "C" Scr_D2D0* cScriptInterpreter_considerFunc(Mgr_D2D0* tab, Def_D2D0* def, void* ctx)
 {
     Scr_D2D0* s;
     int key;
@@ -147,7 +147,7 @@ extern "C" Scr_D2D0* Script_LinkDefinition(Mgr_D2D0* tab, Def_D2D0* def, void* c
     int z;
     CIt_D2D0 e;
     It_D2D0 t2;
-    s = ScriptDesc_Find(tab, def);
+    s = cScriptInterpreter_findFunc_FuncDefInitP(tab, def);
     if (s) {
         if (!s->ctx && ctx) {
             s->ctx = ctx;
@@ -166,7 +166,7 @@ extern "C" Scr_D2D0* Script_LinkDefinition(Mgr_D2D0* tab, Def_D2D0* def, void* c
         int i;
         {
             AllocGuard g;
-            n = (Scr_D2D0*)Mem_Alloc(0, 0x44, D_004BD4C0, 0xAE4);
+            n = (Scr_D2D0*)cMemMan_Allocate(0, 0x44, D_004BD4C0, 0xAE4);
         }
         if (n)
             n = FuncDef_ctor_charP_voidP_intP(n, def->name, ctx, def->x78);
@@ -180,7 +180,7 @@ extern "C" Scr_D2D0* Script_LinkDefinition(Mgr_D2D0* tab, Def_D2D0* def, void* c
         s->b40 = def->b18;
         s->b41 = def->b19;
         z = 0;
-        PtrVector_Resize(&s->vec, def->count, &z);
+        std_vector_pod_int_resize(&s->vec, def->count, &z);
         for (i = 0; i < def->count; i++) {
             int** p = &s->vec.data[(unsigned int)i];
             *p = Tab_Push(tab, def->args[i]);
@@ -192,7 +192,7 @@ extern "C" Scr_D2D0* Script_LinkDefinition(Mgr_D2D0* tab, Def_D2D0* def, void* c
                 Map_D2D0* m;
                 {
                     AllocGuard g;
-                    m = (Map_D2D0*)Mem_Alloc(0, 0x10, D_004BD4C0, 0xAF9);
+                    m = (Map_D2D0*)cMemMan_Allocate(0, 0x10, D_004BD4C0, 0xAF9);
                 }
                 if (m) {
                     std_tree_pair_int_value_compare_cAllocator_pair_ctor_valuecompareR_cAllocatorR_2(m, Cmp_D2D0(), Al_D2D0());
@@ -208,7 +208,7 @@ extern "C" Scr_D2D0* Script_LinkDefinition(Mgr_D2D0* tab, Def_D2D0* def, void* c
                     Lst_D2D0** slot = (Lst_D2D0**)(func_003E2DA0(tab->map, &key) + 4);
                     {
                         AllocGuard g;
-                        l = (Lst_D2D0*)Mem_Alloc(0, 0x10, D_004BD4C0, 0xAFF);
+                        l = (Lst_D2D0*)cMemMan_Allocate(0, 0x10, D_004BD4C0, 0xAFF);
                     }
                     if (l) {
                         std_vector_FuncDefPtr_ctor(l);
@@ -225,7 +225,7 @@ extern "C" Scr_D2D0* Script_LinkDefinition(Mgr_D2D0* tab, Def_D2D0* def, void* c
     s->refs++;
     return s;
 }
-#undef Mem_Alloc /* merge_units */
+#undef cMemMan_Allocate /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003DD2D0(void) {}
 #pragma pop /* merge_units */

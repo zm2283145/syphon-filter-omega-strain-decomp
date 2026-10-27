@@ -34,7 +34,7 @@ static inline void merge_flush_func_00349180(void) {}
 char D_004BA520[] = "GuiNetMessageArray"; /* "GuiNetMessageArray" */
 
 /* GuiNetMessageArray::IsA: returns 1 if the given class name is "GuiNetMessageArray". */
-int GuiNetMessageArray_IsType(void* self, const char* name)
+int GuiNetMessageArray_IsClass(void* self, const char* name)
 {
     return strcmp(D_004BA520, name) == 0;
 }
@@ -47,8 +47,8 @@ static inline void merge_flush_func_00349190(void) {}
 #pragma push /* merge_units */
 typedef struct { char unused; } Alloc003491C0; /* empty allocator object passed by value */
 typedef struct { int w0, w4, w8; } Str003491C0;
-extern void String_Reserve(Str003491C0* str, int n);
-extern void String_Replace(Str003491C0* str, int pos, int count, const char* first, const char* last, Alloc003491C0 alloc);
+extern void std_basic_string_char_char_traits_char_reserve(Str003491C0* str, int n);
+extern void std_basic_string_char_char_traits_char_do_replace(Str003491C0* str, int pos, int count, const char* first, const char* last, Alloc003491C0 alloc);
 /* Construct a string from a C string. */
 Str003491C0* String_CtorCStr_3491C0(Str003491C0* str, const char* s)
 {
@@ -58,8 +58,8 @@ Str003491C0* String_CtorCStr_3491C0(Str003491C0* str, const char* s)
     str->w4 = 0;
     str->w8 = 0;
     n = strlen(s);
-    String_Reserve(str, n);
-    String_Replace(str, 0, 0, s, s + n, alloc);
+    std_basic_string_char_char_traits_char_reserve(str, n);
+    std_basic_string_char_char_traits_char_do_replace(str, 0, 0, s, s + n, alloc);
     return str;
 }
 /* merge_units: generate this block's code under its own pragmas */

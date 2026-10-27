@@ -11,8 +11,8 @@
 #pragma push /* merge_units */
 typedef struct { int a[3]; } Str_7690;
 typedef struct { Str_7690 name; int fc; int f10; Str_7690 s14; Str_7690 s20; int f2c; float f30; unsigned char b34; } Mat_7690;
-extern Mat_7690* MaterialProp_Build(Mat_7690* o, char* a, int b, char* c, char* d, float f, unsigned char g);
-extern unsigned char MaterialProps_Add(void* reg, int a, int b, Mat_7690* m);
+extern Mat_7690* cMaterialProperties_MatPropInfo_ctor_charP_int_charP_charP_etc(Mat_7690* o, char* a, int b, char* c, char* d, float f, unsigned char g);
+extern unsigned char cMaterialPropertiesTable_AddPropertyInfo(void* reg, int a, int b, Mat_7690* m);
 extern int String_Dtor(Str_7690* s, int f);
 extern char D_0053BB90[];
 static inline void Dt_7690(Str_7690* p) { if (p) String_Dtor(p, 0); }
@@ -20,8 +20,8 @@ unsigned char Global_AddMaterialProperties(int p0, int p1, char* a, signed char 
 {
     Mat_7690 m;
     unsigned char r;
-    MaterialProp_Build(&m, a, b, c, d, f, g);
-    r = MaterialProps_Add(D_0053BB90, p0, p1, &m);
+    cMaterialProperties_MatPropInfo_ctor_charP_int_charP_charP_etc(&m, a, b, c, d, f, g);
+    r = cMaterialPropertiesTable_AddPropertyInfo(D_0053BB90, p0, p1, &m);
     Dt_7690(&m.s20);
     Dt_7690(&m.s14);
     String_Dtor(&m.name, 0);

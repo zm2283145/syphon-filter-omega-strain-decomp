@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-float Model_GetFirstFloat(char* self) {
+float cSkaAnimationSet_DefaultCrossFadeDuration(char* self) {
     return *(float*)(self + 0);
 }

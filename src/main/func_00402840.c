@@ -6,46 +6,46 @@ typedef struct SklFile_h5 {
 extern signed char D_00493A60;
 extern char D_0055D510[];
 extern char D_0055D950[];
-extern void Resource_Construct(SklFile_h5* f);
+extern void cFileMan_ctor_void(SklFile_h5* f);
 extern void cFileMan_EncodeFilename_charP_cFileIOP_bool(SklFile_h5* f, char* path, int a, int b);
-extern int FileMan_FindMember(SklFile_h5* f);
-extern int FileMan_GetSize(SklFile_h5* f);
-extern void* FileMan_ReadData(SklFile_h5* f);
+extern int cFileMan_Open(SklFile_h5* f);
+extern int cFileMan_GetSize(SklFile_h5* f);
+extern void* cFileMan_Read_void(SklFile_h5* f);
 extern void cFileMan_Close(SklFile_h5* f);
-extern void FileMan_Release(SklFile_h5* f, int flags);
+extern void cFileMan_dtor(SklFile_h5* f, int flags);
 extern int sprintf(char* buf, const char* fmt, ...);
-extern void Appearance_PackText(char* dst, void* text, int len);
-void Skl_Load(void* self, char* skelPath, char* animPath)
+extern void SKL_ConvertSKL(char* dst, void* text, int len);
+void Monster_LoadMenSKLs(void* self, char* skelPath, char* animPath)
 {
     D_00493A60 = 0;
     {
         SklFile_h5 f;
-        Resource_Construct(&f);
+        cFileMan_ctor_void(&f);
         cFileMan_EncodeFilename_charP_cFileIOP_bool(&f, skelPath, 0, 0);
-        if ((unsigned char)FileMan_FindMember(&f)) {
+        if ((unsigned char)cFileMan_Open(&f)) {
             char msg[128];
             sprintf(msg, "Failed to open %s in LoadSKL\n", f.name);
-            FileMan_Release(&f, -1);
+            cFileMan_dtor(&f, -1);
         } else {
-            int len = FileMan_GetSize(&f);
-            Appearance_PackText(D_0055D510, FileMan_ReadData(&f), len);
+            int len = cFileMan_GetSize(&f);
+            SKL_ConvertSKL(D_0055D510, cFileMan_Read_void(&f), len);
             cFileMan_Close(&f);
-            FileMan_Release(&f, -1);
+            cFileMan_dtor(&f, -1);
         }
     }
     {
         SklFile_h5 f;
-        Resource_Construct(&f);
+        cFileMan_ctor_void(&f);
         cFileMan_EncodeFilename_charP_cFileIOP_bool(&f, animPath, 0, 0);
-        if ((unsigned char)FileMan_FindMember(&f)) {
+        if ((unsigned char)cFileMan_Open(&f)) {
             char msg[128];
             sprintf(msg, "Failed to open %s in LoadSKL\n", f.name);
-            FileMan_Release(&f, -1);
+            cFileMan_dtor(&f, -1);
         } else {
-            int len = FileMan_GetSize(&f);
-            Appearance_PackText(D_0055D950, FileMan_ReadData(&f), len);
+            int len = cFileMan_GetSize(&f);
+            SKL_ConvertSKL(D_0055D950, cFileMan_Read_void(&f), len);
             cFileMan_Close(&f);
-            FileMan_Release(&f, -1);
+            cFileMan_dtor(&f, -1);
         }
     }
 }

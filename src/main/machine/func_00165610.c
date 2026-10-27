@@ -8,6 +8,6 @@
 
 extern int g_FrameCounter;  /* counter */
 
-void Game_IncFrameCounter(void) {
+void cMachine_CalcFrameTime(void) {
     g_FrameCounter = g_FrameCounter + 1;
 }

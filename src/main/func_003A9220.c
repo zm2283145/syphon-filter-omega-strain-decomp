@@ -27,14 +27,14 @@ extern "C" {
 MNode* std_vector_imp_cBone_begin(NVec* v);
 MNode* std_vector_imp_cBone_end(NVec* v);
 void std_vector_cBone_pointer2iterator(NIt* out, NVec* v, MNode* const& p);
-void Ptr_Identity(V* v);
-V* Vec4_Copy(V* d, const V* s);
-void Mtx_Multiply4(V* v, M* m);
+void cVector_ctor_void(V* v);
+V* cVector_opAssign(V* d, const V* s);
+void cVector_Transform_cMatrixR(V* v, M* m);
 V* func_00133EC0(M* m);
-void Vec4_Set(V* d, float x, float y, float z, float w);
-void Sphere_FromCenter(V* d, const V* c, const V* r);
-void Box_ExtendXYZ(Box* b, const V* v);
-void Vec4_Add(V* d, const V* a, const V* b);
+void cVector_ctor_float_float_float_float(V* d, float x, float y, float z, float w);
+void cVector_opSub(V* d, const V* c, const V* r);
+void cBox_Include(Box* b, const V* v);
+void cVector_opAdd(V* d, const V* a, const V* b);
 }
 static inline void Mk(NIt* r, NVec* v, MNode* p) { MNode* const& q = p; std_vector_cBone_pointer2iterator(r, v, q); }
 struct NVec {
@@ -45,8 +45,8 @@ struct NVec {
 static inline bool operator==(const NIt& a, const NIt& b) { MNode* y = b.p; MNode* x = a.p; return x == y; }
 static inline bool operator!=(const NIt& a, const NIt& b) { return !(a == b); }
 struct Ctx { char pad[0x18]; NVec nodes; char pad1C[0x14]; Box box; };
-extern "C" void ModelCtx_ComputeBounds(Ctx* c);
-void ModelCtx_ComputeBounds(Ctx* c)
+extern "C" void cSkeleton_UpdateBBox(Ctx* c);
+void cSkeleton_UpdateBBox(Ctx* c)
 {
     NIt it; NIt e;
     V lo(3.4028235e38f, 3.4028235e38f, 3.4028235e38f, 1.0f);
@@ -62,18 +62,18 @@ void ModelCtx_ComputeBounds(Ctx* c)
         Sph* s = &it.p->sph;
         if (s->on) {
             V p;
-            Ptr_Identity(&p);
-            if (!s->local) Mtx_Multiply4(Vec4_Copy(&p, &s->c), m);
-            else Vec4_Copy(&p, func_00133EC0(m));
+            cVector_ctor_void(&p);
+            if (!s->local) cVector_Transform_cMatrixR(cVector_opAssign(&p, &s->c), m);
+            else cVector_opAssign(&p, func_00133EC0(m));
             float r = s->r;
             if (r > 0.0f) {
-                V rv; Vec4_Set(&rv, r, r, r, 0.0f);
-                V a; Sphere_FromCenter(&a, &p, &rv);
-                Box_ExtendXYZ(&c->box, &a);
-                V b; Vec4_Add(&b, &p, &rv);
-                Box_ExtendXYZ(&c->box, &b);
+                V rv; cVector_ctor_float_float_float_float(&rv, r, r, r, 0.0f);
+                V a; cVector_opSub(&a, &p, &rv);
+                cBox_Include(&c->box, &a);
+                V b; cVector_opAdd(&b, &p, &rv);
+                cBox_Include(&c->box, &b);
             } else {
-                Box_ExtendXYZ(&c->box, &p);
+                cBox_Include(&c->box, &p);
             }
         }
         it.p++;

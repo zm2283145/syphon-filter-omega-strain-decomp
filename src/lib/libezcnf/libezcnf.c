@@ -77,7 +77,7 @@ int ezNetCnfGetCombinationList(char *fname, int type, int list)
         scePrintf("RPC data size 0x%x exceeds buffer size 0x%x\n", EZNET_RPC_NAMES_SIZE, EZNET_RPC_BUF_SIZE);
         return -1;
     }
-    String_Copy(res + 0x10, fname);
+    Libc_Strcpy(res + 0x10, fname);
     ((int *)res)[0] = list;
     ((int *)res)[1] = type;
     sceSifCallRpc(&ezNetCnf_cd, EZNETCNF_FNO_GET_COMBINATION_LIST, 0, res, EZNET_RPC_NAMES_SIZE, res, EZNET_RPC_NAMES_SIZE, 0, 0);
@@ -128,8 +128,8 @@ int ezNetCnfGetProperties(char *fname, char *usrName, int data)
         scePrintf("RPC service not running\n");
         return -1;
     }
-    String_Copy(res + 0x10, fname);
-    String_Copy(res + 0x110, usrName);
+    Libc_Strcpy(res + 0x10, fname);
+    Libc_Strcpy(res + 0x110, usrName);
     ((int *)res)[0] = data;
     sceSifCallRpc(&ezNetCnf_cd, EZNETCNF_FNO_GET_PROPERTIES, 0, res, EZNET_RPC_NAMES_SIZE, res, EZNET_RPC_NAMES_SIZE, 0, 0);
     EZNETCNF_LOG_HEADER();

@@ -28,16 +28,16 @@ struct V {
 struct Plc { V rot, pos; };
 
 extern "C" {
-void* Root_GetParent(void*);
-void* Root_GetWorldPlacement(void*);
-void Transform_SetOrientation(Plc*, void*);
-void Placement_Invert(Plc*);
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(void*);
+void* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void*);
+void cQuatVec_opAssign(Plc*, void*);
+void cQuatVec_InvertAssumingUnitQuat(Plc*);
 void cQuaternion_ctor_void(V*);
-void Quat_Multiply(V*, V*, V*);
+void cQuaternion_VU0Multiply(V*, V*, V*);
 void cQuaternion_ctor_cQuaternionR(V*, V*);
-void Root_GetWorldPose(struct S* s);
-void Root_RefreshWorldCache(void*);
-char* Root_Identity(void*);
+void cSkaAnimAnchor_TreeNode_UpdateSkeletonTarget(struct S* s);
+void cSkaAnimAnchor_TreeNode_UpdateTransform(void*);
+char* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(void*);
 }
 
 struct S {
@@ -84,14 +84,14 @@ static inline void VAdd3(V* s, V* d) {
 
 static inline Plc* WorldPlc(void* r)
 {
-    if (Root_GetParent(r)) {
-        Root_RefreshWorldCache(r);
-        return (Plc*)Root_Identity(r);
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(r)) {
+        cSkaAnimAnchor_TreeNode_UpdateTransform(r);
+        return (Plc*)cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r);
     }
-    return (Plc*)(Root_Identity(r) + 0x50);
+    return (Plc*)(cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r) + 0x50);
 }
 
-void Root_GetWorldPose(S* s)
+void cSkaAnimAnchor_TreeNode_UpdateSkeletonTarget(S* s)
 {
     if (s->ba2) {
         Plc* pi = WorldPlc(s->ib0);
@@ -105,7 +105,7 @@ void Root_GetWorldPose(S* s)
         V r;
         V q;
         cQuaternion_ctor_void(&q);
-        Quat_Multiply(&q, &pi->rot, &p->rot);
+        cQuaternion_VU0Multiply(&q, &pi->rot, &p->rot);
         cQuaternion_ctor_cQuaternionR(&r, &q);
         p->rot = r;
         QRot(&p->pos, &pi->rot);
@@ -124,31 +124,31 @@ typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 typedef struct { V4 r[4]; } M4;
 typedef struct { char pad[0x20]; V4 v20; char pad30[0x40]; V4 v70; char pad80[0x21]; unsigned char dirty; char padA2[0xE]; void* root; } Obj;
 #if 0 /* merge_units */
-extern int Root_GetParent(void* r);
+extern int cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(void* r);
 #endif /* merge_units */
-#define Root_GetParent(a0) ((int)Root_GetParent((a0))) /* merge_units */
+#define cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(a0) ((int)cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Root_RefreshWorldCache(void* r);
+extern void cSkaAnimAnchor_TreeNode_UpdateTransform(void* r);
 #endif /* merge_units */
-#define Root_RefreshWorldCache(a0) (Root_RefreshWorldCache((a0))) /* merge_units */
+#define cSkaAnimAnchor_TreeNode_UpdateTransform(a0) (cSkaAnimAnchor_TreeNode_UpdateTransform((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern char* Root_Identity(void* r);
+extern char* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(void* r);
 #endif /* merge_units */
-#define Root_Identity(a0) (Root_Identity((a0))) /* merge_units */
+#define cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(a0) (cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void((a0))) /* merge_units */
 
-extern V4* Placement_GetQuat(void* p);
-extern M4* Quat_ToMatrix(M4* m, V4* q);
-extern V4* Placement_GetPosition(void* p);
-extern M4* Mtx_FromBasisAndPosition(M4* m, M4* b, V4* p);
+extern V4* cQuatVec_Rotation(void* p);
+extern M4* cMatrix_ctor_cQuaternionR(M4* m, V4* q);
+extern V4* cQuatVec_Translation(void* p);
+extern M4* cMatrix_Set_cMatrixR_cVectorR(M4* m, M4* b, V4* p);
 #pragma opt_common_subs off
 static inline char* GetWorld(void* r) {
-    if (Root_GetParent(r)) {
-        Root_RefreshWorldCache(r);
-        return Root_Identity(r);
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(r)) {
+        cSkaAnimAnchor_TreeNode_UpdateTransform(r);
+        return cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r);
     }
-    return Root_Identity(r) + 0x50;
+    return cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r) + 0x50;
 }
 void cSkaAnimAnchor_TreeNode_UpdateDeltaPos(Obj* o)
 {
@@ -157,8 +157,8 @@ void cSkaAnimAnchor_TreeNode_UpdateDeltaPos(Obj* o)
         VCopyF(&o->v20, &o->v70);
         {
             M4 m; M4 rot; M4* b; V4* d;
-            b = Quat_ToMatrix(&rot, Placement_GetQuat(v));
-            Mtx_FromBasisAndPosition(&m, b, Placement_GetPosition(v));
+            b = cMatrix_ctor_cQuaternionR(&rot, cQuatVec_Rotation(v));
+            cMatrix_Set_cMatrixR_cVectorR(&m, b, cQuatVec_Translation(v));
             d = &o->v20;
             {
                 M4* mp = &m;
@@ -177,9 +177,9 @@ void cSkaAnimAnchor_TreeNode_UpdateDeltaPos(Obj* o)
         o->dirty = 0;
     }
 }
-#undef Root_GetParent /* merge_units */
-#undef Root_RefreshWorldCache /* merge_units */
-#undef Root_Identity /* merge_units */
+#undef cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void /* merge_units */
+#undef cSkaAnimAnchor_TreeNode_UpdateTransform /* merge_units */
+#undef cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001A76A0(void) {}
 #pragma pop /* merge_units */

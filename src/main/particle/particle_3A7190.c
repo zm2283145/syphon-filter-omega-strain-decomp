@@ -9,7 +9,7 @@
 #include "types.h"
 typedef struct { int a; int b; int c; int d; int e; int f; int g; int h; } P3A7190;
 extern int snd_SendIOPCommandNoWait(int cmd, int size, void* data, int x, long long y);
-int snd_PlayVAGStream(int a, int b, unsigned short c, unsigned short d, int ch, int dh, int e, int f, int g, int h, int x, long long y)
+int snd_PlayVAGStreamByLocEx_CB(int a, int b, unsigned short c, unsigned short d, int ch, int dh, int e, int f, int g, int h, int x, long long y)
 {
     P3A7190 p;
     p.a = a;
@@ -91,7 +91,7 @@ extern int snd_SendIOPCommandNoWait(int cmd, int size, int* args, int a3, int t0
 #define snd_SendIOPCommandNoWait(a0, a1, a2, a3, a4) (snd_SendIOPCommandNoWait((a0), (a1), (void *)(a2), (a3), (long long)(a4))) /* merge_units */
 
 
-int snd_FreeVAGStreamChannels(void) {
+int snd_StopAllStreams(void) {
     return snd_SendIOPCommandNoWait(52, 0, 0, 0, 0);
 }
 

@@ -25,15 +25,15 @@ typedef struct Game {
 
 extern void cSFOini_Load(char* name);
 extern void cGameOptions_LoadDefaults(int);
-extern char* GameIni_GetString(char* key);
+extern char* cSFOini_GetKeyValue(char* key);
 extern void printf(char* fmt, ...);
 extern int String_CompareNoCase(char* a, char* b);
-extern int String_CompareN(char* a, char* b, int n);
+extern int Libc_Strncmp(char* a, char* b, int n);
 extern int atoi(char*);
 extern void Language_FromSystem(int);
-extern char* Loc_GetLanguageName(unsigned char id);
+extern char* nGlobalization_GetLanguageName_eLanguage(unsigned char id);
 extern void Loc_SetLanguage(unsigned char id);
-extern char* Loc_GetCurrentLanguageName(void);
+extern char* nGlobalization_GetLanguageName_void(void);
 extern int strstr(char* a, char* b);
 
 extern int g_OptionsRecord;
@@ -41,7 +41,7 @@ extern char D_004FFBB5;
 extern char D_004FFBB1;
 extern int D_00494188;
 
-void Game_LoadIni(Game* g) {
+void cMachine_InitINI(Game* g) {
     char* s;
     char* v;
     int i;
@@ -50,13 +50,13 @@ void Game_LoadIni(Game* g) {
 
     cSFOini_Load("SFO_GAME.INI");
     cGameOptions_LoadDefaults(g_OptionsRecord);
-    { char* mode = GameIni_GetString("BOOT_VIDEOMODE"); printf("videomode: %s\n", mode); }
-    { int pal = String_CompareNoCase(GameIni_GetString("BOOT_VIDEOMODE"), "PAL") == 0; if (pal) {
+    { char* mode = cSFOini_GetKeyValue("BOOT_VIDEOMODE"); printf("videomode: %s\n", mode); }
+    { int pal = String_CompareNoCase(cSFOini_GetKeyValue("BOOT_VIDEOMODE"), "PAL") == 0; if (pal) {
         g->videoMode = 2;
         g->width = 0x280;
         g->height = 0x200;
         g->fps = 0x32;
-    } else { int pro = String_CompareNoCase(GameIni_GetString("BOOT_VIDEOMODE"), "PROSCAN") == 0; if (pro) {
+    } else { int pro = String_CompareNoCase(cSFOini_GetKeyValue("BOOT_VIDEOMODE"), "PROSCAN") == 0; if (pro) {
         g->videoMode = 4;
         g->width = 0x280;
         g->height = 0x1E0;
@@ -70,19 +70,19 @@ void Game_LoadIni(Game* g) {
     D_004FFBB5 = 1;
     D_004FFBB1 = 1;
     g->invFps = 1.0f / g->fps;
-    { char* net = GameIni_GetString("NET_BUFFER_SIZE");
+    { char* net = cSFOini_GetKeyValue("NET_BUFFER_SIZE");
     if (strlen(net) != 0) {
         D_00494188 = atoi(net);
     } }
     /* retail "1" is an 8-byte, 8-aligned literal: a 4-byte wide string */
-    ukEnglish = String_CompareNoCase(GameIni_GetString("BOOT_USE_UK_ENGLISH"), (char*)L"1") == 0;
-    s = GameIni_GetString("BOOT_LANGUAGE");
+    ukEnglish = String_CompareNoCase(cSFOini_GetKeyValue("BOOT_USE_UK_ENGLISH"), (char*)L"1") == 0;
+    s = cSFOini_GetKeyValue("BOOT_LANGUAGE");
     if (s && *s) {
         if (String_CompareNoCase(s, "PS2_SETTING") == 0) {
             Language_FromSystem(ukEnglish);
         } else {
             for (i = 0; i < 7; i++) {
-                if (String_CompareNoCase(s, Loc_GetLanguageName(i)) == 0) {
+                if (String_CompareNoCase(s, nGlobalization_GetLanguageName_eLanguage(i)) == 0) {
                     Loc_SetLanguage(i);
                     break;
                 }
@@ -95,12 +95,12 @@ void Game_LoadIni(Game* g) {
     } else {
         Language_FromSystem(ukEnglish);
     }
-    v = GameIni_GetString("BOOT_VALID_LANGUAGES");
+    v = cSFOini_GetKeyValue("BOOT_VALID_LANGUAGES");
     if (v && *v) {
-        if (strstr(v, Loc_GetCurrentLanguageName()) == 0) {
+        if (strstr(v, nGlobalization_GetLanguageName_void()) == 0) {
             for (j = 0; j < 7; j++) {
-                char* name = Loc_GetLanguageName(j);
-                if (String_CompareN(v, name, strlen(name)) == 0) {
+                char* name = nGlobalization_GetLanguageName_eLanguage(j);
+                if (Libc_Strncmp(v, name, strlen(name)) == 0) {
                     Loc_SetLanguage(j);
                     return;
                 }
@@ -146,9 +146,9 @@ typedef struct {
     unsigned char b168;
 } R165;
 typedef struct { char pad[0x248]; int i248; char p24C[0x280 - 0x24C]; int i280[3]; } O165;
-extern R165* Archive_Open(void*, char*, int, int);
-extern void Font_LoadFnt(int, R165*, int);
-extern int* TextManager_Get(void);
+extern R165* cHogList_Open(void*, char*, int, int);
+extern void cFont_Load(int, R165*, int);
+extern int* GetTextSystem(void);
 extern I165 D_0048A060;
 extern char D_0048B2F8[];
 extern char D_0049C360[];
@@ -175,19 +175,19 @@ extern int D_0055C730;
 extern int D_0055C734;
 extern unsigned char D_0055C738;
 
-void Boot_LoadFonts(O165* o) {
+void cMachine_InitFonts(O165* o) {
     char buf[0x50];
     I165 I165 = D_0048A060;
     R165* r;
     int i;
     int x;
     sprintf(buf, D_0049C360, D_0048B2F8);
-    r = Archive_Open(D_004FFB8C, buf, 0, 0);
+    r = cHogList_Open(D_004FFB8C, buf, 0, 0);
     for (i = 0; i < 3; i++) {
-        Font_LoadFnt(o->i280[i], r, I165.v[i]);
+        cFont_Load(o->i280[i], r, I165.v[i]);
     }
     x = o->i280[0];
-    *TextManager_Get() = x;
+    *GetTextSystem() = x;
     o->i248 = x;
     D_00533868 = x;
     g_InterfaceFont = o->i280[1];
@@ -221,54 +221,54 @@ static inline void merge_flush_func_00165950(void) {}
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int NetMsgTypes_RegisterAll();                        
-int ObjectiveNet_Setup();                             
-int cTeamDataStruct_NetRegister();                                  
-int cHotboxMsg_NetRegister();                                  
+int cNetObj_NetInit();                        
+int cNetObjectiveMsg_InitNet();                             
+int cTeam_InitNet();                                  
+int cHotboxMsg_InitNet();                                  
 int cEndLevelMsg_InitNet();                                  
 int cStopSoundMsg_InitNet();                                  
 int cPlaySoundMsg_InitNet_void();                                  
 int SoundPosRequest_NetRegister();                                  
 int tGimmeTheElevatorMenu_NetRegister();                                  
 int cNetLockElevatorMsg_InitNet();                                  
-int cGOBJTriggerEventMsg_NetRegister();                                  
-int NetElevatorInfo_NetRegister();                                  
-int NetPathedGobj_NetRegister();                                  
+int cGOBJTriggerEventMsg_InitNet();                                  
+int cElevatorGOBJ_InitNet();                                  
+int cPathedGOBJ_InitNet();                                  
 int cGeneratorDataMessage_InitNet();                                  
 int cGeneratorMessageBase_InitNet();                                  
-int cRespawnMsg_NetRegister();                                  
-int cNotifyCheckpointMsg_NetRegister();                                  
-int cAddCheckpointMsg_NetRegister();                                  
+int cRespawnMsg_InitNet();                                  
+int cNotifyCheckpointMsg_InitNet();                                  
+int cAddCheckpointMsg_InitNet();                                  
 int cNICameraMsg_InitNet();                                  
 int cNIShuttle_InitNet();                                  
-int cRestoreBodyMsg_NetRegister();                                  
-int cSwitchBodiesMsg_NetRegister();                                  
-int cAIUnconsciousMsg_NetRegister();                                  
-int cAIDisguiseTakenMsg_NetRegister();                                  
-int cAIBodyMovedMsg_NetRegister();                                  
-int cAINewAwarenessMsg_NetRegister();                                  
-int cAIDestinationReachedMsg_NetRegister();                                  
-int cAIWaypointReachedMsg_NetRegister();                                  
-int cAIDeadMsg_NetRegister();                                  
-int cAIDeactivatedMsg_NetRegister();                                  
-int cAIActivatedMsg_NetRegister();                                  
+int cRestoreBodyMsg_InitNet();                                  
+int cSwitchBodiesMsg_InitNet();                                  
+int cAIUnconsciousMsg_InitNet();                                  
+int cAIDisguiseTakenMsg_InitNet();                                  
+int cAIBodyMovedMsg_InitNet();                                  
+int cAINewAwarenessMsg_InitNet();                                  
+int cAIDestinationReachedMsg_InitNet();                                  
+int cAIWaypointReachedMsg_InitNet();                                  
+int cAIDeadMsg_InitNet();                                  
+int cAIDeactivatedMsg_InitNet();                                  
+int cAIActivatedMsg_InitNet();                                  
 int func_00282240();                                  
-int cNetCalloutMsg_NetRegister();                                  
-int cNetCopyMsg_NetRegister();                                  
-int cNetCreateBlastMsg_NetRegister();                                  
+int cNetCalloutMsg_InitNet();                                  
+int cNetCopyMsg_InitNet();                                  
+int cNetCreateBlastMsg_InitNet();                                  
 int netCreateNPC_InitNet();                                  
 int netCreatePlayer_InitNet();                                  
-int NetGenerator_NetRegister();                                  
+int tNetGenerator_InitNet();                                  
 int cNetGeneratorCreateMsg_InitNet();                                  
 int cNetGeneratorDeleteMsg_InitNet();                                  
-int cNetHuman_NetRegister();                                  
-int cNetLabelMsg_NetRegister();                                  
+int cNetHuman_InitNet();                                  
+int cNetLabelMsg_InitNet();                                  
 int cNetNPCMsgs_InitNet();                                  
-int cNetPathMsg_NetRegister();                                  
-int cNetScoreMsg_NetRegister();                                  
-int cNetShatterMsg_NetRegister();                                  
-int cNetWeaponMsg_NetRegister();                                  
-int cNetRemoveHudObjectiveMsg_NetRegister();                                  
+int cNetPathMsg_InitNet();                                  
+int cNetScoreMsg_InitNet();                                  
+int cNetShatterMsg_InitNet();                                  
+int cNetWeaponMsg_InitNet();                                  
+int cNetRemoveHudObjectiveMsg_InitNet();                                  
 int Iop_LoadNetModules(int);                                 
 int cDME_Init();                                  
 extern unsigned char D_004EE530;
@@ -276,7 +276,7 @@ extern signed char D_0051EEA0;
 extern unsigned char D_0051EEA8;
 extern unsigned char D_005723D0;
 
-void App_InitSystemsOnce(void) {
+void cMachine_InitDME(void) {
     if (D_004EE530 == 0) {
         D_004EE530 = 1;
         Iop_LoadNetModules(1);
@@ -286,54 +286,54 @@ void App_InitSystemsOnce(void) {
         }
     }
     if (D_005723D0 == 0) {
-        cNetHuman_NetRegister();
-        NetGenerator_NetRegister();
-        cNetPathMsg_NetRegister();
+        cNetHuman_InitNet();
+        tNetGenerator_InitNet();
+        cNetPathMsg_InitNet();
         cNetGeneratorCreateMsg_InitNet();
         cNetGeneratorDeleteMsg_InitNet();
-        ObjectiveNet_Setup();
-        cNetWeaponMsg_NetRegister();
-        cSwitchBodiesMsg_NetRegister();
-        cRestoreBodyMsg_NetRegister();
+        cNetObjectiveMsg_InitNet();
+        cNetWeaponMsg_InitNet();
+        cSwitchBodiesMsg_InitNet();
+        cRestoreBodyMsg_InitNet();
         cGeneratorMessageBase_InitNet();
         cGeneratorDataMessage_InitNet();
-        cAIDeadMsg_NetRegister();
-        cAIDeactivatedMsg_NetRegister();
-        cAIActivatedMsg_NetRegister();
-        cAIWaypointReachedMsg_NetRegister();
-        cAIDestinationReachedMsg_NetRegister();
-        cAINewAwarenessMsg_NetRegister();
-        cAIBodyMovedMsg_NetRegister();
-        cAIUnconsciousMsg_NetRegister();
-        cAIDisguiseTakenMsg_NetRegister();
+        cAIDeadMsg_InitNet();
+        cAIDeactivatedMsg_InitNet();
+        cAIActivatedMsg_InitNet();
+        cAIWaypointReachedMsg_InitNet();
+        cAIDestinationReachedMsg_InitNet();
+        cAINewAwarenessMsg_InitNet();
+        cAIBodyMovedMsg_InitNet();
+        cAIUnconsciousMsg_InitNet();
+        cAIDisguiseTakenMsg_InitNet();
         cEndLevelMsg_InitNet();
         SoundPosRequest_NetRegister();
         cPlaySoundMsg_InitNet_void();
         cStopSoundMsg_InitNet();
-        cNetCreateBlastMsg_NetRegister();
-        cNetCalloutMsg_NetRegister();
-        cNetShatterMsg_NetRegister();
-        cNetRemoveHudObjectiveMsg_NetRegister();
+        cNetCreateBlastMsg_InitNet();
+        cNetCalloutMsg_InitNet();
+        cNetShatterMsg_InitNet();
+        cNetRemoveHudObjectiveMsg_InitNet();
         cNIShuttle_InitNet();
         cNICameraMsg_InitNet();
         cNetNPCMsgs_InitNet();
-        cNetCopyMsg_NetRegister();
-        cRespawnMsg_NetRegister();
-        cNotifyCheckpointMsg_NetRegister();
-        cAddCheckpointMsg_NetRegister();
-        cNetLabelMsg_NetRegister();
-        cHotboxMsg_NetRegister();
-        cGOBJTriggerEventMsg_NetRegister();
+        cNetCopyMsg_InitNet();
+        cRespawnMsg_InitNet();
+        cNotifyCheckpointMsg_InitNet();
+        cAddCheckpointMsg_InitNet();
+        cNetLabelMsg_InitNet();
+        cHotboxMsg_InitNet();
+        cGOBJTriggerEventMsg_InitNet();
         cNetLockElevatorMsg_InitNet();
-        NetElevatorInfo_NetRegister();
-        NetPathedGobj_NetRegister();
-        cNetScoreMsg_NetRegister();
+        cElevatorGOBJ_InitNet();
+        cPathedGOBJ_InitNet();
+        cNetScoreMsg_InitNet();
         tGimmeTheElevatorMenu_NetRegister();
-        cTeamDataStruct_NetRegister();
+        cTeam_InitNet();
         netCreateNPC_InitNet();
         netCreatePlayer_InitNet();
         func_00282240();
-        NetMsgTypes_RegisterAll();
+        cNetObj_NetInit();
         D_005723D0 = 1;
     }
 }

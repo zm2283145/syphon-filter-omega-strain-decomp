@@ -58,6 +58,6 @@ extern int sceSifCallRpc(SifRpcClientData *cd, int fno, int mode, void *send, in
                          void *endFunc, void *endParam);
 extern int sceSifStopModule(int modId, int argLen, int args, int *result);
 extern int sceSifUnloadModule(int modId);
-extern void String_Copy(char *dst, char *src); /* strcpy */
+extern void Libc_Strcpy(char *dst, char *src); /* strcpy */
 
 #endif /* EZNET_H */

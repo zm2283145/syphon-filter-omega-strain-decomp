@@ -4,7 +4,7 @@
 #pragma inline_depth(8)
 /* Quad copies as GCC-style volatile lq/sq asm (house idiom); the unused `xx` locals keep retail's dead address addius.
    M(const M&, int) is the same matrix copy without the dead addiu (retail has it on the parameter copy only). */
-/* PhysEmitter_StepParticles: reset the emitter's gravity to the zero vector rotated into local space and refresh its rate */
+/* cParticleSpray_UpdateGravityVector: reset the emitter's gravity to the zero vector rotated into local space and refresh its rate */
 struct V {
     float x, y, z, w;
     V() {}
@@ -30,7 +30,7 @@ static inline V& Rot(V& v, M m) { __asm__ volatile("lqc2 vf8, 0x0(%2); lqc2 vf4,
 struct Def { char pad[0x64]; unsigned char rate; };
 struct Emitter { char pad0[0xD0]; V grav; char padE0[0x120 - 0xE0]; Def* def; };
 extern "C" V D_004BC550;
-extern "C" void PhysEmitter_StepParticles(Emitter* e, const M* m)
+extern "C" void cParticleSpray_UpdateGravityVector(Emitter* e, const M* m)
 {
     e->grav = D_004BC550;
     e->grav = Rot(e->grav, Transposed(*m));

@@ -10,18 +10,18 @@ extern int D_00542D1C;
 extern int* cCollisionModel_Data_GetFaceIndices(Mesh5BD0* m, int* p);
 extern char* cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_5(Mesh5BD0* m, int* p);
 extern char* cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_4(Mesh5BD0* m, int* p);
-extern int Triangle_GetSurface(Tri5BD0* t);
-extern int Surface_Lookup(Mesh5BD0* m, int s);
-extern int ColTri_FilterStub(void* f, unsigned char mask);
-extern int Surface_TestMask(int s, unsigned char mask);
+extern int cCollisionModel_Face_GetPropertiesIndex(Tri5BD0* t);
+extern int cCollisionModel_Data_GetFaceProperties(Mesh5BD0* m, int s);
+extern int tFaceFlags_GetMaskedBits(void* f, unsigned char mask);
+extern int cCollisionModel_FaceProperties_GetMaskedBits(int s, unsigned char mask);
 extern int cArray_cCollisionFace_Size(int v);
 extern int cArray_cCollisionFace_Capacity(int v);
-extern void Vector_Reserve_139920_Thunk_1839C0(int v, int n);
+extern void cArray_cCollisionFace_ReserveActual(int v, int n);
 extern void cArray_cCollisionFace_ResizeActual(int v, int n, Rec5BD0* r);
 extern int cArray_cCollisionFace_Back(int v);
 extern void cCollisionFace_ctor_void(Rec5BD0* r);
 extern void cCollisionFace_dtor(Rec5BD0* r, int f);
-extern void GatherRecords_Append(int p, Tri5BD0* t, int i, int s, int x);
+extern void cCollisionFace_SetWithoutCalculatingNormal(int p, Tri5BD0* t, int i, int s, int x);
 
 static inline unsigned char BoxTest5BD0(void* unused, V4* a) {
     V4* b = a + 1;
@@ -93,16 +93,16 @@ void cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cCollisionModelT
             b = GetVert5BD0(m, t->v[1]);
             c = GetVert5BD0(m, t->v[2]);
             if (TriTest5BD0(0, a, b, c)) {
-                surf = Surface_Lookup(m, Triangle_GetSurface(t));
-                if (!(ColTri_FilterStub(t->flags, out->mask) & 0xFF) && !(Surface_TestMask(surf, out->mask) & 0xFF)) {
+                surf = cCollisionModel_Data_GetFaceProperties(m, cCollisionModel_Face_GetPropertiesIndex(t));
+                if (!(tFaceFlags_GetMaskedBits(t->flags, out->mask) & 0xFF) && !(cCollisionModel_FaceProperties_GetMaskedBits(surf, out->mask) & 0xFF)) {
                     sz = cArray_cCollisionFace_Size(out->vec);
                     if (sz >= cArray_cCollisionFace_Capacity(out->vec)) {
-                        Vector_Reserve_139920_Thunk_1839C0(out->vec, cArray_cCollisionFace_Capacity(out->vec) * 3 / 2);
+                        cArray_cCollisionFace_ReserveActual(out->vec, cArray_cCollisionFace_Capacity(out->vec) * 3 / 2);
                     }
                     cCollisionFace_ctor_void(&rec);
                     cArray_cCollisionFace_ResizeActual(out->vec, cArray_cCollisionFace_Size(out->vec) + 1, &rec);
                     cCollisionFace_dtor(&rec, -1);
-                    GatherRecords_Append(cArray_cCollisionFace_Back(out->vec), t, idx, surf, out->x4);
+                    cCollisionFace_SetWithoutCalculatingNormal(cArray_cCollisionFace_Back(out->vec), t, idx, surf, out->x4);
                 }
             }
         }

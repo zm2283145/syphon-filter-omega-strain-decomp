@@ -16,14 +16,14 @@ typedef struct NetEventMsg {
 
 extern char D_0051F0A8[];
 extern char D_004DE4D0[];
-extern void Event_Construct(NetEventMsg* msg, void* type);
-extern void Event_Send(NetEventMsg* msg, void* target, int flags);
+extern void cMessage_ctor_cMessageNameR(NetEventMsg* msg, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int(NetEventMsg* msg, void* target, int flags);
 extern void cMessage_dtor(NetEventMsg* msg, int flags);
 
 /* Builds a network event message (type, len, three payload words) and sends it to target. */
-void NetEvent_Send(void* target, int type, int len, int a, int b, int c, int flags) {
+void cNetNPCMsgs_SendMessage(void* target, int type, int len, int a, int b, int c, int flags) {
     NetEventMsg msg;
-    Event_Construct(&msg, D_0051F0A8);
+    cMessage_ctor_cMessageNameR(&msg, D_0051F0A8);
     msg.vtbl = D_004DE4D0;
     msg.type = type;
     msg.size = 0x40;
@@ -31,7 +31,7 @@ void NetEvent_Send(void* target, int type, int len, int a, int b, int c, int fla
     msg.b = b;
     msg.c = c;
     msg.len = len;
-    Event_Send(&msg, target, flags);
+    QueueMessage_cMessageR_cSystemP_int(&msg, target, flags);
     msg.vtbl = D_004DE4D0;
     cMessage_dtor(&msg, 0);
 }

@@ -102,16 +102,16 @@ extern char g_TriggerMsgKey[];
 extern char D_004DAF10[];
 extern char D_004F5450[];
 extern char D_004DAE90[];
-void Actor_BaseLogicUpdate(PathObj* o, float dt);
+void cGOBJ_NextFrame(PathObj* o, float dt);
 void PathObj_GetPoint(PathObj* o, V* out, int i);
-void Mtx_InvertRigid_13ECA0(M* out, M* in);
+void cMatrix_Copy_InvertRotTrans(M* out, M* in);
 Qt* func_002181C0(Arr* v, int i);
 int func_002181D0(Arr* v);
 float* func_002181E0(Arr* v, int i);
 int func_002181F0(Arr* v);
-void PathObj_PropagateMovement(PathObj* o, M m, int f);
-void PathObj_ResetAndTrigger(PathObj* o);
-M PathObj_InterpRotation(PathObj* o, int a, int b, float t);
+void cPathedGOBJ_TransformAttached(PathObj* o, M m, int f);
+void cPathedGOBJ_ResetAndTrigger(PathObj* o);
+M cPathedGOBJ_GetAdjustedRot(PathObj* o, int a, int b, float t);
 }
 
 static inline int ObjId(Kid* o) { return o ? *(int*)((char*)o + 0xC) : 0; }
@@ -126,14 +126,14 @@ struct LiftMsg {
     LiftMsg(int k, int f)
     {
         LiftMsg* p = this;
-        Event_Construct(p, g_TriggerMsgKey);
+        cMessage_ctor_cMessageNameR(p, g_TriggerMsgKey);
         p->vtable = D_004DAF10;
         p->mkind = k;
         p->floor = f;
         p->to = ObjId(0);
         p->from = ObjId(0);
     }
-    void Send(void* to) { Event_Send(this, to, 0); }
+    void Send(void* to) { QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~LiftMsg() { vtable = D_004DAF10; cMessage_dtor(this, 0); }
 };
 
@@ -142,9 +142,9 @@ struct Notice {
     int nkind;
     int arg;
     char pad2C[4];
-    Notice(int k, int a) { Notice* p = this; Event_Construct(p, D_004F5450); p->vtable = D_004DAE90; p->nkind = k; p->arg = a; }
-    Notice(Cursor* c) { Notice* p = this; int a = c->cur; Event_Construct(p, D_004F5450); p->vtable = D_004DAE90; p->nkind = 0; p->arg = a; }
-    void Send(void* to) { Event_Send(this, to, 0); }
+    Notice(int k, int a) { Notice* p = this; cMessage_ctor_cMessageNameR(p, D_004F5450); p->vtable = D_004DAE90; p->nkind = k; p->arg = a; }
+    Notice(Cursor* c) { Notice* p = this; int a = c->cur; cMessage_ctor_cMessageNameR(p, D_004F5450); p->vtable = D_004DAE90; p->nkind = 0; p->arg = a; }
+    void Send(void* to) { QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Notice() { vtable = D_004DAE90; cMessage_dtor(this, 0); }
 };
 
@@ -168,16 +168,16 @@ static inline float* SegAt(PathObj* o, int idx)
     return q;
 }
 
-/* PathObj_ResetAndTrigger: put the path object back on its first point
+/* cPathedGOBJ_ResetAndTrigger: put the path object back on its first point
  * (placement from point 0 and the first rotation key), pass the movement on,
  * rewind the cursor and send the trigger message to itself. */
 /* the trigger message is a temporary of a helper: it gets the lowest frame slot, below the MMul temp */
 /* the trigger message is a helper temporary: it gets the lowest frame slot, below the MMul temp */
 static inline void Trigger(PathObj* o) { LiftMsg(0, 0).Send(o); }
-extern "C" void PathObj_ResetAndTrigger(PathObj* self)
+extern "C" void cPathedGOBJ_ResetAndTrigger(PathObj* self)
 {
     M inv;
-    Mtx_InvertRigid_13ECA0(&inv, self->src->Xform());
+    cMatrix_Copy_InvertRotTrans(&inv, self->src->Xform());
     int i = 0;
     V pt;
     PathObj_GetPoint(self, &pt, i);
@@ -186,7 +186,7 @@ extern "C" void PathObj_ResetAndTrigger(PathObj* self)
     else q = func_002181C0(&self->rots, func_002181D0(&self->rots) - 1);
     Plc p(M(*q), pt);
     self->SetPlacement(&p);
-    PathObj_PropagateMovement(self, MMul(p, inv), 1);
+    cPathedGOBJ_TransformAttached(self, MMul(p, inv), 1);
     self->cur->dir = 1;
     self->cur->cur = i;
     self->t = 0.0f;

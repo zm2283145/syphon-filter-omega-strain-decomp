@@ -9,7 +9,7 @@
 typedef struct { __int128 v; float a; float b; signed char f; } MM24;
 #pragma push
 #pragma optimization_level 3
-MM24 *MoveMsg_Set(MM24 *m, __int128 *v, float a, float b, int flag) {
+MM24 *cMotionParams_ctor(MM24 *m, __int128 *v, float a, float b, int flag) {
     signed char c;
     m->v = *v;
     m->a = a;
@@ -37,7 +37,7 @@ static inline float WrapPi(float a)
     }
     return a;
 }
-void Math_WrapAngleDiff(Vec3* out, Vec3* in)
+void nSFOMath_ExpressAngleAsValueBetweenNegAndPos180_cEulerAngleTR(Vec3* out, Vec3* in)
 {
     float x = WrapPi(in->x);
     float y = WrapPi(in->y);

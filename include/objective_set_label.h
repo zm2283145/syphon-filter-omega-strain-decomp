@@ -25,10 +25,10 @@ typedef struct ObjLabelObjective {
 extern unsigned char g_IsMultiplayer;
 extern char D_0051F0B0[];
 extern char D_004DE4F0[];
-extern void* Loc_LookupText(char* key);
-extern int Objective_DupString(ObjLabelObjective* self, void* text);
-extern void Event_Construct(ObjLabelMsg* msg, void* name);
-extern void Transport_Send(int target, ObjLabelMsg* msg, int a, int b);
+extern void* nGlobalization_GetString_charP(char* key);
+extern int cObjective_CopyStr(ObjLabelObjective* self, void* text);
+extern void cMessage_ctor_cMessageNameR(ObjLabelMsg* msg, void* name);
+extern void cNetObj_SendMessage_int_cMessageR_int_int(int target, ObjLabelMsg* msg, int a, int b);
 extern void cMessage_dtor(ObjLabelMsg* msg, int flags);
 extern char* strncpy(char* dst, const char* src, unsigned int n);
 
@@ -38,18 +38,18 @@ extern char* strncpy(char* dst, const char* src, unsigned int n);
         ObjLabelMsg msg;                                                      \
         ObjLabelMsg* m;                                                       \
         *(int*)((char*)self + (labelOffset)) =                                \
-            Objective_DupString(self, Loc_LookupText(key));                         \
+            cObjective_CopyStr(self, nGlobalization_GetString_charP(key));                         \
         if (g_IsMultiplayer && !quiet) {                                           \
             int id = self->id;                                                \
             m = &msg;                                                         \
-            Event_Construct(m, D_0051F0B0);                                   \
+            cMessage_ctor_cMessageNameR(m, D_0051F0B0);                                   \
             m->vtable = D_004DE4F0;                                           \
             m->objectiveId = id;                                              \
             m->kind = (msgKind);                                              \
             if (key)                                                          \
                 strncpy(m->key, key, 16);                                     \
             m->flags = 0x40;                                                  \
-            Transport_Send(self->id, &msg, -1, -1);                           \
+            cNetObj_SendMessage_int_cMessageR_int_int(self->id, &msg, -1, -1);                           \
             msg.vtable = D_004DE4F0;                                          \
             cMessage_dtor(&msg, 0);                                           \
         }                                                                     \

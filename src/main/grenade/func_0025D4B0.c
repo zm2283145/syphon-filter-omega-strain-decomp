@@ -2,7 +2,7 @@
 #include "types.h"
 #include "vslot_pad.h"
 #pragma inline_depth(8)
-/* Projectile_Launch: solve the ballistic launch velocity and clamp its speed to the projectile type's range */
+/* cGrenade_SetInitialVelocity: solve the ballistic launch velocity and clamp its speed to the projectile type's range */
 struct V;
 // VU0 macro-mode vector op (COP2), not expressible in C
 static inline void ScaleV(V* rp, const V* tp, float k) { __int128 t = 0; __asm__ volatile(".set noreorder; lqc2 $vf1, 0x0(%2); mfc1 %0, %3; qmtc2.ni %0, $vf2; vmulx.xyzw $vf1, $vf1, $vf2x; sqc2 $vf1, 0x0(%1); .set reorder" : "+r"(t) : "r"(rp), "r"(tp), "f"(k) : "memory"); }
@@ -25,10 +25,10 @@ extern "C" {
 extern float D_004F7FE0;
 extern float g_ThrowGravity;
 extern float D_0048AF98;
-void Projectile_SolveBallistic(V* out, const V* from, const V* to, V* extra, float g, float k, float minAng);
-void Projectile_Launch(Projectile* p, V* to, float k);
+void nPhysics_CalculateInitialVelocityForTrajectory(V* out, const V* from, const V* to, V* extra, float g, float k, float minAng);
+void cGrenade_SetInitialVelocity(Projectile* p, V* to, float k);
 }
-void Projectile_Launch(Projectile* p, V* to, float k)
+void cGrenade_SetInitialVelocity(Projectile* p, V* to, float k)
 {
     bool lob = p->rec->cls == 1;
     float minAng;
@@ -37,7 +37,7 @@ void Projectile_Launch(Projectile* p, V* to, float k)
     if (p->rec->cls == 7) g += D_0048AF98;
     V vel;
     V* from = &p->pos;
-    Projectile_SolveBallistic(&vel, from, to, 0, g, k, minAng);
+    nPhysics_CalculateInitialVelocityForTrajectory(&vel, from, to, 0, g, k, minAng);
     V* pa = &vel;
     int r = p->rec->range;
     int rr = r * r;
@@ -58,7 +58,7 @@ void Projectile_Launch(Projectile* p, V* to, float k)
     p->launch = vel;
 }
 
-/* Projectile_Construct: set up a projectile object at the launcher's matrix */
+/* cGrenade_ctor: set up a projectile object at the launcher's matrix */
 struct VC { float x, y, z, w; VC() {}
     // 128-bit lq/sq quadword copy idiom (copy ctor and assignment)
     VC(const VC& o) { VC* d = this; const VC* s = &o; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); } VC& operator=(const VC& o) { VC* d = this; const VC* s = &o; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); return *this; } } __attribute__((aligned(16)));
@@ -116,35 +116,35 @@ extern float D_0048AF40;
 extern float D_0048AF90;
 extern char D_004DC6C0[];
 extern char g_IdentityMatrix[];
-void IdMgr_Allocate(int* id, int kind);
+void nGobjManager_GetNextId(int* id, int kind);
 void cGOBJ_ctor(void* self, int* gid, int n, int* tag);
-V* Vec4_Set(V* out, float x, float y, float z, float w);
-void Vec4_Assign(V* d, V* s);
-V* Vec4_GetZero(void);
-void PhysState_SetMass(void* p, float m);
-void Object_Register(void* o);
-ProjC* Projectile_Construct(ProjC* self, POwnerC* owner, M4P* mtx, PTypeC* rec);
+V* cVector_ctor_float_float_float_float(V* out, float x, float y, float z, float w);
+void cVector_ctor_cVectorR(V* d, V* s);
+V* cVector_GetZero(void);
+void cPointMass_SetMass(void* p, float m);
+void nGobjManager_AddGOBJ(void* o);
+ProjC* cGrenade_ctor(ProjC* self, POwnerC* owner, M4P* mtx, PTypeC* rec);
 }
 // 128-bit lq/sq quadword copy idiom
 static inline void CpA(VC* d0, const VC* s0) { const VC* s = s0; VC* d = d0; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
-ProjC* Projectile_Construct(ProjC* self, POwnerC* owner, M4P* mtx, PTypeC* rec)
+ProjC* cGrenade_ctor(ProjC* self, POwnerC* owner, M4P* mtx, PTypeC* rec)
 {
     int id;
     int tag;
     float mass;
     tag = 0;
-    IdMgr_Allocate(&id, 245);
+    nGobjManager_GetNextId(&id, 245);
     cGOBJ_ctor(self, &id, 3, &tag);
     *(char**)self = D_004DC6C0;
     mass = D_0048AF30;
-    Vec4_Assign(&self->pos, Vec4_Set(&V(), 0.0f, 0.0f, 0.0f, 1.0f));
-    Vec4_Assign(&self->prev, Vec4_Set(&V(), 0.0f, 0.0f, 0.0f, 1.0f));
-    Vec4_Assign(&self->vel, Vec4_GetZero());
-    Vec4_Assign(&self->accel, Vec4_GetZero());
-    Vec4_Assign(&self->force, Vec4_Set(&V(), 0.0f, 0.0f, 0.0f, 0.0f));
-    Vec4_Assign(&self->torque, Vec4_Set(&V(), 0.0f, 0.0f, 0.0f, 0.0f));
+    cVector_ctor_cVectorR(&self->pos, cVector_ctor_float_float_float_float(&V(), 0.0f, 0.0f, 0.0f, 1.0f));
+    cVector_ctor_cVectorR(&self->prev, cVector_ctor_float_float_float_float(&V(), 0.0f, 0.0f, 0.0f, 1.0f));
+    cVector_ctor_cVectorR(&self->vel, cVector_GetZero());
+    cVector_ctor_cVectorR(&self->accel, cVector_GetZero());
+    cVector_ctor_cVectorR(&self->force, cVector_ctor_float_float_float_float(&V(), 0.0f, 0.0f, 0.0f, 0.0f));
+    cVector_ctor_cVectorR(&self->torque, cVector_ctor_float_float_float_float(&V(), 0.0f, 0.0f, 0.0f, 0.0f));
     self->xD0 = 0;
-    PhysState_SetMass(self->phys, mass);
+    cPointMass_SetMass(self->phys, mass);
     self->xF0 = 0;
     self->xF4 = 0;
     self->xF8 = 0;
@@ -176,7 +176,7 @@ ProjC* Projectile_Construct(ProjC* self, POwnerC* owner, M4P* mtx, PTypeC* rec)
         self->SetName(g_IdentityMatrix, 0);
         self->node->SetMatrix(m);
         self->Activate(1);
-        Object_Register(self);
+        nGobjManager_AddGOBJ(self);
         self->retired = 0;
         self->rest = 0;
         self->rec = rec;

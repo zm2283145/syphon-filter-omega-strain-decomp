@@ -31,15 +31,15 @@ typedef struct {
 } WeaponDb_147400;
 
 extern int sprintf(char* buf, const char* fmt, ...);
-extern unsigned char FileMan_LoadFile(WeaponDb_147400* db, void* entry);
-extern Obj_147400* Awards_RegisterName(Obj_147400* self, int a, int b);
+extern unsigned char cDB_LoadDB(WeaponDb_147400* db, void* entry);
+extern Obj_147400* cAgentData_Record_ctor_int_int(Obj_147400* self, int a, int b);
 extern int cArray_Record_PushBackActual(void* v, Obj_147400* value);
 extern char D_0049B310[];
 extern char D_0048B2F8[];
 extern int D_004926E0;
 extern char g_UnlockRows[];
 
-unsigned char WeaponDb_Load(WeaponDb_147400* db)
+unsigned char cWeaponDB_LoadOnce(WeaponDb_147400* db)
 {
     char path[0x80];
     FileManEntry e;
@@ -49,15 +49,15 @@ unsigned char WeaponDb_Load(WeaponDb_147400* db)
 
     sprintf(path, D_0049B310, D_0048B2F8);
     cFileMan_ctor_charP_cFileIOP_bool(&e, path, 0, 0);
-    db->loaded = FileMan_LoadFile(db, &e);
+    db->loaded = cDB_LoadDB(db, &e);
     db->recs = (WeaponRec_147400*)(db->data + 0x10);
     if (db->hdr->magic != 4) {
-        FileMan_Release(&e, -1);
+        cFileMan_dtor(&e, -1);
         return 0;
     }
     if (db->loaded) {
         for (i = 0; i < db->hdr->count; i++) {
-            cArray_Record_PushBackActual(g_UnlockRows, Awards_RegisterName(&tmp, i, D_004926E0++));
+            cArray_Record_PushBackActual(g_UnlockRows, cAgentData_Record_ctor_int_int(&tmp, i, D_004926E0++));
             db->recs[i].x138 = 0;
             db->recs[i].x130 = -1;
             db->recs[i].x134 = -1;
@@ -71,6 +71,6 @@ unsigned char WeaponDb_Load(WeaponDb_147400* db)
         }
     }
     r = db->loaded;
-    FileMan_Release(&e, -1);
+    cFileMan_dtor(&e, -1);
     return r;
 }

@@ -16,12 +16,12 @@ extern void* g_Hud;
 extern char D_0049F490[];
 extern char D_0051F098[];
 extern char D_004DE280[];
-extern void Hud_AddPdaQuip(void* hud, char* a, char* b);
-extern void* Loc_LookupText(char* key);
-extern void Hud_PostNotification(void* hud, void* text);
-extern void Event_Construct(Msg_1C63B0* m, void* type);
-extern int Loc_FindKeyThunk(char* s);
-extern void Transport_Send(int a, Msg_1C63B0* m, int b, int c);
+extern void cHud_AddPDAQuip(void* hud, char* a, char* b);
+extern void* nGlobalization_GetString_charP(char* key);
+extern void cHud_Message(void* hud, void* text);
+extern void cMessage_ctor_cMessageNameR(Msg_1C63B0* m, void* type);
+extern int nGlobalization_GetStringIndex(char* s);
+extern void cNetObj_SendMessage_int_cMessageR_int_int(int a, Msg_1C63B0* m, int b, int c);
 extern void cMessage_dtor(Msg_1C63B0* m, int f);
 /* script: add a PDA quip (name, text) and broadcast it when networked */
 int Script_AddPDAQuip_2(ScriptArg_1C63B0* args)
@@ -36,22 +36,22 @@ int Script_AddPDAQuip_2(ScriptArg_1C63B0* args)
     text = *(char**)b;
     if (name) {
         text = (!text || !*text) ? D_0049F490 : text;
-        Hud_AddPdaQuip(g_Hud, name, text);
+        cHud_AddPDAQuip(g_Hud, name, text);
         {
             void* hud = g_Hud;
-            Hud_PostNotification(hud, Loc_LookupText(D_0049F490));
+            cHud_Message(hud, nGlobalization_GetString_charP(D_0049F490));
         }
         if (g_IsMultiplayer) {
             Msg_1C63B0 m;
             Msg_1C63B0* p = &m;
-            Event_Construct(p, D_0051F098);
+            cMessage_ctor_cMessageNameR(p, D_0051F098);
             m.w24 = 0;
             m.vt = D_004DE280;
             m.b28 = 2;
-            p->key0 = name ? Loc_FindKeyThunk(name) : -1;
-            p->key1 = text ? Loc_FindKeyThunk(text) : -1;
+            p->key0 = name ? nGlobalization_GetStringIndex(name) : -1;
+            p->key1 = text ? nGlobalization_GetStringIndex(text) : -1;
             m.kind = 4;
-            Transport_Send(0, &m, -1, -1);
+            cNetObj_SendMessage_int_cMessageR_int_int(0, &m, -1, -1);
             m.vt = D_004DE280;
             cMessage_dtor(&m, 0);
         }
@@ -78,22 +78,22 @@ int Script_AddPDAQuip(ScriptArg_1C63B0* args)
     name = *(char**)a;
     if (name) {
         { char* t0 = 0; text = (t0 && *t0) ? t0 : D_0049F490; }
-        Hud_AddPdaQuip(g_Hud, name, text);
+        cHud_AddPDAQuip(g_Hud, name, text);
         {
             void* hud = g_Hud;
-            Hud_PostNotification(hud, Loc_LookupText(D_0049F490));
+            cHud_Message(hud, nGlobalization_GetString_charP(D_0049F490));
         }
         if (g_IsMultiplayer) {
             Msg_1C63B0 m;
             Msg_1C63B0* p = &m;
-            Event_Construct(p, D_0051F098);
+            cMessage_ctor_cMessageNameR(p, D_0051F098);
             m.w24 = 0;
             m.vt = D_004DE280;
             m.b28 = 2;
-            p->key0 = name ? Loc_FindKeyThunk(name) : -1;
-            p->key1 = text ? Loc_FindKeyThunk(text) : -1;
+            p->key0 = name ? nGlobalization_GetStringIndex(name) : -1;
+            p->key1 = text ? nGlobalization_GetStringIndex(text) : -1;
             m.kind = 4;
-            Transport_Send(0, &m, -1, -1);
+            cNetObj_SendMessage_int_cMessageR_int_int(0, &m, -1, -1);
             m.vt = D_004DE280;
             cMessage_dtor(&m, 0);
         }

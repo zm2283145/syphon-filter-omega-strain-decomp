@@ -22,9 +22,9 @@ struct Actor {
 extern "C" {
 extern float D_0049CFB8;
 /* float target declared before n: int/float args use separate registers, this order only changes arg scheduling */
-void AnimChannel_SetTarget(void* a, int idx, float target, unsigned int n, float dur, float damping);
+void cSkaParams_SetSliderValue_UsingSplineForInterpolation(void* a, int idx, float target, unsigned int n, float dur, float damping);
 void cSkaParams_SetSwitchNextGoalState(void* a, int idx, int n);
-void Actor_PrepareNeutralChannels(Actor* self, int b, int c, int d, int e);
+void cHuman_ClearMotionSettings(Actor* self, int b, int c, int d, int e);
 }
 static inline bool LnkIsA(Actor* l, Actor* a) { return ((Lnk*)l)->id == a->linkId; }
 static inline bool LinkOk(Actor* a) { return !a->link || LnkIsA(a->link, a); }
@@ -35,7 +35,7 @@ static inline void SetFlag(Actor* a, unsigned char on) {
     if (on) a->flags3208 |= 1;
     else a->flags3208 &= ~1;
 }
-extern "C" void Actor_UpdatePairChannels(Actor* self)
+extern "C" void cHuman_CarryBody_NextFrame(Actor* self)
 {
     if (!((self->f324C >> 3) & 1)) return;
     bool hold = 0;
@@ -59,21 +59,21 @@ extern "C" void Actor_UpdatePairChannels(Actor* self)
         {
             AnimBlk* blk = &self->blk;
             cSkaParams_SetSwitchNextGoalState(blk->anim, 4, mode);
-            AnimChannel_SetTarget(blk->anim, 14, t, 0, D_0049CFB8, 6.5f);
+            cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 14, t, 0, D_0049CFB8, 6.5f);
         }
         {
             AnimBlk* blk = &Link(self)->blk;
             cSkaParams_SetSwitchNextGoalState(blk->anim, 4, mode);
-            AnimChannel_SetTarget(blk->anim, 14, t, 0, D_0049CFB8, 6.5f);
+            cSkaParams_SetSliderValue_UsingSplineForInterpolation(blk->anim, 14, t, 0, D_0049CFB8, 6.5f);
         }
         unsigned char h = hold;
         SetFlag(self, h);
-        Actor_PrepareNeutralChannels(self, 1, 0, 0, 0);
+        cHuman_ClearMotionSettings(self, 1, 0, 0, 0);
         SetFlag(Link(self), h);
-        Actor_PrepareNeutralChannels(Link(self), 1, 0, 0, 0);
+        cHuman_ClearMotionSettings(Link(self), 1, 0, 0, 0);
     } else {
         self->flags3208 &= ~1;
-        Actor_PrepareNeutralChannels(self, 1, 0, 0, 0);
+        cHuman_ClearMotionSettings(self, 1, 0, 0, 0);
     }
 }
 

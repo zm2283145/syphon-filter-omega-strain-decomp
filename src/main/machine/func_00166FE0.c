@@ -1,4 +1,4 @@
-/* Game_DrawWaitingForPlayers (machine): loading-screen progress tick (sibling of GameFlow_EnterMpLobby). The quad copy and
+/* cMachine_UpdateNetworkLobbyScreen (machine): loading-screen progress tick (sibling of cMachine_ChooseNetworkServer). The quad copy and
    identity-matrix store are GCC-style __asm__ volatile: MW does no CSE across them, so the base address
    and constant are rematerialised as in retail. */
 #pragma opt_rotateloops off
@@ -49,13 +49,13 @@ extern float D_0055A284;
 extern float D_0055A288;
 extern float D_0055A28C;
 int sprintf(char* d, const char* f, ...);
-void Video_BeginFrame(void* p);
-float SoftFloat_U64ToFloat(unsigned long long t);
+void XLib_NextFrame(void* p);
+float _f_ulltof(unsigned long long t);
 void cHudNetLobby_NextFrame(void* o, float dt);
 void cHudNetLobby_Render(void* o);
 void cFont_Display_charP_tRGBAR_int_int_etc(void* font, char* s, V4_00166FE0* col, int x, int y, float scale);
-int TextManager_Get(void);
-void TextManager_DrawImmediate(int a);
+int GetTextSystem(void);
+void cTextSystem_Render(int a);
 }
 
 #define RS_00166FE0 ((Rs_00166FE0*)g_Video)
@@ -82,7 +82,7 @@ static inline void SetCol_00166FE0(const V4c_00166FE0& c)
     D_0055A28C = c.w;
 }
 
-extern "C" void Game_DrawWaitingForPlayers(Screen_00166FE0* self, int first, int last)
+extern "C" void cMachine_UpdateNetworkLobbyScreen(Screen_00166FE0* self, int first, int last)
 {
     int n;
     if (self->anim == 0) return;
@@ -113,21 +113,21 @@ extern "C" void Game_DrawWaitingForPlayers(Screen_00166FE0* self, int first, int
     UM_00166FE0(&RS_00166FE0->mtx[D_00538C64]);
     D_00538C68 = 1;
     D_005392D8 = D_004BC1B0;
-    Video_BeginFrame(g_Video);
+    XLib_NextFrame(g_Video);
     {
         V4c_00166FE0 c(1.0f, 1.0f, 0.0f, 1.0f);
         SetCol_00166FE0(c);
     }
     {
         unsigned long long now = Now_00166FE0();
-        cHudNetLobby_NextFrame(self->anim, SoftFloat_U64ToFloat(now - D_004EE4B8) / 100000.0f);
+        cHudNetLobby_NextFrame(self->anim, _f_ulltof(now - D_004EE4B8) / 100000.0f);
         D_004EE4B8 = now;
     }
     cHudNetLobby_Render(self->anim);
     D_005392D8 = D_004BC1B0;
     n = last - first - 1;
     if (n != 0) {
-        float t = SoftFloat_U64ToFloat((int)Now_00166FE0() % 100000) / 100000.0f;
+        float t = _f_ulltof((int)Now_00166FE0() % 100000) / 100000.0f;
         V4c_00166FE0 c(1.0f, 1.0f, 1.0f, 1.0f);
         V4_00166FE0 col;
         char buf[0x80];
@@ -136,7 +136,7 @@ extern "C" void Game_DrawWaitingForPlayers(Screen_00166FE0* self, int first, int
         sprintf(buf, D_0049C400, n, n > 1 ? D_0049C3E8 : D_0049C3F0);
         cFont_Display_charP_tRGBAR_int_int_etc(self->font, buf, &col, -220, -156, 0.001f);
     }
-    TextManager_DrawImmediate(TextManager_Get());
+    cTextSystem_Render(GetTextSystem());
     D_00538C68 = 1;
     D_00538C64--;
     {

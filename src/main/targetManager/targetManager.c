@@ -12,8 +12,8 @@
 #include "targetManager_types.h"
 typedef struct { void* vt; char p4[0x1C]; void* arr[29]; char p94[0x7C]; char a110[0xC]; char a11C[4]; } M22D4F0;
 extern "C" {
-void Receiver_Construct(M22D4F0*, void*);
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void cSystem_ctor(M22D4F0*, void*);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void* func_001005E0(void* p, void* ctor, int dtor, int size, int n);
 void std_list_deleter_cSafePtr_cGOBJ_ctor(void*);
 void cTargetManager_Reset(M22D4F0*);
@@ -26,18 +26,18 @@ TargetSlot* cTargetManager_LosElem_ctor(TargetSlot* self);
 
 #pragma opt_strength_reduction off
 
-extern "C" M22D4F0* TargetVisMgr_ctor(M22D4F0* m) {
+extern "C" M22D4F0* cTargetManager_ctor(M22D4F0* m) {
     int i;
     int n;
     int off;
     void* p;
-    Receiver_Construct(m, D_004F77A8);
+    cSystem_ctor(m, D_004F77A8);
     m->vt = D_004DB850;
     std_list_deleter_LosReqElem_ctor(m->a110);
     std_list_deleter_cSafePtr_cGOBJ_ctor(m->a11C);
     for (i = 0, off = 0; i < 29; i++, off += 4) {
         n = 29 - i;
-        { AllocGuard g; p = Mem_Alloc(0, (n << 4) + 0x10, "targetManager.cc", 0x2B); }
+        { AllocGuard g; p = cMemMan_Allocate(0, (n << 4) + 0x10, "targetManager.cc", 0x2B); }
         *(void**)((char*)m + off + 0x20) = func_001005E0(p, (void*)cTargetManager_LosElem_ctor, 0, 0x10, n);
     }
     cTargetManager_Reset(m);

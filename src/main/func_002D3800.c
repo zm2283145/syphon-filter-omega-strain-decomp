@@ -7,6 +7,6 @@ int cNetNPC_MoveToGobj(Npc3800* o, Gobj3800* g)
 {
     if (NpcAuth_IsLocal())
         cNPC_MoveToGobj(o, g);
-    NetEvent_Send(o->net, 0x2C, 8, g->id, 0, 0, 0);
+    cNetNPCMsgs_SendMessage(o->net, 0x2C, 8, g->id, 0, 0, 0);
     return 1;
 }

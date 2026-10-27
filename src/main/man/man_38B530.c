@@ -10,7 +10,7 @@
 /* merge_units: begin func_0038B530 */
 #pragma push /* merge_units */
 typedef struct { int t; float v; } KtKey;
-float KeyTrack_Sample(int t, KtKey* keys); /* gsynth: defined below */
+float AnimMix(int t, KtKey* keys); /* gsynth: defined below */
 typedef unsigned char u8;
 typedef signed char s8;
 typedef short s16;
@@ -52,13 +52,13 @@ extern u8 D_0053B340[];
 extern u8 D_0053B348[];
 extern char g_MorphCurveGrip[], g_MorphCurveActive[], g_MorphCurvePeriodic[];
 #if 0 /* merge_units */
-extern float KeyTrack_Sample(int frame, char* track);
+extern float AnimMix(int frame, char* track);
 #endif /* merge_units */
-#define KeyTrack_Sample(a0, a1) (KeyTrack_Sample((a0), (void *)(a1))) /* merge_units */
+#define AnimMix(a0, a1) (AnimMix((a0), (void *)(a1))) /* merge_units */
 
-extern int Random_Next(void);
+extern int Libc_Rand(void);
 
-void Equip_UpdateGrip(Equip_38B530* e)
+void cMan_UpdateMorphs(Equip_38B530* e)
 {
     u8 s;
     int i;
@@ -75,7 +75,7 @@ void Equip_UpdateGrip(Equip_38B530* e)
                 e->w0 = 0.0f;
             }
         }
-        f = KeyTrack_Sample(e->s0, g_MorphCurveGrip);
+        f = AnimMix(e->s0, g_MorphCurveGrip);
         e->w0 = f;
         e->w0b = 1.0f - f;
     }
@@ -91,7 +91,7 @@ void Equip_UpdateGrip(Equip_38B530* e)
                 e->w1 = 0.0f;
             }
         }
-        f = KeyTrack_Sample(e->s1, g_MorphCurveGrip);
+        f = AnimMix(e->s1, g_MorphCurveGrip);
         e->w1 = f;
         e->w1b = 1.0f - f;
     }
@@ -103,7 +103,7 @@ void Equip_UpdateGrip(Equip_38B530* e)
         }
         if (e->count < 8) {
             e->ids[e->count] = D_0053B340[e->type];
-            e->vals[e->count] = KeyTrack_Sample(e->s2, g_MorphCurveActive);
+            e->vals[e->count] = AnimMix(e->s2, g_MorphCurveActive);
             if (!e->vals[e->count]) {
             } else {
                 e->count++;
@@ -116,11 +116,11 @@ void Equip_UpdateGrip(Equip_38B530* e)
     } else if (e->timer >= 0) {
         if (e->timer >= e->limit) {
             e->timer = 0;
-            e->limit = (Random_Next() & 0x3FF) + 300;
+            e->limit = (Libc_Rand() & 0x3FF) + 300;
         }
         if (e->count < 8) {
             e->ids[e->count] = D_0053B348[e->type];
-            e->vals[e->count] = KeyTrack_Sample(e->timer, g_MorphCurvePeriodic);
+            e->vals[e->count] = AnimMix(e->timer, g_MorphCurvePeriodic);
             if (!e->vals[e->count]) {
             } else {
                 e->count++;
@@ -129,7 +129,7 @@ void Equip_UpdateGrip(Equip_38B530* e)
         e->timer++;
     }
 }
-#undef KeyTrack_Sample /* merge_units */
+#undef AnimMix /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0038B530(void) {}
 #pragma pop /* merge_units */
@@ -137,7 +137,7 @@ static inline void merge_flush_func_0038B530(void) {}
 
 /* merge_units: begin func_0038B800 */
 #pragma push /* merge_units */
-float KeyTrack_Sample(int t, KtKey* keys)
+float AnimMix(int t, KtKey* keys)
 {
     int i = 0;
     int kt;

@@ -2,7 +2,7 @@
 #include "vc_copy.h"
 #include "v4_asm_copy.h"
 typedef struct { char pad[0x10]; __int128 q10; __int128 q20; __int128 q30; __int128 q40; __int128 q50; } P_9600;
-void PhysState_ResetIntegrator(P_9600* p) {
+void cPointMass_ClearPhysics(P_9600* p) {
     __int128* d; __int128* s; __int128 t; __int128* z;
     V4StoreZero(&p->q50);
     V4StoreZero(&p->q40);

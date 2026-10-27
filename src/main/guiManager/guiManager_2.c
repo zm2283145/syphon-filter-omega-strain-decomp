@@ -10,20 +10,20 @@
 #include "guiManager.h"
 #define NULL 0
 #pragma mpwc_relax on
-int GuiResource_Find(char *, int *, signed char *);   /* open the archive that holds name */
-int GuiManager_LoadGuiFromHog(GuiScreenList *, int, signed char *, int);
+int cInterfaceManager_OpenHogFile(char *, int *, signed char *);   /* open the archive that holds name */
+int GuiManager_ConstructWidget_cHogFileR_charP_GuiWidgetP(GuiScreenList *, int, signed char *, int);
 extern char D_00571DC0;                             /* interface manager */
 
 /* Load "<name>.GUI" from whichever mounted archive contains name; 0 on failure. */
-int GuiManager_LoadGui(GuiScreenList *self, signed char *name, int existing) {
+int GuiManager_ConstructWidget_charP_GuiWidgetP(GuiScreenList *self, signed char *name, int existing) {
     int hog;
     int root;
 
     if ((name == NULL) || (*name == 0)) {
         return 0;
     }
-    if (GuiResource_Find(&D_00571DC0, &hog, name) != 0) {
-        root = GuiManager_LoadGuiFromHog(self, hog, name, existing);
+    if (cInterfaceManager_OpenHogFile(&D_00571DC0, &hog, name) != 0) {
+        root = GuiManager_ConstructWidget_cHogFileR_charP_GuiWidgetP(self, hog, name, existing);
     } else {
         root = 0;
     }
@@ -43,11 +43,11 @@ int GuiManager_LoadGui(GuiScreenList *self, signed char *name, int existing) {
 
 #include "guiManager.h"
 
-extern int GuiManager_FlushDeleted(GuiScreenList* self);
+extern int GuiManager_DestroyPending(GuiScreenList* self);
 
 /* Per-frame update (callers pass dt): destroys the widgets queued for deletion. */
-int GuiManager_Update(GuiScreenList* self) {
-    return GuiManager_FlushDeleted(self);
+int GuiManager_NextFrame(GuiScreenList* self) {
+    return GuiManager_DestroyPending(self);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00419260 */

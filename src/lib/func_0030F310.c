@@ -54,7 +54,7 @@ extern char *D_004913B0;
 extern char *D_004913B4;
 extern char *D_004913B8;
 extern char *func_0030F0E8(char *buf, int len);
-extern int String_CompareN(const char *a, const char *b, int n);
+extern int Libc_Strncmp(const char *a, const char *b, int n);
 extern char *strncpy(char *d, const char *s, unsigned int n);
 
 void func_0030F310(const char *s, int len, Xml_30F310 *p)
@@ -68,15 +68,15 @@ void func_0030F310(const char *s, int len, Xml_30F310 *p)
     if (len == 0) return;
     if (isspace(*s)) return;
     e = func_0030F0E8(p->buf, p->bufLen);
-    while (tags.p[i] && String_CompareN(tags.p[i], e, 0x100))
+    while (tags.p[i] && Libc_Strncmp(tags.p[i], e, 0x100))
         i++;
     switch (i) {
     case 0:
-        if (String_CompareN(D_004B0828, p->name, 0x100) || *s != '1')
+        if (Libc_Strncmp(D_004B0828, p->name, 0x100) || *s != '1')
             p->stop = 1;
         break;
     case 1:
-        if (String_CompareN(D_004B0828, p->name, 0x100) || *s != '0')
+        if (Libc_Strncmp(D_004B0828, p->name, 0x100) || *s != '0')
             p->stop = 1;
         break;
     case 2:
@@ -84,135 +84,135 @@ void func_0030F310(const char *s, int len, Xml_30F310 *p)
         d->s004[len] = 0;
         break;
     case 3:
-        if (String_CompareN(D_00491384, s, len) == 0) {
+        if (Libc_Strncmp(D_00491384, s, len) == 0) {
             d->flags |= 1;
-        } else if (String_CompareN(D_00491388, s, len) == 0) {
+        } else if (Libc_Strncmp(D_00491388, s, len) == 0) {
             d->flags |= 2;
-        } else if (String_CompareN(D_0049138C, s, len) == 0) {
+        } else if (Libc_Strncmp(D_0049138C, s, len) == 0) {
             d->flags |= 4;
             strncpy(p->name, s, len);
             p->name[len] = 0;
-        } else if (String_CompareN(D_00491390, s, len) == 0) {
+        } else if (Libc_Strncmp(D_00491390, s, len) == 0) {
             d->flags |= 0x10;
         }
         break;
     case 4:
-        if (String_CompareN(D_0049138C, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_0049138C, p->name, 0x100) == 0) {
             strncpy(d->s104, s, len);
             d->s104[len] = 0;
         }
         break;
     case 5:
-        if (String_CompareN(D_0049138C, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_0049138C, p->name, 0x100) == 0) {
             strncpy(d->s204, s, len);
             d->s204[len] = 0;
         }
         break;
     case 6:
-        if (String_CompareN(D_0049138C, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_0049138C, p->name, 0x100) == 0) {
             strncpy(d->s304, s, len);
             d->s304[len] = 0;
         }
         break;
     case 7:
-        if (String_CompareN(D_0049138C, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_0049138C, p->name, 0x100) == 0) {
             strncpy(d->s404, s, len);
             d->s404[len] = 0;
         }
         break;
     case 8:
-        if (String_CompareN(D_0049138C, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_0049138C, p->name, 0x100) == 0) {
             strncpy(d->s504, s, len);
             d->s504[len] = 0;
         }
         break;
     case 9:
-        if (String_CompareN(D_0049138C, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_0049138C, p->name, 0x100) == 0) {
             strncpy(d->s604, s, len);
             d->s604[len] = 0;
         }
         break;
     case 10:
-        if (String_CompareN(D_0049138C, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_0049138C, p->name, 0x100) == 0) {
             strncpy(d->s704, s, len);
             d->s704[len] = 0;
         }
         break;
     case 11:
-        if (String_CompareN(D_0049138C, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_0049138C, p->name, 0x100) == 0) {
             strncpy(d->s804, s, len);
             d->s804[len] = 0;
         }
         break;
     case 12:
-        if (String_CompareN(D_0049138C, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_0049138C, p->name, 0x100) == 0) {
             strncpy(d->s904, s, len);
             d->s904[len] = 0;
         }
         break;
     case 13:
-        if (String_CompareN(D_0049138C, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_0049138C, p->name, 0x100) == 0) {
             strncpy(d->sA04, s, len);
             d->sA04[len] = 0;
         }
         break;
     case 14:
-        if (String_CompareN(D_00491398, s, len) == 0) {
+        if (Libc_Strncmp(D_00491398, s, len) == 0) {
             d->flags |= 0x20;
-        } else if (String_CompareN(D_0049139C, s, len) == 0) {
+        } else if (Libc_Strncmp(D_0049139C, s, len) == 0) {
             d->flags |= 0x40;
-        } else if (String_CompareN(D_004913A0, s, len) == 0) {
+        } else if (Libc_Strncmp(D_004913A0, s, len) == 0) {
             d->flags |= 0x80;
-        } else if (String_CompareN(D_004913A4, s, len) == 0) {
+        } else if (Libc_Strncmp(D_004913A4, s, len) == 0) {
             d->flags |= 0x100;
-        } else if (String_CompareN(D_004913A8, s, len) == 0) {
+        } else if (Libc_Strncmp(D_004913A8, s, len) == 0) {
             d->flags |= 0x200;
-        } else if (String_CompareN(D_004913AC, s, len) == 0) {
+        } else if (Libc_Strncmp(D_004913AC, s, len) == 0) {
             d->flags |= 0x400;
-        } else if (String_CompareN(D_004913B0, s, len) == 0) {
+        } else if (Libc_Strncmp(D_004913B0, s, len) == 0) {
             d->flags |= 0x800;
             strncpy(p->name, s, len);
             p->name[len] = 0;
-        } else if (String_CompareN(D_004913B4, s, len) == 0) {
+        } else if (Libc_Strncmp(D_004913B4, s, len) == 0) {
             d->flags |= 0x1000;
             strncpy(p->name, s, len);
             p->name[len] = 0;
-        } else if (String_CompareN(D_004913B8, s, len) == 0) {
+        } else if (Libc_Strncmp(D_004913B8, s, len) == 0) {
             d->flags |= 0x2000;
         }
         break;
     case 15:
-        if (String_CompareN(D_004913B0, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_004913B0, p->name, 0x100) == 0) {
             strncpy(d->sB04, s, len);
             d->sB04[len] = 0;
-        } else if (String_CompareN(D_004913B4, p->name, 0x100) == 0) {
+        } else if (Libc_Strncmp(D_004913B4, p->name, 0x100) == 0) {
             strncpy(d->sF04, s, len);
             d->sF04[len] = 0;
         }
         break;
     case 16:
-        if (String_CompareN(D_004913B0, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_004913B0, p->name, 0x100) == 0) {
             strncpy(d->sD04, s, len);
             d->sD04[len] = 0;
-        } else if (String_CompareN(D_004913B4, p->name, 0x100) == 0) {
+        } else if (Libc_Strncmp(D_004913B4, p->name, 0x100) == 0) {
             strncpy(d->s1104, s, len);
             d->s1104[len] = 0;
         }
         break;
     case 17:
-        if (String_CompareN(D_004913B0, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_004913B0, p->name, 0x100) == 0) {
             strncpy(d->sE04, s, len);
             d->sE04[len] = 0;
-        } else if (String_CompareN(D_004913B4, p->name, 0x100) == 0) {
+        } else if (Libc_Strncmp(D_004913B4, p->name, 0x100) == 0) {
             strncpy(d->s1204, s, len);
             d->s1204[len] = 0;
         }
         break;
     case 18:
-        if (String_CompareN(D_004913B0, p->name, 0x100) == 0) {
+        if (Libc_Strncmp(D_004913B0, p->name, 0x100) == 0) {
             strncpy(d->sC04, s, len);
             d->sC04[len] = 0;
-        } else if (String_CompareN(D_004913B4, p->name, 0x100) == 0) {
+        } else if (Libc_Strncmp(D_004913B4, p->name, 0x100) == 0) {
             strncpy(d->s1004, s, len);
             d->s1004[len] = 0;
         }

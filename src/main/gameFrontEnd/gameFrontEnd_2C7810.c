@@ -11,13 +11,13 @@
 #include "alloc_guard.h"
 
 extern "C" {
-extern void* Mem_Alloc(int pool, int size, char* file, int line);
+extern void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern char D_004AC980[];
 extern char D_004DE148[];
 extern char D_004DE168[];
 extern unsigned char D_005721D0;
 extern unsigned char D_005723C8;
-extern void Coop_CreatePartnerActor(void* msg, int target);
+extern void netCreatePlayer_HandleNetPlayerCreate(void* msg, int target);
 extern void cNetObj_AddHumanToQueue(int target, int id, void* msg, int flag);
 }
 
@@ -40,7 +40,7 @@ struct Msg7810 : MsgMid {
     char data[0x400];
     static void* operator new(unsigned int size) {
         AllocGuard guard;
-        return Mem_Alloc(0, size, D_004AC980, 0x11);
+        return cMemMan_Allocate(0, size, D_004AC980, 0x11);
     }
 };
 
@@ -51,7 +51,7 @@ extern "C" int netCreatePlayer_netCreatePlayerCallback(void* self, int unused, i
     }
     Msg7810* s = src;
     if (D_005721D0) {
-        Coop_CreatePartnerActor(s, target);
+        netCreatePlayer_HandleNetPlayerCreate(s, target);
     } else {
         Msg7810* p = new Msg7810(*s);
         cNetObj_AddHumanToQueue(target, s->id, p, 1);
@@ -101,7 +101,7 @@ extern int D_0051EE80;
 extern void tNetGenerator_NetGeneratorCreationCallback(void);
 extern void tNetGenerator_NetGeneratorUpdateCallback(void);
 extern void tNetGenerator_NetGeneratorDeleteCallback(void);
-unsigned char NetGenerator_NetRegister(void)
+unsigned char tNetGenerator_InitNet(void)
 {
     int db;
     int table;

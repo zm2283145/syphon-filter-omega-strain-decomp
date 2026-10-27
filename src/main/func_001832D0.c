@@ -6,7 +6,7 @@ typedef struct { V4 a; V4 b; } B_32D0;
 #pragma opt_propagation off
 #pragma opt_common_subs off
 #pragma opt_dead_assignments off
-V4 Box_GetCenter(B_32D0* b) {
+V4 cBox_Center(B_32D0* b) {
     V4 m; V4 v; V4 r; V4 s;
     V4* ss;
     V4* p;

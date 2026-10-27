@@ -2,7 +2,7 @@ extern char **D_0048943C;
 static char ***D_00489440 = &D_0048943C;
 extern void Newlib_EnvLock(void *);
 extern void Newlib_EnvUnlock(void *);
-extern int String_CompareN(const char *, const char *, unsigned int);
+extern int Libc_Strncmp(const char *, const char *, unsigned int);
 char *Newlib_FindenvR(void *reent_ptr, const char *name, int *offset)
 {
     int len;
@@ -18,7 +18,7 @@ char *Newlib_FindenvR(void *reent_ptr, const char *name, int *offset)
         len++;
     }
     for (p = *D_00489440; *p; ++p)
-        if (!String_CompareN(*p, name, len))
+        if (!Libc_Strncmp(*p, name, len))
             if (*(c = *p + len) == '=') {
                 *offset = p - *D_00489440;
                 Newlib_EnvUnlock(reent_ptr);

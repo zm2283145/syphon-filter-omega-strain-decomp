@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void PtrVec_End(Iter* out, PtrVec* v) {
+void cArray_cGOBJPtr_End(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
@@ -15,7 +15,7 @@ Word* cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(Word* dst, Word* src) {
     return dst;
 }
 
-void PtrVec_Begin(Iter* out, PtrVec* v) {
+void cArray_cGOBJPtr_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 

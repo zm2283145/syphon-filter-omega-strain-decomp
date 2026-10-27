@@ -19,7 +19,7 @@ typedef struct {
     __int128 keys[1];
 } KS4022E0;
 extern char D_004BE760[];
-extern int String_CompareN(char*, char*, int);
+extern int Libc_Strncmp(char*, char*, int);
 static inline int ks4022E0eq(__int128 a, __int128 b) {
     __int128 t;
     long long r;
@@ -135,7 +135,7 @@ void Monster_FindTheTexture(KS4022E0* s, __int128 key, KO4022E0* out, short* pa,
             return;
         }
     }
-    String_CompareN(p + 6, D_004BE760, 3);
+    Libc_Strncmp(p + 6, D_004BE760, 3);
     out->val = key;
     *pa = s->pairs[0].a;
     *pb = s->pairs[0].b;

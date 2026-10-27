@@ -29,7 +29,7 @@ const char* GuiRanks_GetClassName(void) {
 extern int strcmp(const char* a, const char* b); /* strcmp */
 
 /* Returns 1 if name equals the string "GuiRanks". */
-int GuiRanks_IsType(void* self, const char* name)
+int GuiRanks_IsClass(void* self, const char* name)
 {
     return strcmp("GuiRanks", name) == 0;
 }
@@ -45,19 +45,19 @@ typedef struct { char pad[0xB50]; C34E4D0* cur; } A34E4D0;
 typedef struct { char pad[0x48]; int a48; } S34E4D0;
 extern char g_Game[];
 extern T34E4D0 g_RankRows;
-extern A34E4D0* Agent_GetSelected(void* list, int idx);
-extern char* Loc_LookupText(char* key);
+extern A34E4D0* cGameSystem_GetAgentData(void* list, int idx);
+extern char* nGlobalization_GetString_charP(char* key);
 extern void GuiTextListWidget_AddItem(int list, char* name, int idx, int state);
 #pragma opt_strength_reduction off
-void GuiRanks_Fill(S34E4D0* o)
+void GuiRanks_PopulateList(S34E4D0* o)
 {
-    A34E4D0* ag = Agent_GetSelected(g_Game, -1);
+    A34E4D0* ag = cGameSystem_GetAgentData(g_Game, -1);
     T34E4D0* t = &g_RankRows;
     C34E4D0* cur = ag->cur;
     int i;
     for (i = 0; i < t->count; i++) {
         R34E4D0* r = &t->data[i];
-        char* txt = Loc_LookupText(r->key);
+        char* txt = nGlobalization_GetString_charP(r->key);
         int sel = 0;
         if (cur->id != r->id) sel = 1;
         GuiTextListWidget_AddItem(o->a48, txt, i, sel);

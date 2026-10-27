@@ -7,14 +7,14 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int AnimChannelBase_CopyCtor(CurveChannel* d, CurveChannel* s);
+extern int cSplinedMotion_float_ctor_cSplinedMotionR(CurveChannel* d, CurveChannel* s);
 extern char D_004DA840[]; /* AnimChannel vtable */
 
 /* Copy constructor (research ANIMATION_CHANNEL_NATIVE.md). */
-AnimChannel* AnimChannel_CopyCtor(AnimChannel* d, AnimChannel* s) {
+AnimChannel* cSkaSliderValue_ctor_cSkaSliderValueR(AnimChannel* d, AnimChannel* s) {
     unsigned char wrap;
 
-    AnimChannelBase_CopyCtor(&d->base, &s->base);
+    cSplinedMotion_float_ctor_cSplinedMotionR(&d->base, &s->base);
     d->base.vtable = D_004DA840;
     wrap = s->wrap;
     d->wrap = wrap;

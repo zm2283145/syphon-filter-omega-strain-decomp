@@ -13,5 +13,5 @@ void cTurret_SetWeapon(cTankTurret* turret, int weaponId) {
     void* table = g_WeaponDatabase;
 
     turret->weaponId = weaponId;
-    turret->weaponDef = WeaponDb_Get(table, weaponId);
+    turret->weaponDef = cWeaponDB_GetEntry(table, weaponId);
 }

@@ -8,13 +8,13 @@
 
 struct VC00393BD0 { virtual int v0(); virtual int v1(); virtual int v2(); virtual float v3(); };
 extern "C" {
-int PhysicalBase_Construct(...);                 
+int cSplinedMotion_float_ctor_floatR_floatR(...);                 
 static const unsigned int dat_00493460[2] = { 0x0, 0x0 };
 static const unsigned int dat_00493468[2] = { 0x0, 0x0 };
 extern int D_004DA840;
 }
 extern "C" int cSkaSliderValue_ctor_float(char *arg0, float farg0) {
-    PhysicalBase_Construct(arg0, &(*(int*)dat_00493460), &(*(int*)dat_00493468));
+    cSplinedMotion_float_ctor_floatR_floatR(arg0, &(*(int*)dat_00493460), &(*(int*)dat_00493468));
     F_(arg0, 0x0, int) = (int)(&D_004DA840);
     F_(arg0, 0x38, signed char) = 0;
     F_(arg0, 0x10, float) = farg0;

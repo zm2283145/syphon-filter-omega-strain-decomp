@@ -14,7 +14,7 @@ static inline unsigned char Pcm_Test(Physical* p, int n)
 {
     return ((p->bits[n / 32] >> (n & 31)) & 1) != 0;
 }
-void Physical_ClearModeBit(Physical* p, int bit)
+void cModeSwitch_WithHistory_12_DeactivateMode(Physical* p, int bit)
 {
     int i;
     p->bits[bit / 32] &= ~(1 << (bit & 31));
@@ -41,7 +41,7 @@ extern unsigned char AnimPriority_Helper3(void*, int);
 extern void AnimPriority_Helper2(void*, int, int);
 extern void AnimPriority_Helper1(void*);
 extern void AnimPriority_Helper0(void*, int, int);
-extern void Inventory_ReleaseItem(Inv*);
+extern void cWeapon_ReloadThrow(Inv*);
 
 int Actor_HandleEmbeddedEvent(Act* a, Ev* e)
 {
@@ -63,7 +63,7 @@ int Actor_HandleEmbeddedEvent(Act* a, Ev* e)
         break;
     case 2:
         switch (e->sub) case 4: case 5: {
-            Inventory_ReleaseItem(a->inv);
+            cWeapon_ReloadThrow(a->inv);
             a->b33E4 = 0;
         }
         break;

@@ -16,7 +16,7 @@ typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-V4* Mtx_DotRowsVec3(V4* v, PPMtx* m)
+V4* cVector_InverseRotate_cMatrixR(V4* v, PPMtx* m)
 {
     PPMtx t;
     PPMtx tmp;
@@ -45,7 +45,7 @@ static inline void merge_flush_func_0019F2A0(void) {}
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-void Actor_ShotFrameNodeWorld(PPMtx* out, PPMtx* in, PPMtx* m) {
+void cMatrix_GetTransformed(PPMtx* out, PPMtx* in, PPMtx* m) {
     PPMtx t;
     PPMtx* ps = &t;
     PPMtx* pd = &t;

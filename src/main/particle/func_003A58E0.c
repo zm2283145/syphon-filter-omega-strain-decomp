@@ -45,41 +45,41 @@ extern "C" {
 extern void* g_TextureMgr;
 extern u64_t D_0053B680[];
 extern char D_004BC640[];
-int ParticleLib_FindId(Lib* lib, char* name);
-int FileMan_FindMember(Res* r);
-char* FileMan_ReadData(Res* r);
+int cParticleSystem_GetEffectID(Lib* lib, char* name);
+int cFileMan_Open(Res* r);
+char* cFileMan_Read_void(Res* r);
 void cFileMan_Close(Res* r);
-Def* ParticleDef_Parse(Lib* lib, char* str, char* tex, Def* obj);
+Def* cParticleSystem_Load_charP_charP_cParticleDefinitionP(Lib* lib, char* str, char* tex, Def* obj);
 void cFileMan_ctor_charP_cFileManR(Res* r, char* name, Res* parent);
-int TexMan_FindOrLoad(void* mgr, Res* r);
-void FileMan_Release(Res* r, int f);
+int cTexMan_AddTextureFromFile_cFileManR(void* mgr, Res* r);
+void cFileMan_dtor(Res* r, int f);
 void std_list_cParticleDefinitionPtr_push_back(void* list, Def** v);
 char* strncpy(void* d, const void* s, int n);
 void Libc_Strcat(char* d, const char* s);
-void Resource_Construct(Res* r);
+void cFileMan_ctor_void(Res* r);
 void cFileMan_EncodeFilename_charP_cFileManR(Res* r, char* name, Res* parent);
-bool ParticleLib_LoadPar(Lib* lib, Res* res);
+bool cParticleSystem_Load_cFileManR(Lib* lib, Res* res);
 }
 
 /* Loads a .par particle definition (and, recursively, its sub-definitions): parse, bind the
  * texture, fill the GS register block (TEX0/ALPHA/...) and register it in the library. */
-extern "C" bool ParticleLib_LoadPar(Lib* lib, Res* res)
+extern "C" bool cParticleSystem_Load_cFileManR(Lib* lib, Res* res)
 {
     bool ok = true;
-    if (ParticleLib_FindId(lib, res->name) == -1 && !(unsigned char)FileMan_FindMember(res)) {
-        char* data = FileMan_ReadData(res);
+    if (cParticleSystem_GetEffectID(lib, res->name) == -1 && !(unsigned char)cFileMan_Open(res)) {
+        char* data = cFileMan_Read_void(res);
         cFileMan_Close(res);
         if (data) {
             Def* def;
             char texName[0x8C];
             int k;
-            def = ParticleDef_Parse(lib, data, texName, 0);
+            def = cParticleSystem_Load_charP_charP_cParticleDefinitionP(lib, data, texName, 0);
             if (def) {
                 Res tex;
                 int i;
                 if (!texName[0]) return 0;
                 cFileMan_ctor_charP_cFileManR(&tex, texName, res);
-                def->tex = TexMan_FindOrLoad(g_TextureMgr, &tex);
+                def->tex = cTexMan_AddTextureFromFile_cFileManR(g_TextureMgr, &tex);
                 def->q80 = IV4(0, 0, 0, 0);
                 def->q90 = V4(0.0f, 0.0f, 0.0f, 0.0f);
                 def->tag = 0x1000000000000003UL;
@@ -96,11 +96,11 @@ extern "C" bool ParticleLib_LoadPar(Lib* lib, Res* res)
                 for (i = 0; i < 12; i++) def->mode[i] = 2;
                 if (def->tex < 0) {
                     ok = false;
-                    FileMan_Release(&tex, -1);
+                    cFileMan_dtor(&tex, -1);
                     return ok;
                 }
                 std_list_cParticleDefinitionPtr_push_back(lib->list, &def);
-                FileMan_Release(&tex, -1);
+                cFileMan_dtor(&tex, -1);
             }
             for (k = 0; k < def->nSub; k++) {
                 char name[0x20];
@@ -108,10 +108,10 @@ extern "C" bool ParticleLib_LoadPar(Lib* lib, Res* res)
                 strncpy(name, def->subs[k], 16);
                 name[16] = 0;
                 Libc_Strcat(name, D_004BC640);
-                Resource_Construct(&sub);
+                cFileMan_ctor_void(&sub);
                 cFileMan_EncodeFilename_charP_cFileManR(&sub, name, res);
-                ParticleLib_LoadPar(lib, &sub);
-                FileMan_Release(&sub, -1);
+                cParticleSystem_Load_cFileManR(lib, &sub);
+                cFileMan_dtor(&sub, -1);
             }
         }
     }

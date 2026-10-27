@@ -99,8 +99,8 @@ extern char D_004E0D20[];
 extern char D_0049AF00[];
 void std_vector_deleter_Item_dtor(TextListEntryVec* entries, int flags);
 void func_0013A040(void* state, int flags);
-void GuiWidget_Destroy(TextRenderWidget* self, int flags);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void GuiWidget_dtor(TextRenderWidget* self, int flags);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
 }
 
@@ -150,7 +150,7 @@ extern "C" TextRenderWidget* GuiArrayWidget_dtor_421DA0(TextRenderWidget* self, 
     if (self) {
         self->vtable = D_004E0D20;
         destroy_state(self->baseState);
-        GuiWidget_Destroy(self, 0);
+        GuiWidget_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
@@ -161,7 +161,7 @@ static inline void free_buffer(TextListEntry* data)
 {
     if (data) {
         AllocGuard guard;
-        Mem_Free(0, data, D_0049AF00, 0x64);
+        cMemMan_Deallocate(0, data, D_0049AF00, 0x64);
     }
 }
 

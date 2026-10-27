@@ -65,7 +65,7 @@ typedef struct Vec24 {
     Elem24* data;                   /* 0x08 */
 } Vec24;
 
-/* 3x4 float matrix rows (Mtx44_SetRows123FromMtx34_370000 copies a 3x4 into +0x10). */
+/* 3x4 float matrix rows (cXform_SetRotationMatrix_ParentRelative copies a 3x4 into +0x10). */
 typedef struct Mtx34 {
     float m[3][4];
 } Mtx34;
@@ -88,7 +88,7 @@ typedef struct Slot20 {
 typedef struct Manager37F9D0 {
     int unk00;                      /* 0x00 = -1 */
     char pad004[0x1EC];
-    char items[8][272];             /* 0x1F0 each built by CameraRecord_Construct */
+    char items[8][272];             /* 0x1F0 each built by cXViewport_ctor */
     int current;                    /* 0xA70 index into items */
     char pad0A74[0x5E4];
     int unk1058;                    /* 0x1058 (4184) */
@@ -131,7 +131,7 @@ typedef struct Member34FE40 {
 /*
  * GuiMissionStatistics (vtable D_004DEE70, class-name getter GuiMissionStatistics_GetClassName), ctor
  * GuiMissionStatistics_ctor; derives from GuiPersonnelScreen.
- * Vtable slot 13 (message handler) is GuiMissionStatistics_HandleEvent, overriding GuiPersonnelScreen_HandleEvent.
+ * Vtable slot 13 (message handler) is GuiMissionStatistics_onMessage, overriding GuiPersonnelScreen_onMessage.
  */
 typedef struct GuiMissionStatistics {
     GuiPersonnelScreen base;              /* 0x00 */
@@ -186,7 +186,7 @@ typedef struct Vec36 { int unk00; int count; Elem36* data; } Vec36;
 typedef struct Vec112 { int unk00; int count; Elem112* data; } Vec112;
 
 /*
- * GUI screen base built by GuiScreen_ctor (GuiLobbyScreen.cc unit). Subclasses
+ * GUI screen base built by GuiLobbyScreen_ctor (GuiLobbyScreen.cc unit). Subclasses
  * set screenId (GuiNetMessages uses 9, GuiAgentInfo uses 8).
  */
 typedef struct GuiScreenBase {
@@ -195,12 +195,12 @@ typedef struct GuiScreenBase {
     int screenId;                   /* 0x84 */
 } GuiScreenBase;
 
-/* 28-byte member constructed by LobbyArray_ctor. */
+/* 28-byte member constructed by SFOLobbyList_ctor. */
 typedef struct Member44FA00 {
     char pad[0x1C];
 } Member44FA00;
 
-/* Menu screen built by GuiMenuScreen_ctor (vtable D_004DE8A0); GuiMenuScreen in loose02_types.h. */
+/* Menu screen built by GuiMissionLobbyScreen_ctor (vtable D_004DE8A0); GuiMenuScreen in loose02_types.h. */
 typedef struct L3GuiMenuScreen {
     GuiScreenBase base;             /* 0x00 */
     int unk88;                      /* 0x88 */
@@ -228,7 +228,7 @@ typedef struct GuiAgentInfoTarget {
     int unk4E0;                     /* 0x4E0 */
 } GuiAgentInfoTarget;
 
-/* Embedded member at +0x88 of GuiAgentInfo (two String_CtorEmpty sub-objects). */
+/* Embedded member at +0x88 of GuiAgentInfo (two cString_ctor_void sub-objects). */
 typedef struct GuiAgentInfoMember88 {
     char pad00[0x30];
     char unk30[0xC];                /* 0x30 */
@@ -245,7 +245,7 @@ typedef struct GuiAgentInfo {
     GuiAgentInfoTarget* unk120;        /* 0x120 */
 } GuiAgentInfo;
 
-/* Object returned by Gui_GetScreenStack (GUI manager?); unk2C->unk08 is compared to a screen. */
+/* Object returned by Gui_Canvas (GUI manager?); unk2C->unk08 is compared to a screen. */
 typedef struct Obj4147A0Inner {
     char pad00[0x8];
     GuiAgentInfo* unk08;               /* 0x08 */
@@ -256,7 +256,7 @@ typedef struct Obj4147A0 {
     Obj4147A0Inner* unk2C;          /* 0x2C */
 } Obj4147A0;
 
-/* Object built by cHogFile_ctor (sub-object at +0x80 from FileHal_CtorDefault, FileHalPS2.cc). */
+/* Object built by cHogFile_ctor (sub-object at +0x80 from cFileIO_ctor_void, FileHalPS2.cc). */
 typedef struct Obj36D630 {
     char pad000[0x80];
     char unk80[0xC8];               /* 0x80 */
@@ -265,7 +265,7 @@ typedef struct Obj36D630 {
     char pad14D[0xB];
     int unk158;                     /* 0x158 */
     int unk15C;                     /* 0x15C */
-    int* unk160;                    /* 0x160 word table (Hog_GetMemberOffset) */
+    int* unk160;                    /* 0x160 word table (cHogFile_GetBlockOffset) */
     int unk164;                     /* 0x164 */
     unsigned char unk168;           /* 0x168 */
 } Obj36D630;
@@ -286,7 +286,7 @@ typedef struct Rec377C30 {
 } Rec377C30;
 
 /* Object (vtable D_004DF6A0) holding a 3x4 matrix at +0x10: slot 8 (cXform_GetMatrix_ParentRelative)
- * returns its address, slot 12 (Mtx44_SetRows123FromMtx34_370000) sets it. */
+ * returns its address, slot 12 (cXform_SetRotationMatrix_ParentRelative) sets it. */
 typedef struct Obj370000 {
     char pad00[0x10];
     Mtx34 mtx;                      /* 0x10 */
@@ -309,13 +309,13 @@ typedef struct WordCursor {
     char pad10[0x4];
 } WordCursor;
 
-/* Skeleton node set (SkelNodes_Construct); only the flag byte is known. */
+/* Skeleton node set (cSkeleton_CreateBones); only the flag byte is known. */
 typedef struct SkelNodes {
     char pad00[0x14];
     unsigned char unk14;            /* 0x14 */
 } SkelNodes;
 
-/* Object used by Video_DrawFullScreenQuad (forwards fields 0x1C/0x20). */
+/* Object used by XLib_ClearScreen_tIRGBAR_bool_uint (forwards fields 0x1C/0x20). */
 typedef struct Obj37A1C0 {
     char pad00[0x1C];
     int unk1C;                      /* 0x1C */

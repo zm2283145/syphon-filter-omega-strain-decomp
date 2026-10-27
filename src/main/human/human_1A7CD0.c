@@ -10,33 +10,33 @@
 /* merge_units: begin func_001A7CD0 */
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4_7D80;
-V4_7D80* Quat_MulInPlace(V4_7D80* self, V4_7D80* o); /* gsynth: defined below */typedef struct { float m[4]; } E2Quat;
+V4_7D80* cQuaternion_Rotate(V4_7D80* self, V4_7D80* o); /* gsynth: defined below */typedef struct { float m[4]; } E2Quat;
 typedef struct { char pad[0xA0]; unsigned char dirty; } E2Ident;
 typedef struct { char pad[0x160]; int f160; } E2Root;
-extern E2Ident* Root_IdentityAccessor(E2Root*);
+extern E2Ident* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(E2Root*);
 extern void* cJointInfo_Limits_InJointSpace(void*);
-extern void Quat_Assign(void*, void*);
+extern void cQuaternion_opAssign(void*, void*);
 extern int cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(E2Root*);
 extern void cQuaternion_ctor_void(E2Quat*);
 extern void* cSkaAnimAnchor_TreeNode_GetParentInverseRotation(E2Root*, E2Quat*);
 #if 0 /* merge_units */
-extern void Quat_MulInPlace(void*, void*);
+extern void cQuaternion_Rotate(void*, void*);
 #endif /* merge_units */
-#define Quat_MulInPlace(a0, a1) ((void)Quat_MulInPlace((void *)(a0), (void *)(a1))) /* merge_units */
+#define cQuaternion_Rotate(a0, a1) ((void)cQuaternion_Rotate((void *)(a0), (void *)(a1))) /* merge_units */
 
-extern void Root_PropagateChildren(E2Root*);
-void Root_SetWorldOrientationReset(E2Root* r, void* q) {
+extern void cSkaAnimAnchor_TreeNode_TellChildrenNeedToUpdate(E2Root*);
+void cSkaAnimAnchor_SetRotation(E2Root* r, void* q) {
     E2Quat tmp;
-    Quat_Assign(cJointInfo_Limits_InJointSpace((char*)Root_IdentityAccessor(r) + 0x50), q);
+    cQuaternion_opAssign(cJointInfo_Limits_InJointSpace((char*)cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(r) + 0x50), q);
     if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void_2(r)) {
         cQuaternion_ctor_void(&tmp);
-        Quat_MulInPlace(cJointInfo_Limits_InJointSpace((char*)Root_IdentityAccessor(r) + 0x50), cSkaAnimAnchor_TreeNode_GetParentInverseRotation(r, &tmp));
+        cQuaternion_Rotate(cJointInfo_Limits_InJointSpace((char*)cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(r) + 0x50), cSkaAnimAnchor_TreeNode_GetParentInverseRotation(r, &tmp));
     }
-    Root_IdentityAccessor(r)->dirty = 1;
-    Root_PropagateChildren(r);
+    cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void_2(r)->dirty = 1;
+    cSkaAnimAnchor_TreeNode_TellChildrenNeedToUpdate(r);
     r->f160 = 0;
 }
-#undef Quat_MulInPlace /* merge_units */
+#undef cQuaternion_Rotate /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001A7CD0(void) {}
 #pragma pop /* merge_units */
@@ -65,7 +65,7 @@ static inline V4_7D80 QMul_(V4_7D80* a, V4_7D80* b) {
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-V4_7D80* Quat_MulInPlace(V4_7D80* self, V4_7D80* o) {
+V4_7D80* cQuaternion_Rotate(V4_7D80* self, V4_7D80* o) {
     V4_7D80 t; V4_7D80* tp; t = QMul_(self, o); tp = &t; *self = *tp;
     return self;
 }

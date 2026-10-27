@@ -29,16 +29,16 @@ extern "C" {
 extern char g_Game[];
 extern char D_004DAE30[];
 extern char D_004A79A8[];
-void Resource_Construct(void* m);
-void FileMan_Release(void* part, int flags);
+void cFileMan_ctor_void(void* m);
+void cFileMan_dtor(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
-void Event_Send(void* msg, void* target, int flags);
-void SoundAction_CtorVoice(void* action, int kind, char* name, int a, int b);
+void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int flags);
+void cSndFx_SetSndFx(void* action, int kind, char* name, int a, int b);
 void EffectMsg_WrapRequest(Msg_2517D0* msg, void* action);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" void PickupMenu_CursorNext(Self_2517D0* s)
+extern "C" void cPickupMenu_Next(Self_2517D0* s)
 {
     if (s->cur + 1 < s->count) {
         Act_2517D0 act;
@@ -50,9 +50,9 @@ extern "C" void PickupMenu_CursorNext(Self_2517D0* s)
         act.h24.v = -2;
         act.w20 = 0;
         pa = act.memberA;
-        Resource_Construct(pa);
+        cFileMan_ctor_void(pa);
         pb = act.memberB;
-        Resource_Construct(pb);
+        cFileMan_ctor_void(pb);
         p->id = -1;
         p->mask = -1;
         p->w20 = 0;
@@ -63,17 +63,17 @@ extern "C" void PickupMenu_CursorNext(Self_2517D0* s)
         p->h184 = -1;
         p->w180 = 0;
         p->b186 = 0;
-        SoundAction_CtorVoice(p, 3, D_004A79A8, 0, 0);
+        cSndFx_SetSndFx(p, 3, D_004A79A8, 0, 0);
         EffectMsg_WrapRequest(&m, &act);
         m.flag = 1;
-        Event_Send(&m, g_Game, 1);
+        QueueMessage_cMessageR_cSystemP_int(&m, g_Game, 1);
         m.vtbl = D_004DAE30;
-        FileMan_Release(m.partB, -1);
-        FileMan_Release(m.partA, -1);
+        cFileMan_dtor(m.partB, -1);
+        cFileMan_dtor(m.partA, -1);
         cMessage_dtor(&m, 0);
         s->cur++;
-        FileMan_Release(pb, -1);
-        FileMan_Release(pa, -1);
+        cFileMan_dtor(pb, -1);
+        cFileMan_dtor(pa, -1);
     }
 }
 #pragma pop

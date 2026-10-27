@@ -4,8 +4,8 @@ typedef struct { char tag; } Alloc;
 typedef struct { char* begin; char* end; char* cap; } String;
 
 extern int strlen(const char* s); /* strlen */
-extern void String_Reserve(String* self, int n);
-extern void String_Replace(String* self, char* at, int unused, const char* first, const char* last, Alloc alloc);
+extern void std_basic_string_char_char_traits_char_reserve(String* self, int n);
+extern void std_basic_string_char_char_traits_char_do_replace(String* self, char* at, int unused, const char* first, const char* last, Alloc alloc);
 
 /* Constructs a string from a C string; returns self. */
 String* func_002AA180(String* self, const char* s)
@@ -16,7 +16,7 @@ String* func_002AA180(String* self, const char* s)
     self->end = 0;
     self->cap = 0;
     len = strlen(s);
-    String_Reserve(self, len);
-    String_Replace(self, 0, 0, s, s + len, alloc);
+    std_basic_string_char_char_traits_char_reserve(self, len);
+    std_basic_string_char_char_traits_char_do_replace(self, 0, 0, s, s + len, alloc);
     return self;
 }

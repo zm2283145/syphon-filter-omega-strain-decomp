@@ -1,4 +1,4 @@
-/* Script_Load 003DA110 draft (mw38, C++). cdiff: 1329 '**' lines of ~1992; prelude+early return match modulo frame (0x360 vs 0x390), slti v0 vs at; mid-body register allocation swaps (s0/s1/s2, fp vs stack temp). */
+/* cScriptInterpreter_SymbolTable_loadScript 003DA110 draft (mw38, C++). cdiff: 1329 '**' lines of ~1992; prelude+early return match modulo frame (0x360 vs 0x390), slti v0 vs at; mid-body register allocation swaps (s0/s1/s2, fp vs stack temp). */
 #pragma cplusplus on
 #pragma inline_depth(12)
 #include "types.h"
@@ -12,26 +12,26 @@ extern char D_004BDC28[];
 extern char D_004BDC68[];
 extern int D_004938F0;
 extern int D_004938F8;
-void* Mem_Alloc(int heap, int size, char* file, int line);
-void Mem_Free(int heap, void* p, char* file, int line);
-char* Str_Duplicate(char* s);
-void String_Copy(char* d, void* s);
+void* cMemMan_Allocate(int heap, int size, char* file, int line);
+void cMemMan_Deallocate(int heap, void* p, char* file, int line);
+char* cScriptBase_myStrdup(char* s);
+void Libc_Strcpy(char* d, void* s);
 int String_CompareNoCase(char* a, char* b);
 void* memcpy(void* d, const void* s, unsigned int n);
-void Resource_Construct(void* h);
+void cFileMan_ctor_void(void* h);
 void cFileMan_Close(void* h);
-void FileMan_Release(void* h, int f);
-void FileHal_Dtor(void* p, int f);
-int* FileMan_ReadData(void* h);
-int FileMan_GetSize(void* h);
-void PtrVector_Resize(void* v, int n, void* const& fill);
+void cFileMan_dtor(void* h, int f);
+void cFileIO_dtor(void* p, int f);
+int* cFileMan_Read_void(void* h);
+int cFileMan_GetSize(void* h);
+void std_vector_pod_int_resize(void* v, int n, void* const& fill);
 void** cArray_VarDefPtr_opIndex(void* s, int id);
 void std_vector_SubScriptPtr_push_back(void* v, void* p);
 void** std_vector_SubScriptPtr_opIndex(void* v, int i);
 void** std_vector_intPtr_opIndex(void* v, int i);
 void std_vector_charPtr_push_back_charPR(void* v, void* p);
-struct TypeRec* ScriptType_GetRecord(int id);
-int Script_ResolveType(void* s, int t);
+struct TypeRec* cScriptBase_getClass(int id);
+int cScriptInterpreter_SymbolTable_remapType(void* s, int t);
 void* SubScript_ctor(void* p, int id, char* name);
 void cScriptInterpreter_SymbolTable_addClass(void* s, char* name, u8 b, char* name2, int n, char** strs, int* ints, int idx);
 void cScriptInterpreter_SymbolTable_addEnum(void* s, char* name, int idx, void* recs, int n);
@@ -77,10 +77,10 @@ struct Script {
     int version;     /* 0x8C */
 };
 
-static inline void* New_3DA110(int size, char* f, int line) { AllocGuard g; return Mem_Alloc(0, size, f, line); }
-static inline void Del_3DA110(void* p, char* f, int line) { if (p) { AllocGuard g; Mem_Free(0, p, f, line); } }
-static inline void DelG_3DA110(int* p, char* f, int line) { AllocGuard g; FileHal_Dtor(p, -1); Mem_Free(0, p, f, line); }
-static inline void DelU_3DA110(void* p, char* f, int line) { AllocGuard g; Mem_Free(0, p, f, line); }
+static inline void* New_3DA110(int size, char* f, int line) { AllocGuard g; return cMemMan_Allocate(0, size, f, line); }
+static inline void Del_3DA110(void* p, char* f, int line) { if (p) { AllocGuard g; cMemMan_Deallocate(0, p, f, line); } }
+static inline void DelG_3DA110(int* p, char* f, int line) { AllocGuard g; cFileIO_dtor(p, -1); cMemMan_Deallocate(0, p, f, line); }
+static inline void DelU_3DA110(void* p, char* f, int line) { AllocGuard g; cMemMan_Deallocate(0, p, f, line); }
 
 struct ScriptFile {
     int* file;
@@ -93,7 +93,7 @@ struct ScriptFile {
     int len;
     u8 ok;
 
-    ScriptFile(char* name, int sz) { Resource_Construct(hog); file = 0; size = sz; Open(name, 0); }
+    ScriptFile(char* name, int sz) { cFileMan_ctor_void(hog); file = 0; size = sz; Open(name, 0); }
     void Open(char* name, int mode);
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~ScriptFile() {
         cFileMan_Close(hog);
@@ -107,7 +107,7 @@ struct ScriptFile {
         buf = 0;
         data = 0;
         ok = 0;
-        FileMan_Release(hog, -1);
+        cFileMan_dtor(hog, -1);
     }
     int ReadInt() { int* p = cur; cur = p + 1; return *p; }
     bool ReadBool() { return ReadInt() != 0; }
@@ -117,26 +117,26 @@ struct ScriptFile {
         int n = ReadInt();
         char* s = n ? (char*)New_3DA110(n, D_004BDC68, 0xF9) : 0;
         if (s) {
-            String_Copy(s, cur);
+            Libc_Strcpy(s, cur);
             cur += (unsigned)(n + 3) >> 2;
         }
         return s;
     }
 };
 
-extern "C" void FileMan_Open(ScriptFile* s, char* name, int mode);
-inline void ScriptFile::Open(char* name, int mode) { FileMan_Open(this, name, mode); }
+extern "C" void ScriptFileBuff_open(ScriptFile* s, char* name, int mode);
+inline void ScriptFile::Open(char* name, int mode) { ScriptFileBuff_open(this, name, mode); }
 
-static inline TypeRec* GetType(void* p) { return ScriptType_GetRecord((int)p); }
+static inline TypeRec* GetType(void* p) { return cScriptBase_getClass((int)p); }
 
-extern "C" u8 Script_Load(Script* s, int size, char* name)
+extern "C" u8 cScriptInterpreter_SymbolTable_loadScript(Script* s, int size, char* name)
 {
     u8 reload = 0;
     u8 result;
     int i;
 
     if (name) {
-        s->name = Str_Duplicate(name);
+        s->name = cScriptBase_myStrdup(name);
     } else {
         int n;
         reload = 1;
@@ -160,8 +160,8 @@ extern "C" u8 Script_Load(Script* s, int size, char* name)
             int* oldGlobals;
             int nSubs, nGlobals, nRecs;
             result = 1;
-            f->data = FileMan_ReadData(f->hog);
-            f->len = FileMan_GetSize(f->hog);
+            f->data = cFileMan_Read_void(f->hog);
+            f->len = cFileMan_GetSize(f->hog);
             f->cur = f->data;
             f->buf = 0;
             s->version = f->ReadInt();
@@ -176,7 +176,7 @@ extern "C" u8 Script_Load(Script* s, int size, char* name)
             f->cur += n;
 
             int n1 = f->ReadInt();
-            PtrVector_Resize(&s->v60, n1, (void*)0);
+            std_vector_pod_int_resize(&s->v60, n1, (void*)0);
             { int i = 0; if (0 < n1) do {
                 char* str = f->ReadString();
                 s->v60[i] = str;
@@ -190,8 +190,8 @@ extern "C" u8 Script_Load(Script* s, int size, char* name)
             } while (++i < n);
 
             nTypes = f->ReadInt();
-            PtrVector_Resize(&s->v30, nTypes, *(void**)&D_004938F0);
-            PtrVector_Resize(&s->v20, nTypes, (void*)0);
+            std_vector_pod_int_resize(&s->v30, nTypes, *(void**)&D_004938F0);
+            std_vector_pod_int_resize(&s->v20, nTypes, (void*)0);
             flags = nTypes ? (u8*)New_3DA110(nTypes, D_004BD4C0, 0xBF3) : 0;
             i = 0; if (0 < nTypes) do {
                 char* tname = f->ReadString();
@@ -220,7 +220,7 @@ extern "C" u8 Script_Load(Script* s, int size, char* name)
             } while (++i < nTypes);
 
             n = f->ReadInt();
-            PtrVector_Resize(&s->v40, n, *(void**)&D_004938F8);
+            std_vector_pod_int_resize(&s->v40, n, *(void**)&D_004938F8);
             i = 0; if (0 < n) do {
                 char* fname = f->ReadString();
                 if (f->ReadInt() == 0) {
@@ -248,7 +248,7 @@ extern "C" u8 Script_Load(Script* s, int size, char* name)
                     int j;
                     j = 0; if (0 < cnt) do {
                         int& t = ((int*)rec->fields[j])[2];
-                        t = Script_ResolveType(s, t);
+                        t = cScriptInterpreter_SymbolTable_remapType(s, t);
                     } while (++j < cnt);
                 }
             } while (++i < nTypes);
@@ -286,7 +286,7 @@ extern "C" u8 Script_Load(Script* s, int size, char* name)
 
             nGlobals = f->ReadInt();
             oldGlobals = s->x88;
-            PtrVector_Resize(&s->v00, nGlobals, (void*)0);
+            std_vector_pod_int_resize(&s->v00, nGlobals, (void*)0);
             s->x88 = nGlobals ? (int*)New_3DA110(nGlobals * 4, D_004BD4C0, 0xC71) : 0;
             i = 0; if (0 < nGlobals) do {
                 char* gname = f->ReadString();
@@ -317,7 +317,7 @@ extern "C" u8 Script_Load(Script* s, int size, char* name)
             } while (++i < n);
 
             nRecs = f->ReadInt();
-            PtrVector_Resize(&s->v10, nRecs, (void*)0);
+            std_vector_pod_int_resize(&s->v10, nRecs, (void*)0);
             i = 0; if (0 < nRecs) do {
                 ScriptRec rec;
                 u8 isNull;

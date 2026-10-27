@@ -1,7 +1,7 @@
 /* same-unit callee stub: weak, in a section the link discards (the real function is defined elsewhere); restores retail delay-slot choices */
 typedef struct { int *v[256]; } T2E5360;
 extern int NetGetConnInfo(unsigned int, T2E5360 **);
-int * __attribute__((weak, section(".dtors_drop"))) Rt_MemoryAllocate(int a0) { return 0; }
+int * __attribute__((weak, section(".dtors_drop"))) DMEmalloc(int a0) { return 0; }
 int NetCreateClientInfo(unsigned int a, unsigned int b, int **out)
 {
     T2E5360 *p = 0;
@@ -14,7 +14,7 @@ int NetCreateClientInfo(unsigned int a, unsigned int b, int **out)
     if (r) return r;
     if (p == 0) return 0xA;
     if (p->v[b] == 0) {
-        p->v[b] = Rt_MemoryAllocate(0x2C);
+        p->v[b] = DMEmalloc(0x2C);
         if (p->v[b] == 0) return 0x16;
     }
     *out = p->v[b];

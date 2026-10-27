@@ -11,21 +11,21 @@
 #include "alloc_guard.h"
 #include "interface_types.h"
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 extern void* g_TextureMgr;                            /* texture manager */
 void cInterfaceModel_dtor(InterfaceModel* p, int flags);   /* InterfaceModel dtor */
 void cTexMan_Flush(void* p);
 void operator_delete(void* p);
 }
 /* Destructor: delete the model, then let the texture manager release its textures. */
-extern "C" Interface* Interface_Dtor(Interface* self, short flag)
+extern "C" Interface* cInterface_dtor(Interface* self, short flag)
 {
     if (self) {
         InterfaceModel* b = self->model;
         {
             AllocGuard g;
             cInterfaceModel_dtor(b, -1);
-            Mem_Free(0, b, "interface.cc", 0x45);
+            cMemMan_Deallocate(0, b, "interface.cc", 0x45);
         }
         cTexMan_Flush(g_TextureMgr);
         if (flag > 0)
@@ -53,42 +53,42 @@ void cInterface_Refresh(Interface* self, void* arg) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-extern void FileMan_FindMember(void*);
-extern unsigned char* FileMan_ReadData(void*);
+extern void cFileMan_Open(void*);
+extern unsigned char* cFileMan_Read_void(void*);
 extern int D_0055C0B8;                              /* u16 read from the interface file header */
 extern char D_004BDEC8[];                           /* "interface.cc" */
-extern void* Mem_Alloc(int, int, char*, int);
+extern void* cMemMan_Allocate(int, int, char*, int);
 extern InterfaceModel* cInterfaceModel_ctor(void*, unsigned char**, void*, int); /* InterfaceModel ctor from data */
-extern void* IeNode_FindChild(InterfaceModel*, char*); /* find element by name */
-extern void* IeElement_Create(void*);
+extern void* cInterfaceModel_GetChild(InterfaceModel*, char*); /* find element by name */
+extern void* cInterfaceModel_CreateInstance(void*);
 extern float cInterfaceModel_NumFrames(void*);
-extern void IeElement_PlayRange(void*, int, float, float);
+extern void cAnimator_StartAnimation(void*, int, float, float);
 }
 #pragma opt_propagation off
 /* Constructor: build the model from the interface file src and set up its "preview" element. */
-extern "C" Interface* Interface_Ctor(Interface* o, void* src) {
+extern "C" Interface* cInterface_ctor(Interface* o, void* src) {
     unsigned char* p;
     InterfaceModel* m;
     void* s;
     o->model = 0;
     o->preview = 0;
-    FileMan_FindMember(src);
-    p = FileMan_ReadData(src);
+    cFileMan_Open(src);
+    p = cFileMan_Read_void(src);
     p++;
     p++;
     D_0055C0B8 = *(unsigned short*)p;
     p += 2;
     {
         AllocGuard g;
-        m = (InterfaceModel*)Mem_Alloc(0, INTERFACE_MODEL_SIZE, D_004BDEC8, 0x2F);
+        m = (InterfaceModel*)cMemMan_Allocate(0, INTERFACE_MODEL_SIZE, D_004BDEC8, 0x2F);
     }
     if (m) m = cInterfaceModel_ctor(m, &p, src, 0);
     o->model = m;
     o->model->unk60 = 1;
-    s = IeNode_FindChild(o->model, "preview");
+    s = cInterfaceModel_GetChild(o->model, "preview");
     if (s) {
-        o->preview = IeElement_Create(s);
-        IeElement_PlayRange(o->preview, 1, -20.0f, 20.0f + cInterfaceModel_NumFrames(s));
+        o->preview = cInterfaceModel_CreateInstance(s);
+        cAnimator_StartAnimation(o->preview, 1, -20.0f, 20.0f + cInterfaceModel_NumFrames(s));
     }
     return o;
 }

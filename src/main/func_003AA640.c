@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { char pad[0x1D0]; } SkelNode;
 typedef struct { int cap; int count; SkelNode* data; } SkelVec;
-extern void SkelNode_CopyConstruct(SkelNode* d, SkelNode* s);
+extern void cBone_opAssign(SkelNode* d, SkelNode* s);
 extern void cBone_dtor(SkelNode* p, int f);
 
 SkelNode* std_vector_imp_cBone_erase(SkelVec* v, SkelNode* first, SkelNode* last)
@@ -17,7 +17,7 @@ SkelNode* std_vector_imp_cBone_erase(SkelVec* v, SkelNode* first, SkelNode* last
         SkelNode* d;
         d = first; s = last;
         while (s < end) {
-            SkelNode_CopyConstruct(d, s);
+            cBone_opAssign(d, s);
             s++; d++;
         }
     }

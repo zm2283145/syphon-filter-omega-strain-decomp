@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Message destructor: payload members, then cMessage base. */
-DEFINE_MESSAGE_TWO_MEMBER_DTOR(SoundPosRequest_dtor, D_004DAE30)
+DEFINE_MESSAGE_TWO_MEMBER_DTOR(cPlaySoundMsg_dtor_void, D_004DAE30)
 #pragma pop /* merge_units */
 /* merge_units: end func_001359D0 */
 
@@ -29,6 +29,6 @@ DEFINE_MESSAGE_TWO_MEMBER_DTOR(SoundPosRequest_dtor, D_004DAE30)
 #pragma cplusplus on
 
 /* Destructor: destroy two members, optionally delete. */
-DEFINE_TWO_MEMBER_DTOR(SoundRequest_dtor, FileMan_Release, 0x48, 0xE4)
+DEFINE_TWO_MEMBER_DTOR(cString_dtor, cFileMan_dtor, 0x48, 0xE4)
 #pragma pop /* merge_units */
 /* merge_units: end func_00135A60 */

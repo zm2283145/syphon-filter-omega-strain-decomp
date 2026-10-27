@@ -8,7 +8,7 @@
 
 /* Runtime array constructor: (array, ctor, dtor, element size, count). */
 extern int __construct_array(void* array, void* ctor, void* dtor, int size, int count);
-extern int CameraRecord_Construct(void*);
+extern int cXViewport_ctor(void*);
 extern List* std_list_deleter_tDataDelRec_ctor(List*);
 extern int cUserFrameEnv_dtor(int, int);
 extern int cUserFrameEnv_ctor(int);
@@ -20,7 +20,7 @@ Manager37F9D0* XLib_ctor(Manager37F9D0* self) {
     self->unk00 = -1;
     item = self->items[0];
     do {
-        CameraRecord_Construct(item);
+        cXViewport_ctor(item);
         item += 272;
     } while (item != self->items[8]);
     self->unk1058 = 0;

@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_00582680;
 
-void StaticInit_NetActivateAndControlMsgName(void) {
+void StaticInit_NetActivateAndControlMsg(void) {
     D_00582680 = "MSGGAME_NET_ACTIVATEANDCONTROL_REQUEST";
 }

@@ -33,16 +33,16 @@ typedef struct Node_003EE510 {
     char pad88[4];
     int skip;
 } Node_003EE510;
-extern void IeElement_EvaluateAt(void *p, float t);
-void IeNode_PropagateTrackColour(Node_003EE510 *n, float t)
+extern void viBufGetTs(void *p, float t);
+void cInterfaceModel_SetFrame(Node_003EE510 *n, float t)
 {
     int i;
     for (i = 0; i < n->nA; i++) {
-        IeElement_EvaluateAt(n->a[i], t);
+        viBufGetTs(n->a[i], t);
     }
     for (i = 0; i < n->nB; i++) {
         if (n->b[i]->skip <= 0) {
-            IeNode_PropagateTrackColour(n->b[i], t);
+            cInterfaceModel_SetFrame(n->b[i], t);
         }
     }
 }
@@ -51,9 +51,9 @@ void IeNode_PropagateTrackColour(Node_003EE510 *n, float t)
 
 /* merge_units: begin func_003EE5E0 */
 #pragma push /* merge_units */
-extern int IeNode_PropagateColour(Unk3EE5E0*, Vec4*);
+extern int cInterfaceModel_FilterChildren(Unk3EE5E0*, Vec4*);
 
-/* Stores a vector at +0xA0, then forwards it to IeNode_PropagateColour. */
+/* Stores a vector at +0xA0, then forwards it to cInterfaceModel_FilterChildren. */
 int func_003EE5E0(Unk3EE5E0* self, Vec4* v) {
     float x;
     float y;
@@ -68,7 +68,7 @@ int func_003EE5E0(Unk3EE5E0* self, Vec4* v) {
     self->unkA0.z = z;
     w = v->w;
     self->unkA0.w = w;
-    return IeNode_PropagateColour(self, v);
+    return cInterfaceModel_FilterChildren(self, v);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003EE5E0 */
@@ -85,8 +85,8 @@ extern "C" {
 It_3EE610 std_list_cInterfaceElementPtr_end(void* l);
 void cLListIterator_cInterfaceElementPtr_ctor(It_3EE610* out, It_3EE610* in);
 It_3EE610 std_list_cInterfaceElementPtr_begin(void* l);
-void IeElement_UpdateAnimation(void* p, float f);
-int IeNode_Update(Self_3EE610* self, float f);
+void cAnimator_NextFrame(void* p, float f);
+int cInterfaceModel_NextFrame(Self_3EE610* self, float f);
 }
 struct ItE_3EE610 : It_3EE610 { ItE_3EE610(const ItE_3EE610& o) { n = o.n; } ItE_3EE610(const It_3EE610& t) { cLListIterator_cInterfaceElementPtr_ctor((It_3EE610*)this, (It_3EE610*)&t); } };
 struct Self_3EE610 {
@@ -101,15 +101,15 @@ static inline ItE_3EE610 BeginE_3EE610(void* l) { return B1_3EE610(l); }
 static inline ItE_3EE610 End_3EE610(void* l) { return E0_3EE610(l); }
 static inline bool Ne_3EE610(const It_3EE610& a, const ItE_3EE610& b) { return a.n != b.n; }
 
-extern "C" int IeNode_Update(Self_3EE610* self, float f)
+extern "C" int cInterfaceModel_NextFrame(Self_3EE610* self, float f)
 {
     if (self->b60) {
         It_3EE610 it = ItE_3EE610(BeginE_3EE610(self->l8C));
         while (Ne_3EE610(it, End_3EE610(self->l8C))) {
-            IeElement_UpdateAnimation(it.n->val, f);
+            cAnimator_NextFrame(it.n->val, f);
             it.n = it.n->next;
         }
-        { int i; for (i = 0; i < self->n6E; i++) IeNode_Update(self->a84[i], f); }
+        { int i; for (i = 0; i < self->n6E; i++) cInterfaceModel_NextFrame(self->a84[i], f); }
     }
     return 1;
 }
@@ -151,7 +151,7 @@ extern "C" float cInterfaceModel_NumFrames(O3EE740* o) {
 
 /* merge_units: begin func_003EE830 */
 #pragma push /* merge_units */
-void IeNode_SetFlag61(char* self, char value) {
+void cInterfaceModel_SetPerspective(char* self, char value) {
     self[97] = value;
 }
 #pragma pop /* merge_units */
@@ -163,17 +163,17 @@ void IeNode_SetFlag61(char* self, char value) {
 #pragma inline_depth(10)
 struct Node_003EE840 { char pad[0x6E]; unsigned short count; char p70[0x84 - 0x70]; Node_003EE840** kids; };
 extern "C" {
-int String_AssignCStr_1C43A0(void* s, const char* name);
+int std_basic_string_char_char_traits_char_compare_charP(void* s, const char* name);
 int cString_opEq(void* s, const char* name);
 int std_opEq_basicstringR_charP(void* s, const char* name);
 void* func_003EEB20(void* s);
-Node_003EE840* IeNode_FindNode(Node_003EE840* n, const char* name);
+Node_003EE840* cInterfaceModel_FindChild(Node_003EE840* n, const char* name);
 }
 static inline Node_003EE840* F3(Node_003EE840* n, const char* name) {
     int i;
     if (cString_opEq(func_003EEB20(n), name)) return n;
     for (i = 0; i < n->count; i++) {
-        Node_003EE840* r = IeNode_FindNode(n->kids[i], name);
+        Node_003EE840* r = cInterfaceModel_FindChild(n->kids[i], name);
         if (r) return r;
     }
     return 0;
@@ -189,16 +189,16 @@ static inline Node_003EE840* F2(Node_003EE840* n, const char* name) {
 }
 static inline Node_003EE840* F1(Node_003EE840* n, const char* name) {
     int i;
-    if (String_AssignCStr_1C43A0(n, name) == 0) return n;
+    if (std_basic_string_char_char_traits_char_compare_charP(n, name) == 0) return n;
     for (i = 0; i < n->count; i++) {
         Node_003EE840* r = F2(n->kids[i], name);
         if (r) return r;
     }
     return 0;
 }
-extern "C" Node_003EE840* IeNode_FindNode(Node_003EE840* n, const char* name) {
+extern "C" Node_003EE840* cInterfaceModel_FindChild(Node_003EE840* n, const char* name) {
     int i;
-    if (String_AssignCStr_1C43A0(n, name) == 0) return n;
+    if (std_basic_string_char_char_traits_char_compare_charP(n, name) == 0) return n;
     for (i = 0; i < n->count; i++) {
         Node_003EE840* r = F1(n->kids[i], name);
         if (r) return r;

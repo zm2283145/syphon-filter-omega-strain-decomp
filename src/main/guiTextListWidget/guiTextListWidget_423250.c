@@ -21,7 +21,7 @@ typedef struct SsoString {
 typedef struct { char unused; } Allocator; /* empty allocator object passed by value */
 
 /* Replaces count characters at pos with the range [first, last). */
-extern void* String_Replace(SsoString* str, int pos, int count, const char* first, const char* last, Allocator alloc);
+extern void* std_basic_string_char_char_traits_char_do_replace(SsoString* str, int pos, int count, const char* first, const char* last, Allocator alloc);
 
 /* Assigns the range [first, last) to the string (replaces the whole contents). */
 void* func_00423250(SsoString* str, const char* first, const char* last)
@@ -32,7 +32,7 @@ void* func_00423250(SsoString* str, const char* first, const char* last)
         len = (unsigned char)str->h.s.shortLen;
     else
         len = str->longLen;
-    return String_Replace(str, 0, len, first, last, alloc);
+    return std_basic_string_char_char_traits_char_do_replace(str, 0, len, first, last, alloc);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00423250 */
@@ -44,7 +44,7 @@ void* func_00423250(SsoString* str, const char* first, const char* last)
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004BF5F8[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(GuiTextListWidget_Create, 0x100, D_004BF5F8, GuiTextListWidget_ctor)
+DEFINE_GUARDED_NEW_CTOR(ConcreteWidgetClassRep_GuiTextListWidget_Create, 0x100, D_004BF5F8, GuiTextListWidget_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_004232A0 */
 
@@ -54,7 +54,7 @@ DEFINE_GUARDED_NEW_CTOR(GuiTextListWidget_Create, 0x100, D_004BF5F8, GuiTextList
 #include "vtable_member_base_dtor.h"
 
 /* Derived destructor: member, then base, optionally delete. */
-DEFINE_VTABLE_MEMBER_BASE_DTOR(GuiArrayWidget_dtor_423350, D_004E0D20, 0x60, func_0013A040, GuiWidget_Destroy)
+DEFINE_VTABLE_MEMBER_BASE_DTOR(GuiArrayWidget_dtor_423350, D_004E0D20, 0x60, func_0013A040, GuiWidget_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00423350 */
 

@@ -59,9 +59,9 @@ extern char g_LosRequestMsgClass[];
 extern char D_004D9180[];
 extern char g_Game[];
 extern char g_LosCheckService[];
-void Event_Construct(void*, void*);
+void cMessage_ctor_cMessageNameR(void*, void*);
 void cMessage_dtor(void*, int);
-Svc* Service_Lookup(void* a, void* b);
+Svc* cSystemContainer_GetSystem(void* a, void* b);
 int cAirTaser_LosBlocked(HeldItem* h);
 }
 
@@ -83,7 +83,7 @@ struct LosMsg : MsgB {
     LosMsg(LosRes* r, const V& f, const V& d, void* o)
     {
         LosMsg* m = this;
-        Event_Construct(m, g_LosRequestMsgClass);
+        cMessage_ctor_cMessageNameR(m, g_LosRequestMsgClass);
         m->vtable = D_004D9180;
         m->x24 = 0;
         m->x28 = 0;
@@ -112,7 +112,7 @@ int cAirTaser_LosBlocked(HeldItem* h)
         d.Set(*last - from);
         LosRes res;
         LosMsg msg(&res, from, d, h->ctl);
-        Service_Lookup(g_Game, g_LosCheckService)->Post(&msg);
+        cSystemContainer_GetSystem(g_Game, g_LosCheckService)->Post(&msg);
         hit = res.hit;
     }
     return hit;

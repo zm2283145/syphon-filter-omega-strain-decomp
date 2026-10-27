@@ -10,7 +10,7 @@
 /* merge_units: begin func_00255860 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x2E4]; int pending; int a; int b; } Q255;
-int Backpack_TakeArmor(Q255* s, int* a, int* b) {
+int cBackpack_TakeFlakJacket(Q255* s, int* a, int* b) {
     if (s->pending) {
         s->pending--;
         *a = s->a;
@@ -32,14 +32,14 @@ typedef struct { float x, y, z, w; } V4_558A0;
 typedef struct { V4_558A0 a; V4_558A0 b; int id; int ref; } Ent_558A0;
 typedef struct { unsigned char type; char pad[3]; Ent_558A0 ents[5]; int count; unsigned char flag; char pad2[3]; } Slot_558A0;
 typedef struct { char pad[0x64]; Slot_558A0 slots[3]; } Pack_558A0;
-extern int WeaponInv_SlotOfItem(int key);
+extern int cWeapon_GetWeaponSlot(int key);
 static inline void Cp_558A0(Ent_558A0* d, Ent_558A0* s) { d->a = s->a; d->b = s->b; d->id = s->id; d->ref = s->ref; }
 #pragma opt_rotateloops off
-int Backpack_TakeItem(Pack_558A0* s, int id, int keep)
+int cBackpack_TakeWeapon(Pack_558A0* s, int id, int keep)
 {
     Slot_558A0* p; int i;
     int t;
-    t = WeaponInv_SlotOfItem(id); p = s->slots;
+    t = cWeapon_GetWeaponSlot(id); p = s->slots;
     i = 0;
     for (; i < 3; i++, p++) {
         if (p->type == (unsigned char)t) {
@@ -75,10 +75,10 @@ static inline void merge_flush_func_002558A0(void) {}
 typedef struct { unsigned char type; char pad[0xCF]; unsigned char flag; char pad2[3]; } Slot2559;
 typedef struct { char pad[0x64]; Slot2559 slots[3]; } Pack2559;
 #pragma opt_rotateloops off
-unsigned char Backpack_GetItemSlotFlag(Pack2559* s, int key) {
+unsigned char cBackpack_SlotIsReplaceable(Pack2559* s, int key) {
     Slot2559* p; int i;
     int t;
-    t = WeaponInv_SlotOfItem(key); p = s->slots;
+    t = cWeapon_GetWeaponSlot(key); p = s->slots;
     i = 0;
     for (; i < 3; i++, p++) {
         if (p->type == (unsigned char)t) return p->flag;

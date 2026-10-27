@@ -36,7 +36,7 @@ typedef struct NpcAi {
     int targetOverride;             /* 0x1C cleared by ResumeAITargeting */
 } NpcAi;
 
-/* 20-byte record in cNPC+0x17C, first byte read by cNPC_v28. */
+/* 20-byte record in cNPC+0x17C, first byte read by cNPC_UseCurrentLookAt. */
 typedef struct NpcRec14 {
     unsigned char unk00;
     char pad01[0x13];
@@ -51,7 +51,7 @@ typedef struct cNPC {
     NpcActor* actor;                /* 0x030 */
     char forceOnRadar;              /* 0x034 */
     char pad035[0xF];
-    char unk044[0x1C];              /* 0x044 sub-object passed to NpcAi_RequestMode */
+    char unk044[0x1C];              /* 0x044 sub-object passed to cStateMachine_ChangeState */
     float unk060;                   /* 0x060 */
     int travelSpeedOverride;        /* 0x064 0 = AI decides */
     char pad068[0x4];

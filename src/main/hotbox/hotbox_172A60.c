@@ -18,26 +18,26 @@
 
 /* Derived destructor: member, then base, optionally delete. */
 extern "C" {
-extern "C" void Actor_ApplyContactDamage();
-extern "C" void Actor_BaseLogicUpdate();
-extern "C" void Actor_BasePreLogic();
-extern "C" void Actor_BaseWorldUpdate();
-extern "C" void Actor_VirtualNop();
-extern "C" void Controller_DeathNotice();
-extern "C" void Hotbox_Contains();
-extern "C" void Node_GetFlag2C();
-extern "C" void Object_Activate();
-extern "C" void Object_AttachTransform();
-extern "C" void Object_GetAttachedOrSelf();
-extern "C" void cHotbox_v01();
-extern "C" void cHotbox_v43();
-extern "C" void GObj_GetID();
+extern "C" void cGOBJ_ReceiveDamage();
+extern "C" void cGOBJ_NextFrame();
+extern "C" void cGOBJ_CriticalNextFrame();
+extern "C" void cGOBJ_UpdateMotion();
+extern "C" void cGOBJ_CriticalUpdateMotion();
+extern "C" void cGOBJ_Die();
+extern "C" void cHotbox_Intersects();
+extern "C" void cGOBJ_IsEnabled();
+extern "C" void cGOBJ_Activate();
+extern "C" void cGOBJ_CreateXform();
+extern "C" void cGOBJ_ScriptGetRealObj();
+extern "C" void cHotbox_HandleMessage();
+extern "C" void cHotbox_HandleInteract();
+extern "C" void cSystem_ScriptGetObjectId();
 extern "C" void cSystem_SendCreated();
 extern "C" void cGOBJ_GetFloorPlane();
 extern "C" void func_00140E90();
-extern "C" void GObj_GetLifeState();
+extern "C" void cGOBJ_GetHealthState();
 extern "C" void cGOBJ_IsGeneratorCreated();
-extern "C" void Object_GetEye();
+extern "C" void cGOBJ_GetTargetPosition();
 extern "C" void cGOBJ_GetLosPosition();
 extern "C" void cGOBJ_HasHeadset();
 extern "C" void cGOBJ_SetStatus();
@@ -52,39 +52,39 @@ extern "C" void cGOBJ_GetNumSubTargets();
 extern "C" void cGOBJ_IsAimed();
 extern "C" void cGOBJ_InitNetwork();
 extern "C" void cGOBJ_CheckBullet();
-extern "C" void Hotbox_Disable();
-extern "C" void Hotbox_Enable();
-extern "C" void cHotbox_v0B();
-extern "C" void Hotbox_ScriptFilter();
-extern "C" void cHotbox_v14();
-extern "C" void cHotbox_v0A();
-extern "C" void cHotbox_v0E();
-extern "C" void cHotbox_v0F();
-extern "C" void Hotbox_GetBounds();
-extern "C" void Hotbox_Enable_173670();
-extern "C" void cHotbox_v09();
-extern "C" void cHotbox_v06();
-extern "C" void cHotbox_v07();
-extern "C" void cHotbox_v04();
-extern "C" void GObj_GetWorldMatrix();
-extern "C" void cNode_v3A();
-extern "C" void cGOBJ_v39();
-extern "C" void Node_GetComponentMatrix();
-extern "C" void PathObj_GetPosition();
-extern "C" void Node_GetLightRefPoint();
+extern "C" void cHotbox_Disable();
+extern "C" void cHotbox_Enable();
+extern "C" void cHotbox_getSOBJClassId();
+extern "C" void cHotbox_ScriptHandleMessage();
+extern "C" void cHotbox_Render();
+extern "C" void cHotbox_IsDeliverable();
+extern "C" void cHotbox_Init();
+extern "C" void cHotbox_Load();
+extern "C" void cHotbox_GetBBox();
+extern "C" void cHotbox_NetEnable();
+extern "C" void cHotbox_NetDisable();
+extern "C" void cHotbox_NetActivate();
+extern "C" void cHotbox_NetDeactivate();
+extern "C" void cHotbox_IsNetworked();
+extern "C" void cGOBJ_GetTransform_ForFloorTravel();
+extern "C" void cGOBJ_GetCameraCollisionReferencePoint();
+extern "C" void cGOBJ_GetTransform_ForCameraTracking();
+extern "C" void cGOBJ_GetTransform_ForTeleporting();
+extern "C" void cGOBJ_GetCenterOfMass();
+extern "C" void cGOBJ_GetActivationPoint();
 extern "C" void cGOBJ_v35();
-extern "C" void Node_GetWorldMatrix();
-extern "C" void cNode_v2B();
-extern "C" void cNode_v2A();
-extern "C" void cNode_v29();
-extern "C" void cNode_v28();
-extern "C" void cNode_v27();
-extern "C" void cNode_v26();
-extern "C" void cNode_v25();
-extern "C" void cNode_v24();
-extern "C" void Player_GetActiveWeapon();
-extern "C" void Object_Deactivate();
-extern "C" void cNode_v0D();
+extern "C" void cGOBJ_GetMatrix();
+extern "C" void cGOBJ_SetTranslation_ResetPhysics();
+extern "C" void cGOBJ_SetRotation_ResetPhysics();
+extern "C" void cGOBJ_SetTransform_ResetPhysics();
+extern "C" void cGOBJ_ApplyTranslation();
+extern "C" void cGOBJ_ApplyLocalRotation();
+extern "C" void cGOBJ_ApplyTransform();
+extern "C" void cGOBJ_SetTranslation();
+extern "C" void cGOBJ_SetRotation();
+extern "C" void cGOBJ_SetTransform();
+extern "C" void cGOBJ_Deactivate();
+extern "C" void cGOBJ_ProcessMessage();
 extern void * const D_004D9AC0[];
 void* std_vector_cGOBJPtr_dtor(void* self, short deleteFlag);
 void* cGOBJ_dtor(void* self, short deleteFlag);
@@ -103,7 +103,7 @@ extern "C" VtableMemberObject* cHotbox_dtor(VtableMemberObject* self,
     }
     return self;
 }
-void * const D_004D9AC0[72] = { (void*)0x0, (void*)0x0, (void*)cHotbox_dtor, (void*)cHotbox_v01, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)cHotbox_v04, (void*)cSystem_SendCreated, (void*)cHotbox_v06, (void*)cHotbox_v07, (void*)Hotbox_Enable_173670, (void*)cHotbox_v09, (void*)cHotbox_v0A, (void*)cHotbox_v0B, (void*)Hotbox_ScriptFilter, (void*)cNode_v0D, (void*)cHotbox_v0E, (void*)cHotbox_v0F, (void*)Actor_BaseLogicUpdate, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cHotbox_v14, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Hotbox_Enable, (void*)Hotbox_Disable, (void*)Node_GetFlag2C, (void*)cGOBJ_HasHeadset, (void*)cGOBJ_SetStatus, (void*)cGOBJ_GetStatus, (void*)cGOBJ_IsGeneratorCreated, (void*)cGOBJ_GetChildList_void_2, (void*)cGOBJ_GetChildList_void, (void*)Hotbox_GetBounds, (void*)cGOBJ_ScaleBBox, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)cNode_v24, (void*)cNode_v25, (void*)cNode_v26, (void*)cNode_v27, (void*)cNode_v28, (void*)cNode_v29, (void*)cNode_v2A, (void*)cNode_v2B, (void*)cGOBJ_GetTargetPriority, (void*)cGOBJ_GetLosPosition, (void*)Object_GetEye, (void*)cGOBJ_GetMovementState, (void*)func_00140E90, (void*)cGOBJ_GetSubTargetAimAdjust, (void*)cGOBJ_GetNumSubTargets, (void*)cGOBJ_IsAimed, (void*)Node_GetWorldMatrix, (void*)cGOBJ_v35, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)cGOBJ_v39, (void*)cNode_v3A, (void*)GObj_GetWorldMatrix, (void*)cGOBJ_GetFloorPlane, (void*)cGOBJ_InitNetwork, (void*)Actor_ApplyContactDamage, (void*)cGOBJ_CheckBullet, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice, (void*)Hotbox_Contains, (void*)cHotbox_v43, (void*)0x0, (void*)0x0 };
+void * const D_004D9AC0[72] = { (void*)0x0, (void*)0x0, (void*)cHotbox_dtor, (void*)cHotbox_HandleMessage, (void*)cSystem_ScriptGetObjectId, (void*)cGOBJ_ScriptGetRealObj, (void*)cHotbox_IsNetworked, (void*)cSystem_SendCreated, (void*)cHotbox_NetActivate, (void*)cHotbox_NetDeactivate, (void*)cHotbox_NetEnable, (void*)cHotbox_NetDisable, (void*)cHotbox_IsDeliverable, (void*)cHotbox_getSOBJClassId, (void*)cHotbox_ScriptHandleMessage, (void*)cGOBJ_ProcessMessage, (void*)cHotbox_Init, (void*)cHotbox_Load, (void*)cGOBJ_NextFrame, (void*)cGOBJ_CriticalNextFrame, (void*)cGOBJ_UpdateMotion, (void*)cGOBJ_CriticalUpdateMotion, (void*)cHotbox_Render, (void*)cGOBJ_Activate, (void*)cGOBJ_Deactivate, (void*)cHotbox_Enable, (void*)cHotbox_Disable, (void*)cGOBJ_IsEnabled, (void*)cGOBJ_HasHeadset, (void*)cGOBJ_SetStatus, (void*)cGOBJ_GetStatus, (void*)cGOBJ_IsGeneratorCreated, (void*)cGOBJ_GetChildList_void_2, (void*)cGOBJ_GetChildList_void, (void*)cHotbox_GetBBox, (void*)cGOBJ_ScaleBBox, (void*)cGOBJ_CreateXform, (void*)cGOBJ_SetTransform, (void*)cGOBJ_SetRotation, (void*)cGOBJ_SetTranslation, (void*)cGOBJ_ApplyTransform, (void*)cGOBJ_ApplyLocalRotation, (void*)cGOBJ_ApplyTranslation, (void*)cGOBJ_SetTransform_ResetPhysics, (void*)cGOBJ_SetRotation_ResetPhysics, (void*)cGOBJ_SetTranslation_ResetPhysics, (void*)cGOBJ_GetTargetPriority, (void*)cGOBJ_GetLosPosition, (void*)cGOBJ_GetTargetPosition, (void*)cGOBJ_GetMovementState, (void*)func_00140E90, (void*)cGOBJ_GetSubTargetAimAdjust, (void*)cGOBJ_GetNumSubTargets, (void*)cGOBJ_IsAimed, (void*)cGOBJ_GetMatrix, (void*)cGOBJ_v35, (void*)cGOBJ_GetActivationPoint, (void*)cGOBJ_GetCenterOfMass, (void*)cGOBJ_GetTransform_ForTeleporting, (void*)cGOBJ_GetTransform_ForCameraTracking, (void*)cGOBJ_GetCameraCollisionReferencePoint, (void*)cGOBJ_GetTransform_ForFloorTravel, (void*)cGOBJ_GetFloorPlane, (void*)cGOBJ_InitNetwork, (void*)cGOBJ_ReceiveDamage, (void*)cGOBJ_CheckBullet, (void*)cGOBJ_GetHealthState, (void*)cGOBJ_Die, (void*)cHotbox_Intersects, (void*)cHotbox_HandleInteract, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00172A60(void) {}
 #pragma pop /* merge_units */
@@ -147,21 +147,21 @@ extern int D_005721A8;
 extern unsigned char D_005721C0;
 extern unsigned char g_IsMultiplayer;
 void cGOBJ_ctor(Hotbox*, int*, int, void*);
-void PtrVec_InitEmpty(Items_172AE0*);
-void Mtx_SetBasis(Mtx* m, V4* a, V4* b, V4* c);
-void Mtx_SetTranslation(Mtx* m, V4* t);
-int IdMgr_FindCollision(int, int);
-void ZoneMgr_Associate(int, Hotbox*, int, int);
-void PtrVec_PushBack_171C70(Items_172AE0*, int*);
-void Event_Construct(void*, char*);
-void Event_Send(void*, int, int);
+void std_vector_cGOBJPtr_ctor_void(Items_172AE0*);
+void cMatrix_SetAxes(Mtx* m, V4* a, V4* b, V4* c);
+void cMatrix_SetTranslation(Mtx* m, V4* t);
+int nGobjManager_LookupGOBJ_int_int(int, int);
+void cTerrain_AddActivation(int, Hotbox*, int, int);
+void std_vector_cGOBJPtr_push_back(Items_172AE0*, int*);
+void cMessage_ctor_cMessageNameR(void*, char*);
+void QueueMessage_cMessageR_cSystemP_int(void*, int, int);
 void cMessage_dtor(void*, int);
 int* cArray_cGameGOBJPtr_opIndex(PtrVec* v, int i);
 int cArray_cGameGOBJPtr_Size(PtrVec* v);
 Item_172AE0*** std_vector_pod_int_data(Items_172AE0* v);
 int cArray_cHotboxPtr_PushBackActual(PtrVec* v, Hotbox** value);
-int NetMap_BindReceiver(int, int, Hotbox*);
-int NetGame_InitLocalSlot(int*, int);
+int cNetObj_AddSystem(int, int, Hotbox*);
+int NetGetMyClientIndex(int*, int);
 int NetGetPeerToPeerHostClientIndex(int, int*);
 }
 static inline int Read(Reader* r) { int v = *(int*)r->cur; r->cur += 4; return v; }
@@ -176,7 +176,7 @@ static inline void ReadV(Reader* r, V4* v, float w)
 }
 static inline void QR(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
 static inline void GC1L(void* d, const void* s) { const void* ss = s; void* dd = d; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(dd), "r"(ss) : "memory"); }
-static inline void Init(Msg_172AE0* pm) { Event_Construct(pm, g_cDisableMsgClass); pm->vt = D_004E0860; pm->f24 = -1; pm->f1c = 0x40; }
+static inline void Init(Msg_172AE0* pm) { cMessage_ctor_cMessageNameR(pm, g_cDisableMsgClass); pm->vt = D_004E0860; pm->f24 = -1; pm->f1c = 0x40; }
 static inline bool IsIdent(float* m) {
     return m[0] == 1.0f && m[1] == 0.0f && m[2] == 0.0f && m[3] == 0.0f &&
            m[4] == 0.0f && m[5] == 1.0f && m[6] == 0.0f && m[7] == 0.0f &&
@@ -186,11 +186,11 @@ static inline bool IsIdent(float* m) {
 static inline Leaf_172AE0* First(PtrVec* v) { return cArray_cGameGOBJPtr_Size(v) ? (Leaf_172AE0*)*cArray_cGameGOBJPtr_opIndex(v, 0) : 0; }
 static inline unsigned char IsLocal(void) { unsigned char v; if (g_IsMultiplayer) v = D_005721C0; else v = 1; return v; }
 #pragma inline_depth(10)
-static inline int LocalId() { int r=0;int a=D_005721A8;if(g_IsMultiplayer) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { /* Keep the default-id branch. */ asm { .set reorder } }return r; }
+static inline int LocalId() { int r=0;int a=D_005721A8;if(g_IsMultiplayer) { if(D_00494178==-1)NetGetMyClientIndex(&D_00494178,a);r=D_00494178; }else { /* Keep the default-id branch. */ asm { .set reorder } }return r; }
 #pragma opt_strength_reduction off
 #pragma opt_unroll_loops off
 #pragma opt_rotateloops off
-extern "C" Hotbox* cHotbox_ctor(Hotbox* self, Reader* r, int type)
+extern "C" Hotbox* cHotbox_ctor_cPopulationR_int(Hotbox* self, Reader* r, int type)
 {
     int c;
     H_172AE0 id;
@@ -208,7 +208,7 @@ extern "C" Hotbox* cHotbox_ctor(Hotbox* self, Reader* r, int type)
     Msg_172AE0* pm;
     cGOBJ_ctor(self, &gid, 8, D_004EE6B8);
     *(void**)self = D_004D9AC0;
-    { Items_172AE0* it = &self->items; PtrVec_InitEmpty(it); it->bC = 1; }
+    { Items_172AE0* it = &self->items; std_vector_cGOBJPtr_ctor_void(it); it->bC = 1; }
     self->bmin.x = 3.4028235e38f;
     self->bmin.y = 3.4028235e38f;
     self->bmin.z = 3.4028235e38f;
@@ -237,11 +237,11 @@ extern "C" Hotbox* cHotbox_ctor(Hotbox* self, Reader* r, int type)
         ReadV(r, &r2, 0.0f);
         ReadV(r, &pos, 1.0f);
         zero.x = 0.0f; zero.y = 0.0f; zero.z = 0.0f; zero.w = 1.0f;
-        Mtx_SetBasis(&m, &r0, &r1, &r2);
-        Mtx_SetTranslation(&m, &zero);
+        cMatrix_SetAxes(&m, &r0, &r1, &r2);
+        cMatrix_SetTranslation(&m, &zero);
         if (!IsIdent(&m.r[0].x)) {
-            Mtx_SetBasis(&m, &r0, &r1, &r2);
-            Mtx_SetTranslation(&m, &pos);
+            cMatrix_SetAxes(&m, &r0, &r1, &r2);
+            cMatrix_SetTranslation(&m, &pos);
             self->SetMatrix(&m, 0);
         }
     }
@@ -252,13 +252,13 @@ extern "C" Hotbox* cHotbox_ctor(Hotbox* self, Reader* r, int type)
     for (i = 0; i < n2; i += 2) {
         int a = Read(r);
         int b = Read(r);
-        c = IdMgr_FindCollision(a, b);
+        c = nGobjManager_LookupGOBJ_int_int(a, b);
         if (c) {
-            PtrVec_PushBack_171C70(&self->items, &c);
+            std_vector_cGOBJPtr_push_back(&self->items, &c);
             if (self->type == 1 || self->type == 6 || self->type == 7) {
                 pm = &msg;
                 Init(pm);
-                Event_Send(&msg, c, 0);
+                QueueMessage_cMessageR_cSystemP_int(&msg, c, 0);
                 msg.vt = D_004E0860;
                 cMessage_dtor(&msg, 0);
             }
@@ -268,8 +268,8 @@ extern "C" Hotbox* cHotbox_ctor(Hotbox* self, Reader* r, int type)
     self->hC = id;
     for (i = 0; i < n; i++) {
         if (regions[i] > 0) {
-            int c2 = IdMgr_FindCollision(regions[i], ids[i]);
-            if (c2) ZoneMgr_Associate(c2, self, 0, 0);
+            int c2 = nGobjManager_LookupGOBJ_int_int(regions[i], ids[i]);
+            if (c2) cTerrain_AddActivation(c2, self, 0, 0);
         } else if (regions[i] == -1 && ids[i] == -1) {
             self->b2C = 0;
         }
@@ -295,7 +295,7 @@ extern "C" Hotbox* cHotbox_ctor(Hotbox* self, Reader* r, int type)
         int t = self->h10.v;
         int nid;
         if (IsLocal()) nid = LocalId(); else { NetGetPeerToPeerHostClientIndex(D_005721A8, &tmp); nid = tmp; }
-        NetMap_BindReceiver(t, nid, self);
+        cNetObj_AddSystem(t, nid, self);
     }
     return self;
 }

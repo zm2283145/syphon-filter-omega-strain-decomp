@@ -1,10 +1,10 @@
 #include "types.h"
-extern void FreeList_Push(void*);
+extern void AbstractWidgetClassRep_AddClassRep(void*);
 extern char D_004DEAF0;
 extern void* D_005331C0;
 extern void* D_005331C8;
-void StaticInit_GuiAgentModifyFactory(void) {
+void StaticInit_GuiAgentModify(void) {
     D_005331C8 = &D_004DEAF0;
     D_005331C0 = "GuiAgentModify";
-    FreeList_Push(&D_005331C0);
+    AbstractWidgetClassRep_AddClassRep(&D_005331C0);
 }

@@ -28,29 +28,29 @@ typedef struct {
     int idx;
 } S2998B0;
 extern "C" {
-void* Gui_GetScreenStack(void);
-void GuiScreen_SetFocus(void* a, int b);
-void GuiWidget_SendEvent(void* a, void* b, int c, int d, int e);
+void* Gui_Canvas(void);
+void GuiCanvas_SetFocus(void* a, int b);
+void GuiWidget_SendMessage(void* a, void* b, int c, int d, int e);
 #if 0 /* merge_units */
 void GuiGameOptions_UpdateHints(S2998B0* s);
 #endif /* merge_units */
 #define GuiGameOptions_UpdateHints(a0) (GuiGameOptions_UpdateHints((int)(a0))) /* merge_units */
 
 }
-extern "C" void GuiGameOptions_Enter(S2998B0* s)
+extern "C" void GuiGameOptions_ActivateGroup(S2998B0* s)
 {
     if (s->items[s->idx]) {
         int r;
         s->items[s->idx]->flags |= 4;
         r = s->items[s->idx]->v.v15();
-        GuiScreen_SetFocus(Gui_GetScreenStack(), r);
+        GuiCanvas_SetFocus(Gui_Canvas(), r);
         s->x20 = r;
     }
     if (s->xAC)
         s->xAC->flags &= ~4;
     if (s->objs[s->idx]) {
-        GuiWidget_SendEvent(s, s->objs[s->idx], 10, 10, 0);
-        GuiWidget_SendEvent(s->objs[s->idx], Gui_GetScreenStack(), 0x10, 0, 0);
+        GuiWidget_SendMessage(s, s->objs[s->idx], 10, 10, 0);
+        GuiWidget_SendMessage(s->objs[s->idx], Gui_Canvas(), 0x10, 0, 0);
     }
     GuiGameOptions_UpdateHints(s);
 }
@@ -64,7 +64,7 @@ static inline void merge_flush_func_002998B0(void) {}
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
-int Loc_LookupText(int *, int );                    
+int nGlobalization_GetString_charP(int *, int );                    
 int GuiTextWidget_SetText(int, int, int);                       
 
 #pragma opt_common_subs off
@@ -96,7 +96,7 @@ void GuiGameOptions_UpdateHints(int arg0) {
             } else {
                 var_a0 = ((int*)"ToSave");
             }
-            GuiTextWidget_SetText(F_(arg0, 0x88, int), Loc_LookupText(var_a0, temp_a1_2), 0);
+            GuiTextWidget_SetText(F_(arg0, 0x88, int), nGlobalization_GetString_charP(var_a0, temp_a1_2), 0);
         }
     }
 }
@@ -126,14 +126,14 @@ int GuiTextWidget_SetText(void* w, char* text, int c);
 #endif /* merge_units */
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((int)(a0), (int)(a1), (a2))) /* merge_units */
 
-void GuiArrayWidget_Select(void* w, int a, int b);
+void GuiArrayWidget_SetSelected(void* w, int a, int b);
 #if 0 /* merge_units */
 void GuiGameOptions_UpdateHints(S_299AA0* self);
 #endif /* merge_units */
 #define GuiGameOptions_UpdateHints(a0) (GuiGameOptions_UpdateHints((int)(a0))) /* merge_units */
 
 
-void GuiGameOptions_Show(S_299AA0* self, int idx) {
+void GuiGameOptions_SelectGroup(S_299AA0* self, int idx) {
     int i;
     for (i = 0; i < 4; i++) {
         if (self->tabs[i]) {
@@ -147,7 +147,7 @@ void GuiGameOptions_Show(S_299AA0* self, int idx) {
     switch (idx) {
     case 3:
         if (self->x430) {
-            GuiArrayWidget_Select(self->x430, 0, 0);
+            GuiArrayWidget_SetSelected(self->x430, 0, 0);
         }
         break;
     }
@@ -200,34 +200,34 @@ extern char g_Game[];
 extern char D_004DADF0[];
 extern char D_004DAE10[];
 #if 0 /* merge_units */
-Ui_00299B90* Gui_GetScreenStack(void);
+Ui_00299B90* Gui_Canvas(void);
 #endif /* merge_units */
-#define Gui_GetScreenStack() ((Ui_00299B90 *)Gui_GetScreenStack()) /* merge_units */
+#define Gui_Canvas() ((Ui_00299B90 *)Gui_Canvas()) /* merge_units */
 
-void GuiGameOptions_ShowMenu(S_00299B90* self);
-void GuiGameOptions_Leave(S_00299B90* self);
+void GuiGameOptions_DeactivateGroup(S_00299B90* self);
+void GuiGameOptions_ExitScreen(S_00299B90* self);
 #if 0 /* merge_units */
-void GuiGameOptions_Enter(S_00299B90* self);
+void GuiGameOptions_ActivateGroup(S_00299B90* self);
 #endif /* merge_units */
-#define GuiGameOptions_Enter(a0) (GuiGameOptions_Enter((S2998B0 *)(a0))) /* merge_units */
+#define GuiGameOptions_ActivateGroup(a0) (GuiGameOptions_ActivateGroup((S2998B0 *)(a0))) /* merge_units */
 
-void GuiGameOptions_Close(S_00299B90* self, int a);
-void GuiStartMenu_CloseAll(S_00299B90* self);
-void GameOptions_Apply(void* p, int n);
-void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
-void SoundEvent_Ctor(SoundEventMsg* msg, void* action, int flags);
-void Event_Send(void* msg, void* target, int flags);
+void GuiGameOptions_ApplySettings(S_00299B90* self, int a);
+void GuiStartMenu_PopStartMenu(S_00299B90* self);
+void cGameOptions_Apply(void* p, int n);
+void cSndFx_ctor_int_charP_cGOBJP_int(SoundRequest* req, int kind, void* name, int a, int b);
+void cStopSoundMsg_ctor_cSndFxR_bool(SoundEventMsg* msg, void* action, int flags);
+void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int flags);
 #if 0 /* merge_units */
-void FileMan_Release(void* part, int flags);
+void cFileMan_dtor(void* part, int flags);
 #endif /* merge_units */
-#define FileMan_Release(a0, a1) (FileMan_Release((a0), (a1))) /* merge_units */
+#define cFileMan_dtor(a0, a1) (cFileMan_dtor((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 void cMessage_dtor(void* msg, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((a0), (a1))) /* merge_units */
 
-void SoundAction_CtorVoice(void* action, int kind, char* voice, int a, int b);
+void cSndFx_SetSndFx(void* action, int kind, char* voice, int a, int b);
 void SoundMsg_WrapAction(SoundMsg* msg, void* action);
 }
 static inline unsigned char Down_00299B90(Ev_00299B90* e)
@@ -256,62 +256,62 @@ static inline bool Held_00299B90(Ev_00299B90* e, unsigned int b)
     return e->type == 1 && e->f2 == 0 && e->btn == b && e->f6 == 1;
 }
 /* Options page input handler: back/confirm/select buttons, gamma slider sound preview, default fallback. */
-extern "C" int GuiGameOptions_HandleInput(S_00299B90* self, Ev_00299B90* ev)
+extern "C" int GuiGameOptions_onInput(S_00299B90* self, Ev_00299B90* ev)
 {
     {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x10 && ev->f6 == 0;
         if (b) {
-            if (!Gui_GetScreenStack()->f20 || Gui_GetScreenStack()->f20->f10 != -1) {
-                GuiGameOptions_Close(self, 0);
-                if (self->x1C == Gui_GetScreenStack()) {
-                    GuiGameOptions_Leave(self);
+            if (!Gui_Canvas()->f20 || Gui_Canvas()->f20->f10 != -1) {
+                GuiGameOptions_ApplySettings(self, 0);
+                if (self->x1C == Gui_Canvas()) {
+                    GuiGameOptions_ExitScreen(self);
                     return 1;
                 }
             } else {
-                GuiGameOptions_ShowMenu(self);
+                GuiGameOptions_DeactivateGroup(self);
                 return 1;
             }
         }
     }
     {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x2000 && ev->f6 == 0;
-        if (b && Gui_GetScreenStack()->f20->f10 != -1) {
-            GuiGameOptions_Enter(self);
+        if (b && Gui_Canvas()->f20->f10 != -1) {
+            GuiGameOptions_ActivateGroup(self);
             return 1;
         }
     }
     if (Press_00299B90(ev, 0x80)) {
         if (self->b400 && self->p84 && (self->p84->flags & 2))
             return 1;
-        GuiGameOptions_Close(self, 1);
+        GuiGameOptions_ApplySettings(self, 1);
         return 1;
     }
     {
         if (Held_00299B90(ev, 0x8000) || Held_00299B90(ev, 0x2000)) {
             W_00299B90* w;
-            if (Gui_GetScreenStack()->f20 == (w = self->p41C)) {
+            if (Gui_Canvas()->f20 == (w = self->p41C)) {
                 SoundEventMsg evm;
                 SoundMsg play;
                 SoundRequest req;
                 self->fC4 = w->x64 / 100.0f;
-                GameOptions_Apply(self->xB8, 0x20);
-                SoundRequest_Ctor(&req, 4, D_0048B908, 0, 0);
-                SoundEvent_Ctor(&evm, &req, 0);
-                FileMan_Release(req.partB, -1);
-                FileMan_Release(req.partA, -1);
+                cGameOptions_Apply(self->xB8, 0x20);
+                cSndFx_ctor_int_charP_cGOBJP_int(&req, 4, D_0048B908, 0, 0);
+                cStopSoundMsg_ctor_cSndFxR_bool(&evm, &req, 0);
+                cFileMan_dtor(req.partB, -1);
+                cFileMan_dtor(req.partA, -1);
                 evm.flag = 1;
-                Event_Send(&evm, g_Game, 1);
-                SoundAction_CtorVoice(self->action, 4, D_0048B908, 0, 0);
+                QueueMessage_cMessageR_cSystemP_int(&evm, g_Game, 1);
+                cSndFx_SetSndFx(self->action, 4, D_0048B908, 0, 0);
                 SoundMsg_WrapAction(&play, self->action);
                 play.flag = 1;
-                Event_Send(&play, g_Game, 1);
+                QueueMessage_cMessageR_cSystemP_int(&play, g_Game, 1);
                 play.vtbl = D_004DAE10;
-                FileMan_Release(play.partB, -1);
-                FileMan_Release(play.partA, -1);
+                cFileMan_dtor(play.partB, -1);
+                cFileMan_dtor(play.partA, -1);
                 cMessage_dtor(&play, 0);
                 evm.vtbl = D_004DADF0;
-                FileMan_Release(evm.partB, -1);
-                FileMan_Release(evm.partA, -1);
+                cFileMan_dtor(evm.partB, -1);
+                cFileMan_dtor(evm.partA, -1);
                 cMessage_dtor(&evm, 0);
                 return 1;
             }
@@ -322,15 +322,15 @@ extern "C" int GuiGameOptions_HandleInput(S_00299B90* self, Ev_00299B90* ev)
     {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x800 && ev->f6 == 0;
         if (b && self->b400) {
-            GuiStartMenu_CloseAll(self);
+            GuiStartMenu_PopStartMenu(self);
             return 1;
         }
     }
     return 0;
 }
-#undef Gui_GetScreenStack /* merge_units */
-#undef GuiGameOptions_Enter /* merge_units */
-#undef FileMan_Release /* merge_units */
+#undef Gui_Canvas /* merge_units */
+#undef GuiGameOptions_ActivateGroup /* merge_units */
+#undef cFileMan_dtor /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00299B90(void) {}

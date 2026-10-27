@@ -12,8 +12,8 @@ extern void cCollisionModel_FaceProperties_dtor(void);
 extern void __register_global_object(void*, void*, void*);
 extern char* cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_3(Hdr_60C0* owner, int* key);
 extern unsigned char* cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_5(Hdr_60C0* hdr, int* offset);
-extern void GatherRecords_Append(void* out, unsigned char* rec, int index, Surf_60C0* surf, Owner_60C0* owner);
-extern void Col_CalcTriangleNormal(void* out);
+extern void cCollisionFace_SetWithoutCalculatingNormal(void* out, unsigned char* rec, int index, Surf_60C0* surf, Owner_60C0* owner);
+extern void cCollisionFace_CalculateUnitNormal(void* out);
 static inline Surf_60C0* GetSurf_60C0(Owner_60C0* ctx, int index) {
     int key[1];
     Hdr_60C0* owner = ctx->ref->hdr;
@@ -29,7 +29,7 @@ static inline Surf_60C0* GetSurf_60C0(Owner_60C0* ctx, int index) {
     key[0] = owner->key;
     return (Surf_60C0*)(cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_3(owner, key) + index * 16);
 }
-void Col_ReconstructSourceTriangle(void* out, Src_60C0* src) {
+void cCollisionFace_Set_cCollisionModelFaceLocatorR(void* out, Src_60C0* src) {
     unsigned char* rec;
     int surf;
     Owner_60C0* owner;
@@ -52,6 +52,6 @@ void Col_ReconstructSourceTriangle(void* out, Src_60C0* src) {
         rec = cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_5(hdr, &offset16) + index * 16;
     }
     surf = (unsigned char)(rec[10] >> 1);
-    GatherRecords_Append(out, rec, index, GetSurf_60C0(owner, surf), owner);
-    Col_CalcTriangleNormal(out);
+    cCollisionFace_SetWithoutCalculatingNormal(out, rec, index, GetSurf_60C0(owner, surf), owner);
+    cCollisionFace_CalculateUnitNormal(out);
 }

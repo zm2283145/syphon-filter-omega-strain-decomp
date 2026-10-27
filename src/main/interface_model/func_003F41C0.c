@@ -1,7 +1,7 @@
 #include "types.h"
 
-/* IeDiffuseTrack_Construct: piecewise-linear evaluation of a 3-component (colour) track;
- * the key search is IeScalarTrack_Construct's (interface_model_3F3E70.c). */
+/* cKeyframeAnimation_tRGB_Update: piecewise-linear evaluation of a 3-component (colour) track;
+ * the key search is cKeyframeAnimation_float_Update's (interface_model_3F3E70.c). */
 typedef struct { float t; float v[3]; } Key;
 typedef struct {
     char pad0[0x18];
@@ -18,7 +18,7 @@ static inline Key* Last(Curve* c) { return c->keys + c->count - 1; }
 
 #pragma opt_strength_reduction off
 #pragma opt_propagation off
-void IeDiffuseTrack_Construct(Curve* c, float t)
+void cKeyframeAnimation_tRGB_Update(Curve* c, float t)
 {
     /* Local declaration order matters for register allocation.
      * `cc` (an un-propagated alias of c) makes the second scan loop reload

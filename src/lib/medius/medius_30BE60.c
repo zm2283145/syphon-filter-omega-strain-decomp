@@ -22,7 +22,7 @@ typedef struct {
 extern int rt_comm_receive_from(int sock, void *from, unsigned short *fromlen, char *buf, int size, unsigned short *len);
 extern int func_0030B760(char *resp, char *hdr);
 extern int rt_time_elapsed(void *timer, unsigned int *ms);
-extern int String_CompareN(const char *a, const char *b, unsigned int n);
+extern int Libc_Strncmp(const char *a, const char *b, unsigned int n);
 extern char D_004AFAB0[];
 extern char D_004AFAE0[];
 extern char D_004AFB18[];
@@ -48,16 +48,16 @@ int func_0030BE60(UpnpObj *o, unsigned char *done)
         if (len == 200) {
             switch (o->req->kind) {
             case 0x20:
-                if (String_CompareN(D_004AFAB0, o->req->service, 0x200) != 0) return 10;
+                if (Libc_Strncmp(D_004AFAB0, o->req->service, 0x200) != 0) return 10;
                 break;
             case 0x40:
-                if (String_CompareN(D_004AFAE0, o->req->service, 0x200) != 0) return 10;
+                if (Libc_Strncmp(D_004AFAE0, o->req->service, 0x200) != 0) return 10;
                 break;
             case 0x1000:
-                if (String_CompareN(D_004AFB18, o->req->service, 0x200) != 0) return 10;
+                if (Libc_Strncmp(D_004AFB18, o->req->service, 0x200) != 0) return 10;
                 break;
             case 0x800:
-                if (String_CompareN(D_004AFB48, o->req->service, 0x200) != 0) return 10;
+                if (Libc_Strncmp(D_004AFB48, o->req->service, 0x200) != 0) return 10;
                 break;
             default:
                 return 13;
@@ -108,7 +108,7 @@ int func_00310988(void** h, int n, int x);
 int rt_comm_create(void* p, char* addr, unsigned short port, Opt_30BFE8* o);
 int func_00310C30(void* h);
 int rt_comm_destroy(void* p);
-int Socket_WriteConnected(void* p, char* buf, unsigned short len, unsigned short* out);
+int rt_comm_send(void* p, char* buf, unsigned short len, unsigned short* out);
 void* memset(void* d, int c, unsigned int n);
 int sprintf(char* d, const char* fmt, ...);
 int strlen(const char* s);
@@ -139,7 +139,7 @@ int UPnP_SendQueryStateVariable(Conn_30BFE8* c, int flags, char* body)
         return 5;
     }
     sprintf(c->req->buf, D_004AFB78, c->req->host, addr, port, strlen(body) + 0x11C, body);
-    if (Socket_WriteConnected(c->req->p0, c->req->buf, strlen(c->req->buf), &written) != 0
+    if (rt_comm_send(c->req->p0, c->req->buf, strlen(c->req->buf), &written) != 0
         || strlen(c->req->buf) != written) {
         rt_comm_destroy(c->req->p0);
         func_00310C30(c->req->h);
@@ -230,7 +230,7 @@ int UPnP_SendSoapAction(Conn_30C1B8* c, char* action, char* args)
     sprintf(c->req->buf, D_004AFD70, c->req->host, addr, port,
             n1 + n2,
             c->req->path, action, action, c->req->path, args, action);
-    if (Socket_WriteConnected(c->req->p0, c->req->buf, strlen(c->req->buf), &written) != 0
+    if (rt_comm_send(c->req->p0, c->req->buf, strlen(c->req->buf), &written) != 0
         || strlen(c->req->buf) != written) {
         rt_comm_destroy(c->req->p0);
         func_00310C30(c->req->h);

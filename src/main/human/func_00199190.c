@@ -3,7 +3,7 @@ typedef struct { void* vtable; char base[0x20]; signed char value; signed char w
 extern char D_004EEE98[];
 extern char D_004DA9D0[];
 extern char D_004DCF10[];
-extern void Event_Construct(Msg_199190* msg, void* name);
+extern void cMessage_ctor_cMessageNameR(Msg_199190* msg, void* name);
 extern void cMessage_dtor(Msg_199190* msg, int flags);
 extern signed char NetStream_ReadS8(void);
 extern void Stream_ReadByte(signed char* out);
@@ -15,7 +15,7 @@ void Actor_HandleNetSetFlag(void* self)
     Msg_199190 msg;
     signed char* wp;
     signed char* vp;
-    Event_Construct(&msg, D_004EEE98);
+    cMessage_ctor_cMessageNameR(&msg, D_004EEE98);
     msg.vtable = D_004DA9D0;
     wp = &msg.which;
     *wp = NetStream_ReadS8();

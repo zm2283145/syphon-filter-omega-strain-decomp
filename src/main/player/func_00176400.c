@@ -12,7 +12,7 @@ struct Src {
 };
 struct Owner_76400 { char pad[0x50]; Src* src; };
 struct P_76400 { char pad[0x30]; char* p30; char pad34[0x1A0 - 0x34]; Owner_76400* x1A0; };
-extern "C" void Weapon_MuzzleFrame(Mtx* out, void* p, unsigned char f);
+extern "C" void cMan_GetGunBarrelMatrix(Mtx* out, void* p, unsigned char f);
 static inline Mtx* GetXform(Src* s) {
     if (s->dirty) s->Refresh();
     return &s->xform;
@@ -33,8 +33,8 @@ static inline void MulV(V* o, Mtx* m, V* v) {
         sqc2 vf12, 0x0(o)
     }
 }
-/* cPlayer_v17: muzzle/eye frame (else branch is cNPC_v17, npc_14F380.c) */
-extern "C" int cPlayer_v17(P_76400* self, Mtx* out, int flag, int eye)
+/* cPlayer_GetBulletDir: muzzle/eye frame (else branch is cNPC_GetBulletDir, npc_14F380.c) */
+extern "C" int cPlayer_GetBulletDir(P_76400* self, Mtx* out, int flag, int eye)
 {
     char* p = self->p30;
     if (eye) {
@@ -48,7 +48,7 @@ extern "C" int cPlayer_v17(P_76400* self, Mtx* out, int flag, int eye)
         __int128 qa; __int128 qb; Mtx* s;
         unsigned short f;
         if (flag) f = 1; else f = 0;
-        { char* q = p + 0x60; Weapon_MuzzleFrame(&tmp, q, f); }
+        { char* q = p + 0x60; cMan_GetGunBarrelMatrix(&tmp, q, f); }
         s = &tmp;
         asm {
             .set noreorder

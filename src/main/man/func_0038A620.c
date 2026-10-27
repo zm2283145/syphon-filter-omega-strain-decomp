@@ -58,7 +58,7 @@ static inline void Xform(V& o, const V& in, M* m) {
         sqc2 vf12, 0x0(out)
     }
 }
-extern "C" void ActorRender_UnionAttachSphere(Sphere* s, Box* box, M* m)
+extern "C" void cSkeletonBBoxContribution_ContributeToBBox(Sphere* s, Box* box, M* m)
 {
     V c = s->c;
     if (!s->b4)

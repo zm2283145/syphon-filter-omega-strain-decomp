@@ -14,7 +14,7 @@ typedef struct RegFields {
 } RegFields;
 
 /* Packs the unpacked register fields into a 64-bit register value. */
-unsigned long Renderer_SetTestReg(RegFields* s) {
+unsigned long XLib_GetPixelEnv(RegFields* s) {
     return (unsigned long)s->f0
          | ((unsigned long)s->f1 << 1)
          | ((unsigned long)s->f4 << 4)

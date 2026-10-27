@@ -17,7 +17,7 @@
  */
 
 
-void Npc_v1B(Actor* actor, int value) {
+void cHuman_SetStatus(Actor* actor, int value) {
     ActorLink3584* link = actor->unk3584;
 
     if (link != 0) {
@@ -35,7 +35,7 @@ typedef struct { char pad[0x32]; unsigned char b32; } Sub32;
 typedef struct { char pad[0x3584]; Sub32* sub; } Obj3584;
 
 /* Returns sub->b32, or 0 if there is no sub object. */
-unsigned char Npc_v1C(Obj3584* self)
+unsigned char cHuman_GetStatus(Obj3584* self)
 {
     if (self->sub)
         return self->sub->b32;
@@ -59,7 +59,7 @@ typedef struct Holder3584 {
 } Holder3584;
 
 /* Returns sub->value (byte at +0x33) or 0 when the sub-object at +0x3584 is absent. */
-int Npc_v1A(Holder3584* self) {
+int cHuman_HasHeadset(Holder3584* self) {
     Sub33* sub = self->sub;
     if (sub) {
         return sub->value;
@@ -73,11 +73,11 @@ static inline void merge_flush_func_00184CA0(void) {}
 
 /* merge_units: begin func_00184CC0 */
 #pragma push /* merge_units */
-int Npc_v04(void) {
+int cHuman_IsNetworked(void) {
     return 1;
 }
 
-unsigned char Actor_IsReplica(Actor* actor) {
+unsigned char cHuman_IsGeneratorCreated(Actor* actor) {
     return actor->unk3598;
 }
 /* merge_units: generate this block's code under its own pragmas */

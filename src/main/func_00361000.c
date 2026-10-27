@@ -1,4 +1,4 @@
-/* GuiAgentInfo_Refresh: fill the agent score sheet (name, team, rank, ratings and award columns, stats
+/* GuiAgentInfo_SetupWidgets: fill the agent score sheet (name, team, rank, ratings and award columns, stats
  * table, rank badge, online buttons). */
 #pragma cplusplus on
 #include "types.h"
@@ -41,59 +41,59 @@ extern char D_004BB868[], D_004BB8B0[], D_004BB8C0[], D_004BB8D0[], D_004BB8E0[]
 extern char D_004BB908[], D_004BB910[], D_004BB920[], D_004BB928[], D_004BB930[], D_004BB940[], D_004BB948[];
 extern char D_004A7520[];
 extern char D_00587BE0[], D_00587BD0[];
-void* Agent_GetSelected(void* a, int b);
-char* String_CStr(void* str);
+void* cGameSystem_GetAgentData(void* a, int b);
+char* std_basic_string_char_char_traits_char_c_str(void* str);
 void GuiTextWidget_SetText(void* w, char* text, int flags);
-char* Loc_LookupText(char* key);
-char* Loc_GetStoredKey(int key);
+char* nGlobalization_GetString_charP(char* key);
+char* nGlobalization_GetStringTag(int key);
 int sprintf(char* buf, const char* fmt, ...);
-Wid_1000* GuiWidget_FindChildByName(void* self, char* name);
-void GuiTextArrayWidget_SetHAlign(Wid_1000* w, int a);
-void GuiArrayWidget_ColumnWidth(Wid_1000* w, int col, int width);
-void GuiTextArrayWidget_SetCellText(Wid_1000* w, int col, int row, char* text);
-void GuiTextArrayWidget_SetCellRgba(Wid_1000* w, int col, int row, char* colour);
-void GuiTextArrayWidget_SetCellHAlign(Wid_1000* w, int col, int row, int align);
+Wid_1000* GuiWidget_FindChild_charP(void* self, char* name);
+void GuiTextArrayWidget_SetTextFormat(Wid_1000* w, int a);
+void GuiArrayWidget_SetColumnWidth(Wid_1000* w, int col, int width);
+void GuiTextArrayWidget_SetText(Wid_1000* w, int col, int row, char* text);
+void GuiTextArrayWidget_SetElementTextColor(Wid_1000* w, int col, int row, char* colour);
+void GuiTextArrayWidget_SetElementTextFormat(Wid_1000* w, int col, int row, int align);
 void func_00296FA0(Vec_1000* v);
 void func_00299360(Vec_1000* v, int f);
-void AgentData_GetRatings(void* ag, Vec_1000* v);
-void AgentData_GetAwardRows(void* ag, int a, Vec_1000* v);
-void GuiBitmapWidget_SetImage(void* w, char* name, int img);
-void* DME_GetLobby(void);
+void cAgentData_GetRatings(void* ag, Vec_1000* v);
+void cAgentData_GetAchievements(void* ag, int a, Vec_1000* v);
+void GuiBitmapWidget_SetBitmap(void* w, char* name, int img);
+void* cDME_GetLobby(void);
 int SFOLobby_CellContainsAgent(void* lb, int id, int f);
 int SFOLobby_ContactListContainsAgent(void* lb, int id, int f);
-void GuiAgentInfo_Refresh(Self_1000* self);
+void GuiAgentInfo_SetupWidgets(Self_1000* self);
 }
 
-extern "C" void GuiAgentInfo_Refresh(Self_1000* self)
+extern "C" void GuiAgentInfo_SetupWidgets(Self_1000* self)
 {
-    void* ag = Agent_GetSelected(g_Game, -1);
+    void* ag = cGameSystem_GetAgentData(g_Game, -1);
     char buf[0x10];
     char* t;
-    GuiTextWidget_SetText(self->w100, String_CStr(self->strB8), 0);
-    t = String_CStr(self->strC4);
+    GuiTextWidget_SetText(self->w100, std_basic_string_char_char_traits_char_c_str(self->strB8), 0);
+    t = std_basic_string_char_char_traits_char_c_str(self->strC4);
     if (!t || !*t)
-        t = Loc_LookupText(D_004BB8B0);
+        t = nGlobalization_GetString_charP(D_004BB8B0);
     GuiTextWidget_SetText(self->w108, t ? t : D_004BB868, 0);
     sprintf(buf, D_004BB8C0, self->rank + 1);
-    t = Loc_LookupText(buf);
+    t = nGlobalization_GetString_charP(buf);
     GuiTextWidget_SetText(self->w104, t ? t : D_004BB868, 0);
     {
-        Wid_1000* c = GuiWidget_FindChildByName(self, D_004BB8D0);
+        Wid_1000* c = GuiWidget_FindChild_charP(self, D_004BB8D0);
         c = (c && c->IsA(D_004A7520)) ? c : 0;
         if (c)
-            GuiTextWidget_SetText(c, Loc_LookupText(self->team == 1 ? D_004BB8E0 : D_004BB8F0), 0);
+            GuiTextWidget_SetText(c, nGlobalization_GetString_charP(self->team == 1 ? D_004BB8E0 : D_004BB8F0), 0);
     }
     self->w10C->SetCols(2, 8);
-    GuiTextArrayWidget_SetHAlign(self->w10C, 2);
-    GuiArrayWidget_ColumnWidth(self->w10C, 0, 0x70);
-    GuiArrayWidget_ColumnWidth(self->w10C, 1, 10);
+    GuiTextArrayWidget_SetTextFormat(self->w10C, 2);
+    GuiArrayWidget_SetColumnWidth(self->w10C, 0, 0x70);
+    GuiArrayWidget_SetColumnWidth(self->w10C, 1, 10);
     {
         Vec_1000 r;
         int j;
         int i;
         func_00296FA0(&r);
         r.own = 1;
-        AgentData_GetRatings(Agent_GetSelected(g_Game, -1), &r);
+        cAgentData_GetRatings(cGameSystem_GetAgentData(g_Game, -1), &r);
         j = 0;
         for (i = 0; i < 6; i++) {
             char line[0x20];
@@ -104,24 +104,24 @@ extern "C" void GuiAgentInfo_Refresh(Self_1000* self)
                 if (self->flags[i][k]) idx = j;
             }
             if (idx == -1) {
-                s = Loc_LookupText(D_004BB8F8);
+                s = nGlobalization_GetString_charP(D_004BB8F8);
             } else {
-                sprintf(line, D_004BB908, Loc_GetStoredKey(r.data[idx].key));
-                s = Loc_LookupText(line);
+                sprintf(line, D_004BB908, nGlobalization_GetStringTag(r.data[idx].key));
+                s = nGlobalization_GetString_charP(line);
             }
-            GuiTextArrayWidget_SetCellText(self->w10C, 0, i, s);
+            GuiTextArrayWidget_SetText(self->w10C, 0, i, s);
         }
         {
             Vec_1000 a;
             func_00296FA0(&a);
             a.own = 1;
-            AgentData_GetAwardRows(ag, 0, &a);
+            cAgentData_GetAchievements(ag, 0, &a);
             int n;
             for (n = 0; n < a.count && n < 8; n++) {
                 if (self->award[n]) {
                     char line[0x20];
-                    sprintf(line, D_004BB908, Loc_GetStoredKey(((Rec_1000*)((char*)a.data + n * sizeof(Rec_1000)))->key));
-                    GuiTextArrayWidget_SetCellText(self->w10C, 1, n, Loc_LookupText(line));
+                    sprintf(line, D_004BB908, nGlobalization_GetStringTag(((Rec_1000*)((char*)a.data + n * sizeof(Rec_1000)))->key));
+                    GuiTextArrayWidget_SetText(self->w10C, 1, n, nGlobalization_GetString_charP(line));
                 }
             }
             func_00299360(&a, 0);
@@ -129,23 +129,23 @@ extern "C" void GuiAgentInfo_Refresh(Self_1000* self)
         func_00299360(&r, 0);
     }
     self->w110->SetCols(2, 0xC);
-    GuiArrayWidget_ColumnWidth(self->w110, 0, 0xA0);
-    GuiArrayWidget_ColumnWidth(self->w110, 1, 10);
+    GuiArrayWidget_SetColumnWidth(self->w110, 0, 0xA0);
+    GuiArrayWidget_SetColumnWidth(self->w110, 1, 10);
     {
         int i;
         for (i = 0; i < 12; i++) {
             char line[0x20];
             sprintf(line, D_004BB910, i);
-            GuiTextArrayWidget_SetCellText(self->w110, 0, i, Loc_LookupText(line));
+            GuiTextArrayWidget_SetText(self->w110, 0, i, nGlobalization_GetString_charP(line));
             if (i == 6 || i == 7)
                 sprintf(line, D_004BB920, self->vals[i]);
             else
                 sprintf(line, D_004BB928, self->vals[i]);
-            GuiTextArrayWidget_SetCellText(self->w110, 1, i, line);
-            GuiTextArrayWidget_SetCellRgba(self->w110, 0, i, D_00587BE0);
-            GuiTextArrayWidget_SetCellHAlign(self->w110, 0, i, 2);
-            GuiTextArrayWidget_SetCellRgba(self->w110, 1, i, D_00587BD0);
-            GuiTextArrayWidget_SetCellHAlign(self->w110, 1, i, 1);
+            GuiTextArrayWidget_SetText(self->w110, 1, i, line);
+            GuiTextArrayWidget_SetElementTextColor(self->w110, 0, i, D_00587BE0);
+            GuiTextArrayWidget_SetElementTextFormat(self->w110, 0, i, 2);
+            GuiTextArrayWidget_SetElementTextColor(self->w110, 1, i, D_00587BD0);
+            GuiTextArrayWidget_SetElementTextFormat(self->w110, 1, i, 1);
         }
     }
     {
@@ -153,9 +153,9 @@ extern "C" void GuiAgentInfo_Refresh(Self_1000* self)
         W_1000* b1;
         W_1000* b2;
         sprintf(line, D_004BB930, self->rank + 1);
-        GuiBitmapWidget_SetImage(self->w11C, line, D_004FFC04->img);
-        b1 = (W_1000*)GuiWidget_FindChildByName(self, D_004BB940);
-        b2 = (W_1000*)GuiWidget_FindChildByName(self, D_004BB948);
+        GuiBitmapWidget_SetBitmap(self->w11C, line, D_004FFC04->img);
+        b1 = (W_1000*)GuiWidget_FindChild_charP(self, D_004BB940);
+        b2 = (W_1000*)GuiWidget_FindChild_charP(self, D_004BB948);
         if (b1) {
             if (self->team == 1) b1->flags |= 2;
             else b1->flags &= ~2;
@@ -169,7 +169,7 @@ extern "C" void GuiAgentInfo_Refresh(Self_1000* self)
         void* lb;
         self->w114->flags |= 2;
         self->w118->flags |= 2;
-        lb = DME_GetLobby();
+        lb = cDME_GetLobby();
         if (!lb || self->xF8 == -1) {
             self->w118->flags &= ~4;
             self->w114->flags &= ~4;

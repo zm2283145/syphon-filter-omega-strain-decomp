@@ -37,7 +37,7 @@ DEFINE_BUF_HOLDER_DTOR(std_vector_charPtr_dtor_void_2)
 
 extern void* g_Game;
 extern int Game_CountAttractMovies(void*);
-extern int GuiWidget_Init(Unk288A80*);
+extern int GuiWidget_onAdd(Unk288A80*);
 
 int* std_vector_charPtr_opIndex_uint_2(PtrVec* v, int i) {
     return v->data + i;
@@ -51,10 +51,10 @@ Rel* std_vector_charPtr_ctor_void_2(Rel* r) {
 }
 
 /* Base update, then record whether an agent is selected. */
-int GuiTitleScreen_Init(Unk288A80* self) {
+int GuiTitleScreen_onAdd(Unk288A80* self) {
     int selected;
 
-    GuiWidget_Init(self);
+    GuiWidget_onAdd(self);
     selected = Game_CountAttractMovies(&g_Game);
     self->unk48 = selected != 0;
     return selected;
@@ -78,16 +78,16 @@ extern "C" {
 extern char* D_0048B3E8;
 extern char* D_0048B3F0;
 extern char* D_0048B3F8;
-W_00288920* GuiWidget_FindChildByName(Scr_00288920* s, char* name);
-void* Gui_GetScreenStack(void);
-void GuiScreen_SetFocus(void* stack, void* w);
+W_00288920* GuiWidget_FindChild_charP(Scr_00288920* s, char* name);
+void* Gui_Canvas(void);
+void GuiCanvas_SetFocus(void* stack, void* w);
 }
 extern "C" void GuiTitleScreen_EnableButtons(Scr_00288920* self, int on)
 {
     char* names[3] = { D_0048B3E8, D_0048B3F0, D_0048B3F8 };
     unsigned int i;
     for (i = 0; i < 3; i++) {
-        W_00288920* w = GuiWidget_FindChildByName(self, names[i]);
+        W_00288920* w = GuiWidget_FindChild_charP(self, names[i]);
         if (w) {
             if (on)
                 w->flags |= 4;
@@ -96,7 +96,7 @@ extern "C" void GuiTitleScreen_EnableButtons(Scr_00288920* self, int on)
         }
     }
     if (self->flags & 8)
-        GuiScreen_SetFocus(Gui_GetScreenStack(), self->GetFocus());
+        GuiCanvas_SetFocus(Gui_Canvas(), self->GetFocus());
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00288920 */
@@ -108,12 +108,12 @@ typedef struct TimedObj {
     float seconds;
 } TimedObj;
 
-extern void* Time_GetMilliseconds(TimedObj* self);
-extern float SoftFloat_U64ToFloat(void* src);
+extern void* cTimer_GetMillisecondTime(TimedObj* self);
+extern float _f_ulltof(void* src);
 
 /* Caches a millisecond value from the source as seconds at +0x4C. */
 void GuiTitleScreen_ResetTimer(TimedObj* self) {
-    self->seconds = SoftFloat_U64ToFloat(Time_GetMilliseconds(self)) / 1000.0f;
+    self->seconds = _f_ulltof(cTimer_GetMillisecondTime(self)) / 1000.0f;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00288A40 */
@@ -144,7 +144,7 @@ typedef struct StrHdr {
 } StrHdr;
 
 extern int strlen(const char* s); /* strlen */
-extern void String_Compare(StrHdr* str, int pos, int count, const char* src, int srcLen);
+extern void std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(StrHdr* str, int pos, int count, const char* src, int srcLen);
 
 /* String assign from a C string: replaces the whole contents with cstr. */
 void String_AssignCStr(StrHdr* str, const char* cstr) {
@@ -155,7 +155,7 @@ void String_AssignCStr(StrHdr* str, const char* cstr) {
     } else {
         len = (unsigned char)str->shortLen;
     }
-    String_Compare(str, 0, len, cstr, srcLen);
+    std_basic_string_char_char_traits_char_compare_uint_uint_charP_uint(str, 0, len, cstr, srcLen);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00288AD0 */

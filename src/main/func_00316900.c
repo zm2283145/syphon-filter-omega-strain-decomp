@@ -4,7 +4,7 @@ typedef struct { int h0, h1; int a; int b; } Buf;
 extern int D_0052ACB8;
 extern int Event_PackHeader(Msg* m, int p1, int* type, int p3, int p4, unsigned int size, void* buf);
 /* Serialises the message's two fields into buf; returns the size written (16) or -1. */
-int cNetShatterMsg_v02(Msg* m, int p1, int* type, int p3, int p4, unsigned int size, void* buf)
+int cNetShatterMsg_Pack(Msg* m, int p1, int* type, int p3, int p4, unsigned int size, void* buf)
 {
     Buf* out;
     int result = -1;

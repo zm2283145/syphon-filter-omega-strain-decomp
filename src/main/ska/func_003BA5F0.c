@@ -1,6 +1,6 @@
 #pragma cplusplus on
 #include "types.h"
-/* Bone_FinalizeTranslation: push the accumulated translation, or restore the bind position */
+/* cBone_AnimationSetWeightedOffset: push the accumulated translation, or restore the bind position */
 typedef struct Vec3BT { float x, y, z; } Vec3BT;
 struct Vec4BT {
     float x, y, z, w;
@@ -45,7 +45,7 @@ static inline int IsZero(const Vec4BT* v)
     }
     return r;
 }
-extern "C" void Bone_FinalizeTranslation(BoneBT* b)
+extern "C" void cBone_AnimationSetWeightedOffset(BoneBT* b)
 {
     if (!IsZero(&b->accumT)) {
         b->accumT.w = 1.0f;

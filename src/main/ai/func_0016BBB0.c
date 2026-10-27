@@ -1,4 +1,4 @@
-/* NpcPerception_VisibilityTest: per-frame sight check of one object: line of
+/* cAITarget_UpdateLOS: per-frame sight check of one object: line of
  * sight (unless the object is a hidden player or our owner is blinded),
  * head/body view-cone tests, the cached flags for the current target (and
  * the "seen" message when head+line state changes), then the sighting
@@ -30,23 +30,23 @@ extern "C" {
 extern int g_HumanActorClassKey;
 extern char g_TargetVisMgr[];
 extern char D_004EE550[], D_004D9340[];
-int TargetVis_Test(void* mgr, AObj* a, AObj* b, int c, int d);
-unsigned char NpcPerception_SightTest(Perc* self, V* p, int x, int mode);
-void NpcPerception_RegisterSighting(Perc* self, AObj* o, unsigned char a, unsigned char b);
-AObj* Flashlight_GetLitSpot(AObj* o);
-void Event_Construct(void*, void*);
-void Event_Send(void*, void*, int);
+int cTargetManager_IsLosBlocked(void* mgr, AObj* a, AObj* b, int c, int d);
+unsigned char cAITarget_TestPointInViewCone(Perc* self, V* p, int x, int mode);
+void cAITarget_SetAwarenessVisible(Perc* self, AObj* o, unsigned char a, unsigned char b);
+AObj* cHuman_GetFlashlightGobj(AObj* o);
+void cMessage_ctor_cMessageNameR(void*, void*);
+void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 void cMessage_dtor(void*, int);
-void NpcPerception_VisibilityTest(Perc* self, AObj* obj);
+void cAITarget_UpdateLOS(Perc* self, AObj* obj);
 }
 /* weak message destructors in a dropped section: inlined at the call sites, no body emitted */
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
 struct MsgB { void* vt;
-    MsgB(void* k) { Event_Construct(this, k); }
+    MsgB(void* k) { cMessage_ctor_cMessageNameR(this, k); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); } };
 struct Msg4 : MsgB { char p04[0x20]; unsigned char kind; char p25[3]; int id;
     Msg4(int i) : MsgB(D_004EE550) { vt = D_004D9340; kind = 4; id = i; }
-    void Send(void* to) { Event_Send(this, to, 0); }
+    void Send(void* to) { QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
     __declspec(weak) __declspec(MSG_DTOR) ~Msg4() { vt = D_004D9340; } };
 static inline bool Active(AObj* p) { return p->activated && p->enabled && !p->removed; }
 static inline int IsNullNV(void* p) { return (p != 0) ^ 1; }
@@ -58,7 +58,7 @@ static inline int InView1(Perc* self, AObj* o, int x, int*& m)
     int mode = *m;
     if (self->component->owner->net == 1)
         mode = 0;
-    return NpcPerception_SightTest(self, &r, x, mode);
+    return cAITarget_TestPointInViewCone(self, &r, x, mode);
 }
 static inline unsigned char InView(Perc* self, AObj* o, int x, int* m)
 {
@@ -66,13 +66,13 @@ static inline unsigned char InView(Perc* self, AObj* o, int x, int* m)
     int mode = *m;
     if (self->component->owner->net == 1)
         mode = 0;
-    return NpcPerception_SightTest(self, &r, x, mode);
+    return cAITarget_TestPointInViewCone(self, &r, x, mode);
 }
-static inline bool NotVis(AObj* a, AObj* b) { return !TargetVis_Test(g_TargetVisMgr, a, b, 0, 0); }
+static inline bool NotVis(AObj* a, AObj* b) { return !cTargetManager_IsLosBlocked(g_TargetVisMgr, a, b, 0, 0); }
 static inline unsigned char Both(Perc* p) { unsigned char r = 0; if (p->head && p->clear) r = 1; return r; }
 static inline bool Player(Ctl* c) { bool yes = false; if (c) if (c->IsPlayer()) yes = true; return yes; }
 
-void NpcPerception_VisibilityTest(Perc* self, AObj* obj)
+void cAITarget_UpdateLOS(Perc* self, AObj* obj)
 {
     unsigned char vis = 0;
     if (Active(obj)) {
@@ -86,7 +86,7 @@ void NpcPerception_VisibilityTest(Perc* self, AObj* obj)
             if (obj->ctrl && obj->ctrl->IsPlayer()) pl = 1;
             if (pl && !obj->hidden14) hidden = (obj->x3034 & 1) != 0;
         }
-        if (!hidden) vis = !TargetVis_Test(g_TargetVisMgr, self->component->owner, obj, 0, 0);
+        if (!hidden) vis = !cTargetManager_IsLosBlocked(g_TargetVisMgr, self->component->owner, obj, 0, 0);
     }
     unsigned char los;
     int* pm;
@@ -104,20 +104,20 @@ void NpcPerception_VisibilityTest(Perc* self, AObj* obj)
             self->both = self->head && self->clear;
         }
     }
-    NpcPerception_RegisterSighting(self, obj, vis, los);
+    cAITarget_SetAwarenessVisible(self, obj, vis, los);
     if (!vis || !los) {
         if (obj->team == g_HumanActorClassKey) {
-            AObj* lit = Flashlight_GetLitSpot(obj);
+            AObj* lit = cHuman_GetFlashlightGobj(obj);
             if (lit && NotVis(self->component->owner, lit)) {
                 V p = lit->GetPos2();
-                if (NpcPerception_SightTest(self, &p, 1, 0))
-                    NpcPerception_RegisterSighting(self, obj, 1, 1);
+                if (cAITarget_TestPointInViewCone(self, &p, 1, 0))
+                    cAITarget_SetAwarenessVisible(self, obj, 1, 1);
             }
         }
     }
 }
 
-/* NpcPerception_SetLastKnown: record where a target was last seen and its route region */
+/* cAITarget_SetTargetPositionLastSeen: record where a target was last seen and its route region */
 struct V_C030 { float x, y, z, w; } __attribute__((aligned(16)));
 struct RouteRef_C030 { char pad[0x5C]; int region; };
 class Ctl_C030 {
@@ -133,11 +133,11 @@ struct Actor_C030 { char pad0[0x58]; Ctl_C030* ctl; char pad5C[0x3204 - 0x5C]; i
 struct Known_C030 { V_C030 pos; char pad10[8]; int region; char pad1C[4]; unsigned char lo : 3; unsigned char extra : 1; unsigned char valid : 1; };
 extern "C" {
 extern int g_NpcRegionTable[];
-int Controller_NotifySeen(Actor_C030* a);
-int NpcRoute_RegionAt(Known_C030* k, int r);
-void NpcPerception_SetLastKnown(Known_C030* k, Actor_C030* a, V_C030* pos, int extra);
+int cGOBJ_Team(Actor_C030* a);
+int cAIPathData_GetGroupIndex(Known_C030* k, int r);
+void cAITarget_SetTargetPositionLastSeen(Known_C030* k, Actor_C030* a, V_C030* pos, int extra);
 }
-void NpcPerception_SetLastKnown(Known_C030* k, Actor_C030* a, V_C030* pos, int extra)
+void cAITarget_SetTargetPositionLastSeen(Known_C030* k, Actor_C030* a, V_C030* pos, int extra)
 {
     int region = -1;
     bool ok = 1;
@@ -146,7 +146,7 @@ void NpcPerception_SetLastKnown(Known_C030* k, Actor_C030* a, V_C030* pos, int e
         if (a->ctl && a->ctl->IsA()) human = true;
         if (human) {
                 { bool h = (a->flags >> 7) & 1; ok = !(h != 0); }
-            region = g_NpcRegionTable[Controller_NotifySeen(a)];
+            region = g_NpcRegionTable[cGOBJ_Team(a)];
         } else if (a->ctl && a->ctl->IsB()) {
             region = a->ctl->route->region;
         } else if (a->ctl && a->ctl->IsC()) {
@@ -154,7 +154,7 @@ void NpcPerception_SetLastKnown(Known_C030* k, Actor_C030* a, V_C030* pos, int e
         }
     }
     if (ok) {
-        if (region < 0) region = NpcRoute_RegionAt(k, k->region);
+        if (region < 0) region = cAIPathData_GetGroupIndex(k, k->region);
         k->region = region;
         /* 128-bit lq/sq quadword copy idiom; the GCC-style asm also keeps MW's
          * unfolded "li 1; andi" for the bitfield stores below */

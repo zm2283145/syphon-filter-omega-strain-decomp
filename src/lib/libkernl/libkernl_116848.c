@@ -2,7 +2,7 @@
 int Exit(int);                               
 int TerminateLibrary();                                  
 
-void Newlib_SysExit(int arg0) {
+void Exit_2(int arg0) {
     TerminateLibrary();
     Exit(arg0);
 }

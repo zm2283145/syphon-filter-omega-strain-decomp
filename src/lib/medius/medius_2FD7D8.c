@@ -25,7 +25,7 @@ int rt_msg_client_iset_send_aggregation_time(unsigned short id, int v)
 
 /* merge_units: begin func_002FD860 */
 extern int rt_msg_set_u2byte(char *, unsigned short);
-extern int NetConn_BufferMessage(int, int, int, char *, int, int);
+extern int rt_msg_client_store_msg_in_send_buf(int, int, int, char *, int, int);
 int rt_msg_client_iset_server_send_aggregation_time(unsigned short id, int x)
 {
     char buf[16];
@@ -35,7 +35,7 @@ int rt_msg_client_iset_server_send_aggregation_time(unsigned short id, int x)
     r = rt_msg_client_get_valid_connection(id, &p);
     if (r) return r;
     if (rt_msg_set_u2byte(buf, x)) return 7;
-    return NetConn_BufferMessage(*(int *)(p + 0x80), 0xE, 0xFFFF, buf, 2, 0);
+    return rt_msg_client_store_msg_in_send_buf(*(int *)(p + 0x80), 0xE, 0xFFFF, buf, 2, 0);
 }
 /* merge_units: end func_002FD860 */
 

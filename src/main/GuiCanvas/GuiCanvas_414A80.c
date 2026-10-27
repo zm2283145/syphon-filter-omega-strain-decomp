@@ -10,16 +10,16 @@
 
 typedef struct { char pad[0x48]; int id; char pad2[4]; unsigned char pressed; } Widget414;
 
-extern int GuiWidget_OnEvent(Widget414* self, int id, unsigned short event);
+extern int GuiWidget_onMessage(Widget414* self, int id, unsigned short event);
 
 /* Marks the widget pressed on event 3 for its own id (returns 1); otherwise returns the base handler's result. */
-int GuiCanvas_FinishDeferredPop(Widget414* self, int id, unsigned short event)
+int GuiCanvas_onMessage(Widget414* self, int id, unsigned short event)
 {
     if (event == 3 && id == self->id) {
         self->pressed = 1;
         return 1;
     }
-    return GuiWidget_OnEvent(self, id, event);
+    return GuiWidget_onMessage(self, id, event);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00414A80 */
@@ -36,7 +36,7 @@ struct VC00414AC0 { virtual int v0(); virtual int v1(); virtual int v2(); virtua
 extern "C" {
 
 }
-extern "C" void GuiStack_SwapScreens(void **arg0, int arg1, int arg2) {
+extern "C" void GuiCanvas_Transition(void **arg0, int arg1, int arg2) {
     if (arg1 != 0) {
         ((VC00414AC0 *)(arg0))->v24();
     }
@@ -61,7 +61,7 @@ struct Node414B30 {
     VC00414B30* obj;      /* 0x44 */
 };
 
-extern "C" void GuiScreen_SetFocus(Node414B30* self, Node414B30* w) {
+extern "C" void GuiCanvas_SetFocus(Node414B30* self, Node414B30* w) {
     if (w != self->focus) {
         if (self->focus) {
             self->focus->obj->v8();
@@ -94,7 +94,7 @@ struct N_414BE0 { int prev; int next; W_414BE0* obj; };
 struct O_414BE0 { char pad[0x20]; W_414BE0* f20; char pad24[4]; int f28; N_414BE0* f2C; char pad30[0x24]; char l54[0xC]; unsigned char b60; };
 extern "C" {
 extern char D_0055A300[];
-int List_Erase(...);
+int std_list_deleter_voidPtr_erase_listdeleter(...);
 int std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(...);
 int opNe_cLListIteratorR_cLListIteratorR_6(...);
 int cLList_GuiWidgetPtr_End(...);
@@ -106,12 +106,12 @@ int cLList_GuiWidgetPtr_Begin(...);
 int cLListIterator_GuiWidgetPtr_ctor_void(...);
 int std_list_GuiWidgetPtr_end(...);
 int cLListIterator_GuiWidgetPtr_ctor_listR(...);
-void Pad_ResetHeldMask(void* p);
-void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
-void GuiCanvas_PopScreen(O_414BE0* o, W_414BE0* w);
+void cJoystick_Debounce(void* p);
+void GuiWidget_SendMessage(void* a, void* b, int kind, int v, int f);
+void GuiCanvas_PopGui(O_414BE0* o, W_414BE0* w);
 }
 
-void GuiCanvas_PopScreen(O_414BE0* o, W_414BE0* w)
+void GuiCanvas_PopGui(O_414BE0* o, W_414BE0* w)
 {
     char* r1;
     char* r2;
@@ -153,7 +153,7 @@ loop_1:
         if ((int)r1 != e3a) {
             t1 = r1;
             std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&x1, &t1);
-            List_Erase(&y1, o->l54, &x1);
+            std_list_deleter_voidPtr_erase_listdeleter(&y1, o->l54, &x1);
         }
     }
     cLListIterator_GuiWidgetPtr_ctor_void(&it2);
@@ -174,15 +174,15 @@ loop_2:
     if ((int)r2 == e3b) return;
     w->f1C = 0;
     hp = &o->f2C;
-    if (o->f2C->obj == w) Pad_ResetHeldMask(D_0055A300);
+    if (o->f2C->obj == w) cJoystick_Debounce(D_0055A300);
     c = ((N_414BE0*)r2)->obj;
     if (c) {
         if (c->flags & 8) c->f44->v6();
         t2 = r2;
         std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&x2, &t2);
-        List_Erase(&y2, &o->f28, &x2);
+        std_list_deleter_voidPtr_erase_listdeleter(&y2, &o->f28, &x2);
     }
-    GuiWidget_SendEvent(o, w, 0x19, 0, 0);
+    GuiWidget_SendMessage(o, w, 0x19, 0, 0);
     if (o->f20 && w->f20 == o->f20) o->f20->f44->v8();
     w->f20 = 0;
     if (o->f28) {

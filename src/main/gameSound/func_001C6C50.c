@@ -19,24 +19,24 @@ typedef struct EventMsg {
 
 extern int g_Game;
 extern int D_004DADF0;
-extern void SoundRequest_Ctor(SndCmd*, signed char, int, int, int);
-extern void SoundEvent_Ctor(EventMsg*, void*, int);
-extern void Event_Send(EventMsg*, void*, int);
-extern void FileMan_Release(void*, int);
+extern void cSndFx_ctor_int_charP_cGOBJP_int(SndCmd*, signed char, int, int, int);
+extern void cStopSoundMsg_ctor_cSndFxR_bool(EventMsg*, void*, int);
+extern void QueueMessage_cMessageR_cSystemP_int(EventMsg*, void*, int);
+extern void cFileMan_dtor(void*, int);
 extern void cMessage_dtor(EventMsg*, int);
 
 /* Global: StopSnd(channel, id) - broadcasts a stop-sound event. */
-void Global_StopSnd(int channel, int id) {
+void nGameSound_StopSnd_eSndBank_charP(int channel, int id) {
     SndCmd cmd;
     EventMsg msg;
-    SoundRequest_Ctor(&cmd, (signed char)channel, id, 0, 0);
-    SoundEvent_Ctor(&msg, &cmd, 0);
-    FileMan_Release(cmd.partB, -1);
-    FileMan_Release(cmd.partA, -1);
+    cSndFx_ctor_int_charP_cGOBJP_int(&cmd, (signed char)channel, id, 0, 0);
+    cStopSoundMsg_ctor_cSndFxR_bool(&msg, &cmd, 0);
+    cFileMan_dtor(cmd.partB, -1);
+    cFileMan_dtor(cmd.partA, -1);
     msg.immediate = 1;
-    Event_Send(&msg, &g_Game, 0);
+    QueueMessage_cMessageR_cSystemP_int(&msg, &g_Game, 0);
     msg.vtable = &D_004DADF0;
-    FileMan_Release(msg.partB, -1);
-    FileMan_Release(msg.partA, -1);
+    cFileMan_dtor(msg.partB, -1);
+    cFileMan_dtor(msg.partA, -1);
     cMessage_dtor(&msg, 0);
 }

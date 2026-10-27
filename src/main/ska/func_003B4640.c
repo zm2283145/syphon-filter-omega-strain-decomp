@@ -8,9 +8,9 @@ typedef struct { char pad[0x44]; Tree tree; } Self_4640;
 typedef struct { int node; char ins; } Res_4640;
 extern "C" void std_map_cString16N_2_cSkaAnimationBlendPtr_cAllocator_pair_end(Iter* out, Tree* t);
 extern "C" void cAssocArray_cString16N_2_cSkaAnimationBlendPtr_Iterator_ctor(Iter* out, Iter* in);
-extern "C" void NamedRootMap_Find(Iter* out, Tree* t, Name32_4640* key);
-extern "C" void MotionRegistry_MapInsert(Res_4640* out, Tree* t, Pair_4640* v);
-extern "C" void* Mem_Alloc(int a, int size, char* file, int line);
+extern "C" void std_tree_pair_cString16N_value_compare_cAllocator_pair_find_cString16NR_2(Iter* out, Tree* t, Name32_4640* key);
+extern "C" void std_tree_pair_cString16N_value_compare_cAllocator_pair_insert_one_pairR_2(Res_4640* out, Tree* t, Pair_4640* v);
+extern "C" void* cMemMan_Allocate(int a, int size, char* file, int line);
 extern "C" char D_004BCD70;
 static inline void QCopy_4640(void* d0, void* s0) { int n = 2; __int128 t; void* s = s0; void* d = d0;
     asm {
@@ -28,10 +28,10 @@ static inline void QCopy_4640(void* d0, void* s0) { int n = 2; __int128 t; void*
 static inline Iter* ItCopy_4640(Iter* d, Iter* s) { d->p = s->p; return d; }
 static inline int End_4640(Iter* out, Tree* t) { Iter e; std_map_cString16N_2_cSkaAnimationBlendPtr_cAllocator_pair_end(&e, t); cAssocArray_cString16N_2_cSkaAnimationBlendPtr_Iterator_ctor(out, &e); return 0; }
 static inline Iter* Sel_4640(Iter* a, int b) { return a; }
-static inline Iter* Find_4640(Iter* out, Tree* t, Name32_4640* n) { Iter f; NamedRootMap_Find(&f, t, n); return ItCopy_4640(out, &f); }
+static inline Iter* Find_4640(Iter* out, Tree* t, Name32_4640* n) { Iter f; std_tree_pair_cString16N_value_compare_cAllocator_pair_find_cString16NR_2(&f, t, n); return ItCopy_4640(out, &f); }
 #pragma opt_common_subs off
 #pragma opt_propagation off
-extern "C" void MotionRegistry_Register(Self_4640* self, Name32_4640* name, Val_4640* src)
+extern "C" void cSkaAnimationSet_CreateAnimationBlend(Self_4640* self, Name32_4640* name, Val_4640* src)
 {
     Iter c;
     Iter e2;
@@ -43,7 +43,7 @@ extern "C" void MotionRegistry_Register(Self_4640* self, Name32_4640* name, Val_
         Val_4640* v;
         {
             AllocGuard g;
-            v = (Val_4640*)Mem_Alloc(0, 0xC, &D_004BCD70, 0x27D);
+            v = (Val_4640*)cMemMan_Allocate(0, 0xC, &D_004BCD70, 0x27D);
         }
         if (v != 0) {
             v->a = src->a;
@@ -55,7 +55,7 @@ extern "C" void MotionRegistry_Register(Self_4640* self, Name32_4640* name, Val_
         p.val = v;
         QCopy_4640(&q, &p);
         q.val = p.val;
-        MotionRegistry_MapInsert(&r, &self->tree, &q);
+        std_tree_pair_cString16N_value_compare_cAllocator_pair_insert_one_pairR_2(&r, &self->tree, &q);
     }
 }
 

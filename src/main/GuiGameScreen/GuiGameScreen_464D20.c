@@ -14,21 +14,21 @@ extern unsigned char g_LoadoutPending;
 extern void* D_004FFC04;
 extern G_464D20* g_Hud;
 extern P_464D20* g_LocalPlayer;
-int Net_GetTalkerName(void* p);
+int HeadsetSemaphore_GetOwner(void* p);
 int func_004651F0(void);
 void func_00437950(int v);
-int Net_GetClock(int v);
+int cDME_GetTime(int v);
 int cGameFrontEnd_IsMessageBoxAwake_void_2(void* p);
-int GuiGameScreen_IsChooseMenuVisible(void* p);
+int GuiGameScreen_IsChooseMenuActive(void* p);
 void cHud_ActivateQuickChat(G_464D20* g);
-M_464D20* Gui_GetScreenStack(void);
-void GuiCanvas_CheckControllers(O_464D20* o, float dt);
+M_464D20* Gui_Canvas(void);
+void GuiCommonCanvas_NextFrame(O_464D20* o, float dt);
 
 static inline int IsMine_464D20(void)
 {
     void* p = D_00582CF0;
     if (p) {
-        return Net_GetTalkerName(p) == NetLocalId();
+        return HeadsetSemaphore_GetOwner(p) == NetLocalId();
     }
     return 0;
 }
@@ -51,8 +51,8 @@ void func_00464D20(O_464D20* o, float dt)
             if (act) {
                 if (!o->b6D) {
                     o->b6D = 1;
-                    o->f70 = Net_GetClock(1) + 200;
-                } else if (D_00582B88 && o->f70 < Net_GetClock(1)) {
+                    o->f70 = cDME_GetTime(1) + 200;
+                } else if (D_00582B88 && o->f70 < cDME_GetTime(1)) {
                     if (g_IsMultiplayer) {
                         func_00437950(1);
                     } else {
@@ -63,11 +63,11 @@ void func_00464D20(O_464D20* o, float dt)
             }
         } else {
             if (o->b6D) {
-                if (!func_004651F0() || o->f70 < Net_GetClock(1)) {
+                if (!func_004651F0() || o->f70 < cDME_GetTime(1)) {
                     func_00437950(0);
                     (*(int*)D_00497BF0) = -1;
                 } else if (!g_LoadoutPending && !cGameFrontEnd_IsMessageBoxAwake_void_2(D_004FFC04) && !g_Hud->b6A9 && !g_Hud->b6A8
-                           && !g_Hud->b6AA && !GuiGameScreen_IsChooseMenuVisible(g_Hud->f6A4) && !g_LocalPlayer->f178) {
+                           && !g_Hud->b6AA && !GuiGameScreen_IsChooseMenuActive(g_Hud->f6A4) && !g_LocalPlayer->f178) {
                     cHud_ActivateQuickChat(g_Hud);
                 }
             }
@@ -77,22 +77,22 @@ void func_00464D20(O_464D20* o, float dt)
         if (IsMine_464D20()) {
             int t = (*(int*)D_00497BF0);
             if (t > -1) {
-                if (t < Net_GetClock(1)) {
+                if (t < cDME_GetTime(1)) {
                     func_00437950(0);
                     (*(int*)D_00497BF0) = -1;
                     o->b6C = 0;
                 }
             } else {
-                (*(int*)D_00497BF0) = Net_GetClock(1) + 15000;
+                (*(int*)D_00497BF0) = cDME_GetTime(1) + 15000;
             }
         } else {
             (*(int*)D_00497BF0) = -1;
         }
         {
-            M_464D20* m = Gui_GetScreenStack();
+            M_464D20* m = Gui_Canvas();
             L_464D20* l = &m->l;
             if (l->n) o->f74 = l->head->obj;
         }
     }
-    GuiCanvas_CheckControllers(o, dt);
+    GuiCommonCanvas_NextFrame(o, dt);
 }

@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int Vector_Insert_1EEF30(Vec16Array* v, FlagElem16* pos, int n, int value);
+extern int std_vector_imp_cEdgeGroup_insert(Vec16Array* v, FlagElem16* pos, int n, int value);
 
 /* push_back(value) on an array of 16-byte elements. */
 int cArray_cEdgeGroup_PushBackActual(Vec16Array* v, int value) {
@@ -16,5 +16,5 @@ int cArray_cEdgeGroup_PushBackActual(Vec16Array* v, int value) {
 
     count = v->count;
     data = v->data;
-    return Vector_Insert_1EEF30(v, data + count, 1, value);
+    return std_vector_imp_cEdgeGroup_insert(v, data + count, 1, value);
 }

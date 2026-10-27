@@ -22,7 +22,7 @@ typedef struct Obj178 {
 
 extern void cSkaAnimAnchor_TreeNode_ctor_cSkaAnimAnchorTreeNodeR(void*, void*);
 extern void cQuaternion_ctor_cQuaternionR(void*, void*);
-extern void Vec4_Assign(void*, void*);
+extern void cVector_ctor_cVectorR(void*, void*);
 extern void cArray_FixedSize_cVector_4_ctor_cArrayFixedSizeR(void*, void*);
 
 /* Assignment operator: copies each member. */
@@ -33,7 +33,7 @@ Obj178* cSkaAnimAnchorListEntry_ctor(Obj178* self, Obj178* other) {
     cSkaAnimAnchor_TreeNode_ctor_cSkaAnimAnchorTreeNodeR(d->part0, other->body.part0);
     d->fD0 = other->body.fD0;
     cQuaternion_ctor_cQuaternionR(d->partE0, other->body.partE0);
-    Vec4_Assign(d->partF0, other->body.partF0);
+    cVector_ctor_cVectorR(d->partF0, other->body.partF0);
     d->f100 = other->body.f100;
     cArray_FixedSize_cVector_4_ctor_cArrayFixedSizeR(d->part110, other->body.part110);
     cQuaternion_ctor_cQuaternionR(d->part150, other->body.part150);

@@ -1,11 +1,11 @@
 #include "types.h"
-extern void* Root_GetParent(void* r);
-extern void* Root_GetWorldPose(void* r);
-extern char* Root_Identity(void* r);
-void* Root_GetPose(void* r) {
-    if (Root_GetParent(r) != 0) {
-        Root_GetWorldPose(r);
-        return Root_Identity(r) + 0x30;
+extern void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(void* r);
+extern void* cSkaAnimAnchor_TreeNode_UpdateSkeletonTarget(void* r);
+extern char* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(void* r);
+void* cSkaAnimAnchor_GetSkeletonTargetTransform(void* r) {
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(r) != 0) {
+        cSkaAnimAnchor_TreeNode_UpdateSkeletonTarget(r);
+        return cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r) + 0x30;
     }
-    return Root_Identity(r) + 0x80;
+    return cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r) + 0x80;
 }

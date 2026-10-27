@@ -137,7 +137,7 @@ void QueuePeekWriteDone(Ring_0010E510* r)
 
 /* merge_units: begin func_0010E550 */
 typedef struct { int size; int count; unsigned char* rd; unsigned char* wr; unsigned char buf[1]; } Ring_0010E550;
-void ByteRing_Pop(Ring_0010E550* r)
+void QueuePeekReadDone(Ring_0010E550* r)
 {
     r->count--;
     r->rd++;

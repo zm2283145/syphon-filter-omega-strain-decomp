@@ -17,6 +17,6 @@ int* cMenuChoiceMsg_SOBJ_getClassId(void) {
     return &D_004F7E50;
 }
 
-int cMenuChoiceMsg_v03(void) {
+int cMenuChoiceMsg_getSOBJClassId(void) {
     return *cMenuChoiceMsg_SOBJ_getClassId();
 }

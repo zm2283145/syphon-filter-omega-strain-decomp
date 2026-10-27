@@ -7,6 +7,6 @@
 #include "types.h"
 
 /* Address of 160-byte element i. */
-char* Physical_GetLatchSlot(char* base, int i) {
+char* cArray_FixedSize_cFinalLedgeSearchInfo_9_opIndex(char* base, int i) {
     return base + i * 160;
 }

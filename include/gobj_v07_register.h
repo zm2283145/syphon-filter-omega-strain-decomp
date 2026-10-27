@@ -3,8 +3,8 @@
 
 /*
  * Virtual method 7 shared by pathed GOBJ classes: notify the attached
- * object at +0x64 (its int slot 22 with 1), run cNode_v07 on self,
- * then register self with TargetVis_Unregister(g_TargetVisMgr, self).
+ * object at +0x64 (its int slot 22 with 1), run cGOBJ_NetDeactivate on self,
+ * then register self with cTargetManager_RemoveGobj(g_TargetVisMgr, self).
  * C++ only (#pragma cplusplus on before including).
  */
 class VSlotsInt23 {
@@ -27,8 +27,8 @@ struct GobjV07 {
 
 extern "C" {
 extern char g_TargetVisMgr[];
-void cNode_v07(GobjV07* self);
-void TargetVis_Unregister(void* list, GobjV07* self);
+void cGOBJ_NetDeactivate(GobjV07* self);
+void cTargetManager_RemoveGobj(void* list, GobjV07* self);
 }
 
 #define DEFINE_GOBJ_V07_REGISTER(name)                                        \
@@ -37,8 +37,8 @@ void TargetVis_Unregister(void* list, GobjV07* self);
         VSlotsInt23* a = self->attached;                                      \
         if (a)                                                                \
             a->slot22(1);                                                     \
-        cNode_v07(self);                                                  \
-        TargetVis_Unregister(g_TargetVisMgr, self);                                      \
+        cGOBJ_NetDeactivate(self);                                                  \
+        cTargetManager_RemoveGobj(g_TargetVisMgr, self);                                      \
     }
 
 #endif /* GOBJ_V07_REGISTER_H */

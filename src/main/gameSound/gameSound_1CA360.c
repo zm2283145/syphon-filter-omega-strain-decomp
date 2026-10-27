@@ -18,7 +18,7 @@
 extern "C" {
 char D_0049F708[] = "gameSound.cc";
 }
-DEFINE_NET_MSG_CLONE(cStopAllQuipsMsg_v01, 0x24, D_0049F708, 0x6D0, D_004DAC50, (void)0)
+DEFINE_NET_MSG_CLONE(cPlayQuipMsg_Clone, 0x24, D_0049F708, 0x6D0, D_004DAC50, (void)0)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001CA360(void) {}
 #pragma pop /* merge_units */
@@ -27,6 +27,6 @@ static inline void merge_flush_func_001CA360(void) {}
 /* merge_units: begin func_001CA470 */
 #pragma push /* merge_units */
 /* Serialize the two 32-bit message fields. */
-DEFINE_NET_WRITE_TWO_WORDS(cPlayQuipMsg_v04)
+DEFINE_NET_WRITE_TWO_WORDS(cPlayQuipMsg_Pack)
 #pragma pop /* merge_units */
 /* merge_units: end func_001CA470 */

@@ -21,7 +21,7 @@ struct Self {
 extern "C" {
 extern __int128 g_AgentPartCache;
 extern __int128 D_0055DE00;
-void GuiAgentModify_UpdateAvailability(Self* self);
+void GuiAgentModify_TattooPatchesLockout(Self* self);
 }
 
 static inline long KEq(__int128 b, __int128 a, __int128 m)
@@ -41,7 +41,7 @@ static inline long Match(Self* self, int k)
     return KEq(g_AgentPartCache, self->tbl->e[self->idx[k]].q, D_0055DE00);
 }
 
-void GuiAgentModify_UpdateAvailability(Self* self)
+void GuiAgentModify_TattooPatchesLockout(Self* self)
 {
     int n = 0;
     if (Match(self, 0) == -1) self->w[0]->vis->Hide(); else { self->w[0]->vis->Show(); n++; }

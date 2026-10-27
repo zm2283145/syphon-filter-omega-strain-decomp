@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003EBAD0 */
 #pragma push /* merge_units */
@@ -37,7 +37,7 @@ struct Req_EBAD0 {
 
 extern "C" {
 extern char D_004BE010;
-void FileMan_Release(char* f, int a);
+void cFileMan_dtor(char* f, int a);
 }
 
 static inline Sub_EBAD0* ReqSub_EBAD0(Req_EBAD0* r)
@@ -50,7 +50,7 @@ static inline int SubData_EBAD0(Sub_EBAD0* s)
     return s->n8 ? s->n8 : s->n0;
 }
 
-extern "C" int Fstream_StartRequest(Req_EBAD0* r, int release)
+extern "C" int cFSData_FreeStream(Req_EBAD0* r, int release)
 {
     Sub_EBAD0* s = ReqSub_EBAD0(r);
     if (release) {
@@ -59,7 +59,7 @@ extern "C" int Fstream_StartRequest(Req_EBAD0* r, int release)
             {
                 int p = s->n0;
                 if (p) {
-                    { AllocGuard g; Mem_Free(1, (void*)p, &D_004BE010, 0x56); }
+                    { AllocGuard g; cMemMan_Deallocate(1, (void*)p, &D_004BE010, 0x56); }
                     s->n0 = 0;
                     s->n8 = 0;
                     s->n4 = 0;
@@ -71,8 +71,8 @@ extern "C" int Fstream_StartRequest(Req_EBAD0* r, int release)
     if (r->owned) {
         char* f = r->file;
         AllocGuard g;
-        FileMan_Release(f, -1);
-        Mem_Free(0, f, &D_004BE010, 0x134);
+        cFileMan_dtor(f, -1);
+        cMemMan_Deallocate(0, f, &D_004BE010, 0x134);
     }
     r->cb = 0;
     r->user = 0;
@@ -97,7 +97,7 @@ struct Sub_EBDD0 {
     int n8;
     unsigned char bC;
 };
-extern "C" int FStream_AllocBlock(Sub_EBDD0* s, int size); /* gsynth: defined below */
+extern "C" int cFSHandle_AllocateMem(Sub_EBDD0* s, int size); /* gsynth: defined below */
 #pragma pop
 #pragma inline_depth(16)
 #pragma cplusplus on
@@ -119,14 +119,14 @@ struct Req_EBC90 {
 };
 
 extern "C" {
-void FileMan_FindMember(char* f);
-int FileMan_GetSize(char* f);
+void cFileMan_Open(char* f);
+int cFileMan_GetSize(char* f);
 #if 0 /* merge_units */
-int FStream_AllocBlock(Sub_EBC90* s, int size);
+int cFSHandle_AllocateMem(Sub_EBC90* s, int size);
 #endif /* merge_units */
-#define FStream_AllocBlock(a0, a1) (FStream_AllocBlock((Sub_EBDD0 *)(a0), (a1))) /* merge_units */
+#define cFSHandle_AllocateMem(a0, a1) (cFSHandle_AllocateMem((Sub_EBDD0 *)(a0), (a1))) /* merge_units */
 
-void FileMan_ReadMember(char* f, int* data, int size);
+void cFileMan_Stream(char* f, int* data, int size);
 }
 
 static inline Sub_EBC90* ReqSub_EBC90(Req_EBC90* r)
@@ -139,18 +139,18 @@ static inline int SubData_EBC90(Sub_EBC90* s)
     return s->n8 ? s->n8 : s->n0;
 }
 
-extern "C" int FStream_StartRequest(Req_EBC90* r)
+extern "C" int cFSData_StartStream(Req_EBC90* r)
 {
     Sub_EBC90* s = ReqSub_EBC90(r);
-    FileMan_FindMember(r->file);
+    cFileMan_Open(r->file);
     int data = 0;
-    int size = FileMan_GetSize(r->file);
-    if (!FStream_AllocBlock(s, size))
+    int size = cFileMan_GetSize(r->file);
+    if (!cFSHandle_AllocateMem(s, size))
         return 0;
     r->state = 1;
     if (!s->bC) {
         data = SubData_EBC90(s);
-        FileMan_ReadMember(r->file, &data, size);
+        cFileMan_Stream(r->file, &data, size);
     } else {
         if (r->state == 1 || r->state == 3) {
             Sub_EBC90* t = ReqSub_EBC90(r);
@@ -164,7 +164,7 @@ extern "C" int FStream_StartRequest(Req_EBC90* r)
     }
     return 1;
 }
-#undef FStream_AllocBlock /* merge_units */
+#undef cFSHandle_AllocateMem /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003EBC90(void) {}
 #pragma pop /* merge_units */
@@ -178,17 +178,17 @@ static inline void merge_flush_func_003EBC90(void) {}
 
 
 extern "C" {
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 int Libgcc_Moddi3(unsigned long p, int align);
 }
 
 static inline void* Alloc_EBDD0(unsigned int n)
 {
     AllocGuard g;
-    return Mem_Alloc(1, n, &D_004BE010, 0x37);
+    return cMemMan_Allocate(1, n, &D_004BE010, 0x37);
 }
 
-extern "C" int FStream_AllocBlock(Sub_EBDD0* s, int size)
+extern "C" int cFSHandle_AllocateMem(Sub_EBDD0* s, int size)
 {
     int n = size + 0x7F;
     if (s->n0) {

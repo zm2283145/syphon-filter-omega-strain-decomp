@@ -11,7 +11,7 @@ extern void std_tree_pair_int_value_compare_find_intR(int*, int, int);
 extern int std_tree_pair_int_value_compare_erase_tree(void*, int*);
 
 /* Erase by key: pass a local copy of the key to the tree erase routine. */
-int ReceiverMap_Erase(void* map, int* key) {
+int cAssocArray_int_netSystemField_Erase(void* map, int* key) {
     int k[1];
 
     k[0] = *key;

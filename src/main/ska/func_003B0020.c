@@ -5,7 +5,7 @@
 
 #include "ska_types.h"
 
-extern int List_InsertBefore(int* result, List* list, void** pos, int value);
+extern int std_list_deleter_voidPtr_insert(int* result, List* list, void** pos, int value);
 
 /* Append value at the end of the list (insert before the sentinel at +4). */
 int std_list_cSkaTransPlaybackPtr_push_back(List* list, int value) {
@@ -15,5 +15,5 @@ int std_list_cSkaTransPlaybackPtr_push_back(List* list, int value) {
     } loc;
 
     loc.pos = &list->first;
-    return List_InsertBefore(&loc.result, list, &loc.pos, value);
+    return std_list_deleter_voidPtr_insert(&loc.result, list, &loc.pos, value);
 }

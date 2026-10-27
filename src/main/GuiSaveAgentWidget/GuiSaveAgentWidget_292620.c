@@ -46,6 +46,6 @@ void func_00292630(G1Arr* a)
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004A9B70[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(GuiAgentCreate_Create, 0x100, D_004A9B70, GuiAgentCreate_ctor)
+DEFINE_GUARDED_NEW_CTOR(ConcreteWidgetClassRep_GuiAgentCreate_Create, 0x100, D_004A9B70, GuiAgentCreate_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002926B0 */

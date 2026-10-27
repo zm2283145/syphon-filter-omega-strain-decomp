@@ -29,17 +29,17 @@ static inline void merge_flush_func_0019D760(void) {}
  */
 
 
-extern AnimChannel* Model_GetChannelData(ChannelVec*, int);
+extern AnimChannel* std_vector_cSkaSliderValue_opIndex(ChannelVec*, int);
 
 /* Current value of a channel in the collection at +0x88 (index is not set by the caller-side code). */
 float AnimChannel_GetCurrentValue(char* owner) {
     int index;
 
-    return Model_GetChannelData((ChannelVec*)(owner + 136), index)->base.current;
+    return std_vector_cSkaSliderValue_opIndex((ChannelVec*)(owner + 136), index)->base.current;
 }
 
 /* Current value of channel i in the collection at +0x78. */
-float AnimChannel_GetCurrent(char* owner, int i) {
+float cSkaParams_GetSliderValue(char* owner, int i) {
     ChannelVec* v = (ChannelVec*)(owner + 120);
 
     return ((AnimChannel*)((char*)v->data + (((i << 4) - i) << 2)))->base.current;

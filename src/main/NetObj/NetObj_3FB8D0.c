@@ -9,7 +9,7 @@
 #include "net_local_id.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003FB8D0 */
 #pragma push /* merge_units */
@@ -33,7 +33,7 @@ void std_map_int_cSafePtr_cGOBJ_cAllocator_pair_end(PsIt*, void*);
 PsIt* cAssocArray_int_cSafePtr_cGOBJ_Iterator_ctor(PsIt*, PsIt*);
 void cNetObj_RemovePlayer_int(int);
 }
-extern "C" PsObj* PlayerSlots_Get(int key)
+extern "C" PsObj* cNetObj_GetPlayer(int key)
 {
     PsIt e2;
     PsIt it;
@@ -114,7 +114,7 @@ extern void std_map_int_netSystemField_end(void* out, void* map);
 extern void cAssocArray_int_netSystemField_Iterator_ctor(E4Node** out, void* in);
 static inline int E4Eq(E4Node* a, E4Node* b) { return a == b; }
 #pragma bool off
-int* NetMap_Lookup(int key)
+int* cNetObj_GetNetSystem(int key)
 {
     E4Node* end[1]; E4Node* it[1]; int tmp[1]; int k[1];
     E4Node* n;
@@ -132,11 +132,11 @@ static inline void merge_flush_func_003FBB10(void) {}
 
 /* merge_units: begin func_003FBBA0 */
 #pragma push /* merge_units */
-#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int NetGame_InitLocalSlot(int *, int);                        
+int NetGetMyClientIndex(int *, int);                        
 extern int D_00494178;
 extern int D_0055C7B0;
 extern int D_005721A8;
@@ -176,8 +176,8 @@ static inline void merge_flush_func_003FBC40(void) {}
 #pragma push /* merge_units */
 #pragma mpwc_relax on
 int Alloc_Lock(int, int, int);                          
-int Alloc_Unlock(int);                                  
-int NetMap_Clear(int *);                              
+int EnableIntc(int);                                  
+int std_tree_pair_int_value_compare_clear_void(int *);                              
 int std_tree_pair_int_value_compare_cAllocator_pair_clear_void(char *);                               
 int cNPCInfoObject_Clear(char *);                               
 #if 0 /* merge_units */
@@ -226,7 +226,7 @@ extern int D_0055C9A8;
 extern int D_0055C9AC;
 extern int D_0055C9B0;
 
-void NetSession_Cleanup(void) {
+void cNetObj_Clear(void) {
     int sp2C;
     int sp28;
     char *temp_s0;
@@ -237,7 +237,7 @@ void NetSession_Cleanup(void) {
 
     D_0055C990 = 0;
     if (D_0055C7A0 > 0) {
-        NetMap_Clear(&D_0055C7A0);
+        std_tree_pair_int_value_compare_clear_void(&D_0055C7A0);
     }
     std_tree_pair_int_value_compare_cAllocator_pair_clear_void(&D_0055C770);
     cNPCInfoObject_ctor(&sp2C);
@@ -274,9 +274,9 @@ loop_4:
         }
         g_ProfileLockDepth += 1;
         cNPCInfoObject_dtor(temp_s0, -1);
-        Mem_Free(0, temp_s0, &D_004BE228, 0x12E);
+        cMemMan_Deallocate(0, temp_s0, &D_004BE228, 0x12E);
         if (g_ProfileLockEnabled != 0) {
-            Alloc_Unlock(9);
+            EnableIntc(9);
         }
         D_0055C988 = NULL;
         g_ProfileLockDepth -= 1;

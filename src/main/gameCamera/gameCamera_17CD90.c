@@ -21,7 +21,7 @@ static inline Vec4* CopyVec(Vec4* d, Vec4* s)
 }
 
 /* Copies a pair of 16-byte vectors; returns the destination. */
-VecPair* VecPair_Copy(VecPair* dst, VecPair* src)
+VecPair* cQuatVec_ctor_cQuatVecR(VecPair* dst, VecPair* src)
 {
     CopyVec(&dst->a, &src->a);
     CopyVec(&dst->b, &src->b);
@@ -48,11 +48,11 @@ typedef struct VecRecordList {
     char* data;
 } VecRecordList;
 
-extern int VecRecordList_Insert(VecRecordList* list, char* pos, int n, int value);
+extern int std_vector_imp_cVector_insert(VecRecordList* list, char* pos, int n, int value);
 
 /* Appends one record at the end of the list. */
 int cArray_cVector_PushBackActual(VecRecordList* list, int value) {
-    return VecRecordList_Insert(list, list->data + (list->count << 4), 1, value);
+    return std_vector_imp_cVector_insert(list, list->data + (list->count << 4), 1, value);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0017CDB0(void) {}

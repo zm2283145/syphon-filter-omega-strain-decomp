@@ -18,14 +18,14 @@ typedef struct { V_5E40 a; V_5E40 b; float c; float d; int e; } T_5E40;
 T_5E40* cDestinationParams_ctor_cDestinationParamsR(T_5E40* d, const T_5E40* s); /* gsynth: defined below */
 #pragma cplusplus on
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern char D_004E0100[];
 #if 0 /* merge_units */
 void cDestinationParams_ctor_cDestinationParamsR(void* dst, void* src);
 #endif /* merge_units */
 #define cDestinationParams_ctor_cDestinationParamsR(a0, a1) ((void)cDestinationParams_ctor_cDestinationParamsR((T_5E40 *)(a0), (const T_5E40 *)(a1))) /* merge_units */
 
-void cMessage_ctor3(void* self, void* other);
+void cCharActionMsg_ctor_cCharActionMsgR(void* self, void* other);
 }
 struct PM5D70 { void* vtable; char pad[8]; int wC; char pad2[0x20]; char payload[0x30]; };
 extern "C" PM5D70* cCharActionMsg_DestinationParams_Clone(PM5D70* self)
@@ -33,10 +33,10 @@ extern "C" PM5D70* cCharActionMsg_DestinationParams_Clone(PM5D70* self)
     PM5D70* p;
     {
         AllocGuard guard;
-        p = (PM5D70*)Mem_Alloc(0, 0x60, "character.hh", 0x40E);
+        p = (PM5D70*)cMemMan_Allocate(0, 0x60, "character.hh", 0x40E);
     }
     if (p) {
-        cMessage_ctor3(p, self);
+        cCharActionMsg_ctor_cCharActionMsgR(p, self);
         cDestinationParams_ctor_cDestinationParamsR(p->payload, self->payload);
         p->vtable = D_004E0100;
     }

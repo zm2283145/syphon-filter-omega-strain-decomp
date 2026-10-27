@@ -2,14 +2,14 @@
 #define DME_H
 /*
  * DME ("DME.cc"): network game layer on top of the DME networking library.
- * Runs a worker thread (DME_ThreadMain) that is woken every 100 Timer0 ticks
- * by DME_TimerHandler and polls the network (DME_Update). Connection
- * callbacks (DME_On*) are registered with NetGame_Create / Net_ConnectGame.
+ * Runs a worker thread (cDME_ThrFunction) that is woken every 100 Timer0 ticks
+ * by cThreadMgr_ThreadInterruptHandler and polls the network (DME_Update). Connection
+ * callbacks (DME_On*) are registered with NetHostPeerToPeer / Net_ConnectGame.
  *
  * Shared globals (declared per file because their extern types differ):
  *   D_005724B0  connection state, DmeConnState
  *   D_005721A8  network session handle
- *   D_005721C0  this machine is the host (set when NetGame_Create succeeds)
+ *   D_005721C0  this machine is the host (set when NetHostPeerToPeer succeeds)
  *   g_IsMultiplayer  online flag
  *   D_005723C8  network-callback busy byte (set on entry, cleared on exit)
  *   D_005721D8  disconnect pending; reason string in D_005721E0[16]
@@ -17,7 +17,7 @@
  *   D_00572418  per-client "disconnected" flags, indexed by client id
  *   D_00572428  per-client level-info send state (== g_DmeClientLevelInfo[1..3])
  *   D_00572528  DME thread running
- *   D_00572538  Timer0 tick counter (incremented by DME_TimerHandler)
+ *   D_00572538  Timer0 tick counter (incremented by cThreadMgr_ThreadInterruptHandler)
  */
 
 /* D_005724B0 */
@@ -34,7 +34,7 @@ enum DmeConnState {
 /* g_DmeClientLevelInfo / D_00572428: a NetLevelInfoMsg must be sent to this client */
 #define DME_LEVELINFO_PENDING 0x0FFFFFFE
 
-/* Interrupt controller line of EE Timer 0 (also passed to Alloc_Lock/Alloc_Unlock). */
+/* Interrupt controller line of EE Timer 0 (also passed to Alloc_Lock/EnableIntc). */
 #define INTC_TIM0 9
 
 /* EE Timer 0 registers */
@@ -74,7 +74,7 @@ typedef struct DmeSessionCfg {
     /* 0x38 */ int pad[7];
 } DmeSessionCfg;
 
-/* Result of NetGame_Create / the join call; handle is valid on failure too. */
+/* Result of NetHostPeerToPeer / the join call; handle is valid on failure too. */
 typedef struct DmeGameOut {
     /* 0x0 */ int unk0;
     /* 0x4 */ int unk4;

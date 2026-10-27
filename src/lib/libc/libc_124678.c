@@ -1,7 +1,7 @@
 #include "types.h"
 
 extern char D_0058805C[];
-extern int Newlib_SysFstat(int, int);
+extern int Libc_Fstat(int, int);
 
 int Newlib_FstatR(int a0, int a1, int a2) {
     int s0, s1, v0, v1;
@@ -11,7 +11,7 @@ int Newlib_FstatR(int a0, int a1, int a2) {
     a0 = a1;
     a1 = a2;
     *(int*)(char*)s1 = 0;
-    v0 = Newlib_SysFstat(a0, a1);
+    v0 = Libc_Fstat(a0, a1);
     v1 = v0;
     a0 = 0 + -1;
     if (v1 != a0) {

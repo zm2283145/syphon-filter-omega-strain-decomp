@@ -9,7 +9,7 @@
 #include "canonical_key_copy.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_001C3E90 */
 #pragma push /* merge_units */
@@ -21,10 +21,10 @@ typedef struct { Node_1C3E90* n; } It_1C3E90;
 extern char D_004FFBC0[];
 extern void std_tree_pair_cString_value_compare_begin(It_1C3E90* out, void* tree);
 extern void std_tree_pair_cString_value_compare_end(It_1C3E90* out, int tree);
-extern void Tree_Successor(It_1C3E90* it);
-extern void ModelCtx_FindNodeById(It_1C3E90* out, int* tree, Key_1C3E90* key);
-extern void NodeMap_End(It_1C3E90* out, int* tree);
-extern int NodeMapIter_NotEqual(It_1C3E90* a, It_1C3E90* b);
+extern void std_red_black_tree_1_increment(It_1C3E90* it);
+extern void cAssocArray_cString16N_3_int_Find(It_1C3E90* out, int* tree, Key_1C3E90* key);
+extern void cAssocArray_cString16N_3_int_End(It_1C3E90* out, int* tree);
+extern int cAssocArray_cString16N_3_int_ConstIterator_opNe(It_1C3E90* a, It_1C3E90* b);
 static inline unsigned char EqB_1C3E90(void* a, void* b) { return a == b; }
 static inline int Eq_1C3E90(void* a, void* b) { return a == b; }
 #pragma push
@@ -52,10 +52,10 @@ unsigned char SkaRegistry_AllModelsHaveKey(void* mgr, char* name)
         Map_1C3E90* m;
         CANONICAL_KEY_INIT_IX(key.c, name)
         m = *pm;
-        ModelCtx_FindNodeById(&f, &m->tree, &key);
-        NodeMap_End(&g, &m->tree);
-        if (!NodeMapIter_NotEqual(&f, &g)) { ok = 0; break; }
-        Tree_Successor(&it);
+        cAssocArray_cString16N_3_int_Find(&f, &m->tree, &key);
+        cAssocArray_cString16N_3_int_End(&g, &m->tree);
+        if (!cAssocArray_cString16N_3_int_ConstIterator_opNe(&f, &g)) { ok = 0; break; }
+        std_red_black_tree_1_increment(&it);
     }
     return ok;
 }
@@ -74,11 +74,11 @@ extern char D_0049EE88[];
 extern int* std_vector_imp_cTerrainPtr_1_begin(Vec_1C4000* v);
 extern int* std_vector_imp_cTerrainPtr_1_end(Vec_1C4000* v);
 extern void std_vector_cTerrainPtr_pointer2iterator(It_1C4000* out, Vec_1C4000* v, int** src);
-extern void Terrain_ResolveIdList(int id);
+extern void cTerrain_FinalizeActivation(int id);
 extern void cTimerDisable_ctor(int* g);
 extern void cTimerDisable_dtor(int* g, int f);
 extern void cArray_cTerrainPtr_dtor(Vec_1C4000* v, int f);
-void Pop_FinalizeTerrainList(Obj_1C4000* o)
+void cLoader_FinalizeActivation(Obj_1C4000* o)
 {
     It_1C4000 it;
     It_1C4000 end;
@@ -98,13 +98,13 @@ void Pop_FinalizeTerrainList(Obj_1C4000* o)
     e = end.p;
     if ((p == *(int* volatile*)&end.p) ^ 1) {
         do {
-            Terrain_ResolveIdList(*p++);
+            cTerrain_FinalizeActivation(*p++);
         } while ((p == e) ^ 1);
     }
     v = o->vec;
     cTimerDisable_ctor(g);
     cArray_cTerrainPtr_dtor(v, -1);
-    Mem_Free(0, v, D_0049EE88, 0xAC);
+    cMemMan_Deallocate(0, v, D_0049EE88, 0xAC);
     cTimerDisable_dtor(g, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */

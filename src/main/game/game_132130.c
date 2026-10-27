@@ -10,14 +10,14 @@
 /* merge_units: begin func_00132130 */
 #pragma push /* merge_units */
 typedef struct { float m[4][4]; } Mtx_f4;
-extern float Math_Sin(float);
-extern float Math_Cos(float);
-Mtx_f4* Mtx_MakeAxisRotation(Mtx_f4* out, float x, float y, float z, float angle)
+extern float Libc_Sinf(float);
+extern float Libc_Cosf(float);
+Mtx_f4* cMatrix_SetWithAxisAngle(Mtx_f4* out, float x, float y, float z, float angle)
 {
     float s, c, t;
     float sz, sy, sx, tzx, tyz, txy;
-    s = Math_Sin(angle);
-    c = Math_Cos(angle);
+    s = Libc_Sinf(angle);
+    c = Libc_Cosf(angle);
     t = 1.0f - c;
     txy = t * x * y;
     tyz = t * y * z;
@@ -57,15 +57,15 @@ static inline void merge_flush_func_00132130(void) {}
  */
 
 
-float Vec4_GetZ(char* self) {
+float cVector_Z_void(char* self) {
     return *(float*)(self + 8);
 }
 
-float Vec4_GetY(char* self) {
+float cVector_Y_void(char* self) {
     return *(float*)(self + 4);
 }
 
-float Vec4_GetX(char* self) {
+float cVector_X_void(char* self) {
     return *(float*)(self + 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -84,18 +84,18 @@ typedef struct RootP {
     void* root; /* 0x3290 */
 } RootP;
 
-extern void* Root_GetWorldPlacement(void* root);
-extern void* Placement_GetQuat(void* placement);
-extern void* Quat_ToMatrix(Mtx40* out, void* quat);
-extern void* Placement_GetPosition(void* placement);
-extern void Mtx_FromBasisAndPosition(void* out, void* basis, void* pos);
+extern void* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void* root);
+extern void* cQuatVec_Rotation(void* placement);
+extern void* cMatrix_ctor_cQuaternionR(Mtx40* out, void* quat);
+extern void* cQuatVec_Translation(void* placement);
+extern void cMatrix_Set_cMatrixR_cVectorR(void* out, void* basis, void* pos);
 
 /* Builds the world matrix of obj's root placement into out. */
-void Actor_GetRootWorldMatrix(void* out, RootP* obj) {
+void cHuman_GetTransform_ForFloorTravel(void* out, RootP* obj) {
     Mtx40 rot;
-    void* placement = Root_GetWorldPlacement(obj->root);
-    void* basis = Quat_ToMatrix(&rot, Placement_GetQuat(placement));
-    Mtx_FromBasisAndPosition(out, basis, Placement_GetPosition(placement));
+    void* placement = cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(obj->root);
+    void* basis = cMatrix_ctor_cQuaternionR(&rot, cQuatVec_Rotation(placement));
+    cMatrix_Set_cMatrixR_cVectorR(out, basis, cQuatVec_Translation(placement));
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00132280(void) {}

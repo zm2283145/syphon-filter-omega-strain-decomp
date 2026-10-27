@@ -1,7 +1,7 @@
 #include "types.h"
-/* MeshCache_Load: reference an agent part mesh in the cache, or claim a slot for it and queue
+/* Monster_LoadAPart: reference an agent part mesh in the cache, or claim a slot for it and queue
  * its two LOD files (<key><lod suffix>) for streaming. Missing LOD 1 reuses the LOD 0 record.
- * Layout as in MeshCache_RegisterNpcSkm (MeshCache_RegisterNpcSkm.c) and MeshCache_FindSlot. */
+ * Layout as in Monster_LoadParts (Monster_LoadParts.c) and FindPart__7MonsterF1. */
 typedef struct {
     int p;
     unsigned short h;
@@ -31,14 +31,14 @@ extern __int128 D_00493A70[2];
 extern Key_4750 D_00493AE0;
 extern char D_004BE850[];
 int sprintf(char* d, const char* f, ...);
-void Hog_Register(Hog_4750* h, char* name, int a, int b);
-int FileMan_FindMember(Hog_4750* h);
-int FileMan_GetSize(Hog_4750* h);
-int Fstream_GetLoader(void);
-void AsyncLoader_QueueLoad(int q, Hog_4750* h, void* cb, Rec_4750* r, int a, int b, int c);
-void Skm_OnLoaded(void);
+void cFileMan_EncodeFilename_charP_cHogFileR_bool(Hog_4750* h, char* name, int a, int b);
+int cFileMan_Open(Hog_4750* h);
+int cFileMan_GetSize(Hog_4750* h);
+int GetFileStreamMan(void);
+void cFileStreamMan_StreamRequest(int q, Hog_4750* h, void* cb, Rec_4750* r, int a, int b, int c);
+void Parts_PartStreamReturn(void);
 
-/* 128-bit key helpers (MMI pand/por/pceqw), as in MeshCache_FindSlot */
+/* 128-bit key helpers (MMI pand/por/pceqw), as in FindPart__7MonsterF1 */
 static inline __int128 k4750and(__int128 a, __int128 b) {
     __int128 t;
     asm { pand t, a, b }
@@ -84,7 +84,7 @@ static inline void Clear_4750(Rec_4750* r) {
     r->fC = 0;
 }
 
-void MeshCache_Load(Cache_4750* c, __int128 key, Hog_4750* hog)
+void Monster_LoadAPart(Cache_4750* c, __int128 key, Hog_4750* hog)
 {
     char buf[32];
     char t[16];
@@ -121,18 +121,18 @@ void MeshCache_Load(Cache_4750* c, __int128 key, Hog_4750* hog)
         key = k4750andr(key, c->mask);
         key = k4750or(D_00493A70[lod], key);
         sprintf(buf, D_004BE850, &key);
-        Hog_Register(hog, buf, hog->x98, 1);
-        if (!(unsigned char)FileMan_FindMember(hog)) {
+        cFileMan_EncodeFilename_charP_cHogFileR_bool(hog, buf, hog->x98, 1);
+        if (!(unsigned char)cFileMan_Open(hog)) {
             int size;
             c->keys[slot] = key;
-            size = FileMan_GetSize(hog);
+            size = cFileMan_GetSize(hog);
             c->recs[slot][lod].p = 0;
             c->recs[slot][lod].h = slot;
             c->recs[slot][lod].b6 = lod;
             c->recs[slot][lod].b7 = 0;
             c->recs[slot][lod].f8 = 0;
             c->recs[slot][lod].fC = size;
-            AsyncLoader_QueueLoad(Fstream_GetLoader(), hog, (void*)Skm_OnLoaded, &c->recs[slot][lod], 0, 1, 1);
+            cFileStreamMan_StreamRequest(GetFileStreamMan(), hog, (void*)Parts_PartStreamReturn, &c->recs[slot][lod], 0, 1, 1);
             queued++;
         } else {
             c->keys[slot] = key;

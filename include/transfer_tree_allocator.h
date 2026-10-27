@@ -28,8 +28,8 @@ extern char D_004BFB10[];
 void Libc_Fprintf(int channel, const char* message);
 void Libc_Abort(void);
 void std_red_black_tree_1_balance_insert(void* node, void* root);
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 }
 
 template <class Payload, char* AllocateFile, char* DeallocateFile>
@@ -53,7 +53,7 @@ struct TransferTreeAllocator {
         Node* node;
         {
             AllocGuard guard;
-            node = (Node*)Mem_Alloc(0, sizeof(Node), AllocateFile, 0x5C);
+            node = (Node*)cMemMan_Allocate(0, sizeof(Node), AllocateFile, 0x5C);
         }
         /* The placement-copy guard tests the value subobject, not the node. */
         Value* value = &node->value;
@@ -78,14 +78,14 @@ struct TransferTreeAllocator {
     static inline void release(Node* node, int pool, int flags, char* file, int line)
     {
         AllocGuard guard;
-        Mem_Free(pool, node, file, line);
+        cMemMan_Deallocate(pool, node, file, line);
     }
 
     static inline void deallocate(void* allocator, Node* node, int count)
     {
         if (node) {
             AllocGuard guard;
-            Mem_Free(0, node, DeallocateFile, 0x64);
+            cMemMan_Deallocate(0, node, DeallocateFile, 0x64);
         }
     }
 };

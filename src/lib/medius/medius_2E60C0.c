@@ -1,5 +1,5 @@
 #include "types.h"
-int Net_TranslateSendFlags(signed char flags, unsigned char* out) {
+int NetConvertTransportFlags(signed char flags, unsigned char* out) {
     if (out == 0) return 0x17;
     *out = 0;
     if (flags & 0x10) *out = 2;

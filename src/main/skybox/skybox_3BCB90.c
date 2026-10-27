@@ -57,7 +57,7 @@ struct Sky_BCB90 {
 #pragma opt_propagation off
 #pragma opt_common_subs off
 #pragma opt_dead_assignments off
-extern "C" void SkyLayer_Update(Sky_BCB90* o) {
+extern "C" void cSLayer_Update(Sky_BCB90* o) {
     o->ang = o->ang + o->angVel;
     if (!(o->flags & 8)) {
         o->vel += o->acc;
@@ -87,14 +87,14 @@ typedef struct { int a; char name[0x94]; T3BC* f98; } S3BC;
 typedef struct { char pad[0x16C]; int f16c; unsigned char b170; char p171[3]; char f174[0x3C]; float m[24]; } O3BC;
 extern void cHogFile_ctor(O3BC*);
 extern void cVU1Model_ctor(char*);
-extern void FileMan_FindMember(S3BC*);
-extern void FileMan_LoadMemberSync(S3BC*, int*, int);
-extern void Hog_OpenInMemory(O3BC*, char*, int, int);
+extern void cFileMan_Open(S3BC*);
+extern void cFileMan_Read_charPP_int(S3BC*, int*, int);
+extern void cHogFile_Open(O3BC*, char*, int, int);
 extern char* strchr(const char*, int);
 extern void cFileMan_ctor_charP_cHogFileR_bool(H3BC*, char*, O3BC*, int);
-extern void Model_Load(char*, H3BC*, int);
-extern void FileMan_Release(H3BC*, int);
-O3BC* SkyLayer_Construct(O3BC* o, S3BC* src, int arg) {
+extern void cVU1Model_Load(char*, H3BC*, int);
+extern void cFileMan_dtor(H3BC*, int);
+O3BC* cSLayer_ctor(O3BC* o, S3BC* src, int arg) {
     H3BC h;
     cHogFile_ctor(o);
     o->f16c = 0;
@@ -105,18 +105,18 @@ O3BC* SkyLayer_Construct(O3BC* o, S3BC* src, int arg) {
     o->m[12] = 0.0f; o->m[13] = 0.0f; o->m[14] = 0.0f; o->m[15] = 1.0f;
     o->m[16] = 0.0f; o->m[17] = 0.0f; o->m[18] = 0.0f; o->m[19] = 0.0f;
     o->m[20] = 0.0f; o->m[21] = 0.0f; o->m[22] = 0.0f; o->m[23] = 0.0f;
-    FileMan_FindMember(src);
-    FileMan_LoadMemberSync(src, &o->f16c, 0);
+    cFileMan_Open(src);
+    cFileMan_Read_charPP_int(src, &o->f16c, 0);
     if (src->f98->b14c == 2) o->b170 = 1;
     else o->b170 = 0;
-    Hog_OpenInMemory(o, src->name, o->f16c, 0);
+    cHogFile_Open(o, src->name, o->f16c, 0);
     {
         char* name = src->name;
         strncpy(strchr(name, '.'), ".VUM", 4);
         cFileMan_ctor_charP_cHogFileR_bool(&h, name, o, 0);
     }
-    Model_Load(o->f174, &h, arg);
-    FileMan_Release(&h, -1);
+    cVU1Model_Load(o->f174, &h, arg);
+    cFileMan_dtor(&h, -1);
     return o;
 }
 /* merge_units: generate this block's code under its own pragmas */

@@ -5,13 +5,13 @@
 
 #include "ska_types.h"
 
-extern int PtrVec_Insert(SkaVec* v, char* pos, int n, int value);
+extern int std_vector_pod_int_insert(SkaVec* v, char* pos, int n, int value);
 
 /* Append one pointer at the end of the array. */
 int std_vector_cSkaNodePtr_push_back(SkaVec* v, int value) {
     int count = v->count;
     char* data = v->data;
-    return PtrVec_Insert(v, data + (count << 2), 1, value);
+    return std_vector_pod_int_insert(v, data + (count << 2), 1, value);
 }
 
 Word* cAssocArray_cString16N_3_int_Iterator_ctor(Word* dst, Word* src) {

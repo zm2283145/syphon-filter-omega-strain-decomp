@@ -6,13 +6,13 @@ struct AlEq_c { char c; };
 struct AlPred_c { AlEq_c op; void** ref; AlPred_c(const AlEq_c& e, void** r) : op(e), ref(r) {} };
 
 extern "C" {
-void Mem_Free(int pool, void* p, const char* file, int line);
-void Object_Unregister(void*);
-void TargetVis_Unregister(void*, void*);
-void Object_DeleteLater(void*, float);
+void cMemMan_Deallocate(int pool, void* p, const char* file, int line);
+void nGobjManager_RemoveGOBJ(void*);
+void cTargetManager_RemoveGobj(void*, void*);
+void cSystem_ActualScheduleDelete(void*, float);
 void* GetSceneManager(void);
 void cLList_cScenePtr_Clear(void*);
-extern void ActiveList_EraseMatching(int* list, AlPred_c pred);
+extern void std_list_imp_voidPtr_remove_if(int* list, AlPred_c pred);
 extern char D_0049A890[];
 extern char g_TargetVisMgr[];
 }
@@ -26,27 +26,27 @@ struct World132A40 {
     void* d4;
 };
 
-static inline void Erase_c(int* l, void** r) { AlEq_c eq; ActiveList_EraseMatching(l, AlPred_c(eq, r)); }
+static inline void Erase_c(int* l, void** r) { AlEq_c eq; std_list_imp_voidPtr_remove_if(l, AlPred_c(eq, r)); }
 extern "C" void cGameSystem_DestroyPlayerCameraAndScene(World132A40* w)
 {
     void* p;
     Erase_c(&w->list, &w->c0);
-    TargetVis_Unregister(g_TargetVisMgr, w->c0);
-    Object_Unregister(w->c0);
-    Object_Unregister(w->d4);
+    cTargetManager_RemoveGobj(g_TargetVisMgr, w->c0);
+    nGobjManager_RemoveGOBJ(w->c0);
+    nGobjManager_RemoveGOBJ(w->d4);
     if (w->c0) {
-        Object_DeleteLater(w->c0, 0.1f);
+        cSystem_ActualScheduleDelete(w->c0, 0.1f);
         w->c0 = 0;
     }
     if (w->d4) {
-        Object_DeleteLater(w->d4, 0.1f);
+        cSystem_ActualScheduleDelete(w->d4, 0.1f);
         w->d4 = 0;
     }
     p = w->d0;
     if (p) {
         {
             AllocGuard g;
-            Mem_Free(0, p, D_0049A890, 0x563);
+            cMemMan_Deallocate(0, p, D_0049A890, 0x563);
         }
         cLList_cScenePtr_Clear(GetSceneManager());
     }

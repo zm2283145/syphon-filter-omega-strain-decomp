@@ -72,11 +72,11 @@ struct Obj {
     virtual void v60();
     virtual V GetDir();
 };
-extern "C" int Combat_HitDirection(const V& a, const V& b, int c);
+extern "C" int GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP(const V& a, const V& b, int c);
 static inline V Pos_(Obj* o) { return o->GetPos(-1); }
 static inline V Dir_(Obj* o) { return o->GetDir(); }
-static inline int Hit_(const V& dir, Obj* a, Obj* b, int c, V& pa) { pa = a->GetPos(-1); return Combat_HitDirection(dir, b->GetPos(-1), c); }
-extern "C" int Combat_RelativeAngles(Obj* a, Obj* b, int c)
+static inline int Hit_(const V& dir, Obj* a, Obj* b, int c, V& pa) { pa = a->GetPos(-1); return GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP(dir, b->GetPos(-1), c); }
+extern "C" int GetTargetAngle_cHumanP_cGOBJP_cEulerAngleTP(Obj* a, Obj* b, int c)
 {
     V pa; V t1; V t2;
     V* q0 = &pa; V* q1 = &t1; V* q2 = &t2;

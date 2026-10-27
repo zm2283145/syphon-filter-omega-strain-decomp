@@ -5,11 +5,11 @@ typedef struct {
     char p0[0x8C]; char l8C[0x1C]; char lA8[0x1C]; char lC4[0x1C]; char lE0[0x38];
     L44EDC0 list; char p120[0x22C4]; void* l23E4; void* l23E8; char p23EC[4]; void* l23F0; void* l23F4;
 } S44EDC0;
-extern int Name_Compare48(void*, void*, int);
-extern int Lobby_GetTime(void);
+extern int Libc_Memcmp(void*, void*, int);
+extern int SFOLobby_GetMillisecs(void);
 extern void SFOLobby_RefreshGameInfo(S44EDC0*, void*, E44EDC0*);
-extern E44EDC0* LobbyArray_At(L44EDC0*, int);
-extern void LobbyArray_Append(L44EDC0*, E44EDC0*);
+extern E44EDC0* SFOLobbyList_GetSlot(L44EDC0*, int);
+extern void SFOLobbyList_Append(L44EDC0*, E44EDC0*);
 extern void* memcpy(void*, const void*, int);
 extern void* memset(void*, int, int);
 
@@ -22,7 +22,7 @@ static inline E44EDC0* Find44EDC0(L44EDC0* list, int id)
         return 0;
     n = list->count;
     for (i = 0; i < n; i++) {
-        e = LobbyArray_At(list, i);
+        e = SFOLobbyList_GetSlot(list, i);
         if (id == e->id)
             return e;
     }
@@ -39,12 +39,12 @@ void SFOLobby_RefreshGameData(S44EDC0* s, int id, int a2, int a3, int a4, void* 
     e = Find44EDC0(&s->list, id);
     changed = 0;
     if (e) {
-        if (e->f4 != a2 || e->f8 != a3 || e->f24 != a4 || Name_Compare48(e->name, name, 0x18) != 0) {
+        if (e->f4 != a2 || e->f8 != a3 || e->f24 != a4 || Libc_Memcmp(e->name, name, 0x18) != 0) {
             e->f24 = a4;
             e->f4 = a2;
             changed = 1;
             e->f8 = a3;
-            e->f28 = Lobby_GetTime();
+            e->f28 = SFOLobby_GetMillisecs();
             memcpy(e->name, name, 0x18);
         }
     } else {
@@ -53,9 +53,9 @@ void SFOLobby_RefreshGameData(S44EDC0* s, int id, int a2, int a3, int a4, void* 
         tmp.id = id;
         tmp.f4 = a2;
         tmp.f8 = a3;
-        tmp.f28 = Lobby_GetTime();
+        tmp.f28 = SFOLobby_GetMillisecs();
         memcpy(tmp.name, name, 0x18);
-        LobbyArray_Append(&s->list, &tmp);
+        SFOLobbyList_Append(&s->list, &tmp);
         e = &tmp;
         changed = 1;
     }

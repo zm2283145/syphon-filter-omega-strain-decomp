@@ -68,7 +68,7 @@ typedef struct PlayerBody {
 typedef struct cPlayer_00176FA0 { char pad[0x1A0]; PlayerBody* body; /* +0x1A0 */ } cPlayer_00176FA0;
 
 /* Player virtual 0x12: forwards arg to the two body parts' virtual +0xC. */
-extern "C" void cPlayer_v12(cPlayer_00176FA0* self, void* arg)
+extern "C" void cPlayer_CleanUpAfterTeleportationOfGobj(cPlayer_00176FA0* self, void* arg)
 {
     PlayerBody* body = self->body;
     body->partA.Update(arg);

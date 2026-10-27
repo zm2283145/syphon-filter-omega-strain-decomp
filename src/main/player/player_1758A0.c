@@ -11,14 +11,14 @@
 #pragma push /* merge_units */
 #pragma global_optimizer off
 typedef struct { char pad[0x4C]; int kind; char pad2[0x3528 - 0x50]; void* inv; } Obj_P;
-extern Obj_P* GObj_IdentityB(void* o);
+extern Obj_P* cGOBJ_SOBJ_convert(void* o);
 extern int g_HumanActorClassKey;
-extern void Global_PlayerRemoveItem(void* inv, int a, int b);
+extern void cInventory_Remove_charP_int(void* inv, int a, int b);
 static inline void Do_001758A0(int b, int a, void* o)
 {
-    Obj_P* p = GObj_IdentityB(o);
+    Obj_P* p = cGOBJ_SOBJ_convert(o);
     if (p->kind == g_HumanActorClassKey)
-        Global_PlayerRemoveItem(p->inv, a, b);
+        cInventory_Remove_charP_int(p->inv, a, b);
 }
 int Script_PlayerRemoveItem(int* args)
 {
@@ -38,12 +38,12 @@ static inline void merge_flush_func_001758A0(void) {}
 #pragma push /* merge_units */
 #pragma global_optimizer off
 
-extern void Global_PlayerAddItem(void* inv, int a, int b);
+extern void cInventory_Add_charP_int(void* inv, int a, int b);
 static inline void Do_00175910(int b, int a, void* o)
 {
-    Obj_P* p = GObj_IdentityB(o);
+    Obj_P* p = cGOBJ_SOBJ_convert(o);
     if (p->kind == g_HumanActorClassKey)
-        Global_PlayerAddItem(p->inv, a, b);
+        cInventory_Add_charP_int(p->inv, a, b);
 }
 int Script_PlayerAddItem(int* args)
 {
@@ -72,16 +72,16 @@ typedef struct {
 typedef struct { char pad[0x14]; unsigned char local; } Ctl_SM;
 typedef struct { char pad[0x30]; Ctl_SM* ctl; char pad2[0x1B8 - 0x34]; int maxNpc; } Plr_SM;
 extern char D_004F53F8[];
-extern void Message_GetScriptTypeKey();
+extern void cMessage_getSOBJClassId();
 extern void cMaxActiveNpcCountMsg_dtor();
-extern void cMaxActiveNpcCountMsg_v01();
-extern void cMaxActiveNpcCountMsg_v04();
-extern void cMaxActiveNpcCountMsg_v05();
+extern void cMaxActiveNpcCountMsg_Clone();
+extern void cMaxActiveNpcCountMsg_Pack();
+extern void cMaxActiveNpcCountMsg_GetMsgId();
 extern void cNetMsg_Pack();
-void * const D_004DAE70[8] = { (void*)0x0, (void*)0x0, (void*)cMaxActiveNpcCountMsg_dtor, (void*)cMaxActiveNpcCountMsg_v01, (void*)cNetMsg_Pack, (void*)Message_GetScriptTypeKey, (void*)cMaxActiveNpcCountMsg_v04, (void*)cMaxActiveNpcCountMsg_v05 };
+void * const D_004DAE70[8] = { (void*)0x0, (void*)0x0, (void*)cMaxActiveNpcCountMsg_dtor, (void*)cMaxActiveNpcCountMsg_Clone, (void*)cNetMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)cMaxActiveNpcCountMsg_Pack, (void*)cMaxActiveNpcCountMsg_GetMsgId };
 extern char D_004DCF10[];
-extern void Event_Construct(Msg_SM* msg, void* name);
-extern void Event_Send(Msg_SM* msg, void* target, int flags);
+extern void cMessage_ctor_cMessageNameR(Msg_SM* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg_SM* msg, void* target, int flags);
 extern void cMessage_dtor(Msg_SM* msg, int flags);
 static inline void SetMax(int n, Plr_SM* p)
 {
@@ -89,11 +89,11 @@ static inline void SetMax(int n, Plr_SM* p)
         p->maxNpc = n;
     } else {
         Msg_SM msg;
-        Event_Construct(&msg, D_004F53F8);
+        cMessage_ctor_cMessageNameR(&msg, D_004F53F8);
         msg.count = n;
         msg.vtable = ((char*)D_004DAE70);
         msg.kind = 8;
-        Event_Send(&msg, p->ctl, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, p->ctl, 0);
         msg.vtable = D_004DCF10;
         cMessage_dtor(&msg, 0);
     }

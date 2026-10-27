@@ -10,14 +10,14 @@ struct Self_00211980 { char pad0[0xC]; unsigned int fC; int f10; char pad14[0xD0
 extern "C" {
 extern unsigned char D_005721D0;
 extern int D_004F5478;
-void* Mem_Alloc(int heap, int size, char* file, int line);
-void Mem_Free(int heap, void* p, char* file, int line);
+void* cMemMan_Allocate(int heap, int size, char* file, int line);
+void cMemMan_Deallocate(int heap, void* p, char* file, int line);
 int NetCreateObject(int* h, int a, int b, int c, int d, int e, int f, void* buf, char* name, int size);
 int NetGetObject(Seg_00211980** o, int h);
 int func_00211DA0(void);
 void NetFreeObject(int a);
 int cNetObj_GetNetID(void);
-void NetMap_BindReceiver(int a, int b, void* c);
+void cNetObj_AddSystem(int a, int b, void* c);
 }
 static inline int IsHost_00211980(void)
 {
@@ -26,7 +26,7 @@ static inline int IsHost_00211980(void)
 static inline void* New_00211980(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, "GameGOBJ.cc", line);
+    return cMemMan_Allocate(0, size, "GameGOBJ.cc", line);
 }
 static inline void ReleaseD0_00211980(Self_00211980* self)
 {
@@ -36,12 +36,12 @@ static inline void ReleaseD0_00211980(Self_00211980* self)
             NetFreeObject(func_00211DA0());
         } else {
             AllocGuard g;
-            Mem_Free(0, p, "GameGOBJ.cc", 0xB83);
+            cMemMan_Deallocate(0, p, "GameGOBJ.cc", 0xB83);
         }
         self->pD0 = 0;
     }
 }
-extern "C" void Lift_CreateInfoObject(Self_00211980* self)
+extern "C" void cElevatorGOBJ_CreateElevatorInfo(Self_00211980* self)
 {
     int h;
     Seg_00211980* seg;
@@ -70,7 +70,7 @@ extern "C" void Lift_CreateInfoObject(Self_00211980* self)
                 NetFreeObject(p->f1C);
             } else {
                 AllocGuard g;
-                Mem_Free(0, p, "GameGOBJ.cc", 0xCAD);
+                cMemMan_Deallocate(0, p, "GameGOBJ.cc", 0xCAD);
             }
             self->p128 = 0;
         }
@@ -85,7 +85,7 @@ extern "C" void Lift_CreateInfoObject(Self_00211980* self)
     self->p128->f14 = NetLocalId();
     self->p128->f18 = cNetObj_GetNetID();
     self->f10 = self->p128->f18;
-    NetMap_BindReceiver(self->p128->f18, NetLocalId(), self);
+    cNetObj_AddSystem(self->p128->f18, NetLocalId(), self);
     {
         Shm_00211980* p = self->p128;
         if (self->pD0 && p) {

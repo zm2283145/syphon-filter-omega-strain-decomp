@@ -25,19 +25,19 @@ extern char g_LightMgr[];
 extern u64_t D_004BC1B0;
 extern int D_00554F04;
 extern int D_00537E50;
-extern void Renderer_RestoreRenderState(R7C350*);
-extern u64_t* DmaPacket_Reserve(void* q, int a, int b, int c, int d, int e);
-extern u64_t Renderer_SetPrmodeReg(R7C350*);
-extern u64_t Renderer_SetTestReg(R7C350*);
+extern void XLib_UpdateRenderFrameEnv(R7C350*);
+extern u64_t* cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(void* q, int a, int b, int c, int d, int e);
+extern u64_t XLib_GetPrimEnv(R7C350*);
+extern u64_t XLib_GetPixelEnv(R7C350*);
 extern int XLib_GetTexMan(R7C350*);
 extern u64_t* cTexMan_GetTEX0_1(int reg, int index);
 extern u64_t* cTexMan_GetTEX1_1(int reg, int index);
 extern void cDmaMan_EndChain_int(void* q, int n);
-extern void LightMgr_GatherModelLights(void* m, unsigned int mask, unsigned int flags, void* out);
-extern void Renderer_SetReceiverConsts(R7C350*, unsigned int);
+extern void cLightMan_Update(void* m, unsigned int mask, unsigned int flags, void* out);
+extern void XLib_ApplyContext(R7C350*, unsigned int);
 static inline u64_t Dup2_7C350(u64_t v) { return v | (v << 2); }
 
-unsigned int Renderer_SetDrawState(R7C350* r, void* model0, unsigned int req0, unsigned int extra)
+unsigned int XLib_SetModelContext(R7C350* r, void* model0, unsigned int req0, unsigned int extra)
 {
     R7C350* self = r;   /* parameter copies: give retail s5/s4/s3 and keep r in a0 for the call */
     void* mdl = model0;
@@ -54,7 +54,7 @@ unsigned int Renderer_SetDrawState(R7C350* r, void* model0, unsigned int req0, u
         self->alphaFix = 1;
         self->fog = 0;
         if (self->restore) {
-            Renderer_RestoreRenderState(r);
+            XLib_UpdateRenderFrameEnv(r);
             self->restore = 0;
         }
         n = 9;
@@ -63,7 +63,7 @@ unsigned int Renderer_SetDrawState(R7C350* r, void* model0, unsigned int req0, u
         }
         {
             int one = 1;
-            q = (GsQ*)DmaPacket_Reserve(D_00537F80, one, one, n + 2, 0, one);
+            q = (GsQ*)cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(D_00537F80, one, one, n + 2, 0, one);
         }
         q->lo = 0x11000000;
         q->hi = 0x300002E | ((u64_t)0x20001E9 << 32);
@@ -75,10 +75,10 @@ unsigned int Renderer_SetDrawState(R7C350* r, void* model0, unsigned int req0, u
         q->hi = self->prim;
         q++;
         q->lo = 0x1A;
-        q->hi = Renderer_SetPrmodeReg(self);
+        q->hi = XLib_GetPrimEnv(self);
         q++;
         q->lo = 0x1B;
-        q->hi = Renderer_SetTestReg(self);
+        q->hi = XLib_GetPixelEnv(self);
         q++;
         q->lo = 0x47;
         q->hi = self->alphaFix;
@@ -124,7 +124,7 @@ unsigned int Renderer_SetDrawState(R7C350* r, void* model0, unsigned int req0, u
             f |= 0x40000000;
         }
         if (f & 0x10) {
-            LightMgr_GatherModelLights(g_LightMgr, 0x17, 3, mdl);
+            cLightMan_Update(g_LightMgr, 0x17, 3, mdl);
         }
         self->dirty = 0;
     } else {
@@ -178,12 +178,12 @@ unsigned int Renderer_SetDrawState(R7C350* r, void* model0, unsigned int req0, u
         }
         if (f & 0x10) {
             unsigned int m = lights | 4;
-            LightMgr_GatherModelLights(g_LightMgr, m, m, mdl);
+            cLightMan_Update(g_LightMgr, m, m, mdl);
             if (!D_00537E50) {
                 f &= ~0x10;
             }
         }
-        Renderer_SetReceiverConsts(self, f);
+        XLib_ApplyContext(self, f);
     }
     return f;
 }

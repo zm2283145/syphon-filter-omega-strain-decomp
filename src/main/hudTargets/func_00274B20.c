@@ -8,7 +8,7 @@
 #include "hudTargets_types.h"
 
 /* Clears a fresh marker record. */
-ObjMarkerRecord* ObjMarkerRecord_Init(ObjMarkerRecord* self) {
+ObjMarkerRecord* cHudTargetInfo_ctor(ObjMarkerRecord* self) {
     self->id = 0;
     self->icon0 = 0;
     self->icon1 = 0;

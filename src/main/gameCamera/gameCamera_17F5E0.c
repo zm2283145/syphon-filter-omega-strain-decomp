@@ -49,7 +49,7 @@ static inline void merge_flush_func_0017F5E0(void) {}
 /* merge_units: begin func_0017F670 */
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-V4 Vec4_Scale(V4* b, float s) {
+V4 cVector_opMul(V4* b, float s) {
     V4 l0;
     V4* q1 = &l0;
     asm {

@@ -8,21 +8,21 @@ typedef struct { char pad[0x84]; int f84; } O33;
 extern "C" {
 extern G33* D_004FFC04;
 extern char D_004B99D8[];
-extern char* GuiScreen_GetLobbyString(O33*, int, char*, char*, int, int);
-extern int FrontEnd_OpenPopup(G33*, int, char*, char*, int, int);
+extern char* GuiLobbyScreen_GetLobbyString(O33*, int, char*, char*, int, int);
+extern int cGameFrontEnd_PushMessageBox(G33*, int, char*, char*, int, int);
 extern void FrontEnd_StartSplashThread(G33*);
 extern void FrontEnd_StopSplashThread(G33*);
-extern void FrontEnd_ClosePopup(G33*, int);
-extern int Gui_GetScreenList(void);
-extern W33* GuiManager_FindOrLoad(int, char*, char*);
-extern void GuiManager_ReleaseRoot(int, W33*);
-extern int DME_GetLobby(void);
+extern void cGameFrontEnd_PopMessageBox(G33*, int);
+extern int Gui_Manager(void);
+extern W33* GuiManager_OpenGui(int, char*, char*);
+extern void GuiManager_CloseGui(int, W33*);
+extern int cDME_GetLobby(void);
 extern int SFOLobby_CheckMissionLobby(int, int);
-extern int SFOLobby_CheckAgencyCell(int);
-extern V33* Gui_GetScreenStack(void);
-extern void GuiWidget_SendEvent(W33*, V33*, int, int, int);
+extern int SFOLobby_CellIsPlayerInCell(int);
+extern V33* Gui_Canvas(void);
+extern void GuiWidget_SendMessage(W33*, V33*, int, int, int);
 }
-extern "C" int GuiScreen_Navigate(O33* self, int type) {
+extern "C" int GuiLobbyScreen_PushLobbyScreen(O33* self, int type) {
     int c = -1;
     int h;
     W33* w;
@@ -38,37 +38,37 @@ extern "C" int GuiScreen_Navigate(O33* self, int type) {
     h = -1;
     if (c != -1) {
         G33* g = D_004FFC04;
-        h = FrontEnd_OpenPopup(g, 0, D_004B99D8, GuiScreen_GetLobbyString(self, (unsigned char)c, 0, 0, 0, 0), 0, 0);
+        h = cGameFrontEnd_PushMessageBox(g, 0, D_004B99D8, GuiLobbyScreen_GetLobbyString(self, (unsigned char)c, 0, 0, 0, 0), 0, 0);
         FrontEnd_StartSplashThread(D_004FFC04);
     }
     w = 0;
     switch (type) {
-    case 0: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineConnect", "ONLINECN"); break;
-    case 1: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR"); break;
-    case 2: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiNetJoinMission", "JOINMIS"); break;
-    case 6: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiMissionSetup", "MSNSETUP"); break;
-    case 3: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiNetAgencyCell", "AGENTCEL"); break;
-    case 4: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiNetContacts", "CONTACTS"); break;
-    case 5: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineOptions", "ONLIPREF"); break;
-    case 9: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiNetMessages", "NETMESS"); break;
-    case 7: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiAccountLogin", "ACNTLOGN"); break;
+    case 0: w = GuiManager_OpenGui(Gui_Manager(), "GuiOnlineConnect", "ONLINECN"); break;
+    case 1: w = GuiManager_OpenGui(Gui_Manager(), "GuiCommandCenter", "CMDCENTR"); break;
+    case 2: w = GuiManager_OpenGui(Gui_Manager(), "GuiNetJoinMission", "JOINMIS"); break;
+    case 6: w = GuiManager_OpenGui(Gui_Manager(), "GuiMissionSetup", "MSNSETUP"); break;
+    case 3: w = GuiManager_OpenGui(Gui_Manager(), "GuiNetAgencyCell", "AGENTCEL"); break;
+    case 4: w = GuiManager_OpenGui(Gui_Manager(), "GuiNetContacts", "CONTACTS"); break;
+    case 5: w = GuiManager_OpenGui(Gui_Manager(), "GuiOnlineOptions", "ONLIPREF"); break;
+    case 9: w = GuiManager_OpenGui(Gui_Manager(), "GuiNetMessages", "NETMESS"); break;
+    case 7: w = GuiManager_OpenGui(Gui_Manager(), "GuiAccountLogin", "ACNTLOGN"); break;
     }
     if (c != -1) FrontEnd_StopSplashThread(D_004FFC04);
     if (w) {
         if (type == 6 || type == 2) {
             int x = D_004FFC04->f248;
-            int p = DME_GetLobby();
+            int p = cDME_GetLobby();
             if (!p || !SFOLobby_CheckMissionLobby(p, x)) {
-                if (h != -1) FrontEnd_ClosePopup(D_004FFC04, h);
-                GuiManager_ReleaseRoot(Gui_GetScreenList(), w);
+                if (h != -1) cGameFrontEnd_PopMessageBox(D_004FFC04, h);
+                GuiManager_CloseGui(Gui_Manager(), w);
                 return 0;
             }
         }
         if (type == 3) {
-            int p = DME_GetLobby();
-            if (!p || !SFOLobby_CheckAgencyCell(p)) {
-                if (h != -1) FrontEnd_ClosePopup(D_004FFC04, h);
-                GuiManager_ReleaseRoot(Gui_GetScreenList(), w);
+            int p = cDME_GetLobby();
+            if (!p || !SFOLobby_CellIsPlayerInCell(p)) {
+                if (h != -1) cGameFrontEnd_PopMessageBox(D_004FFC04, h);
+                GuiManager_CloseGui(Gui_Manager(), w);
                 return 0;
             }
         }
@@ -78,14 +78,14 @@ extern "C" int GuiScreen_Navigate(O33* self, int type) {
     if (w) {
         V33* m;
         w->flags &= ~2;
-        m = Gui_GetScreenStack();
+        m = Gui_Canvas();
         m->v23(w, 0);
     }
-    Gui_GetScreenStack()->v24(self);
-    if (h != -1) FrontEnd_ClosePopup(D_004FFC04, h);
+    Gui_Canvas()->v24(self);
+    if (h != -1) cGameFrontEnd_PopMessageBox(D_004FFC04, h);
     if (w) {
         w->flags |= 2;
-        GuiWidget_SendEvent(w, Gui_GetScreenStack(), 0x10, 2, 0);
+        GuiWidget_SendMessage(w, Gui_Canvas(), 0x10, 2, 0);
     }
     return 1;
 }

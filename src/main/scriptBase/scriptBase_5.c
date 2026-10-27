@@ -25,7 +25,7 @@ int* std_vector_FieldDefPtr_opIndex_uint_2(PtrVec* v, int i) {
 #pragma cplusplus on
 #pragma inline_depth(10)
 extern "C" {
-void PtrVector_Resize(void* v, int n, int* val);
+void std_vector_pod_int_resize(void* v, int n, int* val);
 }
 typedef struct { int pad0; int count; int* data; unsigned char owns; } V7380;
 typedef struct { int x0; int x4; V7380 vec; int x18; } O7380;
@@ -43,7 +43,7 @@ extern "C" O7380* MemberFunc_ctor(O7380* o, int x0, int x4, int x18, int n, int*
     o->x4 = x4;
     o->x18 = x18;
     zero = 0;
-    PtrVector_Resize(v, n, &zero);
+    std_vector_pod_int_resize(v, n, &zero);
     for (i = 0; i < n; i++) *At(&o->vec, i) = src[i];
     return o;
 }
@@ -55,8 +55,8 @@ extern "C" O7380* MemberFunc_ctor(O7380* o, int x0, int x4, int x18, int n, int*
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int *ScriptEnum_GetById();                          
-int *ScriptType_GetRecord(int);                            
+int *cScriptBase_getEnum();                          
+int *cScriptBase_getClass(int);                            
 extern char D_004BD378[];
 extern char D_004BD380[];
 extern char D_004BD388[];
@@ -74,12 +74,12 @@ int cScriptBase_getClassName(int arg0) {
         return F_(&(*(char*)dat_004938B0), (var_a0 * 4), int);
     }
     if (var_a0 < 0x64) {
-        return *ScriptEnum_GetById();
+        return *cScriptBase_getEnum();
     }
     if (var_a0 >= 0x13EC) {
         var_a0 -= 0x1388;
     }
-    return *ScriptType_GetRecord(var_a0);
+    return *cScriptBase_getClass(var_a0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003D7510 */

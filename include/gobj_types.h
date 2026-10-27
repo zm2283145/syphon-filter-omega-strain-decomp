@@ -22,7 +22,7 @@ typedef union ScriptArg {
 
 /*
  * Base world object (cGOBJ). Constructor cGOBJ_ctor (0x003CF0E0) runs the
- * parent constructor Object_ConstructBase and then initializes +0x2C..+0x5C.
+ * parent constructor cSystemContainer_ctor_cObjectIdR and then initializes +0x2C..+0x5C.
  * Total size unknown (at least 0x60).
  */
 typedef struct cGOBJ {
@@ -91,9 +91,9 @@ typedef struct cElevatorGOBJ {
     LiftSound stopSound;       /* 0x600 */
 } cElevatorGOBJ;
 
-/* Parameter block passed to ModelCtx_Init (0x30 bytes on the stack). */
+/* Parameter block passed to cSkeleton_Reset (0x30 bytes on the stack). */
 typedef struct ModelCtxParams {
-    int skel;                  /* 0x00: Skel_Find result */
+    int skel;                  /* 0x00: cSkeletonDataBank_GetSkeletonData result */
     int unk04;                 /* 0x04 */
     int unk08;                 /* 0x08 */
     int unk0C;                 /* 0x0C */
@@ -122,7 +122,7 @@ typedef struct cVUM_GOBJ {
     char pad1F4[0x2A70];
     void* model;               /* 0x2C64: points at modelCtx */
     char pad2C68[0x1E8];
-    int modelCtx;              /* 0x2E50: model context (ModelCtx_Init) */
+    int modelCtx;              /* 0x2E50: model context (cSkeleton_Reset) */
 } cVUM_GOBJ;
 
 /* 16-byte vector element and an (unk, count, data) array of them. */
@@ -148,7 +148,7 @@ typedef struct IntFloatVec {
     IntFloat* data;
 } IntFloatVec;
 
-/* Small record initialized by cSafePtr_cGOBJ_ctor_void / SchedEvent_Init (0x0C bytes). */
+/* Small record initialized by cSafePtr_cGOBJ_ctor_void / cCBData_ctor (0x0C bytes). */
 typedef struct Rec0C {
     int unk0;                  /* 0x0 */
     signed char unk4;          /* 0x4 (cSafePtr_cGOBJ_ctor_void writes -2 as a word over 0x4..0x7) */

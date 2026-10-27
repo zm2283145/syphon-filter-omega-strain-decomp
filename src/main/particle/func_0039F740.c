@@ -8,14 +8,14 @@
 
 extern "C" {
 /*fc*/
-int Mem_Free(...);                         
-int Tex_Release(...);                       
+int cMemMan_Deallocate(...);                         
+int cTexMan_RemoveTexture(...);                       
 int operator_delete(...);                          
 extern char D_004BC5D0;
 extern char D_004DFAD8;
-extern "C" void ShatterEmitter_Draw();
-extern "C" void ShatterEmitter_Update();
-extern "C" void ShatterEmitter_IsDead();
+extern "C" void cParticleShatter_Render();
+extern "C" void cParticleShatter_NextFrame();
+extern "C" void cParticleShatter_Done();
 extern "C" void cParticleBase_GetRenderMatrix();
 extern "C" void cParticleShatter_Definition();
 extern void * const D_004DFB10[];
@@ -24,7 +24,7 @@ extern unsigned char g_ProfileLockEnabled;
 extern int g_TextureMgr;
 }
 #pragma opt_common_subs off
-extern "C" char * ShatterEmitter_Destroy(char * arg0, long long arg1) {
+extern "C" char * cParticleShatter_dtor(char * arg0, long long arg1) {
     int temp_a1;
     int temp_s2;
 
@@ -32,13 +32,13 @@ extern "C" char * ShatterEmitter_Destroy(char * arg0, long long arg1) {
         F_(arg0, 0x0, int) = (int)(&(*(char*)D_004DFB10));
         temp_a1 = F_(arg0, 0x170, int);
         if (temp_a1 >= 0) {
-            Tex_Release(g_TextureMgr, temp_a1, 1);
+            cTexMan_RemoveTexture(g_TextureMgr, temp_a1, 1);
         }
         temp_s2 = F_(arg0, 0x124, int);
         if (temp_s2 != 0) {
             {
                 AllocGuard g;
-            Mem_Free(0, temp_s2, &D_004BC5D0, 0x99B);
+            cMemMan_Deallocate(0, temp_s2, &D_004BC5D0, 0x99B);
             }
             F_(arg0, 0x124, int) = 0;
         }
@@ -54,4 +54,4 @@ extern "C" char * ShatterEmitter_Destroy(char * arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004DFB10[8] = { (void*)0x0, (void*)0x0, (void*)ShatterEmitter_Destroy, (void*)ShatterEmitter_Draw, (void*)ShatterEmitter_Update, (void*)cParticleShatter_Definition, (void*)ShatterEmitter_IsDead, (void*)cParticleBase_GetRenderMatrix };
+void * const D_004DFB10[8] = { (void*)0x0, (void*)0x0, (void*)cParticleShatter_dtor, (void*)cParticleShatter_Render, (void*)cParticleShatter_NextFrame, (void*)cParticleShatter_Definition, (void*)cParticleShatter_Done, (void*)cParticleBase_GetRenderMatrix };

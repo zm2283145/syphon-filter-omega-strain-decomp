@@ -25,7 +25,7 @@ static inline void Reset_38AE0(T_438AE0* r)
     r->b = 0;
 }
 
-unsigned char GenInfo_RegisterNetType(void)
+unsigned char cGenInfoObject_InitNet(void)
 {
     int db;
     Prm_38AE0 prm;

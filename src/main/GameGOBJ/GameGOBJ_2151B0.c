@@ -55,28 +55,28 @@ typedef struct ElevatorMsg {
 extern char g_Game[];
 extern char D_004DADF0[];
 extern char g_TargetVisMgr[];
-extern "C" void SoundStopMsg_Ctor(ElevatorMsg* msg, int* floors, cElevatorGOBJ_002151C0* self);
-extern "C" void Event_Send(ElevatorMsg* msg, void* queue, int flag);
-extern "C" void FileMan_Release(void* member, int flag);
+extern "C" void cStopSoundMsg_ctor_cSndFxR_cGOBJP(ElevatorMsg* msg, int* floors, cElevatorGOBJ_002151C0* self);
+extern "C" void QueueMessage_cMessageR_cSystemP_int(ElevatorMsg* msg, void* queue, int flag);
+extern "C" void cFileMan_dtor(void* member, int flag);
 extern "C" void cMessage_dtor(ElevatorMsg* msg, int flag);
-extern "C" void TargetVis_Unregister(void* list, cElevatorGOBJ_002151C0* obj);
-extern "C" void cNode_v07(cElevatorGOBJ_002151C0* self);
+extern "C" void cTargetManager_RemoveGobj(void* list, cElevatorGOBJ_002151C0* obj);
+extern "C" void cGOBJ_NetDeactivate(cElevatorGOBJ_002151C0* self);
 
 /* Lift virtual 0x07: posts an elevator message, notifies the door (virtual +0x60), runs the base handler and unregisters. */
-extern "C" void cElevatorGOBJ_v07(cElevatorGOBJ_002151C0* self)
+extern "C" void cElevatorGOBJ_NetDeactivate(cElevatorGOBJ_002151C0* self)
 {
     ElevatorMsg msg;
-    SoundStopMsg_Ctor(&msg, &self->floors, self);
-    Event_Send(&msg, g_Game, 1);
+    cStopSoundMsg_ctor_cSndFxR_cGOBJP(&msg, &self->floors, self);
+    QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 1);
     /* ~ElevatorMsg() */
     msg.vtable = D_004DADF0;
-    FileMan_Release(msg.memberB, -1);
-    FileMan_Release(msg.memberA, -1);
+    cFileMan_dtor(msg.memberB, -1);
+    cFileMan_dtor(msg.memberA, -1);
     cMessage_dtor(&msg, 0);
     if (self->door)
         self->door->Method60(1);
-    cNode_v07(self);
-    TargetVis_Unregister(g_TargetVisMgr, self);
+    cGOBJ_NetDeactivate(self);
+    cTargetManager_RemoveGobj(g_TargetVisMgr, self);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002151C0(void) {}

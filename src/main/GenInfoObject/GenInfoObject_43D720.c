@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* MLTextWidget_GetClassName(void) {
+char* GuiMLTextWidget_GetClassName(void) {
     return "GuiMLTextWidget";
 }

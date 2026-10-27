@@ -6,16 +6,16 @@
 
 /* merge_units: begin func_00437BF0 */
 #pragma push /* merge_units */
-#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
 int NetGetObject(void **, int);
-int NetGame_InitLocalSlot(int *, int);
+int NetGetMyClientIndex(int *, int);
 int NetReleaseObjectPrivateOwnership(int);
 int NetStreamMediaQuitChannel(int, int);
 int lgAudStopRecording(int);
-int Net_GetClock(int);
+int cDME_GetTime(int);
 int func_0042BF90();
 int cNellyMoser_nmsDestroy();
 int lgAudClose(int);
@@ -55,14 +55,14 @@ void cHeadSet_ShutdownAudio(void) {
             if (lgAudStopRecording(D_00497548) == 0x80000006) {
                 D_00582B88 = 0;
             }
-            D_00582D08 = Net_GetClock(1) + 0x7D0;
+            D_00582D08 = cDME_GetTime(1) + 0x7D0;
         }
         D_00583860 = 0;
         if (D_00582B88 != 0) {
             if (lgAudStopRecording(D_00497548) == 0x80000006) {
                 D_00582B88 = 0;
             }
-            D_00582D08 = Net_GetClock(1) + 0x7D0;
+            D_00582D08 = cDME_GetTime(1) + 0x7D0;
         }
         lgAudStopPlayback(D_00497548);
         D_00582B88 = 0;
@@ -196,9 +196,9 @@ void NetGetObject(P_437F90** out, void* s);
 #define NetGetObject(a0, a1) ((void)NetGetObject((void * *)(a0), (int)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-int Net_GetClock(int v);
+int cDME_GetTime(int v);
 #endif /* merge_units */
-#define Net_GetClock(a0) (Net_GetClock((a0))) /* merge_units */
+#define cDME_GetTime(a0) (cDME_GetTime((a0))) /* merge_units */
 
 int lgAudRead(int h, int mode, void* buf, int* len);
 int cNellyMoser_nmsEncode(char* in, char* out, char* flag);
@@ -208,7 +208,7 @@ static inline int LocalIdX_7F90(void)
     int r = 0;
     int a = D_005721A8;
     if (g_IsMultiplayer) {
-        if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
+        if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, a);
         r = D_00494178;
     } else { asm { .set reorder } } /* scheduling barrier: keeps the empty else block (b + nop) */
     return r;
@@ -263,7 +263,7 @@ void cHeadSet_AudioRecordCallback(Pkt_437F90* pkt)
 {
     char flag;
     int len;
-    int t0 = Net_GetClock(1);
+    int t0 = cDME_GetTime(1);
     if (pkt && D_00582B88 && D_00497540) {
         char* dst;
         unsigned char t;
@@ -296,7 +296,7 @@ void cHeadSet_AudioRecordCallback(Pkt_437F90* pkt)
                 D_00582D48 = D_00582D48 + (int)len;
             }
             if (D_00582D48 < 0x140) {
-                D_00582D38 = Net_GetClock(1) - t0;
+                D_00582D38 = cDME_GetTime(1) - t0;
                 return;
             }
             {
@@ -309,11 +309,11 @@ void cHeadSet_AudioRecordCallback(Pkt_437F90* pkt)
         pkt->len = D_00582D40;
         D_00582D40 = 0;
     }
-    D_00582D38 = Net_GetClock(1) - t0;
+    D_00582D38 = cDME_GetTime(1) - t0;
 }
 #undef D_00583870 /* merge_units */
 #undef D_00583860 /* merge_units */
 #undef NetGetObject /* merge_units */
-#undef Net_GetClock /* merge_units */
+#undef cDME_GetTime /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00437F90 */

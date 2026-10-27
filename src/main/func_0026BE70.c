@@ -8,6 +8,6 @@
 
 extern char D_004FF028;
 
-void Pad_EnableVibration(int value) {
+void nRumbleManager_SetEnabled(int value) {
     D_004FF028 = value;
 }

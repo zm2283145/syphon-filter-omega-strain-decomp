@@ -16,18 +16,18 @@ struct M {
     M& operator=(const M& o) { void* d = this; __int128 qa; __int128 qb; const void* s = &o; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); return *this; }
 } __attribute__((aligned(16)));
 extern "C" {
-void Vec4_NormalizeXYZ_132060(V* out, V* v);
-void Vec4_Cross(V* out, V* a, V* b);
-int Vec4_IsZeroXYZ(V* v);
-V* Vec4_NormalizeXYZInPlace(V* v);
-V* Vec4_Assign(V* d, V* s);
-V* Vec4_Set(V* out, float x, float y, float z, float w);
-void Mtx_FromRowsAndTranslation(M* m, V* a, V* b, V* c, V* t);
-void Mtx_FrameFromAxis(M* m, V* a);
-void Mtx_SetIdentity(M* m);
-void Mtx_SetRow0(M* m, V* v);
-void Mtx_SetRow1(M* m, V* v);
-void Mtx_SetRow2(M* m, V* v);
+void cVector_GetNormalized_void(V* out, V* v);
+void cVector_Cross(V* out, V* a, V* b);
+int cVector_IsZeroXYZ(V* v);
+V* cVector_Normalize_void(V* v);
+V* cVector_ctor_cVectorR(V* d, V* s);
+V* cVector_ctor_float_float_float_float(V* out, float x, float y, float z, float w);
+void cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(M* m, V* a, V* b, V* c, V* t);
+void cMatrix_MakeLookAtMatrix_cVectorR(M* m, V* a);
+void cMatrix_SetUnit(M* m);
+void cMatrix_SetXAxis(M* m, V* v);
+void cMatrix_SetYAxis(M* m, V* v);
+void cMatrix_SetZAxis(M* m, V* v);
 void Mtx_LookAt(M* out, V* dir, V* up, M* ref, float limit);
 }
 static inline void Normalize(V* v) { __asm__ volatile("lqc2 $vf1, 0x0(%0); vmul.xyz $vf2, $vf1, $vf1; vmulax.w $ACC, $vf0, $vf2x; vmadday.w $ACC, $vf0, $vf2y; vmaddz.w $vf3, $vf0, $vf2z; vrsqrt $Q, $vf0w, $vf3w; vwaitq; vmulq.xyz $vf1, $vf1, $Q; sqc2 $vf1, 0x0(%0)" : : "r"(v) : "memory"); }
@@ -45,20 +45,20 @@ static inline V Unit(const V& v) { V t = v; V* p = &t; Normalize(p); return *p; 
 static inline void LookFrame(M* m, V* dir, V* up)
 {
     V c;
-    Vec4_Cross(&c, dir, up);
-    if (!Vec4_IsZeroXYZ(&c)) {
+    cVector_Cross(&c, dir, up);
+    if (!cVector_IsZeroXYZ(&c)) {
         V f;
         V r;
         V u;
         V w;
-        Vec4_NormalizeXYZ_132060(&f, dir);
-        Vec4_Assign(&r, Vec4_NormalizeXYZInPlace(&c));
-        Vec4_Cross(&u, &r, &f);
-        Mtx_FromRowsAndTranslation(m, &r, &f, &u, Vec4_Set(&w, 0.0f, 0.0f, 0.0f, 1.0f));
-    } else if (!Vec4_IsZeroXYZ(dir)) {
-        Mtx_FrameFromAxis(m, dir);
+        cVector_GetNormalized_void(&f, dir);
+        cVector_ctor_cVectorR(&r, cVector_Normalize_void(&c));
+        cVector_Cross(&u, &r, &f);
+        cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(m, &r, &f, &u, cVector_ctor_float_float_float_float(&w, 0.0f, 0.0f, 0.0f, 1.0f));
+    } else if (!cVector_IsZeroXYZ(dir)) {
+        cMatrix_MakeLookAtMatrix_cVectorR(m, dir);
     } else {
-        Mtx_SetIdentity(m);
+        cMatrix_SetUnit(m);
     }
 }
 
@@ -79,9 +79,9 @@ void Mtx_LookAt(M* out, V* dir, V* up, M* ref, float limit)
             V r1 = *(V*)&m.r[1];
             V r2 = *(V*)&m.r[2];
             V n = -r0;
-            Mtx_SetRow0(&m, &r2);
-            Mtx_SetRow1(&m, &r1);
-            Mtx_SetRow2(&m, &n);
+            cMatrix_SetXAxis(&m, &r2);
+            cMatrix_SetYAxis(&m, &r1);
+            cMatrix_SetZAxis(&m, &n);
         }
     }
     *out = m;

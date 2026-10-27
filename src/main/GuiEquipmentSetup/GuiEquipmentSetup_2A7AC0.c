@@ -28,7 +28,7 @@ char* GuiMessageBox_GetClassName(void) {
 extern void* strcmp(void* key);
 
 /* Returns whether the lookup of "GuiMessageBox" yields null. */
-int GuiMessageBox_IsType(void) {
+int GuiMessageBox_IsClass(void) {
     return strcmp("GuiMessageBox") == 0;
 }
 #pragma pop /* merge_units */

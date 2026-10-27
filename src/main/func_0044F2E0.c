@@ -1,6 +1,6 @@
 #include "types.h"
 int memcpy(int, int, int);
-int Name_Compare48(int, int, int);
+int Libc_Memcmp(int, int, int);
 
 typedef struct {
     int cap;
@@ -25,7 +25,7 @@ static inline void Arr_Set(Arr *a, int i, int elem) {
     if (elem != 0) {
         p = Arr_At(a, i);
         if (p != 0) {
-            if (Name_Compare48(p, elem, a->size) != 0) {
+            if (Libc_Memcmp(p, elem, a->size) != 0) {
                 a->dirty = 1;
             }
             memcpy(p, elem, a->size);
@@ -33,7 +33,7 @@ static inline void Arr_Set(Arr *a, int i, int elem) {
     }
 }
 
-void LobbyArray_RemoveAt(Arr *a, int idx) {
+void SFOLobbyList_DeleteSlot(Arr *a, int idx) {
     int i;
     if (Arr_At(a, idx) != 0) {
         for (i = idx; i < a->count - 1; i++) {

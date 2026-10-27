@@ -39,7 +39,7 @@ struct Msg_00222530 : ClonedMessageBase {
 #define CLONE_BODY(p, s) p->vtable = D_004DB660; p->a24 = s->a24; p->vtable = D_004DB620;
 
 extern "C" { char D_004A4C98[] = "generator.hh"; }
-DEFINE_MESSAGE_CLONE(cDespawnedNPCMsg_v01, Msg_00222530, 40, D_004A4C98, 207, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cDespawnedNPCMsg_Clone, Msg_00222530, 40, D_004A4C98, 207, CLONE_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_00222530 */
 
@@ -57,7 +57,7 @@ struct Msg_00222640 : ClonedMessageBase {
 #define CLONE_BODY(p, s) p->vtable = D_004DB660; p->a24 = s->a24; p->vtable = D_004DB640;
 
 extern "C" { char D_004A4CA8[] = "generator.hh"; }
-DEFINE_MESSAGE_CLONE(cSpawnedNPCMsg_v01, Msg_00222640, 40, D_004A4CA8, 191, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cSpawnedNPCMsg_Clone, Msg_00222640, 40, D_004A4CA8, 191, CLONE_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_00222640 */
 
@@ -74,6 +74,6 @@ struct Msg_00222750 : ClonedMessageBase {
 #define CLONE_BODY(p, s) p->vtable = D_004DB660; p->a24 = s->a24;
 
 extern "C" { char D_004A4CB8[] = "generator.hh"; }
-DEFINE_MESSAGE_CLONE(cGeneratorMessageBase_v01, Msg_00222750, 40, D_004A4CB8, 163, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cGeneratorMessageBase_Clone, Msg_00222750, 40, D_004A4CB8, 163, CLONE_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_00222750 */

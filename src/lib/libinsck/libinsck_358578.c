@@ -5,7 +5,7 @@
  */
 
 /* merge_units: begin func_00358578 */
-int Insck_MapLibnetError(int e)
+int conv_errno(int e)
 {
     switch (e) {
     case 0: return 0;
@@ -63,13 +63,13 @@ extern N81E0 *D_00492CD4;
 extern void sceLibnetTerminate(void *);
 extern void my_free(void *);
 extern void *my_malloc(int);
-extern N81E0 *Insck_GetThreadContext(int);
-extern int Insck_SetErrno(N81E0 *, int);
+extern N81E0 *thread_enter(int);
+extern int thread_leave(N81E0 *, int);
 extern int sceLibnetInitialize(void *, unsigned int, int, int);
 
 int sceInsockSetSifMBindRpcValue(unsigned int a, int b, int c)
 {
-    N81E0 *n = Insck_GetThreadContext(0);
+    N81E0 *n = thread_enter(0);
     unsigned int mask;
     int err;
     if (n == 0) return -1;
@@ -88,7 +88,7 @@ int sceInsockSetSifMBindRpcValue(unsigned int a, int b, int c)
         else D_00492CD4 = n->prev;
         my_free(n);
         D_00492CCC--;
-        return Insck_SetErrno(n, 0xC);
+        return thread_leave(n, 0xC);
     } else {
         n->x54 = (int)(n->x50 + 0x3F) & -0x40;
         if (sceLibnetInitialize(n->x14, (n->x58 + 0x63) & mask, n->x5C, n->x60) < 0) {
@@ -99,9 +99,9 @@ int sceInsockSetSifMBindRpcValue(unsigned int a, int b, int c)
             else D_00492CD4 = n->prev;
             my_free(n);
             D_00492CCC--;
-            return Insck_SetErrno(n, 0x16);
+            return thread_leave(n, 0x16);
         } else {
-            return Insck_SetErrno(n, 0);
+            return thread_leave(n, 0);
         }
     }
 }
@@ -110,93 +110,93 @@ int sceInsockSetSifMBindRpcValue(unsigned int a, int b, int c)
 /* merge_units: begin func_00358890 */
 typedef struct { char pad[0x60]; int f60; } E358890;
 #if 0 /* merge_units */
-extern int Insck_GetThreadContext(int x);
+extern int thread_enter(int x);
 #endif /* merge_units */
-#define Insck_GetThreadContext(a0) ((int)Insck_GetThreadContext((a0))) /* merge_units */
+#define thread_enter(a0) ((int)thread_enter((a0))) /* merge_units */
 
-extern E358890* Insck_FindSocket(int a);
+extern E358890* socket_info(int a);
 #if 0 /* merge_units */
-extern int Insck_SetErrno(int h, int c);
+extern int thread_leave(int h, int c);
 #endif /* merge_units */
-#define Insck_SetErrno(a0, a1) (Insck_SetErrno((N81E0 *)(a0), (a1))) /* merge_units */
+#define thread_leave(a0, a1) (thread_leave((N81E0 *)(a0), (a1))) /* merge_units */
 
 int sceInsockSetRecvTimeout(int a, int b)
 {
-    int h = Insck_GetThreadContext(0);
+    int h = thread_enter(0);
     E358890* e;
     if (h == 0) return -1;
-    e = Insck_FindSocket(a);
-    if (e == 0) return Insck_SetErrno(h, 9);
+    e = socket_info(a);
+    if (e == 0) return thread_leave(h, 9);
     e->f60 = b;
-    Insck_SetErrno(h, 0);
+    thread_leave(h, 0);
     return 0;
 }
-#undef Insck_GetThreadContext /* merge_units */
-#undef Insck_SetErrno /* merge_units */
+#undef thread_enter /* merge_units */
+#undef thread_leave /* merge_units */
 /* merge_units: end func_00358890 */
 
 /* merge_units: begin func_00358910 */
 typedef struct { char pad[0x64]; int f60; } E358910;
 #if 0 /* merge_units */
-extern int Insck_GetThreadContext(int x);
+extern int thread_enter(int x);
 #endif /* merge_units */
-#define Insck_GetThreadContext(a0) ((int)Insck_GetThreadContext((a0))) /* merge_units */
+#define thread_enter(a0) ((int)thread_enter((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern E358910* Insck_FindSocket(int a);
+extern E358910* socket_info(int a);
 #endif /* merge_units */
-#define Insck_FindSocket(a0) ((E358910 *)Insck_FindSocket((a0))) /* merge_units */
+#define socket_info(a0) ((E358910 *)socket_info((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int Insck_SetErrno(int h, int c);
+extern int thread_leave(int h, int c);
 #endif /* merge_units */
-#define Insck_SetErrno(a0, a1) (Insck_SetErrno((N81E0 *)(a0), (a1))) /* merge_units */
+#define thread_leave(a0, a1) (thread_leave((N81E0 *)(a0), (a1))) /* merge_units */
 
 int sceInsockSetSendTimeout(int a, int b)
 {
-    int h = Insck_GetThreadContext(0);
+    int h = thread_enter(0);
     E358910* e;
     if (h == 0) return -1;
-    e = Insck_FindSocket(a);
-    if (e == 0) return Insck_SetErrno(h, 9);
+    e = socket_info(a);
+    if (e == 0) return thread_leave(h, 9);
     e->f60 = b;
-    Insck_SetErrno(h, 0);
+    thread_leave(h, 0);
     return 0;
 }
-#undef Insck_GetThreadContext /* merge_units */
-#undef Insck_FindSocket /* merge_units */
-#undef Insck_SetErrno /* merge_units */
+#undef thread_enter /* merge_units */
+#undef socket_info /* merge_units */
+#undef thread_leave /* merge_units */
 /* merge_units: end func_00358910 */
 
 /* merge_units: begin func_00358990 */
 typedef struct { char pad[0x68]; int f60; } E358990;
 #if 0 /* merge_units */
-extern int Insck_GetThreadContext(int x);
+extern int thread_enter(int x);
 #endif /* merge_units */
-#define Insck_GetThreadContext(a0) ((int)Insck_GetThreadContext((a0))) /* merge_units */
+#define thread_enter(a0) ((int)thread_enter((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern E358990* Insck_FindSocket(int a);
+extern E358990* socket_info(int a);
 #endif /* merge_units */
-#define Insck_FindSocket(a0) ((E358990 *)Insck_FindSocket((a0))) /* merge_units */
+#define socket_info(a0) ((E358990 *)socket_info((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int Insck_SetErrno(int h, int c);
+extern int thread_leave(int h, int c);
 #endif /* merge_units */
-#define Insck_SetErrno(a0, a1) (Insck_SetErrno((N81E0 *)(a0), (a1))) /* merge_units */
+#define thread_leave(a0, a1) (thread_leave((N81E0 *)(a0), (a1))) /* merge_units */
 
 int sceInsockSetShutdownTimeout(int a, int b)
 {
-    int h = Insck_GetThreadContext(0);
+    int h = thread_enter(0);
     E358990* e;
     if (h == 0) return -1;
-    e = Insck_FindSocket(a);
-    if (e == 0) return Insck_SetErrno(h, 9);
+    e = socket_info(a);
+    if (e == 0) return thread_leave(h, 9);
     e->f60 = b;
-    Insck_SetErrno(h, 0);
+    thread_leave(h, 0);
     return 0;
 }
-#undef Insck_GetThreadContext /* merge_units */
-#undef Insck_FindSocket /* merge_units */
-#undef Insck_SetErrno /* merge_units */
+#undef thread_enter /* merge_units */
+#undef socket_info /* merge_units */
+#undef thread_leave /* merge_units */
 /* merge_units: end func_00358990 */

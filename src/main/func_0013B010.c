@@ -1,5 +1,5 @@
 #include "types.h"
-extern void* Ptr_Identity(void* p);
+extern void* cVector_ctor_void(void* p);
 extern void* cCollisionModel_FaceProperties_ctor(void* p);
 extern void* cCollisionModel_FaceLocator_ctor(void* p);
 
@@ -38,10 +38,10 @@ R13B* cLosResult_ctor_cLosResultR(R13B* d, R13B* s)
     h = &d->hit;
     p = h->m;
     do {
-        Ptr_Identity(p);
+        cVector_ctor_void(p);
         p++;
     } while (p != &h->m[3]);
-    Ptr_Identity(&h->t);
+    cVector_ctor_void(&h->t);
     cCollisionModel_FaceProperties_ctor(h->b);
     cCollisionModel_FaceLocator_ctor(h->ip);
     cCollisionFace_opAssign(h, &s->hit);

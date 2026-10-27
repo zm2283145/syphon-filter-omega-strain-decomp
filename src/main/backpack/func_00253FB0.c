@@ -9,7 +9,7 @@
 extern BackpackWorld* g_WeaponDatabase;
 extern char D_005716C0[];
 
-char* cBackpack_v20(void) {
+char* cBackpack_GetBBox(void) {
     char* p = g_WeaponDatabase->unkB8;
     if (p != 0) {
         return p + 0x3E0;

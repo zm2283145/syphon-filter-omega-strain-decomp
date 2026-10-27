@@ -82,24 +82,24 @@ extern char g_ActorActionMsgClass[], D_004E0840[], D_004E0200[];
 extern unsigned char g_IsMultiplayer;
 struct GunDef { char pad[0x4C]; unsigned char ok; char pad4D[3]; unsigned char Ok() { return ok; } };
 extern GunDef SecondaryStateTable[];
-Obj* ActorRef_Copy(Hdl*);
-int WeaponInv_IsFullAuto(void*);
-unsigned char WeaponInv_GetHeldClass(void*);
-int WeaponInv_IsReadyToFire(void*, int);
-int Weapon_CanAttack(void*);
-void Weapon_Discharge(void*, int, int, int, int);
-int Random_Next(void);
-void Event_Construct(void*, void*);
-void Event_Send(void*, void*, int);
+Obj* cSafePtr_cGOBJ_opCast_cGOBJPtr(Hdl*);
+int cWeapon_IsFullyAutomatic(void*);
+unsigned char cWeapon_GetEquipmentType(void*);
+int cWeapon_ReadyToFire(void*, int);
+int cWeapon_Ready(void*);
+void cWeapon_FireIfReady(void*, int, int, int, int);
+int Libc_Rand(void);
+void cMessage_ctor_cMessageNameR(void*, void*);
+void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 void cMessage_dtor(void*, int);
-void NpcAttack_FiringGate(Npc* self, float dt);
+void cNPC_HandleWeaponFiring(Npc* self, float dt);
 }
 
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
 
 struct MsgB {
     void* vtable; void* type; int pad8[6]; unsigned char kind; char pad21[3];
-    MsgB(void* t) { Event_Construct(this, t); }
+    MsgB(void* t) { cMessage_ctor_cMessageNameR(this, t); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); }
 };
 struct Msg3B : MsgB {
@@ -120,7 +120,7 @@ static inline Obj* RefGet(Hdl* h) {
     if (!(!NotNull(h->obj) || Eq(h->obj->serial, h->serial))) ok = 0;
     return ok ? h->obj : 0;
 }
-static inline float RandF() { return (float)Random_Next() / 2147483648.0f; }
+static inline float RandF() { return (float)Libc_Rand() / 2147483648.0f; }
 static inline void Scale(V* v, float k) {
     int t;
     __asm__ volatile(".set noreorder; lqc2 vf1, 0x0(%1); mfc1 %0, %2; qmtc2.ni %0, vf2; vmulx.xyzw vf1, vf1, vf2x; sqc2 vf1, 0x0(%1); .set reorder" : "=&r"(t) : "r"(v), "f"(k) : "memory");
@@ -152,10 +152,10 @@ static inline float Range(Npc* self) {
     return r;
 }
 static inline unsigned char InReach(Npc* self, void* inv) {
-    if (WeaponInv_GetHeldClass(inv) == 1) return 1;
+    if (cWeapon_GetEquipmentType(inv) == 1) return 1;
     float r = Range(self);
     if (self->ai->Get()) {
-        Sub58* o = ((Sub58Holder*)ActorRef_Copy((Hdl*)&self->ai->obj))->s;
+        Sub58* o = ((Sub58Holder*)cSafePtr_cGOBJ_opCast_cGOBJPtr((Hdl*)&self->ai->obj))->s;
         unsigned char big = 0;
         if (o && o->Big()) big = 1;
         if (!big) r *= 0.5f;
@@ -164,7 +164,7 @@ static inline unsigned char InReach(Npc* self, void* inv) {
     return 1;
 }
 
-void NpcAttack_FiringGate(Npc* self, float dt)
+void cNPC_HandleWeaponFiring(Npc* self, float dt)
 {
     Owner* own = self->owner;
     void* inv = own->inv;
@@ -185,17 +185,17 @@ void NpcAttack_FiringGate(Npc* self, float dt)
         if (!down) {
             if (self->fireMode == 2) {
                 fire = 1;
-            } else if (self->cnt->n > 0 && self->owner->mode == 0x1A && WeaponInv_IsFullAuto(inv)) {
+            } else if (self->cnt->n > 0 && self->owner->mode == 0x1A && cWeapon_IsFullyAutomatic(inv)) {
                 fire = 1;
             } else if (!self->Busy(1)) {
                 Ai* ai = self->ai;
                 unsigned char f = 0;
                 if (ai->b0) { unsigned char b = ai->b2; if (b) f = 1; }
                 if (f || (Range(self) < 0.01f && tgt)) {
-                    if (WeaponInv_GetHeldClass(inv) != 1) {
+                    if (cWeapon_GetEquipmentType(inv) != 1) {
                         float r = Range(self);
                         if (self->ai->Get()) {
-                            Sub58* o = ((Sub58Holder*)ActorRef_Copy((Hdl*)&self->ai->obj))->s;
+                            Sub58* o = ((Sub58Holder*)cSafePtr_cGOBJ_opCast_cGOBJPtr((Hdl*)&self->ai->obj))->s;
                             unsigned char big = 0;
                             if (o && o->Big()) big = 1;
                             if (!big) r *= 0.5f;
@@ -209,15 +209,15 @@ void NpcAttack_FiringGate(Npc* self, float dt)
         }
     }
 
-    if (fire && Weapon_CanAttack(inv) && self->cool2 <= 0.0f) {
-        if (WeaponInv_GetHeldClass(inv) != 1) {
-            if (WeaponInv_IsReadyToFire(inv, 0)) {
+    if (fire && cWeapon_Ready(inv) && self->cool2 <= 0.0f) {
+        if (cWeapon_GetEquipmentType(inv) != 1) {
+            if (cWeapon_ReadyToFire(inv, 0)) {
             if (HasGun(own)) {
                     FireMsg m(tgt, self->team, V(0.0f, 0.0f, 0.0f, 0.0f), 0.0f);
                     m.kind = 1;
-                    Event_Send(&m, self->owner, 0);
+                    QueueMessage_cMessageR_cSystemP_int(&m, self->owner, 0);
                 } else {
-                    Weapon_Discharge(inv, 0, -1, 0, 0);
+                    cWeapon_FireIfReady(inv, 0, -1, 0, 0);
                 }
             }
         } else {
@@ -238,13 +238,13 @@ void NpcAttack_FiringGate(Npc* self, float dt)
                     Add(&pos, &pos, &off);
                     FireMsg m(0, self->team, pos, Rad(self->rate));
                     m.kind = 1;
-                    Event_Send(&m, self->owner, 0);
+                    QueueMessage_cMessageR_cSystemP_int(&m, self->owner, 0);
                 }
             }
         }
     }
 
-    if (Weapon_CanAttack(inv)) {
+    if (cWeapon_Ready(inv)) {
         if (!(self->cool2 <= 0.0f)) self->cool2 -= dt;
         if (!(self->cool <= 0.0f)) self->cool -= dt;
     }

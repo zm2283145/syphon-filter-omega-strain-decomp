@@ -17,7 +17,7 @@
 #define cNINotice_vtable D_004DBEB0
 
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern char cMessage_vtable[];
 extern char cNINotice_vtable[];
 }
@@ -31,12 +31,12 @@ struct cNINotice {
 
 /* Clone (vtable slot 1): heap copy of the message, built the way the inlined
  * copy constructors do it (base part first, then the derived vtable). */
-extern "C" cNINotice* cNINotice_v01(cNINotice* self)
+extern "C" cNINotice* cCrateInteractMsg_Clone(cNINotice* self)
 {
     cNINotice* copy;
     {
         AllocGuard guard;
-        copy = (cNINotice*)Mem_Alloc(0, sizeof(cNINotice), "NIEvent.hh", 0x28);
+        copy = (cNINotice*)cMemMan_Allocate(0, sizeof(cNINotice), "NIEvent.hh", 0x28);
     }
     if (copy) {
         copy->vtable = cMessage_vtable;
@@ -76,8 +76,8 @@ DEFINE_VTABLE_BASE_DTOR(cNINotice_dtor, cNINotice_vtable, cMessage_dtor)
 
 extern int D_004F7D20; /* cNINotice script type key */
 extern int D_004F7D28; /* cNINotice script type id */
-extern int* Message_GetScriptTypeKeyPtr(void); /* address of the cMessage type key */
-extern void ScriptType_SetParent(int type, int parentType);
+extern int* cMessage_SOBJ_getClassId(void); /* address of the cMessage type key */
+extern void cScriptBase_declareParent(int type, int parentType);
 
 /* Action(notice): returns the notice's action byte (low byte of cNINotice.action, +0x24). */
 int Script_cNINotice_Action(unsigned char** args) {
@@ -85,12 +85,12 @@ int Script_cNINotice_Action(unsigned char** args) {
 }
 
 /* cNINotice derives from cMessage. */
-void ScriptType_cNINotice_Init(void) {
-    int* parent = Message_GetScriptTypeKeyPtr();
-    ScriptType_SetParent(D_004F7D28, *parent);
+void cNINotice_SOBJ_init(void) {
+    int* parent = cMessage_SOBJ_getClassId();
+    cScriptBase_declareParent(D_004F7D28, *parent);
 }
 
-int cNINotice_v03(void) {
+int cNINotice_getSOBJClassId(void) {
     return D_004F7D20;
 }
 #pragma pop /* merge_units */

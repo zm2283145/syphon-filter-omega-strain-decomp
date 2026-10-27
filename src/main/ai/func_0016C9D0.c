@@ -1,4 +1,4 @@
-/* NpcPerception_AddAwareness: find or create the awareness record for an
+/* cAITarget_AddAwareness: find or create the awareness record for an
  * object, apply the cause-specific delay/salience, refresh its handle and
  * last seen position, and announce new human pickups once. */
 #pragma cplusplus on
@@ -22,15 +22,15 @@ struct RNode { int p0; RNode* next; ARec* value; };
 struct Perc { char p0[0x30]; char recs[0xC]; void* component; };
 extern "C" {
 void Alloc_Lock(int);
-void Alloc_Unlock(int);
-void* Mem_Alloc(int, int, void*, int);
-void Event_Construct(void*, void*);
-void Event_Send(void*, void*, int);
+void EnableIntc(int);
+void* cMemMan_Allocate(int, int, void*, int);
+void cMessage_ctor_cMessageNameR(void*, void*);
+void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 void cMessage_dtor(void*, int);
-void NpcPerception_FindRecord(RNode** out, void* map, AObj* key);
+void cAITarget_cAwareList_Find(RNode** out, void* map, AObj* key);
 void std_list_cTargetAwarenessPtr_end_void(void*, void*);
 void cLListIterator_cTargetAwarenessPtr_ctor(void*, void*);
-void List_PushBack_16CEE0(void* list, ARec* const* v);
+void std_list_cTargetAwarenessPtr_push_front(void* list, ARec* const* v);
 extern char D_0049C650[];
 extern int g_HumanActorClassKey;
 extern char D_004DCD70[], D_004DCBD0[];
@@ -42,11 +42,11 @@ extern int g_ProfileLockDepth;
 struct ObjVt { VPAD32(a) VPAD8(b) VPAD4(c) VPAD2(d) virtual V Pos(int); VPAD4(e) virtual int D4(); VPAD4(f) virtual M Mtx(); VPAD2(g) VPAD1(h) virtual int Type(void*); VPAD2(i) VPAD1(j) virtual unsigned char Life(); };
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
 struct MsgB { void* vt;
-    MsgB(void* k) { Event_Construct(this, k); }
+    MsgB(void* k) { cMessage_ctor_cMessageNameR(this, k); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); } };
 struct MsgPick : MsgB { char p04[0x1C]; unsigned char kind; char p21[3]; AObj* obj;
     MsgPick(AObj* o) : MsgB(g_AIPickupableAwarenessMsgKey) { vt = D_004DCD70; obj = o; kind = 2; vt = D_004DCBD0; }
-    void Send(void* to) { Event_Send(this, to, 0); }
+    void Send(void* to) { QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgPick() { vt = D_004DCD70; } };
 static inline bool Active(AObj* p) { return p->activated && p->enabled && !p->removed; }
 static inline bool Human(AObj* o) { bool r = false; bool a = Active(o); if (a && o->human) r = true; return r; }
@@ -56,8 +56,8 @@ static inline ARec* NewRec() {
     void* m;
     if (g_ProfileLockEnabled) Alloc_Lock(9);
     g_ProfileLockDepth++;
-    m = Mem_Alloc(0, 0x40, D_0049C650, 0x33E);
-    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    m = cMemMan_Allocate(0, 0x40, D_0049C650, 0x33E);
+    if (g_ProfileLockEnabled) EnableIntc(9);
     g_ProfileLockDepth--;
     if (m) { ARec* r = (ARec*)m; r->id = -2; r->obj = 0; r->id2 = -1; }
     return (ARec*)m;
@@ -70,13 +70,13 @@ static inline void En2(void* recs, RNode** e) { void* s; std_list_cTargetAwarene
 static inline void En1(void* recs, RNode** e) { En2(recs, e); }
 static inline void En0(void* recs, RNode** e) { En1(recs, e); }
 
-extern "C" void NpcPerception_AddAwareness(Perc* self, AObj* who, unsigned char cause, float amt)
+extern "C" void cAITarget_AddAwareness(Perc* self, AObj* who, unsigned char cause, float amt)
 {
     RNode* it;
     ARec* rec;
     RNode* end;
     bool human;
-    NpcPerception_FindRecord(&it, self->recs, who);
+    cAITarget_cAwareList_Find(&it, self->recs, who);
     human = false;
     if (((ObjVt*)who)->Life() == 3) {
         if (who->team == Key0()) human = Human(who);
@@ -97,7 +97,7 @@ extern "C" void NpcPerception_AddAwareness(Perc* self, AObj* who, unsigned char 
         rec->salience = 0.0f;
         rec->sent = 0;
         rec->f3C = 0;
-        List_PushBack_16CEE0(self->recs, &rec);
+        std_list_cTargetAwarenessPtr_push_front(self->recs, &rec);
     }
     rec->age = 0.0f;
     if (cause == 6) {

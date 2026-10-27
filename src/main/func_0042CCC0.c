@@ -7,8 +7,8 @@ typedef struct { char pad[0x10]; Obj0042CCC0* val; } Node0042CCC0;
 typedef struct { void* vt; char p4[0x18]; int f1C; char p20[0xC]; int f2C; char p30[0xC]; } Evt0042CCC0;
 typedef struct { char q0[0x4]; int a4; int a8; } Arg0042CCC0;
 extern "C" {
-extern void Event_Construct(Evt0042CCC0* e, void* type);
-extern void MsgQueue_QueueClone(Evt0042CCC0* e, void* obj, int a, int b);
+extern void cMessage_ctor_cMessageNameR(Evt0042CCC0* e, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int_int(Evt0042CCC0* e, void* obj, int a, int b);
 extern void cMessage_dtor(Evt0042CCC0* e, int f);
 extern char D_0055C7A0[];
 extern void std_tree_pair_int_value_compare_find_intR(Node0042CCC0** out, void* map, int* key);
@@ -22,7 +22,7 @@ static inline int Eq0042CCC0(Node0042CCC0* a, Node0042CCC0* b) { return a == b; 
 #pragma push
 #pragma bool off
 #pragma opt_propagation off
-extern "C" int cNetActivateAndControlMsg_NetReceive(int a0, int a1, int a2, Arg0042CCC0* arg) {
+extern "C" int cNetActivateAndControlMsg_ActivateAndControlCallback(int a0, int a1, int a2, Arg0042CCC0* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Evt0042CCC0 e;
@@ -32,7 +32,7 @@ extern "C" int cNetActivateAndControlMsg_NetReceive(int a0, int a1, int a2, Arg0
         int tmp[1];
         Node0042CCC0* n;
         Arg0042CCC0* a = arg;
-        Event_Construct(&e, D_00582680);
+        cMessage_ctor_cMessageNameR(&e, D_00582680);
         e.vt = D_004E0EA0;
         e.f2C = a->a8;
         k[0] = a->a4;
@@ -45,11 +45,11 @@ extern "C" int cNetActivateAndControlMsg_NetReceive(int a0, int a1, int a2, Arg0
             if (o) {
                 Ev2_0042CCC0 e2;
                 int v = o->fC;
-                Event_Construct((Evt0042CCC0*)&e2, D_00582680);
+                cMessage_ctor_cMessageNameR((Evt0042CCC0*)&e2, D_00582680);
                 e2.vt = D_004E0EA0;
                 e2.f1C = 0x40;
                 e2.f2C = v;
-                MsgQueue_QueueClone((Evt0042CCC0*)&e2, o, 0, 0);
+                QueueMessage_cMessageR_cSystemP_int_int((Evt0042CCC0*)&e2, o, 0, 0);
                 e2.vt = D_004E0EA0;
                 cMessage_dtor((Evt0042CCC0*)&e2, 0);
             }

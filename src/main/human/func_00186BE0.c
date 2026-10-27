@@ -7,6 +7,6 @@
 #include "types.h"
 
 /* Address of the 8-byte entry i. */
-char* History_At(PtrVec* v, int i) {
+char* cArray_cTargetZRotationStackSlot_opIndex(PtrVec* v, int i) {
     return (char*)v->data + (i << 3);
 }

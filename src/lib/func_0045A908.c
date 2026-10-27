@@ -8,7 +8,7 @@
 
 extern int func_003583F0(void);
 extern int func_00358438(void);
-extern int Insck_Shutdown(int, int);
+extern int sceInsockAbort(int, int);
 
 int func_0045A908(void) {
     int tmp0;
@@ -27,6 +27,6 @@ int func_0045A928(void) {
 int sceNetGlueAbort(int a0) {
     int tmp0;
 
-    tmp0 = Insck_Shutdown(a0, 0);
+    tmp0 = sceInsockAbort(a0, 0);
     return tmp0;
 }

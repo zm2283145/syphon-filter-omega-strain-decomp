@@ -53,7 +53,7 @@ typedef struct { char pad[0x40]; float f40; } NpcState;
 typedef struct { char pad[0x30]; NpcState* state; } NpcObj;
 
 /* Returns the NPC state float at +0x40 truncated to int. */
-int cNPC_v5A(NpcObj* self)
+int cNPC_GetHitPoints(NpcObj* self)
 {
     return (int)self->state->f40;
 }
@@ -90,13 +90,13 @@ struct cNPC_00149680 {
     virtual void* GetDestinationNode(); /* +0x194 */
 };
 
-extern "C" int cNode_Identity(void* node);
+extern "C" int cNode_SOBJ_toInt(void* node);
 
 /* Script native: id of the NPC destination node. */
 extern "C" int Script_cNPC_GetDestinationNode(ScriptArg_00149680* args)
 {
     cNPC_00149680* npc = (cNPC_00149680*)args[0].p;
-    return cNode_Identity(npc->GetDestinationNode());
+    return cNode_SOBJ_toInt(npc->GetDestinationNode());
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00149680(void) {}
@@ -131,11 +131,11 @@ struct cNPC_001496B0 {
     virtual void* GetNextNode(); /* +0x190 */
 };
 
-/* Script native: returns the id (cNode_Identity) of the NPC's next path node. */
+/* Script native: returns the id (cNode_SOBJ_toInt) of the NPC's next path node. */
 extern "C" int Script_cNPC_GetNextNode(ScriptArg* args)
 {
     cNPC_001496B0* npc = (cNPC_001496B0*)args[0].p;
-    return cNode_Identity(npc->GetNextNode());
+    return cNode_SOBJ_toInt(npc->GetNextNode());
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001496B0(void) {}
@@ -174,7 +174,7 @@ struct cNPC_001496E0 {
 extern "C" int Script_cNPC_GetCurrentNode(ScriptArg_001496E0* args)
 {
     cNPC_001496E0* npc = (cNPC_001496E0*)args[0].p;
-    return cNode_Identity(npc->GetCurrentNode());
+    return cNode_SOBJ_toInt(npc->GetCurrentNode());
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001496E0(void) {}
@@ -270,7 +270,7 @@ struct cNPC_00149760 {
     virtual void SetGrenadeTarget(void* target, float time, int flag); /* +0x19C */
 };
 
-extern "C" void* GObj_IdentityB(void* object);
+extern "C" void* cGOBJ_SOBJ_convert(void* object);
 
 /* Script native: cNPC::SetGrenadeTarget(target of args[1], args[2] as float, args[3] != 0); returns 0. */
 extern "C" int Script_cNPC_SetGrenadeTarget_3(ScriptArg_00149760* args)
@@ -280,7 +280,7 @@ extern "C" int Script_cNPC_SetGrenadeTarget_3(ScriptArg_00149760* args)
     int part[1];
     part[0] = args[2].i;
     npc = (cNPC_00149760*)args[0].p;
-    npc->SetGrenadeTarget(GObj_IdentityB(args[1].p), *(float*)part, flag);
+    npc->SetGrenadeTarget(cGOBJ_SOBJ_convert(args[1].p), *(float*)part, flag);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -323,7 +323,7 @@ extern "C" int Script_cNPC_SetGrenadeTarget_2(ScriptArg_001497C0* args)
     int part[1];
     part[0] = args[2].i;
     npc = (cNPC_001497C0*)args[0].p;
-    npc->SetGrenadeTarget(GObj_IdentityB(args[1].p), *(float*)part, 0);
+    npc->SetGrenadeTarget(cGOBJ_SOBJ_convert(args[1].p), *(float*)part, 0);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -360,19 +360,19 @@ struct cNPC_00149810 {
 };
 
 #if 0 /* merge_units */
-extern "C" void* GObj_IdentityB(void* handle);
+extern "C" void* cGOBJ_SOBJ_convert(void* handle);
 #endif /* merge_units */
-#define GObj_IdentityB(a0) (GObj_IdentityB((a0))) /* merge_units */
+#define cGOBJ_SOBJ_convert(a0) (cGOBJ_SOBJ_convert((a0))) /* merge_units */
 
 
 /* Script native: cNPC::SetGrenadeTarget(object of args[1], 4.0f, 0); returns 0. */
 extern "C" int Script_cNPC_SetGrenadeTarget(ScriptArg* args)
 {
     cNPC_00149810* npc = (cNPC_00149810*)args[0].p;
-    npc->SetGrenadeTarget(GObj_IdentityB(args[1].p), 4.0f, 0);
+    npc->SetGrenadeTarget(cGOBJ_SOBJ_convert(args[1].p), 4.0f, 0);
     return 0;
 }
-#undef GObj_IdentityB /* merge_units */
+#undef cGOBJ_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00149810(void) {}
 #pragma pop /* merge_units */
@@ -865,14 +865,14 @@ static inline void merge_flush_func_00149AB0(void) {}
 
 /* merge_units: begin func_00149AE0 */
 #pragma push /* merge_units */
-extern void cNPC_SetSkill(cNPC* npc, float skill);
+extern void cGameGobjController_SetSkill_float_2(cNPC* npc, float skill);
 
 /* Script: cNPC.SetSkill(skill); the argument word holds a float. */
 int Script_cNPC_SetSkill(NpcScriptArgs* args) {
     NpcScriptWord skill;
 
     skill.i = args->arg1;
-    cNPC_SetSkill(args->npc, skill.f);
+    cGameGobjController_SetSkill_float_2(args->npc, skill.f);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -1079,13 +1079,13 @@ struct cNPC_00149C30 {
     virtual void Teleport(void* node); /* +0x10C */
 };
 
-extern "C" void* ScriptNode_Identity(void* id);
+extern "C" void* cNode_SOBJ_convert(void* id);
 
 /* Script native: teleports the NPC to node args[1]. */
 extern "C" int Script_Teleport(ScriptArg_00149C30* args)
 {
     cNPC_00149C30* npc = (cNPC_00149C30*)args[0].p;
-    npc->Teleport(ScriptNode_Identity(args[1].p));
+    npc->Teleport(cNode_SOBJ_convert(args[1].p));
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -1250,7 +1250,7 @@ static inline void merge_flush_func_00149D10(void) {}
 const float D_00489DD0[4] = { 0.0f, 0.1f, 0.5f, 0.9f };
 
 /* cNPC virtual slot 0x50: looks up a float table entry by byte index. */
-float cNPC_v50(void* self, unsigned char i)
+float cNPC_GetTravelSpeed_eTravelSpeed(void* self, unsigned char i)
 {
     return ((float*)D_00489DD0)[i];
 }
@@ -1479,9 +1479,9 @@ struct cNPC_00149E80 {
 };
 
 #if 0 /* merge_units */
-extern "C" void* GObj_IdentityB(void* handle);
+extern "C" void* cGOBJ_SOBJ_convert(void* handle);
 #endif /* merge_units */
-#define GObj_IdentityB(a0) (GObj_IdentityB((a0))) /* merge_units */
+#define cGOBJ_SOBJ_convert(a0) (cGOBJ_SOBJ_convert((a0))) /* merge_units */
 
 
 /* Script native: cNPC::RequestFacial(object of args[1], (float)args[2], 100); returns 0. */
@@ -1491,10 +1491,10 @@ extern "C" int Script_cNPC_RequestFacial(ScriptArg* args)
     cNPC_00149E80* npc;
     time[0] = args[2].i;
     npc = (cNPC_00149E80*)args[0].p;
-    npc->RequestFacial(GObj_IdentityB(args[1].p), *(float*)time, 100);
+    npc->RequestFacial(cGOBJ_SOBJ_convert(args[1].p), *(float*)time, 100);
     return 0;
 }
-#undef GObj_IdentityB /* merge_units */
+#undef cGOBJ_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00149E80(void) {}
 #pragma pop /* merge_units */
@@ -1530,7 +1530,7 @@ extern "C" int Script_cNPC_RequestLookAt(ScriptArg_00149ED0* args)
     int part[1];
     part[0] = args[2].i;
     npc = (cNPC_00149ED0*)args[0].p;
-    npc->RequestLookAt(GObj_IdentityB(args[1].p), *(float*)part, 100);
+    npc->RequestLookAt(cGOBJ_SOBJ_convert(args[1].p), *(float*)part, 100);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -1758,11 +1758,11 @@ static inline void merge_flush_func_0014A050(void) {}
 /* merge_units: begin func_0014A080 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern int GObj_IdentityB(int handle);
+extern int cGOBJ_SOBJ_convert(int handle);
 #endif /* merge_units */
-#define GObj_IdentityB(a0) ((int)GObj_IdentityB((void *)(a0))) /* merge_units */
+#define cGOBJ_SOBJ_convert(a0) ((int)cGOBJ_SOBJ_convert((void *)(a0))) /* merge_units */
 
-extern int cNPC_Deactivate(cNPC* npc, int player);
+extern int cNPC_Deactivate_cGOBJP(cNPC* npc, int player);
 
 /* Script: cNPC.Deactivate(player). */
 int Script_cNPC_Deactivate(NpcScriptArgs* args) {
@@ -1770,11 +1770,11 @@ int Script_cNPC_Deactivate(NpcScriptArgs* args) {
     int player;
 
     npc = args->npc;
-    player = GObj_IdentityB(args->arg1);
-    cNPC_Deactivate(npc, player);
+    player = cGOBJ_SOBJ_convert(args->arg1);
+    cNPC_Deactivate_cGOBJP(npc, player);
     return 0;
 }
-#undef GObj_IdentityB /* merge_units */
+#undef cGOBJ_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A080(void) {}
 #pragma pop /* merge_units */
@@ -1947,11 +1947,11 @@ static inline void merge_flush_func_0014A190(void) {}
 /* merge_units: begin func_0014A1C0 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern int GObj_IdentityB(int handle);
+extern int cGOBJ_SOBJ_convert(int handle);
 #endif /* merge_units */
-#define GObj_IdentityB(a0) ((int)GObj_IdentityB((void *)(a0))) /* merge_units */
+#define cGOBJ_SOBJ_convert(a0) ((int)cGOBJ_SOBJ_convert((void *)(a0))) /* merge_units */
 
-extern int NpcPerception_SetTarget(NpcAi* ai, int target, int priority);
+extern int cAITarget_SetTarget(NpcAi* ai, int target, int priority);
 
 /* Script: cNPC.ResumeAITargeting(). */
 int Script_cNPC_ResumeAITargeting(NpcScriptArgs* args) {
@@ -1961,7 +1961,7 @@ int Script_cNPC_ResumeAITargeting(NpcScriptArgs* args) {
 
 /* Script: cNPC.ClearTarget(). */
 int Script_cNPC_ClearTarget(NpcScriptArgs* args) {
-    NpcPerception_SetTarget(args->npc->ai, 0, 100);
+    cAITarget_SetTarget(args->npc->ai, 0, 100);
     return 0;
 }
 
@@ -1969,11 +1969,11 @@ int Script_cNPC_ClearTarget(NpcScriptArgs* args) {
 int Script_cNPC_SetTarget(NpcScriptArgs* args) {
     int target;
 
-    target = GObj_IdentityB(args->arg1);
-    NpcPerception_SetTarget(args->npc->ai, target, 100);
+    target = cGOBJ_SOBJ_convert(args->arg1);
+    cAITarget_SetTarget(args->npc->ai, target, 100);
     return 0;
 }
-#undef GObj_IdentityB /* merge_units */
+#undef cGOBJ_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A1C0(void) {}
 #pragma pop /* merge_units */
@@ -2009,11 +2009,11 @@ static inline void merge_flush_func_0014A250(void) {}
 /* merge_units: begin func_0014A280 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern int GObj_IdentityB(int handle);
+extern int cGOBJ_SOBJ_convert(int handle);
 #endif /* merge_units */
-#define GObj_IdentityB(a0) ((int)GObj_IdentityB((void *)(a0))) /* merge_units */
+#define cGOBJ_SOBJ_convert(a0) ((int)cGOBJ_SOBJ_convert((void *)(a0))) /* merge_units */
 
-extern int NpcAi_ActivateForPlayer(cNPC* npc, int player);
+extern int cNPC_Activate_cGOBJP(cNPC* npc, int player);
 
 /* Script: cNPC.Activate(player). */
 int Script_cNPC_Activate(NpcScriptArgs* args) {
@@ -2021,17 +2021,17 @@ int Script_cNPC_Activate(NpcScriptArgs* args) {
     int player;
 
     npc = args->npc;
-    player = GObj_IdentityB(args->arg1);
-    NpcAi_ActivateForPlayer(npc, player);
+    player = cGOBJ_SOBJ_convert(args->arg1);
+    cNPC_Activate_cGOBJP(npc, player);
     return 0;
 }
 
 /* Script: cNPC.ActivateAnon(). */
 int Script_cNPC_ActivateAnon(NpcScriptArgs* args) {
-    NpcAi_ActivateForPlayer(args->npc, 0);
+    cNPC_Activate_cGOBJP(args->npc, 0);
     return 0;
 }
-#undef GObj_IdentityB /* merge_units */
+#undef cGOBJ_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A280(void) {}
 #pragma pop /* merge_units */
@@ -2075,7 +2075,7 @@ static inline void merge_flush_func_0014A2F0(void) {}
 typedef struct { char pad[0x21]; unsigned char flag : 1; unsigned char rest : 7; } Sub21;
 typedef struct { char pad[0x1AC]; Sub21* sub; } Obj1AC;
 /* Sets the low flag bit of the sub-object's byte at +0x21. */
-void cNPC_v3C(Obj1AC* o) { o->sub->flag = 1; }
+void cNPC_SendNewAwarenessOfPlayers(Obj1AC* o) { o->sub->flag = 1; }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A320(void) {}
 #pragma pop /* merge_units */
@@ -2103,19 +2103,19 @@ struct cNPC_0014A340 {
 };
 
 #if 0 /* merge_units */
-extern "C" void* GObj_IdentityB(void* handle);
+extern "C" void* cGOBJ_SOBJ_convert(void* handle);
 #endif /* merge_units */
-#define GObj_IdentityB(a0) (GObj_IdentityB((a0))) /* merge_units */
+#define cGOBJ_SOBJ_convert(a0) (cGOBJ_SOBJ_convert((a0))) /* merge_units */
 
 
-/* Script native: cNPC::ResendNewAwarenessMessage(GObj_IdentityB(args[1])); returns 0. */
+/* Script native: cNPC::ResendNewAwarenessMessage(cGOBJ_SOBJ_convert(args[1])); returns 0. */
 extern "C" int Script_cNPC_ResendNewAwarenessMessage_2(ScriptArg* args)
 {
     cNPC_0014A340* npc = (cNPC_0014A340*)args[0].p;
-    npc->ResendNewAwarenessMessage(GObj_IdentityB(args[1].p));
+    npc->ResendNewAwarenessMessage(cGOBJ_SOBJ_convert(args[1].p));
     return 0;
 }
-#undef GObj_IdentityB /* merge_units */
+#undef cGOBJ_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A340(void) {}
 #pragma pop /* merge_units */
@@ -2123,11 +2123,11 @@ static inline void merge_flush_func_0014A340(void) {}
 
 /* merge_units: begin func_0014A380 */
 #pragma push /* merge_units */
-extern int NpcPerception_ResendAwareness(NpcAi* ai, int player);
+extern int cAITarget_ResendNewAwarenessMessage(NpcAi* ai, int player);
 
 /* vtable slot 0x3B: ResendNewAwarenessMessage. */
 int cNPC_ResendNewAwarenessMessage(cNPC* self, int player) {
-    return NpcPerception_ResendAwareness(self->ai, player);
+    return cAITarget_ResendNewAwarenessMessage(self->ai, player);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A380(void) {}
@@ -2192,7 +2192,7 @@ struct cNPC_0014A3C0 {
 extern "C" int Script_cNPC_RemoveAwareness(ScriptArg_0014A3C0* args)
 {
     cNPC_0014A3C0* npc = (cNPC_0014A3C0*)args[0].p;
-    npc->RemoveAwareness(GObj_IdentityB(args[1].p));
+    npc->RemoveAwareness(cGOBJ_SOBJ_convert(args[1].p));
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -2202,11 +2202,11 @@ static inline void merge_flush_func_0014A3C0(void) {}
 
 /* merge_units: begin func_0014A400 */
 #pragma push /* merge_units */
-extern int NpcPerception_RemoveAwareness(NpcAi* ai, int gobj);
+extern int cAITarget_RemoveAwareness(NpcAi* ai, int gobj);
 
 /* vtable slot 0x38: RemoveAwareness. */
 int cNPC_RemoveAwareness(cNPC* self, int gobj) {
-    return NpcPerception_RemoveAwareness(self->ai, gobj);
+    return cAITarget_RemoveAwareness(self->ai, gobj);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A400(void) {}
@@ -2235,19 +2235,19 @@ struct cNPC_0014A410 {
 };
 
 #if 0 /* merge_units */
-extern "C" void* GObj_IdentityB(void* handle);
+extern "C" void* cGOBJ_SOBJ_convert(void* handle);
 #endif /* merge_units */
-#define GObj_IdentityB(a0) (GObj_IdentityB((a0))) /* merge_units */
+#define cGOBJ_SOBJ_convert(a0) (cGOBJ_SOBJ_convert((a0))) /* merge_units */
 
 
-/* Script native: cNPC::AddAwareness(GObj_IdentityB(args[1])); returns 0. */
+/* Script native: cNPC::AddAwareness(cGOBJ_SOBJ_convert(args[1])); returns 0. */
 extern "C" int Script_cNPC_AddAwareness(ScriptArg* args)
 {
     cNPC_0014A410* npc = (cNPC_0014A410*)args[0].p;
-    npc->AddAwareness(GObj_IdentityB(args[1].p));
+    npc->AddAwareness(cGOBJ_SOBJ_convert(args[1].p));
     return 0;
 }
-#undef GObj_IdentityB /* merge_units */
+#undef cGOBJ_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A410(void) {}
 #pragma pop /* merge_units */
@@ -2255,11 +2255,11 @@ static inline void merge_flush_func_0014A410(void) {}
 
 /* merge_units: begin func_0014A450 */
 #pragma push /* merge_units */
-extern int NpcPerception_AddAwareness(NpcAi* ai, int gobj, int flag, float value);
+extern int cAITarget_AddAwareness(NpcAi* ai, int gobj, int flag, float value);
 
 /* vtable slot 0x37: AddAwareness. */
 int cNPC_AddAwareness(cNPC* self, int gobj) {
-    return NpcPerception_AddAwareness(self->ai, gobj, 1, 0.0f);
+    return cAITarget_AddAwareness(self->ai, gobj, 1, 0.0f);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A450(void) {}
@@ -2319,9 +2319,9 @@ struct cNPC_0014A4A0 {
 };
 
 #if 0 /* merge_units */
-extern "C" void* ScriptNode_Identity(void* handle);
+extern "C" void* cNode_SOBJ_convert(void* handle);
 #endif /* merge_units */
-#define ScriptNode_Identity(a0) (ScriptNode_Identity((a0))) /* merge_units */
+#define cNode_SOBJ_convert(a0) (cNode_SOBJ_convert((a0))) /* merge_units */
 
 
 /* Script native: cNPC::SetMode((byte)args[1], node of args[2]); returns 0. */
@@ -2331,10 +2331,10 @@ extern "C" int Script_cNPC_SetMode_2(ScriptArg* args)
     unsigned char mode;
     mode = args[1].b;
     npc = (cNPC_0014A4A0*)args[0].p;
-    npc->SetMode(mode, ScriptNode_Identity(args[2].p));
+    npc->SetMode(mode, cNode_SOBJ_convert(args[2].p));
     return 0;
 }
-#undef ScriptNode_Identity /* merge_units */
+#undef cNode_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A4A0(void) {}
 #pragma pop /* merge_units */
@@ -2395,14 +2395,14 @@ struct cNPC_0014A520 {
 };
 
 #if 0 /* merge_units */
-extern "C" void* GObj_IdentityB(void* handle);
+extern "C" void* cGOBJ_SOBJ_convert(void* handle);
 #endif /* merge_units */
-#define GObj_IdentityB(a0) (GObj_IdentityB((a0))) /* merge_units */
+#define cGOBJ_SOBJ_convert(a0) (cGOBJ_SOBJ_convert((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern "C" void* ScriptNode_Identity(void* handle);
+extern "C" void* cNode_SOBJ_convert(void* handle);
 #endif /* merge_units */
-#define ScriptNode_Identity(a0) (ScriptNode_Identity((a0))) /* merge_units */
+#define cNode_SOBJ_convert(a0) (cNode_SOBJ_convert((a0))) /* merge_units */
 
 
 /* Script native: returns cNPC::CarryBodyToNode(object of args[1], node of args[2]). */
@@ -2410,11 +2410,11 @@ extern "C" int Script_cNPC_CarryBodyToNode(ScriptArg* args)
 {
     void* body;
     cNPC_0014A520* npc = (cNPC_0014A520*)args[0].p;
-    body = GObj_IdentityB(args[1].p);
-    return npc->CarryBodyToNode(body, ScriptNode_Identity(args[2].p));
+    body = cGOBJ_SOBJ_convert(args[1].p);
+    return npc->CarryBodyToNode(body, cNode_SOBJ_convert(args[2].p));
 }
-#undef GObj_IdentityB /* merge_units */
-#undef ScriptNode_Identity /* merge_units */
+#undef cGOBJ_SOBJ_convert /* merge_units */
+#undef cNode_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A520(void) {}
 #pragma pop /* merge_units */
@@ -2446,7 +2446,7 @@ struct cNPC_0014A580 {
 extern "C" int Script_cNPC_MoveToGobj(ScriptArg_0014A580* args)
 {
     cNPC_0014A580* npc = (cNPC_0014A580*)args[0].p;
-    return npc->MoveToGobj(GObj_IdentityB(args[1].p));
+    return npc->MoveToGobj(cGOBJ_SOBJ_convert(args[1].p));
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A580(void) {}
@@ -2476,18 +2476,18 @@ struct cNPC_0014A5C0 {
 };
 
 #if 0 /* merge_units */
-extern "C" void* ScriptNode_Identity(void* handle);
+extern "C" void* cNode_SOBJ_convert(void* handle);
 #endif /* merge_units */
-#define ScriptNode_Identity(a0) (ScriptNode_Identity((a0))) /* merge_units */
+#define cNode_SOBJ_convert(a0) (cNode_SOBJ_convert((a0))) /* merge_units */
 
 
 /* Script native: returns cNPC::MoveToNode(node of args[1]). */
 extern "C" int Script_cNPC_MoveToNode(ScriptArg* args)
 {
     cNPC_0014A5C0* npc = (cNPC_0014A5C0*)args[0].p;
-    return npc->MoveToNode(ScriptNode_Identity(args[1].p));
+    return npc->MoveToNode(cNode_SOBJ_convert(args[1].p));
 }
-#undef ScriptNode_Identity /* merge_units */
+#undef cNode_SOBJ_convert /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A5C0(void) {}
 #pragma pop /* merge_units */
@@ -2499,41 +2499,41 @@ extern int D_004EA3D0;          /* cAIModeChangeMsg script type */
 extern int D_004EA3F0;
 extern int D_004EA3F8;          /* cNPC script type */
 extern char D_00555070[];       /* cNPC script filter table */
-extern void Global_PlayerAddItem(int items, int item, int count);
-extern int Global_PlayerGetItemCount(int items, int item);
-extern void Global_PlayerRemoveItem(int items, int item, int count);
-extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
+extern void cInventory_Add_charP_int(int items, int item, int count);
+extern int cInventory_GetCount_charP(int items, int item);
+extern void cInventory_Remove_charP_int(int items, int item, int count);
+extern int cScriptInterpreter_CallEvent(void* filter, int a1, int a2);
 extern int* cAI_SOBJ_getClassId(void);
 extern int Actor_SetStunImmune(NpcActor* actor, int on, int a2);
 extern int Actor_SetNotGasable(NpcActor* actor, int on, int a2);
 extern int cNetSetFlagMsg_Send(NpcActor* actor, int on, int a2);
-extern int* cGOBJTriggerEventMsg_GetScriptTypeKeyPtr(void);
-extern int ScriptType_AddAccepted(int type, int iface);
-extern void ScriptType_SetParent(int type, int base);
+extern int* cGOBJTriggerEventMsg_SOBJ_getClassId(void);
+extern int cScriptBase_declareMsgUse(int type, int iface);
+extern void cScriptBase_declareParent(int type, int base);
 extern int* cDamageMsg_SOBJ_getClassId(void);
 
 /* Registers the cNPC script type: base type, then the interfaces it accepts. */
-int ScriptType_cNPC_Init(void) {
+int cNPC_SOBJ_init(void) {
     int* base;
     int* iface;
 
     base = cAI_SOBJ_getClassId();
-    ScriptType_SetParent(D_004EA3F8, *base);
-    iface = cGOBJTriggerEventMsg_GetScriptTypeKeyPtr();
-    ScriptType_AddAccepted(D_004EA3F8, *iface);
-    ScriptType_AddAccepted(D_004EA3F8, D_004EA3D0);
+    cScriptBase_declareParent(D_004EA3F8, *base);
+    iface = cGOBJTriggerEventMsg_SOBJ_getClassId();
+    cScriptBase_declareMsgUse(D_004EA3F8, *iface);
+    cScriptBase_declareMsgUse(D_004EA3F8, D_004EA3D0);
     iface = cDamageMsg_SOBJ_getClassId();
-    return ScriptType_AddAccepted(D_004EA3F8, *iface);
+    return cScriptBase_declareMsgUse(D_004EA3F8, *iface);
 }
 
-int NpcAi_GetIdentity(int value) {
+int cNPC_SOBJ_toInt(int value) {
     int word[1];
 
     *(int*)(char*)word = value;
     return *(int*)(char*)word;
 }
 
-void* NpcScript_GetReceiver(void* self) {
+void* cNPC_SOBJ_convert(void* self) {
     return self;
 }
 
@@ -2542,13 +2542,13 @@ int* cNPC_SOBJ_getClassId(void) {
 }
 
 /* vtable slot 0x0B. */
-int cNPC_v0B(void) {
+int cNPC_getSOBJClassId(void) {
     return D_004EA3F0;
 }
 
 /* vtable slot 0x0C: forwards to the cNPC script filter. */
-int AiComponent_ScriptFilter(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+int cNPC_ScriptHandleMessage(int a0, int a1) {
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 
 /* Script: cAIModeChangeMsg.GetAiMode(). */
@@ -2556,11 +2556,11 @@ int Script_cAIModeChangeMsg_GetAiMode(NpcAiMsg** args) {
     return args[0]->aiMode;
 }
 
-void ScriptType_cAIModeChangeMsg_Init(void) {
+void cAIModeChangeMsg_SOBJ_init(void) {
 }
 
 /* Returns the cAIModeChangeMsg script type. */
-int cAIModeChangeMsg_v03(void) {
+int cAIModeChangeMsg_getSOBJClassId(void) {
     return D_004EA3D0;
 }
 
@@ -2569,7 +2569,7 @@ int cNPC_GetItemCount(cNPC* self, int item) {
     NpcActor* actor;
 
     actor = self->actor;
-    return Global_PlayerGetItemCount(actor->items, item);
+    return cInventory_GetCount_charP(actor->items, item);
 }
 
 /* vtable slot 0x85: RemoveItem. */
@@ -2577,7 +2577,7 @@ void cNPC_RemoveItem(cNPC* self, int item, int count) {
     NpcActor* actor;
 
     actor = self->actor;
-    Global_PlayerRemoveItem(actor->items, item, count);
+    cInventory_Remove_charP_int(actor->items, item, count);
 }
 
 /* vtable slot 0x84: AddItem. */
@@ -2585,7 +2585,7 @@ void cNPC_AddItem(cNPC* self, int item, int count) {
     NpcActor* actor;
 
     actor = self->actor;
-    Global_PlayerAddItem(actor->items, item, count);
+    cInventory_Add_charP_int(actor->items, item, count);
 }
 
 /* vtable slot 0x83: SetNotTargetable. */
@@ -2646,8 +2646,8 @@ static inline void merge_flush_func_0014A770(void) {}
 
 /* merge_units: begin func_0014A7C0 */
 #pragma push /* merge_units */
-extern int Actor_SetDeathMotionOverride(NpcActor* actor, int a1, int a2);
-extern int Goggles_SetMode(NpcActor* actor, int a1, int a2);
+extern int cHuman_RequestDeathAnimation(NpcActor* actor, int a1, int a2);
+extern int cHuman_RequestEquipGoggles(NpcActor* actor, int a1, int a2);
 
 /* vtable slot 0x7F: SetFireInvulnerability. */
 void cNPC_SetFireInvulnerability(cNPC* self, char on) {
@@ -2661,12 +2661,12 @@ void cNPC_DontDropWeapons(cNPC* self) {
 
 /* vtable slot 0x7A: EquipGoggles. */
 int cNPC_EquipGoggles(cNPC* self, int a1) {
-    return Goggles_SetMode(self->actor, a1, 0);
+    return cHuman_RequestEquipGoggles(self->actor, a1, 0);
 }
 
 /* vtable slot 0x79: RequestDeathAnimation. */
 int cNPC_RequestDeathAnimation(cNPC* self, int a1) {
-    return Actor_SetDeathMotionOverride(self->actor, a1, 0);
+    return cHuman_RequestDeathAnimation(self->actor, a1, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A7C0(void) {}
@@ -2677,14 +2677,14 @@ static inline void merge_flush_func_0014A7C0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x30]; void* actor; } cNPC_0014A810;
 extern unsigned char g_IsMultiplayer;
-extern void Actor_SetInvulnerable(void* actor, int on);
-extern void NetEvent_Send(void* actor, int id, int size, unsigned char value, int a, int b, int c);
+extern void cHuman_SetInvulnerable(void* actor, int on);
+extern void cNetNPCMsgs_SendMessage(void* actor, int id, int size, unsigned char value, int a, int b, int c);
 /* Sets invulnerability and replicates it when networked and not silent. */
 void cNPC_SetInvulnerable(cNPC_0014A810* npc, int on, int silent)
 {
-    Actor_SetInvulnerable(npc->actor, on);
+    cHuman_SetInvulnerable(npc->actor, on);
     if (g_IsMultiplayer && !silent)
-        NetEvent_Send(npc->actor, 0x2E, 4, on, 0, 0, 0);
+        cNetNPCMsgs_SendMessage(npc->actor, 0x2E, 4, on, 0, 0, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A810(void) {}

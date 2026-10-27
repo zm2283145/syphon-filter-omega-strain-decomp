@@ -1,8 +1,8 @@
 #pragma opt_propagation off
 #pragma cplusplus on
-/* Renderer_ClearRect: queues a GS packet that clears a w x h rectangle of the
+/* XLib_ClearActiveBuffer: queues a GS packet that clears a w x h rectangle of the
  * renderer's frame/z buffers with the given RGBA colour (z test off when
- * flag is set). Same packet builder shape as XLib_ClearZBuffer/Video_BuildFrameClearPacket. */
+ * flag is set). Same packet builder shape as XLib_ClearZBuffer/XLib_ClearScreen_void. */
 typedef unsigned long long u64_t;
 typedef struct { u64_t lo, hi; } GsQ;
 typedef struct {
@@ -17,12 +17,12 @@ typedef struct {
 extern "C" {
 extern char D_00537F80[];
 extern u64_t D_004BC1B0[];
-extern u64_t* DmaPacket_Reserve(void* q, int a, int b, int c, int d, int e);
+extern u64_t* cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(void* q, int a, int b, int c, int d, int e);
 }
 
-extern "C" void Renderer_ClearRect(R370* o, int w, int h, int* rgba, int flag, int idx)
+extern "C" void XLib_ClearActiveBuffer(R370* o, int w, int h, int* rgba, int flag, int idx)
 {
-    GsQ* q = (GsQ*)DmaPacket_Reserve(D_00537F80, 1, 1, 12, 0, 1);
+    GsQ* q = (GsQ*)cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(D_00537F80, 1, 1, 12, 0, 1);
     q->lo = 0x11000000ULL | ((u64_t)0x5000000C << 32);
     q->hi = 0x800BULL | ((u64_t)0x10000000 << 32);
     q++;

@@ -30,19 +30,19 @@ extern int g_Hud;
 extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
 extern char D_004E0100[];
-int Net_GetClock(int);
+int cDME_GetTime(int);
 V* cMatrix_GetAxis(Mtx*, int);
-float Math_Atan2f(float, float);
-void Event_Construct(void*, void*);
-void Event_Send(void*, void*, int);
+float Libc_Atan2f(float, float);
+void cMessage_ctor_cMessageNameR(void*, void*);
+void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
 void cMessage_dtor(void*, int);
 void PlayerInput_Update(void*, int, Obj*, float);
-void PlayerInput_DrawDebugCamera(void*, int, Obj*);
-void HudRadar_SetMeter(int, int, float);
+void cPlayerControls_PrintDebugInfoToScreen(void*, int, Obj*);
+void cHudRadar_SetDanger(int, int, float);
 }
 
 struct MsgBase { void* vt; char pad[0x20]; int x24; unsigned char x28;
-    MsgBase(void* n) { Event_Construct(this, n); vt = D_004E0840; x24 = 0; x28 = 0xD; }
+    MsgBase(void* n) { cMessage_ctor_cMessageNameR(this, n); vt = D_004E0840; x24 = 0; x28 = 0xD; }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MsgBase() { vt = D_004E0840; cMessage_dtor(this, 0); }
 };
 static inline float Min(float a, float b) { float r = 0.0f; __asm__ volatile("min.s %0, %1, %2" : "=f"(r) : "f"(a), "f"(b)); return r; }
@@ -57,17 +57,17 @@ struct Msg : MsgBase { char pad2c[4]; Payload p;
 static inline float Yaw(Mtx& m) {
     V r0 = *cMatrix_GetAxis(&m, 0);
     V r1 = *cMatrix_GetAxis(&m, 1);
-    float a = r1.z; float b = r0.z; if (b < a) { float x = r0.x; return Math_Atan2f(r0.y, x); }
-    return Math_Atan2f(-r1.x, r1.y);
+    float a = r1.z; float b = r0.z; if (b < a) { float x = r0.x; return Libc_Atan2f(r0.y, x); }
+    return Libc_Atan2f(-r1.x, r1.y);
 }
-extern "C" void Player_Update(Player* self, float dt)
+extern "C" void cPlayer_NextFrame(Player* self, float dt)
 {
     if (g_IsMultiplayer) {
         Obj* o = self->obj;
         if (o->b14) {
             if (o && o->p3584)
                 o->p3584->b33 = D_00582B88;
-            if (self->t1C0 < Net_GetClock(1)) {
+            if (self->t1C0 < cDME_GetTime(1)) {
                 Mtx m = self->obj->GetMatrix();
                 V v;
                 const V& pos = m.r[3];
@@ -80,14 +80,14 @@ extern "C" void Player_Update(Player* self, float dt)
                     if (s) id = *s->p64;
                 }
                 { Msg msg(pos, v, Yaw(m), 1.0f, id);
-                Event_Send(&msg, self->obj, 0); }
-                self->t1C0 = Net_GetClock(1) + 250;
+                QueueMessage_cMessageR_cSystemP_int(&msg, self->obj, 0); }
+                self->t1C0 = cDME_GetTime(1) + 250;
             }
         }
     }
     { Obj* ob = self->obj; PlayerInput_Update(self->input, self->x1A0, ob, dt); }
-    { Obj* ob = self->obj; PlayerInput_DrawDebugCamera(self->input, self->x1A0, ob); }
-    HudRadar_SetMeter(g_Hud + 0xD0, 1, self->f1AC);
+    { Obj* ob = self->obj; cPlayerControls_PrintDebugInfoToScreen(self->input, self->x1A0, ob); }
+    cHudRadar_SetDanger(g_Hud + 0xD0, 1, self->f1AC);
     self->f1A8 = 0;
     self->f1AC = 0;
 }

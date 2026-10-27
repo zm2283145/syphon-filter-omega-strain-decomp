@@ -10,7 +10,7 @@ typedef struct { unsigned char kind; unsigned char id; unsigned short pad; TyEnu
 typedef struct { int sock; char pad[0x44]; unsigned char b48; } ScfSock;
 typedef struct { int f0; int f4; int addr[4]; unsigned short port; char pad[0x5A]; int f74; } ScfPeer;
 extern void *memset(void *d, int c, unsigned int n);
-extern int Socket_WriteAddressed(int sock, void *addr, unsigned short port, void *data, int len, unsigned short *sent);
+extern int rt_comm_send_to(int sock, void *addr, unsigned short port, void *data, int len, unsigned short *sent);
 int rt_udp_send_reset(ScfSock *s, ScfPeer *e)
 {
     ScfHdr hdr;
@@ -23,7 +23,7 @@ int rt_udp_send_reset(ScfSock *s, ScfPeer *e)
     hdr.id = s->b48;
     hdr.kind = 8;
     hdr.val = e->f74;
-    Socket_WriteAddressed(s->sock, e->addr, e->port, &hdr, 12, &sent);
+    rt_comm_send_to(s->sock, e->addr, e->port, &hdr, 12, &sent);
     return 0;
 }
 /* merge_units: end func_0030AB20 */
@@ -40,7 +40,7 @@ int rt_udp_reset(ScfSock *s, void *addr, unsigned short port, int val)
     hdr.id = s->b48;
     hdr.kind = 8;
     hdr.val = val;
-    Socket_WriteAddressed(s->sock, addr, port, &hdr, 12, &sent);
+    rt_comm_send_to(s->sock, addr, port, &hdr, 12, &sent);
     return 0;
 }
 /* merge_units: end func_0030ABA8 */
@@ -51,9 +51,9 @@ typedef struct { unsigned char b[4]; } ScfU32u;
 typedef struct { unsigned char flags; unsigned char pad[7]; ScfU32u seq; } ScfRxHdr;
 typedef struct { int sock; char pad[0x44]; int b48; } ScfSock_0030AC40;
 extern void *memcpy(void *d, const void *s, unsigned int n);
-extern int RtUdp_CopyPacket(ScfPeer *e, ScfHdr_0030AC40 *h, void *data, int len);
+extern int rt_udp_buffer_data_for_send(ScfPeer *e, ScfHdr_0030AC40 *h, void *data, int len);
 
-int RtUdp_QueueAck(ScfSock_0030AC40 *s, ScfPeer *e, ScfRxHdr *p)
+int rt_udp_send_ack(ScfSock_0030AC40 *s, ScfPeer *e, ScfRxHdr *p)
 {
     ScfHdr_0030AC40 hdr;
     unsigned char ack[5];
@@ -64,7 +64,7 @@ int RtUdp_QueueAck(ScfSock_0030AC40 *s, ScfPeer *e, ScfRxHdr *p)
     hdr.len = 5;
     ack[0] = p->flags;
     memcpy(&ack[1], &p->seq, 4);
-    return RtUdp_CopyPacket(e, &hdr, ack, 5);
+    return rt_udp_buffer_data_for_send(e, &hdr, ack, 5);
 }
 /* merge_units: end func_0030AC40 */
 
@@ -78,7 +78,7 @@ extern unsigned int rt_list_buf_get_data_size(void *node);
 extern char *rt_list_buf_get_data_ptr(void *node);
 extern void *rt_list_buf_get_next(void *node);
 
-int RtUdp_CheckDuplicate(ScfSock_0030ACD8 *s, ScfPeer_0030ACD8 *e, ScfHdr_0030ACD8 *p, unsigned char *dup)
+int rt_udp_is_duplicate_packet(ScfSock_0030ACD8 *s, ScfPeer_0030ACD8 *e, ScfHdr_0030ACD8 *p, unsigned char *dup)
 {
     ScfHdr_0030ACD8 hd;
     void *node = 0;
@@ -129,7 +129,7 @@ typedef struct {
     unsigned int rto;
 } RtUdpRtt;
 extern void rt_time_elapsed(int *timer, unsigned int *elapsed);
-int RtUdp_UpdateRtt(void *ctx, RtUdpRtt *r, unsigned char flags, int seq)
+int rt_udp_calculate_rto(void *ctx, RtUdpRtt *r, unsigned char flags, int seq)
 {
     unsigned int elapsed;
     unsigned int srtt, rttvar, rto, v;
@@ -163,7 +163,7 @@ int RtUdp_UpdateRtt(void *ctx, RtUdpRtt *r, unsigned char flags, int seq)
 /* merge_units: begin func_0030AF68 */
 typedef struct { int sock; char pad[0x20]; void *buf1; void *buf2; char pad2[0xC]; unsigned int mtu; char pad3[0xA]; unsigned short port; unsigned int idx; } ScfSock_0030AF68;
 typedef struct { int a; unsigned int size; int c; } ScfSockOpt;
-extern int Net_AllocZeroed(void *out, unsigned long n);
+extern int rt_memory_allocate_init_zero(void *out, unsigned long n);
 extern int rt_comm_create(int *sock, int a, unsigned short port, ScfSockOpt *opt);
 extern int rt_comm_startup(void);
 extern int rt_comm_get_local_port(int sock, unsigned short *port);
@@ -173,7 +173,7 @@ extern void *D_00491318;
 extern void *D_0049131C;
 extern ScfSock_0030AF68 *D_00529860[8];
 
-int RtUdp_Init(ScfSock_0030AF68 *s)
+int rt_udp_create_shared_channel_data(ScfSock_0030AF68 *s)
 {
     ScfSockOpt opt;
     int r;
@@ -181,8 +181,8 @@ int RtUdp_Init(ScfSock_0030AF68 *s)
         if (s->mtu >= 0x59F) return 1;
         if (D_00491310 == 0) {
             D_00491314 = s->port;
-            if (Net_AllocZeroed(&D_00491318, 0x5AA) != 0) return 9;
-            if (Net_AllocZeroed(&D_0049131C, 0x5AA) != 0) return 9;
+            if (rt_memory_allocate_init_zero(&D_00491318, 0x5AA) != 0) return 9;
+            if (rt_memory_allocate_init_zero(&D_0049131C, 0x5AA) != 0) return 9;
             memset(D_00529860, 0, 0x20);
             memset(&opt, 0, 12);
             opt.size = 0x5AA;
@@ -206,8 +206,8 @@ int RtUdp_Init(ScfSock_0030AF68 *s)
         } else return 17;
     } else {
         if (s->mtu >= 0x59F) return 1;
-        if (Net_AllocZeroed(&s->buf1, s->mtu + 12) != 0) return 9;
-        if (Net_AllocZeroed(&s->buf2, s->mtu + 12) != 0) return 9;
+        if (rt_memory_allocate_init_zero(&s->buf1, s->mtu + 12) != 0) return 9;
+        if (rt_memory_allocate_init_zero(&s->buf2, s->mtu + 12) != 0) return 9;
         memset(&opt, 0, 12);
         opt.size = s->mtu + 12;
         opt.a = 1;

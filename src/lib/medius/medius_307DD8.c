@@ -19,7 +19,7 @@ extern int rt_list_buf_get_data_size(void *pkt);
 extern void *rt_list_buf_get_next(void *pkt);
 extern void rt_list_buf_remove(void *list, void *pkt);
 extern void *memcpy(void *d, const void *s, unsigned int n);
-int RtUdp_Read(RtUdp *r, unsigned int idx, void *dst, unsigned int max, unsigned int *out)
+int rt_udp_recv(RtUdp *r, unsigned int idx, void *dst, unsigned int max, unsigned int *out)
 {
     void *p = 0;
     RtHdr h;

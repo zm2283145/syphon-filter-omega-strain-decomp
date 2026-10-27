@@ -24,7 +24,7 @@ Vec4* cCollisionModel_FaceProperties_opAssign(Vec4* d, Vec4* s) {
     return d;
 }
 
-int Mem_PlacementNew(int a0, int a1) {
+int opNew_uint_voidP(int a0, int a1) {
     return a1;
 }
 #pragma pop /* merge_units */
@@ -40,9 +40,9 @@ struct V139BD0 { unsigned int cap; unsigned int count; E139BD0* data; };
 extern "C" {
 extern char D_0049ABB0[];
 #if 0 /* merge_units */
-void* Mem_PlacementNew(unsigned int size, void* p);
+void* opNew_uint_voidP(unsigned int size, void* p);
 #endif /* merge_units */
-#define Mem_PlacementNew(a0, a1) ((void *)Mem_PlacementNew((int)(a0), (int)(a1))) /* merge_units */
+#define opNew_uint_voidP(a0, a1) ((void *)opNew_uint_voidP((int)(a0), (int)(a1))) /* merge_units */
 
 void cLosRequest_cCollisionModelList_Game_ctor(void* dst, const E139BD0* src);
 }
@@ -59,12 +59,12 @@ extern "C" void std_vector_imp_cLosRequest_cCollisionModelList_Game_init(V139BD0
         E139BD0* p = v->data;
         E139BD0* end = p + n;
         for (; p < end; p++) {
-            void* o = Mem_PlacementNew(sizeof(E139BD0), p);
+            void* o = opNew_uint_voidP(sizeof(E139BD0), p);
             if (o) cLosRequest_cCollisionModelList_Game_ctor(o, val);
             v->count++;
         }
     }
 }
-#undef Mem_PlacementNew /* merge_units */
+#undef opNew_uint_voidP /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00139BD0 */

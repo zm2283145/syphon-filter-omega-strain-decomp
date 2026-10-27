@@ -14,23 +14,23 @@
 extern "C" void operator_delete(void* p);
 extern "C" void cGOBJ_dtor(void* self, int flag);
 class VDel { public: int a; virtual ~VDel(); };
-extern "C" void Actor_ApplyContactDamage();
-extern "C" void Actor_BaseLogicUpdate();
-extern "C" void Actor_BasePreLogic();
-extern "C" void Actor_BaseWorldUpdate();
-extern "C" void Actor_VirtualNop();
-extern "C" void Controller_DeathNotice();
-extern "C" void Node_ClearFlag2C();
-extern "C" void Node_GetFlag2C();
-extern "C" void Node_SetFlag2C();
-extern "C" void Object_Activate();
-extern "C" void Object_AttachTransform();
-extern "C" void Object_GetAttachedOrSelf();
-extern "C" void cEnvSettings_v0B();
-extern "C" void cEnvSettings_v0C();
+extern "C" void cGOBJ_ReceiveDamage();
+extern "C" void cGOBJ_NextFrame();
+extern "C" void cGOBJ_CriticalNextFrame();
+extern "C" void cGOBJ_UpdateMotion();
+extern "C" void cGOBJ_CriticalUpdateMotion();
+extern "C" void cGOBJ_Die();
+extern "C" void cGOBJ_Disable();
+extern "C" void cGOBJ_IsEnabled();
+extern "C" void cGOBJ_Enable();
+extern "C" void cGOBJ_Activate();
+extern "C" void cGOBJ_CreateXform();
+extern "C" void cGOBJ_ScriptGetRealObj();
+extern "C" void cEnvSettings_getSOBJClassId();
+extern "C" void cEnvSettings_ScriptHandleMessage();
 extern "C" void cEnvSettings_v0E();
-extern "C" void cEnvSettings_v0F();
-extern "C" void GObj_GetID();
+extern "C" void cEnvSettings_Load();
+extern "C" void cSystem_ScriptGetObjectId();
 extern "C" void cSystem_SendCreated();
 extern "C" void cSystem_NetEnable();
 extern "C" void cSystem_NetDisable();
@@ -38,9 +38,9 @@ extern "C" void cSystem_IsDeliverable();
 extern "C" void cGOBJ_GetFloorPlane();
 extern "C" void cGOBJ_GetBBox();
 extern "C" void func_00140E90();
-extern "C" void GObj_GetLifeState();
+extern "C" void cGOBJ_GetHealthState();
 extern "C" void cGOBJ_IsGeneratorCreated();
-extern "C" void Object_GetEye();
+extern "C" void cGOBJ_GetTargetPosition();
 extern "C" void cGOBJ_GetLosPosition();
 extern "C" void cGOBJ_HasHeadset();
 extern "C" void cGOBJ_SetStatus();
@@ -56,29 +56,29 @@ extern "C" void cGOBJ_IsAimed();
 extern "C" void cGOBJ_InitNetwork();
 extern "C" void cGOBJ_IsNetworked();
 extern "C" void cGOBJ_CheckBullet();
-extern "C" void GObj_GetWorldMatrix();
-extern "C" void cNode_v3A();
-extern "C" void cGOBJ_v39();
-extern "C" void Node_GetComponentMatrix();
-extern "C" void PathObj_GetPosition();
-extern "C" void Node_GetLightRefPoint();
+extern "C" void cGOBJ_GetTransform_ForFloorTravel();
+extern "C" void cGOBJ_GetCameraCollisionReferencePoint();
+extern "C" void cGOBJ_GetTransform_ForCameraTracking();
+extern "C" void cGOBJ_GetTransform_ForTeleporting();
+extern "C" void cGOBJ_GetCenterOfMass();
+extern "C" void cGOBJ_GetActivationPoint();
 extern "C" void cGOBJ_v35();
-extern "C" void Node_GetWorldMatrix();
-extern "C" void cNode_v2B();
-extern "C" void cNode_v2A();
-extern "C" void cNode_v29();
-extern "C" void cNode_v28();
-extern "C" void cNode_v27();
-extern "C" void cNode_v26();
-extern "C" void cNode_v25();
-extern "C" void cNode_v24();
-extern "C" void Player_GetActiveWeapon();
-extern "C" void Object_Deactivate();
-extern "C" void cNode_v07();
-extern "C" void cNode_v06();
-extern "C" void cNode_v14();
-extern "C" void cNode_v0D();
-extern "C" void Object_HandleMessage();
+extern "C" void cGOBJ_GetMatrix();
+extern "C" void cGOBJ_SetTranslation_ResetPhysics();
+extern "C" void cGOBJ_SetRotation_ResetPhysics();
+extern "C" void cGOBJ_SetTransform_ResetPhysics();
+extern "C" void cGOBJ_ApplyTranslation();
+extern "C" void cGOBJ_ApplyLocalRotation();
+extern "C" void cGOBJ_ApplyTransform();
+extern "C" void cGOBJ_SetTranslation();
+extern "C" void cGOBJ_SetRotation();
+extern "C" void cGOBJ_SetTransform();
+extern "C" void cGOBJ_Deactivate();
+extern "C" void cGOBJ_NetDeactivate();
+extern "C" void cGOBJ_NetActivate();
+extern "C" void cGOBJ_Render();
+extern "C" void cGOBJ_ProcessMessage();
+extern "C" void cGOBJ_HandleMessage();
 extern void * const D_004D9E00[];
 typedef struct { void* vt; char pad[0x9C]; VDel* xA0; } S_84F0;
 extern "C" S_84F0* cEnvSettings_dtor(S_84F0* self, short flag)
@@ -93,7 +93,7 @@ extern "C" S_84F0* cEnvSettings_dtor(S_84F0* self, short flag)
     }
     return self;
 }
-void * const D_004D9E00[68] = { (void*)0x0, (void*)0x0, (void*)cEnvSettings_dtor, (void*)Object_HandleMessage, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)cGOBJ_IsNetworked, (void*)cSystem_SendCreated, (void*)cNode_v06, (void*)cNode_v07, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cEnvSettings_v0B, (void*)cEnvSettings_v0C, (void*)cNode_v0D, (void*)cEnvSettings_v0E, (void*)cEnvSettings_v0F, (void*)Actor_BaseLogicUpdate, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cNode_v14, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)cGOBJ_HasHeadset, (void*)cGOBJ_SetStatus, (void*)cGOBJ_GetStatus, (void*)cGOBJ_IsGeneratorCreated, (void*)cGOBJ_GetChildList_void_2, (void*)cGOBJ_GetChildList_void, (void*)cGOBJ_GetBBox, (void*)cGOBJ_ScaleBBox, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)cNode_v24, (void*)cNode_v25, (void*)cNode_v26, (void*)cNode_v27, (void*)cNode_v28, (void*)cNode_v29, (void*)cNode_v2A, (void*)cNode_v2B, (void*)cGOBJ_GetTargetPriority, (void*)cGOBJ_GetLosPosition, (void*)Object_GetEye, (void*)cGOBJ_GetMovementState, (void*)func_00140E90, (void*)cGOBJ_GetSubTargetAimAdjust, (void*)cGOBJ_GetNumSubTargets, (void*)cGOBJ_IsAimed, (void*)Node_GetWorldMatrix, (void*)cGOBJ_v35, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)cGOBJ_v39, (void*)cNode_v3A, (void*)GObj_GetWorldMatrix, (void*)cGOBJ_GetFloorPlane, (void*)cGOBJ_InitNetwork, (void*)Actor_ApplyContactDamage, (void*)cGOBJ_CheckBullet, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice };
+void * const D_004D9E00[68] = { (void*)0x0, (void*)0x0, (void*)cEnvSettings_dtor, (void*)cGOBJ_HandleMessage, (void*)cSystem_ScriptGetObjectId, (void*)cGOBJ_ScriptGetRealObj, (void*)cGOBJ_IsNetworked, (void*)cSystem_SendCreated, (void*)cGOBJ_NetActivate, (void*)cGOBJ_NetDeactivate, (void*)cSystem_NetEnable, (void*)cSystem_NetDisable, (void*)cSystem_IsDeliverable, (void*)cEnvSettings_getSOBJClassId, (void*)cEnvSettings_ScriptHandleMessage, (void*)cGOBJ_ProcessMessage, (void*)cEnvSettings_v0E, (void*)cEnvSettings_Load, (void*)cGOBJ_NextFrame, (void*)cGOBJ_CriticalNextFrame, (void*)cGOBJ_UpdateMotion, (void*)cGOBJ_CriticalUpdateMotion, (void*)cGOBJ_Render, (void*)cGOBJ_Activate, (void*)cGOBJ_Deactivate, (void*)cGOBJ_Enable, (void*)cGOBJ_Disable, (void*)cGOBJ_IsEnabled, (void*)cGOBJ_HasHeadset, (void*)cGOBJ_SetStatus, (void*)cGOBJ_GetStatus, (void*)cGOBJ_IsGeneratorCreated, (void*)cGOBJ_GetChildList_void_2, (void*)cGOBJ_GetChildList_void, (void*)cGOBJ_GetBBox, (void*)cGOBJ_ScaleBBox, (void*)cGOBJ_CreateXform, (void*)cGOBJ_SetTransform, (void*)cGOBJ_SetRotation, (void*)cGOBJ_SetTranslation, (void*)cGOBJ_ApplyTransform, (void*)cGOBJ_ApplyLocalRotation, (void*)cGOBJ_ApplyTranslation, (void*)cGOBJ_SetTransform_ResetPhysics, (void*)cGOBJ_SetRotation_ResetPhysics, (void*)cGOBJ_SetTranslation_ResetPhysics, (void*)cGOBJ_GetTargetPriority, (void*)cGOBJ_GetLosPosition, (void*)cGOBJ_GetTargetPosition, (void*)cGOBJ_GetMovementState, (void*)func_00140E90, (void*)cGOBJ_GetSubTargetAimAdjust, (void*)cGOBJ_GetNumSubTargets, (void*)cGOBJ_IsAimed, (void*)cGOBJ_GetMatrix, (void*)cGOBJ_v35, (void*)cGOBJ_GetActivationPoint, (void*)cGOBJ_GetCenterOfMass, (void*)cGOBJ_GetTransform_ForTeleporting, (void*)cGOBJ_GetTransform_ForCameraTracking, (void*)cGOBJ_GetCameraCollisionReferencePoint, (void*)cGOBJ_GetTransform_ForFloorTravel, (void*)cGOBJ_GetFloorPlane, (void*)cGOBJ_InitNetwork, (void*)cGOBJ_ReceiveDamage, (void*)cGOBJ_CheckBullet, (void*)cGOBJ_GetHealthState, (void*)cGOBJ_Die };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001784F0(void) {}
 #pragma pop /* merge_units */
@@ -104,9 +104,9 @@ static inline void merge_flush_func_001784F0(void) {}
 #pragma opt_propagation off
 #pragma cplusplus on
 extern "C" {
-extern "C" void Light_Disable();
-extern "C" void Light_SetPosition();
-extern "C" void Light_Enable();
+extern "C" void cLightSrc_Deactivate();
+extern "C" void cLightSrc_SetPosition();
+extern "C" void cLightSrc_Activate();
 extern "C" void func_001479A0();
 extern "C" void Light_GetCoronaSize();
 extern "C" void Light_GetCoronaFlag();
@@ -118,7 +118,7 @@ extern char D_004D9240[];
 extern char D_004D9280[];
 extern char g_LightMgr[];
 extern unsigned char g_LevelLightsDirty;
-void LightMgr_RemoveFromTable(void* pool, void* p);
+void cLightMan_RemoveLight(void* pool, void* p);
 }
 class S_8580 {
 public:
@@ -143,12 +143,12 @@ extern "C" S_8580* cAmbientLight_dtor(S_8580* self, short flag)
                 VT(s) = D_004D9280;
         }
         if (flag > 0)
-            LightMgr_RemoveFromTable(g_LightMgr, s);
+            cLightMan_RemoveLight(g_LightMgr, s);
     }
     return s;
 }
 #pragma opt_common_subs reset
-void * const D_004D9F10[16] = { (void*)0x0, (void*)0x0, (void*)cAmbientLight_dtor, (void*)PointLightComp_Start, (void*)0x1479E0, (void*)func_00147A00, (void*)func_00147A10, (void*)func_001479A0, (void*)Light_GetCoronaSize, (void*)Light_GetCoronaFlag, (void*)Light_SetPosition, (void*)Light_Enable, (void*)Light_Disable, (void*)0x1479F0, (void*)0x0, (void*)0x0 };
+void * const D_004D9F10[16] = { (void*)0x0, (void*)0x0, (void*)cAmbientLight_dtor, (void*)PointLightComp_Start, (void*)0x1479E0, (void*)func_00147A00, (void*)func_00147A10, (void*)func_001479A0, (void*)Light_GetCoronaSize, (void*)Light_GetCoronaFlag, (void*)cLightSrc_SetPosition, (void*)cLightSrc_Activate, (void*)cLightSrc_Deactivate, (void*)0x1479F0, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00178580(void) {}
 #pragma pop /* merge_units */
@@ -185,14 +185,14 @@ extern char D_004D9F10[];
 #define D_004D9F10 ((char*)&D_004D9F10) /* merge_units */
 
 void cGOBJ_ctor(EnvSettings_178630* obj, int* id, int kind, int* out);
-Light_178630* LightMgr_AllocPoint(void* pool, int n, int id);
-V4_178630* Vec4_SetFromVec3W(V4_178630* out, V3_178630* in, float w);
-void LevelLight_CreateDirectional(Light_178630* l, int a, V4_178630* c);
-int IdMgr_FindCollision(int region, int id);
-void* World_GetActorArray(void);
+Light_178630* cLightMan_AddLight(void* pool, int n, int id);
+V4_178630* tRGBA_ctor_tRGBR_float(V4_178630* out, V3_178630* in, float w);
+void cLightSrc_ctor_eLightSrcTypes_tRGBAR(Light_178630* l, int a, V4_178630* c);
+int nGobjManager_LookupGOBJ_int_int(int region, int id);
+void* nGobjManager_GetGOBJList(void);
 Vec_178630* cObjList_cGOBJPtr_GetList(void* arr);
-void PtrVec_Begin(It_178630* out, Vec_178630* v);
-void PtrVec_End(It_178630* out, Vec_178630* v);
+void cArray_cGOBJPtr_Begin(It_178630* out, Vec_178630* v);
+void cArray_cGOBJPtr_End(It_178630* out, Vec_178630* v);
 void cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(It_178630* out, It_178630* in);
 }
 static inline int Read_178630(Reader_178630* r) { int v = *(int*)r->cur; r->cur += 4; return v; }
@@ -239,9 +239,9 @@ extern "C" EnvSettings_178630* cEnvSettings_ctor(EnvSettings_178630* obj, Reader
     ReadFloat_178630(r, &obj->color.x);
     ReadFloat_178630(r, &obj->color.y);
     ReadFloat_178630(r, &obj->color.z);
-    l = LightMgr_AllocPoint(g_LightMgr, 1, lo);
+    l = cLightMan_AddLight(g_LightMgr, 1, lo);
     if (l) {
-        LevelLight_CreateDirectional(l, 1, Vec4_SetFromVec3W(&tmp, &obj->color, 0.0f));
+        cLightSrc_ctor_eLightSrcTypes_tRGBAR(l, 1, tRGBA_ctor_tRGBR_float(&tmp, &obj->color, 0.0f));
         *(void**)((char*)l + 4) = D_004D9F10;
     }
     obj->light = l;
@@ -263,7 +263,7 @@ extern "C" EnvSettings_178630* cEnvSettings_ctor(EnvSettings_178630* obj, Reader
     else
         obj->f80 = 0.45f;
     { int off; char* base = (char*)obj; for (i = 0, off = 0; i < 4; i++, p++, off += 4)
-        *(int*)(base + 0x90 + off) = IdMgr_FindCollision(hi, *p); }
+        *(int*)(base + 0x90 + off) = nGobjManager_LookupGOBJ_int_int(hi, *p); }
     obj->actor = 0;
     if (r->version >= 0x3A) {
         find = *(unsigned char*)r->cur;
@@ -273,10 +273,10 @@ extern "C" EnvSettings_178630* cEnvSettings_ctor(EnvSettings_178630* obj, Reader
         find = 1;
     }
     if (find) {
-        void* arr = World_GetActorArray();
-        PtrVec_End(&te, cObjList_cGOBJPtr_GetList(arr));
+        void* arr = nGobjManager_GetGOBJList();
+        cArray_cGOBJPtr_End(&te, cObjList_cGOBJPtr_GetList(arr));
         cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&end, &te);
-        PtrVec_Begin(&tb, cObjList_cGOBJPtr_GetList(arr));
+        cArray_cGOBJPtr_Begin(&tb, cObjList_cGOBJPtr_GetList(arr));
         cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(&it, &tb);
         while (Ne_178630(&it, &end)) {
             Actor_178630* a = *it.p;

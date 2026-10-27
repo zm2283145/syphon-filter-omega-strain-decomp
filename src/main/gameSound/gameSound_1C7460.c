@@ -24,7 +24,7 @@ static inline short ReadS16(void)
 }
 
 /* Reads a little-endian 32-bit value (two 16-bit halves) from the stream into *out. */
-void Stream_ReadU32(int* out)
+void cNetMsg_GetInt(int* out)
 {
     unsigned short lo = ReadS16();
     unsigned short hi = ReadS16();
@@ -39,24 +39,24 @@ static inline void merge_flush_func_001C7460(void) {}
 #pragma push /* merge_units */
 typedef struct { void* vtable; char pad[0x2C]; } Event001C7500;
 extern char D_004F2CE8[];
-extern void Message_GetScriptTypeKey();
-extern void cStopAllQuipsMsg_dtor();
-extern void cStopAllQuipsMsg_v01();
+extern void cMessage_getSOBJClassId();
+extern void cPlayQuipMsg_dtor_2();
+extern void cPlayQuipMsg_Clone();
 extern void cStopAllQuipsMsg_v04();
 extern void cStopAllQuipsMsg_v05();
 extern void cNetMsg_Pack();
-void * const D_004DAC50[8] = { (void*)0x0, (void*)0x0, (void*)cStopAllQuipsMsg_dtor, (void*)cStopAllQuipsMsg_v01, (void*)cNetMsg_Pack, (void*)Message_GetScriptTypeKey, (void*)cStopAllQuipsMsg_v04, (void*)cStopAllQuipsMsg_v05 };
+void * const D_004DAC50[8] = { (void*)0x0, (void*)0x0, (void*)cPlayQuipMsg_dtor_2, (void*)cPlayQuipMsg_Clone, (void*)cNetMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)cStopAllQuipsMsg_v04, (void*)cStopAllQuipsMsg_v05 };
 extern char D_004DCF10[];
-extern void Event_Construct(Event001C7500* ev, void* desc);
-extern void Global_StopAllQuips(int a);
+extern void cMessage_ctor_cMessageNameR(Event001C7500* ev, void* desc);
+extern void nGameSound_StopAllQuips(int a);
 extern void cMessage_dtor(Event001C7500* ev, int flags);
-/* Build a temporary event, run Global_StopAllQuips(1) and destroy the event. */
+/* Build a temporary event, run nGameSound_StopAllQuips(1) and destroy the event. */
 void cStopAllQuipsMsg_NetReceive(void)
 {
     Event001C7500 ev;
-    Event_Construct(&ev, D_004F2CE8);
+    cMessage_ctor_cMessageNameR(&ev, D_004F2CE8);
     ev.vtable = ((char*)D_004DAC50);
-    Global_StopAllQuips(1);
+    nGameSound_StopAllQuips(1);
     ev.vtable = D_004DCF10;
     cMessage_dtor(&ev, 0);
 }

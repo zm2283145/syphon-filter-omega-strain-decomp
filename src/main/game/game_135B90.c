@@ -91,20 +91,20 @@ typedef struct {
 } LosReceiver_f3;
 extern char g_LosCheckService[];
 extern char D_004D90A0[];
-extern void Receiver_Construct(LosReceiver_f3* r, void* type);
-extern LosVec_f3* Vec4_GetZero(void);
-extern void Vec4_Assign(LosVec_f3* d, LosVec_f3* s);
+extern void cSystem_ctor(LosReceiver_f3* r, void* type);
+extern LosVec_f3* cVector_GetZero(void);
+extern void cVector_ctor_cVectorR(LosVec_f3* d, LosVec_f3* s);
 extern void cLosResult_ctor_void(void* buf);
 extern void std_vector_imp_cLosRequest_cCollisionModelList_Game_ctor(LosSub_f3* sub, int arg, LosQuery_f3* q);
-extern void ScalarCollection_Init(void* c);
+extern void std_list_deleter_voidPtr_ctor_void(void* c);
 LosReceiver_f3* LosReceiver_Construct(LosReceiver_f3* self, int arg)
 {
     LosQuery_f3 q;
     LosSub_f3* sub;
-    Receiver_Construct(self, g_LosCheckService);
+    cSystem_ctor(self, g_LosCheckService);
     self->vtable = D_004D90A0;
-    Vec4_Assign(&q.from, Vec4_GetZero());
-    Vec4_Assign(&q.to, Vec4_GetZero());
+    cVector_ctor_cVectorR(&q.from, cVector_GetZero());
+    cVector_ctor_cVectorR(&q.to, cVector_GetZero());
     q.active = 0;
     q.data = q.buf;
     q.count = 0;
@@ -117,8 +117,8 @@ LosReceiver_f3* LosReceiver_Construct(LosReceiver_f3* self, int arg)
     std_vector_imp_cLosRequest_cCollisionModelList_Game_ctor(sub, arg, &q);
     sub->ready = 1;
     q.active = 0;
-    ScalarCollection_Init(self->coll30);
-    ScalarCollection_Init(self->coll3C);
+    std_list_deleter_voidPtr_ctor_void(self->coll30);
+    std_list_deleter_voidPtr_ctor_void(self->coll3C);
     self->f48 = 0;
     return self;
 }

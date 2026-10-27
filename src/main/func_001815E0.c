@@ -1,6 +1,6 @@
-/* Collision_GatherNode: recursive per-actor collision gather (child walk of Collision_GatherScene).
+/* cCollisionModelList_CollectFaces_cCollisionFaceCollectorR_cGOBJP_cBoxR_cSphereR: recursive per-actor collision gather (child walk of cCollisionModelList_CollectFaces_MainCode_cArrayR_cBoxR_int).
  * The node's own shape is tested with inlined sphere/transform helpers; children go through the
- * out-of-line ones, as in Collision_GatherScene. */
+ * out-of-line ones, as in cCollisionModelList_CollectFaces_MainCode_cArrayR_cBoxR_int. */
 #pragma cplusplus on
 #include "types.h"
 #pragma opt_propagation off
@@ -118,39 +118,39 @@ extern "C" {
 void* cGOBJ_GetMovementInfo(Actor*);
 unsigned char cMovement_WasMovingLastFrame(void*);
 void* cMovement_PrevTransform(void*);
-M40* Transform_GetUpdated(Xf*);
+M40* cXform_GetMatrix(Xf*);
 void cBox_ctor_cBoxR(Box2*, Bnd*);
-void Mtx_InvertRigid_13ECA0(M40*, void*);
-void ColTree_GatherBounds(void*, M40*);
+void cMatrix_Copy_InvertRotTrans(M40*, void*);
+void cBox_Transform(void*, M40*);
 void cBox_opAssign(Bnd*, Bnd*);
-void Box_Union(Bnd*, Box2*);
-void Transform_GetInverseMatrix(M40*, Xf*);
-void ColGather_SetSource(Src*, Shp*);
+void cBox_opAddAssign(Bnd*, Box2*);
+void cXform_GetInverseMatrix(M40*, Xf*);
+void cCollisionFaceCollector_ResetModelInstance(Src*, Shp*);
 Mesh* cCollisionModelMaster_GetData(char*);
-void ColTree_VisitRootNode(Mesh*, Src*, Bnd*);
-int PtrArray_Begin(void*);
-int PtrArray_End(void*);
+void cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cBoxR(Mesh*, Src*, Bnd*);
+int std_vector_imp_cGOBJPtr_1_begin(void*);
+int std_vector_imp_cGOBJPtr_1_end_void(void*);
 void std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR(It*, void*, int*);
-Xf* Object_GetRootNode(Actor*);
+Xf* cGOBJ_GetXform_void_2(Actor*);
 Sph* cCollisionModel_BoundingSphere_LocalSpace(Shp*);
 void cSphere_ctor_cSphereR(Sph*, Sph*);
 void Sphere_Transform(Sph*, M40*);
-int Sphere_Overlaps(Sph*, Sph*);
-int GameObject_IsCollisionEnabled(Actor*);
-int* InlinePtrArray_Find(PA*, Actor**);
-int* InlinePtrArray_End(PA*);
-void Bounds_SetEmpty(Bnd*);
+int cSphere_Intersects(Sph*, Sph*);
+int cGOBJ_IsActive(Actor*);
+int* cArray_FixedCapacity_cGOBJPtr_2_Find(PA*, Actor**);
+int* cArray_FixedCapacity_cGOBJPtr_2_End(PA*);
+void cBox_ctor_void(Bnd*);
 void nCollision_GetTransformedCollectorObject_RelativeToObjectWithXform_cBoxR_cBoxR_cGOBJP_cXformP(Bnd*, Bnd*, Actor*, Xf*);
-void ColGather_GatherWrapper(Shp*, Src*, Bnd*);
-void PtrVec_Begin(It*, void*);
-void PtrVec_End(It*, void*);
+void cCollisionModel_GetNearFaces_cCollisionFaceCollector_cBoxR(Shp*, Src*, Bnd*);
+void cArray_cGOBJPtr_Begin(It*, void*);
+void cArray_cGOBJPtr_End(It*, void*);
 int cArray_cGOBJPtr_Iterator_opNe(It*, It*);
 Actor** cArray_cGOBJPtr_Iterator_opMul(It*);
-It* Iter_Advance4(It*);
-void Collision_GatherNode(Gath* self, Src* src, Actor* node, Bnd* box, Sph* e0);
+It* cArray_cGOBJPtr_Iterator_opInc(It*);
+void cCollisionModelList_CollectFaces_cCollisionFaceCollectorR_cGOBJP_cBoxR_cSphereR(Gath* self, Src* src, Actor* node, Bnd* box, Sph* e0);
 }
 
-void Collision_GatherNode(Gath* self, Src* src, Actor* node, Bnd* box, Sph* e0)
+void cCollisionModelList_CollectFaces_cCollisionFaceCollectorR_cGOBJP_cBoxR_cSphereR(Gath* self, Src* src, Actor* node, Bnd* box, Sph* e0)
 {
     It p;
     It e;
@@ -185,38 +185,38 @@ void Collision_GatherNode(Gath* self, Src* src, Actor* node, Bnd* box, Sph* e0)
                 t = cGOBJ_GetMovementInfo(node);
                 if (t != 0 && cMovement_WasMovingLastFrame(t)) {
                     void* m = cMovement_PrevTransform(t);
-                    M40* u = Transform_GetUpdated(xf);
+                    M40* u = cXform_GetMatrix(xf);
                     cBox_ctor_cBoxR(&b4, box);
-                    Mtx_InvertRigid_13ECA0(&m1, m);
-                    ColTree_GatherBounds(&b4, &m1);
+                    cMatrix_Copy_InvertRotTrans(&m1, m);
+                    cBox_Transform(&b4, &m1);
                     cBox_opAssign(&bb, box);
-                    Mtx_InvertRigid_13ECA0(&m2, u);
-                    ColTree_GatherBounds(&bb, &m2);
-                    Box_Union(&bb, &b4);
+                    cMatrix_Copy_InvertRotTrans(&m2, u);
+                    cBox_Transform(&bb, &m2);
+                    cBox_opAddAssign(&bb, &b4);
                 } else {
                     cBox_opAssign(&bb, box);
-                    Transform_GetInverseMatrix(&m3, xf);
-                    ColTree_GatherBounds(&bb, &m3);
+                    cXform_GetInverseMatrix(&m3, xf);
+                    cBox_Transform(&bb, &m3);
                 }
                 Src s1 = *src;
-                ColGather_SetSource(&s1, sh);
-                ColTree_VisitRootNode(cCollisionModelMaster_GetData(sh->node), &s1, &bb);
+                cCollisionFaceCollector_ResetModelInstance(&s1, sh);
+                cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cBoxR(cCollisionModelMaster_GetData(sh->node), &s1, &bb);
             }
         } else {
             if (Overlaps((Sph*)(sh->node + 16), e0) && Live(node) && !Has(&self->list, node)) {
                 Src s2 = *src;
-                ColGather_SetSource(&s2, sh);
-                ColTree_VisitRootNode(cCollisionModelMaster_GetData(sh->node), &s2, box);
+                cCollisionFaceCollector_ResetModelInstance(&s2, sh);
+                cCollisionModel_Data_GetNearFaces_cCollisionFaceCollectorR_cBoxR(cCollisionModelMaster_GetData(sh->node), &s2, box);
             }
         }
     }
     ch = node->Children();
     if (ch != 0) {
         /* argument pointers taken into locals first: retail sets a2 before a0 for both converter calls */
-        tb = PtrArray_Begin(ch);
+        tb = std_vector_imp_cGOBJPtr_1_begin(ch);
         { int* pt = &tb; It* pi = &ib; std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR(pi, ch, pt); }
         p = ib;
-        te = PtrArray_End(ch);
+        te = std_vector_imp_cGOBJPtr_1_end_void(ch);
         { int* pt = &te; It* pi = &ie; std_vector_cGOBJPtr_pointer2iterator_cGOBJPPR(pi, ch, pt); }
         e = ie;
         while (Ne(&p, &e)) {
@@ -224,20 +224,20 @@ void Collision_GatherNode(Gath* self, Src* src, Actor* node, Bnd* box, Sph* e0)
             {
                 Shp* s = act->GetShape();
                 if (s != 0) {
-                    Xf* x = Object_GetRootNode(act);
+                    Xf* x = cGOBJ_GetXform_void_2(act);
                     if (x != 0) {
                         cSphere_ctor_cSphereR(&xs2, cCollisionModel_BoundingSphere_LocalSpace(s));
-                        Sphere_Transform(&xs2, Transform_GetUpdated(x));
-                        if ((unsigned char)Sphere_Overlaps(&xs2, e0) && GameObject_IsCollisionEnabled(act)
-                            && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
-                            Bounds_SetEmpty(&bnd);
+                        Sphere_Transform(&xs2, cXform_GetMatrix(x));
+                        if ((unsigned char)cSphere_Intersects(&xs2, e0) && cGOBJ_IsActive(act)
+                            && cArray_FixedCapacity_cGOBJPtr_2_Find(&self->list, &act) == cArray_FixedCapacity_cGOBJPtr_2_End(&self->list)) {
+                            cBox_ctor_void(&bnd);
                             nCollision_GetTransformedCollectorObject_RelativeToObjectWithXform_cBoxR_cBoxR_cGOBJP_cXformP(&bnd, box, act, x);
-                            ColGather_GatherWrapper(s, src, &bnd);
+                            cCollisionModel_GetNearFaces_cCollisionFaceCollector_cBoxR(s, src, &bnd);
                         }
                     } else {
-                        if ((unsigned char)Sphere_Overlaps(cCollisionModel_BoundingSphere_LocalSpace(s), e0) && GameObject_IsCollisionEnabled(act)
-                            && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
-                            ColGather_GatherWrapper(s, src, box);
+                        if ((unsigned char)cSphere_Intersects(cCollisionModel_BoundingSphere_LocalSpace(s), e0) && cGOBJ_IsActive(act)
+                            && cArray_FixedCapacity_cGOBJPtr_2_Find(&self->list, &act) == cArray_FixedCapacity_cGOBJPtr_2_End(&self->list)) {
+                            cCollisionModel_GetNearFaces_cCollisionFaceCollector_cBoxR(s, src, box);
                         }
                     }
                 }
@@ -245,11 +245,11 @@ void Collision_GatherNode(Gath* self, Src* src, Actor* node, Bnd* box, Sph* e0)
             {
                 void* c2 = act->Children();
                 if (c2 != 0) {
-                    PtrVec_Begin(&it1, c2);
-                    PtrVec_End(&it2, c2);
+                    cArray_cGOBJPtr_Begin(&it1, c2);
+                    cArray_cGOBJPtr_End(&it2, c2);
                     while (cArray_cGOBJPtr_Iterator_opNe(&it1, &it2)) {
-                        Collision_GatherNode(self, src, *cArray_cGOBJPtr_Iterator_opMul(&it1), box, e0);
-                        Iter_Advance4(&it1);
+                        cCollisionModelList_CollectFaces_cCollisionFaceCollectorR_cGOBJP_cBoxR_cSphereR(self, src, *cArray_cGOBJPtr_Iterator_opMul(&it1), box, e0);
+                        cArray_cGOBJPtr_Iterator_opInc(&it1);
                     }
                 }
             }

@@ -29,8 +29,8 @@ int cArray_tRankInfo_PushBackActual(Vec36* v, Elem36* value) {
 typedef struct { int a; int index; int b; int c; char name[16]; int key; } R2EB00;
 extern char* strncpy(char* d, const char* s, unsigned int n);
 extern int sprintf(char* buf, const char* fmt, ...);
-extern int Loc_FindKeyThunk(char* key);
-R2EB00* Awards_FormatRankTitle(R2EB00* r, int a, int b, int c, int index, const char* name)
+extern int nGlobalization_GetStringIndex(char* key);
+R2EB00* cAgentData_tRankInfo_ctor(R2EB00* r, int a, int b, int c, int index, const char* name)
 {
     char buf[16];
     r->a = a;
@@ -42,7 +42,7 @@ R2EB00* Awards_FormatRankTitle(R2EB00* r, int a, int b, int c, int index, const 
     else
         r->name[0] = 0;
     sprintf(buf, "S_RANK_%2.2d", r->index + 1);
-    r->key = Loc_FindKeyThunk(buf);
+    r->key = nGlobalization_GetStringIndex(buf);
     return r;
 }
 #pragma pop /* merge_units */

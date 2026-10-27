@@ -3,7 +3,7 @@
 /* Actor_FireRespawnTimer: in game state 15, starts (or, while the screen
  * fader is idle, cancels) the respawn fade for the actor and queues the
  * timed respawn event (vtable D_004DA970). Event allocation as in
- * SoundMgr_Pause. */
+ * cGameSound_PauseMusic. */
 struct Ghost_A130 { char pad0[0x34]; unsigned char b34; };
 struct Actor_A130 {
     char pad0[0x14];
@@ -30,12 +30,12 @@ extern char D_004D9DE0[];
 extern void * const D_004DA970[];
 void* GetSceneManager(void);
 Zone_A130* cSceneManager_GetSceneBelongingTo(void* a, int id);
-int Zone_IsReady(void* z);
-void ActorFader_Start(Fader_A130* f, float t, int on);
+int nActivation_IsActivationLoaded(void* z);
+void cScreenFader_StartFade(Fader_A130* f, float t, int on);
 void ScreenFx_Start(void* s, unsigned char active, float x, float y, float z, float w);
 void Actor_Ignite(Actor_A130* a, unsigned char on, void* obj, unsigned char a3, int quiet, float f);
-void* Mem_Alloc(int, int, const char*, int);
-void EventQueue_Admit(Ev_A130*);
+void* cMemMan_Allocate(int, int, const char*, int);
+void nCallback_SetCallback(Ev_A130*);
 void Actor_FireRespawnTimer(Self_A130* self);
 char D_0049ED68[] = "human.cc";
 char D_0049ED78[] = "human.cc";
@@ -66,29 +66,29 @@ extern "C" void Actor_FireRespawnTimer(Self_A130* self)
         return;
     z = cSceneManager_GetSceneBelongingTo(GetSceneManager(), g_LocalPlayer->zoneId);
     if (!self->started) {
-        if (Zone_IsReady(z->zone)) {
+        if (nActivation_IsActivationLoaded(z->zone)) {
             Ev_A130* e;
-            ActorFader_Start(g_Fader, 1.0f, 1);
+            cScreenFader_StartFade(g_Fader, 1.0f, 1);
             ScreenFx_Start(g_VisionFxMan, 1, 0.0f, 0.0f, 0.0f, 0.0f);
             SetRespawning(self->actor, 1);
             Actor_Ignite(self->actor, 0, 0, 0, 0, -1.0f);
             self->actor->b3269 = 0;
             {
                 AllocGuard g;
-                e = (Ev_A130*)Mem_Alloc(0, 0x14, D_0049ED88, 0x3DC3);
+                e = (Ev_A130*)cMemMan_Allocate(0, 0x14, D_0049ED88, 0x3DC3);
             }
             if (e)
                 InitEv(e, self->actor, 3000, 1);
-            EventQueue_Admit(e);
+            nCallback_SetCallback(e);
         } else {
             Ev_A130* e;
             {
                 AllocGuard g;
-                e = (Ev_A130*)Mem_Alloc(0, 0x14, D_0049ED78, 0x3DC7);
+                e = (Ev_A130*)cMemMan_Allocate(0, 0x14, D_0049ED78, 0x3DC7);
             }
             if (e)
                 InitEv(e, self->actor, 1000, 0);
-            EventQueue_Admit(e);
+            nCallback_SetCallback(e);
             SetRespawning(self->actor, 1);
         }
     } else if (self->started) {
@@ -98,11 +98,11 @@ extern "C" void Actor_FireRespawnTimer(Self_A130* self)
             Ev_A130* e;
             {
                 AllocGuard g;
-                e = (Ev_A130*)Mem_Alloc(0, 0x14, D_0049ED68, 0x3DD2);
+                e = (Ev_A130*)cMemMan_Allocate(0, 0x14, D_0049ED68, 0x3DD2);
             }
             if (e)
                 InitEv(e, self->actor, 1000, 1);
-            EventQueue_Admit(e);
+            nCallback_SetCallback(e);
         }
     }
 }

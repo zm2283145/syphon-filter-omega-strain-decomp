@@ -1,7 +1,7 @@
 #pragma cplusplus on
-/* SoundMgr_TransitionMusic: fades out the playing music slot(s) of a type and
+/* cGameSound_StopVAG: fades out the playing music slot(s) of a type and
  * queues a fade event that starts `next` when done (transition record 0 at
- * D_004F2CD0). Shape follows SoundMgr_Pause (gameSound_1C7D80.c). */
+ * D_004F2CD0). Shape follows cGameSound_PauseMusic (gameSound_1C7D80.c). */
 #include "alloc_guard.h"
 
 struct Slot_83A0 {
@@ -16,13 +16,13 @@ extern Trans_83A0 D_004F2CD0[2];
 extern char D_0049F4A0[];
 extern char D_004D9DE0[];
 extern void * const D_004DAC90[];
-void* Mem_Alloc(int, int, char*, int);
-void EventQueue_Admit(SndEv_83A0*);
+void* cMemMan_Allocate(int, int, char*, int);
+void nCallback_SetCallback(SndEv_83A0*);
 void snd_AutoVol(int, int, int, int);
 int String_CompareNoCase(const char*, const char*);
 }
 
-extern "C" void SoundMgr_TransitionMusic(Ent_83A0* self, signed char type, Slot_83A0* next, unsigned char mode)
+extern "C" void cGameSound_StopVAG(Ent_83A0* self, signed char type, Slot_83A0* next, unsigned char mode)
 {
     Slot_83A0* pending;
     Trans_83A0* rec;
@@ -60,7 +60,7 @@ extern "C" void SoundMgr_TransitionMusic(Ent_83A0* self, signed char type, Slot_
                 rec->to = 0;
                 {
                     AllocGuard g;
-                    e = (SndEv_83A0*)Mem_Alloc(0, 0x10, D_0049F4A0, 0x4C4);
+                    e = (SndEv_83A0*)cMemMan_Allocate(0, 0x10, D_0049F4A0, 0x4C4);
                 }
                 if (e) {
                     e->vt = D_004D9DE0;
@@ -71,7 +71,7 @@ extern "C" void SoundMgr_TransitionMusic(Ent_83A0* self, signed char type, Slot_
                     e->rec = rec;
                     e->rec->active = 1;
                 }
-                EventQueue_Admit(e);
+                nCallback_SetCallback(e);
             } else {
                 s->state = 0;
             }
@@ -83,7 +83,7 @@ extern "C" void SoundMgr_TransitionMusic(Ent_83A0* self, signed char type, Slot_
                 rec->to = pending;
                 {
                     AllocGuard g;
-                    e = (SndEv_83A0*)Mem_Alloc(0, 0x10, D_0049F4A0, 0x4DA);
+                    e = (SndEv_83A0*)cMemMan_Allocate(0, 0x10, D_0049F4A0, 0x4DA);
                 }
                 if (e) {
                     e->vt = D_004D9DE0;
@@ -94,7 +94,7 @@ extern "C" void SoundMgr_TransitionMusic(Ent_83A0* self, signed char type, Slot_
                     e->rec = rec;
                     e->rec->active = 1;
                 }
-                EventQueue_Admit(e);
+                nCallback_SetCallback(e);
                 started = true;
                 pending = 0;
             } else {

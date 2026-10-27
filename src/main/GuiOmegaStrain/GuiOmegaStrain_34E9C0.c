@@ -31,7 +31,7 @@ extern int strcmp(const char* a, const char* b);
 /* "GuiOmegaStrain" */
 
 /* GuiOmegaStrain type check: true when name equals the class name "GuiOmegaStrain". */
-int GuiOmegaStrain_IsType(void* self, const char* name) {
+int GuiOmegaStrain_IsClass(void* self, const char* name) {
     return strcmp("GuiOmegaStrain", name) == 0;
 }
 #pragma pop /* merge_units */
@@ -44,16 +44,16 @@ typedef struct { int a0; int count; E34EA00* data; unsigned char aC; } L34EA00;
 extern char g_Game[];
 extern void func_00296F20(L34EA00* l);
 extern void std_vector_deleter_tRequirementInfo_dtor(L34EA00* l, int flags);
-extern void* Agent_GetSelected(void* list, int idx);
-extern void AgentData_GetAwardItems(void* ag, int a, int b, L34EA00* l);
-extern void GuiPersonnelScreen_ShowItem(void* o, int i, int v);
-void GuiOmegaStrain_Show(void* o, int idx)
+extern void* cGameSystem_GetAgentData(void* list, int idx);
+extern void cAgentData_GetRequirements(void* ag, int a, int b, L34EA00* l);
+extern void GuiPersonnelScreen_SetupPreviewWidgets(void* o, int i, int v);
+void GuiOmegaStrain_ItemGainFocus(void* o, int idx)
 {
     L34EA00 l;
     func_00296F20(&l);
     l.aC = 1;
-    AgentData_GetAwardItems(Agent_GetSelected(g_Game, -1), 4, 0, &l);
-    if (idx >= 0 && idx < l.count) GuiPersonnelScreen_ShowItem(o, idx, ((E34EA00*)((char*)l.data + idx * 28))->a18);
+    cAgentData_GetRequirements(cGameSystem_GetAgentData(g_Game, -1), 4, 0, &l);
+    if (idx >= 0 && idx < l.count) GuiPersonnelScreen_SetupPreviewWidgets(o, idx, ((E34EA00*)((char*)l.data + idx * 28))->a18);
     std_vector_deleter_tRequirementInfo_dtor(&l, 0);
 }
 #pragma pop /* merge_units */

@@ -50,8 +50,8 @@ extern size_t strlen(const char *);
 #define fflush fflush
 #define __sinit __sinit
 #define __sfvwrite __sfvwrite
-#define __sprint Newlib_Sprint
-#define __sbprintf Newlib_Sbprintf
+#define __sprint Newlib_Sprint_void_2
+#define __sbprintf Newlib_Sbprintf_void_2
 #define vfprintf vfprintf
 #define __swsetup __swsetup
 #define _mbtowc_r _mbtowc_r

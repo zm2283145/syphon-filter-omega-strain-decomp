@@ -9,20 +9,20 @@ typedef struct Msg {
 typedef struct { char pad[0x3524]; void* owner; } Player;
 extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
-extern int WeaponInv_AllowsAction(void* owner);
-extern void Event_Construct(Msg* msg, void* name);
-extern void Event_Send(Msg* msg, void* target, int flags);
+extern int cWeapon_CanReload(void* owner);
+extern void cMessage_ctor_cMessageNameR(Msg* msg, void* name);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg* msg, void* target, int flags);
 extern void cMessage_dtor(Msg* msg, int flags);
 /* When enabled and the owner is valid, sends the player a timed message (60). */
 void cPlayerControls_HandleReloadButtonPress(void* self, int enable, Player* p)
 {
     Msg msg;
-    if (enable && WeaponInv_AllowsAction(p->owner)) {
-        Event_Construct(&msg, g_ActorActionMsgClass);
+    if (enable && cWeapon_CanReload(p->owner)) {
+        cMessage_ctor_cMessageNameR(&msg, g_ActorActionMsgClass);
         msg.vtable = D_004E0840;
         msg.value = 0x3C;
         msg.flag = 0;
-        Event_Send(&msg, p, 0);
+        QueueMessage_cMessageR_cSystemP_int(&msg, p, 0);
         msg.vtable = D_004E0840;
         cMessage_dtor(&msg, 0);
     }

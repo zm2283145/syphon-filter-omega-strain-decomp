@@ -16,7 +16,7 @@
  */
 
 
-int* MotionGroup_CopyPair(int* dst, int* src) {
+int* cSkaPlaybackGroupId_ctor_cSkaPlaybackGroupIdR(int* dst, int* src) {
     dst[0] = src[0];
     dst[1] = src[1];
     return dst;
@@ -31,7 +31,7 @@ static inline void merge_flush_func_00198AD0(void) {}
 typedef struct { char pad[0x40]; int key; } MotionGroup;
 typedef struct { MotionGroup* group; int key; } MotionKey;
 /* Build a key handle: the group is set only when its key is unassigned (-1). */
-MotionKey* MotionGroup_GetKey(MotionKey* out, MotionGroup* group)
+MotionKey* cSkaPlaybackGroupId_ctor_cSkaAnimR(MotionKey* out, MotionGroup* group)
 {
     out->group = group->key == -1 ? group : 0;
     out->key = group->key;

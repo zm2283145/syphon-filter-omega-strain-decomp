@@ -14,7 +14,7 @@ struct List22D650 {
 };
 
 extern "C" {
-int Name_Compare48(const char* a, const char* b, int n);
+int Libc_Memcmp(const char* a, const char* b, int n);
 void std_list_deleter_LosReqElem_erase(Node22D650** result, List22D650* list, Node22D650** first, Node22D650** last);
 }
 
@@ -24,7 +24,7 @@ struct NamePred22D650 {
 };
 
 static inline bool NameEq22D650(Node22D650* n, const char* name) {
-    bool r = !Name_Compare48(n->name, name, 16);
+    bool r = !Libc_Memcmp(n->name, name, 16);
     return r;
 }
 

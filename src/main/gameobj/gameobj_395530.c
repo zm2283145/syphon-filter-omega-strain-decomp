@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_00395530 */
 #pragma push /* merge_units */
@@ -33,9 +33,9 @@ struct V4_395530 {
 extern "C" {
 extern char D_004BC430[];
 extern char D_004BC530[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 void* cVU1Model_ctor(void* p);
-void* Resource_Construct(void* p);
+void* cFileMan_ctor_void(void* p);
 }
 inline void* operator new(unsigned int, void* p) { return p; }
 static inline const V4_395530& IdentR_395530(void) { V4_395530 l0; V4_395530* q1 = &l0; asm { sqc2 vf0, 0x0(q1) } return l0; }
@@ -67,9 +67,9 @@ static inline void* NewA_395530(int line)
     void* p;
     {
         AllocGuard g;
-        p = Mem_Alloc(0, 0x9C, D_004BC430, line);
+        p = cMemMan_Allocate(0, 0x9C, D_004BC430, line);
     }
-    if (p) p = Resource_Construct(p);
+    if (p) p = cFileMan_ctor_void(p);
     return p;
 }
 extern "C" void cVUM_GOBJ_CreateModelData(S_395530* self_, S_395530* other_)
@@ -81,14 +81,14 @@ extern "C" void cVUM_GOBJ_CreateModelData(S_395530* self_, S_395530* other_)
     self_->i64 = other;
     {
         AllocGuard g;
-        p = Mem_Alloc(0, 0x30, D_004BC430, 0x99);
+        p = cMemMan_Allocate(0, 0x30, D_004BC430, 0x99);
     }
     if (p) p = cVU1Model_ctor(p);
     self->p68 = p;
     if (self->p70 == 0) {
         {
             AllocGuard g;
-            p = Mem_Alloc(0, 0x30, D_004BC530, 0x4FD);
+            p = cMemMan_Allocate(0, 0x30, D_004BC530, 0x4FD);
         }
         p = new (p) Coll_395530;
         self->p70 = (Coll_395530*)p;
@@ -184,13 +184,13 @@ extern "C" {
 extern char D_004DF970[];
 void cGOBJ_dtor(void* self, int flag);
 void cHogFile_dtor(void* p, int flag);
-void FileMan_Release(void* p, int flag);
+void cFileMan_dtor(void* p, int flag);
 void cVU1Model_dtor(void* p, int flag);
 void cCollisionModelMaster_UnLoad(void* p);
 void operator_delete(void* p);
 }
-static inline void DelA_00395950(void* p, int line) { AllocGuard g; FileMan_Release(p, -1); Mem_Free(0, p, D_004BC430, line); }
-static inline void DelB_00395950(void* p, int line) { AllocGuard g; cVU1Model_dtor(p, -1); Mem_Free(0, p, D_004BC430, line); }
+static inline void DelA_00395950(void* p, int line) { AllocGuard g; cFileMan_dtor(p, -1); cMemMan_Deallocate(0, p, D_004BC430, line); }
+static inline void DelB_00395950(void* p, int line) { AllocGuard g; cVU1Model_dtor(p, -1); cMemMan_Deallocate(0, p, D_004BC430, line); }
 struct S_00395950 {
     void* vt; char pad4[0x5C]; int i60; int i64; void* p68; char pad6c[4]; void* p70; char m74[0x1E0 - 0x74];
     void* p1E0; void* p1E4; void* p1E8; void* p1EC; char pad1f0[2]; unsigned char b1F2;
@@ -207,7 +207,7 @@ extern "C" S_00395950* cVUM_GOBJ_dtor(S_00395950* self, short flag)
         }
         if (self->i60 == 0) {
             DelB_00395950(self->p68, 0x44);
-            { void* q = self->p70; if (q) { { AllocGuard g; if (q) cCollisionModelMaster_UnLoad(q); Mem_Free(0, q, "collision.hh", 0x506); } self->p70 = 0; } }
+            { void* q = self->p70; if (q) { { AllocGuard g; if (q) cCollisionModelMaster_UnLoad(q); cMemMan_Deallocate(0, q, "collision.hh", 0x506); } self->p70 = 0; } }
             if (self->p1E0) DelA_00395950(self->p1E0, 0x49);
             DelA_00395950(self->p1E8, 0x4B);
             DelA_00395950(self->p1E4, 0x4C);

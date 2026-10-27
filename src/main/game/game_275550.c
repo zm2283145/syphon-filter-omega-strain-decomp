@@ -91,14 +91,14 @@ extern G7_E275 D_004FFE60[];
 #endif /* merge_units */
 #define D_004FFE60 ((G7_E275*)&D_004FFE60) /* merge_units */
 
-extern void BulletPool_UpdateAll(G7_E275* e, float f);
-void BulletPool_Update(float f)
+extern void cBullet_Move(G7_E275* e, float f);
+void cBulletManager_NextFrame(float f)
 {
     int i;
     G7_E275* e = D_004FFE60;
     for (i = 0; i < 50; i++, e++) {
         if (e->active) {
-            BulletPool_UpdateAll(e, f);
+            cBullet_Move(e, f);
         }
     }
 }

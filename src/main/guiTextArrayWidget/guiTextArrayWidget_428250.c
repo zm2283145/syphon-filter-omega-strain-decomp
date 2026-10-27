@@ -10,8 +10,8 @@
 typedef struct { char unused; } Alloc0041BCE0; /* empty allocator object passed by value */
 typedef struct { unsigned long long isLong : 1; unsigned long long size : 7; } Short0041BCE0;
 typedef union { unsigned int flags; Short0041BCE0 s; struct { int f0; int length; char* data; } l; } Str0041BCE0;
-extern void String_Replace(Str0041BCE0* str, int pos, int count, int a, int b, Alloc0041BCE0 alloc);
-/* Forward (0, size) of the string to String_Replace. */
+extern void std_basic_string_char_char_traits_char_do_replace(Str0041BCE0* str, int pos, int count, int a, int b, Alloc0041BCE0 alloc);
+/* Forward (0, size) of the string to std_basic_string_char_char_traits_char_do_replace. */
 void func_00428250(Str0041BCE0* s, int a, int b)
 {
     Alloc0041BCE0 alloc;
@@ -21,7 +21,7 @@ void func_00428250(Str0041BCE0* s, int a, int b)
     } else {
         len = (unsigned char)s->s.size;
     }
-    String_Replace(s, 0, len, a, b, alloc);
+    std_basic_string_char_char_traits_char_do_replace(s, 0, len, a, b, alloc);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00428250 */
@@ -77,7 +77,7 @@ extern "C" TextArrayCell* std_msl_copy_tTextElement_copy(TextArrayCell* first, T
 #include "tstr_types.h"
 
 extern "C" {
-void String_CopyCtor(void* d, const void* s);
+void std_basic_string_char_char_traits_char_ctor_basicstringR(void* d, const void* s);
 extern char D_004BF830[];
 extern char D_004BF878[];
 void std_fill_n_tTextElement_int_fill_n(TextArrayCell* d, unsigned int n, const TextArrayCell* v);
@@ -98,7 +98,7 @@ void std_vector_deleter_tTextElement_dtor(CellVec* v, int flag);
 static inline void construct(TextArrayCell* p, const TextArrayCell* v)
 {
     if (p) {
-        String_CopyCtor(p, v);
+        std_basic_string_char_char_traits_char_ctor_basicstringR(p, v);
         p->flags = v->flags;
         p->attribute = *(const signed char*)&v->attribute;
         p->text = v->text;

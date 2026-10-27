@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose04_types.h"
 
-void IeDraw_SetPerspective(Unk3ED240* self) {
+void cXViewport_SetPersp(Unk3ED240* self) {
     self->unk106 = 1;
     self->unk104 = 0;
 }

@@ -9,14 +9,14 @@
 #include "loose04_types.h"
 #include "guiManager.h"
 
-extern GuiWidget* GuiManager_LoadNode(GuiScreenList* self, char** cursor, GuiWidget* existing);
-extern void GuiManager_AddWidget(GuiScreenList* self, GuiWidget* widget);
+extern GuiWidget* GuiManager_LoadWidget(GuiScreenList* self, char** cursor, GuiWidget* existing);
+extern void GuiManager_Add(GuiScreenList* self, GuiWidget* widget);
 
 /* Read a widget tree at *cursor and add the root when creation succeeds. */
-GuiWidget* GuiManager_ReadTree(GuiScreenList* self, char** cursor, GuiWidget* existing) {
-    GuiWidget* widget = GuiManager_LoadNode(self, cursor, existing);
+GuiWidget* GuiManager_ConstructWidget_cStreamingBufferR_GuiWidgetP(GuiScreenList* self, char** cursor, GuiWidget* existing) {
+    GuiWidget* widget = GuiManager_LoadWidget(self, cursor, existing);
     if (widget != 0) {
-        GuiManager_AddWidget(self, widget);
+        GuiManager_Add(self, widget);
     }
     return widget;
 }
@@ -28,29 +28,29 @@ GuiWidget* GuiManager_ReadTree(GuiScreenList* self, char** cursor, GuiWidget* ex
 #include "types.h"
 #include "guiManager.h"
 
-extern void FileMan_FindMember(void* f);             /* file: begin access */
-extern char* FileMan_ReadData(void* f);
+extern void cFileMan_Open(void* f);             /* file: begin access */
+extern char* cFileMan_Read_void(void* f);
 extern void cFileMan_Close(void* f);             /* file: end access */
 
 static inline char Rd8_419020(char* volatile* c) { char* t = *c; char v = *t; *c = t + 1; return v; }
 
 /* Check the "GUI" magic of an opened .GUI file and load its widget tree. */
-GuiWidget* GuiManager_LoadGuiFile(GuiScreenList* self, void* file, GuiWidget* existing)
+GuiWidget* GuiManager_ConstructWidgetFromFile(GuiScreenList* self, void* file, GuiWidget* existing)
 {
     char* volatile p;
     char m0;
     char m1;
     char m2;
     GuiWidget* root;
-    FileMan_FindMember(file);
-    p = FileMan_ReadData(file);
+    cFileMan_Open(file);
+    p = cFileMan_Read_void(file);
     m0 = Rd8_419020(&p);
     m1 = Rd8_419020(&p);
     m2 = Rd8_419020(&p);
     if (m0 != 'G' || m1 != 'U' || m2 != 'I') return 0;
     p = (char*)(((int)p + 3) & ~3);
     p += GUI_FILE_HEADER_SKIP;
-    root = GuiManager_ReadTree(self, (char**)&p, existing);
+    root = GuiManager_ConstructWidget_cStreamingBufferR_GuiWidgetP(self, (char**)&p, existing);
     cFileMan_Close(file);
     return root;
 }

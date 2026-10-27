@@ -6,7 +6,7 @@ Word* cArray_cAnimatorPtr_Iterator_ctor(Word* dst, Word* src);
 void std_vector_cAnimatorPtr_end_void(Word* out, PtrVec* v);
 void std_vector_cAnimatorPtr_pointer2iterator_cAnimatorPPR(Word* out, PtrVec* self, Word* src);
 int std_vector_imp_cAnimatorPtr_1_begin_void(PtrVec* v);
-void IeElement_EvaluateAt(void* item, float t);
+void viBufGetTs(void* item, float t);
 }
 
 #pragma bool off
@@ -20,13 +20,13 @@ struct Holder {
     PtrVec items;
 };
 
-extern "C" void IeTrack_EvaluateGroup(Holder* self, float t)
+extern "C" void cKfAnimationContainer_Update(Holder* self, float t)
 {
     Word end;
     Word it;
     void** p;
     GetBegin(&it, &self->items);
     for (p = (void**)it.value; GetEnd(&end, &self->items), Ne((int)p, end.value); p++) {
-        IeElement_EvaluateAt(*p, t);
+        viBufGetTs(*p, t);
     }
 }

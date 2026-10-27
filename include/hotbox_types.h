@@ -36,7 +36,7 @@ typedef struct cHotboxMsg {
     void* who;             /* 0x30: game object that triggered the message */
 } cHotboxMsg;
 
-/* Receiver-derived object built by HotboxTracker_Construct (class table D_004D9960). */
+/* Receiver-derived object built by cHotboxMan_ctor (class table D_004D9960). */
 typedef struct HotboxReceiver {
     void* vtable;          /* 0x00 */
     char pad04[0x20 - 0x04];

@@ -6,6 +6,6 @@
 #include "npc_types.h"
 
 /* Returns the word at +0x30 (the owning actor if this is a cNPC). */
-NpcActor* AiController_GetActor(cNPC* self) {
+NpcActor* cNPC_Human(cNPC* self) {
     return self->actor;
 }

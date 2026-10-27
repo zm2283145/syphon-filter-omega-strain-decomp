@@ -22,26 +22,26 @@ DEFINE_STRING_INT_PAIR_COPY_CTOR(std_pair_cString_cFontPtr_ctor)
 
 extern "C" {
 extern "C" void GuiTextEditWidget_GetClassName();
-extern "C" void GuiTextEditWidget_IsType();
-extern "C" void GuiTextEditWidget_Draw();
-extern "C" void GuiTextEditWidget_Update();
+extern "C" void GuiTextEditWidget_IsClass();
+extern "C" void GuiTextEditWidget_onRender();
+extern "C" void GuiTextEditWidget_onAdvanceTime();
 extern "C" void GuiTextEditWidget_UpdateText();
-extern "C" void GuiTextEditWidget_OnInput();
+extern "C" void GuiTextEditWidget_onInput();
 extern "C" void GuiTextEditWidget_Load();
-extern "C" void GuiTextEditWidget_OnWake();
-extern "C" void GuiTextWidget_OnSleep();
-extern "C" void GuiWidget_FocusPrev();
-extern "C" void GuiWidget_FocusNext();
-extern "C" void GuiWidget_FocusLast();
-extern "C" void GuiWidget_FocusFirst();
-extern "C" void GuiWidget_BubbleActivate();
-extern "C" void GuiWidget_BubbleType1();
-extern "C" void GuiWidget_BubbleType0();
-extern "C" void GuiWidget_OnEvent();
-extern "C" void GuiWidget_ClearFlag4();
-extern "C" void GuiWidget_SetFlag4();
-extern "C" void GuiWidget_Deinit();
-extern "C" void GuiWidget_Init();
+extern "C" void GuiTextEditWidget_onWake();
+extern "C" void GuiTextWidget_onSleep();
+extern "C" void GuiWidget_FindPrevFocus();
+extern "C" void GuiWidget_FindNextFocus();
+extern "C" void GuiWidget_FindLastFocus();
+extern "C" void GuiWidget_FindFirstFocus();
+extern "C" void GuiWidget_onAction();
+extern "C" void GuiWidget_onLoseFocus();
+extern "C" void GuiWidget_onGainFocus();
+extern "C" void GuiWidget_onMessage();
+extern "C" void GuiWidget_onDeactivate();
+extern "C" void GuiWidget_onActivate();
+extern "C" void GuiWidget_onRemove();
+extern "C" void GuiWidget_onAdd();
 extern void * const D_004E0A40[];
 void* GuiTextWidget_dtor(void* self, short deleteFlag);
 }
@@ -55,6 +55,6 @@ extern "C" VtableObject* GuiTextEditWidget_dtor(VtableObject* self, short delete
     }
     return self;
 }
-void * const D_004E0A40[24] = { (void*)0x0, (void*)0x0, (void*)GuiTextEditWidget_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextEditWidget_OnWake, (void*)GuiTextWidget_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiTextEditWidget_OnInput, (void*)GuiTextEditWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiTextEditWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiTextEditWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiTextEditWidget_GetClassName, (void*)GuiTextEditWidget_IsType, (void*)GuiTextEditWidget_UpdateText };
+void * const D_004E0A40[24] = { (void*)0x0, (void*)0x0, (void*)GuiTextEditWidget_dtor, (void*)GuiWidget_onAdd, (void*)GuiWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiWidget_onDeactivate, (void*)GuiTextEditWidget_onWake, (void*)GuiTextWidget_onSleep, (void*)GuiWidget_onGainFocus, (void*)GuiWidget_onLoseFocus, (void*)GuiTextEditWidget_onInput, (void*)GuiTextEditWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiTextEditWidget_onAdvanceTime, (void*)GuiWidget_onMessage, (void*)GuiTextEditWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiTextEditWidget_GetClassName, (void*)GuiTextEditWidget_IsClass, (void*)GuiTextEditWidget_UpdateText };
 #pragma pop /* merge_units */
 /* merge_units: end func_0041A060 */

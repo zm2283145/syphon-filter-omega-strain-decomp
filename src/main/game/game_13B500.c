@@ -12,7 +12,7 @@
 
 extern "C" { char D_0049AD10[] = "basic_string: out_of_range"; }
 extern "C" { char D_0049AD30[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE_XD(String_Replace, D_0049AD10, D_0049AD30, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00489BE8, D_00489BF0, Libc_Memmove, String_Assign, String_Dtor)
+DEFINE_STRING_REPLACE_RANGE_XD(std_basic_string_char_char_traits_char_do_replace, D_0049AD10, D_0049AD30, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00489BE8, D_00489BF0, Libc_Memmove, std_basic_string_char_char_traits_char_assign_charP_charP_intP, String_Dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0013B500 */
 
@@ -22,6 +22,6 @@ DEFINE_STRING_REPLACE_RANGE_XD(String_Replace, D_0049AD10, D_0049AD30, D_0049ADE
 #include "string_reserve.h"
 
 extern "C" { char D_0049AD50[] = "basic_string::reserve length_error"; }
-DEFINE_STRING_RESERVE(String_Reserve, D_0049AD50, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
+DEFINE_STRING_RESERVE(std_basic_string_char_char_traits_char_reserve, D_0049AD50, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_0013B970 */

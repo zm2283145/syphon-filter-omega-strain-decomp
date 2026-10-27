@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 
 /* merge_units: begin func_003941A0 */
 #pragma push /* merge_units */
@@ -23,24 +23,24 @@ int Mem_Free();
 
 
 extern "C" {
-int ParticleInst_Kill(...);                            
-int Object_Deactivate(...);                         
+int cParticle_dtor(...);                            
+int cGOBJ_Deactivate(...);                         
 extern unsigned char g_ProfileLockEnabled;
 }
 #pragma opt_common_subs off
-extern "C" void ParticleGob_OnAbsent(char * arg0, int arg1) {
+extern "C" void cPARTICLE_GOBJ_Deactivate(char * arg0, int arg1) {
     int temp_s2;
 
     temp_s2 = F_(arg0, 0x64, int);
     if (temp_s2 != 0) {
         {
             AllocGuard g;
-        ParticleInst_Kill(temp_s2, -1);
-        Mem_Free(0, temp_s2, "gameobj.cc", 0x286);
+        cParticle_dtor(temp_s2, -1);
+        cMemMan_Deallocate(0, temp_s2, "gameobj.cc", 0x286);
         }
         F_(arg0, 0x64, int) = 0;
     }
-    Object_Deactivate(arg0, arg1);
+    cGOBJ_Deactivate(arg0, arg1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003941A0(void) {}
@@ -85,28 +85,28 @@ struct Self394270 {
 
 extern "C" {
 extern char D_004BC430[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-Tracer394270* Tracer_Create(void* p, int id, void* pos, float scale);
-void Object_Activate(Self394270* self, int arg);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+Tracer394270* cParticle_ctor(void* p, int id, void* pos, float scale);
+void cGOBJ_Activate(Self394270* self, int arg);
 }
 
-extern "C" void ParticleGob_OnPresent(Self394270* self, int arg)
+extern "C" void cPARTICLE_GOBJ_Activate(Self394270* self, int arg)
 {
     if (self->id != -1 && self->tracer == 0) {
         void* p;
         {
             AllocGuard g;
-            p = Mem_Alloc(0, 0x70, D_004BC430, 0x273);
+            p = cMemMan_Allocate(0, 0x70, D_004BC430, 0x273);
         }
         if (p) {
             OwnerData394270* o = self->owner;
             if (o->dirty) ((Owner394270*)o)->Update();
-            p = Tracer_Create(p, self->id, o->pos, 1.0f);
+            p = cParticle_ctor(p, self->id, o->pos, 1.0f);
         }
         self->tracer = (Tracer394270*)p;
         if (self->tracer) self->tracer->width = self->width;
     }
-    Object_Activate(self, arg);
+    cGOBJ_Activate(self, arg);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00394270(void) {}
@@ -129,13 +129,13 @@ typedef struct {
     char pad68[8];
     float scale;
 } Obj;
-extern Box *ParticleInst_ComputeBounds(void *);
+extern Box *cParticle_GetBBox(void *);
 extern signed char D_0053B4C0;
 extern Box D_0053B4D0;
-Box *ParticleGob_GetBounds(Obj *o)
+Box *cPARTICLE_GOBJ_GetBBox(Obj *o)
 {
     if (o->mdl != 0) {
-    if (o->scale == 1.0f) return ParticleInst_ComputeBounds(o->mdl);
+    if (o->scale == 1.0f) return cParticle_GetBBox(o->mdl);
     if (!D_0053B4C0) {
         D_0053B4D0.min.x = 3.4028235e38f;
         D_0053B4D0.min.y = 3.4028235e38f;
@@ -147,12 +147,12 @@ Box *ParticleGob_GetBounds(Obj *o)
         D_0053B4D0.max.w = 1.0f;
         D_0053B4C0 = 1;
     }
-    Q43(&D_0053B4D0.min, &ParticleInst_ComputeBounds(o->mdl)->min);
-    D_0053B4D0.min.x = o->scale * ParticleInst_ComputeBounds(o->mdl)->min.x;
-    D_0053B4D0.min.y = o->scale * ParticleInst_ComputeBounds(o->mdl)->min.y;
-    Q43(&D_0053B4D0.max, &ParticleInst_ComputeBounds(o->mdl)->max); { void* xx = &D_0053B4D0.max; /* dead on purpose: retail keeps this addiu */ }
-    D_0053B4D0.max.x = o->scale * ParticleInst_ComputeBounds(o->mdl)->max.x;
-    D_0053B4D0.max.y = o->scale * ParticleInst_ComputeBounds(o->mdl)->max.y;
+    Q43(&D_0053B4D0.min, &cParticle_GetBBox(o->mdl)->min);
+    D_0053B4D0.min.x = o->scale * cParticle_GetBBox(o->mdl)->min.x;
+    D_0053B4D0.min.y = o->scale * cParticle_GetBBox(o->mdl)->min.y;
+    Q43(&D_0053B4D0.max, &cParticle_GetBBox(o->mdl)->max); { void* xx = &D_0053B4D0.max; /* dead on purpose: retail keeps this addiu */ }
+    D_0053B4D0.max.x = o->scale * cParticle_GetBBox(o->mdl)->max.x;
+    D_0053B4D0.max.y = o->scale * cParticle_GetBBox(o->mdl)->max.y;
     return &D_0053B4D0;
     }
     return 0;

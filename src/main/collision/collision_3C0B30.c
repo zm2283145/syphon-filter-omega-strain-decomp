@@ -92,7 +92,7 @@ extern TriData* cCollisionModel_Data_GetFace(void* mesh, int index);
 
 extern void* cCollisionModel_Data_GetVertex(void* mesh, unsigned short vert);
 /* Looks up the three vertex pointers of the triangle referenced by ctx. */
-void ColTri_GetVertices(ColTri* tri, void** v0, void** v1, void** v2, void* ctx)
+void cCollisionModel_GetEdgeVertices(ColTri* tri, void** v0, void** v1, void** v2, void* ctx)
 {
     int i2, i1, i0;
     void* mesh = tri->ref->mesh;

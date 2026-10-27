@@ -181,7 +181,7 @@ struct Xform {
     unsigned char dirty;
     V GetPos() { if (dirty) Update(); const V& p = pos; return p; }
 };
-extern "C" void Xform_Translate(Xform* x, const V* d)
+extern "C" void cXformNode_Translate(Xform* x, const V* d)
 {
     x->SetPos(x->GetPos() += *d);
 }
@@ -256,15 +256,15 @@ void* cXformNode_GetNode_void_2(void* self) {
 /* merge_units: begin func_0036ECF0 */
 #pragma push /* merge_units */
 typedef struct { char pad0[0x50]; unsigned char dirty; char pad1[0x4F]; void* parent; } XfNode;
-extern void Xform_EvalAncestors(void* p);
-extern void Xform_ComputeWorld(XfNode* x);
-void Xform_RefreshDirty(XfNode* x)
+extern void cXformNode_UpdateAncestorsAndSelf(void* p);
+extern void cXformNode_UpdateSelf(XfNode* x);
+void cXformNode_UpdateTreeNode(XfNode* x)
 {
     if (x->dirty) {
         if (x->parent) {
-            Xform_EvalAncestors(x->parent);
+            cXformNode_UpdateAncestorsAndSelf(x->parent);
         }
-        Xform_ComputeWorld(x);
+        cXformNode_UpdateSelf(x);
         x->dirty = 0;
     }
 }

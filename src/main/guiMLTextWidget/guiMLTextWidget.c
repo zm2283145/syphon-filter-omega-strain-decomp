@@ -16,28 +16,28 @@ char *strncpy(void *, const void *, int);
 /* List iterator returned by value (begin/end). */
 struct LineIter { MLTextLine* node; };
 extern "C" {
-void Mem_Free(int, void*, char*, int);
-void ObjectList_EraseRange(int*, MLTextLineList*, MLTextLine**, MLTextLine**);
-LineIter List_Begin(MLTextLineList*);                 /* begin() */
+void cMemMan_Deallocate(int, void*, char*, int);
+void std_list_deleter_voidPtr_erase_listdeleter_listdeleter(int*, MLTextLineList*, MLTextLine**, MLTextLine**);
+LineIter std_list_deleter_voidPtr_begin_void(MLTextLineList*);                 /* begin() */
 LineIter std_list_charPtr_end(MLTextLineList*);                 /* end() */
 void std_list_charPtr_generic_iterator_ctor(MLTextLine**, const LineIter&);       /* iterator copy */
 void cLListIterator_charPtr_ctor(MLTextLine**, const LineIter&);       /* iterator copy */
-void GuiScrollBarWidget_SetRange(void*, int, int, int, int);           /* scroll bar: set position/range */
+void GuiScrollBarWidget_SetValues(void*, int, int, int, int);           /* scroll bar: set position/range */
 }
 /* Free every line's text, erase all nodes, scroll to the top. */
-extern "C" void MLTextWidget_Clear(MLTextWidget* self) {
+extern "C" void GuiMLTextWidget_Clear(MLTextWidget* self) {
     {
         MLTextLine* end;
         {
             MLTextLine* n;
             MLTextLine* it;
-            std_list_charPtr_generic_iterator_ctor(&it, List_Begin(&self->lines));
+            std_list_charPtr_generic_iterator_ctor(&it, std_list_deleter_voidPtr_begin_void(&self->lines));
             n = it;
             while ((cLListIterator_charPtr_ctor(&end, std_list_charPtr_end(&self->lines)), n != end)) {
                 void* text = n->text;
                 {
                     AllocGuard g;
-                    Mem_Free(0, text, "guiMLTextWidget.cc", 0xCB);
+                    cMemMan_Deallocate(0, text, "guiMLTextWidget.cc", 0xCB);
                 }
                 n = n->next;
             }
@@ -48,11 +48,11 @@ extern "C" void MLTextWidget_Clear(MLTextWidget* self) {
             MLTextLine* last;
             last = (MLTextLine*)&self->lines.last; /* sentinel node */
             first = self->lines.first;
-            ObjectList_EraseRange(&res, &self->lines, &first, &last);
+            std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&res, &self->lines, &first, &last);
         }
     }
     self->scrollPos = 0;
-    if (self->scrollBar) GuiScrollBarWidget_SetRange(self->scrollBar, 0, self->scrollPos, 0, self->lines.count - self->visibleLines);
+    if (self->scrollBar) GuiScrollBarWidget_SetValues(self->scrollBar, 0, self->scrollPos, 0, self->lines.count - self->visibleLines);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0043DB80 */
@@ -62,15 +62,15 @@ extern "C" void MLTextWidget_Clear(MLTextWidget* self) {
 #pragma cplusplus on
 extern "C" {
 extern char D_004C0110[]; /* "guiMLTextWidget.cc" */
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 #if 0 /* merge_units */
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 #endif /* merge_units */
-#define Mem_Free(a0, a1, a2, a3) (Mem_Free((a0), (a1), (a2), (a3))) /* merge_units */
+#define cMemMan_Deallocate(a0, a1, a2, a3) (cMemMan_Deallocate((a0), (a1), (a2), (a3))) /* merge_units */
 
-int Font_GetStringWidth(void* font, const char* s, int n);     /* text width in pixels */
-void MLTextLineList_PushBack(MLTextLineList* list, char* const& text);
-void List_Erase(void* res, MLTextLineList* list, MLTextLine* const& it); /* erase */
+int cFont_GetStringWidth(void* font, const char* s, int n);     /* text width in pixels */
+void std_list_charPtr_push_back(MLTextLineList* list, char* const& text);
+void std_list_deleter_voidPtr_erase_listdeleter(void* res, MLTextLineList* list, MLTextLine* const& it); /* erase */
 }
 
 /*
@@ -79,7 +79,7 @@ void List_Erase(void* res, MLTextLineList* list, MLTextLine* const& it); /* eras
  * the colour code in effect; colour codes inside the text update colorIndex.
  * Drops the oldest lines beyond maxLines, then refreshes the scroll bar.
  */
-extern "C" void MLTextWidget_AddText(MLTextWidget* self, char* text)
+extern "C" void GuiMLTextWidget_AddText(MLTextWidget* self, char* text)
 {
     char* cur;
     char* lineStart;
@@ -93,7 +93,7 @@ extern "C" void MLTextWidget_AddText(MLTextWidget* self, char* text)
     width = (int)self->width;
     wrapAt = 0;
     while (*cur) {
-        if (*cur == '\n' || Font_GetStringWidth(self->font, lineStart, cur - lineStart + 1) >= width) {
+        if (*cur == '\n' || cFont_GetStringWidth(self->font, lineStart, cur - lineStart + 1) >= width) {
             if (*cur == '\n') {
                 wrapAt = cur;
                 cur++;
@@ -107,7 +107,7 @@ extern "C" void MLTextWidget_AddText(MLTextWidget* self, char* text)
                 int i;
                 {
                     AllocGuard g;
-                    p = (char*)Mem_Alloc(0, n + 2, D_004C0110, 0x93);
+                    p = (char*)cMemMan_Allocate(0, n + 2, D_004C0110, 0x93);
                 }
                 line = p;
                 strncpy(p + 1, lineStart, n);
@@ -118,7 +118,7 @@ extern "C" void MLTextWidget_AddText(MLTextWidget* self, char* text)
                     if (c >= MLTEXT_COLOR_CODE_FIRST && c < MLTEXT_COLOR_CODE_END)
                         self->colorIndex = c - MLTEXT_COLOR_CODE_FIRST;
                 }
-                MLTextLineList_PushBack(&self->lines, line);
+                std_list_charPtr_push_back(&self->lines, line);
                 lineStart = wrapAt + 1;
                 wrapAt = 0;
             }
@@ -132,30 +132,30 @@ extern "C" void MLTextWidget_AddText(MLTextWidget* self, char* text)
         char* p;
         {
             AllocGuard g;
-            p = (char*)Mem_Alloc(0, n + 1, D_004C0110, 0xB1);
+            p = (char*)cMemMan_Allocate(0, n + 1, D_004C0110, 0xB1);
         }
         tail = p;
         strncpy(p, lineStart, n);
         tail[n] = 0;
-        MLTextLineList_PushBack(&self->lines, tail);
+        std_list_charPtr_push_back(&self->lines, tail);
     }
     if (self->maxLines) {
         while (self->lines.count > self->maxLines) {
             char* s = self->lines.first->text;
             {
                 AllocGuard g;
-                Mem_Free(0, s, D_004C0110, 0xBF);
+                cMemMan_Deallocate(0, s, D_004C0110, 0xBF);
             }
             {
                 int res;
                 MLTextLine* it = self->lines.first;
-                List_Erase(&res, &self->lines, it);
+                std_list_deleter_voidPtr_erase_listdeleter(&res, &self->lines, it);
             }
         }
     }
-    if (self->scrollBar) GuiScrollBarWidget_SetRange(self->scrollBar, 0, self->scrollPos, 0, self->lines.count - self->visibleLines);
+    if (self->scrollBar) GuiScrollBarWidget_SetValues(self->scrollBar, 0, self->scrollPos, 0, self->lines.count - self->visibleLines);
 }
-#undef Mem_Free /* merge_units */
+#undef cMemMan_Deallocate /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043DCE0 */
 
@@ -169,16 +169,16 @@ extern "C" void MLTextWidget_AddText(MLTextWidget* self, char* text)
 
 
 #pragma cplusplus on
-extern "C" Iter* List_InsertBefore(Iter* result, void* list, Iter* pos, int value);
+extern "C" Iter* std_list_deleter_voidPtr_insert(Iter* result, void* list, Iter* pos, int value);
 
 /* push_back on the line list (sentinel node at +4); the value is the address of the
-   caller's char* (C++ reference), matching the declaration in MLTextWidget_AddText. */
-extern "C" void MLTextLineList_PushBack(MLTextLineList* list, char* const& text) {
+   caller's char* (C++ reference), matching the declaration in GuiMLTextWidget_AddText. */
+extern "C" void std_list_charPtr_push_back(MLTextLineList* list, char* const& text) {
     Iter result; /* C++ mode lays locals out in the opposite order to C */
     Iter end;
 
     end.p = (int*)&list->last;
-    List_InsertBefore(&result, list, &end, (int)&text);
+    std_list_deleter_voidPtr_insert(&result, list, &end, (int)&text);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0043E0B0 */
@@ -189,18 +189,18 @@ extern "C" void MLTextLineList_PushBack(MLTextLineList* list, char* const& text)
 
 extern "C" {
 #if 0 /* merge_units */
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 #endif /* merge_units */
-#define Mem_Free(a0, a1, a2, a3) (Mem_Free((a0), (a1), (a2), (a3))) /* merge_units */
+#define cMemMan_Deallocate(a0, a1, a2, a3) (cMemMan_Deallocate((a0), (a1), (a2), (a3))) /* merge_units */
 
 void* String_Dtor(void* self, short flags);   /* String dtor */
-void GuiWidget_Deinit(void* self);                 /* GuiWidget vtable slot 4 */
+void GuiWidget_onRemove(void* self);                 /* GuiWidget vtable slot 4 */
 }
 /* vtable slot 4: base teardown, then destroy and free the text box. */
-extern "C" void MLTextWidget_Teardown(MLTextWidget* o)
+extern "C" void GuiMLTextWidget_onRemove(MLTextWidget* o)
 {
     GuiTextBox* box;
-    GuiWidget_Deinit(o);
+    GuiWidget_onRemove(o);
     box = o->textBox;
     {
         AllocGuard guard;
@@ -209,12 +209,12 @@ extern "C" void MLTextWidget_Teardown(MLTextWidget* o)
             if (text)
                 String_Dtor(text, 0);
         }
-        Mem_Free(0, box, D_004C0110, 0x67);
+        cMemMan_Deallocate(0, box, D_004C0110, 0x67);
     }
     o->textBox = 0;
 
 }
-#undef Mem_Free /* merge_units */
+#undef cMemMan_Deallocate /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043E0E0 */
 
@@ -222,31 +222,31 @@ extern "C" void MLTextWidget_Teardown(MLTextWidget* o)
 #pragma push /* merge_units */
 #pragma cplusplus on
 struct Q0043E1A0 { __int128 q; }; /* colour copied as one quadword */
-extern "C" void TextObj_SetColour(GuiTextBox* box, GuiColor* c); /* text box: set colour */
+extern "C" void cTextArea_SetColor(GuiTextBox* box, GuiColor* c); /* text box: set colour */
 static inline void Set0043E1A0(GuiColor* d, const GuiColor& s) { d->r = s.r; d->g = s.g; d->b = s.b; d->a = s.a; }
-extern "C" void MLTextWidget_SetColor(MLTextWidget* w, Q0043E1A0* in)
+extern "C" void GuiMLTextWidget_SetTextColor(MLTextWidget* w, Q0043E1A0* in)
 {
     Q0043E1A0 t = *in;
     Set0043E1A0(&w->color, *(GuiColor*)&t);
-    if (w->textBox) TextObj_SetColour(w->textBox, &w->color);
+    if (w->textBox) cTextArea_SetColor(w->textBox, &w->color);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0043E1A0 */
 
 /* merge_units: begin func_0043E200 */
 #pragma push /* merge_units */
-extern int Font_GetLineHeight(int font);            /* font line height */
-extern int Gui_GetScreenList(void);
-extern int GuiFont_Find(int, int);            /* look up font by name (0 = default) */
+extern int cFont_GetCharH(int font);            /* font line height */
+extern int Gui_Manager(void);
+extern int GuiManager_GetFont(int, int);            /* look up font by name (0 = default) */
 #pragma push
 #pragma opt_common_subs off
 void MLTextWidget_SetFont(MLTextWidget* w, const char* fontName)
 {
     GuiTextBox* box;
-    w->font = (void*)GuiFont_Find(Gui_GetScreenList(), (int)fontName);
+    w->font = (void*)GuiManager_GetFont(Gui_Manager(), (int)fontName);
     box = w->textBox;
     if (box != 0) box->font = w->font;
-    w->maxLines = (int)w->height / Font_GetLineHeight((int)w->font);
+    w->maxLines = (int)w->height / cFont_GetCharH((int)w->font);
     w->visibleLines = w->maxLines;
 }
 #pragma pop
@@ -259,39 +259,39 @@ void MLTextWidget_SetFont(MLTextWidget* w, const char* fontName)
 
 /* scroll bar: set position and range */
 #if 0 /* merge_units */
-extern void GuiScrollBarWidget_SetRange(GuiWidget43BEF0* self, unsigned char mode, int value,
+extern void GuiScrollBarWidget_SetValues(GuiWidget43BEF0* self, unsigned char mode, int value,
                          int lower, int upper);
 #endif /* merge_units */
-#define GuiScrollBarWidget_SetRange(a0, a1, a2, a3, a4) (GuiScrollBarWidget_SetRange((void *)(a0), (int)(a1), (a2), (a3), (a4))) /* merge_units */
+#define GuiScrollBarWidget_SetValues(a0, a1, a2, a3, a4) (GuiScrollBarWidget_SetValues((void *)(a0), (int)(a1), (a2), (a3), (a4))) /* merge_units */
 
 
 /* Synchronize the optional scroll bar with the scroll position and line count. */
-void MLTextWidget_UpdateScrollBar(MLTextWidget* self) {
+void GuiMLTextWidget_UpdateScrollBars(MLTextWidget* self) {
     if (self->scrollBar != 0) {
-        GuiScrollBarWidget_SetRange(self->scrollBar, 0, self->scrollPos, 0,
+        GuiScrollBarWidget_SetValues(self->scrollBar, 0, self->scrollPos, 0,
                      self->lines.count - self->visibleLines);
     }
 }
-#undef GuiScrollBarWidget_SetRange /* merge_units */
+#undef GuiScrollBarWidget_SetValues /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043E290 */
 
 /* merge_units: begin func_0043E2E0 */
 #pragma push /* merge_units */
-extern void GuiWidget_BaseWake(MLTextWidget* s, float x); /* GuiWidget vtable slot 7 */
+extern void GuiWidget_onWake(MLTextWidget* s, float x); /* GuiWidget vtable slot 7 */
 #if 0 /* merge_units */
-extern void GuiScrollBarWidget_SetRange(void* t, int a, int pos, int b, int len);
+extern void GuiScrollBarWidget_SetValues(void* t, int a, int pos, int b, int len);
 #endif /* merge_units */
-#define GuiScrollBarWidget_SetRange(a0, a1, a2, a3, a4) (GuiScrollBarWidget_SetRange((a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define GuiScrollBarWidget_SetValues(a0, a1, a2, a3, a4) (GuiScrollBarWidget_SetValues((a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 
 /* vtable slot 7: base behaviour (sets flag 0x8 and forwards to children), then refresh the scroll bar. */
-void MLTextWidget_Vt07(MLTextWidget* s, float x) {
-    GuiWidget_BaseWake(s, x);
+void GuiMLTextWidget_onWake(MLTextWidget* s, float x) {
+    GuiWidget_onWake(s, x);
     if (s->scrollBar)
-        GuiScrollBarWidget_SetRange(s->scrollBar, 0, s->scrollPos, 0, s->lines.count - s->visibleLines);
+        GuiScrollBarWidget_SetValues(s->scrollBar, 0, s->scrollPos, 0, s->lines.count - s->visibleLines);
 }
-#undef GuiScrollBarWidget_SetRange /* merge_units */
+#undef GuiScrollBarWidget_SetValues /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043E2E0 */
 
@@ -308,49 +308,49 @@ struct W_43E330 {
 };extern "C" {extern char D_004C0100[]; /* default colour */
 extern char D_004AAE00[]; /* scroll bar class type */
 extern int D_004976B8; /* scroll bar child id */
-void GuiWidget_Init(MLTextWidget* o); /* GuiWidget vtable slot 3 */
+void GuiWidget_onAdd(MLTextWidget* o); /* GuiWidget vtable slot 3 */
 #if 0 /* merge_units */
-void* Gui_GetScreenList(void);
+void* Gui_Manager(void);
 #endif /* merge_units */
-#define Gui_GetScreenList() ((void *)Gui_GetScreenList()) /* merge_units */
+#define Gui_Manager() ((void *)Gui_Manager()) /* merge_units */
 
 
 #if 0 /* merge_units */
-void* GuiFont_Find(void* mgr, int name);
+void* GuiManager_GetFont(void* mgr, int name);
 #endif /* merge_units */
-#define GuiFont_Find(a0, a1) ((void *)GuiFont_Find((int)(a0), (a1))) /* merge_units */
+#define GuiManager_GetFont(a0, a1) ((void *)GuiManager_GetFont((int)(a0), (a1))) /* merge_units */
 
 
-GuiTextBox* TextObj_Construct(void* p, int x, int y, int w, int h, void* font, char* color); /* text box ctor */
-W_43E330* GuiWidget_FindChildBySubstring(void* o, int id); /* find child by id */
+GuiTextBox* cTextArea_ctor(void* p, int x, int y, int w, int h, void* font, char* color); /* text box ctor */
+W_43E330* GuiWidget_FindChildPartial(void* o, int id); /* find child by id */
 #if 0 /* merge_units */
-int Font_GetLineHeight(void* p);
+int cFont_GetCharH(void* p);
 #endif /* merge_units */
-#define Font_GetLineHeight(a0) (Font_GetLineHeight((int)(a0))) /* merge_units */
+#define cFont_GetCharH(a0) (cFont_GetCharH((int)(a0))) /* merge_units */
 
 
-void MLTextWidget_Setup(MLTextWidget* o);
+void GuiMLTextWidget_onAdd(MLTextWidget* o);
 }
-static inline void* Alloc_43E330(int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004C0110, line); }
+static inline void* Alloc_43E330(int n, int line) { AllocGuard g; return cMemMan_Allocate(0, n, D_004C0110, line); }
 static inline W_43E330* Cast_43E330(W_43E330* w, void* t) { return w && w->IsA(t) ? w : 0; }
 
 /* vtable slot 3: base setup, default font, text box, line counts, scroll bar child. */
-void MLTextWidget_Setup(MLTextWidget* o)
+void GuiMLTextWidget_onAdd(MLTextWidget* o)
 {
     GuiTextBox* box;
-    GuiWidget_Init(o);
-    o->font = GuiFont_Find(Gui_GetScreenList(), 0);
+    GuiWidget_onAdd(o);
+    o->font = GuiManager_GetFont(Gui_Manager(), 0);
     box = (GuiTextBox*)Alloc_43E330(sizeof(GuiTextBox), 0x33);
-    if (box) box = TextObj_Construct(box, 0, 0, (int)o->width, (int)o->height, o->font, D_004C0100);
+    if (box) box = cTextArea_ctor(box, 0, 0, (int)o->width, (int)o->height, o->font, D_004C0100);
     o->textBox = box;
     o->textBox->unk10 = 0;
     o->textBox->unk58 = 1;
-    o->maxLines = (int)o->height / Font_GetLineHeight(o->font);
+    o->maxLines = (int)o->height / cFont_GetCharH(o->font);
     o->visibleLines = o->maxLines;
-    o->scrollBar = (struct GuiWidget43BEF0*)Cast_43E330(GuiWidget_FindChildBySubstring(o, D_004976B8), D_004AAE00);
+    o->scrollBar = (struct GuiWidget43BEF0*)Cast_43E330(GuiWidget_FindChildPartial(o, D_004976B8), D_004AAE00);
 }
-#undef Gui_GetScreenList /* merge_units */
-#undef GuiFont_Find /* merge_units */
-#undef Font_GetLineHeight /* merge_units */
+#undef Gui_Manager /* merge_units */
+#undef GuiManager_GetFont /* merge_units */
+#undef cFont_GetCharH /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043E330 */

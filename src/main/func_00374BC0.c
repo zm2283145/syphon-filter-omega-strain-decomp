@@ -22,7 +22,7 @@ static inline V XformPt(const V& v, const M& m) { V p = v; V* pp = &p; MulM(pp, 
 static inline V Project(const V& v, const M& m) { return XformPt(v, m); }
 struct Cam { float x, y, w, h; char pad10[0x40]; M m; char pad90[0x64]; float nearz; float pad; float farz; };
 extern "C" M D_00539070;
-extern "C" V Renderer_ProjectToScreen(Cam* c, const V* p)
+extern "C" V cXViewport_GetScreenVert(Cam* c, const V* p)
 {
     V sc;
     float hz = 0.5f * (c->farz - c->nearz);

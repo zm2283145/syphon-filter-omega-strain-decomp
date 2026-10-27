@@ -5,9 +5,9 @@
 struct Raw_8E20 { int p; };
 struct Ent_8E20 { int key; unsigned char lo : 4; unsigned char hi : 4; char pad[3]; };
 extern "C" {
-void Mem_Free(int, void*, char*, int);
-void List_Erase(int*, char*, int*);
-Raw_8E20 List_Begin(void*);
+void cMemMan_Deallocate(int, void*, char*, int);
+void std_list_deleter_voidPtr_erase_listdeleter(int*, char*, int*);
+Raw_8E20 std_list_deleter_voidPtr_begin_void(void*);
 Raw_8E20 std_list_tGenInfoPtr_end(void*);
 void std_list_tGenInfoPtr_generic_iterator_ctor(char**, const Raw_8E20&);
 void cLListIterator_tGenInfoPtr_ctor(char**, const Raw_8E20&);
@@ -16,7 +16,7 @@ void cGenInfoObject_ctor(int*);
 extern char D_005838B8;
 extern char D_004BFD60[];
 }
-#define Begin_8E20(o) std_list_tGenInfoPtr_generic_iterator_ctor(o, List_Begin(&D_005838B8))
+#define Begin_8E20(o) std_list_tGenInfoPtr_generic_iterator_ctor(o, std_list_deleter_voidPtr_begin_void(&D_005838B8))
 #define End_8E20(o) cLListIterator_tGenInfoPtr_ctor(o, std_list_tGenInfoPtr_end(&D_005838B8))
 extern "C" void cGenInfoObject_DoPendingAdds(Ent_8E20* tbl) {
     int ctx;
@@ -46,7 +46,7 @@ extern "C" void cGenInfoObject_DoPendingAdds(Ent_8E20* tbl) {
             }
             {
                 AllocGuard g;
-                Mem_Free(0, e, D_004BFD60, 0x2FD);
+                cMemMan_Deallocate(0, e, D_004BFD60, 0x2FD);
             }
             {
                 char* c;
@@ -54,7 +54,7 @@ extern "C" void cGenInfoObject_DoPendingAdds(Ent_8E20* tbl) {
                 int pos;
                 c = cur;
                 std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(&pos, &c);
-                List_Erase(&res, &D_005838B8, &pos);
+                std_list_deleter_voidPtr_erase_listdeleter(&res, &D_005838B8, &pos);
             }
         }
     }

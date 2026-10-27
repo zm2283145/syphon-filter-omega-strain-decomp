@@ -6,5 +6,5 @@
 
 #include "types.h"
 
-void AreaEffect_Draw(void) {
+void cAreaEffect_Render(void) {
 }

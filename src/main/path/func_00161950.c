@@ -1,6 +1,6 @@
 #pragma cplusplus on
 #include "types.h"
-/* NpcRoute_ScoreNodes: restart the route walk when dirty, then report the chosen node to the owner */
+/* cNodeRequest_Update: restart the route walk when dirty, then report the chosen node to the owner */
 typedef struct Pt1SnObj { char pad0[0xC]; int serial; char pad10[0x58 - 0x10]; struct Pt1SnObj* owner; } Pt1SnObj;
 typedef struct Pt1SnNode { char pad0[0x10]; int a; int b; } Pt1SnNode;
 typedef struct Pt1SnMsg {
@@ -40,12 +40,12 @@ typedef struct Pt1SnSelf {
 } Pt1SnSelf;
 extern char D_004ED9B8[];
 extern char D_004D9760[];
-extern "C" void Event_Construct(void* msg, void* name);
-extern "C" void Event_Send(void* msg, void* target, int immediate);
+extern "C" void cMessage_ctor_cMessageNameR(void* msg, void* name);
+extern "C" void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int immediate);
 extern "C" void cMessage_dtor(void* msg, int flags);
-extern "C" void NpcRoute_CollectCandidates(Pt1SnSelf* self, int mode);
-extern "C" Pt1SnNode* NpcNodeSearch_PopFront(void* list);
-extern "C" void NpcRoute_RequestLosChecks(Pt1SnSelf* self, int id, int mask);
+extern "C" void cNodeRequest_AddNodesToEvaluate(Pt1SnSelf* self, int mode);
+extern "C" Pt1SnNode* cPriorityQueue_cNodeIndex_Pop(void* list);
+extern "C" void cNodeRequest_SendLOSRequest(Pt1SnSelf* self, int id, int mask);
 
 static inline Pt1SnObj* Pt1Sn_Owner(Pt1SnSelf* self)
 {
@@ -59,7 +59,7 @@ static inline Pt1SnObj* Pt1Sn_Owner(Pt1SnSelf* self)
     Pt1SnObj* o=t->owner; return o == 0 ? t : o;
 }
 
-extern "C" unsigned char NpcRoute_ScoreNodes(Pt1SnSelf* self)
+extern "C" unsigned char cNodeRequest_Update(Pt1SnSelf* self)
 {
     unsigned char done = 0;
     if (self->dirty) {
@@ -70,19 +70,19 @@ extern "C" unsigned char NpcRoute_ScoreNodes(Pt1SnSelf* self)
         self->last = self->sentinel;
         self->count = 0;
         if (!self->crouched)
-            NpcRoute_CollectCandidates(self, 2);
+            cNodeRequest_AddNodesToEvaluate(self, 2);
         else
-            NpcRoute_CollectCandidates(self, 0);
+            cNodeRequest_AddNodesToEvaluate(self, 0);
         self->target = -1;
         self->target2 = -1;
         self->status = 0;
         if (self->count) {
             if (!self->mode) {
-                Pt1SnNode* n = NpcNodeSearch_PopFront(self->list);
+                Pt1SnNode* n = cPriorityQueue_cNodeIndex_Pop(self->list);
                 self->target = n->a;
                 self->target2 = n->b;
             } else {
-                NpcRoute_RequestLosChecks(self, ((Pt1SnNode*)self->head)->a, self->mask);
+                cNodeRequest_SendLOSRequest(self, ((Pt1SnNode*)self->head)->a, self->mask);
             }
         }
     }
@@ -98,23 +98,23 @@ extern "C" unsigned char NpcRoute_ScoreNodes(Pt1SnSelf* self)
         self->reported = 1;
         b = self->target2;
         a = self->target;
-        Event_Construct(&m, D_004ED9B8);
+        cMessage_ctor_cMessageNameR(&m, D_004ED9B8);
         m.node = a;
         m.node2 = b;
         m.vt = D_004D9760;
         m.found = 0;
-        Event_Send(&m, Pt1Sn_Owner(self), 1);
+        QueueMessage_cMessageR_cSystemP_int(&m, Pt1Sn_Owner(self), 1);
         m.vt = D_004D9760;
         cMessage_dtor(&m, 0);
         done = 1;
     } else if (!self->count) {
         Pt1SnMsg m;
         self->reported = 1;
-        Event_Construct(&m, D_004ED9B8);
+        cMessage_ctor_cMessageNameR(&m, D_004ED9B8);
         m.vt = D_004D9760;
         m.found = 1;
         m.node = -1;
-        Event_Send(&m, Pt1Sn_Owner(self), 1);
+        QueueMessage_cMessageR_cSystemP_int(&m, Pt1Sn_Owner(self), 1);
         m.vt = D_004D9760;
         cMessage_dtor(&m, 0);
         done = 1;

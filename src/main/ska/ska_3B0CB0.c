@@ -52,10 +52,10 @@ typedef struct { LNode* p; } LIt;
 typedef struct { int pad[3]; float unkC; } AnimGroup;
 
 extern "C" {
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 extern char D_004BCFE8[];
 extern char D_004BCFF0[];
-Raw List_Begin(AnimGroup* g);
+Raw std_list_deleter_voidPtr_begin_void(AnimGroup* g);
 void std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(LIt* out, const Raw& r);
 Raw std_list_cSkaPlaybackGroupPtr_end(AnimGroup* g);
 void cLListIterator_cSkaPlaybackGroupPtr_ctor(LIt* out, const Raw& r);
@@ -118,15 +118,15 @@ static inline void Contrib_Init(Contrib* c, int id, float t)
     c->f33 = 0;
 }
 
-static inline void LBegin(LIt* o, AnimGroup* g) { std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(o, List_Begin(g)); }
+static inline void LBegin(LIt* o, AnimGroup* g) { std_list_cSkaPlaybackGroupPtr_generic_iterator_ctor(o, std_list_deleter_voidPtr_begin_void(g)); }
 static inline void LEnd(LIt* o, AnimGroup* g) { cLListIterator_cSkaPlaybackGroupPtr_ctor(o, std_list_cSkaPlaybackGroupPtr_end(g)); }
 static inline Contrib* Contrib_New(char* file, int line)
 {
     AllocGuard g;
-    return (Contrib*)Mem_Alloc(0, sizeof(Contrib), file, line);
+    return (Contrib*)cMemMan_Allocate(0, sizeof(Contrib), file, line);
 }
 
-extern "C" void AnimGroup_AddContribution(float weight, AnimGroup* g, Clip* clip, int id)
+extern "C" void cSkaPlaybackList_Add(float weight, AnimGroup* g, Clip* clip, int id)
 {
     Contrib* t1;
     Contrib* t2;
@@ -145,7 +145,7 @@ extern "C" void AnimGroup_AddContribution(float weight, AnimGroup* g, Clip* clip
             }
         }
         Contrib* c;
-        { AllocGuard ag; c = (Contrib*)Mem_Alloc(0, sizeof(Contrib), D_004BCFF0, 0xFD); }
+        { AllocGuard ag; c = (Contrib*)cMemMan_Allocate(0, sizeof(Contrib), D_004BCFF0, 0xFD); }
         if (c) {
             Contrib_Init(c, -1, g->unkC);
             cSkaPlaybackGroup_Add(c, clip, weight);
@@ -164,7 +164,7 @@ extern "C" void AnimGroup_AddContribution(float weight, AnimGroup* g, Clip* clip
             }
         }
         Contrib* c;
-        { AllocGuard ag; c = (Contrib*)Mem_Alloc(0, sizeof(Contrib), D_004BCFE8, 0x112); }
+        { AllocGuard ag; c = (Contrib*)cMemMan_Allocate(0, sizeof(Contrib), D_004BCFE8, 0x112); }
         if (c) {
             Contrib_Init(c, id, g->unkC);
             cSkaPlaybackGroup_Add(c, clip, weight);

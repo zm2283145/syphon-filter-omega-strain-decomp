@@ -15,7 +15,7 @@ typedef struct { char pad0[0x70]; int num; char vec[8]; Obj4080** objs; } Lift40
 extern Ent4080** std_vector_cGOBJPtr_opIndex(void* vec, int i);
 extern int g_GameGobjClassWord;
 #pragma opt_strength_reduction off
-unsigned char cElevatorGOBJ_LinksOpen(Lift4080* p) {
+unsigned char cElevatorGOBJ_InsideDoorsAreOpen(Lift4080* p) {
     unsigned char ok = 1;
     int i;
     Obj4080* o;
@@ -38,20 +38,20 @@ static inline void merge_flush_func_00214080(void) {}
 
 /* merge_units: begin func_00214160 */
 #pragma push /* merge_units */
-extern int cElevatorGOBJ_FloorExtrasClosed(int);
-extern int cElevatorGOBJ_LinksClosed(int);
+extern int cElevatorGOBJ_OutsideDoorsAreClosed(int);
+extern int cElevatorGOBJ_InsideDoorsAreClosed(int);
 
-int cElevatorGOBJ_DoorsClosed(int a0) {
+int cElevatorGOBJ_DoorsAreClosed(int a0) {
     int s0, v0;
     int cond;
 
     s0 = a0;
-    v0 = cElevatorGOBJ_LinksClosed(a0);
+    v0 = cElevatorGOBJ_InsideDoorsAreClosed(a0);
     v0 = v0 & 255;
     cond = v0 == 0;
     a0 = s0;
     if (cond) goto L00214190;
-    v0 = cElevatorGOBJ_FloorExtrasClosed(a0);
+    v0 = cElevatorGOBJ_OutsideDoorsAreClosed(a0);
     v0 = v0 & 255;
 L00214190:;
     goto ret;

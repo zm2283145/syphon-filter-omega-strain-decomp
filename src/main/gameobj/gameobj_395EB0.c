@@ -24,7 +24,7 @@ struct V395EB0 { unsigned int cap; unsigned int count; SkelNode395EB0* data; };
 extern "C" {
 extern char D_004BC460[];
 extern char D_004BC510[];
-void SkelNode_Assign(SkelNode395EB0* d, const SkelNode395EB0* s);
+void cBone_ctor_cBoneR(SkelNode395EB0* d, const SkelNode395EB0* s);
 }
 
 extern "C" void std_vector_imp_cBone_init(V395EB0* v, unsigned int n, const SkelNode395EB0* val)
@@ -40,7 +40,7 @@ extern "C" void std_vector_imp_cBone_init(V395EB0* v, unsigned int n, const Skel
         SkelNode395EB0* p = v->data;
         SkelNode395EB0* e = p + n;
         for (; p < e; p++) {
-            if (p) SkelNode_Assign(p, val);
+            if (p) cBone_ctor_cBoneR(p, val);
             v->count++;
         }
     }

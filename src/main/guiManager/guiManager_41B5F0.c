@@ -27,7 +27,7 @@ typedef struct Tag {
     signed char unused;
 } Tag;
 
-extern void String_Replace(String*, int, int, char*, Tag*, Tag);
+extern void std_basic_string_char_char_traits_char_do_replace(String*, int, int, char*, Tag*, Tag);
 
 /* Appends one character to the string (insert at end). */
 void String_PushBack_41B5F0(String* str, char c) {
@@ -38,7 +38,7 @@ void String_PushBack_41B5F0(String* str, char c) {
     } else {
         size = (unsigned char)str->s.size;
     }
-    String_Replace(str, size, 0, &c, &tag, tag);
+    std_basic_string_char_char_traits_char_do_replace(str, size, 0, &c, &tag, tag);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0041B5F0 */

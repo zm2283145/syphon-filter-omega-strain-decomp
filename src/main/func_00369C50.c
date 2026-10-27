@@ -36,7 +36,7 @@ static inline float PadAxis_369C50(unsigned int v)
     return (float)v - 127.5f;
 }
 
-void Pad_Update(Pad369C50* p)
+void cJoyPad_Read(Pad369C50* p)
 {
     PadRaw369C50 b;
     if (!p->connected) {

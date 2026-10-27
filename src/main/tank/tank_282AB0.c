@@ -42,10 +42,10 @@ static inline void merge_flush_func_00282AB0(void) {}
  */
 
 
-extern int GObj_IdentityA(void*);
+extern int cGOBJ_SOBJ_toInt(void*);
 
 int Script_cTank_GetGobj(TankScriptArg* args) {
-    return GObj_IdentityA(((cTank*)args[0].p)->gobj);
+    return cGOBJ_SOBJ_toInt(((cTank*)args[0].p)->gobj);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00282AE0(void) {}

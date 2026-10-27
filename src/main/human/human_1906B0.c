@@ -16,7 +16,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(Secondary_MotionRecordDtor)
+DEFINE_TRIVIAL_DTOR(cSkaAnimDataIterator_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001906B0 */
 
@@ -33,7 +33,7 @@ struct Sample {
     unsigned char id;
     V v[4];
 };
-extern "C" Sample* Anim_CopySample(Sample* d, const Sample* s)
+extern "C" Sample* cSkaAnimDataSample_ctor_cSkaAnimDataSampleR(Sample* d, const Sample* s)
 {
     *d = *s; return d;
 }
@@ -47,7 +47,7 @@ static inline void merge_flush_func_00190700(void) {}
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 #pragma push
 #pragma opt_common_subs off
-V4 Anim_ApproachTarget(V4* b, V4* c, float s) {
+V4 LerpAndNormalize(V4* b, V4* c, float s) {
     V4 l0;
     V4* q1 = &l0;
     int rv1;

@@ -12,7 +12,7 @@
 typedef struct { char c[16]; } N2C4;
 typedef struct { void* vt; int f4, f8, fc, f10, f14, f18, f1c; signed char b20; char p21[3]; signed char b24; char p25[3]; int f28; float f2c; float f30; N2C4 name; int f44; unsigned char b48; unsigned char b49; char p4a[2]; } M2C4;
 extern "C" {
-extern void* Mem_Alloc(int, int, char*, int);
+extern void* cMemMan_Allocate(int, int, char*, int);
 extern char D_004DFD80[];
 extern char D_004DE0F0[];
 }
@@ -20,7 +20,7 @@ extern "C" M2C4* cNetCalloutMsg_Clone(M2C4* src) {
     M2C4* m;
     {
         AllocGuard g;
-        m = (M2C4*)Mem_Alloc(0, 0x4C, "NetCalloutMsg.hh", 0x26);
+        m = (M2C4*)cMemMan_Allocate(0, 0x4C, "NetCalloutMsg.hh", 0x26);
     }
     if (m) {
         m->vt = D_004DFD80;
@@ -57,22 +57,22 @@ extern "C" {
 extern unsigned char D_005721D0;
 extern char D_0051EE48[], D_004DE0F0[];
 extern void *g_Hud;
-extern void Event_Construct(Msg2C50E0* e, void* type);
-extern char *Loc_GetStoredKey(int);
+extern void cMessage_ctor_cMessageNameR(Msg2C50E0* e, void* type);
+extern char *nGlobalization_GetStringTag(int);
 extern char *strncpy(char *, const char *, unsigned int);
-extern void Hud_SetCalloutLabel(void *, int *, char *, int, float, float, unsigned char, unsigned char, int);
-extern void Hud_ClearCallout(void *, int *, int, unsigned char, int);
+extern void cHud_SetCalloutLabel(void *, int *, char *, int, float, float, unsigned char, unsigned char, int);
+extern void cHud_ClearCallout(void *, int *, int, unsigned char, int);
 extern void cMessage_dtor(Msg2C50E0*, int);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int cNetCalloutMsg_NetReceive(int a0, int a1, int a2, Pk2C50E0* arg) {
+extern "C" int cNetCalloutMsg_NetCalloutMsgCallback(int a0, int a1, int a2, Pk2C50E0* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Msg2C50E0 msg;
         Pk2C50E0* p = arg;
         Msg2C50E0* m = &msg;
-        Event_Construct(m, D_0051EE48);
+        cMessage_ctor_cMessageNameR(m, D_0051EE48);
         msg.vt = D_004DE0F0;
         msg.f28 = -1;
         msg.f28 = p->f10;
@@ -81,11 +81,11 @@ extern "C" int cNetCalloutMsg_NetReceive(int a0, int a1, int a2, Pk2C50E0* arg) 
         msg.f44 = p->f1C;
         msg.b48 = p->f9;
         msg.b49 = p->fA;
-        strncpy(m->name, Loc_GetStoredKey(p->fC), 0x10);
+        strncpy(m->name, nGlobalization_GetStringTag(p->fC), 0x10);
         if (p->f8 == 0) {
-            Hud_SetCalloutLabel(g_Hud, &msg.f28, msg.name, msg.f44, msg.f2C, msg.f30, msg.b48, msg.b49, 0);
+            cHud_SetCalloutLabel(g_Hud, &msg.f28, msg.name, msg.f44, msg.f2C, msg.f30, msg.b48, msg.b49, 0);
         } else {
-            Hud_ClearCallout(g_Hud, &msg.f28, msg.f44, msg.b48, 0);
+            cHud_ClearCallout(g_Hud, &msg.f28, msg.f44, msg.b48, 0);
         }
         msg.vt = D_004DE0F0;
         cMessage_dtor(&msg, 0);

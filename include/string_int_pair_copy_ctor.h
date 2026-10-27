@@ -9,7 +9,7 @@
  */
 #include "short_string_replace.h"
 
-extern "C" void String_Reserve(ShortStr* self, unsigned int n);
+extern "C" void std_basic_string_char_char_traits_char_reserve(ShortStr* self, unsigned int n);
 
 struct ShortStrIntPair {
     ShortStr first;
@@ -26,9 +26,9 @@ struct ShortStrIntPair {
             self->first.u.l.word = 0;                                         \
             self->first.u.l.length = 0;                                       \
             self->first.u.l.data = 0;                                         \
-            String_Reserve(&self->first, src->first.u.l.length);              \
+            std_basic_string_char_char_traits_char_reserve(&self->first, src->first.u.l.length);              \
             ShortStrIterTag tag;                                              \
-            String_Replace(&self->first, 0, 0, src->first.u.l.data,           \
+            std_basic_string_char_char_traits_char_do_replace(&self->first, 0, 0, src->first.u.l.data,           \
                            src->first.u.l.data + src->first.u.l.length, tag); \
         }                                                                     \
         self->second = src->second;                                           \

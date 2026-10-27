@@ -1,6 +1,6 @@
 #pragma cplusplus on
 #include "types.h"
-/* Hotbox_Contains: point-in-box test of the hotbox, in the attached node's frame when there is one */
+/* cHotbox_Intersects: point-in-box test of the hotbox, in the attached node's frame when there is one */
 struct V { float x, y, z, w; } __attribute__((aligned(16)));
 struct Mtx { V r[4]; };
 struct Node_HC {
@@ -13,9 +13,9 @@ struct Node_HC {
 };
 struct Hotbox_HC { char pad[0x50]; Node_HC* node; char pad54[0x70 - 0x54]; V lo; V hi; };
 extern "C" {
-void Mtx_InvertRigid_13ECA0(Mtx* out, Mtx* in);
-V* Mtx_Multiply4(V* v, Mtx* m);
-unsigned char Hotbox_Contains(Hotbox_HC* h, V* p);
+void cMatrix_Copy_InvertRotTrans(Mtx* out, Mtx* in);
+V* cVector_Transform_cMatrixR(V* v, Mtx* m);
+unsigned char cHotbox_Intersects(Hotbox_HC* h, V* p);
 }
 static inline Mtx* GetXform(Node_HC* s) {
     if (s->dirty) s->Refresh();
@@ -58,7 +58,7 @@ static inline int InBox(V* p, Hotbox_HC* b) {
     }
     return r;
 }
-unsigned char Hotbox_Contains(Hotbox_HC* h, V* p)
+unsigned char cHotbox_Intersects(Hotbox_HC* h, V* p)
 {
     Node_HC* n = h->node;
     if (n) {
@@ -67,8 +67,8 @@ unsigned char Hotbox_Contains(Hotbox_HC* h, V* p)
         Mtx inv;
         VC0(&t, p);
         { V* q = &t; V* d = &pt; q->w = 1.0f; VC(d, q); }
-        Mtx_InvertRigid_13ECA0(&inv, GetXform(n));
-        return InBox(Mtx_Multiply4(&pt, &inv), h);
+        cMatrix_Copy_InvertRotTrans(&inv, GetXform(n));
+        return InBox(cVector_Transform_cMatrixR(&pt, &inv), h);
     }
     return InBox(p, h);
 }

@@ -4,8 +4,8 @@
 #include "vtable_chain_dtor.h"
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-extern "C" void SkaClip_GetGroupingPair();
-extern "C" void SkaClip_Submit();
+extern "C" void cSkaAnim_PlaybackGroupId();
+extern "C" void cSkaAnim_UpdateNodes();
 extern void * const D_004DFC30[];
 extern "C" char D_004DFC50[];
 extern "C" VtableChainObject* cSkaAnim_dtor(VtableChainObject* self,
@@ -20,4 +20,4 @@ extern "C" VtableChainObject* cSkaAnim_dtor(VtableChainObject* self,
     }
     return self;
 }
-void * const D_004DFC30[8] = { (void*)0x0, (void*)0x0, (void*)cSkaAnim_dtor, (void*)SkaClip_Submit, (void*)SkaClip_GetGroupingPair, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004DFC30[8] = { (void*)0x0, (void*)0x0, (void*)cSkaAnim_dtor, (void*)cSkaAnim_UpdateNodes, (void*)cSkaAnim_PlaybackGroupId, (void*)0x0, (void*)0x0, (void*)0x0 };

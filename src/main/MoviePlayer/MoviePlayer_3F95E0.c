@@ -58,11 +58,11 @@ char* cHogList_Get(char* self, const char* name)
 
 /* merge_units: begin func_003F96B0 */
 #pragma push /* merge_units */
-extern L4Archive* Archive_Open(int, int, int, int);
+extern L4Archive* cHogList_Open(int, int, int, int);
 
 /* Opens an archive and sets the byte at +0x168 on the returned handle. */
 L4Archive* cHogList_OpenProtected(int a0, int a1, int a2) {
-    L4Archive* ar = Archive_Open(a0, a1, a2, 0);
+    L4Archive* ar = cHogList_Open(a0, a1, a2, 0);
 
     ar->unk168 = 1;
     return ar;

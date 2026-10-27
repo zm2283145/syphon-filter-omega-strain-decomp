@@ -6,7 +6,7 @@ extern "C" {
 extern char D_004BE3B0[];
 extern char D_004E0800[];
 extern char D_004E0820[];
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
 Word* cArray_cAnimatorPtr_Iterator_ctor(Word* dst, Word* src);
 void std_vector_cAnimatorPtr_end_void(Word* out, PtrVec* v);
@@ -41,7 +41,7 @@ extern "C" Holder* cKfAnimationContainer_dtor(Holder* self, short deleteFlag)
             {
                 AllocGuard guard;
                 o->~Obj();
-                Mem_Free(0, o, D_004BE3B0, 0xF);
+                cMemMan_Deallocate(0, o, D_004BE3B0, 0xF);
             }
         }
         if (&self->items)

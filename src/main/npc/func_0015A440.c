@@ -142,8 +142,8 @@ int cNPCInfoObject_GetPrevOwner(Lock_A440*, int*);
 int cNPCInfoObject_IsActive(Lock_A440*, int*, int);
 int cNPCInfoObject_IsInActiveTerrain(Lock_A440*, int*, int);
 void cNPCInfoObject_DisconnectOwner(Lock_A440*, int*, int);
-NpcObj_A440* Object_ClosestPlayerDistSq(NpcObj_A440*, float*);
-void List_Begin(Raw_A440*, void*);
+NpcObj_A440* cGOBJ_GetClosestPlayer(NpcObj_A440*, float*);
+void std_list_deleter_voidPtr_begin_void(Raw_A440*, void*);
 void func_0015AD60(Node_A440**, Raw_A440*);
 void func_0015AD50(Raw_A440*, void*);
 void func_0015AD40(Node_A440**, Raw_A440*);
@@ -156,22 +156,22 @@ void cObjectId_ctor_uint(void*, int);
 void cTargetAwareness_ctor(void*);
 void func_00148B50(void*, Npc_A440*);
 void func_00148CD0(Npc_A440*, void*);
-void Event_Construct(Msg_A440*, void*);
-void Event_Send(Msg_A440*, NpcObj_A440*, int);
+void cMessage_ctor_cMessageNameR(Msg_A440*, void*);
+void QueueMessage_cMessageR_cSystemP_int(Msg_A440*, NpcObj_A440*, int);
 void cMessage_dtor(Msg_A440*, int);
 void printf(char*, ...);
-int PlayerSlots_Get(int);
-int Net_GetClock(int);
+int cNetObj_GetPlayer(int);
+int cDME_GetTime(int);
 void cNetObjectMgr_AddCopyMsg(int*, int);
 void cNetObjectMgr_AddDeactivate(NpcObj_A440*, int, int);
-void NetGame_InitLocalSlot(int*, int);
+void NetGetMyClientIndex(int*, int);
 
 }
 
 static inline void MkBegin(Node_A440** t)
 {
     Raw_A440 b;
-    List_Begin(&b, D_004EA1B0);
+    std_list_deleter_voidPtr_begin_void(&b, D_004EA1B0);
     func_0015AD60(t, &b);
 }
 static inline Node_A440* Begin()
@@ -195,7 +195,7 @@ static inline int LocalSlot(int a)
 {
     if (g_IsMultiplayer) {
         if (D_00494178 == -1)
-            NetGame_InitLocalSlot(&D_00494178, a);
+            NetGetMyClientIndex(&D_00494178, a);
         return D_00494178;
     }
     return 0;
@@ -227,7 +227,7 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
         if (!busy && !cNPCInfoObject_IsActiveOnRemote(&lk, &id)) {
             if (!self->b1D5) {
                 float d;
-                NpcObj_A440* pl = Object_ClosestPlayerDistSq(self->obj, &d);
+                NpcObj_A440* pl = cGOBJ_GetClosestPlayer(self->obj, &d);
                 if (pl) {
                     float r = self->range;
                     r = (r < 0.00001f) ? g_LevelFarDistance * g_LevelFarDistance : r;
@@ -244,7 +244,7 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
         } else if (!self->b1D4) {
             float d;
             float r;
-            Object_ClosestPlayerDistSq(self->obj, &d);
+            cGOBJ_GetClosestPlayer(self->obj, &d);
             r = self->range;
             r = (r < 0.00001f) ? g_LevelFarDistance * g_LevelFarDistance : r;
             if (!(d <= 625.0f + r)) {
@@ -298,10 +298,10 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
                             } while (p != q + 0x2E0);
                             func_00148B50(&big, self);
                             o = self->obj;
-                            Event_Construct(&msg, D_00582730);
+                            cMessage_ctor_cMessageNameR(&msg, D_00582730);
                             msg.vtable = D_004D9300;
                             msg.kind = 1;
-                            Event_Send(&msg, o, 1);
+                            QueueMessage_cMessageR_cSystemP_int(&msg, o, 1);
                             msg.vtable = D_004D9300;
                             cMessage_dtor(&msg, 0);
                             n = o->npc58;
@@ -313,13 +313,13 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
                             int who = 0;
                             int i;
                             for (i = 0; i < 4; i++) {
-                                if (PlayerSlots_Get(i) && (rec->mask & (1 << i))) {
+                                if (cNetObj_GetPlayer(i) && (rec->mask & (1 << i))) {
                                     who = i;
                                     if (cNPCInfoObject_IsActive(&lk2, &self->obj->id, i) && cNPCInfoObject_IsInActiveTerrain(&lk2, &self->obj->id, i))
                                         break;
                                 }
                             }
-                            if (who == 0 || D_004EA380 < Net_GetClock(1)) {
+                            if (who == 0 || D_004EA380 < cDME_GetTime(1)) {
                                 self->b169 = 0;
                                 rec->t = 0.0f;
                                 if (who > 0) {
@@ -327,12 +327,12 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
                                     cNetObjectMgr_AddCopyMsg(pid, self->V90());
                                     cNetObjectMgr_AddDeactivate(self->obj, 0, who);
                                     printf(D_0049B730);
-                                    D_004EA380 = Net_GetClock(1) + 0xFA;
+                                    D_004EA380 = cDME_GetTime(1) + 0xFA;
                                 }
                             }
                         }
                     }
-                } else if (!PlayerSlots_Get(slot) || (slot == -1 && !PlayerSlots_Get(alt))) {
+                } else if (!cNetObj_GetPlayer(slot) || (slot == -1 && !cNetObj_GetPlayer(alt))) {
                     printf(D_0049B780, slot, id);
                     cNPCInfoObject_DisconnectOwner(&lk2, &id, 0);
                     self->b169 = 1;
@@ -349,7 +349,7 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
                         rec->t = 0.0f;
                         to = -1;
                         for (j = 0; j < 4; j++) {
-                            if (j != slot && PlayerSlots_Get(j) && cNPCInfoObject_IsActive(&lk2, &self->obj->id, j) && cNPCInfoObject_IsInActiveTerrain(&lk2, &self->obj->id, j)) {
+                            if (j != slot && cNetObj_GetPlayer(j) && cNPCInfoObject_IsActive(&lk2, &self->obj->id, j) && cNPCInfoObject_IsInActiveTerrain(&lk2, &self->obj->id, j)) {
                                 to = j;
                                 if (rec->mask & (1 << j))
                                     break;

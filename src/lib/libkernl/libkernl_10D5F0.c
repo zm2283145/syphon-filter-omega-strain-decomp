@@ -50,7 +50,7 @@ long VSync2(void)
 extern int D_00486190;
 extern int sceTtyInit(void);
 extern int sceTtyWrite(int, int);
-int Newlib_SysWrite(int mode, int a, int b)
+int Libc_Write(int mode, int a, int b)
 {
     if (mode == 1 || mode == 2) {
         if (!D_00486190) {
@@ -66,7 +66,7 @@ int Newlib_SysWrite(int mode, int a, int b)
 
 /* merge_units: begin func_0010D7A8 */
 extern int sceTtyRead(int, int);
-int Newlib_SysRead(int mode, int a, int b)
+int Libc_Read(int mode, int a, int b)
 {
     if (mode == 0) {
         if (!D_00486190) {

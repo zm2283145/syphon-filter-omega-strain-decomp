@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* Placement_GetPosition(char* self) {
+void* cQuatVec_Translation(char* self) {
     return self + 16;
 }

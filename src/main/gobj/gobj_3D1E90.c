@@ -26,13 +26,13 @@ struct Obj : ObjBase {
 };
 
 extern char D_004E0080[];
-extern "C" void UvScrollAnim_Update();
-extern "C" void UvScrollAnim_Init();
-extern "C" void UvScrollAnim_dtor();
-void * const D_004E0090[6] = { (void*)0x0, (void*)0x0, (void*)UvScrollAnim_Update, (void*)UvScrollAnim_Init, (void*)UvScrollAnim_dtor, (void*)0x0 };
+extern "C" void cScrollAnimTexture_Update();
+extern "C" void cScrollAnimTexture_Reset();
+extern "C" void cScrollAnimTexture_dtor();
+void * const D_004E0090[6] = { (void*)0x0, (void*)0x0, (void*)cScrollAnimTexture_Update, (void*)cScrollAnimTexture_Reset, (void*)cScrollAnimTexture_dtor, (void*)0x0 };
 
 /* Constructor: installs the base vtable D_004E0080, stores the leading fields, installs vtable ((char*)D_004E0090), copies pos[0..1] and calls virtual +0xC. */
-extern "C" Obj* UvScrollAnim_Construct(Obj* self, float* pos, int a2, int a3, int a0)
+extern "C" Obj* cScrollAnimTexture_ctor(Obj* self, float* pos, int a2, int a3, int a0)
 {
     *(void**)((char*)self + 0x10) = D_004E0080;
     self->unk0 = a0;
@@ -70,7 +70,7 @@ T1F00* cAnimTexture_dtor(T1F00* self, short del)
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int Tex_GetRecord(int, int);                        
+int cTexMan_GetTexture(int, int);                        
 int XLib_GetTexMan(char *);                             
 int opNe_cConstLListIteratorR_cConstLListIteratorR_5(char *, int);                        
 int cLList_cAnimTexturePtr_End(char *, int);                          
@@ -86,7 +86,7 @@ extern char * g_TextureMgr;
 
 #pragma push
 #pragma opt_common_subs off
-void Global_SetTexture(int arg0, int arg1, unsigned int arg2) {
+void cAnimTexMan_SetTextureFrame(int arg0, int arg1, unsigned int arg2) {
     char * var_s0;
     int sp7C;
     int sp78;
@@ -104,7 +104,7 @@ void Global_SetTexture(int arg0, int arg1, unsigned int arg2) {
 loop_2:
         temp_s3 = *cConstLListIterator_cAnimTexturePtr_opMul(&sp7C);
         temp_s2 = XLib_GetTexMan(&g_Video);
-        if (strcmp(cTexture_GetName(Tex_GetRecord(temp_s2, cAnimTexture_GetTextureId(temp_s3))), arg1) == 0) {
+        if (strcmp(cTexture_GetName(cTexMan_GetTexture(temp_s2, cAnimTexture_GetTextureId(temp_s3))), arg1) == 0) {
             var_s0 = temp_s3;
         } else {
             cConstLListIterator_cAnimTexturePtr_opInc(&sp7C);

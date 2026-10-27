@@ -1,6 +1,6 @@
 #pragma cplusplus on
 
-#define ObjectList_EraseRange Player_ClearRecentTargets
+#define std_list_deleter_voidPtr_erase_listdeleter_listdeleter std_list_deleter_cSafePtr_cGOBJ_erase_listdeleter_listdeleter
 #include "obj_list_dtor.h"
 
 DEFINE_OBJ_LIST_DTOR(std_list_cSafePtr_cGOBJ_dtor)

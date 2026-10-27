@@ -9,11 +9,11 @@ typedef struct { char p0[0xC]; int id; char p10[0x50]; int kind; char p64[0xDC];
 typedef struct { char pad[0x10]; ObjF680* val; } NodeF680;
 typedef struct { char q0[0x4]; int id; unsigned char off; } ArgF680;
 extern "C" {
-extern void Event_Construct(EvF680* e, void* type);
-extern void Transport_Send(int target, EvF680* e, int a, int b);
+extern void cMessage_ctor_cMessageNameR(EvF680* e, void* type);
+extern void cNetObj_SendMessage_int_cMessageR_int_int(int target, EvF680* e, int a, int b);
 extern void cMessage_dtor(EvF680* e, int f);
-extern void cNIEventOBJ_ActivateCamera(void* c);
-extern void cNIEventOBJ_DeactivateCamera(void* c);
+extern void cGameCamera_PushCurrent(void* c);
+extern void cGameCamera_RemoveCamera(void* c);
 extern char D_0055C7A0[];
 extern void std_tree_pair_int_value_compare_find_intR(NodeF680** out, void* map, int* key);
 extern void std_map_int_netSystemField_end(void* out, void* map);
@@ -45,26 +45,26 @@ extern "C" int cNICameraMsg_NICameraCallback(int a0, int a1, int a2, ArgF680* ar
             if (o) {
                 if (!a->off) {
                     if (o->kind == 5 && o->cam) {
-                        cNIEventOBJ_ActivateCamera(o->cam);
+                        cGameCamera_PushCurrent(o->cam);
                         if (g_IsMultiplayer && NpcAuth_IsLocal()) {
                             EvF680 e;
-                            Event_Construct(&e, D_004F7C38);
+                            cMessage_ctor_cMessageNameR(&e, D_004F7C38);
                             e.vt = D_004DC2D0;
                             e.b24 = 0;
-                            Transport_Send(o->id, &e, -1, -1);
+                            cNetObj_SendMessage_int_cMessageR_int_int(o->id, &e, -1, -1);
                             e.vt = D_004DC2D0;
                             cMessage_dtor(&e, 0);
                         }
                     }
                 } else {
                     if (o->kind == 5 && o->cam) {
-                        cNIEventOBJ_DeactivateCamera(o->cam);
+                        cGameCamera_RemoveCamera(o->cam);
                         if (g_IsMultiplayer && NpcAuth_IsLocal()) {
                             EvF680 e;
-                            Event_Construct(&e, D_004F7C38);
+                            cMessage_ctor_cMessageNameR(&e, D_004F7C38);
                             e.vt = D_004DC2D0;
                             e.b24 = 1;
-                            Transport_Send(o->id, &e, -1, -1);
+                            cNetObj_SendMessage_int_cMessageR_int_int(o->id, &e, -1, -1);
                             e.vt = D_004DC2D0;
                             cMessage_dtor(&e, 0);
                         }

@@ -10,7 +10,7 @@
 
 /* merge_units: begin func_003AF0C0 */
 #pragma push /* merge_units */
-SkaDirtyFlags* AnimRoot_CopyDirtyFlags(SkaDirtyFlags* dst, SkaDirtyFlags* src); /* gsynth: defined below */Rel* AnimRoot_InitRelations(Rel* r); /* gsynth: defined below */
+SkaDirtyFlags* cSkaAnimAnchor_TreeNodeData_tNeedsUpdate_ctor(SkaDirtyFlags* dst, SkaDirtyFlags* src); /* gsynth: defined below */Rel* std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor(Rel* r); /* gsynth: defined below */
 typedef struct { char b[0x50]; } AnimRegion;
 typedef struct { char b[0x10]; } AnimDirty;
 typedef struct { char b[0xC]; unsigned char valid; } AnimRelations;
@@ -21,33 +21,33 @@ typedef struct {
     int unkB0;
     AnimRelations rel;
 } AnimRoot;
-extern void AnimRoot_CopyRegion(AnimRegion* dst, AnimRegion* src);
+extern void cSkaAnimAnchor_TreeNodeData_tData_ctor(AnimRegion* dst, AnimRegion* src);
 #if 0 /* merge_units */
-extern void AnimRoot_CopyDirtyFlags(AnimDirty* dst, AnimDirty* src);
+extern void cSkaAnimAnchor_TreeNodeData_tNeedsUpdate_ctor(AnimDirty* dst, AnimDirty* src);
 #endif /* merge_units */
-#define AnimRoot_CopyDirtyFlags(a0, a1) ((void)AnimRoot_CopyDirtyFlags((void *)(a0), (void *)(a1))) /* merge_units */
+#define cSkaAnimAnchor_TreeNodeData_tNeedsUpdate_ctor(a0, a1) ((void)cSkaAnimAnchor_TreeNodeData_tNeedsUpdate_ctor((void *)(a0), (void *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void AnimRoot_InitRelations(AnimRelations* rel);
+extern void std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor(AnimRelations* rel);
 #endif /* merge_units */
-#define AnimRoot_InitRelations(a0) ((void)AnimRoot_InitRelations((void *)(a0))) /* merge_units */
+#define std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor(a0) ((void)std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor((void *)(a0))) /* merge_units */
 
 
 /* Copies an animation root: both regions and the dirty flags; resets the relations. */
-AnimRoot* AnimRoot_Copy(AnimRoot* dst, AnimRoot* src)
+AnimRoot* cTreeNode_cSkaAnimAnchor_TreeNodeData_ctor(AnimRoot* dst, AnimRoot* src)
 {
     AnimRelations* rel;
-    AnimRoot_CopyRegion(&dst->a, &src->a);
-    AnimRoot_CopyRegion(&dst->b, &src->b);
-    AnimRoot_CopyDirtyFlags(&dst->dirty, &src->dirty);
+    cSkaAnimAnchor_TreeNodeData_tData_ctor(&dst->a, &src->a);
+    cSkaAnimAnchor_TreeNodeData_tData_ctor(&dst->b, &src->b);
+    cSkaAnimAnchor_TreeNodeData_tNeedsUpdate_ctor(&dst->dirty, &src->dirty);
     rel = &dst->rel;
     dst->unkB0 = 0;
-    AnimRoot_InitRelations(rel);
+    std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor(rel);
     rel->valid = 1;
     return dst;
 }
-#undef AnimRoot_CopyDirtyFlags /* merge_units */
-#undef AnimRoot_InitRelations /* merge_units */
+#undef cSkaAnimAnchor_TreeNodeData_tNeedsUpdate_ctor /* merge_units */
+#undef std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003AF0C0(void) {}
 #pragma pop /* merge_units */
@@ -61,14 +61,14 @@ static inline void merge_flush_func_003AF0C0(void) {}
  */
 
 
-Rel* AnimRoot_InitRelations(Rel* r) {
+Rel* std_vector_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-SkaDirtyFlags* AnimRoot_CopyDirtyFlags(SkaDirtyFlags* dst, SkaDirtyFlags* src) {
+SkaDirtyFlags* cSkaAnimAnchor_TreeNodeData_tNeedsUpdate_ctor(SkaDirtyFlags* dst, SkaDirtyFlags* src) {
     dst->f0 = src->f0;
     dst->f1 = src->f1;
     dst->f2 = src->f2;

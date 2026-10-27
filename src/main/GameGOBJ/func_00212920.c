@@ -12,7 +12,7 @@ extern void cPathedGOBJ_PathedGobjUpdateCallback();
 extern void func_002128A0();
 
 /* Initializes the network service, opens the named handle and registers its callbacks. */
-void NetPathedGobj_NetRegister(void)
+void cPathedGOBJ_InitNet(void)
 {
     NetInit init;
     int handle;

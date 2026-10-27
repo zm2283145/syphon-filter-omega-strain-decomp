@@ -15,7 +15,7 @@ extern void ezNetCtlInit(void);
 extern void ezNetCnfExit(void);
 extern void ezNetCtlExit(void);
 
-int Iop_LoadEzNetModules(int load)
+int SFOLibInit_RequestEzNetConfig(int load)
 {
     if (load) {
         LibInit_LoadIrxModule("EZNETCNF.IRX", 0, 0, 1);

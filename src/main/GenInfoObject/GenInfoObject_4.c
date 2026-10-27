@@ -27,7 +27,7 @@ int cGenInfoObject_ctor(int a0) {
 }
 
 /* clear(): frees all nodes and resets the map to empty. */
-void Map_Clear(Map* m) {
+void std_tree_pair_tGenInfoPtr_value_compare_clear(Map* m) {
     int root = m->head;
 
     if (root != 0) {

@@ -16,31 +16,31 @@ struct Backpack {
 extern "C" {
 extern int g_BackpackList;
 extern char D_004A7B50[];
-void* Mem_Alloc(int heap, int size, char* file, int line);
+void* cMemMan_Allocate(int heap, int size, char* file, int line);
 Backpack* cBackpack_ctor(void* p, int rec);
-void Backpack_AppendToList(int list, Backpack** bp);
-void NetMap_BindReceiver(int a, int b, void* c);
+void std_vector_cBackpackPtr_push_back(int list, Backpack** bp);
+void cNetObj_AddSystem(int a, int b, void* c);
 }
 
 static inline void* New_00257480(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004A7B50, line);
+    return cMemMan_Allocate(0, size, D_004A7B50, line);
 }
 
-extern "C" Backpack* Backpack_CreateFromRecord(int rec)
+extern "C" Backpack* cBackpack_NewBackpack_cPopulationR(int rec)
 {
     Backpack* bp;
     void* p = New_00257480(0x318, 0x16F);
     if (p) p = cBackpack_ctor(p, rec);
     bp = (Backpack*)p;
-    Backpack_AppendToList(g_BackpackList, &bp);
+    std_vector_cBackpackPtr_push_back(g_BackpackList, &bp);
     if (g_IsMultiplayer) {
         Backpack* b = bp;
         b->netid = b->id;
         if (!(g_IsMultiplayer ? D_005721C0 : 1)) b->active = 0;
         int nid = b->netid;
-        NetMap_BindReceiver(nid, NetObjId(), b);
+        cNetObj_AddSystem(nid, NetObjId(), b);
     }
     return bp;
 }

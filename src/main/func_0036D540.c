@@ -20,11 +20,11 @@ typedef struct ChunkReader {
     int user;              /* 0x164 */
 } ChunkReader;
 
-extern void String_Copy(char* dst, const char* src);
+extern void Libc_Strcpy(char* dst, const char* src);
 
 /* Binds a loaded chunk buffer to the reader; returns 0. */
-int Hog_OpenInMemory(ChunkReader* r, const char* name, char* buffer, int user) {
-    String_Copy(r->name, name);
+int cHogFile_Open(ChunkReader* r, const char* name, char* buffer, int user) {
+    Libc_Strcpy(r->name, name);
     r->loaded = 1;
     r->base = buffer;
     r->hdr = (ChunkHdr*)r->base;

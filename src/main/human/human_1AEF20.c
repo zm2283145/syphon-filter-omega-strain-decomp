@@ -28,21 +28,21 @@ DEFINE_TRIVIAL_DTOR(cSkaSwitchValue_dtor)
  * anim_channel_dtor.h written out, so the unit can define the class vtable). */
 extern "C" {
 void cSplinedMotion_Scalar0To1_dtor();
-void AnimChannel_AddOffset();
-void AnimChannel_DirectValueZero();
-void AnimChannel_DirectDerivedZero();
-void AnimChannel_PreUpdate();
-void AnimChannel_ClampValue();
-void AnimChannel_UpdateRate();
+void cSplinedMotion_Scalar0To1_TeleportByDelta();
+void cSplinedMotion_Scalar0To1_InitPos();
+void cSplinedMotion_Scalar0To1_ZeroVel();
+void cSplinedMotion_Scalar0To1_UpdateSplinePoints();
+void cSplinedMotion_Scalar0To1_FixUpResultOfSplineEvaluation();
+void cSplinedMotion_Scalar0To1_UpdateVelocity();
 extern char D_004DA380[];
 #if 0 /* merge_units */
 void operator_delete(void* allocation);
 #endif /* merge_units */
 #define operator_delete(a0) ((void)operator_delete((a0))) /* merge_units */
 
-void* const D_004DA840[12] = { 0, 0, (void*)cSplinedMotion_Scalar0To1_dtor, (void*)AnimChannel_AddOffset, (void*)AnimChannel_DirectValueZero,
-    (void*)AnimChannel_DirectDerivedZero, (void*)AnimChannel_PreUpdate, (void*)AnimChannel_ClampValue,
-    (void*)AnimChannel_UpdateRate, 0, 0, 0 };
+void* const D_004DA840[12] = { 0, 0, (void*)cSplinedMotion_Scalar0To1_dtor, (void*)cSplinedMotion_Scalar0To1_TeleportByDelta, (void*)cSplinedMotion_Scalar0To1_InitPos,
+    (void*)cSplinedMotion_Scalar0To1_ZeroVel, (void*)cSplinedMotion_Scalar0To1_UpdateSplinePoints, (void*)cSplinedMotion_Scalar0To1_FixUpResultOfSplineEvaluation,
+    (void*)cSplinedMotion_Scalar0To1_UpdateVelocity, 0, 0, 0 };
 }
 
 struct AnimChannelObj {

@@ -12,13 +12,13 @@ int localeconv(void) { return Newlib_LocaleconvR(D_00489738); }
 
 /* merge_units: begin func_00124F80 */
 extern int D_0058805C;
-extern int Newlib_SysLseek(int fd, void* buf, unsigned int cnt);
+extern int Libc_Lseek(int fd, void* buf, unsigned int cnt);
 struct reent_00124F80 { int _errno; };
 int Newlib_LseekR(struct reent_00124F80* ptr, int fd, void* buf, unsigned int cnt)
 {
     int ret;
     D_0058805C = 0;
-    if ((ret = Newlib_SysLseek(fd, buf, cnt)) == -1 && D_0058805C != 0)
+    if ((ret = Libc_Lseek(fd, buf, cnt)) == -1 && D_0058805C != 0)
         ptr->_errno = D_0058805C;
     return ret;
 }
@@ -30,7 +30,7 @@ typedef struct { unsigned char* _p; int _r; int _w; short _flags; short _file; u
 struct stat_X { short st_dev; unsigned short st_ino; unsigned int st_mode; char rest[0x68]; };
 extern int Newlib_FstatR(reent_X* r, int fd, struct stat_X* st);
 extern void* _malloc_r(reent_X* r, unsigned int n);
-extern int Newlib_SysIsatty(int fd);
+extern int Libc_Isatty(int fd);
 extern long Newlib_Sseek();
 extern void Newlib_CleanupR(void);
 void Newlib_Smakebuf(register FILE_X *fp)
@@ -75,7 +75,7 @@ void Newlib_Smakebuf(register FILE_X *fp)
       fp->_flags |= 0x0080;
       fp->_bf_base = fp->_p = (unsigned char *) p;
       fp->_bf_size = size;
-      if (couldbetty && Newlib_SysIsatty (fp->_file))
+      if (couldbetty && Libc_Isatty (fp->_file))
 	fp->_flags |= 0x0001;
     }
 }

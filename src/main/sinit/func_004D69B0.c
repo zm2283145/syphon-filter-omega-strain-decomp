@@ -4,7 +4,7 @@
 #pragma mpwc_relax on
 int __construct_array(char *, char *, int, int, int);                
 int __register_global_object(char *, char *, char *);          
-int LinkList_Ctor_3ECAF0(char *);
+int std_list_cSfxSchedulerPtr_ctor(char *);
 extern char D_0055A890;
 extern char D_0055C098;
 extern char D_0055C0A8;
@@ -13,6 +13,6 @@ extern char cSfxScheduler_tItem_ctor;
 
 void StaticInit_specfx(void) {
     __construct_array(&D_0055A890, &cSfxScheduler_tItem_ctor, 0, 0x10, 384);
-    LinkList_Ctor_3ECAF0(&D_0055C0A8);
+    std_list_cSfxSchedulerPtr_ctor(&D_0055C0A8);
     __register_global_object(&D_0055C0A8, &cLList_cSfxSchedulerPtr_dtor, &D_0055C098);
 }

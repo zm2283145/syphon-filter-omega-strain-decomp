@@ -24,7 +24,7 @@ static inline void WriteU8(unsigned char v)
 }
 
 /* cNetTaserMsg virtual 4: writes the mode; unless mode 2, also the target, position and three parameters. */
-void cNetTaserMsg_v04(cNetTaserMsg* self)
+void cNetTaserMsg_Pack(cNetTaserMsg* self)
 {
     WriteU8(self->mode);
     if (self->mode != 2) {

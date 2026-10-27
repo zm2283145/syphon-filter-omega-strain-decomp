@@ -19,19 +19,19 @@ extern unsigned char D_004AF4E8;
 extern void *memset(void *, int, unsigned int);
 extern void *memcpy(void *, const void *, unsigned int);
 extern char *strncpy(char *, const char *, unsigned int);
-extern int NetConn_Allocate(unsigned short *, int, int, int);
+extern int rt_msg_client_create_new_connection_index(unsigned short *, int, int, int);
 extern void KM_Destroy(unsigned short);
 extern void KM_Create(unsigned short, int, int);
 extern int rt_msg_client_get_connection(unsigned short, NsConn **);
 extern int rt_msg_client_change_state(NsConn *, int);
-extern int Net_AllocZeroed(void *, unsigned long);
+extern int rt_memory_allocate_init_zero(void *, unsigned long);
 extern int rt_time_start(void *);
 extern int rt_circ_buf_clear(void *);
 extern int rt_comm_create(void *, char *, unsigned short, NsAddr *);
 extern int rt_msg_client_map_comm_error(int);
 extern int rt_msg_client_update_comm_wait(NsConn *);
 
-int NetSession_CreateSockets(unsigned short *out, NsCfg *cfg)
+int rt_msg_client_iconnect(unsigned short *out, NsCfg *cfg)
 {
     NsAddr loc;
     unsigned short id = 0;
@@ -48,7 +48,7 @@ int NetSession_CreateSockets(unsigned short *out, NsCfg *cfg)
     if (!cfg->x38) return 2;
     if (cfg->mode >= 2u) return 2;
     *out = D_004908F0 + 1;
-    if ((r = NetConn_Allocate(&id, cfg->mode, cfg->x28, cfg->x2C)) != 0) return r;
+    if ((r = rt_msg_client_create_new_connection_index(&id, cfg->mode, cfg->x28, cfg->x2C)) != 0) return r;
     *out = id;
     KM_Destroy(id);
     KM_Create(id, 0, cfg->x1C);
@@ -58,7 +58,7 @@ int NetSession_CreateSockets(unsigned short *out, NsCfg *cfg)
     if ((r = rt_msg_client_change_state(conn, 0)) != 0) return r;
     memcpy(&conn->cfg, cfg, sizeof(*cfg));
     if (cfg->data && cfg->len) {
-        if (Net_AllocZeroed(&conn->cfg.data, cfg->len)) return 8;
+        if (rt_memory_allocate_init_zero(&conn->cfg.data, cfg->len)) return 8;
         memcpy(conn->cfg.data, cfg->data, cfg->len);
         conn->cfg.len = cfg->len;
     } else {

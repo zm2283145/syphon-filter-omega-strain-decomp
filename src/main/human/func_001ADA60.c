@@ -8,7 +8,7 @@
 #include "human_types.h"
 
 /* Copy xyz from src and set w. */
-Vec4* Vec4_SetXYZ_W(Vec4* dst, Vec4* src, float w) {
+Vec4* cAxisAngle_ctor_cVectorR_float(Vec4* dst, Vec4* src, float w) {
     dst->x = src->x;
     dst->y = src->y;
     dst->z = src->z;

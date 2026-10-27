@@ -2,38 +2,38 @@
 
 #include "types.h"
 
-/* Deleting destructor: string at +0x80, nested member at +0x6C, base GuiWidget_Destroy. */
+/* Deleting destructor: string at +0x80, nested member at +0x6C, base GuiWidget_dtor. */
 extern "C" {
 extern "C" void GuiAchievementScreen_GetClassName();
-extern "C" void GuiAchievementScreen_IsType();
-extern "C" void GuiAchievementScreen_Select();
-extern "C" void GuiAchievementScreen_Show();
-extern "C" void GuiAchievementScreen_Fill();
-extern "C" void GuiAchievementScreen_Wake();
-extern "C" void GuiAchievementScreen_Init();
-extern "C" void GuiPersonnelScreen_Back();
-extern "C" void GuiPersonnelScreen_HandleEvent();
-extern "C" void GuiPersonnelScreen_HandleInput();
-extern "C" void GuiWidget_FocusPrev();
-extern "C" void GuiWidget_FocusNext();
-extern "C" void GuiWidget_FocusLast();
-extern "C" void GuiWidget_FocusFirst();
-extern "C" void GuiWidget_BubbleActivate();
-extern "C" void GuiWidget_BubbleType1();
-extern "C" void GuiWidget_BubbleType0();
-extern "C" void GuiWidget_Update();
-extern "C" void GuiWidget_Draw();
-extern "C" void GuiWidget_BaseSleep();
-extern "C" void GuiWidget_ClearFlag4();
-extern "C" void GuiWidget_SetFlag4();
-extern "C" void GuiWidget_Deinit();
+extern "C" void GuiAchievementScreen_IsClass();
+extern "C" void GuiAchievementScreen_ItemAction();
+extern "C" void GuiAchievementScreen_ItemGainFocus();
+extern "C" void GuiAchievementScreen_PopulateList();
+extern "C" void GuiAchievementScreen_onWake();
+extern "C" void GuiAchievementScreen_onAdd();
+extern "C" void GuiPersonnelScreen_PreviousScreen();
+extern "C" void GuiPersonnelScreen_onMessage();
+extern "C" void GuiPersonnelScreen_onInput();
+extern "C" void GuiWidget_FindPrevFocus();
+extern "C" void GuiWidget_FindNextFocus();
+extern "C" void GuiWidget_FindLastFocus();
+extern "C" void GuiWidget_FindFirstFocus();
+extern "C" void GuiWidget_onAction();
+extern "C" void GuiWidget_onLoseFocus();
+extern "C" void GuiWidget_onGainFocus();
+extern "C" void GuiWidget_onAdvanceTime();
+extern "C" void GuiWidget_onRender();
+extern "C" void GuiWidget_onSleep();
+extern "C" void GuiWidget_onDeactivate();
+extern "C" void GuiWidget_onActivate();
+extern "C" void GuiWidget_onRemove();
 extern "C" void GuiWidget_Load();
 extern void * const D_004DEF90[];
 extern char D_004DF0B0[];
 void operator_delete(void* allocation);
 void* String_Dtor(void* self, short deleteFlag);
 void* func_00299360(void* self, short deleteFlag);
-void* GuiWidget_Destroy(void* self, short deleteFlag);
+void* GuiWidget_dtor(void* self, short deleteFlag);
 }
 struct O3533B0 { void* vtable; };
 extern "C" O3533B0* GuiAchievementScreen_dtor(O3533B0* self, short deleteFlag)
@@ -52,11 +52,11 @@ extern "C" O3533B0* GuiAchievementScreen_dtor(O3533B0* self, short deleteFlag)
         }
         if (self) {
             self->vtable = D_004DF0B0;
-            GuiWidget_Destroy(self, 0);
+            GuiWidget_dtor(self, 0);
         }
         if (deleteFlag > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004DEF90[28] = { (void*)0x0, (void*)0x0, (void*)GuiAchievementScreen_dtor, (void*)GuiAchievementScreen_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiAchievementScreen_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiPersonnelScreen_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiPersonnelScreen_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAchievementScreen_GetClassName, (void*)GuiAchievementScreen_IsType, (void*)GuiAchievementScreen_Fill, (void*)GuiAchievementScreen_Show, (void*)GuiAchievementScreen_Select, (void*)GuiPersonnelScreen_Back, (void*)0x0 };
+void * const D_004DEF90[28] = { (void*)0x0, (void*)0x0, (void*)GuiAchievementScreen_dtor, (void*)GuiAchievementScreen_onAdd, (void*)GuiWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiWidget_onDeactivate, (void*)GuiAchievementScreen_onWake, (void*)GuiWidget_onSleep, (void*)GuiWidget_onGainFocus, (void*)GuiWidget_onLoseFocus, (void*)GuiPersonnelScreen_onInput, (void*)GuiWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiWidget_onAdvanceTime, (void*)GuiPersonnelScreen_onMessage, (void*)GuiWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiAchievementScreen_GetClassName, (void*)GuiAchievementScreen_IsClass, (void*)GuiAchievementScreen_PopulateList, (void*)GuiAchievementScreen_ItemGainFocus, (void*)GuiAchievementScreen_ItemAction, (void*)GuiPersonnelScreen_PreviousScreen, (void*)0x0 };

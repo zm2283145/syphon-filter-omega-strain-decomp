@@ -9,7 +9,7 @@
 
 /* merge_units: begin func_00142140 */
 #pragma push /* merge_units */
-extern void HeldItem_Reset(int);
+extern void cAirTaser_Reset(int);
 
 void cWeapon_SetAmmoPlayerDeath(int a0) {
     int cond;
@@ -17,7 +17,7 @@ void cWeapon_SetAmmoPlayerDeath(int a0) {
     a0 = *(int*)(char*)a0;
     cond = a0 == 0;
     if (cond) goto L00142160;
-    HeldItem_Reset(a0);
+    cAirTaser_Reset(a0);
 L00142160:;
     goto ret;
 ret:;
@@ -51,19 +51,19 @@ typedef struct {
 extern int g_WeaponDatabase;
 extern float MaxNpcAmmoPct;
 extern float D_00489C20;
-Wpn_142170* WeaponDb_Get(int, int);
-int WeaponInv_ClipsForActor(int, int);
-int Random_Next(void);
-static inline float frand(void) { return Random_Next() / 2147483648.0f; }
+Wpn_142170* cWeaponDB_GetEntry(int, int);
+int cHuman_AdjustMaxClips(int, int);
+int Libc_Rand(void);
+static inline float frand(void) { return Libc_Rand() / 2147483648.0f; }
 
-void WeaponInv_RandomizeDroppedAmmo(Inv_142170* inv)
+void cWeapon_SetAmmoNpcDeath(Inv_142170* inv)
 {
     int i;
     for (i = 0; i < 6; i++) {
         Slot_142170* s = &inv->slots[i];
         if (s->id != -1) {
-            Wpn_142170* w = WeaponDb_Get(g_WeaponDatabase, s->id);
-            int total = w->clip * WeaponInv_ClipsForActor(inv->actor, w->f74);
+            Wpn_142170* w = cWeaponDB_GetEntry(g_WeaponDatabase, s->id);
+            int total = w->clip * cHuman_AdjustMaxClips(inv->actor, w->f74);
             float pct;
             int n;
             pct = frand();
@@ -107,27 +107,27 @@ extern void* g_WeaponDatabase;
 #define g_WeaponDatabase (*(void **)&g_WeaponDatabase) /* merge_units */
 
 #if 0 /* merge_units */
-extern WDef_2320* WeaponDb_Get(void* db, int id);
+extern WDef_2320* cWeaponDB_GetEntry(void* db, int id);
 #endif /* merge_units */
-#define WeaponDb_Get(a0, a1) ((WDef_2320 *)WeaponDb_Get((int)(a0), (a1))) /* merge_units */
+#define cWeaponDB_GetEntry(a0, a1) ((WDef_2320 *)cWeaponDB_GetEntry((int)(a0), (a1))) /* merge_units */
 
-extern void Backpack_AddWeapon(void* o, int id, int d, int c, int z);
-extern void WeaponInv_RemoveSlot(INV* self, unsigned char slot, int a, int b, int c);
-void WeaponInv_MoveItemsToBackpack(INV* self, void* o)
+extern void cBackpack_AddWeapon(void* o, int id, int d, int c, int z);
+extern void cWeapon_RemoveWeapon(INV* self, unsigned char slot, int a, int b, int c);
+void cWeapon_InitBackpack(INV* self, void* o)
 {
     int i;
     if (self->lock)
         return;
     for (i = 7; i >= 0; i--) {
         E_INV* e = (E_INV*)((char*)self + i * 16 + 4);
-        if (e->id != -1 && WeaponDb_Get(g_WeaponDatabase, e->id)->xA8) {
-            Backpack_AddWeapon(o, e->id, e->d, e->c, 0);
-            WeaponInv_RemoveSlot(self, i, 0, 0, 0);
+        if (e->id != -1 && cWeaponDB_GetEntry(g_WeaponDatabase, e->id)->xA8) {
+            cBackpack_AddWeapon(o, e->id, e->d, e->c, 0);
+            cWeapon_RemoveWeapon(self, i, 0, 0, 0);
         }
     }
 }
 #undef g_WeaponDatabase /* merge_units */
-#undef WeaponDb_Get /* merge_units */
+#undef cWeaponDB_GetEntry /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00142320(void) {}
 #pragma pop /* merge_units */
@@ -137,11 +137,11 @@ static inline void merge_flush_func_00142320(void) {}
 #pragma push /* merge_units */
 typedef struct { int a0; int a4; int id; int ac; } S23E0;
 #if 0 /* merge_units */
-extern void WeaponInv_RemoveSlot(void* self, unsigned char slot, int a, int b, int c);
+extern void cWeapon_RemoveWeapon(void* self, unsigned char slot, int a, int b, int c);
 #endif /* merge_units */
-#define WeaponInv_RemoveSlot(a0, a1, a2, a3, a4) (WeaponInv_RemoveSlot((void *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define cWeapon_RemoveWeapon(a0, a1, a2, a3, a4) (cWeapon_RemoveWeapon((void *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
-void WeaponInv_ClearSlots(S23E0* self)
+void cWeapon_RemoveAllWeapons(S23E0* self)
 {
     int i;
     S23E0* p;
@@ -149,12 +149,12 @@ void WeaponInv_ClearSlots(S23E0* self)
     p = self;
     do {
         if (p->id != -1)
-            WeaponInv_RemoveSlot(self, i, 0, 1, 0);
+            cWeapon_RemoveWeapon(self, i, 0, 1, 0);
         i++;
         p++;
     } while (i < 6);
 }
-#undef WeaponInv_RemoveSlot /* merge_units */
+#undef cWeapon_RemoveWeapon /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001423E0(void) {}
 #pragma pop /* merge_units */

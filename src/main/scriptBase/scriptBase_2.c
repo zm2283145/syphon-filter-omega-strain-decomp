@@ -10,7 +10,7 @@
 #include "alloc_guard.h"
 extern "C" {
 extern char D_004BD3B0[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 int strlen(const char* s);
 void* memcpy(void* d, const void* s, unsigned int n);
 }
@@ -26,7 +26,7 @@ struct S6190 {
 };
 static inline char* Alloc6190(int n) {
     AllocGuard g;
-    return (char*)Mem_Alloc(0, n, D_004BD3B0, 0x130);
+    return (char*)cMemMan_Allocate(0, n, D_004BD3B0, 0x130);
 }
 static inline int Round6190(int n) { return (n + 31) / 32 * 32; }
 extern "C" S6190* VarDef_ctor(S6190* s, const char* name, int a, int b, unsigned char f)
@@ -57,7 +57,7 @@ typedef struct { char pad[0xA8]; int* cursor; } Writer;
 typedef struct { void* key; } KeyRef;
 typedef struct { char* name; KeyRef* ref; } NamedRef;
 extern int strlen(const char* s); /* strlen */
-extern char* String_Copy(char* dst, const char* src);
+extern char* Libc_Strcpy(char* dst, const char* src);
 extern void ScriptFileBuff_put(Writer* w, int size);
 extern int ScriptFileBuff_charsToInts(Writer* w, int size);
 extern void ScriptFileBuff_expand(Writer* w, int words);
@@ -69,7 +69,7 @@ static inline void Writer_PutString(Writer* w, char* s)
     ScriptFileBuff_put(w, size);
     words = ScriptFileBuff_charsToInts(w, size);
     ScriptFileBuff_expand(w, words);
-    String_Copy((char*)w->cursor, s);
+    Libc_Strcpy((char*)w->cursor, s);
     w->cursor += words;
 }
 /* Serialises the name and the key's name as padded strings. */

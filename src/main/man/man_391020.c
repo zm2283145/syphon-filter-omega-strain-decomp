@@ -8,7 +8,7 @@
 #include "types.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 void *memcpy();
 int strcmp(const void *, const void *);
 
@@ -44,17 +44,17 @@ extern char g_AgentPartCache[];
 extern char D_005711B0[];
 extern char D_004BC310[];
 
-void ActorModel_SwitchBodyPacking(Self391020* self);
-void Appearance_RemoveBlankPairs(App391020* app);
-int Appearance_GetPairCount(App391020* app);
-void Appearance_RequestHardMesh(App391020* app, int hard, char* out);
-void TexCache_LoadPartTexture(char* cache, __int128 name, char* tex, short* a, short* b);
+void cMan_MergeSKLs(Self391020* self);
+void SKL_RemoveBlanks(App391020* app);
+int SKL_CountAttribs(App391020* app);
+void SKL_LoadSKLParts(App391020* app, int hard, char* out);
+void Monster_FindAddTexture(char* cache, __int128 name, char* tex, short* a, short* b);
 int FindTex__7MonsterF1(char* cache, __int128 name);
 void Monster_FreeTexture(char* cache, int slot);
-int MeshCache_FindSlot(char* cache, __int128 name);
+int FindPart__7MonsterF1(char* cache, __int128 name);
 void Monster_FreePart(char* cache, int slot);
-void Appearance_ReorderParts(Self391020* self);
-void ActorModel_Setup(Self391020* self, int flag);
+void cMan_SortParts(Self391020* self);
+void cMan_BuildMan(Self391020* self, int flag);
 }
 
 extern "C" void cMan_AddDisguise(Self391020* self)
@@ -63,15 +63,15 @@ extern "C" void cMan_AddDisguise(Self391020* self)
     int j;
     int n;
 
-    ActorModel_SwitchBodyPacking(self);
-    Appearance_RemoveBlankPairs(&self->app);
-    self->x23C0 = Appearance_GetPairCount(&self->app);
-    Appearance_RequestHardMesh(&self->app, 1, self->x20);
+    cMan_MergeSKLs(self);
+    SKL_RemoveBlanks(&self->app);
+    self->x23C0 = SKL_CountAttribs(&self->app);
+    SKL_LoadSKLParts(&self->app, 1, self->x20);
     for (i = 0; self->app.pairs[i].b; i++) {
-        TexCache_LoadPartTexture(g_AgentPartCache, self->app.pairs[i].b, D_005711B0, &self->x22C0[i], &self->x2300[i]);
+        Monster_FindAddTexture(g_AgentPartCache, self->app.pairs[i].b, D_005711B0, &self->x22C0[i], &self->x2300[i]);
     }
     self->x22C0[i] = 0;
-    n = Appearance_GetPairCount(self->x2C14);
+    n = SKL_CountAttribs(self->x2C14);
     for (j = 0; j <= n; j++) {
         int s = FindTex__7MonsterF1(g_AgentPartCache, self->x2C14->pairs[j].b);
         if (s != -1) {
@@ -79,7 +79,7 @@ extern "C" void cMan_AddDisguise(Self391020* self)
         }
     }
     for (i = 0; i < n; i++) {
-        int s = MeshCache_FindSlot(g_AgentPartCache, self->x2C14->pairs[i].a);
+        int s = FindPart__7MonsterF1(g_AgentPartCache, self->x2C14->pairs[i].a);
         if (s != -1) {
             Monster_FreePart(g_AgentPartCache, s);
         }
@@ -87,11 +87,11 @@ extern "C" void cMan_AddDisguise(Self391020* self)
     {
         App391020* p = self->x2C14;
         AllocGuard g;
-        Mem_Free(0, p, D_004BC310, 0x2DA);
+        cMemMan_Deallocate(0, p, D_004BC310, 0x2DA);
     }
     self->x2C14 = 0;
-    Appearance_ReorderParts(self);
-    ActorModel_Setup(self, 1);
+    cMan_SortParts(self);
+    cMan_BuildMan(self, 1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00391020(void) {}
@@ -116,9 +116,9 @@ struct Self391210 {
 extern "C" {
 void cMan_GetTextureIDs(Self391210* self);
 #if 0 /* merge_units */
-void ActorModel_Setup(Self391210* self, int flag);
+void cMan_BuildMan(Self391210* self, int flag);
 #endif /* merge_units */
-#define ActorModel_Setup(a0, a1) (ActorModel_Setup((Self391020 *)(a0), (a1))) /* merge_units */
+#define cMan_BuildMan(a0, a1) (cMan_BuildMan((Self391020 *)(a0), (a1))) /* merge_units */
 
 }
 
@@ -138,7 +138,7 @@ static inline void QMove_391210(void* d0, void* s, int n0) {
     }
 }
 
-extern "C" void ActorModel_RestoreBodyPacking(Self391210* self)
+extern "C" void cMan_RemoveCostume(Self391210* self)
 {
     App391210* s = self->x2C14;
     if (s) {
@@ -146,14 +146,14 @@ extern "C" void ActorModel_RestoreBodyPacking(Self391210* self)
         {
             App391210* p = self->x2C14;
             AllocGuard g;
-            Mem_Free(0, p, D_004BC310, 0x2A8);
+            cMemMan_Deallocate(0, p, D_004BC310, 0x2A8);
         }
         self->x2C14 = 0;
         cMan_GetTextureIDs(self);
-        ActorModel_Setup(self, 1);
+        cMan_BuildMan(self, 1);
     }
 }
-#undef ActorModel_Setup /* merge_units */
+#undef cMan_BuildMan /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00391210(void) {}
 #pragma pop /* merge_units */
@@ -166,8 +166,8 @@ extern unsigned char D_0053B340;
 extern unsigned char D_0053B341;
 extern unsigned char D_0053B348;
 extern unsigned char D_0053B349;
-extern int Morph_FindShapeIndex(char* name, int which);
-void Expression_Init(void)
+extern int FindFace(char* name, int which);
+void cMan_ManInit(void)
 {
     int i;
     if (WoundEffectTable[0] == -1) {
@@ -178,10 +178,10 @@ void Expression_Init(void)
             WoundEffectTable[i] = WoundEffectTable[0];
         }
     }
-    D_0053B340 = Morph_FindShapeIndex("EMO_SHOT", 0);
-    D_0053B341 = Morph_FindShapeIndex("EMO_SHOT", 1);
-    D_0053B348 = Morph_FindShapeIndex("BLINKBOTH", 0);
-    D_0053B349 = Morph_FindShapeIndex("BLINKBOTH", 1);
+    D_0053B340 = FindFace("EMO_SHOT", 0);
+    D_0053B341 = FindFace("EMO_SHOT", 1);
+    D_0053B348 = FindFace("BLINKBOTH", 0);
+    D_0053B349 = FindFace("BLINKBOTH", 1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00391300(void) {}
@@ -190,7 +190,7 @@ static inline void merge_flush_func_00391300(void) {}
 
 /* merge_units: begin func_003913D0 */
 #pragma push /* merge_units */
-/* Skel_ApplyScalePreset */
+/* cMan_SetBoneSet */
 typedef struct { char name[16]; } Pt2_PresetName;
 typedef struct { unsigned int count; Pt2_PresetName e[24]; } Pt2_PresetTbl;
 typedef struct { float x, y, z, w; } Pt2_Sc;
@@ -199,12 +199,12 @@ typedef struct { char pad0[0x40]; char name[0x2BC4]; Pt2_Skl* skel; char pad2C08
 extern Pt2_PresetTbl D_00571300;
 extern Pt2_Sc* D_00571484[];
 extern float* cArray_cBoneScale_opIndex(void*, int);
-extern void* SkelNodes_GetAt(void*, int);
+extern void* cArray_cBone_opIndex_int_2(void*, int);
 extern void cBone_SetScaleX(void*, float);
 extern void cBone_SetScaleY(void*, float);
 extern void cBone_SetScaleZ(void*, float);
 
-int Skel_ApplyScalePreset(Pt2_App* a, int preset) {
+int cMan_SetBoneSet(Pt2_App* a, int preset) {
     Pt2_Sc* s;
     int i;
     if (preset < 0) {
@@ -224,13 +224,13 @@ int Skel_ApplyScalePreset(Pt2_App* a, int preset) {
         float v;
         k = a->skel; v = s->x;
         cArray_cBoneScale_opIndex(k->bones, i)[0] = v;
-        if (k->hasMorph) cBone_SetScaleX(SkelNodes_GetAt(k->morph, i), v);
+        if (k->hasMorph) cBone_SetScaleX(cArray_cBone_opIndex_int_2(k->morph, i), v);
         k = a->skel; v = s->y;
         cArray_cBoneScale_opIndex(k->bones, i)[1] = v;
-        if (k->hasMorph) cBone_SetScaleY(SkelNodes_GetAt(k->morph, i), v);
+        if (k->hasMorph) cBone_SetScaleY(cArray_cBone_opIndex_int_2(k->morph, i), v);
         k = a->skel; v = s->z;
         cArray_cBoneScale_opIndex(k->bones, i)[2] = v;
-        if (k->hasMorph) cBone_SetScaleZ(SkelNodes_GetAt(k->morph, i), v);
+        if (k->hasMorph) cBone_SetScaleZ(cArray_cBone_opIndex_int_2(k->morph, i), v);
     }
     a->preset = preset;
     return preset;

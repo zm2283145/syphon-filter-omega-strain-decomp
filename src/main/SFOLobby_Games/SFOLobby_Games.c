@@ -12,10 +12,10 @@ char *strncpy(void *, const void *, int);
 /* merge_units: begin func_0044E060 */
 #pragma push /* merge_units */
 #include "SFOLobby.h"
-extern void String_Copy(char*, char*);
-extern int Lobby_GetTime(void);
+extern void Libc_Strcpy(char*, char*);
+extern int SFOLobby_GetMillisecs(void);
 extern void SFOLobby_SetError(SFOLobby*, int, char*, int);
-extern void SFOLobby_CallUpdateHook(SFOLobby*, int, int);
+extern void SFOLobby_GuiCallback(SFOLobby*, int, int);
 extern int SFOLobby_Poll(SFOLobby*, int, int, int);
 extern void MediusGetGameInfo(void*, void*);
 extern int D_00497890;    /* request timeout */
@@ -35,14 +35,14 @@ char* SFOLobby_GetGameInfo(SFOLobby* s, int arg)
 
     s->gotReply20C = 0;
     memset(&req, 0, sizeof(req));
-    String_Copy(req.messageId, D_004C0EF0);
-    String_Copy(req.sessionKey, s->sessionKey);
+    Libc_Strcpy(req.messageId, D_004C0EF0);
+    Libc_Strcpy(req.sessionKey, s->sessionKey);
     req.arg = arg;
     MediusGetGameInfo(&req, func_00446B40);
-    t0 = Lobby_GetTime();
+    t0 = SFOLobby_GetMillisecs();
     s->busy = 1;
     while (NonZero44E060(s->gotReply20C) ^ 1) {
-        SFOLobby_CallUpdateHook(s, 0, 0);
+        SFOLobby_GuiCallback(s, 0, 0);
         if (s->requestResult != 0) {
             s->busy = 0;
             return 0;
@@ -71,9 +71,9 @@ typedef struct {
     int value;
 } Request;
 #if 0 /* merge_units */
-extern char* String_Copy(char* dst, const char* src);
+extern char* Libc_Strcpy(char* dst, const char* src);
 #endif /* merge_units */
-#define String_Copy(a0, a1) (String_Copy((a0), (void *)(a1))) /* merge_units */
+#define Libc_Strcpy(a0, a1) (Libc_Strcpy((a0), (void *)(a1))) /* merge_units */
 
 extern void MediusSetGameListFilter(Request* req, void (*cb)(void));
 extern void SFOLobby_Callback_SetGameListFilter(void);
@@ -86,20 +86,20 @@ void SFOLobby_FilterGameListByMyMission(SFOLobby* self, int value)
     Request b;
     memset(&a, 0, sizeof(Request));
     sprintf(a.messageId, "%d", 4);
-    String_Copy(a.sessionKey, self->sessionKey);
+    Libc_Strcpy(a.sessionKey, self->sessionKey);
     a.field = 4;
     a.compare = 2;
     a.value = value;
     MediusSetGameListFilter(&a, SFOLobby_Callback_SetGameListFilter);
     memset(&b, 0, sizeof(Request));
     sprintf(b.messageId, "%d", 7);
-    String_Copy(b.sessionKey, self->sessionKey);
+    Libc_Strcpy(b.sessionKey, self->sessionKey);
     b.field = 7;
     b.compare = 2;
     b.value = 1;
     MediusSetGameListFilter(&b, SFOLobby_Callback_SetGameListFilter);
 }
-#undef String_Copy /* merge_units */
+#undef Libc_Strcpy /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0044E1A0 */
 
@@ -108,7 +108,7 @@ void SFOLobby_FilterGameListByMyMission(SFOLobby* self, int value)
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int SFOLobby_NoInstance();
+int SFOLobby_IgnoreCallbacks();
 extern SFOLobby * D_00585E60;
 
 typedef struct { char c[21]; } SCc21;
@@ -123,7 +123,7 @@ void SFOLobby_Callback_JoinGame(int d0, int d1, int d2, signed char *arg3) {
     int var_a0;
     int var_a0_2;
 
-    if (SFOLobby_NoInstance() == 0) {
+    if (SFOLobby_IgnoreCallbacks() == 0) {
         var_a0 = 0x15;
         var_a2 = arg3;
         D_00585E60->gotReply210 = 1;
@@ -162,7 +162,7 @@ int SFOLobby_GameIntel(void) {
 /* merge_units: begin func_0044E340 */
 #pragma push /* merge_units */
 #pragma mpwc_relax on
-int Net_ParseIPv4(char * );
+int SFOLobby_PackIPAddress(char * );
 int SFOMGCL_SetConnectedFlag(int);
 int SFOMGCL_SetAsCurrentHost(int);
 int SFOMGCL_AmICurrentHost();
@@ -187,7 +187,7 @@ void SFOLobby_ExitGame(SFOLobby * arg0) {
     }
     SFOLobby_StatsCallback(arg0, 3, &D_00585E90);
     D_00585F78 = arg0->unk2484;
-    D_00585F84 = Net_ParseIPv4(arg0->myIp);
+    D_00585F84 = SFOLobby_PackIPAddress(arg0->myIp);
     D_00585F88 = 5;
     D_00585F7C = 0;
     D_00585F89 = 0;
@@ -207,7 +207,7 @@ void SFOLobby_ExitGame(SFOLobby * arg0) {
 #pragma push /* merge_units */
 #pragma mpwc_relax on
 
-extern int Net_ParseIPv4(char*);
+extern int SFOLobby_PackIPAddress(char*);
 extern void Net_StartSessionSingleTry(void*);
 #if 0 /* merge_units */
 extern char* SFOLobby_GetGameInfo(SFOLobby*, int);
@@ -234,7 +234,7 @@ typedef struct LobbyGame {
     char pad28[4];
 } LobbyGame;
 
-extern void* LobbyArray_At(LobbyArray*, int);
+extern void* SFOLobbyList_GetSlot(LobbyArray*, int);
 extern LobbyAccountEntry* SFOLobby_FindAgentData(SFOLobby*, int);
 extern int D_005721A8;
 extern int D_00584520;
@@ -258,7 +258,7 @@ static inline LobbyGame* FindGame(SFOLobby* s, int id) {
         int j;
         LobbyGame* e;
         for (j = 0; j < n; j++) {
-            e = (LobbyGame*)LobbyArray_At(&s->pool118, j);
+            e = (LobbyGame*)SFOLobbyList_GetSlot(&s->pool118, j);
             if (id == e->id) {
                 return e;
             }
@@ -300,12 +300,12 @@ int SFOLobby_JoinGame(SFOLobby* s, int id) {
     }
     type = g->type;
     if (type == 3 || type == 4) {
-        t0 = Lobby_GetTime();
+        t0 = SFOLobby_GetMillisecs();
         wid = g->worldId;
         acc = SFOLobby_FindAgentData(s, wid);
         while (acc->f34 == 3) {
             SFOLobby_PingRequest(s, wid);
-            SFOLobby_CallUpdateHook(s, 0, 0);
+            SFOLobby_GuiCallback(s, 0, 0);
             if (SFOLobby_Poll(s, t0, D_00497890, 0) == 0) {
                 SFOLobby_SetError(s, 2, D_004C0F00, 0x1BF);
                 break;
@@ -334,7 +334,7 @@ int SFOLobby_JoinGame(SFOLobby* s, int id) {
     }
     SFOLobby_StatsCallback(s, 2, &D_00585E90);
     D_00585F78 = s->unk2484;
-    D_00585F84 = Net_ParseIPv4(s->myIp);
+    D_00585F84 = SFOLobby_PackIPAddress(s->myIp);
     D_00585F7C = g->worldId;
     D_00585F89 = g->f10;
     D_00585F88 = g->type;
@@ -344,7 +344,7 @@ int SFOLobby_JoinGame(SFOLobby* s, int id) {
         return 0;
     }
     memset(&req, 0, sizeof(req));
-    String_Copy(req.messageId, D_004C0EF0);
+    Libc_Strcpy(req.messageId, D_004C0EF0);
     strncpy(req.sessionKey, s->sessionKey, 0x11);
     req.id = id;
     req.f50 = 2;
@@ -353,11 +353,11 @@ int SFOLobby_JoinGame(SFOLobby* s, int id) {
         SFOLobby_SetError(s, 1, D_004C0F00, 0x21D);
         return 0;
     }
-    t1 = Lobby_GetTime();
+    t1 = SFOLobby_GetMillisecs();
     s->gotReply210 = 0;
     s->busy = 1;
     while (s->gotReply210 == 0) {
-        SFOLobby_CallUpdateHook(s, 0, 0);
+        SFOLobby_GuiCallback(s, 0, 0);
         if (SFOLobby_Poll(s, t1, D_00497890, 0) == 0) {
             SFOLobby_SetError(s, 2, D_004C0F00, 0x22C);
             s->busy = 0;
@@ -390,7 +390,7 @@ extern void SFOLobby_SetError(char*, int, char*, int);
 #endif /* merge_units */
 #define SFOLobby_SetError(a0, a1, a2, a3) (SFOLobby_SetError((void *)(a0), (a1), (a2), (a3))) /* merge_units */
 
-extern void Net_StartSession(int);
+extern void cDME_ConnectToGame(int);
 extern int SFOMGCL_CreateGameOnSelf(char*, char*, char*, int, int, int, int, int, int, int, int, int, int);
 #if 0 /* merge_units */
 extern int SFOLobby_StatsCallback(char*, int, char*);
@@ -443,7 +443,7 @@ int SFOLobby_CreateGame(char* self, int a1, int a2, int a3)
     }
     F_(self, 0x26A0, char) = 0;
     D_00494180 = a2;
-    Net_StartSession(0);
+    cDME_ConnectToGame(0);
     D_00584520 = D_005721A8;
     sprintf(buf, D_004C0F20, self + 0x243D, a2, a1, a3, F_(self, 0x2480, int));
     if (!SFOMGCL_CreateGameOnSelf(buf, (char*)&D_00585E70, D_004C0F30, F_(self, 0x1EA8, int), a2, 1, a1, 0, 0, 0, 0, 0, 2)) {
@@ -452,7 +452,7 @@ int SFOLobby_CreateGame(char* self, int a1, int a2, int a3)
     }
     SFOLobby_StatsCallback(self, 1, D_00585E90);
     D_00585F78 = F_(self, 0x2484, int);
-    D_00585F84 = Net_ParseIPv4(self + 0x2429);
+    D_00585F84 = SFOLobby_PackIPAddress(self + 0x2429);
     D_00585F7C = F_(self, 0x2480, int);
     D_00585F89 = a1;
     D_00585F80 = SFOMGCL_Get_MediusWorldID();
@@ -463,7 +463,7 @@ int SFOLobby_CreateGame(char* self, int a1, int a2, int a3)
     D_00585E74 = a1;
     D_00585E7C = a3;
     D_00585E80 = 0;
-    D_00585E84 = Net_ParseIPv4(self + 0x2429);
+    D_00585E84 = SFOLobby_PackIPAddress(self + 0x2429);
     if (!SFOLobby_UpdateStats(self, D_00585E90)) {
         SFOLobby_SetError(self, 1, D_004C0F00, 0x176);
         return 0;

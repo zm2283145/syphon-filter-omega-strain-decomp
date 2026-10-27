@@ -26,9 +26,9 @@ struct Col_1C1470 {
     virtual void v20(); virtual void v21(); virtual void Activate(int on);
 };
 extern "C" {
-int Pop_FindTag(PopReader_1C1470* r, int tag);
-Col_1C1470* IdMgr_FindCollision(int a, int b);
-void ZoneMgr_Associate(Col_1C1470* a, Col_1C1470* b, int c, Col_1C1470* d);
+int cPopulation_SeekBlock(PopReader_1C1470* r, int tag);
+Col_1C1470* nGobjManager_LookupGOBJ_int_int(int a, int b);
+void cTerrain_AddActivation(Col_1C1470* a, Col_1C1470* b, int c, Col_1C1470* d);
 }
 static inline void Align_1C1470(PopReader_1C1470* r)
 {
@@ -82,10 +82,10 @@ static inline void Copy_1C1470(void* d0, void* s0, int n0)
     done:
     }
 }
-extern "C" void Loader_LoadPointLights(void* a0, PopReader_1C1470* r)
+extern "C" void cLoader_ProcessLightsActivation(void* a0, PopReader_1C1470* r)
 {
     Align_1C1470(r);
-    if ((unsigned char)Pop_FindTag(r, 0x3A544E50)) {
+    if ((unsigned char)cPopulation_SeekBlock(r, 0x3A544E50)) {
         int n = ReadInt_1C1470(r);
         int i = 0;
         for (; i < n; i++) {
@@ -95,12 +95,12 @@ extern "C" void Loader_LoadPointLights(void* a0, PopReader_1C1470* r)
             int c = ReadInt_1C1470(r);
             int d = ReadInt_1C1470(r);
             if (c != -1 && d != -1) {
-                Col_1C1470* o1 = IdMgr_FindCollision(a, b);
-                Col_1C1470* o2 = IdMgr_FindCollision(c, d);
+                Col_1C1470* o1 = nGobjManager_LookupGOBJ_int_int(a, b);
+                Col_1C1470* o2 = nGobjManager_LookupGOBJ_int_int(c, d);
                 if (o1)
                     o1->Activate(1);
                 if (o2 && o1)
-                    ZoneMgr_Associate(o2, o1, 1, o2);
+                    cTerrain_AddActivation(o2, o1, 1, o2);
             }
             Copy_1C1470((void*)&L.buf, r->cur, 0x24);
             r->cur += 0x24;
@@ -135,28 +135,28 @@ struct Light_1C1770 { void* vt; char pad[0x64]; };
 extern "C" {
 extern char D_0049EE88[];
 extern char D_004DA0B0[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void Object_Register(void* o);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void nGobjManager_AddGOBJ(void* o);
 #if 0 /* merge_units */
-int Pop_FindTag(PopReader_1C1770* r, int tag);
+int cPopulation_SeekBlock(PopReader_1C1770* r, int tag);
 #endif /* merge_units */
-#define Pop_FindTag(a0, a1) (Pop_FindTag((PopReader_1C1470 *)(a0), (a1))) /* merge_units */
+#define cPopulation_SeekBlock(a0, a1) (cPopulation_SeekBlock((PopReader_1C1470 *)(a0), (a1))) /* merge_units */
 
 void* cGameSceneLight_ctor(void* p, PopReader_1C1770* r);
 void* cGameDirectionalLight_ctor(void* p, PopReader_1C1770* r);
 void cGameLight_dtor(void* p, int f);
-void Loader_UpdateLoadingScreen(void* a, char* name, int x);
-void* App_GetInstance(void);
+void cMachine_ShowLoadingScreen(void* a, char* name, int x);
+void* GetMachine(void);
 }
-extern "C" void Loader_InitLights(void* a0, PopReader_1C1770* r)
+extern "C" void cLoader_LoadLights(void* a0, PopReader_1C1770* r)
 {
     if (r->cur) {
         int mis;
-        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Lights...", 0);
+        cMachine_ShowLoadingScreen(GetMachine(), "Initializing Lights...", 0);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;
-        if ((unsigned char)Pop_FindTag(r, 0x3A544E50)) {
+        if ((unsigned char)cPopulation_SeekBlock(r, 0x3A544E50)) {
             {
                 int n;
                 int i = 0;
@@ -166,17 +166,17 @@ extern "C" void Loader_InitLights(void* a0, PopReader_1C1770* r)
                     void* p;
                     {
                         AllocGuard g;
-                        p = Mem_Alloc(0, 0x68, D_0049EE88, 0x441);
+                        p = cMemMan_Allocate(0, 0x68, D_0049EE88, 0x441);
                     }
                     if (p)
                         p = cGameSceneLight_ctor(p, r);
-                    Object_Register(p);
+                    nGobjManager_AddGOBJ(p);
                 }
             }
             mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
             if (mis)
                 r->cur += 4 - mis;
-            if ((unsigned char)Pop_FindTag(r, 0x3A524944)) {
+            if ((unsigned char)cPopulation_SeekBlock(r, 0x3A524944)) {
                 int n;
                 int i = 0;
                 n = *(int*)r->cur;
@@ -186,11 +186,11 @@ extern "C" void Loader_InitLights(void* a0, PopReader_1C1770* r)
                         void* p;
                         {
                             AllocGuard g;
-                            p = Mem_Alloc(0, 0x68, D_0049EE88, 0x484);
+                            p = cMemMan_Allocate(0, 0x68, D_0049EE88, 0x484);
                         }
                         if (p)
                             p = cGameDirectionalLight_ctor(p, r);
-                        Object_Register(p);
+                        nGobjManager_AddGOBJ(p);
                     } else {
                         Light_1C1770 tmp;
                         cGameDirectionalLight_ctor(&tmp, r);
@@ -202,7 +202,7 @@ extern "C" void Loader_InitLights(void* a0, PopReader_1C1770* r)
         }
     }
 }
-#undef Pop_FindTag /* merge_units */
+#undef cPopulation_SeekBlock /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C1770(void) {}
 #pragma pop /* merge_units */
@@ -217,18 +217,18 @@ typedef struct G4PopReader {
     int* cur;
 } G4PopReader;
 extern char g_LightMgr[];
-extern void* App_GetInstance(void);
+extern void* GetMachine(void);
 #if 0 /* merge_units */
-extern void Loader_UpdateLoadingScreen(void* h, void* s, int f);
+extern void cMachine_ShowLoadingScreen(void* h, void* s, int f);
 #endif /* merge_units */
-#define Loader_UpdateLoadingScreen(a0, a1, a2) (Loader_UpdateLoadingScreen((a0), (void *)(a1), (a2))) /* merge_units */
+#define cMachine_ShowLoadingScreen(a0, a1, a2) (cMachine_ShowLoadingScreen((a0), (void *)(a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int Pop_FindTag(G4PopReader* r, int tag);
+extern int cPopulation_SeekBlock(G4PopReader* r, int tag);
 #endif /* merge_units */
-#define Pop_FindTag(a0, a1) (Pop_FindTag((void *)(a0), (a1))) /* merge_units */
+#define cPopulation_SeekBlock(a0, a1) (cPopulation_SeekBlock((void *)(a0), (a1))) /* merge_units */
 
-extern void LightMgr_AllocPool(void* pool, int type, int count);
+extern void cLightMan_AllocateLightSources(void* pool, int type, int count);
 static inline void G4_Align(G4PopReader* r)
 {
     int m = (unsigned long long)(unsigned int)r->cur % 4;
@@ -236,32 +236,32 @@ static inline void G4_Align(G4PopReader* r)
         r->cur = (int*)((int)r->cur + (4 - m));
     }
 }
-void Loader_AllocateLights(void* level, G4PopReader* r)
+void cLoader_PreAllocLights(void* level, G4PopReader* r)
 {
     int n;
     if (r->cur == 0) {
         return;
     }
-    Loader_UpdateLoadingScreen(App_GetInstance(), "Allocating Lights...", 0);
+    cMachine_ShowLoadingScreen(GetMachine(), "Allocating Lights...", 0);
     G4_Align(r);
-    if (!(unsigned char)Pop_FindTag(r, 0x3A544E50)) {
+    if (!(unsigned char)cPopulation_SeekBlock(r, 0x3A544E50)) {
         return;
     }
     n = *r->cur;
     r->cur++;
-    LightMgr_AllocPool(g_LightMgr, 16, n);
+    cLightMan_AllocateLightSources(g_LightMgr, 16, n);
     G4_Align(r);
-    if (!(unsigned char)Pop_FindTag(r, 0x3A524944)) {
+    if (!(unsigned char)cPopulation_SeekBlock(r, 0x3A524944)) {
         return;
     }
     n = *r->cur;
     r->cur++;
-    LightMgr_AllocPool(g_LightMgr, 2, n);
-    LightMgr_AllocPool(g_LightMgr, 4, 0x18);
-    LightMgr_AllocPool(g_LightMgr, 1, 1);
+    cLightMan_AllocateLightSources(g_LightMgr, 2, n);
+    cLightMan_AllocateLightSources(g_LightMgr, 4, 0x18);
+    cLightMan_AllocateLightSources(g_LightMgr, 1, 1);
 }
-#undef Loader_UpdateLoadingScreen /* merge_units */
-#undef Pop_FindTag /* merge_units */
+#undef cMachine_ShowLoadingScreen /* merge_units */
+#undef cPopulation_SeekBlock /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C1A20(void) {}
 #pragma pop /* merge_units */
@@ -276,38 +276,38 @@ extern "C" {
 extern char D_0048B2F8[];
 extern char g_LevelDirName[];
 #if 0 /* merge_units */
-int Pop_FindTag(PopReader_1C1B60* r, int tag);
+int cPopulation_SeekBlock(PopReader_1C1B60* r, int tag);
 #endif /* merge_units */
-#define Pop_FindTag(a0, a1) (Pop_FindTag((PopReader_1C1470 *)(a0), (a1))) /* merge_units */
+#define cPopulation_SeekBlock(a0, a1) (cPopulation_SeekBlock((PopReader_1C1470 *)(a0), (a1))) /* merge_units */
 
-Sky_1C1B60* SkyboxGob_Create(void* p, void* a, int arc, PopReader_1C1B60* r, int n);
-int Archive_Open(void* a, char* name, int b, int c);
+Sky_1C1B60* cGameSky_ctor(void* p, void* a, int arc, PopReader_1C1B60* r, int n);
+int cHogList_Open(void* a, char* name, int b, int c);
 }
-extern "C" void Loader_InitSkybox(void* a0, void* a1, PopReader_1C1B60* r, void* arc)
+extern "C" void cLoader_LoadSKY(void* a0, void* a1, PopReader_1C1B60* r, void* arc)
 {
-    if ((unsigned char)Pop_FindTag(r, 0x3A594B53)) {
+    if ((unsigned char)cPopulation_SeekBlock(r, 0x3A594B53)) {
         char name[128];
         int h;
         int n;
-        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Skybox...", 0);
+        cMachine_ShowLoadingScreen(GetMachine(), "Initializing Skybox...", 0);
         sprintf(name, "%s\\%s\\TEX.HOG", D_0048B2F8, g_LevelDirName, g_LevelDirName);
-        h = Archive_Open(arc, name, 0, 0);
+        h = cHogList_Open(arc, name, 0, 0);
         n = *(int*)r->cur;
         r->cur += 4;
         while (n) {
             Sky_1C1B60* p;
             {
                 AllocGuard g;
-                p = (Sky_1C1B60*)Mem_Alloc(0, 0x94, D_0049EE88, 0x3F3);
+                p = (Sky_1C1B60*)cMemMan_Allocate(0, 0x94, D_0049EE88, 0x3F3);
             }
             if (p)
-                p = SkyboxGob_Create(p, a1, h, r, n);
-            Object_Register(p);
+                p = cGameSky_ctor(p, a1, h, r, n);
+            nGobjManager_AddGOBJ(p);
             n -= p->count;
         }
     }
 }
-#undef Pop_FindTag /* merge_units */
+#undef cPopulation_SeekBlock /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C1B60(void) {}
 #pragma pop /* merge_units */
@@ -319,16 +319,16 @@ static inline void merge_flush_func_001C1B60(void) {}
 struct PopReader_1C1CE0 { int unk0; int size; unsigned int base; char* cur; };
 extern "C" {
 #if 0 /* merge_units */
-int Pop_FindTag(PopReader_1C1CE0* r, int tag);
+int cPopulation_SeekBlock(PopReader_1C1CE0* r, int tag);
 #endif /* merge_units */
-#define Pop_FindTag(a0, a1) (Pop_FindTag((PopReader_1C1470 *)(a0), (a1))) /* merge_units */
+#define cPopulation_SeekBlock(a0, a1) (cPopulation_SeekBlock((PopReader_1C1470 *)(a0), (a1))) /* merge_units */
 
-void* Loader_ReadParticleRecord(void* p, PopReader_1C1CE0* r);
+void* cGameParticle_ctor_cPopulationR(void* p, PopReader_1C1CE0* r);
 }
-extern "C" void Loader_LoadParticles(void* a0, PopReader_1C1CE0* r)
+extern "C" void cLoader_LoadPARs(void* a0, PopReader_1C1CE0* r)
 {
-    Loader_UpdateLoadingScreen(App_GetInstance(), "Loading Particles...", 0);
-    if ((unsigned char)Pop_FindTag(r, 0x3A524C50)) {
+    cMachine_ShowLoadingScreen(GetMachine(), "Loading Particles...", 0);
+    if ((unsigned char)cPopulation_SeekBlock(r, 0x3A524C50)) {
         int mis;
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
@@ -342,16 +342,16 @@ extern "C" void Loader_LoadParticles(void* a0, PopReader_1C1CE0* r)
             void* p;
             {
                 AllocGuard g;
-                p = Mem_Alloc(0, 0x74, D_0049EE88, 0x3C9);
+                p = cMemMan_Allocate(0, 0x74, D_0049EE88, 0x3C9);
             }
             if (p)
-                p = Loader_ReadParticleRecord(p, r);
-            Object_Register(p);
+                p = cGameParticle_ctor_cPopulationR(p, r);
+            nGobjManager_AddGOBJ(p);
         }
         }
     }
 }
-#undef Pop_FindTag /* merge_units */
+#undef cPopulation_SeekBlock /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C1CE0(void) {}
 #pragma pop /* merge_units */

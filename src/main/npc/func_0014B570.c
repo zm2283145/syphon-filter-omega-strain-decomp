@@ -16,15 +16,15 @@ struct NpcNV {
     char pad2[0x1AC - 0x50];
     HandleNV* target;
 };
-extern "C" void NpcAi_RequestMode(void* a, int b, int c);
-extern "C" void cNPC_v36(NpcNV* n)
+extern "C" void cStateMachine_ChangeState(void* a, int b, int c);
+extern "C" void cNPC_ResumeAIMode(NpcNV* n)
 {
     if (n->timer > 20) {
         n->timer = 0;
         if (n->target->Get()) {
-            NpcAi_RequestMode(n->anim, 1, 0);
+            cStateMachine_ChangeState(n->anim, 1, 0);
         } else {
-            NpcAi_RequestMode(n->anim, 0, 0);
+            cStateMachine_ChangeState(n->anim, 0, 0);
         }
     }
 }

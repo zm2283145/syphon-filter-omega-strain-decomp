@@ -13,16 +13,16 @@ typedef struct {
     char p1EB8[0x23EC-0x1EB8]; int h0; int h2; int h1; char p23F8[0x255C-0x23F8]; int state;
 } Cell;
 extern void SFOLobby_SetCallback(Cell*, int);
-extern void LobbyArray_Init(void*, int, int, int);
+extern void SFOLobbyList_AllocList(void*, int, int, int);
 extern int SFOLobby_HandleOverflowJoinChannel(Cell*, int);
-extern void LobbyArray_Free(int);
+extern void SFOLobbyList_ClearAndCompactList(int);
 extern void SFOLobby_ContactGetInvites(Cell*);
-extern int Lobby_GetTime(void);
+extern int SFOLobby_GetMillisecs(void);
 extern int D_00497788;
 static inline void SetA0(Cell* o, int v) { if (v != o->fA0) o->fA0 = v; }
-static inline void RelH(int* h) { int t = *h; if (t != 0) LobbyArray_Free(t); *h = 0; }
+static inline void RelH(int* h) { int t = *h; if (t != 0) SFOLobbyList_ClearAndCompactList(t); *h = 0; }
 
-int SFOLobby_JoinRoom(Cell* self, int a1, int a2, int a3, int t0)
+int SFOLobby_LobbyScreenStart(Cell* self, int a1, int a2, int a3, int t0)
 {
     char* b = (char*)self;
     if (self->state != 9) return 0;
@@ -31,12 +31,12 @@ int SFOLobby_JoinRoom(Cell* self, int a1, int a2, int a3, int t0)
     self->h0 = a2;
     self->h1 = a3;
     self->h2 = t0;
-    LobbyArray_Init((void*)self->h0, self->fA4, 0, 0x68);
-    LobbyArray_Init((void*)self->h1, 0x104, 0x104, 0x50);
-    LobbyArray_Init((void*)self->h2, 0x104, 0x104, 0x50);
-    LobbyArray_Init(b + 0x8C, 0x104, 0x104, 0x50);
-    LobbyArray_Init(b + 0xA8, 0x104, 0x104, 0x50);
-    LobbyArray_Init(b, 0x20, 0x20, 0x14);
+    SFOLobbyList_AllocList((void*)self->h0, self->fA4, 0, 0x68);
+    SFOLobbyList_AllocList((void*)self->h1, 0x104, 0x104, 0x50);
+    SFOLobbyList_AllocList((void*)self->h2, 0x104, 0x104, 0x50);
+    SFOLobbyList_AllocList(b + 0x8C, 0x104, 0x104, 0x50);
+    SFOLobbyList_AllocList(b + 0xA8, 0x104, 0x104, 0x50);
+    SFOLobbyList_AllocList(b, 0x20, 0x20, 0x14);
     self->f170 = 1;
     self->t98 = 0;
     self->t9C = 0;
@@ -49,8 +49,8 @@ int SFOLobby_JoinRoom(Cell* self, int a1, int a2, int a3, int t0)
         return 0;
     }
     SFOLobby_ContactGetInvites(self);
-    if (Lobby_GetTime() - self->t98 > D_00497788 - 1000) {
-        self->t98 = Lobby_GetTime() - D_00497788 + 1000;
+    if (SFOLobby_GetMillisecs() - self->t98 > D_00497788 - 1000) {
+        self->t98 = SFOLobby_GetMillisecs() - D_00497788 + 1000;
     }
     return 1;
 }
@@ -92,10 +92,10 @@ typedef struct {
 } S451B30;
 extern int D_00497830;
 extern R451B30 D_00585E90;
-extern unsigned char SFOLobby_RequestAccountInfo(S451B30*, int);
+extern unsigned char SFOLobby_GetAgentDetails(S451B30*, int);
 extern void func_004499A0(S451B30*);
 extern void SFOLobby_UpdateStats(S451B30*, R451B30*);
-extern void SFOLobby_CacheAccount(S451B30*, int, char*, int, R451B30*);
+extern void SFOLobby_RefreshAgentData(S451B30*, int, char*, int, R451B30*);
 
 void func_00451B30(S451B30* s)
 {
@@ -103,14 +103,14 @@ void func_00451B30(S451B30* s)
     unsigned char ok;
     R451B30* room;
 
-    dt = Lobby_GetTime() - s->f2590;
+    dt = SFOLobby_GetMillisecs() - s->f2590;
     if (D_00497830 < dt) {
-        ok = SFOLobby_RequestAccountInfo(s, s->f2480);
+        ok = SFOLobby_GetAgentDetails(s, s->f2480);
         func_004499A0(s);
         room = ok ? &s->room : &D_00585E90;
         room->fE8 = s->f2484;
         SFOLobby_UpdateStats(s, room);
-        SFOLobby_CacheAccount(s, s->f2480, s->fAA4, room->fF4, room);
+        SFOLobby_RefreshAgentData(s, s->f2480, s->fAA4, room->fF4, room);
     }
 }
 #pragma pop /* merge_units */

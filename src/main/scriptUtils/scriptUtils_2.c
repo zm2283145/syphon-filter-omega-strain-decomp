@@ -34,7 +34,7 @@ struct Holder {
 };
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" float Global_Distance(GObj* g, GObj* o) {
+extern "C" float nScriptUtils_Distance_cGOBJP_cGOBJP(GObj* g, GObj* o) {
     V4 a = g->GetPos();
     V4 b = o->GetPos();
     V4 d;
@@ -76,28 +76,28 @@ ss = &r; pv = &d; asm { mtc1 $zero, ret } dd = &d; x = *(__int128*)ss; *(__int12
 #include "scriptUtils_types.h"
 
 extern char* g_Hud;
-extern void* GObj_IdentityB(void* obj);
-extern int Global_ClearCallout(char* obj);
-extern int Global_ClearCallout_2(CalloutOwner* obj);
-extern CalloutOwner* NpcScript_GetReceiver(void* obj);
-extern int Hud_ClearCallout(char* a0, char* key, int a2, int a3, int a4);
+extern void* cGOBJ_SOBJ_convert(void* obj);
+extern int nScriptUtils_ClearCallout_cGOBJP(char* obj);
+extern int nScriptUtils_ClearCallout_cNPCP(CalloutOwner* obj);
+extern CalloutOwner* cNPC_SOBJ_convert(void* obj);
+extern int cHud_ClearCallout(char* a0, char* key, int a2, int a3, int a4);
 
 int Script_ClearCallout_2(ScriptArg* args) {
-    Global_ClearCallout_2(NpcScript_GetReceiver(args[0].p));
+    nScriptUtils_ClearCallout_cNPCP(cNPC_SOBJ_convert(args[0].p));
     return 0;
 }
 
-int Global_ClearCallout_2(CalloutOwner* obj) {
-    return Hud_ClearCallout(g_Hud, obj->callout + 12, 0, 0, 1);
+int nScriptUtils_ClearCallout_cNPCP(CalloutOwner* obj) {
+    return cHud_ClearCallout(g_Hud, obj->callout + 12, 0, 0, 1);
 }
 
 int Script_ClearCallout(ScriptArg* args) {
-    Global_ClearCallout(GObj_IdentityB(args[0].p));
+    nScriptUtils_ClearCallout_cGOBJP(cGOBJ_SOBJ_convert(args[0].p));
     return 0;
 }
 
-int Global_ClearCallout(char* obj) {
-    return Hud_ClearCallout(g_Hud, obj + 12, 0, 0, 1);
+int nScriptUtils_ClearCallout_cGOBJP(char* obj) {
+    return cHud_ClearCallout(g_Hud, obj + 12, 0, 0, 1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00267F90 */
@@ -106,11 +106,11 @@ int Global_ClearCallout(char* obj) {
 #pragma push /* merge_units */
 typedef union { int i; void* p; } ScriptArg_00268030;
 #if 0 /* merge_units */
-extern void* NpcScript_GetReceiver(void* p);
+extern void* cNPC_SOBJ_convert(void* p);
 #endif /* merge_units */
-#define NpcScript_GetReceiver(a0) ((void *)NpcScript_GetReceiver((a0))) /* merge_units */
+#define cNPC_SOBJ_convert(a0) ((void *)cNPC_SOBJ_convert((a0))) /* merge_units */
 
-extern void Global_SetCalloutLabel_2(void* obj, int label, int value, int flag);int Script_SetCalloutLabel_4(ScriptArg_00268030* args)
+extern void nScriptUtils_SetCalloutLabel_cNPCP_charP_int_bool(void* obj, int label, int value, int flag);int Script_SetCalloutLabel_4(ScriptArg_00268030* args)
 {
 int labelArg[1]; int valueArg[1]; int flag; int value;
     void* obj;
@@ -118,22 +118,22 @@ int labelArg[1]; int valueArg[1]; int flag; int value;
     valueArg[0] = args[2].i;
     labelArg[0] = args[1].i;
     value = *(int*)valueArg;
-    obj = NpcScript_GetReceiver(args[0].p);
-    Global_SetCalloutLabel_2(obj, *(int*)labelArg, value, flag);
+    obj = cNPC_SOBJ_convert(args[0].p);
+    nScriptUtils_SetCalloutLabel_cNPCP_charP_int_bool(obj, *(int*)labelArg, value, flag);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00268030(void) {}
-#undef NpcScript_GetReceiver /* merge_units */
+#undef cNPC_SOBJ_convert /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00268030 */
 
 /* merge_units: begin func_00268090 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern void Global_SetCalloutLabel_2(void* obj, int label, int text, int flag);
+extern void nScriptUtils_SetCalloutLabel_cNPCP_charP_int_bool(void* obj, int label, int text, int flag);
 #endif /* merge_units */
-#define Global_SetCalloutLabel_2(a0, a1, a2, a3) (Global_SetCalloutLabel_2((a0), (a1), (a2), (a3))) /* merge_units */
+#define nScriptUtils_SetCalloutLabel_cNPCP_charP_int_bool(a0, a1, a2, a3) (nScriptUtils_SetCalloutLabel_cNPCP_charP_int_bool((a0), (a1), (a2), (a3))) /* merge_units */
 
 
 
@@ -147,12 +147,12 @@ int Script_SetCalloutLabel_3(ScriptArg* args)
     textArg[0] = args[2].i;
     labelArg[0] = args[1].i;
     text = *(int*)textArg;
-    obj = NpcScript_GetReceiver(args[0].p);
-    Global_SetCalloutLabel_2(obj, *(int*)labelArg, text, 0);
+    obj = cNPC_SOBJ_convert(args[0].p);
+    nScriptUtils_SetCalloutLabel_cNPCP_charP_int_bool(obj, *(int*)labelArg, text, 0);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00268090(void) {}
-#undef Global_SetCalloutLabel_2 /* merge_units */
+#undef nScriptUtils_SetCalloutLabel_cNPCP_charP_int_bool /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00268090 */

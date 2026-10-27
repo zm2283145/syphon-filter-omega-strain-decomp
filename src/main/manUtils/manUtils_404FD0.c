@@ -10,7 +10,7 @@
 
 /* library prototypes shared by the blocks below (C linkage) */
 #include "SFOLobby_helpers.h"
-int Mem_Free();
+int cMemMan_Deallocate();
 int sprintf(void *, const void *, ...);
 
 /* merge_units: begin func_00404FD0 */
@@ -48,18 +48,18 @@ extern "C" {
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
-void Alloc_Unlock(int id);
+void EnableIntc(int id);
 extern char D_004BE7F0[];
 extern char D_004BE830[];
 extern int g_TextureMgr;
 extern int D_00571300;
 void Libc_Strcat(char* d, char* s);
-void Resource_Construct(MC_File* f);
-void FileMan_Release(void* f, int del);
+void cFileMan_ctor_void(MC_File* f);
+void cFileMan_dtor(void* f, int del);
 void cFileMan_EncodeFilename_charP_cFileIOP_bool(MC_File* f, char* name, int a, int b);
-void* Fstream_GetLoader(void);
-void Fstream_ReleaseNoCallback(void* m, MC_File* f, int a);
-void Tex_Release(int lib, int h, int keep);
+void* GetFileStreamMan(void);
+void cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(void* m, MC_File* f, int a);
+void cTexMan_RemoveTexture(int lib, int h, int keep);
 void operator_delete(void* p);
 MC_State* Monster_dtor(MC_State* s, short del);
 }
@@ -72,9 +72,9 @@ MC_State* Monster_dtor(MC_State* s, short del)
     int j;
     void* p;
     if (s) {
-        Resource_Construct(&fm);
+        cFileMan_ctor_void(&fm);
         for (i = s->meshLoaded; i < s->meshCount; i++) {
-            String_Copy(name, s->names[i]);
+            Libc_Strcpy(name, s->names[i]);
             Libc_Strcat(name, D_004BE830);
             for (j = 1; j > 0; j--) {
                 MC_Lod* l = (MC_Lod*)((char*)s->lods + i * 32 + j * 16);
@@ -82,13 +82,13 @@ MC_State* Monster_dtor(MC_State* s, short del)
                 if (h != l[-1].h && h != 0) {
                     name[14] = j + '0';
                     cFileMan_EncodeFilename_charP_cFileIOP_bool(&fm, name, 0, 0);
-                    Fstream_ReleaseNoCallback(Fstream_GetLoader(), &fm, 1);
+                    cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(GetFileStreamMan(), &fm, 1);
                 }
             }
             if (s->lods[i][0].h) {
                 name[14] = '0';
                 cFileMan_EncodeFilename_charP_cFileIOP_bool(&fm, name, 0, 0);
-                Fstream_ReleaseNoCallback(Fstream_GetLoader(), &fm, 1);
+                cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(GetFileStreamMan(), &fm, 1);
             }
         }
         ckc_qzero(s->names, 0x300);
@@ -101,12 +101,12 @@ MC_State* Monster_dtor(MC_State* s, short del)
                 MC_Tex* t = (MC_Tex*)((char*)s->tex + i * 4);
                 int b = t->b;
                 if (b != t->a)
-                    Tex_Release(g_TextureMgr, b, 0);
+                    cTexMan_RemoveTexture(g_TextureMgr, b, 0);
             }
             {
                 /* loading the library first orders lui before the index add */
                 int lib = g_TextureMgr;
-                Tex_Release(lib, s->tex[i].a, 0);
+                cTexMan_RemoveTexture(lib, s->tex[i].a, 0);
             }
         }
         s->texCount = 0;
@@ -115,14 +115,14 @@ MC_State* Monster_dtor(MC_State* s, short del)
         if (p) {
             if (g_ProfileLockEnabled) Alloc_Lock(9);
             g_ProfileLockDepth++;
-            Mem_Free(0, p, D_004BE7F0, 0x52C);
-            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            cMemMan_Deallocate(0, p, D_004BE7F0, 0x52C);
+            if (g_ProfileLockEnabled) EnableIntc(9);
             g_ProfileLockDepth--;
             p = s->bufD8;
             if (g_ProfileLockEnabled) Alloc_Lock(9);
             g_ProfileLockDepth++;
-            Mem_Free(0, p, D_004BE7F0, 0x52D);
-            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            cMemMan_Deallocate(0, p, D_004BE7F0, 0x52D);
+            if (g_ProfileLockEnabled) EnableIntc(9);
             g_ProfileLockDepth--;
             s->bufD4 = 0;
             s->bufD8 = 0;
@@ -131,16 +131,16 @@ MC_State* Monster_dtor(MC_State* s, short del)
             p = s->bufE8;
             if (g_ProfileLockEnabled) Alloc_Lock(9);
             g_ProfileLockDepth++;
-            Mem_Free(0, p, D_004BE7F0, 0x532);
-            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            cMemMan_Deallocate(0, p, D_004BE7F0, 0x532);
+            if (g_ProfileLockEnabled) EnableIntc(9);
             g_ProfileLockDepth--;
         }
         s->bufE8 = 0;
         s->hasE8 = 0;
         D_00571300 = 1;
-        FileMan_Release(&fm, -1);
-        FileMan_Release((char*)s + 0x134AC, -1);
-        FileMan_Release((char*)s + 0x13410, -1);
+        cFileMan_dtor(&fm, -1);
+        cFileMan_dtor((char*)s + 0x134AC, -1);
+        cFileMan_dtor((char*)s + 0x13410, -1);
         if (del > 0)
             operator_delete(s);
     }
@@ -153,7 +153,7 @@ static inline void merge_flush_func_00404FD0(void) {}
 
 /* merge_units: begin func_004053B0 */
 #pragma push /* merge_units */
-/* 0x004053B0 ManUtils_LoadSKL (mw38). Quad copies use lq/sq GCC asm; operator= decl order
+/* 0x004053B0 Monster_MonsterInit (mw38). Quad copies use lq/sq GCC asm; operator= decl order
    reproduces the dead duplicate addiu pair. Empty asm barrier (no code) keeps axis on the stack. */
 #pragma cplusplus on
 #pragma always_inline on
@@ -161,7 +161,7 @@ static inline void merge_flush_func_00404FD0(void) {}
 struct V { float x, y, z, w; };
 struct M;
 extern "C" void cMatrix_ctor_void(M*);
-extern "C" void Mtx_MakeAxisRotation(M*, float, float, float, float);
+extern "C" void cMatrix_SetWithAxisAngle(M*, float, float, float, float);
 struct M {
     union { float m[4][4]; __int128 q[4]; };
     M() {}
@@ -173,21 +173,21 @@ struct File {
 };
 extern "C" {
 #if 0 /* merge_units */
-void Resource_Construct(File* f);
+void cFileMan_ctor_void(File* f);
 #endif /* merge_units */
-#define Resource_Construct(a0) (Resource_Construct((MC_File *)(a0))) /* merge_units */
+#define cFileMan_ctor_void(a0) (cFileMan_ctor_void((MC_File *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 void cFileMan_EncodeFilename_charP_cFileIOP_bool(File* f, const char* path, int a, int b);
 #endif /* merge_units */
 #define cFileMan_EncodeFilename_charP_cFileIOP_bool(a0, a1, a2, a3) (cFileMan_EncodeFilename_charP_cFileIOP_bool((MC_File *)(a0), (char *)(a1), (a2), (a3))) /* merge_units */
 
-int FileMan_FindMember(File* f);
+int cFileMan_Open(File* f);
 void cFileMan_Close(File* f);
 #if 0 /* merge_units */
-void FileMan_Release(File* f, int flags);
+void cFileMan_dtor(File* f, int flags);
 #endif /* merge_units */
-#define FileMan_Release(a0, a1) (FileMan_Release((void *)(a0), (a1))) /* merge_units */
+#define cFileMan_dtor(a0, a1) (cFileMan_dtor((void *)(a0), (a1))) /* merge_units */
 
 }
 struct Man {
@@ -197,14 +197,14 @@ struct Man {
     float m1E0[3][4];
 };
 extern "C" {
-void Appearance_LoadPartSortTable(Man*, const char*);
-void FrontEndLights_Load(Man*, const char*, void*, M*);
-void Mtx_Multiply(M*, M*);
-M* Mtx_Copy(M* d, const M* s);
-M* Matrix_TransposeInPlace(M* m);
-int FileMan_GetSize(File*);
-char* FileMan_ReadData(File*);
-void Appearance_PackText(void*, char*, int);
+void Monster_ReadSortTable(Man*, const char*);
+void Monster_LoadLights(Man*, const char*, void*, M*);
+void cMatrix_Rotate(M*, M*);
+M* cMatrix_ctor_cMatrixR(M* d, const M* s);
+M* cMatrix_Transpose(M* m);
+int cFileMan_GetSize(File*);
+char* cFileMan_Read_void(File*);
+void SKL_ConvertSKL(void*, char*, int);
 extern const char D_004BE860[];
 extern const char D_004BE880[];
 extern const char D_004BE8A0[];
@@ -215,20 +215,20 @@ extern char D_00493A60;
 extern char D_0055D510[];
 extern char D_0055D950[];
 }
-static inline void RotMul(M* a, const V& ax, float ang) { M rot; cMatrix_ctor_void(&rot); Mtx_MakeAxisRotation(&rot, ax.x, ax.y, ax.z, ang); Mtx_Multiply(a, &rot); }
-static inline M* TransCopy(M* d, const M* s) { M tmp; return Mtx_Copy(d, Matrix_TransposeInPlace(Mtx_Copy(&tmp, s))); }
+static inline void RotMul(M* a, const V& ax, float ang) { M rot; cMatrix_ctor_void(&rot); cMatrix_SetWithAxisAngle(&rot, ax.x, ax.y, ax.z, ang); cMatrix_Rotate(a, &rot); }
+static inline M* TransCopy(M* d, const M* s) { M tmp; return cMatrix_ctor_cMatrixR(d, cMatrix_Transpose(cMatrix_ctor_cMatrixR(&tmp, s))); }
 #pragma push
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
 #pragma opt_unroll_loops off
-extern "C" void ManUtils_LoadSKL(Man* self)
+extern "C" void Monster_MonsterInit(Man* self)
 {
     M a;
     V axis;
     M b;
     int i, j;
-    Appearance_LoadPartSortTable(self, D_004BE860);
-    FrontEndLights_Load(self, D_004BE880, (char*)self + 0x120, &a);
+    Monster_ReadSortTable(self, D_004BE860);
+    Monster_LoadLights(self, D_004BE880, (char*)self + 0x120, &a);
     axis.x = 0.0f;
     axis.y = 0.0f;
     axis.z = 1.0f;
@@ -241,7 +241,7 @@ extern "C" void ManUtils_LoadSKL(Man* self)
         M* s = &a;
         asm volatile("lq %0,0(%2)\n\tlq %1,16(%2)\n\tsq %0,0(%3)\n\tlq %0,32(%2)\n\tsq %1,16(%3)\n\tlq %1,48(%2)\n\tsq %0,32(%3)\n\tsq %1,48(%3)" : "=&r"(t0), "=&r"(t1) : "r"(s), "r"(d) : "memory");
     }
-    FrontEndLights_Load(self, D_004BE8A0, (char*)self + 0x1A0, &a);
+    Monster_LoadLights(self, D_004BE8A0, (char*)self + 0x1A0, &a);
     TransCopy(&b, &a);
     a = b;
     for (i = 0; i < 3; i++) {
@@ -252,40 +252,40 @@ extern "C" void ManUtils_LoadSKL(Man* self)
     D_00493A60 = 0;
     {
         File f;
-        Resource_Construct(&f);
+        cFileMan_ctor_void(&f);
         cFileMan_EncodeFilename_charP_cFileIOP_bool(&f, D_004BE8C0, 0, 0);
-        if ((unsigned char)FileMan_FindMember(&f)) {
+        if ((unsigned char)cFileMan_Open(&f)) {
             char buf[0x80];
             sprintf(buf, D_004BE770, f.name);
-            FileMan_Release(&f, -1);
+            cFileMan_dtor(&f, -1);
             goto next1;
         }
-        int size = FileMan_GetSize(&f);
-        Appearance_PackText(D_0055D510, FileMan_ReadData(&f), size);
+        int size = cFileMan_GetSize(&f);
+        SKL_ConvertSKL(D_0055D510, cFileMan_Read_void(&f), size);
         cFileMan_Close(&f);
-        FileMan_Release(&f, -1);
+        cFileMan_dtor(&f, -1);
     }
 next1:;
     {
         File f;
-        Resource_Construct(&f);
+        cFileMan_ctor_void(&f);
         cFileMan_EncodeFilename_charP_cFileIOP_bool(&f, D_004BE8E0, 0, 0);
-        if ((unsigned char)FileMan_FindMember(&f)) {
+        if ((unsigned char)cFileMan_Open(&f)) {
             char buf[0x80];
             sprintf(buf, D_004BE770, f.name);
-            FileMan_Release(&f, -1);
+            cFileMan_dtor(&f, -1);
             return;
         }
-        int size = FileMan_GetSize(&f);
-        Appearance_PackText(D_0055D950, FileMan_ReadData(&f), size);
+        int size = cFileMan_GetSize(&f);
+        SKL_ConvertSKL(D_0055D950, cFileMan_Read_void(&f), size);
         cFileMan_Close(&f);
-        FileMan_Release(&f, -1);
+        cFileMan_dtor(&f, -1);
     }
 }
 #pragma pop
-#undef Resource_Construct /* merge_units */
+#undef cFileMan_ctor_void /* merge_units */
 #undef cFileMan_EncodeFilename_charP_cFileIOP_bool /* merge_units */
-#undef FileMan_Release /* merge_units */
+#undef cFileMan_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_004053B0(void) {}
 #pragma pop /* merge_units */

@@ -51,24 +51,24 @@ extern char g_Game[];
 extern char g_LosCheckService[];
 extern char g_LosRequestMsgClass[];
 extern char D_004D9180[];
-Svc* Service_Lookup(void* a, void* b);
-void Event_Construct(void* m, void* type);
+Svc* cSystemContainer_GetSystem(void* a, void* b);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
 void cMessage_dtor(void* m, int flags);
-void Hud_SetLockMeter(char* h, float f);
-void Hud_ShowThrowMarker(char* h, V* a, V* b);
-Item* WeaponInv_GetHeldItem(int inv);
+void cHud_SetAimCursorColor(char* h, float f);
+void cHud_SetAimCursorPosition(char* h, V* a, V* b);
+Item* cWeapon_GetWeaponEntry(int inv);
 }
-extern "C" unsigned char Player_AimViewThrownPoint(V* out, Obj* obj, Plr* p)
+extern "C" unsigned char GetGrenadeManualAimTarget(V* out, Obj* obj, Plr* p)
 {
     M m = SubMtx(obj->sub);
     char* hud = g_Hud;
-    Hud_SetLockMeter(hud, 0.0f);
+    cHud_SetAimCursorColor(hud, 0.0f);
     V a;
     unsigned char r = 0;
     a.y = 1.5f; a.w = 1.0f; a.x = 0.0f; a.z = 0.0f;
     MulV(&a, &m);
     m.t = a;
-    float range = (float)WeaponInv_GetHeldItem(p->inv)->range;
+    float range = (float)cWeapon_GetWeaponEntry(p->inv)->range;
     HitRes res;
     RayMsg msg;
     V b;
@@ -76,7 +76,7 @@ extern "C" unsigned char Player_AimViewThrownPoint(V* out, Obj* obj, Plr* p)
     V dir = m.r1 * range;
     RayMsg* mp = &msg;
     V* st = &m.t;
-    Event_Construct(mp, g_LosRequestMsgClass);
+    cMessage_ctor_cMessageNameR(mp, g_LosRequestMsgClass);
     mp->vt = D_004D9180;
     mp->f24 = 0;
     mp->f28 = 0;
@@ -89,7 +89,7 @@ extern "C" unsigned char Player_AimViewThrownPoint(V* out, Obj* obj, Plr* p)
     mp->b5C = 0;
     mp->start.w = 1.0f;
     mp->end.w = 0.0f;
-    Service_Lookup(g_Game, g_LosCheckService)->Send(&msg);
+    cSystemContainer_GetSystem(g_Game, g_LosCheckService)->Send(&msg);
     b.x = 0.0f; b.y = range; b.z = 0.0f; b.w = 1.0f;
     MulV(&b, &m);
     if (res.hit) {
@@ -100,7 +100,7 @@ extern "C" unsigned char Player_AimViewThrownPoint(V* out, Obj* obj, Plr* p)
         *out = b;
         d = -m.r1;
     }
-    Hud_ShowThrowMarker(hud, out, &d);
+    cHud_SetAimCursorPosition(hud, out, &d);
     msg.vt = D_004D9180;
     cMessage_dtor(&msg, 0);
     return r;
@@ -125,16 +125,16 @@ typedef struct { char pad[0x58]; Cam_249B10* cam; char pad5C[0x3524 - 0x5C]; Wpn
 typedef struct { char pad[0xC]; int id; } HitData_249B10;
 extern "C" {
 extern char D_004A75B8[];
-float Weapon_GetHeldRange(Wpn_249B10* w);
-float Flashlight_BeamProbe(Pl_249B10* p, Probe_249B10* pr, int n);
-int TeamTable_AreEnemies(Pl_249B10* p, Hit_249B10* h);
-void Hud_ShowNoFire(char* h);
-void Hud_HideNoFire(char* h);
-int Loc_LookupText(char* key);
-void Hud_ShowCallout(char* a0, int* a1, float f0, float f1, int text, int a3, signed char c0, signed char c1);
+float cWeapon_GetMaxRange(Wpn_249B10* w);
+float GetCollisionDist(Pl_249B10* p, Probe_249B10* pr, int n);
+int cGOBJ_Enemy(Pl_249B10* p, Hit_249B10* h);
+void cHud_ActivateNoFireIcon(char* h);
+void cHud_DeactivateNoFireIcon(char* h);
+int nGlobalization_GetString_charP(char* key);
+void cHud_SetCallout(char* a0, int* a1, float f0, float f1, int text, int a3, signed char c0, signed char c1);
 }
 static inline bool IsKind23(Hit_249B10* h) { unsigned char k = h->Kind(); return k == 2 || k == 3; }
-extern "C" Hit_249B10* PlayerInput_AimViewLock(int a0, int a1, Pl_249B10* p)
+extern "C" Hit_249B10* cPlayerControls_GetManualAimTarget(int a0, int a1, Pl_249B10* p)
 {
     Probe_249B10 pr;
     Mat_249B10 m;
@@ -152,23 +152,23 @@ extern "C" Hit_249B10* PlayerInput_AimViewLock(int a0, int a1, Pl_249B10* p)
     p->cam->GetMatrix(&m, 0, 1);
     pr.mat = &m;
     pr.c8 = 0.2f;
-    pr.range = Weapon_GetHeldRange(p->wpn);
-    r = Flashlight_BeamProbe(p, &pr, 0x10);
-    if (pr.hit && !TeamTable_AreEnemies(p, pr.hit)) {
+    pr.range = cWeapon_GetMaxRange(p->wpn);
+    r = GetCollisionDist(p, &pr, 0x10);
+    if (pr.hit && !cGOBJ_Enemy(p, pr.hit)) {
         pr.kind = 0;
-        Hud_ShowNoFire(g_Hud);
+        cHud_ActivateNoFireIcon(g_Hud);
     } else {
-        Hud_HideNoFire(g_Hud);
+        cHud_DeactivateNoFireIcon(g_Hud);
     }
     show = pr.kind == 2 && !IsKind23(pr.hit);
     h = g_Hud;
     if (pr.kind == 0)
-        Hud_SetLockMeter(h, 1.0f);
+        cHud_SetAimCursorColor(h, 1.0f);
     else
-        Hud_SetLockMeter(h, 0.0f);
+        cHud_SetAimCursorColor(h, 0.0f);
     if (show) {
         int* idp = &((HitData_249B10*)pr.hit)->id;
-        Hud_ShowCallout(h, idp, 0.1f, 1.0f, Loc_LookupText(D_004A75B8), 0, 0, 0);
+        cHud_SetCallout(h, idp, 0.1f, 1.0f, nGlobalization_GetString_charP(D_004A75B8), 0, 0, 0);
     }
     p->wpn->beam = r;
     return pr.hit;
@@ -190,24 +190,24 @@ extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
 extern float D_004A7580;
 #if 0 /* merge_units */
-extern "C" void Event_Construct(QtMsg* m, void* type);
+extern "C" void cMessage_ctor_cMessageNameR(QtMsg* m, void* type);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
 
-extern "C" void Event_Send(QtMsg* m, void* target, int immediate);
+extern "C" void QueueMessage_cMessageR_cSystemP_int(QtMsg* m, void* target, int immediate);
 #if 0 /* merge_units */
 extern "C" void cMessage_dtor(QtMsg* m, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
-extern "C" void Curve_Retime1s(void* c, float f);
-extern "C" void VecCurve_SetDuration(void* c, float f);
+extern "C" void cSplinedMotion_cQuaternion_RestartTransition(void* c, float f);
+extern "C" void cSplinedMotion_cVector_RestartTransition(void* c, float f);
 static inline bool QtBusy(QtPl* pl) {
     bool b = 0;
     if (pl->sub && pl->sub->busy) b = 1;
     return b;
 }
-extern "C" void Player_UpdateQuickTurn(QtState* q, QtIn* in, float dt, QtPl* pl, char* c)
+extern "C" void cPlayerControls_DetectForAndHandle180Turn(QtState* q, QtIn* in, float dt, QtPl* pl, char* c)
 {
     if ((q->state == 0 || q->state == 4) && !QtBusy(pl)) {
         if (in->y < 0.0f) {
@@ -222,18 +222,18 @@ extern "C" void Player_UpdateQuickTurn(QtState* q, QtIn* in, float dt, QtPl* pl,
         } else if (!(in->y < 0.0f) && in->y < 0.5f) {
             if (!(q->t <= 0.0f) && q->t <= D_004A7580 && q->flag && pl->mode != 3) {
                 QtMsg msg;
-                Event_Construct(&msg, g_ActorActionMsgClass);
+                cMessage_ctor_cMessageNameR(&msg, g_ActorActionMsgClass);
                 msg.vtable = D_004E0840;
                 msg.kind = 0xE;
                 msg.b = 0;
-                Event_Send(&msg, pl, 0);
+                QueueMessage_cMessageR_cSystemP_int(&msg, pl, 0);
                 msg.vtable = D_004E0840;
                 cMessage_dtor(&msg, 0);
-                Curve_Retime1s(c + 0x210, 1.0f);
-                VecCurve_SetDuration(c + 0x2E0, -1.0f);
-                VecCurve_SetDuration(c + 0x3A0, -1.0f);
-                Curve_Retime1s(c + 0x780, -1.0f);
-                VecCurve_SetDuration(c + 0x910, -1.0f);
+                cSplinedMotion_cQuaternion_RestartTransition(c + 0x210, 1.0f);
+                cSplinedMotion_cVector_RestartTransition(c + 0x2E0, -1.0f);
+                cSplinedMotion_cVector_RestartTransition(c + 0x3A0, -1.0f);
+                cSplinedMotion_cQuaternion_RestartTransition(c + 0x780, -1.0f);
+                cSplinedMotion_cVector_RestartTransition(c + 0x910, -1.0f);
             }
             q->t = 0.0f;
             q->flag = 0;
@@ -246,7 +246,7 @@ extern "C" void Player_UpdateQuickTurn(QtState* q, QtIn* in, float dt, QtPl* pl,
         q->flag = 0;
     }
 }
-#undef Event_Construct /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00249D00(void) {}
@@ -267,25 +267,25 @@ typedef struct Msg_00249F40 {
 typedef struct Pl_00249F40 { char pad[0x320C]; int state; } Pl_00249F40;
 typedef struct In_00249F40 { char pad[0x24]; unsigned char b24; char pad25[0xAC - 0x25]; unsigned char held; } In_00249F40;
 #if 0 /* merge_units */
-extern void Event_Construct(Msg_00249F40* msg, void* name);
+extern void cMessage_ctor_cMessageNameR(Msg_00249F40* msg, void* name);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Event_Send(Msg_00249F40* msg, void* target, int flags);
+extern void QueueMessage_cMessageR_cSystemP_int(Msg_00249F40* msg, void* target, int flags);
 #endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((void *)(a0), (a1), (a2))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(Msg_00249F40* msg, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
-extern int PlayerInput_ZoneEnteredThisFrame(In_00249F40* in);
-extern int PlayerInput_CrouchToggle(In_00249F40* in, Pl_00249F40* p);
-#define SENDB(V) { Msg_00249F40 msg; Event_Construct(&msg, g_ActorActionMsgClass); msg.vtable = D_004E0840; msg.value = V; msg.b20 = 1; msg.b28 = 0; Event_Send(&msg, p, 1); msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
-#define SEND(V) { Msg_00249F40 msg; Event_Construct(&msg, g_ActorActionMsgClass); msg.vtable = D_004E0840; msg.b20 = 1; msg.value = V; msg.b28 = 0; Event_Send(&msg, p, 1); msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
-void PlayerInput_HandleCross(In_00249F40* in, Pl_00249F40* p, float v)
+extern int cPlayerControls_HasEnteredCrawlHotbox(In_00249F40* in);
+extern int cPlayerControls_ToggleCrawl(In_00249F40* in, Pl_00249F40* p);
+#define SENDB(V) { Msg_00249F40 msg; cMessage_ctor_cMessageNameR(&msg, g_ActorActionMsgClass); msg.vtable = D_004E0840; msg.value = V; msg.b20 = 1; msg.b28 = 0; QueueMessage_cMessageR_cSystemP_int(&msg, p, 1); msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
+#define SEND(V) { Msg_00249F40 msg; cMessage_ctor_cMessageNameR(&msg, g_ActorActionMsgClass); msg.vtable = D_004E0840; msg.b20 = 1; msg.value = V; msg.b28 = 0; QueueMessage_cMessageR_cSystemP_int(&msg, p, 1); msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
+void cPlayerControls_HandleCrouchButtonPress(In_00249F40* in, Pl_00249F40* p, float v)
 {
     int t = 1;
     unsigned char pressed;
@@ -295,8 +295,8 @@ void PlayerInput_HandleCross(In_00249F40* in, Pl_00249F40* p, float v)
     pressed = t;
     edge = !in->held && pressed;
     in->held = pressed;
-    if (edge || (PlayerInput_ZoneEnteredThisFrame(in) && pressed)) {
-        if (PlayerInput_CrouchToggle(in, p))
+    if (edge || (cPlayerControls_HasEnteredCrawlHotbox(in) && pressed)) {
+        if (cPlayerControls_ToggleCrawl(in, p))
             pressed = 0;
     }
     if (p->state == 0x10) {
@@ -312,8 +312,8 @@ void PlayerInput_HandleCross(In_00249F40* in, Pl_00249F40* p, float v)
     else
         SENDB(2)
 }
-#undef Event_Construct /* merge_units */
-#undef Event_Send /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00249F40(void) {}
@@ -356,30 +356,30 @@ extern char D_004D9320[];
 extern unsigned char D_0048AEC8;
 extern int g_HotboxTracker;
 #if 0 /* merge_units */
-void Event_Construct(Msg_24A1C0* m, void* type);
+void cMessage_ctor_cMessageNameR(Msg_24A1C0* m, void* type);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void Event_Send(Msg_24A1C0* m, void* target, int immediate);
+void QueueMessage_cMessageR_cSystemP_int(Msg_24A1C0* m, void* target, int immediate);
 #endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((QtMsg *)(a0), (a1), (a2))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((QtMsg *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 void cMessage_dtor(Msg_24A1C0* m, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
-int Actor_TryObjectInteraction(int a, Pl_24A1C0* p, int b, int c);
+int cHotboxMan_Interact(int a, Pl_24A1C0* p, int b, int c);
 #if 0 /* merge_units */
-int PlayerInput_ZoneEnteredThisFrame(St_24A1C0* s);
+int cPlayerControls_HasEnteredCrawlHotbox(St_24A1C0* s);
 #endif /* merge_units */
-#define PlayerInput_ZoneEnteredThisFrame(a0) (PlayerInput_ZoneEnteredThisFrame((In_00249F40 *)(a0))) /* merge_units */
+#define cPlayerControls_HasEnteredCrawlHotbox(a0) (cPlayerControls_HasEnteredCrawlHotbox((In_00249F40 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-int PlayerInput_CrouchToggle(St_24A1C0* s, Pl_24A1C0* p);
+int cPlayerControls_ToggleCrawl(St_24A1C0* s, Pl_24A1C0* p);
 #endif /* merge_units */
-#define PlayerInput_CrouchToggle(a0, a1) (PlayerInput_CrouchToggle((In_00249F40 *)(a0), (Pl_00249F40 *)(a1))) /* merge_units */
+#define cPlayerControls_ToggleCrawl(a0, a1) (cPlayerControls_ToggleCrawl((In_00249F40 *)(a0), (Pl_00249F40 *)(a1))) /* merge_units */
 
 }
 static inline bool Busy_(Pl_24A1C0* pl) {
@@ -390,7 +390,7 @@ static inline bool Busy_(Pl_24A1C0* pl) {
 static inline bool IsKind23_0024A1C0(Pl_24A1C0* h) { unsigned char k = h->Kind(); return k == 2 || k == 3; }
 #pragma push
 #pragma opt_propagation off
-extern "C" void PlayerInput_HandleTriangle(St_24A1C0* s, Pl_24A1C0* p, float v)
+extern "C" void cPlayerControls_HandleInteractButtonPress(St_24A1C0* s, Pl_24A1C0* p, float v)
 {
     bool pressed = v > 0.0f;
     bool edge = !s->xAD && pressed;
@@ -404,23 +404,23 @@ extern "C" void PlayerInput_HandleTriangle(St_24A1C0* s, Pl_24A1C0* p, float v)
     if (edge) {
         int k = s->x138 ? 0x2D : 0x2C;
         Msg_24A1C0 m;
-        Event_Construct(&m, g_ActorActionMsgClass);
+        cMessage_ctor_cMessageNameR(&m, g_ActorActionMsgClass);
         m.x20 = 1;
         m.kind = (signed char)k;
         m.b = 0;
         m.vtable = D_004E0840;
-        Event_Send(&m, p, 1);
+        QueueMessage_cMessageR_cSystemP_int(&m, p, 1);
         m.vtable = D_004E0840;
         cMessage_dtor(&m, 0);
         if (p->mode == 0x14) {
             Msg2_24A1C0 m2x;
-            Event_Construct(&m2x.base, g_ActorActionMsgClass);
+            cMessage_ctor_cMessageNameR(&m2x.base, g_ActorActionMsgClass);
             m2x.base.kind = 0x28;
             m2x.base.b = 1;
             m2x.base.vtable = D_004D9320;
             m2x.base.x20 = 1;
             m2x.x2C = D_0048AEC8;
-            Event_Send(&m2x.base, p, 1);
+            QueueMessage_cMessageR_cSystemP_int(&m2x.base, p, 1);
             m2x.base.vtable = D_004E0840;
             pressed = 0;
             edge = 0;
@@ -429,7 +429,7 @@ extern "C" void PlayerInput_HandleTriangle(St_24A1C0* s, Pl_24A1C0* p, float v)
     }
     if (edge && !Busy_(p) && !IsKind23_0024A1C0(p)) {
         int mode = p->mode;
-        if ((mode == 0 || mode == 0x11 || mode == 0x12) && Actor_TryObjectInteraction(g_HotboxTracker, p, 1, 0)) {
+        if ((mode == 0 || mode == 0x11 || mode == 0x12) && cHotboxMan_Interact(g_HotboxTracker, p, 1, 0)) {
             int i;
             s->x12C = 1;
             s->xC8 = 0;
@@ -445,39 +445,39 @@ extern "C" void PlayerInput_HandleTriangle(St_24A1C0* s, Pl_24A1C0* p, float v)
                 s->x40 = i;
         }
     }
-    if ((edge || (PlayerInput_ZoneEnteredThisFrame(s) && pressed)) && PlayerInput_CrouchToggle(s, p))
+    if ((edge || (cPlayerControls_HasEnteredCrawlHotbox(s) && pressed)) && cPlayerControls_ToggleCrawl(s, p))
         pressed = 0;
     if (pressed) {
         {
             Msg_24A1C0 m3;
-            Event_Construct(&m3, g_ActorActionMsgClass);
+            cMessage_ctor_cMessageNameR(&m3, g_ActorActionMsgClass);
             m3.x20 = 1;
             m3.vtable = D_004E0840;
             m3.kind = 0xF;
             m3.b = 0;
-            Event_Send(&m3, p, 1);
+            QueueMessage_cMessageR_cSystemP_int(&m3, p, 1);
             m3.vtable = D_004E0840;
             cMessage_dtor(&m3, 0);
         }
         {
             Msg_24A1C0 m4;
-            Event_Construct(&m4, g_ActorActionMsgClass);
+            cMessage_ctor_cMessageNameR(&m4, g_ActorActionMsgClass);
             m4.vtable = D_004E0840;
             m4.kind = 0x1B;
             m4.x20 = 1;
             m4.b = 0;
-            Event_Send(&m4, p, 1);
+            QueueMessage_cMessageR_cSystemP_int(&m4, p, 1);
             m4.vtable = D_004E0840;
             cMessage_dtor(&m4, 0);
         }
     }
 }
 #pragma pop
-#undef Event_Construct /* merge_units */
-#undef Event_Send /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
-#undef PlayerInput_ZoneEnteredThisFrame /* merge_units */
-#undef PlayerInput_CrouchToggle /* merge_units */
+#undef cPlayerControls_HasEnteredCrawlHotbox /* merge_units */
+#undef cPlayerControls_ToggleCrawl /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0024A1C0(void) {}
 #pragma pop /* merge_units */

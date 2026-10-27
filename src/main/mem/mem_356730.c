@@ -24,16 +24,16 @@ struct P356730 {
     short h184;
     unsigned char b186;
 };
-extern "C" void Resource_Construct(void* m);
+extern "C" void cFileMan_ctor_void(void* m);
 /* constructor: reset two members, ids, mask, handle (copied through a stack temp) */
 #pragma push
 #pragma opt_propagation off
-extern "C" P356730* GuiPersonnelMenu_ctor(P356730* p)
+extern "C" P356730* cSndFx_ctor_void(P356730* p)
 {
     *(int*)((char*)p + 0x24) = -2;
     *(int*)((char*)p + 0x20) = 0;
-    Resource_Construct(p->memberA);
-    Resource_Construct(p->memberB);
+    cFileMan_ctor_void(p->memberA);
+    cFileMan_ctor_void(p->memberB);
     p->id = -1;
     p->mask = -1;
     p->w20 = 0;
@@ -56,6 +56,6 @@ extern "C" P356730* GuiPersonnelMenu_ctor(P356730* p)
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(GuiPersonnelScreen_dtor_3567B0, D_004DF0B0, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(GuiPersonnelScreen_dtor_3567B0, D_004DF0B0, GuiWidget_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003567B0 */

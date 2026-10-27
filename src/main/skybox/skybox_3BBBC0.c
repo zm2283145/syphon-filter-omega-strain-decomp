@@ -10,11 +10,11 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int FileMan_Release(char *, int);                            
+int cFileMan_dtor(char *, int);                            
 int cFileMan_ctor_charP_cFileIOP_bool(char *, char *, int, int);                    
 int XLib_RequestDeleteDmaData(char *, int, int);                       
-int Fstream_ReleaseNoCallback(int, char *, int);                       
-int Fstream_GetLoader();                                
+int cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(int, char *, int);                       
+int GetFileStreamMan();                                
 int operator_delete(char * );                          
 int sprintf(char *, char *, char * );                        
 extern char g_Video;
@@ -30,8 +30,8 @@ char * cTexture_dtor(char * arg0, short arg1) {
             if (temp_v1 & 0x2000) {
                 sprintf(spD0, "%s.TDX", arg0);
                 cFileMan_ctor_charP_cFileIOP_bool(sp30, spD0, 0, 0);
-                Fstream_ReleaseNoCallback(Fstream_GetLoader(), sp30, 1);
-                FileMan_Release(sp30, -1);
+                cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(GetFileStreamMan(), sp30, 1);
+                cFileMan_dtor(sp30, -1);
             } else {
                 XLib_RequestDeleteDmaData(&g_Video, F_(arg0, 0x44, int), -1);
             }

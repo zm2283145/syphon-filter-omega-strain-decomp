@@ -25,7 +25,7 @@ static inline void merge_flush_func_001ADA90(void) {}
 
 /* merge_units: begin func_001ADAB0 */
 #pragma push /* merge_units */
-void Actor_LinkBody(int a0, int a1) {
+void cSafePtr_cHuman_Set(int a0, int a1) {
     int loc[1];
     int v1;
     int cond;

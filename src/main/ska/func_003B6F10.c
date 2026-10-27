@@ -5,8 +5,8 @@ struct V { float x, y, z, w; V& operator=(const V& o) { __int128 t; __asm__ vola
 struct H0 { V m0; V m1; };
 struct H2 { V m0; V m1; };
 struct T5 { H0 m0; V m1; H2 m2; };
-extern "C" T5* AnimRoot_CopyRegion_3B6F10(T5* t, const T5* s);
-T5* AnimRoot_CopyRegion_3B6F10(T5* t, const T5* s) {
+extern "C" T5* cSkaAnimAnchor_TreeNodeData_tData_opAssign(T5* t, const T5* s);
+T5* cSkaAnimAnchor_TreeNodeData_tData_opAssign(T5* t, const T5* s) {
     *t = *s;
     return t;
 }

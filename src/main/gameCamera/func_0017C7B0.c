@@ -6,5 +6,5 @@
 
 #include "types.h"
 
-void Curve_VirtualNop(void) {
+void cSplinedMotion_float_FixUpResultOfSplineEvaluation(void) {
 }

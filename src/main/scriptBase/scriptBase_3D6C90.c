@@ -12,7 +12,7 @@
 #pragma pop
 
 /* library prototypes shared by the blocks below (C linkage) */
-int Mem_Free();
+int cMemMan_Deallocate();
 void *memcpy();
 int strlen(const char *);
 
@@ -20,8 +20,8 @@ int strlen(const char *);
 #pragma push /* merge_units */
 typedef struct { void* name; char pad0[0x3C]; int next; } PsNode;
 extern int String_CompareNoCase(void* a, void* b);
-extern PsNode* ScriptType_GetRecord(int idx);
-int ScriptType_DerivesFromName(PsNode* n) { do { if (String_CompareNoCase(n->name, "AI") == 0) return 1; if (n->next <= -1) break; } while ((n = ScriptType_GetRecord(n->next)) != 0); return 0; }
+extern PsNode* cScriptBase_getClass(int idx);
+int ClassDef_isController(PsNode* n) { do { if (String_CompareNoCase(n->name, "AI") == 0) return 1; if (n->next <= -1) break; } while ((n = cScriptBase_getClass(n->next)) != 0); return 0; }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003D6C90(void) {}
 #pragma pop /* merge_units */
@@ -34,8 +34,8 @@ static inline void merge_flush_func_003D6C90(void) {}
 #pragma opt_strength_reduction off
 extern "C" {
 extern char D_004BD3B0[];
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void PtrVector_Resize(void* v, int n, int* val);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void std_vector_pod_int_resize(void* v, int n, int* val);
 }
 typedef struct { char* name; int id; int val; } E6D00;
 typedef struct { int pad0; int count; E6D00** data; } V6D00;
@@ -43,7 +43,7 @@ typedef struct { int pad0; V6D00 vec; char pad10[0x3C - 0x10]; unsigned char b3C
 static inline void* SD_Alloc(int n, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, n, D_004BD3B0, line);
+    return cMemMan_Allocate(0, n, D_004BD3B0, line);
 }
 static inline char* Dup(char* s)
 {
@@ -62,7 +62,7 @@ extern "C" void ClassDef_init(S6D00* self, int n, char** names, int* vals, int x
     int zero;
     self->x40 = x40;
     zero = 0;
-    PtrVector_Resize(&self->vec, n, &zero);
+    std_vector_pod_int_resize(&self->vec, n, &zero);
     self->b44 = 1;
     self->b3C = 1;
     self->x48 = base + n;
@@ -95,7 +95,7 @@ extern "C" {
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
-void Alloc_Unlock(int id);
+void EnableIntc(int id);
 void operator_delete(void* p);
 void* func_0013A040(void* self, short f);
 void* std_vector_MemberFuncPtr_dtor(void* self, short f);
@@ -122,9 +122,9 @@ extern "C" Owner* ClassDef_dtor(Owner* self, short flag)
         if (g_ProfileLockEnabled)
             Alloc_Lock(9);
         g_ProfileLockDepth++;
-        Mem_Free(0, d, D_004BD3B0, 0x170);
+        cMemMan_Deallocate(0, d, D_004BD3B0, 0x170);
         if (g_ProfileLockEnabled)
-            Alloc_Unlock(9);
+            EnableIntc(9);
         g_ProfileLockDepth--;
         for (int i = 0; i < self->items.count; i++) {
             Item* it = *std_vector_FieldDefPtr_opIndex_uint_2(&self->items, i);
@@ -134,12 +134,12 @@ extern "C" Owner* ClassDef_dtor(Owner* self, short flag)
                 if (g_ProfileLockEnabled)
                     Alloc_Lock(9);
                 g_ProfileLockDepth++;
-                Mem_Free(0, p, D_004BD3B0, 0x15C);
+                cMemMan_Deallocate(0, p, D_004BD3B0, 0x15C);
                 if (g_ProfileLockEnabled)
-                    Alloc_Unlock(9);
+                    EnableIntc(9);
                 g_ProfileLockDepth--;
             }
-            Mem_Free(0, it, D_004BD3B0, 0x173);
+            cMemMan_Deallocate(0, it, D_004BD3B0, 0x173);
         }
         void* m;
         m = self->m24;

@@ -54,74 +54,74 @@ extern char D_004F7A08[];
 extern char D_004DBA00[];
 extern char D_004DCF10[];
 extern Tgt_244FA0* g_LocalPlayer;
-float Hud_GetMissionTime();
-int Awards_GetParTime(void* p, unsigned char b);
+float cHud_GetMissionTime();
+int cAgentData_GetParTime(void* p, unsigned char b);
 int ObjMan_GetService();
-int ObjMan_GetTotalCount(int s);
-int ObjectiveMgr_GetCompleted(int s, int* buf, int n, int k);
-void Objective_QueueThresholdVoice(int a, int b);
-void HudTicker_Update(void* p, float dt);
-void Hud_UpdateCallouts(Obj_244FA0* o, float dt);
-int Object_LookupById(void* id);
-void HudTargets_Update(void* h, int t);
-void Hud_UpdateAmmoText(Obj_244FA0* o, int t);
-void IeScreen_Update(int h, float dt);
-void HudMap_Update(int h, float dt);
+int cObjectiveMan_GetObjectiveCount(int s);
+int cObjectiveMan_GetSucceededObjectives(int s, int* buf, int n, int k);
+void PlayCommanderQuip(int a, int b);
+void cInfoBar_NextFrame(void* p, float dt);
+void cHud_UpdateCallouts(Obj_244FA0* o, float dt);
+int nGobjManager_LookupGOBJ_cObjectIdR(void* id);
+void cHudTargetManager_Update(void* h, int t);
+void cHud_UpdateWeapon(Obj_244FA0* o, int t);
+void cInterface_NextFrame(int h, float dt);
+void cMap_NextFrame(int h, float dt);
 bool HudTimer_Update(void* t, float now);
-float Hud_GetNetworkTime(Obj_244FA0* o);
-void Event_Construct(Msg_244FA0* m, void* p);
-void Event_Send(Msg_244FA0* m, void* target, int flags);
+float cHud_GetGlobalTime(Obj_244FA0* o);
+void cMessage_ctor_cMessageNameR(Msg_244FA0* m, void* p);
+void QueueMessage_cMessageR_cSystemP_int(Msg_244FA0* m, void* target, int flags);
 void cMessage_dtor(Msg_244FA0* m, int flags);
-int Gui_GetScreenList();
-Svc_244FA0* Gui_GetScreenStack();
-void GuiCanvas_UpdatePads(Svc_244FA0* s);
-void GuiManager_Update(int h, float dt);
+int Gui_Manager();
+Svc_244FA0* Gui_Canvas();
+void GuiCanvas_ProcessInput_void(Svc_244FA0* s);
+void GuiManager_NextFrame(int h, float dt);
 }
-extern "C" void Hud_Update(Obj_244FA0* o, float dt)
+extern "C" void cHud_NextFrame(Obj_244FA0* o, float dt)
 {
     if (!D_004FFBB7) {
         o->f6DC += dt;
         unsigned char flag = g_IsMultiplayer;
-        float cur = Hud_GetMissionTime();
-        float max = (float)Awards_GetParTime(g_LevelDirName, flag);
+        float cur = cHud_GetMissionTime();
+        float max = (float)cAgentData_GetParTime(g_LevelDirName, flag);
         float q = max / 4.0f;
         float h = max / 2.0f;
         float t = 0.75f * max;
-        int total = ObjMan_GetTotalCount(ObjMan_GetService());
+        int total = cObjectiveMan_GetObjectiveCount(ObjMan_GetService());
         int buf[20];
         if (D_004F7DD8 < q && !(cur < q)) {
-            int n = ObjectiveMgr_GetCompleted(ObjMan_GetService(), buf, 20, 1);
+            int n = cObjectiveMan_GetSucceededObjectives(ObjMan_GetService(), buf, 20, 1);
             if (flag && !n)
-                Objective_QueueThresholdVoice(0x15, 2);
+                PlayCommanderQuip(0x15, 2);
         } else if (D_004F7DD8 < h && !(cur < h)) {
-            int n = ObjectiveMgr_GetCompleted(ObjMan_GetService(), buf, 20, 1);
+            int n = cObjectiveMan_GetSucceededObjectives(ObjMan_GetService(), buf, 20, 1);
             if (n < total / 2)
-                Objective_QueueThresholdVoice(0x15, 3);
+                PlayCommanderQuip(0x15, 3);
             else if (flag)
-                Objective_QueueThresholdVoice(0x15, 2);
+                PlayCommanderQuip(0x15, 2);
         } else if (D_004F7DD8 < t && !(cur < t)) {
-            if ((float)ObjectiveMgr_GetCompleted(ObjMan_GetService(), buf, 20, 1) < 0.75f * (float)total)
-                Objective_QueueThresholdVoice(0x15, 4);
+            if ((float)cObjectiveMan_GetSucceededObjectives(ObjMan_GetService(), buf, 20, 1) < 0.75f * (float)total)
+                PlayCommanderQuip(0x15, 4);
         }
         D_004F7DD8 = cur;
     }
-    HudTicker_Update(o->x100, dt);
+    cInfoBar_NextFrame(o->x100, dt);
     if (o->i6E8)
-        Hud_UpdateCallouts(o, dt);
-    int tgt = Object_LookupById(D_004F7DB8);
+        cHud_UpdateCallouts(o, dt);
+    int tgt = nGobjManager_LookupGOBJ_cObjectIdR(D_004F7DB8);
     o->sub.v0(tgt);
-    HudTargets_Update(o->hud, tgt);
-    Hud_UpdateAmmoText(o, tgt);
-    IeScreen_Update(o->i54, dt);
+    cHudTargetManager_Update(o->hud, tgt);
+    cHud_UpdateWeapon(o, tgt);
+    cInterface_NextFrame(o->i54, dt);
     if (o->i6A0)
-        HudMap_Update(o->i6A0, dt);
+        cMap_NextFrame(o->i6A0, dt);
     if (HudTimer_Update(&o->f6AC, o->f6DC)) {
         Msg_244FA0 m;
-        Event_Construct(&m, D_004F7A08);
+        cMessage_ctor_cMessageNameR(&m, D_004F7A08);
         m.vt = D_004DBA00;
         m.i24 = 1;
         m.b20 = 2;
-        Event_Send(&m, g_LocalPlayer->x30, 0);
+        QueueMessage_cMessageR_cSystemP_int(&m, g_LocalPlayer->x30, 0);
         m.vt = D_004DCF10;
         cMessage_dtor(&m, 0);
     }
@@ -131,23 +131,23 @@ extern "C" void Hud_Update(Obj_244FA0* o, float dt)
         if (o->f6B4 <= o->f6AC)
             busy = 0;
     }
-    if (!busy && HudTimer_Update(o->t6C4, Hud_GetNetworkTime(o))) {
+    if (!busy && HudTimer_Update(o->t6C4, cHud_GetGlobalTime(o))) {
         if (!g_IsMultiplayer || (g_IsMultiplayer ? D_005721C0 : 1)) {
             Msg_244FA0 m;
-            Event_Construct(&m, D_004F7A08);
+            cMessage_ctor_cMessageNameR(&m, D_004F7A08);
             m.vt = D_004DBA00;
             m.i24 = 0;
             m.b20 = 1;
-            Event_Send(&m, g_LocalPlayer->x30, 0);
+            QueueMessage_cMessageR_cSystemP_int(&m, g_LocalPlayer->x30, 0);
             m.vt = D_004DCF10;
             cMessage_dtor(&m, 0);
         }
     }
     if (!g_LoadoutPending || g_IsMultiplayer) {
-        GuiManager_Update(Gui_GetScreenList(), dt);
+        GuiManager_NextFrame(Gui_Manager(), dt);
         if (g_GameState != 0x13)
-            GuiCanvas_UpdatePads(Gui_GetScreenStack());
-        Gui_GetScreenStack()->v22(dt);
+            GuiCanvas_ProcessInput_void(Gui_Canvas());
+        Gui_Canvas()->v22(dt);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -186,25 +186,25 @@ extern "C" {
 extern char g_Game[];
 extern char D_004DAE10[];
 extern char D_004A72A8[];
-void Resource_Construct(void* m);
-void FileMan_Release(void* part, int flags);
+void cFileMan_ctor_void(void* m);
+void cFileMan_dtor(void* part, int flags);
 #if 0 /* merge_units */
 void cMessage_dtor(void* msg, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((Msg_244FA0 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void Event_Send(void* msg, void* target, int flags);
+void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int flags);
 #endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((Msg_244FA0 *)(a0), (a1), (a2))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((Msg_244FA0 *)(a0), (a1), (a2))) /* merge_units */
 
-int Objective_GetLevelMissionNumber(void* o);
-void SoundAction_CtorVoice(void* action, int kind, char* name, int a, int b);
+int cAgentData_GetCommander(void* o);
+void cSndFx_SetSndFx(void* action, int kind, char* name, int a, int b);
 void SoundMsg_WrapAction(Msg_245400* msg, void* action);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" void Objective_QueueThresholdVoice(int a, int b)
+extern "C" void PlayCommanderQuip(int a, int b)
 {
     Act_245400 act;
     char buf[32];
@@ -216,9 +216,9 @@ extern "C" void Objective_QueueThresholdVoice(int a, int b)
     act.h24.v = -2;
     act.w20 = 0;
     pa = act.memberA;
-    Resource_Construct(pa);
+    cFileMan_ctor_void(pa);
     pb = act.memberB;
-    Resource_Construct(pb);
+    cFileMan_ctor_void(pb);
     p->id = -1;
     p->mask = -1;
     p->w20 = 0;
@@ -229,25 +229,25 @@ extern "C" void Objective_QueueThresholdVoice(int a, int b)
     p->h184 = -1;
     p->w180 = 0;
     p->b186 = 0;
-    n = Objective_GetLevelMissionNumber(g_LevelDirName);
+    n = cAgentData_GetCommander(g_LevelDirName);
     if (n > 0) {
         Msg_245400 m;
         sprintf(buf, D_004A72A8, n, a, b);
-        SoundAction_CtorVoice(p, 4, buf, 0, 0);
+        cSndFx_SetSndFx(p, 4, buf, 0, 0);
         SoundMsg_WrapAction(&m, &act);
         m.flag = 1;
-        Event_Send(&m, g_Game, 1);
+        QueueMessage_cMessageR_cSystemP_int(&m, g_Game, 1);
         m.vtbl = D_004DAE10;
-        FileMan_Release(m.partB, -1);
-        FileMan_Release(m.partA, -1);
+        cFileMan_dtor(m.partB, -1);
+        cFileMan_dtor(m.partA, -1);
         cMessage_dtor(&m, 0);
     }
-    FileMan_Release(pb, -1);
-    FileMan_Release(pa, -1);
+    cFileMan_dtor(pb, -1);
+    cFileMan_dtor(pa, -1);
 }
 #pragma pop
 #undef cMessage_dtor /* merge_units */
-#undef Event_Send /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00245400(void) {}
 #pragma pop /* merge_units */
@@ -277,27 +277,27 @@ extern char* g_LocalPlayer;
 #define g_LocalPlayer (*(char **)&g_LocalPlayer) /* merge_units */
 
 #if 0 /* merge_units */
-extern float Hud_GetNetworkTime(char* o);
+extern float cHud_GetGlobalTime(char* o);
 #endif /* merge_units */
-#define Hud_GetNetworkTime(a0) (Hud_GetNetworkTime((void *)(a0))) /* merge_units */
+#define cHud_GetGlobalTime(a0) (cHud_GetGlobalTime((void *)(a0))) /* merge_units */
 
-extern int Loc_LookupText(char* key);
-extern void HudTimer_Start(void* t, int text, float time);
+extern int nGlobalization_GetString_charP(char* key);
+extern void cHud_cHudTimer_ScheduleExpiration(void* t, int text, float time);
 extern void EffectMsg_WrapRequest(EMsg_245560* m, void* a);
 #if 0 /* merge_units */
-extern void Event_Send(void* m, void* target, int a);
+extern void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int a);
 #endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((void *)(a0), (a1), (a2))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void FileMan_Release(void* member, int flags);
+extern void cFileMan_dtor(void* member, int flags);
 #endif /* merge_units */
-#define FileMan_Release(a0, a1) (FileMan_Release((a0), (a1))) /* merge_units */
+#define cFileMan_dtor(a0, a1) (cFileMan_dtor((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Event_Construct(Msg_245560* m, void* type);
+extern void cMessage_ctor_cMessageNameR(Msg_245560* m, void* type);
 #endif /* merge_units */
-#define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(void* m, int f);
@@ -305,18 +305,18 @@ extern void cMessage_dtor(void* m, int f);
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
 
-void Hud_StartGlobalTimer(char* o, char* key, float f)
+void cHud_StartGlobalTimer(char* o, char* key, float f)
 {
     EMsg_245560 em;
-    float t = f + Hud_GetNetworkTime(o);
-    HudTimer_Start(o + 0x6C4, key ? Loc_LookupText(key) : 0, t);
+    float t = f + cHud_GetGlobalTime(o);
+    cHud_cHudTimer_ScheduleExpiration(o + 0x6C4, key ? nGlobalization_GetString_charP(key) : 0, t);
     EffectMsg_WrapRequest(&em, D_004F0F90);
     em.b20 = 1;
-    Event_Send(&em, g_Game, 0);
+    QueueMessage_cMessageR_cSystemP_int(&em, g_Game, 0);
     if (g_IsMultiplayer && (g_IsMultiplayer ? D_005721C0 : 1)) {
         Msg_245560 m;
         Msg_245560* p = &m;
-        Event_Construct(p, D_004F7DC0);
+        cMessage_ctor_cMessageNameR(p, D_004F7DC0);
         m.vt = D_004DC310;
         m.f = t;
         m.kind = 4;
@@ -326,20 +326,20 @@ void Hud_StartGlobalTimer(char* o, char* key, float f)
         } else {
             p->key[0] = 0;
         }
-        Event_Send(&m, *(void**)(g_LocalPlayer + 0x30), 0);
+        QueueMessage_cMessageR_cSystemP_int(&m, *(void**)(g_LocalPlayer + 0x30), 0);
         m.vt = D_004DCF10;
         cMessage_dtor(&m, 0);
     }
     em.vtable = D_004DAE30;
-    FileMan_Release(em.memberB, -1);
-    FileMan_Release(em.memberA, -1);
+    cFileMan_dtor(em.memberB, -1);
+    cFileMan_dtor(em.memberA, -1);
     cMessage_dtor(&em, 0);
 }
 #undef g_LocalPlayer /* merge_units */
-#undef Hud_GetNetworkTime /* merge_units */
-#undef Event_Send /* merge_units */
-#undef FileMan_Release /* merge_units */
-#undef Event_Construct /* merge_units */
+#undef cHud_GetGlobalTime /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
+#undef cFileMan_dtor /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00245560(void) {}

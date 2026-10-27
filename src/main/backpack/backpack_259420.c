@@ -12,14 +12,14 @@ typedef struct Obj68 {
 } Obj68;
 
 extern int D_004DC4A0;
-extern void IdMgr_Allocate(int*, int);
+extern void nGobjManager_GetNextId(int*, int);
 extern void cGOBJ_ctor(Obj68*, int*, int, int*);
 
 /* Constructor: base init with resource 0xF5, then sets the vtable and defaults. */
-Obj68* WeaponPreview_ctor(Obj68* o) {
+Obj68* cHudWeapon_ctor(Obj68* o) {
     int extra = 0;
     int res;
-    IdMgr_Allocate(&res, 0xF5);
+    nGobjManager_GetNextId(&res, 0xF5);
     cGOBJ_ctor(o, &res, 3, &extra);
     o->vtable = &D_004DC4A0;
     o->unk60 = 0;

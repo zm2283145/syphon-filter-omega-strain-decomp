@@ -18,7 +18,7 @@ typedef struct N164 { int pad; struct N164* next; struct N164* prev; float key; 
 typedef struct { int pad; N164* next; N164* prev; } H164;
 typedef struct { int pad[2]; N164* first; int pad2; H164 sent; int count; } L164;
 static inline int Less164(N164* a, N164* b) { return a->key <= b->key; }
-void NpcNodeSearch_InsertSorted(L164* l, N164* item) {
+void cPriorityQueue_cNodeIndex_Push(L164* l, N164* item) {
     N164* n;
     N164* p;
     for (n = l->first; n != (N164*)&l->sent && !Less164(item, n); n = n->next) { }
@@ -36,7 +36,7 @@ static inline void merge_flush_func_00164B10(void) {}
 
 /* merge_units: begin func_00164B70 */
 #pragma push /* merge_units */
-void NpcRoute_InsertSorted(L164* l, N164* item) {
+void cPriorityQueue_cPathCell_Push(L164* l, N164* item) {
     N164* n;
     N164* p;
     for (n = l->first; n != (N164*)&l->sent && !Less164(item, n); n = n->next) { }
@@ -106,7 +106,7 @@ void std_swap_vectordeleterR_vectordeleterR_4(V_00164CA0* a, V_00164CA0* b);
 #pragma opt_common_subs off
 #pragma opt_dead_code off
 #pragma opt_loop_invariants off
-extern "C" void Vector_Insert_164CA0(V_00164CA0* v, T* pos, unsigned int n, const T* value)
+extern "C" void std_vector_imp_cBox_insert(V_00164CA0* v, T* pos, unsigned int n, const T* value)
 {
     /* declared before vb so pb colours above vb (retail a3/a2) */
     Q_00164CA0* pb; const Q_00164CA0* vb;

@@ -6,12 +6,12 @@
 #include "types.h"
 #include "fstream_types.h"
 
-extern int List_InsertBefore(int** out, StdList* list, int** pos, int value);
+extern int std_list_deleter_voidPtr_insert(int** out, StdList* list, int** pos, int value);
 
 /* list.push_back(value): insert before the sentinel. */
-int List_PushBack_3EB310(StdList* list, int value) {
+int std_list_cFSDataPtr_push_back(StdList* list, int value) {
     ListInsertArgs it;
 
     it.pos = &list->header;
-    return List_InsertBefore(&it.result, list, &it.pos, value);
+    return std_list_deleter_voidPtr_insert(&it.result, list, &it.pos, value);
 }

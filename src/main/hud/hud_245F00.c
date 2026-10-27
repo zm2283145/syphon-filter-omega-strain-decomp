@@ -127,42 +127,42 @@ extern Node_245F00* D_004F7DA8;
 extern Node_245F00* D_004F7DAC;
 extern Node_245F00* D_004F7DB0;
 extern void* D_004FFC04;
-void* Gui_GetScreenList(void);
-Stack_245F00* Gui_GetScreenStack(void);
-void Hud_SetGoggles(Hud_245F00* h, int on);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void ObjMarkerMgr_ctor(void* p);
-void ScalarCollection_Init(void* p);
-Snd_245F00* App_GetInstance(void);
-void** Hud_LoadIeScreen(int a, int b);
-void Hud_SelectTextColorTable(Hud_245F00* h, int a);
+void* Gui_Manager(void);
+Stack_245F00* Gui_Canvas(void);
+void cHud_ChangeGadget(Hud_245F00* h, int on);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cHudTargetManager_ctor(void* p);
+void std_list_deleter_voidPtr_ctor_void(void* p);
+Snd_245F00* GetMachine(void);
+void** LoadInterface_charP_cHogListR(int a, int b);
+void cHud_UseNightVisionColors(Hud_245F00* h, int a);
 void Hud_InitCalloutRects(Hud_245F00* h);
 void cLList_cHudTargetsObserverPtr_PushBackActual(void* mgr, Link_245F00** l);
 void std_vector_cInterfaceElementPtr_ctor(void* p);
 void std_vector_PDAQuip_ctor(Hud_245F00* h);
-void WeaponPreview_ctor(void* p);
-int Hud_FindOrCreateElement(void* a, char* name);
-void HudRadar_ctor(void* a, void* b);
-Link_245F00* HudMap_ctor(void* p, int a, int b);
-void FrontEnd_StartGui(void* a, int b);
-void IeElement_SetData(void* a, void* b);
-void IeElement_SetShown(int a, int b);
-void IeNode_SetFlag61(void* a, int b);
-void* IeNode_FindChild(void* a, char* name);
-void IeNode_SetShown(void* a, int b, int c);
-void* IeElement_Create(void* a);
-void HudTicker_SetStyle(void* a, int b);
-void HudTicker_Init(void* a, int b, int c);
-void* GuiManager_CreateRoot(void* list, char* a, char* b);
-void GuiManager_FindOrLoad(void* list, char* a, char* b);
-Widget_245F00* GuiWidget_FindChildByName(void* a, char* name);
+void cHudWeapon_ctor(void* p);
+int nHud_CreateHudElement(void* a, char* name);
+void cHudRadar_ctor(void* a, void* b);
+Link_245F00* cMap_ctor(void* p, int a, int b);
+void cGameFrontEnd_InitGui(void* a, int b);
+void cInterfaceElement_SetGobj(void* a, void* b);
+void cInterfaceElement_Activate(int a, int b);
+void cInterfaceModel_SetPerspective(void* a, int b);
+void* cInterfaceModel_GetChild(void* a, char* name);
+void cInterfaceModel_Activate(void* a, int b, int c);
+void* cInterfaceModel_CreateInstance(void* a);
+void cInfoBar_SetScrolling(void* a, int b);
+void cInfoBar_ctor(void* a, int b, int c);
+void* GuiManager_ConstructGui(void* list, char* a, char* b);
+void GuiManager_OpenGui(void* list, char* a, char* b);
+Widget_245F00* GuiWidget_FindChild_charP(void* a, char* name);
 }
 
 #pragma inline_depth(10)
-static inline void* Alloc_245F00(int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004A7210, line); }
+static inline void* Alloc_245F00(int n, int line) { AllocGuard g; return cMemMan_Allocate(0, n, D_004A7210, line); }
 static inline void Reg_245F00(void* mgr, Link_245F00* l) { l->owner = mgr; cLList_cHudTargetsObserverPtr_PushBackActual(mgr, &l); }
 static inline Widget_245F00* Cast_245F00(Widget_245F00* w, void* t) { return w && w->IsA(t) ? w : 0; }
-extern "C" Hud_245F00* HudObject_ctor(Hud_245F00* h, int a1, int a2, int a3)
+extern "C" Hud_245F00* cHud_ctor(Hud_245F00* h, int a1, int a2, int a3)
 {
     void* root;
     void* grp;
@@ -171,10 +171,10 @@ extern "C" Hud_245F00* HudObject_ctor(Hud_245F00* h, int a1, int a2, int a3)
     std_vector_PDAQuip_ctor(h);
     h->bC = 1;
     h->f50 = a1;
-    h->f54 = Hud_LoadIeScreen(a2, a1);
-    h->f58 = IeNode_FindChild(*h->f54, D_004A72B8);
-    h->f5C = IeNode_FindChild(*h->f54, D_004A72C8);
-    h->f60 = IeNode_FindChild(*h->f54, D_004A72E0);
+    h->f54 = LoadInterface_charP_cHogListR(a2, a1);
+    h->f58 = cInterfaceModel_GetChild(*h->f54, D_004A72B8);
+    h->f5C = cInterfaceModel_GetChild(*h->f54, D_004A72C8);
+    h->f60 = cInterfaceModel_GetChild(*h->f54, D_004A72E0);
     h->f64 = 0;
     h->f68 = 0;
     {
@@ -182,19 +182,19 @@ extern "C" Hud_245F00* HudObject_ctor(Hud_245F00* h, int a1, int a2, int a3)
         std_vector_cInterfaceElementPtr_ctor(s);
         s->bC = 1;
     }
-    ObjMarkerMgr_ctor(h->m90);
-    HudRadar_ctor(&h->mD0, IeNode_FindChild(*h->f54, D_004A72F8));
+    cHudTargetManager_ctor(h->m90);
+    cHudRadar_ctor(&h->mD0, cInterfaceModel_GetChild(*h->f54, D_004A72F8));
     h->fEC = 0;
     {
         signed char c = D_004F7D40;
-        int v = *(int*)((unsigned char)c * 4 + (char*)App_GetInstance()->f280);
-        HudTicker_Init(h->m100, Hud_FindOrCreateElement(*h->f54, D_004A7308), v);
+        int v = *(int*)((unsigned char)c * 4 + (char*)GetMachine()->f280);
+        cInfoBar_ctor(h->m100, nHud_CreateHudElement(*h->f54, D_004A7308), v);
     }
-    WeaponPreview_ctor(h->m634);
+    cHudWeapon_ctor(h->m634);
     {
         Link_245F00* p;
         p = (Link_245F00*)Alloc_245F00(0xA0, 0xE0);
-        if (p) p = HudMap_ctor(p, h->f50, a3);
+        if (p) p = cMap_ctor(p, h->f50, a3);
         h->f6A0 = p;
     }
     h->f6A4 = 0;
@@ -211,24 +211,24 @@ extern "C" Hud_245F00* HudObject_ctor(Hud_245F00* h, int a1, int a2, int a3)
     h->f6C4 = 0;
     h->b6C8 = 0;
     h->f6CC = 0;
-    ScalarCollection_Init(h->m6E8);
+    std_list_deleter_voidPtr_ctor_void(h->m6E8);
     Reg_245F00(h->m90, h->f6A0);
     Reg_245F00(h->m90, &h->mD0);
     root = *h->f54;
-    IeNode_SetFlag61(h->f5C, 1);
-    IeNode_SetFlag61(h->f60, 1);
-    grp = IeNode_FindChild(root, D_004A7310);
-    IeNode_SetShown(grp, 1, 1);
-    h->f6C = Hud_FindOrCreateElement(grp, D_004A7328);
-    h->f70 = Hud_FindOrCreateElement(grp, D_004A7338);
-    h->f74 = Hud_FindOrCreateElement(root, D_004A7348);
-    Hud_SetGoggles(h, 0);
+    cInterfaceModel_SetPerspective(h->f5C, 1);
+    cInterfaceModel_SetPerspective(h->f60, 1);
+    grp = cInterfaceModel_GetChild(root, D_004A7310);
+    cInterfaceModel_Activate(grp, 1, 1);
+    h->f6C = nHud_CreateHudElement(grp, D_004A7328);
+    h->f70 = nHud_CreateHudElement(grp, D_004A7338);
+    h->f74 = nHud_CreateHudElement(root, D_004A7348);
+    cHud_ChangeGadget(h, 0);
     h->f8C = -1;
-    HudTicker_SetStyle(h->m100, 0);
-    grp = IeNode_FindChild(root, D_004A7360);
-    h->f630 = IeElement_Create(grp);
-    IeElement_SetData(h->f630, h->m634);
-    h->f69C = (Model_245F00*)IeElement_Create(IeNode_FindChild(grp, D_004A7378));
+    cInfoBar_SetScrolling(h->m100, 0);
+    grp = cInterfaceModel_GetChild(root, D_004A7360);
+    h->f630 = cInterfaceModel_CreateInstance(grp);
+    cInterfaceElement_SetGobj(h->f630, h->m634);
+    h->f69C = (Model_245F00*)cInterfaceModel_CreateInstance(cInterfaceModel_GetChild(grp, D_004A7378));
     {
         Elem_245F00* e = h->f69C->f74;
         if (e) {
@@ -236,37 +236,37 @@ extern "C" Hud_245F00* HudObject_ctor(Hud_245F00* h, int a1, int a2, int a3)
             e->b10 = 2;
         }
     }
-    D_004F7D90 = (Node_245F00*)IeNode_FindChild(root, D_004A7388);
+    D_004F7D90 = (Node_245F00*)cInterfaceModel_GetChild(root, D_004A7388);
     D_004F7D90->b62 = 1;
-    D_004F7DA0 = (Node_245F00*)IeNode_FindChild(root, D_004A7398);
-    D_004F7DA4 = (Node_245F00*)IeNode_FindChild(root, D_004A73B0);
-    D_004F7DA8 = (Node_245F00*)IeNode_FindChild(root, D_004A73C0);
-    D_004F7DAC = (Node_245F00*)IeNode_FindChild(root, D_004A73D0);
+    D_004F7DA0 = (Node_245F00*)cInterfaceModel_GetChild(root, D_004A7398);
+    D_004F7DA4 = (Node_245F00*)cInterfaceModel_GetChild(root, D_004A73B0);
+    D_004F7DA8 = (Node_245F00*)cInterfaceModel_GetChild(root, D_004A73C0);
+    D_004F7DAC = (Node_245F00*)cInterfaceModel_GetChild(root, D_004A73D0);
     D_004F7DA0->b62 = 1;
     D_004F7DA4->b62 = 1;
     D_004F7DA8->b62 = 1;
     D_004F7DAC->b62 = 1;
     Hud_InitCalloutRects(h);
-    D_004F7DB0 = (Node_245F00*)IeNode_FindChild(root, D_004A73E8);
+    D_004F7DB0 = (Node_245F00*)cInterfaceModel_GetChild(root, D_004A73E8);
     D_004F7DB0->b62 = 1;
-    IeNode_SetShown(D_004F7DB0, 0, 1);
-    h->f78 = Hud_FindOrCreateElement(root, D_004A73F8);
-    IeElement_SetShown(h->f78, 0);
-    Hud_SelectTextColorTable(h, 0);
+    cInterfaceModel_Activate(D_004F7DB0, 0, 1);
+    h->f78 = nHud_CreateHudElement(root, D_004A73F8);
+    cInterfaceElement_Activate(h->f78, 0);
+    cHud_UseNightVisionColors(h, 0);
     h->fF0 = 0;
     h->f6DC = 0;
     h->f6E0 = -1.0f;
-    FrontEnd_StartGui(D_004FFC04, 1);
-    h->f6A4 = GuiManager_CreateRoot(Gui_GetScreenList(), D_004A7400, D_004A7410);
-    Gui_GetScreenStack()->Show(h->f6A4, 0);
-    wa = Cast_245F00(GuiWidget_FindChildByName(h->f6A4, D_004A7420), D_004A7520);
-    wb = Cast_245F00(GuiWidget_FindChildByName(h->f6A4, D_004A7438), D_004A7520);
+    cGameFrontEnd_InitGui(D_004FFC04, 1);
+    h->f6A4 = GuiManager_ConstructGui(Gui_Manager(), D_004A7400, D_004A7410);
+    Gui_Canvas()->Show(h->f6A4, 0);
+    wa = Cast_245F00(GuiWidget_FindChild_charP(h->f6A4, D_004A7420), D_004A7520);
+    wb = Cast_245F00(GuiWidget_FindChild_charP(h->f6A4, D_004A7438), D_004A7520);
     h->f6D4 = wa;
     h->f6D8 = wb;
     h->f6BC = wa;
     h->f6C0 = wb;
-    GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A7260, D_004A7278);
-    GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A7248, D_004A7288);
+    GuiManager_OpenGui(Gui_Manager(), D_004A7260, D_004A7278);
+    GuiManager_OpenGui(Gui_Manager(), D_004A7248, D_004A7288);
     return h;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -278,6 +278,6 @@ static inline void merge_flush_func_00245F00(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_VTABLE_BASE_DTOR(WeaponPreview_dtor, D_004DC4A0, cGOBJ_dtor)
+DEFINE_VTABLE_BASE_DTOR(cHudWeapon_dtor, D_004DC4A0, cGOBJ_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002464B0 */

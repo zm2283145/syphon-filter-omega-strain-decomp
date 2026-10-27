@@ -19,7 +19,7 @@ DEFINE_TREE_NODE_FREE(std_tree_pair_int_value_compare_destroy_nodeP, D_004BDBF8)
 #include "payload_message_clone_latevt_p.h"
 
 extern "C" { char D_004BDDD8[] = "character.hh"; }
-DEFINE_PAYLOAD_MESSAGE_CLONE_LATEVT_P(cCharActionMsg_InteractParams_Clone, 0x60, D_004BDDD8, 0x4D8, D_004E00E0, cInteractParams_ctor_cInteractParamsR, cMessage_ctor3)
+DEFINE_PAYLOAD_MESSAGE_CLONE_LATEVT_P(cCharActionMsg_InteractParams_Clone, 0x60, D_004BDDD8, 0x4D8, D_004E00E0, cInteractParams_ctor_cInteractParamsR, cCharActionMsg_ctor_cCharActionMsgR)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E4170 */
 
@@ -47,12 +47,12 @@ extern unsigned char D_005723C8, D_005721D0;
 extern char D_004E00E0[], D_004E0840[];
 void cCharActionMsg_ctor_netcharactionreqR(Msg_4240*, Src_4240*);
 V4_4240* cQuaternion_ctor_float_float_float_float(V4_4240*, float, float, float, float);
-V4_4240* Vec4_Set(V4_4240*, float, float, float, float);
-Pl_4240* Placement_GetIdentity(Pl_4240*, V4_4240*, V4_4240*);
+V4_4240* cVector_ctor_float_float_float_float(V4_4240*, float, float, float, float);
+Pl_4240* cQuatVec_ctor_cQuaternionR_cVectorR(Pl_4240*, V4_4240*, V4_4240*);
 Id_4240* cObjectId_ctor_uint(Id_4240*, int);
 void cInteractParams_ctor_int_cQuatVecR_cObjectIdR(void*, int, Pl_4240*, Id_4240*);
-void** NetMap_Lookup(int);
-void MsgQueue_QueueClone(Msg_4240*, void*, int, int);
+void** cNetObj_GetNetSystem(int);
+void QueueMessage_cMessageR_cSystemP_int_int(Msg_4240*, void*, int, int);
 void cMessage_dtor(Msg_4240*, int);
 
 int cCharActionMsg_InteractParams_NetCharActionInteractParamsReq(int a, int b, int c, Src_4240* p0)
@@ -71,11 +71,11 @@ int cCharActionMsg_InteractParams_NetCharActionInteractParamsReq(int a, int b, i
         Pl_4240* pp;
         cCharActionMsg_ctor_netcharactionreqR(m, p);
         r = cQuaternion_ctor_float_float_float_float(&rot, p->qx, p->qy, p->qz, p->qw);
-        pp = Placement_GetIdentity(&pl, r, Vec4_Set(&pos, p->px, p->py, p->pz, 1.0f));
+        pp = cQuatVec_ctor_cQuaternionR_cVectorR(&pl, r, cVector_ctor_float_float_float_float(&pos, p->px, p->py, p->pz, 1.0f));
         cInteractParams_ctor_int_cQuatVecR_cObjectIdR(m->sub30, p->unkC, pp, cObjectId_ctor_uint(&idv, p->unk10));
         m->vt = D_004E00E0;
-        obj = NetMap_Lookup(p->id);
-        if (obj) MsgQueue_QueueClone(m, *obj, 0, 0);
+        obj = cNetObj_GetNetSystem(p->id);
+        if (obj) QueueMessage_cMessageR_cSystemP_int_int(m, *obj, 0, 0);
         msg.vt = D_004E0840;
         cMessage_dtor(&msg, 0);
     }

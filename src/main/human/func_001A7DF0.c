@@ -2,7 +2,7 @@
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 #pragma push
 #pragma opt_common_subs off
-V4 Quat_ComposeOffset(V4* b, V4* c) {
+V4 cQuaternion_GetRotated(V4* b, V4* c) {
     V4 l0;
     V4* q1 = &l0;
     asm {

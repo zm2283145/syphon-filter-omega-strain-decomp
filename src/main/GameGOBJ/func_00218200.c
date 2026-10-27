@@ -3,7 +3,7 @@
 #include "vslot_pad.h"
 #include "cmessage.h"
 #pragma inline_depth(8)
-/* PathObj_PropagateMovement: pass the path object's new placement on to the
+/* cPathedGOBJ_TransformAttached: pass the path object's new placement on to the
  * attached objects (teleport message or direct set; dead handles are erased)
  * and to the child sources (their transform times the new placement). */
 struct V {
@@ -53,20 +53,20 @@ struct PTeleMsg {
 extern "C" {
 extern char g_TeleportMsgClass[];
 extern char D_004D9360[];
-void* Mtx_GetIdentity();
-void* Mtx_SetRotationTranslation(void* d, void* r, void* t);
+void* cMatrix_GetUnit();
+void* cMatrix_ctor_cMatrixR_cVectorR(void* d, void* r, void* t);
 V cVector_Copy_WSet0(const V& v);
 int* std_vector_cGOBJPtr_opIndex(PtrVec* v, int i);
 void func_002186A0(PHVec* v);
 PHandle* cSafePtr_cGOBJ_opAssign_cSafePtrR(PHandle* d, PHandle* s);
 PHandle* func_002186D0(PHVec* v, int i);
 int func_002186E0(PHVec* v);
-void PathObj_PropagateMovement(PathObj* self, M m, int msg);
+void cPathedGOBJ_TransformAttached(PathObj* self, M m, int msg);
 }
 static inline int IsNullNV(void* p) { return (p != 0) ^ 1; }
 static inline int EqNV(int a, int b) { return (unsigned)(a ^ b) < 1; }
 static inline PMover* WGet(PHandle* h) { bool ok = 1; if (!IsNullNV(h->object) && !EqNV(h->object->id, h->id)) ok = 0; unsigned char k = ok; return k ? h->object : 0; }
-static inline void SetRT(void* d, void* r, const V& t) { Mtx_SetRotationTranslation(d, r, (void*)&t); }
+static inline void SetRT(void* d, void* r, const V& t) { cMatrix_ctor_cMatrixR_cVectorR(d, r, (void*)&t); }
 static inline void SetPose(void* d, void* r, const V& p) { SetRT(d, r, cVector_Copy_WSet0(p)); }
 static inline int** KData(PtrVec* v) { return &v->data; }
 static inline void* KidAt(PtrVec* v, int i) { return (void*)(*KData(v))[i]; }
@@ -81,7 +81,7 @@ static inline void Erase(PHVec* v, int i)
     }
 }
 
-void PathObj_PropagateMovement(PathObj* self, M m, int msg)
+void cPathedGOBJ_TransformAttached(PathObj* self, M m, int msg)
 {
     int n = self->hv.count;
     int i;
@@ -91,13 +91,13 @@ void PathObj_PropagateMovement(PathObj* self, M m, int msg)
                 PTeleMsg t;
                 PTeleMsg* tp = &t;
                 V* pos = &m.r3;
-                Event_Construct(tp, g_TeleportMsgClass);
+                cMessage_ctor_cMessageNameR(tp, g_TeleportMsgClass);
                 tp->vtable = D_004D9360;
                 tp->mode = 3;
-                void* id = Mtx_GetIdentity();
+                void* id = cMatrix_GetUnit();
                 SetPose1(&tp->matrix, id, *pos);
                 t.kind = 1;
-                Event_Send(&t, WGet(&self->hv.data[i]), 1);
+                QueueMessage_cMessageR_cSystemP_int(&t, WGet(&self->hv.data[i]), 1);
                 t.vtable = D_004D9360;
                 cMessage_dtor(&t, 0);
             } else {
@@ -118,12 +118,12 @@ void PathObj_PropagateMovement(PathObj* self, M m, int msg)
         if (msg) {
             PTeleMsg t;
             PTeleMsg* tp = &t;
-            Event_Construct(tp, g_TeleportMsgClass);
+            cMessage_ctor_cMessageNameR(tp, g_TeleportMsgClass);
             tp->vtable = D_004D9360;
             tp->mode = 2;
             CopyM(&tp->matrix, &w);
             t.kind = 1;
-            Event_Send(&t, KidAt(&self->kidv, i), 1);
+            QueueMessage_cMessageR_cSystemP_int(&t, KidAt(&self->kidv, i), 1);
             t.vtable = D_004D9360;
             cMessage_dtor(&t, 0);
         } else {

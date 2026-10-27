@@ -11,11 +11,11 @@
 #pragma push /* merge_units */
 typedef struct { char pad[0x6A4]; void* snd; unsigned char b6A8; unsigned char b6A9; unsigned char b6AA; } Obj2426;
 extern void GuiGameScreen_ActivateQuickChat(void* p, int on);
-extern void Pad_ResetHeldMask(void* p);
+extern void cJoystick_Debounce(void* p);
 extern char D_0055A300[];void cHud_DeactivateQuickChat(Obj2426* s) {
     if (!s->b6AA || !s->snd) return;
     GuiGameScreen_ActivateQuickChat(s->snd, 0);
-    Pad_ResetHeldMask(D_0055A300);
+    cJoystick_Debounce(D_0055A300);
     s->b6AA = 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -27,7 +27,7 @@ static inline void merge_flush_func_002426E0(void) {}
 #pragma push /* merge_units */
 void cHud_ActivateQuickChat(Obj2426* s) {
     if (s->b6AA || !s->snd) return;
-    Pad_ResetHeldMask(D_0055A300);
+    cJoystick_Debounce(D_0055A300);
     GuiGameScreen_ActivateQuickChat(s->snd, 1);
     s->b6AA = 1;
 }
@@ -39,12 +39,12 @@ static inline void merge_flush_func_00242740(void) {}
 /* merge_units: begin func_002427A0 */
 #pragma push /* merge_units */
 extern int D_0055A6C0;
-extern void Hud_CloseMapScreen(Obj2426* s);
-extern void Hud_OpenMapScreen(Obj2426* s);
-void Hud_ToggleMap(Obj2426* s) {
+extern void cHud_DeactivateMap(Obj2426* s);
+extern void cHud_ActivateMap(Obj2426* s);
+void cHud_ToggleMap(Obj2426* s) {
     D_0055A6C0 = -0x41;
-    if (s->b6A9) Hud_CloseMapScreen(s);
-    else Hud_OpenMapScreen(s);
+    if (s->b6A9) cHud_DeactivateMap(s);
+    else cHud_ActivateMap(s);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002427A0(void) {}

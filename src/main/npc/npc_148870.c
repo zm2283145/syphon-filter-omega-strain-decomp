@@ -48,7 +48,7 @@ struct cNPC_00148880 {
     virtual void Follow(void* target, float minDist, float maxDist); /* +0xFC */
 };
 
-extern "C" void* GObj_IdentityB(void* handle);
+extern "C" void* cGOBJ_SOBJ_convert(void* handle);
 
 /* Script native: cNPC::Follow(object of args[1], (float)args[2], (float)args[3]); returns 0. */
 extern "C" int Script_cNPC_Follow(ScriptArg* args)
@@ -61,7 +61,7 @@ extern "C" int Script_cNPC_Follow(ScriptArg* args)
     minDist[0] = args[2].i;
     npc = (cNPC_00148880*)args[0].p;
     far = *(volatile float*)maxDist;
-    npc->Follow(GObj_IdentityB(args[1].p), *(float*)minDist, far);
+    npc->Follow(cGOBJ_SOBJ_convert(args[1].p), *(float*)minDist, far);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

@@ -33,11 +33,11 @@ int GetPlayerCountInGroup(N2FD8 *head)
 
 /* merge_units: begin func_002F3010 */
 typedef struct S3010 { struct S3010 *a, *b; int c; int d[3]; int x18; } S3010;
-extern void Net_AllocZeroed(void *, int);
+extern void rt_memory_allocate_init_zero(void *, int);
 S3010 *CreatePlayer(int c)
 {
     S3010 *p = 0;
-    Net_AllocZeroed(&p, 0x860);
+    rt_memory_allocate_init_zero(&p, 0x860);
     if (p) {
         p->b = p->a = p;
         p->c = c;

@@ -6,12 +6,12 @@ typedef struct MemPool {
 } MemPool;
 
 extern MemPool D_00533CB0[]; /* memory pools */
-extern void Mem_HeapFree(MemPool* pool, void* block);
+extern void cMemBin_Deallocate(MemPool* pool, void* block);
 
 /* Frees a block back to the pool recorded in its header (low nibble at block-0xC). */
-void Mem_Free(void* self, char* block) {
+void cMemMan_Deallocate(void* self, char* block) {
     if (block) {
         char pool = block[-0xC] & 0xF;
-        Mem_HeapFree(&D_00533CB0[pool], block);
+        cMemBin_Deallocate(&D_00533CB0[pool], block);
     }
 }

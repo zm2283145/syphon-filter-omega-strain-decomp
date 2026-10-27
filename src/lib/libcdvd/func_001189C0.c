@@ -29,7 +29,7 @@ extern void scePrintf(const char *, ...);
 /* busy-wait; the nop has no C equivalent */
 #define DELAY() { int j = 0x100000; do { j--; __asm__ volatile("nop"); } while (j != -1); }
 
-int sceCdSearchFile(sceCdlFILE *fp, const char *name, int layer)
+int sceCdLayerSearchFile(sceCdlFILE *fp, const char *name, int layer)
 {
     int i;
     int ret;

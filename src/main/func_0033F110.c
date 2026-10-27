@@ -23,20 +23,20 @@ extern unsigned char D_00532FF0;
 extern int D_00532FF8;
 extern int D_00533000;
 void GuiScreen_Wake(O* o);
-void String_CtorCStr_13B480(String* s, const char* text);
-void String_AssignString(void* list, String* s);
+void std_basic_string_char_char_traits_char_ctor_charP(String* s, const char* text);
+void std_basic_string_char_char_traits_char_assign_basicstringR(void* list, String* s);
 void String_Dtor(String* s, int flags);
 void GuiMissionLobbyScreen_SetDisplayMode(O* o, unsigned char mode);
-W* GuiWidget_FindChildByName(void* o, char* name);
-void* Agent_GetSelected(void* p, int i);
-char* AgentData_GetName(void* a);
+W* GuiWidget_FindChild_charP(void* o, char* name);
+void* cGameSystem_GetAgentData(void* p, int i);
+char* cAgentData_GetUserName(void* a);
 void GuiTextWidget_SetText(W* w, char* s, int f);
-Mgr* Gui_GetScreenStack(void);
-void GuiMenuScreen_Wake(O* o);
+Mgr* Gui_Canvas(void);
+void GuiMissionLobbyScreen_onWake(O* o);
 }
 static inline W* Cast(W* w, void* t) { return w && w->IsA(t) ? w : 0; }
 
-void GuiMenuScreen_Wake(O* o)
+void GuiMissionLobbyScreen_onWake(O* o)
 {
     W* w;
     GuiScreen_Wake(o);
@@ -44,8 +44,8 @@ void GuiMenuScreen_Wake(O* o)
     o->f100 = -1;
     {
         String s;
-        String_CtorCStr_13B480(&s, D_004B9C60);
-        String_AssignString(o->f104, &s);
+        std_basic_string_char_char_traits_char_ctor_charP(&s, D_004B9C60);
+        std_basic_string_char_char_traits_char_assign_basicstringR(o->f104, &s);
         String_Dtor(&s, 0);
     }
     if (o->f88) {
@@ -54,12 +54,12 @@ void GuiMenuScreen_Wake(O* o)
         o->f88->b80 = 1;
     }
     o->b78 = 1;
-    w = Cast(GuiWidget_FindChildByName(o, D_004928E0), D_004A7520);
+    w = Cast(GuiWidget_FindChild_charP(o, D_004928E0), D_004A7520);
     if (w)
-        GuiTextWidget_SetText(w, AgentData_GetName(Agent_GetSelected(g_Game, -1)), 0);
+        GuiTextWidget_SetText(w, cAgentData_GetUserName(cGameSystem_GetAgentData(g_Game, -1)), 0);
     D_00532FF0 = 0;
     D_00532FF8 = 0;
     D_00533000 = 0;
-    Gui_GetScreenStack()->flags |= 0xC;
-    Gui_GetScreenStack()->flags |= 0x3;
+    Gui_Canvas()->flags |= 0xC;
+    Gui_Canvas()->flags |= 0x3;
 }

@@ -9,12 +9,12 @@ extern Wrap_4422D0 g_MemCard;
 extern char D_00499C70[];
 Vec_4422D0* std_vector_charPtr_ctor_void_2(Vec_4422D0* v);
 void std_vector_charPtr_dtor_void_2(Vec_4422D0* v, short del);
-void MemCardWrap_Enumerate(Wrap_4422D0* o, Vec_4422D0* v);
+void cMemCard_GetFilenames(Wrap_4422D0* o, Vec_4422D0* v);
 char** std_vector_charPtr_opIndex_uint_2(Vec_4422D0* v, int i);
 char* strchr(const char* s, int c);
 int AgentFile_DecodeName(const unsigned char* in, char* out, int* digit, int max);
 int strcmp(const char* a, const char* b);
-void String_Copy(char* d, const char* s);
+void Libc_Strcpy(char* d, const char* s);
 }
 extern "C" int SaveAgentWidget_FindSlotFile(int slot, const char* want, char* out)
 {
@@ -24,12 +24,12 @@ extern "C" int SaveAgentWidget_FindSlotFile(int slot, const char* want, char* ou
     int i;
     std_vector_charPtr_ctor_void_2(&v);
     v.owns = 1;
-    MemCardWrap_Enumerate(&g_MemCard, &v);
+    cMemCard_GetFilenames(&g_MemCard, &v);
     for (i = 0; i < v.Size(); i++) {
         if (!strchr(v.data[i], '.') && ((D_00499C70 + 1)[**std_vector_charPtr_opIndex_uint_2(&v, i)] & 4) &&
             AgentFile_DecodeName((unsigned char*)v.data[i], name, &digit, 0x10)) {
             if ((!want || strcmp(name, want)) && slot == digit) {
-                if (out) String_Copy(out, v.data[i]);
+                if (out) Libc_Strcpy(out, v.data[i]);
                 std_vector_charPtr_dtor_void_2(&v, -1);
                 return 1;
             }

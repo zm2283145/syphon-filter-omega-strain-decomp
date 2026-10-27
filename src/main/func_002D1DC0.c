@@ -5,7 +5,7 @@ typedef struct { char pad[0x1C]; char ref[8]; int owner; unsigned char b28; unsi
 typedef struct { char pad[4]; int owner; char pad2[0x14]; Sess1DC0* sess; } Hdl1DC0;
 extern unsigned char D_005723C8;
 extern unsigned char D_0051F080;
-extern Obj1DC0* Object_LookupById(int* id);
+extern Obj1DC0* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
 extern void cAimWeapon_Creation(void* ref, Obj1DC0* o);
 extern void cTargetInfo_Creation(Sess1DC0* s, Obj1DC0* o);
 #pragma push
@@ -23,7 +23,7 @@ void cNetHuman_NetHumanUpdateCallback(void* recv, int id, int kind)
             if (s->b29) {
                 Obj1DC0* o;
                 sl.oid = s->netId;
-                o = Object_LookupById(&sl.oid);
+                o = nGobjManager_LookupGOBJ_cObjectIdR(&sl.oid);
                 if (o) {
                     cAimWeapon_Creation(s->ref, o);
                     cTargetInfo_Creation(s, o);

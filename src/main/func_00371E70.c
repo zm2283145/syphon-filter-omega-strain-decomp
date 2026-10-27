@@ -55,14 +55,14 @@ struct LMgr {
     V x20F0[4];
 };
 extern "C" {
-M* Mtx_Copy(M* d, const M* s);
-M* Mtx_InvertRigid(M* m);
+M* cMatrix_ctor_cMatrixR(M* d, const M* s);
+M* cMatrix_InvertRotTrans(M* m);
 }
 #pragma push
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
-static inline M* InvCopy(M* b, M* m) { M a; return Mtx_Copy(b, Mtx_InvertRigid(Mtx_Copy(&a, m))); }
-extern "C" void LightMgr_WriteModelSlots(LMgr* self, M* m)
+static inline M* InvCopy(M* b, M* m) { M a; return cMatrix_ctor_cMatrixR(b, cMatrix_InvertRotTrans(cMatrix_ctor_cMatrixR(&a, m))); }
+extern "C" void cLightMan_VU1PrepareParallel(LMgr* self, M* m)
 {
     V rows[4];
     if (m) {

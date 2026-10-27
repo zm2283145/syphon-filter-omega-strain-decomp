@@ -8,19 +8,19 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { char p[0x6C]; float f6C; } W465570;
-extern void GuiCanvas_PushScreen(W465570* w);
-extern void* GuiWidget_FindChildByName(void* x, int key);
-extern void GuiWidget_SendEvent(void* w, void* src, int kind, int a, int b);
+extern void GuiCanvas_PushGui(W465570* w);
+extern void* GuiWidget_FindChild_charP(void* x, int key);
+extern void GuiWidget_SendMessage(void* w, void* src, int kind, int a, int b);
 extern char D_004C28F8[];
 static int D_00497BE0 = (int)D_004C28F8;
-void GuiGameCanvas_PushScreen(W465570* w, void* x)
+void GuiFrontendCanvas_PushGui(W465570* w, void* x)
 {
-    GuiCanvas_PushScreen(w);
+    GuiCanvas_PushGui(w);
     if (x) {
-        void* o = GuiWidget_FindChildByName(x, D_00497BE0);
+        void* o = GuiWidget_FindChild_charP(x, D_00497BE0);
         if (o) {
-            GuiWidget_SendEvent(w, o, 10, (int)w->f6C, 0);
-            GuiWidget_SendEvent(w, o, 0xD, 0, 300);
+            GuiWidget_SendMessage(w, o, 10, (int)w->f6C, 0);
+            GuiWidget_SendMessage(w, o, 0xD, 0, 300);
         }
     }
 }
@@ -36,10 +36,10 @@ void GuiGameCanvas_PushScreen(W465570* w, void* x)
  */
 
 
-extern int GuiCanvas_Navigate(int, int);
+extern int GuiCanvas_onInput(int, int);
 
 int GuiFrontendCanvas_HandleInput(int a0, int a1) {
-    return GuiCanvas_Navigate(a0, a1);
+    return GuiCanvas_onInput(a0, a1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00465600 */
@@ -59,25 +59,25 @@ extern char D_00586C90[];
 extern char D_00586E30[];
 extern char D_00586FD0[];
 extern char D_00587170[];
-char* Loc_LookupText(int key);
-int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
-int GuiWidget_BroadcastEvent(void* self, int message, int first, int second);
+char* nGlobalization_GetString_charP(int key);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, char* c, void* d, int e);
+int GuiWidget_SendChildrenMessage(void* self, int message, int first, int second);
 int GuiCommonCanvas_onMessage(void* self, void* sender, int message, int first, int second);
-int GuiSound_Stop(void* sender, char* tbl, int message);
-int GuiSound_Play(void* sender, char* tbl, int message);
+int StopGuiSound(void* sender, char* tbl, int message);
+int PlayGuiSound(void* sender, char* tbl, int message);
 }
-extern "C" int GuiFrontendCanvas_OnEvent(void* self, void* sender, int message, int first, int second)
+extern "C" int GuiFrontendCanvas_onMessage(void* self, void* sender, int message, int first, int second)
 {
     unsigned short m = message;
     if (m == 0x1E) {
-        if (!GuiWidget_BroadcastEvent(self, message, first, second)) {
+        if (!GuiWidget_SendChildrenMessage(self, message, first, second)) {
             if ((first != 0) == 1) {
                 g_PrevGameState = g_GameState;
                 g_GameState = 3;
             } else {
                 D_004FFC04->f35 = 0;
                 D_004FFC04->f33 = 0;
-                { Ui_00465610* ui = D_004FFC04; FrontEnd_OpenPopup(ui, 2, D_004C2988, Loc_LookupText(second), 0, 0); }
+                { Ui_00465610* ui = D_004FFC04; cGameFrontEnd_PushMessageBox(ui, 2, D_004C2988, nGlobalization_GetString_charP(second), 0, 0); }
             }
         }
         return 1;
@@ -96,9 +96,9 @@ extern "C" int GuiFrontendCanvas_OnEvent(void* self, void* sender, int message, 
         }
         if (tbl) {
             if (m == 0x10)
-                return GuiSound_Play(sender, tbl, message);
+                return PlayGuiSound(sender, tbl, message);
             else
-                return GuiSound_Stop(sender, tbl, message);
+                return StopGuiSound(sender, tbl, message);
         }
     }
     return GuiCommonCanvas_onMessage(self, sender, message, first, second);
@@ -115,7 +115,7 @@ int SFOLibInit_RequestCancel(int);
 int func_00465A40();                                  
 extern unsigned char g_DebugTriangle;
 
-void GuiCanvas_HandlePad(int d0, char * arg1) {
+void GuiFrontendCanvas_ProcessInputEvent(int d0, char * arg1) {
     int var_v1;
 
     if (g_DebugTriangle != 0) {

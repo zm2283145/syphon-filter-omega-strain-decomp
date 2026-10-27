@@ -4,7 +4,7 @@ typedef struct { char pad[0x68]; int f68; } Leaf_1C90;
 typedef struct { char pad[0x49]; unsigned char f49; char pad4A[0x4E]; PtrVec f98; } Item_1C90;
 typedef struct { char pad[0x60]; PtrVec items; char pad6C[0x24]; int f90; int f94; } Obj_1C90;
 void cGOBJTriggerEventMsg_ctor(Msg_1C90* m, int type, int a, int b, Obj_1C90* src);
-int Event_Send(Msg_1C90*, void*, int);
+int QueueMessage_cMessageR_cSystemP_int(Msg_1C90*, void*, int);
 int cMessage_dtor(Msg_1C90*, int);
 int* cArray_cGameGOBJPtr_opIndex(PtrVec* v, int i);
 int cArray_cGameGOBJPtr_Size(PtrVec* v);
@@ -16,7 +16,7 @@ static inline unsigned char IsLocal_1C90(void) { unsigned char v; if (g_IsMultip
 static inline Leaf_1C90* First_1C90(PtrVec* v) { return cArray_cGameGOBJPtr_Size(v) ? (Leaf_1C90*)*cArray_cGameGOBJPtr_opIndex(v, 0) : 0; }
 #pragma push
 #pragma opt_strength_reduction off
-int cHotbox_v43(Obj_1C90* self, int arg)
+int cHotbox_HandleInteract(Obj_1C90* self, int arg)
 {
     int i;
     switch (self->f90) {
@@ -39,7 +39,7 @@ int cHotbox_v43(Obj_1C90* self, int arg)
             else
                 m.kind = IsLocal_1C90() ? 1 : 2;
         }
-        Event_Send(&m, (void*)self->items.data[i], 0);
+        QueueMessage_cMessageR_cSystemP_int(&m, (void*)self->items.data[i], 0);
         m.vt = D_004DAF10;
         cMessage_dtor(&m, 0);
     }

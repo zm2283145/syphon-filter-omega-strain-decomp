@@ -7,6 +7,6 @@
 
 extern char g_IdentityMatrix[];
 
-void* Mtx_GetIdentity(void) {
+void* cMatrix_GetUnit(void) {
     return g_IdentityMatrix;
 }

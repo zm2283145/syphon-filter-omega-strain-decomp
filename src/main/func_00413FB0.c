@@ -9,7 +9,7 @@ struct V413FB0 { unsigned int cap; unsigned int count; E413FB0* data; };
 extern "C" {
 extern char D_004BEF70[];
 extern char D_004BEFA0[];
-void String_CopyCtor(E413FB0* d, const E413FB0* s);
+void std_basic_string_char_char_traits_char_ctor_basicstringR(E413FB0* d, const E413FB0* s);
 void std_copy_backward_cString_copy_backward(E413FB0* first, E413FB0* last, E413FB0* dlast);
 void func_00414410(E413FB0* first, unsigned int n, const E413FB0* value);
 void std_swap_vectordeleterR_vectordeleterR_48(V413FB0* a, V413FB0* b);
@@ -18,7 +18,7 @@ void std_vector_deleter_cString_dtor(V413FB0* v, int flags);
 static inline void Construct413FB0(E413FB0* p, const E413FB0* src)
 {
     if (p)
-        String_CopyCtor(p, src);
+        std_basic_string_char_char_traits_char_ctor_basicstringR(p, src);
 }
 
 extern "C" void std_vector_imp_cString_insert(V413FB0* v, E413FB0* pos, unsigned int n, const E413FB0* value)

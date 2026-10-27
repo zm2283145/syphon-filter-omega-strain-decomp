@@ -15,20 +15,20 @@ typedef struct { Q q[64]; } Q64;
 typedef struct { C16 a; __int128 b; C16 c; C16 d; Q64 e; } Blk;
 
 extern void GuiAgentInfo_AgentInfo_Reset(char*);
-extern int String_CtorCStr_13B480(char*, char*);
+extern int std_basic_string_char_char_traits_char_ctor_charP(char*, char*);
 extern int String_Dtor(char*, int);
-extern int String_AssignString(char*, char*);
-extern char* DME_GetLobby(void);
+extern int std_basic_string_char_char_traits_char_assign_basicstringR(char*, char*);
+extern char* cDME_GetLobby(void);
 extern int SFOLobby_CellIsPlayerCellLeader(char*);
-extern int SFOLobby_FormatError(char*, int);
+extern int SFOLobby_GetErrorDetails(char*, int);
 extern char* SFOLobby_CellGetName(char*);
 extern char* func_00448FF0(char*, int);
 extern void* memset(void*, int, int);
 extern void* memcpy(void*, void*, int);
-extern void* Agent_GetSelected(void*, int);
+extern void* cGameSystem_GetAgentData(void*, int);
 extern void SKL_UncompressSKL(Blk*, char*);
-extern void Skl_Load(void*, char*, char*);
-extern void GuiAgentInfo_Refresh(char*);
+extern void Monster_LoadMenSKLs(void*, char*, char*);
+extern void GuiAgentInfo_SetupWidgets(char*);
 extern char D_004BB868[];
 extern char g_Game[];
 extern char g_AgentPartCache[];
@@ -52,28 +52,28 @@ void GuiAgentInfo_DisplayRemoteAgent(char* self, int* arg1, Msg* arg2) {
 
     GuiAgentInfo_AgentInfo_Reset(self + 0x88);
     F_(self, 0xD0, int) = arg2->b1;
-    String_CtorCStr_13B480(s1, (char*)(arg1 + 1));
-    String_AssignString(self + 0xB8, s1);
+    std_basic_string_char_char_traits_char_ctor_charP(s1, (char*)(arg1 + 1));
+    std_basic_string_char_char_traits_char_assign_basicstringR(self + 0xB8, s1);
     String_Dtor(s1, 0);
-    o = DME_GetLobby();
+    o = cDME_GetLobby();
     if (o) {
         F_(self, 0xF4, char) = SFOLobby_CellIsPlayerCellLeader(o);
-        if (!(unsigned char)SFOLobby_FormatError(o, 0)) {
+        if (!(unsigned char)SFOLobby_GetErrorDetails(o, 0)) {
             if (arg1[0] == F_(o, 0x2480, int)) {
                 F_(self, 0xF8, int) = -1;
-                String_CtorCStr_13B480(s2, SFOLobby_CellGetName(o));
-                String_AssignString(self + 0xC4, s2);
+                std_basic_string_char_char_traits_char_ctor_charP(s2, SFOLobby_CellGetName(o));
+                std_basic_string_char_char_traits_char_assign_basicstringR(self + 0xC4, s2);
                 String_Dtor(s2, 0);
             } else {
                 F_(self, 0xF8, int) = arg1[0];
-                String_CtorCStr_13B480(s3, D_004BB868);
-                String_AssignString(self + 0xC4, s3);
+                std_basic_string_char_char_traits_char_ctor_charP(s3, D_004BB868);
+                std_basic_string_char_char_traits_char_assign_basicstringR(self + 0xC4, s3);
                 String_Dtor(s3, 0);
                 if (arg2->xE8 != -1) {
                     r = func_00448FF0(o, arg2->xE8);
                     if (r) {
-                        String_CtorCStr_13B480(s4, r);
-                        String_AssignString(self + 0xC4, s4);
+                        std_basic_string_char_char_traits_char_ctor_charP(s4, r);
+                        std_basic_string_char_char_traits_char_assign_basicstringR(self + 0xC4, s4);
                         String_Dtor(s4, 0);
                     }
                 }
@@ -107,12 +107,12 @@ void GuiAgentInfo_DisplayRemoteAgent(char* self, int* arg1, Msg* arg2) {
         }
         memset(buf, 0, 0x100);
         memcpy(buf, arg2->data, 0xC0);
-        Agent_GetSelected(g_Game, -1);
+        cGameSystem_GetAgentData(g_Game, -1);
         p = (Blk*)(F_(self, 0x120, char*) + 0xA0);
         memset(p, 0, 0x440);
         SKL_UncompressSKL(p, buf);
     } else {
-        Skl_Load(g_AgentPartCache, "GAMEDATA\\FRONTEND\\MALE.SKL", "GAMEDATA\\FRONTEND\\FEMALE.SKL");
+        Monster_LoadMenSKLs(g_AgentPartCache, "GAMEDATA\\FRONTEND\\MALE.SKL", "GAMEDATA\\FRONTEND\\FEMALE.SKL");
         p = (Blk*)(F_(self, 0x120, char*) + 0xA0);
         p->a = D_0055D510;
         p->b = D_0055D520;
@@ -121,7 +121,7 @@ void GuiAgentInfo_DisplayRemoteAgent(char* self, int* arg1, Msg* arg2) {
         p->e = D_0055D550;
     }
     F_(self, 0xFC, int) = 1;
-    GuiAgentInfo_Refresh(self);
+    GuiAgentInfo_SetupWidgets(self);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00360610 */
@@ -174,46 +174,46 @@ extern char g_Game;
 #define g_Game (*(char*)&g_Game) /* merge_units */
 
 #if 0 /* merge_units */
-Agent_09F0* Agent_GetSelected(void* list, int idx);
+Agent_09F0* cGameSystem_GetAgentData(void* list, int idx);
 #endif /* merge_units */
-#define Agent_GetSelected(a0, a1) ((Agent_09F0 *)Agent_GetSelected((a0), (a1))) /* merge_units */
+#define cGameSystem_GetAgentData(a0, a1) ((Agent_09F0 *)cGameSystem_GetAgentData((a0), (a1))) /* merge_units */
 
-char* AgentData_GetName(Agent_09F0* a);
+char* cAgentData_GetUserName(Agent_09F0* a);
 #if 0 /* merge_units */
-void String_CtorCStr_13B480(Str_09F0* s, const char* c);
+void std_basic_string_char_char_traits_char_ctor_charP(Str_09F0* s, const char* c);
 #endif /* merge_units */
-#define String_CtorCStr_13B480(a0, a1) ((void)String_CtorCStr_13B480((char *)(a0), (char *)(a1))) /* merge_units */
+#define std_basic_string_char_char_traits_char_ctor_charP(a0, a1) ((void)std_basic_string_char_char_traits_char_ctor_charP((char *)(a0), (char *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void String_AssignString(void* dst, Str_09F0* s);
+void std_basic_string_char_char_traits_char_assign_basicstringR(void* dst, Str_09F0* s);
 #endif /* merge_units */
-#define String_AssignString(a0, a1) ((void)String_AssignString((char *)(a0), (char *)(a1))) /* merge_units */
+#define std_basic_string_char_char_traits_char_assign_basicstringR(a0, a1) ((void)std_basic_string_char_char_traits_char_assign_basicstringR((char *)(a0), (char *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 void String_Dtor(Str_09F0* s, short f);
 #endif /* merge_units */
 #define String_Dtor(a0, a1) ((void)String_Dtor((char *)(a0), (int)(a1))) /* merge_units */
 
-char* DME_GetLobby(void);
-void String_Copy(char* dst, char* src);
+char* cDME_GetLobby(void);
+void Libc_Strcpy(char* dst, char* src);
 int cAgentData_GetStat(Agent_09F0* a, int id);
 void func_00296FA0(Rel_09F0* r);
 void func_00299360(Rel_09F0* r, short f);
-void AgentData_GetRatings(Agent_09F0* a, Rel_09F0* r);
-void AgentData_GetAwardRows(Agent_09F0* a, int k, Rel_09F0* r);
+void cAgentData_GetRatings(Agent_09F0* a, Rel_09F0* r);
+void cAgentData_GetAchievements(Agent_09F0* a, int k, Rel_09F0* r);
 #if 0 /* merge_units */
 void GuiAgentInfo_AgentInfo_Reset(void* p);
 #endif /* merge_units */
 #define GuiAgentInfo_AgentInfo_Reset(a0) (GuiAgentInfo_AgentInfo_Reset((char *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void GuiAgentInfo_Refresh(Panel_09F0* p);
+void GuiAgentInfo_SetupWidgets(Panel_09F0* p);
 #endif /* merge_units */
-#define GuiAgentInfo_Refresh(a0) (GuiAgentInfo_Refresh((char *)(a0))) /* merge_units */
+#define GuiAgentInfo_SetupWidgets(a0) (GuiAgentInfo_SetupWidgets((char *)(a0))) /* merge_units */
 
 }
 
-extern "C" void GuiAgentInfo_Fill(Panel_09F0* p)
+extern "C" void GuiAgentInfo_DisplayLocalAgent(Panel_09F0* p)
 {
     Agent_09F0* a;
     char* g;
@@ -224,14 +224,14 @@ extern "C" void GuiAgentInfo_Fill(Panel_09F0* p)
     Pal_09F0* src;
 
     GuiAgentInfo_AgentInfo_Reset(&p->s88);
-    a = Agent_GetSelected(&g_Game, -1);
-    String_CtorCStr_13B480(&s1, AgentData_GetName(a));
-    String_AssignString(p->strB8, &s1);
+    a = cGameSystem_GetAgentData(&g_Game, -1);
+    std_basic_string_char_char_traits_char_ctor_charP(&s1, cAgentData_GetUserName(a));
+    std_basic_string_char_char_traits_char_assign_basicstringR(p->strB8, &s1);
     String_Dtor(&s1, 0);
-    g = DME_GetLobby();
-    if (g) String_Copy(a->name, g + 0xE8C);
-    String_CtorCStr_13B480(&s2, a->name);
-    String_AssignString(p->strC4, &s2);
+    g = cDME_GetLobby();
+    if (g) Libc_Strcpy(a->name, g + 0xE8C);
+    std_basic_string_char_char_traits_char_ctor_charP(&s2, a->name);
+    std_basic_string_char_char_traits_char_assign_basicstringR(p->strC4, &s2);
     String_Dtor(&s2, 0);
     p->team = a->team[1];
     p->s88 = cAgentData_GetStat(a, 0xD);
@@ -248,7 +248,7 @@ extern "C" void GuiAgentInfo_Fill(Panel_09F0* p)
     p->sB4 = cAgentData_GetStat(a, 0);
     func_00296FA0(&r1);
     r1.own = 1;
-    AgentData_GetRatings(Agent_GetSelected(&g_Game, -1), &r1);
+    cAgentData_GetRatings(cGameSystem_GetAgentData(&g_Game, -1), &r1);
     int k = 0; for (int i = 0; i < 6; i++) {
         int j;
         for (j = 0; j < 4; j++) {
@@ -257,7 +257,7 @@ extern "C" void GuiAgentInfo_Fill(Panel_09F0* p)
     }
     func_00296FA0(&r2);
     r2.own = 1;
-    AgentData_GetAwardRows(a, 0, &r2);
+    cAgentData_GetAchievements(a, 0, &r2);
     for (int i = 0; i < 8; i++) {
         if (i < r2.Size()) {
             p->slots[i] = r2[i].on != 0;
@@ -268,17 +268,17 @@ extern "C" void GuiAgentInfo_Fill(Panel_09F0* p)
     if (a->pal) {
         p->dst->SetPal(*a->pal);
     }
-    GuiAgentInfo_Refresh(p);
+    GuiAgentInfo_SetupWidgets(p);
     p->fFC = 0;
     func_00299360(&r2, 0);
     func_00299360(&r1, 0);
 }
 #undef g_Game /* merge_units */
-#undef Agent_GetSelected /* merge_units */
-#undef String_CtorCStr_13B480 /* merge_units */
-#undef String_AssignString /* merge_units */
+#undef cGameSystem_GetAgentData /* merge_units */
+#undef std_basic_string_char_char_traits_char_ctor_charP /* merge_units */
+#undef std_basic_string_char_char_traits_char_assign_basicstringR /* merge_units */
 #undef String_Dtor /* merge_units */
 #undef GuiAgentInfo_AgentInfo_Reset /* merge_units */
-#undef GuiAgentInfo_Refresh /* merge_units */
+#undef GuiAgentInfo_SetupWidgets /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003609F0 */

@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 
-/* Edge_LedgeProbeMask: build the ledge-probe mask for a collision query mask. A rule table is
+/* cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_TranslateTestResultsToSubtypes: build the ledge-probe mask for a collision query mask. A rule table is
  * built on first use (each element registered for destruction); every rule whose required
  * bits are all set in the query and whose forbidden bits are all clear adds its bit. */
 
@@ -25,10 +25,10 @@ extern char D_004F5348[];
 void __register_global_object(void* obj, void* dtor, void* rec);
 void* func_001EDCC0(void* self, short flag);
 void* cBitArray_5_dtor(void* self, short flag);
-int HumanColQueryMask_And(Mask* out, Mask* a, Mask* b);
-int HumanColQueryMask_Not(Mask* out, Mask* a);
-int HumanColQueryMask_Equals(Mask* a, Mask* b);
-int Edge_LedgeProbeMask(Mask* out, void* self, Mask* q);
+int cBitArray_5_opAnd(Mask* out, Mask* a, Mask* b);
+int cBitArray_5_opCompl(Mask* out, Mask* a);
+int cBitArray_5_opEq(Mask* a, Mask* b);
+int cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_TranslateTestResultsToSubtypes(Mask* out, void* self, Mask* q);
 }
 
 /* the element initialisers write through the element's this pointer; the int round trip keeps
@@ -60,7 +60,7 @@ static inline bool MaskEq(Mask* a, Mask* b)
     return true;
 }
 
-int Edge_LedgeProbeMask(Mask* out, void* self, Mask* q)
+int cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_TranslateTestResultsToSubtypes(Mask* out, void* self, Mask* q)
 {
     Mask res;
     Rule* e;
@@ -92,14 +92,14 @@ int Edge_LedgeProbeMask(Mask* out, void* self, Mask* q)
     res.w[0] = 0;
     for (e = D_004A0380; e->bit != -1; e++) {
         Mask t;
-        HumanColQueryMask_And(&t, q, &e->need);
+        cBitArray_5_opAnd(&t, q, &e->need);
         if (MaskEq(&t, &e->need)) {
             Mask n;
             Mask u;
             unsigned char ok;
-            HumanColQueryMask_Not(&n, q);
-            HumanColQueryMask_And(&u, &n, &e->forbid);
-            ok = HumanColQueryMask_Equals(&u, &e->forbid);
+            cBitArray_5_opCompl(&n, q);
+            cBitArray_5_opAnd(&u, &n, &e->forbid);
+            ok = cBitArray_5_opEq(&u, &e->forbid);
             cBitArray_5_dtor(&u, -1);
             cBitArray_5_dtor(&n, -1);
             if (ok) res.w[e->bit / 32] |= 1 << (e->bit & 31);

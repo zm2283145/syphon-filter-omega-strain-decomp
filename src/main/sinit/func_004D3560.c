@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0051EE98;
 
-void StaticInit_GameFrontendMsgName(void) {
+void StaticInit_NetCreateBlastMsg(void) {
     D_0051EE98 = "GAME_FRONTEND";
 }

@@ -13,7 +13,7 @@
 #include "object_list_erase_range.h"
 extern "C" { char D_004BDBE8[] = "allocator.hh"; }
 
-DEFINE_OBJECT_LIST_ERASE_RANGE(ObjectList_EraseRange_3E3320)
+DEFINE_OBJECT_LIST_ERASE_RANGE(std_list_deleter_PopVar_erase)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E3320 */
 

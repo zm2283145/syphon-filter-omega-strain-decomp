@@ -5,7 +5,7 @@
 int NetGetLocalTime(int *);                           
 int NetGetTime(int *);                           
 
-int Net_GetClock(int arg0) {
+int cDME_GetTime(int arg0) {
     int sp1C;
     int var_v0;
 

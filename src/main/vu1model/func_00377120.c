@@ -1,11 +1,11 @@
 
 #include "types.h"
-/* Model_FoldMaterialFlags */
+/* cVU1Model_PatchMaterials */
 typedef struct { char pad0[4]; int flags; char pad8[0x40]; int tex[4]; int nTex; char pad5C[0]; } Pt2_Mat;
 typedef struct { char pad0[4]; int flags; char pad8[0x10]; int nMat; char pad1C[0x34]; char* mats; } Pt2_Geo;
 typedef struct { char pad0[4]; Pt2_Geo* geo; char pad8[0x1C]; int flags; } Pt2_Model;
 
-void Model_FoldMaterialFlags(Pt2_Model* m) {
+void cVU1Model_PatchMaterials(Pt2_Model* m) {
     int i;
     for (i = 0; i < m->geo->nMat; i++) {
         Pt2_Mat* mt = (Pt2_Mat*)(m->geo->mats + i * 0x5C);

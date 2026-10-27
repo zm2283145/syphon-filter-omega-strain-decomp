@@ -8,7 +8,7 @@ extern N96E0* details_compressed_pair_imp_cAllocator_node_node_base_1_second_voi
 extern void* std_list_deleter_cHogFile_tail(void* self);
 extern void std_list_deleter_cHogFile_generic_iterator_ctor(N96E0** out, void* v);
 extern int String_CompareNoCase(const char* a, const char* b);
-extern int Hog_Load(O96E0* o, const char* name, unsigned char stream, int pool);
+extern int cHogFile_OpenHog(O96E0* o, const char* name, unsigned char stream, int pool);
 extern void cHogFile_ctor(O96E0* o);
 extern void cHogFile_dtor(O96E0* o, int f);
 extern void std_list_deleter_cHogFile_insert(N96E0** out, T96E0* self, void* pos, O96E0* v);
@@ -21,7 +21,7 @@ enum ArchiveLoadMode { ARCHIVE_RESIDENT, ARCHIVE_STREAMED };
  * when it is not loaded in the requested mode. Otherwise append a new entry
  * at the front of the list, load it and clear its keep flag.
  */
-extern "C" O96E0* Archive_Open(T96E0* self, const char* name, int stream, int pool)
+extern "C" O96E0* cHogList_Open(T96E0* self, const char* name, int stream, int pool)
 {
     N96E0* e;
     N96E0* n;
@@ -32,7 +32,7 @@ extern "C" O96E0* Archive_Open(T96E0* self, const char* name, int stream, int po
     for (n = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(&self->list)->next; std_list_deleter_cHogFile_generic_iterator_ctor(&e, std_list_deleter_cHogFile_tail(self)), n != e; n = n->next) {
         if (!String_CompareNoCase((char*)&n->obj, name)) {
             if (stream ? !(n->obj.active == 2) : !(n->obj.active != 0))
-                Hog_Load(&n->obj, name, stream ? ARCHIVE_STREAMED : ARCHIVE_RESIDENT, pool);
+                cHogFile_OpenHog(&n->obj, name, stream ? ARCHIVE_STREAMED : ARCHIVE_RESIDENT, pool);
             return &n->obj;
         }
     }
@@ -41,7 +41,7 @@ extern "C" O96E0* Archive_Open(T96E0* self, const char* name, int stream, int po
     std_list_deleter_cHogFile_insert(&r, self, &pos, &tmp);
     cHogFile_dtor(&tmp, -1);
     o = &self->list->obj;
-    Hog_Load(o, name, stream ? ARCHIVE_STREAMED : ARCHIVE_RESIDENT, pool);
+    cHogFile_OpenHog(o, name, stream ? ARCHIVE_STREAMED : ARCHIVE_RESIDENT, pool);
     o->keep = 0;
     return o;
 }

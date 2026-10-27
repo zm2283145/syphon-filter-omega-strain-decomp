@@ -3,14 +3,14 @@
 
 /*
  * Clone() of a message with an out-of-line payload copy: allocate under the
- * allocator guard, copy-construct the cMessage base (cMessage_ctor), store
+ * allocator guard, copy-construct the cMessage base (cMessage_ctor_cMessageR), store
  * the class vtable and copy the payload at +0x30 with payloadCopy.
  * C++ only (#pragma cplusplus on before including).
  */
 #include "alloc_guard.h"
 
-extern "C" void* Mem_Alloc(int pool, int size, char* file, int line);
-extern "C" void cMessage_ctor(void* self, void* other);
+extern "C" void* cMemMan_Allocate(int pool, int size, char* file, int line);
+extern "C" void cMessage_ctor_cMessageR(void* self, void* other);
 
 struct PayloadMessage {
     void* vtable;
@@ -30,10 +30,10 @@ struct PayloadMessage {
         PayloadMessage* p;                                                    \
         {                                                                     \
             AllocGuard guard;                                                 \
-            p = (PayloadMessage*)Mem_Alloc(0, (size), fileSym, (line));       \
+            p = (PayloadMessage*)cMemMan_Allocate(0, (size), fileSym, (line));       \
         }                                                                     \
         if (p) {                                                              \
-            cMessage_ctor(p, self);                                           \
+            cMessage_ctor_cMessageR(p, self);                                           \
             p->vtable = vtableSym;                                            \
             payloadCopy(p->payload, self->payload);                           \
         }                                                                     \

@@ -25,11 +25,11 @@ struct S_002A1D20 {
 };
 extern "C" {
 extern void* D_004FFC04;
-Ui_002A1D20* Gui_GetScreenStack(void);
-void GuiWidget_SendEvent(void* a, void* b, int c, int d, int e);
-void GuiScreen_SetFocus(void* ui, void* w);
-char* Loc_LookupText(char* key);
-int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_002A1D20* d, int e);
+Ui_002A1D20* Gui_Canvas(void);
+void GuiWidget_SendMessage(void* a, void* b, int c, int d, int e);
+void GuiCanvas_SetFocus(void* ui, void* w);
+char* nGlobalization_GetString_charP(char* key);
+int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, char* c, S_002A1D20* d, int e);
 }
 static inline unsigned char Down_002A1D20(Ev_002A1D20* e)
 {
@@ -52,7 +52,7 @@ static inline unsigned char Press_002A1D20(Ev_002A1D20* e, unsigned int b)
         r = 1;
     return r;
 }
-extern "C" int GuiEquipmentSetup_HandleInput(S_002A1D20* self, Ev_002A1D20* ev)
+extern "C" int GuiEquipmentSetup_onInput(S_002A1D20* self, Ev_002A1D20* ev)
 {
     if (Press_002A1D20(ev, 0x1000))
         return 1;
@@ -64,12 +64,12 @@ extern "C" int GuiEquipmentSetup_HandleInput(S_002A1D20* self, Ev_002A1D20* ev)
     {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x8000 && ev->f6 == 0;
         if (b) {
-            void* cur = Gui_GetScreenStack()->f20;
-            GuiWidget_SendEvent(cur, Gui_GetScreenStack(), 0x10, 0, 0);
+            void* cur = Gui_Canvas()->f20;
+            GuiWidget_SendMessage(cur, Gui_Canvas(), 0x10, 0, 0);
             {
-                Ui_002A1D20* a = Gui_GetScreenStack();
-                Ui_002A1D20* u = Gui_GetScreenStack();
-                GuiScreen_SetFocus(u, self->Next(a->f20, 1));
+                Ui_002A1D20* a = Gui_Canvas();
+                Ui_002A1D20* u = Gui_Canvas();
+                GuiCanvas_SetFocus(u, self->Next(a->f20, 1));
             }
             return 1;
         }
@@ -77,12 +77,12 @@ extern "C" int GuiEquipmentSetup_HandleInput(S_002A1D20* self, Ev_002A1D20* ev)
     {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x2000 && ev->f6 == 0;
         if (b) {
-            void* cur = Gui_GetScreenStack()->f20;
-            GuiWidget_SendEvent(cur, Gui_GetScreenStack(), 0x10, 0, 0);
+            void* cur = Gui_Canvas()->f20;
+            GuiWidget_SendMessage(cur, Gui_Canvas(), 0x10, 0, 0);
             {
-                Ui_002A1D20* a = Gui_GetScreenStack();
-                Ui_002A1D20* u = Gui_GetScreenStack();
-                GuiScreen_SetFocus(u, self->Next(a->f20, 1));
+                Ui_002A1D20* a = Gui_Canvas();
+                Ui_002A1D20* u = Gui_Canvas();
+                GuiCanvas_SetFocus(u, self->Next(a->f20, 1));
             }
             return 1;
         }
@@ -90,10 +90,10 @@ extern "C" int GuiEquipmentSetup_HandleInput(S_002A1D20* self, Ev_002A1D20* ev)
     {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x10 && ev->f6 == 0;
         if (b) {
-            char* a = Loc_LookupText("QuitTitle");
-            char* c = Loc_LookupText("QuitMessage");
+            char* a = nGlobalization_GetString_charP("QuitTitle");
+            char* c = nGlobalization_GetString_charP("QuitMessage");
             if (a && c)
-                FrontEnd_OpenPopup(D_004FFC04, 5, a, c, self, 0);
+                cGameFrontEnd_PushMessageBox(D_004FFC04, 5, a, c, self, 0);
             return 1;
         }
     }
@@ -155,29 +155,29 @@ extern unsigned char D_005723F8;
 extern unsigned char D_00572400;
 extern char g_Game[];
 void func_002A3A10(S_002A2170* self);
-char* String_CStr(void* s);
-void Pad_Reset(void* p);
-void DME_SendPlayGameMsg(void);
+char* std_basic_string_char_char_traits_char_c_str(void* s);
+void cJoystick_Poll(void* p);
+void cDME_SendPlayGame(void);
 #if 0 /* merge_units */
-void* Gui_GetScreenStack(void);
+void* Gui_Canvas(void);
 #endif /* merge_units */
-#define Gui_GetScreenStack() ((void *)Gui_GetScreenStack()) /* merge_units */
+#define Gui_Canvas() ((void *)Gui_Canvas()) /* merge_units */
 
-void GuiStack_SwapScreens(void* ui, S_002A2170* self, void* pg);
-G_002A2170* DME_GetLobby(void);
+void GuiCanvas_Transition(void* ui, S_002A2170* self, void* pg);
+G_002A2170* cDME_GetLobby(void);
 void GuiTextWidget_SetText(void* w, char* s, int a);
-void* Gui_GetScreenList(void);
-void* GuiManager_FindOrLoad(void* a, char* b, char* c);
-void Game_EndLevel(void* a, int b);
-int GuiWidget_OnEvent(S_002A2170* self, W_002A2170* w, int msg, int sub, char* text);
+void* Gui_Manager(void);
+void* GuiManager_OpenGui(void* a, char* b, char* c);
+void cGameSystem_Restart(void* a, int b);
+int GuiWidget_onMessage(S_002A2170* self, W_002A2170* w, int msg, int sub, char* text);
 }
-extern "C" int GuiEquipmentSetup_HandleEvent(S_002A2170* self, W_002A2170* w, int msg, int sub, char* text)
+extern "C" int GuiEquipmentSetup_onMessage(S_002A2170* self, W_002A2170* w, int msg, int sub, char* text)
 {
     unsigned short m;
     func_002A3A10(self);
     m = msg;
     if (m == 2) {
-        char* n = String_CStr(w->name);
+        char* n = std_basic_string_char_char_traits_char_c_str(w->name);
         if (!strcmp(n, D_004AB0B0)) {
             if (g_IsMultiplayer) {
                 int ok;
@@ -190,9 +190,9 @@ extern "C" int GuiEquipmentSetup_HandleEvent(S_002A2170* self, W_002A2170* w, in
                     if (g_LocalPlayer->p30->GetState() == 3) {
                         if (self->fC0 == 2) {
                             g_LoadoutPending = 0;
-                            Pad_Reset(D_0055A300);
-                            DME_SendPlayGameMsg();
-                            GuiStack_SwapScreens(Gui_GetScreenStack(), self, 0);
+                            cJoystick_Poll(D_0055A300);
+                            cDME_SendPlayGame();
+                            GuiCanvas_Transition(Gui_Canvas(), self, 0);
                             g_LocalPlayer->p30->SetState(4);
                         }
                     } else if (self->fC0 > 0) {
@@ -201,51 +201,51 @@ extern "C" int GuiEquipmentSetup_HandleEvent(S_002A2170* self, W_002A2170* w, in
                         if (!self->bD8) {
                             G_002A2170* g;
                             self->bD8 = 1;
-                            g = DME_GetLobby();
+                            g = cDME_GetLobby();
                             if (g)
                                 g->b26A0 = 1;
                         }
                     }
                 } else if (D_00572400) {
                     g_LoadoutPending = 0;
-                    Pad_Reset(D_0055A300);
-                    GuiStack_SwapScreens(Gui_GetScreenStack(), self, 0);
+                    cJoystick_Poll(D_0055A300);
+                    GuiCanvas_Transition(Gui_Canvas(), self, 0);
                     g_LocalPlayer->p30->SetState(4);
                 } else if (g_LocalPlayer->p30->GetState() == 1) {
                     char* t;
                     g_LocalPlayer->p30->SetState(2);
-                    t = Loc_LookupText("EQS_WAITING");
+                    t = nGlobalization_GetString_charP("EQS_WAITING");
                     if (t)
                         GuiTextWidget_SetText(w, t, 0);
                 } else {
                     char* t;
                     g_LocalPlayer->p30->SetState(1);
-                    t = Loc_LookupText("EQS_EQUIP");
+                    t = nGlobalization_GetString_charP("EQS_EQUIP");
                     if (t)
                         GuiTextWidget_SetText(w, t, 0);
                 }
             } else {
                 g_LoadoutPending = 0;
-                Pad_Reset(D_0055A300);
-                GuiStack_SwapScreens(Gui_GetScreenStack(), self, 0);
+                cJoystick_Poll(D_0055A300);
+                GuiCanvas_Transition(Gui_Canvas(), self, 0);
             }
             return 1;
         }
         if (!strcmp(n, "equipbutton")) {
-            void* pg = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiEquipmentModify", "eqmodify");
+            void* pg = GuiManager_OpenGui(Gui_Manager(), "GuiEquipmentModify", "eqmodify");
             g_LocalPlayer->p30->SetState(1);
-            GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
+            GuiCanvas_Transition(Gui_Canvas(), self, pg);
             return 1;
         }
     }
     if (m == 0x1A && !sub) {
-        GuiStack_SwapScreens(Gui_GetScreenStack(), self, 0);
-        Game_EndLevel(g_Game, 3);
+        GuiCanvas_Transition(Gui_Canvas(), self, 0);
+        cGameSystem_Restart(g_Game, 3);
         return 1;
     }
-    return GuiWidget_OnEvent(self, w, msg, sub, text);
+    return GuiWidget_onMessage(self, w, msg, sub, text);
 }
-#undef Gui_GetScreenStack /* merge_units */
+#undef Gui_Canvas /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002A2170(void) {}
 #pragma pop /* merge_units */

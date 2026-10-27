@@ -9,7 +9,7 @@
 #include "types.h"
 extern int strcmp(void* obj);
 /* True when strcmp returns 0 for the global object "GuiTextListWidget". */
-int GuiTextListWidget_IsType(void)
+int GuiTextListWidget_IsClass(void)
 {
     return strcmp("GuiTextListWidget") == 0;
 }
@@ -20,11 +20,11 @@ int GuiTextListWidget_IsType(void)
 #pragma push /* merge_units */
 #include "guiTextListWidget_types.h"
 
-extern void TextObj_SetColour(TextRenderChild* child, const TextRenderStyle* style);
-extern const char* String_CStr(const void* string);
-extern void TextObj_SetText(TextRenderChild* child, const char* text);
+extern void cTextArea_SetColor(TextRenderChild* child, const TextRenderStyle* style);
+extern const char* std_basic_string_char_char_traits_char_c_str(const void* string);
+extern void cTextArea_SetText(TextRenderChild* child, const char* text);
 extern void TextObj_Draw(TextRenderChild* child);
-extern void GuiArrayWidget_DrawCell(TextRenderWidget* self, void* context, unsigned int index,
+extern void GuiArrayWidget_onElementRender(TextRenderWidget* self, void* context, unsigned int index,
                           const TextRenderRect* rect);
 
 static inline TextListEntry* entry_at(TextRenderWidget* self, unsigned int index)
@@ -49,21 +49,21 @@ static inline void set_size(TextRenderChild* child, float width, float height)
 }
 
 /* Render an existing text row with its selected or per-entry style, then its base. */
-void GuiTextListWidget_DrawCell(TextRenderWidget* self, void* context, unsigned int index,
+void GuiTextListWidget_onElementRender(TextRenderWidget* self, void* context, unsigned int index,
                    const TextRenderRect* rect)
 {
     if (self->child && index < (unsigned int)self->entries.count) {
         if (index == self->selected && self->highlighted)
-            TextObj_SetColour(self->child, &self->highlight);
+            cTextArea_SetColor(self->child, &self->highlight);
         else
-            TextObj_SetColour(self->child,
+            cTextArea_SetColor(self->child,
                          &self->styles[(unsigned char)entry_at(self, index)->unk10]);
         set_position(self->child, rect->x, rect->y);
         set_size(self->child, rect->width, rect->height);
-        TextObj_SetText(self->child, String_CStr(entry_at(self, index)));
+        cTextArea_SetText(self->child, std_basic_string_char_char_traits_char_c_str(entry_at(self, index)));
         TextObj_Draw(self->child);
     }
-    GuiArrayWidget_DrawCell(self, context, index, rect);
+    GuiArrayWidget_onElementRender(self, context, index, rect);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00420E50 */
@@ -78,18 +78,18 @@ typedef struct Render {
 extern char g_Video[];
 extern int D_00538C64;
 extern char D_00538C68;
-void GuiArrayWidget_Draw(void* self);
+void GuiArrayWidget_onRender(void* self);
 static inline Mtx* MtxAt(int i) { return &((Render*)g_Video)->mtx[i]; }
 static inline void GQR(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 static inline void UM(void* p) { int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
 
-void GuiTextListWidget_Draw(void* self)
+void GuiTextListWidget_onRender(void* self)
 {
     { int i = D_00538C64; GQR(MtxAt(i + 1), MtxAt(i)); }
     D_00538C64++;
     UM(MtxAt(D_00538C64));
     D_00538C68 = 1;
-    GuiArrayWidget_Draw(self);
+    GuiArrayWidget_onRender(self);
     D_00538C64--;
     D_00538C68 = 1;
 }
@@ -114,14 +114,14 @@ struct Widget {
 };
 
 extern "C" void std_vector_deleter_Item_clear(int* sub);
-extern "C" void GuiArrayWidget_Select(Widget* self, int a, int b);
+extern "C" void GuiArrayWidget_SetSelected(Widget* self, int a, int b);
 
-/* Resets the +0x90 sub-object, calls virtual +0x5C(1, +0x94), then GuiArrayWidget_Select(self, 0, 0). */
+/* Resets the +0x90 sub-object, calls virtual +0x5C(1, +0x94), then GuiArrayWidget_SetSelected(self, 0, 0). */
 extern "C" void GuiTextListWidget_Clear(Widget* self)
 {
     std_vector_deleter_Item_clear(&self->sub90);
     self->Method5C(1, self->unk94);
-    GuiArrayWidget_Select(self, 0, 0);
+    GuiArrayWidget_SetSelected(self, 0, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00421070 */

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* SkelNode_GetBoundSphere(char* self) {
+void* cBone_GetSkeletonBBoxContribution(char* self) {
     return self + 336;
 }

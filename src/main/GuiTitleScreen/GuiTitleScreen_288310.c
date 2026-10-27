@@ -29,20 +29,20 @@ extern char D_004A9610[];
 extern char D_004A9618[];
 extern char D_004A9628[];
 
-extern void MemCard_Refresh(Mgr288310* m);
+extern void cMemCard_FullCheck(Mgr288310* m);
 extern int GuiTitleScreen_SavedAgentExists(void);
-extern char* Loc_LookupText(const char* key);
-extern int FrontEnd_OpenPopup(void* ui, int kind, const char* a, const char* b, Self288310* owner, int flag);
-extern int Agent_GetSelected(void* list, int idx);
-extern int AgentData_GetSaveSize(int agent);
-extern int MemCard_GetSpaceNeeded(Mgr288310* m, int v);
+extern char* nGlobalization_GetString_charP(const char* key);
+extern int cGameFrontEnd_PushMessageBox(void* ui, int kind, const char* a, const char* b, Self288310* owner, int flag);
+extern int cGameSystem_GetAgentData(void* list, int idx);
+extern int cAgentData_GetNumSavedBytes(int agent);
+extern int cMemCard_GetClustersNeeded(Mgr288310* m, int v);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char* strstr(const char* s, const char* sub);
 extern char* strncpy(char* d, const char* s, int n);
 extern void Libc_Strcat(char* d, const char* s);
-extern void String_Copy(char* d, const char* s);
+extern void Libc_Strcpy(char* d, const char* s);
 
-void GuiTitleScreen_CheckMemCard(Self288310* self, int force)
+void GuiTitleScreen_VerifyMemCard(Self288310* self, int force)
 {
     char buf[0x108];
     char num[8];
@@ -52,21 +52,21 @@ void GuiTitleScreen_CheckMemCard(Self288310* self, int force)
         return;
     D_00506330 = 1;
     m = &g_MemCard;
-    MemCard_Refresh(m);
+    cMemCard_FullCheck(m);
     if (!GuiTitleScreen_SavedAgentExists()) {
         if (!m->cfg->x59D) {
             void* ui = D_004FFC04;
-            char* a = Loc_LookupText(D_004A95F0);
-            self->x50 = FrontEnd_OpenPopup(ui, 4, a, Loc_LookupText(D_004A9600), self, 1);
+            char* a = nGlobalization_GetString_charP(D_004A95F0);
+            self->x50 = cGameFrontEnd_PushMessageBox(ui, 4, a, nGlobalization_GetString_charP(D_004A9600), self, 1);
         } else if (m->cfg->x59E) {
             int have = m->cfg->x5A4;
-            int need = MemCard_GetSpaceNeeded(m, AgentData_GetSaveSize(Agent_GetSelected(g_Game, -1)));
+            int need = cMemCard_GetClustersNeeded(m, cAgentData_GetNumSavedBytes(cGameSystem_GetAgentData(g_Game, -1)));
             if (have < need) {
                 char* text;
                 char* p;
                 void* ui;
                 sprintf(num, D_004A9610, need);
-                text = Loc_LookupText(D_004A9618);
+                text = nGlobalization_GetString_charP(D_004A9618);
                 p = strstr(text, D_004A9628);
                 if (p) {
                     int n = p - text;
@@ -75,10 +75,10 @@ void GuiTitleScreen_CheckMemCard(Self288310* self, int force)
                     Libc_Strcat(buf, num);
                     Libc_Strcat(buf, p + 4);
                 } else {
-                    String_Copy(buf, text);
+                    Libc_Strcpy(buf, text);
                 }
                 ui = D_004FFC04;
-                self->x50 = FrontEnd_OpenPopup(ui, 4, Loc_LookupText(D_004A95F0), buf, self, 1);
+                self->x50 = cGameFrontEnd_PushMessageBox(ui, 4, nGlobalization_GetString_charP(D_004A95F0), buf, self, 1);
             } else {
                 g_CardSlotId = m->cfg->x5A8;
             }

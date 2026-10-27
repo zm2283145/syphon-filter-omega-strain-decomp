@@ -32,6 +32,6 @@ Vec* cArray_StatsRequirement_opAssign(Vec* self, Vec* other)
 #include "vector_insert_fill_obj.h"
 
 extern "C" { char D_004BABD0[] = "vector::insert length error\n"; }
-DEFINE_VECTOR_INSERT_FILL_OBJ(std_vector_imp_MissionStats_insert, 0x5C, 0x10B216, 0x8590B, D_004BABD0, D_004BAC98, 0x5C, Mem_PlacementNew, MissionStats_ctor, std_copy_backward_MissionStats_copy_backward, std_fill_n_MissionStats_int_fill_n, std_swap_vectordeleterR_vectordeleterR_37, std_vector_deleter_MissionStats_dtor)
+DEFINE_VECTOR_INSERT_FILL_OBJ(std_vector_imp_MissionStats_insert, 0x5C, 0x10B216, 0x8590B, D_004BABD0, D_004BAC98, 0x5C, opNew_uint_voidP, MissionStats_ctor, std_copy_backward_MissionStats_copy_backward, std_fill_n_MissionStats_int_fill_n, std_swap_vectordeleterR_vectordeleterR_37, std_vector_deleter_MissionStats_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00351810 */

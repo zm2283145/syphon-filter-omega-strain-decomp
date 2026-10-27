@@ -37,7 +37,7 @@ static inline float CxFr_LenSq(CxFrV4 v){
     __asm__ volatile("lqc2 $vf1, 0x0(%2); vaddw.x $vf3, $vf0, $vf0w; vmul.xyz $vf2, $vf1, $vf1; vmulax.x $ACC, $vf3, $vf2x; vmadday.x $ACC, $vf3, $vf2y; vmaddz.x $vf4, $vf3, $vf2z; qmfc2.ni %1, $vf4; mtc1 %1, %0" : "+f"(r), "=&r"(t) : "r"(&tv) : "memory");
     return r;
 }
-extern "C" CxFrReq*NpcRoute_FindCachedRequest(CxFrManager*self,int a,int b,int c,int d,CxFrV4*from,CxFrV4*to){
+extern "C" CxFrReq*cPathSystem_FindSimilarPastRequest_int_int_int_int_etc(CxFrManager*self,int a,int b,int c,int d,CxFrV4*from,CxFrV4*to){
     CxFrIt cur=CxFr_Begin(&self->cache);
     for(;cur!=CxFr_End(&self->cache);cur.link=cur.link->prev){
         CxFrReq* req=cur.Req();

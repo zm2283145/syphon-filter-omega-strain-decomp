@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int Object_LookupById(int *);                     
+int nGobjManager_LookupGOBJ_cObjectIdR(int *);                     
 int NetGetObject(void **);                         
 extern unsigned char D_005723C8;
 
@@ -19,7 +19,7 @@ void func_002128A0(void) {
     if (NetGetObject(sl.f18) == 0) {
         temp_v0 = F_(sl.f18[0], 0x1C, int);
         sl.f14 = F_(temp_v0, 0x10, unsigned short) | (F_(temp_v0, 0xE, unsigned short) << 0x10);
-        temp_v0_2 = Object_LookupById(&sl.f14);
+        temp_v0_2 = nGobjManager_LookupGOBJ_cObjectIdR(&sl.f14);
         if (temp_v0_2 != NULL) {
             (void)*(volatile int*)((char*)temp_v0_2 + 0xD0); F_(temp_v0_2, 0xD0, int) = 0;
         }

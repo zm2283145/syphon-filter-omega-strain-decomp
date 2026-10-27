@@ -11,7 +11,7 @@
 /* 0x30-byte argument block of command 0x5C (role unknown); `flags` says which fields are valid */
 typedef struct { union { int i; long long l; } u; int d; int e; __int128 c; short f1; short f2; char p24[4]; int flags; char p2C[4]; } P3A8070;
 extern int snd_SendIOPCommandNoWait(int cmd, int size, void* data, int x, long long y);
-int snd_PlaySoundVolPan(int a, long long b, __int128 c, int d, int e, short f1, short f2, int x, long long y)
+int snd_PlaySoundByNameVolPanPMPB_CB(int a, long long b, __int128 c, int d, int e, short f1, short f2, int x, long long y)
 {
     P3A8070 p;
     int* fl = &p.flags;

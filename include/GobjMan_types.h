@@ -19,11 +19,11 @@ typedef struct GobjVec {
 } GobjVec;
 
 /*
- * Object scope / registry (0x24 bytes, built by GobjScopeBase_Ctor, destroyed by
- * GobjScopeBase_Dtor). Lookups walk an object's scope chain through `parent` and
+ * Object scope / registry (0x24 bytes, built by cBaseObjList_ctor, destroyed by
+ * cBaseObjList_dtor). Lookups walk an object's scope chain through `parent` and
  * accept it only when the chain reaches the requested scope. Every scope is
- * also kept in the global list returned by GobjScope_GetList.
- * IdMgr_Init creates the root scope g_GobjRootScope (4500 slots) and the world
+ * also kept in the global list returned by GetPurgeList.
+ * nGobjManager_InitIDs creates the root scope g_GobjRootScope (4500 slots) and the world
  * scope g_GobjWorldScope (2500 slots, parent = root).
  */
 typedef struct GobjScope {

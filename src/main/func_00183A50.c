@@ -23,7 +23,7 @@ extern void __register_global_object(void*, void*, void*);
 extern char* cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_3(SurfOwnerE6* owner, int* key);
 
 /* Returns the surface entry for an index, or a static default for old formats. */
-SurfE6* Surface_Lookup(SurfOwnerE6* owner, int index)
+SurfE6* cCollisionModel_Data_GetFaceProperties(SurfOwnerE6* owner, int index)
 {
     int key[1];
     if (owner->kind < 3) {

@@ -17,15 +17,15 @@
 
 extern char D_0055A300[];
 extern char D_0055A700[];
-extern int GuiCanvas_KeyboardInput(Unk415870*, void*);
-extern int GuiCanvas_PadClock(Unk415870*, void*);
+extern int GuiCanvas_ProcessInput_cUSBKeybdR(Unk415870*, void*);
+extern int GuiCanvas_ProcessInput_cJoystickR(Unk415870*, void*);
 
-/* If flag bit 2 is set, calls GuiCanvas_PadClock and, when byte +0x51 is set, GuiCanvas_KeyboardInput. */
-void GuiCanvas_UpdatePads(Unk415870* self) {
+/* If flag bit 2 is set, calls GuiCanvas_ProcessInput_cJoystickR and, when byte +0x51 is set, GuiCanvas_ProcessInput_cUSBKeybdR. */
+void GuiCanvas_ProcessInput_void(Unk415870* self) {
     if ((self->flags & 4) != 0) {
-        GuiCanvas_PadClock(self, D_0055A300);
+        GuiCanvas_ProcessInput_cJoystickR(self, D_0055A300);
         if (self->unk51 != 0) {
-            GuiCanvas_KeyboardInput(self, D_0055A700);
+            GuiCanvas_ProcessInput_cUSBKeybdR(self, D_0055A700);
         }
     }
 }
@@ -80,16 +80,16 @@ struct U_415950 {
     virtual void Update(float dt);
 };
 extern "C" {
-void List_Begin(LIt_415950* out, void* list);
+void std_list_deleter_voidPtr_begin_void(LIt_415950* out, void* list);
 void std_list_GuiWidgetPtr_generic_iterator_ctor(LIt_415950* out, LIt_415950* in);
 void std_list_GuiWidgetPtr_end(LIt_415950* out, void* list);
 void cLListIterator_GuiWidgetPtr_ctor_listR(LIt_415950* out, LIt_415950* in);
 void std_list_GuiWidgetPtr_push_back_GuiWidgetPR(List_415950* list, W_415950** v);
-void List_Erase(LIt_415950* out, List_415950* list, LIt_415950* pos);
+void std_list_deleter_voidPtr_erase_listdeleter(LIt_415950* out, List_415950* list, LIt_415950* pos);
 W_415950** func_00415B20(List_415950* list);
 }
 
-extern "C" void GuiCanvas_UpdateStack(W_415950* o, float dt)
+extern "C" void GuiCanvas_NextFrame(W_415950* o, float dt)
 {
     if (o->flags & 4) {
         LIt_415950 last;
@@ -112,7 +112,7 @@ extern "C" void GuiCanvas_UpdateStack(W_415950* o, float dt)
             }
             o->b50 = 0;
         }
-        List_Begin(&beginTmp, o->children);
+        std_list_deleter_voidPtr_begin_void(&beginTmp, o->children);
         std_list_GuiWidgetPtr_generic_iterator_ctor(&it, &beginTmp);
         n = it.node;
         std_list_GuiWidgetPtr_end(&endTmp, o->children);
@@ -132,11 +132,11 @@ extern "C" void GuiCanvas_UpdateStack(W_415950* o, float dt)
                 ((U_415950*)w)->Update(dt);
                 if (o->queue.size && w == o->queue.head->value) {
                     pos1.node = o->queue.head;
-                    List_Erase(&res1, &o->queue, &pos1);
+                    std_list_deleter_voidPtr_erase_listdeleter(&res1, &o->queue, &pos1);
                 }
             } else {
                 pos2.node = o->queue.head;
-                List_Erase(&res2, &o->queue, &pos2);
+                std_list_deleter_voidPtr_erase_listdeleter(&res2, &o->queue, &pos2);
             }
         }
         o->busy = 0;

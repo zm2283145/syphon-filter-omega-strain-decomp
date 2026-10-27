@@ -15,8 +15,8 @@ extern int rt_circ_buf_normalize_with_buf(void *, int, int);
 extern int rt_circ_buf_get_start_used_ptr(void *, unsigned char **);
 extern int rt_circ_buf_free(void *, unsigned short);
 extern int rt_time_start(void *);
-extern int Socket_Write(C *, unsigned char *, int, unsigned short *);
-int NetConn_Drain(C *c)
+extern int rt_msg_client_channel_send_buf(C *, unsigned char *, int, unsigned short *);
+int rt_msg_client_send_channel_circ_buf(C *c)
 {
     unsigned char flag;
     unsigned short wrote;
@@ -44,7 +44,7 @@ int NetConn_Drain(C *c)
     do {
         if (rt_circ_buf_get_start_used_ptr(q, &data) != 0) return 0x15;
         wrote = 0;
-        r = Socket_Write(c, data, avail, &wrote);
+        r = rt_msg_client_channel_send_buf(c, data, avail, &wrote);
         if (r != 0) return r;
         if (wrote != 0) {
             if (rt_time_start(c->f20) != 0) return 0x18;
@@ -76,7 +76,7 @@ extern int rt_circ_buf_get_start_avail_ptr(void *, unsigned char **);
 extern int rt_comm_receive(int, unsigned char *, unsigned short, unsigned short *);
 extern int rt_comm_receive_from(int, char *, unsigned short *, unsigned char *, int, unsigned short *);
 extern int rt_msg_client_map_comm_error(int);
-extern int NetRing_Commit(void *, unsigned short);
+extern int rt_circ_buf_use(void *, unsigned short);
 extern int strcmp(const char *, const char *);
 int rt_msg_client_recv_channel_circ_buf(R *c)
 {
@@ -124,7 +124,7 @@ int rt_msg_client_recv_channel_circ_buf(R *c)
         }
         if (got != 0) {
             if (rt_time_start(c->f28) != 0) return 0x18;
-            if (NetRing_Commit(q, got) != 0) return 0x15;
+            if (rt_circ_buf_use(q, got) != 0) return 0x15;
         }
         if (rt_circ_buf_get_avail_nowrap(q, &avail) != 0) return 0x15;
     } while (avail != 0 && more == 1);

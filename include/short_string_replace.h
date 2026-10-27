@@ -4,7 +4,7 @@
 /*
  * replace(pos, n, const string& src) shared by identical template clones:
  * take src's character range (in place for short strings, heap data for
- * long ones) and forward to String_Replace with an (empty) iterator tag.
+ * long ones) and forward to std_basic_string_char_char_traits_char_do_replace with an (empty) iterator tag.
  * C++ only (#pragma cplusplus on before including).
  */
 #include "short_string_assign.h"
@@ -13,7 +13,7 @@ struct ShortStrIterTag {
     char c;
 };
 
-extern "C" ShortStr* String_Replace(ShortStr* self, unsigned int pos,
+extern "C" ShortStr* std_basic_string_char_char_traits_char_do_replace(ShortStr* self, unsigned int pos,
                                     unsigned int n, const char* first,
                                     const char* last, ShortStrIterTag tag);
 
@@ -31,7 +31,7 @@ extern "C" ShortStr* String_Replace(ShortStr* self, unsigned int pos,
             len = src->u.l.length;                                            \
         }                                                                     \
         ShortStrIterTag tag;                                                  \
-        return String_Replace(self, pos, n, data, data + len, tag);           \
+        return std_basic_string_char_char_traits_char_do_replace(self, pos, n, data, data + len, tag);           \
     }
 
 #endif /* SHORT_STRING_REPLACE_H */

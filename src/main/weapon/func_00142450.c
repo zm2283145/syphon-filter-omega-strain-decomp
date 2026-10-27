@@ -9,18 +9,18 @@ extern unsigned char g_IsMultiplayer;
 extern unsigned char WeaponHolsterAttachPoints[];
 extern unsigned char WeaponHandAttachPoints[];
 extern char D_0052ACC8[];
-extern void Message_GetScriptTypeKey();
+extern void cMessage_getSOBJClassId();
 extern void cNetWeaponMsg_dtor();
-extern void cNetWeaponMsg_v01();
-extern void cNetWeaponMsg_v02();
-void * const D_004DE610[8] = { (void*)0x0, (void*)0x0, (void*)cNetWeaponMsg_dtor, (void*)cNetWeaponMsg_v01, (void*)cNetWeaponMsg_v02, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
-W_2450* WeaponDb_Get(void* db, int id);
-void Equip_ClearSlot(void* eq, unsigned char kind, int slot);
-void WeaponDb_Unload(void* db, int id, int a);
-void Event_Construct(Ev_2450* e, void* type);
-void Event_Send(Ev_2450* e, void* target, int a);
+extern void cNetWeaponMsg_Clone();
+extern void cNetWeaponMsg_Pack();
+void * const D_004DE610[8] = { (void*)0x0, (void*)0x0, (void*)cNetWeaponMsg_dtor, (void*)cNetWeaponMsg_Clone, (void*)cNetWeaponMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
+W_2450* cWeaponDB_GetEntry(void* db, int id);
+void cMan_RemoveGun(void* eq, unsigned char kind, int slot);
+void cWeaponDB_UnloadWeapon(void* db, int id, int a);
+void cMessage_ctor_cMessageNameR(Ev_2450* e, void* type);
+void QueueMessage_cMessageR_cSystemP_int(Ev_2450* e, void* target, int a);
 void cMessage_dtor(Ev_2450* e, int f);
-void WeaponInv_RemoveSlot(S_2450* self, int slot, int unused, int drop, int remote)
+void cWeapon_RemoveWeapon(S_2450* self, int slot, int unused, int drop, int remote)
 {
     int i = (unsigned char)slot;
     Slot_2450* s = &self->slots[i];
@@ -36,20 +36,20 @@ void WeaponInv_RemoveSlot(S_2450* self, int slot, int unused, int drop, int remo
     } else {
         kind = WeaponHolsterAttachPoints[i];
     }
-    Equip_ClearSlot(self->own->equip, kind, i);
-    if (drop && !WeaponDb_Get(g_WeaponDatabase, s->id)->keep)
-        WeaponDb_Unload(g_WeaponDatabase, s->id, 0);
+    cMan_RemoveGun(self->own->equip, kind, i);
+    if (drop && !cWeaponDB_GetEntry(g_WeaponDatabase, s->id)->keep)
+        cWeaponDB_UnloadWeapon(g_WeaponDatabase, s->id, 0);
     s->id = -1;
     if (g_IsMultiplayer && !remote) {
         Ev_2450 e;
-        Event_Construct(&e, D_0052ACC8);
+        cMessage_ctor_cMessageNameR(&e, D_0052ACC8);
         e.slot = slot;
         e.drop = (unsigned char)drop;
         e.b2C = 0;
         e.vt = ((char*)D_004DE610);
         e.size = 0x40;
         e.kind = 4;
-        Event_Send(&e, self->own, 0);
+        QueueMessage_cMessageR_cSystemP_int(&e, self->own, 0);
         e.vt = ((char*)D_004DE610);
         cMessage_dtor(&e, 0);
     }

@@ -37,7 +37,7 @@ static inline void LayerB_SetWeight(LayerB* l, float t)
     r = 0.0f; if (r != t) r = 1.0f / t; else asm { .set reorder } l->inv = r;
     l->e4 = l->obj->f40;
 }
-void SecondaryAim_SetLayerSource(SA* self, float w, Src* src)
+void cIkTargetWithSplinedTransition_TransitionToNewTarget(SA* self, float w, Src* src)
 {
     asm { .set reorder } /* barrier: keeps the copy below the prologue, as in retail */
     self->a = src->a;

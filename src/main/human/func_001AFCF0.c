@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-extern int PtrVec_Reserve(void*, int);
+extern int std_vector_pod_int_reserve(void*, int);
 
-int PtrVec_Reserve_Thunk_1AFCF0(void* self, int arg) {
-    return PtrVec_Reserve(self, arg);
+int std_vector_cSkeletonBBoxContributionPtr_reserve(void* self, int arg) {
+    return std_vector_pod_int_reserve(self, arg);
 }
 
 Rel* std_vector_cSkeletonBBoxContributionPtr_ctor(Rel* r) {
@@ -19,8 +19,8 @@ Rel* std_vector_cSkeletonBBoxContributionPtr_ctor(Rel* r) {
     return r;
 }
 
-int PtrVec_Reserve_Thunk_1AFD20(void* self, int arg) {
-    return PtrVec_Reserve(self, arg);
+int std_vector_cSkeletonCenterOfMassContributionPtr_reserve(void* self, int arg) {
+    return std_vector_pod_int_reserve(self, arg);
 }
 
 Rel* std_vector_cSkeletonCenterOfMassContributionPtr_ctor(Rel* r) {

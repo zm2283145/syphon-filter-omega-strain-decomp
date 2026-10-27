@@ -3,7 +3,7 @@
 #include "alloc_guard.h"
 #include "q4_asm_copy.h"
 extern "C" {
-void* Mem_Alloc(int pool, int size, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
 extern char D_004DFD80[];
 extern char D_004D9360[];
 }
@@ -17,7 +17,7 @@ extern "C" Msg_BBB0* cMoveMsg_Template_Clone(Msg_BBB0* src)
     Msg_BBB0* p;
     {
         AllocGuard guard;
-        p = (Msg_BBB0*)Mem_Alloc(0, 0x70, "moveMsg.hh", 0x4C);
+        p = (Msg_BBB0*)cMemMan_Allocate(0, 0x70, "moveMsg.hh", 0x4C);
     }
     if (p) {
         M_BBB0* d = &p->m;

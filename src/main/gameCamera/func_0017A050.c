@@ -7,17 +7,17 @@
 #include "types.h"
 
 extern int D_004EE948;
-extern int GObj_IdentityA(int);
+extern int cGOBJ_SOBJ_toInt(int);
 
 /* Script binding: args[0] is the message; returns its "who" field (+0x24). */
 int Script_cHumanSeenMsg_Who(char** args) {
-    return GObj_IdentityA(*(int*)(args[0] + 0x24));
+    return cGOBJ_SOBJ_toInt(*(int*)(args[0] + 0x24));
 }
 
-void ScriptType_cHumanSeenMsg_Init(void) {
+void cHumanSeenMsg_SOBJ_init(void) {
 }
 
 /* Returns the value of global D_004EE948. */
-int cHumanSeenMsg_v03(void) {
+int cHumanSeenMsg_getSOBJClassId(void) {
     return D_004EE948;
 }

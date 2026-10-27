@@ -7,6 +7,6 @@
 #include "types.h"
 
 /* clear(): count = 0. */
-void Actor_VirtualLeaf175230(PtrVec* v) {
+void std_vector_deleter_cObjectId_clear(PtrVec* v) {
     v->count = 0;
 }

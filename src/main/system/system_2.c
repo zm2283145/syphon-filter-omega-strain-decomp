@@ -15,7 +15,7 @@
 
 
 extern "C" {
-int Mem_Free(...);
+int cMemMan_Deallocate(...);
 int operator_delete(...);
 extern char D_004BD1A8;                     /* "system.cc" */
 extern char D_004BD1E8;                     /* "system.hh" */
@@ -23,7 +23,7 @@ extern char D_004DFDE0;                     /* Receiver vtable */
 extern unsigned char g_ProfileLockEnabled;
 }
 /* Receiver destructor: frees the owned buffer; deletes self when (short)flags > 0. */
-extern "C" Receiver * Receiver_Destruct(Receiver * self, long long flags) {
+extern "C" Receiver * cSystem_dtor(Receiver * self, long long flags) {
     ReceiverBuf *buf;
     void *data;
 
@@ -40,11 +40,11 @@ extern "C" Receiver * Receiver_Destruct(Receiver * self, long long flags) {
                 if (data != NULL) {
                     {
                         AllocGuard g;
-                    Mem_Free(0, data, &D_004BD1E8, 0x34);
+                    cMemMan_Deallocate(0, data, &D_004BD1E8, 0x34);
                     }
                 }
             }
-            Mem_Free(0, buf, &D_004BD1A8, 0x54);
+            cMemMan_Deallocate(0, buf, &D_004BD1A8, 0x54);
             }
         }
         if (((long long) (flags << 0x30) >> 0x30) > 0) {
@@ -72,7 +72,7 @@ extern char D_004DFDE0[];   /* Receiver vtable */
 
 
 /* Initializes the Receiver base fields; owner is stored at +8. */
-Receiver* Receiver_Construct(Receiver* self, void* owner) {
+Receiver* cSystem_ctor(Receiver* self, void* owner) {
     self->vtable = D_004DFDE0;
     self->magic = RECEIVER_MAGIC;
     self->owner = owner;

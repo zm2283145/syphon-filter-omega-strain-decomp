@@ -9,6 +9,6 @@
 extern int D_004EE938;
 
 /* Returns the value of global D_004EE938. */
-int cHumanSeenMsg_v05(void) {
+int cHumanSeenMsg_GetMsgId(void) {
     return D_004EE938;
 }

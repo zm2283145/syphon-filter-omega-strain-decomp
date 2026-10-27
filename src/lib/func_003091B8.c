@@ -22,9 +22,9 @@ extern void KM_GetSymmetricKey(int, int, char *);
 extern void KM_DeleteSymmetricKey(int, int);
 extern int KM_Encrypt(int, int, int, int);
 extern void KM_AddSymmetricKey(int, int, char *);
-extern int Socket_WriteAddressed(int, int *, unsigned short, int, unsigned short, unsigned short *);
+extern int rt_comm_send_to(int, int *, unsigned short, int, unsigned short, unsigned short *);
 
-int RtUdp_SendPump(RtCtx *c, RtConn *k)
+int rt_udp_send_messages(RtCtx *c, RtConn *k)
 {
     RtHdr hdr;
     RtPktHdr h;
@@ -82,7 +82,7 @@ int RtUdp_SendPump(RtCtx *c, RtConn *k)
         }
         n = b + 12;
         if (enc) n += 4;
-        r = Socket_WriteAddressed(c->sock, k->addr, k->port, rt_list_buf_get_data_ptr(pk) + 12, n, &out);
+        r = rt_comm_send_to(c->sock, k->addr, k->port, rt_list_buf_get_data_ptr(pk) + 12, n, &out);
         if (out == 0) break;
         if (r != 0 || n != out) return 16;
         if (h.seq == k->x64) {

@@ -1,6 +1,6 @@
 typedef int C1q_1333 __attribute__((mode(TI)));
 typedef struct { C1q_1333 r[4]; } C1Mtx_1333;
-C1Mtx_1333* Mtx_Copy(C1Mtx_1333* d, C1Mtx_1333* s)
+C1Mtx_1333* cMatrix_ctor_cMatrixR(C1Mtx_1333* d, C1Mtx_1333* s)
 {
     C1q_1333 a = s->r[0];
     C1q_1333 b = s->r[1];

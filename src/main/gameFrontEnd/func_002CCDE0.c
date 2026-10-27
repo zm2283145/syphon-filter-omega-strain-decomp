@@ -7,7 +7,7 @@
 #include "types.h"
 #include "gameFrontEnd_types.h"
 
-extern FeListPos* List_InsertBefore(FeListPos* result, void* list, FeListPos* pos, int value);
+extern FeListPos* std_list_deleter_voidPtr_insert(FeListPos* result, void* list, FeListPos* pos, int value);
 
 Word* cLListIterator_GuiWidgetPtr_ctor_cLListIteratorR(Word* dst, Word* src) {
     dst->value = src->value;
@@ -44,5 +44,5 @@ FeListPos* std_list_GuiWidgetPtr_push_back_GuiWidgetPR(void* list, int value) {
     FeListPos result;
 
     end.node = (FeListNode*)((char*)list + 4);
-    return List_InsertBefore(&result, list, &end, value);
+    return std_list_deleter_voidPtr_insert(&result, list, &end, value);
 }

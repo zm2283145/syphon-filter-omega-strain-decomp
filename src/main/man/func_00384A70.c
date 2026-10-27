@@ -2,12 +2,12 @@
 #pragma inline_depth(8)
 #include "types.h"
 
-/* Weapon_MuzzleFlash picks a free (or the oldest) flash slot, places it at the muzzle with
- * ShellEject_Place and gives it a random upward speed plus half the barrel direction.
- * ShellEject_Place composes the attach point with the muzzle's rest rotation (quaternion -> matrix
+/* cMan_FireShell picks a free (or the oldest) flash slot, places it at the muzzle with
+ * cMan_GetGunShellLocOrient and gives it a random upward speed plus half the barrel direction.
+ * cMan_GetGunShellLocOrient composes the attach point with the muzzle's rest rotation (quaternion -> matrix
  * -> product -> quaternion) and moves the muzzle offset into world space.
  * VU0 math and quad copies are inline asm (C cannot express the VU0 ops); QuatToMtx / MtxToQuat are
- * the shared VU0 quaternion routines (PlayerCamera_Follow.c / GuiAgentInfo/GuiAgentDisplay_Draw.c). */
+ * the shared VU0 quaternion routines (cPlayerCamera_UpdateCameraTrackingPoint.c / GuiAgentInfo/GuiAgentDisplay_onRender.c). */
 struct M;
 struct V {
     float x, y, z, w;
@@ -61,15 +61,15 @@ struct Weapon {
 };
 extern "C" {
 extern float D_00493340;
-void ActorRender_GetAttachPoint(Weapon* w, M* out, int i);
-void* Skeleton_NodeAt(void* nodes, int i);
+void cMan_GetGunMatrix_WithoutFlippingAxes(Weapon* w, M* out, int i);
+void* cArray_cBone_opIndex_int(void* nodes, int i);
 void* cBone_Xform(void* n);
-M* Transform_GetUpdated(void* x);
-void Actor_ShotFrameNodeWorld(M* out, M* a, M* b);
-void Mtx_Copy(M* d, M* s);
-int Random_Next(void);
-int ShellEject_Place(Weapon* w, int i, V* pos, V* rot);
-void Weapon_MuzzleFlash(Weapon* w, int i);
+M* cXform_GetMatrix(void* x);
+void cMatrix_GetTransformed(M* out, M* a, M* b);
+void cMatrix_ctor_cMatrixR(M* d, M* s);
+int Libc_Rand(void);
+int cMan_GetGunShellLocOrient(Weapon* w, int i, V* pos, V* rot);
+void cMan_FireShell(Weapon* w, int i);
 }
 static inline void QuatToMtx(void* a_, void* b) {
     void* a = a_;
@@ -250,7 +250,7 @@ static inline V Half(V v)
 }
 static inline void operator+=(V& a, const V& b) { AddV(&a, &a, &b); }
 
-extern "C" void Weapon_MuzzleFlash(Weapon* w, int i)
+extern "C" void cMan_FireShell(Weapon* w, int i)
 {
     int best;
     int most;
@@ -265,21 +265,21 @@ extern "C" void Weapon_MuzzleFlash(Weapon* w, int i)
         if (life == 0) { best = j; break; }
         if (most < life) { most = life; best = j; }
     }
-    ShellEject_Place(w, i, &w->flash[best].pos, &w->flash[best].rot);
+    cMan_GetGunShellLocOrient(w, i, &w->flash[best].pos, &w->flash[best].rot);
     {
         Skel* s = w->skel;
         M m;
         V up;
         V vel;
         if (s->shot) {
-            M* t = Transform_GetUpdated(cBone_Xform(Skeleton_NodeAt(s->nodes, 0)));
-            Actor_ShotFrameNodeWorld(&m, t, Transform_GetUpdated(s->xform));
+            M* t = cXform_GetMatrix(cBone_Xform(cArray_cBone_opIndex_int(s->nodes, 0)));
+            cMatrix_GetTransformed(&m, t, cXform_GetMatrix(s->xform));
         } else {
-            Mtx_Copy(&m, Transform_GetUpdated(s->xform));
+            cMatrix_ctor_cMatrixR(&m, cXform_GetMatrix(s->xform));
         }
         QCopy(&up, &m.r[3]);
         {
-            float k = (float)(Random_Next() & 0xF) * 0.002f + D_00493340;
+            float k = (float)(Libc_Rand() & 0xF) * 0.002f + D_00493340;
             vel.z = k;
             vel.y = -k;
             vel.x = 0.0f;
@@ -299,12 +299,12 @@ static inline void MulMM(M* d, const M* a, const M* b) { M* pd = d; const M* pb 
 static inline M Compose(const M& a, V* q) { M qm; M prod; QuatToMtx(&qm, q); MulMM(&prod, &a, &qm); return prod; }
 inline V::V(M m) { void* xx = this; V* o = this; MtxToQuat(&m, o); }
 
-extern "C" int ShellEject_Place(Weapon* w, int i, V* pos, V* rot)
+extern "C" int cMan_GetGunShellLocOrient(Weapon* w, int i, V* pos, V* rot)
 {
     V p;
     M att;
     if (w->muzzle[i]) {
-        ActorRender_GetAttachPoint(w, &att, i);
+        cMan_GetGunMatrix_WithoutFlippingAxes(w, &att, i);
         QCopy(rot, &w->muzzle[i]->rot);
         V q(Compose(att, rot));
         QCopy(rot, &q);

@@ -19,7 +19,7 @@ extern "C" void cSkaSystem_DetachParentAnchors_All(Obj_3932F0* o); /* gsynth: de
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int *Ptr_IdentityCast(char * );                      
+int *cTreeNode_cSkaSystemPtr_Data(char * );                      
 int cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opNe(char *, char *);                        
 int cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opInc(char *);                               
 void **cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opMul(char *);                          
@@ -43,7 +43,7 @@ void cSkaSystem_DetachChildren(char *arg0) {
     cArray_cTreeNode_cSkaSystemPtrPtr_End_void(&sp28, cMatrix_GetYAxis(arg0 + 0x100));
     if (cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opNe(&sp2C, &sp28) != 0) {
         do {
-            cSkaSystem_DetachParentAnchors_All(*Ptr_IdentityCast(*cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opMul(&sp2C)));
+            cSkaSystem_DetachParentAnchors_All(*cTreeNode_cSkaSystemPtr_Data(*cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opMul(&sp2C)));
             cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opInc(&sp2C);
         } while (cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opNe(&sp2C, &sp28) != 0);
     }

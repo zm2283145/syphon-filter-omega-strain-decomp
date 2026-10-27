@@ -9,7 +9,7 @@
 
 extern char D_004DA930[];   /* AnimEvent vtable */
 extern char D_00542B60[];   /* AnimEvent message type */
-extern Message* Event_Construct(Message*, void*);
+extern Message* cMessage_ctor_cMessageNameR(Message*, void*);
 
 float func_0018A2C0(char* self) {
     return *(float*)(self + 156);
@@ -23,12 +23,12 @@ void* cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(char* self) {
     return self + 76;
 }
 
-signed char MotionRequest_GetMode(signed char* self) {
+signed char cSkaRequestStream_AnimationPacket_GetInstruction(signed char* self) {
     return self[72];
 }
 
-AnimEvent* AnimEvent_Construct(AnimEvent* self) {
-    Event_Construct(&self->base, D_00542B60);
+AnimEvent* cSkaAnimEndedMessage_ctor_void(AnimEvent* self) {
+    cMessage_ctor_cMessageNameR(&self->base, D_00542B60);
     self->base.vtable = D_004DA930;
     self->unk24 = 0;
     self->unk28 = 0;
@@ -38,7 +38,7 @@ AnimEvent* AnimEvent_Construct(AnimEvent* self) {
     return self;
 }
 
-Vec4* Vec4_Copy_18A350(Vec4* dst, Vec4* src) {
+Vec4* cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(Vec4* dst, Vec4* src) {
     dst->x = src->x;
     dst->y = src->y;
     dst->z = src->z;

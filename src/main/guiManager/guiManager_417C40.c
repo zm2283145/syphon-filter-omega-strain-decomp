@@ -33,7 +33,7 @@ struct V7C60 { unsigned int cap; unsigned int count; E7C60* data; };
 extern "C" {
 extern char D_004BF080[];
 extern char D_004BF0B0[];
-void String_CopyCtor(void* d, const void* s);
+void std_basic_string_char_char_traits_char_ctor_basicstringR(void* d, const void* s);
 E7C60* std_copy_backward_GuiAnimationTrack_copy_backward(E7C60* first, E7C60* last, E7C60* result);
 void std_fill_n_GuiAnimationTrack_int_fill_n(E7C60* p, unsigned int n, const E7C60* v);
 void std_swap_vectordeleterR_vectordeleterR_49(V7C60* a, V7C60* b);
@@ -43,7 +43,7 @@ void std_vector_deleter_GuiAnimationTrack_dtor(V7C60* v, int f);
 static inline void construct(E7C60* p, const E7C60* s)
 {
     if (p) {
-        String_CopyCtor(p, s);
+        std_basic_string_char_char_traits_char_ctor_basicstringR(p, s);
         p->c = s->c;
         p->a = s->a;
         p->b = s->b;

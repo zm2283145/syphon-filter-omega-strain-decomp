@@ -7,7 +7,7 @@ extern int D_00493888;
 extern int D_00493890;
 extern int D_004F78F0;
 
-void ScriptType_TargSettings_Init(int arg0) {
+void TargSettings_SOBJ_init(int arg0) {
     cScriptBase_registerField(D_004F78F0, "maxDist", arg0, D_00493890);
     cScriptBase_registerField(D_004F78F0, "distFactor", arg0 + 4, D_00493890);
     cScriptBase_registerField(D_004F78F0, "freshFactor", arg0 + 8, D_00493890);

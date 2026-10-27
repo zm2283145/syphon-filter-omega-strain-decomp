@@ -13,15 +13,15 @@ typedef struct {
 } Ctx;
 typedef struct { char pad[0xA70]; int cur; } CtxCur;
 extern char D_00537F80[];
-extern u64_t* DmaPacket_Reserve(void* q, int a, int b, int c, int d, int e);
-extern void Renderer_RefreshCamera(Ent* e);
+extern u64_t* cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(void* q, int a, int b, int c, int d, int e);
+extern void cXViewport_Validate(Ent* e);
 
 typedef struct { u64_t lo, hi; } GsQ_98A0;
 /* Builds the GS environment packet (FRAME/ZBUF/XYOFFSET/SCISSOR/ALPHA/FBA/TEXA via A+D)
    for the current buffer entry; the A+D pairs straddle quadwords. */
-void Renderer_RestoreRenderState(Ctx* c)
+void XLib_UpdateRenderFrameEnv(Ctx* c)
 {
-    GsQ_98A0* q = (GsQ_98A0*)DmaPacket_Reserve(D_00537F80, 1, 1, 0x10, 0, 1);
+    GsQ_98A0* q = (GsQ_98A0*)cDmaMan_BeginChain_eDmaChannel_eDmaMode_int_int_etc(D_00537F80, 1, 1, 0x10, 0, 1);
     Ent* e;
     q->lo = 0x11000000;
     q->hi = 0x0300002EULL | ((u64_t)0x020001E9 << 32);
@@ -31,7 +31,7 @@ void Renderer_RestoreRenderState(Ctx* c)
     q++;
     q->lo = 0xE;
     e = &c->ents[((CtxCur*)c)->cur];
-    Renderer_RefreshCamera(e);
+    cXViewport_Validate(e);
     c->scissor = e->v108;
     q->hi = c->frame1; q++; q->lo = 0x4C;
     q->hi = c->frame2; q++; q->lo = 0x4D;

@@ -17,11 +17,11 @@
  */
 
 
-extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int value);
 
 /* push_back: inserts one value at the end. */
 int std_vector_FuncDefPtr_push_back(PtrVec* v, int value) {
-    return PtrVec_Insert(v, v->data + v->count, 1, value);
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003D7910(void) {}
@@ -31,7 +31,7 @@ static inline void merge_flush_func_003D7910(void) {}
 /* merge_units: begin func_003D7930 */
 #pragma push /* merge_units */
 /* Variadic no-op (debug print stub). */
-void Script_PrintWarning(int fmt, ...) {
+void cScriptBase_sm_printf(int fmt, ...) {
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003D7930(void) {}

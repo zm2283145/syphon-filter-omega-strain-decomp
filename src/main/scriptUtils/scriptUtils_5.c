@@ -62,8 +62,8 @@ void* cLListIterator_ArrayPtr_ctor_void(void* self) {
 #pragma mpwc_relax on
 /*fc*/
 int Alloc_Lock(int);                                    
-int Alloc_Unlock(int);                                  
-char * Mem_Alloc(int, int, char *, int);                    
+int EnableIntc(int);                                  
+char * cMemMan_Allocate(int, int, char *, int);                    
 int std_list_ArrayPtr_push_back(char *, void **);                      
 extern char D_004A82B8;
 extern char D_004F83E0;
@@ -81,9 +81,9 @@ char * ScriptArray_Create(int arg0) {
             Alloc_Lock(9);
         }
         g_ProfileLockDepth += 1;
-        temp_s0 = (char *)(Mem_Alloc(0, 0xC, &D_004A82B8, 0x19E));
+        temp_s0 = (char *)(cMemMan_Allocate(0, 0xC, &D_004A82B8, 0x19E));
         if (g_ProfileLockEnabled != 0) {
-            Alloc_Unlock(9);
+            EnableIntc(9);
         }
         g_ProfileLockDepth -= 1;
         if (temp_s0 != NULL) {
@@ -91,9 +91,9 @@ char * ScriptArray_Create(int arg0) {
                 Alloc_Lock(9);
             }
             g_ProfileLockDepth += 1;
-            temp_s2 = (char *)(Mem_Alloc(0, arg0 * 4, &D_004A82B8, 0x127));
+            temp_s2 = (char *)(cMemMan_Allocate(0, arg0 * 4, &D_004A82B8, 0x127));
             if (g_ProfileLockEnabled != 0) {
-                Alloc_Unlock(9);
+                EnableIntc(9);
             }
             g_ProfileLockDepth -= 1;
             F_(temp_s0, 0x0, int) = (int)(temp_s2);

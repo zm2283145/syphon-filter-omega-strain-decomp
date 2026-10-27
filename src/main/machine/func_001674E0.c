@@ -4,13 +4,13 @@
 #pragma mpwc_relax on
 /*fc*/
 int Alloc_Lock();                                    
-int Alloc_Unlock();                                  
-int Archive_Open();                   
-char * Mem_Alloc(int, int, char *, int);                      
+int EnableIntc();                                  
+int cHogList_Open();                   
+char * cMemMan_Allocate(int, int, char *, int);                      
 int func_0027B680();                            
 char * cHudNetLobby_ctor(char * , int, char *);              
-int FileMan_FindMember();                             
-int FileMan_Release();                            
+int cFileMan_Open();                             
+int cFileMan_dtor();                            
 int cFileMan_ctor_charP_cFileIOP_bool();                    
 int sprintf();                           
 extern char D_0048B2F8;
@@ -29,15 +29,15 @@ void cMachine_CreateNetworkLobbyScreen(char * arg0) {
     if (F_(arg0, 0x27C, int) == NULL) {
         sprintf(spE0, "%s\\COMMON\\IALOBBYN.HOG", &D_0048B2F8);
         cFileMan_ctor_charP_cFileIOP_bool(sp40, spE0, 0, 0);
-        if (!(FileMan_FindMember(sp40) & 0xFF)) {
-            temp_s0 = Archive_Open(&D_004FFB8C, spE0, 0, 0);
+        if (!(cFileMan_Open(sp40) & 0xFF)) {
+            temp_s0 = cHogList_Open(&D_004FFB8C, spE0, 0, 0);
             if (g_ProfileLockEnabled != 0) {
                 Alloc_Lock(9);
             }
             g_ProfileLockDepth += 1;
-            var_s2 = (char *)(Mem_Alloc(0, 0x58, &D_0049C390, 0x5B7));
+            var_s2 = (char *)(cMemMan_Allocate(0, 0x58, &D_0049C390, 0x5B7));
             if (g_ProfileLockEnabled != 0) {
-                Alloc_Unlock(9);
+                EnableIntc(9);
             }
             g_ProfileLockDepth -= 1;
             if (var_s2 != NULL) {
@@ -47,6 +47,6 @@ void cMachine_CreateNetworkLobbyScreen(char * arg0) {
             F_(F_(arg0, 0x27C, int), 0x56, signed char) = 1;
             func_0027B680(F_(arg0, 0x27C, int));
         }
-        FileMan_Release(sp40, -1);
+        cFileMan_dtor(sp40, -1);
     }
 }

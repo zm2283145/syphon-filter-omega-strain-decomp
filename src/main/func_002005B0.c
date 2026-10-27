@@ -1,7 +1,7 @@
 #include "types.h"
 extern void MEMCLEAR16(char*, int);
 #pragma optimization_level 1
-char* MotionRegistry_MakeKey(char* dst, char* src)
+char* cString16N_2_ctor_charP(char* dst, char* src)
 {
     if (src != 0) {
         unsigned char done = 0;

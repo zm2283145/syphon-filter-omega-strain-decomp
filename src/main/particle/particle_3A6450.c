@@ -98,15 +98,15 @@ const unsigned int D_004BC700[10] = { 0x65727473, 0x705F6D61, 0x726F6972, 0x3D79
 extern char D_00537F80[];       /* DMA manager instance */
 extern unsigned char D_0053BBB0;
 extern int LibInitModules(int);
-extern int Overlay_Load(int);
-extern int Mem_Init(void);
+extern int SFO_RequestOverlay(int);
+extern int cMemMan_Init_void(void);
 extern int cDmaMan_Init(void* mgr, int a1, int a2, int a3);
 
 int SFOLibInit(int a0) {
-    Mem_Init();
+    cMemMan_Init_void();
     LibInitModules(a0);
     cDmaMan_Init(D_00537F80, 13312, 1075200, 204800);
-    return Overlay_Load(1);
+    return SFO_RequestOverlay(1);
 }
 
 /* Set the byte flag D_0053BBB0 and return its previous value. */
@@ -119,7 +119,7 @@ int SFOLibInit_RequestCancel(int value) {
 }
 
 int SFOLibInit_RequestOverlay(int overlay) {
-    return Overlay_Load(overlay);
+    return SFO_RequestOverlay(overlay);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003A65F0 */

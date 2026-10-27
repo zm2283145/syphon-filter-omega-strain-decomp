@@ -21,17 +21,17 @@ extern int g_CardSlotId;
 extern Net_4415A0 g_MemCard;
 extern char D_004C0448[]; extern char D_004C0458[]; extern char D_004C0468[];
 extern char D_004C0498[]; extern char D_004C04A8[];
-int Agent_GetSelected(void*, int);
-char* Loc_LookupText(char*);
-int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
-void FrontEnd_ClosePopup(int, int);
-int MemCardWrap_MakeDirectory(Net_4415A0*);
+int cGameSystem_GetAgentData(void*, int);
+char* nGlobalization_GetString_charP(char*);
+int cGameFrontEnd_PushMessageBox(int, int, char*, char*, void*, int);
+void cGameFrontEnd_PopMessageBox(int, int);
+int cMemCard_MakeGameDir(Net_4415A0*);
 int SaveAgentWidget_FindSlotFile(int, char*, char*);
 int SaveAgentWidget_SpaceCheck();
-void SaveAgentWidget_Save(Obj_4415A0*);
+void GuiSaveAgentWidget_Write(Obj_4415A0*);
 }
 
-static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, Loc_LookupText(t), Loc_LookupText(m), cb, x); }
+static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) { return cGameFrontEnd_PushMessageBox(mgr, type, nGlobalization_GetString_charP(t), nGlobalization_GetString_charP(m), cb, x); }
 
 extern "C" void SaveAgentWidget_Prepare(Obj_4415A0* self)
 {
@@ -42,15 +42,15 @@ extern "C" void SaveAgentWidget_Prepare(Obj_4415A0* self)
             self->shown = 1;
             self->dlg = ShowDlg(D_004FFC04, 0, D_004C0448, D_004C0458, self, 0);
         }
-        if (!MemCardWrap_MakeDirectory(net)) {
+        if (!cMemCard_MakeGameDir(net)) {
             int old = self->dlg;
             self->dlg = ShowDlg(D_004FFC04, 2, D_004C0468, D_004C04A8, self, 2);
-            FrontEnd_ClosePopup(D_004FFC04, old);
+            cGameFrontEnd_PopMessageBox(D_004FFC04, old);
             return;
         }
     }
     {
-        char* agent = (char*)Agent_GetSelected(g_Game, -1);
+        char* agent = (char*)cGameSystem_GetAgentData(g_Game, -1);
         bool other = g_MemCard.impl->f5A8 != g_CardSlotId;
         if (self->mode != 4) {
             char* name = 0;
@@ -60,7 +60,7 @@ extern "C" void SaveAgentWidget_Prepare(Obj_4415A0* self)
                 return;
             }
         }
-        SaveAgentWidget_Save(self);
+        GuiSaveAgentWidget_Write(self);
     }
 }
 

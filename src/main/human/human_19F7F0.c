@@ -131,10 +131,10 @@ struct ActMsg : CMsg {
 };
 
 extern "C" {
-void* RootCollection_FindByKey_Thunk(void* root, void* key);
+void* cSkaSystem_GetAnchor(void* root, void* key);
 void Actor_UnlinkAll(Actor9F* a);
-void Root_ClearChildren(void* r);
-void WeaponInv_RestoreHiddenItem(int item);
+void cSkaAnimAnchor_DetachChildren(void* r);
+void cWeapon_DrawLastWeaponUsed(int item);
 }
 extern char D_0049D040[];
 extern char D_0049D048[];
@@ -153,9 +153,9 @@ static inline bool IsBusy9F(Actor9F* a) { unsigned char st = a->State(); return 
 extern "C" void Actor_ReactToActionChanges(Actor9F* a)
 {
     if (ActTriggered(a, 21)) {
-        Root_ClearChildren(RootCollection_FindByKey_Thunk(a->root2EC0, D_0049D040));
-        Root_ClearChildren(RootCollection_FindByKey_Thunk(a->root2EC0, D_0049D048));
-        WeaponInv_RestoreHiddenItem(a->item3524);
+        cSkaAnimAnchor_DetachChildren(cSkaSystem_GetAnchor(a->root2EC0, D_0049D040));
+        cSkaAnimAnchor_DetachChildren(cSkaSystem_GetAnchor(a->root2EC0, D_0049D048));
+        cWeapon_DrawLastWeaponUsed(a->item3524);
         Actor_UnlinkAll(a);
     }
     if (ActTriggered(a, 17) || ActTriggered(a, 18)) {
@@ -169,13 +169,13 @@ extern "C" void Actor_ReactToActionChanges(Actor9F* a)
             }
             {
                 ActMsg m;
-                Event_Construct(&m, g_CasEventMsgClass);
+                cMessage_ctor_cMessageNameR(&m, g_CasEventMsgClass);
                 m.actor = a;
                 m.action = (char)act;
                 m.kind = 1;
                 m.vtable = D_004DA950;
                 m.target = -1;
-                Event_Send(&m, a->link3474, 1);
+                QueueMessage_cMessageR_cSystemP_int(&m, a->link3474, 1);
                 m.vtable = D_004DA950;
                 cMessage_dtor(&m, 0);
             }
@@ -184,26 +184,26 @@ extern "C" void Actor_ReactToActionChanges(Actor9F* a)
     }
     if (ActTriggered(a, 16)) {
         ActMsg m;
-        Event_Construct(&m, g_CasEventMsgClass);
+        cMessage_ctor_cMessageNameR(&m, g_CasEventMsgClass);
         m.actor = 0;
         m.vtable = D_004DA950;
         m.action = 0xC;
         m.target = -1;
-        Event_Send(&m, a->target58, 1);
+        QueueMessage_cMessageR_cSystemP_int(&m, a->target58, 1);
         m.vtable = D_004DA950;
         cMessage_dtor(&m, 0);
-        WeaponInv_RestoreHiddenItem(a->item3524);
+        cWeapon_DrawLastWeaponUsed(a->item3524);
     }
     if (ActTriggered(a, 6)) {
         ActMsg m;
         a->flags3248 &= ~0x100;
         a->flags3248 &= ~0x200;
-        Event_Construct(&m, g_CasEventMsgClass);
+        cMessage_ctor_cMessageNameR(&m, g_CasEventMsgClass);
         m.actor = 0;
         m.vtable = D_004DA950;
         m.action = 7;
         m.target = -1;
-        Event_Send(&m, a->target58, 0);
+        QueueMessage_cMessageR_cSystemP_int(&m, a->target58, 0);
         m.vtable = D_004DA950;
         cMessage_dtor(&m, 0);
     }
@@ -217,12 +217,12 @@ static inline void merge_flush_func_0019F890(void) {}
 #pragma push /* merge_units */
 extern void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(void* r);
 extern int cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Empty(void* v);
-extern void** PtrVec_Back(void* v);
+extern void** cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Back(void* v);
 extern void cSkaAnimAnchor_TreeNode_DetachChild(void* r, void* c);
-void Root_ClearChildren(void* r)
+void cSkaAnimAnchor_DetachChildren(void* r)
 {
     while (!cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Empty(cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(r))) {
-        cSkaAnimAnchor_TreeNode_DetachChild(r, *PtrVec_Back(cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(r)));
+        cSkaAnimAnchor_TreeNode_DetachChild(r, *cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Back(cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(r)));
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

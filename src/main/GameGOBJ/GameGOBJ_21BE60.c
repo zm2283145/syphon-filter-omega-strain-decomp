@@ -29,7 +29,7 @@ DEFINE_VTABLE_BASE_DTOR(cFacingGOBJ_dtor, D_004DB3A0, cGameGOBJ_dtor)
 
 DEFINE_RESIZE_ELEMENT(Elem16, 16)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(std_vector_imp_cVector_resize, Elem16, VecRecordList_Insert, std_vector_imp_cVector_erase)
+DEFINE_VECTOR_RESIZE(std_vector_imp_cVector_resize, Elem16, std_vector_imp_cVector_insert, std_vector_imp_cVector_erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_0021BEC0 */

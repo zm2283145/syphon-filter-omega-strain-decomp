@@ -6,7 +6,7 @@ extern int std_list_deleter_tNode_tail(int*);
 extern void std_list_deleter_tNode_generic_iterator_ctor_nodebaseP(RippleNode_b6**, int);
 extern void std_list_deleter_tNode_erase_listdeleter(RippleNode_b6**, int*, RippleNode_b6**);
 static inline float fmax_b6(float a, float b) { float r; asm { max.s r, a, b } return r; }
-void WaterFx_AgeRipples(RippleEmitter_b6* e, float dt)
+void cWake_NextFrame_float(RippleEmitter_b6* e, float dt)
 {
     RippleNode_b6* n = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_7(&e->sentinel)->next;
     RippleNode_b6* ret[1];

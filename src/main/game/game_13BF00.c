@@ -46,10 +46,10 @@ typedef struct SsoString {
 typedef struct { char unused; } Allocator; /* empty allocator object passed by value */
 
 /* Replaces count characters at pos with the range [first, last). */
-extern void* String_Replace(SsoString* str, int pos, int count, const char* first, const char* last, Allocator alloc);
+extern void* std_basic_string_char_char_traits_char_do_replace(SsoString* str, int pos, int count, const char* first, const char* last, Allocator alloc);
 
 /* Assigns the range [first, last) to the string (replaces the whole contents). */
-void* String_Assign(SsoString* str, const char* first, const char* last)
+void* std_basic_string_char_char_traits_char_assign_charP_charP_intP(SsoString* str, const char* first, const char* last)
 {
     Allocator alloc;
     int len;
@@ -57,7 +57,7 @@ void* String_Assign(SsoString* str, const char* first, const char* last)
         len = (unsigned char)str->h.s.shortLen;
     else
         len = str->longLen;
-    return String_Replace(str, 0, len, first, last, alloc);
+    return std_basic_string_char_char_traits_char_do_replace(str, 0, len, first, last, alloc);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0013BFE0 */
@@ -68,7 +68,7 @@ void* String_Assign(SsoString* str, const char* first, const char* last)
 #include "alloc_guard.h"
 struct N_0013C030 { N_0013C030* left; N_0013C030* right; int f8; char val[4]; };
 extern "C" {
-void Mem_Free(int pool, void* p, const char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, const char* file, int line);
 }
 extern "C" void std_tree_pair_cString_value_compare_destroy_nodeP_2(void* t, N_0013C030* n)
 {
@@ -77,7 +77,7 @@ extern "C" void std_tree_pair_cString_value_compare_destroy_nodeP_2(void* t, N_0
     if (n->val) { if (n->val) String_Dtor(n->val, 0); }
     if (n) {
         AllocGuard g;
-        Mem_Free(0, n, "allocator.hh", 0x64);
+        cMemMan_Deallocate(0, n, "allocator.hh", 0x64);
     }
 }
 #pragma pop /* merge_units */

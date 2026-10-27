@@ -12,7 +12,7 @@
 #pragma push /* merge_units */
 typedef struct B4Ev { char pad[0x94]; struct B4Ev* next; } B4Ev;
 extern void cNIEventOBJ_DeactivateChildren(B4Ev*);
-void cNIEventOBJ_v16(B4Ev* p) {
+void cNIEventOBJ_Deactivate(B4Ev* p) {
     B4Ev* n;
     for (n = p->next; n != 0; n = n->next) p = n;
     cNIEventOBJ_DeactivateChildren(p);
@@ -41,12 +41,12 @@ struct Node_23C010 {
 extern "C" {
 extern int D_004F7C60;
 int* std_vector_cNIEventBasePtr_opIndex(PtrVec* v, int i);
-void NiEvent_SetTreePresence(Node_23C010* self, int arg);
-void Object_Activate(Node_23C010* self, int arg);
+void cNIEventOBJ_ActivateChildren(Node_23C010* self, int arg);
+void cGOBJ_Activate(Node_23C010* self, int arg);
 }
 #pragma push
 #pragma opt_strength_reduction off
-extern "C" void NiEvent_SetTreePresence(Node_23C010* self, int arg)
+extern "C" void cNIEventOBJ_ActivateChildren(Node_23C010* self, int arg)
 {
     int i;
     if (self->target)
@@ -54,11 +54,11 @@ extern "C" void NiEvent_SetTreePresence(Node_23C010* self, int arg)
     for (i = 0; i < self->children.count; i++) {
         Child_23C010* c = (Child_23C010*)*std_vector_cNIEventBasePtr_opIndex(&self->children, i);
         if (c->kind == D_004F7C60)
-            NiEvent_SetTreePresence((Node_23C010*)self->children.data[i], arg);
+            cNIEventOBJ_ActivateChildren((Node_23C010*)self->children.data[i], arg);
         else
             ((Target_23C010*)self->children.data[i])->slot21(arg);
     }
-    Object_Activate(self, arg);
+    cGOBJ_Activate(self, arg);
 }
 #pragma pop
 /* merge_units: generate this block's code under its own pragmas */

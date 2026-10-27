@@ -8,6 +8,6 @@
 
 extern int D_00504070;
 
-int cNetGrenadeMsg_v05(void) {
+int cNetGrenadeMsg_GetMsgId(void) {
     return D_00504070;
 }

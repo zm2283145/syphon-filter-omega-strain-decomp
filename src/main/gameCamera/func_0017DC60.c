@@ -3,5 +3,5 @@
 #pragma push
 #pragma peephole off
 #pragma opt_propagation off
-CURVE_RETIME_FUNC(VecCurve_SetDuration)
+CURVE_RETIME_FUNC(cSplinedMotion_cVector_RestartTransition)
 #pragma pop

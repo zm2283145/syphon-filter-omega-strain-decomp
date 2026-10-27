@@ -5,22 +5,22 @@ typedef struct { int a; int count; Ent *data; } EntVec;
 typedef struct { int d[0x2A]; } FEnt;
 extern EntVec D_00532B30;
 extern char D_004B9280[];
-extern void *Resource_Construct(void *);
-extern void *FileMan_Release(void *, int);
-extern void Hog_Register(void *, const char *, int, int);
-extern int FileMan_FindMember(void *);
-extern char *FileMan_ReadData(void *);
-extern int FileMan_GetSize(void *);
+extern void *cFileMan_ctor_void(void *);
+extern void *cFileMan_dtor(void *, int);
+extern void cFileMan_EncodeFilename_charP_cHogFileR_bool(void *, const char *, int, int);
+extern int cFileMan_Open(void *);
+extern char *cFileMan_Read_void(void *);
+extern int cFileMan_GetSize(void *);
 extern ColVec *std_vector_tColumnData_ctor(ColVec *);
 extern void func_0033A580(ColVec *);
 extern void std_vector_deleter_tColumnData_dtor(ColVec *, int);
 extern void std_vector_imp_tColumnData_insert(ColVec *, Col *, int, Col *);
-extern void PartsTable_InsertRow(EntVec *, Ent *, int, Ent *);
+extern void std_vector_imp_PartData_insert(EntVec *, Ent *, int, Ent *);
 extern int atoi(const char *);
 extern int strlen(const char *);
 extern char *strncpy(char *, const char *, int);
 #pragma opt_strength_reduction off
-void PartsTable_Load(int arg)
+void cAgentData_LoadPartData(int arg)
 {
     Col col;
     FEnt f;
@@ -35,11 +35,11 @@ void PartsTable_Load(int arg)
     int j;
     char *s;
     char *q;
-    Resource_Construct(&f);
-    Hog_Register(&f, D_004B9280, arg, 0);
-    if (!(FileMan_FindMember(&f) & 0xFF)) {
-        p = FileMan_ReadData(&f);
-        left = FileMan_GetSize(&f);
+    cFileMan_ctor_void(&f);
+    cFileMan_EncodeFilename_charP_cHogFileR_bool(&f, D_004B9280, arg, 0);
+    if (!(cFileMan_Open(&f) & 0xFF)) {
+        p = cFileMan_Read_void(&f);
+        left = cFileMan_GetSize(&f);
         first = 1;
         std_vector_tColumnData_ctor(&v);
         v.owns = 1;
@@ -87,7 +87,7 @@ void PartsTable_Load(int arg)
                             strncpy(ent.name, b, n);
                             ent.name[n] = 0;
                             ent.val = v.data[j].hash;
-                            PartsTable_InsertRow(&D_00532B30, D_00532B30.data + D_00532B30.count, 1, &ent);
+                            std_vector_imp_PartData_insert(&D_00532B30, D_00532B30.data + D_00532B30.count, 1, &ent);
                         }
                     }
                 }
@@ -96,7 +96,7 @@ void PartsTable_Load(int arg)
 
         std_vector_deleter_tColumnData_dtor(&v, 0);
     }
-    FileMan_Release(&f, -1);
+    cFileMan_dtor(&f, -1);
 }
 
 

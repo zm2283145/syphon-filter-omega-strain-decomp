@@ -13,13 +13,13 @@ extern int D_004EEEF0;
 extern void cNetMsg_PutGOBJ(int);
 
 /* Serialize: write the word argument, then one byte. */
-void cNetMeleeAttackMsg_v04(ArgMsg* msg) {
+void cNetMeleeAttackMsg_Pack(ArgMsg* msg) {
     cNetMsg_PutGOBJ(msg->arg0);
     *D_005061D0 = msg->arg1;
     D_005061D0 = D_005061D0 + 1;
 }
 
 /* Message type id. */
-int cNetMeleeAttackMsg_v05(void) {
+int cNetMeleeAttackMsg_GetMsgId(void) {
     return D_004EEEF0;
 }

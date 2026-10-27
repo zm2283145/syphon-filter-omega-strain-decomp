@@ -18,7 +18,7 @@ typedef struct {
 extern unsigned char D_005721C0;
 extern unsigned char g_IsMultiplayer;
 extern unsigned char cTurret_Aim(Turret_286570* t, float dt);
-extern void cTank_Fire(Turret_286570* t, Target_286570* tgt, unsigned char valid, unsigned char r);
+extern void cTurret_Fire(Turret_286570* t, Target_286570* tgt, unsigned char valid, unsigned char r);
 }
 struct Obj_286570 {
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
@@ -59,7 +59,7 @@ extern "C" void cTurret_NextFrame(Turret_286570* t, float dt)
     tgt = valid ? tgt : 0;
     if (tgt && !t->busy && r && t->cooldown <= 0.0f) {
         if (!g_IsMultiplayer || Flag_286570() || !(t->aux->f <= 1.0f))
-            cTank_Fire(t, tgt, valid, r);
+            cTurret_Fire(t, tgt, valid, r);
     }
 }
 

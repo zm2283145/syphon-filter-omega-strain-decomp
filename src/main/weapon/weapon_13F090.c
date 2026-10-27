@@ -37,7 +37,7 @@ TB5C0* cAssocMultiArray_float_cGOBJPtr_dtor(TB5C0* t, short del)
 
 #include "loose00_types.h"
 
-extern void Tree_Successor(Iter* it);
+extern void std_red_black_tree_1_increment(Iter* it);
 
 int cAssocMultiArray_float_cGOBJPtr_Iterator_opNe(Iter* a, Iter* b) {
     return !(a->p == b->p);
@@ -48,8 +48,8 @@ void cAssocMultiArray_float_cGOBJPtr_End(Iter* out, Tree* t) {
 }
 
 /* ++it on a tree iterator. */
-Iter* TreeIter_Increment(Iter* it) {
-    Tree_Successor(it);
+Iter* cAssocMultiArray_float_cGOBJPtr_Iterator_opInc(Iter* it) {
+    std_red_black_tree_1_increment(it);
     return it;
 }
 
@@ -87,10 +87,10 @@ struct List_F1A0 { int n; Obj_F1A0* items[1]; };
 extern "C" {
 extern char D_00543790[];
 extern unsigned char g_IsMultiplayer;
-void Shadow_AddReceiver(void* mgr, Obj_F1A0* o, int flag);
-void Shadow_AddCaster(void* mgr, Obj_F1A0* o, int mode);
+void cShadowMan_AddReceiver(void* mgr, Obj_F1A0* o, int flag);
+void cShadowMan_AddCaster(void* mgr, Obj_F1A0* o, int mode);
 }
-extern "C" void Shadow_RegisterReceiver(List_F1A0* list)
+extern "C" void ProcessShadows(List_F1A0* list)
 {
     Obj_F1A0** p;
     for (p = list->items; p != list->items + list->n; p++) {
@@ -98,7 +98,7 @@ extern "C" void Shadow_RegisterReceiver(List_F1A0* list)
         if (o->kind == 1) {
             Ren_F1A0* r = o->ren;
             if (r->f24 & 0x60) { unsigned char v = r->f0 != 0; if (v)
-                Shadow_AddReceiver(D_00543790, o, 0); }
+                cShadowMan_AddReceiver(D_00543790, o, 0); }
         } else if (o->kind == 2) {
             Obj_F1A0* c = o;
             unsigned char local = 0;
@@ -107,11 +107,11 @@ extern "C" void Shadow_RegisterReceiver(List_F1A0* list)
                 local = 1;
             if (g_IsMultiplayer) {
                 if (local)
-                    Shadow_AddCaster(D_00543790, c, 2);
+                    cShadowMan_AddCaster(D_00543790, c, 2);
             } else if (local) {
-                Shadow_AddCaster(D_00543790, c, 2);
+                cShadowMan_AddCaster(D_00543790, c, 2);
             } else {
-                Shadow_AddCaster(D_00543790, c, 1);
+                cShadowMan_AddCaster(D_00543790, c, 1);
             }
         }
     }

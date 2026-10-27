@@ -1,10 +1,10 @@
 #pragma cplusplus on
 #include "types.h"
-/* Font_DrawString: draws a string as one textured sprite (two vertices) per glyph. Control
+/* cFont_Display_charP_tRGBAR_float_float_etc: draws a string as one textured sprite (two vertices) per glyph. Control
  * characters 16-23 select a colour from the font's table; characters inside the fade band
  * at either clip edge get their alpha ramped, glyphs crossing the left edge are cut (UV
  * shifted), the first glyph past the right edge ends the string; kerning pairs adjust the
- * advance. Render state and vertex emission as in GuiBitmapWidget_Draw (GenInfoObject_43C0C0.c). */
+ * advance. Render state and vertex emission as in GuiBitmapWidget_onRender (GenInfoObject_43C0C0.c). */
 struct V4 {
     float x, y, z, w;
     V4() {}
@@ -38,15 +38,15 @@ typedef struct G_A330 {
     int f10; int pad14[4]; int f24; int f28; int pad2C[3]; int f38; int f3C; int pad40[2]; TexMan* f48; int pad4C[33]; int fD0;
 } G_A330;
 extern G_A330 D_00539210;
-void Renderer_BindTexture(TexMan* m, int idx);
+void cTexMan_SetActive(TexMan* m, int idx);
 void XLib_NewStrip(char* r);
 void XLib_NextBatchVert(char* r);
-void Vec4_Copy(void* d, const void* s);
-void GuiBatch_AddVertexColor(void* out, const void* in);
-float GuiBatch_AddVertexUV(void);
-V4* Vec4_Set(V4* o, float x, float y, float z, float w);
-void Renderer_FlushPrimitives(char* r);
-void Font_DrawString(Font* f, const char* s, V4* col, float x, float y, float z, float lo, float hi, float fade);
+void cVector_opAssign(void* d, const void* s);
+void tIRGBA_opAssign_tRGBAR(void* out, const void* in);
+float tVifFloatToInt_short_4_Bias(void);
+V4* cVector_ctor_float_float_float_float(V4* o, float x, float y, float z, float w);
+void XLib_DrawSprites2(char* r);
+void cFont_Display_charP_tRGBAR_float_float_etc(Font* f, const char* s, V4* col, float x, float y, float z, float lo, float hi, float fade);
 }
 
 #define D_00539224 (D_00539210.f24)
@@ -65,14 +65,14 @@ static inline void Emit(const V4& pos, const V4& col, float u, float v)
     float uu;
     XLib_NextBatchVert(g_Video);
     e = EntAt(D_00539210.f10);
-    Vec4_Copy(e->pos + (D_00539224 - 1) * 16, &pos);
-    GuiBatch_AddVertexColor(e->c30 + (D_00539224 - 1) * 16, &col);
-    uu = u + GuiBatch_AddVertexUV();
-    Vec4_Copy(e->c34 + (D_00539224 - 1) * 16, Vec4_Set(&tmp, uu, v + GuiBatch_AddVertexUV(), 1.0f, 0.0f));
+    cVector_opAssign(e->pos + (D_00539224 - 1) * 16, &pos);
+    tIRGBA_opAssign_tRGBAR(e->c30 + (D_00539224 - 1) * 16, &col);
+    uu = u + tVifFloatToInt_short_4_Bias();
+    cVector_opAssign(e->c34 + (D_00539224 - 1) * 16, cVector_ctor_float_float_float_float(&tmp, uu, v + tVifFloatToInt_short_4_Bias(), 1.0f, 0.0f));
     D_005381F8 = 6LL << 32;
 }
 
-void Font_DrawString(Font* f, const char* s, V4* col, float x, float y, float z, float lo, float hi, float fade)
+void cFont_Display_charP_tRGBAR_float_float_etc(Font* f, const char* s, V4* col, float x, float y, float z, float lo, float hi, float fade)
 {
     const unsigned char* p;
     int n;
@@ -82,7 +82,7 @@ void Font_DrawString(Font* f, const char* s, V4* col, float x, float y, float z,
     p = (const unsigned char*)s;
     texW = (int)TexQ(g_TextureMgr, f->tex)->info->w;
     g_DrawMode = 5;
-    Renderer_BindTexture(g_TextureMgr, f->tex);
+    cTexMan_SetActive(g_TextureMgr, f->tex);
     D_00539228 = 0;
     D_00539238 = (unsigned char)((g_DrawMode & 1) ? 3 : 2);
     D_0053923C = (g_DrawMode & 1) ? 0x41 : 0x62;
@@ -189,5 +189,5 @@ void Font_DrawString(Font* f, const char* s, V4* col, float x, float y, float z,
         }
     }
     if (n)
-        Renderer_FlushPrimitives(g_Video);
+        XLib_DrawSprites2(g_Video);
 }

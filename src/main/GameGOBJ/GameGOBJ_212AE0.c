@@ -28,12 +28,12 @@ typedef struct SndObj_00212AE0 {
 extern int g_LocalPlayer;
 extern char g_Game[];
 extern char D_004DADF0[];
-extern int Event_Send(void* m, void* target, int immediate);
+extern int QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 extern int cMessage_dtor(void* m, int flags);
-extern void SoundStopMsg_Ctor(Snd2_00212AE0* e, void* preset, void* owner);
-extern int FileMan_Release(Str_00212AE0* s, int flag);
-extern void Object_Deactivate(SndObj_00212AE0* self, int arg);
-void cSoundGOBJ_v16(SndObj_00212AE0* self, int arg)
+extern void cStopSoundMsg_ctor_cSndFxR_cGOBJP(Snd2_00212AE0* e, void* preset, void* owner);
+extern int cFileMan_dtor(Str_00212AE0* s, int flag);
+extern void cGOBJ_Deactivate(SndObj_00212AE0* self, int arg);
+void cSoundGOBJ_Deactivate(SndObj_00212AE0* self, int arg)
 {
     Snd2_00212AE0 c;
     if (self->active) {
@@ -44,15 +44,15 @@ void cSoundGOBJ_v16(SndObj_00212AE0* self, int arg)
             owner = 0;
         else
             owner = self;
-        SoundStopMsg_Ctor(&c, self->preset, owner);
-        Event_Send(&c, g_Game, 1);
+        cStopSoundMsg_ctor_cSndFxR_cGOBJP(&c, self->preset, owner);
+        QueueMessage_cMessageR_cSystemP_int(&c, g_Game, 1);
         c.vt = D_004DADF0;
-        FileMan_Release(&c.s114, -1);
-        FileMan_Release(&c.s78, -1);
+        cFileMan_dtor(&c.s114, -1);
+        cFileMan_dtor(&c.s78, -1);
         cMessage_dtor(&c, 0);
         self->playing = 0;
     }
-    Object_Deactivate(self, arg);
+    cGOBJ_Deactivate(self, arg);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00212AE0(void) {}
@@ -65,21 +65,21 @@ static inline void merge_flush_func_00212AE0(void) {}
 #define NULL 0
 #pragma mpwc_relax on
 #if 0 /* merge_units */
-int Event_Send(char **, char *, int);
+int QueueMessage_cMessageR_cSystemP_int(char **, char *, int);
 #endif /* merge_units */
-#define Event_Send(a0, a1, a2) (Event_Send((void *)(a0), (void *)(a1), (a2))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((void *)(a0), (void *)(a1), (a2))) /* merge_units */
                          
-int Object_Activate(char * , int);                       
-int SoundEvent_CtorFromPreset(char **, char * , char * );  
+int cGOBJ_Activate(char * , int);                       
+int cPlaySoundMsg_ctor_cSndFxR(char **, char * , char * );  
 #if 0 /* merge_units */
 int cMessage_dtor(char **, int);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
                            
 #if 0 /* merge_units */
-int FileMan_Release(char *, int);
+int cFileMan_dtor(char *, int);
 #endif /* merge_units */
-#define FileMan_Release(a0, a1) (FileMan_Release((void *)(a0), (a1))) /* merge_units */
+#define cFileMan_dtor(a0, a1) (cFileMan_dtor((void *)(a0), (a1))) /* merge_units */
                             
 extern char D_004DAE30;
 #if 0 /* merge_units */
@@ -91,7 +91,7 @@ void func_001C6700(); /* gsynth: address taken */
 #define func_001C6700 (*(char *)func_001C6700) /* merge_units */
 
 #pragma opt_common_subs off
-void cSoundGOBJ_v15(char * arg0, int arg1) {
+void cSoundGOBJ_Activate(char * arg0, int arg1) {
     struct { char * f30[8]; signed char f50[88]; int fA8[39]; int f144[43]; } sl;
     char * var_a2;
 
@@ -102,23 +102,23 @@ void cSoundGOBJ_v15(char * arg0, int arg1) {
         }
         if (F_(arg0, 0x1F0, unsigned char) == 0) {
             F_(arg0, 0x1F0, unsigned char) = 1U;
-            SoundEvent_CtorFromPreset(sl.f30, arg0 + 0x60, var_a2);
+            cPlaySoundMsg_ctor_cSndFxR(sl.f30, arg0 + 0x60, var_a2);
             if (&func_001C6700 == NULL) {
                 sl.f50[0] = 1;
             }
-            Event_Send(sl.f30, &g_Game, 1);
+            QueueMessage_cMessageR_cSystemP_int(sl.f30, &g_Game, 1);
             sl.f30[0] = &D_004DAE30;
-            FileMan_Release(sl.f144, -1);
-            FileMan_Release(sl.fA8, -1);
+            cFileMan_dtor(sl.f144, -1);
+            cFileMan_dtor(sl.fA8, -1);
             cMessage_dtor(sl.f30, 0);
         }
     }
-    Object_Activate(arg0, arg1);
+    cGOBJ_Activate(arg0, arg1);
 }
 #undef func_001C6700 /* merge_units */
-#undef Event_Send /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
 #undef cMessage_dtor /* merge_units */
-#undef FileMan_Release /* merge_units */
+#undef cFileMan_dtor /* merge_units */
 #undef g_Game /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00212BB0(void) {}
@@ -155,58 +155,58 @@ extern char D_004DAE30[];
 #endif /* merge_units */
 #define D_004DAE30 ((char*)&D_004DAE30) /* merge_units */
 
-extern int* Event_GetType(void* ev);
+extern int* cMessage_Name(void* ev);
 #if 0 /* merge_units */
-extern int SoundEvent_CtorFromPreset(Snd_00212C80* e, void* preset, void* owner);
+extern int cPlaySoundMsg_ctor_cSndFxR(Snd_00212C80* e, void* preset, void* owner);
 #endif /* merge_units */
-#define SoundEvent_CtorFromPreset(a0, a1, a2) (SoundEvent_CtorFromPreset((void *)(a0), (void *)(a1), (void *)(a2))) /* merge_units */
+#define cPlaySoundMsg_ctor_cSndFxR(a0, a1, a2) (cPlaySoundMsg_ctor_cSndFxR((void *)(a0), (void *)(a1), (void *)(a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void SoundStopMsg_Ctor(Snd2_00212C80* e, void* preset, void* owner);
+extern void cStopSoundMsg_ctor_cSndFxR_cGOBJP(Snd2_00212C80* e, void* preset, void* owner);
 #endif /* merge_units */
-#define SoundStopMsg_Ctor(a0, a1, a2) (SoundStopMsg_Ctor((void *)(a0), (a1), (a2))) /* merge_units */
+#define cStopSoundMsg_ctor_cSndFxR_cGOBJP(a0, a1, a2) (cStopSoundMsg_ctor_cSndFxR_cGOBJP((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int FileMan_Release(Str_00212C80* s, int flag);
+extern int cFileMan_dtor(Str_00212C80* s, int flag);
 #endif /* merge_units */
-#define FileMan_Release(a0, a1) (FileMan_Release((void *)(a0), (a1))) /* merge_units */
+#define cFileMan_dtor(a0, a1) (cFileMan_dtor((void *)(a0), (a1))) /* merge_units */
 
 extern void func_001C6700();
-extern int Object_HandleMessage(SndObj_00212C80* self, void* ev);
+extern int cGOBJ_HandleMessage(SndObj_00212C80* self, void* ev);
 static inline SndObj_00212C80* Owner_00212C80(SndObj_00212C80* o) { return o->local ? o : 0; }
 static inline void Play_00212C80(SndObj_00212C80* self, Snd_00212C80* s)
 {
     SndObj_00212C80* owner = Owner_00212C80(self);
     if (!self->playing) {
         self->playing = 1;
-        SoundEvent_CtorFromPreset(s, self->preset, owner);
+        cPlaySoundMsg_ctor_cSndFxR(s, self->preset, owner);
         if (!func_001C6700)
             s->flag = 1;
-        Event_Send(s, g_Game, 1);
+        QueueMessage_cMessageR_cSystemP_int(s, g_Game, 1);
         s->vt = D_004DAE30;
-        FileMan_Release(&s->s114, -1);
-        FileMan_Release(&s->s78, -1);
+        cFileMan_dtor(&s->s114, -1);
+        cFileMan_dtor(&s->s78, -1);
         cMessage_dtor(s, 0);
     }
 }
-int cSoundGOBJ_v01(SndObj_00212C80* self, void* ev)
+int cSoundGOBJ_HandleMessage(SndObj_00212C80* self, void* ev)
 {
     Snd_00212C80 a;
     Snd_00212C80 b;
     Snd2_00212C80 c;
-    int t = *Event_GetType(ev);
+    int t = *cMessage_Name(ev);
     if (t == g_TriggerMsgKey) {
         Play_00212C80(self, &a);
         return 1;
     }
-    t = *Event_GetType(ev);
+    t = *cMessage_Name(ev);
     if (t == g_cEnableMsgClass) {
         if (!self->local) {
             Play_00212C80(self, &b);
             return 1;
         }
     } else {
-        t = *Event_GetType(ev);
+        t = *cMessage_Name(ev);
         if (t == g_cDisableMsgClass && !self->local) {
             SndObj_00212C80* owner;
             if (self->local)
@@ -215,22 +215,22 @@ int cSoundGOBJ_v01(SndObj_00212C80* self, void* ev)
                 owner = 0;
             else
                 owner = self;
-            SoundStopMsg_Ctor(&c, self->preset, owner);
-            Event_Send(&c, g_Game, 1);
+            cStopSoundMsg_ctor_cSndFxR_cGOBJP(&c, self->preset, owner);
+            QueueMessage_cMessageR_cSystemP_int(&c, g_Game, 1);
             c.vt = D_004DADF0;
-            FileMan_Release(&c.s114, -1);
-            FileMan_Release(&c.s78, -1);
+            cFileMan_dtor(&c.s114, -1);
+            cFileMan_dtor(&c.s78, -1);
             cMessage_dtor(&c, 0);
             self->playing = 0;
             return 1;
         }
     }
-    return Object_HandleMessage(self, ev);
+    return cGOBJ_HandleMessage(self, ev);
 }
 #undef D_004DAE30 /* merge_units */
-#undef SoundEvent_CtorFromPreset /* merge_units */
-#undef SoundStopMsg_Ctor /* merge_units */
-#undef FileMan_Release /* merge_units */
+#undef cPlaySoundMsg_ctor_cSndFxR /* merge_units */
+#undef cStopSoundMsg_ctor_cSndFxR_cGOBJP /* merge_units */
+#undef cFileMan_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00212C80(void) {}
 #pragma pop /* merge_units */
@@ -273,15 +273,15 @@ struct SoundGOBJ {
 extern "C" {
 extern char D_004F54B8[], D_004DAF30[], D_0049C088[];
 void cGOBJ_ctor(SoundGOBJ*, int*, int, void*);
-void Resource_Construct(void* m);
-void* Mem_Alloc(int, int, char*, int);
-void Script_LookupResource(Node_212EE0* n, char* name);
-void Mtx_SetBasis(Mtx* m, V4* a, V4* b, V4* c);
-void Mtx_SetTranslation(Mtx* m, V4* t);
-void SoundAction_CtorVoice(void* action, int kind, char* name, void* a, int b);
-void Node_ClearLocalMatrix(SoundGOBJ*);
-int IdMgr_FindCollision(int, int);
-void ZoneMgr_Associate(int, SoundGOBJ*, int, int);
+void cFileMan_ctor_void(void* m);
+void* cMemMan_Allocate(int, int, char*, int);
+void cScriptVars_initScriptlet(Node_212EE0* n, char* name);
+void cMatrix_SetAxes(Mtx* m, V4* a, V4* b, V4* c);
+void cMatrix_SetTranslation(Mtx* m, V4* t);
+void cSndFx_SetSndFx(void* action, int kind, char* name, void* a, int b);
+void cGOBJ_DestroyXform(SoundGOBJ*);
+int nGobjManager_LookupGOBJ_int_int(int, int);
+void cTerrain_AddActivation(int, SoundGOBJ*, int, int);
 }
 static inline int Read(Reader* r) { int v = *(int*)r->cur; r->cur += 4; return v; }
 static inline void ReadInt(Reader* r, int* out) { *out = *(int*)r->cur; r->cur += 4; }
@@ -318,8 +318,8 @@ extern "C" SoundGOBJ* cSoundGOBJ_ctor(SoundGOBJ* obj, Reader* r, unsigned char t
     p = &obj->snd;
     obj->snd.h24.v = -2;
     obj->snd.w20 = 0;
-    Resource_Construct(p->memberA);
-    Resource_Construct(p->memberB);
+    cFileMan_ctor_void(p->memberA);
+    cFileMan_ctor_void(p->memberB);
     p->id = -1;
     p->mask = -1;
     p->w20 = 0;
@@ -342,20 +342,20 @@ extern "C" SoundGOBJ* cSoundGOBJ_ctor(SoundGOBJ* obj, Reader* r, unsigned char t
             Node_212EE0* nd;
             {
                 AllocGuard g;
-                nd = (Node_212EE0*)Mem_Alloc(0, 12, D_0049C088, 0x49);
+                nd = (Node_212EE0*)cMemMan_Allocate(0, 12, D_0049C088, 0x49);
             }
             if (nd) { nd->a = 0; nd->b = 0; nd->c = -1; }
             obj->node = nd;
         }
-        Script_LookupResource(obj->node, tag);
+        cScriptVars_initScriptlet(obj->node, tag);
     }
     Align(r);
     ReadV(r, &pos, 1.0f);
     ReadV(r, &r0, 0.0f);
     ReadV(r, &r1, 0.0f);
     ReadV(r, &r2, 0.0f);
-    Mtx_SetBasis(&m, &r0, &r1, &r2);
-    Mtx_SetTranslation(&m, &pos);
+    cMatrix_SetAxes(&m, &r0, &r1, &r2);
+    cMatrix_SetTranslation(&m, &pos);
     obj->id = lo | (hi << 16);
     n = Read(r);
     for (i = 0; i < n; i++) {
@@ -368,14 +368,14 @@ extern "C" SoundGOBJ* cSoundGOBJ_ctor(SoundGOBJ* obj, Reader* r, unsigned char t
     Align(r);
     ver = 0;
     if (r->version > 0x34) ver = Read(r);
-    SoundAction_CtorVoice(&obj->snd, ver, name, obj, 0);
-    Node_ClearLocalMatrix(obj);
+    cSndFx_SetSndFx(&obj->snd, ver, name, obj, 0);
+    cGOBJ_DestroyXform(obj);
     obj->SetMatrix(&m, 0);
     obj->Enable(1);
     for (i = 0; i < n; i++) {
         if (regions[i] != -1 && ids[i] != -1) {
-            int c = IdMgr_FindCollision(regions[i], ids[i]);
-            if (c) ZoneMgr_Associate(c, obj, 1, c);
+            int c = nGobjManager_LookupGOBJ_int_int(regions[i], ids[i]);
+            if (c) cTerrain_AddActivation(c, obj, 1, c);
         }
     }
     obj->b1F0 = 0;
@@ -451,35 +451,35 @@ extern char D_004DAE30[];
 #endif /* merge_units */
 #define D_004DAE30 ((char*)&D_004DAE30) /* merge_units */
 
-int Net_GetClock(int a);
+int cDME_GetTime(int a);
 int NetCreateObject(int* h, int a, int b, int c, int d, int e, int f, void* buf, char* name, int size);
 int NetGetObject(LuSeg** o, int h);
 void printf(char* s, int h, int n);
 void NetReleaseObjectPrivateOwnership(int h);
-void* World_GetActorArray(void);
+void* nGobjManager_GetGOBJList(void);
 LuVec* cObjList_cGOBJPtr_GetList(void* arr);
-void PtrVec_End(LuIt* out, LuVec* v);
+void cArray_cGOBJPtr_End(LuIt* out, LuVec* v);
 void cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(LuIt* out, LuIt* in);
-void PathObj_Update(Lift* l, float dt);
-int cElevatorGOBJ_DoorsOpen(Lift* l);
-int cElevatorGOBJ_DoorsClosed(Lift* l);
-void Lift_CloseDoors(Lift* l);
-void Lift_OpenDoors(Lift* l);
-void Lift_FinishArrival(Lift* l);
-void Lift_ActivateRecipients(Lift* l);
-void Lift_SeekFloor(Lift* l, int floor, int a2, int a3);
-void Event_Construct(LuMsg* m, void* type);
-int Event_Send(void* m, void* target, int immediate);
+void cPathedGOBJ_NextFrame(Lift* l, float dt);
+int cElevatorGOBJ_DoorsAreOpen(Lift* l);
+int cElevatorGOBJ_DoorsAreClosed(Lift* l);
+void cElevatorGOBJ_CloseDoors(Lift* l);
+void cElevatorGOBJ_OpenDoors(Lift* l);
+void cElevatorGOBJ_DoorlessArrive(Lift* l);
+void cElevatorGOBJ_EnableCallboxes(Lift* l);
+void cElevatorGOBJ_SeekFloor(Lift* l, int floor, int a2, int a3);
+void cMessage_ctor_cMessageNameR(LuMsg* m, void* type);
+int QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
 int cMessage_dtor(void* m, int flags);
 #if 0 /* merge_units */
-int SoundEvent_CtorFromPreset(LuSnd* e, void* preset, Lift* l);
+int cPlaySoundMsg_ctor_cSndFxR(LuSnd* e, void* preset, Lift* l);
 #endif /* merge_units */
-#define SoundEvent_CtorFromPreset(a0, a1, a2) (SoundEvent_CtorFromPreset((char * *)(a0), (char *)(a1), (char *)(a2))) /* merge_units */
+#define cPlaySoundMsg_ctor_cSndFxR(a0, a1, a2) (cPlaySoundMsg_ctor_cSndFxR((char * *)(a0), (char *)(a1), (char *)(a2))) /* merge_units */
 
 #if 0 /* merge_units */
-int FileMan_Release(LuStr* s, int flag);
+int cFileMan_dtor(LuStr* s, int flag);
 #endif /* merge_units */
-#define FileMan_Release(a0, a1) (FileMan_Release((Str_00212AE0 *)(a0), (a1))) /* merge_units */
+#define cFileMan_dtor(a0, a1) (cFileMan_dtor((Str_00212AE0 *)(a0), (a1))) /* merge_units */
 
 }
 static inline bool LuIsHost(void) { unsigned char r; if (g_IsMultiplayer) r = D_005721C0; else r = true; return r; }
@@ -500,27 +500,27 @@ static inline LuShm* LuCreate(void)
     }
     return r;
 }
-static inline void LuGetEnd(LuIt* o, LuVec* v) { LuIt te; PtrVec_End(&te, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &te); }
-extern "C" void Lift_Update(Lift* l, float dt)
+static inline void LuGetEnd(LuIt* o, LuVec* v) { LuIt te; cArray_cGOBJPtr_End(&te, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &te); }
+extern "C" void cElevatorGOBJ_NextFrame(Lift* l, float dt)
 {
     LuIt it;
     if (g_IsMultiplayer && LuIsHost()) {
-        if (!l->shm && D_004F54A0 < Net_GetClock(1)) {
+        if (!l->shm && D_004F54A0 < cDME_GetTime(1)) {
             l->shm = LuCreate();
             if (l->shm) {
                 int id = l->fC;
                 l->shm->f0 = id;
                 NetReleaseObjectPrivateOwnership(l->shm->f4);
             }
-            D_004F54A0 = Net_GetClock(1) + 500;
+            D_004F54A0 = cDME_GetTime(1) + 500;
         }
     }
-    LuGetEnd(&it, cObjList_cGOBJPtr_GetList(World_GetActorArray()));
+    LuGetEnd(&it, cObjList_cGOBJPtr_GetList(nGobjManager_GetGOBJList()));
     LuSub* s = l->sub;
     if (s->f50) s->Sync();
     LuQ p = s->pos;
     l->Refresh();
-    PathObj_Update(l, dt);
+    cPathedGOBJ_NextFrame(l, dt);
     LuCtl* c = l->ctl;
     switch (c->f28) {
     case 0:
@@ -529,66 +529,66 @@ extern "C" void Lift_Update(Lift* l, float dt)
     case 1:
         if (!l->fDC) break;
         if (c->f20 != c->f0) {
-            if (l->f70 > 0 && cElevatorGOBJ_DoorsOpen(l)) {
-                Lift_CloseDoors(l);
+            if (l->f70 > 0 && cElevatorGOBJ_DoorsAreOpen(l)) {
+                cElevatorGOBJ_CloseDoors(l);
                 break;
             }
-            if (!cElevatorGOBJ_DoorsClosed(l) && l->f70 > 0) break;
+            if (!cElevatorGOBJ_DoorsAreClosed(l) && l->f70 > 0) break;
             {
                 LuSnd ev1;
                 LuSnd ev2;
-                SoundEvent_CtorFromPreset(&ev1, l->preset1, l);
+                cPlaySoundMsg_ctor_cSndFxR(&ev1, l->preset1, l);
                 ev1.flag = 1;
-                SoundEvent_CtorFromPreset(&ev2, l->preset2, l);
+                cPlaySoundMsg_ctor_cSndFxR(&ev2, l->preset2, l);
                 ev2.flag = 1;
-                Event_Send(&ev1, g_Game, 1);
-                Event_Send(&ev2, g_Game, 1);
+                QueueMessage_cMessageR_cSystemP_int(&ev1, g_Game, 1);
+                QueueMessage_cMessageR_cSystemP_int(&ev2, g_Game, 1);
                 l->fDC = 0;
                 l->fE0 = 0;
                 ev2.vt = D_004DAE30;
-                FileMan_Release(&ev2.s114, -1);
-                FileMan_Release(&ev2.s78, -1);
+                cFileMan_dtor(&ev2.s114, -1);
+                cFileMan_dtor(&ev2.s78, -1);
                 cMessage_dtor(&ev2, 0);
                 ev1.vt = D_004DAE30;
-                FileMan_Release(&ev1.s114, -1);
-                FileMan_Release(&ev1.s78, -1);
+                cFileMan_dtor(&ev1.s114, -1);
+                cFileMan_dtor(&ev1.s78, -1);
                 cMessage_dtor(&ev1, 0);
             }
             break;
         }
-        if (l->f70 <= 0) Lift_FinishArrival(l);
-        if (l->f70 > 0 && cElevatorGOBJ_DoorsClosed(l)) {
+        if (l->f70 <= 0) cElevatorGOBJ_DoorlessArrive(l);
+        if (l->f70 > 0 && cElevatorGOBJ_DoorsAreClosed(l)) {
             if (!g_IsMultiplayer || LuIsHost()) {
                 LuMsg msg;
                 LuMsg* m = &msg;
-                Event_Construct(m, D_004F5448);
+                cMessage_ctor_cMessageNameR(m, D_004F5448);
                 m->vtable = D_004DAED0;
                 m->kind = 0;
                 m->arg = 0;
-                Event_Send(m, l, 0);
+                QueueMessage_cMessageR_cSystemP_int(m, l, 0);
                 msg.vtable = D_004DAED0;
                 cMessage_dtor(m, 0);
             }
-            Lift_OpenDoors(l);
+            cElevatorGOBJ_OpenDoors(l);
             break;
         }
-        if (!cElevatorGOBJ_DoorsOpen(l) && l->f70 > 0) break;
+        if (!cElevatorGOBJ_DoorsAreOpen(l) && l->f70 > 0) break;
         l->ctl->f28 = 0;
-        Lift_ActivateRecipients(l);
+        cElevatorGOBJ_EnableCallboxes(l);
         {
             int f = -1;
             if (l->nFloors) {
                 l->nFloors--;
                 f = l->floors[l->nFloors];
             }
-            if (f != -1) Lift_SeekFloor(l, f, 1, 0);
+            if (f != -1) cElevatorGOBJ_SeekFloor(l, f, 1, 0);
         }
         break;
     }
 }
 #undef D_004DAE30 /* merge_units */
-#undef SoundEvent_CtorFromPreset /* merge_units */
-#undef FileMan_Release /* merge_units */
+#undef cPlaySoundMsg_ctor_cSndFxR /* merge_units */
+#undef cFileMan_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002135C0(void) {}
 #pragma pop /* merge_units */

@@ -33,7 +33,7 @@ struct V {
     }
 } __attribute__((aligned(16)));
 struct M;
-extern "C" M* Mtx_Copy(M* d, const M* s);
+extern "C" M* cMatrix_ctor_cMatrixR(M* d, const M* s);
 struct M {
     float m[4][4];
     M() {}
@@ -57,12 +57,12 @@ struct Caster { Act* actor; int nLights; int arg; int padC; Light lights[6]; };
 struct Proj { Act* actor; float x4; float fov; char padC[2]; unsigned char type; char padF; M view; M x50; float x90; float x94; char pad98[8]; float xA0[4]; V dir; };
 struct Shadow { char pad0[0x10]; Caster casters[0xD9]; char padx[0x10540 - 0x10 - 0xD9 * 0x130]; Proj proj[24]; int nProj; };
 extern "C" {
-float Math_Atan(float);
-M* Mtx_Copy(M* d, const M* s);
-M* Mtx_InvertRigid(M* m);
-void Shadow_LookAt(V* pos, V* dir, M* m);
-void Shadow_Perspective(M* out, float* a, float* b, float fov, float f13, float f14, float f15, float f16, float n, float f, float f19, float s0, float s8);
-void Shadow_AddToReceivers(Shadow* sh, int idx, V* c);
+float Libc_Atanf(float);
+M* cMatrix_ctor_cMatrixR(M* d, const M* s);
+M* cMatrix_InvertRotTrans(M* m);
+void BuildLookatMatrix(V* pos, V* dir, M* m);
+void BuildProjection(M* out, float* a, float* b, float fov, float f13, float f14, float f15, float f16, float n, float f, float f19, float s0, float s8);
+void cShadowMan_AssignShadow(Shadow* sh, int idx, V* c);
 extern char g_Video[];
 extern int D_00538C64;
 extern M D_00539070;
@@ -103,13 +103,13 @@ static inline void GMul2(void* o, const void* a, const void* b) {
 }
 static inline M MulM2(const M& a, const M& b) { M r; GMul2(&r, &a, &b); return r; }
 static inline M operator*(const M& a, const M& b) { M r; GMul(&r, &a, &b); return r; }
-inline M::M(const M* p) { Mtx_Copy(this, p); }
-static inline M Inv2(const M& m) { M t; return M(Mtx_InvertRigid(Mtx_Copy(&t, &m))); }
+inline M::M(const M* p) { cMatrix_ctor_cMatrixR(this, p); }
+static inline M Inv2(const M& m) { M t; return M(cMatrix_InvertRotTrans(cMatrix_ctor_cMatrixR(&t, &m))); }
 static inline M Inv3(const M& m) { return Inv2(m); }
 static inline M Inv4(const M& m) { return Inv3(m); }
 static inline M Inverse(const M& m) { return Inv4(m); }
 static inline void Cp_(V* d, const M& m) { void* xx = d; const V* s = (const V*)&m; s += 3; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(d), "r"(s) : "memory"); }
-extern "C" void Shadow_BuildProjection(Shadow* sh, int idx)
+extern "C" void cShadowMan_ProcessCaster(Shadow* sh, int idx)
 {
     float dist;
     float len;
@@ -144,7 +144,7 @@ extern "C" void Shadow_BuildProjection(Shadow* sh, int idx)
         if (l->type == 0) {
             float maxFov = 0.43633232f;
             l->dir = (wc - l->pos).Normalize(&dist);
-            fov = Math_Atan((2.0f + radius) / dist);
+            fov = Libc_Atanf((2.0f + radius) / dist);
             fov = fov < maxFov ? fov : maxFov;
             n = dist - radius;
             { float k = 25.0f; f = k + (dist + radius); }
@@ -154,7 +154,7 @@ extern "C" void Shadow_BuildProjection(Shadow* sh, int idx)
         } else if (l->type == 1) {
             dist = 10.0f;
             l->pos = wc - l->dir * dist;
-            fov = Math_Atan((2.0f + radius) / dist);
+            fov = Libc_Atanf((2.0f + radius) / dist);
             n = dist - radius;
             { float k = 25.0f; f = k + (dist + radius); }
             scale = 1.5f;
@@ -163,7 +163,7 @@ extern "C" void Shadow_BuildProjection(Shadow* sh, int idx)
         } else {
             Cp_(&camPos, Inverse(*(M*)(g_Video + D_00538C64 * 0x40 + 0xA80)));
             dist = (camPos - l->pos).Length();
-            fov = Math_Atan(radius / dist);
+            fov = Libc_Atanf(radius / dist);
             n = dist - 3.0f * radius - 6.0f;
             f = dist + radius;
             scale = 5.5f;
@@ -182,11 +182,11 @@ extern "C" void Shadow_BuildProjection(Shadow* sh, int idx)
             l->pos = l->pos + ScR1(refl, len);
             l->dir = (wc - l->pos).Normalize();
         }
-        Shadow_LookAt(&l->pos, &l->dir, &p->view);
+        BuildLookatMatrix(&l->pos, &l->dir, &p->view);
         {
             M persp;
             float inv;
-            Shadow_Perspective(&persp, &p->x90, p->xA0, fov, 0.0f, 1.0f, 0.0f, 1.0f, n, f, 1.0f, 1.0f, extra);
+            BuildProjection(&persp, &p->x90, p->xA0, fov, 0.0f, 1.0f, 0.0f, 1.0f, n, f, 1.0f, 1.0f, extra);
             inv = 1.0f / scale;
             persp.m[0][0] *= inv;
             persp.m[1][1] *= inv;
@@ -196,7 +196,7 @@ extern "C" void Shadow_BuildProjection(Shadow* sh, int idx)
         }
         p->dir = (type == 1) ? l->dir : -l->dir;
         p->type = type;
-        Shadow_AddToReceivers(sh, sh->nProj, &wc);
+        cShadowMan_AssignShadow(sh, sh->nProj, &wc);
         sh->nProj++;
     }
 }

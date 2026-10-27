@@ -15,8 +15,8 @@ extern int D_00497570;
 extern int D_00497578;
 int NetCreateObject(int* key, int a, int b, int c, int d, int e, int f, T_439670* g, char* h, int i);
 int NetGetObject(P_439670** out, int key);
-void* Mem_Alloc(int pool, int size, char* file, int line);
-void Mem_Free(int pool, void* p, char* file, int line);
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 void cGenInfoObject_Setup(void);
 }
 static inline void Reg_439670(int* key, T_439670** out)
@@ -41,8 +41,8 @@ void cGenInfoObject_Setup(void)
         if (p) {
             if (g_ProfileLockEnabled) Alloc_Lock(9);
             g_ProfileLockDepth++;
-            Mem_Free(0, p, D_004BFD60, 0x211);
-            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            cMemMan_Deallocate(0, p, D_004BFD60, 0x211);
+            if (g_ProfileLockEnabled) EnableIntc(9);
             g_ProfileLockDepth--;
         }
         D_00583880 = 1;
@@ -52,8 +52,8 @@ void cGenInfoObject_Setup(void)
         {
             if (g_ProfileLockEnabled) Alloc_Lock(9);
             g_ProfileLockDepth++;
-            p = (T_439670*)Mem_Alloc(0, 0x1B8, D_004BFD60, 0x21B);
-            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            p = (T_439670*)cMemMan_Allocate(0, 0x1B8, D_004BFD60, 0x21B);
+            if (g_ProfileLockEnabled) EnableIntc(9);
             g_ProfileLockDepth--;
         }
         if (p) {

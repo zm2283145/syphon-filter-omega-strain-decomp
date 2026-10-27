@@ -4,13 +4,13 @@
 
 #include "gobj_types.h"
 
-extern void Actor_BaseLogicUpdate(void* self);
-extern int Object_HandleMessage(void* self, int a1);
+extern void cGOBJ_NextFrame(void* self);
+extern int cGOBJ_HandleMessage(void* self, int a1);
 
-void cGameGOBJ_v10(void* self) {
-    Actor_BaseLogicUpdate(self);
+void cGameGOBJ_NextFrame(void* self) {
+    cGOBJ_NextFrame(self);
 }
 
-int cGameGOBJ_Receive(void* self, int a1) {
-    return Object_HandleMessage(self, a1);
+int cGameGOBJ_HandleMessage(void* self, int a1) {
+    return cGOBJ_HandleMessage(self, a1);
 }

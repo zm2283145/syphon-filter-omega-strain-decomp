@@ -75,16 +75,16 @@ struct Msg { void* vt; char pad[0x20]; unsigned char kind; char pad25[3]; int id
 extern "C" {
 extern char D_004ED9B8[];
 extern char D_004D9760[];
-PNode* NpcPath_GetNode(int id);
-void Node_GetTranslation(V* out, PNode* node);
-void NpcPath_HoldNode(Path* p, int id);
-int NpcPath_LinkType(int a, int b);
-void Event_Construct(void* m, void* type);
-void Event_Send(void* m, Actor* to, int flags);
+PNode* cAIPathData_GetNode(int id);
+void cNode_GetLoc(V* out, PNode* node);
+void cPathNavigator_SetNodeIndex(Path* p, int id);
+int cAIPathData_GetLinkType(int a, int b);
+void cMessage_ctor_cMessageNameR(void* m, void* type);
+void QueueMessage_cMessageR_cSystemP_int(void* m, Actor* to, int flags);
 void cMessage_dtor(void* m, int flags);
-unsigned char NpcPath_SetSegmentToPoint(Path* self, V* target, int seg);
+unsigned char cPathNavigator_StartPathSegment_cVectorR_int(Path* self, V* target, int seg);
 }
-static inline void Construct(Msg* m, unsigned char kind, int id) { Event_Construct(m, D_004ED9B8); m->vt = D_004D9760; m->kind = kind; m->id = id; }
+static inline void Construct(Msg* m, unsigned char kind, int id) { cMessage_ctor_cMessageNameR(m, D_004ED9B8); m->vt = D_004D9760; m->kind = kind; m->id = id; }
 static inline void Destroy(Msg* loc) { loc->vt = D_004D9760; cMessage_dtor(loc, 0); }
 static inline void Notify(Path* p, unsigned char kind, int id)
 {
@@ -92,18 +92,18 @@ static inline void Notify(Path* p, unsigned char kind, int id)
     Msg* m = &msg;
     Construct(m, kind, id);
     Actor* a = p->actor; Actor* o = a->owner; Actor* to = a; if (!o) { asm { .set reorder } } else to = o;
-    Event_Send(&msg, to, 0);
+    QueueMessage_cMessageR_cSystemP_int(&msg, to, 0);
     Destroy(&msg);
 }
-unsigned char NpcPath_SetSegmentToPoint(Path* self, V* target, int seg)
+unsigned char cPathNavigator_StartPathSegment_cVectorR_int(Path* self, V* target, int seg)
 {
     unsigned char r = 0;
     V pos;
     if (self->cur >= 0) {
         V t;
-        Node_GetTranslation(&t, NpcPath_GetNode(self->cur));
+        cNode_GetLoc(&t, cAIPathData_GetNode(self->cur));
         pos = t;
-        NpcPath_HoldNode(self, self->cur);
+        cPathNavigator_SetNodeIndex(self, self->cur);
     } else {
         M m = self->actor->GetMatrix();
         M* pm = &m; pos = pm->r[3];
@@ -114,7 +114,7 @@ unsigned char NpcPath_SetSegmentToPoint(Path* self, V* target, int seg)
     self->dist2 = self->dist;
     if (self->cur != seg) {
         if (self->node >= 0 && seg >= 0) {
-            Notify(self, 7, NpcPath_LinkType(self->node, seg));
+            Notify(self, 7, cAIPathData_GetLinkType(self->node, seg));
         }
         self->cur = seg;
     }

@@ -28,25 +28,25 @@ struct Obj {
     char pad5C[0x3584 - 0x5C];
     Pt* pt;
 };
-extern "C" void Actor_GetBackpackDropMatrix(M4u* out, Obj* o); /* gsynth: defined below */
+extern "C" void cHuman_FigurePickupLoc(M4u* out, Obj* o); /* gsynth: defined below */
 #pragma pop
 typedef struct { int w[16]; } Buf_1A3200;
 typedef struct { char pad[0x3464]; int h; } O_1A3200;
 #if 0 /* merge_units */
-extern void Actor_GetBackpackDropMatrix(Buf_1A3200* b, O_1A3200* o);
+extern void cHuman_FigurePickupLoc(Buf_1A3200* b, O_1A3200* o);
 #endif /* merge_units */
-#define Actor_GetBackpackDropMatrix(a0, a1) (Actor_GetBackpackDropMatrix((void *)(a0), (void *)(a1))) /* merge_units */
+#define cHuman_FigurePickupLoc(a0, a1) (cHuman_FigurePickupLoc((void *)(a0), (void *)(a1))) /* merge_units */
 
-extern void Backpack_Place(int h, Buf_1A3200* b, int f);
+extern void cBackpack_SetBodyLoc(int h, Buf_1A3200* b, int f);
 void cHuman_SetWeaponPickupLoc(O_1A3200* o)
 {
     Buf_1A3200 b;
     if (o->h) {
-        Actor_GetBackpackDropMatrix(&b, o);
-        Backpack_Place(o->h, &b, 0);
+        cHuman_FigurePickupLoc(&b, o);
+        cBackpack_SetBodyLoc(o->h, &b, 0);
     }
 }
-#undef Actor_GetBackpackDropMatrix /* merge_units */
+#undef cHuman_FigurePickupLoc /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001A3200(void) {}
 #pragma pop /* merge_units */
@@ -57,27 +57,27 @@ static inline void merge_flush_func_001A3200(void) {}
 typedef struct { int w[16]; } Buf_1A3250;
 typedef struct { char pad[0x3464]; int h; } O_1A3250;
 #if 0 /* merge_units */
-extern void Actor_GetBackpackDropMatrix(Buf_1A3250* b, O_1A3250* o);
+extern void cHuman_FigurePickupLoc(Buf_1A3250* b, O_1A3250* o);
 #endif /* merge_units */
-#define Actor_GetBackpackDropMatrix(a0, a1) (Actor_GetBackpackDropMatrix((void *)(a0), (void *)(a1))) /* merge_units */
+#define cHuman_FigurePickupLoc(a0, a1) (cHuman_FigurePickupLoc((void *)(a0), (void *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void Backpack_Place(int h, Buf_1A3250* b, int f);
+extern void cBackpack_SetBodyLoc(int h, Buf_1A3250* b, int f);
 #endif /* merge_units */
-#define Backpack_Place(a0, a1, a2) (Backpack_Place((a0), (void *)(a1), (a2))) /* merge_units */
+#define cBackpack_SetBodyLoc(a0, a1, a2) (cBackpack_SetBodyLoc((a0), (void *)(a1), (a2))) /* merge_units */
 
-extern void Backpack_TurnOn(int h);
-void Actor_TurnOnWeaponPickup(O_1A3250* o)
+extern void cBackpack_MakeInteractBox(int h);
+void cHuman_TurnOnWeaponPickup(O_1A3250* o)
 {
     Buf_1A3250 b;
     if (o->h) {
-        Actor_GetBackpackDropMatrix(&b, o);
-        Backpack_Place(o->h, &b, 1);
-        Backpack_TurnOn(o->h);
+        cHuman_FigurePickupLoc(&b, o);
+        cBackpack_SetBodyLoc(o->h, &b, 1);
+        cBackpack_MakeInteractBox(o->h);
     }
 }
-#undef Actor_GetBackpackDropMatrix /* merge_units */
-#undef Backpack_Place /* merge_units */
+#undef cHuman_FigurePickupLoc /* merge_units */
+#undef cBackpack_SetBodyLoc /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001A3250(void) {}
 #pragma pop /* merge_units */
@@ -94,9 +94,9 @@ struct Fv { float x, y, z, w; };
 
 
 extern "C" {
-extern float Math_CosThunk(float);
-extern float Math_SinThunk(float);
-extern void* Mtx44_SetRotation(M4u* m, float a, float b, float c, float d, float e, float f,
+extern float COS(float);
+extern float SIN(float);
+extern void* cMatrix_Set_ColumnMajorForm(M4u* m, float a, float b, float c, float d, float e, float f,
                                float g, float h, float i);
 extern signed char D_004EED90;
 extern Ang D_004EEDA0;
@@ -108,7 +108,7 @@ static inline bool Not(unsigned char v) { return !(v != 0); }
 /* plain asm sq: lets the delay-slot filler move later code past it */
 static inline void StR(void* d, __int128 t) { asm { sq t, 0(d) } }
 #pragma opt_propagation off
-extern "C" void Actor_GetBackpackDropMatrix(M4u* out, Obj* o)
+extern "C" void cHuman_FigurePickupLoc(M4u* out, Obj* o)
 {
     if (!D_004EED90) {
         D_004EEDA0.y = 0.0f;
@@ -120,17 +120,17 @@ extern "C" void Actor_GetBackpackDropMatrix(M4u* out, Obj* o)
         float y = D_004EEDA0.y;
         float x = D_004EEDA0.x;
         float z = D_004EEDA0.z;
-        float cy = Math_CosThunk(y);
-        float sy = Math_SinThunk(y);
-        float cx = Math_CosThunk(x);
-        float sx = Math_SinThunk(x);
-        float cz = Math_CosThunk(z);
-        float sz = Math_SinThunk(z);
+        float cy = COS(y);
+        float sy = SIN(y);
+        float cx = COS(x);
+        float sx = SIN(x);
+        float cz = COS(z);
+        float sz = SIN(z);
         float czcy = cz * cy;
         float czsy = cz * sy;
         float szcy = sz * cy;
         float szsy = sz * sy;
-        Mtx44_SetRotation(&D_004EEDC0,
+        cMatrix_Set_ColumnMajorForm(&D_004EEDC0,
                           czcy - szsy * sx, -sz * cx, czsy + szcy * sx,
                           szcy + czsy * sx, cz * cx, szsy - czcy * sx,
                           -cx * sy, sx, cx * cy);
@@ -192,47 +192,47 @@ static inline void merge_flush_func_001A32A0(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-extern "C" {int Event_Construct(char **, char *);
-int Event_Send(char **, char * , int);
-int Inventory_HasAnyItem(int);
+extern "C" {int cMessage_ctor_cMessageNameR(char **, char *);
+int QueueMessage_cMessageR_cSystemP_int(char **, char * , int);
+int cWeapon_HasAnyWeapons(int);
 int cMessage_dtor(char **, int);
-int WeaponInv_MoveItemsToBackpack(int, int);
-int WorldInv_AddArmor(int, int, int);
-int Backpack_Construct(char * , int, int);
+int cWeapon_InitBackpack(int, int);
+int cBackpack_AddFlakJacket(int, int, int);
+int cBackpack_NewBackpack_cHumanP_bool_cObjectIdP(char * , int, int);
 int ItemInv_Any(int);
-extern "C" void Message_GetScriptTypeKey();
+extern "C" void cMessage_getSOBJClassId();
 extern "C" void cNetBackpackMsg_dtor();
-extern "C" void cNetBackpackMsg_v01();
-extern "C" void cNetBackpackMsg_v04();
-extern "C" void cNetBackpackMsg_v05();
+extern "C" void cNetBackpackMsg_Clone();
+extern "C" void cNetBackpackMsg_Pack();
+extern "C" void cNetBackpackMsg_GetMsgId();
 extern "C" void cNetMsg_Pack();
-void * const D_004DCEF0[8] = { (void*)0x0, (void*)0x0, (void*)cNetBackpackMsg_dtor, (void*)cNetBackpackMsg_v01, (void*)cNetMsg_Pack, (void*)Message_GetScriptTypeKey, (void*)cNetBackpackMsg_v04, (void*)cNetBackpackMsg_v05 };
+void * const D_004DCEF0[8] = { (void*)0x0, (void*)0x0, (void*)cNetBackpackMsg_dtor, (void*)cNetBackpackMsg_Clone, (void*)cNetMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)cNetBackpackMsg_Pack, (void*)cNetBackpackMsg_GetMsgId };
 extern char D_004DCF10;
 extern char D_005061B0;
 }
 #pragma opt_common_subs off
-extern "C" void Npc_DeadStateDrop(char * arg0) {
+extern "C" void cHuman_SetupWeaponPickup(char * arg0) {
     char * sp40[12];
     int x; int inv;
     if (F_(arg0, 0x3464, int) == 0) {
         inv = F_(arg0, 0x3524, int);
         x = F_(arg0, 0x33A0, int);
-        bool ok; if (!Inventory_HasAnyItem(inv) && !x) { ok = F_(arg0, 0x2D, unsigned char) && F_(arg0, 0x2C, unsigned char) && !F_(arg0, 0x2E, unsigned char) && F_(arg0, 0x3468, unsigned char); if (!ok && !ItemInv_Any(F_(arg0, 0x3528, int))) return; } {
+        bool ok; if (!cWeapon_HasAnyWeapons(inv) && !x) { ok = F_(arg0, 0x2D, unsigned char) && F_(arg0, 0x2C, unsigned char) && !F_(arg0, 0x2E, unsigned char) && F_(arg0, 0x3468, unsigned char); if (!ok && !ItemInv_Any(F_(arg0, 0x3528, int))) return; } {
         if (F_(arg0, 0x14, unsigned char) != 0) {
-            F_(arg0, 0x3464, int) = Backpack_Construct(arg0, 1, 0);
-            WeaponInv_MoveItemsToBackpack(inv, F_(arg0, 0x3464, int));
+            F_(arg0, 0x3464, int) = cBackpack_NewBackpack_cHumanP_bool_cObjectIdP(arg0, 1, 0);
+            cWeapon_InitBackpack(inv, F_(arg0, 0x3464, int));
             if (x != 0) {
-                WorldInv_AddArmor(F_(arg0, 0x3464, int), x, F_(arg0, 0x339C, int));
+                cBackpack_AddFlakJacket(F_(arg0, 0x3464, int), x, F_(arg0, 0x339C, int));
             }
-            unsigned char on = *(volatile unsigned char*)&g_IsMultiplayer; if (on != 0) { int h; int id; int a = D_005721A8; if (on) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a); id = D_00494178; } else id = 0;
+            unsigned char on = *(volatile unsigned char*)&g_IsMultiplayer; if (on != 0) { int h; int id; int a = D_005721A8; if (on) { if (D_00494178 == -1) NetGetMyClientIndex(&D_00494178, a); id = D_00494178; } else id = 0;
                 h = F_(arg0, 0x3464, int);
-                Event_Construct(sp40, &D_005061B0);
+                cMessage_ctor_cMessageNameR(sp40, &D_005061B0);
                 sp40[0] = &(*(char*)D_004DCEF0);
                 F_(sp40, 0x28, int) = h;
                 F_(sp40, 0x20, signed char) = 4;
                 F_(sp40, 0x2C, int) = id;
                 F_(sp40, 0x24, signed char) = 0;
-                Event_Send(sp40, arg0, 0);
+                QueueMessage_cMessageR_cSystemP_int(sp40, arg0, 0);
                 sp40[0] = &D_004DCF10;
                 cMessage_dtor(sp40, 0);
             }

@@ -71,11 +71,11 @@ extern __int128 D_00493A80;
 extern __int128 D_00493A90;
 extern __int128 D_00493AA0;
 extern char D_004BC428[];
-void String_Copy(char* d, const char* s);
+void Libc_Strcpy(char* d, const char* s);
 }
 #pragma push
 #pragma opt_unroll_loops off
-extern "C" Man* ManModel_ClearAttachPoints(Man* self)
+extern "C" Man* cMan_ctor(Man* self)
 {
     self->box.mn.x = 3.4028235e38f; self->box.mn.y = 3.4028235e38f; self->box.mn.z = 3.4028235e38f; self->box.mn.w = 1.0f;
     self->box.mx.x = -3.4028235e38f; self->box.mx.y = -3.4028235e38f; self->box.mx.z = -3.4028235e38f; self->box.mx.w = 1.0f;
@@ -98,7 +98,7 @@ extern "C" Man* ManModel_ClearAttachPoints(Man* self)
     self->x2C0F = -1;
     self->x2BDB = 1;
     self->x2BDC = 1;
-    String_Copy(self->name, D_004BC428);
+    Libc_Strcpy(self->name, D_004BC428);
     D_00493A70 = 0x300000000000000000000000000000;
     D_00493A80 = 0x310000000000000000000000000000;
     D_00493A90 = 0x320000000000000000000000000000;
@@ -220,12 +220,12 @@ extern "C" int Script_cPARTICLE_GOBJ_Enable(ScriptArg_00392640* args)
 extern int D_0053B500;
 extern int D_0053B508;          /* cPARTICLE_GOBJ script type */
 extern char D_00555070[];       /* script filter context */
-extern int ScriptFilter_Dispatch(void* ctx, int a0, int a1);
-extern int* cGOBJ_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int type, int parent);
+extern int cScriptInterpreter_CallEvent(void* ctx, int a0, int a1);
+extern int* cGOBJ_SOBJ_getClassId(void);
+extern void cScriptBase_declareParent(int type, int parent);
 
-void ScriptType_cPARTICLE_GOBJ_Init(void) {
-    ScriptType_SetParent(D_0053B508, *cGOBJ_GetScriptTypeKeyPtr());
+void cPARTICLE_GOBJ_SOBJ_init(void) {
+    cScriptBase_declareParent(D_0053B508, *cGOBJ_SOBJ_getClassId());
 }
 
 int cPARTICLE_GOBJ_getSOBJClassId(void) {
@@ -233,7 +233,7 @@ int cPARTICLE_GOBJ_getSOBJClassId(void) {
 }
 
 int cPARTICLE_GOBJ_ScriptHandleMessage(int a0, int a1) {
-    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+    return cScriptInterpreter_CallEvent(D_00555070, a0, a1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00392670 */

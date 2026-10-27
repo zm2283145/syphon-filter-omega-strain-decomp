@@ -26,7 +26,7 @@ typedef struct {
 
 extern "C" {
 void* memset(void*, int, unsigned int);
-void String_Copy(char*, const char*);
+void Libc_Strcpy(char*, const char*);
 void MGCLSetDefaultConnectParams(Conn9C0*);
 int atoi(char*);
 void MGCLSetAuthConnectParams(Conn9C0*, int, int, int, void*);
@@ -35,10 +35,10 @@ int Medius_ConnectServer(Conn9C0*, int*);
 int MGCLSessionBegin(Req9C0A*, void*);
 int MGCLAuthenticationSend(Req9C0B*, void*);
 int KM_GetSoftwareID(void);
-int Medius_DisconnectServer(void);
+int MGCLDisconnect(void);
 void NetGetLocalTime(int*);
 int SFOMGCL_Update(int);
-void SFOLobby_CallUpdateHook(char*, int, int);
+void SFOLobby_GuiCallback(char*, int, int);
 void func_00444DD0(void);
 void Callback_MGCLServerSessionBegin(void);
 void Callback_MGCLServerAuthentication(void);
@@ -58,12 +58,12 @@ static inline bool Poll(void) {
     int now = 0;
     NetGetLocalTime(&now);
     if (now - D_00584528 > 30000) return false;
-    SFOLobby_CallUpdateHook(D_00585E60, 0, 0);
+    SFOLobby_GuiCallback(D_00585E60, 0, 0);
     return true;
 }
 
 static inline int Busy(void) {
-    int r = Medius_DisconnectServer();
+    int r = MGCLDisconnect();
     if (r) return r;
     return 0;
 }
@@ -89,14 +89,14 @@ int SFOMGCL_Connect_MAS(int a, char* b) {
     if (conn.wait) {
         D_00584528 = 0;
         NetGetLocalTime(&D_00584528);
-        SFOLobby_CallUpdateHook(D_00585E60, 2, 1);
+        SFOLobby_GuiCallback(D_00585E60, 2, 1);
         while (D_00584232 == 0) {
             if (!Poll()) return -1000;
             if (SFOMGCL_Update(0)) return -12;
         }
         if (!D_00584233) return -12;
     }
-    String_Copy(req.kind, D_004C0B38);
+    Libc_Strcpy(req.kind, D_004C0B38);
     req.id = *(int*)(D_00585E60 + 0x1F38);
     req.ver = KM_GetSoftwareID();
     req.mode = 2;
@@ -104,19 +104,19 @@ int SFOMGCL_Connect_MAS(int a, char* b) {
     if (r) return r;
     D_00584528 = 0;
     NetGetLocalTime(&D_00584528);
-    SFOLobby_CallUpdateHook(D_00585E60, 2, 1);
+    SFOLobby_GuiCallback(D_00585E60, 2, 1);
     while (D_00584235 == 0) {
         if (!Poll()) return -1000;
         if (SFOMGCL_Update(0)) return -12;
     }
     if (!D_00584236) return -12;
-    String_Copy(join.kind, D_004C0B38);
+    Libc_Strcpy(join.kind, D_004C0B38);
     join.one = 1;
     r = MGCLAuthenticationSend(&join, (void*)Callback_MGCLServerAuthentication);
     if (r) return r;
     D_00584528 = 0;
     NetGetLocalTime(&D_00584528);
-    SFOLobby_CallUpdateHook(D_00585E60, 2, 1);
+    SFOLobby_GuiCallback(D_00585E60, 2, 1);
     while (D_00584239 == 0) {
         if (!Poll()) return -1000;
         if (SFOMGCL_Update(0)) return -12;

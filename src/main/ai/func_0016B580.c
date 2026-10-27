@@ -8,17 +8,17 @@ struct ThinkFlags { unsigned char a:7; unsigned char tested:1; };
 struct ObjectV { VPAD32(a) VPAD16(b) VPAD8(c) VPAD4(d) virtual bool Type(void*); VPAD2(e) VPAD1(f) virtual int Life(); };
 struct ControllerV { VPAD16(a) VPAD2(b) VPAD1(c) virtual int IsPlayer(); VPAD4(d) VPAD2(e) virtual int Enemy(Actor*); };
 extern "C" {
-Actor* ActorRef_Copy(SfWeakHandle*);
-void NpcPerception_FindRecord(void*,void*,Actor*);
-Actor* NpcPerception_NextCandidate(SfAiPerception*,Actor*);
-void NpcPerception_SetTarget(SfAiPerception*,Actor*,int);
-void NpcPerception_UpdateRecords(SfAiPerception*,float);
-void NpcPerception_VisibilityTest(SfAiPerception*,Actor*);
+Actor* cSafePtr_cGOBJ_opCast_cGOBJPtr(SfWeakHandle*);
+void cAITarget_cAwareList_Find(void*,void*,Actor*);
+Actor* cAITarget_GetNextNpcToTest(SfAiPerception*,Actor*);
+void cAITarget_SetTarget(SfAiPerception*,Actor*,int);
+void cAITarget_UpdateAwareness(SfAiPerception*,float);
+void cAITarget_UpdateLOS(SfAiPerception*,Actor*);
 void __register_global_object(void*,void*,void*);
 void std_list_cTargetAwarenessPtr_end_void(void*,void*);
 void cLListIterator_cTargetAwarenessPtr_ctor(void*,void*);
 void std_list_cTargetAwarenessPtr_begin(void*,void*);
-void StaticInit_FloorContactVecs(void*,int);
+void cPlane_dtor(void*,int);
 extern signed char D_004EE590;
 extern char D_004EE598[],D_004EE5B0[];
 }
@@ -33,7 +33,7 @@ static inline bool Player(ControllerV* p) { bool yes=false; if(p) if(p->IsPlayer
 static inline bool Player2(ControllerV* p) { if(p) if(p->IsPlayer()) return true; return false; }
 static inline Actor* WGet(bool isNull, Actor* o, int id){ if (!isNull) if (o->id != id) return 0; return o; }
 static inline Actor* WGet2(bool isNull, Actor* o, int id){ if (!isNull) if (o->id != id) o = 0; return o; }
-extern "C" void NpcPerception_Think(SfAiPerception* arg0, float dt) {
+extern "C" void cAITarget_Update(SfAiPerception* arg0, float dt) {
     ThinkIter spBC;
     ThinkIter spB8;
     ThinkIter spB4;
@@ -89,9 +89,9 @@ extern "C" void NpcPerception_Think(SfAiPerception* arg0, float dt) {
         var_a1 = 0;
     }
     if ((var_a1 ? temp_a0 : 0) != 0) {
-        temp_v0 = ActorRef_Copy(&arg0->target);
+        temp_v0 = cSafePtr_cGOBJ_opCast_cGOBJPtr(&arg0->target);
         var_v1 = Active(temp_v0);
-        if ((var_v1 != 0) && (temp_v0_2 = ActorRef_Copy(&arg0->target), ((((ObjectV*)temp_v0_2)->Life() & 0xFF) != 3))) {
+        if ((var_v1 != 0) && (temp_v0_2 = cSafePtr_cGOBJ_opCast_cGOBJPtr(&arg0->target), ((((ObjectV*)temp_v0_2)->Life() & 0xFF) != 3))) {
             temp_a1 = (Actor*)arg0->target.object;
             var_a0 = 1;
             bool null_temp_a1 = !temp_a1;
@@ -103,10 +103,10 @@ extern "C" void NpcPerception_Think(SfAiPerception* arg0, float dt) {
             }
         } else {
 block_14:
-            NpcPerception_SetTarget(arg0, 0, 0x14);
+            cAITarget_SetTarget(arg0, 0, 0x14);
         }
     }
-    NpcPerception_UpdateRecords(arg0,dt);
+    cAITarget_UpdateAwareness(arg0,dt);
     var_f21 = 0.0f;
     var_s4 = 0;
     std_list_cTargetAwarenessPtr_begin(&spA4, &arg0->records);
@@ -141,7 +141,7 @@ block_14:
                             skipP:
                             if (var_s0) {
                                 if (D_004EE590 == 0) {
-                                    __register_global_object(D_004EE5B0, (void*)&StaticInit_FloorContactVecs, D_004EE598);
+                                    __register_global_object(D_004EE5B0, (void*)&cPlane_dtor, D_004EE598);
                                     D_004EE590 = 1;
                                 }
                                 var_s2 = ((ObjectV*)temp_s1_2)->Type(D_004EE5B0);
@@ -174,7 +174,7 @@ block_14:
         } while (spBC.p != spB0.p);
     }
     if (!(var_f21 <= 0.0f)) {
-        NpcPerception_SetTarget(arg0, var_s4, 0x14);
+        cAITarget_SetTarget(arg0, var_s4, 0x14);
     } else {
         var_a2 = (Actor*)arg0->target.object;
         temp_a1_2 = !var_a2;
@@ -184,11 +184,11 @@ block_14:
         }
         var_v1_3 = var_a3 ? var_a2 : 0;
         if (var_v1_3 != 0) {
-            NpcPerception_FindRecord(&spB8, &arg0->records, (temp_a1_2 || var_a2->id == arg0->target.id) ? var_a2 : 0);
+            cAITarget_cAwareList_Find(&spB8, &arg0->records, (temp_a1_2 || var_a2->id == arg0->target.id) ? var_a2 : 0);
             std_list_cTargetAwarenessPtr_end_void(&sp9C, &arg0->records);
             cLListIterator_cTargetAwarenessPtr_ctor(&spAC, &sp9C);
             if (spB8.p == spAC.p) {
-                NpcPerception_SetTarget(arg0, 0, 0x14);
+                cAITarget_SetTarget(arg0, 0, 0x14);
             }
         }
     }
@@ -202,7 +202,7 @@ block_14:
     if ((var_v1_4 != 0) && (((ThinkFlags*)&arg0->flags)->tested == 0)) {
         Actor* vt = (temp_a2 || var_a1_3->id == arg0->target.id) ? var_a1_3 : 0;
         var_s6 = 1;
-        NpcPerception_VisibilityTest(arg0, vt);
+        cAITarget_UpdateLOS(arg0, vt);
         ((ThinkFlags*)&arg0->flags)->tested = 1;
     }
     if (!var_s6) {
@@ -212,7 +212,7 @@ block_14:
     if (!null_temp_a1_3 && (temp_a1_3->id != arg0->nextCandidate.id)) {
             var_a0_3 = 0;
         }
-        temp_v0_3 = NpcPerception_NextCandidate(arg0, var_a0_3 ? temp_a1_3 : 0);
+        temp_v0_3 = cAITarget_GetNextNpcToTest(arg0, var_a0_3 ? temp_a1_3 : 0);
         if (temp_v0_3 != 0) {
             arg0->nextCandidate.object = temp_v0_3;
             if (temp_v0_3 != 0) {
@@ -222,7 +222,7 @@ block_14:
                 var_v0_2 = &spA8;
             }
             arg0->nextCandidate.id = (int) *var_v0_2;
-            NpcPerception_VisibilityTest(arg0, temp_v0_3);
+            cAITarget_UpdateLOS(arg0, temp_v0_3);
         }
         ((ThinkFlags*)&arg0->flags)->tested = 0;
     }

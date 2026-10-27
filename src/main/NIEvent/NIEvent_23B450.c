@@ -11,7 +11,7 @@
 /* merge_units: begin func_0023B450 */
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-V4* Mtx_Multiply(V4* a, V4* b) {
+V4* cMatrix_Rotate(V4* a, V4* b) {
     asm {
         lqc2 vf4, 0x0(b)
         lqc2 vf5, 0x10(b)
@@ -61,19 +61,19 @@ struct K8_23B4C0 { float t; int v; };
 struct K16_23B4C0 { float t; char pad[0xC]; };
 struct Rot_23B4C0 { float val; int cap; int n; K16_23B4C0* data; int pad10; int state; float t; unsigned char flag; char pad1D[3]; };
 extern "C" {
-float Vec4_GetX(V4_23B4C0* v);
-float Vec4_GetY(V4_23B4C0* v);
-float Vec4_GetZ(V4_23B4C0* v);
-void Mtx_MakeAxisRotation(M4_23B4C0* m, float x, float y, float z, float a);
+float cVector_X_void(V4_23B4C0* v);
+float cVector_Y_void(V4_23B4C0* v);
+float cVector_Z_void(V4_23B4C0* v);
+void cMatrix_SetWithAxisAngle(M4_23B4C0* m, float x, float y, float z, float a);
 void cMatrix_ctor_void(M4_23B4C0* m);
 #if 0 /* merge_units */
-void Mtx_Multiply(M4_23B4C0* a, M4_23B4C0* b);
+void cMatrix_Rotate(M4_23B4C0* a, M4_23B4C0* b);
 #endif /* merge_units */
-#define Mtx_Multiply(a0, a1) ((void)Mtx_Multiply((V4 *)(a0), (V4 *)(a1))) /* merge_units */
+#define cMatrix_Rotate(a0, a1) ((void)cMatrix_Rotate((V4 *)(a0), (V4 *)(a1))) /* merge_units */
 
-bool NiRotationTrack_Update(Rot_23B4C0* p, float dt);
+bool cNIEventFloatTrack_Update(Rot_23B4C0* p, float dt);
 }
-static inline void MakeRot_23B4C0(M4_23B4C0* m, const V4_23B4C0& a, float ang) { Mtx_MakeAxisRotation(m, a.x, a.y, a.z, ang); }
+static inline void MakeRot_23B4C0(M4_23B4C0* m, const V4_23B4C0& a, float ang) { cMatrix_SetWithAxisAngle(m, a.x, a.y, a.z, ang); }
 class Elem_23B4C0 {
 public:
     VPAD32(a) VPAD32(b) VPAD4(c) VPAD4(d)
@@ -110,12 +110,12 @@ public:
 static inline void Finish_23B4C0(Rot_23B4C0* r) {
     r->flag = 1;
     if (r->state == -1)
-        NiRotationTrack_Update(r, r->data[(unsigned)(r->n - 1)].t - r->t);
+        cNIEventFloatTrack_Update(r, r->data[(unsigned)(r->n - 1)].t - r->t);
 }
 #pragma push
 #pragma opt_strength_reduction off
 #pragma opt_rotateloops off
-extern "C" void cNIEventOBJ_v48(Self_23B4C0* self)
+extern "C" void cNIEventOBJ_SetEndState(Self_23B4C0* self)
 {
     int i;
     self->b130 = 1;
@@ -134,17 +134,17 @@ extern "C" void cNIEventOBJ_v48(Self_23B4C0* self)
         float ang;
         ang = Rad_23B4C0(self->rx.val);
         ax1.Set(1.0f, 0.0f, 0.0f, 0.0f);
-        Mtx_MakeAxisRotation(&m0, Vec4_GetX(&ax1), Vec4_GetY(&ax1), Vec4_GetZ(&ax1), ang);
+        cMatrix_SetWithAxisAngle(&m0, cVector_X_void(&ax1), cVector_Y_void(&ax1), cVector_Z_void(&ax1), ang);
         ang = Rad_23B4C0(self->ry.val);
         ax2.Set(0.0f, 1.0f, 0.0f, 0.0f);
         cMatrix_ctor_void(&m1);
         MakeRot_23B4C0(&m1, ax2, ang);
-        Mtx_Multiply(&m0, &m1);
+        cMatrix_Rotate(&m0, &m1);
         ang = Rad_23B4C0(self->rz.val);
         ax3.Set(0.0f, 0.0f, 1.0f, 0.0f);
         cMatrix_ctor_void(&m2);
         MakeRot_23B4C0(&m2, ax3, ang);
-        Mtx_Multiply(&m0, &m2);
+        cMatrix_Rotate(&m0, &m2);
         StoreAll_23B4C0(&self->mtx, &m0, LoadQ_23B4C0(&self->pos), &m0.r[3]);
     }
     self->Apply();
@@ -152,7 +152,7 @@ extern "C" void cNIEventOBJ_v48(Self_23B4C0* self)
         self->adata[i]->Reset();
 }
 #pragma pop
-#undef Mtx_Multiply /* merge_units */
+#undef cMatrix_Rotate /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0023B4C0(void) {}
 #pragma pop /* merge_units */

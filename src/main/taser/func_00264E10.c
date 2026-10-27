@@ -103,16 +103,16 @@ extern float D_0048B108;
 extern int g_HumanActorClassKey;
 extern char D_004A8210[];
 extern int g_Hud;
-void Combat_HitDirection(Mtx* m, V4* v, Vd* out);
-void HeldItem_Release(HeldItem* h);
-float Math_CosThunk(float);
-float Math_SinThunk(float);
-void Mtx44_SetRotation(Mtx* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
-void Projectile_QueryCandidates(Query* q);
-int Actor_IsInvulnerable(Tgt* t);
-void Hud_ShowCallout(float a, float b, int c, void* pos, void* name, int d, int e, int f);
-void Vector_Insert_266BA0(void* a, Mtx* m, int n, Seg* s);
-void ParticleInst_Update(float dt, int a, Mtx* m, int b);
+void GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP(Mtx* m, V4* v, Vd* out);
+void cAirTaser_Release(HeldItem* h);
+float COS(float);
+float SIN(float);
+void cMatrix_Set_ColumnMajorForm(Mtx* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
+void CheckBulletCollisions(Query* q);
+int cHuman_IsInvulnerable(Tgt* t);
+void cHud_SetCallout(float a, float b, int c, void* pos, void* name, int d, int e, int f);
+void std_vector_imp_TaserPoint_insert(void* a, Mtx* m, int n, Seg* s);
+void cParticle_NextFrame(float dt, int a, Mtx* m, int b);
 void cAirTaser_BeginShocking_cHumanP_int(HeldItem* h, Tgt* t, int part);
 void cAirTaser_SmoothLine(float a, HeldItem* h, int b);
 int cAirTaser_LosBlocked(HeldItem* h);
@@ -149,11 +149,11 @@ static inline void M3Mul(void* o, void* a, void* b) {
 static inline void Apply(V4* o, Mtx* m, V4* v) { __asm__ volatile("lqc2 vf8, 0x0(%2); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; sqc2 vf12, 0x0(%0)" : : "r"(o), "r"(m), "r"(v) : "memory"); }
 static inline void RotEuler(Mtx* m, const V3& a) {
     float az = a.z; float ay = a.y; float ax = a.x;
-    float cz = Math_CosThunk(az); float sz = Math_SinThunk(az);
-    float cx = Math_CosThunk(ax); float sx = Math_SinThunk(ax);
-    float cy = Math_CosThunk(ay); float sy = Math_SinThunk(ay);
+    float cz = COS(az); float sz = SIN(az);
+    float cx = COS(ax); float sx = SIN(ax);
+    float cy = COS(ay); float sy = SIN(ay);
     float cycz = cy * cz; float cysz = cy * sz; float sycz = sy * cz; float sysz = sy * sz;
-    Mtx44_SetRotation(m, cycz + sysz * sx, -cysz + sycz * sx, sy * cx,
+    cMatrix_Set_ColumnMajorForm(m, cycz + sysz * sx, -cysz + sycz * sx, sy * cx,
                       cx * sz, cx * cz, -sx,
                       -sycz + cysz * sx, sysz + cycz * sx, cy * cx);
 }
@@ -162,18 +162,18 @@ static inline void Emit(HeldItem* self, const V4& p) {
     s.a.x = 0.0f; s.a.y = 0.0f; s.a.z = 0.0f; s.a.w = 0.0f;
     s.b.x = 0.65f; s.b.y = 0.65f; s.b.z = 1.0f; s.b.w = 1.0f;
     s.pos = p;
-    Vector_Insert_266BA0(self->x10, self->Segs() + self->idx, 1, &s);
+    std_vector_imp_TaserPoint_insert(self->x10, self->Segs() + self->idx, 1, &s);
 }
-extern "C" void HeldItem_UpdateFlight(HeldItem* self, float dt) {
+extern "C" void cAirTaser_UpdateShot(HeldItem* self, float dt) {
     unsigned char live = self->ctl->b14;
     if (live && cAirTaser_LosBlocked(self)) {
-        HeldItem_Release(self);
+        cAirTaser_Release(self);
         return;
     }
     if (!self->Get()) self->b34 = 1;
     if (!self->b34) self->xA0.Set(self->Get()->GetPos(self->x38));
     Vd dir;
-    Combat_HitDirection(&self->m60, &self->xA0, &dir);
+    GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP(&self->m60, &self->xA0, &dir);
     if (!(Abs(dir.x) <= 0.5f) || !(Abs(dir.z) <= 0.5f)) {
         dir = self->x50;
     } else {
@@ -219,7 +219,7 @@ extern "C" void HeldItem_UpdateFlight(HeldItem* self, float dt) {
         q.owner = self->owner;
         q.b20 = 1;
         q.x28 = 0.2f;
-        Projectile_QueryCandidates(&q);
+        CheckBulletCollisions(&q);
         if (q.hit) step = q.dist;
     }
     self->xB0 += step;
@@ -232,7 +232,7 @@ extern "C" void HeldItem_UpdateFlight(HeldItem* self, float dt) {
     Emit(self, a);
     Emit(self, b);
     *(V4*)self->m60.m[3] = b;
-    ParticleInst_Update(dt, self->xC0, &self->m60, 0);
+    cParticle_NextFrame(dt, self->xC0, &self->m60, 0);
     if (live && q.hit && q.tgt) {
         self->Clear();
         unsigned char k = q.tgt->Kind();
@@ -252,16 +252,16 @@ extern "C" void HeldItem_UpdateFlight(HeldItem* self, float dt) {
             VObj58* o = t->x58;
             bool blocked = false;
             if (o && o->Check(held, mine)) blocked = true;
-            if (blocked || t->x320C == 2 || t->x320C == 0x1A || Actor_IsInvulnerable(t) || t->b346A || cAirTaser_LosBlocked(self)) {
-                HeldItem_Release(self);
+            if (blocked || t->x320C == 2 || t->x320C == 0x1A || cHuman_IsInvulnerable(t) || t->b346A || cAirTaser_LosBlocked(self)) {
+                cAirTaser_Release(self);
             } else if ((m2 || q.hit == 3) && t->x33A0) {
-                Hud_ShowCallout(5.0f, 0.0f, g_Hud, (char*)t + 0xC, D_004A8210, -1, 0, 0);
-                HeldItem_Release(self);
+                cHud_SetCallout(5.0f, 0.0f, g_Hud, (char*)t + 0xC, D_004A8210, -1, 0, 0);
+                cAirTaser_Release(self);
             } else {
                 cAirTaser_BeginShocking_cHumanP_int(self, t, q.part);
             }
         } else {
-            HeldItem_Release(self);
+            cAirTaser_Release(self);
         }
     }
     {
@@ -273,6 +273,6 @@ extern "C" void HeldItem_UpdateFlight(HeldItem* self, float dt) {
     cAirTaser_SmoothLine(1.0f, self, 1);
     if (live && self->b8 == 1 && !(self->xB0 <= (float)self->owner->x3C)) {
         self->Clear();
-        HeldItem_Release(self);
+        cAirTaser_Release(self);
     }
 }

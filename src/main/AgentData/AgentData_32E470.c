@@ -14,7 +14,7 @@ typedef struct OmegaRec {
 } OmegaRec;
 
 extern char D_00532AB0[];
-extern void* AwardRow_Construct(OmegaRec* out, int a, int zero, int b, int c, int zero2);
+extern void* cAgentData_Record_ctor_charP_int_charP_int_etc_2(OmegaRec* out, int a, int zero, int b, int c, int zero2);
 extern void cArray_Record_PushBackActual(void* list, void* rec);
 
 /* Script native: cAgentData::RegisterOmega(a, b, c).
@@ -35,7 +35,7 @@ int Script_cAgentData__RegisterOmega(ScriptArg* args) {
     v = args[0].i;
     b = slot1;
     slot0 = v;
-    cArray_Record_PushBackActual(D_00532AB0, AwardRow_Construct(&rec, slot0, 0, b, c, 0));
+    cArray_Record_PushBackActual(D_00532AB0, cAgentData_Record_ctor_charP_int_charP_int_etc_2(&rec, slot0, 0, b, c, 0));
     return 0;
 }
 #pragma pop /* merge_units */
@@ -46,7 +46,7 @@ int Script_cAgentData__RegisterOmega(ScriptArg* args) {
 typedef union ScriptArg_0032E4D0 { int i; float f; void* p; unsigned char b; } ScriptArg_0032E4D0;
 typedef struct { char data[0x20]; } Medal;
 extern char D_00532A90[];
-extern void* AwardRow_ConstructIndexed(Medal* c, int a, int b, int c2, int d, unsigned char e);
+extern void* cAgentData_Record_ctor_charP_int_charP_int_etc(Medal* c, int a, int b, int c2, int d, unsigned char e);
 #if 0 /* merge_units */
 extern void cArray_Record_PushBackActual(void* registry, void* c);
 #endif /* merge_units */
@@ -66,7 +66,7 @@ int Script_cAgentData__RegisterMedal_3(ScriptArg_0032E4D0* args)
     p2[0] = args[2].i;
     p1[0] = args[1].i;
     p0[0] = args[0].i;
-    cArray_Record_PushBackActual(D_00532A90, AwardRow_ConstructIndexed(&c, *(int*)p0, *(int*)p1, *(int*)p2, *(int*)p3, e));
+    cArray_Record_PushBackActual(D_00532A90, cAgentData_Record_ctor_charP_int_charP_int_etc(&c, *(int*)p0, *(int*)p1, *(int*)p2, *(int*)p3, e));
     return 0;
 }
 #undef cArray_Record_PushBackActual /* merge_units */
@@ -77,9 +77,9 @@ int Script_cAgentData__RegisterMedal_3(ScriptArg_0032E4D0* args)
 #pragma push /* merge_units */
 typedef struct { char data[0x1C]; } Medal_0032E540;
 #if 0 /* merge_units */
-extern void* AwardRow_Construct(Medal_0032E540* m, int a, int b, int c, int d, int e);
+extern void* cAgentData_Record_ctor_charP_int_charP_int_etc_2(Medal_0032E540* m, int a, int b, int c, int d, int e);
 #endif /* merge_units */
-#define AwardRow_Construct(a0, a1, a2, a3, a4, a5) (AwardRow_Construct((OmegaRec *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define cAgentData_Record_ctor_charP_int_charP_int_etc_2(a0, a1, a2, a3, a4, a5) (cAgentData_Record_ctor_charP_int_charP_int_etc_2((OmegaRec *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cArray_Record_PushBackActual(void* registry, void* item);
@@ -101,10 +101,10 @@ int Script_cAgentData__RegisterMedal_2(ScriptArg* args)
     p2[0] = args[2].i;
     p1[0] = args[1].i;
     p0[0] = args[0].i;
-    cArray_Record_PushBackActual(D_00532A90, AwardRow_Construct(&m, *(int*)p0, *(int*)p1, *(int*)p2, *(int*)p3, *(int*)p4));
+    cArray_Record_PushBackActual(D_00532A90, cAgentData_Record_ctor_charP_int_charP_int_etc_2(&m, *(int*)p0, *(int*)p1, *(int*)p2, *(int*)p3, *(int*)p4));
     return 0;
 }
-#undef AwardRow_Construct /* merge_units */
+#undef cAgentData_Record_ctor_charP_int_charP_int_etc_2 /* merge_units */
 #undef cArray_Record_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032E540 */
@@ -113,9 +113,9 @@ int Script_cAgentData__RegisterMedal_2(ScriptArg* args)
 #pragma push /* merge_units */
 typedef struct { char data[0x1C]; } Medal_0032E5B0;
 #if 0 /* merge_units */
-extern void* AwardRow_Construct(Medal_0032E5B0* m, int a, int b, int c, int d, int e);
+extern void* cAgentData_Record_ctor_charP_int_charP_int_etc_2(Medal_0032E5B0* m, int a, int b, int c, int d, int e);
 #endif /* merge_units */
-#define AwardRow_Construct(a0, a1, a2, a3, a4, a5) (AwardRow_Construct((OmegaRec *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define cAgentData_Record_ctor_charP_int_charP_int_etc_2(a0, a1, a2, a3, a4, a5) (cAgentData_Record_ctor_charP_int_charP_int_etc_2((OmegaRec *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cArray_Record_PushBackActual(void* registry, void* item);
@@ -135,10 +135,10 @@ int Script_cAgentData__RegisterMedal(ScriptArg* args)
     p2[0] = args[2].i;
     p1[0] = args[1].i;
     p0[0] = args[0].i;
-    cArray_Record_PushBackActual(D_00532A90, AwardRow_Construct(&m, *(int*)p0, *(int*)p1, *(int*)p2, *(int*)p3, 0));
+    cArray_Record_PushBackActual(D_00532A90, cAgentData_Record_ctor_charP_int_charP_int_etc_2(&m, *(int*)p0, *(int*)p1, *(int*)p2, *(int*)p3, 0));
     return 0;
 }
-#undef AwardRow_Construct /* merge_units */
+#undef cAgentData_Record_ctor_charP_int_charP_int_etc_2 /* merge_units */
 #undef cArray_Record_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032E5B0 */
@@ -149,9 +149,9 @@ typedef union ScriptArg_0032E620 { int i; float f; void* p; unsigned char b; } S
 typedef struct { char data[0x20]; } Commendation;
 extern char D_00532A80[];
 #if 0 /* merge_units */
-extern void* AwardRow_ConstructIndexed(Commendation* c, int a, int b, int c2, int d, unsigned char e);
+extern void* cAgentData_Record_ctor_charP_int_charP_int_etc(Commendation* c, int a, int b, int c2, int d, unsigned char e);
 #endif /* merge_units */
-#define AwardRow_ConstructIndexed(a0, a1, a2, a3, a4, a5) (AwardRow_ConstructIndexed((Medal *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define cAgentData_Record_ctor_charP_int_charP_int_etc(a0, a1, a2, a3, a4, a5) (cAgentData_Record_ctor_charP_int_charP_int_etc((Medal *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cArray_Record_PushBackActual(void* registry, void* c);
@@ -172,10 +172,10 @@ int Script_cAgentData__RegisterCommendatio_3(ScriptArg_0032E620* args)
     p2[0] = args[2].i;
     p1[0] = args[1].i;
     p0[0] = args[0].i;
-    cArray_Record_PushBackActual(D_00532A80, AwardRow_ConstructIndexed(&c, *(int*)p0, *(int*)p1, *(int*)p2, *(int*)p3, e));
+    cArray_Record_PushBackActual(D_00532A80, cAgentData_Record_ctor_charP_int_charP_int_etc(&c, *(int*)p0, *(int*)p1, *(int*)p2, *(int*)p3, e));
     return 0;
 }
-#undef AwardRow_ConstructIndexed /* merge_units */
+#undef cAgentData_Record_ctor_charP_int_charP_int_etc /* merge_units */
 #undef cArray_Record_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032E620 */
@@ -191,9 +191,9 @@ typedef struct Commendation_0032E690 {
     char data[0x1C];
 } Commendation_0032E690;
 #if 0 /* merge_units */
-extern int AwardRow_Construct(Commendation_0032E690* rec, int a0, int a1, int a2, int a3, int a4);
+extern int cAgentData_Record_ctor_charP_int_charP_int_etc_2(Commendation_0032E690* rec, int a0, int a1, int a2, int a3, int a4);
 #endif /* merge_units */
-#define AwardRow_Construct(a0, a1, a2, a3, a4, a5) ((int)AwardRow_Construct((OmegaRec *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define cAgentData_Record_ctor_charP_int_charP_int_etc_2(a0, a1, a2, a3, a4, a5) ((int)cAgentData_Record_ctor_charP_int_charP_int_etc_2((OmegaRec *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cArray_Record_PushBackActual(void* registry, int rec);
@@ -216,10 +216,10 @@ int Script_cAgentData__RegisterCommendatio_2(CommendationArgs* args) {
     v1 = w1;
     w0 = args->a0;
     v0 = w0;
-    cArray_Record_PushBackActual(D_00532A80, AwardRow_Construct(&rec, v0, v1, v2, v3, v4));
+    cArray_Record_PushBackActual(D_00532A80, cAgentData_Record_ctor_charP_int_charP_int_etc_2(&rec, v0, v1, v2, v3, v4));
     return 0;
 }
-#undef AwardRow_Construct /* merge_units */
+#undef cAgentData_Record_ctor_charP_int_charP_int_etc_2 /* merge_units */
 #undef cArray_Record_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032E690 */
@@ -235,9 +235,9 @@ typedef struct Commendation_0032E700 {
     char data[0x20];
 } Commendation_0032E700;
 #if 0 /* merge_units */
-extern int AwardRow_Construct(Commendation_0032E700* rec, int a0, int a1, int a2, int a3, int a4);
+extern int cAgentData_Record_ctor_charP_int_charP_int_etc_2(Commendation_0032E700* rec, int a0, int a1, int a2, int a3, int a4);
 #endif /* merge_units */
-#define AwardRow_Construct(a0, a1, a2, a3, a4, a5) ((int)AwardRow_Construct((OmegaRec *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define cAgentData_Record_ctor_charP_int_charP_int_etc_2(a0, a1, a2, a3, a4, a5) ((int)cAgentData_Record_ctor_charP_int_charP_int_etc_2((OmegaRec *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cArray_Record_PushBackActual(void* registry, int rec);
@@ -258,10 +258,10 @@ int Script_cAgentData__RegisterCommendation(CommendationArgs_0032E700* args) {
     v1 = w1;
     w0 = args->a0;
     v0 = w0;
-    cArray_Record_PushBackActual(D_00532A80, AwardRow_Construct(&rec, v0, v1, v2, v3, 0));
+    cArray_Record_PushBackActual(D_00532A80, cAgentData_Record_ctor_charP_int_charP_int_etc_2(&rec, v0, v1, v2, v3, 0));
     return 0;
 }
-#undef AwardRow_Construct /* merge_units */
+#undef cAgentData_Record_ctor_charP_int_charP_int_etc_2 /* merge_units */
 #undef cArray_Record_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032E700 */
@@ -281,9 +281,9 @@ typedef struct Ratio {
 
 extern int D_00532A70;
 #if 0 /* merge_units */
-extern void* AwardRow_ConstructIndexed(Ratio*, int, int, int, int, unsigned char);
+extern void* cAgentData_Record_ctor_charP_int_charP_int_etc(Ratio*, int, int, int, int, unsigned char);
 #endif /* merge_units */
-#define AwardRow_ConstructIndexed(a0, a1, a2, a3, a4, a5) (AwardRow_ConstructIndexed((Medal *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define cAgentData_Record_ctor_charP_int_charP_int_etc(a0, a1, a2, a3, a4, a5) (cAgentData_Record_ctor_charP_int_charP_int_etc((Medal *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cArray_Record_PushBackActual(void*, void*);
@@ -303,10 +303,10 @@ int Script_cAgentData__RegisterSpecialRati_3(ScriptArg_0032E770* args) {
     c[0] = args[2].i;
     b[0] = args[1].i;
     a[0] = args[0].i;
-    cArray_Record_PushBackActual(&D_00532A70, AwardRow_ConstructIndexed(&ratio, *(int*)a, *(int*)b, *(int*)c, *(int*)d, flag));
+    cArray_Record_PushBackActual(&D_00532A70, cAgentData_Record_ctor_charP_int_charP_int_etc(&ratio, *(int*)a, *(int*)b, *(int*)c, *(int*)d, flag));
     return 0;
 }
-#undef AwardRow_ConstructIndexed /* merge_units */
+#undef cAgentData_Record_ctor_charP_int_charP_int_etc /* merge_units */
 #undef cArray_Record_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032E770 */
@@ -317,9 +317,9 @@ typedef struct Ratio_0032E7E0 {
     char b[0x1C];
 } Ratio_0032E7E0;
 #if 0 /* merge_units */
-extern void* AwardRow_Construct(Ratio_0032E7E0*, int, int, int, int, int);
+extern void* cAgentData_Record_ctor_charP_int_charP_int_etc_2(Ratio_0032E7E0*, int, int, int, int, int);
 #endif /* merge_units */
-#define AwardRow_Construct(a0, a1, a2, a3, a4, a5) (AwardRow_Construct((OmegaRec *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define cAgentData_Record_ctor_charP_int_charP_int_etc_2(a0, a1, a2, a3, a4, a5) (cAgentData_Record_ctor_charP_int_charP_int_etc_2((OmegaRec *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cArray_Record_PushBackActual(void*, void*);
@@ -340,10 +340,10 @@ int Script_cAgentData__RegisterSpecialRati_2(ScriptArg* args) {
     c[0] = args[2].i;
     b[0] = args[1].i;
     a[0] = args[0].i;
-    cArray_Record_PushBackActual(&D_00532A70, AwardRow_Construct(&ratio, *(int*)a, *(int*)b, *(int*)c, *(int*)d, *(int*)e));
+    cArray_Record_PushBackActual(&D_00532A70, cAgentData_Record_ctor_charP_int_charP_int_etc_2(&ratio, *(int*)a, *(int*)b, *(int*)c, *(int*)d, *(int*)e));
     return 0;
 }
-#undef AwardRow_Construct /* merge_units */
+#undef cAgentData_Record_ctor_charP_int_charP_int_etc_2 /* merge_units */
 #undef cArray_Record_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032E7E0 */
@@ -357,9 +357,9 @@ extern char D_00532A70[];
 #define D_00532A70 ((char*)&D_00532A70) /* merge_units */
 
 #if 0 /* merge_units */
-extern void* AwardRow_Construct(Rating0032E850* out, int a, int b, int c, int d, int e);
+extern void* cAgentData_Record_ctor_charP_int_charP_int_etc_2(Rating0032E850* out, int a, int b, int c, int d, int e);
 #endif /* merge_units */
-#define AwardRow_Construct(a0, a1, a2, a3, a4, a5) (AwardRow_Construct((OmegaRec *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define cAgentData_Record_ctor_charP_int_charP_int_etc_2(a0, a1, a2, a3, a4, a5) (cAgentData_Record_ctor_charP_int_charP_int_etc_2((OmegaRec *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cArray_Record_PushBackActual(void* list, void* rating);
@@ -378,11 +378,11 @@ int Script_cAgentData__RegisterSpecialRating(int* args)
     c[0] = args[2];
     b[0] = args[1];
     a[0] = args[0];
-    cArray_Record_PushBackActual(D_00532A70, AwardRow_Construct(&rating, *(int*)a, *(int*)b, *(int*)c, *(int*)d, 0));
+    cArray_Record_PushBackActual(D_00532A70, cAgentData_Record_ctor_charP_int_charP_int_etc_2(&rating, *(int*)a, *(int*)b, *(int*)c, *(int*)d, 0));
     return 0;
 }
 #undef D_00532A70 /* merge_units */
-#undef AwardRow_Construct /* merge_units */
+#undef cAgentData_Record_ctor_charP_int_charP_int_etc_2 /* merge_units */
 #undef cArray_Record_PushBackActual /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032E850 */
@@ -392,7 +392,7 @@ int Script_cAgentData__RegisterSpecialRating(int* args)
 typedef union { int i; unsigned char uc; } Arg0032E8C0;
 typedef struct { char data[0x20]; } Rating0032E8C0;
 extern char D_00532AD0[];
-extern void* RatingRow_ConstructIndexed(Rating0032E8C0* out, int a, int b, unsigned char c, int d, int e, unsigned char f);
+extern void* cAgentData_RatingRecord_ctor_charP_int_eScoreTypes_int_etc(Rating0032E8C0* out, int a, int b, unsigned char c, int d, int e, unsigned char f);
 extern void cArray_RatingRecord_PushBackActual(void* list, void* rating);
 /* Script: cAgentData::RegisterRating(a, b, c, d, e, f). */
 int Script_cAgentData__RegisterRating_3(Arg0032E8C0* args)
@@ -410,7 +410,7 @@ int Script_cAgentData__RegisterRating_3(Arg0032E8C0* args)
     c = args[2].uc;
     b[0] = args[1].i;
     a[0] = args[0].i;
-    cArray_RatingRecord_PushBackActual(D_00532AD0, RatingRow_ConstructIndexed(&rating, *(int*)a, *(int*)b, c, *(int*)d, *(int*)e, f));
+    cArray_RatingRecord_PushBackActual(D_00532AD0, cAgentData_RatingRecord_ctor_charP_int_eScoreTypes_int_etc(&rating, *(int*)a, *(int*)b, c, *(int*)d, *(int*)e, f));
     return 0;
 }
 #pragma pop /* merge_units */

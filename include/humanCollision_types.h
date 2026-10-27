@@ -20,7 +20,7 @@ typedef struct HumanColMask {
     int bits;                       /* 0x00 */
 } HumanColMask;
 
-/* Preset record (0xF0 bytes); constructor HumanColPreset_Ctor, configured by HumanColPreset_SetConfig. */
+/* Preset record (0xF0 bytes); constructor cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_ctor_void, configured by cHumanCollisionRoutine_cIntermediateLedgeSearchInfo_ctor_eLedgeSubtype_cBitArrayR_cBitArrayR_cBitArrayR_etc. */
 typedef struct HumanColPreset {
     signed char selector;           /* 0x00 -1 until configured */
     char pad01[3];
@@ -57,7 +57,7 @@ typedef struct HumanColVec {
     unsigned int capacity;          /* 0x00 */
     unsigned int count;             /* 0x04 */
     void* data;                     /* 0x08 */
-    signed char flag0C;             /* 0x0C set to 1 by HumanCol_Init */
+    signed char flag0C;             /* 0x0C set to 1 by cHumanCollisionRoutine_InitStatics */
     char pad0D[3];
 } HumanColVec;
 

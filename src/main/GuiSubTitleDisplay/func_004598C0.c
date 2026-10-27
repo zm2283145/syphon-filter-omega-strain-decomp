@@ -14,8 +14,8 @@
 
 extern "C" {
 extern char D_004C1F58[];
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 }
 
 struct I8_004598C0Val { float a; float b __attribute__((aligned(16))); float c; float d; float e; int f; int g; int h; int i; };
@@ -49,7 +49,7 @@ struct ListI8_004598C0Holder {
             ListI8_004598C0Node* p = node;
             if (p) {
                 AllocGuard guard;
-                Mem_Free(0, p, D_004C1F58, 0x64);
+                cMemMan_Deallocate(0, p, D_004C1F58, 0x64);
             }
         }
     }
@@ -64,7 +64,7 @@ struct ListI8_004598C0Holder {
         ListI8_004598C0Flag flag;                                                  \
         {                                                                     \
             AllocGuard guard;                                                 \
-            n = (ListI8_004598C0Node*)Mem_Alloc(0, 64, "allocator.hh", 0x5C);            \
+            n = (ListI8_004598C0Node*)cMemMan_Allocate(0, 64, "allocator.hh", 0x5C);            \
         }                                                                     \
         ListI8_004598C0Holder h;                                                     \
         h.alloc = alloc;                                                      \

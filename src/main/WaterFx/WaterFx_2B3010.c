@@ -10,11 +10,11 @@
 /* merge_units: begin func_002B3010 */
 #pragma push /* merge_units */
 typedef struct WaterFx WaterFx;
-extern void WaterFx_Clear(WaterFx* w);
+extern void cWaterFx_Purge(WaterFx* w);
 extern void operator_delete(void* p);
-WaterFx* WaterFx_Destroy(WaterFx* self, short flag) {
+WaterFx* cWaterFx_dtor(WaterFx* self, short flag) {
     if (self) {
-        WaterFx_Clear(self);
+        cWaterFx_Purge(self);
         if (flag > 0) {
             operator_delete(self);
         }
@@ -35,9 +35,9 @@ typedef struct {
     int a450;
     int a454;
 } C3WaterFx;
-extern void WaterFx_BuildGrid(C3WaterFx* w);
-extern float Math_Sin(float x);
-C3WaterFx* WaterFx_Construct(C3WaterFx* w)
+extern void cWaterFx_CreateWaterBaseCVs(C3WaterFx* w);
+extern float Libc_Sinf(float x);
+C3WaterFx* cWaterFx_ctor(C3WaterFx* w)
 {
     int i;
     int j;
@@ -47,10 +47,10 @@ C3WaterFx* WaterFx_Construct(C3WaterFx* w)
     for (i = 0; i < 20; i++) {
         w->slots[i] = 0;
     }
-    WaterFx_BuildGrid(w);
+    cWaterFx_CreateWaterBaseCVs(w);
     a = -3.1415927f;
     for (j = 0; j < 64; j++) {
-        w->sinTab[j] = Math_Sin(a);
+        w->sinTab[j] = Libc_Sinf(a);
         a += 0.09817477f;
     }
     return w;
@@ -90,14 +90,14 @@ extern G D_00539210;
 extern char g_Video[];
 extern long long D_005381F8;
 extern long long D_004BC1B0[];
-void Renderer_BindTexture(void* m, int idx);
+void cTexMan_SetActive(void* m, int idx);
 void XLib_NewStrip(void* s);
 void XLib_NextBatchVert(void* s);
-void Renderer_FlushBatch(void* s);
-void Vec4_Copy(V* d, const V* s);
-void GuiBatch_AddVertexColor(V* d, const V* s);
-float GuiBatch_AddVertexUV(void);
-V* Vec4_Set(V* o, float x, float y, float z, float w);
+void XLib_DrawStrip(void* s);
+void cVector_opAssign(V* d, const V* s);
+void tIRGBA_opAssign_tRGBAR(V* d, const V* s);
+float tVifFloatToInt_short_4_Bias(void);
+V* cVector_ctor_float_float_float_float(V* o, float x, float y, float z, float w);
 RLink* std_list_deleter_tNode_tail(RList* l);
 RIter* std_list_deleter_tNode_generic_iterator_ctor_nodeP(RIter* it, RNode* n);
 void std_list_deleter_tNode_end(RIter* out, RList* l);
@@ -169,10 +169,10 @@ static inline void Emit_(const V& pos, const V4c& col, const V4c& uv)
     float u;
     XLib_NextBatchVert(g_Video);
     e = &RS->ents[D_00539210.f10];
-    Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
-    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V*)&col);
-    u = uv.x + GuiBatch_AddVertexUV();
-    Vec4_Copy(&e->c34[D_00539224 - 1], Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
+    cVector_opAssign(&e->pos[D_00539224 - 1], &pos);
+    tIRGBA_opAssign_tRGBAR(&e->c30[D_00539224 - 1], (V*)&col);
+    u = uv.x + tVifFloatToInt_short_4_Bias();
+    cVector_opAssign(&e->c34[D_00539224 - 1], cVector_ctor_float_float_float_float(&tmp, u, uv.y + tVifFloatToInt_short_4_Bias(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 static inline void Emit(const V& pos, const V4c& col, const V4c& uv) { Emit_(pos, col, uv); }
@@ -185,7 +185,7 @@ static inline RIter Begin(RList* l) { return It0(std_list_deleter_tNode_tail(l)-
 static inline void EndT(RIter* r, RList* l) { RIter t; std_list_deleter_tNode_end(&t, l); cLListIterator_tNode_ctor(r, &t); }
 static inline RIter End(RList* l) { RIter r; EndT(&r, l); return r; }
 
-extern "C" void WaterFx_RenderRipples(Water* w)
+extern "C" void cWake_Render(Water* w)
 {
     RIter it;
     for (it = Begin(&w->list); it != End(&w->list); it.node = it.node->next) {
@@ -197,7 +197,7 @@ extern "C" void WaterFx_RenderRipples(Water* w)
         s = r->alpha * a;
         if (a <= 0.0078125f) continue;
         TexFrame(g_TextureMgr, w->tex, r->frame);
-        Renderer_BindTexture(g_TextureMgr, w->tex);
+        cTexMan_SetActive(g_TextureMgr, w->tex);
         { int bl = r->blend; D_005392D8 = D_004BC1B0[bl]; }
         k = w->base + w->range * (1.0f - r->age / 1.2f);
         V c0, c1, c2, c3;
@@ -227,7 +227,7 @@ extern "C" void WaterFx_RenderRipples(Water* w)
         Emit(c1, V4c(1.0f, 1.0f, 1.0f, a), V4c(0.0f, 0.0f, 1.0f, 0.0f));
         Emit(c2, V4c(1.0f, 1.0f, 1.0f, s), V4c(1.0f, 1.0f, 1.0f, 0.0f));
         Emit(c3, V4c(1.0f, 1.0f, 1.0f, a), V4c(1.0f, 0.0f, 1.0f, 0.0f));
-        Renderer_FlushBatch(g_Video);
+        XLib_DrawStrip(g_Video);
     }
     D_005392D8 = D_004BC1B0[0];
 }

@@ -7,9 +7,9 @@ typedef struct LNode {
 } LNode;
 typedef struct LIt { LNode* node; } LIt;
 typedef struct LColl { int w[3]; } LColl;
-extern int Gui_GetScreenStack(void);
-extern void ScalarCollection_Init(void* LColl);
-extern void List_Begin(LIt* out, void* list);
+extern int Gui_Canvas(void);
+extern void std_list_deleter_voidPtr_ctor_void(void* LColl);
+extern void std_list_deleter_voidPtr_begin_void(LIt* out, void* list);
 extern void std_list_GuiWidgetPtr_generic_iterator_ctor(LIt* out, LIt* in);
 extern void std_list_GuiWidgetPtr_end(LIt* out, void* list);
 extern void cLListIterator_GuiWidgetPtr_ctor_listR(LIt* out, LIt* in);
@@ -22,19 +22,19 @@ extern int opNe_cLListIteratorR_cLListIteratorR_6(LIt* a, LIt* b);
 extern int* cLListIterator_GuiWidgetPtr_opMul(LIt* LIt);
 extern void cLListIterator_GuiWidgetPtr_opInc(LIt* LIt);
 extern void cLListIterator_GuiWidgetPtr_ctor_cLListIteratorR(LIt* dst, LIt* src);
-extern void GuiWidget_SendEvent(int stack, int widget, unsigned short evt, int a, int b);
+extern void GuiWidget_SendMessage(int stack, int widget, unsigned short evt, int a, int b);
 extern void cLList_GuiWidgetPtr_dtor(void* LColl, int flag);
-void App_Broadcast(int evt, int a, int b)
+void cGameFrontEnd_LobbySendShutdownMessage(int evt, int a, int b)
 {
-    if (Gui_GetScreenStack()) {
+    if (Gui_Canvas()) {
         LIt last1; LIt found; LIt endB; LIt last2; LIt it1; LIt it2; LIt begin1; LIt etmp1;
         LIt begin2; LIt etmp98; LIt fit; LIt btmp; LIt fend; LIt etmp2;
         LColl coll;
         void* list; LNode* node; void* set; int* val;
-        ScalarCollection_Init(&coll);
+        std_list_deleter_voidPtr_ctor_void(&coll);
         {
-            list = (char*)Gui_GetScreenStack() + 0x28;
-            List_Begin(&begin1, list);
+            list = (char*)Gui_Canvas() + 0x28;
+            std_list_deleter_voidPtr_begin_void(&begin1, list);
             std_list_GuiWidgetPtr_generic_iterator_ctor(&it1, &begin1);
             node = it1.node;
             std_list_GuiWidgetPtr_end(&etmp1, list);
@@ -47,17 +47,17 @@ void App_Broadcast(int evt, int a, int b)
             }
         }
         {
-        List_Begin(&begin2, &coll);
+        std_list_deleter_voidPtr_begin_void(&begin2, &coll);
         std_list_GuiWidgetPtr_generic_iterator_ctor(&it2, &begin2);
         node = it2.node;
         std_list_GuiWidgetPtr_end(&etmp2, &coll);
         cLListIterator_GuiWidgetPtr_ctor_listR(&last2, &etmp2);
         while (node != last2.node) {
-            std_list_GuiWidgetPtr_end(&etmp98, (char*)Gui_GetScreenStack() + 0x28);
+            std_list_GuiWidgetPtr_end(&etmp98, (char*)Gui_Canvas() + 0x28);
             cLListIterator_GuiWidgetPtr_ctor_listR(&endB, &etmp98);
             {
                 val = &node->value;
-                set = (char*)Gui_GetScreenStack() + 0x28;
+                set = (char*)Gui_Canvas() + 0x28;
                 cLListIterator_GuiWidgetPtr_ctor_void(&fit);
                 cLList_GuiWidgetPtr_Begin(&btmp, set);
                 cLListIterator_GuiWidgetPtr_opAssign(&fit, &btmp);
@@ -70,7 +70,7 @@ void App_Broadcast(int evt, int a, int b)
             }
             cLListIterator_GuiWidgetPtr_ctor_cLListIteratorR(&found, &fit);
             if (found.node != endB.node) {
-                GuiWidget_SendEvent(Gui_GetScreenStack(), node->value, evt, a, b);
+                GuiWidget_SendMessage(Gui_Canvas(), node->value, evt, a, b);
             }
             node = node->next;
             std_list_GuiWidgetPtr_end(&etmp2, &coll);

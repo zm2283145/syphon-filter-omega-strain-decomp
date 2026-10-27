@@ -1,12 +1,12 @@
 /* same-unit callee stub: weak, in a section the link discards (the real function is defined elsewhere); restores retail delay-slot choices */
 extern int D_0051FEE8[];
-int __attribute__((weak, section(".dtors_drop"))) Rt_MemoryAllocate(int a0) { return 0; }
+int __attribute__((weak, section(".dtors_drop"))) DMEmalloc(int a0) { return 0; }
 int NetGetClientPingInfo(unsigned int a, int *out)
 {
     if (out == 0) return 0x17;
     *out = 0;
     if (a >= 0x100) return 0x17;
-    if (D_0051FEE8[a] == 0 && (D_0051FEE8[a] = Rt_MemoryAllocate(0x1A0)) == 0) return 0x16;
+    if (D_0051FEE8[a] == 0 && (D_0051FEE8[a] = DMEmalloc(0x1A0)) == 0) return 0x16;
     *out = D_0051FEE8[a];
     return 0;
 }

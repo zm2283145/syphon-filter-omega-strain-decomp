@@ -6,22 +6,22 @@ typedef struct {
 extern unsigned char g_IsMultiplayer;
 extern char D_0051EE48[];
 extern char D_004DE0F0[];
-extern int Loc_LookupText(char* key);
-extern void Hud_ShowCallout(int a0, int* a1, float f0, float f1, int text, int a3, signed char c0, signed char c1);
-extern void Event_Construct(Msg_242E40* m, void* type);
+extern int nGlobalization_GetString_charP(char* key);
+extern void cHud_SetCallout(int a0, int* a1, float f0, float f1, int text, int a3, signed char c0, signed char c1);
+extern void cMessage_ctor_cMessageNameR(Msg_242E40* m, void* type);
 extern char* strncpy(char*, const char*, int);
-extern void Transport_Send(int a, Msg_242E40* m, int b, int c);
+extern void cNetObj_SendMessage_int_cMessageR_int_int(int a, Msg_242E40* m, int b, int c);
 extern void cMessage_dtor(Msg_242E40* m, int f);
 
-void Hud_SetCalloutLabel(int a0, int* a1, float f0, float f1, char* key, int a3, signed char c0, signed char c1, int send)
+void cHud_SetCalloutLabel(int a0, int* a1, float f0, float f1, char* key, int a3, signed char c0, signed char c1, int send)
 {
-    int text = Loc_LookupText(key);
+    int text = nGlobalization_GetString_charP(key);
     if (text) {
-        Hud_ShowCallout(a0, a1, f0, f1, text, a3, c0, c1);
+        cHud_SetCallout(a0, a1, f0, f1, text, a3, c0, c1);
         if (g_IsMultiplayer && send) {
             Msg_242E40 m;
             Msg_242E40* p = &m;
-            Event_Construct(p, D_0051EE48);
+            cMessage_ctor_cMessageNameR(p, D_0051EE48);
             m.b24 = 0;
             m.vt = D_004DE0F0;
             m.id = *a1;
@@ -35,7 +35,7 @@ void Hud_SetCalloutLabel(int a0, int* a1, float f0, float f1, char* key, int a3,
             }
             m.w1C = 0x40;
             m.kind = 4;
-            Transport_Send(0, &m, -1, -1);
+            cNetObj_SendMessage_int_cMessageR_int_int(0, &m, -1, -1);
             m.vt = D_004DE0F0;
             cMessage_dtor(&m, 0);
         }

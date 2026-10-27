@@ -17,7 +17,7 @@ typedef struct {
 extern "C" {
 extern char D_004F53C8[];
 extern char D_004DAE10[];
-extern Voice_F190* ActorRef_Copy(void* ref);
+extern Voice_F190* cSafePtr_cGOBJ_opCast_cGOBJPtr(void* ref);
 }
 static inline void Req_Init(SoundRequest* p, int type, __int128 name, Voice_F190* voice, int x180) {
     int tmp; int* r;
@@ -46,17 +46,17 @@ static inline bool HValid(Src_F2A0* h) { Voice_F190* t = h->voice; bool ok = tru
 static inline Voice_F190* HGet(Src_F2A0* h) { return HValid(h) ? h->voice : 0; }
 extern "C" SoundEventP* SoundMsg_WrapAction(SoundEventP* ev, Src_F2A0* src) {
     SoundRequest* p;
-    Event_Construct(ev, D_004F53C8);
+    cMessage_ctor_cMessageNameR(ev, D_004F53C8);
     ev->vtable = D_004DAE10;
     p = &ev->req;
     p->voiceId = -2;
     p->voice = 0;
-    Resource_Construct(&p->a);
-    Resource_Construct(&p->b);
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
     if (HGet(src))
-        Req_Init(&ev->req, src->type, src->name, ActorRef_Copy(&src->voice), src->x180);
+        Req_Init(&ev->req, src->type, src->name, cSafePtr_cGOBJ_opCast_cGOBJPtr(&src->voice), src->x180);
     else
         Req_InitPos(&ev->req, src->type, src->name, 0, src->pos, src->x180);
     ev->req.x186 = src->x186;

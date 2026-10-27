@@ -8,19 +8,19 @@
 #pragma push /* merge_units */
 #include "types.h"
 extern void cMoviePlayer_Purge(void* self);
-extern void MoviePlayer_FreeBuffers(void* self);
-extern void FileMan_Release(void* p, int del);
+extern void cMoviePlayer_PurgeBuffers(void* self);
+extern void cFileMan_dtor(void* p, int del);
 extern void operator_delete(void* p);
-void* MoviePlayer_Destroy(void* self, short del)
+void* cMoviePlayer_dtor(void* self, short del)
 {
     if (self) {
         void* m;
         cMoviePlayer_Purge(self);
-        MoviePlayer_FreeBuffers(self);
-        FileMan_Release((char*)self + 0x190, -1);
+        cMoviePlayer_PurgeBuffers(self);
+        cFileMan_dtor((char*)self + 0x190, -1);
         m = (char*)self + 0x58;
         if (m)
-            FileMan_Release((char*)self + 0x6C, -1);
+            cFileMan_dtor((char*)self + 0x6C, -1);
         if (del > 0)
             operator_delete(self);
     }
@@ -40,12 +40,12 @@ void* MoviePlayer_Destroy(void* self, short del)
 #include "loose04_types.h"
 
 extern int cFileMan_EncodeFilename_charP_cFileManR(void*, void*, int*);
-extern int Resource_Construct(void*);
-extern int MoviePlayer_Start(Unk3F9380*);
+extern int cFileMan_ctor_void(void*);
+extern int cMoviePlayer_Init(Unk3F9380*);
 extern int MoviePlayer_AllocBuffers(Unk3F9380*);
 
 /* Constructor: clears the object, copies *src into the second sub-object, then runs two setup passes. */
-Unk3F9380* MoviePlayer_ctor(Unk3F9380* self, int* src, int arg) {
+Unk3F9380* cMoviePlayer_ctor(Unk3F9380* self, int* src, int arg) {
     self->unk00[0] = 0;
     self->unk00[1] = 0;
     self->unk00[2] = 0;
@@ -66,10 +66,10 @@ Unk3F9380* MoviePlayer_ctor(Unk3F9380* self, int* src, int arg) {
     self->unk00[17] = 0;
     self->unk00[18] = 0;
     self->unk00[19] = 0;
-    Resource_Construct(self->unk6C);
+    cFileMan_ctor_void(self->unk6C);
     self->unk188 = 0;
     self->unk18C = 0;
-    Resource_Construct(self->unk190);
+    cFileMan_ctor_void(self->unk190);
     self->unk22C = arg;
     self->unk230 = 0;
     self->unk231 = 0;
@@ -80,7 +80,7 @@ Unk3F9380* MoviePlayer_ctor(Unk3F9380* self, int* src, int arg) {
     self->unk236 = 1;
     cFileMan_EncodeFilename_charP_cFileManR(self->unk190, src + 1, src);
     MoviePlayer_AllocBuffers(self);
-    MoviePlayer_Start(self);
+    cMoviePlayer_Init(self);
     return self;
 }
 #pragma pop /* merge_units */
@@ -92,9 +92,9 @@ typedef struct { char pad[0x14C]; unsigned char active; } O9470;
 typedef struct N9470 { int m0; struct N9470* next; O9470 obj; char pad[0x170 - 0x8 - sizeof(O9470)]; unsigned char keep; } N9470;
 typedef struct { int m0; int list; } T9470;
 extern N9470* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(void* list);
-extern void Hog_Unload(O9470* o);
+extern void cHogFile_CloseHog(O9470* o);
 extern void std_list_deleter_cHogFile_erase_listdeleter(N9470** out, T9470* self, N9470** pos);
-void Archive_ReleaseAll(T9470* self)
+void cHogList_CloseAll(T9470* self)
 {
     N9470* end;
     N9470* n = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_11(&self->list)->next;
@@ -105,7 +105,7 @@ void Archive_ReleaseAll(T9470* self)
             N9470* r;
             N9470* pos;
             if (o->active)
-                Hog_Unload(o);
+                cHogFile_CloseHog(o);
             pos = n;
             std_list_deleter_cHogFile_erase_listdeleter(&r, self, &pos);
             n = r;

@@ -26,5 +26,5 @@ int rt_time_elapsed(int a0, int a1) {
 typedef struct { int sec; int usec; } ScfTime;
 extern int rt_time_elapsed_timestamp(void *in, ScfTime *tv);
 #define SCF_TIME_CONV(name, conv) extern int conv(ScfTime *tv, void *out); int name(void *in, void *out) { ScfTime tv; int ret = 2; if (in == 0) return ret; if (out == 0) return ret; ret = rt_time_elapsed_timestamp(in, &tv); if (ret != 0) return ret; return conv(&tv, out); }
-SCF_TIME_CONV(rt_time_elapsed_secs, TimeVal_ToSeconds)
+SCF_TIME_CONV(rt_time_elapsed_secs, rt_time_timestamp_to_secs)
 /* merge_units: end func_00306108 */

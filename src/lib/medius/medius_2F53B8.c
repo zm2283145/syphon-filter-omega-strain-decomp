@@ -63,7 +63,7 @@ extern int rt_circ_buf_normalize(Ring2F5460 *r, unsigned char flag);
 
 
 /* Commits n written bytes to a ring buffer (advances the write index with wrap). */
-int NetRing_Commit(Ring2F5460 *r, unsigned int n)
+int rt_circ_buf_use(Ring2F5460 *r, unsigned int n)
 {
     int ret = 2;
     unsigned int avail = 0;

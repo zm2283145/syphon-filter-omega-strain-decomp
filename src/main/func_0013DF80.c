@@ -10,15 +10,15 @@ void std_vector_cGOBJPtr_end(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-Iter* Iter_Assign(Iter* d, Iter* s) {
+Iter* cArray_cGOBJPtr_ConstIterator_ctor_wrapiteratorR(Iter* d, Iter* s) {
     d->p = s->p;
     return d;
 }
 
-void Iter_Begin(Iter* out, PtrVec* v) {
+void std_vector_cGOBJPtr_begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-void* Terrain_GetBounds(char* self) {
+void* cTerrain_GetBBox(char* self) {
     return self + 560;
 }

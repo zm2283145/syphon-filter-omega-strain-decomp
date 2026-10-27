@@ -52,7 +52,7 @@ struct Msg_0021BB90 : ClonedMessageBase {
 extern "C" {
 char D_004A4A38[] = "gamegobj.hh";
 }
-DEFINE_MESSAGE_CLONE(cGOBJTriggerEventMsg_v01, Msg_0021BB90, 52, D_004A4A38, 112, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cGOBJTriggerEventMsg_Clone, Msg_0021BB90, 52, D_004A4A38, 112, CLONE_BODY)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0021BB90(void) {}
 #pragma pop /* merge_units */
@@ -63,7 +63,7 @@ static inline void merge_flush_func_0021BB90(void) {}
 #pragma cplusplus on
 
 extern "C" {
-void FileMan_Release(void* member, int flags);
+void cFileMan_dtor(void* member, int flags);
 void cGOBJ_dtor(void* self, int flags);
 void operator_delete(void* allocation);
 extern char D_004DAF30[];
@@ -82,8 +82,8 @@ extern "C" SoundGobj0021BCB0* cSoundGOBJ_dtor(SoundGobj0021BCB0* self, short del
     if (self) {
         self->vtable = D_004DAF30;
         if (self->payload) {
-            FileMan_Release(self->memberB, -1);
-            FileMan_Release(self->memberA, -1);
+            cFileMan_dtor(self->memberB, -1);
+            cFileMan_dtor(self->memberA, -1);
         }
         cGOBJ_dtor(self, 0);
         if (deleteFlag > 0)

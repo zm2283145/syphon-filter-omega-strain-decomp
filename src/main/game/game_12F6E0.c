@@ -17,8 +17,8 @@
  */
 
 
-extern void AgentData_ResetMission(int);
-extern int Agent_GetSelected(int, int);
+extern void cAgentData_ResetStats(int);
+extern int cGameSystem_GetAgentData(int, int);
 extern char g_Game[];                      /* world object */
 extern char* g_LocalPlayer;                       /* world +0xBC service */
 extern GameTimerService* g_Hud;           /* world +0xDC service */
@@ -28,9 +28,9 @@ extern int Game_IsMultiplayer(void);
 extern int Global_ResetLevel(void);
 extern void Global_ResetStats(void);
 extern int Script_ClearSchedules_3DFB20(void);
-extern void Hud_ClearPda(GameTimerService*);
-extern int PlayerInput_ClosePickupMenu(int);
-extern int Backpack_RemoveAll(void);
+extern void std_vector_deleter_PDAQuip_clear(GameTimerService*);
+extern int cPlayerControls_KillPickup(int);
+extern int cBackpack_RemoveAll(void);
 extern int AreaEffect_FinishAll(void);
 extern void DecalMgr_KillAll(int);
 extern int HudTicker_Reset(int);
@@ -45,15 +45,15 @@ int Global_ResetLevel(void) {
     GameTimerService* svc;
     int agent;
 
-    PlayerInput_ClosePickupMenu((int)(g_LocalPlayer + 0x50));
-    Backpack_RemoveAll();
+    cPlayerControls_KillPickup((int)(g_LocalPlayer + 0x50));
+    cBackpack_RemoveAll();
     AreaEffect_FinishAll();
-    agent = Agent_GetSelected((int)g_Game, -1);
-    AgentData_ResetMission(agent);
+    agent = cGameSystem_GetAgentData((int)g_Game, -1);
+    cAgentData_ResetStats(agent);
     svc = g_Hud;
     svc->unk6DC = 0;
     svc->unk6E0 = 0xbf800000; /* -1.0f */
-    Hud_ClearPda(g_Hud);
+    std_vector_deleter_PDAQuip_clear(g_Hud);
     HudTicker_Reset((int)((char*)g_Hud + 0x100));
     DecalMgr_KillAll(g_DecalMgr);
     return Script_ClearSchedules_3DFB20();
@@ -69,8 +69,8 @@ void Global_ResetStats(void) {
     GameTimerService* svc;
     int agent;
 
-    agent = Agent_GetSelected((int)g_Game, -1);
-    AgentData_ResetMission(agent);
+    agent = cGameSystem_GetAgentData((int)g_Game, -1);
+    cAgentData_ResetStats(agent);
     svc = g_Hud;
     svc->unk6DC = 0;
     svc->unk6E0 = 0xbf800000; /* -1.0f */
@@ -148,11 +148,11 @@ static inline void merge_flush_func_0012F860(void) {}
  */
 
 
-extern int Hud_StartGlobalTimer(GameTimerService*, int, float);
+extern int cHud_StartGlobalTimer(GameTimerService*, int, float);
 
 /* Starts the global timer: forwards to the timer service. */
 int Global_StartGlobalTimer(int id, float value) {
-    return Hud_StartGlobalTimer(g_Hud, id, value);
+    return cHud_StartGlobalTimer(g_Hud, id, value);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0012F890(void) {}
@@ -161,7 +161,7 @@ static inline void merge_flush_func_0012F890(void) {}
 
 /* merge_units: begin func_0012F8A0 */
 #pragma push /* merge_units */
-extern void* GObj_IdentityB(int handle);
+extern void* cGOBJ_SOBJ_convert(int handle);
 extern void Global_AddTremor(void* obj, float a, float b, float c);
 /* Script: AddTremor(obj, a, b, c). */
 int Script_AddTremor(int* args)
@@ -175,7 +175,7 @@ int Script_AddTremor(int* args)
     bv = *b;
     *(int*)a = args[1];
     cv = *c;
-    Global_AddTremor(GObj_IdentityB(args[0]), *a, bv, cv);
+    Global_AddTremor(cGOBJ_SOBJ_convert(args[0]), *a, bv, cv);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

@@ -16,9 +16,9 @@ public:
     float fA0;
 };
 extern "C" void cHermiteSplineWithScaledDuration_cVector_dtor(void*, int);
-extern "C" void* Mem_PlacementNew(int, void*);
-extern "C" void Curve_SetTangents(void*, V4c*, V4c*, V4c*, V4c*, float);
-extern "C" void VecCurve_RebaseCurrent(CamCAE0* c, V4c* a, V4c* b)
+extern "C" void* opNew_uint_voidP(int, void*);
+extern "C" void cHermiteSplineWithScaledDuration_cVector_ctor_cVectorR_cVectorR_cVectorR_cVectorR_etc(void*, V4c*, V4c*, V4c*, V4c*, float);
+extern "C" void cSplinedMotion_cVector_ResetCurrValAndResetCurrVelocity(CamCAE0* c, V4c* a, V4c* b)
 {
     V4c t;
     void* n;
@@ -27,8 +27,8 @@ extern "C" void VecCurve_RebaseCurrent(CamCAE0* c, V4c* a, V4c* b)
     c->p30 = *b;
     t = c->GetTangent();
     cHermiteSplineWithScaledDuration_cVector_dtor(c->sp60, -1);
-    n = Mem_PlacementNew(0x50, c->sp60);
-    if (n) Curve_SetTangents(n, &c->p20, &c->p30, &c->p40, &t, c->fA0);
+    n = opNew_uint_voidP(0x50, c->sp60);
+    if (n) cHermiteSplineWithScaledDuration_cVector_ctor_cVectorR_cVectorR_cVectorR_cVectorR_etc(n, &c->p20, &c->p30, &c->p40, &t, c->fA0);
 }
 
 

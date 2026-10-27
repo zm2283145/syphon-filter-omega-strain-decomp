@@ -10,8 +10,8 @@
 /* merge_units: begin func_002BDED0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x104]; int count; int cur; short ids[1]; } S2BDED0;
-extern void GuiEquipmentModify_RingTouch(S2BDED0* s, short id);
-void GuiEquipmentModify_PreloadWindow(S2BDED0* s, int n)
+extern void GuiEquipmentModify_LoadQue(S2BDED0* s, short id);
+void GuiEquipmentModify_PrefetchQue(S2BDED0* s, int n)
 {
     int base = s->cur - (n >> 1);
     int i;
@@ -22,7 +22,7 @@ void GuiEquipmentModify_PreloadWindow(S2BDED0* s, int n)
         if (k > s->count)
             k -= s->count;
         if (k >= 0 && k < s->count)
-            GuiEquipmentModify_RingTouch(s, s->ids[k]);
+            GuiEquipmentModify_LoadQue(s, s->ids[k]);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -44,12 +44,12 @@ extern "C" {
 extern char D_004AC370[];
 extern char D_004A7520[];
 extern char D_004AC388[];
-void* GuiWidget_FindChildByName(void* self, char* name);
+void* GuiWidget_FindChild_charP(void* self, char* name);
 void GuiTextWidget_SetText(W_002BDF90* w, char* s, int a);
 }
 static inline W_002BDF90* FindAs_002BDF90(void* self, char* name, char* type)
 {
-    W_002BDF90* w = (W_002BDF90*)GuiWidget_FindChildByName(self, name);
+    W_002BDF90* w = (W_002BDF90*)GuiWidget_FindChild_charP(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
 static inline void Clear_002BDF90(void* self, char* name)
@@ -58,7 +58,7 @@ static inline void Clear_002BDF90(void* self, char* name)
     if (w)
         GuiTextWidget_SetText(w, D_004AC388, 0);
 }
-extern "C" void GuiEquipmentModify_Clear(void* self)
+extern "C" void GuiEquipmentModify_UpdateEmpty(void* self)
 {
     Clear_002BDF90(self, D_004AC370);
     Clear_002BDF90(self, "value_firerate1");

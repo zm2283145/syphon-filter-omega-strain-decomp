@@ -9,7 +9,7 @@ static inline float RF_00281B40(void) { int i = R32_00281B40(); return *(float*)
 typedef struct { char pad[0xC]; int id; } O_00281B40;
 typedef struct { char pad[0x1C]; int flags; char p20[4]; unsigned char type; char p25[3]; O_00281B40* obj; int owner; } M_00281B40;
 extern void cBackpack_Pack(O_00281B40* o);
-void cNetBackpackMsg_v04(M_00281B40* m) {
+void cNetBackpackMsg_Pack(M_00281B40* m) {
     *D_005061D0++ = m->type;
     *D_005061D0++ = m->owner;
     W32_00281B40(m->obj->id);

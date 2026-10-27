@@ -31,15 +31,15 @@ extern LightState_h5* g_LocalPlayer;
 extern char g_Game[];
 extern char D_004F2CC0[];
 extern int D_005383C0;
-extern void Pad_EnableVibration(int v);
-extern void* Service_Lookup(char* a, char* b);
-extern void SoundMgr_SetChannelVolume(void* svc, int ch, int v);
-extern void SoundMgr_SetOutputMode(void* svc, int v);
-extern char* GameIni_GetString(char* key);
+extern void nRumbleManager_SetEnabled(int v);
+extern void* cSystemContainer_GetSystem(char* a, char* b);
+extern void cGameSound_SetMasterVolume(void* svc, int ch, int v);
+extern void cGameSound_SetPlaybackMode(void* svc, int v);
+extern char* cSFOini_GetKeyValue(char* key);
 extern int String_CompareNoCase(char* a, char* b);
-extern void* App_GetInstance(void);
-extern void Options_SetVideoMode(void* a, int mode);
-void GameOptions_Apply(LightCfg_h5* cfg, unsigned int mask)
+extern void* GetMachine(void);
+extern void cMachine_SetVideoMode(void* a, int mode);
+void cGameOptions_Apply(LightCfg_h5* cfg, unsigned int mask)
 {
     void* svc;
     if (mask & 1) {
@@ -48,7 +48,7 @@ void GameOptions_Apply(LightCfg_h5* cfg, unsigned int mask)
         }
     }
     if (mask & 2) {
-        Pad_EnableVibration(cfg->b5);
+        nRumbleManager_SetEnabled(cfg->b5);
     }
     if (mask & 4) {
         if (g_LocalPlayer) {
@@ -61,37 +61,37 @@ void GameOptions_Apply(LightCfg_h5* cfg, unsigned int mask)
         }
     }
     if (mask & 0x10) {
-        svc = Service_Lookup(g_Game, D_004F2CC0);
+        svc = cSystemContainer_GetSystem(g_Game, D_004F2CC0);
         if (svc) {
-            SoundMgr_SetChannelVolume(svc, 0, (int)(1024.0f * cfg->vol0));
+            cGameSound_SetMasterVolume(svc, 0, (int)(1024.0f * cfg->vol0));
         }
     }
     if (mask & 0x20) {
-        svc = Service_Lookup(g_Game, D_004F2CC0);
+        svc = cSystemContainer_GetSystem(g_Game, D_004F2CC0);
         if (svc) {
-            SoundMgr_SetChannelVolume(svc, 2, (int)(1024.0f * cfg->vol2));
+            cGameSound_SetMasterVolume(svc, 2, (int)(1024.0f * cfg->vol2));
         }
     }
     if (mask & 0x40) {
-        svc = Service_Lookup(g_Game, D_004F2CC0);
+        svc = cSystemContainer_GetSystem(g_Game, D_004F2CC0);
         if (svc) {
-            SoundMgr_SetChannelVolume(svc, 1, (int)(1024.0f * cfg->vol1));
+            cGameSound_SetMasterVolume(svc, 1, (int)(1024.0f * cfg->vol1));
         }
     }
     if (mask & 0x80) {
-        svc = Service_Lookup(g_Game, D_004F2CC0);
+        svc = cSystemContainer_GetSystem(g_Game, D_004F2CC0);
         if (svc) {
-            SoundMgr_SetOutputMode(svc, cfg->mode14);
+            cGameSound_SetPlaybackMode(svc, cfg->mode14);
         }
     }
     if (mask & 0x400) {
         D_005383C0 = (unsigned char)(int)(191.25f * cfg->level);
     }
     if (mask & 0x800) {
-        int same = String_CompareNoCase(GameIni_GetString("BOOT_VIDEOMODE"), "PAL") == 0;
+        int same = String_CompareNoCase(cSFOini_GetKeyValue("BOOT_VIDEOMODE"), "PAL") == 0;
         int mode;
         mode = cfg->alt == 0 ? (same ? 2 : 0) : 4;
-        Options_SetVideoMode(App_GetInstance(), mode);
+        cMachine_SetVideoMode(GetMachine(), mode);
     }
 }
 #pragma pop /* merge_units */
@@ -102,7 +102,7 @@ void GameOptions_Apply(LightCfg_h5* cfg, unsigned int mask)
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int GameOptions_Diff(char * arg0, char * arg1) {
+int cGameOptions_GetDifferenceMask(char * arg0, char * arg1) {
     int var_v0;
 
     var_v0 = 0;
@@ -155,12 +155,12 @@ typedef struct {
     float unk1C;
     int unk20;
 } Settings0045A700;
-extern Settings0045A700* Options_SetDefaults(Settings0045A700* s);
+extern Settings0045A700* cGameOptions_ctor(Settings0045A700* s);
 /* Initialise with defaults, then override three fields. */
 void cGameOptions_LoadDefaults(Settings0045A700* s)
 {
     Settings0045A700 def;
-    Options_SetDefaults(&def);
+    cGameOptions_ctor(&def);
     s->unk0 = def.unk0;
     s->b4 = def.b4;
     s->b5 = def.b5;

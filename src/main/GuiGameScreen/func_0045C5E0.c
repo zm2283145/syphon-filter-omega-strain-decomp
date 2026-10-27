@@ -17,12 +17,12 @@ struct Scr_5C5E0 {
 };
 extern "C" {
 void GuiWeaponDisplay_SetItem(Wd_5C5E0* w, int item, int a, int b);
-void GuiWeaponDisplay_Set(Wd_5C5E0* w, int item);
-void GuiGameScreen_FillWeaponPanels(Scr_5C5E0* s);
+void GuiWeaponDisplay_SetWeapon(Wd_5C5E0* w, int item);
+void GuiGameScreen_UpdateWeaponPanels(Scr_5C5E0* s);
 }
 static inline void UM(void* p0) { void* p = p0; int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
 #pragma opt_rotateloops off
-void GuiGameScreen_FillWeaponPanels(Scr_5C5E0* s)
+void GuiGameScreen_UpdateWeaponPanels(Scr_5C5E0* s)
 {
     int idx;
     bool done;
@@ -34,12 +34,12 @@ void GuiGameScreen_FillWeaponPanels(Scr_5C5E0* s)
         if (!done) {
             int item = s->items[idx];
             if (item == -2) GuiWeaponDisplay_SetItem(s->panels[i], -2, s->xD8, 0);
-            else GuiWeaponDisplay_Set(s->panels[i], item);
+            else GuiWeaponDisplay_SetWeapon(s->panels[i], item);
             idx++;
             if (idx >= s->count) idx = 0;
             if (idx == s->cur) done = true;
         } else {
-            GuiWeaponDisplay_Set(s->panels[i], -1);
+            GuiWeaponDisplay_SetWeapon(s->panels[i], -1);
         }
     }
     { Wd_5C5E0* p = s->panels[0]; p->bA4 = s->items[s->cur] != -2; }

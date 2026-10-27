@@ -5,7 +5,7 @@
  */
 
 /* merge_units: begin func_0030FF20 */
-extern int String_CompareN(const char *, const char *, unsigned int);
+extern int Libc_Strncmp(const char *, const char *, unsigned int);
 
 typedef struct {
     char *p[26];
@@ -31,7 +31,7 @@ void func_0030FF20(Obj *o, const char *s, unsigned int n)
     } else if (o->type == 7) {
         p = o->flags;
     }
-    while (names.p[i] != 0 && String_CompareN(names.p[i], s, n) != 0) {
+    while (names.p[i] != 0 && Libc_Strncmp(names.p[i], s, n) != 0) {
         i++;
     }
     switch (i) {
@@ -123,9 +123,9 @@ typedef struct {
 } Up310238;
 extern int func_0030EFD0(char *a, char *b, char *s);
 #if 0 /* merge_units */
-extern int String_CompareN(char *a, char *b, int n);
+extern int Libc_Strncmp(char *a, char *b, int n);
 #endif /* merge_units */
-#define String_CompareN(a0, a1, a2) (String_CompareN((const char *)(a0), (const char *)(a1), (unsigned int)(a2))) /* merge_units */
+#define Libc_Strncmp(a0, a1, a2) (Libc_Strncmp((const char *)(a0), (const char *)(a1), (unsigned int)(a2))) /* merge_units */
 
 extern char *D_004913BC;
 extern char *D_004913C0;
@@ -146,44 +146,44 @@ void func_00310238(char *name, char **argv, Up310238 *x)
     s = name;
     while (*s != ':')
         s++;
-    if (String_CompareN(D_004B0D58, s + 1, 0x100) == 0) {
+    if (Libc_Strncmp(D_004B0D58, s + 1, 0x100) == 0) {
         for (i = 0; argv[i] != 0; i++) {
             switch (i) {
             case 0:
-                if (String_CompareN(D_004B0820, argv[i], 5) != 0)
+                if (Libc_Strncmp(D_004B0820, argv[i], 5) != 0)
                     x->bad = 1;
                 break;
             case 1:
-                if (String_CompareN(D_004913BC, argv[i], 0x100) != 0)
+                if (Libc_Strncmp(D_004913BC, argv[i], 0x100) != 0)
                     x->bad = 1;
                 break;
             case 2:
                 s = argv[i];
                 while (*s != ':')
                     s++;
-                if (String_CompareN(D_004B0D68, s + 1, 0x100) != 0)
+                if (Libc_Strncmp(D_004B0D68, s + 1, 0x100) != 0)
                     x->bad = 1;
                 break;
             case 3:
-                if (String_CompareN(D_004913C0, argv[i], 0x100) != 0)
+                if (Libc_Strncmp(D_004913C0, argv[i], 0x100) != 0)
                     x->bad = 1;
                 break;
             }
         }
-    } else if (String_CompareN(D_004B0D78, name, 0x100) == 0) {
+    } else if (Libc_Strncmp(D_004B0D78, name, 0x100) == 0) {
         for (j = 0; argv[j] != 0; j++) {
             switch (j) {
             case 1:
-                if (String_CompareN(D_004B0820, argv[j], 5) != 0)
+                if (Libc_Strncmp(D_004B0820, argv[j], 5) != 0)
                     x->bad = 1;
                 break;
             case 2:
-                if (String_CompareN(D_004913C8, argv[j], 0x100) != 0)
+                if (Libc_Strncmp(D_004913C8, argv[j], 0x100) != 0)
                     x->bad = 1;
                 break;
             }
         }
     }
 }
-#undef String_CompareN /* merge_units */
+#undef Libc_Strncmp /* merge_units */
 /* merge_units: end func_00310238 */

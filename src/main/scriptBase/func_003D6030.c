@@ -7,7 +7,7 @@
 
 
 extern "C" {
-int Mem_Alloc(...);                      
+int cMemMan_Allocate(...);                      
 int std_vector_intPtr_ctor(...);                            
 int memcpy(...);                            
 int strlen(...);                                    
@@ -29,7 +29,7 @@ extern "C" char * FuncDef_ctor_charP_intPintPint_bool(char * arg0, int arg1, int
         temp_v1 = strlen(arg1) + 1; temp_s0_2 = (temp_v1 + 0x1F) / 32 * 32;
         {
             AllocGuard g;
-        var_s1 = Mem_Alloc(0, temp_s0_2, &D_004BD3B0, 0x130);
+        var_s1 = cMemMan_Allocate(0, temp_s0_2, &D_004BD3B0, 0x130);
         }
         memcpy(var_s1, arg1, temp_s0_2);
     }

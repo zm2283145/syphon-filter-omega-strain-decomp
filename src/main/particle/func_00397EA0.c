@@ -2,7 +2,7 @@
 #include "types.h"
 #include "alloc_guard.h"
 extern "C" {
-void Mem_Free(int pool, void* p, char* file, int line);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 void std_vector_intPtr_dtor(void* p, int flags);
 void operator_delete(void* p);
 }
@@ -12,7 +12,7 @@ extern "C" void* cEffectRequest_dtor(void* self, short flag)
         void* b = *(void**)self;
         {
             AllocGuard g;
-            Mem_Free(0, b, "particle.cc", 0x11A0);
+            cMemMan_Deallocate(0, b, "particle.cc", 0x11A0);
         }
         {
             void* m = (char*)self + 4;

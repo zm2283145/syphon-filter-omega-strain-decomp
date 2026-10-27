@@ -9,8 +9,8 @@
 #include "alloc_guard.h"
 
 extern "C" {
-void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void Mem_Free(int pool, void* allocation, char* file, int line);
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 }
 
 struct ListIntNodeP {
@@ -47,7 +47,7 @@ struct ListInsertFlagP {
                 ListIntNodeP* p = node;                                       \
                 if (p) {                                                      \
                     AllocGuard guard;                                         \
-                    Mem_Free(0, p, freeFile, 0x64);                           \
+                    cMemMan_Deallocate(0, p, freeFile, 0x64);                           \
                 }                                                             \
             }                                                                 \
         }                                                                     \
@@ -60,7 +60,7 @@ struct ListInsertFlagP {
         ListInsertFlagP flag;                                                 \
         {                                                                     \
             AllocGuard guard;                                                 \
-            n = (ListIntNodeP*)Mem_Alloc(0, 0xC, allocFile, 0x5C);            \
+            n = (ListIntNodeP*)cMemMan_Allocate(0, 0xC, allocFile, 0x5C);            \
         }                                                                     \
         name##_Holder h;                                                      \
         h.alloc = alloc;                                                      \

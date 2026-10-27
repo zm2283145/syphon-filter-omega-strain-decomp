@@ -1,7 +1,0 @@
-#pragma cplusplus on
-#include "types.h"
-#include "guarded_new.h"
-
-/* Factory: allocate, run the base constructor, set the vtable. */
-extern "C" { char D_004ABC50[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_VT(ConcreteWidgetClassRep_GuiChatWindow_Create, 0x80, D_004ABC50, GuiMLTextWidget_ctor, D_004DDCE0)

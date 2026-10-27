@@ -1,0 +1,237 @@
+/*
+ * SFOGame/Source/hotbox: 2 files, 001723F0-00172400
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_001723F0 */
+#pragma push /* merge_units */
+#include "types.h"
+
+/* Returns whether the first word of the object is zero. */
+int cLList_cEnvSettingsPtr_Empty(int* self)
+{
+    return self[0] == 0;
+}
+static inline void merge_flush_func_001723F0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001723F0 */
+
+/* merge_units: begin func_00172400 */
+#pragma push /* merge_units */
+#pragma push
+#pragma opt_propagation off
+#pragma opt_strength_reduction off
+#pragma cplusplus on
+#include "hotbox_types.h"
+#include "sfo_common_types.h"
+#include "cmessage.h"
+struct EnableMsg { CMSG_HEADER; int player; } __attribute__((aligned(16)));
+struct HotMsg { CMSG_HEADER; int action; unsigned int code; int value; void* who; } __attribute__((aligned(16)));
+struct TeleportMsg { CMSG_HEADER; signed char mode; char pad25[0xB]; float matrix[16]; } __attribute__((aligned(16)));
+struct SimpleMsg { CMSG_HEADER; int object; int unknown; } __attribute__((aligned(16)));
+extern "C" {
+void cEnvMan_SetCurrent(int,void*);
+void* cMatrix_GetUnit();
+void cNode_GetLoc(void*,void*);
+int cNetObj_GetOwner(int);
+void cVector_Copy_WSet1(void*,void*);
+void cGameSystem_PushCamera(void*,void*);
+void cGOBJTriggerEventMsg_ctor(void*,int,int,void*,int);
+void* cMatrix_ctor_cMatrixR_cVectorR(void*,void*,void*);
+int* std_vector_cGOBJPtr_opIndex(PtrVec*,int);
+extern char D_004D9360[],D_004D9940[],D_004DAF10[],D_004DB8D0[],D_004E0880[],D_004EE698[],D_004F7930[],g_Game[],g_TeleportMsgClass[],g_cEnableMsgClass[];
+extern int D_004FFBD4;
+extern void* g_LocalPlayer;
+}
+extern "C" void cHotbox_HandleEnter(cHotbox *arg0, SfGameObject *arg1) {
+    EnableMsg sp2B0;
+    Vec4 sp2A0;
+    HotMsg sp260;
+    HotMsg sp220;
+    HotMsg sp1E0;
+    HotMsg sp1A0;
+    TeleportMsg sp130;
+    HotMsg spF0;
+    HotMsg spB0;
+    SimpleMsg sp80;
+    Vec4 sp70;
+    TeleportMsg* tp;
+
+    int temp_s0_2;
+    int temp_s0_3;
+    int temp_s0_4;
+    int temp_s0_5;
+    int temp_s0_6;
+    int var_s1;
+    int var_s1_2;
+    int var_s5;
+    int var_s4;
+    unsigned int temp_s1;
+    SfGameObject* temp_a1;
+    void *temp_s1_2;
+    void* temp_s0;
+
+    temp_s1 = arg0->type;
+    switch (temp_s1) {
+    case 1:
+    case 6:
+        var_s5 = -1;
+        if (arg1 != 0) {
+            var_s5 = cNetObj_GetOwner(arg1->id);
+        }
+        var_s4 = 0;
+        if (0 < arg0->unk60.count) {
+            do {
+                cMessage_ctor_cMessageNameR(&sp2B0, &g_cEnableMsgClass);
+                sp2B0.vtable = D_004E0880;
+                sp2B0.player = var_s5;
+                sp2B0.flags = 0x40;
+                sp2B0.kind = 1;
+                QueueMessage_cMessageR_cSystemP_int(&sp2B0, (void*)arg0->unk60.data[var_s4], 0);
+                sp2B0.vtable = D_004E0880;
+                cMessage_dtor(&sp2B0, 0);
+                var_s4 += 1;
+            } while (var_s4 < arg0->unk60.count);
+            goto done;
+        }
+    default:
+        goto done;
+    case 2:
+        temp_s1_2 = g_LocalPlayer;
+        cNode_GetLoc(&sp2A0, (void*)*arg0->unk60.data);
+        tp=&sp130;
+        cMessage_ctor_cMessageNameR(tp, &g_TeleportMsgClass);
+        sp130.mode = 0;
+        sp130.vtable = D_004D9360;
+        temp_s0 = cMatrix_GetUnit();
+        cVector_Copy_WSet1(&sp70, &sp2A0);
+        void* dest=(char*)tp+0x30;
+        // Empty scheduling barrier: retain the destination address before call setup.
+        asm { .set reorder }
+        cMatrix_ctor_cMatrixR_cVectorR(dest,temp_s0,&sp70);
+        QueueMessage_cMessageR_cSystemP_int(tp, temp_s1_2, 0);
+        sp130.vtable = D_004D9360;
+        cMessage_dtor(tp, 0);
+        goto done;
+    case 3:
+        var_s1 = 0;
+        if (0 < arg0->unk60.count) {
+            do {
+                cGOBJTriggerEventMsg_ctor(&spF0, 0, 0, arg0,0);
+                QueueMessage_cMessageR_cSystemP_int(&spF0, (void*)arg0->unk60.data[var_s1], 0);
+                spF0.vtable = D_004DAF10;
+                cMessage_dtor(&spF0, 0);
+                var_s1 += 1;
+            } while (var_s1 < arg0->unk60.count);
+            goto done;
+        }
+        break;
+    case 4:
+        var_s1_2 = 0;
+        if (0 < arg0->unk60.count) {
+            do {
+                cGOBJTriggerEventMsg_ctor(&sp260, 1, *(int*)arg0->pad94, arg0,0);
+                QueueMessage_cMessageR_cSystemP_int(&sp260, (void*)arg0->unk60.data[var_s1_2], 0);
+                sp260.vtable = D_004DAF10;
+                cMessage_dtor(&sp260, 0);
+                var_s1_2 += 1;
+            } while (var_s1_2 < arg0->unk60.count);
+            goto done;
+        }
+        break;
+    case 5:
+        if (arg0->unk60.count > 0) {
+            cEnvMan_SetCurrent(D_004FFBD4, (void*)*arg0->unk60.data);
+            goto done;
+        }
+        break;
+    case 8:
+    case 12:
+    case 14:
+    case 18:
+        temp_s0_2 = *(int*)arg0->pad94;
+        cMessage_ctor_cMessageNameR(&spB0, &D_004EE698);
+        spB0.vtable = D_004D9940;
+        spB0.code = temp_s1;
+        spB0.value = temp_s0_2;
+        spB0.who = arg1;
+        spB0.action = 0;
+        QueueMessage_cMessageR_cSystemP_int(&spB0, arg1, 0);
+        spB0.vtable = D_004D9940;
+        cMessage_dtor(&spB0, 0);
+        goto done;
+    case 13:
+        temp_s0_3 = *(int*)arg0->pad94;
+        cMessage_ctor_cMessageNameR(&sp220, &D_004EE698);
+        sp220.vtable = D_004D9940;
+        sp220.code = temp_s1;
+        sp220.value = temp_s0_3;
+        sp220.kind = 5;
+        sp220.flags = 0x40;
+        sp220.who = arg1;
+        sp220.action = 0;
+        QueueMessage_cMessageR_cSystemP_int(&sp220, arg1, 0);
+        sp220.vtable = D_004D9940;
+        cMessage_dtor(&sp220, 0);
+        goto done;
+    case 10:
+        if (arg0->unk60.count != 0) {
+            temp_s0_4 = *std_vector_cGOBJPtr_opIndex(&arg0->unk60, 0);
+            cMessage_ctor_cMessageNameR(&sp80, &D_004F7930);
+            sp80.vtable = D_004DB8D0;
+            sp80.object = temp_s0_4;
+            sp80.unknown = 0;
+            QueueMessage_cMessageR_cSystemP_int(&sp80, arg1, 0);
+            sp80.vtable = D_004DB8D0;
+            cMessage_dtor(&sp80, 0);
+            goto done;
+        }
+        break;
+    case 11:
+        if (arg0->unk60.count != 0) {
+            temp_a1 = (SfGameObject*)*arg0->unk60.data;
+            if (temp_a1->classByte == 9) {
+                cGameSystem_PushCamera(&g_Game, temp_a1);
+                goto done;
+            }
+        }
+        break;
+    case 9:
+        temp_s0_5 = *(int*)arg0->pad94;
+        cMessage_ctor_cMessageNameR(&sp1E0, &D_004EE698);
+        sp1E0.vtable = D_004D9940;
+        sp1E0.code = temp_s1;
+        sp1E0.value = temp_s0_5;
+        sp1E0.kind = 8;
+        sp1E0.flags = 0x40;
+        sp1E0.who = arg1;
+        sp1E0.action = 0;
+        QueueMessage_cMessageR_cSystemP_int(&sp1E0, arg1, 0);
+        sp1E0.vtable = D_004D9940;
+        cMessage_dtor(&sp1E0, 0);
+        goto done;
+    case 15:
+    case 16:
+        temp_s0_6 = ((SfGameObject*)*arg0->unk60.data)->id;
+        cMessage_ctor_cMessageNameR(&sp1A0, &D_004EE698);
+        sp1A0.vtable = D_004D9940;
+        sp1A0.code = temp_s1;
+        sp1A0.value = temp_s0_6;
+        sp1A0.kind = 8;
+        sp1A0.flags = 0x40;
+        sp1A0.who = arg1;
+        sp1A0.action = 0;
+        QueueMessage_cMessageR_cSystemP_int(&sp1A0, arg1, 0);
+        sp1A0.vtable = D_004D9940;
+        cMessage_dtor(&sp1A0, 0);
+        break;
+    }
+done:
+    return;
+}
+
+#pragma pop
+static inline void merge_flush_func_00172400(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00172400 */

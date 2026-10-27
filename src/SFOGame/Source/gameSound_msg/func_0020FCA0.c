@@ -1,6 +1,0 @@
-#pragma cplusplus on
-#include "types.h"
-#include "payload_message_clone.h"
-
-extern "C" { char D_004A4100[] = "gameSound_msg.hh"; }
-DEFINE_PAYLOAD_MESSAGE_CLONE(func_0020FCA0, 0x1C0, D_004A4100, 0x57, D_004DAE10, cSndFx_ctor_cSndFxR)

@@ -1,6 +1,0 @@
-#pragma cplusplus on
-
-#define std_list_deleter_voidPtr_erase_listdeleter_listdeleter std_list_deleter_tNode_erase_listdeleter_listdeleter
-#include "obj_list_dtor.h"
-
-DEFINE_OBJ_LIST_DTOR(std_list_tNode_dtor)

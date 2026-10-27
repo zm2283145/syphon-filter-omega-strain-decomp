@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import configure  # noqa: E402
 import merge_units as mu  # noqa: E402
 
-SOURCES = {"SFOGame/Source/game", "Libs/SFOLib/Source/mem", "SFOGame/Source/AIMsgs"}
+SOURCES = {"SFOGame/Source/game", "SFOGame/Source/zzNoSuchFile", "Libs/SFOLib/Source/mem", "SFOGame/Source/AIMsgs"}
 
 
 class TuRangesTests(unittest.TestCase):
@@ -78,28 +78,28 @@ class ModuleTests(unittest.TestCase):
         self.assertEqual(mu.files_dir("main/aiMsgs"), mu.ROOT / "src" / "main" / "aiMsgs")
 
     def test_group_names(self):
-        segs = [[0x100, "c", "SFOGame/Source/game/func_00100100", []],
-                [0x110, "c", "SFOGame/Source/game/func_00100110", []],
+        segs = [[0x100, "c", "SFOGame/Source/zzNoSuchFile/func_00100100", []],
+                [0x110, "c", "SFOGame/Source/zzNoSuchFile/func_00100110", []],
                 [0x120, "asm", None, []],
-                [0x130, "c", "SFOGame/Source/game/func_00100130", []],
-                [0x140, "c", "SFOGame/Source/game/func_00100140", []],
-                [0x150, "c", "SFOGame/Source/game_2", []]]
+                [0x130, "c", "SFOGame/Source/zzNoSuchFile/func_00100130", []],
+                [0x140, "c", "SFOGame/Source/zzNoSuchFile/func_00100140", []],
+                [0x150, "c", "SFOGame/Source/zzNoSuchFile_2", []]]
         g1, g2 = ["mw", [0, 1], [], None, False], ["mw", [3, 4], [], None, False]
-        names = mu.name_groups("SFOGame/Source/game", [g1, g2], segs)
-        # game_2 is taken by a unit that is not regrouped
-        self.assertEqual([names[id(g1)], names[id(g2)]], ["SFOGame/Source/game", "SFOGame/Source/game_3"])
+        names = mu.name_groups("SFOGame/Source/zzNoSuchFile", [g1, g2], segs)
+        # zzNoSuchFile_2 is taken (names never depend on files on disk here) by a unit that is not regrouped
+        self.assertEqual([names[id(g1)], names[id(g2)]], ["SFOGame/Source/zzNoSuchFile", "SFOGame/Source/zzNoSuchFile_3"])
 
     def test_lone_units_get_part_names(self):
-        segs = [[0x100, "c", "SFOGame/Source/game/func_00100100", []],
+        segs = [[0x100, "c", "SFOGame/Source/zzNoSuchFile/func_00100100", []],
                 [0x110, "asm", None, []],
-                [0x120, "c", "SFOGame/Source/game/game_100120", []],
-                [0x130, "c", "SFOGame/Source/game/func_00100130", []],
+                [0x120, "c", "SFOGame/Source/zzNoSuchFile/zzNoSuchFile_100120", []],
+                [0x130, "c", "SFOGame/Source/zzNoSuchFile/func_00100130", []],
                 [0x140, "asm", None, []],
-                [0x150, "c", "SFOGame/Source/game_7", []]]
+                [0x150, "c", "SFOGame/Source/zzNoSuchFile_7", []]]
         lone, pair, part = ["mw", [0], [], None, False], ["mw", [2, 3], [], None, False], ["mw", [5], [], None, False]
-        names = mu.name_groups("SFOGame/Source/game", [lone, pair, part], segs)
-        self.assertEqual(names[id(lone)], "SFOGame/Source/game")
-        self.assertEqual(names[id(pair)], "SFOGame/Source/game_2")
+        names = mu.name_groups("SFOGame/Source/zzNoSuchFile", [lone, pair, part], segs)
+        self.assertEqual(names[id(lone)], "SFOGame/Source/zzNoSuchFile")
+        self.assertEqual(names[id(pair)], "SFOGame/Source/zzNoSuchFile_2")
         self.assertNotIn(id(part), names)   # already a part file: keeps its name
 
     def test_part_names(self):

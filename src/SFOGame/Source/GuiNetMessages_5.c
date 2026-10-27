@@ -1,0 +1,69 @@
+/*
+ * SFOGame/Source/GuiNetMessages: 2 files, 003476B0-003477D0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_003476B0 */
+#pragma push /* merge_units */
+#include "types.h"
+#pragma cplusplus on
+#include "vslot_pad.h"
+class W3476B0 {
+public:
+    VPAD16(a) VPAD4(b)
+    virtual bool IsA(void* type);
+};
+struct S3476B0 { char pad[0x78]; unsigned char a78; char pad79[7]; unsigned char a80; };
+extern "C" {
+extern "C" char D_004BA2D8[];
+extern "C" char D_004BA2E8[];
+static void * const dat_00492B88[2] = { (void*)D_004BA2D8, (void*)0x0 };
+static void * const dat_00492B90[2] = { (void*)D_004BA2E8, (void*)0x0 };
+extern char D_004A7520[];
+extern char g_Game[];
+W3476B0* GuiWidget_FindChild_charP(void* self, char* name);
+void* cGameSystem_GetAgentData(void* list, int idx);
+char* cAgentData_GetUserName(void* ag);
+char* AgentData_GetRankText(void* ag);
+void GuiTextWidget_SetText(W3476B0* w, char* text, int flags);
+void func_003476B0(S3476B0* o);
+}
+static inline W3476B0* cast3476B0(W3476B0* w)
+{
+    return (w && w->IsA(D_004A7520)) ? w : 0;
+}
+void func_003476B0(S3476B0* o)
+{
+    W3476B0* w;
+    if (o->a80) return;
+    w = cast3476B0(GuiWidget_FindChild_charP(o, (*(char**)dat_00492B88)));
+    if (w) GuiTextWidget_SetText(w, cAgentData_GetUserName(cGameSystem_GetAgentData(g_Game, -1)), 0);
+    w = cast3476B0(GuiWidget_FindChild_charP(o, (*(char**)dat_00492B90)));
+    if (w) GuiTextWidget_SetText(w, AgentData_GetRankText(cGameSystem_GetAgentData(g_Game, -1)), 0);
+    o->a78 = 1;
+    o->a80 = 1;
+}
+static inline void merge_flush_func_003476B0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003476B0 */
+
+/* merge_units: begin func_003477D0 */
+#pragma push /* merge_units */
+typedef struct { char pad[0x14]; unsigned short flags; } Widget;
+typedef struct { char pad[0x8C]; Widget* a; Widget* b; Widget* c; char pad2[0xC]; Widget* d; } Screen;
+extern void GuiScreen_Wake(Screen* s);
+/* Hides three widgets, shows the fourth, then refreshes. */
+#pragma opt_common_subs off
+void GuiNetMessages_onWake(Screen* s)
+{
+    s->a->flags &= ~2;
+    s->b->flags &= ~2;
+    s->c->flags &= ~2;
+    s->d->flags |= 2;
+    GuiScreen_Wake(s);
+}
+#pragma opt_common_subs reset
+static inline void merge_flush_func_003477D0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003477D0 */

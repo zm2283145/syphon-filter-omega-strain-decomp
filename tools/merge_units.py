@@ -916,6 +916,13 @@ class Checker:
         self.cm = cm
         self.rom = (ROOT / "build" / "orig" / "SCUS_972.64.rom").read_bytes()
         self.names, _ = cm.symbols()
+        # symbols the build's link gets from these scripts (addresses outside the
+        # executable, data inside C-owned blocks)
+        for f in (ROOT / "config" / "extra.ld", ROOT / "build" / "undefined_syms_auto.txt",
+                  ROOT / "build" / "undefined_funcs_auto.txt"):
+            if f.exists():
+                for m in re.finditer(r"^\s*([A-Za-z_.$][\w.$]*)\s*=\s*(0x[0-9A-Fa-f]+)\s*;", f.read_text(), re.M):
+                    self.names.setdefault(m.group(1), int(m.group(2), 16))
         self.segs, self.end_off = segs, end_off
         prefix = configure.binutils_prefix(None)
         exe = ".exe" if os.name == "nt" else ""

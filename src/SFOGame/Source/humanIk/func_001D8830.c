@@ -1,4 +1,0 @@
-#pragma cplusplus on
-#include "types.h"
-#include "member0_dtor.h"
-DEFINE_NESTED_MEMBER0_DTOR(cDrawAndHolsterWeapon_ActionManager_cWeaponSlotTransitionTable_dtor, std_map_cWeaponSlotPair_cIkTarget_LeftRight_dtor)

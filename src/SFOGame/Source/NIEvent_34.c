@@ -1,0 +1,138 @@
+/*
+ * SFOGame/Source/NIEvent: 3 files, 0023F530-0023F680
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_0023F530 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#include "buf_holder_dtor.h"
+
+/* Destroy a buffer holder: free its buffer, optionally delete. */
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cNIEventBasePtr_1_dtor)
+static inline void merge_flush_func_0023F530(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0023F530 */
+
+/* merge_units: begin func_0023F620 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+#include "types.h"
+#include "NIEvent_types.h"
+
+/* Constructs an empty vector. */
+NIEventVec3* std_vector_VisKey_ctor(NIEventVec3* vec) {
+    vec->begin = 0;
+    vec->end = 0;
+    vec->cap = 0;
+    return vec;
+}
+
+/* Constructs an empty vector. */
+NIEventVec3* std_vector_VectorKey_ctor(NIEventVec3* vec) {
+    vec->begin = 0;
+    vec->end = 0;
+    vec->cap = 0;
+    return vec;
+}
+
+/* Constructs an empty vector. */
+NIEventVec3* std_vector_cNIEventBasePtr_ctor(NIEventVec3* vec) {
+    vec->begin = 0;
+    vec->end = 0;
+    vec->cap = 0;
+    return vec;
+}
+static inline void merge_flush_func_0023F620(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0023F620 */
+
+/* merge_units: begin func_0023F680 */
+#pragma push /* merge_units */
+/* Net receive handler: look up the object by id and (de)activate its event camera,
+   then re-broadcast a toggle event when hosting. */
+#pragma cplusplus on
+#include "net_recv_guard.h"
+#include "npc_auth.h"
+typedef struct { void* vt; char p4[0x20]; unsigned char b24; char p25[0x3]; } EvF680;
+typedef struct { char p0[0xC]; int id; char p10[0x50]; int kind; char p64[0xDC]; void* cam; } ObjF680;
+typedef struct { char pad[0x10]; ObjF680* val; } NodeF680;
+typedef struct { char q0[0x4]; int id; unsigned char off; } ArgF680;
+extern "C" {
+extern void cMessage_ctor_cMessageNameR(EvF680* e, void* type);
+extern void cNetObj_SendMessage_int_cMessageR_int_int(int target, EvF680* e, int a, int b);
+extern void cMessage_dtor(EvF680* e, int f);
+extern void cGameCamera_PushCurrent(void* c);
+extern void cGameCamera_RemoveCamera(void* c);
+extern char D_0055C7A0[];
+extern void std_tree_pair_int_value_compare_find_intR(NodeF680** out, void* map, int* key);
+extern void std_map_int_netSystemField_end(void* out, void* map);
+extern void cAssocArray_int_netSystemField_Iterator_ctor(NodeF680** out, void* in);
+extern char D_004DC2D0[];
+extern char D_004F7C38[];
+extern unsigned char D_005721D0;
+}
+static inline int EqF680(NodeF680* a, NodeF680* b) { return a == b; }
+#pragma push
+#pragma bool off
+#pragma opt_propagation off
+extern "C" int cNICameraMsg_NICameraCallback(int a0, int a1, int a2, ArgF680* arg) {
+    NetRecvGuard g;
+    if (D_005721D0) {
+        int k[1];
+        NodeF680* end[1];
+        NodeF680* it[1];
+        int tmp[1];
+        NodeF680* n;
+        ArgF680* a = arg;
+        k[0] = a->id;
+        std_tree_pair_int_value_compare_find_intR(it, D_0055C7A0, k);
+        n = it[0];
+        std_map_int_netSystemField_end(tmp, D_0055C7A0);
+        cAssocArray_int_netSystemField_Iterator_ctor(end, tmp);
+        if (EqF680(n, end[0]) ^ 1) {
+            ObjF680* o = n->val;
+            if (o) {
+                if (!a->off) {
+                    if (o->kind == 5 && o->cam) {
+                        cGameCamera_PushCurrent(o->cam);
+                        if (g_IsMultiplayer && NpcAuth_IsLocal()) {
+                            EvF680 e;
+                            cMessage_ctor_cMessageNameR(&e, D_004F7C38);
+                            e.vt = D_004DC2D0;
+                            e.b24 = 0;
+                            cNetObj_SendMessage_int_cMessageR_int_int(o->id, &e, -1, -1);
+                            e.vt = D_004DC2D0;
+                            cMessage_dtor(&e, 0);
+                        }
+                    }
+                } else {
+                    if (o->kind == 5 && o->cam) {
+                        cGameCamera_RemoveCamera(o->cam);
+                        if (g_IsMultiplayer && NpcAuth_IsLocal()) {
+                            EvF680 e;
+                            cMessage_ctor_cMessageNameR(&e, D_004F7C38);
+                            e.vt = D_004DC2D0;
+                            e.b24 = 1;
+                            cNetObj_SendMessage_int_cMessageR_int_int(o->id, &e, -1, -1);
+                            e.vt = D_004DC2D0;
+                            cMessage_dtor(&e, 0);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return 0xC;
+}
+#pragma pop
+static inline void merge_flush_func_0023F680(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0023F680 */

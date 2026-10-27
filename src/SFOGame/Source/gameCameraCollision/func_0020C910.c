@@ -1,5 +1,0 @@
-#include "types.h"
-#include "o1_tree_dtor.h"
-#pragma optimization_level 1
-DEFINE_O1_TREE_DTOR(std_vector_deleter_cSkaSwitchItem_dtor, std_vector_deleter_cSkaSwitchItem_clear, std_vector_deleter_cSkaSwitchItem_data, std_vector_deleter_cSkaSwitchItem_alloc_void, std_vector_deleter_cSkaSwitchItem_cap_void, cAllocator_cSkaSwitchItem_deallocate)
-#pragma optimization_level reset

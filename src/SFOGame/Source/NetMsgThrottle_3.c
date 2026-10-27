@@ -1,0 +1,268 @@
+/*
+ * SFOGame/Source/NetMsgThrottle: 7 files, 00471F90-00472380
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00471F90 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#include "types.h"
+#include "base_dtor_chain.h"
+
+/* Deleting destructor that runs the base destructor. */
+DEFINE_BASE_DTOR_CHAIN(cNetMsgThrottle_sMsgTypeInfo_dtor, std_list_sMsgInfoPtr_dtor)
+static inline void merge_flush_func_00471F90(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00471F90 */
+
+/* merge_units: begin func_00471FF0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+/* Deleting destructor: destroy the member at +4, then delete. */
+extern "C" void operator_delete(void* allocation);
+extern "C" void* cLList_sMsgInfoPtr_dtor(void* self, short deleteFlag);
+
+typedef struct { int pad0; int member; } Obj_3A6240;
+
+extern "C" Obj_3A6240* std_pair_int_sMsgTypeInfo_dtor(Obj_3A6240* self, short deleteFlag)
+{
+    if (self) {
+        void* m = &self->member;
+        if (m)
+            cLList_sMsgInfoPtr_dtor(m, -1);
+        if (deleteFlag > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+static inline void merge_flush_func_00471FF0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00471FF0 */
+
+/* merge_units: begin func_00472050 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+
+/* Iterator copy-assignment. */
+Word* func_00472050(Word* dst, Word* src) {
+    dst->value = src->value;
+    return dst;
+}
+
+/* end(): iterator at the tree header. */
+void func_00472060(Iter* out, Tree* t) {
+    out->p = &t->header;
+}
+
+/* begin(): iterator at the leftmost node. */
+void func_00472070(Iter* out, Tree* t) {
+    out->p = t->leftmost;
+}
+static inline void merge_flush_func_00472050(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00472050 */
+
+/* merge_units: begin func_00472080 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "alloc_guard.h"
+
+struct ThrMsg {
+    virtual ~ThrMsg();
+};
+
+struct ThrEntry {
+    ThrMsg* msg;
+    void* target;
+    int flags;
+};
+
+struct ThrListNode {
+    ThrListNode* next;
+    ThrListNode* prev;
+    ThrEntry* entry;
+};
+
+struct ThrList {
+    char pad0[8];
+    ThrListNode* head;
+    char padC[4];
+    float rate;
+    int count;
+};
+
+struct ThrNode {
+    char links[0xC];
+    int key;
+    ThrList list;
+};
+
+struct ThrIt { ThrNode* node; };
+struct ThrLIt {
+    ThrListNode* node;
+    ThrLIt() {}
+    ThrLIt(ThrListNode* n) : node(n) {}
+};
+
+extern "C" {
+extern char D_00588020[];
+extern int D_00588030;
+extern char D_004C3430[];
+extern char D_004C3410[];
+#if 0 /* merge_units */
+void func_00472070(ThrIt* r, void* map);
+#endif /* merge_units */
+#define func_00472070(a0, a1) (func_00472070((Iter *)(a0), (Tree *)(a1))) /* merge_units */
+
+
+ThrIt func_00471EA0(void* map);
+void func_00471E90(ThrIt* r, const ThrIt& s);
+/* ThrLIt has constructors, so these return it through a hidden pointer:
+   ThrLIt func_00472370(ThrList *) / ThrLIt func_00472060(ThrList *). */
+void func_00472370(Iter* out, PtrVec* v);
+#if 0 /* merge_units */
+void func_00472050(ThrLIt* r, const ThrLIt& s);
+#endif /* merge_units */
+#define func_00472050(a0, a1) ((void)func_00472050((Word *)(a0), (Word *)(a1))) /* merge_units */
+
+
+ThrLIt std_list_deleter_voidPtr_erase_listdeleter(ThrList* l, const ThrLIt& pos);
+int cDME_GetTime(int);
+void printf(char* fmt, ...);
+void QueueMessage_cMessageR_cSystemP_int(ThrMsg* msg, void* target, int flags);
+void std_red_black_tree_1_increment(void* it);
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+}
+
+static inline void LGet(ThrList* l, ThrLIt* b, ThrLIt* e)
+{
+    ThrLIt t;
+    ThrLIt u;
+
+    func_00472370((Iter*)&t, (PtrVec*)l);
+    func_00472050((Word*)b, (Word*)&t);
+    func_00472060((Iter*)&u, (Tree*)l);
+    func_00472050((Word*)e, (Word*)&u);
+}
+
+static inline int MapNe(ThrIt* it, ThrIt* end)
+{
+    func_00471E90(end, func_00471EA0(D_00588020));
+    return (it->node == end->node) ^ 1;
+}
+
+extern "C" void cNetMsgThrottle_NextFrame(void)
+{
+    ThrIt it;
+    ThrLIt e;
+    ThrLIt b;
+    ThrIt end;
+    ThrIt begin;
+    int now;
+
+    func_00472070(&begin, D_00588020);
+    it.node = begin.node;
+    now = cDME_GetTime(1);
+    while (MapNe(&it, &end)) {
+        ThrList* l = &it.node->list;
+        float f = (float)l->count * l->rate;
+        if (f >= 1.0f) {
+            int n = (int)f;
+            int i;
+            l->count = 1;
+            for (i = 0; i <= n; i++) {
+                ThrEntry* ent;
+                ThrMsg* msg;
+                LGet(l, &b, &e);
+                if (e.node == b.node) break;
+                ent = l->head->entry;
+                std_list_deleter_voidPtr_erase_listdeleter(l, ThrLIt(l->head));
+                printf(D_004C3430, now, ++D_00588030, it.node->key);
+                QueueMessage_cMessageR_cSystemP_int(ent->msg, ent->target, ent->flags);
+                msg = ent->msg;
+                {
+                    AllocGuard guard;
+                    msg->~ThrMsg();
+                    cMemMan_Deallocate(0, msg, D_004C3410, 0x32);
+                }
+                {
+                    AllocGuard guard;
+                    cMemMan_Deallocate(0, ent, D_004C3410, 0x33);
+                }
+            }
+        } else {
+            l->count++;
+        }
+        std_red_black_tree_1_increment(&it);
+    }
+}
+#undef func_00472070 /* merge_units */
+#undef func_00472050 /* merge_units */
+static inline void merge_flush_func_00472080(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00472080 */
+
+/* merge_units: begin func_00472370 */
+#pragma push /* merge_units */
+/* begin(): iterator at the first element. */
+void func_00472370(Iter* out, PtrVec* v) {
+    out->p = v->data;
+}
+static inline void merge_flush_func_00472370(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00472370 */
+
+/* merge_units: begin func_00472380 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Not inside a known source-file range: after NetMsgThrottle.cc (ends 0x00472370).
+ */
+
+
+Map* std_tree_pair_int_value_compare_ctor_valuecompareR_cAllocatorR_6(Map* m, unsigned char* cmp) {
+    m->count = 0;
+    m->head = 0;
+    m->cmp = *cmp;
+    m->hp = &m->head;
+    return m;
+}
+static inline void merge_flush_func_00472380(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00472380 */
+
+/* merge_units: begin func_004723A0 */
+#pragma push /* merge_units */
+typedef struct { int m0; void* m4; } TB5C0;
+extern void std_tree_pair_int_value_compare_destroy_nodeP_6(TB5C0* t, void* n);
+#if 0 /* merge_units */
+extern void operator_delete(void* p);
+#endif /* merge_units */
+#define operator_delete(a0) ((void)operator_delete((a0))) /* merge_units */
+
+TB5C0* cAssocArray_int_sMsgTypeInfo_dtor(TB5C0* t, short del)
+{
+    if (t) {
+        if (t) {
+            if (t) {
+                if (t->m4)
+                    std_tree_pair_int_value_compare_destroy_nodeP_6(t, t->m4);
+            }
+        }
+        if (del > 0)
+            operator_delete(t);
+    }
+    return t;
+}
+#undef operator_delete /* merge_units */
+static inline void merge_flush_func_004723A0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_004723A0 */

@@ -1,0 +1,117 @@
+/*
+ * SFOGame/Source/Generator: 2 files, 0021EDE0-0021EDF0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_0021EDE0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+#include "types.h"
+
+void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4(void* self) {
+    return self;
+}
+static inline void merge_flush_func_0021EDE0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0021EDE0 */
+
+/* merge_units: begin func_0021EDF0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#define V5(a) virtual void a##0(); virtual void a##1(); virtual void a##2(); virtual void a##3(); virtual void a##4();
+#define V25(a) V5(a##a) V5(a##b) V5(a##c) V5(a##d) V5(a##e)
+struct Tgt {
+    V25(x) V25(y) V5(za) V5(zb) virtual void q0(); virtual void q1(); virtual void q2(); virtual void q3();
+    virtual unsigned char State();
+    int pad4[2]; int id;
+};
+struct Hnd { Tgt* p; int id; };
+struct LNode { LNode* prev; LNode* next; Hnd h; };
+struct Gen;
+extern "C" {
+#if 0 /* merge_units */
+LNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4(LNode* n);
+#endif /* merge_units */
+#define details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4(a0) ((LNode *)details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4((void *)(a0))) /* merge_units */
+
+LNode* std_list_deleter_cSafePtr_cGOBJ_tail(void* l);
+LNode** std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(LNode** it, LNode* n);
+void cGenInfoObject_ctor(void* ctx);
+int cGenInfoObject_IsOwner(void* ctx, void* key);
+int cDME_GetTime(int);
+int cNPC_GetActiveNpcCount(void);
+unsigned char cGenerator_CheckSpawnNode(Gen* g, Gen* s);
+void cGenerator_Spawn(Gen* g, Gen* s, int i);
+extern int g_MaxActiveNpcCount;
+extern int D_004F56B8;
+extern unsigned char g_IsMultiplayer;
+void cGenerator_NextFrame(Gen* self, float dt);
+}
+struct Gen {
+    V5(a) V5(b) V5(c) V5(d) V5(e)
+    virtual int CanSpawn();
+    char pad4[8]; char key[0x78 - 0xC]; int n78; Gen** arr; int pad80; float f84; int n88; int n8C;
+    int list90; LNode head; char padA4[0x18]; float fBC; int nC0; int nC4; int nC8; char padCC[4]; unsigned char bD0; unsigned char bD1;
+};
+static inline bool Valid(Hnd* h) {
+    return !h->p || h->p->id == h->id;
+}
+static inline Tgt* HGet(Hnd* h) {
+    return Valid(h) ? h->p : 0;
+}
+void cGenerator_NextFrame(Gen* self, float dt)
+{
+    char ctx[4];
+    LNode* end;
+    int cnt = 0;
+    LNode* n = details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4(&self->head)->next;
+    self->fBC += dt;
+    std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&end, std_list_deleter_cSafePtr_cGOBJ_tail(&self->list90));
+    while (n != end) {
+        Hnd* h = &n->h;
+        Tgt* t = HGet(h);
+        if (t && t->State() != 3) cnt++;
+        n = n->next;
+        std_list_deleter_cSafePtr_cGOBJ_generic_iterator_ctor_nodebaseP(&end, std_list_deleter_cSafePtr_cGOBJ_tail(&self->list90));
+    }
+    cGenInfoObject_ctor(ctx);
+    if (self->bD1) return;
+    if (g_IsMultiplayer) {
+        if (!cGenInfoObject_IsOwner(ctx, self->key)) return;
+        if (!(D_004F56B8 < cDME_GetTime(1))) return;
+    }
+    if (!(g_MaxActiveNpcCount > cNPC_GetActiveNpcCount())) return;
+    if (!self->CanSpawn()) return;
+    if (!(self->nC0 < self->n8C)) return;
+    if (self->fBC <= self->f84) return;
+    if (!(cnt < self->n88)) return;
+    Gen* s;
+    int nn = self->n78;
+    if (nn == 0) {
+        s = self;
+    } else {
+        if (!self->bD0) {
+            int c = self->nC4 + 1;
+            self->nC4 = c;
+            self->nC4 = c % nn;
+        }
+        s = self->arr[self->nC4];
+    }
+    unsigned char r = cGenerator_CheckSpawnNode(self, s);
+    if (r == 1) {
+        cGenerator_Spawn(self, s, self->n78 ? self->nC4 : -1);
+        D_004F56B8 = cDME_GetTime(1) + 250;
+    } else if (r == 0) {
+        if (self->nC8 == self->nC4) self->fBC = self->f84 - 1.0f;
+    }
+}
+#undef details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_4 /* merge_units */
+static inline void merge_flush_func_0021EDF0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0021EDF0 */

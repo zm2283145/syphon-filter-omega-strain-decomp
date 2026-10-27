@@ -1,6 +1,0 @@
-#pragma cplusplus on
-#include "types.h"
-#define std_list_deleter_voidPtr_erase_listdeleter_listdeleter std_list_deleter_cSafePtr_cGOBJ_erase_listdeleter_listdeleter
-#include "obj_list_dtor_mid.h"
-
-DEFINE_OBJ_LIST_DTOR_MID(std_list_imp_cSafePtr_cGOBJ_dtor)

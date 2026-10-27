@@ -1,0 +1,199 @@
+/*
+ * SFOGame/Source/GuiEquipmentModify: 2 files, 002BF090-002BF370
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_002BF090 */
+#pragma push /* merge_units */
+#include "types.h"
+/* GuiEquipmentModify_UpdateSelectionList: collects the weapon ids of the
+ * selected category: every weapon in the database (D_0051EE38 set),
+ * otherwise the agent's unlocked weapons plus the screen's extra entries of
+ * that category not already listed; then places the list widget and
+ * rebuilds the columns. Layout and placement as in
+ * GuiEquipmentModify_UpdateSelectionHand (GuiEquipmentModify_UpdateSelectionHand.c); id list as in
+ * GuiEndGameStatistics_PlayQuips (GuiEndGameStatistics_PlayQuips.c). */
+typedef struct { int a0; int n; int* data; unsigned char owned; char pad[3]; } IntVec_F090;
+typedef struct { char pad[0x30]; unsigned char cls; } Wpn_F090;
+typedef struct { int pad; int n; } WpnList_F090;
+typedef struct { int pad; WpnList_F090* list; } WpnDb_F090;
+typedef struct {
+    char pad0[0x88];
+    int cat;
+    char pad8C[0x94 - 0x8C];
+    void* list;
+    int x;
+    int total;
+    int base;
+    int step;
+    int max;
+    char padAC[0xD8 - 0xAC];
+    int nExtra;
+    short extra[10];
+    unsigned char extraCat[20];
+    int count;
+    int sel;
+    short ids[1];
+} Self_F090;
+extern char g_Game[];
+extern WpnDb_F090* g_WeaponDatabase;
+extern unsigned char D_0051EE38;
+void* cGameSystem_GetAgentData(void* mgr, int idx);
+void std_vector_int_ctor_void(IntVec_F090* v);
+void func_0013A040(IntVec_F090* v, int flags);
+void cAgentData_GetWeaponIndices(void* agent, IntVec_F090* v);
+Wpn_F090* cWeaponDB_GetEntry(WpnDb_F090* db, int id);
+void GuiEquipmentModify_PrefetchQue(Self_F090* self, int f);
+void GuiWidget_SetPosition(void*, float, float);
+void GuiEquipmentModify_UpdateList(Self_F090*);
+void GuiEquipmentModify_UpdateCurrent(Self_F090*);
+void GuiEquipmentModify_UpdateSelection(Self_F090*);
+
+void GuiEquipmentModify_UpdateSelectionList(Self_F090* self)
+{
+    int i;
+    int lim;
+    int off;
+    int span;
+    int q;
+    int first;
+    self->count = 0;
+    if (!D_0051EE38) {
+        void* a = cGameSystem_GetAgentData(g_Game, -1);
+        IntVec_F090 list;
+        int n;
+        int j;
+        std_vector_int_ctor_void(&list);
+        list.owned = 1;
+        cAgentData_GetWeaponIndices(a, &list);
+        n = list.n;
+        for (j = 0; j < n; j++) {
+            Wpn_F090* w = cWeaponDB_GetEntry(g_WeaponDatabase, list.data[(unsigned)j]);
+            if (w->cls == self->cat) {
+                self->ids[self->count] = list.data[(unsigned)j];
+                self->count++;
+            }
+        }
+        for (i = 0; i < self->nExtra; i++) {
+            if (self->extraCat[i] == self->cat) {
+                int found = 0;
+                int k;
+                for (k = 0; k < self->count; k++) {
+                    if (self->ids[k] == self->extra[i]) {
+                        found = 1;
+                        break;
+                    }
+                }
+                if (!found) {
+                    self->ids[self->count] = self->extra[i];
+                    self->count++;
+                }
+            }
+        }
+        func_0013A040(&list, -1);
+    } else {
+        int n = g_WeaponDatabase->list->n;
+        for (i = 0; i < n; i++) {
+            Wpn_F090* w = cWeaponDB_GetEntry(g_WeaponDatabase, i);
+            if (w->cls == self->cat) {
+                self->ids[self->count] = i;
+                self->count++;
+            }
+        }
+    }
+    GuiEquipmentModify_PrefetchQue(self, 1);
+    span = self->total - self->base;
+    q = span / self->step;
+    first = q - (self->count >> 1);
+    off = span - q * self->step - 1;
+    if (first < 0)
+        first = 0;
+    lim = self->max - self->count;
+    if (lim < 0)
+        lim = 0;
+    if (lim < first)
+        first = lim;
+    GuiWidget_SetPosition(self->list, (float)self->x, (float)(self->total - off - first * self->step));
+    GuiEquipmentModify_UpdateList(self);
+    GuiEquipmentModify_UpdateCurrent(self);
+    GuiEquipmentModify_UpdateSelection(self);
+}
+static inline void merge_flush_func_002BF090(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002BF090 */
+
+/* merge_units: begin func_002BF370 */
+#pragma push /* merge_units */
+typedef struct { char pad[0x40A]; short id; } Item_2BF370;
+typedef struct { char pad[0x2410]; Item_2BF370* items[10]; } Inv_2BF370;
+typedef struct { char pad[0x60]; Inv_2BF370 inv; } Owner_2BF370;
+typedef struct {
+    char pad0[0x4C];
+    Owner_2BF370* owner;
+    char pad50[0x94 - 0x50];
+    void* list;
+    int x;
+    int total;
+    int base;
+    int step;
+    char padA8[0x104 - 0xA8];
+    int count;
+    int sel;
+    short ids[10];
+} Self_2BF370;
+
+extern void GuiWidget_SetPosition(void*, float, float);
+#if 0 /* merge_units */
+extern void GuiEquipmentModify_UpdateList(Self_2BF370*);
+#endif /* merge_units */
+#define GuiEquipmentModify_UpdateList(a0) (GuiEquipmentModify_UpdateList((Self_F090 *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
+extern void GuiEquipmentModify_UpdateCurrent(Self_2BF370*);
+#endif /* merge_units */
+#define GuiEquipmentModify_UpdateCurrent(a0) (GuiEquipmentModify_UpdateCurrent((Self_F090 *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
+extern void GuiEquipmentModify_UpdateSelection(Self_2BF370*);
+#endif /* merge_units */
+#define GuiEquipmentModify_UpdateSelection(a0) (GuiEquipmentModify_UpdateSelection((Self_F090 *)(a0))) /* merge_units */
+
+
+void GuiEquipmentModify_UpdateSelectionHand(Self_2BF370* self)
+{
+    int i;
+    int span;
+    int first;
+    int off;
+    int q;
+
+    self->count = 0;
+    for (i = 0; i < 10; i++) {
+        if (i != 1 && i != 4 && i != 6 && i != 7) {
+            Item_2BF370* it = ((Inv_2BF370*)((int)self->owner + 0x60))->items[i];
+            if (it) {
+                self->ids[self->count] = it->id;
+                self->count++;
+            }
+        }
+    }
+    if (self->sel >= self->count)
+        self->sel = 0;
+    span = self->total - self->base;
+    q = span / self->step;
+    first = q - (self->count >> 1);
+    off = span - q * self->step - 1;
+    if (first < 0)
+        first = 0;
+    GuiWidget_SetPosition(self->list, (float)self->x, (float)(self->total - off - first * self->step));
+    GuiEquipmentModify_UpdateList(self);
+    GuiEquipmentModify_UpdateCurrent(self);
+    GuiEquipmentModify_UpdateSelection(self);
+}
+#undef GuiEquipmentModify_UpdateList /* merge_units */
+#undef GuiEquipmentModify_UpdateCurrent /* merge_units */
+#undef GuiEquipmentModify_UpdateSelection /* merge_units */
+static inline void merge_flush_func_002BF370(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002BF370 */

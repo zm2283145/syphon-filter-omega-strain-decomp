@@ -1,0 +1,94 @@
+/*
+ * SFOGame/Source/grenade: 2 files, 00259490-002594A0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00259490 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+#include "types.h"
+
+void cAreaEffect_Render(void) {
+}
+static inline void merge_flush_func_00259490(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00259490 */
+
+/* merge_units: begin func_002594A0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+static inline void QC(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
+struct V4 {
+    float x, y, z, w;
+    V4() {}
+    V4(const V4& o) { V4* d = this; const V4* s = &o; __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
+} __attribute__((aligned(16)));
+struct Iter_002594A0 {
+    int *p;
+    bool operator==(const Iter_002594A0 &o) const { int *q = o.p; return p == q; }
+    Iter_002594A0() {}
+    Iter_002594A0(const Iter_002594A0 &o) : p(o.p) {}
+    Iter_002594A0 &operator=(const Iter_002594A0 &o) { p = o.p; return *this; }
+    bool operator!=(const Iter_002594A0 &o) const { return !(*this == o); }
+    Iter_002594A0 &operator++() { ++p; return *this; }
+};
+struct SmokeDef { char pad0[0xBC]; unsigned char bBC; char padBD[0xC8 - 0xBD]; float fC8; };
+struct Smoke {
+    char pad0[0x60];
+    float f60;
+    char pad64[0xC];
+    V4 pos;
+    SmokeDef *def;
+    char pad84[0xD5 - 0x84];
+    unsigned char bD5;
+    unsigned char bD6;
+};
+extern "C" {
+extern char D_004F8040[];
+extern float D_0048AFE8;
+extern float D_0048AFE0;
+int *func_002596D0(void *);
+int *func_002596A0(void *);
+Iter_002594A0 std_list_cAreaEffectPtr_generic_iterator_ctor(void *, int *const &);
+int ClipSegmentToZRange(V4 *, V4 *, float, float);
+int SegmentIntersectsSphere(V4 *, V4 *, V4 *, float);
+}
+static inline Iter_002594A0 Begin() { return std_list_cAreaEffectPtr_generic_iterator_ctor(D_004F8040, func_002596D0(D_004F8040)); }
+static inline Iter_002594A0 End() { return std_list_cAreaEffectPtr_generic_iterator_ctor(D_004F8040, func_002596A0(D_004F8040)); }
+#pragma opt_rotateloops off
+extern "C" Smoke *cAreaEffect_LOS_Obscured(V4 *a, V4 *b)
+{
+    Iter_002594A0 it, end;
+    it = Begin();
+    end = End();
+    for (; it != end; ++it) {
+        Smoke *s = (Smoke *)*it.p;
+        if (s->bD6) {
+            V4 p0 = *a;
+            V4 q0 = *b;
+            float ratio = 1.0f;
+            unsigned char hit = 0;
+            float k;
+            if (!s->bD5 && s->f60 < D_0048AFE8 && s->def->bBC != 4)
+                ratio = s->f60 / D_0048AFE8;
+            k = s->def->fC8 * ratio;
+            float h = D_0048AFE0 * (1.0f + ratio) / 2.0f;
+            if (ClipSegmentToZRange(&p0, &q0, s->pos.z, s->pos.z + h)) {
+                V4 c = s->pos;
+                c.z += D_0048AFE0 / 2.0f;
+                hit = SegmentIntersectsSphere(&p0, &q0, &c, k);
+            }
+            if (hit) return (Smoke *)*it.p;
+        }
+    }
+    return 0;
+}
+static inline void merge_flush_func_002594A0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002594A0 */

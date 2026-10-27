@@ -1,0 +1,168 @@
+/*
+ * SFOGame/Source/humanAnimData: 2 files, 001EFE10-001EFE70
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_001EFE10 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+#include "types.h"
+#include "loose01_types.h"
+
+extern float Math_Clampf(float, float, float);
+
+/* Sets a range and clamps it: x into [0,1], y into [x,1]. */
+Vec2f* cSkaAnimPlaybackRange_Normalized_ctor(Vec2f* self, float x, float y) {
+    self->x = x;
+    self->y = y;
+    self->x = Math_Clampf(self->x, 0.0f, 1.0f);
+    self->y = Math_Clampf(self->y, self->x, 1.0f);
+    return self;
+}
+static inline void merge_flush_func_001EFE10(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001EFE10 */
+
+/* merge_units: begin func_001EFE70 */
+#pragma push /* merge_units */
+typedef struct { char d[0x4]; } B4;
+typedef struct { char d[0x8]; } B8;
+typedef struct { char d[0x10]; } B10;
+typedef struct { char d[0x30]; } B30;
+typedef struct { char d[0x38]; } B38;
+typedef struct { char d[0x50]; } B50;
+typedef struct { char d[0x70]; } B70;
+extern void* cString16N_3_ctor_charP(void*, void*);
+extern void cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier(void*, void*, void*, int);
+extern void cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(void*, void*, void*, void*);
+extern void cSkaAnim_dtor(void*, int);
+#if 0 /* merge_units */
+extern void* cSkaAnimPlaybackRange_Normalized_ctor(void*, float, float);
+#endif /* merge_units */
+#define cSkaAnimPlaybackRange_Normalized_ctor(a0, a1, a2) ((void *)cSkaAnimPlaybackRange_Normalized_ctor((Vec2f *)(a0), (a1), (a2))) /* merge_units */
+
+extern void* cEulerAngle_T_1_2_ctor_float_float_float(void*, float, float, float);
+extern void cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_2(void*, void*, void*, int, int, void*, void*, int, float, int, int);
+extern float Deg2Rad(float);
+extern void* cSkaAnimationSet_GetNode_cString16NR(void*, void*);
+extern void* cVector_ctor_float_float_float_float(void*, float, float, float, float);
+extern void cSkaRotatableAnim_ctor(void*, int, void*, float, float, void*, int);
+extern void cSkaRotatableAnim_dtor(void*, int);
+/* Builds and registers one block of motion-graph nodes. */
+#pragma optimization_level 1
+void BuildAnimations_BodyLand(void* p0)
+{
+    B4 v70C;
+    B4 v708;
+    B4 v704;
+    B4 v700;
+    B4 v6FC;
+    B4 v6F8;
+    B4 v6F4;
+    B4 v6F0;
+    B8 v6E8;
+    B8 v6E0;
+    B8 v6D8;
+    B38 v6A0;
+    B30 v670;
+    B50 v620;
+    B30 v5F0;
+    B30 v5C0;
+    B10 v5B0;
+    B50 v560;
+    B30 v530;
+    B30 v500;
+    B10 v4F0;
+    B70 v480;
+    B30 v450;
+    B30 v420;
+    B10 v410;
+    B70 v3A0;
+    B30 v370;
+    B30 v340;
+    B10 v330;
+    B50 v2E0;
+    B30 v2B0;
+    B30 v280;
+    B10 v270;
+    B50 v220;
+    B30 v1F0;
+    B30 v1C0;
+    B10 v1B0;
+    B70 v140;
+    B30 v110;
+    B30 vE0;
+    B10 vD0;
+    B70 v60;
+    float f0;
+    float f1;
+    float f2;
+    float f3;
+    float f4;
+    float f5;
+    float f6;
+    float f7;
+    float f8;
+    float f9;
+    void* t1;
+    void* t2;
+    void* t3;
+    void* t4;
+    void* t5;
+    void* t6;
+    void* t7;
+    void* t8;
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier(&v620, cString16N_3_ctor_charP(&v670, "dataDeathImpactWithGround"), p0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v70C, p0, cString16N_3_ctor_charP(&v6A0, "animBodyLandFaceDown_UnRotatable"), &v620);
+    cSkaAnim_dtor(&v620, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_2(&v560, cString16N_3_ctor_charP(&v5C0, "dataDeathImpactWithGroundOnBack"), p0, 0, 0, cSkaAnimPlaybackRange_Normalized_ctor(&v6E8, 0.125f, 1.0f), cEulerAngle_T_1_2_ctor_float_float_float(&v5B0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v708, p0, cString16N_3_ctor_charP(&v5F0, "animBodyLandOnBack_UnRotatable"), &v560);
+    cSkaAnim_dtor(&v560, -1);
+    f0 = Deg2Rad(-14.0f);
+    t1 = cString16N_3_ctor_charP(&v500, "animBodyLandFaceDown_UnRotatable");
+    t2 = cSkaAnimationSet_GetNode_cString16NR(p0, t1);
+    f1 = f0 + Deg2Rad(-1.8e+02f);
+    f2 = f0 + Deg2Rad(1.8e+02f);
+    cSkaRotatableAnim_ctor(&v480, 22, t2, f1, f2, cVector_ctor_float_float_float_float(&v4F0, 0.0f, 0.0f, 1.0f, 0.0f), 1);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v704, p0, cString16N_3_ctor_charP(&v530, "animBodyLandFaceDown"), &v480);
+    cSkaRotatableAnim_dtor(&v480, -1);
+    f3 = Deg2Rad(-13.0f);
+    t3 = cString16N_3_ctor_charP(&v420, "animBodyLandOnBack_UnRotatable");
+    t4 = cSkaAnimationSet_GetNode_cString16NR(p0, t3);
+    f4 = f3 + Deg2Rad(-1.8e+02f);
+    f5 = f3 + Deg2Rad(1.8e+02f);
+    cSkaRotatableAnim_ctor(&v3A0, 22, t4, f4, f5, cVector_ctor_float_float_float_float(&v410, 0.0f, 0.0f, 1.0f, 0.0f), 1);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v700, p0, cString16N_3_ctor_charP(&v450, "animBodyLandOnBack"), &v3A0);
+    cSkaRotatableAnim_dtor(&v3A0, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_2(&v2E0, cString16N_3_ctor_charP(&v340, "dataDeathImpactWithGround"), p0, 0, 0, cSkaAnimPlaybackRange_Normalized_ctor(&v6E0, 1.0f, 1.0f), cEulerAngle_T_1_2_ctor_float_float_float(&v330, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v6FC, p0, cString16N_3_ctor_charP(&v370, "animBodyLandFaceDown_UnRotatable_LastFrameOnly"), &v2E0);
+    cSkaAnim_dtor(&v2E0, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_2(&v220, cString16N_3_ctor_charP(&v280, "dataDeathImpactWithGroundOnBack"), p0, 0, 0, cSkaAnimPlaybackRange_Normalized_ctor(&v6D8, 1.0f, 1.0f), cEulerAngle_T_1_2_ctor_float_float_float(&v270, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v6F8, p0, cString16N_3_ctor_charP(&v2B0, "animBodyLandOnBack_UnRotatable_LastFrameOnly"), &v220);
+    cSkaAnim_dtor(&v220, -1);
+    t5 = cString16N_3_ctor_charP(&v1C0, "animBodyLandFaceDown_UnRotatable_LastFrameOnly");
+    t6 = cSkaAnimationSet_GetNode_cString16NR(p0, t5);
+    f6 = f0 + Deg2Rad(-1.8e+02f);
+    f7 = f0 + Deg2Rad(1.8e+02f);
+    cSkaRotatableAnim_ctor(&v140, 22, t6, f6, f7, cVector_ctor_float_float_float_float(&v1B0, 0.0f, 0.0f, 1.0f, 0.0f), 1);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v6F4, p0, cString16N_3_ctor_charP(&v1F0, "animBodyLandFaceDown_LastFrameOnly"), &v140);
+    cSkaRotatableAnim_dtor(&v140, -1);
+    t7 = cString16N_3_ctor_charP(&vE0, "animBodyLandOnBack_UnRotatable_LastFrameOnly");
+    t8 = cSkaAnimationSet_GetNode_cString16NR(p0, t7);
+    f8 = f3 + Deg2Rad(-1.8e+02f);
+    f9 = f3 + Deg2Rad(1.8e+02f);
+    cSkaRotatableAnim_ctor(&v60, 22, t8, f8, f9, cVector_ctor_float_float_float_float(&vD0, 0.0f, 0.0f, 1.0f, 0.0f), 1);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v6F0, p0, cString16N_3_ctor_charP(&v110, "animBodyLandOnBack_LastFrameOnly"), &v60);
+    cSkaRotatableAnim_dtor(&v60, -1);
+}
+#pragma optimization_level reset
+#undef cSkaAnimPlaybackRange_Normalized_ctor /* merge_units */
+static inline void merge_flush_func_001EFE70(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001EFE70 */

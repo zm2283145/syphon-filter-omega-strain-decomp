@@ -1,0 +1,91 @@
+/*
+ * SFOGame/Source/humanAnimData: 1 file, 00206B50
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00206B50 */
+#pragma push /* merge_units */
+#include "types.h"
+typedef struct { char data[0x30]; } Name;
+typedef struct { char data[0x20]; } RegKey;
+typedef struct { char data[0x50]; } Binding;
+typedef struct { char data[0x40]; } Slider;
+typedef struct { char data[0x10]; } Quat;
+typedef struct { char data[0x10]; } Vec;
+typedef struct { char data[0x10]; } SelNode;
+typedef struct { char data[0x8]; } Pair;
+typedef struct { char data[0x10]; } Child;
+typedef struct { char data[0x8]; } Range;
+typedef struct { char data[0x10]; } ChildList;
+typedef struct { int unused; } Handle;
+typedef struct { Child c; Range r; } ChildRange;
+typedef struct { SelNode n; Pair p; } SelPair;
+typedef struct { SelPair sp; ChildRange cr3; ChildRange cr2; ChildRange cr1; ChildList list; } SliderParts;
+extern Name* cString16N_3_ctor_charP(Name* n, const char* s);
+extern void cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_int_eAxisOfMotion(Binding* b, Name* n, void* obj, int a, int b2);
+extern void cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier_cEulerAngleTR_etc(Binding* b, Name* n, void* obj, int a, Vec* v, int c);
+extern void cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(Handle* h, void* obj, Name* n, void* node);
+extern void cSkaAnim_dtor(Binding* b, int flags);
+extern float Deg2Rad(float deg);
+extern Vec* cEulerAngle_T_1_2_ctor_float_float_float(Vec* v, float x, float y, float z);
+extern void cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(ChildList* l);
+extern Range* cSkaBlendSequenceExtents_ctor_float_float(Range* r, float a, float b);
+extern Child* cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(Child* c, Name* n, void* obj, Range* r);
+extern ChildList* cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(ChildList* l, Child* c);
+extern void cQuaternion_GetIdentity(Quat* q);
+extern Slider* cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(Slider* s, int a, ChildList* l, int c, int d, Quat* q);
+extern void cSkaSlider_dtor(Slider* s, int flags);
+extern void cSkaBlendSequenceItem_dtor(Child* c, int flags);
+extern void cSkaBlendSequenceExtents_dtor(Range* r, int flags);
+extern void cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(ChildList* l, int flags);
+extern Pair* cSkaPlaybackGroupId_ctor_int(Pair* p, int a);
+extern SelNode* cSkaAnimationBlend_ctor(SelNode* s, Name* n, void* obj, Pair* p);
+extern RegKey* cString16N_2_ctor_charP(RegKey* k, const char* s);
+extern void cSkaAnimationSet_CreateAnimationBlend(void* obj, RegKey* k, SelNode* s);
+extern void cSkaAnimationBlend_dtor(SelNode* s, int flags);
+/* Registers the turn bindings and the turn slider of a motion graph. */
+#pragma optimization_level 1
+void BuildAnimationBlend_RollBack(void* obj)
+{
+    Handle h1; Handle h2; Handle h3; Handle h4;
+    SliderParts s;
+    Name n2; Name n1; Binding b1; Name n5; Name n4; Vec v1; Binding b2; Name n8; Name n7; Vec v2; Binding b3;
+    Name n9; Name n10; Name n11; Name n12; Quat q; Slider slider; RegKey key; Name n13;
+    ChildList* l;
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_int_eAxisOfMotion(&b1, cString16N_3_ctor_charP(&n1, "DATA_ID_RunningRoll"), obj, 2, 0x2);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&h1, obj, cString16N_3_ctor_charP(&n2, "animRunRollForw_Forw"), &b1);
+    cSkaAnim_dtor(&b1, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier_cEulerAngleTR_etc(&b2, cString16N_3_ctor_charP(&n4, "animRunRollForw_Forw"), obj, 4, cEulerAngle_T_1_2_ctor_float_float_float(&v1, 0.0f, 0.0f, Deg2Rad(90.0f)), 0x1);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&h2, obj, cString16N_3_ctor_charP(&n5, "animRunRollForw_Left"), &b2);
+    cSkaAnim_dtor(&b2, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier_cEulerAngleTR_etc(&b3, cString16N_3_ctor_charP(&n7, "animRunRollForw_Forw"), obj, 4, cEulerAngle_T_1_2_ctor_float_float_float(&v2, 0.0f, 0.0f, Deg2Rad(-90.0f)), 0x1);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&h3, obj, cString16N_3_ctor_charP(&n8, "animRunRollForw_Rght"), &b3);
+    cSkaAnim_dtor(&b3, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(&s.list);
+    cSkaBlendSequenceExtents_ctor_float_float(&s.cr1.r, 0.0f, 0.25f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&s.cr1.c, cString16N_3_ctor_charP(&n10, "animRunRollForw_Left"), obj, &s.cr1.r);
+    cSkaBlendSequenceExtents_ctor_float_float(&s.cr2.r, 0.5f, 0.5f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&s.cr2.c, cString16N_3_ctor_charP(&n11, "animRunRollForw_Forw"), obj, &s.cr2.r);
+    cSkaBlendSequenceExtents_ctor_float_float(&s.cr3.r, 0.75f, 1.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&s.cr3.c, cString16N_3_ctor_charP(&n12, "animRunRollForw_Rght"), obj, &s.cr3.r);
+    l = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(&s.list, &s.cr1.c), &s.cr2.c), &s.cr3.c);
+    cQuaternion_GetIdentity(&q);
+    cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(&slider, 0xF, l, 0, 0, &q);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&h4, obj, cString16N_3_ctor_charP(&n9, "sliderRunRollForw"), &slider);
+    cSkaSlider_dtor(&slider, -1);
+    cSkaBlendSequenceItem_dtor(&s.cr3.c, -1);
+    cSkaBlendSequenceExtents_dtor(&s.cr3.r, -1);
+    cSkaBlendSequenceItem_dtor(&s.cr2.c, -1);
+    cSkaBlendSequenceExtents_dtor(&s.cr2.r, -1);
+    cSkaBlendSequenceItem_dtor(&s.cr1.c, -1);
+    cSkaBlendSequenceExtents_dtor(&s.cr1.r, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(&s.list, -1);
+    cSkaAnimationBlend_ctor(&s.sp.n, cString16N_3_ctor_charP(&n13, "sliderRunRollForw"), obj, cSkaPlaybackGroupId_ctor_int(&s.sp.p, 2));
+    cSkaAnimationSet_CreateAnimationBlend(obj, cString16N_2_ctor_charP(&key, "RunRollForw"), &s.sp.n);
+    cSkaAnimationBlend_dtor(&s.sp.n, -1);
+}
+#pragma optimization_level reset
+static inline void merge_flush_func_00206B50(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00206B50 */

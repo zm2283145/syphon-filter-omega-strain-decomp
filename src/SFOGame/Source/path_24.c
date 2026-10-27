@@ -1,0 +1,84 @@
+/*
+ * SFOGame/Source/path: 1 file, 00161DB0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00161DB0 */
+#pragma push /* merge_units */
+#include "types.h"
+/* N5c route scoring walk: step along the node list until a scored node or a target is found */
+typedef struct Pt1RwNode {
+    char pad0[0x10];
+    int a;
+    int b;
+    int c;
+    int d;
+} Pt1RwNode;
+typedef struct Pt1RwSelf {
+    char pad0[0x10];
+    char list[0x8];
+    Pt1RwNode* cur;
+    char pad1C[0x2C - 0x1C];
+    int active;
+    char pad30[0x468 - 0x30];
+    int mask;
+    unsigned char mode;
+    char pad46D[0x474 - 0x46D];
+    unsigned char status;
+    char pad475[3];
+    int target;
+    int target2;
+    unsigned char reverse;
+    unsigned char retry;
+} Pt1RwSelf;
+extern void cNodeRequest_SetNodeLOSResultForRestOfList(Pt1RwSelf* s, int id, int flag);
+extern void cNodeRequest_SetCompanionNodeLOSResultForRestOfList(Pt1RwSelf* s, int id, int flag);
+extern Pt1RwNode* cPriorityQueue_cNodeIndex_Pop(void* list, Pt1RwNode* n);
+extern void cNodeRequest_SendLOSRequest(Pt1RwSelf* s, int id, int mask);
+
+void cNodeRequest_UpdateLOSResult(Pt1RwSelf* s, unsigned char* flag)
+{
+    Pt1RwNode* cur = s->cur;
+    int found = 0;
+    if (!s->reverse)
+        cNodeRequest_SetNodeLOSResultForRestOfList(s, cur->a, !*flag);
+    else
+        cNodeRequest_SetCompanionNodeLOSResultForRestOfList(s, cur->b, !*flag);
+    do {
+        Pt1RwNode* n = s->cur;
+        if (n->b < 0) {
+            if (n->c == (s->mode != 2)) {
+                s->target = n->a;
+                s->target2 = -1;
+                s->status = 2;
+            }
+            n = cPriorityQueue_cNodeIndex_Pop(s->list, n);
+        } else if (!s->reverse) {
+            if (n->c == (s->mode != 2))
+                s->reverse = 1;
+            else
+                n = cPriorityQueue_cNodeIndex_Pop(s->list, n);
+        } else {
+            if (n->d != (s->mode != 2)) {
+                s->target = n->a;
+                s->target2 = n->b;
+                s->status = 2;
+            }
+            n = cPriorityQueue_cNodeIndex_Pop(s->list, n);
+            s->reverse = 0;
+        }
+        if (s->reverse) {
+            if (n->d < 0) {
+                cNodeRequest_SendLOSRequest(s, n->b, ~s->mask);
+                found = 1;
+            }
+        } else if ((s->target < 0 || s->retry) && s->active && s->cur->c < 0) {
+            cNodeRequest_SendLOSRequest(s, s->cur->a, s->mask);
+            found = 1;
+        }
+    } while (s->status != 2 && !found && s->active);
+}
+static inline void merge_flush_func_00161DB0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00161DB0 */

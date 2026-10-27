@@ -1,0 +1,355 @@
+/*
+ * SFOGame/Source/humanAnimData: 3 files, 001F12D0-001F1360
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_001F12D0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+#include "types.h"
+#include "loose01_types.h"
+
+extern int std_basic_string_char_char_traits_char_ctor_charP(int, int);
+extern float CLAMP_LOW(float, float);
+
+int cString_ctor_charP(int a0, int a1) {
+    std_basic_string_char_char_traits_char_ctor_charP(a0, a1);
+    return a0;
+}
+
+/* Sets a range with x = f(x, 0) and y = f(y, x). */
+Vec2f* cSkaAnimPlaybackRange_ctor(Vec2f* self, float x, float y) {
+    self->x = x;
+    self->y = y;
+    self->x = CLAMP_LOW(self->x, 0.0f);
+    self->y = CLAMP_LOW(self->y, self->x);
+    return self;
+}
+static inline void merge_flush_func_001F12D0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001F12D0 */
+
+/* merge_units: begin func_001F1350 */
+#pragma push /* merge_units */
+float MAX(float a, float b) {
+    float r;
+    asm { max.s r, a, b }
+    return r;
+}
+static inline void merge_flush_func_001F1350(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001F1350 */
+
+/* merge_units: begin func_001F1360 */
+#pragma push /* merge_units */
+typedef struct { char d[0x4]; } B4;
+typedef struct { char d[0x8]; } B8;
+typedef struct { char d[0x10]; } B10;
+typedef struct { char d[0x20]; } B20;
+typedef struct { char d[0x28]; } B28;
+typedef struct { char d[0x30]; } B30;
+typedef struct { char d[0x40]; } B40;
+typedef struct { char d[0x50]; } B50;
+typedef struct { B8 m10D0; B10 m10D8; } S10D0;
+typedef struct { B8 m10A0; B10 m10A8; B8 m10B8; } S10A0;
+typedef struct { B8 m1060; B10 m1068; B8 m1078; } S1060;
+typedef struct { B8 mFB0; B10 mFB8; B10 mFC8; B10 mFD8; B10 mFE8; B10 mFF8; B10 m1008; B10 m1018; B10 m1028; B10 m1038; B8 m1048; } SFB0;
+typedef struct { B8 mFA0; B8 mFA8; } SFA0;
+typedef struct { B28 mF70; B8 mF98; } SF70;
+extern char D_004A0640[];
+extern void* cString16N_3_ctor_charP(void*, void*);
+extern void cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_int_eAxisOfMotion(void*, void*, void*, int, int);
+extern void cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(void*, void*, void*, void*);
+extern void cSkaAnim_dtor(void*, int);
+extern void cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier(void*, void*, void*, int);
+extern void cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(void*);
+extern void cSkaBlendSequenceExtents_ctor_float_float(void*, float, float);
+extern void cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(void*, void*, void*, void*);
+extern void* cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(void*, void*);
+extern void cQuaternion_GetIdentity(void*);
+extern void cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(void*, int, void*, int, int, void*);
+extern void cSkaSlider_dtor(void*, int);
+extern void cSkaBlendSequenceItem_dtor(void*, int);
+extern void cSkaBlendSequenceExtents_dtor(void*, int);
+extern void cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(void*, int);
+extern void cSkaTransBLEND_ctor_float_bool_bool(void*, float, int, int);
+extern float nGameUnits_Sec(float);
+extern void cSkaInitListOfPointers_cSkaSwitchItem_ctor(void*);
+extern void cSkaInitListOfPointers_cSkaTransBLEND_ctor(void*);
+extern void* cSkaInitListOfPointers_cSkaTransBLEND_opShl(void*, void*);
+extern void cSkaSwitchItem_ctor_cString16NR_cSkaAnimationSetR_cSkaInitListOfPointersR(void*, void*, void*, void*);
+extern void* cSkaInitListOfPointers_cSkaSwitchItem_opShl(void*, void*);
+extern void cSkaSwitch_ctor(void*, int, void*, void*);
+extern void cSkaSwitch_dtor(void*, int);
+extern void cSkaSwitchItem_dtor(void*, int);
+extern void cSkaInitListOfPointers_cSkaTransBLEND_dtor(void*, int);
+extern void cSkaInitListOfPointers_cSkaSwitchItem_dtor(void*, int);
+extern void* cSkaAnimPlaybackRange_Normalized_ctor(void*, float, float);
+extern void* cEulerAngle_T_1_2_ctor_float_float_float(void*, float, float, float);
+extern void cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_2(void*, void*, void*, int, int, void*, void*, int, float, int, int);
+extern float Deg2Rad(float);
+extern void cSkaTransBLEND_dtor(void*, int);
+/* Builds and registers one block of motion-graph nodes. */
+#pragma optimization_level 1
+void BuildAnimations_CarryBody(void* p0)
+{
+    B4 v112C;
+    B4 v1128;
+    B4 v1124;
+    B4 v1120;
+    B4 v111C;
+    B4 v1118;
+    B4 v1114;
+    B4 v1110;
+    B4 v110C;
+    B4 v1108;
+    B4 v1104;
+    B4 v1100;
+    B4 v10FC;
+    B4 v10F8;
+    B4 v10F4;
+    B4 v10F0;
+    B4 v10EC;
+    B4 v10E8;
+    S10D0 s10D0;
+    B10 v10C0;
+    S10A0 s10A0;
+    B10 v1090;
+    B10 v1080;
+    S1060 s1060;
+    B10 v1050;
+    SFB0 sFB0;
+    SFA0 sFA0;
+    SF70 sF70;
+    B30 vF40;
+    B30 vF10;
+    B30 vEE0;
+    B50 vE90;
+    B30 vE60;
+    B30 vE30;
+    B50 vDE0;
+    B30 vDB0;
+    B30 vD80;
+    B50 vD30;
+    B30 vD00;
+    B30 vCD0;
+    B50 vC80;
+    B30 vC50;
+    B30 vC20;
+    B50 vBD0;
+    B30 vBA0;
+    B30 vB70;
+    B50 vB20;
+    B30 vAF0;
+    B30 vAC0;
+    B50 vA70;
+    B30 vA40;
+    B30 vA10;
+    B50 v9C0;
+    B30 v990;
+    B30 v960;
+    B30 v930;
+    B30 v900;
+    B10 v8F0;
+    B40 v8B0;
+    B30 v880;
+    B30 v850;
+    B30 v820;
+    B30 v7F0;
+    B10 v7E0;
+    B40 v7A0;
+    B30 v770;
+    B30 v740;
+    B20 v720;
+    B30 v6F0;
+    B20 v6D0;
+    B30 v6A0;
+    B20 v680;
+    B10 v670;
+    B40 v630;
+    B30 v600;
+    B30 v5D0;
+    B20 v5B0;
+    B30 v580;
+    B20 v560;
+    B30 v530;
+    B20 v510;
+    B10 v500;
+    B40 v4C0;
+    B30 v490;
+    B30 v460;
+    B10 v450;
+    B50 v400;
+    B30 v3D0;
+    B30 v3A0;
+    B10 v390;
+    B50 v340;
+    B30 v310;
+    B30 v2E0;
+    B50 v290;
+    B30 v260;
+    B30 v230;
+    B50 v1E0;
+    B30 v1B0;
+    B30 v180;
+    B10 v170;
+    B50 v120;
+    B30 vF0;
+    B30 vC0;
+    B10 vB0;
+    B50 v60;
+    float f0;
+    void* t1;
+    void* t2;
+    void* t3;
+    void* t4;
+    void* t5;
+    void* t6;
+    void* t7;
+    void* t8;
+    void* t9;
+    void* t10;
+    void* t11;
+    void* t12;
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_int_eAxisOfMotion(&vE90, cString16N_3_ctor_charP(&vEE0, "carrybody_pt1"), p0, 0, 2);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v112C, p0, cString16N_3_ctor_charP(&vF10, "animCarryBody_Carrier"), &vE90);
+    cSkaAnim_dtor(&vE90, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_int_eAxisOfMotion(&vDE0, cString16N_3_ctor_charP(&vE30, "carrybody_pt2"), p0, 0, 2);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v1128, p0, cString16N_3_ctor_charP(&vE60, "animCarryBody_Body"), &vDE0);
+    cSkaAnim_dtor(&vDE0, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier(&vD30, cString16N_3_ctor_charP(&vD80, "animCarryBody_Carrier"), p0, 1);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v1124, p0, cString16N_3_ctor_charP(&vDB0, "animCarryBodyBackwards_Carrier"), &vD30);
+    cSkaAnim_dtor(&vD30, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier(&vC80, cString16N_3_ctor_charP(&vCD0, "animCarryBody_Body"), p0, 1);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v1120, p0, cString16N_3_ctor_charP(&vD00, "animCarryBodyBackwards_Body"), &vC80);
+    cSkaAnim_dtor(&vC80, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier(&vBD0, cString16N_3_ctor_charP(&vC20, "carrybody_turn360_pt1"), p0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v111C, p0, cString16N_3_ctor_charP(&vC50, "animCarryBodyTurnLeft_Carrier"), &vBD0);
+    cSkaAnim_dtor(&vBD0, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier(&vB20, cString16N_3_ctor_charP(&vB70, "carrybody_turn360_pt2"), p0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v1118, p0, cString16N_3_ctor_charP(&vBA0, "animCarryBodyTurnLeft_Body"), &vB20);
+    cSkaAnim_dtor(&vB20, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier(&vA70, cString16N_3_ctor_charP(&vAC0, "animCarryBodyTurnLeft_Carrier"), p0, 1);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v1114, p0, cString16N_3_ctor_charP(&vAF0, "animCarryBodyTurnRight_Carrier"), &vA70);
+    cSkaAnim_dtor(&vA70, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier(&v9C0, cString16N_3_ctor_charP(&vA10, "animCarryBodyTurnLeft_Body"), p0, 1);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v1110, p0, cString16N_3_ctor_charP(&vA40, "animCarryBodyTurnRight_Body"), &v9C0);
+    cSkaAnim_dtor(&v9C0, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(&s10D0.m10D8);
+    cSkaBlendSequenceExtents_ctor_float_float(&s10D0.m10D0, 0.0f, 0.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&v10C0, cString16N_3_ctor_charP(&v960, "animCarryBodyTurnLeft_Carrier"), p0, &s10D0.m10D0);
+    cSkaBlendSequenceExtents_ctor_float_float(&s10A0.m10B8, 0.5f, 0.5f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&s10A0.m10A8, cString16N_3_ctor_charP(&v930, "carrybody_idle_pt1"), p0, &s10A0.m10B8);
+    cSkaBlendSequenceExtents_ctor_float_float(&s10A0.m10A0, 1.0f, 1.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&v1090, cString16N_3_ctor_charP(&v900, "animCarryBodyTurnRight_Carrier"), p0, &s10A0.m10A0);
+    t1 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(&s10D0.m10D8, &v10C0);
+    t2 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t1, &s10A0.m10A8);
+    t3 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t2, &v1090);
+    cQuaternion_GetIdentity(&v8F0);
+    cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(&v8B0, 14, t3, 0, 0, &v8F0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v110C, p0, cString16N_3_ctor_charP(&v990, "sliderCarryBodyStationary_Carrier"), &v8B0);
+    cSkaSlider_dtor(&v8B0, -1);
+    cSkaBlendSequenceItem_dtor(&v1090, -1);
+    cSkaBlendSequenceExtents_dtor(&s10A0.m10A0, -1);
+    cSkaBlendSequenceItem_dtor(&s10A0.m10A8, -1);
+    cSkaBlendSequenceExtents_dtor(&s10A0.m10B8, -1);
+    cSkaBlendSequenceItem_dtor(&v10C0, -1);
+    cSkaBlendSequenceExtents_dtor(&s10D0.m10D0, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(&s10D0.m10D8, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(&v1080);
+    cSkaBlendSequenceExtents_ctor_float_float(&s1060.m1078, 0.0f, 0.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&s1060.m1068, cString16N_3_ctor_charP(&v850, "animCarryBodyTurnLeft_Body"), p0, &s1060.m1078);
+    cSkaBlendSequenceExtents_ctor_float_float(&s1060.m1060, 0.5f, 0.5f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&v1050, cString16N_3_ctor_charP(&v820, "carrybody_idle_pt2"), p0, &s1060.m1060);
+    cSkaBlendSequenceExtents_ctor_float_float(&sFB0.m1048, 1.0f, 1.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&sFB0.m1038, cString16N_3_ctor_charP(&v7F0, "animCarryBodyTurnRight_Body"), p0, &sFB0.m1048);
+    t4 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(&v1080, &s1060.m1068);
+    t5 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t4, &v1050);
+    t6 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t5, &sFB0.m1038);
+    cQuaternion_GetIdentity(&v7E0);
+    cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(&v7A0, 14, t6, 0, 0, &v7E0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v1108, p0, cString16N_3_ctor_charP(&v880, "sliderCarryBodyStationary_Body"), &v7A0);
+    cSkaSlider_dtor(&v7A0, -1);
+    cSkaBlendSequenceItem_dtor(&sFB0.m1038, -1);
+    cSkaBlendSequenceExtents_dtor(&sFB0.m1048, -1);
+    cSkaBlendSequenceItem_dtor(&v1050, -1);
+    cSkaBlendSequenceExtents_dtor(&s1060.m1060, -1);
+    cSkaBlendSequenceItem_dtor(&s1060.m1068, -1);
+    cSkaBlendSequenceExtents_dtor(&s1060.m1078, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(&v1080, -1);
+    cSkaTransBLEND_ctor_float_bool_bool(&sF70.mF70, 0.0f, 1, 0);
+    cSkaTransBLEND_ctor_float_bool_bool(&vF40, nGameUnits_Sec(0.5f), 1, 1);
+    cSkaInitListOfPointers_cSkaSwitchItem_ctor(&sFB0.m1028);
+    cSkaInitListOfPointers_cSkaTransBLEND_ctor(&sFB0.m1018);
+    cSkaSwitchItem_ctor_cString16NR_cSkaAnimationSetR_cSkaInitListOfPointersR(&v720, cString16N_3_ctor_charP(&v740, "sliderCarryBodyStationary_Carrier"), p0, cSkaInitListOfPointers_cSkaTransBLEND_opShl(cSkaInitListOfPointers_cSkaTransBLEND_opShl(cSkaInitListOfPointers_cSkaTransBLEND_opShl(&sFB0.m1018, &sF70.mF70), &vF40), &vF40));
+    cSkaInitListOfPointers_cSkaTransBLEND_ctor(&sFB0.m1008);
+    cSkaSwitchItem_ctor_cString16NR_cSkaAnimationSetR_cSkaInitListOfPointersR(&v6D0, cString16N_3_ctor_charP(&v6F0, "animCarryBody_Carrier"), p0, cSkaInitListOfPointers_cSkaTransBLEND_opShl(cSkaInitListOfPointers_cSkaTransBLEND_opShl(cSkaInitListOfPointers_cSkaTransBLEND_opShl(&sFB0.m1008, &vF40), &sF70.mF70), &vF40));
+    cSkaInitListOfPointers_cSkaTransBLEND_ctor(&sFB0.mFF8);
+    cSkaSwitchItem_ctor_cString16NR_cSkaAnimationSetR_cSkaInitListOfPointersR(&v680, cString16N_3_ctor_charP(&v6A0, "animCarryBodyBackwards_Carrier"), p0, cSkaInitListOfPointers_cSkaTransBLEND_opShl(cSkaInitListOfPointers_cSkaTransBLEND_opShl(cSkaInitListOfPointers_cSkaTransBLEND_opShl(&sFB0.mFF8, &vF40), &vF40), &sF70.mF70));
+    t7 = cSkaInitListOfPointers_cSkaSwitchItem_opShl(&sFB0.m1028, &v720);
+    t8 = cSkaInitListOfPointers_cSkaSwitchItem_opShl(t7, &v6D0);
+    t9 = cSkaInitListOfPointers_cSkaSwitchItem_opShl(t8, &v680);
+    cQuaternion_GetIdentity(&v670);
+    cSkaSwitch_ctor(&v630, 4, t9, &v670);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v1104, p0, cString16N_3_ctor_charP(&v770, "switchCarryBody_Carrier"), &v630);
+    cSkaSwitch_dtor(&v630, -1);
+    cSkaSwitchItem_dtor(&v680, -1);
+    cSkaInitListOfPointers_cSkaTransBLEND_dtor(&sFB0.mFF8, -1);
+    cSkaSwitchItem_dtor(&v6D0, -1);
+    cSkaInitListOfPointers_cSkaTransBLEND_dtor(&sFB0.m1008, -1);
+    cSkaSwitchItem_dtor(&v720, -1);
+    cSkaInitListOfPointers_cSkaTransBLEND_dtor(&sFB0.m1018, -1);
+    cSkaInitListOfPointers_cSkaSwitchItem_dtor(&sFB0.m1028, -1);
+    cSkaInitListOfPointers_cSkaSwitchItem_ctor(&sFB0.mFE8);
+    cSkaInitListOfPointers_cSkaTransBLEND_ctor(&sFB0.mFD8);
+    cSkaSwitchItem_ctor_cString16NR_cSkaAnimationSetR_cSkaInitListOfPointersR(&v5B0, cString16N_3_ctor_charP(&v5D0, "sliderCarryBodyStationary_Body"), p0, cSkaInitListOfPointers_cSkaTransBLEND_opShl(cSkaInitListOfPointers_cSkaTransBLEND_opShl(cSkaInitListOfPointers_cSkaTransBLEND_opShl(&sFB0.mFD8, &sF70.mF70), &vF40), &vF40));
+    cSkaInitListOfPointers_cSkaTransBLEND_ctor(&sFB0.mFC8);
+    cSkaSwitchItem_ctor_cString16NR_cSkaAnimationSetR_cSkaInitListOfPointersR(&v560, cString16N_3_ctor_charP(&v580, "animCarryBody_Body"), p0, cSkaInitListOfPointers_cSkaTransBLEND_opShl(cSkaInitListOfPointers_cSkaTransBLEND_opShl(cSkaInitListOfPointers_cSkaTransBLEND_opShl(&sFB0.mFC8, &vF40), &sF70.mF70), &vF40));
+    cSkaInitListOfPointers_cSkaTransBLEND_ctor(&sFB0.mFB8);
+    cSkaSwitchItem_ctor_cString16NR_cSkaAnimationSetR_cSkaInitListOfPointersR(&v510, cString16N_3_ctor_charP(&v530, "animCarryBodyBackwards_Body"), p0, cSkaInitListOfPointers_cSkaTransBLEND_opShl(cSkaInitListOfPointers_cSkaTransBLEND_opShl(cSkaInitListOfPointers_cSkaTransBLEND_opShl(&sFB0.mFB8, &vF40), &vF40), &sF70.mF70));
+    t10 = cSkaInitListOfPointers_cSkaSwitchItem_opShl(&sFB0.mFE8, &v5B0);
+    t11 = cSkaInitListOfPointers_cSkaSwitchItem_opShl(t10, &v560);
+    t12 = cSkaInitListOfPointers_cSkaSwitchItem_opShl(t11, &v510);
+    cQuaternion_GetIdentity(&v500);
+    cSkaSwitch_ctor(&v4C0, 4, t12, &v500);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v1100, p0, cString16N_3_ctor_charP(&v600, "switchCarryBody_Body"), &v4C0);
+    cSkaSwitch_dtor(&v4C0, -1);
+    cSkaSwitchItem_dtor(&v510, -1);
+    cSkaInitListOfPointers_cSkaTransBLEND_dtor(&sFB0.mFB8, -1);
+    cSkaSwitchItem_dtor(&v560, -1);
+    cSkaInitListOfPointers_cSkaTransBLEND_dtor(&sFB0.mFC8, -1);
+    cSkaSwitchItem_dtor(&v5B0, -1);
+    cSkaInitListOfPointers_cSkaTransBLEND_dtor(&sFB0.mFD8, -1);
+    cSkaInitListOfPointers_cSkaSwitchItem_dtor(&sFB0.mFE8, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_2(&v400, cString16N_3_ctor_charP(&v460, "lay_down_body_pt1"), p0, 0, 0, cSkaAnimPlaybackRange_Normalized_ctor(&sFB0.mFB0, 0.0f, 0.5f), cEulerAngle_T_1_2_ctor_float_float_float(&v450, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10FC, p0, cString16N_3_ctor_charP(&v490, "animLayDownBody_Carrier"), &v400);
+    cSkaAnim_dtor(&v400, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_2(&v340, cString16N_3_ctor_charP(&v3A0, "lay_down_body_pt2"), p0, 0, 0, cSkaAnimPlaybackRange_Normalized_ctor(&sFA0.mFA8, 0.0f, 0.5f), cEulerAngle_T_1_2_ctor_float_float_float(&v390, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10F8, p0, cString16N_3_ctor_charP(&v3D0, "animLayDownBody_Body"), &v340);
+    cSkaAnim_dtor(&v340, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier(&v290, cString16N_3_ctor_charP(&v2E0, "toss_body_pt1"), p0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10F4, p0, cString16N_3_ctor_charP(&v310, "animTossBody_Carrier"), &v290);
+    cSkaAnim_dtor(&v290, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier(&v1E0, cString16N_3_ctor_charP(&v230, "toss_body_pt2"), p0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10F0, p0, cString16N_3_ctor_charP(&v260, "animTossBody_Body"), &v1E0);
+    cSkaAnim_dtor(&v1E0, -1);
+    f0 = Deg2Rad(-13.0f);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_2(&v120, cString16N_3_ctor_charP(&v180, D_004A0640), p0, 0, 0, cSkaAnimPlaybackRange_Normalized_ctor(&sFA0.mFA0, 0.5f, 1.0f), cEulerAngle_T_1_2_ctor_float_float_float(&v170, 0.0f, 0.0f, f0 + Deg2Rad(-9e+01f)), -1, 1.0f, 0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10EC, p0, cString16N_3_ctor_charP(&v1B0, "animBodyFinalPoseAfterLaidDown"), &v120);
+    cSkaAnim_dtor(&v120, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_2(&v60, cString16N_3_ctor_charP(&vC0, "death_crouch_fall_left"), p0, 0, 0, cSkaAnimPlaybackRange_Normalized_ctor(&sF70.mF98, 1.0f, 1.0f), cEulerAngle_T_1_2_ctor_float_float_float(&vB0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10E8, p0, cString16N_3_ctor_charP(&vF0, "animBodyFinalPoseAfterTossed"), &v60);
+    cSkaAnim_dtor(&v60, -1);
+    cSkaTransBLEND_dtor(&vF40, -1);
+    cSkaTransBLEND_dtor(&sF70.mF70, -1);
+}
+#pragma optimization_level reset
+static inline void merge_flush_func_001F1360(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001F1360 */

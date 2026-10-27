@@ -1,7 +1,0 @@
-#include "types.h"
-
-/* Clears the word at offset 0x104D4. */
-void cShadowMan_ClearProjTexs(char* self)
-{
-    *(int*)(self + 0x104D4) = 0;
-}

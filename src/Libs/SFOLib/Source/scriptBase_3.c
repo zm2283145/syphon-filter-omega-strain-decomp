@@ -1,0 +1,61 @@
+/*
+ * Libs/SFOLib/Source/scriptBase: 1 file, 003D6030
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_003D6030 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "types.h"
+#include "alloc_guard.h"
+#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#define NULL 0
+#pragma mpwc_relax on
+
+
+extern "C" {
+int cMemMan_Allocate(...);                      
+int std_vector_intPtr_ctor(...);                            
+int memcpy(...);                            
+int strlen(...);                                    
+extern char D_004BD3B0;
+extern unsigned char g_ProfileLockEnabled;
+}
+extern "C" char * FuncDef_ctor_charP_intPintPint_bool(char * arg0, int arg1, int arg2, signed char arg3) {
+    int temp_v1;
+    int var_v0;
+    int var_s1;
+    char * temp_s0;
+    int temp_s0_2;
+
+    temp_s0 = arg0 + 8;
+    std_vector_intPtr_ctor(temp_s0);
+    var_s1 = 0;
+    F_(temp_s0, 0xC, signed char) = 1;
+    if (arg1 != 0) {
+        temp_v1 = strlen(arg1) + 1; temp_s0_2 = (temp_v1 + 0x1F) / 32 * 32;
+        {
+            AllocGuard g;
+        var_s1 = cMemMan_Allocate(0, temp_s0_2, &D_004BD3B0, 0x130);
+        }
+        memcpy(var_s1, arg1, temp_s0_2);
+    }
+    F_(arg0, 0x0, int) = var_s1;
+    F_(arg0, 0x18, int) = 0;
+    F_(arg0, 0x1C, int) = arg2;
+    F_(arg0, 0x20, int) = 0;
+    F_(arg0, 0x34, signed char) = 1;
+    F_(arg0, 0x28, int) = -1;
+    F_(arg0, 0x2C, int) = 0;
+    F_(arg0, 0x24, int) = 0;
+    F_(arg0, 0x30, int) = 0;
+    F_(arg0, 0x35, signed char) = arg3;
+    F_(arg0, 0x38, int) = 0;
+    F_(arg0, 0x40, signed char) = 0;
+    F_(arg0, 0x41, signed char) = 0;
+    return arg0;
+}
+static inline void merge_flush_func_003D6030(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003D6030 */

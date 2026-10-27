@@ -143,6 +143,25 @@ class ReadChunksTests(unittest.TestCase):
         self.assertEqual(t.count("merge_flush_func_00100000"), 1)
         self.assertIn(mu.TAG, t.split("merge_flush_func_00100000")[1].split("\n")[0])
 
+    def test_knr_declaration_before_a_differing_definition(self):
+        a = mu.Chunk("func_00100000", "struct A; void f(struct A *p);\nvoid g(void) { f(0); }\n", "mw", False)
+        b = mu.Chunk("func_00100010", "struct B { int x; };\nvoid f(struct B *p) { p->x = 0; }\n", "mw", False)
+        self.assertEqual(mu.knr_declarations([a, b]), {(0, "f")})
+        t = mu.synthesize([a, b], mu.ROOT / "include", True, "t", cast=True)
+        self.assertIn("void f(); " + mu.TAG, t)
+        # read back, the original declaration is restored
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "x.c"
+            p.write_text(t)
+            first = mu.read_chunks(p, "mw")[0].text
+        self.assertIn("void f(struct A *p);", first)
+        self.assertNotIn("void f();", first)
+
+    def test_no_knr_for_promoted_parameters(self):
+        a = mu.Chunk("func_00100000", "void f(int x);\n", "mw", False)
+        b = mu.Chunk("func_00100010", "void f(short x) { }\n", "mw", False)
+        self.assertEqual(mu.knr_declarations([a, b]), set())
+
     def test_first_error(self):
         err = ("### mwccps2.exe Compiler:\n#     169: x = f();\n#   Error:     ^\n#   illegal explicit conversion"
                " from 'void' to\n#   'int'\n### mwccps2.exe Compiler:\n#     170: y\n#   Error: ^\n#   later\n")

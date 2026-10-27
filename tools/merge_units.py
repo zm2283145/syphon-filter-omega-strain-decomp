@@ -524,6 +524,45 @@ def read_chunks(path, kind):
     return chunks
 
 
+def bol(block, lead):
+    """'\\n' if text appended after lead would not start a line (a directive must)."""
+    prev = lead or (block[-1] if block else "\n")
+    return "" if prev.endswith("\n") else "\n"
+
+
+def knr_declarations(chunks):
+    """{(chunk index, function)}: prototypes in C blocks of functions that a later
+    C block defines with another prototype (same return type, no parameter that
+    default promotions would change). synthesize declares those without a
+    prototype, `ret f();`, which C accepts before the definition; the build
+    check decides whether the calls still give the retail code."""
+    defs, decls = {}, []
+    for ci, c in enumerate(chunks):
+        if c.cpp:
+            continue
+        for it in split_items(c.text):
+            if it.pp or it.static:
+                continue
+            p = proto(it)
+            if not p:
+                continue
+            if it.kind == "func":
+                defs.setdefault(p[0], (ci, p[1]))
+            else:
+                decls.append((ci, p[0], p[1]))
+    out = set()
+    for ci, n, vals in decls:
+        if n not in defs or defs[n][0] <= ci or defs[n][1] == vals:
+            continue
+        a, b = split_proto(n, vals), split_proto(n, defs[n][1])
+        if not a or not b or a[0] != b[0] or a[2] or b[2]:
+            continue
+        if any(set(t) & {"char", "short", "float", "_Bool", "bool"} and "*" not in t for t in b[1]):
+            continue
+        out.add((ci, n))
+    return out
+
+
 def synthesize(chunks, unit_dir, mw, title, cast=False):
     """Merged source for chunks (in order). Returns the text.
 
@@ -540,7 +579,8 @@ def synthesize(chunks, unit_dir, mw, title, cast=False):
     protos = {}      # function -> prototype tokens
     objdecls = {}    # object -> normalized first declaration
     comments = set()
-    for c in chunks:
+    kr = knr_declarations(chunks) if cast else set()
+    for ci, c in enumerate(chunks):
         text = c.text
         # rename conflicting type names and statics (to a fixpoint)
         mapping = {}
@@ -617,15 +657,22 @@ def synthesize(chunks, unit_dir, mw, title, cast=False):
                 p = proto(it)
                 if nt in decl_seen:
                     keep = False
+                elif p and (ci, p[0]) in kr and p[0] not in protos and p[0] not in macros:
+                    # a later C block defines the function with another prototype: declare it
+                    # without one here, so that the definition is compatible
+                    ret = " ".join(split_proto(p[0], p[1])[0])
+                    block.append(f"{lead}{bol(block, lead)}#if 0 {TAG}\n{it.text.strip()}\n#endif {TAG}\n{ret} {p[0]}(); {TAG}\n")
+                    declared.add(p[0])
+                    continue
                 elif cast and p and p[0] in protos and protos[p[0]] != p[1] and p[0] not in macros \
                         and (mac := call_macro(p[0], p[1], protos[p[0]])):
                     n = p[0]
-                    block.append(f"{lead}#if 0 {TAG}\n{it.text.strip()}\n#endif {TAG}\n{mac} {TAG}\n")
+                    block.append(f"{lead}{bol(block, lead)}#if 0 {TAG}\n{it.text.strip()}\n#endif {TAG}\n{mac} {TAG}\n")
                     undefs.append(n)
                     continue
                 elif cast and not p and len(it.names) == 1 and objdecls.get(it.names[0], nt) != nt \
                         and it.names[0] not in macros and (mac := object_macro(it.names[0], [v for _, v in it.s])):
-                    block.append(f"{lead}#if 0 {TAG}\n{it.text.strip()}\n#endif {TAG}\n{mac} {TAG}\n")
+                    block.append(f"{lead}{bol(block, lead)}#if 0 {TAG}\n{it.text.strip()}\n#endif {TAG}\n{mac} {TAG}\n")
                     undefs.append(it.names[0])
                     continue
                 if not p and len(it.names) == 1:
@@ -941,7 +988,7 @@ class Checker:
             for n in undef:
                 a = self.addr_of(n)
                 if a is not None:  # else only used by discarded sections, or the link fails
-                    lines.append(f"    {n} = {a:#x};")
+                    lines.append(f"    \"{n}\" = {a:#x};")  # quoted: C++ names may hold any character
             lines.append(f"    .text {start:#x} : {{ *(.text*) }}")
             pstart = pend = None
             if pieces:

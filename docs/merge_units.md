@@ -1,10 +1,35 @@
 # merge_units.py: per-function units back into translation units
 
-`tools/integrate_pending.py` adds every matched function as its own unit,
-`src/<main|lib>/<module>/func_XXXXXXXX.c`. `tools/merge_units.py` merges runs of
-those files into one translation unit per module (`src/main/aiMsgs/aiMsgs.c`,
-`aiMsgs_2.c`, ...). It only keeps a merge if the merged file reproduces the
-retail bytes, so the build still matches after it runs.
+`src/` follows the original project tree, recovered from the prototype builds'
+debug information (relative to the original project's code directory):
+`src/SFOGame/Source/...`, `src/Libs/SFOLib/Source/...`,
+`src/Libs/SFOLobby/SFOLobby/...`, `src/Libs/989snd/ee/...` and
+`src/CW_PS2Support/...`. `config/tu_ranges.txt` lists every original source
+file with its retail address range. A *module* is one original file, named by
+its path without extension (`SFOGame/Source/human`). Its units are:
+
+- **part files** `src/SFOGame/Source/human.c`, `human_2.c`, ... in address
+  order. A fully matched file whose units all merged is one file
+  (`src/SFOGame/Source/AIMsgs.c`). Otherwise there is one part file per run of
+  C code that could be merged, with asm units (and units that could not be
+  merged) between them;
+- **per-function units** `src/SFOGame/Source/human/func_XXXXXXXX.c`: new
+  matches waiting to be merged (`tools/integrate_pending.py` puts a new function
+  inside an original file's range there), and units that matched only on their
+  own.
+
+Code without debug information keeps the older scheme: `src/lib/<module>/`
+(EE-GCC SDK and middleware), `src/main/<module>/` and `src/main/func_*.c`
+(template/inline code at file boundaries that could not be attributed, code
+added after the prototypes, the static initialisers in `src/main/sinit/`).
+There the module is the directory, and merged files are named
+`<module>/<module>.c`, `<module>_2.c`, ...
+
+`tools/merge_units.py` merges runs of adjacent units of one module into one
+translation unit. It only keeps a merge if the merged file reproduces the
+retail bytes, so the build still matches after it runs. In an original source
+file, a unit left on its own is renamed to the next part-file name, so the
+per-function directory empties as matching completes.
 
 ## Usage
 
@@ -13,19 +38,30 @@ environment as the build (`CW38_DIR` / `CW50_DIR` / `CW304_DIR`, `build/orig/`,
 `asm/`).
 
 ```sh
-python tools/merge_units.py --dry-run -v main/aiMsgs lib/lgaud  # show groups and why they split
+python tools/merge_units.py --dry-run -v SFOGame/Source/human   # show groups and why they split
+python tools/merge_units.py SFOGame/Source/human Libs/SFOLib/Source/mem
 python tools/merge_units.py --all-complete    # modules with no asm/hasm/data left in their text range
-python tools/merge_units.py --all             # every run of >= 2 adjacent units of one module
-python tools/merge_units.py main/DME main/group
-python tools/merge_units.py --unmerge main/group/group     # back to func_XXXXXXXX.c files
+python tools/merge_units.py --all             # every module (also folds new per-function units in)
+python tools/merge_units.py --unmerge SFOGame/Source/human_3   # back to human/func_XXXXXXXX.c files
 python configure.py && ninja                  # always rebuild afterwards
 ```
 
+**Merging part files later.** When the asm between two part files is matched
+(integrate_pending adds it as `<file>/func_XXXXXXXX.c`), run
+`python tools/merge_units.py <module>` (or `--all`): the new unit and both
+neighbours form one run and are merged when the check passes; the part files
+are then renumbered in address order. Part files that still do not merge
+usually conflict in declarations (two blocks declaring one helper with
+different prototypes, C and C++ blocks declaring the same function). Make the
+prototypes agree (a shared header) and rerun; `-v` prints the compiler's first
+error for every split.
+
 The tool rewrites `config/splat.yaml` and `config/compiler_overrides.json`,
-writes the merged files and deletes the per-function files it merged. It does
-not touch `include/`, `asm/` or `tu_ranges.txt`. `--jobs N` checks N runs in
-parallel; the default is the CPU count. Timings in WSL: all complete modules
-about 20 s, `--all` about 8 min.
+writes the merged files and deletes the per-function files it merged (and
+directories left empty). It does not touch `include/`, `asm/` or
+`tu_ranges.txt`. `--jobs N` checks N runs in parallel; the default is the CPU
+count. Large original files take a while: each unit that joins a group
+recompiles the whole group so far.
 
 `--unmerge` rebuilds a standalone file for each block. Each one starts with
 the declarations it uses from earlier blocks, then the block's text, and is
@@ -39,19 +75,22 @@ On trees with `tools/lit_pool.py`, EE-GCC groups are checked with the same
 `.lit4`/`.lit8` pool redirection as the `gcc` build rule.
 
 It is idempotent. A merged unit (a `c` unit not named `func_XXXXXXXX`) takes
-part in grouping like any other unit, with its blocks as chunks. A unit left
-on its own is never rewritten, so running the tool again changes nothing. If
-new per-function units are integrated next to a merged unit, they are merged
-into it when the check passes. Otherwise they end up in a new `<module>_N`
-unit.
+part in grouping like any other unit, with its blocks as chunks. Text before
+the first block of a merged file (some files hoist shared includes and
+declarations there) is treated as part of the first block. A unit left on its
+own is never rewritten (only renamed in an original source file), so running
+the tool again changes nothing. If new per-function units are integrated next
+to a merged unit, they are merged into it when the check passes. Otherwise
+they end up in a new part file.
 
 ## What a merged file looks like
 
 ```c
-/* main/group: 7 files, 003D96D0-003D9870 -- generated by tools/merge_units.py */
+/* SFOGame/Source/group: 7 files, 003D96D0-003D9870 -- generated by tools/merge_units.py */
 /* merge_units: begin func_003D96D0 */
 #pragma push /* merge_units */
 ...original func_003D96D0.c, minus duplicated declarations...
+static inline void merge_flush_func_003D96D0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003D96D0 */
 /* merge_units: begin func_003D9740 */
@@ -84,6 +123,9 @@ How each block is put together:
 - **Conflicting object declarations** (`extern char D_X;` against
   `char D_X[]`): the same approach with `#define D_X (*(T*)&D_X)` or
   `((T*)&D_X)`.
+- **Flush.** Each Metrowerks block ends with an empty `static inline`
+  function, so MW generates the block's deferred code under the block's own
+  pragmas (C or C++ mode) before the `pop`.
 - **Pragmas.** Metrowerks blocks are wrapped in `#pragma push` / `#pragma pop`,
   so per-file pragmas (`opt_propagation`, `cplusplus`, `inline_depth`, ...)
   stay scoped to their function. Tests showed that `pop` also restores
@@ -97,8 +139,8 @@ addresses, reproduces the retail code, the padding up to the next unit, and
 the group's data. The tool emulates the build exactly for this check:
 
 - the same compiler driver as `check_match.py`;
-- `-Iinclude -Isrc`, with the temporary source placed in the module's
-  directory;
+- `-Iinclude -Isrc`, with the temporary source placed in the directory of the
+  module's part files;
 - the `objcopy --set-section-alignment` used by the `cc_aligned` and gcc rules;
 - the link script's `.text* .data* .rodata* .sdata*`, with everything else
   discarded;
@@ -113,13 +155,14 @@ writing:
   merged file matches with one of the two kinds.
 - **Data pieces not adjacent** in `splat.yaml`. A `data/` unit, another
   module's data, or out-of-order data lies between them. This was the most
-  common reason. In `main/aiMsgs`, each function's 12-byte `.data` string is
+  common reason. In `SFOGame/Source/AIMsgs` (then `main/aiMsgs`), each function's 12-byte `.data` string is
   followed by a 4-byte zero `data/` filler, and the strings are not in
   function order, so the retail TU did not emit them in function order. MW
   would also pool identical string literals in one TU.
 - **Code length or bytes differ.** In one TU, MW sometimes shares or reorders
   literal pools, or inlines or aligns differently. Examples are DME
-  `0x188 vs 0x180` and guiManager `0x20c vs 0x200`. gcc's padding to the
+  `0x188 vs 0x180`, guiManager `0x20c vs 0x200` and SFOLobby_Main
+  `0xd10 vs 0xd00`. gcc's padding to the
   next unit can also no longer line up (lgaud `0x3f8 vs 0x400`).
 - **Declarations that cannot be reconciled:**
   - C and C++ blocks declaring the same function: `illegal function
@@ -134,10 +177,18 @@ writing:
 `main/sinit` (static initialisers of many modules, in the tail) is never
 merged.
 
+Examples from the reorganisation (`-v`): `illegal function overloading`
+(a C block and a C++ block declaring one helper, e.g. `cMessage_dtor`),
+`identifier 'X' redeclared` and `illegal explicit conversion from 'void' to
+'int'` (one block declares a helper `void`, a later one uses its result).
+
 ## Interaction with other tools
 
 - **`integrate_pending.py`** keeps adding new matches as `func_XXXXXXXX.c`
-  units, including ones next to a merged unit. Rerun `merge_units.py` to fold
+  units, including ones next to a merged unit. Inside an original source file's
+  range (`config/tu_ranges.txt`) it uses `<file>/func_XXXXXXXX.c`, e.g.
+  `src/SFOGame/Source/human/func_00190000.c`; Metrowerks units elsewhere go to
+  `src/main/`, EE-GCC units to `src/lib/`. Rerun `merge_units.py` to fold
   them in. A pending function that would replace the
   start of a merged unit (its address is the merged unit's start) is skipped
   with a message. Run `merge_units.py --unmerge UNIT` first if that is ever
@@ -147,5 +198,10 @@ merged.
 - **`clone_match.py`** reads the blocks of merged units. For a matched
   function in a merged unit it generates its standalone template from the block
   (`standalone()`).
+- **configure.py** builds a unit with EE-GCC when its path starts with `lib/`,
+  else with Metrowerks. The objdiff progress categories are `main` (the whole
+  executable) plus `game` (`SFOGame/`), `libs` (`Libs/`, `CW_PS2Support/`) and
+  `sdk` (`lib/`, and asm in the library ranges of `tu_ranges.txt`); a unit
+  outside these trees is categorised by the `tu_ranges.txt` range holding it.
 - **objdiff/report:** a merged unit is one objdiff unit. It contains the same
   functions as before, so the matched function and byte counts stay the same.

@@ -126,13 +126,37 @@ def compile_with(kind, src, incs, dirs):
     else:
         return None, f"unknown compiler {kind}"
     fd, out = tempfile.mkstemp(suffix=".o", dir=ROOT / "build"); os.close(fd); os.unlink(out)
-    r = subprocess.run(wrapper() + [str(cc)] + flags + incs + ["-o", out, str(src)],
-                       capture_output=True, text=True, cwd=ROOT)
-    if r.returncode or not os.path.exists(out):
+    code, text = run_limited(wrapper() + [str(cc)] + flags + incs + ["-o", out, str(src)])
+    if code or not os.path.exists(out):
         if os.path.exists(out):
             os.unlink(out)
-        return None, (r.stdout[-3000:] + r.stderr[-1500:]).strip()
+        return None, text[-4500:].strip()
     return out, None
+
+
+def run_limited(cmd, limit=1 << 20):
+    """(returncode, output) of cmd, stdout and stderr together. Metrowerks can
+    loop forever printing the same error for some invalid sources; the run is
+    stopped once the output passes `limit` bytes."""
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=ROOT)
+    head, tail, total = b"", b"", 0
+    while True:
+        chunk = p.stdout.read(65536)
+        if not chunk:
+            break
+        total += len(chunk)
+        if len(head) < 8192:
+            head += chunk[:8192 - len(head)]
+        tail = (tail + chunk)[-8192:]
+        if total > limit:
+            p.kill()
+            p.wait()
+            text = head.decode(errors="replace")
+            return 1, text + f"\n(compiler stopped: more than {limit} bytes of output)"
+    p.wait()
+    text = (head.decode(errors="replace") if total <= 8192 else
+            head.decode(errors="replace") + "\n...\n" + tail.decode(errors="replace"))
+    return p.returncode, text
 
 
 def compare(obj, rom, names, starts):

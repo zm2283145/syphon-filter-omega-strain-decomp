@@ -89,6 +89,25 @@ class ModuleTests(unittest.TestCase):
         # game_2 is taken by a unit that is not regrouped
         self.assertEqual([names[id(g1)], names[id(g2)]], ["SFOGame/Source/game", "SFOGame/Source/game_3"])
 
+    def test_lone_units_get_part_names(self):
+        segs = [[0x100, "c", "SFOGame/Source/game/func_00100100", []],
+                [0x110, "asm", None, []],
+                [0x120, "c", "SFOGame/Source/game/game_100120", []],
+                [0x130, "c", "SFOGame/Source/game/func_00100130", []],
+                [0x140, "asm", None, []],
+                [0x150, "c", "SFOGame/Source/game_7", []]]
+        lone, pair, part = ["mw", [0], [], None, False], ["mw", [2, 3], [], None, False], ["mw", [5], [], None, False]
+        names = mu.name_groups("SFOGame/Source/game", [lone, pair, part], segs)
+        self.assertEqual(names[id(lone)], "SFOGame/Source/game")
+        self.assertEqual(names[id(pair)], "SFOGame/Source/game_2")
+        self.assertNotIn(id(part), names)   # already a part file: keeps its name
+
+    def test_part_names(self):
+        self.assertTrue(mu.is_part_name("SFOGame/Source/game", "SFOGame/Source/game_12"))
+        self.assertFalse(mu.is_part_name("SFOGame/Source/game", "SFOGame/Source/gameFrontEnd"))
+        self.assertTrue(mu.needs_part_name("SFOGame/Source/game", "SFOGame/Source/game/func_00100100"))
+        self.assertFalse(mu.needs_part_name("main/aiMsgs", "main/aiMsgs/func_00100100"))
+
     def test_group_names_older_scheme(self):
         segs = [[0x100, "c", "main/zzNoSuchModule/func_00100100", []], [0x110, "c", "main/zzNoSuchModule/func_00100110", []]]
         g = ["mw", [0, 1], [], None, False]

@@ -1045,13 +1045,33 @@ def plan_run(chk, mod, idx, segs, overrides, dpieces, log):
     return groups
 
 
+def remove_empty_dirs(d):
+    """Remove d and its parents up to src/ while they are empty (a module's
+    per-function directory once all of its units are merged)."""
+    src = ROOT / "src"
+    while d != src and src in d.parents and d.is_dir() and not any(d.iterdir()):
+        d.rmdir()
+        d = d.parent
+
+
+def is_part_name(mod, name):
+    """SFOGame/Source/game, SFOGame/Source/game_2, ... for module SFOGame/Source/game."""
+    return name == mod or re.fullmatch(re.escape(mod) + r"_\d+", name) is not None
+
+
+def needs_part_name(mod, name):
+    return is_source_module(mod) and not is_part_name(mod, name)
+
+
 def name_groups(mod, groups, segs):
     """Names for the merged groups in address order, skipping names of units of
     the module that are not regrouped: SFOGame/Source/game, game_2, ... for an
     original source file; <module>/<base>, <base>_2, ... in the older scheme."""
     base = mod.rsplit("/", 1)[1]
     prefix = mod if is_source_module(mod) else f"{mod}/{base}"
-    merged = [g for g in groups if len(g[1]) > 1]   # a lone unit (merged before or not) stays as is
+    # a lone unit (merged before or not) stays as is - except in an original source
+    # file, where it moves out of the per-function directory to a part-file name
+    merged = [g for g in groups if len(g[1]) > 1 or needs_part_name(mod, segs[g[1][0]][2])]
     mine = {segs[i][2] for g in merged for i in g[1]}
     taken = {n for _, t, n, _ in segs if t == "c" and n and n not in mine}
     rel = files_dir(mod).relative_to(ROOT / "src").as_posix()
@@ -1092,7 +1112,8 @@ def main():
         unknown = want - {m for m, _ in allruns}
         if unknown:
             sys.exit(f"no units for module(s): {', '.join(sorted(unknown))}")
-    todo = [(m, idx) for m, idx in allruns if m in want and len(idx) > 1]
+    todo = [(m, idx) for m, idx in allruns
+            if m in want and (len(idx) > 1 or needs_part_name(m, segs[idx[0]][2]))]
     chk = Checker(segs, end_off)
 
     def work(r):
@@ -1125,10 +1146,27 @@ def main():
     for m, groups in bymod.items():
         names = name_groups(m, groups, segs)
         for g in groups:
-            if len(g[1]) < 2:
+            if id(g) not in names:
                 continue
             kind, members, chunks, text, cast = g
             new = names[id(g)]
+            if len(members) == 1:
+                # a lone unit renamed to a part file: a merged file keeps its text, a
+                # per-function file becomes a one-block file if that still matches
+                old = segs[members[0]][2]
+                text = (ROOT / "src" / (old + ".c")).read_text(errors="replace")
+                if not any(BEGIN.match(l) for l in text.split("\n")):
+                    text = synthesize(chunks, files_dir(m), kind in MW_KINDS,
+                                      f"{m}: 1 file, {segs[members[0]][0] + BASE:08X}")
+                    why = chk.check(text, kind, files_dir(m), members, dpieces.get(old, []))
+                    if why is not None:
+                        print(f"  {old}: stays (as a one-block file: {why})")
+                        continue
+                new_files[new] = text
+                old_files.append(old)
+                rename[old] = new
+                ovr[new] = kind
+                continue
             text = synthesize(chunks, files_dir(m), kind in MW_KINDS, f"{m}: {len(chunks)} files, "
                               f"{segs[members[0]][0] + BASE:08X}-{segs[members[-1]][0] + BASE:08X}", cast)
             new_files[new] = text
@@ -1163,6 +1201,7 @@ def main():
         p = ROOT / "src" / (old + ".c")
         if p.exists() and old not in new_files:
             p.unlink()
+            remove_empty_dirs(p.parent)
     for new, text in new_files.items():
         (ROOT / "src" / (new + ".c")).parent.mkdir(parents=True, exist_ok=True)
         (ROOT / "src" / (new + ".c")).write_text(text, newline="\n")

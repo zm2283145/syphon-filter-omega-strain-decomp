@@ -44,7 +44,7 @@ $PY tools/publish_report.py >> "$LOG" 2>&1 || { say "publish_report failed"; exi
 $PY -m unittest discover -s tests -p 'test_*.py' -q > build/tests.log 2>&1 || { say "tests failed (build/tests.log)"; tail -20 build/tests.log; exit 1; }
 LINE=$($PY -c "import json;m=json.load(open('progress/report.json'))['measures'];print(f\"{m['matched_functions']:,} / {m['total_functions']:,} functions, {float(m['matched_code_percent']):.2f}% code, {float(m.get('matched_data_percent',0)):.2f}% data\")")
 say "$LINE"
-git add -A src config include progress tools tests
+git add -A src config include progress tools tests configure.py docs README.md
 if git diff --cached --name-only | grep -Eiq '(^orig/|^asm/|^build/|^\.tools/|\.rom$|\.elf$|\.exe$|\.dll$|SCUS_)'; then say "STOP: private/generated file staged"; exit 1; fi
 git diff --cached --quiet && { say "nothing to commit"; exit 0; }
 printf '%s\n\nThe build prints the OK line (SHA-256 9924da91...31dc6).\n%s.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01Uqack8zNUGjdqTDiYfZ6mk\n' "$MSG" "$LINE" > build/msg.txt

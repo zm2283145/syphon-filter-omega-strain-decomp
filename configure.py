@@ -115,6 +115,37 @@ def data_pieces(subs):
     return pieces
 
 
+# Progress sub-categories (beside "main", the whole executable), by where a
+# unit's code comes from: the game's own source tree, the libraries built with
+# it from source (Libs/, the CodeWarrior runtime), and SDK/middleware code
+# without debug info (src/lib/ and the library ranges of config/tu_ranges.txt).
+CATEGORIES = [{"id": "main", "name": "SCUS_972.64"}, {"id": "game", "name": "Game (SFOGame)"},
+              {"id": "libs", "name": "Libraries (Libs, CW runtime)"}, {"id": "sdk", "name": "SDK and middleware"}]
+TOP_CATEGORY = {"SFOGame": "game", "Libs": "libs", "CW_PS2Support": "libs", "lib": "sdk"}
+
+
+def load_ranges(path):
+    """[(start, end, file)] of config/tu_ranges.txt (VRAM addresses, end inclusive)."""
+    out = []
+    if path.exists():
+        for line in path.read_text().splitlines():
+            if line.strip() and not line.startswith("#"):
+                s, e, n = line.split()[:3]
+                out.append((int(s, 16), int(e, 16), n))
+    return out
+
+
+def categories(name, vram, ranges):
+    """progress_categories of a unit: ["main"] plus its sub-category, if known."""
+    top = (name or "").split("/")[0]
+    sub = TOP_CATEGORY.get(top)
+    if sub is None:
+        f = next((n for s, e, n in ranges if s <= vram <= e), None)
+        if f is not None:
+            sub = TOP_CATEGORY.get(f.split("/")[0], "game") if "/" in f else "sdk"
+    return ["main"] + ([sub] if sub else [])
+
+
 def unit_name(typ, name, start):
     # splat names unnamed subsegments after their rom offset in hex
     return name if name else f"{start:X}"
@@ -338,8 +369,10 @@ def main():
     in_tail = lambda st: first_data is not None and st >= first_data
     block = {n: p[0][0] + seg_vram for n, p in carved.items()}
     data_objs, relinks = [], []
+    ranges = load_ranges(CONFIG / "tu_ranges.txt")
     for start, typ, name in subs:
         vram = start + seg_vram
+        cats = categories(name, vram, ranges)
         if typ in DATA_PIECE_TYPES and data_only(name):
             # A data-only C unit: compiled like a unit with a data block, no
             # code; its objdiff target is splat's assembly of the block.
@@ -354,7 +387,7 @@ def main():
             link_objs.append(link)
             units.append({"name": name, "target_path": str(target).replace("\\", "/"),
                           "base_path": str(obj).replace("\\", "/"),
-                          "metadata": {"progress_categories": ["main"], "complete": True,
+                          "metadata": {"progress_categories": cats, "complete": True,
                                        "source_path": str(src).replace("\\", "/")}})
             continue
         if typ in DATA_PIECE_TYPES:
@@ -373,13 +406,13 @@ def main():
             link_objs.append(link)
             if typ in ("asm", "hasm"):
                 units.append({"name": f"asm/{start + 0x100000:06X}", "target_path": str(obj).replace("\\", "/"),
-                              "metadata": {"progress_categories": ["main"], "auto_generated": True}})
+                              "metadata": {"progress_categories": cats, "auto_generated": True}})
             else:
                 # Data still in assembly counts toward the data total (not
                 # linked from source yet), so the report's data progress is
                 # real instead of an empty 100 %.
                 units.append({"name": f"{typ}/{start + 0x100000:06X}", "target_path": str(obj).replace("\\", "/"),
-                              "metadata": {"progress_categories": ["main"], "auto_generated": True}})
+                              "metadata": {"progress_categories": cats, "auto_generated": True}})
         elif typ == "c":
             src = Path("src") / (name + ".c")
             obj = Path("build") / "src" / (name + ".o")
@@ -399,7 +432,7 @@ def main():
                     relinks.append((obj, link, text_tail, block.get(name)))
                 link_objs.append(link)
                 units.append({"name": name, "target_path": str(obj).replace("\\", "/"),
-                              "metadata": {"progress_categories": ["main"], "auto_generated": True}})
+                              "metadata": {"progress_categories": cats, "auto_generated": True}})
                 continue
             out = link = obj
             if name in carved:
@@ -416,7 +449,7 @@ def main():
             link_objs.append(link)
             units.append({"name": name, "target_path": str(target).replace("\\", "/"),
                           "base_path": str(obj).replace("\\", "/"),
-                          "metadata": {"progress_categories": ["main"], "complete": True,
+                          "metadata": {"progress_categories": cats, "complete": True,
                                        "source_path": str(src).replace("\\", "/")}})
 
     py = cmd_path(sys.executable)
@@ -549,7 +582,7 @@ def main():
         "build_target": False,
         "build_base": True,
         "watch_patterns": ["*.c", "*.h", "*.s", "*.yaml", "*.txt"],
-        "progress_categories": [{"id": "main", "name": "SCUS_972.64"}],
+        "progress_categories": CATEGORIES,
         "units": units,
     }
     (ROOT / "objdiff.json").write_text(json.dumps(objdiff_cfg, indent=2) + "\n")

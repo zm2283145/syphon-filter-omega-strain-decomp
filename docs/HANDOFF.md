@@ -78,12 +78,19 @@ then run `bash tools/round.sh <round> "<subject>"`. It integrates, applies names
 builds, requires the OK line, then reports, tests, commits and pushes;
 its steps are listed under "Integrating a round".
 
+
+**Folding new matches into original files (2026-10-27):** `merge_units.py --all` currently stops
+on an EE-GCC library group ("pooled literal .lit4 ... differ from the retail pool") and changes
+nothing. Run it on the original files that received new `func_*.c` units instead:
+`python tools/merge_units.py --jobs 2 $(find src/SFOGame src/Libs src/CW_PS2Support -name 'func_*.c' | sed 's|^src/||; s|/func_[0-9A-F]*\.c$||' | sort -u)`
+then `bash tools/round.sh - "<subject>"`. R149's 22 matches were folded this way (`d8455590`).
+
 ## Status
 
 | | |
 |---|---|
-| Functions matched | 13,765 of 14,345 |
-| Code matched | 84.43% |
+| Functions matched | 13,787 of 14,345 |
+| Code matched | 84.92% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 

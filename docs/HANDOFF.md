@@ -5,6 +5,90 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Resume here (2026-10-26 evening)
+
+This is the state as the last Claude session stopped (usage limit). Read this first.
+
+**On `main`:** everything listed in Status. The build reproduces retail byte for byte.
+
+- **Original names applied:** 11,790 functions, about 82%, use their real names from the two
+  prototype builds (`c4e49eb`, `3a4a2d3c`). See "Prototype builds with debug symbols" below.
+- **Prototype tools committed:** `tools/proto/` (DWARF v1 parser, Metrowerks demangler,
+  prototype→retail matcher). Its README explains how to regenerate the private outputs in
+  `build/agents/P1/`: `map.tsv`, `layout.txt`, `types.txt`, `locals.tsv`, `names_*.txt`. This
+  needs the two prototype ELFs from the owner; never commit them or the outputs.
+
+**Not on `main` (work in progress in the last cloud workspace only):**
+
+1. **Original source layout reorganization (owner approved).** Move `src/` to mirror the original
+   project tree, for example `src/SFOGame/Source/GuiAgentModify.c` and
+   `src/Libs/SFOLobby/SFOLobby/SFOLobby_Lobby.c`. SDK code stays in `src/lib/`, the extension
+   stays `.c`, and one file per original source file is merged with `tools/merge_units.py`.
+   - Original files that are not fully matched become numbered part-files (`Human.c`,
+     `Human_2.c`) with asm between them.
+   - Inputs: `layout.txt` and `layout_objects.txt` from the prototype tools. 227 of 327 original
+     files are fully matched. 82 appear in more than one address run, mostly inline and template
+     code.
+   - What blocks it: `merge_units.py`, `configure.py` and `integrate_pending.py` assume
+     `src/<main|lib>/<module>/` paths and must learn arbitrary unit paths. Work in batches, each
+     verified by a full build that prints the OK line, with matched-function counts not dropping.
+   - The README already describes this layout and marks it "in progress". Remove that note once
+     the layout lands.
+2. **Staged matches.** These were verified by `check_match` but not yet integrated. They lived in
+   the last workspace's gitignored `build/pending/r113/`, so redo them if that workspace is gone:
+   - cScene_UpdateActivation 0x13DB30
+   - cPlayerCamera_GetAngleToTarget 0x280070
+   - cNPC_RecommendAIMode 0x1570B0
+   - GameIni_GetString 0x3CBA90 (built from the prototype's locals)
+
+**Next steps, in order:**
+
+1. Finish the layout reorganization above, then update the README.
+2. Keep matching. Remaining work by size: 48 functions over 3 KB (258 KB) and 93 of
+   1.2–3 KB (173 KB). For every target:
+   - look it up in `build/agents/P1/map.tsv`;
+   - write it with the prototype's locals in declaration order and its real class layout;
+   - diff retail against the **prototype's own disassembly** of the same function. Its code is
+     often identical apart from a source change (GuiEquipmentPane_Cycle went from 84 to 6 diff
+     lines that way).
+
+   The prototypes were built with MW 2.4.1 = our `mw304`, so a draft can be calibrated against the
+   prototype first.
+3. Closest open near misses (2–6 diff lines, all register allocation):
+   - GuiObjectives_SetTab
+   - func_00400F20: last function of the AgentPacking unit; stage the whole unit `0x400990`
+   - Bone_FinalizeRotation
+   - HudTicker_Update
+   - Heap_AllocSlot
+   - GuiEquipmentPane_Cycle
+   - GuiAgentCreate_RandomLook
+   - TargetVis_Test (1 line)
+   - func_002B9108 (gcc, 2)
+
+   Each lane's `build/agents/M*/FINAL_REPORT.md` in the last workspace had the drafts; they are
+   gitignored, so treat these as known-close targets.
+4. Owner review is still open for 976 medium-confidence prototype names
+   (`build/agents/P1/names_review.txt`). 325 high-confidence names were held back on purpose:
+   - C library and runtime names (`memcpy`, `__throw`; renaming can change codegen);
+   - GCC built-ins;
+   - names that collide with other identifiers;
+   - self-referencing aliases.
+
+**Naming-round pitfalls hit today (avoid them):**
+
+- A libgcc alias line `dptoul = func_X` became `dptoul = dptoul` and hung the old assembler forever.
+- Macros paste the function name into type names (`NAME##_V`, `_E`, `_Construct`, ...). Renaming a
+  name means renaming those pasted identifiers too, but never a suffixed token that is itself a
+  real symbol.
+- Two functions can swap names. Apply renames in one pass, never chained.
+- `rename_map.tsv` (gitignored) drove the existing-name rename;
+  `tools/rename_drafts.py <dir>` renames `func_` tokens in drafts to current names.
+
+**Routine for a round** (see "Integrating a round"): stage verified files in `build/pending/<round>/`,
+then run `bash tools/round.sh <round> "<subject>"`. It integrates, applies names, configures,
+builds, requires the OK line, then reports, tests, commits and pushes;
+its steps are listed under "Integrating a round".
+
 ## Status
 
 | | |

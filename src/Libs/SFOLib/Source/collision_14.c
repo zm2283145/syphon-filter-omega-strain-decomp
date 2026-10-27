@@ -1,30 +1,57 @@
 /*
- * Libs/SFOLib/Source/collision: 5 files, 003C0F10-003C1020
+ * Libs/SFOLib/Source/collision: 5 files, 003C3110-003C3170
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_003C0F10 */
+/* merge_units: begin func_003C3110 */
 #pragma push /* merge_units */
 #include "types.h"
-#include "collision_types.h"
 
-typedef struct Cycle3 {
-    int unk0;
-    int index;
-} Cycle3;
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
 
-/* Returns the next index in a 0..2 cycle. */
-unsigned int cCollisionModel_EdgeId_FaceVertexNumber1(Cycle3* c) {
-    unsigned int next = c->index + 1;
-    return next < 3 ? next : 0;
+
+/* Constructor: null pointer wrapper. */
+int* cArray_FixedCapacity_cGOBJPtr_2_ctor(int* self) {
+    *self = 0;
+    return self;
 }
 /* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_003C0F10(void) {}
+static inline void merge_flush_func_003C3110(void) {}
 #pragma pop /* merge_units */
-/* merge_units: end func_003C0F10 */
+/* merge_units: end func_003C3110 */
 
-/* merge_units: begin func_003C0F30 */
+/* merge_units: begin func_003C3120 */
+#pragma push /* merge_units */
+typedef struct Obj3C3 {
+    char pad[0xC];
+    char flag;
+} Obj3C3;
+
+#if 0 /* merge_units */
+extern void std_vector_imp_cGOBJPtr_1_ctor(Obj3C3* self, int* src, int flag);
+#endif /* merge_units */
+Rel * std_vector_imp_cGOBJPtr_1_ctor(); /* merge_units */
+
+extern void std_vector_pod_int_reserve(Obj3C3* self, int value);
+
+/* Constructor: base init, applies *src, then stores the flag byte at +0xC. */
+Obj3C3* cArray_cGOBJPtr_ctor(Obj3C3* self, int* src, int flag) {
+    std_vector_imp_cGOBJPtr_1_ctor(self, src, flag);
+    std_vector_pod_int_reserve(self, *src);
+    self->flag = flag;
+    return self;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003C3120(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_003C3120 */
+
+/* merge_units: begin func_003C3170 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -33,155 +60,106 @@ static inline void merge_flush_func_003C0F10(void) {}
  */
 
 
-/* Vertex index i of a raw triangle. */
-int cCollisionModel_Face_GetIndexIntoVertexBlockOfCollisionModel(ColTri* tri, int i) {
-    return tri->vert[i];
+Rel* std_vector_imp_cGOBJPtr_1_ctor(Rel* r) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
+    return r;
 }
-
-int cCollisionModel_EdgeId_FaceVertexNumber0(char* self) {
-    return *(int*)(self + 4);
-}
-
-void* std_vector_deleter_cCollisionEdge_data(char* self) {
-    return self + 8;
-}
-
-/* Address of the three edge flag bytes. */
-unsigned char* cCollisionModel_Face_GetEdgeFlags(ColTri* tri) {
-    return tri->edgeFlags;
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_003C0F30(void) {}
+static inline void merge_flush_func_003C3170(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003C0F30 */
+/* merge_units: end func_003C3170 */
 
-/* merge_units: begin func_003C0F70 */
+/* merge_units: begin func_003C3190 */
 #pragma push /* merge_units */
-typedef struct { unsigned char b0, b1, b2, type; char pad[0x14]; int m18; } H0F70;
-typedef struct { H0F70* h; } P20F70;
-typedef struct { int m0; P20F70* q; } P10F70;
-typedef struct { int idx; P10F70* p; } T0F70;
-extern char* cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_5(H0F70* h, int* x);
-char* cCollisionModel_FaceLocator_Face(T0F70* t)
-{
-    int i = t->idx;
-    H0F70* h = t->p->q->h;
-    if (h->type < 4) {
-        int x = h->m18;
-        return cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_5(h, &x) + i * 64;
-    } else if (h->type < 5) {
-        int x = h->m18;
-        return cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_5(h, &x) + i * 32;
-    } else {
-        int x = h->m18;
-        return cCollisionModel_Data_GetAbsoluteAddress_cCollisionModelAddress_5(h, &x) + i * 16;
-    }
-}
-static inline void merge_flush_func_003C0F70(void) {} /* merge_units */
+#pragma push
+#pragma cplusplus on
+#include "vector_resize.h"
+#pragma pop
+
+#pragma cplusplus on
+DEFINE_RESIZE_ELEMENT(Elem96_3190, 96)
+#pragma opt_common_subs off
+DEFINE_VECTOR_RESIZE(std_vector_imp_cCollisionEdge_resize, Elem96_3190, std_vector_imp_cCollisionEdge_insert, std_vector_imp_cCollisionEdge_erase)
+#pragma opt_common_subs reset
+static inline void merge_flush_func_003C3190(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003C0F70 */
+/* merge_units: end func_003C3190 */
 
-/* merge_units: begin func_003C1010 */
-#pragma push /* merge_units */
-/*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
- */
-
-
-void* cCollisionFace_FaceLocator(char* self) {
-    return self + 96;
-}
-static inline void merge_flush_func_003C1010(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_003C1010 */
-
-/* merge_units: begin func_003C1020 */
+/* merge_units: begin func_003C3220 */
 #pragma push /* merge_units */
 #pragma cplusplus on
+#pragma always_inline on
 #pragma inline_depth(8)
-
-struct V_3C1 {
+/* lq/sq quad copies, sq zero and VU0 math as GCC-style volatile asm; the unused xx locals keep retail's dead addius */
+struct V {
     float x, y, z, w;
-    V_3C1() {}
-    // 128-bit lq/sq quadword copy idiom
-    // (dead xx local reproduces retail's duplicated addiu of the destination)
-    V_3C1& operator=(const V_3C1& o) { V_3C1* xx = this; __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(t) : "r"(this), "r"(&o) : "memory"); return *this; }
+    V() {}
+    V(const V& o) { void* xx = this; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(this), "r"(&o) : "memory"); }
+    V& operator=(const V& o) { void* xx = this; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(this), "r"(&o) : "memory"); return *this; }
+    float& X() { return x; }
+    float& Y() { return y; }
+    float& Z() { return z; }
+    void Clear() { __asm__ volatile("sq $0, 0x0(%0)" : : "r"(this) : "memory"); }
 } __attribute__((aligned(16)));
-struct Tri_3C1 { V_3C1 p0; V_3C1 p1; V_3C1 p2; V_3C1 n; char pad40[0x30]; };
-struct It_3C1 {
-    Tri_3C1* p;
-    It_3C1() {}
-    It_3C1(const It_3C1& o) : p(o.p) {}
-    Tri_3C1* Get() const { return p; }
-    bool operator==(const It_3C1& o) const { return Get() == o.Get(); }
-    bool operator!=(const It_3C1& o) const { return !(*this == o); }
-    Tri_3C1* Next() { Tri_3C1* r = p; p++; return r; }
+struct M { V a, b, c, d; };
+extern "C" void cVector_ctor_void(void* p);
+static inline void Xform(V* d, const V* s, const M* m) { __asm__ volatile("lqc2 vf8, 0x0(%2); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; sqc2 vf12, 0x0(%0)" : : "r"(d), "r"(m), "r"(s) : "memory"); }
+static inline void Fix(V& v, const M& m) { v.X() *= v.Y(); v.Z() *= v.Y(); Xform(&v, &v, &m); }
+struct CQ {
+    unsigned char b0; char pad1[0xF];
+    V v10; V v20; V v30; V v40; V v50; V v60; V v70; V v80;
+    char pad90[0x40];
+    int xD0; char padD4[0x45];
+    unsigned char b119; unsigned char b11A; char pad11B[5];
+    M m120;
 };
-struct Gath;
-struct Scene_3C1;
-extern "C" Tri_3C1** std_vector_deleter_cCollisionFace_data_void_2(Scene_3C1* s);
-struct Scene_3C1 {
-    int cap;
-    int count;
-    Tri_3C1* data;
-    It_3C1 Begin() { It_3C1 r; r.p = *std_vector_deleter_cCollisionFace_data_void_2(this); return r; }
-    It_3C1 End() { It_3C1 r; r.p = *std_vector_deleter_cCollisionFace_data_void_2(this) + count; return r; }
+struct PV { float x, y, z, w; } __attribute__((aligned(16)));
+struct ATri {
+    PV v[3];
+    V n;
+    char x40[0x20];
+    char x60[0x10];
+    ATri(V* src);
 };
-// VU0 macro-mode: load triangle corners + scale into a fixed vf register group
-#define LOADTRI(t, S) { int tmp; __asm__ volatile(S : "=&r"(tmp) : "r"(&t->p0), "r"(&t->p1), "r"(&t->p2), "f"(t->n.w) : "memory"); }
-
-extern "C" void cCollisionModelList_CalculateFaceNormals(Gath* self, Scene_3C1* scene)
-{
-    It_3C1 it = scene->Begin();
-    It_3C1 end = scene->End();
-    V_3C1 n0;
-    V_3C1 n1;
-    V_3C1 n2;
-    V_3C1 n3;
-    // VU0 macro-mode: clear w of the normal accumulators
-    __asm__ volatile("vmulx.w $vf25, $vf0, $vf0x; vmulx.w $vf26, $vf0, $vf0x; vmulx.w $vf27, $vf0, $vf0x; vmulx.w $vf28, $vf0, $vf0x");
-    while (it != end) {
-        Tri_3C1* t0 = it.Next();
-        LOADTRI(t0, "lqc2 $vf1, 0x0(%1); lqc2 $vf2, 0x0(%2); lqc2 $vf3, 0x0(%3); mfc1 %0, %4; qmtc2.ni %0, $vf4");
-        if (it != end) {
-            Tri_3C1* t1 = it.Next();
-            LOADTRI(t1, "lqc2 $vf5, 0x0(%1); lqc2 $vf6, 0x0(%2); lqc2 $vf7, 0x0(%3); mfc1 %0, %4; qmtc2.ni %0, $vf8");
-            if (it != end) {
-                Tri_3C1* t2 = it.Next();
-                LOADTRI(t2, "lqc2 $vf9, 0x0(%1); lqc2 $vf10, 0x0(%2); lqc2 $vf11, 0x0(%3); mfc1 %0, %4; qmtc2.ni %0, $vf12");
-                if (it != end) {
-                    Tri_3C1* t3 = it.Next();
-                    LOADTRI(t3, "lqc2 $vf13, 0x0(%1); lqc2 $vf14, 0x0(%2); lqc2 $vf15, 0x0(%3); mfc1 %0, %4; qmtc2.ni %0, $vf16");
-                    // VU0 macro-mode: four cross products scaled by w
-                    __asm__ volatile(
-                        "vsub.xyzw $vf17, $vf2, $vf1; vsub.xyzw $vf18, $vf3, $vf1; vsub.xyzw $vf19, $vf6, $vf5; vsub.xyzw $vf20, $vf7, $vf5; vsub.xyzw $vf21, $vf10, $vf9; vsub.xyzw $vf22, $vf11, $vf9; vsub.xyzw $vf23, $vf14, $vf13; vsub.xyzw $vf24, $vf15, $vf13; vopmula.xyz $ACC, $vf17, $vf18; vopmsub.xyz $vf25, $vf18, $vf17; vopmula.xyz $ACC, $vf19, $vf20; vopmsub.xyz $vf26, $vf20, $vf19; vopmula.xyz $ACC, $vf21, $vf22; vopmsub.xyz $vf27, $vf22, $vf21; vopmula.xyz $ACC, $vf23, $vf24; vopmsub.xyz $vf28, $vf24, $vf23; vmulx.xyz $vf25, $vf25, $vf4x; vmulx.xyz $vf26, $vf26, $vf8x; vmulx.xyz $vf27, $vf27, $vf12x; vmulx.xyz $vf28, $vf28, $vf16x; sqc2 $vf25, 0x0(%0); sqc2 $vf26, 0x0(%1); sqc2 $vf27, 0x0(%2); sqc2 $vf28, 0x0(%3)"
-                        : : "r"(&n0), "r"(&n1), "r"(&n2), "r"(&n3) : "memory");
-                    t3->n = n3;
-                } else {
-                    // VU0 macro-mode: three cross products scaled by w
-                    __asm__ volatile(
-                        "vsub.xyzw $vf17, $vf2, $vf1; vsub.xyzw $vf18, $vf3, $vf1; vsub.xyzw $vf19, $vf6, $vf5; vsub.xyzw $vf20, $vf7, $vf5; vsub.xyzw $vf21, $vf10, $vf9; vsub.xyzw $vf22, $vf11, $vf9; vopmula.xyz $ACC, $vf17, $vf18; vopmsub.xyz $vf25, $vf18, $vf17; vopmula.xyz $ACC, $vf19, $vf20; vopmsub.xyz $vf26, $vf20, $vf19; vopmula.xyz $ACC, $vf21, $vf22; vopmsub.xyz $vf27, $vf22, $vf21; vmulx.xyz $vf25, $vf25, $vf4x; vmulx.xyz $vf26, $vf26, $vf8x; vmulx.xyz $vf27, $vf27, $vf12x; sqc2 $vf25, 0x0(%0); sqc2 $vf26, 0x0(%1); sqc2 $vf27, 0x0(%2)"
-                        : : "r"(&n0), "r"(&n1), "r"(&n2) : "memory");
-                }
-                t2->n = n2;
-            } else {
-                // VU0 macro-mode: two cross products scaled by w
-                __asm__ volatile(
-                    "vsub.xyzw $vf17, $vf2, $vf1; vsub.xyzw $vf18, $vf3, $vf1; vsub.xyzw $vf19, $vf6, $vf5; vsub.xyzw $vf20, $vf7, $vf5; vopmula.xyz $ACC, $vf17, $vf18; vopmsub.xyz $vf25, $vf18, $vf17; vopmula.xyz $ACC, $vf19, $vf20; vopmsub.xyz $vf26, $vf20, $vf19; vmulx.xyz $vf25, $vf25, $vf4x; vmulx.xyz $vf26, $vf26, $vf8x; sqc2 $vf25, 0x0(%0); sqc2 $vf26, 0x0(%1)"
-                    : : "r"(&n0), "r"(&n1) : "memory");
-            }
-            t1->n = n1;
-        } else {
-            // VU0 macro-mode: one cross product scaled by w
-            __asm__ volatile(
-                "vsub.xyzw $vf17, $vf2, $vf1; vsub.xyzw $vf18, $vf3, $vf1; vopmula.xyz $ACC, $vf17, $vf18; vopmsub.xyz $vf25, $vf18, $vf17; vmulx.xyz $vf25, $vf25, $vf4x; sqc2 $vf25, 0x0(%0)"
-                : : "r"(&n0) : "memory");
-        }
-        t0->n = n0;
-    }
+extern "C" {
+unsigned char cCollisionProbe_SphereSweptRay_DetectForCollision_AccountForMovementOfCollidingObjects(CQ* q, int a, int b);
+unsigned char cCollisionProbe_SphereSweptRay_DetectForCollision_IgnoreMovementOfCollidingObjects(CQ* q, int a, int b);
+void cCollisionModel_FaceProperties_ctor(void* p);
+void cCollisionModel_FaceLocator_ctor(void* p);
+void cCollisionFace_Set_cCollisionModelFaceLocatorR(ATri* t, V* src);
 }
-static inline void merge_flush_func_003C1020(void) {} /* merge_units */
+inline ATri::ATri(V* src) { ATri* p = this; PV* it = p->v; do { cVector_ctor_void(it); it++; } while (it != p->v + 3); cVector_ctor_void(&p->n); cCollisionModel_FaceProperties_ctor(p->x40); cCollisionModel_FaceLocator_ctor(p->x60); cCollisionFace_Set_cCollisionModelFaceLocatorR(p, src); }
+extern "C" unsigned char ColQuery_ExecuteSweep(CQ* q, int a, int b)
+{
+    unsigned char hit;
+    if (q->xD0) {
+    if (q->b119) hit = cCollisionProbe_SphereSweptRay_DetectForCollision_AccountForMovementOfCollidingObjects(q, a, b);
+    else hit = cCollisionProbe_SphereSweptRay_DetectForCollision_IgnoreMovementOfCollidingObjects(q, a, b);
+    if (hit) {
+        q->v20 = q->v10;
+        q->v50 = q->v40;
+    }
+    q->v80 = q->v70;
+    if (q->b11A) {
+        if (hit) {
+            q->v20.Clear();
+            Fix(q->v50, q->m120);
+        }
+        Fix(q->v80, q->m120);
+    }
+    if (hit) {
+        if (q->b0 == 1) q->v30 = q->v20;
+        else {
+            ATri t(&q->v60);
+            const V& r = t.n;
+            q->v30 = r;
+        }
+    }
+    } else hit = 0;
+    return hit;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003C3220(void) {}
 #pragma pop /* merge_units */
-/* merge_units: end func_003C1020 */
+/* merge_units: end func_003C3220 */

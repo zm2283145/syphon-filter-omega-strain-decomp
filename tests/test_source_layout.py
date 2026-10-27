@@ -146,7 +146,7 @@ class ReadChunksTests(unittest.TestCase):
     def test_knr_declaration_before_a_differing_definition(self):
         a = mu.Chunk("func_00100000", "struct A; void f(struct A *p);\nvoid g(void) { f(0); }\n", "mw", False)
         b = mu.Chunk("func_00100010", "struct B { int x; };\nvoid f(struct B *p) { p->x = 0; }\n", "mw", False)
-        self.assertEqual(mu.knr_declarations([a, b]), {(0, "f")})
+        self.assertEqual(mu.knr_declarations([a, b]), {(0, "f"): "void"})
         t = mu.synthesize([a, b], mu.ROOT / "include", True, "t", cast=True)
         self.assertIn("void f(); " + mu.TAG, t)
         # read back, the original declaration is restored
@@ -160,7 +160,12 @@ class ReadChunksTests(unittest.TestCase):
     def test_no_knr_for_promoted_parameters(self):
         a = mu.Chunk("func_00100000", "void f(int x);\n", "mw", False)
         b = mu.Chunk("func_00100010", "void f(short x) { }\n", "mw", False)
-        self.assertEqual(mu.knr_declarations([a, b]), set())
+        self.assertEqual(mu.knr_declarations([a, b]), {})
+
+    def test_knr_uses_the_definitions_return_type(self):
+        a = mu.Chunk("func_00100000", "void f(void *p);\nvoid g(void) { f(0); }\n", "mw", False)
+        b = mu.Chunk("func_00100010", "int f(int *p) { return *p; }\n", "mw", False)
+        self.assertEqual(mu.knr_declarations([a, b]), {(0, "f"): "int"})
 
     def test_first_error(self):
         err = ("### mwccps2.exe Compiler:\n#     169: x = f();\n#   Error:     ^\n#   illegal explicit conversion"

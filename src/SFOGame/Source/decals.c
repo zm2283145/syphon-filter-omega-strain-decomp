@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/decals: 1 file, 002783A0
+ * SFOGame/Source/decals: 2 files, 002783A0-00278430
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -34,9 +34,17 @@ typedef struct Obj116 {
     unsigned char unk115;
 } Obj116;
 
+#if 0 /* merge_units */
 extern void func_00278440(Sub78*);
+#endif /* merge_units */
+Rel * func_00278440(); /* merge_units */
+
 extern int cArrayCapacity_Int(int*);
+#if 0 /* merge_units */
 extern void PtrVec_Reserve_Thunk_278430(Sub78*, int);
+#endif /* merge_units */
+int PtrVec_Reserve_Thunk_278430(); /* merge_units */
+
 
 /* Constructor body: resets three (0, -2) pairs, sets up the sub-object and clears flags. */
 Obj116* cBullet_ctor(Obj116* o) {
@@ -63,3 +71,28 @@ Obj116* cBullet_ctor(Obj116* o) {
 static inline void merge_flush_func_002783A0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002783A0 */
+
+/* merge_units: begin func_00278430 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+
+extern int std_vector_pod_int_reserve(int, int);
+
+int PtrVec_Reserve_Thunk_278430(int a0, int a1) {
+    return std_vector_pod_int_reserve(a0, a1);
+}
+
+Rel* func_00278440(Rel* r) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
+    return r;
+}
+static inline void merge_flush_func_00278430(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00278430 */

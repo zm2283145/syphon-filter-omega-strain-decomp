@@ -1,95 +1,81 @@
 /*
- * SFOGame/Source/humanAnimData: 3 files, 001F33F0-001F3510
+ * SFOGame/Source/humanAnimData: 2 files, 00206F90-002070F0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_001F33F0 */
+/* merge_units: begin func_00206F90 */
 #pragma push /* merge_units */
-/*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
- */
-
 #include "types.h"
-#include "loose01_types.h"
-
-extern int std_opNe_listdeleterR_listdeleterR(ListIter*, ListIter*);
-extern ListIter* std_list_deleter_voidPtr_generic_iterator_1_opInc(ListIter*);
-extern ListIter* std_list_cSkaTransBLENDPtr_generic_iterator_1_opInc(ListIter*);
+typedef struct { char d[0x8]; } B8;
+typedef struct { int w[3]; } W12;
+typedef struct { char d[0x20]; } B20;
+typedef struct { char d[0x30]; } B30;
+extern int BuildAnimationNode_ForRotatingANonTranslatingAnimation(void*, void*, void*, void*, void*, void*, void*, float, float, void*);
+extern void cString_ctor_charP(void*, void*);
+extern int opAdd_cStringR_cStringR(void*, void*, void*);
+extern void* cSkaPlaybackGroupId_ctor_int(void*, void*);
+extern void cSkaAnimationBlend_ctor(void*, void*, void*, void*);
 #if 0 /* merge_units */
-extern void std_vector_cSkaTransBLEND_push_back(void);
+extern void* cString16N_2_ctor_cStringR(void*, void*);
 #endif /* merge_units */
-void std_vector_cSkaTransBLEND_push_back(); /* merge_units */
+char * cString16N_2_ctor_cStringR(); /* merge_units */
 
-
-int std_opNe_listR_listR_2(ListIter* a, ListIter* b) {
-    return std_opNe_listdeleterR_listdeleterR(a, b);
+extern void cSkaAnimationSet_CreateAnimationBlend(void*, void*, void*);
+extern void cSkaAnimationBlend_dtor(void*, int);
+extern void String_Dtor_138350(void*, int);
+/* Builds the "blend" selector node over the graph made by BuildAnimationNode_ForRotatingANonTranslatingAnimation and registers it. */
+#pragma optimization_level 1
+int BuildAnimationBlend_ForRotatingANonTranslatingAnimation(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, void* p6, float f0, float f1, void* p7)
+{
+    W12 vF0;
+    W12 vE0;
+    B8 vD8;
+    W12 vC8;
+    W12 vB8;
+    W12 vA8;
+    B30 v70;
+    B20 v50;
+    BuildAnimationNode_ForRotatingANonTranslatingAnimation(&v70, p1, p2, p3, p4, p5, p6, f0, f1, p7);
+    cString_ctor_charP(&vF0, "blend");
+    opAdd_cStringR_cStringR(&vE0, &vF0, p2);
+    cSkaAnimationBlend_ctor(&vC8, &v70, p1, cSkaPlaybackGroupId_ctor_int(&vD8, p7));
+    cSkaAnimationSet_CreateAnimationBlend(p1, cString16N_2_ctor_cStringR(&v50, &vE0), &vC8);
+    cSkaAnimationBlend_dtor(&vC8, -1);
+    String_Dtor_138350(&vE0, -1);
+    String_Dtor_138350(&vF0, -1);
+    cString_ctor_charP(&vB8, "blend");
+    opAdd_cStringR_cStringR(&vA8, &vB8, p2);
+    cString16N_2_ctor_cStringR(p0, &vA8);
+    String_Dtor_138350(&vA8, -1);
+    String_Dtor_138350(&vB8, -1);
+    return 0;
 }
-
-ListIter* cConstLListIterator_cSkaTransBLENDPtr_opInc(ListIter* it) {
-    std_list_cSkaTransBLENDPtr_generic_iterator_1_opInc(it);
-    return it;
-}
-
-ListIter* std_list_cSkaTransBLENDPtr_generic_iterator_1_opInc(ListIter* it) {
-    std_list_deleter_voidPtr_generic_iterator_1_opInc(it);
-    return it;
-}
-
-void cArray_cSkaTransBLEND_PushBackActual(void) {
-    std_vector_cSkaTransBLEND_push_back();
-}
-static inline void merge_flush_func_001F33F0(void) {} /* merge_units */
+#pragma optimization_level reset
+static inline void merge_flush_func_00206F90(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001F33F0 */
+/* merge_units: end func_00206F90 */
 
-/* merge_units: begin func_001F3470 */
+/* merge_units: begin func_002070F0 */
 #pragma push /* merge_units */
-extern int std_vector_imp_cSkaTransBLEND_push_back(ObjVec*, int);
-extern char* std_vector_imp_cSkaTransBLEND_end_void(ObjVec*);
-#if 0 /* merge_units */
-extern char** std_vector_deleter_cSkaTransBLEND_data_void(ObjVec*);
-#endif /* merge_units */
-char * * std_vector_deleter_cSkaTransBLEND_data_void(); /* merge_units */
-
-extern int std_vector_imp_cSkaTransBLEND_insert(ObjVec*, char*, int, int);
-
-void std_vector_cSkaTransBLEND_push_back(ObjVec* v, int value) {
-    std_vector_imp_cSkaTransBLEND_push_back(v, value);
+extern int cString_Length(void* s);
+extern char* cString_opCast_constcharPtr(void* s);
+#pragma optimization_level 1
+char* cString16N_2_ctor_cStringR(char* dst, void* s)
+{
+    int i;
+    for (i = 0; i < 31; i++) {
+        char c;
+        if (i < cString_Length(s))
+            c = cString_opCast_constcharPtr(s)[i];
+        else
+            c = 0;
+        dst[i] = c;
+    }
+    dst[i] = 0;
+    return dst;
 }
-
-/* Append one element at the end. */
-int std_vector_imp_cSkaTransBLEND_push_back(ObjVec* v, int value) {
-    return std_vector_imp_cSkaTransBLEND_insert(v, std_vector_imp_cSkaTransBLEND_end_void(v), 1, value);
-}
-
-/* End pointer for 36-byte elements. */
-char* std_vector_imp_cSkaTransBLEND_end_void(ObjVec* v) {
-    char** data;
-    int count;
-
-    data = std_vector_deleter_cSkaTransBLEND_data_void(v);
-    count = v->count;
-    return *data + count * 36;
-}
-static inline void merge_flush_func_001F3470(void) {} /* merge_units */
+#pragma optimization_level reset
+static inline void merge_flush_func_002070F0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001F3470 */
-
-/* merge_units: begin func_001F3510 */
-#pragma push /* merge_units */
-extern void std_list_cSkaTransBLENDPtr_generic_iterator_1_opMul(void);
-
-/* Address of the data pointer. */
-char** std_vector_deleter_cSkaTransBLEND_data_void(ObjVec* v) {
-    return &v->data;
-}
-
-void cConstLListIterator_cSkaTransBLENDPtr_opMul(void) {
-    std_list_cSkaTransBLENDPtr_generic_iterator_1_opMul();
-}
-static inline void merge_flush_func_001F3510(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F3510 */
+/* merge_units: end func_002070F0 */

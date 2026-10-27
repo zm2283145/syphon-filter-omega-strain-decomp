@@ -1,76 +1,167 @@
 /*
- * SFOGame/Source/GuiSlideShow: 2 files, 003282A0-00328310
+ * SFOGame/Source/GuiSlideShow: 8 files, 00328570-00328810
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_003282A0 */
+/* merge_units: begin func_00328570 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-extern "C" void operator_delete(void*);
-extern "C" void String_Dtor(void*, short);
-extern "C" void* GuiSlideShow_Slide_dtor(void* self, short del)
-{
-    if (self) {
-        char* m = (char*)self + 0x10;
-        if (m) String_Dtor(m, 0);
-        if (self) String_Dtor(self, 0);
-        if (del > 0) operator_delete(self);
-    }
-    return self;
-}
-static inline void merge_flush_func_003282A0(void) {} /* merge_units */
+#include "direct_base_dtor.h"
+
+DEFINE_DIRECT_BASE_DTOR(std_vector_imp_Slide_dtor, std_vector_deleter_Slide_dtor)
+static inline void merge_flush_func_00328570(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003282A0 */
+/* merge_units: end func_00328570 */
 
-/* merge_units: begin func_00328310 */
+/* merge_units: begin func_003285D0 */
 #pragma push /* merge_units */
-typedef struct { int a, b, c; } Str_328310;
-typedef struct { int a, b, c, d; } Sub_328310;
-typedef struct { Str_328310 name; Sub_328310 sub; int x; } E_328310;
-typedef struct {
-    char pad[0x48];
-    char v48[4];
-    int n4C;
-    E_328310* v50;
-} O_328310;
-extern char D_004B8790[];
-void cString_ctor_void(void* s);
-void cArray_Slide_ctor(void* s);
-void std_basic_string_char_char_traits_char_ctor_charP(Str_328310* s, char* c);
-void std_basic_string_char_char_traits_char_assign_basicstringR(Str_328310* d, Str_328310* s);
-#if 0 /* merge_units */
-void String_Dtor(void* s, int f);
-#endif /* merge_units */
-#define String_Dtor(a0, a1) ((void)String_Dtor((a0), (short)(a1))) /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
 
-void std_vector_imp_Section_insert(void* v, E_328310* pos, int n, E_328310* e);
-void std_vector_deleter_Slide_dtor(void* s, int f);
+#include "types.h"
 
-int GuiSlideShow_AddSection(O_328310* o, char* s)
-{
-    E_328310 e;
-    Str_328310 t;
-    int r;
-    Sub_328310* m;
-    cString_ctor_void(&e);
-    m = &e.sub;
-    cArray_Slide_ctor(m);
-    { Str_328310* p = &t; std_basic_string_char_char_traits_char_ctor_charP(p, s ? s : D_004B8790); }
-    std_basic_string_char_char_traits_char_assign_basicstringR(&e.name, &t);
-    String_Dtor(&t, 0);
-    e.x = 0;
-    std_vector_imp_Section_insert(o->v48, o->v50 + o->n4C, 1, &e);
-    r = o->n4C - 1;
-    if (m) {
-        if (m) {
-            if (m) std_vector_deleter_Slide_dtor(m, 0);
-        }
-    }
-    String_Dtor(&e, 0);
+Rel* std_vector_imp_Slide_ctor(Rel* r) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
     return r;
 }
-#undef String_Dtor /* merge_units */
-static inline void merge_flush_func_00328310(void) {} /* merge_units */
+static inline void merge_flush_func_003285D0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00328310 */
+/* merge_units: end func_003285D0 */
+
+/* merge_units: begin func_003285F0 */
+#pragma push /* merge_units */
+typedef struct { char d[0x20]; } E285F0;
+typedef struct { char pad[0x4C]; int count; E285F0* items; } T285F0;E285F0* GuiSlideShow_GetSection(T285F0* self, int i)
+{
+    if (i < 0 || self->count <= i) return 0;
+    return &self->items[i];
+}
+static inline void merge_flush_func_003285F0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003285F0 */
+
+/* merge_units: begin func_00328630 */
+#pragma push /* merge_units */
+#include "loose02_types.h"
+
+extern void std_vector_deleter_Section_clear(void* rec);
+
+void GuiSlideShow_Clear(Obj328630* self) {
+    std_vector_deleter_Section_clear(self->unk48);
+    self->unk58 = -1;
+}
+static inline void merge_flush_func_00328630(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00328630 */
+
+/* merge_units: begin func_00328660 */
+#pragma push /* merge_units */
+#define SOUND_EVENT_NO_PROTOS
+#include "sound_event.h"
+typedef struct { int pad[3]; int id; } Voice_328660;
+typedef struct {
+    char base[0x48];
+    char a[0xC];
+    unsigned char a0C;
+    char pad55[3];
+    int x58;
+    char pad5C[0x10];
+    int x6C;
+    int x70;
+    int x74;
+    int x78;
+    int x7C;
+    int x80;
+    char pad84[0xC];
+    SoundRequest req;
+} Obj_328660;
+extern char D_004DE710[];
+extern void GuiWidget_ctor(void* self);
+#if 0 /* merge_units */
+extern void std_vector_Section_ctor(void* p);
+#endif /* merge_units */
+Rel * std_vector_Section_ctor(); /* merge_units */
+
+#if 0 /* merge_units */
+extern void std_vector_deleter_Section_clear(void* p);
+#endif /* merge_units */
+#define std_vector_deleter_Section_clear(a0) (std_vector_deleter_Section_clear((a0))) /* merge_units */
+
+static inline void Req_Init_328660(SoundRequest* p, int type, __int128 name, Voice_328660* voice, int x180) {
+    int tmp; int* r = &tmp;
+    p->type = type;
+    *(__int128*)p->name = name;
+    p->voice = voice;
+    if (voice) r = &voice->id; else tmp = -1;
+    p->voiceId = *r;
+    p->x30 = 0; p->x34 = 0; p->x38 = 0;
+    p->x184 = -1;
+    p->x180 = x180;
+}
+Obj_328660* GuiSlideShow_ctor(Obj_328660* o)
+{
+    SoundRequest* p;
+    char* pa;
+    GuiWidget_ctor(o);
+    *(char**)o = D_004DE710;
+    pa = o->a;
+    std_vector_Section_ctor(pa);
+    pa[0xC] = 1;
+    o->x6C = 0;
+    o->x70 = 0;
+    o->x74 = 0;
+    o->x78 = 0;
+    o->x7C = 0;
+    o->x80 = 0;
+    p = &o->req;
+    p->voiceId = -2;
+    p->voice = 0;
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
+    Req_Init_328660(p, -1, -1, 0, 0);
+    p->x186 = 0;
+    std_vector_deleter_Section_clear(pa);
+    o->x58 = -1;
+    return o;
+}
+#undef std_vector_deleter_Section_clear /* merge_units */
+static inline void merge_flush_func_00328660(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00328660 */
+
+/* merge_units: begin func_00328740 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "nested_null_dtor.h"
+
+DEFINE_NESTED_NULL_DTOR3(cArray_Section_dtor, std_vector_deleter_Section_dtor)
+static inline void merge_flush_func_00328740(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00328740 */
+
+/* merge_units: begin func_003287B0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+DEFINE_NESTED_NULL_DTOR2(std_vector_Section_dtor, std_vector_deleter_Section_dtor)
+static inline void merge_flush_func_003287B0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003287B0 */
+
+/* merge_units: begin func_00328810 */
+#pragma push /* merge_units */
+Rel* std_vector_Section_ctor(Rel* r) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
+    return r;
+}
+static inline void merge_flush_func_00328810(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00328810 */

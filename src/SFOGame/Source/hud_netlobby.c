@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/hud_netlobby: 4 files, 0027A740-0027A7F0
+ * SFOGame/Source/hud_netlobby: 6 files, 0027A740-0027AA80
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -9,11 +9,16 @@
 #include "types.h"
 typedef struct { char pad[0x3C]; int mode; char pad2[0x16]; unsigned char busy; } Menu27A7;
 typedef struct { char pad[0x14C]; unsigned int pressed; char pad2[8]; unsigned int held; } Pad27A7;
+#if 0 /* merge_units */
 extern void cHudNetLobby_NextButton(Menu27A7* s, int dir);
+#endif /* merge_units */
+void cHudNetLobby_NextButton(); /* merge_units */
+
 #if 0 /* merge_units */
 extern void cHudNetLobby_ButtonPressed(Menu27A7* s);
 #endif /* merge_units */
 void cHudNetLobby_ButtonPressed(); /* merge_units */
+
 
 extern void cHudNetLobby_InitCurrentScreen(Menu27A7* s);
 void cHudNetLobby_HandleInput(Menu27A7* s, Pad27A7* p) {
@@ -92,12 +97,21 @@ typedef struct {
 } Menu27A8;
 extern unsigned char D_00504040;
 extern void std_list_deleter_voidPtr_begin_void(It27A8 *r, void *l);
+#if 0 /* merge_units */
 extern void std_list_GameInfoPtr_generic_iterator_ctor(It27A8 *r, It27A8 *s);
+#endif /* merge_units */
+Word * std_list_GameInfoPtr_generic_iterator_ctor(); /* merge_units */
+
+#if 0 /* merge_units */
 extern char *std_list_GameInfoPtr_front(void *l);
+#endif /* merge_units */
+char * std_list_GameInfoPtr_front(); /* merge_units */
+
 #if 0 /* merge_units */
 extern void cHudNetLobby_InitCurrentScreen(Menu27A8 *s);
 #endif /* merge_units */
 #define cHudNetLobby_InitCurrentScreen(a0) (cHudNetLobby_InitCurrentScreen((Menu27A7 *)(a0))) /* merge_units */
+
 
 
 void cHudNetLobby_ButtonPressed(Menu27A8 *s)
@@ -141,3 +155,45 @@ void cHudNetLobby_ButtonPressed(Menu27A8 *s)
 static inline void merge_flush_func_0027A8B0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0027A8B0 */
+
+/* merge_units: begin func_0027AA80 */
+#pragma push /* merge_units */
+Word* std_list_GameInfoPtr_generic_iterator_ctor(Word* dst, Word* src) {
+    dst->value = src->value;
+    return dst;
+}
+
+/* Address 8 bytes past the node stored at +8. */
+char* std_list_GameInfoPtr_front(PtrVec* self) {
+    return (char*)self->data + 8;
+}
+static inline void merge_flush_func_0027AA80(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0027AA80 */
+
+/* merge_units: begin func_0027AAA0 */
+#pragma push /* merge_units */
+typedef struct { char pad[0x2C]; int count; char pad2[8]; int sel; int mode; } Menu27AA;
+extern void cHudNetLobby_SetActive(Menu27AA* s);
+void cHudNetLobby_NextButton(Menu27AA* s, int dir) {
+    int n = 0;
+    if (s->mode == 0) {
+        if (D_00504040 || !s->count) return;
+        n = 2;
+    } else if (s->mode == 1) {
+        n = s->count;
+    }
+    if (n) {
+        if (dir) {
+            s->sel++;
+            if (s->sel >= n) s->sel = 0;
+        } else {
+            s->sel--;
+            if (s->sel < 0) s->sel = n - 1;
+        }
+    }
+    cHudNetLobby_SetActive(s);
+}
+static inline void merge_flush_func_0027AAA0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0027AAA0 */

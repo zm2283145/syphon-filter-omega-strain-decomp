@@ -1,18 +1,18 @@
 /*
- * main/hotbox: range (4 files, 00170160-00170460)
+ * SFOGame/Source/hotbox: 6 files, 00170160-00170500
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* headers shared by the blocks below */
+/* merge_units: begin func_00170160 */
+#pragma push /* merge_units */
 #include "types.h"
 #include "message_pack.h"
 
-/* merge_units: begin func_00170160 */
-#pragma push /* merge_units */
 #define PACK_BODY(e, b) MP_I(b, 8) = MP_I(e, 0x24); MP_I(b, 0xC) = MP_I(e, 0x28); MP_I(b, 0x10) = MP_I(e, 0x2C); MP_I(b, 0x14) = MP_I(MP_P(e, 0x30), 0xC);
 
 DEFINE_MESSAGE_PACK(cHotboxMsg_Pack, 0x18, D_004EE6A0, PACK_BODY)
+static inline void merge_flush_func_00170160(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00170160 */
 
@@ -143,13 +143,19 @@ extern void* g_HotboxTracker;
 #endif /* merge_units */
 #define g_HotboxTracker (*(void **)&g_HotboxTracker) /* merge_units */
 
+
 extern char g_RuntimeHotboxes[];
 #if 0 /* merge_units */
 T_0460* cHotboxMan_CreateInteractBox(void* mgr, O_0460* obj, int a, int b);
 #endif /* merge_units */
 #define cHotboxMan_CreateInteractBox(a0, a1, a2, a3) ((T_0460 *)cHotboxMan_CreateInteractBox((int)(a0), (int)(a1), (a2), (a3))) /* merge_units */
 
+
+#if 0 /* merge_units */
 void std_vector_cHotboxPtr_push_back(void* list, T_0460** pt);
+#endif /* merge_units */
+int std_vector_cHotboxPtr_push_back(); /* merge_units */
+
 void cNetNPCMsgs_SendMessage(O_0460* obj, int type, int size, int a, int b, int c, int d);
 T_0460* Global_MakeNPCInteractable(S_0460* self)
 {
@@ -160,9 +166,92 @@ T_0460* Global_MakeNPCInteractable(S_0460* self)
         cNetNPCMsgs_SendMessage(self->obj, 0x2A, 4, self->obj->id, t->id, 0, 0);
     return t;
 }
-#undef g_HotboxTracker /* merge_units */
-#undef cHotboxMan_CreateInteractBox /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00170460(void) {}
+#undef g_HotboxTracker /* merge_units */
+#undef cHotboxMan_CreateInteractBox /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00170460 */
+
+/* merge_units: begin func_00170500 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * cHotbox interaction volumes, cHotboxMsg and the script natives that use them.
+ */
+
+#include "hotbox_types.h"
+
+#if 0 /* merge_units */
+extern PtrVec g_RuntimeHotboxes;  /* list of created hotboxes */
+#endif /* merge_units */
+#define g_RuntimeHotboxes (*(PtrVec*)&g_RuntimeHotboxes) /* merge_units */
+
+#if 0 /* merge_units */
+extern void* g_HotboxTracker;
+#endif /* merge_units */
+#define g_HotboxTracker (*(void **)&g_HotboxTracker) /* merge_units */
+
+extern int std_vector_pod_int_insert(PtrVec* v, int* pos, int n, int* value);
+#if 0 /* merge_units */
+extern int cHotboxMan_CreateInteractBox(void* owner, void* gobj, int a2, int a3);
+#endif /* merge_units */
+#define cHotboxMan_CreateInteractBox(a0, a1, a2, a3) ((int)cHotboxMan_CreateInteractBox((int)(a0), (int)(a1), (a2), (a3))) /* merge_units */
+
+
+/* push_back on a pointer vector. */
+int std_vector_cHotboxPtr_push_back(PtrVec* v, int* value) {
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
+}
+
+/* Creates a hotbox for a game object and records it in g_RuntimeHotboxes. */
+int Global_MakeGOBJInteractable(void* gobj) {
+    int hotbox = cHotboxMan_CreateInteractBox(g_HotboxTracker, gobj, 0, 0);
+
+    std_vector_cHotboxPtr_push_back(&g_RuntimeHotboxes, &hotbox);
+    return hotbox;
+}
+#undef g_RuntimeHotboxes /* merge_units */
+#undef g_HotboxTracker /* merge_units */
+#undef cHotboxMan_CreateInteractBox /* merge_units */
+static inline void merge_flush_func_00170500(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00170500 */
+
+/* merge_units: begin func_00170570 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct Eq_0570 {};
+struct Pred_0570 { Eq_0570 op; int* ref; Pred_0570(const Eq_0570& e, int* r) : op(e), ref(r) {} };
+struct M_0570 { char pad[0x28]; char list[4]; };
+extern "C" {
+extern char g_HotboxList[];
+
+extern int D_004EE6E4;
+#if 0 /* merge_units */
+extern M_0570* g_HotboxTracker;
+#endif /* merge_units */
+#define g_HotboxTracker (*(M_0570 **)&g_HotboxTracker) /* merge_units */
+
+
+void std_list_imp_voidPtr_remove_if(void* list, Pred_0570 p);
+int* func_00170650(void* v, int i);
+}
+extern "C" void ResetInteractBoxes(void)
+{
+    int key;
+    Eq_0570 e1;
+    Eq_0570 e2;
+    M_0570* mgr = g_HotboxTracker;
+    int i;
+    for (i = 0; i < D_004EE6E4; i++) {
+        key = *func_00170650(g_RuntimeHotboxes, i);
+        std_list_imp_voidPtr_remove_if(g_HotboxList, Pred_0570(e1, &key));
+        std_list_imp_voidPtr_remove_if(mgr->list, Pred_0570(e2, &key));
+    }
+    D_004EE6E4 = 0;
+}
+#undef g_HotboxTracker /* merge_units */
+static inline void merge_flush_func_00170570(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00170570 */

@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/NetObjectiveMsg: 2 files, 002D74A0-002D7580
+ * SFOGame/Source/NetObjectiveMsg: 3 files, 002D74A0-002D7620
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -13,7 +13,11 @@ extern int cMessage_RegisterFields(F6ObjNet*);
 extern int NetMessageField(F6ObjNet*, void*, int, int);
 extern int NetRegisterMessage(void*, int, void*);
 extern char D_0051F0B8[];
+#if 0 /* merge_units */
 extern void cNetObjectiveMsg_ObjectiveMsgCallback(void);
+#endif /* merge_units */
+int cNetObjectiveMsg_ObjectiveMsgCallback(); /* merge_units */
+
 unsigned char cNetObjectiveMsg_InitNet(void)
 {
     F6ObjNet s;
@@ -43,6 +47,7 @@ extern int D_0051F0B8;
 #endif /* merge_units */
 #define D_0051F0B8 (*(int*)&D_0051F0B8) /* merge_units */
 
+
 extern int Event_PackHeader(ObjEvt_e1*, int, int*, int, int, unsigned int, char*);
 extern char* strncpy(char*, const char*, unsigned int);
 int cNetObjectiveMsg_Pack(ObjEvt_e1* self, int recv, int* outSize, int a3, int a4, unsigned int cap, char* buf)
@@ -67,3 +72,44 @@ int cNetObjectiveMsg_Pack(ObjEvt_e1* self, int recv, int* outSize, int a3, int a
 static inline void merge_flush_func_002D7580(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002D7580 */
+
+/* merge_units: begin func_002D7620 */
+#pragma push /* merge_units */
+typedef struct { char s[16]; } F1Name2D7;
+typedef struct F1Data2D7 { int a; int id; signed char c; char pad9[3]; int d; int e; F1Name2D7 name; } F1Data2D7;
+typedef struct F1Msg2D7 { void* vt; char base[0x20]; int a; int id; signed char c; char pad2D[3]; int d; int e; F1Name2D7 name; } F1Msg2D7;
+typedef struct F1Ent2D7 { void* queue; } F1Ent2D7;
+extern unsigned char D_005723C8;
+extern unsigned char D_005721D0;
+extern char D_0051F0B0[];
+extern char D_004DE4F0[];
+extern void cMessage_ctor_cMessageNameR(void* msg, void* name);
+extern F1Ent2D7* cNetObj_GetNetSystem(int id);
+extern void QueueMessage_cMessageR_cSystemP_int_int(void* msg, void* queue, int a, int b);
+extern void cMessage_dtor(void* msg, int flags);
+int cNetObjectiveMsg_ObjectiveMsgCallback(int a0, int a1, int a2, void* data)
+{
+    if (!D_005723C8) D_005723C8 = 1;
+    if (D_005721D0) {
+        F1Msg2D7 m;
+        F1Ent2D7* e;
+        F1Data2D7* d = (F1Data2D7*)data;
+        cMessage_ctor_cMessageNameR(&m, D_0051F0B0);
+        m.vt = D_004DE4F0;
+        m.a = d->a;
+        m.id = d->id;
+        m.c = d->c;
+        m.d = d->d;
+        m.e = d->e;
+        m.name = d->name;
+        e = cNetObj_GetNetSystem(d->id);
+        if (e) QueueMessage_cMessageR_cSystemP_int_int(&m, e->queue, 0, 0);
+        m.vt = D_004DE4F0;
+        cMessage_dtor(&m, 0);
+    }
+    D_005723C8 = 0;
+    return 0x24;
+}
+static inline void merge_flush_func_002D7620(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002D7620 */

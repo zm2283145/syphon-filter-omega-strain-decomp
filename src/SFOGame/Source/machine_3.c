@@ -1,18 +1,17 @@
 /*
- * main/machine: range (2 files, 00166190-00166430)
+ * SFOGame/Source/machine: 3 files, 00166190-00166650
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* headers shared by the blocks below */
+/* merge_units: begin func_00166190 */
+#pragma push /* merge_units */
 #include "types.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
 int cMemMan_Deallocate();
 int sprintf(void *, const void *, ...);
 
-/* merge_units: begin func_00166190 */
-#pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
@@ -120,7 +119,11 @@ int cHogList_Open(char *, int, int, int);
 int nGlobalization_GetString_charP(char *);                            
 int cMemMan_Allocate(int, int, char *, int);                        
 int atoi(signed char *);                            
-int RegisterVBLANKHandler();                                  
+#if 0 /* merge_units */
+int RegisterVBLANKHandler();
+#endif /* merge_units */
+void RegisterVBLANKHandler(); /* merge_units */
+                                  
 int RegisterVBLANKThread(char *);                               
 int cHudLoading_SetProgress(int, float);                            
 int cHudLoading_Activate(int);                               
@@ -189,3 +192,23 @@ void cMachine_SetLoadingScreen(PS0_00166430 *arg0, int d1, int arg2) {
 static inline void merge_flush_func_00166430(void) {}
 #pragma pop /* merge_units */
 /* merge_units: end func_00166430 */
+
+/* merge_units: begin func_00166650 */
+#pragma push /* merge_units */
+extern void VBLANKInterruptHandler(void);
+extern int AddIntcHandler(int id, void (*fn)(void), int arg);
+#if 0 /* merge_units */
+extern void EnableIntc(int id);
+#endif /* merge_units */
+#define EnableIntc(a0) ((void)EnableIntc((a0))) /* merge_units */
+
+/* Register handler 2 and start it. */
+void RegisterVBLANKHandler(void)
+{
+    D_0048A038 = AddIntcHandler(2, VBLANKInterruptHandler, 0);
+    EnableIntc(2);
+}
+#undef EnableIntc /* merge_units */
+static inline void merge_flush_func_00166650(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00166650 */

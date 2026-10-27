@@ -1,15 +1,14 @@
 /*
- * main/NPCInfoObject: range (2 files, 00434740-00434AA0)
+ * Libs/SFOLib/Source/NPCInfoObject: 3 files, 00434740-00434BB0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* headers shared by the blocks below */
+/* merge_units: begin func_00434740 */
+#pragma push /* merge_units */
 #include "NetObjectMgr_types.h"
 #include "types.h"
 
-/* merge_units: begin func_00434740 */
-#pragma push /* merge_units */
 extern unsigned int D_00582B60;
 extern unsigned int D_00582B68;
 extern unsigned int D_00582B70;
@@ -100,7 +99,11 @@ static inline void merge_flush_func_00434740(void) {}
 int Alloc_Lock(int);                                    
 int EnableIntc(int);                                  
 char * cMemMan_Allocate(int, int, char *, int);                      
-int std_list_tNPCInfoPtr_push_back(char *, void **);                      
+#if 0 /* merge_units */
+int std_list_tNPCInfoPtr_push_back(char *, void **);
+#endif /* merge_units */
+Iter * std_list_tNPCInfoPtr_push_back(); /* merge_units */
+                      
 extern char D_004BFCA0;
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
@@ -140,3 +143,25 @@ void cNPCInfoObject_AddPendingAdd(int d0, char * arg1) {
 static inline void merge_flush_func_00434AA0(void) {}
 #pragma pop /* merge_units */
 /* merge_units: end func_00434AA0 */
+
+/* merge_units: begin func_00434BB0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Translation unit: NPCInfoObject.cc.
+ */
+
+#include "npc_types.h"
+
+extern Iter* std_list_deleter_voidPtr_insert(Iter* out, Tree* t, Iter* hint, int value);
+
+/* map insert(value): inserts with an end() hint, result iterator in it[1]. */
+Iter* std_list_tNPCInfoPtr_push_back(Tree* t, int value) {
+    Iter it[2];
+
+    it[0].p = &t->header;
+    return std_list_deleter_voidPtr_insert(&it[1], t, &it[0], value);
+}
+static inline void merge_flush_func_00434BB0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00434BB0 */

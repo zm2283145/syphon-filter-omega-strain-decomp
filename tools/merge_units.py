@@ -410,7 +410,7 @@ def proto(it):
         vals = vals[:-1]
     else:
         vals = vals[:vals.index("{")]
-    vals = [v for v in vals if v not in ("extern", "static", "inline", "__inline")]
+    vals = [v for v in vals if v not in ("extern", "static", "inline", "__inline", "\"C\"")]
     return it.names[0], vals
 
 
@@ -531,11 +531,12 @@ def bol(block, lead):
 
 
 def knr_declarations(chunks):
-    """{(chunk index, function)}: prototypes in C blocks of functions that a later
-    C block defines with another prototype (same return type, no parameter that
+    """{(chunk index, function): return type}: prototypes in C blocks of functions
+    that a later C block defines with another prototype (no parameter that
     default promotions would change). synthesize declares those without a
-    prototype, `ret f();`, which C accepts before the definition; the build
-    check decides whether the calls still give the retail code."""
+    prototype and with the definition's return type, `ret f();`, which C accepts
+    before the definition; the build check decides whether the calls still give
+    the retail code."""
     defs, decls = {}, []
     for ci, c in enumerate(chunks):
         if c.cpp:
@@ -550,16 +551,16 @@ def knr_declarations(chunks):
                 defs.setdefault(p[0], (ci, p[1]))
             else:
                 decls.append((ci, p[0], p[1]))
-    out = set()
+    out = {}
     for ci, n, vals in decls:
         if n not in defs or defs[n][0] <= ci or defs[n][1] == vals:
             continue
         a, b = split_proto(n, vals), split_proto(n, defs[n][1])
-        if not a or not b or a[0] != b[0] or a[2] or b[2]:
+        if not a or not b or a[2] or b[2]:
             continue
         if any(set(t) & {"char", "short", "float", "_Bool", "bool"} and "*" not in t for t in b[1]):
             continue
-        out.add((ci, n))
+        out[(ci, n)] = " ".join(b[0])
     return out
 
 
@@ -579,7 +580,7 @@ def synthesize(chunks, unit_dir, mw, title, cast=False):
     protos = {}      # function -> prototype tokens
     objdecls = {}    # object -> normalized first declaration
     comments = set()
-    kr = knr_declarations(chunks) if cast else set()
+    kr = knr_declarations(chunks) if cast else {}
     for ci, c in enumerate(chunks):
         text = c.text
         # rename conflicting type names and statics (to a fixpoint)
@@ -660,7 +661,7 @@ def synthesize(chunks, unit_dir, mw, title, cast=False):
                 elif p and (ci, p[0]) in kr and p[0] not in protos and p[0] not in macros:
                     # a later C block defines the function with another prototype: declare it
                     # without one here, so that the definition is compatible
-                    ret = " ".join(split_proto(p[0], p[1])[0])
+                    ret = kr[(ci, p[0])]
                     block.append(f"{lead}{bol(block, lead)}#if 0 {TAG}\n{it.text.strip()}\n#endif {TAG}\n{ret} {p[0]}(); {TAG}\n")
                     declared.add(p[0])
                     continue

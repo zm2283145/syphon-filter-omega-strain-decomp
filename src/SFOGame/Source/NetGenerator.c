@@ -1,5 +1,5 @@
 /*
- * main/gameFrontEnd: 5 files, 002C7810-002C7B30
+ * SFOGame/Source/NetGenerator: 6 files, 002C7810-002C7BA0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -59,6 +59,7 @@ extern "C" int netCreatePlayer_netCreatePlayerCallback(void* self, int unused, i
     D_005723C8 = 0;
     return 0x430;
 }
+static inline void merge_flush_func_002C7810(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002C7810 */
 
@@ -79,6 +80,7 @@ int netCreatePlayer_GetMsgType(void) {
 int netCreateNPC_GetMsgType(void) {
     return 1;
 }
+static inline void merge_flush_func_002C79E0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002C79E0 */
 
@@ -98,7 +100,11 @@ extern int NetObjectField(int* db, int offset, int size, int count, int type, Pr
 extern int NetRegisterStructure(int* table, char* name, int size);
 extern int NetRegisterRemoteObjectCallback(int table, void* a, void* b, void* c);
 extern int D_0051EE80;
+#if 0 /* merge_units */
 extern void tNetGenerator_NetGeneratorCreationCallback(void);
+#endif /* merge_units */
+int tNetGenerator_NetGeneratorCreationCallback(); /* merge_units */
+
 extern void tNetGenerator_NetGeneratorUpdateCallback(void);
 extern void tNetGenerator_NetGeneratorDeleteCallback(void);
 unsigned char tNetGenerator_InitNet(void)
@@ -129,6 +135,7 @@ unsigned char tNetGenerator_InitNet(void)
     }
     return ok;
 }
+static inline void merge_flush_func_002C7A00(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002C7A00 */
 
@@ -136,6 +143,7 @@ unsigned char tNetGenerator_InitNet(void)
 #pragma push /* merge_units */
 void tNetGenerator_NetGeneratorDeleteCallback(void) {
 }
+static inline void merge_flush_func_002C7B20(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002C7B20 */
 
@@ -146,6 +154,7 @@ extern char D_0051EE88[];
 extern char D_005723C8[];
 #endif /* merge_units */
 #define D_005723C8 ((char*)&D_005723C8) /* merge_units */
+
 
 extern int NetGetObject(int, int);
 
@@ -176,5 +185,43 @@ L002C7B80:;
 ret:;
 }
 #undef D_005723C8 /* merge_units */
+static inline void merge_flush_func_002C7B30(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002C7B30 */
+
+/* merge_units: begin gameFrontEnd_2C7BA0 */
+#pragma push /* merge_units */
+#if 0 /* merge_units */
+extern char D_005723C8[];
+#endif /* merge_units */
+#define D_005723C8 ((char*)&D_005723C8) /* merge_units */
+
+
+int tNetGenerator_NetGeneratorCreationCallback(void) {
+    int loc[2];
+    int a0, a1, v0, v1;
+    int cond;
+
+    v0 = *(unsigned char*)(char*)D_005723C8;
+    cond = v0 != 0;
+    v0 = 0 + 1;
+    if (cond) goto L002C7BC0;
+    *(char*)(char*)D_005723C8 = v0;
+L002C7BC0:;
+    a0 = (int)loc;
+    v0 = NetGetObject(a0, a1);
+    cond = v0 != 0;
+    if (cond) goto L002C7BE0;
+    v1 = *(int*)(char*)loc;
+    v1 = *(int*)((char*)v1 + 28);
+    *(int*)(char*)D_0051EE88 = v1;
+L002C7BE0:;
+    *(char*)(char*)D_005723C8 = 0;
+    goto ret;
+ret:
+    return v0;
+}
+#undef D_005723C8 /* merge_units */
+static inline void merge_flush_gameFrontEnd_2C7BA0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end gameFrontEnd_2C7BA0 */

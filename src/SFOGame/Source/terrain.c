@@ -1,5 +1,5 @@
 /*
- * main/hotbox: 2 files, 00173810-00173900
+ * SFOGame/Source/terrain: 3 files, 00173810-00173970
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -12,6 +12,7 @@
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
 DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cHotboxPtr_1_dtor)
+static inline void merge_flush_func_00173810(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00173810 */
 
@@ -27,7 +28,11 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cHotboxPtr_1_dtor)
 #include "loose00_types.h"
 
 extern int std_vector_pod_int_reserve(int, int);
+#if 0 /* merge_units */
 extern int details_compressed_pair_imp_cAllocator_voidPtr_int_1_first(LinkList* list);
+#endif /* merge_units */
+void * details_compressed_pair_imp_cAllocator_voidPtr_int_1_first(); /* merge_units */
+
 
 int PtrVec_Reserve_Thunk_173900(int a0, int a1) {
     return std_vector_pod_int_reserve(a0, a1);
@@ -48,5 +53,15 @@ LinkList* std_list_cHotboxPtr_ctor(LinkList* list) {
     list->sentinel.next = &list->sentinel;
     return list;
 }
+static inline void merge_flush_func_00173900(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00173900 */
+
+/* merge_units: begin func_00173970 */
+#pragma push /* merge_units */
+void* details_compressed_pair_imp_cAllocator_voidPtr_int_1_first(void* self) {
+    return self;
+}
+static inline void merge_flush_func_00173970(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00173970 */

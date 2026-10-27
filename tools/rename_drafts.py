@@ -3,7 +3,7 @@
 usage: .venv/bin/python tools/rename_drafts.py <dir-or-file> [...]   (edits .c/.h files in place, LF kept)"""
 import re, sys
 from pathlib import Path
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 names = {}
 for line in (ROOT / "config" / "symbol_addrs.txt").read_text().splitlines():
     m = re.match(r"\s*(\w+)\s*=\s*0x([0-9A-Fa-f]+)\s*;\s*//.*type:func", line)

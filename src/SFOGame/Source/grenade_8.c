@@ -1,3 +1,11 @@
+/*
+ * SFOGame/Source/grenade: 1 file, 00259880
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00259880 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #pragma inline_depth(10)
 #include "types.h"
@@ -66,7 +74,6 @@ extern float D_0048AFE8, D_0048AFE0, D_0048B000, D_0048B008, BlindDuration, Blin
 extern struct G78DC { int a; WList list; WList* L() { return details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_2(&list); } } D_004F78DC;
 extern int g_HumanActorClassKey[];
 extern char g_ActorActionMsgClass[], D_004E0840[], g_Game[];
-WList* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_2(WList*);
 int cHuman_IsInvulnerable(Actor*);
 void Actor_Ignite(Actor*, unsigned char, Actor*, unsigned char, int, float);
 void cHuman_SetDeaf(Actor*, int, float);
@@ -215,5 +222,6 @@ extern "C" void cAreaEffect_NextFrame(Eff* self, float dt)
         cSystem_ActualScheduleDelete(self, 0.1f);
     }
 }
-
-
+static inline void merge_flush_func_00259880(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00259880 */

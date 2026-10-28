@@ -1,3 +1,11 @@
+/*
+ * SFOGame/Source/taser: 1 file, 00263890
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00263890 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
@@ -303,3 +311,6 @@ extern "C" void cAirTaser_UpdateShock(HeldItem* s, float dt)
         cAirTaser_Release(s);
     }
 }
+static inline void merge_flush_func_00263890(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00263890 */

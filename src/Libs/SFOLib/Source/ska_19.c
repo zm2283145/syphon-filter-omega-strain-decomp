@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/ska: 7 files, 003B1420-003B1510
+ * Libs/SFOLib/Source/ska: 11 files, 003B1420-003B1710
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -114,11 +114,16 @@ static inline void merge_flush_func_003B14E0(void) {} /* merge_units */
 #pragma push /* merge_units */
 #include "ska_types.h"
 
-Rel* std_vector_imp_cSkaPlaybackItem_ctor(Rel* r); /* gsynth: defined below */typedef struct { char pad[0xC]; unsigned char flag; } S;
+#if 0 /* merge_units */
+Rel* std_vector_imp_cSkaPlaybackItem_ctor(Rel* r); /* gsynth: defined below */
+#endif /* merge_units */
+Rel * std_vector_imp_cSkaPlaybackItem_ctor(); /* merge_units */
+typedef struct { char pad[0xC]; unsigned char flag; } S;
 #if 0 /* merge_units */
 extern void std_vector_imp_cSkaPlaybackItem_ctor(S*);
 #endif /* merge_units */
-#define std_vector_imp_cSkaPlaybackItem_ctor(a0) ((void)std_vector_imp_cSkaPlaybackItem_ctor((Rel *)(a0))) /* merge_units */
+Rel * std_vector_imp_cSkaPlaybackItem_ctor(); /* merge_units */
+
 
 
 extern void std_vector_imp_cSkaPlaybackItem_reserve(S*, int);
@@ -126,7 +131,6 @@ extern void std_vector_imp_cSkaPlaybackItem_reserve(S*, int);
 S* cArray_cSkaPlaybackItem_ctor(S* s, int* v, unsigned char flag) { std_vector_imp_cSkaPlaybackItem_ctor(s); std_vector_imp_cSkaPlaybackItem_reserve(s, *v); s->flag = flag; return s; }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B1510(void) {}
-#undef std_vector_imp_cSkaPlaybackItem_ctor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003B1510 */
 
@@ -161,3 +165,113 @@ int cArray_cSkaPlaybackItem_PushBackActual(SkaVec* v, int value) {
 static inline void merge_flush_func_003B1560(void) {}
 #pragma pop /* merge_units */
 /* merge_units: end func_003B1560 */
+
+/* merge_units: begin func_003B15B0 */
+#pragma push /* merge_units */
+/* cSkaPlaybackItem::Accumulate: first contribution is copied; otherwise summed root rotations (weighted when still unweighted) and weights. Dead 'xx = this' locals keep retail's dead addius. */
+#pragma cplusplus on
+#pragma always_inline on
+#pragma inline_depth(8)
+#pragma peephole off
+struct V {
+    float x, y, z, w;
+    V() {}
+    V(const V& o) { void* xx = this; V* pd = this; const V* ps = &o; __int128 t; asm volatile { lq t, 0(ps); sq t, 0(pd) } }
+    V& operator=(const V& o) { void* xx = this; V* pd = this; const V* ps = &o; __int128 t; asm volatile { lq t, 0(ps); sq t, 0(pd) } return *this; }
+    V operator*(float k) const;
+    V operator+(const V& o) const;
+} __attribute__((aligned(16)));
+static inline void ScaleTo(V* d, const V* s, float k) { int r; const V* ss = s; asm {
+        .set noreorder
+        lqc2 vf1, 0x0(ss)
+        mfc1 r, k
+        qmtc2.ni r, vf2
+        vmulx.xyzw vf1, vf1, vf2x
+        sqc2 vf1, 0x0(d)
+        .set reorder
+    } }
+static inline void AddTo(V* d, const V* a, const V* b) { asm {
+        lqc2 vf1, 0x0(a)
+        lqc2 vf2, 0x0(b)
+        vadd.xyzw vf1, vf1, vf2
+        sqc2 vf1, 0x0(d)
+    } }
+inline V V::operator*(float k) const { V t; ScaleTo(&t, this, k); return t; }
+inline V V::operator+(const V& o) const { V t; AddTo(&t, this, &o); return t; }
+struct cSkaPlaybackItem {
+    void* mAnimation;
+    float mSummedWeight;
+    unsigned char mIsSummedOffsetRootRotationUnweightedAndNormalized;
+    V mSummedOffsetRootRotation;
+    V GetWeighted() const {
+        if (mIsSummedOffsetRootRotationUnweightedAndNormalized)
+            return mSummedOffsetRootRotation * mSummedWeight;
+        return mSummedOffsetRootRotation;
+    }
+};
+extern "C" void cSkaPlaybackItem_Accumulate(cSkaPlaybackItem* self, const cSkaPlaybackItem* contribution)
+{
+    if (self->mSummedWeight == 0.0f) {
+        *self = *contribution;
+    } else {
+        self->mSummedOffsetRootRotation = self->GetWeighted() + contribution->GetWeighted();
+        self->mSummedWeight += contribution->mSummedWeight;
+        self->mIsSummedOffsetRootRotationUnweightedAndNormalized = 0;
+    }
+}
+static inline void merge_flush_func_003B15B0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B15B0 */
+
+/* merge_units: begin func_003B1710 */
+#pragma push /* merge_units */
+/* Iterator equality. */
+int cSkaPlaybackItem_HasSameAnimation(Iter* a, Iter* b) {
+    return a->p == b->p;
+}
+
+void* AnimBlend_GetGroupCollection(char* self) {
+    return self + 232;
+}
+static inline void merge_flush_func_003B1710(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B1710 */
+
+/* merge_units: begin func_003B1740 */
+#pragma push /* merge_units */
+typedef struct AC_3B1740 { int id; float weight; unsigned char active; char pad[7]; Vec4 v; } AC_3B1740;
+/* Initialises an animation contribution record and returns it. */
+#pragma peephole off
+AC_3B1740* cSkaPlaybackItem_ctor(AC_3B1740* self, int id, float weight, Vec4* v) {
+    self->id = id;
+    self->weight = weight;
+    self->active = 1;
+    self->v = *v;
+    return self;
+}
+#pragma peephole reset
+static inline void merge_flush_func_003B1740(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B1740 */
+
+/* merge_units: begin func_003B1770 */
+#pragma push /* merge_units */
+void** PtrStack_Top(PtrStack* s) {
+    return &s->items[s->count - 1];
+}
+
+int AnimContext_GetCount(char* self) {
+    return *(int*)(self + 0);
+}
+
+float cSkaSliderValue_opCast_float(char* self) {
+    return *(float*)(self + 8);
+}
+
+/* Address of element i in an array of 60-byte elements. */
+char* cArray_cSkaSliderValue_opIndex(SkaVec* v, int i) {
+    return v->data + i * 60;
+}
+static inline void merge_flush_func_003B1770(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B1770 */

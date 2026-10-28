@@ -1,3 +1,11 @@
+/*
+ * Libs/SFOLib/Source/collision: 1 file, 003C2210
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_003C2210 */
+#pragma push /* merge_units */
 /* cRayMatrix::cRayMatrix(const cVector& losStartPoint, const cVector& losVector, float losRadius) (003C2210).
  * Inline-local stack order follows inline nesting depth: MakeAxes/Invert are reached through 3-deep inline wrappers.
  * The void* xx = this locals keep retail's dead addius; function-local statics are written as explicit guards. */
@@ -174,5 +182,6 @@ extern "C" cRayMatrix* cRayMatrix_ctor_cVectorR_cVectorR_float(cRayMatrix* self,
     }
     return self;
 }
-
-
+static inline void merge_flush_func_003C2210(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003C2210 */

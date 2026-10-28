@@ -1,3 +1,11 @@
+/*
+ * SFOGame/Source/gameCamera: 1 file, 0017D700
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_0017D700 */
+#pragma push /* merge_units */
 /* cHermiteSplineWithScaledDuration<cQuaternion>(p0, v0, p1, v1, duration): base cHermiteSpline(p0, v0*duration, p1, v1*duration), then duration and its inverse. */
 #pragma cplusplus on
 #pragma exceptions off
@@ -49,3 +57,6 @@ extern "C" HSD* cHermiteSplineWithScaledDuration_cQuaternion_ctor(HSD* p, const 
     p->mOneOverDuration = (duration != 0.0f) ? 1.0f / duration : 0.0f;
     return p;
 }
+static inline void merge_flush_func_0017D700(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0017D700 */

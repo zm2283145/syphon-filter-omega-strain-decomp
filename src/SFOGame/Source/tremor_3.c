@@ -1,3 +1,11 @@
+/*
+ * SFOGame/Source/tremor: 1 file, 002722B0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_002722B0 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #pragma inline_depth(10)
 #include "types.h"
@@ -167,3 +175,6 @@ extern "C" void cTremorManager_NextFrame(cLList* self, float timeStep)
         nRumbleManager_Start(0, 0, (int)(D_0048B2D8 + intensity * (D_0048B2E0 - D_0048B2D8)), 0.01f, 1);
     }
 }
+static inline void merge_flush_func_002722B0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002722B0 */

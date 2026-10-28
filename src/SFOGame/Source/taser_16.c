@@ -1,3 +1,11 @@
+/*
+ * SFOGame/Source/taser: 1 file, 00265790
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00265790 */
+#pragma push /* merge_units */
 /* 00265790 cAirTaser::SmoothLine(float amt, bool decay) (taser.cc) */
 #pragma cplusplus on
 #include "types.h"
@@ -51,3 +59,6 @@ void cAirTaser_SmoothLine(cAirTaser* self, bool decay, float amt)
         self->mPoints[i].p.z = (1.0f - adjustPct) * self->mPoints[i].p.z + mid.z * adjustPct;
     }
 }
+static inline void merge_flush_func_00265790(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00265790 */

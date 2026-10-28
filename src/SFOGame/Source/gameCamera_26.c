@@ -1,3 +1,11 @@
+/*
+ * SFOGame/Source/gameCamera: 1 file, 0017D5A0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_0017D5A0 */
+#pragma push /* merge_units */
 /* cSplinedMotion::UpdateSplinePoints: on target change rebuild the hermite spline with GetSpeed() as end tangent, else rescale the end tangent into the existing spline. */
 #pragma cplusplus on
 #pragma inline_depth(8)
@@ -70,3 +78,6 @@ extern "C" void cSplinedMotion_cQuaternion_UpdateSplinePoints(Cam* c)
         }
     }
 }
+static inline void merge_flush_func_0017D5A0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0017D5A0 */

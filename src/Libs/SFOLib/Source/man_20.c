@@ -1,3 +1,11 @@
+/*
+ * Libs/SFOLib/Source/man: 1 file, 0038DB30
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_0038DB30 */
+#pragma push /* merge_units */
 #include "types.h"
 
 #pragma cplusplus on
@@ -83,3 +91,6 @@ extern "C" void cMan_Load(cMan* self, char* name, SKL* sklData, int identity)
     if (self->count < texParts) self->faceCamo = 1;
     cMan_BuildMan(self, 1);
 }
+static inline void merge_flush_func_0038DB30(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0038DB30 */

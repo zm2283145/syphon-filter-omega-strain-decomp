@@ -1,12 +1,80 @@
 /*
- * Libs/SFOLib/Source/animator: 8 files, 003F4190-003F4510
+ * Libs/SFOLib/Source/animator: 9 files, 003F3FF0-003F4190
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_003F4190 */
+/* merge_units: begin func_003F3FF0 */
 #pragma push /* merge_units */
 #include "types.h"
+typedef struct { float x, y, z; } cXyz;
+
+typedef struct { float t; cXyz v; } Key;
+typedef struct {
+    char pad0[0x18];
+    int cur;
+    cXyz* out;
+    char pad20[4];
+    int count;
+    Key* keys;
+} Curve;
+
+static inline Key* KeyAt(Key* k, int i) { return &k[i]; }
+static inline void Scale(cXyz* r, const cXyz* a, float s) { r->z = a->z * s; r->y = a->y * s; r->x = a->x * s; }
+static inline void ScaleF(cXyz* r, const cXyz* a, float s) { float x = a->x * s, y = a->y * s, z = a->z * s; r->x = x; r->y = y; r->z = z; }
+static inline void Add(cXyz* r, const cXyz* a, const cXyz* b) { r->x = a->x + b->x; r->y = a->y + b->y; r->z = a->z + b->z; }
+static inline Key* Last(Curve* c) { return c->keys + c->count - 1; }
+
+static inline void Interp(cXyz* o, const Key* k0, const Key* k1, float t)
+{
+    float d1, d0;
+    cXyz a, b, s;
+    d0 = t - k0->t;
+    d1 = k1->t - t;
+    Scale(&a, &k0->v, d1);
+    Scale(&b, &k1->v, d0);
+    Add(&s, &b, &a);
+    ScaleF(o, &s, 1.0f / (k1->t - k0->t));
+}
+#pragma opt_strength_reduction off
+#pragma opt_propagation off
+void cKeyframeAnimation_cXyz_Update(Curve* c, float t)
+{
+    Curve* cc = c;
+    int i;
+    Key* keys;
+    Key** pk;
+    if (*(volatile int*)&c->count > 0) {
+        pk = &c->keys;
+        keys = c->keys;
+        if (t <= KeyAt(keys, 0)->t) {
+            { cXyz* o = c->out; Key* k = KeyAt(keys, 0); o->x = k->v.x; o->y = k->v.y; o->z = k->v.z; }
+            c->cur = 0;
+        } else if (!(t < Last(c)->t)) {
+            { cXyz* o = c->out; Key* k = Last(c); o->x = k->v.x; o->y = k->v.y; o->z = k->v.z; }
+            c->cur = c->count - 1;
+        } else {
+            i = c->cur;
+            while (t < KeyAt(keys, i)->t)
+                i--;
+            if (t > KeyAt(keys, i + 1)->t) {
+                do {
+                    i++;
+                } while (t > KeyAt(cc->keys, i + 1)->t);
+            }
+            c->cur = i;
+            Interp(c->out, KeyAt(*pk, i), KeyAt(*pk, i + 1), t);
+        }
+    }
+}
+#pragma opt_propagation reset
+#pragma opt_strength_reduction reset
+static inline void merge_flush_func_003F3FF0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003F3FF0 */
+
+/* merge_units: begin func_003F4190 */
+#pragma push /* merge_units */
 #include "last_key_time.h"
 
 /* Time of the last key. */
@@ -19,55 +87,55 @@ static inline void merge_flush_func_003F4190(void) {} /* merge_units */
 #pragma push /* merge_units */
 /* cKeyframeAnimation_tRGB_Update: piecewise-linear evaluation of a 3-component (colour) track;
  * the key search is cKeyframeAnimation_float_Update's (interface_model_3F3E70.c). */
-typedef struct { float t; float v[3]; } Key;
+typedef struct { float t; float v[3]; } Key_003F41C0;
 typedef struct {
     char pad0[0x18];
     int cur;
     float* out;
     char pad20[4];
     int count;
-    Key* keys;
-} Curve;
+    Key_003F41C0* keys;
+} Curve_003F41C0;
 
-static inline Key* KeyAt(Key* k, int i) { return &k[i]; }
-static inline void Copy3(float* o, Key* k) { o[0] = k->v[0]; o[1] = k->v[1]; o[2] = k->v[2]; }
-static inline Key* Last(Curve* c) { return c->keys + c->count - 1; }
+static inline Key_003F41C0* KeyAt_003F41C0(Key_003F41C0* k, int i) { return &k[i]; }
+static inline void Copy3(float* o, Key_003F41C0* k) { o[0] = k->v[0]; o[1] = k->v[1]; o[2] = k->v[2]; }
+static inline Key_003F41C0* Last_003F41C0(Curve_003F41C0* c) { return c->keys + c->count - 1; }
 
 #pragma opt_strength_reduction off
 #pragma opt_propagation off
-void cKeyframeAnimation_tRGB_Update(Curve* c, float t)
+void cKeyframeAnimation_tRGB_Update(Curve_003F41C0* c, float t)
 {
     /* Local declaration order matters for register allocation.
      * `cc` (an un-propagated alias of c) makes the second scan loop reload
      * keys from memory each iteration, as retail does. */
-    Curve* cc = c;
+    Curve_003F41C0* cc = c;
     int i;
-    Key* keys;
-    Key** pk;
+    Key_003F41C0* keys;
+    Key_003F41C0** pk;
     float* o; /* declared last: keeps out in t0 (retail) */
     if (*(volatile int*)&c->count > 0) {
         pk = &c->keys;
         keys = c->keys;
-        if (t <= KeyAt(keys, 0)->t) {
-            Copy3(c->out, KeyAt(keys, 0));
+        if (t <= KeyAt_003F41C0(keys, 0)->t) {
+            Copy3(c->out, KeyAt_003F41C0(keys, 0));
             c->cur = 0;
-        } else if (!(t < Last(c)->t)) {
-            Copy3(c->out, Last(c));
+        } else if (!(t < Last_003F41C0(c)->t)) {
+            Copy3(c->out, Last_003F41C0(c));
             c->cur = c->count - 1;
         } else {
             i = c->cur;
-            while (t < KeyAt(keys, i)->t)
+            while (t < KeyAt_003F41C0(keys, i)->t)
                 i--;
-            if (t > KeyAt(keys, i + 1)->t) {
+            if (t > KeyAt_003F41C0(keys, i + 1)->t) {
                 do {
                     i++;
-                } while (t > KeyAt(cc->keys, i + 1)->t);
+                } while (t > KeyAt_003F41C0(cc->keys, i + 1)->t);
             }
             c->cur = i;
             {
-                Key* ks = *pk;
-                Key* k0 = &ks[i];
-                Key* k1 = &ks[i + 1];
+                Key_003F41C0* ks = *pk;
+                Key_003F41C0* k0 = &ks[i];
+                Key_003F41C0* k1 = &ks[i + 1];
                 float t0;
                 float r, g, b; float sb, sg, sr;
                 t0 = k0->t;

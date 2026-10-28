@@ -1,229 +1,262 @@
 /*
- * SFOGame/Source/human: 3 files, 00188760-00188D30
+ * SFOGame/Source/human: 7 files, 0018A0B0-0018A420
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_00188760 */
+/* merge_units: begin func_0018A0B0 */
 #pragma push /* merge_units */
 #include "types.h"
+#pragma push
+#pragma cplusplus on
+#include "trivial_dtor.h"
+#pragma pop
+#pragma push
+#pragma cplusplus on
+#include "vtable_base_dtor.h"
+#pragma pop
 
-extern int WoundEffectTable[];
-
-/* Return entry `index` of a global int table. */
-int cMan_GetBloodEffect(int index)
+typedef struct { int top; int cur[2]; int dirty[2]; } Bits_18A0B0;
+static inline unsigned char Get_18A0B0(int* a, int bit) { return ((a[bit/32] >> (bit&31)) & 1) != 0; }
+static inline void Set_18A0B0(int* a, int bit) { a[bit/32] |= 1 << (bit&31); }
+void ActionPriority_Reset(Bits_18A0B0* b, int bit)
 {
-    return WoundEffectTable[index];
+    int old[2];
+    int i;
+    unsigned int j;
+    old[0] = b->cur[0];
+    old[1] = b->cur[1];
+    b->cur[0] = 0;
+    b->cur[1] = 0;
+    Set_18A0B0(b->cur, bit);
+    for (i = 31; i >= 0 && !Get_18A0B0(b->cur, i); i--) {
+    }
+    if (!Get_18A0B0(b->cur, i)) b->top = -1; else b->top = i;
+    for (j = 0; j < 32; j++) {
+        if (Get_18A0B0(b->cur, j) != Get_18A0B0(old, j)) Set_18A0B0(b->dirty, j);
+    }
 }
-static inline void merge_flush_func_00188760(void) {} /* merge_units */
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0018A0B0(void) {}
 #pragma pop /* merge_units */
-/* merge_units: end func_00188760 */
+/* merge_units: end func_0018A0B0 */
 
-/* merge_units: begin func_00188780 */
+/* merge_units: begin func_0018A210 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-#include "vslot_pad.h"
-/* cHuman_CheckBullet: resolve a bullet hit on this actor - which body region it struck (hit volumes,
-   or the aimed part for a player's own target), friendly-fire/miss chance, kill stats, then the
-   combat event; records the region and node code back into the hit record. */
-struct V_188780 { float x, y, z, w; } __attribute__((aligned(16)));
-struct Ray_188780 { char pad0[0x10]; V_188780 dir; char pad20[0x10]; V_188780 from; };
-struct HV_188780 { char pad0[0x24]; float f24; char pad28[0x18]; signed char ids[8]; signed char count; char pad49[3]; float f4C; } __attribute__((aligned(16)));
-struct Ctrl_188780 { VPAD16(a) VPAD2(b) VPAD1(c) virtual int IsHuman(); };
-struct Wpn_188780 { char pad0[0xBC]; signed char type; };
-struct Actor_188780;
-struct Hit_188780 {
-    Actor_188780* src;      /* 0x0 */
-    Ray_188780* ray;        /* 0x4 */
-    Actor_188780* tgt;      /* 0x8 */
-    char padC;
-    unsigned char b0D;      /* 0xD */
-    char padE[2];
-    int part;               /* 0x10 */
-    char pad14[4];
-    Wpn_188780* wpn;        /* 0x18 */
-    char pad1C[4];
-    unsigned char b20;      /* 0x20 */
-    char pad21[3];
-    int armor;              /* 0x24 */
-    float f28;              /* 0x28 */
-    unsigned char b2C;      /* 0x2C */
-    char pad2D[3];
-    int loc;                /* 0x30 */
-    float f34;              /* 0x34 */
-    Actor_188780* victim;   /* 0x38 */
-    int node;               /* 0x3C */
-    float dmg;              /* 0x40 */
-};
-struct Actor_188780 {
-    VPAD32(a) VPAD16(b) VPAD8(c) VPAD4(d) VPAD2(e)
-    virtual int HandleCombatEvent(float dmg, Actor_188780* src, int loc, int type, int* armor, int flag, V_188780* hitPos);
-    VPAD1(f)
-    virtual unsigned char Stance();
-    char pad4[0x10];
-    unsigned char alive;    /* 0x14 */
-    char pad15[0x58 - 0x15];
-    Ctrl_188780* ctrl;      /* 0x58 */
-    char pad5C[0x33A0 - 0x5C];
-    int armorHP;            /* 0x33A0 */
-    unsigned char dead;     /* 0x33A4 */
-};
-extern "C" {
-extern float D_0048A2B8[];
-extern signed char ActorNodeCodeTable[];
-extern char g_Game[];
-int Libc_Rand(void);
-Actor_188780* cGobjController_GetTarget(Ctrl_188780* c);
-void* cGameSystem_GetAgentData(void* a, int b);
-void cAgentData_AddScore(void* a, int b, int c);
-int cHuman_BulletBlood(Actor_188780* a, V_188780* from, V_188780* dir, int mode, HV_188780* out);
-int cHuman_CheckBullet(Actor_188780* self, Hit_188780* h);
-}
 
-static inline bool IsHuman(Actor_188780* a) { bool r = 0; if (a->ctrl && a->ctrl->IsHuman()) r = 1; return r; }
-static inline bool Dying(Actor_188780* a) { bool r; unsigned char s = a->Stance(); r = 1; if ((unsigned int)(s - 2) > 1) r = 0; return r; }
-static inline int IsNullNV(int x) { return (x != 0) ^ 1; }
-static inline void SetNode(Hit_188780* h, int id) { int j; for (j = 0; j < 21; j++) { if (ActorNodeCodeTable[j] == id) { h->node = j; break; } } }
-/* damage types that count toward the shooter's hit stats: 0, 1, 7, 9, 10, 13 */
-static inline bool Counts(unsigned char t)
-{
-    bool r = 0;
-    if ((unsigned int)t < 14 && ((1 << t) & 0x2683))
-        r = 1;
-    return r;
-}
-
-int cHuman_CheckBullet(Actor_188780* self, Hit_188780* h)
-{
-    HV_188780 hv;
-    bool miss;
-    int part;
-    bool a;
-    /* loc/type/mode are int (tested as unsigned char) - the retail code assigns them with li and
-       passes them to the int parameters below without re-masking */
-    /* declaration order chosen for the retail register assignment */
-    int type;
-    int flags;
-    unsigned char own;
-    bool both;
-    Ray_188780* ray;
-    unsigned char aimed;
-    int loc;
-    Actor_188780* src;
-    int mode;
-    Ctrl_188780* sc;
-    int dmg;
-    int ne;
-    ne = self != h->tgt;
-    own = IsNullNV(ne);
-    if (own)
-        part = h->part;
-    else
-        part = -1;
-    if (h->wpn)
-        type = h->wpn->type;
-    else
-        type = 8;
-    dmg = (int)h->dmg;
-    ray = h->ray;
-    sc = h->src ? h->src->ctrl : 0;
-    mode = (unsigned char)ne;
-    both = 0;
-    a = 0;
-    if (IsHuman(self) && sc)
-        a = 1;
-    if (a && sc->IsHuman())
-        both = 1;
-    if (!(unsigned short)dmg || self->dead || both || (unsigned char)type == 7)
-        mode = 0;
-    else if (self->armorHP <= 0)
-        mode = 2;
-    /* an NPC shooting at something other than its aim target misses by chance (HitInnocentNpcChance) */
-    miss = 0;
-    if (sc && !sc->IsHuman() && cGobjController_GetTarget(sc) != self) {
-        if ((float)Libc_Rand() / 2147483648.0f > D_0048A2B8[0])
-            miss = 1;
-    }
-    hv.f4C = h->f28;
-    if (miss)
-        flags = 0;
-    else
-        flags = cHuman_BulletBlood(self, &ray->from, &ray->dir, mode, &hv);
-    loc = 0;
-    if (flags & 0x40)
-        loc = 2;
-    else if (flags & 0x20)
-        loc = 4;
-    else if (flags & 0x80)
-        loc = 3;
-    else if (flags)
-        loc = 1;
-    aimed = sc && cGobjController_GetTarget(sc) == self && own;
-    if (aimed) {
-        int k = part & 3;
-        if (k == 0)
-            loc = 2;
-        else if (k == 3)
-            loc = 3;
-        else
-            loc = 1;
-    }
-    src = h->src;
-    if ((unsigned char)loc && src && src->alive && !h->b20) {
-        if (IsHuman(self)) {
-            if (both) {
-                dmg = 0;
-                if ((unsigned char)type == 7)
-                    type = 0;
-            }
-            if (!aimed)
-                loc = 3;
-        }
-        {
-            int t = (unsigned char)type;
-            bool cnt = Counts(t);
-            if (!Dying(self) && cnt) {
-                if (IsHuman(src) && src->alive && !both && h->b2C) {
-                    cAgentData_AddScore(cGameSystem_GetAgentData(g_Game, -1), 10, 1);
-                    if (h->b0D)
-                        cAgentData_AddScore(cGameSystem_GetAgentData(g_Game, -1), 12, 1);
-                    if (t == 7 && (unsigned char)loc != 2)
-                        cAgentData_AddScore(cGameSystem_GetAgentData(g_Game, -1), 6, 1);
-                }
-            }
-        }
-        self->HandleCombatEvent((float)dmg, src, loc, type, &h->armor, 0, 0);
-    }
-    if (flags && h->armor <= 0) {
-        int i;
-        h->node = -1;
-        h->f34 = hv.f24;
-        h->loc = (unsigned char)loc;
-        h->victim = self;
-        for (i = hv.count - 1; i >= 0; i--) {
-            if (hv.ids[i] >= 0) {
-                SetNode(h, hv.ids[i]);
-                break;
-            }
-        }
-    }
-    return loc;
-}
-static inline void merge_flush_func_00188780(void) {} /* merge_units */
+/* Deleting destructor with nothing to destroy. */
+DEFINE_TRIVIAL_DTOR(func_0018A210)
+static inline void merge_flush_func_0018A210(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00188780 */
+/* merge_units: end func_0018A210 */
 
-/* merge_units: begin func_00188D30 */
+/* merge_units: begin func_0018A260 */
 #pragma push /* merge_units */
-const float D_0048A2A8[2] = { 0.3f, 0.0f };
-const float D_0048A2B0[2] = { 0.5f, 0.0f };
-float cHuman_GetSubTargetAimAdjust(void* self, int n)
-{
-    int k = n & 3;
-    if (k == 0) return (*(float*)D_0048A2A8);
-    if (k == 1 || k == 2) return (*(float*)D_0048A2B0);
-    return 1.0f;
+#pragma cplusplus on
+
+extern "C" {
+extern "C" void Event_PackHeader();
+extern "C" void cMessage_getSOBJClassId();
+extern "C" void cSkaAnimEndedMessage_Clone();
+extern void * const D_004DA930[];
+void* cMessage_dtor(void* self, short deleteFlag);
 }
-static inline void merge_flush_func_00188D30(void) {} /* merge_units */
+extern "C" VtableObject* cSkaAnimEndedMessage_dtor(VtableObject* self, short deleteFlag)
+{
+    if (self) {
+        self->vtable = ((char*)D_004DA930);
+        cMessage_dtor(self, 0);
+        if (deleteFlag > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+void * const D_004DA930[8] = { (void*)0x0, (void*)0x0, (void*)cSkaAnimEndedMessage_dtor, (void*)cSkaAnimEndedMessage_Clone, (void*)Event_PackHeader, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0018A260(void) {}
 #pragma pop /* merge_units */
-/* merge_units: end func_00188D30 */
+/* merge_units: end func_0018A260 */
+
+/* merge_units: begin func_0018A2C0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+#include "human_types.h"
+
+#if 0 /* merge_units */
+extern char D_004DA930[];   /* AnimEvent vtable */
+#endif /* merge_units */
+#define D_004DA930 ((char*)&D_004DA930) /* merge_units */
+
+
+extern char D_00542B60[];   /* AnimEvent message type */
+extern Message* cMessage_ctor_cMessageNameR(Message*, void*);
+
+float func_0018A2C0(char* self) {
+    return *(float*)(self + 156);
+}
+
+float cSkaRequestStream_AnimationPacket_GetDuration(char* self) {
+    return *(float*)(self + 152);
+}
+
+void* cSkaRequestStream_AnimationPacket_GetAnimCheckpoints(char* self) {
+    return self + 76;
+}
+
+signed char cSkaRequestStream_AnimationPacket_GetInstruction(signed char* self) {
+    return self[72];
+}
+
+AnimEvent* cSkaAnimEndedMessage_ctor_void(AnimEvent* self) {
+    cMessage_ctor_cMessageNameR(&self->base, D_00542B60);
+    self->base.vtable = D_004DA930;
+    self->unk24 = 0;
+    self->unk28 = 0;
+    self->unk2C = 0;
+    self->unk30 = 0;
+    self->unk34 = 0.0f;
+    return self;
+}
+
+Vec4* cSkaCrossFadeDuration_ctor_cSkaCrossFadeDurationR(Vec4* dst, Vec4* src) {
+    dst->x = src->x;
+    dst->y = src->y;
+    dst->z = src->z;
+    dst->w = src->w;
+    return dst;
+}
+#undef D_004DA930 /* merge_units */
+static inline void merge_flush_func_0018A2C0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0018A2C0 */
+
+/* merge_units: begin func_0018A380 */
+#pragma push /* merge_units */
+typedef struct { float a, b, c, d; } AnimRate;
+static inline float b4inv(float r) { return (r != 0.0f) ? 1.0f / r : 3.4028235e38f; }
+AnimRate* cSkaCrossFadeDuration_ctor_float(AnimRate* p, float r) {
+    p->a = r;
+    p->b = r;
+    p->c = b4inv(r);
+    p->d = b4inv(r);
+    return p;
+}
+static inline void merge_flush_func_0018A380(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0018A380 */
+
+/* merge_units: begin func_0018A410 */
+#pragma push /* merge_units */
+float cSkaAnimationSet_DefaultCrossFadeDuration(char* self) {
+    return *(float*)(self + 0);
+}
+static inline void merge_flush_func_0018A410(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0018A410 */
+
+/* merge_units: begin func_0018A420 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#pragma inline_depth(10)
+
+class cSkaAnim;
+class cSkaNode;
+
+class cSkaPlaybackGroupId {
+public:
+    cSkaAnim* animId;
+    int syncGroupId;
+    cSkaPlaybackGroupId() : animId(0), syncGroupId(-1) {}
+    cSkaPlaybackGroupId(const cSkaNode* anim);
+    cSkaPlaybackGroupId(const cSkaPlaybackGroupId& o) : animId(o.animId), syncGroupId(o.syncGroupId) {}
+
+};
+
+class cSkaNode {
+public:
+    int pad00;
+    unsigned char type;
+    char pad05[0x40 - 0x05];
+    int mSyncGroupId;
+    const int& GetSyncGroupId() const { return mSyncGroupId; }
+    bool IsAnim() const { bool r = true; if (type != 0 && type != 1) r = false; return r; }
+    cSkaPlaybackGroupId GetPlaybackGroupId() const {
+        return IsAnim() ? cSkaPlaybackGroupId(this) : cSkaPlaybackGroupId();
+    }
+};
+
+/* cSkaAnimationBlend: +0 animation node, +4 playback group id */
+struct cSkaAnimationBlend {
+    cSkaNode* node;
+    cSkaPlaybackGroupId id;
+};
+
+class cArray_cSkaNodePtr {
+public:
+    char pad[0x10];
+};
+
+class cSkaAnimationSet {
+public:
+    char pad00[0x34];
+    cArray_cSkaNodePtr nodeLookupTable_ByIndex;
+};
+
+class cSkaRequestStream_AnimationPacket {
+public:
+    unsigned char mAnimSpecifier;
+    char pad01[0x0F];
+    char mName[0x30];
+    int mId;
+    cSkaAnimationBlend* mAnimationBlend;
+};
+
+extern "C" {
+int cSkaAnimationSet_GetNodeId(const cSkaAnimationSet* set, const char* name);
+cSkaNode* const* cArray_cSkaNodePtr_opIndex(const cArray_cSkaNodePtr* a, int i);
+}
+
+inline cSkaPlaybackGroupId::cSkaPlaybackGroupId(const cSkaNode* anim)
+{
+    const int& s = anim->GetSyncGroupId();
+    animId = s == -1 ? (cSkaAnim*)anim : 0;
+    syncGroupId = s;
+}
+
+
+extern "C" void cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(const cSkaRequestStream_AnimationPacket* self, const cSkaNode*& animation, cSkaPlaybackGroupId& playbackGroupId, const cSkaAnimationSet& animationSet)
+{
+    switch (self->mAnimSpecifier) {
+    case 0:
+        animation = *cArray_cSkaNodePtr_opIndex(&animationSet.nodeLookupTable_ByIndex, cSkaAnimationSet_GetNodeId(&animationSet, self->mName));
+        {
+            const cSkaNode* n = animation;
+            playbackGroupId = n ? n->GetPlaybackGroupId() : cSkaPlaybackGroupId();
+        }
+        break;
+    case 1:
+        animation = *cArray_cSkaNodePtr_opIndex(&animationSet.nodeLookupTable_ByIndex, self->mId);
+        {
+            const cSkaNode* n = animation;
+            playbackGroupId = n ? n->GetPlaybackGroupId() : cSkaPlaybackGroupId();
+        }
+        break;
+    case 2:
+        animation = self->mAnimationBlend->node;
+        playbackGroupId = self->mAnimationBlend->id;
+        break;
+    default:
+        animation = 0;
+        playbackGroupId = cSkaPlaybackGroupId();
+        break;
+    }
+}
+static inline void merge_flush_func_0018A420(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0018A420 */

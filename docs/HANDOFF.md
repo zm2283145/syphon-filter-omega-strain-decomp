@@ -5,9 +5,26 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Resume here (2026-10-28 night, Copilot session)
+
+- **R150 (`71adec89`) and R151 (`3cd37d22`) added 44 matches** with prototype "dossiers" (below);
+  `25ab2b41` folded them into their original files. Now 13,831 / 14,345, 86.13% code.
+- **Dossier workflow:** `tools/proto/rank_proto.py` ranks every unmatched function by
+  normalised similarity between retail and its prototype twin (`proto_rank.tsv`; 339 are ≥0.95).
+  `tools/proto/dossier.py <outdir> <addr...>` (run from the repo root) writes one text file
+  per function: the `map.tsv` row, prototype params/locals in declaration order, the class and
+  struct layouts, the prototype's own disassembly with symbols, and a retail-vs-prototype diff.
+  Lanes given a dossier matched 44 of ~120 game functions in one 2.5-hour pass.
+- **Near misses with drafts** (score = differing instructions): 001A7080 (1), 003A5C50 (3),
+  00188D80 (4), 003A5F20 (5), 0022D3C0 (6, mw50), 0037B5C0 / 003AF400 / 001E8760 (7),
+  001DD6A0 (8), 00287540 (10), 00385240 / 0038FEA0 / 003BD0A0 / 00224330 (11), 00224180 (12),
+  0028CB20 (13), 00389FA0 / 001D29F0 / 00278460 (16), 003F9E60 (17), 00219820 / 00131540 (19),
+  004073C0 (23). Drafts are in each lane's `build/agents/<lane>/work/`; see its `NOTES.md`.
+- **Blocked:** see "Known blocked work" for the dead-`div` DMA wait loops in `man.cc`.
+
 ## Resume here (2026-10-26 evening)
 
-This is the state as the last Claude session stopped (usage limit). Read this first.
+This is the state as the last Claude session stopped (usage limit).
 
 **On `main`:** everything listed in Status. The build reproduces retail byte for byte.
 
@@ -89,8 +106,8 @@ then `bash tools/round.sh - "<subject>"`. R149's 22 matches were folded this way
 
 | | |
 |---|---|
-| Functions matched | 13,787 of 14,345 |
-| Code matched | 84.92% |
+| Functions matched | 13,831 of 14,345 |
+| Code matched | 86.13% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -282,6 +299,30 @@ file per splat unit), and per prototype `types.txt`, `locals.tsv`, `globals.tsv`
   still in its incoming argument register.
 
 ## Near-miss techniques (newest)
+
+From the R150–R151 dossier lanes (2026-10-28):
+
+- **Declaration-order search:** register colouring follows the declaration order of locals,
+  including pointer locals used in inline asm. Several lanes scored every permutation with
+  parallel compiles (0023A5A0 226 → 28, 39EF90 253 → 87; 00400F20 matched only in 1 of 7 orders).
+- **Inline depth moves stack slots:** temporaries get slots by inline depth, then source order.
+  Extra pass-through `static inline` wrappers (with `#pragma inline_depth(8)`) move a temp to
+  retail's slot. MW evaluates call and constructor arguments right to left, and gives the first
+  written argument the highest slot.
+- **Dead `addiu` of `this`:** `void* xx = this;` inside an inline copy constructor or method
+  survives only next to GCC-style `__asm__ volatile` lq/sq copies; MW `asm {}` blocks let it be
+  removed. Put it only where retail shows the instruction.
+- **GCC `__asm__ volatile` with operands** disables MW's global CSE and constant propagation for
+  the whole function and changes argument evaluation order; MW `asm volatile {}` blocks the
+  delay-slot fill. Pick the copy idiom per function.
+- **Bool shapes:** `bool ok = true; return ok;` gives retail's `andi v0,0xff` tail;
+  `#pragma opt_rebuildlogicals off` (undocumented, found in `mwccps2.exe`) keeps inline bool
+  results as branches; assigning 1/0 in an `if` with explicit `== 0` tests avoids `sltu`.
+- **Float scheduling:** declare float locals first, then assign them in retail order; compute
+  all products into locals before storing to get retail's multiply operand order.
+- **Misc:** `*(int*)&f = 0` gives `sw zero`; a union with a `u64` member forces reloads after
+  64-bit stores; hoisting block-scoped locals to the function top fixes stack layout; MW vtable
+  slot offset is 8 + 4 × index.
 
 - **Quad copy split at the call site (M16):** writing a 16-byte copy as a volatile asm `lq` plus
   a C `sq` (instead of a class `operator=` or a full asm block) changes MW's register pairing; it
@@ -583,9 +624,11 @@ prototype that callers use inconsistently is declared K&R in a shared header (fo
   (`0x31D558` went in with `0x31D2A8` in R133, and `0x31A630` was integrated earlier.)
 - `0x286570` may now be fixable the same way as the `0x416830` thunk unit: add a
   `// type:func` symbol at `0x286590` and integrate both functions in one file.
-- `0x17D700` is a C++ constructor; a match compiles to
-  `__ct__10Curve_d700FRC2V4RC2V4RC2V4RC2V4f`, so `config/symbol_addrs.txt` needs that
-  mangled name (or the real class name) at that address first.
+- **Dead `div` in DMA wait loops (`man.cc`):** cMan_ManDMA 0x385D40, cMan_SetGunOffsets
+  0x38E100, BloodHitVert/BloodHitPart/BloodHit 0x38BA80/0x38BD30/0x38C050 and GunCalcBBox
+  0x38D720 contain a busy-wait loop with a `div` whose result is unused. mw38 removes it in
+  every legal form tried; it survives only if the value is carried across iterations
+  (`a = a / a;`, but then `li 7` is hoisted) or at `optimization_level 0` (wrong frame).
 
 ## Readability
 

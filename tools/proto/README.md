@@ -58,3 +58,8 @@ Confidence (combine.py):
 - `early/`, `earlier/`: the DWARF dumps (cu.tsv, types.txt, locals.tsv, globals.tsv).
 
 Naming conventions: `Class_Method`, `Class_ctor`, `Class_dtor` and `Class_opAssign` (other operators follow the same op* pattern). Namespaces (`nMSGGAME::`, `@unnamed@...`, `Metrowerks::`) are dropped for class members and kept for free functions. Template classes get a short form of their arguments (`cArray_cHumanPtr_Begin`). C library functions become `Libc_Xxx`, newlib internals in 0x121B00-0x12ECD0 become `Newlib_Xxx`, and `__sinit_<file>` becomes `StaticInit_<file>`. When an identifier repeats, a parameter-type suffix is added, then `_2`, `_3`, and so on. No proposed name clashes with any name that stays in symbol_addrs.txt.
+
+## Matching aids
+
+- `rank_proto.py`: ranks every unmatched function by normalised similarity between its retail code and its prototype twin. Run from the repo root after the P1 outputs exist: `.venv/bin/python tools/proto/rank_proto.py > build/agents/proto_rank.tsv`.
+- `dossier.py <outdir> <addr...>`: writes one text file per function with its `map.tsv` row, the prototype's params and locals in declaration order, the class and struct layouts it uses, the prototype's own disassembly with symbols, and a normalised retail-vs-prototype diff. Give these to whoever matches the function.

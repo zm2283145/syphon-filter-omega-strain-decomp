@@ -3947,5 +3947,20 @@
   "SFOGame/Source/human/func_001AE280": "cwps2-3.0b38",
   "Libs/989snd/ee/989snd/func_003A74E0": "cwps2-3.0b38",
   "Libs/SFOLib/Source/fstream/func_003EB340": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/infobar/func_003F9E60": "cwps2-3.0b38"
+  "Libs/SFOLib/Source/infobar/func_003F9E60": "cwps2-3.0b38",
+  "lib/func_0031AEE8": "ee-gcc2.96",
+  "lib/func_002E2878": "ee-gcc2.96-G0",
+  "lib/func_00302A38": "ee-gcc2.96-G0",
+  "lib/func_00306E10": "ee-gcc2.96-G0",
+  "lib/func_00125EA0": "ee-gcc2.9-991111",
+  "lib/func_00129360": "ee-gcc2.9-991111",
+  "lib/func_0035AA60": "ee-gcc2.9-991111",
+  "lib/func_0035ABE0": "ee-gcc2.9-991111",
+  "SFOGame/Source/human/func_00188D80": "cwps2-3.0b38",
+  "SFOGame/Source/human/func_00190060": "cwps2-3.0b38",
+  "SFOGame/Source/humanCollision/func_001E8760": "cwps2-3.0b38",
+  "SFOGame/Source/Generator/func_0021F0A0": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/ska/func_003AF400": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/character/func_003E4720": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/manUtils/func_00403040": "cwps2-3.0b38"
 }

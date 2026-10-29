@@ -3962,5 +3962,12 @@
   "SFOGame/Source/Generator/func_0021F0A0": "cwps2-3.0b38",
   "Libs/SFOLib/Source/ska/func_003AF400": "cwps2-3.0b38",
   "Libs/SFOLib/Source/character/func_003E4720": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/manUtils/func_00403040": "cwps2-3.0b38"
+  "Libs/SFOLib/Source/manUtils/func_00403040": "cwps2-3.0b38",
+  "lib/func_0031AB98": "ee-gcc2.96",
+  "lib/func_0031EA18": "ee-gcc2.96",
+  "lib/func_00323770": "ee-gcc2.96",
+  "lib/func_002DFFE8": "ee-gcc2.96-G0",
+  "lib/func_00300168": "ee-gcc2.96-G0",
+  "SFOGame/Source/grenade/func_0025C650": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/man/func_0038FEA0": "cwps2-3.0b38"
 }

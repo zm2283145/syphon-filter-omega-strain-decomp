@@ -5,6 +5,26 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Resume here (2026-10-29, Copilot session)
+
+- **R152 (`067bb3b4`) added 52 matches** from dossier lanes (incl. cBox_Transform, the cHuman
+  ctor, `cHumanCollisionRoutine_HandleAnyLethalCollisions`, memcpy). Now 13,883 / 14,345, 88.09% code.
+- **Build in WSL, not Windows.** On this machine every Windows process start costs 1–10 s
+  (endpoint security), so Windows ninja ran ~17–28 steps/min (a full rebuild took 6–10 h).
+  The same build in WSL takes ~2 min. Setup (distro `sfos3`, root): `apt install python3-venv
+  rsync`; copy the repo (minus build/.venv/.tools/asm/.git) to `~/sfos-decomp`; make a venv,
+  `pip install -r requirements.txt`, `python tools/setup_tools.py`; then **copy every
+  `.tools/eegcc/*` compiler from the Windows checkout** (setup_tools only fetches 2.95.3-136
+  and 2.96; without the others the lib units fall back to asm and the report drops ~470 functions
+  while the SHA still matches). `~/sfos-env.sh` sets `CW38_DIR`/`CW50_DIR`/`CW304_DIR` to the
+  `/mnt/d/...` compiler folders. A round = mirror src/config/include/tests/tools in, run the
+  round.sh steps, mirror src/config/include + `progress/report.json` back, commit on Windows.
+- **Windows ninja has no header deps:** after a header rename, stale objects can still link
+  against old names. Delete `<x>.o`, `.link.o`, `.raw.o`, `.o.ld` for each object named in the
+  link error (the WSL round touches all C files when the include/ hash changes).
+- **WSL distros wedge** when idled out (`Wsl/Service/CreateInstance/0xd0000035`); keep one alive
+  with `wsl -d sfos3 -u root -e sleep infinity`.
+
 ## Resume here (2026-10-28 night, Copilot session)
 
 - **R150 (`71adec89`) and R151 (`3cd37d22`) added 44 matches** with prototype "dossiers" (below);
@@ -106,8 +126,8 @@ then `bash tools/round.sh - "<subject>"`. R149's 22 matches were folded this way
 
 | | |
 |---|---|
-| Functions matched | 13,831 of 14,345 |
-| Code matched | 86.13% |
+| Functions matched | 13,883 of 14,345 |
+| Code matched | 88.09% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -299,6 +319,27 @@ file per splat unit), and per prototype `types.txt`, `locals.tsv`, `globals.tsv`
   still in its incoming argument register.
 
 ## Near-miss techniques (newest)
+
+From the R152 lanes (2026-10-29):
+
+- **One-byte enums:** `#pragma enumsalwaysint off` plus an enum with a `0x7F` max, compared
+  through an enum-typed local, gives retail's `lbu; bne` with the pointer still live.
+- **Pragmas:** `#pragma schedule off` works on mw38 (shows pre-scheduling order);
+  `#pragma unsigned_char on` makes `(unsigned char)` casts no-ops; `(unsigned char)(char)field`
+  puts an `andi` on just one compare; `opt_common_subs off` stops float-constant hoisting.
+- **Register/stack order:** declare pointer locals before an `asm volatile` block and assign them
+  after it; pass an inline float argument by pointer to control creation order; block-scoped loop
+  counters, or reusing an earlier pointer variable for a later loop, change s-register order.
+- **CSE:** a GCC `__asm__ volatile("lq ...")` load blocks MW address CSE; `x=&pt; x=&pt;` gives two
+  `addiu` into one register. MW asm has no `"0"` constraint; use `"+r"`.
+- **Value-returning operators:** `V r; Helper(&r, ...); return r;` with the VU0 asm one inline
+  level deeper.
+- **newlib string functions** are built with ee-gcc 2.9-991111 (kind gcc29). Its short-loop pass
+  leaves the delay slot empty for loops of ≤7 instructions; an empty `__asm__ volatile("")` in the
+  body counts as an instruction but emits nothing. `goto` loops avoid loop-alignment nops; a tied
+  empty asm `__asm__("" : "=r"(m) : "0"(k))` forces a copy CSE would turn into `li`; write
+  `if (n > 0) { i = n; do … while (--i); }` for retail's `blez`. gcc29 has no MMI types, so MMI
+  must be inline asm on 128-bit values. Write work files with LF endings for the WSL compilers.
 
 From the R150–R151 dossier lanes (2026-10-28):
 

@@ -3938,5 +3938,14 @@
   "Libs/SFOLib/Source/bboxman/func_003C8750": "cwps2-3.0b38",
   "Libs/SFOLib/Source/shadows/func_003D2D10": "cwps2-3.0b38",
   "Libs/SFOLib/Source/fstream/func_003EAA70": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/interface_model/func_003ECD60": "cwps2-3.0b38"
+  "Libs/SFOLib/Source/interface_model/func_003ECD60": "cwps2-3.0b38",
+  "lib/func_002E2480": "ee-gcc2.96-G0",
+  "lib/func_002E4228": "ee-gcc2.96-G0",
+  "lib/func_002FFB48": "ee-gcc2.96-G0",
+  "lib/func_0010F9C8": "ee-gcc2.9-991111",
+  "SFOGame/Source/human/func_0019E670": "cwps2-3.0b38",
+  "SFOGame/Source/human/func_001AE280": "cwps2-3.0b38",
+  "Libs/989snd/ee/989snd/func_003A74E0": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/fstream/func_003EB340": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/infobar/func_003F9E60": "cwps2-3.0b38"
 }

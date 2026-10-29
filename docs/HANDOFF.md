@@ -7,6 +7,17 @@ This is the working state and the routine for whoever continues this project
 
 ## Resume here (2026-10-29, Copilot session)
 
+- **R153 (`a8234987`), R154 (`628c7fcc`), R155 (`b2551e5a`) added 33 more matches.** Now
+  13,916 / 14,345, 88.75% code. Rounds run with a WSL round script: integrate + build + report
+  in `sfos3` (~4 min), then commit/push on Windows.
+- **Check for invented callee names.** check_match can print MATCH next to `UNDEF X: called as a
+  function`; that file is not acceptable (only `__dl__FPv` may be undefined). Lane drafts sometimes
+  name callees themselves (`Event_Send`); replace them with the `symbol_addrs.txt` name of the jal
+  target, decoded as `(word & 0x3FFFFFF) << 2` from the little-endian word in
+  `build/agents/asm/<ADDR>.s`. R154's first build failed to link on exactly this.
+- **What is left (428):** ~150 are 16–24-byte kernel syscall stubs and other hand-written SDK asm
+  (stay as asm, see "Open decisions"); the rest have all been attempted at least once, many 5+
+  times. Their closest states are in `build/agents/*/NOTES.md`.
 - **R152 (`067bb3b4`) added 52 matches** from dossier lanes (incl. cBox_Transform, the cHuman
   ctor, `cHumanCollisionRoutine_HandleAnyLethalCollisions`, memcpy). Now 13,883 / 14,345, 88.09% code.
 - **Build in WSL, not Windows.** On this machine every Windows process start costs 1–10 s
@@ -126,8 +137,8 @@ then `bash tools/round.sh - "<subject>"`. R149's 22 matches were folded this way
 
 | | |
 |---|---|
-| Functions matched | 13,883 of 14,345 |
-| Code matched | 88.09% |
+| Functions matched | 13,916 of 14,345 |
+| Code matched | 88.75% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -319,6 +330,23 @@ file per splat unit), and per prototype `types.txt`, `locals.tsv`, `globals.tsv`
   still in its incoming argument register.
 
 ## Near-miss techniques (newest)
+
+From the R153–R155 lanes (2026-10-29):
+
+- **mw38 scheduling barrier:** a GCC-style `asm volatile("" ::: "memory")` stops mw38 from sharing
+  constants and loads across it, unlike a CW `asm {}` block (loadingThread went from 44 to 6
+  differing lines).
+- **C++ shape from the prototype:** return structs by value through an inline constructor; use the
+  prototype's real template types (`cArray_FixedSize<...>::operator[]`) and reference-returning
+  member chains (`a.b().c()`) instead of flattened pointer arithmetic (0x1E8760).
+- **`#pragma opt_common_subs off` alone**, plus GCC `lq` / MW `sq` asm for quadword moves, closed
+  `cQuatVec_GetUnit`.
+- **gcc29 (ee-gcc2.9-991111)** builds the insock code and the MMI string functions (memcpy, memcmp,
+  strcpy, strlen). Use if/else chains rather than `switch` (no jump table); a loop label that is not
+  8-byte aligned means the original used `goto`.
+- **gcc296 voice codec:** pinning registers (`register float x asm("$fN")`) is fine in GCC code.
+- **Netcode (gcc296g0):** store through a block-local copy of the pointer; write
+  `e = call() ? K : 0;` in each arm; share one `goto fail` exit.
 
 From the R152 lanes (2026-10-29):
 

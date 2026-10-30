@@ -54,3 +54,20 @@ class CompilerProfileTests(unittest.TestCase):
             self.assertEqual(commands[0][0], str(compiler))
             self.assertIn("-G0", commands[0])
             self.assertEqual(integrate_pending.OVR["gcc29a"], "ee-gcc2.9-991111a")
+
+
+class DiscardedDataTests(unittest.TestCase):
+    def test_only_known_discard_section_is_ignored(self):
+        from unittest.mock import MagicMock
+        for section_name in (".dtors_drop", ".custom_data", ".dtors_drop_extra"):
+            section = MagicMock()
+            section.name = section_name
+            fields = {"sh_type": "SHT_PROGBITS", "sh_flags": 2, "sh_size": 4}
+            section.__getitem__.side_effect = fields.__getitem__
+            elf = MagicMock()
+            elf.iter_sections.return_value = iter([section])
+            pieces = check_match.data_pieces(elf, b"", {})
+            if section_name == ".dtors_drop":
+                self.assertEqual(pieces, [])
+            else:
+                self.assertEqual(pieces[0]["result"], "section kind cannot be linked from C yet")

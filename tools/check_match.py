@@ -338,6 +338,9 @@ def data_pieces(e, rom, names):
     secs = list(e.iter_sections())
     out = []
     for sec in secs:
+        # Unused runtime helpers and label anchors in this section are discarded by the linker.
+        if sec.name == ".dtors_drop":
+            continue
         if sec["sh_type"] == "SHT_NOBITS" and sec["sh_flags"] & SHF_ALLOC and sec["sh_size"]:
             out.append({"section": sec.name, "start": None, "size": sec["sh_size"],
                         "result": "uninitialised data cannot be linked from C; declare it extern"})

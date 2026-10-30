@@ -5,7 +5,40 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R158) - START HERE
+## Resume here (2026-10-30, Codex R159) - START HERE
+
+- **13,977 / 14,345 functions; 90.31% code, 99.92% data; 368 unmatched.**
+  The full build still reproduces retail byte for byte. All 129 tests pass.
+- Matched `rt_msg_client_process_connect_result` (0x002FF868, 736 bytes). Its held
+  R156 draft was code-exact but owned unused `.sdata`. The address-taken label anchor
+  now lives in `.dtors_drop`, which the linker discards. The match checker explicitly
+  ignores this exact discarded section; regression coverage still rejects unknown
+  custom data sections. No linked retail data was omitted.
+- **Owner instruction:** preserve original source layout recovered from the prototypes;
+  merge completed source sections into a single `.c` when byte-identical compilation
+  permits it. Continue folding new per-function files into their original part files.
+- Consolidated `Libs/SFOLib/Source/viewport` from two parts into **one `viewport.c`**.
+  `XLib_GetFullscreenWindow` now returns `float*`, agreeing with its caller; address
+  arithmetic and generated code are unchanged.
+- Folded `SFOGame/Source/gameGobjController` from seven parts into five, including the
+  R157 match at 0x0022F5B0, and `SFOGame/Source/GuiObjectives` from six into four,
+  including 0x00367B20. Both sections are fully matched but cannot yet become single
+  files: remaining blockers include conflicting declarations and nonadjacent data
+  subsegments. `build/agents/r159/merge_review.log` lists the observed blockers.
+- Both private prototype executables are present under
+  `D:\Claude\Syphon Filter Omega Strain\local\prototypes`. Always set
+  `SFOS_PROTO_DIR` before generating dossiers. January 2004 SCUS_973.97 is preferred;
+  October 2003 SCUS_972.64 is the other reference. Never commit the binaries or dumps.
+- Regenerated dossiers for 0x003CD260, 0x00219820, 0x00166840 with prototype disassembly.
+  Constructor 0x00219820 remains at 12 differences after accessor/copy/helper/constraint
+  experiments. rFft_vu4 remains at two real instruction differences after source-order,
+  address-expression and barrier experiments. **Its correct address is 0x00322FC0**;
+  the old near-miss table listed a different address. No near-miss drafts were integrated.
+- Local experiment details: `build/agents/r159/NOTES.md`. Batch `build/pending/r159`
+  was verified through `wsl_round.sh`, then a rebuild-only round verified the extra
+  source consolidations. Changes saved locally; no push. Root scratch candidates untouched.
+
+## Previous continuation (2026-10-30, Codex R158)
 
 - Continued from the Copilot R157 handoff below. The active Windows checkout is
   `D:\Claude\syphon-filter-omega-strain-decomp`; the older `sfos-decomp-helper` path is absent.
@@ -125,7 +158,7 @@ The scripts live in `tools/workflow/`.
 | Addr | Function | Diff | Draft | What differs |
 |---|---|---|---|---|
 | 002E2250 | NetIRequestCreateRemoteNamedObject | 1 | `l2\work\e2250\L3.c` | branch target 0x200 vs 0x204 |
-| 0031B730 | rFft_vu4 | 2 | `l3\work\fc0_b.c` | |
+| 00322FC0 | rFft_vu4 | 2 | `l3\work\fc0_b.c` | |
 | 00370CC0 | XLib_DrawDma | 4 | `l4\work\best_370CC0_4.c` | `li fp,12` hoist order |
 | 003CD260 | cGOBJ_GetCenterOfMass | 4 | `l8\work\cm0.c` | two stack slots swapped |
 | 00166840 | loadingThread | 5 | `l8\work\lt3.c` | a1/a2 for `show` |

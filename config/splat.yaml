@@ -3556,7 +3556,7 @@ segments:
       - [0x257140, c, main/func_00357140]
       - [0x257148, c, lib/func_00357148]
       - [0x257150, c, lib/func_00357150]
-      - [0x257178, asm]
+      - [0x257178, c, lib/func_00357178]
       - [0x257190, c, lib/libinsck/libinsck_357190]
       - [0x257340, c, lib/libinsck/libinsck_357340]
       - [0x257370, c, lib/libinsck/libinsck_357370]

@@ -15,7 +15,34 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
-## Resume here (2026-10-30, Codex R183 accepted three-agent matching batch) - START HERE
+## Resume here (2026-10-30, Codex R184 accepted three-agent matching batch) - START HERE
+
+- **13,992 / 14,349 functions; 90.43% code; 357 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. New C match: ordinary byte-swap
+  **func_00357178**,24bytes,gcc296, now src/lib/func_00357178.c.
+- Audio lane solved the historical two-word scheduling mismatch with local x/r/s
+  register lifetimes and an empty read/write dependency on both first result and
+  original input. All six ordinary instructions remain compiler output; no scalar
+  instruction transcription. Existing asm has no handwritten marker; prior policy
+  treats it as compiled endian helper. No original .cc evidence, so library layout.
+- Parent independently reran strict MATCH,no UNDEF/data/literal diagnostics.
+  Full integration added24bytes,no skips. WSL_ROUND_OK completed before commit:
+  retail hash,135tests,report and final synchronization. Code percent unchanged
+  after rounding; this is one new function/24new C bytes, not consolidation credit.
+- Ready/evidence: build/pending/r185_audio/gcc296_00357178.c and r185_audio/NOTES.md;
+  parent checkpoint r184_coordination. Other lanes quiesced before verification.
+- GAME weapon renderer113word baseline preserved. Real LocalTransform helper ABI
+  confirmed, but two-pointer primitive removes needed address setup; reference/copy
+  variants give no gain. r185_game/NOTES.md recommends a fresh prototype-supported
+  target absent new evidence about three temporary slots. No ready match.
+- NETWORK NetObjectFullUpdate entry pseudo364 forms global allocation web with
+  eight definitions/33uses and a0 conflict. Narrow split gives41strict differences
+  but changes cleanup; ordinary48difference baseline retained. Preserve r185_network
+  notes/RTL evidence; don't repeat generic per-block register hints without reason.
+- Root scratch preserved; no pushes/private artifacts/tooling changes committed.
+  Continue three human-authorized matching lanes after parent final synchronization.
+
+## Previous continuation (2026-10-30, Codex R183 accepted three-agent matching batch)
 
 - **13,991 / 14,349 functions; 90.43% code; 358 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. New C match: **VoicingLD**,

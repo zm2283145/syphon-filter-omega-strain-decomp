@@ -79,7 +79,7 @@ extern int D_0048AEF8;
 extern char D_004A7998[]; /* "pickup_menu.cc" */
 void* cMemMan_Allocate(int pool, int size, char* file, int line);
 PickupMenuModel* cInterfaceModel_CreateInstance(int tmpl);
-void viBufGetTs(float t, PickupMenuModel* m);
+void cAnimator_SetFrame(float t, PickupMenuModel* m);
 void cAnimator_AnimateTo(float t, PickupMenuModel* m);
 #if 0 /* merge_units */
 void cPickupMenu_PickupEntry_SetupTextArea(int x);
@@ -99,7 +99,7 @@ extern "C" void cPickupMenu_PickupEntry_Activate(PickupMenuObj* s, signed char k
     s->id = id;
     s->x8 = 0;
     s->model1 = cInterfaceModel_CreateInstance(D_004F7E90);
-    viBufGetTs(t, s->model1);
+    cAnimator_SetFrame(t, s->model1);
     cAnimator_AnimateTo(t + D_0048AEF8, s->model1);
     cPickupMenu_PickupEntry_SetupTextArea(s->model1->text);
     {
@@ -115,7 +115,7 @@ extern "C" void cPickupMenu_PickupEntry_Activate(PickupMenuObj* s, signed char k
     }
     cInterfaceModel_Activate(D_004F7E98, 1, 1);
     s->model2 = cInterfaceModel_CreateInstance(D_004F7E98);
-    viBufGetTs(t, s->model2);
+    cAnimator_SetFrame(t, s->model2);
     cAnimator_AnimateTo(t + D_0048AEF8, s->model2);
     cPickupMenu_PickupEntry_SetupTextArea(s->model2->text);
     {

@@ -166,7 +166,7 @@ Word* cArray_cAnimatorPtr_Iterator_ctor(Word* dst, Word* src);
 void std_vector_cAnimatorPtr_end_void(Word* out, PtrVec* v);
 void std_vector_cAnimatorPtr_pointer2iterator_cAnimatorPPR(Word* out, PtrVec* self, Word* src);
 int std_vector_imp_cAnimatorPtr_1_begin_void(PtrVec* v);
-void viBufGetTs(void* item, float t);
+void cAnimator_SetFrame(void* item, float t);
 }
 
 #pragma bool off
@@ -187,7 +187,7 @@ extern "C" void cKfAnimationContainer_Update(Holder* self, float t)
     void** p;
     GetBegin(&it, &self->items);
     for (p = (void**)it.value; GetEnd(&end, &self->items), Ne((int)p, end.value); p++) {
-        viBufGetTs(*p, t);
+        cAnimator_SetFrame(*p, t);
     }
 }
 static inline void merge_flush_func_003FCE90(void) {} /* merge_units */

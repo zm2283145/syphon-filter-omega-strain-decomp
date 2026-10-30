@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/animator: 9 files, 003F3FF0-003F4190
+ * Libs/SFOLib/Source/animator: 10 files, 003F3FF0-003F45A0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -287,3 +287,29 @@ void cAnimator_StartAnimation(S3F4510* s, float lo_, float hi_, unsigned char fl
 static inline void merge_flush_func_003F4510(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003F4510 */
+
+/* merge_units: begin func_003F45A0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#pragma exceptions off
+
+struct cAnimator_R202 {
+    virtual ~cAnimator_R202();
+    virtual void ReservedVirtual0C() = 0; /* Prototype vtable has a null slot at +0x0C; original declaration unavailable. */
+    virtual void Update(float frame);
+    float mCurrentFrame;
+    float mAnimationStart;
+    float mAnimationEnd;
+    float mDirection;
+    unsigned char mPingPong;
+};
+
+extern "C" void cAnimator_SetFrame(cAnimator_R202* self, float frame)
+{
+    self->mCurrentFrame = frame;
+    self->mDirection = 0.0f;
+    self->Update(frame);
+}
+static inline void merge_flush_func_003F45A0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003F45A0 */

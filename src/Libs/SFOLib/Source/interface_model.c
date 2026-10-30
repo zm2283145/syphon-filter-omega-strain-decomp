@@ -67,7 +67,7 @@ struct Obj {
     char pad74[0x80 - 0x74];
     int* subs;
 };
-extern "C" void viBufGetTs(int s, float f);
+extern "C" void cAnimator_SetFrame(int s, float f);
 extern "C" void cInterfaceModel_GetBounds(Rect* out, Obj* obj, float f)
 {
     float b[4];
@@ -79,7 +79,7 @@ extern "C" void cInterfaceModel_GetBounds(Rect* out, Obj* obj, float f)
     b[1] = -10000.0f;
     if (!(f < 0.0f)) {
         for (i = 0; i < obj->nsub; i++)
-            viBufGetTs(obj->subs[i], f);
+            cAnimator_SetFrame(obj->subs[i], f);
     }
     for (j = 0; j < obj->nverts; j++) {
         V p(obj->verts[j].x, obj->verts[j].y, obj->verts[j].z, 1.0f);

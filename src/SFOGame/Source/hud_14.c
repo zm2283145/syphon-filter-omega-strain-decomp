@@ -163,15 +163,15 @@ typedef struct { char pad[0x68]; void* p68; } Obj_42E0;
 typedef struct { float v[4]; } Buf_42E0;
 extern void nHud_ComputeColor(Buf_42E0* out, float t);
 extern void cInterfaceElement_SetFilterColor(void* p, Buf_42E0* b);
-extern void viBufGetTs(void* p, float f);
+extern void cAnimator_SetFrame(void* p, float f);
 
 void cHud_SetToHit(Obj_42E0* o, float t) {
     Buf_42E0 b;
     if (o->p68) {
         nHud_ComputeColor(&b, 1.0f - t);
         cInterfaceElement_SetFilterColor(o->p68, &b);
-        if (t < 0.95f) viBufGetTs(o->p68, 15.0f * t);
-        else viBufGetTs(o->p68, 15.0f);
+        if (t < 0.95f) cAnimator_SetFrame(o->p68, 15.0f * t);
+        else cAnimator_SetFrame(o->p68, 15.0f);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

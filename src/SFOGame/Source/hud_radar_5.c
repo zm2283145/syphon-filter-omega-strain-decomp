@@ -14,7 +14,7 @@
 int nHud_CreateHudElement(int, char *);                        
 int cInterfaceModel_GetChild(int, char *);                        
 int cInterfaceModel_Activate(int, int, int);                         
-int viBufGetTs(float, int);                          
+int cAnimator_SetFrame(float, int);
 extern int D_0048B0D8;
 extern char D_004DC930;
 extern char D_004DC950;
@@ -33,7 +33,7 @@ char * cHudRadar_ctor(PS0_002619B0 *arg0, int arg1) {
     cInterfaceModel_Activate(arg1, 1, 0);
     cInterfaceModel_Activate(cInterfaceModel_GetChild(arg1, "radar"), 1, 1);
     arg0->f18 = nHud_CreateHudElement(arg1, "selected_waypoint");
-    viBufGetTs((float) D_0048B0D8, arg0->f18);
+    cAnimator_SetFrame((float) D_0048B0D8, arg0->f18);
     D_004FFD58 = cInterfaceModel_GetChild(arg1, "radartriangle");
     D_004FFD50 = cInterfaceModel_GetChild(arg1, "radartriangle");
     D_004FFD60 = cInterfaceModel_GetChild(arg1, "radarsquare");

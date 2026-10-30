@@ -103,7 +103,7 @@ extern "C" void HudMapSprite_Place(S_9550* self)
 extern void cInterfaceElement_SetLocation(int, void*);
 extern void cIE_GOBJ_TransformPointIntoCamera(void*);
 extern float cAnimator_AnimateTo(int, float);
-extern void viBufGetTs(int, float);
+extern void cAnimator_SetFrame(int, float);
 
 void HudLockTracker_Draw(Unk3E96F0* self) {
     cIE_GOBJ_TransformPointIntoCamera(self->unk70);
@@ -111,7 +111,7 @@ void HudLockTracker_Draw(Unk3E96F0* self) {
 }
 
 void HudLockTracker_Changed(Unk3E96F0* self) {
-    viBufGetTs(self->unk60, 0.0f);
+    cAnimator_SetFrame(self->unk60, 0.0f);
     self->unk84 = 1;
 }
 

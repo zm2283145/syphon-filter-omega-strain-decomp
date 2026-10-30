@@ -78,7 +78,7 @@ extern "C" {
 E_4173B0* GuiInterfaceDecorator_FindEvent(Self_4173B0* o, char* name);
 int GuiInterfaceDecorator_StartAnimation(Self_4173B0* o, char* name);
 void cAnimator_NextFrame(Inst_4173B0* i, float t);
-void viBufGetTs(Inst_4173B0* i, float t);
+void cAnimator_SetFrame(Inst_4173B0* i, float t);
 void cAnimator_AnimateTo(Inst_4173B0* i, float t);
 void cAnimator_StartAnimation(Inst_4173B0* i, float a, float b, int f);
 void cInterfaceElement_SetView(Inst_4173B0* i, V4_4173B0* v);
@@ -134,20 +134,20 @@ extern "C" bool GuiInterfaceDecorator_onMessage(Self_4173B0* self, int a1, unsig
         if (self->inst == 0) break;
         switch (msg) {
         case 10:
-            viBufGetTs(self->inst, p1);
+            cAnimator_SetFrame(self->inst, p1);
         case 11:
             cAnimator_AnimateTo(self->inst, p1);
             break;
         case 12:
-            viBufGetTs(self->inst, p1);
+            cAnimator_SetFrame(self->inst, p1);
             cAnimator_AnimateTo(self->inst, p2);
             break;
         case 13:
-            if (self->inst->t < p1 || self->inst->t > p2) { Inst_4173B0* volatile* pv = &self->inst; viBufGetTs(*pv, p1); }
+            if (self->inst->t < p1 || self->inst->t > p2) { Inst_4173B0* volatile* pv = &self->inst; cAnimator_SetFrame(*pv, p1); }
             cAnimator_StartAnimation(self->inst, p1, p2, 0);
             break;
         case 14:
-            if (self->inst->t < p1 || self->inst->t > p2) { Inst_4173B0* volatile* pv = &self->inst; viBufGetTs(*pv, p1); }
+            if (self->inst->t < p1 || self->inst->t > p2) { Inst_4173B0* volatile* pv = &self->inst; cAnimator_SetFrame(*pv, p1); }
             cAnimator_StartAnimation(self->inst, p1, p2, 1);
             break;
         }

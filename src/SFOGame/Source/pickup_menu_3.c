@@ -135,7 +135,7 @@ extern int cBackpack_GetWeaponDbs(Owner_253070* o, int* out, int a, int n);
 extern int cBackpack_BodyIsPickupable(Owner_253070* o);
 extern int cBackpack_BodyHasDisguise(Owner_253070* o);
 extern int cInterfaceModel_GetChild(void* root, char* name);
-extern void viBufGetTs(Widget_253070* w, float v);
+extern void cAnimator_SetFrame(Widget_253070* w, float v);
 extern void cAnimator_AnimateTo(Widget_253070* w, float v);
 extern void cInterfaceElement_SetText(Widget_253070* w, char* text);
 extern char* nGlobalization_GetString_charP(char* key);
@@ -260,9 +260,9 @@ extern "C" Self_253070* cPickupMenu_ctor(Self_253070* self, void* root, Owner_25
             }
         }
     }
-    viBufGetTs(self->w9C, self->unk98);
+    cAnimator_SetFrame(self->w9C, self->unk98);
     cAnimator_AnimateTo(self->w9C, self->unk98 + D_0048AEF8 * (self->count - 1));
-    viBufGetTs(self->wA0, self->unk98);
+    cAnimator_SetFrame(self->wA0, self->unk98);
     cAnimator_AnimateTo(self->wA0, self->unk98 + D_0048AEF0);
     if (optB) {
         cInterfaceElement_SetText(self->wA4, D_004A79E8);
@@ -285,7 +285,7 @@ extern "C" Self_253070* cPickupMenu_ctor(Self_253070* self, void* root, Owner_25
         l->unk10 = 2;
         cTextArea_SetColor(l, g_PickupTextColour);
     }
-    viBufGetTs(self->wA4, self->unk98);
+    cAnimator_SetFrame(self->wA4, self->unk98);
     cAnimator_AnimateTo(self->wA4, self->unk98 + D_0048AEF0);
     return self;
 }

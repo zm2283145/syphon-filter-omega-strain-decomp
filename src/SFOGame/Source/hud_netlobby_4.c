@@ -42,7 +42,7 @@ typedef struct {
     List27A items;
 } Panel27A;
 extern void cInterfaceElement_Activate(void* widget, int visible);
-extern void viBufGetTs(void* widget, float alpha);
+extern void cAnimator_SetFrame(void* widget, float alpha);
 extern void std_list_deleter_voidPtr_begin_void(Iter27A* out, List27A* list);
 extern void std_list_GameInfoPtr_generic_iterator_ctor(Iter27A* out, Iter27A* in);
 #if 0 /* merge_units */
@@ -74,9 +74,9 @@ void cHudNetLobby_DeactivateControls(Panel27A* p)
     cInterfaceElement_Activate(p->w4, 0);
     cInterfaceElement_Activate(p->wC, 0);
     cInterfaceElement_Activate(p->w8, 0);
-    viBufGetTs(p->w8, 0.0f);
+    cAnimator_SetFrame(p->w8, 0.0f);
     cInterfaceElement_Activate(p->w10, 0);
-    viBufGetTs(p->w10, 0.0f);
+    cAnimator_SetFrame(p->w10, 0.0f);
     cInterfaceElement_Activate(p->w28, 0);
     std_list_deleter_voidPtr_begin_void(&beginRaw, &p->items);
     std_list_GameInfoPtr_generic_iterator_ctor(&it, &beginRaw);
@@ -84,7 +84,7 @@ void cHudNetLobby_DeactivateControls(Panel27A* p)
     if (node != std_list_cCBDataPtr_push_back(&p->items, &endRaw, &end)) {
         do {
             cInterfaceElement_Activate(node->item->widget, 0);
-            viBufGetTs(node->item->widget, 0.0f);
+            cAnimator_SetFrame(node->item->widget, 0.0f);
             node = node->next;
         } while (node != std_list_cCBDataPtr_push_back(&p->items, &endRaw, &end));
     }

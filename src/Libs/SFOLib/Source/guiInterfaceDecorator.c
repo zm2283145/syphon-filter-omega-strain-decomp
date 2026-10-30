@@ -12,7 +12,7 @@ typedef struct E_416D10 { char name[0xC]; unsigned char kind; char pad[3]; int x
 typedef struct O_416D10 { char pad[0x24]; void* inst; char pad28[0x58]; E_416D10* cur; } O_416D10;
 
 extern E_416D10* GuiInterfaceDecorator_FindEvent(O_416D10* o, char* name);
-extern void viBufGetTs(void* i, float t);
+extern void cAnimator_SetFrame(void* i, float t);
 extern void cAnimator_AnimateTo(void* i, float t);
 extern void cAnimator_StartAnimation(void* i, float a, float b, int f);
 
@@ -24,15 +24,15 @@ int GuiInterfaceDecorator_StartAnimation(O_416D10* o, char* name)
     if (e != 0) {
     switch (e->kind) {
     case 1:
-        viBufGetTs(o->inst, e->x);
+        cAnimator_SetFrame(o->inst, e->x);
         cAnimator_AnimateTo(o->inst, e->y);
         break;
     case 2:
-        viBufGetTs(o->inst, e->x);
+        cAnimator_SetFrame(o->inst, e->x);
         cAnimator_StartAnimation(o->inst, e->x, e->y, 1);
         break;
     case 3:
-        viBufGetTs(o->inst, e->x);
+        cAnimator_SetFrame(o->inst, e->x);
         cAnimator_StartAnimation(o->inst, e->x, e->y, 0);
         break;
     }

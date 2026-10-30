@@ -33,12 +33,12 @@ typedef struct Node_003EE510 {
     char pad88[4];
     int skip;
 } Node_003EE510;
-extern void viBufGetTs(void *p, float t);
+extern void cAnimator_SetFrame(void *p, float t);
 void cInterfaceModel_SetFrame(Node_003EE510 *n, float t)
 {
     int i;
     for (i = 0; i < n->nA; i++) {
-        viBufGetTs(n->a[i], t);
+        cAnimator_SetFrame(n->a[i], t);
     }
     for (i = 0; i < n->nB; i++) {
         if (n->b[i]->skip <= 0) {

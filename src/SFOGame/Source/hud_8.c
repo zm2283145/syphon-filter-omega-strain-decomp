@@ -93,7 +93,7 @@ void std_list_tCalloutPtr_end_void(It_242B40* out, char* l);
 void cLListIterator_tCalloutPtr_ctor(It_242B40* out, It_242B40* in);
 void std_list_deleter_voidPtr_generic_iterator_ctor_listdeleterR(It_242B40* out, It_242B40* in);
 void std_list_deleter_voidPtr_erase_listdeleter(It_242B40* out, char* l, It_242B40* pos);
-void viBufGetTs(int a, float f);
+void cAnimator_SetFrame(int a, float f);
 void cInterfaceElement_Activate(int a, int b);
 void cInterfaceElement_SetText(int a, int b);
 void cIE_GOBJ_AnimateOff(int a);
@@ -132,7 +132,7 @@ int cHud_ClearCallout(char* o, int* key, int id, signed char flag, int send)
         if (it.n->ent->key == *key && id == it.n->ent->id) {
             Ent_242B40* e;
             if (flag) {
-                viBufGetTs(it.n->ent->c, 0.0f);
+                cAnimator_SetFrame(it.n->ent->c, 0.0f);
                 cInterfaceElement_Activate(it.n->ent->c, 0);
             }
             e = it.n->ent;

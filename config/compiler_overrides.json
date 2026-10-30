@@ -3819,7 +3819,6 @@
   "Libs/SFOLib/Source/collision_4": "cwps2-3.0b38",
   "Libs/SFOLib/Source/collision_5": "cwps2-3.0b38",
   "Libs/SFOLib/Source/collision_17": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/animator": "cwps2-3.0b38",
   "Libs/SFOLib/Source/globalization_8": "cwps2-3.0b38",
   "Libs/SFOLib/Source/manUtils_2": "cwps2-3.0b38",
   "Libs/SFOLib/Source/manUtils_3": "cwps2-3.0b38",
@@ -3998,5 +3997,6 @@
   "lib/libcdvd/func_001184C0": "ee-gcc2.9-991111-as296",
   "lib/libkernl/func_0010FBC0": "ee-gcc2.9-991111",
   "lib/libmpeg/func_0010CAF0": "ee-gcc2.9-991111",
-  "SFOGame/Source/GuiAgentModify_9": "cwps2-3.0b38"
+  "SFOGame/Source/GuiAgentModify_9": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/animator": "cwps2-3.0b38"
 }

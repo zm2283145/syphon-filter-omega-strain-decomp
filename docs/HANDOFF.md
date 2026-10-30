@@ -15,6 +15,32 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Resume here (2026-10-30, Codex R189 accepted prototype-boundary match) - START HERE
+
+- **13,998 / 14,350 functions; 90.49% code; 352 remaining.** Final consolidated
+  retail SHA-256 9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6
+  verified; regression checks and synchronization completed WSL_ROUND_OK.
+- New ordinary C++ match **cAnimator_SetFrame003F45A0,24bytes**. Exact raw bytes
+  in Jan003E1C80/Oct003D31C0, both actual animator.cc CU. Real float fields and
+  Update(float) virtualslot+10 confirmed from prototypes/vtable; no assembly.
+- Old viBufGetTs symbol incorrectly began at animator helper and combined it with
+  actual movie routine003F45C0,428bytes. Corrected starts/sizes, retained8zero pad
+  at45B8..45C0 and following movie assembly. Existing animator callers renamed;
+  actual movie callerfunc45C0 renamed viBufGetTs. Full hash confirms targets.
+  Total+1, matched+1; remaining352 unchanged because hidden helper now counted.
+- Extended confirmed animator source range to45B8 and folded new helper into
+  **src/Libs/SFOLib/Source/animator.c**, ten original functionblocks,single C file.
+  Parent standard regenerated checker MATCH, merge tool byte-identical, then
+  reran full WSL workflow after consolidation; waited final WSL_ROUND_OK.
+- Evidence build/pending/r202_network/mw38_003F45A0.c,r202_network/NOTES.md,
+  thunk_boundary_check.json,thunk_prototype_evidence.json. Parent corrected symbol
+  metadata only after independent prototype/body validation. Earlier guessed
+  IeElement identity was rejected; no speculative header/template owner move.
+- All three agents held for verification. Resume audio prepared quaternion
+  expression inverse r202_audio (actual InvertUnitQuat returnsreference); game
+  fresh GrabLedge001A1C80 r203_game/grab_initial.c; network movie timestamp routine
+  independent ring-buffer reconstruction. Parent continues own matching research.
+
 ## Current independent matching lanes (R202)
 
 - R200 independent reviews found no further missing arguments: Fire helper return
@@ -42,7 +68,7 @@ scratch files. Keep matching as the priority; consolidate alongside accepted mat
   Original gui.cc mapping has.714 similarity and224byte prototype vs336retail;
   don't treat it as hash-exact. Verified source remains R188,352remaining.
 
-## Resume here (2026-10-30, Codex R188 accepted independent-review match) - START HERE
+## Resume here (2026-10-30, Codex R188 accepted independent-review match)
 
 - **13,997 / 14,349 functions; 90.49% code; 352 remaining.** Full retail
   SHA-256 9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6

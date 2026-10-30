@@ -136,7 +136,7 @@ void cHud_DeactivateAimCursor(Hud*);
 void cHud_DeactivateNoFireIcon(Hud*);
 Spr** std_vector_cInterfaceElementPtr_opIndex(SprVec*, int);
 void cInterfaceElement_Activate(Spr*, int);
-void viBufGetTs(Spr*, float);
+void cAnimator_SetFrame(Spr*, float);
 void cAnimator_AnimateTo(Spr*, float);
 }
 static inline void* GetCam() { if (func_00159570(g_CameraObject)) return *cLList_cCAMERA_GOBJPtr_Front(g_CameraObject); return 0; }
@@ -153,7 +153,7 @@ static inline void Select(Hud* h, int idx) {
             Spr* s = h->v.data[(unsigned)(idx - 1)];
             if (s) {
                 cInterfaceElement_Activate(s, 1);
-                viBufGetTs(s, 1.0f);
+                cAnimator_SetFrame(s, 1.0f);
                 cAnimator_AnimateTo(s, 10.0f);
             }
             cHud_DeactivateAimCursor(h);

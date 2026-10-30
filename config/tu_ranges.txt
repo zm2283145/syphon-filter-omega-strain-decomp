@@ -205,7 +205,7 @@
 0x003EA6A0 0x003EBF0C Libs/SFOLib/Source/fstream.cc
 0x003EBF10 0x003ECAEC Libs/SFOLib/Source/specfx.cc
 0x003ECAF0 0x003F1E3C Libs/SFOLib/Source/interface_model.cc
-0x003F3FF0 0x003F459C Libs/SFOLib/Source/animator.cc
+0x003F3FF0 0x003F45B8 Libs/SFOLib/Source/animator.cc
 0x003F45A0 0x003F56CC Libs/SFOLib/Source/mp_vibuf.c
 0x003F56D0 0x003F5E7C Libs/SFOLib/Source/mp_videodec.c
 0x003F5E80 0x003F617C Libs/SFOLib/Source/mp_vobuf.c

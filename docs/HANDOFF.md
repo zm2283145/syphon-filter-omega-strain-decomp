@@ -15,6 +15,19 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Active matching after R189 (R204/R205)
+
+- Verified baseline still93edeb6d,13,998/14,350,90.49%,352remaining.
+- Audio quaternion reference-return expression in best helper representation
+  preserves17strict words, exact504B,clean symbols; faithful class version worsens.
+  Evidence r204_audio/NOTES.md. No new match. Audio now independently audits
+  triangle normal003C0020 actual GetNormalized const-expression lifetime.
+- Game fresh GrabLedge001A1C80 reconstruction and network actual timestamp routine
+ 003F45C0 continue private research; don't assign duplicate writers.
+- Parent read-only internal alabel audit of live unmatched IK assembly found
+  sampled labels are in-function VU result stores, not independent hidden helpers.
+  No speculative boundary splits. Private r205_parent/NOTES.md.
+
 ## Resume here (2026-10-30, Codex R189 accepted prototype-boundary match) - START HERE
 
 - **13,998 / 14,350 functions; 90.49% code; 352 remaining.** Final consolidated

@@ -5,6 +5,175 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Resume here (2026-10-30 handoff, Copilot session) - START HERE
+
+The Copilot session that ran R150-R157 has stopped. Every lane agent finished; nothing is pending.
+
+### State
+
+**13,973 / 14,345 functions (90.24% code, 99.92% data).** The build is still byte-identical.
+
+| Round | Commit | Matches |
+|---|---|---|
+| R153 + R154 | `a8234987`, `628c7fcc` | 25 |
+| R155 | `b2551e5a` | 8 |
+| R156 | `2a3ff850` | 52 |
+| R157 | `258b47d4` | 5 |
+
+### What is left (372)
+
+- **About 150 stay as asm by policy.** These are 16-24-byte kernel syscall stubs and other
+  hand-written SDK asm; see "Open decisions" below. Hand-written routines include: the bignum
+  routines IsSmaller, lint*, MODIP, MULT and XMOD; DotProd; ScrambleSeed; SHAtoByte; md5Encode.
+- **Everything else has been tried by at least one lane, most of them five or more times.** The
+  closest state of each function is in `build/agents/<lane>/NOTES.md`. That folder is local and
+  gitignored; the best ones are copied into the near-miss table below.
+
+### Running a round
+
+The scripts live in `tools/workflow/`.
+
+1. **One-time WSL setup.** Run `wsl -d sfos3 -u root -e bash /mnt/d/Claude/syphon-filter-omega-strain-decomp/tools/workflow/setup_wsl.sh /mnt/d/Claude/syphon-filter-omega-strain-decomp`.
+   Read the script header first. It creates `~/sfos-decomp` and a venv, and copies every
+   `.tools/eegcc` compiler from the Windows checkout. Without those compilers the report silently
+   loses about 470 functions.
+2. **Keepalive.** While working, keep a background
+   `wsl -d sfos3 -u root -e bash -c "while true; do sleep 3600; done"` running. If the distro
+   idles out or restarts, a round in progress dies; that happened once in R155.
+3. **Collect the matched files** into `build\pending\rNNN\`.
+   **Wildcard gotcha:** `Get-ChildItem build\pending\l? -Filter *.c` returns nothing. Loop over
+   the lane names explicitly instead:
+
+   ```powershell
+   foreach($l in 'l1','l2'){ Get-ChildItem "build\pending\$l" -Filter *.c }
+   ```
+
+4. **Verify.** Run `tools\workflow\verify_pending.ps1 -Lanes rNNN`. Every file must say `OK`,
+   meaning every line is MATCH and there is no UNDEF except `__dl__FPv`.
+5. **Run the round.** `tools\workflow\round_wsl.ps1 rNNN "Match N more functions incl. ... (RNNN)<newline><newline>Co-authored-by: ..."`.
+   - This integrates the batch and builds it in WSL (about 4 minutes), mirrors the results back,
+     then commits and pushes on Windows.
+   - If it fails, the batch is left in `build\pending\rNNN_batchHHMMSS` and Windows `src` is
+     untouched. Fix the problem, move the files back and rerun.
+   - Files that `integrate_pending` skips are moved back to `build\pending\rNNN`.
+   - The `.sh` files must keep LF line endings. If they come out as CRLF, bash fails with
+     `set: pipefail: invalid option`.
+
+### Running lanes (parallel matching agents)
+
+1. **Build the candidate list.** Take the unmatched functions from `progress/report.json` or the
+   asm left in `asm/`. Drop the syscall stubs.
+2. **Generate a dossier per function:**
+
+   ```powershell
+   $env:SFOS_PROTO_DIR='D:\Claude\Syphon Filter Omega Strain\local\prototypes'
+   .venv\Scripts\python.exe tools\proto\dossier.py build\agents\<lane>\dossier <ADDR>
+   ```
+
+   Without `SFOS_PROTO_DIR`, the dossier silently leaves out the symbolised prototype disassembly,
+   which is its most useful part. Most R156/R157 lane dossiers were missing it, so regenerating
+   them may unblock some near misses.
+3. **Fill in `tools/workflow/lane_prompt_template.md`.** Replace `<LANE>`, the focus line, the
+   candidates and the deadline. Launch up to 8 agents with one prompt each.
+4. **Re-verify every delivered file yourself.**
+   - Lanes invent callee names, for example `Event_Send`. check_match then prints MATCH next to
+     `UNDEF X: called as a function`.
+   - Fix invented names with `tools\rename_drafts.py <dir>` (handles stale `func_` names), or map
+     them by hand. Decode the jal target as `(word & 0x3FFFFFF) << 2` in
+     `build\agents\asm\<ADDR>.s`, then look the address up in `config\symbol_addrs.txt`.
+
+### Held items (matched or nearly matched, blocked by tooling or config)
+
+| Item | Problem | Fix needed |
+|---|---|---|
+| `build\agents\l1\held\gcc29a_0010ED58.c` (`_printf`) | Matches only with the ee-gcc 2.9-991111a assembler (reproduces retail's float-compare nops) | Add the compiler kind to `check_match` and to the OVR map in `integrate_pending` |
+| `build\agents\l1\held\mw38_00100740.c`, `mw38_00101250.c` | Reference `__unexpected` and `__end__catch` | Add `__unexpected = 0x00101250;` and `__end__catch = 0x00100D20;` to `config/extra.ld` |
+| KM_GetSoftwareKeyPair | Code is byte-exact, but check_match rejects the 0x44 nop tail | Relax the size rule for nop padding |
+| viBufGetTs | Needs a config split | |
+| sceSifInitRpc | Really starts at 0x10FBC0; the current split is wrong | Correct the split |
+| gcc296_002FF868 | Its .sdata is not referenced from code, so `integrate_pending` skips it | Draft in `build\integrated\lanes_r156\l2\` |
+| longReverse | Held by policy | |
+| l4 dmaman 375A30, 375AC0, 375C30 | Match, but the tag helper is inline asm | Awaiting review in `build\agents\l4\asm_review\` |
+| Fft, InverseFft, InverseUnpack (R157) | Integrated, but they use file-scope global register variables | Keep them in their own file; `build\agents\l3\work\comb3.c` has all three together |
+
+### Near misses (closest first; differing lines; draft paths under `build\agents\`)
+
+| Addr | Function | Diff | Draft | What differs |
+|---|---|---|---|---|
+| 002E2250 | NetIRequestCreateRemoteNamedObject | 1 | `l2\work\e2250\L3.c` | branch target 0x200 vs 0x204 |
+| 0031B730 | rFft_vu4 | 2 | `l3\work\fc0_b.c` | |
+| 00370CC0 | XLib_DrawDma | 4 | `l4\work\best_370CC0_4.c` | `li fp,12` hoist order |
+| 003CD260 | cGOBJ_GetCenterOfMass | 4 | `l8\work\cm0.c` | two stack slots swapped |
+| 00166840 | loadingThread | 5 | `l8\work\lt3.c` | a1/a2 for `show` |
+| 0038D720 | gunList_GunCalcBBox | 7 | `l4\work\best_0038D720_7.c` | lq/addiu scheduling |
+| 0037B5C0 | XLib_DisplayLastFrame | 7 | `l4\work\lf_0.c` | t0/t1 swap |
+| 000D0780 | (l5 human IK) | 8 | `l5\work\h_best8.c` | one copy's scheduling |
+| 0037D9A0 | XLib_UpdateCompMat | 8 | `l4\work\best_37D9A0_8.c` | copy-ctor register choice |
+| 002DF290 | NetIInitialize | 8 | `l2\work\df290_a0.c` | |
+| | FftSumCosOlAdd | 8 | `l3\work\fs_b.c` | |
+| 0036B3B0 | cMemMan_Init | 9 | `l4\work\mi_0.c` | |
+| 00385240 | cMan_GetGunBarrelMatrix | 9 | `l4\work\best_385240_9.c` | register allocation |
+| 001DD6A0 | cAimComponent_NextFrame | 11 | `l8\work\d6a.c` | 3 extra sign-extension pairs |
+| 00219820 | cPathedGOBJ_ctor | 12 | `l7\work\pg_b.cpp` | prototype disassembly not used yet |
+| 003BB360 | cTexture_UploadBoth | 13 | `l4\work\ub_m1.c` | |
+| | nemAgcMeanEngLevel | 14 | | |
+| 000BD450 | (l6 particles) | 16 | `l6\work\BD450_p16.c` | temp slots swapped |
+| | UpdatePlayers | 16 | | |
+| 00394AD0 | cVUM_GOBJ_Render | 17 | `l4\work\best_394AD0_17.c` | |
+| 00180580 | cSplinedMotion_QuaternionLERP_1_UpdateVelocity | 17 | `l7\work\sq_a.c` | v1/a3 colours |
+| 00131540 | cGameSystem_PushWeaponCam | 17 | `l7\work\w_a.c` | |
+| 0025F930 | cVisionFxMan_DeactivateFx | 18 | `l8\work\vf0.c` | one cvt and three mfc1 |
+| | strcmp | 18 | | blocked: `pnor` in a delay slot |
+| 000D1140 | (l5) | 20 | `l5\work\k_best20.c` | |
+| 00405660 | Monster_ctor | 21 | `l7\work\mo_n.c` | |
+| 00102B40 | sceGsSetDefDispEnv | 24 | | |
+| 000ED120 | (l5) | 24 | `l5\work\e11.c` | register choice only |
+| 00153870 | cNPC_Follow_cMessageR | 26 | `l8\work\fo3.c` | a0 use in two blocks |
+| | sceCdInit | 31 | | |
+| 000BBDC0 | cSKYBOX_GOBJ_Load | 32 | `l6\work\BBDC0_p32.c` | |
+
+### New techniques (R154-R157 lane reports)
+
+**General**
+- Hill-climb statement and declaration order against check_match's diff score.
+- Copy inline helpers that already match elsewhere verbatim.
+- Name the lerp denominator in a local.
+- Declaring a local at its point of use changes FPR priority.
+
+**Metrowerks (mw38)**
+- Use `=&r` early-clobber temporaries for `qmfc2`.
+- **Expression temporaries.** If the prototype has no local for a message or vector argument,
+  write an expression temporary. Construct it via the real ctor declared extern returning the
+  struct by value; the hidden return pointer in a0 is the ctor's `this`.
+  - Give that struct the weak dtor kept in `.dtors_drop` (see `alloc_guard.h`).
+  - Temporaries created later get lower stack addresses, so put the temporary inside the call's
+    argument list.
+- **Default-argument result wrappers** (`F(a, k, V r = V())`) move a result into the caller's
+  temporary area.
+- **Inline nesting-depth wrappers** reorder the stack slots of inline-function locals.
+- **A dead `void* xx = &v;`** keeps a dead `addiu`.
+- **Constructors:** call `X::operator new` and then the ctor symbol explicitly, instead of
+  `new X(n)`, which leaves an UNDEF for the mangled ctor.
+- **Float-to-double:** call `SoftFloat_FloatToDouble` explicitly to avoid the implicit UNDEF.
+- An empty `asm volatile("" ::: "memory")` has no effect on code that touches only registers.
+
+**gcc29**
+- goto loops avoid strength reduction.
+- For a switch: explicit hole case ranges plus `default: goto oor`.
+- Loading a value before a branch lets it fill the delay slot.
+
+**gcc296**
+- Use file-scope global register variables for values that are only stored; block-local pins get
+  deleted as dead.
+- Write the instruction that should issue second first.
+- Integer pins in loops disable strength reduction.
+
+**Tools in `build\agents\`**
+- `l5\work\seqdiff.py`: instruction-sequence diff that ignores registers and offsets.
+- `spmap.py` / `spsort.py`: where each stack temporary lands compared with retail.
+- `#pragma schedule off` shows the code order before scheduling.
+- `l2\work` has the GCC 2.95.3 haifa/reorg scheduler sources and a tracing approach.
+
 ## Resume here (2026-10-29, Copilot session)
 
 - **R153 (`a8234987`), R154 (`628c7fcc`), R155 (`b2551e5a`) added 33 more matches.** Now
@@ -137,8 +306,8 @@ then `bash tools/round.sh - "<subject>"`. R149's 22 matches were folded this way
 
 | | |
 |---|---|
-| Functions matched | 13,916 of 14,345 |
-| Code matched | 88.75% |
+| Functions matched | 13,973 of 14,345 |
+| Code matched | 90.24% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 

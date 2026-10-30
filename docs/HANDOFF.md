@@ -15,6 +15,25 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Active matching research (2026-10-30, R197/R198)
+
+- Verified source still R187,969e7193:13,996/14,349,90.47%,353remaining.
+- Fresh game reconstruction func003E57B0 destination-message Pack improved271
+  to219strict diagnostics including size; best pack_virtual.c emits0x504 versus
+  true0x5B4 extent (padded0x5C0). Exact0x180frame/all9saved GPRs and early allocator
+  block recovered. Calls/symbols clean. Medium-confidence prototype family only,
+  retail has added terrain-relative branch; don't claim hash-exact source mapping.
+  Evidence build/agents/r197_game/NOTES.txt. R198 game continues constructor/XYZ
+  lifetimes; network independently audits real fixedpoint conversion helpers.
+- R197 Grid fuller packet/header/peer types and four real callee declarations
+  preserve647strict differences plus shifted switch-data issue. Typed source
+  under r197_network; no matching improvement or accepted source.
+- R197 animation cPointer layout confirmed, explicit copy/representation-copy
+  models add temporaries/calls; faithful724byte baseline remains. R198 audio audits
+  actual implicit-copy/conversion declarations, avoiding invented float unions.
+  Evidence r197_audio/NOTES.md. Three agents private scratch only; parent accepts
+  only full checker+retail-hash batches, no new match counted from these drafts.
+
 ## Active matching research (2026-10-30, R196/R197)
 
 - No new accepted source; verified baseline remains13,996/14,349,90.47%,353remaining.

@@ -15,6 +15,21 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Independent matching research (R205/R206)
+
+- Audio triangle actual helper ABI corrections tie current27word+size mismatch;
+  const GetNormalized expression addscopy/worsens. Evidence r205_audio notes.
+- Network movie normalized_bp.c improves27to21strict,exact428bytes,wholeloop/
+  epilogue match; preheader only remains. Independently rotated to audio R206;
+  network now reviews texture UploadBoth10word near miss (game r202 evidence).
+- Game fresh GrabLedge compiling draft has exactframe0x5F0/major slots,414word
+  mismatches plus size; not a near miss. R206 continues actual CBData/priority
+  helper/request contracts. r204_game/grab_name_local.c and notes preserve draft.
+- Parent independently cleaned cMap_ObjectiveSelected0026C570 old near-miss calls:
+  current strict checker21words (historical3metric is not comparable),clean symbols.
+  No repeated Len zero-init grids. Private r206_parent/objective.c/NOTES.md.
+  Verified source remains93edeb6d,13,998/14,350,90.49%,352remaining.
+
 ## Active matching after R189 (R204/R205)
 
 - Verified baseline still93edeb6d,13,998/14,350,90.49%,352remaining.

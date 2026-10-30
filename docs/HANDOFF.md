@@ -15,6 +15,23 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Active matching research (2026-10-30, R196/R197)
+
+- No new accepted source; verified baseline remains13,996/14,349,90.47%,353remaining.
+- R196 Bezier source now checker-ready: correct extern static matrix/guard and
+  Set call,800bytes/frame0x150,53strict differences,clean symbols/data. Remaining
+  late matrix-address/copy lifetime issue; private r196_audio/bezier_split.c.
+- R196 Fire constructor corrects actual scalar-left vector multiply to constref
+  without worsening27strict differences. Arithmetic/copy block alone differs;
+  tail/population accesses match. r196_game/ref_result.c and NOTES.txt.
+- R196 full network handler now faithful0x44-byte public object including trailing
+  LocalUserData,36-byte wire header,unsigned timestamps; still48strict differences.
+  Private r196_network/prototype_object.c and notes, no acceptance claimed.
+- R197 agents continue concrete lifetime/static-object evidence (audio), Fire
+  return/copy context (game), fresh underdeveloped network reconstruction.
+  Parent bare C++ language/linkage switch on GuiAgentModify draft worsens13 to106;
+  preserve C draft and do not repeat switch without actual method context.
+
 ## Active matching research (2026-10-30, R195/R196)
 
 - R195 gun barrel actual matrix/vector/setter ABI preserves10strict differences;

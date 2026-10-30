@@ -15,6 +15,25 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Active matching research (2026-10-30, R193/R194)
+
+- Verified baseline remains R187,969e7193:13,996/14,349,90.47%,353remaining.
+  No new match in R193; all tracked source remains at the verified baseline.
+- SDK _initSeq explicit pointer-lifetime premise adds spill/reload and changes
+  saved registers (684vs680bytes,85aligned differences). Alternate gcc29a still
+  differs28words. Evidence build/agents/r193_sdk/NOTES.md. Avoid repeating.
+- Game memory initialization: true unsigned fields/nested cMemChunk union and
+  direct initialization tie prior result; chained pointer assignment worsens.
+  Evidence build/agents/r193_game/NOTES.txt. No new helper ownership inferred.
+- Network actual return/argument declarations corrected in private drafts, but
+  NetIInitialize8word,NetUpdateAll54word,RemoteDisconnect4word differences persist.
+  Evidence build/agents/r193_network/NOTES.md. ElectSessionMaster caller still
+  requires explicit three zero arguments despite current one-argument definition.
+- R194 active lanes: audio cEdgeGroup_IsEdgeInsideGroup001ED120 (humanCollision
+  prototype iterator ABI); game cGrenade_CalculateArcPoints0025CDC0 (point-mass
+  locals/types); network RemoteClientDisconnectEvent002DEF70 (4word near-match).
+  Reuse these agents; private scratch only. Parent integrates and full-verifies.
+
 ## Resume here (2026-10-30, Codex R187 accepted matching batch) - START HERE
 
 - **13,996 / 14,349 functions; 90.47% code; 353 remaining.** Full retail

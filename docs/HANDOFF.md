@@ -15,6 +15,25 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Active matching research (2026-10-30, R194/R195)
+
+- Live read-only WSL inventory build/agents/r195_inventory.json confirms353
+  unmatched,13,996 C-owned,zero unverified C/boundary cases and no warnings.
+  Verified source baseline remains969e7193; no match counted from research.
+- R194 collision iterator: exact228byte structure,12register-word differences.
+  Prototype mutable edge/const iterator types and64-bit packed flag comparison
+  contract corrected privately. Full old l5 notes already exhaust coloring grids;
+  don't repeat them. Evidence build/agents/r194_audio/NOTES.md.
+- R194 grenade: old52-difference claim is93 with current strict checks. Actual
+  prototype return ABI ties; normalized vector copy construction improves to91.
+  Jan similarity .804 is not hash-exact evidence. r194_game/NOTES.txt.
+- R194 network callback payload now prototype-confirmed24bytes with char* IP,
+  enum status and opaque callback pointer. Faithful types leave four guard swaps
+  and add eight callback register differences; best preserved. r194_network notes.
+- R195 current targets: audio cMan_GetGunBarrelMatrix00385240 (actual member/return
+  ABI), game cVisionFxMan_DeactivateFx0025F930 (prototype color conversion operator),
+  network fresh request/update ABI audit. All agents private scratch only.
+
 ## Active matching research (2026-10-30, R193/R194)
 
 - Verified baseline remains R187,969e7193:13,996/14,349,90.47%,353remaining.

@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/SFOini: 2 files, 003CBA60-003CBA90
+ * Libs/SFOLib/Source/SFOini: 7 files, 003CBA60-003CBE70
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -34,18 +34,7 @@ static inline void merge_flush_func_003CBA60(void) {} /* merge_units */
  * "key=value", skipping comment/section/blank lines, and returns the value with trailing newlines
  * stripped (an empty string when the key is missing, 0 when no ini is loaded). */
 #pragma cplusplus on
-typedef union String {
-    struct {
-        unsigned int cap;
-        int size;
-        char* data;
-    } l;
-    struct {
-        unsigned char isLong : 1;
-        unsigned char size : 7;
-        char data[11];
-    } s;
-} String;
+#include "sfoini_string.h"
 typedef struct Tag { signed char unused; } Tag;
 extern "C" {
 extern char* D_00543658;
@@ -61,7 +50,7 @@ void std_basic_string_char_char_traits_char_ctor_charP(String* s, const char* c)
 void std_basic_string_char_char_traits_char_assign_basicstringR(String* d, String* s);
 void String_Dtor(String* s, int f);
 void std_basic_string_char_char_traits_char_do_replace(String* s, int pos, int n, int first, int last, Tag tag);
-int std_basic_string_char_char_traits_char_find_basicstringR_uint(String* s, String* what, unsigned int pos);
+int std_basic_string_char_char_traits_char_find_basicstringR_uint(const String* s, const String* what, unsigned int pos);
 char* std_basic_string_char_char_traits_char_opIndex(String* s, int i);
 void std_basic_string_char_char_traits_char_opAddAssign(String* s, char c);
 int std_basic_string_char_char_traits_char_compare_charP(String* s, const char* c);
@@ -177,3 +166,178 @@ char* cSFOini_GetKeyValue(char* key)
 static inline void merge_flush_func_003CBA90(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003CBA90 */
+
+/* merge_units: begin func_003CBE70 */
+#pragma push /* merge_units */
+/*
+ * Libs/SFOLib/Source/SFOini: 5 files, 003CBE70-003CBE90
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+char* std_basic_string_char_char_traits_char_opIndex(String* s, int i)
+{
+    return ((s->l.cap & 1) ? s->l.data : (char*)s + 1) + i;
+}
+static inline void merge_flush_func_003CBE70(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003CBE70 */
+
+/* merge_units: begin func_003CBE90 */
+#pragma push /* merge_units */
+#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#define NULL 0
+#pragma mpwc_relax on
+int std_basic_string_char_char_traits_char_reserve(char *, int);
+int cFileMan_Read_charPP_int(char *, int *, int);
+char * func_0036DD80(char *);
+int cFileMan_Close(char *);
+int cFileMan_Open(char *);
+int cFileMan_dtor(char *, int);
+int cFileMan_ctor_charP_cFileIOP_bool(char *, int, int, int);
+#if 0 /* merge_units */
+extern int D_00543658;
+#endif /* merge_units */
+#define D_00543658 (*(int*)&D_00543658) /* merge_units */
+
+#if 0 /* merge_units */
+extern char D_00543680;
+#endif /* merge_units */
+#define D_00543680 (*(char*)&D_00543680) /* merge_units */
+
+#if 0 /* merge_units */
+extern char D_005436A0;
+#endif /* merge_units */
+#define D_005436A0 (*(char*)&D_005436A0) /* merge_units */
+
+
+int cSFOini_Load(int arg0) {
+    int sp10[40];
+
+    if (D_00543668 == 0) {
+        cFileMan_ctor_charP_cFileIOP_bool(sp10, arg0, 0, 0);
+        if (!(cFileMan_Open(sp10) & 0xFF)) {
+            D_00543660 = F_(func_0036DD80(sp10), 0x2C, int);
+            D_00543658 = 0;
+            cFileMan_Read_charPP_int(sp10, &D_00543658, 0);
+            cFileMan_Close(sp10);
+            D_00543668 = 1;
+            std_basic_string_char_char_traits_char_reserve(&D_00543680, 0x40);
+            std_basic_string_char_char_traits_char_reserve(&D_005436A0, 0x40);
+            cFileMan_dtor(sp10, -1);
+            return 1;
+        }
+        cFileMan_dtor(sp10, -1);
+        goto block_5;
+    }
+block_5:
+    return 0;
+}
+#undef D_00543658 /* merge_units */
+#undef D_00543680 /* merge_units */
+#undef D_005436A0 /* merge_units */
+static inline void merge_flush_func_003CBE90(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003CBE90 */
+
+/* merge_units: begin func_003CBF70 */
+#pragma push /* merge_units */
+extern int std_basic_string_char_char_traits_char_find_charP_uint_uint(const String* self, const char* s, unsigned int pos, unsigned int n);
+static inline unsigned char SBF70_ShortLen(const String* s) { return s->s.size; }
+int std_basic_string_char_char_traits_char_find_basicstringR_uint(const String* self, const String* str, unsigned int pos)
+{
+    const char* d;
+    unsigned int n;
+    if (!(str->l.cap & 1)) {
+        d = str->s.data;
+        n = SBF70_ShortLen(str);
+    } else {
+        d = str->l.data;
+        n = str->l.size;
+    }
+    return std_basic_string_char_char_traits_char_find_charP_uint_uint(self, d, pos, n);
+}
+static inline void merge_flush_func_003CBF70(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003CBF70 */
+
+/* merge_units: begin func_003CBFB0 */
+#pragma push /* merge_units */
+int std_basic_string_char_char_traits_char_find_charP_uint_uint(const String* self, const char* s, unsigned int pos, unsigned int n)
+{
+    const char* d;
+    unsigned int size;
+    unsigned int rem;
+    const char* end;
+    const char* p;
+    if (!(self->l.cap & 1)) {
+        d = self->s.data;
+        size = SBF70_ShortLen(self);
+    } else {
+        d = self->l.data;
+        size = self->l.size;
+    }
+    if (pos <= size) {
+        p = d + pos;
+        end = s + n;
+        rem = size - pos;
+        for (; rem >= n; rem--, p++) {
+            const char* b = p;
+            const char* a = s;
+            for (; a < end; a++, b++) {
+                if (*a != *b) goto next;
+            }
+            return p - d;
+        next:;
+        }
+    }
+    return -1;
+}
+static inline void merge_flush_func_003CBFB0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003CBFB0 */
+
+/* merge_units: begin func_003CC060 */
+#pragma push /* merge_units */
+typedef struct { unsigned char m0; int m4; int m8; int mC; } TC060;
+#if 0 /* merge_units */
+extern int cFileMan_Open(void* src);
+#endif /* merge_units */
+#define cFileMan_Open(a0) (cFileMan_Open((char *)(a0))) /* merge_units */
+
+
+
+extern int cFileMan_GetSize(void* src);
+#if 0 /* merge_units */
+extern void cFileMan_Read_charPP_int(void* src, int* out, int z);
+#endif /* merge_units */
+#define cFileMan_Read_charPP_int(a0, a1, a2) ((void)cFileMan_Read_charPP_int((char *)(a0), (a1), (a2))) /* merge_units */
+
+
+
+#if 0 /* merge_units */
+extern void cFileMan_Close(void* src);
+#endif /* merge_units */
+#define cFileMan_Close(a0) ((void)cFileMan_Close((char *)(a0))) /* merge_units */
+
+
+
+unsigned char cDB_LoadDB(TC060* self, void* src)
+{
+    if (!(unsigned char)cFileMan_Open(src)) {
+        self->mC = cFileMan_GetSize(src);
+        self->m8 = 0;
+        cFileMan_Read_charPP_int(src, &self->m8, 0);
+        cFileMan_Close(src);
+        self->m4 = self->m8;
+        self->m0 = 1;
+        return 1;
+    }
+    return 0;
+}
+#undef cFileMan_Open /* merge_units */
+#undef cFileMan_Read_charPP_int /* merge_units */
+#undef cFileMan_Close /* merge_units */
+static inline void merge_flush_func_003CC060(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003CC060 */

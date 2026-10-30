@@ -5,7 +5,30 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R160) - START HERE
+## Resume here (2026-10-30, Codex R161 automatic continuation) - START HERE
+
+- **13,978 / 14,345 functions; 90.32% code; 367 unmatched.** This was a
+  source-consolidation round; no additional function is claimed as matched.
+  Full build remains byte-identical to retail; all 130 tests pass.
+- Consolidated **Libs/SFOLib/Source/SFOini.c** from two parts into one, covering
+  all seven source blocks. Shared the existing 12-byte MSL string representation
+  in `include/sfoini_string.h`, used it for operator[] and both find helpers, and
+  made the find(string) forward declaration agree with the const-qualified definition.
+  This removes the old incompatible flat-struct/union declarations that blocked merging.
+- `NetIRequestCreateRemoteNamedObject` (0x002E2250) is still one differing branch
+  instruction away. New branch-probability / unsigned guard forms did not help.
+  The cleaned candidate is `build/agents/r161/callee1.c`: R0-style baseline with
+  a discarded label anchor, current callee names, and a correct `Libc_Strcpy` call
+  decoded from the retail jal. `check_match` reports only DIFF at 0x5c, with no
+  undefined symbols or data diagnostics. **Not integrated.**
+- Preserve these failed experiments in the local notes: `__builtin_expect` variants
+  enlarged the function; unsigned zero/one guards stayed at one difference except
+  the subtract/compare form, which was worse. Details in `build/agents/r161/NOTES.md`.
+- Used the established WSL rebuild-only round after merge_units verified the complete
+  SFOini section. Changes saved locally; no push. The automatic continuation remains
+  active. Existing root scratch candidates untouched.
+
+## Previous continuation (2026-10-30, Codex R160)
 
 - **13,978 / 14,345 functions; 90.32% code; 367 unmatched.** Full build remains
   byte-identical to retail. All 130 tests pass.

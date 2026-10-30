@@ -1972,7 +1972,6 @@
   "Libs/SFOLib/Source/system_8": "cwps2-3.0b38",
   "Libs/SFOLib/Source/system_9": "cwps2-3.0b38",
   "Libs/SFOLib/Source/system_10": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/SFOini_2": "cwps2-3.0b38",
   "Libs/SFOLib/Source/db": "cwps2-3.0b38",
   "Libs/SFOLib/Source/db_2": "cwps2-3.0b38",
   "Libs/SFOLib/Source/gobj_2": "cwps2-3.0b38",
@@ -3836,7 +3835,6 @@
   "Libs/SFOLib/Source/bone_3": "cwps2-3.0b38",
   "Libs/SFOLib/Source/texture_5": "cwps2-3.0b38",
   "Libs/SFOLib/Source/skybox_2": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/SFOini": "cwps2-3.0b38",
   "Libs/SFOLib/Source/shadows_12": "cwps2-3.0b38",
   "Libs/SFOLib/Source/manUtils_5": "cwps2-3.0b38",
   "SFOGame/Source/GuiGameScreen_8": "cwps2-3.0b38",
@@ -4020,5 +4018,6 @@
   "SFOGame/Source/gameGobjController_3": "cwps2-3.0b38",
   "SFOGame/Source/GuiObjectives": "cwps2-3.0b38",
   "SFOGame/Source/NetHuman": "cwps2-3.0b38",
-  "lib/func_004769A4": "ee-gcc2.96"
+  "lib/func_004769A4": "ee-gcc2.96",
+  "Libs/SFOLib/Source/SFOini": "cwps2-3.0b38"
 }

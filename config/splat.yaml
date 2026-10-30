@@ -4048,7 +4048,6 @@ segments:
       - [0x2CB630, c, Libs/SFOLib/Source/system_9]
       - [0x2CB910, c, Libs/SFOLib/Source/system_10]
       - [0x2CBA60, c, Libs/SFOLib/Source/SFOini]
-      - [0x2CBE70, c, Libs/SFOLib/Source/SFOini_2]
       - [0x2CC0F0, c, Libs/SFOLib/Source/db]
       - [0x2CC1F0, c, Libs/SFOLib/Source/db_2]
       - [0x2CC250, c, Libs/SFOLib/Source/gobj]

@@ -3633,8 +3633,6 @@ segments:
       - [0x263CD0, c, SFOGame/Source/GuiAgentInfo_8]
       - [0x2641C0, c, SFOGame/Source/GuiAgentInfo_9]
       - [0x2643A0, c, SFOGame/Source/GuiAgentInfo_10]
-      - [0x264780, asm]
-      - [0x2647B0, c, SFOGame/Source/GuiAgentInfo_11]
       - [0x264B10, c, SFOGame/Source/GuiAgentInfo_12]
       - [0x264D20, c, SFOGame/Source/GuiAgentInfo_13]
       - [0x2652D0, c, SFOGame/Source/GuiAgentInfo_14]

@@ -5,7 +5,29 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R168 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R169 automatic continuation) - START HERE
+
+- **13,983 / 14,347 functions; 90.33% code; 364 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. Three C routines (40 bytes) matched.
+- Revived c49ty's held draft at 00364780: two independent 16-byte virtual
+  tailcall wrappers at 00364780/00364790, followed by an 8-byte return-zero
+  routine at 003647A0. They were incorrectly grouped as one 40-byte assembly
+  function. Added explicit starts/sizes. Total function count therefore rises
+  by two, matched count rises by three, remaining count drops by one.
+- Strict current WSL check reports all three MATCH, with no undefined symbols
+  or new data. The full retail hash remains
+  9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6.
+- New C was folded into **SFOGame/Source/GuiAgentInfo_10.c**, following the
+  established GuiAgentInfo.cc range 003604D0..00367ADC. The adjacent span
+  003643A0..003647B0 consolidated from three units into one (19 source blocks).
+  Both pre- and post-consolidation full retail builds pass. Section has other asm.
+  Dossiers have no direct prototype mapping for these bodies; no original
+  names/types are claimed. Existing header helpers were not moved.
+- R168 also saved NetCalloutMsg consolidation as local commit d84bfc45.
+  Private evidence: build/agents/r168 and r169/NOTES.md. No pushes/subagents;
+  root scratch candidates preserved. WSL_ROUND_OK completed before saving.
+
+## Previous continuation (2026-10-30, Codex R168 automatic continuation)
 
 - Consolidated **NetCalloutMsg** from three parts into one original source file
   (five source blocks). Message handle is int and registered by address. Its

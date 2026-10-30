@@ -13382,3 +13382,8 @@ StaticInit_camera = 0x004D7770; // type:func
 StaticInit_GenInfoObject = 0x004D7790; // type:func
 StaticInit_guiConstants = 0x004D8570; // type:func
 StaticInit_NetMsgThrottle = 0x004D8C10; // type:func
+
+// Independent compiled bodies previously grouped in the 0x00364780 assembly range.
+func_00364780 = 0x00364780; // type:func size:0x10
+func_00364790 = 0x00364790; // type:func size:0x10
+func_003647A0 = 0x003647A0; // type:func size:0x8

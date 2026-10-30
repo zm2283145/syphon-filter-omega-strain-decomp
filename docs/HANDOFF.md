@@ -15,7 +15,35 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
-## Resume here (2026-10-30, Codex R181 three-agent matching round) - START HERE
+## Resume here (2026-10-30, Codex R182 accepted three-agent matching batch) - START HERE
+
+- **13,990 / 14,349 functions; 90.42% code; 359 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. New C match: **EstOnset**,
+  0x00318400,600bytes,gcc296, now src/lib/func_00318400.c. No confirmed original
+  .cc ownership, so kept in library layout without speculative helper moves.
+- Audio lane solved remaining loop scheduling using local FP lifetimes and empty
+  constraints; ordinary arithmetic/control flow remain C, no scalar instruction
+  transcription. Parent added required comments to empty scheduling dependencies
+  and rechecked exact output. Current callee is GetFrameSpCBM, not stale old name.
+  Coefficient0.9689941f preserves GCC2.96's exact literal; old decimal was1ULP wrong.
+- Parent strict check: function MATCH, four .lit4 checks MATCH (004E1CC4,
+  004E1CC8,004E1CCC twice),no UNDEF/data diagnostics. Full integration added600
+  code bytes,no skips. WSL_ROUND_OK completed before commit: hash,135tests,
+  report and final synchronization. Shared literal pools retained unchanged.
+- Ready/evidence: build/pending/r182_audio/gcc296_00318400.c and r182_audio/NOTES.md;
+  parent checkpoint r182_coordination. All lanes quiesced before full build.
+- NETWORK r183 diagnostics prove RemoteClientDisconnectEvent's four setup-order
+  differences arise in GCC reorg from a synthetic USE of the common disconnect
+  call's delay-slot a0 setup. Standard flags/candidate remain unchanged; no compiler
+  modified. Duplicate-tail/control-flow trials failed. Preserve r182/183 notes;
+  avoid generic argument/declaration sweeps without new evidence.
+- GAME GuiWeaponDisplay_onRender0x00440580 (2388bytes) has progressed to125 strict
+  differences, exact frame/size,no UNDEF/DATA: r183_game/mcopy.c. Not counted.
+  Resume structural VU/helper/temporary investigation after parent synchronization.
+- Root scratch preserved; no pushes/private artifacts or tooling changes committed.
+  Continue three authorized matching lanes, parent-only integration and verification.
+
+## Previous continuation (2026-10-30, Codex R181 three-agent matching round)
 
 - **13,989 / 14,349 functions; 90.40% code; 360 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. New C++ match:

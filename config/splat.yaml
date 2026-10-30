@@ -3139,7 +3139,7 @@ segments:
       - [0x218390, c, main/func_00318390]
       - [0x2183A8, c, lib/medius/medius_3183A8]
       - [0x2183C0, c, main/func_003183C0]
-      - [0x218400, asm]
+      - [0x218400, c, lib/func_00318400]
       - [0x218658, c, lib/medius/medius_318658]
       - [0x218720, c, lib/func_00318720]
       - [0x218848, c, lib/medius/medius_318848]

@@ -15,7 +15,28 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
-## Resume here (2026-10-30, Codex R186 accepted matching batch) - START HERE
+## Resume here (2026-10-30, Codex R187 accepted matching batch) - START HERE
+
+- **13,996 / 14,349 functions; 90.47% code; 353 remaining.** Full retail
+  SHA-256 9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6
+  verified; regression checks and final synchronization finished WSL_ROUND_OK.
+- New ordinary C match **sceIpuInit,568bytes**, standard gcc29, accepted at
+  src/lib/libmpeg/func_0010CAF0.c. No assembly/register pins, just volatile MMIO
+  and TI FIFO copies. Parent independently reports standard MATCH, clean symbols
+  and data. Jan0010CAF0 and Oct0010CB30 prototypes both hash-exact568bytes.
+- Prior g01 draft already matched instructions; historical padding rejection hid
+  it. Current strict extent checker accepts unchanged draft. First full build
+  revealed lost24-byte alignment after CD28; explicit retained rodata CD28..CD40
+  resolves it. Final entire executable hash matches. Following syscall assembly
+  unchanged. No function boundary/denominator correction needed this round.
+- Evidence: build/pending/r192_network/{gcc29_0010CAF0.c,NOTES.md,verification.json}.
+  Original SDK file attribution unavailable; existing lib/libmpeg layout retained.
+  Section still contains unmatched compiled routines, so no speculative full merge.
+- Agents held for parent full build. Audio _initSeq loop-note experiments failed
+  to improve baseline (r192_sdk notes). Game memory initialization research is
+  preserved; resume all three matching lanes after synchronization.
+
+## Resume here (2026-10-30, Codex R186 accepted matching batch)
 
 - **13,995 / 14,349 functions; 90.45% code; 354 remaining.** Full retail
   SHA-256 9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6

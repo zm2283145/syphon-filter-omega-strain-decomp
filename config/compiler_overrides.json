@@ -3172,9 +3172,6 @@
   "SFOGame/Source/scriptUtils_24": "cwps2-3.0b38",
   "SFOGame/Source/scriptUtils_26": "cwps2-3.0b38",
   "SFOGame/Source/scriptUtils_27": "cwps2-3.0b38",
-  "SFOGame/Source/Rumble": "cwps2-3.0b38",
-  "SFOGame/Source/Rumble_2": "cwps2-3.0b38",
-  "SFOGame/Source/Rumble_3": "cwps2-3.0b38",
   "SFOGame/Source/map": "cwps2-3.0b38",
   "SFOGame/Source/map_3": "cwps2-3.0b38",
   "SFOGame/Source/map_4": "cwps2-3.0b38",
@@ -4003,5 +4000,6 @@
   "SFOGame/Source/NetPlayer": "cwps2-3.0b38",
   "Libs/SFOLib/Source/DamageMsg": "cwps2-3.0b38",
   "SFOGame/Source/NetCalloutMsg": "cwps2-3.0b38",
-  "SFOGame/Source/GuiAgentInfo_10": "cwps2-3.0b38"
+  "SFOGame/Source/GuiAgentInfo_10": "cwps2-3.0b38",
+  "SFOGame/Source/Rumble": "cwps2-3.0b38"
 }

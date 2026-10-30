@@ -5,7 +5,28 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R169 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R170 automatic continuation) - START HERE
+
+- **13,983 / 14,347 functions; 90.33% code; 364 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.
+- Consolidated **Rumble** from three parts into one original source file
+  (four source blocks). D_004FEED0 now has one opaque byte-array declaration;
+  both existing typed slot views retain the 28-byte stride and field operations.
+  cJoyPad_SetVibration declarations consistently return int and take void* as
+  their first parameter. Whole-unit comparison and full WSL retail build pass.
+- Byte-swap 00357178 remains two scheduling differences (offsets4/8). A fresh
+  32-variant sweep of half types, expressions, scheduling/optimizer pragmas
+  and three empty-barrier forms produced no improvement. No C candidate added.
+  Prototype dossier has no mapping; do not repeat this sweep without new evidence.
+- tremor local-alias pointer-signature trials changed code and were reverted.
+  Possible new approach: tagged CameraShake forward declaration preserving the
+  original typed definition, and original int push_back signature with caller
+  casts. Not tested. infobar can merge its first two units but later generated
+  adapters refer to unavailable Text_9E60. Other reviewed units have separated data.
+- Private details: build/agents/r170/NOTES.md and scratch sweep sources. Root
+  scratch files preserved, no pushes/subagents; WSL_ROUND_OK completed.
+
+## Previous continuation (2026-10-30, Codex R169 automatic continuation)
 
 - **13,983 / 14,347 functions; 90.33% code; 364 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. Three C routines (40 bytes) matched.

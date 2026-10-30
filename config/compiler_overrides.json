@@ -2153,8 +2153,6 @@
   "Libs/SFOLib/Source/manUtils_8": "cwps2-3.0b38",
   "Libs/SFOLib/Source/manUtils_10": "cwps2-3.0b38",
   "Libs/SFOLib/Source/manUtils_11": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/DamageMsg": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/DamageMsg_2": "cwps2-3.0b38",
   "Libs/SFOLib/Source/materialProperties_3": "cwps2-3.0b38",
   "Libs/SFOLib/Source/materialProperties_4": "cwps2-3.0b38",
   "Libs/SFOLib/Source/materialProperties_5": "cwps2-3.0b38",
@@ -4007,5 +4005,6 @@
   "SFOGame/Source/NetScoreMsg": "cwps2-3.0b38",
   "Libs/SFOLobby/SFOLobby/SFOLobby_Contact": "cwps2-3.0b38",
   "Libs/SFOLobby/SFOLobby/SFOLobby_Games": "cwps2-3.0b38",
-  "SFOGame/Source/NetPlayer": "cwps2-3.0b38"
+  "SFOGame/Source/NetPlayer": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/DamageMsg": "cwps2-3.0b38"
 }

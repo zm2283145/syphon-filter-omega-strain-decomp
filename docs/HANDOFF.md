@@ -5,7 +5,29 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R166 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R167 automatic continuation) - START HERE
+
+- Consolidated **DamageMsg** from two parts into one original source file
+  (eight source blocks). Callback registration now declares its actual int
+  return and four parameters; the callback uses an opaque packet parameter
+  and a local view of its existing payload type. Whole-unit comparison and
+  retail SHA-256 verification pass. All **135 tests** pass; final synchronization
+  completed with WSL_ROUND_OK.
+- **13,980 / 14,345 functions; 90.33% code; 365 remaining.** No new function
+  claimed in this consolidation round.
+- New KM_GetSoftwareID experiment tested c218nm's unsplit-address hypothesis:
+  -mno-split-addresses produces the desired v0 address register, but leaves
+  lw before jr and adds nop (16 bytes versus retail 12). Same on GCC 991111,
+  991111a, 2.96 and 990721. Assembler -O2 and ISA options do not fix the slot.
+  No compiler profile or candidate integrated. Do not repeat without new evidence.
+- Review-only: BeamMsg, NetAimWeapon and DisableMsg have nonadjacent data;
+  NetCalloutMsg has conflicting handle declarations and a later merged-copy
+  helper error; NetLabelMsg has callback conflicts and a final compiler/size split.
+- Private evidence and scratch experiments: build/agents/r167/NOTES.md, id.c;
+  compiler output objects remain private in WSL build/agents/r167.
+- Root scratch candidates untouched; no pushes or subagents. Automation active.
+
+## Previous continuation (2026-10-30, Codex R166 automatic continuation)
 
 - **13,980 / 14,345 functions; 90.33% code; 365 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.

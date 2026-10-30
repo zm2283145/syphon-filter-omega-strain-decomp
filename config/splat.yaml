@@ -4317,7 +4317,6 @@ segments:
       - [0x307830, c, Libs/SFOLib/Source/manUtils_11]
       - [0x307D10, c, Libs/SFOLib/Source/manUtils_12]
       - [0x307DA0, c, Libs/SFOLib/Source/DamageMsg]
-      - [0x3081E0, c, Libs/SFOLib/Source/DamageMsg_2]
       - [0x3084D0, c, Libs/SFOLib/Source/materialProperties]
       - [0x3088D0, c, Libs/SFOLib/Source/materialProperties_3]
       - [0x3089F0, c, Libs/SFOLib/Source/materialProperties_4]

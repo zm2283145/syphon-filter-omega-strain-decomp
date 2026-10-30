@@ -5,7 +5,26 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R167 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R168 automatic continuation) - START HERE
+
+- Consolidated **NetCalloutMsg** from three parts into one original source file
+  (five source blocks). Message handle is int and registered by address. Its
+  payload-copy helper's declaration incorrectly returned void; it now agrees
+  with the definition's pointer return, using opaque parameters and local typed
+  payload views. Whole-unit comparison and full retail hash pass.
+- **13,980 / 14,345 functions; 90.33% code; 365 remaining.** No new function
+  claimed this consolidation round. All 135 tests pass; WSL_ROUND_OK confirms final synchronization.
+- Ready historical candidate: c49ty/work/ready_00364780.c has three independent
+  bodies at 00364780/00364790/003647A0 (16/16/8 bytes), currently lumped as one
+  40-byte assembly function. Strict compare with explicit starts/ends gives
+  three MATCH and no undefined symbols. Two virtual tailcalls followed by a
+  return-zero routine; no direct pointer words found in retail. Prototype
+  dossier has no mapping, so do not assign original .cc ownership speculatively.
+  Next: correct boundaries, integrate, verify full retail and report counts.
+- Private evidence: build/agents/r168/NOTES.md and captured merged candidates;
+  prototype dossiers use the private SFOS_PROTO_DIR. Root scratch preserved.
+
+## Previous continuation (2026-10-30, Codex R167 automatic continuation)
 
 - Consolidated **DamageMsg** from two parts into one original source file
   (eight source blocks). Callback registration now declares its actual int

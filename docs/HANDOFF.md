@@ -15,6 +15,21 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Current independent matching lanes (R202)
+
+- R200 independent reviews found no further missing arguments: Fire helper return
+  types/activation bool correction preserves27words; NetIInitialize true callee
+  seed return int worsens8to10 (shipping caller declaration can differ). Collision
+  true pointer-reference iterator layers worsen12to14/17. Private r200 notes kept.
+- R202 game reconstructs cTexture_UploadBoth003BB360 DMA bitfield contracts;
+  audio independently audits quaternion LERP00180580 helper lifetimes;
+  network reviews viBufGetTs and found old boundary/name error: first003F45A0
+  is a dispatch helper24bytes plus8pad, actual timestamp routine starts003F45C0.
+  No metadata correction/count until candidate+prototype/full retail verification.
+- Parent Gui_Init actual string ctor return correction and proper C++ scoped
+  temporary both tie mw38 mismatch; scopedwrapper adds unowned destructor, so not
+  stageable. Private r201_parent evidence; no accepted source or new count.
+
 ## Current independent matching lanes (R200/R201)
 
 - Audio reviews Fire ctor27word near miss; game independently reviews network

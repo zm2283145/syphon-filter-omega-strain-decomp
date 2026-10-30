@@ -5,7 +5,23 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R171 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R172 automatic continuation) - START HERE
+
+- Consolidated **infobar** from three source units into one original source
+  file (13 source blocks). TextArea declarations consistently use opaque object
+  pointers; SetText takes const char*. D_004BE220 is consistently a char array,
+  removing a generated int* cast. Whole-unit comparison and retail hash pass.
+- **13,983 / 14,347 functions; 90.33% code; 364 remaining.** No new function
+  claimed this consolidation round. All135 tests pass; WSL_ROUND_OK confirms final synchronization.
+- Another ready held draft: c151nm/work/best_001479D0.c strictly checks as three
+  MATCH with explicit16/16/8byte boundaries: PointLightComp_Start,1479E0 virtual
+  slot30 wrapper,1479F0 float getter. Current asm lumps them as one40-byte body.
+  Dossier has no direct prototype mapping; established containing TU is weapon.cc.
+  Correct boundaries, integrate and fold into weapon parts before full verification.
+- Private evidence: build/agents/r172/NOTES.md and dossiers. Root scratch files
+  preserved; no push/subagents. Automation remains active.
+
+## Previous continuation (2026-10-30, Codex R171 automatic continuation)
 
 - **13,983 / 14,347 functions; 90.33% code; 364 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.

@@ -2123,8 +2123,6 @@
   "Libs/SFOLib/Source/hoglist_4": "cwps2-3.0b38",
   "Libs/SFOLib/Source/hoglist_5": "cwps2-3.0b38",
   "Libs/SFOLib/Source/hoglist_6": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/infobar": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/infobar_2": "cwps2-3.0b38",
   "Libs/SFOLib/Source/NetObj": "cwps2-3.0b38",
   "Libs/SFOLib/Source/NetObj_2": "cwps2-3.0b38",
   "Libs/SFOLib/Source/NetObj_3": "cwps2-3.0b38",
@@ -3902,7 +3900,6 @@
   "SFOGame/Source/human/func_001AE280": "cwps2-3.0b38",
   "Libs/989snd/ee/989snd/func_003A74E0": "cwps2-3.0b38",
   "Libs/SFOLib/Source/fstream/func_003EB340": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/infobar/func_003F9E60": "cwps2-3.0b38",
   "lib/func_0031AEE8": "ee-gcc2.96",
   "lib/func_002E2878": "ee-gcc2.96-G0",
   "lib/func_00302A38": "ee-gcc2.96-G0",
@@ -4000,5 +3997,6 @@
   "SFOGame/Source/GuiAgentInfo_10": "cwps2-3.0b38",
   "SFOGame/Source/Rumble": "cwps2-3.0b38",
   "SFOGame/Source/tremor": "cwps2-3.0b38",
-  "SFOGame/Source/tremor_2": "cwps2-3.0b38"
+  "SFOGame/Source/tremor_2": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/infobar": "cwps2-3.0b38"
 }

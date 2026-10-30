@@ -4261,8 +4261,6 @@ segments:
       - [0x2F9A30, c, Libs/SFOLib/Source/hoglist_5]
       - [0x2F9B30, c, Libs/SFOLib/Source/hoglist_6]
       - [0x2F9E20, c, Libs/SFOLib/Source/infobar]
-      - [0x2F9E60, c, Libs/SFOLib/Source/infobar/func_003F9E60]
-      - [0x2FA190, c, Libs/SFOLib/Source/infobar_2]
       - [0x2FA8B0, c, Libs/SFOLib/Source/NetObj]
       - [0x2FAAA0, c, Libs/SFOLib/Source/NetObj_2]
       - [0x2FAD50, c, Libs/SFOLib/Source/NetObj_3]

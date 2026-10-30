@@ -5,7 +5,36 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R161 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R162 automatic continuation) - START HERE
+
+- **13,979 / 14,345 functions; 90.33% code; 366 unmatched.** Full build is
+  byte-identical to retail; all 130 tests pass.
+- Matched **_sceMcFatInit** (0x002B69A0, 92 bytes, gcc296g0), previously held
+  because its root-directory literal overlapped _make_path's C-owned rodata.
+  `memcpy(cwd, D_004AC1C8, 2)` retains the exact two-byte copy emitted for
+  `strcpy(cwd, "/")` while reusing the existing shared literal, including NUL.
+  It emits no new data; the existing linker already provides D_004AC1C8.
+  No data split or change to _make_path was needed. Do not retry this held item.
+- Consolidated **six original source sections**, each from two parts into one:
+  `SFOGame/Source/Env`, `GameSky`, `NetPathMsg`, `NetWeaponMsg`, and
+  `Libs/SFOLib/Source/NetSetGobjMsg`, `NetTerrainActivation`.
+  All 23 source blocks passed the merged-code check before the full build.
+- Env's swap definition now agrees with the vector helper's declared pointer
+  type, using local PtrVec views for its existing body. Network registration
+  and packing use consistent int message handles and registration addresses.
+  NetPathMsg/NetWeaponMsg callback declarations now match their definitions;
+  NetPathMsg's opaque packet parameter is viewed through its existing payload
+  type internally. No payload layouts or generated instruction bytes changed.
+- Review-only blockers: RestoreBody, USBKeybd and NetQuickChatMsg have separated
+  data blocks; mwUtils_PS2 and DeactivateMsg change code when combined. Details
+  and reviewed modules are in `build/agents/r162/NOTES.md` and merge_review.log.
+- Four MW compiler variants for KM_GetSoftwareID stayed at the same two
+  register-allocation differences. No candidate for that function was integrated.
+- Verified batch `r162` through the WSL workflow. Changes saved locally; no push.
+  Existing root scratch candidates untouched. Automatic continuation stays active;
+  coalesce wakeups arriving while a round is active instead of starting a second writer.
+
+## Previous continuation (2026-10-30, Codex R161 automatic continuation)
 
 - **13,978 / 14,345 functions; 90.32% code; 367 unmatched.** This was a
   source-consolidation round; no additional function is claimed as matched.
@@ -968,10 +997,8 @@ prototype that callers use inconsistently is declared K&R in a shared header (fo
 - Some functions reference `.lit4` float literals that the current linking cannot place.
 - `0x286570`: both function bodies match, but the unit needs a split at `0x286590` (see below).
 - Hand-written assembly functions stay as assembly.
-- `0x2B69A0` (gcc 2.96 -G0) matches in `check_match`, but the `"/"` string it owns at
-  `0x4AC1C8` lies inside `lib/func_002B6808`'s `.rodata`, so integration skips it. The
-  draft is `build/pending/hold/gcc296g0_002B69A0.c`; that rodata needs splitting by hand.
-  (`0x31D558` went in with `0x31D2A8` in R133, and `0x31A630` was integrated earlier.)
+- `0x2B69A0` (_sceMcFatInit) was resolved in R162 by reusing the existing root-directory
+  literal with a fixed-size memcpy. No rodata split was needed; the held draft is historical.
 - `0x286570` may now be fixable the same way as the `0x416830` thunk unit: add a
   `// type:func` symbol at `0x286590` and integrate both functions in one file.
 - **Dead `div` in DMA wait loops (`man.cc`):** cMan_ManDMA 0x385D40, cMan_SetGunOffsets

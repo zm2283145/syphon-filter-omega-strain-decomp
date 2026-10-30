@@ -5,7 +5,28 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R174 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R175 automatic continuation) - START HERE
+
+- **13,986 / 14,349 functions; 90.34% code; 363 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.
+- Reduced three original sections from three files to two each (nine to six):
+  **NetActivateAndControlMsg**, **NetCreateBlastMsg**, **NetShatterMsg**.
+  Corrected callback parameter/return declarations; retained typed payload
+  views inside callbacks. Message handles agree with packing code and register
+  by address. All retained whole-unit comparisons and full retail build pass.
+- NetActivateAndControlMsg retains its first separated-data boundary. Blast's
+  final default-mw pack helper changes the earlier callback at002C63A0 when
+  combined. Shatter's final default-mw pack helper changes combined size
+  (0x1b0 versus0x1c0). These boundaries stay; do not force them.
+- Next concrete target: netTaserMsg UnpackAndProcess declarations differ between
+  Visitor*/void* and cNetTaserMsg*/T_0027BB70*. Generated merging corrupts its
+  function declaration. Unify at an opaque-pointer boundary with typed locals,
+  then check compiler effects (first part mw, second mw38). No trial made yet.
+  netBackpackMsg is blocked by separated data and a later code-size mismatch.
+- Private evidence: build/agents/r175/NOTES.md. Root scratch candidates preserved;
+  no pushes/subagents. WSL_ROUND_OK includes all final verification/synchronization.
+
+## Previous continuation (2026-10-30, Codex R174 automatic continuation)
 
 - **13,986 / 14,349 functions; 90.34% code; 363 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.

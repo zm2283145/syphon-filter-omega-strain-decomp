@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/NetShatterMsg: 1 file, 003167C0
+ * SFOGame/Source/NetShatterMsg: 2 files, 003167C0-00316860
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -41,3 +41,19 @@ int cNetShatterMsg_NetShatterMsgCallback(int d0, int d1, int d2, char * arg3) {
 static inline void merge_flush_func_003167C0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003167C0 */
+
+/* merge_units: begin func_00316860 */
+#pragma push /* merge_units */
+#include "net_register_type.h"
+
+typedef struct { int a; int b; } Proto_0020E420;
+extern int D_0052ACB8;
+extern int cNetShatterMsg_NetShatterMsgCallback(int, int, int, char*);
+
+NETREG_BEGIN(cNetShatterMsg_InitNet, Proto_0020E420)
+NETREG_FIELD(a, 4, 1)
+NETREG_FIELD(b, 4, 1)
+NETREG_END(&D_0052ACB8, cNetShatterMsg_NetShatterMsgCallback)
+static inline void merge_flush_func_00316860(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00316860 */

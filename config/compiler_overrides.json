@@ -2290,8 +2290,6 @@
   "Libs/SFOLib/Source/nellymoser_wrapper": "cwps2-3.0b38",
   "Libs/SFOLib/Source/nellymoser_wrapper_2": "cwps2-3.0b38",
   "Libs/SFOLib/Source/NetActivateAndControlMsg": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/NetActivateAndControlMsg_2": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/NetActivateAndControlMsg_3": "cwps2-3.0b38",
   "Libs/SFOLib/Source/NetObjectMgr_2": "cwps2-3.0b38",
   "Libs/SFOLib/Source/NetObjectMgr_3": "cwps2-3.0b38",
   "Libs/SFOLib/Source/NetObjectMgr_4": "cwps2-3.0b38",
@@ -3407,8 +3405,6 @@
   "SFOGame/Source/NetCopyMsg_3": "cwps2-3.0b38",
   "SFOGame/Source/NetCopyMsg_4": "cwps2-3.0b38",
   "SFOGame/Source/NetCopyMsg_5": "cwps2-3.0b38",
-  "SFOGame/Source/NetCreateBlastMsg": "cwps2-3.0b38",
-  "SFOGame/Source/NetCreateBlastMsg_2": "cwps2-3.0b38",
   "SFOGame/Source/NetCreateCharacterMsg": "cwps2-3.0b38",
   "SFOGame/Source/NetCreateCharacterMsg_2": "cwps2-3.0b38",
   "SFOGame/Source/NetCreateCharacterMsg_3": "cwps2-3.0b38",
@@ -3454,8 +3450,6 @@
   "SFOGame/Source/NetNPC_18": "cwps2-3.0b38",
   "SFOGame/Source/NetNPCMsgs": "cwps2-3.0b38",
   "SFOGame/Source/NetNPCMsgs_3": "cwps2-3.0b38",
-  "SFOGame/Source/NetShatterMsg": "cwps2-3.0b38",
-  "SFOGame/Source/NetShatterMsg_2": "cwps2-3.0b38",
   "SFOGame/Source/NetTargetInfo": "cwps2-3.0b38",
   "SFOGame/Source/NetQuickChatMsg": "cwps2-3.0b38",
   "SFOGame/Source/NetQuickChatMsg_2": "cwps2-3.0b38",
@@ -3995,5 +3989,8 @@
   "SFOGame/Source/weapon_4": "cwps2-3.0b38",
   "SFOGame/Source/weapon_16": "cwps2-3.0b38",
   "SFOGame/Source/weapon_21": "cwps2-3.0b38",
-  "SFOGame/Source/NetLabelMsg": "cwps2-3.0b38"
+  "SFOGame/Source/NetLabelMsg": "cwps2-3.0b38",
+  "SFOGame/Source/NetCreateBlastMsg": "cwps2-3.0b38",
+  "SFOGame/Source/NetShatterMsg": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/NetActivateAndControlMsg_2": "cwps2-3.0b38"
 }

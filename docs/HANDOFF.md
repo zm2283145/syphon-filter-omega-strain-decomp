@@ -15,6 +15,20 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Current matching lanes (R209)
+
+- R208 GUI twin actual method/member/viewport corrections retain77strict words
+  each, exact extents, clean symbols. No further missing-argument match there.
+  Evidence r208_audio/r208_network. Network now independently reviews onWake10word.
+- Game GrabLedge accepted human33 declaration/helper context fixes saved-register
+  swap/default fade reads; coarse aligneddiff174 versus312prior, but strict470+size
+  due shifts. Keep414word baseline separately; not a near miss. Audio independently
+  audits CrossFadeDuration helper to support game without overlapping source edits.
+- Parent audited AgentData ctor00336700 old nmI best: current116word+size differences
+  plus unknown/undefined wrapper destructors and data layout issue. Historical29
+  score is not stageable. Private r209_parent; no repeated loop/copy grids.
+  Verified source remains R189,13,998/14,350,90.49%,352remaining.
+
 ## Current matching lanes (R208)
 
 - Audio reconstructs GuiNetMessageArray_onRowRender00347B40; network independently

@@ -5,7 +5,35 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R163 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R164 automatic continuation) - START HERE
+
+- **13,980 / 14,345 functions; 90.33% code; 365 remaining.** Full retail
+  SHA-256 unchanged. All **135 tests** pass (Windows and WSL).
+- Resolved R163's extra C-owned non-match: **voBufCreate / mp_vobuf now reports
+  100%**, all eight functions exact. This corrects comparison metadata for an
+  already byte-identical C implementation; no new algorithm was translated.
+- Splat misidentified four unrolled VoTag array-stride multiples (4..7 times
+  0x4CE40) as absolute symbol addresses, including cNextFrameMsg_dtor. Actual
+  instructions add these constants to the runtime buffer base. The compiler
+  emitted literals, while the target assembly emitted spurious HI16/LO16 relocations.
+- `config/asm_literal_offsets.json` records only the four reviewed pairs in
+  mp_vobuf. `tools/assemble.py` validates their original instruction words,
+  signed HI/LO values, opcode/register pattern and dynamic-base addition, then
+  restores literal operands. Other references stay intact. Ninja depends on
+  the configuration and normalizer so edits trigger reassembly.
+- Verification included native assemble/link byte-equivalence tests and an
+  independent retail comparison of every normalized mp_vobuf target function
+  (8 MATCH, no undefined symbols), in addition to the full retail build check.
+  Details: `build/agents/r164/NOTES.md`, vobuf_diff.json and verify_target.py.
+- **Remaining data comparison discrepancies:** C-owned `lib/libc/libc_124D30`
+  (4 bytes), `lib/medius/medius_30AB20` (264 bytes), `Libs/989snd/ee/989snd_4`
+  (4 bytes). Inspect their actual object differences before making changes;
+  no blanket suppression of relocation differences is appropriate.
+- Source ownership is unchanged; remaining function count now agrees with the
+  fresh 365-unowned-function inventory from R163. Verified WSL rebuild-only round;
+  changes saved locally, no push. Root scratch candidates untouched; automation active.
+
+## Previous continuation (2026-10-30, Codex R163 automatic continuation)
 
 - **13,979 / 14,345 functions; 90.33% code; 366 reported non-matches.** No new
   function is claimed in this consolidation round. Full retail hash exact;

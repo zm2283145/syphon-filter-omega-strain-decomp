@@ -514,7 +514,7 @@ def main():
         "",
     ]
     for src, obj, align in asm_objs:
-        lines.append(f"build {ninja_path(obj)}: as {ninja_path(src)}")
+        lines.append(f"build {ninja_path(obj)}: as {ninja_path(src)} | tools/assemble.py config/asm_literal_offsets.json")
         lines.append(f"  align = {align}")
     for src, obj, target_s, target, rule, align, vram in c_units:
         # Metrowerks aligns .text to 16; a unit starting on an 8-byte boundary
@@ -535,7 +535,7 @@ def main():
             flags = GCC_VERSION_FLAGS.get(overrides[name], GCCFLAGS)
             lines.append(f"  gccflags = {flags} -Iinclude -Isrc")
         name = src.relative_to("src").with_suffix("").as_posix()
-        lines.append(f"build {ninja_path(target)}: {'as_target' if name in carved else 'as'} {ninja_path(target_s)}")
+        lines.append(f"build {ninja_path(target)}: {'as_target' if name in carved else 'as'} {ninja_path(target_s)} | tools/assemble.py config/asm_literal_offsets.json")
         lines.append("  align = 16")
     hexa = lambda v: "-" if v is None else f"{v:#x}"
     for raw, base, link, vram, text, target in data_objs:

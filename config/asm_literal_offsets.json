@@ -1,0 +1,27 @@
+{
+  "Libs/SFOLib/Source/mp_vobuf": {
+    "reason": "voBufCreate unrolls an array with 0x4CE40-byte elements. These four stride multiples coincide with addresses; they are offsets added to the runtime buffer base, not symbol references.",
+    "pairs": [
+      {
+        "hi": "0x003F60CC",
+        "lo": "0x003F60D8",
+        "value": "0x00133900"
+      },
+      {
+        "hi": "0x003F60E0",
+        "lo": "0x003F60EC",
+        "value": "0x00180740"
+      },
+      {
+        "hi": "0x003F60F4",
+        "lo": "0x003F6100",
+        "value": "0x001CD580"
+      },
+      {
+        "hi": "0x003F6108",
+        "lo": "0x003F611C",
+        "value": "0x0021A3C0"
+      }
+    ]
+  }
+}

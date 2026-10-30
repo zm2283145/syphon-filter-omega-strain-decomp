@@ -158,3 +158,16 @@ only after the full build prints the `OK:` line.
   relocation targets (template clones are not interchangeable).
 - Search spaces worth brute-forcing: local declaration order, statement order inside a block,
   pragma combinations, and compiler kind.
+
+## Array-stride constants mistaken for addresses
+
+An already byte-identical C function can report a small objdiff mismatch when splat
+turns a large numeric array offset into a symbol relocation. In voBufCreate, four
+unrolled multiples of the 0x4CE40 VoTag stride happened to coincide with text addresses;
+the actual code adds a runtime buffer base before the store.
+
+Only reviewed pairs belong in config/asm_literal_offsets.json. The assembler helper
+checks their original words, signed HI/LO value and dynamic-base addition before
+restoring literal operands for that unit. Check the normalized comparison target
+against retail and preserve the full build hash. The configuration does not disable
+symbol checks globally.

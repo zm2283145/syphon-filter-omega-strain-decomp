@@ -15,7 +15,34 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
-## Resume here (2026-10-30, Codex R180 three-agent matching round) - START HERE
+## Resume here (2026-10-30, Codex R181 three-agent matching round) - START HERE
+
+- **13,989 / 14,349 functions; 90.40% code; 360 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. New C++ match:
+  **GuiMissionList_onElementRender**,0x002AAD40,1364bytes,mw38, plus24byte switch
+  table at004AB990. Source promoted into original **GuiMissionList_13.c**.
+- Game lane reconstructed AgentElem/AgentStats fields and local order from
+  January prototype evidence, using member accessors, paired bounds setters and
+  source order to match retail. RankArray::At returning RankRow& solved the final
+  four register differences. Matrix copy/identity retain accepted R5900/VU0 idioms;
+  remaining ordinary code and six-way switch are natural C++.
+- Parent independently verified function+data MATCH,no UNDEF/LIT diagnostics.
+  Table originally lived in generated data/d_004AB924; released that managed
+  block with existing data_gen tool before integrating. Compiler now owns24bytes;
+  the following8zero padding bytes remain separate at004AB9A8. Prefix data was
+  regenerated. No private dumps/binaries or tooling edits committed.
+- Original-range merge promotes the new unit into GuiMissionList_13.c but keeps
+  neighboring separated data boundaries. Section still contains other unmatched
+  routines; no forced whole-unit merge. Full WSL_ROUND_OK completed before commit.
+- Ready/evidence: build/pending/r180_game/mw38_002AAD40.c and r180_game/NOTES.md.
+  Parent details in r181_coordination. Audio/network quiesced before integration.
+- Network RemoteClientDisconnectEvent now580bytes/nine strict differences, no
+  UNDEF/DATA: r181_network/defbest5.c. Audio EstOnset corrected baseline600bytes,
+  32differences,all four literal checks pass: r181_audio/eo_short.c. Neither counted.
+  Resume their work only after parent synchronization; preserve all failed trials.
+- Root scratch unchanged; no pushes. Three authorized matching lanes remain priority.
+
+## Previous continuation (2026-10-30, Codex R180 three-agent matching round)
 
 - **13,988 / 14,349 functions; 90.36% code; 361 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. New C match: **nemAgcMeanEngLevel**,

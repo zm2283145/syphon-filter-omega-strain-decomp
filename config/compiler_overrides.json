@@ -3992,5 +3992,6 @@
   "Libs/SFOLib/Source/bboxman": "cwps2-3.0b38",
   "SFOGame/Source/netTaserMsg": "cwps2-3.0b38",
   "lib/func_0031FC28": "ee-gcc2.96",
-  "lib/func_0031E698": "ee-gcc2.96"
+  "lib/func_0031E698": "ee-gcc2.96",
+  "SFOGame/Source/GuiMissionList_13": "cwps2-3.0b38"
 }

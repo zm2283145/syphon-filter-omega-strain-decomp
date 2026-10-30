@@ -13391,3 +13391,7 @@ func_003647A0 = 0x003647A0; // type:func size:0x8
 // Independent compiled wrappers/getter previously grouped with PointLightComp_Start.
 func_001479E0 = 0x001479E0; // type:func size:0x10
 func_001479F0 = 0x001479F0; // type:func size:0x8
+
+// Two independent SDK callback bodies confirmed by both prototype symbol tables.
+func_001184C0 = 0x001184C0; // type:func size:0xD0
+func_00118590 = 0x00118590; // type:func size:0xCC

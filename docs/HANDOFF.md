@@ -15,7 +15,39 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
-## Resume here (2026-10-30, Codex R184 accepted three-agent matching batch) - START HERE
+## Resume here (2026-10-30, Codex R185 accepted three-agent matching batch) - START HERE
+
+- **13,994 / 14,350 functions; 90.44% code; 356 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. Two new SDK C routines,412bytes total:
+  func_001184C0 (callback208bytes) and func_00118590 (initializer204bytes).
+  Combined in one SDK section file **src/lib/libcdvd/func_001184C0.c**.
+- Corrected old merged-function boundary: current first asm unit covered both
+  routines plus4alignment bytes. Both prototype CU records confirm initializer
+  size204 (Jan00118590,Oct001185D0); callback has prototype _Cdvd_cbLoop208bytes.
+  Added explicit starts/sizes208/204, retained4zero padding at11865C..118660.
+  Total rises by1, C matched count by2, remaining drops by1. Address names kept;
+  no speculative original SDK .cc attribution or padding-function count.
+- Audio/SDK lane completed old callback draft with two documented empty volatile
+  scheduling barriers and corrected callees. Standard gcc29as296 profile, no
+  compiler/tool changes. GP save/switch/restore uses ordinary C register binding;
+  kernel/syscall callees remain documented assembly stubs, not counted as new C.
+- Parent combined the source bodies and independently checked both with explicit
+  boundaries, then ran full WSL verification. After actual regeneration, standard
+  WSL check_match reports two MATCH,no undefined/data findings. Exact SHA confirmed;
+  WSL_ROUND_OK includes135tests,report and final synchronization before commit.
+- Ready/evidence: build/pending/r187_sdk/{gcc29as296_001184C0.c,
+  gcc29as296_00118590.c},r187_sdk/NOTES.md,parent r185_coordination. All agents idle
+  before parent mutations/build. First size-only draft mismatch is now resolved.
+- NETWORK GS display setup baseline884bytes/22strictdifferences,stringMATCH;
+  r187_network scheduler proves load priorities11/10 precede height7,not a tie.
+  Need new dependency/CFG evidence,not declaration-order padding. GAME subtitle
+  font still166differences/8bytes short; packet-cursor folding unresolved.
+  r186_game/NOTES.md recommends fresh constructor/state logic,not more draw-packet
+  or renderer temporary sweeps. Neither unsuccessful lane counted.
+- Root scratch preserved; no pushes/private artifacts/tooling edits committed.
+  Continue three human-authorized matching lanes after final parent synchronization.
+
+## Previous continuation (2026-10-30, Codex R184 accepted three-agent matching batch)
 
 - **13,992 / 14,349 functions; 90.43% code; 357 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. New C match: ordinary byte-swap

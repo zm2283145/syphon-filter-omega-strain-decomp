@@ -352,7 +352,7 @@ segments:
       - [0x0182B8, c, lib/libkernl/libkernl_1182B8]
       - [0x018310, c, lib/libkernl/libkernl_118310]
       - [0x018420, c, lib/libcdvd/func_00118420]
-      - [0x0184C0, asm]
+      - [0x0184C0, c, lib/libcdvd/func_001184C0]
       - [0x018660, c, lib/libcdvd/func_00118660]
       - [0x018718, c, lib/libcdvd/func_00118718]
       - [0x0187D0, c, lib/libcdvd/func_001187D0]

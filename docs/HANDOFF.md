@@ -15,7 +15,31 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
-## Resume here (2026-10-30, Codex R185 accepted three-agent matching batch) - START HERE
+## Resume here (2026-10-30, Codex R186 accepted matching batch) - START HERE
+
+- **13,995 / 14,349 functions; 90.45% code; 354 remaining.** Full retail
+  SHA-256 9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6
+  verified; full workflow regression checks passed and WSL_ROUND_OK synchronized.
+- New ordinary C match: **sceSifInitRpc, 412 bytes**, standard gcc29, in
+  src/lib/libkernl/func_0010FBC0.c. Correct DIntr int return declaration resolved
+  all 13 remaining instruction differences. No inline assembly or register pins.
+  Parent standard checker after regeneration reports sceSifInitRpc MATCH.
+- Corrected recorded start FBC4 to FBC0,size0x19C. Jan prototype start0010FBC0
+  and Oct0010FC00 both confirm412bytes. Prior false FBBC helper consumed the real
+  prologue. Removed phantom function classification, retained raw FBBC return
+  fragment in assembly rodata; cache routine remains handwritten assembly with
+  explicit0xAC size. Four alignment bytes after initializer remain preserved.
+  Function total decreases1; one actual function newly matches. Existing callers
+  renamed consistently by apply_names. No speculative SDK source ownership.
+- Evidence: build/agents/r191_network/{NOTES.md,verification.json}; ready source
+  build/pending/r191_network/gcc29_0010FBC0.c. Parent r186_coordination.
+  All three agents quiesced before integration and full verification.
+- Audio SDK KM_GetSoftwareID remains two register differences (r191_sdk notes);
+  game onWake draft now10 differences with exact frame/size (r191_game notes).
+  Continue fresh ordinary SDK ABI research and game matching, not repeated failed
+  address/register experiments or standalone consolidation.
+
+## Resume here (2026-10-30, Codex R185 accepted three-agent matching batch)
 
 - **13,994 / 14,350 functions; 90.44% code; 356 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. Two new SDK C routines,412bytes total:

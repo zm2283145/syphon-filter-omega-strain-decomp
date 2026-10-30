@@ -11,7 +11,7 @@ typedef struct lgAudSemaParam {
     unsigned int option;
 } lgAudSemaParam;
 
-extern void func_0010FBC0(int mode);
+extern void sceSifInitRpc(int mode);
 extern int sceSifBindRpc(void* cd, unsigned int id, int mode);
 extern void* Libc_Malloc(int size);
 extern void Libc_Free(void* p);
@@ -44,7 +44,7 @@ int lgAudInit(void* (*allocFunc)(int), void (*freeFunc)(void*))
     int size;
     lgAudSemaParam sp;
 
-    func_0010FBC0(0);
+    sceSifInitRpc(0);
     lgAud_enumHint = (int*)((unsigned int)D_0052AEC0 | 0x20000000);
     *lgAud_enumHint = 0;
     D_0052AEB8 = 0;

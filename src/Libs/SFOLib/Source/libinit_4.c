@@ -114,7 +114,7 @@ block_19:
 
 /* merge_units: begin func_003A6940 */
 #pragma push /* merge_units */
-extern void func_0010FBC0(int a);
+extern void sceSifInitRpc(int a);
 extern int sceCdInit(int mode);
 extern int scePrintf(const char* fmt, ...);
 extern int sceSifRebootIop(const char* img);
@@ -127,7 +127,7 @@ extern char D_00493480[];
 
 void LibInitModules(int flash)
 {
-    func_0010FBC0(0);
+    sceSifInitRpc(0);
     sceCdInit(0);
     if (flash) {
         scePrintf("\nLibInitModules(): Flashing IOP... (%s)\n\n", D_00493480);
@@ -135,7 +135,7 @@ void LibInitModules(int flash)
         }
         while (!sceSifSyncIop()) {
         }
-        func_0010FBC0(0);
+        sceSifInitRpc(0);
     }
     sceSifInitIopHeap();
     sceCdInit(0);

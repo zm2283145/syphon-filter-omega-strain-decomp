@@ -38,7 +38,7 @@ extern Blk64 D_004FBAC0;                /* socket states (DMA target) */
 extern Blk64 D_004FBB40;                /* socket states (copy) */
 extern int D_004FBB80;                  /* semaphore id */
 
-extern void func_0010FBC0(int);
+extern void sceSifInitRpc(int);
 extern int DIntr(void);         /* DI */
 extern int EIntr(void);         /* EI */
 extern void SyncDCache(void *, void *);
@@ -66,7 +66,7 @@ int sceDbcInit(void)
 
     if (D_0048B238 == 1) return 1;
     D_004FBB80 = 0;
-    func_0010FBC0(0);
+    sceSifInitRpc(0);
     for (;;) {
         if (sceSifBindRpc(&D_004F85C8, DBC_SERVER, 0) < 0) {
             DPRINT("libdbc: bind failed\n");

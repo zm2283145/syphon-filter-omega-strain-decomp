@@ -8,7 +8,7 @@
 /* sceFsInit (gcc29). D_004E5F80 is a {int;void*} pair: distinct field types give the two stores different alias sets, which drives the retail prologue schedule. */
 typedef struct {char v[4];} SceFsVersion;
 typedef struct {int w[9];int serve;} Client;
-extern void func_0010FBC0(int);
+extern void sceSifInitRpc(int);
 extern int DIntr(void);
 extern void EIntr(void);
 extern void sceSifAddCmdHandler(int,void *,void *);
@@ -25,7 +25,7 @@ int func_001112E0(void){
  char *p,*end;
  int i,intr,ver;
  CB *cb=&D_004E5F80;
- func_0010FBC0(0);
+ sceSifInitRpc(0);
  cb->a=0;cb->b=0;
  intr=DIntr();
  sceSifAddCmdHandler(0x80000011,func_00110DA8,D_004E5F40);

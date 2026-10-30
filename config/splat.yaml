@@ -246,6 +246,8 @@ segments:
       - [0x00F810, c, lib/libkernl/libkernl_10F810]
       - [0x00F9C8, c, lib/func_0010F9C8]
       - [0x00FB10, asm]
+      - [0x00FBBC, rodata]
+      - [0x00FBC0, c, lib/libkernl/func_0010FBC0]
       - [0x00FD60, c, lib/libkernl/libkernl_10FD60]
       - [0x00FD88, c, lib/libkernl/libkernl_10FD88]
       - [0x00FE30, c, lib/libkernl/libkernl_10FE30]

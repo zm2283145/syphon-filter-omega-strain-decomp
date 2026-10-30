@@ -20,7 +20,7 @@ extern int PollSema(int);
 extern int SignalSema(int);
 extern int ReferThreadStatus(int, void *);
 extern int sceCdSync(int);
-extern void func_0010FBC0(int);
+extern void sceSifInitRpc(int);
 extern void sceSifWriteBackDCache(void *, int);
 extern int sceSifBindRpc(RpcCd *cd, unsigned int id, int mode);
 extern int sceSifCallRpc(RpcCd *, int, int, void *, int, void *, int, void *, void *);
@@ -41,7 +41,7 @@ int sceCdLayerSearchFile(sceCdlFILE *fp, const char *name, int layer)
         SignalSema(D_004878A8);
         return 0;
     }
-    func_0010FBC0(0);
+    sceSifInitRpc(0);
     if (D_004878C4 < 0) {
         do {
             if (sceSifBindRpc(&D_004E9F00, 0x80000597, 0) < 0) {

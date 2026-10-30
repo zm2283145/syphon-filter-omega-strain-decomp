@@ -1,7 +1,7 @@
 extern char D_00498B80[];
 extern char D_00498B90[];
 extern int scePrintf(const char *fmt, ...);
-extern int func_0010FBC0(int);
+extern int sceSifInitRpc(int);
 extern void sceSifExitRpc(void);
 extern int sceSifResetIop(char *arg, int mode);
 int sceSifRebootIop(const char *img)
@@ -16,7 +16,7 @@ int sceSifRebootIop(const char *img)
         scePrintf(D_00498B90, img);
         return 0;
     }
-    func_0010FBC0(0);
+    sceSifInitRpc(0);
     sceSifExitRpc();
     q = param;
     while (*s)

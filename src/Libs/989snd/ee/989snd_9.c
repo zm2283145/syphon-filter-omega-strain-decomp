@@ -35,7 +35,7 @@ extern int D_00542880;
 extern long long D_00542888;
 extern int D_005428C0;
 extern int D_00542990;
-void func_0010FBC0(int);
+void sceSifInitRpc(int);
 int printf(const char*, ...);
 int sceSifBindRpc(void*, unsigned int, int);
 void snd_SendIOPCommandAndWait(int, int, void*);
@@ -54,7 +54,7 @@ void snd_StartSoundSystemEx(unsigned int flags)
         D_00542990 = 1;
     else
         D_00542990 = 0;
-    func_0010FBC0(0);
+    sceSifInitRpc(0);
     for (;;) {
         if (sceSifBindRpc(D_0053DBC0, 0x123456, 0) < 0) {
             printf(D_004BCCC0, D_004BCCE8, 0xB5);

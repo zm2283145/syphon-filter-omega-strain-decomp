@@ -3997,5 +3997,6 @@
   "lib/func_00318400": "ee-gcc2.96",
   "lib/func_0031DB68": "ee-gcc2.96",
   "lib/func_00357178": "ee-gcc2.96",
-  "lib/libcdvd/func_001184C0": "ee-gcc2.9-991111-as296"
+  "lib/libcdvd/func_001184C0": "ee-gcc2.9-991111-as296",
+  "lib/libkernl/func_0010FBC0": "ee-gcc2.9-991111"
 }

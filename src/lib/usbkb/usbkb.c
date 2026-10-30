@@ -25,7 +25,7 @@ extern KbCtx D_004F5780;
 extern SifRpcClientData D_004F5820;
 extern KbEnt D_004F5950[];
 extern int D_0048AB18;
-extern void func_0010FBC0(int);
+extern void sceSifInitRpc(int);
 char D_004A4CC8[] = "libusbkb : bind errr\n";
 char D_004A4CE0[] = "libusbkb : CreateSema Error\n";
 extern int sceSifBindRpc(SifRpcClientData *, unsigned int, int);
@@ -43,7 +43,7 @@ int sceUsbKbInit(int *max_connect)
     int r;
     unsigned int i;
 
-    func_0010FBC0(0);
+    sceSifInitRpc(0);
     while (1) {
         if (sceSifBindRpc(&D_004F5820, 0x80000211, 0) < 0) {
             scePrintf(D_004A4CC8);

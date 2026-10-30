@@ -3183,7 +3183,6 @@
   "SFOGame/Source/AIMsgs": "cwps2-3.0b38",
   "SFOGame/Source/hud_loading": "cwps2-3.0b38",
   "SFOGame/Source/hud_loading_2": "cwps2-3.0b38",
-  "SFOGame/Source/tremor": "cwps2-3.0b38",
   "SFOGame/Source/hudTargets": "cwps2-3.0b38",
   "SFOGame/Source/hudTargets_2": "cwps2-3.0b38",
   "SFOGame/Source/hudTargets_4": "cwps2-3.0b38",
@@ -3828,7 +3827,6 @@
   "SFOGame/Source/grenade_8": "cwps2-3.0b38",
   "SFOGame/Source/taser_15": "cwps2-3.0b38",
   "SFOGame/Source/taser_16": "cwps2-3.0b38",
-  "SFOGame/Source/tremor_3": "cwps2-3.0b38",
   "SFOGame/Source/NetNPCMsgs_2": "cwps2-3.0b38",
   "Libs/SFOLib/Source/man_5": "cwps2-3.0b38",
   "Libs/SFOLib/Source/man_18": "cwps2-3.0b38",
@@ -3875,7 +3873,6 @@
   "SFOGame/Source/SpecFxDefs/func_00234C40": "cwps2-3.0b38",
   "SFOGame/Source/SpecFxDefs/func_00236A20": "cwps2-3.0b38",
   "SFOGame/Source/grenade/func_0025A2D0": "cwps2-3.0b38",
-  "SFOGame/Source/tremor/func_00272920": "cwps2-3.0b38",
   "Libs/SFOLib/Source/particle/func_003A5F20": "cwps2-3.0b38",
   "Libs/SFOLib/Source/ska/func_003AE350": "cwps2-3.0b38",
   "SFOGame/Source/GuiStartMenu/func_00454F80": "cwps2-3.0b38",
@@ -4001,5 +3998,7 @@
   "Libs/SFOLib/Source/DamageMsg": "cwps2-3.0b38",
   "SFOGame/Source/NetCalloutMsg": "cwps2-3.0b38",
   "SFOGame/Source/GuiAgentInfo_10": "cwps2-3.0b38",
-  "SFOGame/Source/Rumble": "cwps2-3.0b38"
+  "SFOGame/Source/Rumble": "cwps2-3.0b38",
+  "SFOGame/Source/tremor": "cwps2-3.0b38",
+  "SFOGame/Source/tremor_2": "cwps2-3.0b38"
 }

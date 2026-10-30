@@ -5,7 +5,27 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R170 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R171 automatic continuation) - START HERE
+
+- **13,983 / 14,347 functions; 90.33% code; 364 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.
+- Reduced **tremor** from four source units to two, combining its first five
+  source blocks into tremor.c. The manager destructor remains separate as
+  tremor_2.c. Tagged CameraShake declaration preserves its original typed
+  definition; iterator declarations now agree with existing Word/Iter/Tree
+  helper definitions and use explicit caller casts. push_back keeps its int
+  arguments with caller-side address casts. Whole-unit and full retail checks pass.
+- Final single-file merge remains blocked: adding the manager destructor grows
+  compiled code from 0x810 to 0x824 bytes. Normalizing its own iterator prototypes
+  did not fix this; those trials were reverted. Inspect the extra 20 bytes in
+  actual merged compiler output before retrying; do not force the last boundary.
+- Fresh remaining-candidate inventory: build/agents/r171/inventory.json. Private
+  notes: r171/NOTES.md. Next consolidation candidate: infobar, whose generated
+  adapters refer to unavailable Text_9E60; or use the fresh inventory for matching.
+- Root scratch candidates preserved; no pushes/subagents. Final WSL_ROUND_OK
+  includes retail hash, report, regression checks and synchronization.
+
+## Previous continuation (2026-10-30, Codex R170 automatic continuation)
 
 - **13,983 / 14,347 functions; 90.33% code; 364 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.

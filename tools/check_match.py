@@ -68,21 +68,25 @@ def symbols():
     cache = ROOT / "build" / "check_symbols.json"
     stamp = ROOT / "build" / "splat.stamp"
     symbol_files = [ROOT / "config/symbol_addrs.txt", ROOT / "config/extra.ld"]
-    key = (stamp.read_text() if stamp.exists() else "") + repr([
+    key = "function-ends-v1:" + (stamp.read_text() if stamp.exists() else "") + repr([
         (str(p), p.stat().st_mtime_ns if p.exists() else None) for p in symbol_files
     ])
     if cache.exists():
         c = json.loads(cache.read_text())
         if c.get("key") == key:
             return {k: v for k, v in c["names"].items()}, set(c["starts"])
-    names, starts = {}, set()
+    names, starts, ends = {}, set(), {}
     lab = re.compile(r"(?:glabel|nonmatching) (\w+)")
     ins = re.compile(r"\s*/\* [0-9A-F]+ ([0-9A-F]{8}) ")
     for f in (ROOT / "asm").rglob("*.s"):
         if "data" in f.parts:
             continue
         pending = None
+        pending_size = None
         for l in f.read_text(errors="replace").splitlines():
+            m = re.match(r"nonmatching (\w+), (0x[0-9A-Fa-f]+)", l)
+            if m:
+                pending_size = int(m.group(2), 16)
             m = lab.match(l)
             if m:
                 pending = m.group(1); continue
@@ -91,6 +95,9 @@ def symbols():
                 if m:
                     a = int(m.group(1), 16)
                     names[pending] = a; starts.add(a); pending = None
+                    if pending_size is not None:
+                        ends[a] = a + pending_size
+                        pending_size = None
     # Resolve explicit linker aliases too, including compiler-generated runtime calls.
     for path in symbol_files:
         if not path.exists():
@@ -99,8 +106,16 @@ def symbols():
             m = re.match(r"\s*(\w+)\s*=\s*0x([0-9A-Fa-f]+)\s*;", l)
             if m:
                 names[m.group(1)] = int(m.group(2), 16)
-    cache.write_text(json.dumps({"key": key, "names": names, "starts": sorted(starts)}))
+    cache.write_text(json.dumps({"key": key, "names": names, "starts": sorted(starts), "ends": ends}))
     return names, starts
+
+
+def function_ends():
+    """Recorded function extents, excluding alignment padding and following data."""
+    symbols()  # refresh the shared cache before using its extent metadata
+    path = ROOT / "build" / "check_symbols.json"
+    cache = json.loads(path.read_text()) if path.exists() else {}
+    return {int(a): end for a, end in cache.get("ends", {}).items()}
 
 
 def wrapper():
@@ -167,7 +182,7 @@ def run_limited(cmd, limit=1 << 20):
     return p.returncode, text
 
 
-def compare(obj, rom, names, starts):
+def compare(obj, rom, names, starts, ends=None):
     byaddr = {}
     for n, a in names.items():
         byaddr.setdefault(a, n)
@@ -209,7 +224,11 @@ def compare(obj, rom, names, starts):
             orig = rom[a - BASE:a - BASE + len(data)]
             nxt = min((x for x in starts if x > a), default=None)
             bad = []
-            if nxt is not None and a + len(data) != nxt and a + len(data) < nxt:
+            exact_extent = (ends or {}).get(a) == a + len(data)
+            if exact_extent and (nxt is None or a + len(data) <= nxt):
+                # A final text function may be followed by long padding or data, not another function.
+                pass
+            elif nxt is not None and a + len(data) != nxt and a + len(data) < nxt:
                 # shorter than the retail function: only alignment nops may follow
                 tail = rom[a + len(data) - BASE:nxt - BASE]
                 if any(tail) or len(tail) >= 16:
@@ -463,7 +482,7 @@ def main():
             report[kind] = {"error": err}
         else:
             try:
-                res, undef = compare(obj, rom, names, starts)
+                res, undef = compare(obj, rom, names, starts, function_ends())
                 with open(obj, "rb") as fh:
                     data = data_pieces(ELFFile(fh), rom, names)
                 lits = pooled_literals(obj, rom, names)

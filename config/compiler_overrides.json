@@ -3467,8 +3467,6 @@
   "SFOGame/Source/NetGeneratorCreate_4": "cwps2-3.0b38",
   "SFOGame/Source/NetGeneratorDelete": "cwps2-3.0b38",
   "SFOGame/Source/NetGeneratorDelete_2": "cwps2-3.0b38",
-  "SFOGame/Source/NetHuman": "cwps2-3.0b38",
-  "SFOGame/Source/NetHuman_2": "cwps2-3.0b38",
   "SFOGame/Source/NetLabelMsg": "cwps2-3.0b38",
   "SFOGame/Source/NetLabelMsg_2": "cwps2-3.0b38",
   "SFOGame/Source/NetNPC": "cwps2-3.0b38",
@@ -4020,5 +4018,7 @@
   "Libs/SFOLib/Source/viewport": "cwps2-3.0b38",
   "lib/func_002FF868": "ee-gcc2.96",
   "SFOGame/Source/gameGobjController_3": "cwps2-3.0b38",
-  "SFOGame/Source/GuiObjectives": "cwps2-3.0b38"
+  "SFOGame/Source/GuiObjectives": "cwps2-3.0b38",
+  "SFOGame/Source/NetHuman": "cwps2-3.0b38",
+  "lib/func_004769A4": "ee-gcc2.96"
 }

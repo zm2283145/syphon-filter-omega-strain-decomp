@@ -13,7 +13,7 @@ class SymbolAliasTests(unittest.TestCase):
             for folder in ("asm", "config", "build"):
                 (root / folder).mkdir()
             (root / "asm/runtime.s").write_text(
-                "glabel runtime\n/* 0 00101250 00000000 */ nop\n")
+                "nonmatching runtime, 0x4\nglabel runtime\n/* 0 00101250 00000000 */ nop\n")
             (root / "config/symbol_addrs.txt").write_text(
                 "runtime = 0x00101250;\n")
             aliases = root / "config/extra.ld"
@@ -22,6 +22,7 @@ class SymbolAliasTests(unittest.TestCase):
                 names, starts = check_match.symbols()
                 self.assertEqual(names["__unexpected"], 0x101250)
                 self.assertIn(0x101250, starts)
+                self.assertEqual(check_match.function_ends()[0x101250], 0x101254)
                 self.assertEqual(check_match.symbols(), (names, starts))
                 aliases.write_text("__unexpected = 0x00100D20;\n")
                 self.assertEqual(check_match.symbols()[0]["__unexpected"], 0x100D20)
@@ -71,3 +72,27 @@ class DiscardedDataTests(unittest.TestCase):
                 self.assertEqual(pieces, [])
             else:
                 self.assertEqual(pieces[0]["result"], "section kind cannot be linked from C yet")
+
+
+class FunctionExtentTests(unittest.TestCase):
+    def test_recorded_end_excludes_following_padding_and_data(self):
+        import struct
+        from test_try_match import call_object
+        with tempfile.TemporaryDirectory() as directory:
+            obj = Path(directory) / "call.o"
+            obj.write_bytes(call_object())
+            rom = struct.pack("<II", 0x0C040008, 0) + b"non-code" + bytes(48)
+            names = {"example": 0x100000, "target": 0x100020}
+            starts = {0x100000, 0x100040}
+            ends = {0x100000: 0x100008}
+            results, undefined = check_match.compare(obj, rom, names, starts, ends)
+            self.assertEqual(results, [("example", 0x100000, "MATCH")])
+            self.assertEqual(undefined, [])
+            # Neither a guessed short extent nor a boundary crossing is accepted.
+            for bad_ends, bad_starts in (({0x100000: 0x100004}, starts),
+                                         (ends, {0x100000, 0x100004})):
+                results, _ = check_match.compare(obj, rom, names, bad_starts, bad_ends)
+                self.assertIn("size", results[0][2])
+            changed = rom[:4] + struct.pack("<I", 1) + rom[8:]
+            results, _ = check_match.compare(obj, changed, names, starts, ends)
+            self.assertIn("0x4", results[0][2])

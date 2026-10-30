@@ -5,7 +5,39 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R159) - START HERE
+## Resume here (2026-10-30, Codex R160) - START HERE
+
+- **13,978 / 14,345 functions; 90.32% code; 367 unmatched.** Full build remains
+  byte-identical to retail. All 130 tests pass.
+- Matched `KM_GetSoftwareKeyPair` (0x004769A4, 280 bytes), previously held by the
+  checker. `check_match` now caches the explicit sizes in splat's `nonmatching`
+  annotations and accepts an exactly sized function body even when the next
+  function lies beyond padding/data. All instruction and relocation checks remain.
+  Tests reject incorrect sizes, overlapping function boundaries and changed bytes.
+- Integration split the padding at 0x00476ABC into a false one-instruction function.
+  Reclassified the zero-fill region through 0x00476B00 as data and rebuilt; the
+  total is back to **14,345 real functions**. Do not count that padding as a target.
+- Consolidated **SFOGame/Source/NetHuman.c** from two parts into one, covering all
+  ten source blocks. Unified callback declarations and the D_005723C8 byte flag.
+  The shared replicated-record and field-parameter layouts now live in
+  `include/net_human_fields.h`; the cAimWeapon/cTargetInfo field-registration
+  functions use the same record types as their caller. Merged bytes verified.
+- **Source-layout clarification requested by the owner:** `src/main/GameGOBJ/`
+  is not duplicate GameGOBJ game code. Those trailing helpers have only header
+  CU attribution (GameGOBJ.hh / standard-library vector), or no debug attribution.
+  Direct inspection of both prototype ELFs found no STT_FILE object-boundary
+  symbols. No confirmed original `.cc` owner was recovered; no speculative move
+  was made. README now explains this exception. Keep merging confidently assigned
+  code into the original layout, but do not promise every header helper can be
+  assigned to one original `.cc` from the surviving evidence.
+- `KM_GetSoftwareID` (0x00476998) remains assembly. Simple C is two register-allocation
+  differences away (address in v1 instead of retail v0); compiler/profile, return-type
+  and local pointer-pin attempts in `build/agents/r160/` did not match.
+- Details: `build/agents/r160/NOTES.md`. Verified matching batch `r160`, followed by
+  a rebuild-only round for the padding correction. Changes saved locally; no push.
+  Existing root scratch candidates untouched.
+
+## Previous continuation (2026-10-30, Codex R159)
 
 - **13,977 / 14,345 functions; 90.31% code, 99.92% data; 368 unmatched.**
   The full build still reproduces retail byte for byte. All 129 tests pass.
@@ -145,7 +177,7 @@ The scripts live in `tools/workflow/`.
 |---|---|---|
 | `build\agents\l1\held\gcc29a_0010ED58.c` (`_printf`) | Matches only with the ee-gcc 2.9-991111a assembler (reproduces retail's float-compare nops) | Add the compiler kind to `check_match` and to the OVR map in `integrate_pending` |
 | `build\agents\l1\held\mw38_00100740.c`, `mw38_00101250.c` | Reference `__unexpected` and `__end__catch` | Add `__unexpected = 0x00101250;` and `__end__catch = 0x00100D20;` to `config/extra.ld` |
-| KM_GetSoftwareKeyPair | Code is byte-exact, but check_match rejects the 0x44 nop tail | Relax the size rule for nop padding |
+| KM_GetSoftwareKeyPair | Resolved in R160: explicit function extent and separate zero-fill data | Integrated and full-build verified |
 | viBufGetTs | Needs a config split | |
 | sceSifInitRpc | Really starts at 0x10FBC0; the current split is wrong | Correct the split |
 | gcc296_002FF868 | Its .sdata is not referenced from code, so `integrate_pending` skips it | Draft in `build\integrated\lanes_r156\l2\` |

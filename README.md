@@ -42,7 +42,12 @@ here.
   folds them into the part-files ([docs/merge_units.md](docs/merge_units.md)).
   SDK and middleware code without debug information stays under `src/lib/`
   (EE-GCC); template code at file boundaries and code added after the
-  prototypes stays under `src/main/`. The original files were C++ (`.cc`);
+  prototypes stays under `src/main/`. For example, `src/main/GameGOBJ/` holds
+  trailing inline/template helpers attributed only to `GameGOBJ.hh` or the
+  standard-library `vector` header, while `src/SFOGame/Source/GameGOBJ*` holds
+  code assigned to `GameGOBJ.cc`. These are separate functions; the remaining
+  `main/` placements do not claim a confirmed original `.cc` owner.
+  The original files were C++ (`.cc`);
   they keep the `.c` extension here for now.
 - **Types.** The prototypes' debug information also records the original
   struct and class layouts and each function's local variables. It is used as a

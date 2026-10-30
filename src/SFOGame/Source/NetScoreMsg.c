@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/NetScoreMsg: 2 files, 00316370-00316480
+ * SFOGame/Source/NetScoreMsg: 4 files, 00316370-00316600
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -53,7 +53,8 @@ extern void QueueMessage_cMessageR_cSystemP_int_int(Msg316480*, void*, int, int)
 extern void cMessage_dtor(Msg316480*, int);
 #pragma push
 #pragma opt_propagation off
-int cNetScoreMsg_ScoreMsgCallback(int a0, int a1, int a2, Pk316480* arg) {
+int cNetScoreMsg_ScoreMsgCallback(int a0, int a1, int a2, void* packet) {
+    Pk316480* arg = (Pk316480*)packet;
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Msg316480 msg;
@@ -76,3 +77,30 @@ int cNetScoreMsg_ScoreMsgCallback(int a0, int a1, int a2, Pk316480* arg) {
 static inline void merge_flush_func_00316480(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00316480 */
+
+/* merge_units: begin func_00316550 */
+#pragma push /* merge_units */
+#include "net_register_type.h"
+
+typedef struct { int a; int b; int c; } Proto_00316550;
+extern int D_0052ACA8;
+extern int cNetScoreMsg_ScoreMsgCallback(int a0, int a1, int a2, void* packet);
+
+NETREG_BEGIN(cNetScoreMsg_InitNet, Proto_00316550)
+NETREG_FIELD(a, 4, 1)
+NETREG_FIELD(b, 4, 1)
+NETREG_FIELD(c, 4, 1)
+NETREG_END(&D_0052ACA8, cNetScoreMsg_ScoreMsgCallback)
+static inline void merge_flush_func_00316550(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00316550 */
+
+/* merge_units: begin func_00316600 */
+#pragma push /* merge_units */
+#include "message_pack.h"
+#define PACK_BODY(e, b) MP_I(b, 0x8) = MP_I(e, 0x2C); MP_I(b, 0x10) = MP_I(e, 0x28); MP_I(b, 0xC) = MP_I(e, 0x24);
+
+DEFINE_MESSAGE_PACK(cNetScoreMsg_Pack, 20, D_0052ACA8, PACK_BODY)
+static inline void merge_flush_func_00316600(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00316600 */

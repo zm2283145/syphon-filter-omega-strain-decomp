@@ -5,7 +5,35 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R162 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R163 automatic continuation) - START HERE
+
+- **13,979 / 14,345 functions; 90.33% code; 366 reported non-matches.** No new
+  function is claimed in this consolidation round. Full retail hash exact;
+  all 130 tests pass.
+- Consolidated **NetGeneratorDelete**, **NetScoreMsg**, and **SFOLobby_Contact**
+  into their single original `.c` files (7 parts -> 3 files; 17 source blocks).
+  Unified network callback argument/return declarations and message-handle types;
+  retained typed packet views inside callbacks. Corrected conflicting reconstructed
+  memset/GuiCallback/Poll prototypes in the contact unit. Merged bytes verified.
+- **Important inventory finding:** current `rank_candidates` inventory is complete
+  with no warnings and offers **365 unowned assembly functions**, not 366. The extra
+  reported non-match is **voBufCreate (0x003F6040)** in already C-owned `mp_vobuf`:
+  fuzzy 99.5%, size 320 bytes. The full executable is byte-identical, so inspect
+  object relocation/symbol comparison before treating it as another C target.
+  Both prototypes map to it hash-exactly. A fresh dossier is available locally.
+- Fresh inventory: `build/agents/r163/inventory.json`; dossiers for 0x003F6040 and
+  FftSumCosOlAdd (0x0031FC28) in that round's dossier directory, with SFOS_PROTO_DIR set.
+  FFT prototype is hash-exact but records no locals. Im-base register-pin/wrapper
+  experiments did not improve the baseline 8 differences; do not repeat them blindly.
+- Old held entry **0x286570/0x286590 is already integrated** as cTurret_Stop and
+  cTurret_NextFrame in `SFOGame/Source/tank_15.c`; both check as MATCH. Other old held
+  drafts at 0x306C60, 0x3D1B60 and 0x1519A0 already have C definitions as well.
+  Always check current source ownership before retrying historical held notes.
+- Details and failed experiments: `build/agents/r163/NOTES.md`, merge_review.log.
+  Verified WSL rebuild-only round; local commit, no push. Root scratch files untouched.
+  Automatic continuation stays active; do not start overlapping writers/builds.
+
+## Previous continuation (2026-10-30, Codex R162 automatic continuation)
 
 - **13,979 / 14,345 functions; 90.33% code; 366 unmatched.** Full build is
   byte-identical to retail; all 130 tests pass.
@@ -995,12 +1023,11 @@ prototype that callers use inconsistently is declared K&R in a shared header (fo
 - `Mem_Init` (0x36B630) references `D_01FF0000`, `D_0059A980`, `D_0059C980`, which have
   no symbol entries.
 - Some functions reference `.lit4` float literals that the current linking cannot place.
-- `0x286570`: both function bodies match, but the unit needs a split at `0x286590` (see below).
+- `0x286570` / `0x286590`: already integrated as cTurret_Stop / cTurret_NextFrame in tank_15.c (confirmed R163).
 - Hand-written assembly functions stay as assembly.
 - `0x2B69A0` (_sceMcFatInit) was resolved in R162 by reusing the existing root-directory
   literal with a fixed-size memcpy. No rodata split was needed; the held draft is historical.
-- `0x286570` may now be fixable the same way as the `0x416830` thunk unit: add a
-  `// type:func` symbol at `0x286590` and integrate both functions in one file.
+- Do not retry the old 0x286570 packed-unit draft: both functions are already C-owned.
 - **Dead `div` in DMA wait loops (`man.cc`):** cMan_ManDMA 0x385D40, cMan_SetGunOffsets
   0x38E100, BloodHitVert/BloodHitPart/BloodHit 0x38BA80/0x38BD30/0x38C050 and GunCalcBBox
   0x38D720 contain a busy-wait loop with a `div` whose result is unused. mw38 removes it in

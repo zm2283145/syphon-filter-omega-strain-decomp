@@ -1991,7 +1991,6 @@ segments:
       - [0x17B690, c, SFOGame/Source/hud_netlobby_8]
       - [0x17B880, c, SFOGame/Source/hud_netlobby_9]
       - [0x17BB00, c, SFOGame/Source/netTaserMsg]
-      - [0x17BB70, c, SFOGame/Source/netTaserMsg_2]
       - [0x17BD30, c, SFOGame/Source/netTaserMsg_3]
       - [0x17BED0, c, SFOGame/Source/NetGrenadeMsg]
       - [0x17C328, c, lib/func_0027C328]

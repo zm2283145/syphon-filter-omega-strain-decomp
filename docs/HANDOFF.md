@@ -5,7 +5,25 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R175 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R176 automatic continuation) - START HERE
+
+- **13,986 / 14,349 functions; 90.34% code; 363 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.
+- Reduced **netTaserMsg** from three parts to two. First two source blocks now
+  share netTaserMsg.c; trailing three stay netTaserMsg_3.c. UnpackAndProcess
+  declarations/definition use opaque message/target pointers with local typed
+  views. Whole-unit comparison and full retail verification pass.
+- Final merge remains blocked by a generated adapter expanding the function
+  declarator as a call: UnpackAndProcess((void* message),(void* target)).
+  This is a merge-source generation issue. Next targeted experiment: remove the
+  redundant standalone extern-C prototype before the definition, then put C
+  linkage on the definition itself. Not yet tried. Also check third-part compiler
+  profile (mw versus mw38) and signed/unsigned D_005061D0 cursor declarations.
+- Private details: build/agents/r176/NOTES.md. No tooling edits in this round;
+  root scratch files preserved, no pushes/subagents. WSL_ROUND_OK includes final
+  hash, report, regression checks and synchronization.
+
+## Previous continuation (2026-10-30, Codex R175 automatic continuation)
 
 - **13,986 / 14,349 functions; 90.34% code; 363 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.

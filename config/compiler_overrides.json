@@ -1954,8 +1954,6 @@
   "Libs/SFOLib/Source/vu0man_2": "cwps2-3.0b38",
   "Libs/SFOLib/Source/vu0man_3": "cwps2-3.0b38",
   "Libs/SFOLib/Source/vu0man_4": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/bboxman": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/bboxman_2": "cwps2-3.0b38",
   "Libs/SFOLib/Source/message": "cwps2-3.0b38",
   "Libs/SFOLib/Source/message_2": "cwps2-3.0b38",
   "Libs/SFOLib/Source/message_4": "cwps2-3.0b38",
@@ -3875,7 +3873,6 @@
   "SFOGame/Source/hudTargets/func_00272D50": "cwps2-3.0b38",
   "SFOGame/Source/WaterFx/func_002B24C0": "cwps2-3.0b38",
   "Libs/SFOLib/Source/particle/func_003A5C50": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/bboxman/func_003C8750": "cwps2-3.0b38",
   "Libs/SFOLib/Source/shadows/func_003D2D10": "cwps2-3.0b38",
   "Libs/SFOLib/Source/fstream/func_003EAA70": "cwps2-3.0b38",
   "Libs/SFOLib/Source/interface_model/func_003ECD60": "cwps2-3.0b38",
@@ -3992,5 +3989,6 @@
   "SFOGame/Source/NetCreateBlastMsg": "cwps2-3.0b38",
   "SFOGame/Source/NetShatterMsg": "cwps2-3.0b38",
   "Libs/SFOLib/Source/NetActivateAndControlMsg_2": "cwps2-3.0b38",
-  "SFOGame/Source/netTaserMsg": "cwps2-3.0b38"
+  "SFOGame/Source/netTaserMsg": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/bboxman": "cwps2-3.0b38"
 }

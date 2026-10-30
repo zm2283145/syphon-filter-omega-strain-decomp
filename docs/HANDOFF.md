@@ -5,7 +5,28 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R176 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R177 automatic continuation) - START HERE
+
+- **13,986 / 14,349 functions; 90.34% code; 363 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.
+- Consolidated **bboxman** from three source units into one original source
+  file (three source blocks). Whole-unit and full retail checks pass.
+- Fixed netTaserMsg's malformed merge adapter by removing the redundant extern-C
+  prototype before UnpackAndProcess and placing linkage on its definition.
+  Final merge still differs, now isolated to **cNetMsg_GetFloat_void**. All other
+  merged routines match. The float reader alone causes the36-byte shortage.
+  Its standalone source matches both mw/mw38; broad profile switching is not
+  justified. Unsigned cursor unification, explicit C language mode and size-opt
+  trials did not help and were reverted. Next: inspect its actual instruction diff
+  in build/agents/r177/merged2.c; compare shared declarations/optimizer context.
+- interface_element trial resolved prototype/predicate conflicts but changed
+  instruction003E8E5C. All trial sources/header reverted; private drafts preserved
+  under r177. Inspect that instruction before retrying the same changes.
+- Private evidence: build/agents/r177/NOTES.md, captured merge candidates and
+  capture.py. No tooling edits or speculative ownership moves. Root scratch
+  candidates preserved; no pushes/subagents. WSL_ROUND_OK completed.
+
+## Previous continuation (2026-10-30, Codex R176 automatic continuation)
 
 - **13,986 / 14,349 functions; 90.34% code; 363 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.

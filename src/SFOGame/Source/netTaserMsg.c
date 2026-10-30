@@ -67,8 +67,7 @@ static inline signed char ReadS8(void)
     return v;
 }
 
-extern "C" void cNetTaserMsg_UnpackAndProcess(void* message, void* target);
-void cNetTaserMsg_UnpackAndProcess(void* message, void* target)
+extern "C" void cNetTaserMsg_UnpackAndProcess(void* message, void* target)
 {
     cNetTaserMsg* self = (cNetTaserMsg*)message;
     T_0027BB70* t = (T_0027BB70*)target;

@@ -5,7 +5,26 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R165 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R166 automatic continuation) - START HERE
+
+- **13,980 / 14,345 functions; 90.33% code; 365 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.
+- Consolidated **NetPlayer** from three parts into one original source file,
+  covering nine source blocks. Both whole-unit comparison and the full retail
+  rebuild pass; verified WSL round completed including report and synchronization.
+- The constructor-bearing V4 reconstruction in the aiming code clashed with the
+  earlier plain vector view. It is now named NetPlayerAimVec4; existing layouts
+  and code are preserved. Matrix helper structs have tags so forward declarations
+  can agree with the definitions. Vtable declarations now have the actual Team,
+  HandleMessage, NextFrame and func_002D7E50 signatures.
+- SFOLobby_Lobby remains blocked: explicit GetSlot casts and a compatible SetError
+  definition resolve compile errors, but combining the units changes code in the
+  first large function at 0x0044FD13. All those trials were reverted. Inspect
+  cross-function effects / merged output before retrying; no call args changed.
+- Private evidence: build/agents/r166/NOTES.md. R165 data-relocation/report targets
+  remain available below. Root scratch files untouched; no push or subagents.
+
+## Previous continuation (2026-10-30, Codex R165 automatic continuation)
 
 - **13,980 / 14,345 functions; 90.33% code; 365 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.

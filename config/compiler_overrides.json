@@ -3469,9 +3469,6 @@
   "SFOGame/Source/NetNPC_18": "cwps2-3.0b38",
   "SFOGame/Source/NetNPCMsgs": "cwps2-3.0b38",
   "SFOGame/Source/NetNPCMsgs_3": "cwps2-3.0b38",
-  "SFOGame/Source/NetPlayer": "cwps2-3.0b38",
-  "SFOGame/Source/NetPlayer_2": "cwps2-3.0b38",
-  "SFOGame/Source/NetPlayer_3": "cwps2-3.0b38",
   "SFOGame/Source/NetShatterMsg": "cwps2-3.0b38",
   "SFOGame/Source/NetShatterMsg_2": "cwps2-3.0b38",
   "SFOGame/Source/NetTargetInfo": "cwps2-3.0b38",
@@ -4009,5 +4006,6 @@
   "SFOGame/Source/NetGeneratorDelete": "cwps2-3.0b38",
   "SFOGame/Source/NetScoreMsg": "cwps2-3.0b38",
   "Libs/SFOLobby/SFOLobby/SFOLobby_Contact": "cwps2-3.0b38",
-  "Libs/SFOLobby/SFOLobby/SFOLobby_Games": "cwps2-3.0b38"
+  "Libs/SFOLobby/SFOLobby/SFOLobby_Games": "cwps2-3.0b38",
+  "SFOGame/Source/NetPlayer": "cwps2-3.0b38"
 }

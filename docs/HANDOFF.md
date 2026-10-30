@@ -15,6 +15,22 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Active matching research (2026-10-30, R195/R196)
+
+- R195 gun barrel actual matrix/vector/setter ABI preserves10strict differences;
+  color conversion prototype scales channels128, so compensated float form worsens
+  vision deactivate32vs28strict. Network fresh ABI audits still plateau.
+  Private evidence r195_audio/NOTES.md,r195_game/NOTES.txt,r195_network/NOTES.md.
+- R196 lanes now reconstruct larger ordinary routines: audio particle spline
+  ComputeBezierFactors0039FC10 (hash-exact prototypes,static matrix/local evidence),
+  game FireObj ctor002625B0 (population/IDs/min/max locals), network full object
+  update handler002E76D0 (actual public object size0x44,trailing LocalUserData).
+  Preserve these lanes and private scratch; avoid exhausted small-register grids.
+- Parent independently cleaned canonical function/call names in old GuiAgentModify
+  CountSelections00343940 draft:13strict word differences,exact extent,clean symbols.
+  Old41 display score included relocation noise. No match counted. Evidence
+  build/agents/r196_parent/{count.c,NOTES.md}. Baseline still13,996/14,349,90.47%.
+
 ## Active matching research (2026-10-30, R194/R195)
 
 - Live read-only WSL inventory build/agents/r195_inventory.json confirms353

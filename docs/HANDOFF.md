@@ -5,7 +5,30 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R164 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R165 automatic continuation) - START HERE
+
+- **13,980 / 14,345 functions; 90.33% code; 365 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.
+- Consolidated **SFOLobby_Games** from two parts into its single original source
+  file (11 source blocks). Corrected the conflicting Libc_Strcpy declaration to
+  return char* with a const char* source, matching later uses of its return value.
+  Both whole-unit comparison and the full retail rebuild pass.
+- Reviewed the three remaining data-report discrepancies using actual WSL object
+  diffs. libc_124D30 and 989snd_4 comparison targets contain numeric pointer words
+  where compiled C correctly has relocations to existing extra.ld aliases
+  D_0048943C and D_00542940. medius_30AB20's .rodata is 96.21% equal: its string
+  pointer array relocates against individual labels in the target, but against
+  the .rodata section plus offsets in C. Its jump table already matches; the
+  leading colon-string symbol also has different padding extent (8 versus 2).
+  No data/tooling changes made. Canonicalization needs explicit linked-byte and
+  relocation validation; do not suppress differences or claim C translation gains.
+- Private evidence: build/agents/r165/NOTES.md and libc.json, medius.json, snd.json.
+  Next consolidation candidate: SFOLobby_Lobby, whose GetSlot return adapters
+  conflict when merged. Its existing one-argument calls rely on current codegen;
+  inspect retail call semantics before changing argument declarations.
+- Changes saved locally; no push. Root scratch files untouched; automation active.
+
+## Previous continuation (2026-10-30, Codex R164 automatic continuation)
 
 - **13,980 / 14,345 functions; 90.33% code; 365 remaining.** Full retail
   SHA-256 unchanged. All **135 tests** pass (Windows and WSL).

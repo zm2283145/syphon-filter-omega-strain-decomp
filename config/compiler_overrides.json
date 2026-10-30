@@ -1748,7 +1748,6 @@
   "Libs/SFOLobby/SFOLobby/SFOLobby_Cell": "cwps2-3.0b38",
   "Libs/SFOLobby/SFOLobby/SFOLobby_Config": "cwps2-3.0b38",
   "Libs/SFOLobby/SFOLobby/SFOLobby_Connect": "cwps2-3.0b38",
-  "Libs/SFOLobby/SFOLobby/SFOLobby_Games_3": "cwps2-3.0b38",
   "Libs/SFOLobby/SFOLobby/SFOLobby_Lobby": "cwps2-3.0b38",
   "Libs/SFOLobby/SFOLobby/SFOLobby_Lobby_2": "cwps2-3.0b38",
   "Libs/SFOLobby/SFOLobby/SFOLobby_Main": "cwps2-3.0b38",
@@ -3753,7 +3752,6 @@
   "Libs/SFOLib/Source/guiInterfaceDecorator_4": "cwps2-3.0b38",
   "Libs/SFOLib/Source/guiTextEditWidget_4": "cwps2-3.0b38",
   "Libs/SFOLib/Source/guiTextListWidget_4": "cwps2-3.0b38",
-  "Libs/SFOLobby/SFOLobby/SFOLobby_Games": "cwps2-3.0b38",
   "SFOGame/Source/GuiEndGameStatistics_4": "cwps2-3.0b38",
   "SFOGame/Source/game_17": "cwps2-3.0b38",
   "SFOGame/Source/game_22": "cwps2-3.0b38",
@@ -4010,5 +4008,6 @@
   "lib/func_002B69A0": "ee-gcc2.96-G0",
   "SFOGame/Source/NetGeneratorDelete": "cwps2-3.0b38",
   "SFOGame/Source/NetScoreMsg": "cwps2-3.0b38",
-  "Libs/SFOLobby/SFOLobby/SFOLobby_Contact": "cwps2-3.0b38"
+  "Libs/SFOLobby/SFOLobby/SFOLobby_Contact": "cwps2-3.0b38",
+  "Libs/SFOLobby/SFOLobby/SFOLobby_Games": "cwps2-3.0b38"
 }

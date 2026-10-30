@@ -15,6 +15,22 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Current matching lanes (R211)
+
+- AgentData now has clean812B constructor baseline r210_audio/agent_owned_dtors.c:
+ 70strict words,filename DATA004B9308 MATCH,no unknown/undefined symbols. Actual
+  member destructor ownership fixed old stageability, but synthetic nullable-this
+  layer differs from retail; R211 directowner form shrinks/worsens, keep baseline.
+- Monster actual native constructor/member reconstruction retains22word mask
+  plateau. Jan layout differs despite normalized hash score; retain retail offsets.
+  Network R211 switches to loadingThread five-word historical near miss, actual
+  syscall and cHudLoading ABI review, avoiding old on/show type grids.
+- Game switches exhausted Grab context to RunningJumpOffLedge00192800 prototype
+  locals/lineSegment/bbox reconstruction. Audio continues actual destructioncontext.
+- Parent rebuilt old PlaySound001C8770 with current canonical cmessage/callee names;
+  clean symbols/data,0x688vsold padded0x6A0,216words+size. Private r211_parent.
+  Source baseline remains R189,13,998/14,350,90.49%,352remaining; no match counted.
+
 ## Current matching lanes (R210)
 
 - R209 native MW callback probe proves vptr@8 when timing fields precede virtual

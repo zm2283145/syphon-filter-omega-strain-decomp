@@ -3989,6 +3989,6 @@
   "SFOGame/Source/NetCreateBlastMsg": "cwps2-3.0b38",
   "SFOGame/Source/NetShatterMsg": "cwps2-3.0b38",
   "Libs/SFOLib/Source/NetActivateAndControlMsg_2": "cwps2-3.0b38",
-  "SFOGame/Source/netTaserMsg": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/bboxman": "cwps2-3.0b38"
+  "Libs/SFOLib/Source/bboxman": "cwps2-3.0b38",
+  "SFOGame/Source/netTaserMsg": "cwps2-3.0b38"
 }

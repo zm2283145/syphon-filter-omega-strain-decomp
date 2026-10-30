@@ -5,7 +5,27 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R177 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R178 automatic continuation) - START HERE
+
+- **13,986 / 14,349 functions; 90.34% code; 363 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.
+- Completed **netTaserMsg** consolidation into its single original source file
+  (five source blocks). Shared cursor D_005061D0 consistently uses unsigned
+  char*, while ReadS8 explicitly dereferences signed char*. This preserves the
+  float reader's unsigned decoding and retail signed packet-field loads.
+- Corrected the previous diagnosis using actual object disassembly: different
+  r177 captures represented different cursor-type variants. In the unsigned
+  cursor variant Float matched, and only UnpackAndProcess+0x24 differed (lbu/lb).
+  The explicit signed load fixes that final difference. All five functions now
+  check MATCH together with no undefined/data diagnostics. Whole-unit and full
+  retail verification pass; no compiler profile or tool changes were needed.
+- Private evidence: build/agents/r178/NOTES.md, signed_load.c, merged/standalone
+  disassembly. Don't infer variant status from stale captured filenames alone.
+- Next concrete target: inspect interface_element instruction003E8E5C using
+  preserved r177 declaration/predicate trial sources before retrying that merge.
+  Root scratch files preserved; no pushes/subagents. Final WSL_ROUND_OK completed.
+
+## Previous continuation (2026-10-30, Codex R177 automatic continuation)
 
 - **13,986 / 14,349 functions; 90.34% code; 363 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.

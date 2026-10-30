@@ -4020,5 +4020,8 @@
   "lib/func_0031B4E0": "ee-gcc2.96",
   "lib/func_0031B898": "ee-gcc2.96",
   "SFOGame/Source/gameGobjController/func_0022F5B0": "cwps2-3.0b38",
-  "SFOGame/Source/taser/func_00264980": "cwps2-3.0b38"
+  "SFOGame/Source/taser/func_00264980": "cwps2-3.0b38",
+  "main/func_00100740": "cwps2-3.0b38",
+  "main/func_00101250": "cwps2-3.0b38",
+  "lib/func_0010ED58": "ee-gcc2.9-991111a"
 }

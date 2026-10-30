@@ -5,7 +5,31 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30 handoff, Copilot session) - START HERE
+## Resume here (2026-10-30, Codex R158) - START HERE
+
+- Continued from the Copilot R157 handoff below. The active Windows checkout is
+  `D:\Claude\syphon-filter-omega-strain-decomp`; the older `sfos-decomp-helper` path is absent.
+- Integrated three previously held matches: `operator_delete` (0x00100740), the MW
+  exception-specification handler (0x00101250), and `_printf` (0x0010ED58), including its
+  292-byte jump table. This replaces 2,132 bytes of assembly with C.
+- Added `__unexpected` and `__end__catch` linker aliases. `check_match.symbols()` now reads
+  absolute definitions in `config/extra.ld` and invalidates its cache when that file changes,
+  so compiler-generated calls are checked against their actual retail targets.
+- Added the `gcc29a` compiler kind to check_match and integrate_pending, selecting the
+  installed `ee-gcc2.9-991111a` compiler and its original assembler with `-O2 -G0`.
+  Its assembler reproduces `_printf`'s floating-point hazard padding.
+- Final full WSL build remains byte-identical to retail (SHA-256
+  `9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6`).
+  **13,976 / 14,345 functions; 90.29% code, 99.92% data; 369 functions remain.**
+- Validation: all three candidates MATCH (including `_printf` data); 128 tests pass.
+  New regression coverage checks linker-alias cache invalidation and gcc29a selection/flags.
+- Used `tools/workflow/wsl_round.sh` directly for two verified batches, `r158` and
+  `r158_printf`, with a WSL keepalive. Changes are saved locally; no push was performed.
+- The first two rows of the older held-items table below are resolved. Other held items
+  and near misses remain available. Existing root-level untracked scratch candidates were
+  left untouched. No lane agents were launched in this continuation.
+
+## Previous handoff (2026-10-30, Copilot session)
 
 The Copilot session that ran R150-R157 has stopped. Every lane agent finished; nothing is pending.
 

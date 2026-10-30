@@ -5,7 +5,7 @@ usage: python tools/integrate_pending.py REPO PENDING_DIR
 
 Files are named <KIND>_<ADDR>.c, KIND being the compiler the match was made
 with: mw (3.0.3, the default), mw304, mw38, mw50, gcc (2.95.3), gcc296,
-gcc296g0, gcc29 or gcc29as296 (a bare <ADDR>.c is 2.95.3). Where a file goes
+gcc296g0, gcc29, gcc29a or gcc29as296 (a bare <ADDR>.c is 2.95.3). Where a file goes
 depends on the range of config/tu_ranges.txt that holds its address
 (unit_path): inside an original source file's range (a path such as
 SFOGame/Source/game.cc), a Metrowerks file becomes
@@ -47,7 +47,7 @@ from pathlib import Path
 
 BASE = 0x100000
 OVR = {"mw304": "cwps2-3.04", "mw38": "cwps2-3.0b38", "mw50": "cwps2-3.0b50", "gcc296": "ee-gcc2.96",
-       "gcc296g0": "ee-gcc2.96-G0", "gcc29": "ee-gcc2.9-991111", "gcc29as296": "ee-gcc2.9-991111-as296"}
+       "gcc296g0": "ee-gcc2.96-G0", "gcc29": "ee-gcc2.9-991111", "gcc29a": "ee-gcc2.9-991111a", "gcc29as296": "ee-gcc2.9-991111-as296"}
 MW_KINDS = ("mw", "mw304", "mw38", "mw50")
 PIECE_TYPES = (".data", ".rodata", ".sdata")  # configure.DATA_PIECE_TYPES
 SEG = re.compile(r"(\s*)- \[0x([0-9A-F]+), ([.\w]+)(?:, ([^\]]+))?\]\s*$")

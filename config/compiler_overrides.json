@@ -4015,5 +4015,10 @@
   "Libs/SFOLib/Source/particle/func_0039F860": "cwps2-3.0b38",
   "Libs/SFOLib/Source/collision/func_003BD0A0": "cwps2-3.0b38",
   "Libs/SFOLib/Source/scriptManager/func_003E0510": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/mp_vibuf/func_003F4B40": "cwps2-3.0b38"
+  "Libs/SFOLib/Source/mp_vibuf/func_003F4B40": "cwps2-3.0b38",
+  "lib/func_0031B248": "ee-gcc2.96",
+  "lib/func_0031B4E0": "ee-gcc2.96",
+  "lib/func_0031B898": "ee-gcc2.96",
+  "SFOGame/Source/gameGobjController/func_0022F5B0": "cwps2-3.0b38",
+  "SFOGame/Source/taser/func_00264980": "cwps2-3.0b38"
 }

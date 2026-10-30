@@ -3207,7 +3207,7 @@ segments:
       - [0x21FC10, c, main/func_0031FC10]
       - [0x21FC18, c, lib/medius/medius_31FC18]
       - [0x21FC20, c, main/func_0031FC20]
-      - [0x21FC28, asm]
+      - [0x21FC28, c, lib/func_0031FC28]
       - [0x21FEA8, c, lib/func_0031FEA8]
       - [0x2201A8, c, lib/medius/medius_3201A8]
       - [0x220570, c, lib/medius/medius_320570]

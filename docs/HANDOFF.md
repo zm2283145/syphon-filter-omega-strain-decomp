@@ -5,7 +5,41 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R178 automatic continuation) - START HERE
+## Current user direction (2026-10-30, matching priority)
+
+The user explicitly authorized up to three matching agents and asked for new
+C/C++ matches over standalone consolidation rounds. Reuse network, audio/math
+and game/MW lanes, checking live agent state before assignment. Agents only write
+separate private scratch/ready candidates. Parent alone integrates, folds accepted
+matches into original sections, verifies full retail and commits. Coordinate before
+full builds so scratch compiles don't race changed source/config. Preserve user
+scratch files. Keep matching as the priority; consolidate alongside accepted matches.
+
+## Resume here (2026-10-30, Codex R179 three-agent matching round) - START HERE
+
+- **13,987 / 14,349 functions; 90.35% code; 362 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. One new C match: **FftSumCosOlAdd**,
+  0x0031FC28, 640 bytes, gcc296, now src/lib/func_0031FC28.c. No confirmed
+  original prototype .cc range owns this library routine; no speculative move.
+- Audio agent solved the missing im-base setup through short-lived local pointer
+  lifetimes and snapshots of coefficient/trig-table globals. Final copy-loop base
+  initialization order uses a local register-bound pointer. Inline asm is only an
+  empty scheduling dependency; ordinary instructions remain C compiler output.
+  Corrected stale historical inverse-FFT callees and reused actual coefficient data.
+- Parent independently reran strict check: MATCH, no undefined/data/literal
+  diagnostics. Full WSL integration added exactly640bytes, no skipped candidates.
+  WSL_ROUND_OK completed before commit: hash, report,135tests and synchronization.
+- Private ready/evidence: build/pending/r179_audio/gcc296_0031FC28.c and
+  build/agents/r179_audio/NOTES.md. This is new translated C, not consolidation credit.
+- Network/game lanes found no exact matches; preserve their r179_network and
+  r179_game NOTES/drafts. Do not repeat their new byte-swap ABI matrix, GunBarrel
+  operand-use sweep, NetIInitialize register/alias trials or E2250 data-guard hints.
+  UpdatePlayers has January hash-exact evidence and a localized control-flow issue;
+  its best coarse diagnostics are not strict matches. Root coordination notes in
+  r179_coordination. Three lanes may continue once parent verification is finished.
+- Root scratch candidates preserved; no pushes or private assets committed.
+
+## Previous continuation (2026-10-30, Codex R178 automatic continuation)
 
 - **13,986 / 14,349 functions; 90.34% code; 363 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.

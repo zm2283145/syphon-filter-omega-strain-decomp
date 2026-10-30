@@ -15,6 +15,20 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Current matching lanes (R208)
+
+- Audio reconstructs GuiNetMessageArray_onRowRender00347B40; network independently
+  reconstructs GuiMissionList_onRowRender002AB2A0 using accepted GUI sibling and
+  actual helper ABI evidence. Game continues GrabLedge checkpoint/request contracts.
+  Three private lanes, parent alone integrates/verifies; baseline still R189.
+- R206 independent texture Begin/EndChain API correction preserves10strict words;
+  R207 ObjectiveSelected viewport reference and length result contracts preserve21
+  or spill/worsen. Evidence saved in r206_network/r207_audio, no new match.
+- Parent cleaned skeleton ResetBBoxContributors00290610 r02 draft canonical calls;
+  current Windows checker0x244vsold padded0x250,96words+size,clean symbols/data.
+  Historical aligned score not comparable. Private r208_parent; no repeated
+  iterator/copy/pragma grids and no acceptance/count change.
+
 ## Independent matching research (R205/R206)
 
 - Audio triangle actual helper ABI corrections tie current27word+size mismatch;

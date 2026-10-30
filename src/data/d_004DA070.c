@@ -85,14 +85,16 @@ extern void cSystem_ScriptGetObjectId();
 extern void cSystem_SendCreated();
 extern void func_00140E90();
 extern void func_001479A0();
+extern void func_001479E0();
+extern void func_001479F0();
 extern void func_00147A00();
 extern void func_00147A10();
 
 void *D_004DA070[16] = {
     0, 0, &cParallelLight_dtor, &PointLightComp_Start,
-    (void *)0x1479e0, &func_00147A00, &func_00147A10, &func_001479A0,
+    &func_001479E0, &func_00147A00, &func_00147A10, &func_001479A0,
     &Light_GetCoronaSize, &Light_GetCoronaFlag, &cLightSrc_SetPosition, &cLightSrc_Activate,
-    &cLightSrc_Deactivate, (void *)0x1479f0, 0, 0,
+    &cLightSrc_Deactivate, &func_001479F0, 0, 0,
 };
 
 void *D_004DA0B0[72] = {

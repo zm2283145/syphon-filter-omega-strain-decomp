@@ -5,7 +5,29 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R172 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R173 automatic continuation) - START HERE
+
+- **13,986 / 14,349 functions; 90.34% code; 363 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. Three C routines (40 bytes) matched.
+- Recovered independent boundaries at 001479D0/001479E0/001479F0 (16/16/8 bytes):
+  two virtual wrappers and a float getter previously grouped as one40-byte asm
+  function. Explicit starts/sizes correct the total by+2; C count rises by3,
+  remaining drops by1. Existing PointLightComp_Start name retained; new names
+  remain address-based. January-priority dossier has no direct mapping.
+  Existing point/parallel/scene-light vtables independently reference both
+  interior entrypoints; regenerated data now uses their symbols instead of raw addresses.
+- New matches folded into **SFOGame/Source/weapon_21.c** within the established
+  weapon.cc range. Also folded two other verified spans:140EA0..141240 and
+  143DF0..144080. Seven source units became three; other boundaries retained.
+  Strict WSL check of final weapon_21 gives all13 functions MATCH, its existing
+  8-byte data block MATCH, and no undefined diagnostics. Full retail hash exact.
+- R172 consolidated infobar into its single original .c file, commit43e9e28b.
+  Private evidence: build/agents/r172 and r173/NOTES.md. No pushes/subagents,
+  root scratch candidates preserved. Final WSL_ROUND_OK completed before commit.
+- Next useful work: fresh candidate inventory and remaining original sections;
+  don't retry documented scheduling/dead-define experiments without new evidence.
+
+## Previous continuation (2026-10-30, Codex R172 automatic continuation)
 
 - Consolidated **infobar** from three source units into one original source
   file (13 source blocks). TextArea declarations consistently use opaque object

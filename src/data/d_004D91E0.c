@@ -16,6 +16,8 @@ extern void cOutOfAmmoMsg_v03();
 extern void cPointLight_dtor();
 extern void cSpecFx_dtor();
 extern void func_001479A0();
+extern void func_001479E0();
+extern void func_001479F0();
 extern void func_00147A00();
 extern void func_00147A10();
 
@@ -26,16 +28,16 @@ void *D_004D91E0[8] = {
 
 void *D_004D9200[16] = {
     0, 0, &cPointLight_dtor, &PointLightComp_Start,
-    (void *)0x1479e0, &func_00147A00, &func_00147A10, &func_001479A0,
+    &func_001479E0, &func_00147A00, &func_00147A10, &func_001479A0,
     &Light_GetCoronaSize, &Light_GetCoronaFlag, &cLightSrc_SetPosition, &cLightSrc_Activate,
-    &cLightSrc_Deactivate, (void *)0x1479f0, 0, 0,
+    &cLightSrc_Deactivate, &func_001479F0, 0, 0,
 };
 
 void *D_004D9240[16] = {
     0, 0, 0, &PointLightComp_Start,
-    (void *)0x1479e0, &func_00147A00, &func_00147A10, &func_001479A0,
+    &func_001479E0, &func_00147A00, &func_00147A10, &func_001479A0,
     &Light_GetCoronaSize, &Light_GetCoronaFlag, &cLightSrc_SetPosition, &cLightSrc_Activate,
-    &cLightSrc_Deactivate, (void *)0x1479f0, 0, 0,
+    &cLightSrc_Deactivate, &func_001479F0, 0, 0,
 };
 
 void *D_004D9280[8] = {

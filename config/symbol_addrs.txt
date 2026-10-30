@@ -3832,7 +3832,7 @@ WeaponDb_CloneModel = 0x00146B80; // type:func
 WeaponDb_OnModelLoaded = 0x00146FC0; // type:func
 cWeaponDB_GunStreamReturn = 0x00147110; // type:func
 cWeaponDB_GetShellCasing = 0x00147880; // type:func
-PointLightComp_Start = 0x001479D0; // type:func
+PointLightComp_Start = 0x001479D0; // type:func size:0x10
 cNPC_SOBJ_toInt = 0x0014A670; // type:func
 cGOBJ_GetTargetPosition = 0x0014D340; // type:func
 cNPC_Human = 0x00158540; // type:func
@@ -13387,3 +13387,7 @@ StaticInit_NetMsgThrottle = 0x004D8C10; // type:func
 func_00364780 = 0x00364780; // type:func size:0x10
 func_00364790 = 0x00364790; // type:func size:0x10
 func_003647A0 = 0x003647A0; // type:func size:0x8
+
+// Independent compiled wrappers/getter previously grouped with PointLightComp_Start.
+func_001479E0 = 0x001479E0; // type:func size:0x10
+func_001479F0 = 0x001479F0; // type:func size:0x8

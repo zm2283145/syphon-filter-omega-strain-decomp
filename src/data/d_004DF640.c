@@ -50,6 +50,8 @@ extern void cXform_Translate();
 extern void cXform_UpdateTreeNode();
 extern void cXform_dtor();
 extern void func_001479A0();
+extern void func_001479E0();
+extern void func_001479F0();
 extern void func_00147A00();
 extern void func_00147A10();
 
@@ -73,7 +75,7 @@ void *D_004DF6A0[24] = {
 
 void *D_004DF700[16] = {
     0, 0, &cSceneLight_dtor, &PointLightComp_Start,
-    (void *)0x1479e0, &func_00147A00, &func_00147A10, &func_001479A0,
+    &func_001479E0, &func_00147A00, &func_00147A10, &func_001479A0,
     &Light_GetCoronaSize, &Light_GetCoronaFlag, &cLightSrc_SetPosition, &cSceneLight_Activate,
-    &cSceneLight_Deactivate, (void *)0x1479f0, 0, 0,
+    &cSceneLight_Deactivate, &func_001479F0, 0, 0,
 };

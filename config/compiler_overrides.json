@@ -3515,8 +3515,6 @@
   "SFOGame/Source/GuiAgentModify_6": "cwps2-3.0b38",
   "SFOGame/Source/GuiAgentModify_7": "cwps2-3.0b38",
   "SFOGame/Source/GuiAgentModify_8": "cwps2-3.0b38",
-  "SFOGame/Source/GuiAgentModify_9": "cwps2-3.0b38",
-  "SFOGame/Source/GuiAgentModify_10": "cwps2-3.0b38",
   "SFOGame/Source/GuiAgentModify_11": "cwps2-3.0b50",
   "SFOGame/Source/GuiAgentModify_12": "cwps2-3.0b38",
   "SFOGame/Source/GuiAgentModify_13": "cwps2-3.0b38",
@@ -3999,5 +3997,6 @@
   "lib/func_00357178": "ee-gcc2.96",
   "lib/libcdvd/func_001184C0": "ee-gcc2.9-991111-as296",
   "lib/libkernl/func_0010FBC0": "ee-gcc2.9-991111",
-  "lib/libmpeg/func_0010CAF0": "ee-gcc2.9-991111"
+  "lib/libmpeg/func_0010CAF0": "ee-gcc2.9-991111",
+  "SFOGame/Source/GuiAgentModify_9": "cwps2-3.0b38"
 }

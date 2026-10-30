@@ -15,6 +15,35 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Resume here (2026-10-30, Codex R188 accepted independent-review match) - START HERE
+
+- **13,997 / 14,349 functions; 90.49% code; 352 remaining.** Full retail
+  SHA-256 9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6
+  verified; regression checks and synchronization completed WSL_ROUND_OK.
+- User asked for near misses rotated to other agents and parent matching research
+  in parallel. Fresh game review solved all13words of GuiAgentModify_CountSelections
+  00343940,676bytes,mw38. Root cause: old func00401E40 declaration/call omitted
+  seventh int noSwap=3. Actual prototype CountPartsAndTexByName and accepted
+  manUtils_3.c confirm full ABI. No register tuning or compiler changes needed.
+- Parent independently checked standard MATCH, integrated original GuiAgentModify
+  layout and merged three adjacent units into GuiAgentModify_9.c, byte-identical.
+  Complete original section remains14 compiler/data/declaration groups; full single
+  file still blocked by concrete dry-run incompatibilities. No forced merge.
+- Evidence build/pending/r199_game/{mw38_00343940.c,NOTES.txt},r199_game/dossier,
+  parent r196_parent cleaned13word baseline. Jan prototype hash-exact676bytes.
+  All agents quiesced before full verification; no private artifacts committed.
+- R198 Pack improved219to211strict via world-first/const-position reference context,
+  best r198_game/named_position_refs.c; exact match not claimed. Cached message
+  allocation is0x60=96bytes. Network real narrow wire-type audit couldn't explain
+  repeated conversion chain; r198_network notes preserve evidence.
+- R198 animation actual MSL iterator/reference constructor and implicit-copy audit:
+  pointer-only trivial aggregate naturally emits lwc1/swc1 in isolated probes, so
+  no float union needed. Whole caller still fails; r198_audio evidence preserved.
+- Independent R199 audio RemoteDisconnect and network gun-matrix reviews preserve
+  four/ten-word near misses with no new supported premise. Parent fresh NetIInitialize
+  dossier r199_parent confirms Jan matching store schedule and lacks debug locals;
+  no repeated store permutation grid. Resume fresh ABI-focused matching reviews.
+
 ## Active matching research (2026-10-30, R197/R198)
 
 - Verified source still R187,969e7193:13,996/14,349,90.47%,353remaining.
@@ -105,7 +134,7 @@ scratch files. Keep matching as the priority; consolidate alongside accepted mat
   locals/types); network RemoteClientDisconnectEvent002DEF70 (4word near-match).
   Reuse these agents; private scratch only. Parent integrates and full-verifies.
 
-## Resume here (2026-10-30, Codex R187 accepted matching batch) - START HERE
+## Resume here (2026-10-30, Codex R187 accepted matching batch)
 
 - **13,996 / 14,349 functions; 90.47% code; 353 remaining.** Full retail
   SHA-256 9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6

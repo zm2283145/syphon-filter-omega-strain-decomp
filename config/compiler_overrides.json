@@ -3991,5 +3991,6 @@
   "Libs/SFOLib/Source/NetActivateAndControlMsg_2": "cwps2-3.0b38",
   "Libs/SFOLib/Source/bboxman": "cwps2-3.0b38",
   "SFOGame/Source/netTaserMsg": "cwps2-3.0b38",
-  "lib/func_0031FC28": "ee-gcc2.96"
+  "lib/func_0031FC28": "ee-gcc2.96",
+  "lib/func_0031E698": "ee-gcc2.96"
 }

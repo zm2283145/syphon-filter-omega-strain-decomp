@@ -3192,7 +3192,7 @@ segments:
       - [0x21DD70, c, lib/medius/medius_31DD70]
       - [0x21E030, c, lib/medius/medius_31E030]
       - [0x21E548, c, lib/medius/medius_31E548]
-      - [0x21E698, asm]
+      - [0x21E698, c, lib/func_0031E698]
       - [0x21E7B8, c, lib/medius/medius_31E7B8]
       - [0x21E7C0, c, lib/medius/medius_31E7C0]
       - [0x21EA18, c, lib/func_0031EA18]

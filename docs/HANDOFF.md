@@ -15,7 +15,32 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
-## Resume here (2026-10-30, Codex R179 three-agent matching round) - START HERE
+## Resume here (2026-10-30, Codex R180 three-agent matching round) - START HERE
+
+- **13,988 / 14,349 functions; 90.36% code; 361 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. New C match: **nemAgcMeanEngLevel**,
+  0x0031E698,288bytes,gcc296, now src/lib/func_0031E698.c. Both prototypes
+  hash-exact; no recorded original .cc owner, so no speculative source relocation.
+- Audio lane solved the long-standing base-copy/coalescing issue by separating
+  the initial base from the first-loop cursor and preserving pointer/count
+  lifetimes through empty read/write constraints. Ordinary loops and arithmetic
+  remain C; no emitted instruction transcription or file-scope fixed registers.
+- Parent independently reran strict check: MATCH, no undefined/data/literal
+  diagnostics. Full WSL integration added288bytes with no skipped files.
+  WSL_ROUND_OK completed including hash,135tests,report and synchronization.
+- Private ready/evidence: build/pending/r180_audio/gcc296_0031E698.c and
+  build/agents/r180_audio/NOTES.md. Game/network confirmed quiescent before build.
+- GAME lane is close on **GuiMissionList_onElementRender**,0x002AAD40,1364bytes:
+  rank_rev.c differs at four words400/404/408/40C (rank pointer/index registers),
+  switch .rodata4AB990/18 matches, no UNDEF. Not counted. Resume this exact work
+  after parent synchronization; do not reset to earlier93-word reconstruction.
+- NETWORK NetUpdateAll remains strict failure despite better diagnostic alignment.
+  Saved allnatural7.c and new lifetime trials in r180_network; do not mistake
+  coarse33-versus79 improvement for exact matches. Resume based on new evidence.
+- Parent coordination notes: r180_coordination. Preserve all root scratch;
+  no pushes/subagents beyond the three human-authorized matching lanes.
+
+## Previous continuation (2026-10-30, Codex R179 three-agent matching round)
 
 - **13,987 / 14,349 functions; 90.35% code; 362 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. One new C match: **FftSumCosOlAdd**,

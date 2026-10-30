@@ -3189,7 +3189,7 @@ segments:
       - [0x21D2A8, c, lib/func_0031D2A8]
       - [0x21D5C8, c, lib/medius/medius_31D5C8]
       - [0x21D680, c, lib/medius/medius_31D680]
-      - [0x21DB68, asm]
+      - [0x21DB68, c, lib/func_0031DB68]
       - [0x21DD70, c, lib/medius/medius_31DD70]
       - [0x21E030, c, lib/medius/medius_31E030]
       - [0x21E548, c, lib/medius/medius_31E548]

@@ -15,7 +15,33 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
-## Resume here (2026-10-30, Codex R182 accepted three-agent matching batch) - START HERE
+## Resume here (2026-10-30, Codex R183 accepted three-agent matching batch) - START HERE
+
+- **13,991 / 14,349 functions; 90.43% code; 358 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. New C match: **VoicingLD**,
+  0x0031DB68,520bytes,gcc296, now src/lib/func_0031DB68.c. Both prototypes are
+  hash-exact; no recorded owning .cc, so kept in library layout without speculation.
+- Audio lane reconstructed three nested scans with center-sample/scan pointer
+  reuse and local register lifetimes. Explicit tail countdown preserves retail
+  induction after binding the scan index. Ordinary C arithmetic/loops; no assembly
+  statements or instruction transcription in accepted candidate.
+- Parent independently rechecked strict function MATCH and LIT004E1C9CMATCH,
+  no undefined/data findings. Full integration added520bytes with no skips.
+  WSL_ROUND_OK completed before commit: retail hash,135tests,report and sync.
+- Ready/evidence: build/pending/r184_audio/gcc296_0031DB68.c and r184_audio/NOTES.md;
+  parent checkpoint r183_coordination. All lanes confirmed quiescent before build.
+- GAME weapon renderer now113strictdifferences,exactsize/frame,clean symbols:
+  r184_game/area_size_ref.c. Prototype areaCenter/boxSize locals are references;
+  reference accessor fixed12words. Actual matrix helpers are Transform/LocalTransform;
+  their debug ABI/local ordering is the next concrete investigation, not guessed Mul.
+- NETWORK NetObjectFullUpdatePacketHandler0x002E76D0 now48strictdifferences,
+  1164bytes,noUNDEF/data/call findings: r184_network/int_alloc.c. Counted field
+  loop and natural update order improved64->48; no ready match. Preserve failed
+  lifetime/ABI trials. Resume both lanes only after parent final synchronization.
+- Root scratch preserved; no pushes/private assets/tooling edits committed.
+  Continue three matching lanes under existing human authorization.
+
+## Previous continuation (2026-10-30, Codex R182 accepted three-agent matching batch)
 
 - **13,990 / 14,349 functions; 90.42% code; 359 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. New C match: **EstOnset**,

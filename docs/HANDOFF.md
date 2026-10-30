@@ -15,6 +15,18 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Current independent matching lanes (R200/R201)
+
+- Audio reviews Fire ctor27word near miss; game independently reviews network
+  NetIInitialize8word; network independently reviews collision iterator12word.
+  Preserve r200 private work, avoid duplicate target assignments.
+- Parent independently audited Gui_Init00414900 callee/prototype ABIs, fixed old
+  string-assign void return and all stale names in private r201_parent/gui.c.
+  Previously unavailable mw304 is now installed: still0x158vs0x150, same35word/size
+  diagnostics as mw38, clean calls/data. No match; notes/dossiers in r201_parent.
+  Original gui.cc mapping has.714 similarity and224byte prototype vs336retail;
+  don't treat it as hash-exact. Verified source remains R188,352remaining.
+
 ## Resume here (2026-10-30, Codex R188 accepted independent-review match) - START HERE
 
 - **13,997 / 14,349 functions; 90.49% code; 352 remaining.** Full retail

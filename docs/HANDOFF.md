@@ -15,6 +15,23 @@ matches into original sections, verifies full retail and commits. Coordinate bef
 full builds so scratch compiles don't race changed source/config. Preserve user
 scratch files. Keep matching as the priority; consolidate alongside accepted matches.
 
+## Current matching lanes (R210)
+
+- R209 native MW callback probe proves vptr@8 when timing fields precede virtual
+  declarations; retail event constructor writes fullword ID whereas Jan writesbyte.
+  This supports retail intword event storage, not blindly copying old Jan charlayout.
+  GrabLedge fullcandidate did not improve yet; r209_game evidence preserved.
+- Independent fade helper probe exactly matches existing owned constructor; scoped
+  callee optimizer settings don't preserve inlined behavior. No new match counted.
+  onWake true double-return correction preserves10word near miss, no gain.
+- R210 audio repairs stageability of old AgentData nesteddestructor/dataownership;
+  game continues Grab nativecallback/event semantics; network audits Monster_ctor.
+  Parent independently audited ObjectiveSelected real five-argument InfoBar/call
+  contracts, no missing argument found. Private r210_parent notes.
+- GitHub main was synchronized ataf74d9b3 on explicit user request. Subsequent
+  research-only commits stay local under heartbeat policy; no verified match since
+  R189,13,998/14,350,90.49%,352remaining.
+
 ## Current matching lanes (R209)
 
 - R208 GUI twin actual method/member/viewport corrections retain77strict words

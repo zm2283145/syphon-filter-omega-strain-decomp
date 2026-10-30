@@ -2518,7 +2518,6 @@ segments:
       - [0x1D15C0, c, SFOGame/Source/NetGeneratorDelete]
       - [0x1D1940, c, SFOGame/Source/NetHuman]
       - [0x1D2530, c, SFOGame/Source/NetLabelMsg]
-      - [0x1D2850, c, SFOGame/Source/NetLabelMsg_2]
       - [0x1D2B20, c, SFOGame/Source/NetLabelMsg_3]
       - [0x1D2BD0, c, main/func_002D2BD0]
       - [0x1D2C20, c, SFOGame/Source/NetNPC]

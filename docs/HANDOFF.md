@@ -5,7 +5,28 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Resume here (2026-10-30, Codex R173 automatic continuation) - START HERE
+## Resume here (2026-10-30, Codex R174 automatic continuation) - START HERE
+
+- **13,986 / 14,349 functions; 90.34% code; 363 remaining.** Full retail
+  SHA-256 unchanged; all **135 tests** pass. No new function claimed this round.
+- Reduced **NetLabelMsg** from three parts to two: first seven source blocks
+  now share NetLabelMsg.c; trailing NPC helpers remain NetLabelMsg_3.c.
+  Corrected callback declaration to its int return/four pointer arguments and
+  made message handle D_0051F090 consistently int, registered by address.
+  Whole-unit and full WSL retail checks pass.
+- Final helper block retains its compiler boundary. Adding optimize_for_size
+  to its original source did not solve the combined code-size mismatch
+  (0x678 versus0x6a0); reverted the trial. No speculative helper ownership move.
+- Historical held check: c211nm's14-function GuiDecorator group at416830 is
+  already integrated. c151nm's1479D0 group was integrated R173. Do not duplicate
+  either. Private details: build/agents/r174/NOTES.md.
+- Next useful consolidation: remaining NetActivateAndControlMsg callback
+  signature conflict (first unit has separated data, but final two may combine),
+  or current unmatched inventory. Keep documented failed scheduling experiments.
+- Root scratch files preserved; no pushes/subagents. WSL_ROUND_OK completed
+  including hash, regression checks, report and final synchronization.
+
+## Previous continuation (2026-10-30, Codex R173 automatic continuation)
 
 - **13,986 / 14,349 functions; 90.34% code; 363 remaining.** Full retail
   SHA-256 unchanged; all **135 tests** pass. Three C routines (40 bytes) matched.

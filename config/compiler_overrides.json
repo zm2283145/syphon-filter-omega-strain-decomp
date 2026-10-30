@@ -3441,8 +3441,6 @@
   "SFOGame/Source/NetGeneratorCreate_2": "cwps2-3.0b38",
   "SFOGame/Source/NetGeneratorCreate_3": "cwps2-3.0b38",
   "SFOGame/Source/NetGeneratorCreate_4": "cwps2-3.0b38",
-  "SFOGame/Source/NetLabelMsg": "cwps2-3.0b38",
-  "SFOGame/Source/NetLabelMsg_2": "cwps2-3.0b38",
   "SFOGame/Source/NetNPC": "cwps2-3.0b38",
   "SFOGame/Source/NetNPC_2": "cwps2-3.0b38",
   "SFOGame/Source/NetNPC_4": "cwps2-3.0b38",
@@ -3996,5 +3994,6 @@
   "Libs/SFOLib/Source/infobar": "cwps2-3.0b38",
   "SFOGame/Source/weapon_4": "cwps2-3.0b38",
   "SFOGame/Source/weapon_16": "cwps2-3.0b38",
-  "SFOGame/Source/weapon_21": "cwps2-3.0b38"
+  "SFOGame/Source/weapon_21": "cwps2-3.0b38",
+  "SFOGame/Source/NetLabelMsg": "cwps2-3.0b38"
 }

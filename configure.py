@@ -370,6 +370,12 @@ def main():
     block = {n: p[0][0] + seg_vram for n, p in carved.items()}
     data_objs, relinks = [], []
     ranges = load_ranges(CONFIG / "tu_ranges.txt")
+    handwritten = set()
+    if (CONFIG / "handwritten.txt").exists():
+        for line in (CONFIG / "handwritten.txt").read_text().splitlines():
+            line = line.split("#", 1)[0].strip()
+            if line:
+                handwritten.add(int(line, 0))
     for start, typ, name in subs:
         vram = start + seg_vram
         cats = categories(name, vram, ranges)
@@ -400,6 +406,22 @@ def main():
             obj = Path("build") / src.with_suffix(".o")
             asm_objs.append((src, obj, next(a for a in (16, 8, 4) if (start + 0x100000) % a == 0)))
             link = obj
+            hsrc = Path("src") / "asm" / f"{start + 0x100000:06X}.s"
+            if typ == "asm" and start in handwritten and (ROOT / hsrc).exists():
+                # hand-written assembly kept as source (tools/handwritten.py):
+                # the source copy is linked, splat's disassembly is the target
+                base = Path("build") / hsrc.with_suffix(".o")
+                asm_objs.append((hsrc, base, next(a for a in (16, 8, 4) if (start + 0x100000) % a == 0)))
+                link = base
+                if in_tail(start):
+                    link = base.with_suffix(".link.o")
+                    relinks.append((base, link, vram, vram))
+                link_objs.append(link)
+                units.append({"name": f"hasm/{start + 0x100000:06X}", "target_path": str(obj).replace("\\", "/"),
+                              "base_path": str(base).replace("\\", "/"),
+                              "metadata": {"progress_categories": cats, "complete": True,
+                                           "source_path": str(hsrc).replace("\\", "/")}})
+                continue
             if in_tail(start):
                 link = obj.with_suffix(".link.o")
                 relinks.append((obj, link, vram, vram))

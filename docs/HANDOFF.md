@@ -1842,7 +1842,14 @@ prototype that callers use inconsistently is declared K&R in a shared header (fo
   no symbol entries.
 - Some functions reference `.lit4` float literals that the current linking cannot place.
 - `0x286570` / `0x286590`: already integrated as cTurret_Stop / cTurret_NextFrame in tank_15.c (confirmed R163).
-- Hand-written assembly functions stay as assembly.
+- Hand-written assembly functions are kept as source in `src/asm/` (2026-10-31, owner decision):
+  list the asm subsegment in `config/handwritten.txt`, run `tools/handwritten.py` in WSL (it
+  copies splat's disassembly without the `nonmatching` markers), and `configure.py` links the
+  copy and reports the unit as `hasm/<VRAM>`. List a unit only when every function in it is
+  hand-written (syscall stubs, privileged code, `addi`/`sub`/`plzcw`, documented routines).
+  Still asm because the unit is mixed or unproven: `_GetGsDxDyOffset` (shares 0x102B30 with
+  C), longReverse/SHAtoByte (island unit with SHSTransform), NellyLog2/NellyInvLog2,
+  CalcCostFunc, rFft_vu4.
 - `0x2B69A0` (_sceMcFatInit) was resolved in R162 by reusing the existing root-directory
   literal with a fixed-size memcpy. No rodata split was needed; the held draft is historical.
 - Do not retry the old 0x286570 packed-unit draft: both functions are already C-owned.
@@ -1862,5 +1869,6 @@ Function names live in `config/symbol_addrs.txt`; add a name there and run
 
 ## Open decisions for the owner
 
-- Whether to commit hand-written assembly functions as `.s` units.
+- ~~Whether to commit hand-written assembly functions as `.s` units.~~ Done 2026-10-31: 27 units,
+  207 functions in `src/asm/` (see `config/handwritten.txt`).
 - Whether to give data the same readability treatment as code.

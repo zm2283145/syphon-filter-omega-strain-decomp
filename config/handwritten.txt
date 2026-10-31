@@ -1,0 +1,34 @@
+# Asm subsegments (splat.yaml ROM start) whose functions are all hand-written assembly.
+# Each is kept as source in src/asm/<VRAM>.s (written by tools/handwritten.py from
+# splat's disassembly) and assembled as the unit's base object, so it counts as
+# source in the progress report. Only list a unit when every function in it is
+# hand-written: kernel syscall stubs, privileged code (eret, cache, mtc0, ei/di),
+# instructions no compiler here emits (addi/sub, plzcw, pabsw-style register
+# saves of caller-saved temporaries), or routines established as hand-written.
+0x000000  # crt0: _start (padduw register clears, syscalls, ei)
+0x000220  # 8-byte syscall stub
+0x0023B0  # setjmp/longjmp-style context save/restore (paddub $v0,$sp, sub $sp)
+0x0056C8  # _rix_*/_ri0_* MMI image reconstruction kernels (addi), clamp/pack helpers
+0x00CD40  # kernel syscall stubs (RFU000_FullReset .. _InitTLB)
+0x00D9B0  # _sceSDC: cache instructions, mtc0
+0x00DAF0  # _sceIDC: cache instructions, mtc0
+0x00FB10  # sceSifWriteBackDCache: cache instructions
+0x0159E0  # kernel patch syscall stub
+0x015A28  # kernel patch syscall stubs
+0x015B10  # TLB syscall stubs
+0x015B70  # TLB syscall stubs
+0x015E04  # kernel exception handler ($k0/$k1, eret, mtc0)
+0x0161F8  # EIntr: ei/di, cop0
+0x016268  # kernel patch syscall stub
+0x0162F0  # kernel patch syscall stub
+0x016438  # kernel patch syscall stub
+0x0164A0  # kernel patch syscall stubs
+0x0164F8  # kernel patch syscall stub
+0x016620  # kernel patch syscall stub
+0x016660  # kernel patch syscall stub
+0x0168C0  # kernel patch syscall stubs
+0x016918  # kernel patch syscall stub
+0x016A00  # SetT2: eret, cop0
+0x1F1C38  # bignum routines (IsSmaller, lint*, MODIP, MULT, XMOD, Shift*): lq/sq saves of temporaries, plzcw
+0x2020A8  # ScrambleSeed: mfc0 Count, $at total, addi
+0x217780  # DotProd: mula.s/madda.s accumulator chain

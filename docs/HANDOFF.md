@@ -5,6 +5,16 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Current state (R214, 2026-10-31)
+
+14,239 / 14,351 functions, 92.26% code, 99.79% data (hand-written asm counts as source).
+The 112 functions still unmatched are listed in `build/unmatched_r214.tsv` (copy of the
+coordinator's list; regenerate it from `progress/report.json` if missing). `fptodp`
+(MW float->double helper) is aliased in `config/extra.ld`, alongside `__dl__FPv`.
+Remaining work is split into near misses (see "Near-miss techniques (newest)") and
+the big functions to rebuild from prototype DWARF. Per-function status, best drafts and
+next ideas for every remaining target are in `docs/lane_notes/` (start with its README).
+
 ## Current user direction (2026-10-30, matching priority)
 
 The user explicitly authorized up to three matching agents and asked for new
@@ -1495,7 +1505,9 @@ Automated search (2026-10-31). Both tools run in WSL with `CW38_DIR=/root/cw/mwc
   - Output sources still need `DIR/reattr.py` run on them before `check_match`. pycparser drops `__attribute__((aligned))` and `volatile` on asm, and reattr puts them back.
   - It only works on plain C drafts; pycparser rejects C++ and labels-as-values.
   - Its score includes register differences, so a lower permuter score does not always mean fewer differing words.
-- R213 trial: in the first 30 minutes of 90-minute runs on 10 near-miss drafts, nothing matched. Hand edits by the lanes are still the main route.
+- R213 trial: full 90-minute `mutate.py` runs on 12 near-miss drafts produced no match (Monster_ctor 22→21 and cVisionFxMan_DeactivateFx 28→27 were the only gains). A permuter run on loadingThread lowered its score 360→165 without removing any of the 5 differing words. Register-allocation and scheduling near misses need hand edits; the lanes remain the main route.
+- R215 (lane wrap-up): every lane's NOTES.md and best near-miss drafts are snapshotted in `docs/lane_notes/` (index with word counts in its README). New techniques: a vertex `operator=` written as inline `lq`/`sq` with pointer locals, destination declared first, fixed the GUI row-render pair (77–89 → 0 words); the prototype ELF has a DWARF `.line` table mapping each instruction to its source line (k2 `lines.py`); dropping surplus `opt_*` pragmas restored exact size on cParticleShatter_Render.
+- R214: big functions can be rebuilt from the prototype DWARF/disassembly (`tools/proto`, `build/agents/P1`). cHumanIkRoutine_NextFrame (14,360 bytes) fully matched this way, and cMan_ManRender (10,628 bytes) is down to one swapped instruction pair.
 
 From the R153–R155 lanes (2026-10-29):
 

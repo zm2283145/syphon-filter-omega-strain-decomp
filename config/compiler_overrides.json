@@ -4033,5 +4033,12 @@
   "Libs/SFOLib/Source/ska/func_003B17D0": "cwps2-3.0b38",
   "Libs/SFOLib/Source/skybox/func_003BBDC0": "cwps2-3.0b38",
   "Libs/SFOLib/Source/collision/func_003BD450": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/interface_model/func_003EF660": "cwps2-3.0b38"
+  "Libs/SFOLib/Source/interface_model/func_003EF660": "cwps2-3.0b38",
+  "SFOGame/Source/scene/func_0013E1B0": "cwps2-3.0b38",
+  "SFOGame/Source/npc/func_00153870": "cwps2-3.0b38",
+  "SFOGame/Source/GameGOBJ/func_00219820": "cwps2-3.0b38",
+  "SFOGame/Source/GuiMissionList/func_002AB2A0": "cwps2-3.0b38",
+  "SFOGame/Source/GuiNetMessages/func_00347B40": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/man/func_0038CD90": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/mp_vibuf/func_003F45C0": "cwps2-3.0b38"
 }

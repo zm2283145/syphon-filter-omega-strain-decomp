@@ -3998,5 +3998,21 @@
   "lib/libkernl/func_0010FBC0": "ee-gcc2.9-991111",
   "lib/libmpeg/func_0010CAF0": "ee-gcc2.9-991111",
   "SFOGame/Source/GuiAgentModify_9": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/animator": "cwps2-3.0b38"
+  "Libs/SFOLib/Source/animator": "cwps2-3.0b38",
+  "lib/func_002D9438": "ee-gcc2.96-G0",
+  "lib/func_00115C10": "ee-gcc2.9-991111",
+  "lib/libcdvd/func_00119230": "ee-gcc2.9-991111",
+  "SFOGame/Source/game/func_00131540": "cwps2-3.0b38",
+  "SFOGame/Source/humanIk/func_001D3E30": "cwps2-3.0b38",
+  "SFOGame/Source/VisionFxMan/func_0025FBB0": "cwps2-3.0b38",
+  "SFOGame/Source/taser/func_00265B90": "cwps2-3.0b38",
+  "SFOGame/Source/map/func_0026C570": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/xlib/func_0037B330": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/xlib/func_0037D9A0": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/man/func_0038D720": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/gameobj/func_00394AD0": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/particle/func_0039FC10": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/ska/func_003B0280": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/gobj/func_003CD260": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/gui/func_00414900": "cwps2-3.0b38"
 }

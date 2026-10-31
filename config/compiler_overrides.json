@@ -4020,5 +4020,18 @@
   "lib/libmpeg/func_0010C2D8": "ee-gcc2.9-991111",
   "SFOGame/Source/humanIk/func_001D4EB0": "cwps2-3.0b38",
   "Libs/SFOLib/Source/xdrawprim/func_00370CC0": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/man/func_0038B120": "cwps2-3.0b38"
+  "Libs/SFOLib/Source/man/func_0038B120": "cwps2-3.0b38",
+  "lib/func_00322FC0": "ee-gcc2.96",
+  "lib/libmpeg/func_0010C030": "ee-gcc2.9-991111",
+  "SFOGame/Source/machine/func_00166840": "cwps2-3.0b38",
+  "SFOGame/Source/humanIk/func_001CB160": "cwps2-3.0b38",
+  "SFOGame/Source/humanCollision/func_001ED120": "cwps2-3.0b38",
+  "SFOGame/Source/targetManager/func_0022CB10": "cwps2-3.0b38",
+  "SFOGame/Source/hud_netlobby/func_0027AEA0": "cwps2-3.0b38",
+  "SFOGame/Source/GuiOmegaStrain/func_0034EF10": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/particle/func_0039EF90": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/ska/func_003B17D0": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/skybox/func_003BBDC0": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/collision/func_003BD450": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/interface_model/func_003EF660": "cwps2-3.0b38"
 }

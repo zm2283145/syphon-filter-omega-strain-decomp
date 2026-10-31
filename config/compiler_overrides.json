@@ -4014,5 +4014,11 @@
   "Libs/SFOLib/Source/particle/func_0039FC10": "cwps2-3.0b38",
   "Libs/SFOLib/Source/ska/func_003B0280": "cwps2-3.0b38",
   "Libs/SFOLib/Source/gobj/func_003CD260": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/gui/func_00414900": "cwps2-3.0b38"
+  "Libs/SFOLib/Source/gui/func_00414900": "cwps2-3.0b38",
+  "lib/func_002E47B0": "ee-gcc2.96-G0",
+  "lib/func_002E76D0": "ee-gcc2.96-G0",
+  "lib/libmpeg/func_0010C2D8": "ee-gcc2.9-991111",
+  "SFOGame/Source/humanIk/func_001D4EB0": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/xdrawprim/func_00370CC0": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/man/func_0038B120": "cwps2-3.0b38"
 }

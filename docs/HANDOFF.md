@@ -1487,6 +1487,16 @@ file per splat unit), and per prototype `types.txt`, `locals.tsv`, `globals.tsv`
 
 ## Near-miss techniques (newest)
 
+Automated search (2026-10-31). Both tools run in WSL with `CW38_DIR=/root/cw/mwcps2-3.0b38-030307`, where a check takes about 0.2 s:
+
+- `tools/workflow/mutate.py draft.c --func NAME -c mw38 -j 1 --minutes 90` makes random edits to lines inside the function, such as swapping statements, commuting operators, flipping comparisons, adding or removing `register`, and changing types. It is scored by `check_match`'s count of differing words. It works on any draft, including C++ ones, and writes `<draft>.best.c`, plus `<draft>.match.c` on a full match.
+- decomp-permuter is set up at `~/decomp-permuter` with a virtual environment at `~/permvenv`:
+  - Run `~/permvenv/bin/python tools/workflow/perm_setup.py draft.c FUNC DIR [-c mw38|mw]`, then `~/permvenv/bin/python ~/decomp-permuter/permuter.py DIR -j 4 --best-only --stop-on-zero`.
+  - Output sources still need `DIR/reattr.py` run on them before `check_match`. pycparser drops `__attribute__((aligned))` and `volatile` on asm, and reattr puts them back.
+  - It only works on plain C drafts; pycparser rejects C++ and labels-as-values.
+  - Its score includes register differences, so a lower permuter score does not always mean fewer differing words.
+- R213 trial: in the first 30 minutes of 90-minute runs on 10 near-miss drafts, nothing matched. Hand edits by the lanes are still the main route.
+
 From the R153–R155 lanes (2026-10-29):
 
 - **mw38 scheduling barrier:** a GCC-style `asm volatile("" ::: "memory")` stops mw38 from sharing

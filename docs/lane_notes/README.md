@@ -88,3 +88,15 @@ CalculateResultPose remains at 127.
 `n4/`: matched gunList_GunRender (R216). cMachine_NextFrame `n4/drafts/n19.c` is at exact size, 10 words, two register-allocation spots;
 the allocation is a whole-function effect, and 15k mutation variants did not move it. XLib_ApplyContext is parked at 418 lines.
 XLib_DrawLensFlares was only surveyed: the prototype is identical to retail at the start.
+
+## Session 2026-11-01 afternoon (lanes p2l-p5l)
+
+| Lane | Matched | Best near misses (drafts in `<lane>/drafts/`) |
+|---|---|---|
+| p2l | cHumanCollisionRoutine_ctor | cLedgeValidator_cSingleResult_Validate `v17.c` 111 words, exact size (one register per probe ray); HandleMoveMessage<0> `hm2.c` 52 |
+| p3l | cNPC_HandleMessage, cPathRequest_Update, cNPC_UpdateMovement | cMachine_NextFrame `n19_d.c` 10 |
+| p4l | Transport_StartOfFrameUpdate (went in alone; units split at aligned function starts) | DetectForAndHandleCollisionWithOtherHumans `detectfor_best.c` 10 words, exact count (float setup 0x98-0xb4) |
+| p5l | HandleRunningJumpOffLedge, cInterfaceElement_DrawText, GuiEquipmentModify_DrawGun, cFlashlight_Update, cHumanCollisionRoutine_NextFrame | cGrenade_CalculateArcPoints `arcpoints_best.c` 11; SphereSweptRay_DetectForCollision_... `sweptray_s12.c` 25; cInterfaceModel_Render `rn24_d.c` 39 |
+
+p4l's NOTES document the MW38 inline-pass model (frame: named locals, then main-text temps, then inline-body locals by expansion pass;
+by-value call results used as arguments are deferred one pass), which put all 49 stack slots of Transport in place.

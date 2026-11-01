@@ -3966,5 +3966,8 @@
   "Libs/SFOLib/Source/interface_model/func_003ED880": "cwps2-3.0b38",
   "SFOGame/Source/human/func_00192800": "cwps2-3.0b38",
   "SFOGame/Source/humanCollision/func_001E7110": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/interface_element/func_003E8190": "cwps2-3.0b38"
+  "Libs/SFOLib/Source/interface_element/func_003E8190": "cwps2-3.0b38",
+  "SFOGame/Source/humanCollision/func_001E9980": "cwps2-3.0b38",
+  "SFOGame/Source/GuiEquipmentModify/func_002BF4B0": "cwps2-3.0b38",
+  "SFOGame/Source/flashlight/func_0045AE70": "cwps2-3.0b38"
 }

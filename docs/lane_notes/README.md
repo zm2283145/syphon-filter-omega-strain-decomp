@@ -65,3 +65,11 @@ are summarised in `docs/HANDOFF.md` under "Near-miss techniques (newest)".
 cMan_ManRender, cMan_GetGunBarrelMatrix, XLib_DisplayLastFrame, both cMemMan_Init). No new match.
 Key finding: the two gcc296g0 near misses are decided by ee-gcc 2.96's delay-slot pass (reorg), not by
 C statement order; `n1/tools/` has the gdb scripts that trace it. See `n1/NOTES.md`.
+
+## Session 2026-11-01 (lane n2)
+
+`n2/` holds lane N2's notes. It matched cWeapon_FireIfReady (in R216) and improved three near misses,
+whose drafts are in `n2/drafts/`:
+- Global_Shatter `gs1.c`: 5 words, copy destinations a0/v1 swapped at 0x28C.
+- cHuman_Fall `fc1.c`: 5 words, argument-move order before AddRequest; no DATA lines.
+- cSkeleton_ResetBBoxContributors `rb_best.c`: 20 words, exact size; `*pd` load early/unfolded.

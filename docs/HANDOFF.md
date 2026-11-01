@@ -19,8 +19,17 @@ This is the working state and the routine for whoever continues this project
   (it assembles that unit), but reports from there show data at 99.71% instead of 99.79%.
 - Lane notes: `docs/lane_notes/n1/` records that `_sceMcFatCreateFile` and RemoteClientDisconnectEvent
   are decided by ee-gcc 2.96's delay-slot pass (reorg), not by C order; the gdb tracing scripts are there.
-- Near misses left by lane N3: GuiWeaponDisplay_onRender (43 words, exact size) and PlayerInput_Update
-  (43, exact size). Their notes are in lane N3/N5's scratch, which a later session copies into docs/lane_notes.
+- **R217** `04fe9015`: GuiWeaponDisplay_onRender. **14,252 / 14,351, 93.56% code.** All lanes stopped; nothing staged.
+- New best near misses from this session. Drafts and notes are in `docs/lane_notes/n2..n5/`:
+  - cMachine_NextFrame: 10 words, exact size (`n4/drafts/n19.c`)
+  - Global_Shatter: 5 (`n2/drafts/gs1.c`)
+  - cHuman_Fall: 5 (`n2/drafts/fc1.c`)
+  - cSkeleton_ResetBBoxContributors: 20, exact size (`n2/drafts/rb_best.c`)
+  - PlayerInput_Update: 32, exact size (`n5/drafts/pi_best.c`)
+
+  All are register-allocation puzzles. The colouring rules found are in the n3/n4/n5 notes.
+- Untouched or nearly untouched large functions: XLib_DrawLensFlares (5,388 B; the prototype is identical to retail at the
+  start, so it is a good candidate), XLib_ApplyContext (418 lines), XLib_Init (279), cHuman_Land, ActorPhys_RunResponse.
 
 ## START HERE (handoff 2026-11-01, after R215 `b392990e`)
 

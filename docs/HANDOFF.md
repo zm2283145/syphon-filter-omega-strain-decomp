@@ -5,15 +5,71 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Current state (R214, 2026-10-31)
+## START HERE (handoff 2026-11-01, after R215 `b392990e`)
 
-14,239 / 14,351 functions, 92.26% code, 99.79% data (hand-written asm counts as source).
-The 112 functions still unmatched are listed in `build/unmatched_r214.tsv` (copy of the
-coordinator's list; regenerate it from `progress/report.json` if missing). `fptodp`
-(MW float->double helper) is aliased in `config/extra.ld`, alongside `__dl__FPv`.
-Remaining work is split into near misses (see "Near-miss techniques (newest)") and
-the big functions to rebuild from prototype DWARF. Per-function status, best drafts and
-next ideas for every remaining target are in `docs/lane_notes/` (start with its README).
+**State.** 14,246 / 14,351 functions matched, 92.67% code, 99.79% data
+(hand-written asm counts as source, see "hand-written" policy further down).
+105 functions remain: `docs/lane_notes/unmatched_r215.tsv` (addr, name, size).
+No work is in flight: all lanes stopped at 14:15 on 2026-10-31 and every
+finished match is integrated and pushed. `build/` is git-ignored, so a fresh clone
+has no lane scratch; everything worth keeping was copied to `docs/lane_notes/`.
+
+**What to read, in order.**
+1. `docs/lane_notes/README.md`: every remaining target ranked by differing words,
+   with its best draft (in `docs/lane_notes/kN/drafts/`) and the remaining diff.
+2. `docs/lane_notes/kN/NOTES.md`: per-function history (what was tried, next idea).
+   Read the lane's notes before touching one of its functions, to avoid repeating
+   dead ends.
+3. "Near-miss techniques (newest)" below, then `docs/MATCHING_TECHNIQUES.md`.
+4. "Previous handoff (2026-10-30, Copilot session)" below, steps 1–6: the exact
+   round routine (collect → `verify_pending.ps1` → `round_wsl.ps1` → archive).
+
+**Environment.** Windows checkout at `D:\Claude\syphon-filter-omega-strain-decomp`
+plus WSL distro `sfos3` (root, repo `~/sfos-decomp`). In WSL, with
+`export CW38_DIR=/root/cw/mwcps2-3.0b38-030307`, `.venv/bin/python
+tools/check_match.py <draft.c> -c mw38` takes ~0.2 s (8 s on Windows). Compilers:
+`mw` (3.0.3), `mw304`, `mw38`, `mw50`, `gcc`, `gcc296`, `gcc296g0`, `gcc29`,
+`gcc29a`, `gcc29as296`. Most game code is `mw38`. A candidate is accepted only
+if `check_match` says MATCH with zero UNDEF lines except `__dl__FPv` and `fptodp`
+(both aliased in `config/extra.ld`). Use `config/symbol_addrs.txt` names for
+callees; never invent names. `round_wsl.ps1` requires HEAD == origin/main.
+
+**Where the remaining 105 are.**
+- *Near misses (≤30 words, ~27 functions)*: closest are _sceMcFatCreateFile (1),
+  RemoteClientDisconnectEvent and NetIRequestCreateRemoteNamedObject (4),
+  cMan_ManRender (5, really one swapped instruction pair), cWeapon_FireIfReady,
+  cMan_GetGunBarrelMatrix, XLib_DisplayLastFrame (7). These are almost all register
+  allocation / scheduling differences. 90-minute `mutate.py` and decomp-permuter
+  runs found nothing on them; hand restructuring (declaration order, named temps,
+  pointer-local inline asm copies) is what has worked.
+- *Big functions*: rebuild from the prototype ELF's DWARF types, locals and
+  disassembly (`tools/proto`, `build/agents/P1`; the prototype also has a `.line`
+  table, dumped by k2's `lines.py`). This fully matched cHumanIkRoutine_NextFrame
+  (14,360 B), cScene_Render and gunList_LoadGunHog. In progress (words): Global_Shatter
+  12, PlayerInput_Update 94, cGameCamera_UpdateMotion 85, GuiWeaponDisplay_onRender 87,
+  cParticleShatter_Render 107, nIk_TwoLimbIK 109, XLib_Init 279, ActorPhys_RunResponse 970.
+  Untouched big targets include gunList_GunRender, XLib_ApplyContext, cMachine_NextFrame,
+  XLib_DrawLensFlares.
+- *Likely unmatchable as C*: md5Transform/SHSTransform/Nelly/CalcCostFunc were judged
+  infeasible; longReverse, SHAtoByte, md5Encode, strcmp look hand-written (consider
+  counting them under the hand-written policy rather than matching).
+- *Config work needed*: viBufGetTs-style splits — cHuman_GetTransform_ForCameraTracking
+  body (draft `k8/drafts/gt_best8.c`, 8 words) needs a symbol split at 0x1B0F30.
+
+**How the last sessions worked.** A coordinator ran up to 8 lane agents (k1–k8,
+each owning an area: codecs/lib, netcode, XLib/cMan, human IK, particles/ska, game
+objects, game/GUI, large human functions). Lanes only write full MATCH files to
+`build/pending/<lane>/` and keep `build/agents/<lane>/NOTES.md`; no git, configure
+or ninja, max 3 compiler processes each. The coordinator watches `build/pending`,
+collects ~5+ matches into `build/pending/rNNN`, verifies, runs the round, pushes,
+and archives to `build/integrated/lanes_rNNN/`. Pitfall seen: a lane deleted its
+own pending file believing it was integrated — only the coordinator may consume
+pending files. Commits carry the
+`Co-authored-by: Copilot App <223556219+Copilot@users.noreply.github.com>` trailer.
+
+**Recent rounds.** R212 `d43b8e7a` (16), hand-written asm counted `9d0f0dff`,
+R213 `e730eabf` (6), R214 `80e6c62c` (13, incl. loadingThread, onWake via the
+`fptodp` alias), R215 `b392990e` (7, plus `docs/lane_notes`).
 
 ## Current user direction (2026-10-30, matching priority)
 

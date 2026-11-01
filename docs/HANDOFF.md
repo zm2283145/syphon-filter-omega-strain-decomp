@@ -39,7 +39,8 @@ This is the working state and the routine for whoever continues this project
   The integrator splits an asm unit for a function at an aligned start, so unit partners need not match together.
 - **R220** `34dac4a5`: cHumanCollisionRoutine_NextFrame, cFlashlight_Update, GuiEquipmentModify_DrawGun.
 - **R221** `6ecfb54d`: cHumanCollisionRoutine_UpdateClimbingEdge (4,816 B), cPickupMenu_AcceptChoices.
-- **Totals:** 14,266 / 14,351, 94.68% code; 85 functions remain.
+- **R222** `95e23a31`: CalculateLeftWristTargetRot_Local and UpperBody_HandRotation, both fixed by a dedicated case-24 premultiply chain (see p8l NOTES).
+- **Totals:** 14,268 / 14,351, 94.85% code; 83 functions remain. No lanes are running.
 - `merge_units.py` names free operator functions by operator and parameters (`bbe380b0`, test
   `tests/test_merge_operator_names.py`); NIEvent and interface_model now merge.
 - **Closest open targets.** Drafts are in `docs/lane_notes/<lane>/drafts/`.
@@ -47,8 +48,7 @@ This is the working state and the routine for whoever continues this project
   | Function | Diff | Draft | Notes |
   |---|---|---|---|
   | DetectForAndHandleCollisionWithOtherHumans | 2 words | p6l df_best.c | |
-  | CalculateLeftWristTargetRot_Local | 10 words | p6l lw_best.c | same case-24 block as RightWrist; one fix may match both |
-  | UpperBody_HandRotation | 10 words | p6l rw_best.c | same case-24 block |
+  | cHuman_HandleJumpInit | 22 lines | p8l hj_best.c | exact size, all 79 stack slots right; case-21 copy order and X3/X4 argument order |
   | cMachine_NextFrame | 10 | p3l n19_d.c | |
   | XLib_DrawLensFlares | 8 lines | p1l lf_best8.c | root cause in p7l NOTES: single-def uv sunk to its use |
   | cMan_ManDMA | 11 | p1l md_best11.c | hoisted store position |

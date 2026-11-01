@@ -4489,7 +4489,7 @@ segments:
       - [0x3404E0, c, SFOGame/Source/GuiWeaponDisplay]
       - [0x340540, c, SFOGame/Source/GuiWeaponDisplay_2]
       - [0x340550, c, SFOGame/Source/GuiWeaponDisplay_3]
-      - [0x340580, asm]
+      - [0x340580, c, SFOGame/Source/GuiWeaponDisplay/func_00440580]
       - [0x340EE0, c, SFOGame/Source/GuiWeaponDisplay_4]
       - [0x341180, c, SFOGame/Source/GuiWeaponDisplay_5]
       - [0x3411F0, c, SFOGame/Source/GuiWeaponDisplay_6]

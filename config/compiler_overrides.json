@@ -3964,5 +3964,6 @@
   "SFOGame/Source/taser_17": "cwps2-3.0b38",
   "SFOGame/Source/taser_18": "cwps2-3.0b38",
   "SFOGame/Source/terrain": "cwps2-3.0b38",
-  "SFOGame/Source/weapon_34": "cwps2-3.0b38"
+  "SFOGame/Source/weapon_34": "cwps2-3.0b38",
+  "SFOGame/Source/GuiWeaponDisplay/func_00440580": "cwps2-3.0b38"
 }

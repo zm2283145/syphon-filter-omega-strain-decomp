@@ -82,3 +82,9 @@ Key finding: MW creates virtual registers by inline depth, in source order withi
 - PlayerInput_Update `pi_best.c`: 32 words, exact size.
 - cHuman_Land `ld3.c`: rebuilt, far off; the retail frame has two unreferenced holes.
 CalculateResultPose remains at 127.
+
+## Session 2026-11-01 (lane n4)
+
+`n4/`: matched gunList_GunRender (R216). cMachine_NextFrame `n4/drafts/n19.c` is at exact size, 10 words, two register-allocation spots;
+the allocation is a whole-function effect, and 15k mutation variants did not move it. XLib_ApplyContext is parked at 418 lines.
+XLib_DrawLensFlares was only surveyed: the prototype is identical to retail at the start.

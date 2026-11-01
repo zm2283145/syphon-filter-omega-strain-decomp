@@ -3971,5 +3971,7 @@
   "SFOGame/Source/GuiEquipmentModify/func_002BF4B0": "cwps2-3.0b38",
   "SFOGame/Source/flashlight/func_0045AE70": "cwps2-3.0b38",
   "SFOGame/Source/humanCollision/func_001DFB80": "cwps2-3.0b38",
-  "SFOGame/Source/pickup_menu/func_00251920": "cwps2-3.0b38"
+  "SFOGame/Source/pickup_menu/func_00251920": "cwps2-3.0b38",
+  "SFOGame/Source/humanIk/func_001D2F90": "cwps2-3.0b38",
+  "SFOGame/Source/humanIk/func_001D40E0": "cwps2-3.0b38"
 }

@@ -5,6 +5,23 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Session 2026-11-01 (Claude, cloud workspace)
+
+- **R216** `e64bfa37`: 6 matches from prototype-guided lanes. They include cGameCamera_UpdateMotion
+  (8,472 B), InitWeaponSlotIkTargetTable (5,532 B), cParticleShatter_Render (5,048 B),
+  gunList_GunRender (4,932 B), nIk_TwoLimbIK (4,380 B) and cWeapon_FireIfReady.
+  **14,251 / 14,351, 93.50% code.**
+- Folded 209 per-function units, left by earlier rounds, into 108 original-file parts (`f22352b3`).
+  `merge_units.py` crashes in `func_name` (`'(' is not in list`) on `Libs/SFOLib/Source/interface_model`
+  and `SFOGame/Source/NIEvent`, so their 7 `func_*.c` stay unmerged until that parser is fixed.
+- `tools/round.sh` now builds the hand-written-asm (hasm) target objects that `ninja report` needs.
+- The cloud workspace lacks `ee-gcc2.9-991111a`, which builds `_printf`. The build stays byte-identical
+  (it assembles that unit), but reports from there show data at 99.71% instead of 99.79%.
+- Lane notes: `docs/lane_notes/n1/` records that `_sceMcFatCreateFile` and RemoteClientDisconnectEvent
+  are decided by ee-gcc 2.96's delay-slot pass (reorg), not by C order; the gdb tracing scripts are there.
+- Near misses left by lane N3: GuiWeaponDisplay_onRender (43 words, exact size) and PlayerInput_Update
+  (43, exact size). Their notes are in lane N3/N5's scratch, which a later session copies into docs/lane_notes.
+
 ## START HERE (handoff 2026-11-01, after R215 `b392990e`)
 
 **State.** 14,246 / 14,351 functions matched, 92.67% code, 99.79% data

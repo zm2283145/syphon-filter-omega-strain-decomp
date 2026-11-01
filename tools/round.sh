@@ -39,6 +39,8 @@ if ! grep -q "^OK: build/SCUS_972.64 matches retail SCUS_972.64 (SHA-256 $SHA)" 
   say "BUILD DOES NOT MATCH"; grep -E "FAILED|error|MISMATCH" build/ninja.log | head -10 | tee -a "$LOG"; exit 1
 fi
 say "OK line printed"
+# objdiff needs the target objects of every unit, including hand-written asm (hasm) ones the default target skips
+$NINJA $($PY -c "import json,os;print(' '.join(u['target_path'] for u in json.load(open('objdiff.json'))['units'] if u.get('target_path') and not os.path.exists(u['target_path'])))") > build/targets.log 2>&1 || { say "building report targets failed"; exit 1; }
 $NINJA report > build/report.log 2>&1 || { say "report failed"; exit 1; }
 $PY tools/publish_report.py >> "$LOG" 2>&1 || { say "publish_report failed"; exit 1; }
 $PY -m unittest discover -s tests -p 'test_*.py' -q > build/tests.log 2>&1 || { say "tests failed (build/tests.log)"; tail -20 build/tests.log; exit 1; }

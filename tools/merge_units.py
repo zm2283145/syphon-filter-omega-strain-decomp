@@ -218,6 +218,19 @@ class Item:
     def func_name(self):
         vals = [v for _, v in self.s]
         k = vals.index("(")
+        # `V operator*(float, V)`, `bool operator()(...)`: the name is `operator` plus its symbol
+        if "operator" in vals[:k]:
+            o = vals.index("operator")
+            if vals[o + 1:o + 3] == ["(", ")"]:
+                k = o + 3
+            # overloads differ by their parameters: keep them in the name so they never collide
+            depth, e = 0, k
+            for e in range(k, len(vals)):
+                depth += vals[e] == "("
+                depth -= vals[e] == ")"
+                if depth == 0:
+                    break
+            return "".join(vals[o:k]) + "".join(vals[k:e + 1])
         # `int (*f(void))(int) {`: skip a parenthesised declarator start
         while k > 0 and vals[k - 1] in ("(", "*"):
             k = vals.index("(", k + 1)

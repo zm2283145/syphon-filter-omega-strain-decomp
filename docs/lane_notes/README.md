@@ -58,3 +58,10 @@ Check a draft with `tools/check_match.py <draft> -c mw38` (k1's `mc_vO.c` uses `
 
 Techniques that worked this session are in each lane's NOTES.md; the most useful
 are summarised in `docs/HANDOFF.md` under "Near-miss techniques (newest)".
+
+## Session 2026-11-01 (lane n1)
+
+`n1/` holds lane N1's notes on the closest near misses (`_sceMcFatCreateFile`, RemoteClientDisconnectEvent,
+cMan_ManRender, cMan_GetGunBarrelMatrix, XLib_DisplayLastFrame, both cMemMan_Init). No new match.
+Key finding: the two gcc296g0 near misses are decided by ee-gcc 2.96's delay-slot pass (reorg), not by
+C statement order; `n1/tools/` has the gdb scripts that trace it. See `n1/NOTES.md`.

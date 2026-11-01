@@ -31,6 +31,34 @@ This is the working state and the routine for whoever continues this project
 - Untouched or nearly untouched large functions: XLib_DrawLensFlares (5,388 B; the prototype is identical to retail at the
   start, so it is a good candidate), XLib_ApplyContext (418 lines), XLib_Init (279), cHuman_Land, ActorPhys_RunResponse.
 
+## Session 2026-11-01 afternoon (Claude, cloud workspace): R218-R221
+
+- **R218** `574714b0`: cNPC_UpdateMovement, cPathRequest_Update, cNPC_HandleMessage, cHumanCollisionRoutine_ctor,
+  cParticleSpline_NextFrame, cInterfaceModel_ActuallyDraw.
+- **R219** `b2b26b4e`: Transport_StartOfFrameUpdate, HandleRunningJumpOffLedge, cInterfaceElement_DrawText.
+  The integrator splits an asm unit for a function at an aligned start, so unit partners need not match together.
+- **R220** `34dac4a5`: cHumanCollisionRoutine_NextFrame, cFlashlight_Update, GuiEquipmentModify_DrawGun.
+- **R221** `6ecfb54d`: cHumanCollisionRoutine_UpdateClimbingEdge (4,816 B), cPickupMenu_AcceptChoices.
+- **Totals:** 14,266 / 14,351, 94.68% code; 85 functions remain.
+- `merge_units.py` names free operator functions by operator and parameters (`bbe380b0`, test
+  `tests/test_merge_operator_names.py`); NIEvent and interface_model now merge.
+- **Closest open targets.** Drafts are in `docs/lane_notes/<lane>/drafts/`.
+
+  | Function | Diff | Draft | Notes |
+  |---|---|---|---|
+  | DetectForAndHandleCollisionWithOtherHumans | 2 words | p6l df_best.c | |
+  | CalculateLeftWristTargetRot_Local | 10 words | p6l lw_best.c | same case-24 block as RightWrist; one fix may match both |
+  | UpperBody_HandRotation | 10 words | p6l rw_best.c | same case-24 block |
+  | cMachine_NextFrame | 10 | p3l n19_d.c | |
+  | XLib_DrawLensFlares | 8 lines | p1l lf_best8.c | root cause in p7l NOTES: single-def uv sunk to its use |
+  | cMan_ManDMA | 11 | p1l md_best11.c | hoisted store position |
+  | cGrenade_CalculateArcPoints | 11 | p5l | |
+  | Global_Shatter | 5 | n2 | |
+  | cHuman_Fall | 5 | n2 | |
+
+- **Method notes:** the MW38 inline-pass model (p4l NOTES), prototype line numbers via P6L's pl.sh, and
+  micro test harnesses at about 1 s per variant have been the most productive tools.
+
 ## START HERE (handoff 2026-11-01, after R215 `b392990e`)
 
 **State.** 14,246 / 14,351 functions matched, 92.67% code, 99.79% data

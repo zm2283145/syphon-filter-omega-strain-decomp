@@ -73,3 +73,12 @@ whose drafts are in `n2/drafts/`:
 - Global_Shatter `gs1.c`: 5 words, copy destinations a0/v1 swapped at 0x28C.
 - cHuman_Fall `fc1.c`: 5 words, argument-move order before AddRequest; no DATA lines.
 - cSkeleton_ResetBBoxContributors `rb_best.c`: 20 words, exact size; `*pd` load early/unfolded.
+
+## Session 2026-11-01 (lanes n3, n5)
+
+`n3/`: matched nIk_TwoLimbIK, InitWeaponSlotIkTargetTable, cParticleShatter_Render and cGameCamera_UpdateMotion (R216).
+Key finding: MW creates virtual registers by inline depth, in source order within a depth, and colours them in reverse creation order.
+`n5/`: matched GuiWeaponDisplay_onRender. Near misses with drafts in `n5/drafts/`:
+- PlayerInput_Update `pi_best.c`: 32 words, exact size.
+- cHuman_Land `ld3.c`: rebuilt, far off; the retail frame has two unreferenced holes.
+CalculateResultPose remains at 127.

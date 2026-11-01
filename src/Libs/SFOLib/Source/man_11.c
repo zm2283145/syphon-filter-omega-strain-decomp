@@ -1,306 +1,324 @@
 /*
- * Libs/SFOLib/Source/man: 5 files, 0038C7D0-0038CBF0
+ * Libs/SFOLib/Source/man: 2 files, 0038D720-0038DB30
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_0038C7D0 */
+/* merge_units: begin func_0038D720 */
 #pragma push /* merge_units */
+/* 0038D720 gunList::GunCalcBBox() - SFOLib man.cc */
+#pragma cplusplus on
 #include "types.h"
+typedef unsigned int u_long128 __attribute__((mode(TI)));
 
-typedef struct { char pad[0x40C]; unsigned char type; } EquipItem;
-typedef struct { char pad[0x2410]; EquipItem* slots[8]; } EquipState;
-extern void cMan_UpdateHandMorphs(EquipState* e, int slot, EquipItem* it);
-void cMan_AddGun(EquipState* e, int slot, EquipItem* it) {
-    if (it) {
-        int t = it->type;
-        if (t < 0 || t >= 8) return;
+struct cVector {
+    float x, y, z, w;
+    cVector& operator=(const cVector& v)
+    {
+        void* xx = this;
+        u_long128 t;
+        __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=&r"(t) : "r"(this), "r"(&v) : "memory");
+        return *this;
     }
-    e->slots[slot] = it;
-    cMan_UpdateHandMorphs(e, slot, it);
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_0038C7D0(void) {}
-#pragma pop /* merge_units */
-/* merge_units: end func_0038C7D0 */
+};
 
-/* merge_units: begin func_0038C820 */
+struct cMatrix {
+    cVector m[4];
+    void Unit()
+    {
+        char* xx = (char*)this;
+        int t;
+        cMatrix* p = this;
+        asm {
+            sqc2 vf0, 0x30(p)
+            qmfc2.ni t, vf0
+            pcpyud t, t, zero
+            sq t, 0x10(p)
+            pexcw t, t
+            sq t, 0x20(p)
+            pcpyud t, t, zero
+            sq t, 0(p)
+        }
+    }
+    void SetTrans(const cVector& v) { m[3] = v; }
+
+};
+
+typedef struct { unsigned char qwc; unsigned char vertCount; } manRefs;
+
+typedef struct {
+    u_long128* part;
+    unsigned short qwc;
+    unsigned char type;
+    unsigned char patchCount;
+    manRefs* Refs;
+    unsigned int* blends;
+} Parts;
+
+typedef struct {
+    cVector pos;
+    cVector offset;
+} gunBones;
+
+typedef struct {
+    cVector min;
+    cVector max;
+    void Extend(const cVector& v)
+    {
+        cVector* mn = &min;
+        cVector* mx = &max;
+        const cVector* p = &v;
+        asm {
+            lqc2 vf1, 0(mn)
+            lqc2 vf2, 0(mx)
+            lqc2 vf3, 0(p)
+            vmini.xyz vf1, vf1, vf3
+            vmax.xyz vf2, vf2, vf3
+            sqc2 vf1, 0(mn)
+            sqc2 vf2, 0(mx)
+        }
+    }
+} cBox;
+
+typedef struct {
+    char gunName[32];
+    char gunAttribsTable[0x100];
+    gunBones gunBulletOffset;
+    gunBones gunBonesOffsets[12];
+    Parts gunParts[2][8];
+    short gunTexID[8];
+    short gunTexID2[8];
+    cBox gunBBox;
+    char* gunHog;
+    u_long128* casingModelPart;
+    unsigned short casingModelqwc;
+    short gunWDBIndex;
+    unsigned char gunPartCount;
+    unsigned char gunHoldType;
+    unsigned char gunHoldTypeHand2;
+    unsigned char gunAnimType;
+    signed char gunHolsterPart;
+    signed char gunFlarePart;
+    signed char gunLightPart;
+    signed char gunStockPartOn;
+    signed char gunStockPartOff;
+} gunList;
+
+extern "C" {
+extern int D_00542D40;
+extern int D_00542D48;
+extern unsigned int D_004937C0[];
+extern unsigned int D_004937D0[];
+}
+
+static inline void VecAdd(cVector* d, const cVector* a, const cVector* b)
+{
+    asm {
+        lqc2 vf1, 0(a)
+        lqc2 vf2, 0(b)
+        vadd.xyzw vf1, vf1, vf2
+        sqc2 vf1, 0(d)
+    }
+}
+
+static inline void WaitVif0(void)
+{
+    int a, b, c;
+    while (*(volatile int*)0x10008000 & 0x100) {
+        a = 7;
+        b = 7;
+        asm { div c, a, b }
+    }
+    for (c = *(volatile int*)0x10003800; c & 7; c = *(volatile int*)0x10003800) {
+        __asm__ volatile("vnop");
+        __asm__ volatile("sync");
+    }
+    __asm__ volatile("vnop");
+    __asm__ volatile("sync");
+}
+
+/* VU1 output gather; a separate inline gives n/src/dst their own regs */
+static inline void CopyVerts(u_long128* dst, u_long128* src, int n)
+{
+    while (n) {
+        *dst = *src;
+        n--;
+        src += 2;
+        dst++;
+    }
+}
+
+extern "C" void gunList_GunCalcBBox(gunList* self)
+{
+    int bone;
+    u_long128* bonesSrc;
+    cMatrix* bonesMat;
+    cVector offset;
+    u_long128* boneDest;
+    cVector* results;
+    cVector* results1;
+    manRefs* refData;
+    unsigned int patchCount;
+    unsigned int j;
+    int qwc;
+    int vertCount;
+    int nextVertCount;
+    u_long128* part;
+    unsigned int i;
+    unsigned int k;
+
+    bonesMat = (cMatrix*)0x70000000;
+    {
+        int idx = D_00542D40;
+        if (idx != D_00542D48) {
+            unsigned int end = D_004937D0[idx];
+            unsigned int start = D_004937C0[idx];
+            *(volatile int*)0x10008020 = (end - start) >> 4;
+            *(volatile int*)0x10008010 = start;
+            *(volatile int*)0x10008000 = 0x101;
+            __asm__ volatile("sync");
+            D_00542D48 = idx;
+        }
+    }
+    offset = self->gunBonesOffsets[0].offset;
+    offset.w = 1.0f;
+    bonesMat->Unit();
+    bonesMat->SetTrans(offset);
+    for (bone = 0; bone < 11; bone++) {
+        offset = self->gunBonesOffsets[bone].offset;
+        VecAdd(&offset, &offset, &self->gunBonesOffsets[((int*)self->gunBonesOffsets)[bone * 8 + 7]].offset);
+        offset.w = 1.0f;
+        bonesMat[bone].Unit();
+        bonesMat[bone].SetTrans(offset);
+    }
+    WaitVif0();
+    bonesSrc = (u_long128*)bonesMat;
+    boneDest = (u_long128*)0x11004AC0;
+    for (bone = 0; bone < 11; bone++) {
+        boneDest[0] = bonesSrc[0];
+        boneDest[1] = bonesSrc[1];
+        boneDest[2] = bonesSrc[2];
+        boneDest[3] = bonesSrc[3];
+        bonesSrc += 4;
+        boneDest += 4;
+    }
+    results = (cVector*)0x70000540;
+    for (j = 0; j < self->gunPartCount; j++) {
+        refData = self->gunParts[1][j].Refs;
+        patchCount = self->gunParts[1][j].patchCount;
+        part = self->gunParts[1][j].part;
+        refData++;
+        if (j == self->gunHolsterPart || j == self->gunFlarePart || j == self->gunLightPart ||
+            j == self->gunStockPartOff)
+            continue;
+        if (part) {
+            for (i = 0; i < patchCount; i++) {
+                qwc = refData->qwc;
+                vertCount = refData->vertCount;
+                *(volatile int*)0x10008020 = qwc;
+                *(volatile int*)0x10008010 = (int)part;
+                *(volatile int*)0x10008000 = 0x101;
+                __asm__ volatile("sync");
+                part += qwc;
+                refData++;
+                WaitVif0();
+                CopyVerts((u_long128*)results, (u_long128*)0x11004050, vertCount);
+                for (k = 0; k < vertCount; k++) {
+                    self->gunBBox.Extend(results[k]);
+                }
+            }
+        }
+    }
+}
+static inline void merge_flush_func_0038D720(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0038D720 */
+
+/* merge_units: begin func_0038DB30 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-struct Pair38C820 {
+struct manAttribs {
     __int128 a;
     __int128 b;
 };
 
-struct Self38C820 {
-    char pad[0x80];
-    Pair38C820 pairs[(0x2340 - 0x80) / 0x20];
-    void* x2340[0x20];
-    unsigned short x23C0;
+struct SKL {
+    __int128 hdr[4];
+    manAttribs manAttribsTable[32];
+};
+
+struct cMan {
+    char pad0[0x20];
+    char SKLName[0x20];
+    SKL skl;
+    char pad480[0x22C0 - 0x480];
+    short tex[0x20];
+    short tex2[0x60];
+    unsigned short count;
+    char pad23C2[0x2BD0 - 0x23C2];
+    int faceCamo;
+    char pad2BD4[0x2C0D - 0x2BD4];
+    char race;
 };
 
 extern "C" {
 extern char g_AgentPartCache[];
-int FindTex__7MonsterF1(char* cache, __int128 name);
-void Monster_FreeTexture(char* cache, int slot);
-int FindPart__7MonsterF1(char* cache, __int128 name);
-void Monster_FreePart(char* cache, int slot);
-void DELAY_DELETE_ARRAY(void* p);
+extern char D_005711B0[];
+extern char D_004BC398[];
+extern char D_004BC3A0[];
+void strCpyPad(char* dst, int n, char* src);
+char* Libc_Strcpy(char* dst, const char* src);
+int String_CompareNoCase(const char* a, const char* b);
+char SKL_FindRace(SKL* skl);
+int SKL_CountAttribs(SKL* skl);
+void SKL_AddAccessorySKL(SKL* skl, int identity, int count, char* name);
+void SKL_RemoveBlanks(SKL* skl);
+int SKL_LoadSKLParts(SKL* skl, int hard, char* name);
+void Monster_FindAddTexture(char* cache, __int128 name, char* tex, short* a, short* b);
+void cMan_SortParts(cMan* self);
+void cMan_BuildMan(cMan* self, int flag);
 }
 
-extern "C" void cMan_FreeMan(Self38C820* self)
+/* skl = *sklData quad copy loop (hand-written addi); GCC-style operands also put mwcc in the
+   no-global-CSE/no-loop-opt mode retail shows (loop tests and bodies reload separately) */
+static inline void QMove(void* dd, void* ss, int nn) { int n = nn; __int128 q; void* s = ss; void* d = dd;
+    __asm__ volatile(".set noreorder; nop; 1: lq %0, 0(%2); addiu %1, %1, 0x10; addi %3, %3, -1; addiu %2, %2, 0x10; bgtz %3, 1b; sq %0, -0x10(%1); .set reorder" : "=&r"(q), "+r"(d), "+r"(s), "+r"(n) : : "memory");
+}
+
+extern "C" void cMan_Load(cMan* self, char* name, SKL* sklData, int identity)
 {
-    int i;
-    for (i = 0; i < self->x23C0; i++) {
-        int s = FindPart__7MonsterF1(g_AgentPartCache, self->pairs[i].a);
-        if (s != -1) {
-            Monster_FreePart(g_AgentPartCache, s);
-        }
-        if (self->x2340[i]) {
-            DELAY_DELETE_ARRAY(self->x2340[i]);
-            self->x2340[i] = 0;
-        }
+    int count;
+    int texParts;
+    if (sklData) QMove(&self->skl, sklData, sizeof(SKL) / 16);
+    if (name) strCpyPad(self->SKLName, 31, name);
+    else Libc_Strcpy(self->SKLName, D_004BC398);
+    for (char* p = self->SKLName; *p; p++) {
+        char c = *p; if (c >= 'a' && c <= 'z') *p = c - 32;
     }
-    for (i = 0; i < self->x23C0; i++) {
-        int s = FindTex__7MonsterF1(g_AgentPartCache, self->pairs[i].b);
-        if (s != -1) {
-            Monster_FreeTexture(g_AgentPartCache, s);
-        }
-    }
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_0038C820(void) {}
-#pragma pop /* merge_units */
-/* merge_units: end func_0038C820 */
-
-/* merge_units: begin func_0038C920 */
-#pragma push /* merge_units */
-typedef struct {
-    int id;
-    unsigned short flags;
-    unsigned char a;
-    unsigned char b;
-    int x;
-    int y;
-} PartRec;
-
-typedef struct {
-    __int128 a;
-    __int128 b;
-} NamePair;
-
-typedef struct {
-    char pad0[0x40];
-    char appearance[0x10];
-    __int128 name;                  /* 0x50 */
-    char pad60[0x20];
-    NamePair pairs[(0x1EC0 - 0x80) / 0x20];
-    PartRec recs[2][32];            /* 0x1EC0 */
-    short h22C0[0x40];              /* 0x22C0 */
-    void* x2340[0x20];              /* 0x2340 */
-    unsigned short nPairs;          /* 0x23C0 */
-    char pad23C2[0x16];
-    int x23D8;
-    int x23DC;
-    char pad23E0[8];
-    int x23E8;
-    int x23EC;
-    float scale;                    /* 0x23F0 */
-    char pad23F4[0x2BC0 - 0x23F4];
-    unsigned char b2BC0;
-    char pad2BC1;
-    unsigned char shape;            /* 0x2BC2 */
-    char pad2BC3[0x15];
-    short h2BD8;
-    unsigned char b2BDA;
-    unsigned char b2BDB;
-    char pad2BDC[0x30];
-    unsigned char bodyKind;         /* 0x2C0C */
-    char pad2C0D;
-    signed char mouth;              /* 0x2C0E */
-    signed char stra;               /* 0x2C0F */
-} ActorModel;
-
-typedef struct {
-    char pad[0x5C10];
-    PartRec recs[1][2];
-} PartCache;
-
-#if 0 /* merge_units */
-extern PartCache g_AgentPartCache;
-#endif /* merge_units */
-#define g_AgentPartCache (*(PartCache*)&g_AgentPartCache) /* merge_units */
-
-extern int D_005712F0[];
-extern __int128* D_005712F8[];
-extern char D_004BC318[], D_004BC328[], D_004BC330[];
-#if 0 /* merge_units */
-extern int FindPart__7MonsterF1(PartCache* cache, __int128 name);
-#endif /* merge_units */
-#define FindPart__7MonsterF1(a0, a1) (FindPart__7MonsterF1((char *)(a0), (a1))) /* merge_units */
-
-extern void Parts_PartInit(PartRec* r, int a, int b, int c, int d);
-extern int SKL_FindSex(void* a);
-extern void cMan_ChangeGunPlacement(ActorModel* m, int a, int b);
-extern int strcmp(const char* a, const char* b);
-extern int SKL_FindPartIndex(void* a, const char* t);
-
-static inline int Eq(__int128 a, __int128 b) {
-    __int128 t;
-    long long r;
-    asm {
-        pceqw t, a, b
-        ppach r, t, t
-    }
-    return r == -1;
-}
-
-/* Model setup after the part list is filled: resolve each part pair in the agent part cache
- * (copy its two records or reset them), count pairs, body kind, equipment reset, look up
- * the shape index of the model name in the per-body-kind table, STRA_/MOUT_ pairs. */
-void cMan_BuildMan(ActorModel* m)
-{
-    __int128* tbl;
-    int n;
-    int cnt;
-    unsigned int k;
-    m->b2BDB = 1;
-    for (n = 0; m->pairs[n].a; n++) {
-        int slot;
-        if (m->h22C0[n] == -1) m->h22C0[n] = 0;
-        slot = FindPart__7MonsterF1(&g_AgentPartCache, m->pairs[n].a);
-        if (slot == -1) {
-            Parts_PartInit(&m->recs[0][n], 0, 0, 0, 0);
-            Parts_PartInit(&m->recs[1][n], 0, 0, 1, 0);
+    self->race = SKL_FindRace(&self->skl);
+    if (identity >= 0) {
+        self->count = SKL_CountAttribs(&self->skl);
+        if (String_CompareNoCase(name, D_004BC3A0)) {
+            SKL_AddAccessorySKL(&self->skl, identity, self->count, self->SKLName);
         } else {
-            int j;
-            for (j = 0; j < 2; j++) {
-                m->recs[j][n].id = g_AgentPartCache.recs[slot][j].id;
-                m->recs[j][n].flags = g_AgentPartCache.recs[slot][j].flags;
-                m->recs[j][n].a = g_AgentPartCache.recs[slot][j].a;
-                m->recs[j][n].b = g_AgentPartCache.recs[slot][j].b;
-                m->recs[j][n].x = g_AgentPartCache.recs[slot][j].x;
-                m->recs[j][n].y = g_AgentPartCache.recs[slot][j].y;
-            }
+            count = self->count;
+            self->skl.manAttribsTable[0] = self->skl.manAttribsTable[count];
+            count++; self->skl.manAttribsTable[1] = self->skl.manAttribsTable[count];
+            self->count = 0;
         }
-    }
-    m->nPairs = n;
-    m->bodyKind = SKL_FindSex(m->appearance);
-    for (n = 0; n < m->nPairs; n++) m->x2340[n] = 0;
-    m->x23D8 = 0;
-    m->x23DC = 0;
-    m->x23E8 = 0;
-    m->x23EC = 0;
-    cMan_ChangeGunPlacement(m, 0, 0);
-    m->h2BD8 = 255;
-    m->b2BDA = 2;
-    m->b2BC0 = 1;
-    cnt = D_005712F0[m->bodyKind];
-    tbl = D_005712F8[m->bodyKind];
-    for (k = 0; k < cnt; k++) {
-        if (Eq(tbl[k], m->name)) break;
-    }
-    if (k == cnt) {
-        m->b2BC0 = 0;
-        k = 0;
-    }
-    if (strcmp((char*)&m->name, D_004BC318) == 0) m->b2BC0 = 0;
-    m->shape = k;
-    m->scale = 1.0f;
-    m->stra = SKL_FindPartIndex(m->appearance, D_004BC328);
-    m->mouth = SKL_FindPartIndex(m->appearance, D_004BC330);
-    if (m->mouth != -1) {
-        m->recs[1][m->mouth].id = 0;
-        m->recs[1][m->mouth].flags = 0;
-    }
-}
-#undef g_AgentPartCache /* merge_units */
-#undef FindPart__7MonsterF1 /* merge_units */
-static inline void merge_flush_func_0038C920(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_0038C920 */
-
-/* merge_units: begin func_0038CBF0 */
-#pragma push /* merge_units */
-/* library prototypes shared by the blocks below (C linkage) */
-int sprintf(void *, const void *, ...);
-
-typedef struct {
-    char pad0[0x2340];
-    void* items[32];
-    unsigned short count;
-    char pad23c2[0x2C08 - 0x23C2];
-    int x2c08;
-    char pad2c0c[0x2D96 - 0x2C0C];
-    short x2d96;
-} F38CBF0;
-#if 0 /* merge_units */
-extern void DELAY_DELETE_ARRAY(void*);
-#endif /* merge_units */
-#define DELAY_DELETE_ARRAY(a0) (DELAY_DELETE_ARRAY((a0))) /* merge_units */
-
-void cMan_UnDead(F38CBF0* p)
-{
-    int i;
-    p->x2c08 = 0;
-    p->x2d96 = 0;
-    for (i = 0; i < p->count; i++) {
-        if (p->items[i]) {
-            DELAY_DELETE_ARRAY(p->items[i]);
-            p->items[i] = 0;
-        }
-    }
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_0038CBF0(void) {}
-#undef DELAY_DELETE_ARRAY /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_0038CBF0 */
-
-/* merge_units: begin func_0038CC70 */
-#pragma push /* merge_units */
-#include "fileman_entry.h"
-extern void* cFileMan_EncodeFilename_charP_cFileIOP_bool(void* entry, const char* name, int a, int b);
-extern int GetFileStreamMan(void);
-extern int cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(int mgr, void* entry, int flag);
-extern void cTexMan_RemoveTexture(int mgr, int handle, int flags);
-extern int g_TextureMgr;
-typedef struct {
-    char name[0x3C0];
-    short cur[8];
-    short prev[8];
-    char pad3E0[0x40C - 0x3E0];
-    unsigned char count;
-    char pad40D[0x417 - 0x40D];
-    signed char state;
-    unsigned char dirty;
-} Cc70Obj;
-void ActorModel_Release(Cc70Obj* self)
-{
-    if (self->dirty) {
-        FileManEntry e;
-        char path[0x100];
-        cFileMan_ctor_void(&e);
-        sprintf(path, "%s.HOG", self);
-        cFileMan_EncodeFilename_charP_cFileIOP_bool(&e, path, 0, 0);
-        cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(GetFileStreamMan(), &e, 1);
-        self->dirty = 0;
-        cFileMan_dtor(&e, -1);
-    }
-    if (self->state < 0) {
-        self->state = -2;
     } else {
-        int mgr = g_TextureMgr;
-        int i;
-        for (i = 0; i < self->count; i++) {
-            if (self->cur[i] != self->prev[i]) cTexMan_RemoveTexture(mgr, self->prev[i], 0);
-            cTexMan_RemoveTexture(mgr, self->cur[i], 0);
-        }
-        self->state = -3;
+        SKL_RemoveBlanks(&self->skl);
     }
+    cMan_SortParts(self);
+    for (texParts = 0; self->skl.manAttribsTable[texParts].b; texParts++) {
+        Monster_FindAddTexture(g_AgentPartCache, self->skl.manAttribsTable[texParts].b, D_005711B0, &self->tex[texParts], &self->tex2[texParts]);
+    }
+    self->tex[texParts] = 0;
+    self->count = SKL_LoadSKLParts(&self->skl, 1, self->SKLName);
+    if (self->count < texParts) self->faceCamo = 1;
+    cMan_BuildMan(self, 1);
 }
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_0038CC70(void) {}
+static inline void merge_flush_func_0038DB30(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_0038CC70 */
+/* merge_units: end func_0038DB30 */

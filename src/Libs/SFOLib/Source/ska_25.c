@@ -1,54 +1,650 @@
 /*
- * Libs/SFOLib/Source/ska: 1 file, 003AF2D0
+ * Libs/SFOLib/Source/ska: 12 files, 003B1420-003B17D0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_003AF2D0 */
+/* merge_units: begin func_003B1420 */
 #pragma push /* merge_units */
-#pragma cplusplus on
 #include "types.h"
+#include "vc_copy.h"
+#include "v4_asm_copy.h"
+
+typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
+#pragma push
+#pragma opt_common_subs off
+V4 cQuaternion_opAdd_cQuaternionR(V4* b, V4* c) {
+    V4 l0;
+    V4* q1 = &l0;
+    asm {
+        lqc2 vf1, 0x0(b)
+        lqc2 vf2, 0x0(c)
+        vadd.xyzw vf1, vf1, vf2
+        sqc2 vf1, 0x0(q1)
+    }
+    return l0;
+}
+#pragma pop
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003B1420(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_003B1420 */
+
+/* merge_units: begin func_003B1450 */
+#pragma push /* merge_units */
+typedef struct { int f0; float s; unsigned char on; char pad[7]; V4 v; } S_3B1450;
+static inline V4 Scale_(V4* v, float s) {
+    V4 r;
+    V4* q = &r;
+    int t;
+    asm {
+        .set noreorder
+        lqc2 vf1, 0x0(v)
+        mfc1 t, s
+        qmtc2.ni t, vf2
+        vmulx.xyzw vf1, vf1, vf2x
+        sqc2 vf1, 0x0(q)
+        
+    }
+    return *q;
+}
+#pragma push
+#pragma peephole off
+
+V4 cSkaPlaybackItem_GetSummedOffsetRootRotation(S_3B1450* p) {
+    if (p->on) return Scale_(&p->v, p->s);
+    return p->v;
+}
+#pragma pop
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003B1450(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_003B1450 */
+
+/* merge_units: begin func_003B14A0 */
+#pragma push /* merge_units */
+typedef struct { int id; float weight; unsigned char active; char pad[7]; Vec4 v; } AC_3B14A0;
+AC_3B14A0* cSkaPlaybackItem_opAssign(AC_3B14A0* self, AC_3B14A0* o) {
+    self->id = o->id;
+    self->weight = o->weight;
+    self->active = o->active;
+    { typedef char uf_chk_[sizeof(self->v) == 16 ? 1 : -1]; VCopyF(&(self->v), &(o->v)); }
+    return self;
+}
+#pragma peephole reset
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003B14A0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_003B14A0 */
+
+/* merge_units: begin func_003B14D0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Part of ska.cc (skeletal animation).
+ */
+
+
+void* std_vector_deleter_cSkaPlaybackItem_data(char* self) {
+    return self + 8;
+}
+static inline void merge_flush_func_003B14D0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B14D0 */
+
+/* merge_units: begin func_003B14E0 */
+#pragma push /* merge_units */
+typedef struct { float a; float b; unsigned char c; } S_3B14E0;
+static inline float clamp_3B14E0(float x, float lo, float hi) { asm { max.s lo, x, lo
+ min.s lo, lo, hi } return lo; }
+S_3B14E0* cSkaPlaybackGroup_cPlaybackPosWithHistory_ctor(S_3B14E0* s, float x)
+{
+    float v;
+    s->c = 1;
+    v = clamp_3B14E0(x, 0.0f, 1.0f);
+    s->b = v;
+    s->a = v;
+    return s;
+}
+static inline void merge_flush_func_003B14E0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B14E0 */
+
+/* merge_units: begin func_003B1510 */
+#pragma push /* merge_units */
+#include "ska_types.h"
+
+#if 0 /* merge_units */
+Rel* std_vector_imp_cSkaPlaybackItem_ctor(Rel* r); /* gsynth: defined below */
+#endif /* merge_units */
+Rel * std_vector_imp_cSkaPlaybackItem_ctor(); /* merge_units */
+
+typedef struct { char pad[0xC]; unsigned char flag; } S;
+#if 0 /* merge_units */
+extern void std_vector_imp_cSkaPlaybackItem_ctor(S*);
+#endif /* merge_units */
+Rel * std_vector_imp_cSkaPlaybackItem_ctor(); /* merge_units */
+
+
+
+
+extern void std_vector_imp_cSkaPlaybackItem_reserve(S*, int);
+/* Constructor: base init, sets value from *v, stores flag. */
+S* cArray_cSkaPlaybackItem_ctor(S* s, int* v, unsigned char flag) { std_vector_imp_cSkaPlaybackItem_ctor(s); std_vector_imp_cSkaPlaybackItem_reserve(s, *v); s->flag = flag; return s; }
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003B1510(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_003B1510 */
+
+/* merge_units: begin func_003B1560 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Part of ska.cc (skeletal animation).
+ */
+
+
+extern int std_vector_imp_cSkaPlaybackItem_insert(SkaVec* v, char* pos, int n, int value);
+
+Rel* std_vector_imp_cSkaPlaybackItem_ctor(Rel* r) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
+    return r;
+}
+
+unsigned char cSkaAnim_IsLooping(unsigned char* self) {
+    return self[69];
+}
+
+/* Append one 32-byte element at the end of the array. */
+int cArray_cSkaPlaybackItem_PushBackActual(SkaVec* v, int value) {
+    int count = v->count;
+    char* data = v->data;
+    return std_vector_imp_cSkaPlaybackItem_insert(v, data + (count << 5), 1, value);
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003B1560(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_003B1560 */
+
+/* merge_units: begin func_003B15B0 */
+#pragma push /* merge_units */
+/* cSkaPlaybackItem::Accumulate: first contribution is copied; otherwise summed root rotations (weighted when still unweighted) and weights. Dead 'xx = this' locals keep retail's dead addius. */
+#pragma cplusplus on
 #pragma always_inline on
 #pragma inline_depth(8)
-/* lq/sq copies as GCC-style volatile asm; unused xx locals reproduce retail's dead addius (they survive only after an earlier GCC asm) */
+#pragma peephole off
 struct V {
     float x, y, z, w;
     V() {}
-    V(const V& o) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(this), "r"(&o) : "memory"); void* xx = this; }
-    V& operator=(const V& o) { void* xx = this; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(this), "r"(&o) : "memory"); return *this; }
+    V(const V& o) { void* xx = this; V* pd = this; const V* ps = &o; __int128 t; asm volatile { lq t, 0(ps); sq t, 0(pd) } }
+    V& operator=(const V& o) { void* xx = this; V* pd = this; const V* ps = &o; __int128 t; asm volatile { lq t, 0(ps); sq t, 0(pd) } return *this; }
+    V operator*(float k) const;
+    V operator+(const V& o) const;
 } __attribute__((aligned(16)));
-struct Plc;
-extern "C" void cQuatVec_ctor_cQuatVecR(Plc* d, const Plc* s);
-struct Plc { V rot; V pos; Plc() {} Plc(const Plc& o) { cQuatVec_ctor_cQuatVecR(this, &o); void* xx = this; } };
-extern "C" {
-extern signed char D_004E1D80;
-extern Plc D_00497F00;
-void cQuaternion_GetIdentity(V* q);
-void cVector_Get0001(V* v);
-void cQuatVec_ctor_cQuaternionR_cVectorR(Plc* p, V* q, V* v);
-void std_vector_cSkaAnimAnchorListEntry_ctor(void* self);
-}
-static inline Plc Ident()
-{
-    if (!D_004E1D80) {
-        V q; V v;
-        cQuaternion_GetIdentity(&q);
-        cVector_Get0001(&v);
-        cQuatVec_ctor_cQuaternionR_cVectorR(&D_00497F00, &q, &v);
-        D_004E1D80 = 1;
+static inline void ScaleTo(V* d, const V* s, float k) { int r; const V* ss = s; asm {
+        .set noreorder
+        lqc2 vf1, 0x0(ss)
+        mfc1 r, k
+        qmtc2.ni r, vf2
+        vmulx.xyzw vf1, vf1, vf2x
+        sqc2 vf1, 0x0(d)
+        .set reorder
+    } }
+static inline void AddTo(V* d, const V* a, const V* b) { asm {
+        lqc2 vf1, 0x0(a)
+        lqc2 vf2, 0x0(b)
+        vadd.xyzw vf1, vf1, vf2
+        sqc2 vf1, 0x0(d)
+    } }
+inline V V::operator*(float k) const { V t; ScaleTo(&t, this, k); return t; }
+inline V V::operator+(const V& o) const { V t; AddTo(&t, this, &o); return t; }
+struct cSkaPlaybackItem {
+    void* mAnimation;
+    float mSummedWeight;
+    unsigned char mIsSummedOffsetRootRotationUnweightedAndNormalized;
+    V mSummedOffsetRootRotation;
+    V GetWeighted() const {
+        if (mIsSummedOffsetRootRotationUnweightedAndNormalized)
+            return mSummedOffsetRootRotation * mSummedWeight;
+        return mSummedOffsetRootRotation;
     }
-    return D_00497F00;
-}
-struct S { char pad0[0xC]; unsigned char bC; Plc p10; Plc p30; };
-extern "C" S* cSkaAnimAnchorList_ctor_void(S* s);
-S* cSkaAnimAnchorList_ctor_void(S* s)
+};
+extern "C" void cSkaPlaybackItem_Accumulate(cSkaPlaybackItem* self, const cSkaPlaybackItem* contribution)
 {
-    std_vector_cSkaAnimAnchorListEntry_ctor(s);
-    s->bC = 1;
-    s->p10 = Ident();
-    s->p30 = Ident();
-    return s;
+    if (self->mSummedWeight == 0.0f) {
+        *self = *contribution;
+    } else {
+        self->mSummedOffsetRootRotation = self->GetWeighted() + contribution->GetWeighted();
+        self->mSummedWeight += contribution->mSummedWeight;
+        self->mIsSummedOffsetRootRotationUnweightedAndNormalized = 0;
+    }
 }
-static inline void merge_flush_func_003AF2D0(void) {} /* merge_units */
+static inline void merge_flush_func_003B15B0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003AF2D0 */
+/* merge_units: end func_003B15B0 */
+
+/* merge_units: begin func_003B1710 */
+#pragma push /* merge_units */
+/* Iterator equality. */
+int cSkaPlaybackItem_HasSameAnimation(Iter* a, Iter* b) {
+    return a->p == b->p;
+}
+
+void* AnimBlend_GetGroupCollection(char* self) {
+    return self + 232;
+}
+static inline void merge_flush_func_003B1710(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B1710 */
+
+/* merge_units: begin func_003B1740 */
+#pragma push /* merge_units */
+typedef struct AC_3B1740 { int id; float weight; unsigned char active; char pad[7]; Vec4 v; } AC_3B1740;
+/* Initialises an animation contribution record and returns it. */
+#pragma peephole off
+AC_3B1740* cSkaPlaybackItem_ctor(AC_3B1740* self, int id, float weight, Vec4* v) {
+    self->id = id;
+    self->weight = weight;
+    self->active = 1;
+    self->v = *v;
+    return self;
+}
+#pragma peephole reset
+static inline void merge_flush_func_003B1740(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B1740 */
+
+/* merge_units: begin func_003B1770 */
+#pragma push /* merge_units */
+void** PtrStack_Top(PtrStack* s) {
+    return &s->items[s->count - 1];
+}
+
+int AnimContext_GetCount(char* self) {
+    return *(int*)(self + 0);
+}
+
+float cSkaSliderValue_opCast_float(char* self) {
+    return *(float*)(self + 8);
+}
+
+/* Address of element i in an array of 60-byte elements. */
+char* cArray_cSkaSliderValue_opIndex(SkaVec* v, int i) {
+    return v->data + i * 60;
+}
+static inline void merge_flush_func_003B1770(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B1770 */
+
+/* merge_units: begin func_003B17D0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+typedef struct V4_003B17D0 { __int128 q; } V4_003B17D0;
+typedef struct It16 { char *p; } It16;
+
+typedef struct ClipS {
+    unsigned int type;
+    unsigned int n;
+    int stride;
+    char pC[0x10];
+    int tmask;
+    int rmask;
+    char key[0xC];
+    char d30[0x10];
+    char d40[0x30];
+    char d70[0x10];
+} ClipS;
+
+typedef struct StateS {
+    char p0[0x24];
+    ClipS *clip;
+    unsigned char reverse;
+    unsigned char mirror;
+    char p2A[2];
+    float start;
+    float end;
+    float offset;
+    char p38[0xC];
+    signed char motionFlag;
+    unsigned char loop;
+    unsigned char align;
+} StateS;
+
+typedef struct ParamS {
+    char p0[0x24];
+    float time;
+    char p28[4];
+    float speed;
+} ParamS;
+
+typedef struct BoneS {
+    char p0[0xC0];
+    unsigned char *info;
+    char pC4[0x1D0 - 0xC4];
+} BoneS;
+
+typedef struct BoneVec {
+    int unk0;
+    int count;
+    BoneS *data;
+} BoneVec;
+
+typedef struct SkelInner {
+    char p0[0x18];
+    BoneVec bones;
+} SkelInner;
+
+typedef struct SkelS {
+    char p0[0x20];
+    SkelInner *inner;
+    char p24[0xA0 - 0x24];
+    char roots[0x10];
+} SkelS;
+
+typedef struct RootS {
+    char p0[0xD0];
+    float accum;
+} RootS;
+
+typedef void Hdr;
+typedef struct W2 { float w[2]; W2() {} W2(float x) { w[0] = x; w[1] = 1.0f - w[0]; } } __attribute__((aligned(16))) W2;
+struct BIt { BoneS *p; BIt(BoneS *q) : p(q) {} bool operator!=(const BIt &o) const { return !(p == o.p); } };
+
+extern "C" {
+void cSkaAnimAnchor_AccumulateDeltaRot(RootS *r, float a, float w);
+void cSkaAnimAnchor_AccumulateDeltaPos(RootS *r, V4_003B17D0 *v, signed char f, float w);
+void cSkaAnimAnchor_AccumulatePos(RootS *r, V4_003B17D0 *v, float w);
+void cSkaAnimAnchor_AccumulateRot(RootS *r, V4_003B17D0 *q, unsigned char f, float w);
+void cBone_AnimationAccumulateRotation(BoneS *b, V4_003B17D0 *q, float w);
+void cBone_AnimationAccumulateOffset(BoneS *b, V4_003B17D0 *v, float w);
+int cSkaAnimData_RootHasDeltaTranslationX(Hdr *h);
+int cSkaAnimData_RootHasDeltaTranslationY(Hdr *h);
+int cSkaAnimData_RootHasDeltaTranslationZ(Hdr *h);
+float Deg2Rad(float d);
+void cVector_ctor_void(V4_003B17D0 *v);
+void cSkaAnim_Lerp(StateS *s, V4_003B17D0 *out, V4_003B17D0 *a, V4_003B17D0 *b, float *w);
+void cQuaternion_Rotate(V4_003B17D0 *q, V4_003B17D0 *r);
+void cQuaternion_GetIdentity(V4_003B17D0 *o);
+int cSkaAnimData_RootHasDeltaRotation(Hdr *h);
+unsigned char cSkaAnimData_RootHasDeltaTranslation(Hdr *h);
+RootS *RootCollection_FindByKey(void *coll, void *key);
+void cSkaAnimData_RootOffsetFromFirstFrameTranslation(V4_003B17D0 *o, Hdr *h);
+It16 *cSkaAnimDataFrame_ConstIterator_opInc(It16 *it);
+void cBoneData_PositionOffset(V4_003B17D0 *o, void *b);
+void cSkaAnim_LerpXYZ(StateS *s, V4_003B17D0 *out, V4_003B17D0 *a, V4_003B17D0 *b, float *w);
+void cVector_opAddAssign(V4_003B17D0 *a, V4_003B17D0 *b);
+void cVector_opAssign(V4_003B17D0 *a, V4_003B17D0 *b);
+V4_003B17D0 *cVector_GetZero(void);
+void cVector_opMul(V4_003B17D0 *o, V4_003B17D0 *v, float s);
+void cQuaternion_ctor_void(V4_003B17D0 *q);
+void cVector_Rotate_cQuaternionR(V4_003B17D0 *v, V4_003B17D0 *q);
+float *cQuaternion_Z_void(V4_003B17D0 *q);
+float *cQuaternion_Y_void(V4_003B17D0 *q);
+float *cQuaternion_W_void(V4_003B17D0 *q);
+BoneS **std_vector_deleter_cBone_data_void(BoneVec *v);
+void cQuaternion_opSub(V4_003B17D0 *o, V4_003B17D0 *q);
+float func_001E50E0(V4_003B17D0 *a, V4_003B17D0 *b);
+int cQuaternion_IsUnitQuatIdentity(V4_003B17D0 *q);
+void cQuaternion_Negate(V4_003B17D0 *q);
+V4_003B17D0 *cQuaternion_opAdd_void(V4_003B17D0 *q);
+V4_003B17D0 *cSkaAnimDataFrame_ConstIterator_Quaternion(It16 *it);
+float *cSkaAnimDataFrame_ConstIterator_Scalar(It16 *it);
+void *cBone_Properties(BoneS *b);
+float *cVector_Z_void_2(V4_003B17D0 *v);
+float *cVector_Y_void_2(V4_003B17D0 *v);
+float *cVector_X_void_2(V4_003B17D0 *v);
+V4_003B17D0 *cSkaAnimDataFrame_ConstIterator_Vector(It16 *it);
+void cVector_SetZero(V4_003B17D0 *v);
+Hdr *cPointer_cSkaAnimData_opCast_constcSkaAnimDataPtr(ClipS **c);
+void cSkaAnim_ProcessAnimData(float w, StateS *st, ParamS *pr, V4_003B17D0 *q, SkelS *sk);
+}
+
+static inline float FMin(float a, float b) { float r; asm { min.s r, a, b } return r; }
+static inline char *ClipData(ClipS *c)
+{
+    if (c->type >= 3)
+        return c->d70;
+    if (c->type == 2)
+        return c->d40;
+    return c->d30;
+}
+
+void cSkaAnim_ProcessAnimData(float w, StateS *st, ParamS *pr, V4_003B17D0 *q, SkelS *sk)
+{
+    V4_003B17D0 *k0;
+    V4_003B17D0 *k1;
+    It16 it0;
+    It16 it1;
+
+    if (w == 0.0f)
+        return;
+    {
+        ClipS *c = st->clip;
+        int f1;
+        float pos;
+        unsigned int n = c->n;
+        unsigned char loop = st->loop;
+        float sp = *(volatile float *)&pr->speed;
+        float rate = (float)n * sp;
+        float t = pr->time;
+        RootS *root;
+        int tmask;
+        BoneVec *bv;
+        int rmask;
+        int i;
+
+        if (st->reverse) {
+            if (t != 0.0f || !loop)
+                t = 1.0f - t;
+            rate = -rate;
+        }
+        if (st->offset != 0.0f) {
+            t += st->offset;
+            if (!(t < 1.0f))
+                t -= 1.0f;
+        } else {
+            bool full = false;
+            if (st->start == 0.0f && st->end == 1.0f)
+                full = true;
+            if (!full) {
+                float e = st->end;
+                float len = e - st->start;
+                t = st->start + t * len;
+                if (loop) {
+                    if (!(t < e))
+                        t -= len;
+                } else {
+                    t = FMin(1.0f, t);
+                }
+                rate *= len;
+            }
+        }
+        pos = t * (float)n;
+        f1 = (int)pos + 1;
+        if (loop) {
+            if (!(f1 < n))
+                f1 = 0;
+        } else {
+            if (n < f1)
+                f1 = n;
+        }
+        W2 wt(pos - (float)(int)pos);
+        it0.p = ClipData(c) + (int)pos * c->stride * 4;
+        it1.p = ClipData(c) + f1 * c->stride * 4;
+        root = RootCollection_FindByKey(sk->roots, c->key);
+        tmask = c->tmask;
+        bv = &sk->inner->bones;
+        rmask = c->rmask;
+        BIt it(*std_vector_deleter_cBone_data_void(bv));
+        BIt end(*std_vector_deleter_cBone_data_void(bv) + bv->count);
+        i = 0;
+        root->accum += w;
+        if (it != end) {
+            V4_003B17D0 tr;
+            V4_003B17D0 rot;
+            V4_003B17D0 motion;
+            unsigned char te;
+
+
+            cVector_ctor_void(&tr);
+            cQuaternion_ctor_void(&rot);
+            cVector_ctor_void(&motion);
+            c = (ClipS *)cPointer_cSkaAnimData_opCast_constcSkaAnimDataPtr(&st->clip);
+            te = cSkaAnimData_RootHasDeltaTranslation(c);
+            cVector_SetZero(&motion);
+
+            if (tmask & 1) {
+                V4_003B17D0 bm;
+                cSkaAnim_LerpXYZ(st, &tr, cSkaAnimDataFrame_ConstIterator_Vector(&it0), cSkaAnimDataFrame_ConstIterator_Vector(&it1), wt.w);
+                cSkaAnimDataFrame_ConstIterator_opInc(&it0);
+                cSkaAnimDataFrame_ConstIterator_opInc(&it1);
+                if (st->mirror)
+                    *cVector_X_void_2(&tr) = -*cVector_X_void_2(&tr);
+                if (te) {
+                    V4_003B17D0 s;
+                    cVector_opMul(&s, &tr, rate);
+                    cVector_opAssign(&motion, &s);
+                    if (cSkaAnimData_RootHasDeltaTranslationX(c))
+                        *cVector_X_void_2(&tr) = 0.0f;
+                    else
+                        *cVector_X_void_2(&motion) = 0.0f;
+                    if (cSkaAnimData_RootHasDeltaTranslationY(c))
+                        *cVector_Y_void_2(&tr) = 0.0f;
+                    else
+                        *cVector_Y_void_2(&motion) = 0.0f;
+                    if (cSkaAnimData_RootHasDeltaTranslationZ(c))
+                        *cVector_Z_void_2(&tr) = 0.0f;
+                    else
+                        *cVector_Z_void_2(&motion) = 0.0f;
+                }
+                if (st->mirror) {
+                    cSkaAnimData_RootOffsetFromFirstFrameTranslation(&bm, c);
+                    *cVector_X_void_2(&bm) = -*cVector_X_void_2(&bm);
+                    cVector_opAddAssign(&tr, &bm);
+                } else {
+                    V4_003B17D0 b;
+                    cSkaAnimData_RootOffsetFromFirstFrameTranslation(&b, c);
+                    cVector_opAddAssign(&tr, &b);
+                }
+                {
+                    V4_003B17D0 o;
+                    cBoneData_PositionOffset(&o, cBone_Properties(it.p));
+                    cVector_opAddAssign(&tr, &o);
+                }
+            }
+            if (rmask & 1) {
+                if (cSkaAnimData_RootHasDeltaRotation(c)) {
+                    float a0 = *cSkaAnimDataFrame_ConstIterator_Scalar(&it0);
+                    float d = *cSkaAnimDataFrame_ConstIterator_Scalar(&it1) - a0;
+                    float a;
+                    if (d < Deg2Rad(-180.0f))
+                        d += Deg2Rad(360.0f);
+                    else if (d > Deg2Rad(180.0f))
+                        d += Deg2Rad(-360.0f);
+                    a = a0 + d * wt.w[0];
+                    cSkaAnimDataFrame_ConstIterator_opInc(&it0);
+                    cSkaAnimDataFrame_ConstIterator_opInc(&it1);
+                    if (st->mirror)
+                        a = -a;
+                    a *= rate;
+                    cSkaAnimAnchor_AccumulateDeltaRot(root, a, w);
+                }
+                k0 = cSkaAnimDataFrame_ConstIterator_Quaternion(&it0);
+                k1 = cSkaAnimDataFrame_ConstIterator_Quaternion(&it1);
+                if (func_001E50E0(k0, k1) >= 0.0f) {
+                    cSkaAnim_Lerp(st, &rot, k0, cQuaternion_opAdd_void(k1), wt.w);
+                } else {
+                    V4_003B17D0 nq;
+                    cQuaternion_opSub(&nq, k1);
+                    cSkaAnim_Lerp(st, &rot, k0, &nq, wt.w);
+                    if (*cQuaternion_W_void(&rot) < 0.0f)
+                        cQuaternion_Negate(&rot);
+                }
+                cSkaAnimDataFrame_ConstIterator_opInc(&it0);
+                cSkaAnimDataFrame_ConstIterator_opInc(&it1);
+                if (st->mirror) {
+                    *cQuaternion_Y_void(&rot) = -*cQuaternion_Y_void(&rot);
+                    *cQuaternion_Z_void(&rot) = -*cQuaternion_Z_void(&rot);
+                }
+                if (!cQuaternion_IsUnitQuatIdentity(q)) {
+                    cQuaternion_Rotate(&rot, q);
+                    cVector_Rotate_cQuaternionR(&tr, q);
+                    if (te)
+                        cVector_Rotate_cQuaternionR(&motion, q);
+                }
+                cSkaAnimAnchor_AccumulateRot(root, &rot, st->align, w);
+                {
+                    V4_003B17D0 id;
+                    cQuaternion_GetIdentity(&id);
+                    cBone_AnimationAccumulateRotation(it.p, &id, w);
+                }
+            }
+            if (tmask & 1) {
+                cSkaAnimAnchor_AccumulatePos(root, &tr, w);
+                if (te)
+                    cSkaAnimAnchor_AccumulateDeltaPos(root, &motion, st->motionFlag, w);
+                cBone_AnimationAccumulateOffset(it.p, cVector_GetZero(), w);
+            }
+            i++;
+            it.p++;
+        }
+        while (it != end) {
+            int bit;
+            bool hasT;
+            bool hasR;
+            V4_003B17D0 tr;
+            V4_003B17D0 rot;
+            V4_003B17D0 motion;
+
+            BoneS *b = st->mirror ? &bv->data[it.p->info[1]] : it.p;
+            bit = 1 << i;
+            hasT = (tmask & bit) != 0;
+            hasR = (rmask & bit) != 0;
+            cVector_ctor_void(&tr);
+            cQuaternion_ctor_void(&rot);
+            cVector_ctor_void(&motion);
+            if (hasT) {
+                cSkaAnim_LerpXYZ(st, &tr, cSkaAnimDataFrame_ConstIterator_Vector(&it0), cSkaAnimDataFrame_ConstIterator_Vector(&it1), wt.w);
+                cSkaAnimDataFrame_ConstIterator_opInc(&it0);
+                cSkaAnimDataFrame_ConstIterator_opInc(&it1);
+                if (st->mirror)
+                    *cVector_X_void_2(&tr) = -*cVector_X_void_2(&tr);
+                {
+                    V4_003B17D0 o;
+                    cBoneData_PositionOffset(&o, cBone_Properties(b));
+                    cVector_opAddAssign(&tr, &o);
+                }
+            }
+            if (hasR) {
+                V4_003B17D0 *k0 = cSkaAnimDataFrame_ConstIterator_Quaternion(&it0);
+                V4_003B17D0 *k1 = cSkaAnimDataFrame_ConstIterator_Quaternion(&it1);
+                if (func_001E50E0(k0, k1) >= 0.0f) {
+                    cSkaAnim_Lerp(st, &rot, k0, cQuaternion_opAdd_void(k1), wt.w);
+                } else {
+                    V4_003B17D0 nq;
+                    cQuaternion_opSub(&nq, k1);
+                    cSkaAnim_Lerp(st, &rot, k0, &nq, wt.w);
+                    if (*cQuaternion_W_void(&rot) < 0.0f)
+                        cQuaternion_Negate(&rot);
+                }
+                cSkaAnimDataFrame_ConstIterator_opInc(&it0);
+                cSkaAnimDataFrame_ConstIterator_opInc(&it1);
+                if (st->mirror) {
+                    *cQuaternion_Y_void(&rot) = -*cQuaternion_Y_void(&rot);
+                    *cQuaternion_Z_void(&rot) = -*cQuaternion_Z_void(&rot);
+                }
+                cBone_AnimationAccumulateRotation(b, &rot, w);
+            }
+            if (hasT)
+                cBone_AnimationAccumulateOffset(b, &tr, w);
+            i++;
+            it.p++;
+        }
+    }
+}
+static inline void merge_flush_func_003B17D0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B17D0 */

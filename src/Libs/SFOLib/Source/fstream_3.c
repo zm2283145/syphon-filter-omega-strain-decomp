@@ -1,15 +1,124 @@
 /*
- * Libs/SFOLib/Source/fstream: 1 file, 003EAE60
+ * Libs/SFOLib/Source/fstream: 2 files, 003EAA70-003EAE60
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_003EAE60 */
+/* merge_units: begin func_003EAA70 */
 #pragma push /* merge_units */
 #pragma inline_depth(16)
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
+
+/* The request state is a one-byte enum; testing it through an enum-typed local
+   gives retail's registers (byte in a0, request pointer kept in v1). */
+#pragma enumsalwaysint off
+enum eReqState { RS_0, RS_1, RS_2, RS_3, RS_4, RS_5, RS_MAX = 0x7F };
+struct ReqAA { int frame; eReqState state; char pad5[3]; char* file; void* cb; int user; };
+struct LdrAA { char pad[0xC]; ReqAA* cur; };
+struct CmpAA {};
+struct PredAA { CmpAA cmp; ReqAA** pp; PredAA(const CmpAA& c, ReqAA** p) : cmp(c), pp(p) {} };
+
+extern "C" {
+extern char D_004BE010;
+extern int g_FrameCounter;
+void cMemMan_Deallocate(int a, void* p, char* file, int line);
+void std_list_imp_voidPtr_remove_if(LdrAA*, PredAA);
+int cFSData_FreeStream(ReqAA* r, int release);
+ReqAA* cFileStreamMan_FindStreamData(LdrAA* l, char* name, int kind);
+bool cFileStreamMan_StreamRequestFlush_cFileManR_voidPcFSHandlePvoidPbool_voidP_eStreamMode(LdrAA* ldr, char* name, void* cb, int user, unsigned char mode);
+}
+
+static inline PredAA MakePredAA(ReqAA** p) { CmpAA c; return PredAA(c, p); }
+static inline void MarkAA(ReqAA* r)
+{
+    r->state = RS_5;
+    r->frame = g_FrameCounter;
+}
+static inline void SetupAA(ReqAA* r, char* name, void* cb, int user)
+{
+    r->file = name;
+    if (cb) r->cb = cb;
+    if (user) r->user = user;
+}
+
+extern "C" bool cFileStreamMan_StreamRequestFlush_cFileManR_voidPcFSHandlePvoidPbool_voidP_eStreamMode(LdrAA* ldr, char* name, void* cb, int user, unsigned char mode)
+{
+    bool now = mode == 1;
+    ReqAA* r2 = 0;
+    ReqAA* req;
+    bool ret = true;
+
+    req = cFileStreamMan_FindStreamData(ldr, name, 3);
+    if (!req) {
+        req = cFileStreamMan_FindStreamData(ldr, name, 0);
+        if (req)
+            now = true;
+    }
+    if (!req)
+        req = cFileStreamMan_FindStreamData(ldr, name, 5);
+    if (!req) {
+        req = cFileStreamMan_FindStreamData(ldr, name, 1);
+        if (req)
+            req->state = RS_2;
+    }
+    if (req) {
+        eReqState s = req->state;
+        if (s != RS_2) {
+            if (cb)
+                SetupAA(req, name, cb, user);
+            MarkAA(req);
+            if (now) {
+                cFSData_FreeStream(req, 1);
+                std_list_imp_voidPtr_remove_if(ldr, MakePredAA(&req));
+                {
+                    ReqAA* p = req;
+                    AllocGuard g;
+                    cMemMan_Deallocate(0, p, &D_004BE010, 0x2AF);
+                }
+            }
+        }
+        r2 = req;
+        while (r2) {
+            r2 = cFileStreamMan_FindStreamData(ldr, name, 3);
+            if (r2) {
+                std_list_imp_voidPtr_remove_if(ldr, MakePredAA(&r2));
+                {
+                    ReqAA* p = r2;
+                    AllocGuard g;
+                    cMemMan_Deallocate(0, p, &D_004BE010, 0x2C2);
+                }
+            }
+        }
+        r2 = req;
+        while (r2) {
+            r2 = cFileStreamMan_FindStreamData(ldr, name, 0);
+            if (r2) {
+                std_list_imp_voidPtr_remove_if(ldr, MakePredAA(&r2));
+                {
+                    ReqAA* p = r2;
+                    AllocGuard g;
+                    cMemMan_Deallocate(0, p, &D_004BE010, 0x2D5);
+                }
+            }
+        }
+        r2 = cFileStreamMan_FindStreamData(ldr, name, 1);
+        if (r2)
+            r2->state = RS_2;
+    } else {
+        ret = false;
+    }
+    return ret;
+}
+static inline void merge_flush_func_003EAA70(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003EAA70 */
+
+/* merge_units: begin func_003EAE60 */
+#pragma push /* merge_units */
+#pragma inline_depth(16)
+#pragma cplusplus on
 
 struct Sub_EAE60 {
     int n0;
@@ -33,11 +142,14 @@ struct Loader_EAE60 {
 
 extern "C" {
 extern unsigned char D_00493990;
-extern char D_004BE010;
 void* cMemMan_Allocate(int a, int size, char* file, int line);
 int cFileMan_IsReadDone(char* f);
 void cFileStreamMan_FlushAllStreamData(Loader_EAE60* l, int a);
+#if 0 /* merge_units */
 Req_EAE60* cFileStreamMan_FindStreamData(Loader_EAE60* l, char* name, int kind);
+#endif /* merge_units */
+#define cFileStreamMan_FindStreamData(a0, a1, a2) ((Req_EAE60 *)cFileStreamMan_FindStreamData((LdrAA *)(a0), (a1), (a2))) /* merge_units */
+
 void std_list_cFSDataPtr_push_back(Loader_EAE60* l, Req_EAE60** r);
 char* cFileMan_ctor_void(void* p);
 void cFileMan_EncodeFilename_charP_cFileManR(char* f, char* a, char* b);
@@ -173,6 +285,7 @@ extern "C" int cFileStreamMan_StreamRequest(Loader_EAE60* ldr, char* name, void 
     }
     return 1;
 }
+#undef cFileStreamMan_FindStreamData /* merge_units */
 static inline void merge_flush_func_003EAE60(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003EAE60 */

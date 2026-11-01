@@ -3963,5 +3963,8 @@
   "SFOGame/Source/path/func_00162080": "cwps2-3.0b38",
   "SFOGame/Source/humanCollision/func_001EB990": "cwps2-3.0b38",
   "Libs/SFOLib/Source/particle/func_003A0540": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/interface_model/func_003ED880": "cwps2-3.0b38"
+  "Libs/SFOLib/Source/interface_model/func_003ED880": "cwps2-3.0b38",
+  "SFOGame/Source/human/func_00192800": "cwps2-3.0b38",
+  "SFOGame/Source/humanCollision/func_001E7110": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/interface_element/func_003E8190": "cwps2-3.0b38"
 }

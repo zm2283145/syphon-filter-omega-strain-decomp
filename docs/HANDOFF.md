@@ -42,7 +42,16 @@ This is the working state and the routine for whoever continues this project
 - **R222** `95e23a31`: CalculateLeftWristTargetRot_Local and UpperBody_HandRotation, both fixed by a dedicated case-24 premultiply chain (see p8l NOTES).
 - **R223** `5fe0d822`: GuiEquipmentSetup_ctor (q3, built from the matched GuiScoresEquip_ctor sibling), Global_Shatter and
   cHuman_Fall (q2: per-site copy depth; `const cMsg&` temporaries plus a named playback-group pointer in the AddRequest wrapper).
-- **Totals:** 14,271 / 14,351, **95.10% code**; 80 functions remain.
+- **R224** `b9f4a7f2`: cHuman_Land, cHuman_GrabLedge (the less-optimised-mode trigger).
+- **R225** `0de9441c`: cHuman_Choke_NextFrame (the trigger fixed it from 61 to 11 lines; q3's opt pragmas then became unnecessary),
+  DetectForAndHandleCollisionWithOtherHumans, cScriptInterpreter_execute (trigger plus the real Schedule signature from DWARF;
+  `"%d\0\0"` literal padding as in playerControls_12). Also added linker aliases `dpadd`/`dptofp` in config/extra.ld (MW double helpers),
+  which unblocks cHuman_NextFrame.
+- **Totals:** 14,276 / 14,351, **95.45% code**; 75 functions remain.
+- **Mode findings (r1/r2 notes):** a draft with `#pragma opt_*` lines and no volatile asm is worth testing with the trigger. Several
+  `asm { .set reorder }` barriers together can switch a function into the mode. All other remaining asm-heavy drafts already compile in
+  the mode, and retail is too, so their diffs are colouring and scheduling problems inside the mode. `build/agents/R2/mode_sweep.py` (copied
+  in r2 notes) checks a folder of drafts.
 - Session 2026-11-01 evening lanes q1-q3: notes in `docs/lane_notes/q1..q3/`. HandleJumpInit is now at 16 lines (`q2/drafts/hj_best16.c`, only the
   case-21 msg->vec copy left). cMachine_NextFrame is at 10 (`q2/drafts/mn_best10.c`). GrabLedge has a first draft (`q2/drafts/gl3.c`). Both HandleMoveMessage
   variants share one residual s4/s2 swap (`q1/drafts/hm1_best.c`). Lead: the Fall recipe should fix cHuman_Land's first AddRequest.

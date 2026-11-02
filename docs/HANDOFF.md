@@ -31,6 +31,17 @@ This is the working state and the routine for whoever continues this project
 - Untouched or nearly untouched large functions: XLib_DrawLensFlares (5,388 B; the prototype is identical to retail at the
   start, so it is a good candidate), XLib_ApplyContext (418 lines), XLib_Init (279), cHuman_Land, ActorPhys_RunResponse.
 
+## Owner decision pending: StaticInit_scriptUtils (lane s2, 2026-11-02)
+
+s2 has a full match of StaticInit_scriptUtils (0x4D09A0, 3,340 B, with its .data 0x4A82C8..0x4A84D8). It is held at
+`build/agents/held/mw38_004D09A0_needs_noload_sections.c` in the cloud workspace; see docs/lane_notes/s2/NOTES.md.
+- **Why it is held.** Retail keeps v1/a2 live across calls to the anonymous-namespace helpers Array_SOBJ_getClassId and
+  cNodeList_SOBJ_getClassId. MW does that only for a `static` function defined earlier in the same file.
+- **How the draft reproduces it.** The file carries static copies of both helpers in their own sections (`.ipa_002690E0`, `.ipa_00269830`).
+  These need a linker rule mapping them NOLOAD at their real addresses, plus a check that elf_rebuild ignores them.
+- **Result.** A test link was byte-identical. This duplicates two functions in source and adds custom linker sections, so it
+  needs the owner's approval before integration.
+
 ## Source cleanup 2026-11-02 (lane c1)
 
 - Part-files under src/SFOGame, src/Libs and src/CW_PS2Support went from 2,511 to **2,020**; single-file originals went from 49 to 52 of 269.

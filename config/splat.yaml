@@ -3308,7 +3308,7 @@ segments:
       - [0x283420, c, Libs/SFOLib/Source/texman_12]
       - [0x283660, c, Libs/SFOLib/Source/man]
       - [0x284A00, c, Libs/SFOLib/Source/man_2]
-      - [0x285240, asm]
+      - [0x285240, c, Libs/SFOLib/Source/man/func_00385240]
       - [0x285330, c, Libs/SFOLib/Source/man_4]
       - [0x285370, c, Libs/SFOLib/Source/man_3]
       - [0x285D40, asm]

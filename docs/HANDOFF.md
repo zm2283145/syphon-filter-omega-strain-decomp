@@ -31,6 +31,25 @@ This is the working state and the routine for whoever continues this project
 - Untouched or nearly untouched large functions: XLib_DrawLensFlares (5,388 B; the prototype is identical to retail at the
   start, so it is a good candidate), XLib_ApplyContext (418 lines), XLib_Init (279), cHuman_Land, ActorPhys_RunResponse.
 
+## Session 2026-11-02 morning (lanes s1-s3, t1-t3)
+
+- **R227** `d55722e7`: StaticInit_scriptUtils (owner approved; NOLOAD helper copies).
+- **R228** `af2d9c90`: cPlayerCamera_UpdateMotion, cCollisionProbe_SphereSweptRay_Reset_2.
+- **R229** `17394bde`: ColQuery_InitSweep.
+- **Totals:** **14,281 / 14,351, 95.75% code**; 70 functions remain.
+- **Near misses** (drafts in `docs/lane_notes/<lane>/drafts/`):
+  - XLib_Init: 52 lab lines, exact size and frame (`t3/xi_best52.c`); one ~70-instruction window remains.
+  - ActorPhys_RunResponse: 371 lab lines, 116 with sp masked (`t2/ar_best.c`); all call targets match. The temp-region stack slots are the
+    largest remaining pool.
+  - func_003E57B0: 105 lines (`t1/dp_best105_c.c`).
+- **New rules (t1/t2 notes):**
+  - Inline call arguments are evaluated right to left.
+  - GCC `__asm__ volatile` with a "memory" clobber stops MW reusing an address across it (MW `asm {}` does not).
+  - Copying an argument into a local pointer moves its setup earlier.
+  - The block-local unoptimised patterns (dead `move rX,zero`, repeated sign-extends) appear after a volatile asm with an output operand
+    in the same block. Retail's trigger for them is still unknown.
+- **Not started:** CameraCol_Sweep (no prototype counterpart) and WeatherEmitter_Update (retail adds a lot; t3 notes have the outline).
+
 ## StaticInit_scriptUtils: owner approved, integrated in R227 `d55722e7` (lane s2, 2026-11-02)
 
 s2 has a full match of StaticInit_scriptUtils (0x4D09A0, 3,340 B, with its .data 0x4A82C8..0x4A84D8). It is now src/main/sinit/func_004D09A0.c. The

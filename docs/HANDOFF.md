@@ -38,6 +38,8 @@ The owner approved these idioms; each use must be commented in the source:
 - dead `if (0) { ... }` blocks of locals that reproduce unreferenced frame holes in that mode;
 - explicit `asm { nop }` in empty branches where retail has a real nop (SKL_CompressSKL);
 - string literals padded with `\0` to reproduce retail's 8-byte literal alignment.
+- (approved 2026-11-02, later) the XLib_ApplyContext UNPACK copy block as a commented MW `asm volatile { .set noreorder; lw/sw...; .set reorder }`.
+  The shape exists only in that function and no C form produces it; it counts once the function reaches MATCH.
 
 ## Session 2026-11-02 afternoon (lanes u1-u3)
 
@@ -59,7 +61,7 @@ The owner approved these idioms; each use must be commented in the source:
 - **XLib_ApplyContext: 521 → 36 lab lines** at exact size (`docs/lane_notes/w2/drafts/ac_best36.c`).
   - The 16 UNPACK one-quadword copies are written as a commented MW `asm volatile { .set noreorder; lw/sw...; .set reorder }` block.
     No C form gives retail's two-register copy with the source pointer kept in its own register, and this shape appears only in this function.
-  - **Owner decision needed before staging:** accept this asm block if the function reaches MATCH.
+  - **The owner approved this asm block on 2026-11-02** (see Owner decisions).
   - Left: an a0/a1 swap at the first AddUnpack, and the order of the uv-scale float block.
 - **WeatherEmitter_Update:** first full draft, 154 lab lines (151 masked), with exact size, frame and every stack slot (`w1/drafts/wu_best.c`).
   - About 40 lines are saved-FP clamp colouring; retail writes `max.s f1,f22,f0; mov.s f22,f1`.

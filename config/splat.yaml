@@ -3722,7 +3722,7 @@ segments:
       - [0x2FCC50, c, Libs/SFOLib/Source/keyframe]
       - [0x2FD290, c, Libs/SFOLib/Source/globalization]
       - [0x2FD2C0, c, Libs/SFOLib/Source/globalization_2]
-      - [0x2FD740, asm]
+      - [0x2FD740, c, Libs/SFOLib/Source/globalization/func_003FD740]
       - [0x2FDA40, c, Libs/SFOLib/Source/globalization_3]
       - [0x2FDCA0, c, Libs/SFOLib/Source/globalization_4]
       - [0x2FDEB0, c, Libs/SFOLib/Source/globalization_5]

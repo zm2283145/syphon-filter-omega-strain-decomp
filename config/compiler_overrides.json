@@ -3519,5 +3519,6 @@
   "Libs/SFOLib/Source/particle/func_0039A000": "cwps2-3.0b38",
   "SFOGame/Source/humanCollision/func_001E1600": "cwps2-3.0b38",
   "Libs/SFOLib/Source/collision/func_003C0020": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/man/func_00385240": "cwps2-3.0b38"
+  "Libs/SFOLib/Source/man/func_00385240": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/globalization/func_003FD740": "cwps2-3.0b38"
 }

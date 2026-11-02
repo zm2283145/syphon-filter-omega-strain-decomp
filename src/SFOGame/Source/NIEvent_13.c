@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/NIEvent: 1 file, 0023DE10
+ * SFOGame/Source/NIEvent: 2 files, 0023DE10-0023E0A0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -38,7 +38,13 @@ struct NiEv {
 extern "C" {
 Mtx cNIEventBase_MakeFacingMat(NiEv* ev);
 Mtx cNIEventBase_ParentXform(NiEv* ev);
+#if 0 /* merge_units */
 void cMatrix_opMul_cMatrixR(Mtx* out, Mtx* a, Mtx* b);
+#endif /* merge_units */
+union PPMtx; /* merge_units */
+void cMatrix_opMul_cMatrixR(PPMtx* out, PPMtx* a, PPMtx* b); /* merge_units */
+#define cMatrix_opMul_cMatrixR(a0, a1, a2) (cMatrix_opMul_cMatrixR((PPMtx *)(a0), (PPMtx *)(a1), (PPMtx *)(a2))) /* merge_units */
+
 void cMatrix_ctor_void(Mtx* m);
 void cMatrix_opAssign(Mtx* d, Mtx* s);
 void cMatrix_ctor_cMatrixR(Mtx* d, Mtx* s);
@@ -103,6 +109,66 @@ extern "C" Mtx cNIEventBase_ParentXform(NiEv* ev)
     }
     return r;
 }
+#undef cMatrix_opMul_cMatrixR /* merge_units */
 static inline void merge_flush_func_0023DE10(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0023DE10 */
+
+/* merge_units: begin func_0023E0A0 */
+#pragma push /* merge_units */
+#include "pp_quad_copy.h"
+#pragma push
+#pragma peephole off
+#pragma opt_propagation off
+#pragma opt_common_subs off
+void cMatrix_opMul_cMatrixR(PPMtx* out, PPMtx* a, PPMtx* b) {
+    PPMtx t;
+    __int128 qa; __int128 qb; PPMtx* s; PPMtx* p; p = &t;
+    asm {
+        lqc2 vf4, 0x0(a)
+        lqc2 vf5, 0x10(a)
+        lqc2 vf6, 0x20(a)
+        lqc2 vf7, 0x30(a)
+        lqc2 vf8, 0x0(b)
+        lqc2 vf9, 0x10(b)
+        lqc2 vf10, 0x20(b)
+        lqc2 vf11, 0x30(b)
+        vmulax.xyzw ACC, vf4, vf8x
+        vmadday.xyzw ACC, vf5, vf8y
+        vmaddaz.xyzw ACC, vf6, vf8z
+        vmaddw.xyzw vf12, vf7, vf8w
+        vmulax.xyzw ACC, vf4, vf9x
+        vmadday.xyzw ACC, vf5, vf9y
+        vmaddaz.xyzw ACC, vf6, vf9z
+        vmaddw.xyzw vf13, vf7, vf9w
+        vmulax.xyzw ACC, vf4, vf10x
+        vmadday.xyzw ACC, vf5, vf10y
+        vmaddaz.xyzw ACC, vf6, vf10z
+        vmaddw.xyzw vf14, vf7, vf10w
+        vmulax.xyzw ACC, vf4, vf11x
+        vmadday.xyzw ACC, vf5, vf11y
+        vmaddaz.xyzw ACC, vf6, vf11z
+        vmaddw.xyzw vf15, vf7, vf11w
+        sqc2 vf12, 0x0(p)
+        sqc2 vf13, 0x10(p)
+        sqc2 vf14, 0x20(p)
+        sqc2 vf15, 0x30(p)
+    }
+    s = &t;
+    asm {
+ .set noreorder
+ lq qa, 0x0(s)
+ lq qb, 0x10(s)
+ sq qa, 0x0(out)
+ lq qa, 0x20(s)
+ sq qb, 0x10(out)
+ lq qb, 0x30(s)
+ sq qa, 0x20(out)
+ sq qb, 0x30(out)
+ .set reorder
+ }
+}
+#pragma pop
+static inline void merge_flush_func_0023E0A0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0023E0A0 */

@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/human: 6 files, 001AF600-001AF880
+ * SFOGame/Source/human: 8 files, 001AF600-001AF8E0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -164,12 +164,18 @@ extern void* D_004EE9D8;
 extern char D_0049D8D0[];
 extern void cTimerDisable_ctor(G_1AF7A0* g);
 extern void cTimerDisable_dtor(G_1AF7A0* g, int f);
+#if 0 /* merge_units */
 extern void cArray_cSkeletonCenterOfMassContributionPtr_dtor(void* p, int f);
+#endif /* merge_units */
+void* cArray_cSkeletonCenterOfMassContributionPtr_dtor(void* self, short deleteFlag); /* merge_units */
+#define cArray_cSkeletonCenterOfMassContributionPtr_dtor(a0, a1) ((void)cArray_cSkeletonCenterOfMassContributionPtr_dtor((a0), (short)(a1))) /* merge_units */
+
 #if 0 /* merge_units */
 extern void cArray_cSkeletonBBoxContributionPtr_dtor(void* p, int f);
 #endif /* merge_units */
 void* cArray_cSkeletonBBoxContributionPtr_dtor(void* self, short deleteFlag); /* merge_units */
 #define cArray_cSkeletonBBoxContributionPtr_dtor(a0, a1) ((void)cArray_cSkeletonBBoxContributionPtr_dtor((a0), (short)(a1))) /* merge_units */
+
 
 extern void cMemMan_Deallocate(int pool, void* p, char* file, int line);
 extern void cHumanIkRoutine_UnInitStatics(void);
@@ -201,6 +207,7 @@ void cHuman_UnInitStatics(void)
     cCollisionSystem_cBox_UnInitStatics();
     nCollision_UnInitStatics();
 }
+#undef cArray_cSkeletonCenterOfMassContributionPtr_dtor /* merge_units */
 #undef cArray_cSkeletonBBoxContributionPtr_dtor /* merge_units */
 static inline void merge_flush_func_001AF7A0(void) {} /* merge_units */
 #pragma pop /* merge_units */
@@ -216,3 +223,31 @@ DEFINE_BASE_DTOR_CHAIN(cArray_cSkeletonBBoxContributionPtr_dtor, std_vector_imp_
 static inline void merge_flush_func_001AF880(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_001AF880 */
+
+/* merge_units: begin func_001AF8E0 */
+#pragma push /* merge_units */
+#pragma push
+#pragma cplusplus on
+#include "buf_holder_dtor.h"
+#pragma pop
+#pragma push
+#pragma cplusplus on
+#pragma pop
+
+#pragma cplusplus on
+
+/* Destroy a buffer holder: free its buffer, optionally delete. */
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cSkeletonBBoxContributionPtr_1_dtor)
+static inline void merge_flush_func_001AF8E0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001AF8E0 */
+
+/* merge_units: begin func_001AF9D0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+/* Deleting destructor that runs the base destructor. */
+DEFINE_BASE_DTOR_CHAIN(cArray_cSkeletonCenterOfMassContributionPtr_dtor, std_vector_imp_cSkeletonCenterOfMassContributionPtr_1_dtor)
+static inline void merge_flush_func_001AF9D0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001AF9D0 */

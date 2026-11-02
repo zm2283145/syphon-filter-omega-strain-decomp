@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/taser: 5 files, 00266200-002665B0
+ * SFOGame/Source/taser: 10 files, 00266200-002666D0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -123,7 +123,13 @@ extern "C" void cAirTaser_Release(S266*);
 extern "C" void cAirTaser_Release(void*); /* merge_units */
 #define cAirTaser_Release(a0) (cAirTaser_Release((void *)(a0))) /* merge_units */
 
+
+#if 0 /* merge_units */
 extern "C" void std_vector_deleter_TaserPoint_clear(void*);
+#endif /* merge_units */
+extern "C" void std_vector_deleter_TaserPoint_clear(PtrVec* v); /* merge_units */
+#define std_vector_deleter_TaserPoint_clear(a0) (std_vector_deleter_TaserPoint_clear((PtrVec *)(a0))) /* merge_units */
+
 extern "C" void cAirTaser_Reset(S266* p) {
     p->flag = 0;
     cAirTaser_Release(p);
@@ -134,6 +140,7 @@ extern "C" void cAirTaser_Reset(S266* p) {
     }
 }
 #undef cAirTaser_Release /* merge_units */
+#undef std_vector_deleter_TaserPoint_clear /* merge_units */
 static inline void merge_flush_func_00266410(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00266410 */
@@ -161,10 +168,12 @@ void cAirTaser_Release(Obj266* self);
 #define cAirTaser_Release(a0) (cAirTaser_Release((void *)(a0))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void std_vector_deleter_TaserPoint_clear(void* p);
 #endif /* merge_units */
-#define std_vector_deleter_TaserPoint_clear(a0) (std_vector_deleter_TaserPoint_clear((a0))) /* merge_units */
+#define std_vector_deleter_TaserPoint_clear(a0) (std_vector_deleter_TaserPoint_clear((PtrVec *)(a0))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
@@ -173,6 +182,7 @@ void std_list_TaserPulse_dtor(void* p, short flag);
 struct TreeHolder; /* merge_units */
 TreeHolder* std_list_TaserPulse_dtor(TreeHolder* self, short deleteFlag); /* merge_units */
 #define std_list_TaserPulse_dtor(a0, a1) ((void)std_list_TaserPulse_dtor((TreeHolder *)(a0), (a1))) /* merge_units */
+
 
 void std_vector_deleter_TaserPoint_dtor(void* p, short flag);
 }
@@ -229,7 +239,14 @@ static inline void merge_flush_func_00266470(void) {} /* merge_units */
 
 struct TreeNode2;
 struct TreeHolder { int head; int header; TreeNode2* first; };
+#if 0 /* merge_units */
 extern "C" void std_list_deleter_TaserPulse_erase_listdeleter_listdeleter(TreeNode2** result, TreeHolder* self, TreeNode2** first, TreeNode2** last);
+#endif /* merge_units */
+struct EraseListNode; /* merge_units */
+struct EraseList; /* merge_units */
+extern "C" void std_list_deleter_TaserPulse_erase_listdeleter_listdeleter(EraseListNode** result, EraseList* list, EraseListNode** first, EraseListNode** last); /* merge_units */
+#define std_list_deleter_TaserPulse_erase_listdeleter_listdeleter(a0, a1, a2, a3) (std_list_deleter_TaserPulse_erase_listdeleter_listdeleter((EraseListNode * *)(a0), (EraseList *)(a1), (EraseListNode * *)(a2), (EraseListNode * *)(a3))) /* merge_units */
+
 extern "C" TreeHolder* std_list_TaserPulse_dtor(TreeHolder* self, short deleteFlag) {
     if (self) {
         if (self) {
@@ -246,6 +263,7 @@ extern "C" TreeHolder* std_list_TaserPulse_dtor(TreeHolder* self, short deleteFl
     }
     return self;
 }
+#undef std_list_deleter_TaserPulse_erase_listdeleter_listdeleter /* merge_units */
 static inline void merge_flush_func_002665B0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002665B0 */
@@ -272,9 +290,22 @@ extern char D_004F8350[];
 #endif /* merge_units */
 #define D_004F8350 ((char*)&D_004F8350) /* merge_units */
 
+
+#if 0 /* merge_units */
 extern void std_vector_TaserPoint_ctor(Sub_00266630*);
+#endif /* merge_units */
+Rel * std_vector_TaserPoint_ctor(); /* merge_units */
+
+#if 0 /* merge_units */
 extern void std_list_deleter_TaserPulse_ctor(void*);
+#endif /* merge_units */
+List * std_list_deleter_TaserPulse_ctor(); /* merge_units */
+
+#if 0 /* merge_units */
 extern void std_vector_cAirTaserPtr_push_back(void* registry, S** self);
+#endif /* merge_units */
+int std_vector_cAirTaserPtr_push_back(); /* merge_units */
+
 /* Constructor: initialises members and registers the object in the global registry. */
 S* cAirTaser_ctor(S* self, int owner)
 {
@@ -296,3 +327,158 @@ S* cAirTaser_ctor(S* self, int owner)
 static inline void merge_flush_func_00266630(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00266630 */
+
+/* merge_units: begin func_002666D0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+#include "loose01_types.h"
+
+extern int std_vector_pod_int_insert(PtrVec*, int*, int, int*);
+
+/* push_back */
+int std_vector_cAirTaserPtr_push_back(PtrVec* v, int* value) {
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
+}
+
+Rel* std_vector_TaserPoint_ctor(Rel* r) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
+    return r;
+}
+
+void std_vector_deleter_TaserPoint_clear(PtrVec* v) {
+    v->count = 0;
+}
+static inline void merge_flush_func_002666D0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002666D0 */
+
+/* merge_units: begin func_00266720 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#define D_0049AE80 D_004A8280
+#include "object_list_erase_range.h"
+extern "C" { char D_004A8280[] = "allocator.hh"; }
+
+DEFINE_OBJECT_LIST_ERASE_RANGE(std_list_deleter_TaserPulse_erase_listdeleter_listdeleter)
+static inline void merge_flush_func_00266720(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00266720 */
+
+/* merge_units: begin func_00266860 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "object_list_erase_file.h"
+
+DEFINE_OBJECT_LIST_ERASE_ONE_FILE(std_list_deleter_TaserPulse_erase_listdeleter, D_004A8280)
+static inline void merge_flush_func_00266860(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00266860 */
+
+/* merge_units: begin func_00266960 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#pragma always_inline on
+#include "alloc_guard.h"
+
+extern "C" {
+extern char D_004A8270[];
+extern char D_004A8280[];
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
+}
+inline void* operator new(unsigned int, void* p) { return p; }
+struct M_66960 {
+    float m[4][4];
+    M_66960(const M_66960& o) { void* xx = this; __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(this), "r"(&o) : "memory"); }
+} __attribute__((aligned(16)));
+struct Val_66960 { int a; float b; M_66960 m; };
+struct Node_66960 { Node_66960* prev; Node_66960* next; Val_66960 value; };
+struct List_66960 { int count; int alloc; };
+struct Flag_66960 {
+    char c;
+    Flag_66960() { c = 0; }
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Flag_66960() {}
+};
+struct E_66960 {};
+struct Ptr_66960 : E_66960 { Node_66960* p; Ptr_66960(const E_66960& e, Node_66960* n) : E_66960(e), p(n) {} };
+struct Holder_66960;
+#if 0 /* merge_units */
+extern "C" void details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6(Holder_66960* h);
+#endif /* merge_units */
+extern "C" void* details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6(char* self); /* merge_units */
+#define details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6(a0) ((void)details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6((char *)(a0))) /* merge_units */
+
+
+struct Holder_66960 {
+    int* alloc;
+    Node_66960* node;
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Holder_66960()
+    {
+        if (node) {
+            details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6(this);
+            Node_66960* p = node;
+            if (p) {
+                AllocGuard guard;
+                cMemMan_Deallocate(0, p, D_004A8280, 0x64);
+            }
+        }
+    }
+};
+
+static inline Node_66960* NewNode() { AllocGuard guard; return (Node_66960*)cMemMan_Allocate(0, 0x60, D_004A8270, 0x5C); }
+#pragma push
+#pragma opt_propagation off
+extern "C" int std_list_deleter_TaserPulse_insert(Node_66960** result, List_66960* list, Node_66960** pos, const Val_66960* value)
+{
+    Node_66960* n;
+    int* alloc = &list->alloc;
+    Flag_66960 flag;
+    E_66960 f1 = *(E_66960*)&flag;
+    n = NewNode();
+    {
+    Holder_66960 h;
+    Ptr_66960 t(f1, n);
+    h.node = t.p;
+    h.alloc = alloc;
+    Val_66960* v = &h.node->value;
+    new (v) Val_66960(*value);
+    Node_66960* m = h.node;
+    Node_66960* p;
+    h.node = 0;
+    p = *pos;
+    p->prev->next = m;
+    m->prev = p->prev;
+    p->prev = m;
+    m->next = p;
+    list->count++;
+    *result = m;
+    }
+    return 0;
+}
+#pragma pop
+#undef details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6 /* merge_units */
+static inline void merge_flush_func_00266960(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00266960 */
+
+/* merge_units: begin func_00266B70 */
+#pragma push /* merge_units */
+void* details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6(char* self) {
+    return self + 4;
+}
+
+List* std_list_deleter_TaserPulse_ctor(List* l) {
+    l->count = 0;
+    l->first = l->last = &l->first;
+    return l;
+}
+static inline void merge_flush_func_00266B70(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00266B70 */

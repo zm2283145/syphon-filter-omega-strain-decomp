@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/ai: 7 files, 0016A970-0016ADB0
+ * SFOGame/Source/ai: 11 files, 0016A970-0016B2D0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -71,10 +71,12 @@ extern void* D_004EE620;
 
 
 
+
 #if 0 /* merge_units */
 extern signed char D_0048A100;
 #endif /* merge_units */
 #define D_0048A100 (*(signed char*)&D_0048A100) /* merge_units */
+
 
 
 
@@ -83,6 +85,7 @@ extern unsigned char D_005723C8;
 extern char D_0049C650[];
 #endif /* merge_units */
 #define D_0049C650 ((char*)&D_0049C650) /* merge_units */
+
 
 
 
@@ -359,9 +362,28 @@ Actor* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
 unsigned char cSystem_HandleMessage(Sys* s, Msg* m);
 Human* cNPC_Human(Npc* n);
 Awareness* cAITarget_GetAwareness(void* t, Actor* a);
+#if 0 /* merge_units */
 void std_list_cActiveListItemPtr_begin_void_2(It* r, void* l);
+#endif /* merge_units */
+struct IterRet; /* merge_units */
+struct IterContainer; /* merge_units */
+void std_list_cActiveListItemPtr_begin_void_2(IterRet* out, IterContainer* c); /* merge_units */
+#define std_list_cActiveListItemPtr_begin_void_2(a0, a1) (std_list_cActiveListItemPtr_begin_void_2((IterRet *)(a0), (IterContainer *)(a1))) /* merge_units */
+
+#if 0 /* merge_units */
 void std_list_cActiveListItemPtr_end_void_2(It* r, void* l);
+#endif /* merge_units */
+struct IterRet; /* merge_units */
+struct IterContainer; /* merge_units */
+void std_list_cActiveListItemPtr_end_void_2(IterRet* out, IterContainer* c); /* merge_units */
+#define std_list_cActiveListItemPtr_end_void_2(a0, a1) (std_list_cActiveListItemPtr_end_void_2((IterRet *)(a0), (IterContainer *)(a1))) /* merge_units */
+
+#if 0 /* merge_units */
 void cConstLListIterator_cActiveListItemPtr_ctor(It* d, It* s);
+#endif /* merge_units */
+Word* cConstLListIterator_cActiveListItemPtr_ctor(Word* dst, Word* src); /* merge_units */
+#define cConstLListIterator_cActiveListItemPtr_ctor(a0, a1) ((void)cConstLListIterator_cActiveListItemPtr_ctor((Word *)(a0), (Word *)(a1))) /* merge_units */
+
 }
 static inline bool Downed(Actor* a) { bool r; unsigned char s = a->State(); r = true; if (s != 3 && s != 2) r = false; return r; }
 static inline bool IsNpc(Actor* a) { bool r = false; if (a->ctrl && a->ctrl->IsNpc()) r = true; return r; }
@@ -429,6 +451,97 @@ extern "C" unsigned char cAISoundSystem_HandleMessage(Sys* self, Msg* message)
     }
     return res;
 }
+#undef std_list_cActiveListItemPtr_begin_void_2 /* merge_units */
+#undef std_list_cActiveListItemPtr_end_void_2 /* merge_units */
+#undef cConstLListIterator_cActiveListItemPtr_ctor /* merge_units */
 static inline void merge_flush_func_0016ADB0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0016ADB0 */
+
+/* merge_units: begin func_0016B2D0 */
+#pragma push /* merge_units */
+#include "iter_return_copy.h"
+
+/* Return the end iterator. */
+DEFINE_ITER_END(std_list_cActiveListItemPtr_end_void_2)
+static inline void merge_flush_func_0016B2D0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0016B2D0 */
+
+/* merge_units: begin func_0016B300 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Iterator copy.
+ */
+
+
+Word* cConstLListIterator_cActiveListItemPtr_ctor(Word* dst, Word* src) {
+    dst->value = src->value;
+    return dst;
+}
+static inline void merge_flush_func_0016B300(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0016B300 */
+
+/* merge_units: begin func_0016B310 */
+#pragma push /* merge_units */
+/* Return the begin iterator. */
+DEFINE_ITER_BEGIN(std_list_cActiveListItemPtr_begin_void_2)
+static inline void merge_flush_func_0016B310(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0016B310 */
+
+/* merge_units: begin func_0016B340 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * AI receiver and action-message constructors.
+ */
+
+
+/* action message vtable */
+extern char D_004D92A0[];
+/* action message with sender vtable */
+extern char D_004D92C0[];
+extern char D_004D9810[];
+/* action message with sender and target vtable */
+extern void Event_PackHeader();
+extern void cMessage_getSOBJClassId();
+extern void cAISoundSystemGobjToGobjMessage_dtor();
+extern void cAISoundSystemGobjToGobjMessage_Clone();
+void * const D_004D9870[8] = { (void*)0x0, (void*)0x0, (void*)cAISoundSystemGobjToGobjMessage_dtor, (void*)cAISoundSystemGobjToGobjMessage_Clone, (void*)Event_PackHeader, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
+extern char D_004EE5C0[];
+#if 0 /* merge_units */
+extern char D_004EE5C8[];
+#endif /* merge_units */
+#define D_004EE5C8 ((char*)&D_004EE5C8) /* merge_units */
+
+extern int cMessage_ctor_cMessageNameR(cActionMsg*, int);
+extern int cSystem_ctor(void*, int);
+
+void* cAISoundSystem_ctor(void* self) {
+    cSystem_ctor(self, (int)D_004EE5C0);
+    *(int*)self = (int)D_004D9810;
+    return self;
+}
+
+/* Builds an action message carrying sender and target identities (event byte ends as 2). */
+cActionMsg* cAISoundSystemGobjToGobjMessage_ctor(cActionMsg* msg, int* sender, int* target, int action) {
+    cMessage_ctor_cMessageNameR(msg, (int)D_004EE5C8);
+    msg->base.vtable = D_004D92A0;
+    msg->event = 0;
+    msg->action = action;
+    *(int*)&msg->amplitude = 0;
+    *(int*)&msg->unk2C = 0;
+    msg->base.vtable = D_004D92C0;
+    msg->sender = *sender;
+    msg->base.vtable = ((char*)D_004D9870);
+    msg->target = *target;
+    msg->event = 2;
+    return msg;
+}
+#undef D_004EE5C8 /* merge_units */
+static inline void merge_flush_func_0016B340(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0016B340 */

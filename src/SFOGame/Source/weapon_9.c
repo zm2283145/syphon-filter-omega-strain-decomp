@@ -1,25 +1,37 @@
 /*
- * main/weapon: range (3 files, 00145540-00145710)
+ * SFOGame/Source/weapon: 4 files, 001454E0-00145540
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* headers shared by the blocks below */
+/* merge_units: begin func_001454E0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#include "types.h"
+#include "base_dtor_chain.h"
+
+/* Deleting destructor that runs the base destructor. */
+DEFINE_BASE_DTOR_CHAIN(cArray_charPtr_dtor_void, std_vector_imp_charPtr_1_dtor_void)
+static inline void merge_flush_func_001454E0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001454E0 */
+
+/* merge_units: begin func_00145540 */
+#pragma push /* merge_units */
 #pragma push
 #pragma cplusplus on
 #include "buf_holder_dtor.h"
 #pragma pop
-#include "types.h"
 
 /* library prototypes shared by the blocks below (C linkage) */
 int strlen(const char *);
 
-/* merge_units: begin func_00145540 */
-#pragma push /* merge_units */
 #pragma cplusplus on
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
 DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_charPtr_1_dtor_void)
+static inline void merge_flush_func_00145540(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00145540 */
 

@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/xform: 12 files, 0036F010-0036F510
+ * Libs/SFOLib/Source/xform: 15 files, 0036F010-0036FB90
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -167,11 +167,13 @@ void cArray_cXformNodePtr_Begin(It* it, void* c);
 void cArray_cXformNodePtr_Begin(void*, void*); /* merge_units */
 #define cArray_cXformNodePtr_Begin(a0, a1) (cArray_cXformNodePtr_Begin((void *)(a0), (a1))) /* merge_units */
 
+
 #if 0 /* merge_units */
 void cArray_cXformNodePtr_End(It* it, void* c);
 #endif /* merge_units */
 void cArray_cXformNodePtr_End(void*, void*); /* merge_units */
 #define cArray_cXformNodePtr_End(a0, a1) (cArray_cXformNodePtr_End((void *)(a0), (a1))) /* merge_units */
+
 
 #if 0 /* merge_units */
 int cArray_cXformNodePtr_ConstIterator_opNe(It* a, It* b);
@@ -179,11 +181,13 @@ int cArray_cXformNodePtr_ConstIterator_opNe(It* a, It* b);
 int cArray_cXformNodePtr_ConstIterator_opNe(void*, void*); /* merge_units */
 #define cArray_cXformNodePtr_ConstIterator_opNe(a0, a1) (cArray_cXformNodePtr_ConstIterator_opNe((void *)(a0), (void *)(a1))) /* merge_units */
 
+
 #if 0 /* merge_units */
 void** cArray_cXformNodePtr_ConstIterator_opMul(It* it);
 #endif /* merge_units */
 void** cArray_cXformNodePtr_ConstIterator_opMul(void*); /* merge_units */
 #define cArray_cXformNodePtr_ConstIterator_opMul(a0) (cArray_cXformNodePtr_ConstIterator_opMul((void *)(a0))) /* merge_units */
+
 
 void cXformNode_SetNeedsUpdate(void* p);
 #if 0 /* merge_units */
@@ -192,6 +196,7 @@ void cArray_cXformNodePtr_ConstIterator_opInc(It* it);
 void cArray_cXformNodePtr_ConstIterator_opInc(void*); /* merge_units */
 #define cArray_cXformNodePtr_ConstIterator_opInc(a0) (cArray_cXformNodePtr_ConstIterator_opInc((void *)(a0))) /* merge_units */
 
+
 void std_vector_pod_int_resize(void* v, int n, int* fill);
 #if 0 /* merge_units */
 M* cMatrix_InvertRot(M* m);
@@ -199,11 +204,13 @@ M* cMatrix_InvertRot(M* m);
 void* cMatrix_InvertRot(void*); /* merge_units */
 #define cMatrix_InvertRot(a0) ((M *)cMatrix_InvertRot((void *)(a0))) /* merge_units */
 
+
 #if 0 /* merge_units */
 int cMatrix_IsZeroTranslation(M* m);
 #endif /* merge_units */
 int cMatrix_IsZeroTranslation(void*); /* merge_units */
 #define cMatrix_IsZeroTranslation(a0) (cMatrix_IsZeroTranslation((void *)(a0))) /* merge_units */
+
 
 #if 0 /* merge_units */
 V* func_00133EC0(M* m);
@@ -211,11 +218,13 @@ V* func_00133EC0(M* m);
 void* func_00133EC0(void*); /* merge_units */
 #define func_00133EC0(a0) ((V *)func_00133EC0((void *)(a0))) /* merge_units */
 
+
 #if 0 /* merge_units */
 void cVector_ctor_cVectorR(V* d, V* s);
 #endif /* merge_units */
 void cVector_ctor_cVectorR(void*, void*); /* merge_units */
 #define cVector_ctor_cVectorR(a0, a1) (cVector_ctor_cVectorR((void *)(a0), (void *)(a1))) /* merge_units */
+
 
 #if 0 /* merge_units */
 V* cVector_NegateXYZ(V* a);
@@ -223,17 +232,20 @@ V* cVector_NegateXYZ(V* a);
 void* cVector_NegateXYZ(void*); /* merge_units */
 #define cVector_NegateXYZ(a0) ((V *)cVector_NegateXYZ((void *)(a0))) /* merge_units */
 
+
 #if 0 /* merge_units */
 V* cVector_Rotate_cMatrixR(V* a, M* b);
 #endif /* merge_units */
 void* cVector_Rotate_cMatrixR(void*, void*); /* merge_units */
 #define cVector_Rotate_cMatrixR(a0, a1) ((V *)cVector_Rotate_cMatrixR((void *)(a0), (void *)(a1))) /* merge_units */
 
+
 #if 0 /* merge_units */
 void cMatrix_SetTranslation(M* m, V* v);
 #endif /* merge_units */
 void cMatrix_SetTranslation(void*, void*); /* merge_units */
 #define cMatrix_SetTranslation(a0, a1) (cMatrix_SetTranslation((void *)(a0), (void *)(a1))) /* merge_units */
+
 
 }
 struct XVec { int cap; int size; struct Xform** data; };
@@ -320,25 +332,30 @@ void cArray_cXformNodePtr_Begin(It* it, void* c);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_Begin(a0, a1) (cArray_cXformNodePtr_Begin((void *)(a0), (a1))) /* merge_units */
 
+
 #if 0 /* merge_units */
 void cArray_cXformNodePtr_End(It* it, void* c);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_End(a0, a1) (cArray_cXformNodePtr_End((void *)(a0), (a1))) /* merge_units */
+
 
 #if 0 /* merge_units */
 int cArray_cXformNodePtr_ConstIterator_opNe(It* a, It* b);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_ConstIterator_opNe(a0, a1) (cArray_cXformNodePtr_ConstIterator_opNe((void *)(a0), (void *)(a1))) /* merge_units */
 
+
 #if 0 /* merge_units */
 void** cArray_cXformNodePtr_ConstIterator_opMul(It* it);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_ConstIterator_opMul(a0) (cArray_cXformNodePtr_ConstIterator_opMul((void *)(a0))) /* merge_units */
 
+
 #if 0 /* merge_units */
 void cArray_cXformNodePtr_ConstIterator_opInc(It* it);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_ConstIterator_opInc(a0) (cArray_cXformNodePtr_ConstIterator_opInc((void *)(a0))) /* merge_units */
+
 
 #if 0 /* merge_units */
 void std_vector_cXformNodePtr_push_back(void* v, struct Xform_an_36F390** p);
@@ -346,40 +363,48 @@ void std_vector_cXformNodePtr_push_back(void* v, struct Xform_an_36F390** p);
 int std_vector_cXformNodePtr_push_back(PtrVec* v, int* value); /* merge_units */
 #define std_vector_cXformNodePtr_push_back(a0, a1) ((void)std_vector_cXformNodePtr_push_back((PtrVec *)(a0), (int *)(a1))) /* merge_units */
 
+
 #if 0 /* merge_units */
 M_an_36F390* cMatrix_InvertRot(M_an_36F390* m);
 #endif /* merge_units */
 #define cMatrix_InvertRot(a0) ((M_an_36F390 *)cMatrix_InvertRot((void *)(a0))) /* merge_units */
+
 
 #if 0 /* merge_units */
 int cMatrix_IsZeroTranslation(M_an_36F390* m);
 #endif /* merge_units */
 #define cMatrix_IsZeroTranslation(a0) (cMatrix_IsZeroTranslation((void *)(a0))) /* merge_units */
 
+
 #if 0 /* merge_units */
 V_an_36F390* func_00133EC0(M_an_36F390* m);
 #endif /* merge_units */
 #define func_00133EC0(a0) ((V_an_36F390 *)func_00133EC0((void *)(a0))) /* merge_units */
+
 
 #if 0 /* merge_units */
 void cVector_ctor_cVectorR(V_an_36F390* d, V_an_36F390* s);
 #endif /* merge_units */
 #define cVector_ctor_cVectorR(a0, a1) (cVector_ctor_cVectorR((void *)(a0), (void *)(a1))) /* merge_units */
 
+
 #if 0 /* merge_units */
 V_an_36F390* cVector_NegateXYZ(V_an_36F390* a);
 #endif /* merge_units */
 #define cVector_NegateXYZ(a0) ((V_an_36F390 *)cVector_NegateXYZ((void *)(a0))) /* merge_units */
+
 
 #if 0 /* merge_units */
 V_an_36F390* cVector_Rotate_cMatrixR(V_an_36F390* a, M_an_36F390* b);
 #endif /* merge_units */
 #define cVector_Rotate_cMatrixR(a0, a1) ((V_an_36F390 *)cVector_Rotate_cMatrixR((void *)(a0), (void *)(a1))) /* merge_units */
 
+
 #if 0 /* merge_units */
 void cMatrix_SetTranslation(M_an_36F390* m, V_an_36F390* v);
 #endif /* merge_units */
 #define cMatrix_SetTranslation(a0, a1) (cMatrix_SetTranslation((void *)(a0), (void *)(a1))) /* merge_units */
+
 
 }
 struct XVec_an_36F390 { int cap; int size; struct Xform_an_36F390** data; };
@@ -489,60 +514,72 @@ void cArray_cXformNodePtr_Begin(It* it, void* c);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_Begin(a0, a1) (cArray_cXformNodePtr_Begin((void *)(a0), (a1))) /* merge_units */
 
+
 #if 0 /* merge_units */
 void cArray_cXformNodePtr_End(It* it, void* c);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_End(a0, a1) (cArray_cXformNodePtr_End((void *)(a0), (a1))) /* merge_units */
+
 
 #if 0 /* merge_units */
 int cArray_cXformNodePtr_ConstIterator_opNe(It* a, It* b);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_ConstIterator_opNe(a0, a1) (cArray_cXformNodePtr_ConstIterator_opNe((void *)(a0), (void *)(a1))) /* merge_units */
 
+
 #if 0 /* merge_units */
 void** cArray_cXformNodePtr_ConstIterator_opMul(It* it);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_ConstIterator_opMul(a0) (cArray_cXformNodePtr_ConstIterator_opMul((void *)(a0))) /* merge_units */
+
 
 #if 0 /* merge_units */
 void cArray_cXformNodePtr_ConstIterator_opInc(It* it);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_ConstIterator_opInc(a0) (cArray_cXformNodePtr_ConstIterator_opInc((void *)(a0))) /* merge_units */
 
+
 #if 0 /* merge_units */
 M_0036F530* cMatrix_InvertRot(M_0036F530* m);
 #endif /* merge_units */
 #define cMatrix_InvertRot(a0) ((M_0036F530 *)cMatrix_InvertRot((void *)(a0))) /* merge_units */
+
 
 #if 0 /* merge_units */
 int cMatrix_IsZeroTranslation(M_0036F530* m);
 #endif /* merge_units */
 #define cMatrix_IsZeroTranslation(a0) (cMatrix_IsZeroTranslation((void *)(a0))) /* merge_units */
 
+
 #if 0 /* merge_units */
 V_0036F530* func_00133EC0(M_0036F530* m);
 #endif /* merge_units */
 #define func_00133EC0(a0) ((V_0036F530 *)func_00133EC0((void *)(a0))) /* merge_units */
+
 
 #if 0 /* merge_units */
 void cVector_ctor_cVectorR(V_0036F530* d, V_0036F530* s);
 #endif /* merge_units */
 #define cVector_ctor_cVectorR(a0, a1) (cVector_ctor_cVectorR((void *)(a0), (void *)(a1))) /* merge_units */
 
+
 #if 0 /* merge_units */
 V_0036F530* cVector_NegateXYZ(V_0036F530* a);
 #endif /* merge_units */
 #define cVector_NegateXYZ(a0) ((V_0036F530 *)cVector_NegateXYZ((void *)(a0))) /* merge_units */
+
 
 #if 0 /* merge_units */
 V_0036F530* cVector_Rotate_cMatrixR(V_0036F530* a, M_0036F530* b);
 #endif /* merge_units */
 #define cVector_Rotate_cMatrixR(a0, a1) ((V_0036F530 *)cVector_Rotate_cMatrixR((void *)(a0), (void *)(a1))) /* merge_units */
 
+
 #if 0 /* merge_units */
 void cMatrix_SetTranslation(M_0036F530* m, V_0036F530* v);
 #endif /* merge_units */
 #define cMatrix_SetTranslation(a0, a1) (cMatrix_SetTranslation((void *)(a0), (void *)(a1))) /* merge_units */
+
 
 }
 struct Xform_0036F530 {
@@ -648,10 +685,12 @@ void cArray_cXformNodePtr_Begin(It6F6E0* it, void* c);
 #define cArray_cXformNodePtr_Begin(a0, a1) (cArray_cXformNodePtr_Begin((void *)(a0), (a1))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void cArray_cXformNodePtr_End(It6F6E0* it, void* c);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_End(a0, a1) (cArray_cXformNodePtr_End((void *)(a0), (a1))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
@@ -660,16 +699,19 @@ int cArray_cXformNodePtr_ConstIterator_opNe(It6F6E0* a, It6F6E0* b);
 #define cArray_cXformNodePtr_ConstIterator_opNe(a0, a1) (cArray_cXformNodePtr_ConstIterator_opNe((void *)(a0), (void *)(a1))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void** cArray_cXformNodePtr_ConstIterator_opMul(It6F6E0* it);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_ConstIterator_opMul(a0) (cArray_cXformNodePtr_ConstIterator_opMul((void *)(a0))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void cArray_cXformNodePtr_ConstIterator_opInc(It6F6E0* it);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_ConstIterator_opInc(a0) (cArray_cXformNodePtr_ConstIterator_opInc((void *)(a0))) /* merge_units */
+
 
 
 }
@@ -785,10 +827,12 @@ void cMatrix_InvertRot(M_F920* m);
 #define cMatrix_InvertRot(a0) ((void)cMatrix_InvertRot((void *)(a0))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 int cMatrix_IsZeroTranslation(M_F920* m);
 #endif /* merge_units */
 #define cMatrix_IsZeroTranslation(a0) (cMatrix_IsZeroTranslation((void *)(a0))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
@@ -797,10 +841,12 @@ V_F920* func_00133EC0(M_F920* m);
 #define func_00133EC0(a0) ((V_F920 *)func_00133EC0((void *)(a0))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void cVector_ctor_cVectorR(V_F920* d, V_F920* s);
 #endif /* merge_units */
 #define cVector_ctor_cVectorR(a0, a1) (cVector_ctor_cVectorR((void *)(a0), (void *)(a1))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
@@ -809,10 +855,12 @@ void cVector_NegateXYZ(V_F920* v);
 #define cVector_NegateXYZ(a0) ((void)cVector_NegateXYZ((void *)(a0))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void cVector_Rotate_cMatrixR(V_F920* v, M_F920* m);
 #endif /* merge_units */
 #define cVector_Rotate_cMatrixR(a0, a1) ((void)cVector_Rotate_cMatrixR((void *)(a0), (void *)(a1))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
@@ -821,10 +869,12 @@ void cMatrix_SetTranslation(M_F920* m, V_F920* v);
 #define cMatrix_SetTranslation(a0, a1) (cMatrix_SetTranslation((void *)(a0), (void *)(a1))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void cArray_cXformNodePtr_Begin(It_F920* it, void* c);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_Begin(a0, a1) (cArray_cXformNodePtr_Begin((void *)(a0), (a1))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
@@ -833,10 +883,12 @@ void cArray_cXformNodePtr_End(It_F920* it, void* c);
 #define cArray_cXformNodePtr_End(a0, a1) (cArray_cXformNodePtr_End((void *)(a0), (a1))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 int cArray_cXformNodePtr_ConstIterator_opNe(It_F920* a, It_F920* b);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_ConstIterator_opNe(a0, a1) (cArray_cXformNodePtr_ConstIterator_opNe((void *)(a0), (void *)(a1))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
@@ -845,10 +897,12 @@ void** cArray_cXformNodePtr_ConstIterator_opMul(It_F920* it);
 #define cArray_cXformNodePtr_ConstIterator_opMul(a0) (cArray_cXformNodePtr_ConstIterator_opMul((void *)(a0))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void cArray_cXformNodePtr_ConstIterator_opInc(It_F920* it);
 #endif /* merge_units */
 #define cArray_cXformNodePtr_ConstIterator_opInc(a0) (cArray_cXformNodePtr_ConstIterator_opInc((void *)(a0))) /* merge_units */
+
 
 
 }
@@ -924,3 +978,57 @@ DEFINE_BASE_DTOR_CHAIN(cArray_cXformNodePtr_dtor, std_vector_imp_cXformNodePtr_1
 static inline void merge_flush_func_0036FB30(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0036FB30 */
+
+/* merge_units: begin func_0036FB90 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#include "buf_holder_dtor.h"
+
+/* Destroy a buffer holder: free its buffer, optionally delete. */
+DEFINE_BUF_HOLDER_DTOR_SHALLOW(std_vector_imp_cXformNodePtr_1_dtor)
+static inline void merge_flush_func_0036FB90(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0036FB90 */
+
+/* merge_units: begin func_0036FC80 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+/* Deleting destructor of a class with nothing to destroy: restore the vtable, delete. */
+extern "C" {
+extern char D_004DF6A0[];
+void operator_delete(void* allocation);
+}
+struct O36FC80 { void* vtable; };
+extern "C" O36FC80* cXform_dtor(O36FC80* self, short deleteFlag)
+{
+    if (self) {
+        self->vtable = D_004DF6A0;
+        if (deleteFlag > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+static inline void merge_flush_func_0036FC80(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0036FC80 */
+
+/* merge_units: begin func_0036FCD0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+
+Rel* std_vector_cXformNodePtr_ctor(Rel* r) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
+    return r;
+}
+static inline void merge_flush_func_0036FCD0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0036FCD0 */

@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/collision: 1 file, 003BFAB0
+ * Libs/SFOLib/Source/collision: 2 files, 003BFAB0-003BFFF0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -62,7 +62,14 @@ void func_003C01D0(CMesh* m);
 void func_003C01B0(CTri* t, int i, V4* v);
 void func_003C0020(CTri* t);
 void cCollisionFace_ctor_cCollisionFaceR(CTri* d, const CTri* s);
+#if 0 /* merge_units */
 void func_003BFFF0(CMesh* m, CTri* t);
+#endif /* merge_units */
+struct Vec112; /* merge_units */
+struct Elem112; /* merge_units */
+int func_003BFFF0(Vec112* v, Elem112* value); /* merge_units */
+#define func_003BFFF0(a0, a1) ((void)func_003BFFF0((Vec112 *)(a0), (Elem112 *)(a1))) /* merge_units */
+
 void cCollisionFace_dtor(CTri* t, int flag);
 void func_003BFAB0(CTri* q, CMesh* mesh, int idx, V4* v, float h);
 }
@@ -161,6 +168,28 @@ void func_003BFAB0(CTri* q, CMesh* mesh, int idx, V4* v, float h)
         Finish(q, mesh, out, n);
     }
 }
+#undef func_003BFFF0 /* merge_units */
 static inline void merge_flush_func_003BFAB0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003BFAB0 */
+
+/* merge_units: begin func_003BFFF0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+#include "loose03_types.h"
+
+/* Inserts count copies of *value at pos (vector insert). */
+extern int std_vector_imp_cCollisionFace_insert(Vec112* v, Elem112* pos, int count, Elem112* value);
+
+/* push_back: insert one element at the end. */
+int func_003BFFF0(Vec112* v, Elem112* value) {
+    return std_vector_imp_cCollisionFace_insert(v, &v->data[v->count], 1, value);
+}
+static inline void merge_flush_func_003BFFF0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003BFFF0 */

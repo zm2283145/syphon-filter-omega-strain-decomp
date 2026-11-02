@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/GameGOBJ: 7 files, 00219050-00219470
+ * SFOGame/Source/GameGOBJ: 8 files, 00219050-00219730
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -74,6 +74,7 @@ extern void cFileMan_dtor(Str_00219070* s, int flag);
 #endif /* merge_units */
 void cFileMan_dtor(void* p, int flag); /* merge_units */
 #define cFileMan_dtor(a0, a1) (cFileMan_dtor((void *)(a0), (a1))) /* merge_units */
+
 
 extern int cGOBJ_HandleMessage(Path_00219070* self, void* ev);
 }
@@ -183,6 +184,7 @@ extern "C" void cTargetManager_RemoveGobj(void* list, cPathedGOBJ* obj);
 
 
 
+
 /* Notifies the path (virtual +0x60), runs the base handler, then cTargetManager_RemoveGobj(g_TargetVisMgr, self). */
 extern "C" void cPathedGOBJ_Deactivate(cPathedGOBJ* self, void* arg)
 {
@@ -256,24 +258,29 @@ extern "C" void cGOBJ_ScriptGetRealObj();
 extern "C" void cPathedGOBJ_HandleMessage();
 #endif /* merge_units */
 
+
 extern "C" void cPathedGOBJ_ScriptHandleMessage();
 extern "C" void cPathedGOBJ_NextFrame();
 #if 0 /* merge_units */
 extern "C" void cPathedGOBJ_NetActivate();
 #endif /* merge_units */
 
+
 #if 0 /* merge_units */
 extern "C" void cPathedGOBJ_NetDeactivate();
 #endif /* merge_units */
+
 
 extern "C" void cPathedGOBJ_getSOBJClassId();
 #if 0 /* merge_units */
 extern "C" void cPathedGOBJ_Activate();
 #endif /* merge_units */
 
+
 #if 0 /* merge_units */
 extern "C" void cPathedGOBJ_Deactivate();
 #endif /* merge_units */
+
 
 extern "C" void cPathedGOBJ_InitNetwork();
 extern "C" void cSystem_ScriptGetObjectId();
@@ -332,7 +339,12 @@ void cMemMan_Deallocate(int heap, void* p, char* file, int line);
 void cGameGOBJ_dtor(void* p, int flag);
 void std_vector_deleter_cVector_dtor(void* p, int flag);
 int func_00211DA0(void);
+#if 0 /* merge_units */
 void std_vector_float_dtor(void* p, int flag);
+#endif /* merge_units */
+void* std_vector_float_dtor(void* self, short deleteFlag); /* merge_units */
+#define std_vector_float_dtor(a0, a1) ((void)std_vector_float_dtor((a0), (short)(a1))) /* merge_units */
+
 void std_vector_deleter_cQuaternion_dtor(void* p, int flag);
 void NetFreeObject(int a);
 void cFileMan_dtor(void* p, int flag);
@@ -384,6 +396,19 @@ extern "C" S_00219470* cPathedGOBJ_dtor(S_00219470* self, short flag)
     return self;
 }
 void * const D_004DB280[72] = { (void*)0x0, (void*)0x0, (void*)cPathedGOBJ_dtor, (void*)cPathedGOBJ_HandleMessage, (void*)cSystem_ScriptGetObjectId, (void*)cGOBJ_ScriptGetRealObj, (void*)cGameGOBJ_IsNetworked, (void*)cSystem_SendCreated, (void*)cPathedGOBJ_NetActivate, (void*)cPathedGOBJ_NetDeactivate, (void*)cGameGOBJ_NetEnable, (void*)cGameGOBJ_NetDisable, (void*)cSystem_IsDeliverable, (void*)cPathedGOBJ_getSOBJClassId, (void*)cPathedGOBJ_ScriptHandleMessage, (void*)cGOBJ_ProcessMessage, (void*)cGOBJ_Init, (void*)cGOBJ_Load, (void*)cPathedGOBJ_NextFrame, (void*)cGameGOBJ_CriticalNextFrame, (void*)cGOBJ_UpdateMotion, (void*)cGOBJ_CriticalUpdateMotion, (void*)cGameGOBJ_Render, (void*)cPathedGOBJ_Activate, (void*)cPathedGOBJ_Deactivate, (void*)cGameGOBJ_Enable, (void*)cGameGOBJ_Disable, (void*)cGOBJ_IsEnabled, (void*)cGOBJ_HasHeadset, (void*)cGOBJ_SetStatus, (void*)cGOBJ_GetStatus, (void*)cGOBJ_IsGeneratorCreated, (void*)cGOBJ_GetChildList_void_2, (void*)cGOBJ_GetChildList_void, (void*)cGameGOBJ_GetBBox, (void*)cGOBJ_ScaleBBox, (void*)cGOBJ_CreateXform, (void*)cGOBJ_SetTransform, (void*)cGOBJ_SetRotation, (void*)cGOBJ_SetTranslation, (void*)cGOBJ_ApplyTransform, (void*)cGOBJ_ApplyLocalRotation, (void*)cGOBJ_ApplyTranslation, (void*)cGOBJ_SetTransform_ResetPhysics, (void*)cGOBJ_SetRotation_ResetPhysics, (void*)cGOBJ_SetTranslation_ResetPhysics, (void*)cGameGOBJ_GetCollisionModel, (void*)cGOBJ_GetLosPosition, (void*)cGOBJ_GetTargetPosition, (void*)cGameGOBJ_GetTargetPriority, (void*)func_00140E90, (void*)cGOBJ_GetSubTargetAimAdjust, (void*)cGOBJ_GetNumSubTargets, (void*)cGOBJ_IsAimed, (void*)cGOBJ_GetMatrix, (void*)cGOBJ_v35, (void*)cGOBJ_GetActivationPoint, (void*)cGOBJ_GetCenterOfMass, (void*)cGOBJ_GetTransform_ForTeleporting, (void*)cGOBJ_GetTransform_ForCameraTracking, (void*)cGOBJ_GetCameraCollisionReferencePoint, (void*)cGOBJ_GetTransform_ForFloorTravel, (void*)cGOBJ_GetFloorPlane, (void*)cPathedGOBJ_InitNetwork, (void*)cGOBJ_ReceiveDamage, (void*)cGOBJ_CheckBullet, (void*)cGOBJ_GetHealthState, (void*)cGOBJ_Die, (void*)cGameGOBJ_SetParent, (void*)0x0, (void*)0x0, (void*)0x0 };
+#undef std_vector_float_dtor /* merge_units */
 static inline void merge_flush_func_00219470(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00219470 */
+
+/* merge_units: begin func_00219730 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#include "buf_holder_dtor.h"
+
+/* Destroy a buffer holder: free its buffer, optionally delete. */
+DEFINE_BUF_HOLDER_DTOR(std_vector_float_dtor)
+static inline void merge_flush_func_00219730(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00219730 */

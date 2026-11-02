@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/xlib: 5 files, 0037F670-0037F950
+ * Libs/SFOLib/Source/xlib: 7 files, 0037F670-0037FA60
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -115,6 +115,7 @@ struct L37F950; /* merge_units */
 L37F950* std_list_tDataDelRec_dtor(L37F950* self, short deleteFlag); /* merge_units */
 #define std_list_tDataDelRec_dtor(a0, a1) ((void *)std_list_tDataDelRec_dtor((L37F950 *)(a0), (a1))) /* merge_units */
 
+
 void* cUserFrameEnv_dtor(void* self, short flags);
 void __destroy_array(void* array, void* dtor, unsigned int size, unsigned int count);
 void operator_delete(void* allocation);
@@ -144,7 +145,14 @@ static inline void merge_flush_func_0037F8D0(void) {} /* merge_units */
 struct N37F950;
 struct L37F950 { int count; N37F950* sentinelPrev; N37F950* first; };
 extern "C" {
+#if 0 /* merge_units */
 void std_list_deleter_tDataDelRec_erase_listdeleter_listdeleter(N37F950** result, L37F950* self, N37F950** first, N37F950** last);
+#endif /* merge_units */
+struct EraseFileNode; /* merge_units */
+struct EraseFileList; /* merge_units */
+void std_list_deleter_tDataDelRec_erase_listdeleter_listdeleter(EraseFileNode** result, EraseFileList* list, EraseFileNode** first, EraseFileNode** last); /* merge_units */
+#define std_list_deleter_tDataDelRec_erase_listdeleter_listdeleter(a0, a1, a2, a3) (std_list_deleter_tDataDelRec_erase_listdeleter_listdeleter((EraseFileNode * *)(a0), (EraseFileList *)(a1), (EraseFileNode * *)(a2), (EraseFileNode * *)(a3))) /* merge_units */
+
 }
 extern "C" L37F950* std_list_tDataDelRec_dtor(L37F950* self, short deleteFlag)
 {
@@ -164,6 +172,7 @@ extern "C" L37F950* std_list_tDataDelRec_dtor(L37F950* self, short deleteFlag)
     }
     return self;
 }
+#undef std_list_deleter_tDataDelRec_erase_listdeleter_listdeleter /* merge_units */
 static inline void merge_flush_func_0037F950(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0037F950 */
@@ -187,6 +196,7 @@ extern int cUserFrameEnv_dtor(int, int);
 #endif /* merge_units */
 #define cUserFrameEnv_dtor(a0, a1) ((int)cUserFrameEnv_dtor((void *)(a0), (short)(a1))) /* merge_units */
 
+
 extern int cUserFrameEnv_ctor(int);
 
 /* Constructor: 8 sub-objects, two counters, six Slot20 entries. */
@@ -209,3 +219,23 @@ Manager37F9D0* XLib_ctor(Manager37F9D0* self) {
 static inline void merge_flush_func_0037F9D0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0037F9D0 */
+
+/* merge_units: begin func_0037FA60 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "object_list_erase_file.h"
+
+extern "C" { char D_004BC2A8[] = "allocator.hh"; }
+DEFINE_OBJECT_LIST_ERASE_RANGE_FILE(std_list_deleter_tDataDelRec_erase_listdeleter_listdeleter, D_004BC2A8)
+static inline void merge_flush_func_0037FA60(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0037FA60 */
+
+/* merge_units: begin func_0037FBA0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+DEFINE_OBJECT_LIST_ERASE_ONE_FILE(std_list_deleter_tDataDelRec_erase_listdeleter, D_004BC2A8)
+static inline void merge_flush_func_0037FBA0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0037FBA0 */

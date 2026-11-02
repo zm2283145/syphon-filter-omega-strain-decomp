@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/guiMLTextWidget: 1 file, 0043E4C0
+ * Libs/SFOLib/Source/guiMLTextWidget: 2 files, 0043E4C0-0043E550
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -31,7 +31,12 @@ extern "C" void GuiMLTextWidget_onWake();
 extern "C" void GuiMLTextWidget_onAdd();
 extern void * const D_004E1040[];
 void GuiMLTextWidget_Clear(void* self);
+#if 0 /* merge_units */
 void std_list_charPtr_dtor(void* p, int flag);
+#endif /* merge_units */
+void* std_list_charPtr_dtor(void* self, short deleteFlag); /* merge_units */
+#define std_list_charPtr_dtor(a0, a1) ((void)std_list_charPtr_dtor((a0), (short)(a1))) /* merge_units */
+
 void GuiWidget_dtor(void* self, int flag);
 void operator_delete(void* p);
 }
@@ -54,6 +59,19 @@ extern "C" S_E4C0* GuiMLTextWidget_dtor(S_E4C0* self, short flag)
     return self;
 }
 void * const D_004E1040[24] = { (void*)0x0, (void*)0x0, (void*)GuiMLTextWidget_dtor, (void*)GuiMLTextWidget_onAdd, (void*)GuiMLTextWidget_onRemove, (void*)GuiWidget_onActivate, (void*)GuiWidget_onDeactivate, (void*)GuiMLTextWidget_onWake, (void*)GuiWidget_onSleep, (void*)GuiWidget_onGainFocus, (void*)GuiWidget_onLoseFocus, (void*)GuiWidget_onInput, (void*)GuiMLTextWidget_onRender, (void*)GuiWidget_onAction, (void*)GuiWidget_onAdvanceTime, (void*)GuiWidget_onMessage, (void*)GuiWidget_Load, (void*)GuiWidget_FindFirstFocus, (void*)GuiWidget_FindLastFocus, (void*)GuiWidget_FindNextFocus, (void*)GuiWidget_FindPrevFocus, (void*)GuiMLTextWidget_GetClassName, (void*)GuiMLTextWidget_IsClass, (void*)0x0 };
+#undef std_list_charPtr_dtor /* merge_units */
 static inline void merge_flush_guiMLTextWidget_43E4C0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end guiMLTextWidget_43E4C0 */
+
+/* merge_units: begin guiMLTextWidget_43E550 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#include "obj_list_dtor.h"
+
+/* Destroy an object list: erase all nodes, optionally delete. */
+DEFINE_OBJ_LIST_DTOR(std_list_charPtr_dtor)
+static inline void merge_flush_guiMLTextWidget_43E550(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end guiMLTextWidget_43E550 */

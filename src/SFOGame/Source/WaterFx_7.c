@@ -1,166 +1,217 @@
 /*
- * SFOGame/Source/WaterFx: 2 files, 002B3920-002B3960
+ * SFOGame/Source/WaterFx: 6 files, 002B4710-002B4CE0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_002B3920 */
+/* merge_units: begin func_002B4710 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#pragma opt_loop_invariants off
+#pragma opt_strength_reduction off
+#pragma opt_rotateloops off
+#pragma inline_depth(10)
+#pragma opt_rebuildconditionals off
+#include "types.h"
+
+struct V4 {
+    float x, y, z, w;
+    V4() {}
+    V4(const V4& s) { V4* d = this; const V4* p = &s; __asm__ volatile("lq %0, 0x0(%0); sq %0, 0x0(%1)" : "+r"(p) : "r"(d) : "memory"); }
+} __attribute__((aligned(16)));
+typedef struct Splash {
+    float t;
+    char pad4[0xC];
+    V4 pos;
+    float r20;
+    float r24;
+    int tex;
+} Splash;
+struct V4c {
+    float x, y, z, w;
+    V4c(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; }
+} __attribute__((aligned(16)));
+struct M44 { __int128 r[4]; };
+extern "C" {
+void SfxParticleEffect_eEffectName_cMatrixR(int id, M44* m);
+}
+static inline void UnitMtx(void* m) { int t; __asm__ volatile("sqc2 vf0, 0x30(%1); qmfc2.ni %0, vf0; pcpyud %0, %0, zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(m) : "memory"); }
+static inline void CP2(V4* d0, const V4* s) { V4* d = d0; __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=&r"(t) : "r"(s)); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(d) : "memory"); }
+static inline void CP(V4* d, const V4* s) { __asm__ volatile("lq %0, 0x0(%0); sq %0, 0x0(%1)" : "+r"(s) : "r"(d) : "memory"); }
+
+extern "C" void WaterFx_InitSplash(Splash* s, const V4* p, float size, float z)
+{
+    s->t = 5.0f;
+    CP2(&s->pos, p);
+    s->pos.z = z;
+    float k = 2.5f * size;
+    s->r20 = 0.15f * size;
+    s->r24 = k - s->r20;
+    M44 m;
+    UnitMtx(&m);
+    V4c v(s->pos.x, s->pos.y, s->pos.z - 0.25f * size, 1.0f);
+    CP2((V4*)&m.r[3], (V4*)&v);
+    if (size >= 2.0f) SfxParticleEffect_eEffectName_cMatrixR(0x11, &m);
+    else SfxParticleEffect_eEffectName_cMatrixR(0x12, &m);
+}
+static inline void merge_flush_func_002B4710(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002B4710 */
+
+/* merge_units: begin func_002B4810 */
+#pragma push /* merge_units */
+#pragma push
+#pragma cplusplus on
+#include "trivial_dtor.h"
+#pragma pop
+#pragma push
+#pragma cplusplus on
+#include "object_list_erase_range.h"
+#pragma pop
+#pragma push
+#pragma cplusplus on
+#include "object_list_erase_file.h"
+#pragma pop
+
+#pragma cplusplus on
+
+/* Deleting destructor with nothing to destroy. */
+DEFINE_TRIVIAL_DTOR(cSplash_dtor)
+static inline void merge_flush_func_002B4810(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002B4810 */
+
+/* merge_units: begin func_002B4860 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#define D_0049AE80 D_004ABFD0
+extern "C" {
+char D_004ABFD0[] = "allocator.hh";
+}
+
+DEFINE_OBJECT_LIST_ERASE_RANGE(std_list_deleter_tNode_erase_listdeleter_listdeleter)
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_002B4860(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_002B4860 */
+
+/* merge_units: begin func_002B49A0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+DEFINE_OBJECT_LIST_ERASE_ONE_FILE(std_list_deleter_tNode_erase_listdeleter, D_004ABFD0)
+static inline void merge_flush_func_002B49A0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002B49A0 */
+
+/* merge_units: begin func_002B4AA0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "alloc_guard.h"
+
+extern "C" {
+extern char D_004ABFC0[];
+extern char D_004ABFD0[];
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
+}
+inline void* operator new(unsigned int, void* p) { return p; }
+struct Q_B4AA0 {
+    float x, y, z, w;
+    Q_B4AA0(const Q_B4AA0& o) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(this), "r"(&o) : "memory"); }
+} __attribute__((aligned(16)));
+struct Val_B4AA0 { Q_B4AA0 q0, q1, q2, q3, q4; float f50; float f54; int f58; int f5C; };
+struct Node_B4AA0 { Node_B4AA0* prev; Node_B4AA0* next; Val_B4AA0 value; };
+struct List_B4AA0 { int count; int alloc; };
+struct Flag_B4AA0 {
+    char c;
+    Flag_B4AA0() { c = 0; }
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Flag_B4AA0() {}
+};
+struct E_B4AA0 {};
+struct Ptr_B4AA0 : E_B4AA0 { Node_B4AA0* p; Ptr_B4AA0(const E_B4AA0& e, Node_B4AA0* n) : E_B4AA0(e), p(n) {} };
+struct Holder_B4AA0;
+#if 0 /* merge_units */
+extern "C" void details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_7(Holder_B4AA0* h);
+#endif /* merge_units */
+struct WaterListLink; /* merge_units */
+struct WaterList; /* merge_units */
+extern "C" WaterListLink* details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_7(WaterList* list); /* merge_units */
+#define details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_7(a0) ((void)details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_7((WaterList *)(a0))) /* merge_units */
+
+struct Holder_B4AA0 {
+    int* alloc;
+    Node_B4AA0* node;
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Holder_B4AA0()
+    {
+        if (node) {
+            details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_7(this);
+            Node_B4AA0* p = node;
+            if (p) {
+                AllocGuard guard;
+                cMemMan_Deallocate(0, p, D_004ABFD0, 0x64);
+            }
+        }
+    }
+};
+
+static inline Node_B4AA0* NewNode() { AllocGuard guard; return (Node_B4AA0*)cMemMan_Allocate(0, 0x70, D_004ABFC0, 0x5C); }
+#pragma push
+#pragma opt_propagation off
+extern "C" int std_list_deleter_tNode_insert(Node_B4AA0** result, List_B4AA0* list, Node_B4AA0** pos, const Val_B4AA0* value)
+{
+    Node_B4AA0* n;
+    int* alloc = &list->alloc;
+    Flag_B4AA0 flag;
+    E_B4AA0 f1 = *(E_B4AA0*)&flag;
+    n = NewNode();
+    {
+    Holder_B4AA0 h;
+    Ptr_B4AA0 t(f1, n);
+    h.node = t.p;
+    h.alloc = alloc;
+    Val_B4AA0* v = &h.node->value;
+    new (v) Val_B4AA0(*value);
+    Node_B4AA0* m = h.node;
+    Node_B4AA0* p;
+    h.node = 0;
+    p = *pos;
+    p->prev->next = m;
+    m->prev = p->prev;
+    p->prev = m;
+    m->next = p;
+    list->count++;
+    *result = m;
+    }
+    return 0;
+}
+#pragma pop
+#undef details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_7 /* merge_units */
+static inline void merge_flush_func_002B4AA0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002B4AA0 */
+
+/* merge_units: begin func_002B4CE0 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
- * Container iterator helpers.
+ * List helpers.
  */
 
-#include "types.h"
 #include "WaterFx_types.h"
 
-Word* cLListIterator_tNode_ctor(Word* dst, Word* src) {
-    dst->value = src->value;
-    return dst;
-}
-
-void std_list_deleter_tNode_end(Iter* out, Tree* t) {
-    out->p = &t->header;
-}
-
-WaterListIter* std_list_deleter_tNode_generic_iterator_ctor_nodeP(WaterListIter* it, WaterListLink* node) {
-    it->node = node;
-    return it;
-}
-
 /* Address of the list sentinel (end()). */
-WaterListLink* std_list_deleter_tNode_tail(WaterList* list) {
+WaterListLink* details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_7(WaterList* list) {
     return &list->head;
 }
-static inline void merge_flush_func_002B3920(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_002B3920 */
 
-/* merge_units: begin func_002B3960 */
-#pragma push /* merge_units */
-// cWake::NextFrame(float, cMatrix&, cVector&). Op* as wrapper over Mul0 + return *pt removes dead addiu; Length asm non-volatile lets w copy-prop to a0;
-// RandN via asm cvt.w.s/mfc1 helper with 'int r = 0' gives retail's dead daddu zero inits.
-#pragma cplusplus on
-#pragma always_inline on
-#pragma inline_depth(8)
-static inline void Q3960(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
-static inline void QS(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%1); sq %0, 0x0(%2)" : "=r"(t) : "r"(s), "r"(d) : "memory"); }
-struct V {
-    float x, y, z, w;
-    V() {}
-    V(float a, float b, float c, float d) { void* xx = this; x = a; y = b; z = c; w = d; }
-    V(const V& o) { { V* dd = this; const V* ss = &o; __int128 t; __asm__ volatile("lq %0, 0x0(%1); sq %0, 0x0(%2)" : "=r"(t) : "r"(ss), "r"(dd) : "memory"); } }
-    V(const V* p, int) { Q3960(this, p); }
-    V& operator=(const V& o) { { V* dd = this; const V* ss = &o; __int128 t; __asm__ volatile("lq %0, 0x0(%1); sq %0, 0x0(%2)" : "=r"(t) : "r"(ss), "r"(dd) : "memory"); } return *this; }
-    void Set2(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; }
-    void Set(float a, float b, float c, float d) { void* xx = this; x = a; y = b; z = c; w = d; }
-} __attribute__((aligned(16)));
-struct RotM;
-extern "C" void cMatrix_ctor_void(RotM* m);
-struct Q4 { float f[4]; } __attribute__((aligned(16)));
-struct M {
-    Q4 r[4];
-    void Identity() { M* p = this; int t; __asm__ volatile("sqc2 vf0, 0x30(%1); qmfc2.ni %0, vf0; pcpyud %0, %0, zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
-    void Apply(V* v) const { __asm__ volatile("lqc2 vf8, 0x0(%0); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; sqc2 vf12, 0x0(%0)" : : "r"(v), "r"(this) : "memory"); }
-    void Apply2(V* v) const { __asm__ volatile("lqc2 vf8, 0x0(%1); lqc2 vf4, 0x0(%0); lqc2 vf5, 0x10(%0); lqc2 vf6, 0x20(%0); lqc2 vf7, 0x30(%0); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; sqc2 vf12, 0x0(%1)" : : "r"(this), "r"(v) : "memory"); }
-    V Mul0(const V& v) const { V t = v; const V* pt = &t; Apply((V*)pt); return *pt; }
-    V operator*(const V& v) const { return Mul0(v); }
-    void RotAxis(const V& a, float ang);
-};
-struct RotM { Q4 r[4]; RotM() { cMatrix_ctor_void(this); } };
-static inline const V& Normalized(V v) { __asm__ volatile("lqc2 vf1, 0x0(%0); vmul.xyz vf2, vf1, vf1; vmulax.w ACC, vf0, vf2x; vmadday.w ACC, vf0, vf2y; vmaddz.w vf3, vf0, vf2z; vrsqrt Q, vf0w, vf3w; vwaitq; vmulq.xyz vf1, vf1, Q; sqc2 vf1, 0x0(%0)" : : "r"(&v) : "memory"); return v; }
-static inline float Length(const V* v) { float r; __asm__("lqc2 vf1, 0x0(%1); vmul.xyz vf2, vf1, vf1; vmulax.w ACC, vf0, vf2x; vmadday.w ACC, vf0, vf2y; vmaddz.w vf3, vf0, vf2z; vsqrt Q, vf3w; vwaitq; vaddq.x vf4, vf0, Q; qmfc2.ni %0, vf4" : "=r"(r) : "r"(v) : "memory"); return r; }
-struct RNode { RNode* next; };
-struct It {
-    RNode* p;
-    It() {}
-    It(RNode* q) : p(q) {}
-    It(const It& o) : p(o.p) {}
-    It& operator=(const It& o) { p = o.p; return *this; }
-    It& operator++() { p = p->next; return *this; }
-};
-struct RHead { RNode* n0; RNode* n4; };
-struct Ripple {
-    V pos;
-    V d[4];
-    float f170;
-    float f174;
-    int i178;
-    void* p17C;
-};
-struct RList { int size; RHead h; };
-struct WaterFx {
-    float timer;
-    RList list;
-    char pad10[8];
-    float f18; char pad1C[4];
-    int n20;
-};
-struct WObj { char pad[0x30]; V pos; };
-extern "C" {
-RNode* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_7(RHead* h);
-It std_list_deleter_tNode_erase_listdeleter(RList* l, It pos);
-It std_list_deleter_tNode_insert(RList* l, It pos, const Ripple& r);
-float Libc_Atan2f(float y, float x);
-void cMatrix_SetWithAxisAngle(RotM* m, float x, float y, float z, float a);
-void cMatrix_Rotate(M* a, const RotM* b);
-void cMatrix_ctor_void(RotM* m);
-int Libc_Rand(void);
-void cWake_NextFrame_float(WaterFx* w, float dt);
-extern V D_004ABF60;
-extern V D_004ABF70;
-extern V D_004ABF80;
-extern V D_004ABF90;
-extern void* D_004ABFA0[];
+/* Initializes an empty list. */
+WaterList* std_list_deleter_tNode_ctor(WaterList* list) {
+    list->count = 0;
+    list->head.prev = &list->head;
+    list->head.next = &list->head;
+    return list;
 }
-static inline void MulRot(M* m, const V& a, float ang) { RotM rm; cMatrix_SetWithAxisAngle(&rm, a.x, a.y, a.z, ang); cMatrix_Rotate(m, &rm); }
-static inline void MulRot2(M* m, const V& a, float ang) { MulRot(m, a, ang); }
-static inline void MulRot3(M* m, const V& a, float ang) { MulRot2(m, a, ang); }
-inline void M::RotAxis(const V& a, float ang) { MulRot3(this, a, ang); }
-static inline void SetF(float* p, float v) { *p = v; }
-static inline It End(RHead* h) { RHead* t = h; return It(t->n4); }
-static inline It EndL(RList* l) { return End(&l->h); }
-static inline It Begin(RList* l) { return It(details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_7(&l->h)); }
-static inline int FtoI(float f) { int r = 0; asm { cvt.w.s f, f; mfc1 r, f } return r; }
-static inline int RandN(int n) { int r = Libc_Rand(); return FtoI((float)n * ((float)r / 2147483648.0f)); }
-static inline int RandRange(int lo, int hi) { int n = hi - lo + 1; return lo + RandN(n); }
-extern "C" void cWake_NextFrame_float_cMatrixR_cVectorR(WaterFx* w, WObj* o, V* vel, float dt)
-{
-    V v;
-    v.Set2(vel->x, vel->y, 0.0f, 0.0f);
-    float speed = Length(&v);
-    float half = 0.5f * dt;
-    if (!(w->timer < 0.0375f)) {
-        w->timer -= 0.0375f;
-        if (w->list.size >= 0x20) {
-            It it;
-            It e;
-            it = Begin(&w->list);
-            ++it;
-            e = std_list_deleter_tNode_erase_listdeleter(&w->list, it);
-        }
-        float ang = Libc_Atan2f(-vel->x, vel->y);
-        M m;
-        m.Identity();
-        m.RotAxis(V(0.0f, 0.0f, 1.0f, 0.0f), ang);
-        Ripple r;
-        r.pos = o->pos;
-        r.pos.z = w->f18;
-        r.d[0] = Normalized(m * D_004ABF60);
-        r.d[1] = Normalized(m * D_004ABF70);
-        r.d[2] = Normalized(m * D_004ABF80);
-        r.d[3] = Normalized(m * D_004ABF90);
-        r.f174 = (speed > -vel->z) ? 0.0f : 1.0f;
-        r.p17C = D_004ABFA0[RandRange(0, 2)];
-        r.f170 = 1.2f;
-        int k = RandRange(0, w->n20 - 2);
-        r.i178 = k;
-        std_list_deleter_tNode_insert(&w->list, End(&w->list.h), r);
-    }
-    cWake_NextFrame_float(w, dt);
-    if (!(speed <= half) || speed < -vel->z)
-        w->timer += dt;
-}
-static inline void merge_flush_func_002B3960(void) {} /* merge_units */
+static inline void merge_flush_func_002B4CE0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_002B3960 */
+/* merge_units: end func_002B4CE0 */

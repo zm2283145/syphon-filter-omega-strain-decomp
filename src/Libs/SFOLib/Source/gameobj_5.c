@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/gameobj: 3 files, 00392F50-00393000
+ * Libs/SFOLib/Source/gameobj: 5 files, 00392F50-003930F0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -58,7 +58,12 @@ void cArray_cTreeNode_cSkaSystemPtrPtr_End_void(It_3963B0* out, void* vec);
 bool cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opNe(It_3963B0* a, It_3963B0* b);
 Node_3963B0** cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opMul(It_3963B0* it);
 void cArray_cTreeNode_cSkaSystemPtrPtr_Iterator_opInc(It_3963B0* it);
+#if 0 /* merge_units */
 void cArray_cTreeNode_cSkaSystemPtrPtr_Clear(void* vec);
+#endif /* merge_units */
+void cArray_cTreeNode_cSkaSystemPtrPtr_Clear(PtrVec* v); /* merge_units */
+#define cArray_cTreeNode_cSkaSystemPtrPtr_Clear(a0) (cArray_cTreeNode_cSkaSystemPtrPtr_Clear((PtrVec *)(a0))) /* merge_units */
+
 void* std_vector_cTreeNode_cSkaSystemPtrPtr_dtor(void* vec, short deleteFlag);
 void operator_delete(void* allocation);
 }
@@ -88,6 +93,28 @@ extern "C" Node_3963B0* cTreeNode_cSkaSystemPtr_dtor(Node_3963B0* self, short de
     }
     return self;
 }
+#undef cArray_cTreeNode_cSkaSystemPtrPtr_Clear /* merge_units */
 static inline void merge_flush_func_00393000(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00393000 */
+
+/* merge_units: begin func_003930F0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#include "buf_holder_dtor.h"
+
+/* Destroy a buffer holder: free its buffer, optionally delete. */
+DEFINE_BUF_HOLDER_DTOR(std_vector_cTreeNode_cSkaSystemPtrPtr_dtor)
+static inline void merge_flush_func_003930F0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003930F0 */
+
+/* merge_units: begin func_003931E0 */
+#pragma push /* merge_units */
+void cArray_cTreeNode_cSkaSystemPtrPtr_Clear(PtrVec* v) {
+    v->count = 0;
+}
+static inline void merge_flush_func_003931E0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003931E0 */

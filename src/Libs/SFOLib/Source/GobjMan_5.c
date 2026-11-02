@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/GobjMan: 7 files, 0040B510-0040B6C0
+ * Libs/SFOLib/Source/GobjMan: 12 files, 0040B510-0040B920
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -23,6 +23,7 @@ int* std_vector_imp_cObjectId_begin(GobjVec* v);
 int* std_vector_imp_cObjectId_begin(PtrVec* v); /* merge_units */
 #define std_vector_imp_cObjectId_begin(a0) (std_vector_imp_cObjectId_begin((PtrVec *)(a0))) /* merge_units */
 
+
 int* std_vector_imp_cObjectId_end(GobjVec* v);
 struct It_40B510;
 void std_vector_cObjectId_pointer2iterator(It_40B510* out, GobjVec* v, int* const& p);
@@ -32,6 +33,7 @@ void std_vector_pod_int_resize(GobjVec* v, int n, int* fill);
 #endif /* merge_units */
 void std_vector_pod_int_resize(void*, int, int*); /* merge_units */
 #define std_vector_pod_int_resize(a0, a1, a2) (std_vector_pod_int_resize((void *)(a0), (a1), (a2))) /* merge_units */
+
 
 void std_tree_pair_cObjectId_value_compare_erase(GobjMap* map, GobjMapNode** node);
 void std_vector_deleter_cObjectId_clear(GobjVec* v);
@@ -155,11 +157,13 @@ extern void std_vector_cSystemPtr_push_back(void* list, Obj40B790** o);
 int std_vector_cSystemPtr_push_back(); /* merge_units */
 
 
+
 extern void std_tree_pair_cObjectId_value_compare_insert_one(Res40B790* out, void* map, Pair40B790* p);
 #if 0 /* merge_units */
 extern char D_00571C10[];
 #endif /* merge_units */
 #define D_00571C10 ((char*)&D_00571C10) /* merge_units */
+
 
 
 
@@ -198,14 +202,25 @@ static inline void merge_flush_func_0040B810(void) {} /* merge_units */
 #pragma push /* merge_units */
 typedef struct { int pad; int count; void** data; } Vec40B830;
 typedef struct { void* vt; char m4[0x10]; char m14[0xC]; } Obj40B830;
+#if 0 /* merge_units */
 extern Vec40B830* GetPurgeList(void);
+#endif /* merge_units */
+void* GetPurgeList(void); /* merge_units */
+#define GetPurgeList() ((Vec40B830 *)GetPurgeList()) /* merge_units */
+
 #if 0 /* merge_units */
 extern void std_vector_pod_int_resize(Vec40B830* v, int n, int* fill);
 #endif /* merge_units */
 #define std_vector_pod_int_resize(a0, a1, a2) (std_vector_pod_int_resize((void *)(a0), (a1), (a2))) /* merge_units */
 
+
 extern void std_vector_deleter_cObjectId_dtor(void* p, int f);
+#if 0 /* merge_units */
 extern void std_vector_cSystemPtr_dtor(void* p, int f);
+#endif /* merge_units */
+void* std_vector_cSystemPtr_dtor(void* self, short deleteFlag); /* merge_units */
+#define std_vector_cSystemPtr_dtor(a0, a1) ((void)std_vector_cSystemPtr_dtor((a0), (short)(a1))) /* merge_units */
+
 extern void operator_delete(void* p);
 static inline void D1_40B830(void* p) { if (p) std_vector_deleter_cObjectId_dtor(p, 0); }
 static inline void D2_40B830(void* p) { if (p) D1_40B830(p); }
@@ -235,7 +250,192 @@ Obj40B830* cBaseObjList_dtor(Obj40B830* self, short del)
     return self;
 }
 #pragma pop
+#undef GetPurgeList /* merge_units */
 #undef std_vector_pod_int_resize /* merge_units */
+#undef std_vector_cSystemPtr_dtor /* merge_units */
 static inline void merge_flush_func_0040B830(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0040B830 */
+
+/* merge_units: begin func_0040B920 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#include "buf_holder_dtor.h"
+
+/* Destroy a buffer holder: free its buffer, optionally delete. */
+DEFINE_BUF_HOLDER_DTOR(std_vector_cSystemPtr_dtor)
+static inline void merge_flush_func_0040B920(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0040B920 */
+
+/* merge_units: begin func_0040BA10 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct A40BA10 { char pad[0xC]; unsigned char flag; char pad2[3]; };
+struct S40BA10 { int prio; A40BA10 a; A40BA10 b; };
+struct V40BA10;
+struct It40BA10 { S40BA10** p; };
+extern "C" {
+void std_vector_cSystemPtr_ctor(A40BA10* a);
+int cArrayCapacity_Int(int* kind);
+void std_vector_cSystemPtr_reserve(A40BA10* a, int v);
+void std_vector_cObjectId_ctor_void(A40BA10* a);
+#if 0 /* merge_units */
+V40BA10* GetPurgeList(void);
+#endif /* merge_units */
+#define GetPurgeList() ((V40BA10 *)GetPurgeList()) /* merge_units */
+
+void std_vector_cBaseObjListPtr_push_back(V40BA10* v, S40BA10** e);
+int cArray_cBaseObjListPtr_Size(V40BA10* v);
+void cArray_cBaseObjListPtr_ResizeActual(V40BA10* v, int n, S40BA10* const& fill);
+void cArray_cBaseObjListPtr_RBegin(It40BA10* out, V40BA10* v);
+#if 0 /* merge_units */
+void cArray_cBaseObjListPtr_ReverseIterator_ctor(It40BA10* out, It40BA10* src);
+#endif /* merge_units */
+Word* cArray_cBaseObjListPtr_ReverseIterator_ctor(Word* dst, Word* src); /* merge_units */
+#define cArray_cBaseObjListPtr_ReverseIterator_ctor(a0, a1) ((void)cArray_cBaseObjListPtr_ReverseIterator_ctor((Word *)(a0), (Word *)(a1))) /* merge_units */
+
+
+#if 0 /* merge_units */
+void cArray_cBaseObjListPtr_REnd(It40BA10* out, V40BA10* v);
+#endif /* merge_units */
+struct HolderWord; /* merge_units */
+void cArray_cBaseObjListPtr_REnd(Word* result, const HolderWord* source); /* merge_units */
+#define cArray_cBaseObjListPtr_REnd(a0, a1) (cArray_cBaseObjListPtr_REnd((Word *)(a0), (const HolderWord *)(a1))) /* merge_units */
+
+
+#if 0 /* merge_units */
+int cArray_cBaseObjListPtr_ReverseIterator_opNe(It40BA10* a, It40BA10* b);
+#endif /* merge_units */
+int cArray_cBaseObjListPtr_ReverseIterator_opNe(Iter* a, Iter* b); /* merge_units */
+#define cArray_cBaseObjListPtr_ReverseIterator_opNe(a0, a1) (cArray_cBaseObjListPtr_ReverseIterator_opNe((Iter *)(a0), (Iter *)(a1))) /* merge_units */
+
+
+#if 0 /* merge_units */
+void cArray_cBaseObjListPtr_ReverseIterator_opInc(It40BA10* it);
+#endif /* merge_units */
+Iter* cArray_cBaseObjListPtr_ReverseIterator_opInc(Iter* it); /* merge_units */
+#define cArray_cBaseObjListPtr_ReverseIterator_opInc(a0) ((void)cArray_cBaseObjListPtr_ReverseIterator_opInc((Iter *)(a0))) /* merge_units */
+
+
+#if 0 /* merge_units */
+S40BA10** cArray_cBaseObjListPtr_ReverseIterator_opMul(It40BA10* it);
+#endif /* merge_units */
+int* cArray_cBaseObjListPtr_ReverseIterator_opMul(Iter* it); /* merge_units */
+#define cArray_cBaseObjListPtr_ReverseIterator_opMul(a0) ((S40BA10 * *)cArray_cBaseObjListPtr_ReverseIterator_opMul((Iter *)(a0))) /* merge_units */
+
+
+#if 0 /* merge_units */
+S40BA10** cArray_cBaseObjListPtr_Front(V40BA10* v);
+#endif /* merge_units */
+int cArray_cBaseObjListPtr_Front(PtrVec* v); /* merge_units */
+#define cArray_cBaseObjListPtr_Front(a0) ((S40BA10 * *)cArray_cBaseObjListPtr_Front((PtrVec *)(a0))) /* merge_units */
+
+
+}
+static inline void InitA40BA10(A40BA10* a, int* kind)
+{
+    std_vector_cSystemPtr_ctor(a);
+    std_vector_cSystemPtr_reserve(a, cArrayCapacity_Int(kind));
+    a->flag = 0;
+}
+static inline void InitB40BA10(A40BA10* b)
+{
+    std_vector_cObjectId_ctor_void(b);
+    b->flag = 1;
+}
+static inline void PushFront40BA10(V40BA10* v, S40BA10** x)
+{
+    It40BA10 src;
+    It40BA10 dst;
+    It40BA10 end;
+    cArray_cBaseObjListPtr_ResizeActual(v, cArray_cBaseObjListPtr_Size(v) + 1, 0);
+    cArray_cBaseObjListPtr_RBegin(&src, v);
+    cArray_cBaseObjListPtr_ReverseIterator_ctor(&dst, &src);
+    cArray_cBaseObjListPtr_REnd(&end, v);
+    if (cArray_cBaseObjListPtr_ReverseIterator_opNe(&src, &end))
+        cArray_cBaseObjListPtr_ReverseIterator_opInc(&src);
+    while (cArray_cBaseObjListPtr_ReverseIterator_opNe(&src, &end)) {
+        *cArray_cBaseObjListPtr_ReverseIterator_opMul(&dst) = *cArray_cBaseObjListPtr_ReverseIterator_opMul(&src);
+        cArray_cBaseObjListPtr_ReverseIterator_opInc(&src);
+        cArray_cBaseObjListPtr_ReverseIterator_opInc(&dst);
+    }
+    *cArray_cBaseObjListPtr_Front(v) = *x;
+}
+extern "C" S40BA10* cBaseObjList_ctor(S40BA10* self, int kind, int prio)
+{
+    int k = kind;
+    InitA40BA10(&self->a, &k);
+    InitB40BA10(&self->b);
+    self->prio = prio;
+    if (prio)
+        std_vector_cBaseObjListPtr_push_back(GetPurgeList(), &self);
+    else
+        PushFront40BA10(GetPurgeList(), &self);
+    return self;
+}
+#undef GetPurgeList /* merge_units */
+#undef cArray_cBaseObjListPtr_ReverseIterator_ctor /* merge_units */
+#undef cArray_cBaseObjListPtr_REnd /* merge_units */
+#undef cArray_cBaseObjListPtr_ReverseIterator_opNe /* merge_units */
+#undef cArray_cBaseObjListPtr_ReverseIterator_opInc /* merge_units */
+#undef cArray_cBaseObjListPtr_ReverseIterator_opMul /* merge_units */
+#undef cArray_cBaseObjListPtr_Front /* merge_units */
+static inline void merge_flush_func_0040BA10(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0040BA10 */
+
+/* merge_units: begin func_0040BB70 */
+#pragma push /* merge_units */
+int cArray_cBaseObjListPtr_Front(PtrVec* v) {
+    return (int)v->data;
+}
+
+/* Address of the previous word (reverse-iterator dereference). */
+int* cArray_cBaseObjListPtr_ReverseIterator_opMul(Iter* it) {
+    return it->p - 1;
+}
+
+/* Steps the pointer back one word. */
+Iter* cArray_cBaseObjListPtr_ReverseIterator_opInc(Iter* it) {
+    it->p = it->p - 1;
+    return it;
+}
+
+int cArray_cBaseObjListPtr_ReverseIterator_opNe(Iter* a, Iter* b) {
+    return !(a->p == b->p);
+}
+static inline void merge_flush_func_0040BB70(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0040BB70 */
+
+/* merge_units: begin func_0040BBD0 */
+#pragma push /* merge_units */
+typedef struct HolderWord {
+    char pad00[8];
+    int value;
+} HolderWord;
+
+/* Copy the holder's word through the two value-object temporaries. */
+void cArray_cBaseObjListPtr_REnd(Word* result, const HolderWord* source)
+{
+    Word first;
+    Word second;
+    first.value = source->value;
+    second = first;
+    result->value = second.value;
+}
+static inline void merge_flush_func_0040BBD0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0040BBD0 */
+
+/* merge_units: begin func_0040BC00 */
+#pragma push /* merge_units */
+Word* cArray_cBaseObjListPtr_ReverseIterator_ctor(Word* dst, Word* src) {
+    dst->value = src->value;
+    return dst;
+}
+static inline void merge_flush_func_0040BC00(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0040BC00 */

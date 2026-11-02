@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/lights: 8 files, 003718B0-00372120
+ * Libs/SFOLib/Source/lights: 10 files, 003718B0-00372AC0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -136,7 +136,11 @@ typedef struct {
     int n5C;
     E4Slot slots[16];
 } E4Obj;
+#if 0 /* merge_units */
 extern void cVU1Model_UpdateLighting(void* a, int b, int c);
+#endif /* merge_units */
+#define cVU1Model_UpdateLighting(a0, a1, a2) (cVU1Model_UpdateLighting((a0), (a1), (a2))) /* merge_units */
+
 void cSceneLight_Activate(E4Obj* o)
 {
     int i;
@@ -151,6 +155,7 @@ void cSceneLight_Activate(E4Obj* o)
         g_LevelLightsDirty = 1;
     }
 }
+#undef cVU1Model_UpdateLighting /* merge_units */
 static inline void merge_flush_func_00371B00(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00371B00 */
@@ -426,14 +431,62 @@ struct Ctx {
     V_00372120 v2230; V_00372120 v2240;
 };
 extern "C" {
+#if 0 /* merge_units */
 unsigned char func_00372B30(Light* l);
+#endif /* merge_units */
+struct Obj372AC0; /* merge_units */
+signed char func_00372B30(Obj372AC0* self); /* merge_units */
+#define func_00372B30(a0) ((unsigned char)func_00372B30((Obj372AC0 *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
 V_00372120* cParallelLight_GetDirection(Light* l);
+#endif /* merge_units */
+struct Obj372AC0; /* merge_units */
+void* cParallelLight_GetDirection(Obj372AC0* self); /* merge_units */
+#define cParallelLight_GetDirection(a0) ((V_00372120 *)cParallelLight_GetDirection((Obj372AC0 *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
 V_00372120* cLightSrc_GetPosition(Light* l);
+#endif /* merge_units */
+struct Obj372AC0; /* merge_units */
+void* cLightSrc_GetPosition(Obj372AC0* self); /* merge_units */
+#define cLightSrc_GetPosition(a0) ((V_00372120 *)cLightSrc_GetPosition((Obj372AC0 *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
 float func_00372B00(Light* l);
+#endif /* merge_units */
+struct Obj372AC0; /* merge_units */
+float func_00372B00(Obj372AC0* self); /* merge_units */
+#define func_00372B00(a0) (func_00372B00((Obj372AC0 *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
 float func_00372AF0(Light* l);
+#endif /* merge_units */
+struct Obj372AC0; /* merge_units */
+float func_00372AF0(Obj372AC0* self); /* merge_units */
+#define func_00372AF0(a0) (func_00372AF0((Obj372AC0 *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
 float func_00372AE0(Light* l);
+#endif /* merge_units */
+struct Obj372AC0; /* merge_units */
+float func_00372AE0(Obj372AC0* self); /* merge_units */
+#define func_00372AE0(a0) (func_00372AE0((Obj372AC0 *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
 V_00372120* cSceneLight_GetDirection(Light* l);
+#endif /* merge_units */
+struct Obj372AC0; /* merge_units */
+void* cSceneLight_GetDirection(Obj372AC0* self); /* merge_units */
+#define cSceneLight_GetDirection(a0) ((V_00372120 *)cSceneLight_GetDirection((Obj372AC0 *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
 float cSceneLight_GetFalloffAngleCos(Light* l);
+#endif /* merge_units */
+struct Obj372AC0; /* merge_units */
+float cSceneLight_GetFalloffAngleCos(Obj372AC0* self); /* merge_units */
+#define cSceneLight_GetFalloffAngleCos(a0) (cSceneLight_GetFalloffAngleCos((Obj372AC0 *)(a0))) /* merge_units */
+
 void cVector_opAssign(V_00372120* d, const V_00372120* s);
 void cVector_opSub(V_00372120* o, const V_00372120* a, const V_00372120* b);
 float cVector_GetLength(const V_00372120* v);
@@ -569,6 +622,98 @@ extern "C" void cLightMan_UpdateSources(Ctx* c, unsigned int mask, unsigned int 
         c->v2060.w = s;
     }
 }
+#undef func_00372B30 /* merge_units */
+#undef cParallelLight_GetDirection /* merge_units */
+#undef cLightSrc_GetPosition /* merge_units */
+#undef func_00372B00 /* merge_units */
+#undef func_00372AF0 /* merge_units */
+#undef func_00372AE0 /* merge_units */
+#undef cSceneLight_GetDirection /* merge_units */
+#undef cSceneLight_GetFalloffAngleCos /* merge_units */
 static inline void merge_flush_func_00372120(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00372120 */
+
+/* merge_units: begin func_00372AC0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Field accessors of Obj372AC0.
+ */
+
+#include "loose03_types.h"
+
+float cSceneLight_GetFalloffAngleCos(Obj372AC0* self) {
+    return self->unk50;
+}
+
+void* cSceneLight_GetDirection(Obj372AC0* self) {
+    return self->unk40;
+}
+
+float func_00372AE0(Obj372AC0* self) {
+    return self->unk54;
+}
+
+float func_00372AF0(Obj372AC0* self) {
+    return self->unk14;
+}
+
+float func_00372B00(Obj372AC0* self) {
+    return self->unk10;
+}
+
+void* cLightSrc_GetPosition(Obj372AC0* self) {
+    return self->unk30;
+}
+
+void* cParallelLight_GetDirection(Obj372AC0* self) {
+    return self->unk40;
+}
+
+signed char func_00372B30(Obj372AC0* self) {
+    return self->unk1E;
+}
+static inline void merge_flush_func_00372AC0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00372AC0 */
+
+/* merge_units: begin func_00372B40 */
+#pragma push /* merge_units */
+typedef struct { unsigned char m; unsigned char t; unsigned char f; unsigned char p3; int v; char pad[0x18]; } Light_00372B40;
+typedef struct { int v; int z; } Cor;
+typedef struct { Light_00372B40 l[256]; Cor c[1]; } Big;
+typedef struct { char pad[0x4C]; int n; int nc; char* buf; char pad58[8]; char d[1]; } LightMgr_00372B40;
+static inline void FASTDMA_ToSPR(int sadr, int madr, int qwc)
+{
+    *(volatile int*)0x1000D420 = qwc;
+    *(volatile int*)0x1000D480 = sadr;
+    *(volatile int*)0x1000D410 = madr;
+    *(volatile int*)0x1000D400 = 0x100;
+    __asm__ volatile ("sync");
+}
+static inline void FASTDMA_Wait_ToSPR(void)
+{
+    while (*(volatile int*)0x1000D400 & 0x100)
+        ;
+}
+void cLightMan_AquireSourcesByProperty(LightMgr_00372B40* m, int a, int b, int c)
+{
+    int i;
+    Light_00372B40* l;
+    FASTDMA_ToSPR((int)m->buf, (int)m->d, m->n * 2);
+    FASTDMA_Wait_ToSPR();
+    m->nc = 0;
+    for (i = 0; i < m->n; i++) {
+        l = (Light_00372B40*)(m->buf + i * 32);
+        if (!(l->m & a)) continue;
+        if (b != 0xFF && !(l->t & b)) continue;
+        if (!(l->f & c)) continue;
+        ((Cor*)(m->buf + 0x2000))[m->nc].z = 0;
+        ((Cor*)(m->buf + 0x2000))[m->nc].v = l->v;
+        m->nc++;
+    }
+}
+static inline void merge_flush_func_00372B40(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00372B40 */

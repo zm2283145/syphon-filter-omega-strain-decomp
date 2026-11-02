@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/fstream: 2 files, 003EAA70-003EAE60
+ * Libs/SFOLib/Source/fstream: 3 files, 003EAA70-003EB310
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -26,7 +26,12 @@ extern int g_FrameCounter;
 void cMemMan_Deallocate(int a, void* p, char* file, int line);
 void std_list_imp_voidPtr_remove_if(LdrAA*, PredAA);
 int cFSData_FreeStream(ReqAA* r, int release);
+#if 0 /* merge_units */
 ReqAA* cFileStreamMan_FindStreamData(LdrAA* l, char* name, int kind);
+#endif /* merge_units */
+void* cFileStreamMan_FindStreamData(void*, char*, int); /* merge_units */
+#define cFileStreamMan_FindStreamData(a0, a1, a2) ((ReqAA *)cFileStreamMan_FindStreamData((void *)(a0), (a1), (a2))) /* merge_units */
+
 bool cFileStreamMan_StreamRequestFlush_cFileManR_voidPcFSHandlePvoidPbool_voidP_eStreamMode(LdrAA* ldr, char* name, void* cb, int user, unsigned char mode);
 }
 
@@ -111,6 +116,7 @@ extern "C" bool cFileStreamMan_StreamRequestFlush_cFileManR_voidPcFSHandlePvoidP
     }
     return ret;
 }
+#undef cFileStreamMan_FindStreamData /* merge_units */
 static inline void merge_flush_func_003EAA70(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003EAA70 */
@@ -148,9 +154,16 @@ void cFileStreamMan_FlushAllStreamData(Loader_EAE60* l, int a);
 #if 0 /* merge_units */
 Req_EAE60* cFileStreamMan_FindStreamData(Loader_EAE60* l, char* name, int kind);
 #endif /* merge_units */
-#define cFileStreamMan_FindStreamData(a0, a1, a2) ((Req_EAE60 *)cFileStreamMan_FindStreamData((LdrAA *)(a0), (a1), (a2))) /* merge_units */
+#define cFileStreamMan_FindStreamData(a0, a1, a2) ((Req_EAE60 *)cFileStreamMan_FindStreamData((void *)(a0), (a1), (a2))) /* merge_units */
 
+
+#if 0 /* merge_units */
 void std_list_cFSDataPtr_push_back(Loader_EAE60* l, Req_EAE60** r);
+#endif /* merge_units */
+struct StdList; /* merge_units */
+int std_list_cFSDataPtr_push_back(StdList* list, int value); /* merge_units */
+#define std_list_cFSDataPtr_push_back(a0, a1) ((void)std_list_cFSDataPtr_push_back((StdList *)(a0), (int)(a1))) /* merge_units */
+
 char* cFileMan_ctor_void(void* p);
 void cFileMan_EncodeFilename_charP_cFileManR(char* f, char* a, char* b);
 void cFileMan_Open(char* f);
@@ -286,6 +299,29 @@ extern "C" int cFileStreamMan_StreamRequest(Loader_EAE60* ldr, char* name, void 
     return 1;
 }
 #undef cFileStreamMan_FindStreamData /* merge_units */
+#undef std_list_cFSDataPtr_push_back /* merge_units */
 static inline void merge_flush_func_003EAE60(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003EAE60 */
+
+/* merge_units: begin func_003EB310 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * fstream.cc
+ */
+
+#include "fstream_types.h"
+
+extern int std_list_deleter_voidPtr_insert(int** out, StdList* list, int** pos, int value);
+
+/* list.push_back(value): insert before the sentinel. */
+int std_list_cFSDataPtr_push_back(StdList* list, int value) {
+    ListInsertArgs it;
+
+    it.pos = &list->header;
+    return std_list_deleter_voidPtr_insert(&it.result, list, &it.pos, value);
+}
+static inline void merge_flush_func_003EB310(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003EB310 */

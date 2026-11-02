@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/gameFrontEnd: 4 files, 002CC980-002CCCA0
+ * SFOGame/Source/gameFrontEnd: 6 files, 002CC980-002CCD00
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -77,7 +77,12 @@ extern int* cLListIterator_GuiWidgetPtr_opMul(LIt* LIt);
 extern void cLListIterator_GuiWidgetPtr_opInc(LIt* LIt);
 extern void cLListIterator_GuiWidgetPtr_ctor_cLListIteratorR(LIt* dst, LIt* src);
 extern void GuiWidget_SendMessage(int stack, int widget, unsigned short evt, int a, int b);
+#if 0 /* merge_units */
 extern void cLList_GuiWidgetPtr_dtor(void* LColl, int flag);
+#endif /* merge_units */
+void* cLList_GuiWidgetPtr_dtor(void* self, short deleteFlag); /* merge_units */
+#define cLList_GuiWidgetPtr_dtor(a0, a1) ((void)cLList_GuiWidgetPtr_dtor((a0), (short)(a1))) /* merge_units */
+
 void cGameFrontEnd_LobbySendShutdownMessage(int evt, int a, int b)
 {
     if (Gui_Canvas()) {
@@ -134,6 +139,7 @@ void cGameFrontEnd_LobbySendShutdownMessage(int evt, int a, int b)
         cLList_GuiWidgetPtr_dtor(&coll, 0);
     }
 }
+#undef cLList_GuiWidgetPtr_dtor /* merge_units */
 static inline void merge_flush_func_002CCA40(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002CCA40 */
@@ -148,3 +154,31 @@ DEFINE_BASE_DTOR_CHAIN(GuiWidgetList_dtor, std_list_GuiWidgetPtr_dtor)
 static inline void merge_flush_func_002CCCA0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002CCCA0 */
+
+/* merge_units: begin func_002CCD00 */
+#pragma push /* merge_units */
+#pragma push
+#pragma cplusplus on
+#include "obj_list_dtor.h"
+#pragma pop
+#pragma push
+#pragma cplusplus on
+#pragma pop
+
+#pragma cplusplus on
+
+/* Destroy an object list: erase all nodes, optionally delete. */
+DEFINE_OBJ_LIST_DTOR(std_list_GuiWidgetPtr_dtor)
+static inline void merge_flush_func_002CCD00(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002CCD00 */
+
+/* merge_units: begin func_002CCD80 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+/* Deleting destructor that runs the base destructor. */
+DEFINE_BASE_DTOR_CHAIN(cLList_GuiWidgetPtr_dtor, func_00135C90)
+static inline void merge_flush_func_002CCD80(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002CCD80 */

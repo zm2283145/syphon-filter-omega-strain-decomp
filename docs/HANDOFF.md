@@ -31,6 +31,14 @@ This is the working state and the routine for whoever continues this project
 - Untouched or nearly untouched large functions: XLib_DrawLensFlares (5,388 B; the prototype is identical to retail at the
   start, so it is a good candidate), XLib_ApplyContext (418 lines), XLib_Init (279), cHuman_Land, ActorPhys_RunResponse.
 
+## Owner decisions 2026-11-02
+
+The owner approved these idioms; each use must be commented in the source:
+- the dead `if (0) { asm volatile { nop } }` trigger for the less-optimised compiler mode;
+- dead `if (0) { ... }` blocks of locals that reproduce unreferenced frame holes in that mode;
+- explicit `asm { nop }` in empty branches where retail has a real nop (SKL_CompressSKL);
+- string literals padded with `\0` to reproduce retail's 8-byte literal alignment.
+
 ## Session 2026-11-02 morning (lanes s1-s3, t1-t3)
 
 - **R227** `d55722e7`: StaticInit_scriptUtils (owner approved; NOLOAD helper copies).
@@ -1678,8 +1686,8 @@ file per splat unit), and per prototype `types.txt`, `locals.tsv`, `globals.tsv`
   does not trigger it). Signs of this mode: loops left unoptimised, pointers kept in their own register (`move s3,s2`), addresses
   recomputed instead of shared, `b; nop` kept as written, and dead blocks keeping their stack slots (which explains unreferenced frame holes).
   The trigger works from a dead block: `if (0) { asm volatile { nop } }` emits nothing. It is used as a commented barrier, in the same
-  category as the accepted `asm { .set reorder }` barriers. **Owner review pending:** the owner may still reject this idiom.
-  The same family, also pending review: dead `if (0) { ... }` blocks of locals that reproduce unreferenced frame holes in this
+  category as the accepted `asm { .set reorder }` barriers. **Approved by the owner on 2026-11-02.**
+  The same family, also approved on 2026-11-02: dead `if (0) { ... }` blocks of locals that reproduce unreferenced frame holes in this
   mode (cHuman_Land; cCollisionProbe_SphereSweptRay_Reset_2 in R228 and ColQuery_InitSweep in R229, placeholder blocks of matrix/vector temporaries).
 
 Automated search (2026-10-31). Both tools run in WSL with `CW38_DIR=/root/cw/mwcps2-3.0b38-030307`, where a check takes about 0.2 s:

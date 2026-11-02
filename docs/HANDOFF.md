@@ -56,6 +56,23 @@ The owner approved these idioms; each use must be commented in the source:
     creates its address registers one pass later without moving stack slots.
   - Free `operator+/-(const V&, const V&)` avoid the two dead `addiu` per site that member operators on by-value temporaries leave.
 
+## Session 2026-11-02 afternoon 2 (lanes x1-x3)
+
+- **R233** `80a4bc0b`: XLib_ApplyContext (4,388 B, w2+x1), with the owner-approved UNPACK asm block. R232 `75a30bd7` built OK but
+  skipped the file because it was staged as `func_<ADDR>.c`. **Staged files must be named `<compiler>_<ADDR>.c` (e.g. `mw38_0037C870.c`).**
+- **R234** `1d1ad5e8`: WeatherEmitter_Update (4,356 B, w1+x2).
+- **Totals:** **14,286 / 14,351, 96.26% code**; 65 functions remain.
+- **New techniques** (x1/x2 notes):
+  - **Prototype accessors:** grep the prototype symbol table for small non-inlined accessors (`GetGuardBandScaleX__4XLibCFv`).
+    Writing a field read as that inline accessor changes the schedule.
+  - **lui immediates:** lab masks them, so run check_match once lab shows only artefacts. ApplyContext's last 2 words were the OR order of a constant.
+  - **Clamp copy propagation:** with a GCC volatile min/max helper, MW redirects later uses to the helper's result register.
+    A plain MW `asm { min.s }` at that site stops it.
+  - **Two-statement clamp:** `v = expr; v = FMin(v, b);` makes the result share v's register.
+  - **Per-site copy helpers:** pick each site's copy-constructor form separately, using tag arguments (`CopySrcFirst`, `CopyNested`).
+  - **Scratch FP registers:** their numbers follow named temporaries, including a constant held in a local.
+  - **Window micro harness:** cut one basic block into a micro function and score only that window (x1 `m/`).
+
 ## Session 2026-11-02 late (lanes w1-w3, no matches)
 
 - **XLib_ApplyContext: 521 → 36 lab lines** at exact size (`docs/lane_notes/w2/drafts/ac_best36.c`).

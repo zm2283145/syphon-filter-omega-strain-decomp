@@ -1,3 +1,11 @@
+/*
+ * SFOGame/Source/human: 1 file, 001A1C80
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_001A1C80 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #pragma inline_depth(12)
 #include "types.h"
@@ -194,3 +202,6 @@ extern "C" void cHuman_GrabLedge(cHuman* self)
     }
     nCallback_SetCallback(callback);
 }
+static inline void merge_flush_func_001A1C80(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001A1C80 */

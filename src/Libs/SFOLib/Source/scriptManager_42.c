@@ -1,3 +1,11 @@
+/*
+ * Libs/SFOLib/Source/scriptManager: 1 file, 003DDFC0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_003DDFC0 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
@@ -660,3 +668,6 @@ int cScriptInterpreter_execute(ScInterp* self, ScFuncDef* f)
     self->mDepth--;
     return retVal;
 }
+static inline void merge_flush_func_003DDFC0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003DDFC0 */

@@ -1,3 +1,11 @@
+/*
+ * SFOGame/Source/humanCollision: 1 file, 001E7110
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_001E7110 */
+#pragma push /* merge_units */
 /* cHumanCollisionRoutine::Transport_StartOfFrameUpdate(cVector*, cVector*, cQuatVec*, float) (humanCollision.cc) */
 #pragma cplusplus on
 #pragma opt_common_subs off
@@ -439,3 +447,6 @@ extern "C" void cHumanCollisionRoutine_Transport_StartOfFrameUpdate(R* self, V* 
         }
     }
 }
+static inline void merge_flush_func_001E7110(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001E7110 */

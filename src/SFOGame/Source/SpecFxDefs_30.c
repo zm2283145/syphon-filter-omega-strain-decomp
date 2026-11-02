@@ -1,3 +1,11 @@
+/*
+ * SFOGame/Source/SpecFxDefs: 1 file, 00230DE0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00230DE0 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 #include "vslot_pad.h"
@@ -312,3 +320,6 @@ extern "C" void Global_Shatter(cGOBJ* object, const cGOBJ* destroyer, bool bNet)
         cNetObj_SendMessage_int_int_ucharP_int_etc(msgID, nSize, buf, -1, 0);
     }
 }
+static inline void merge_flush_func_00230DE0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00230DE0 */

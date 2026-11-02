@@ -1,3 +1,11 @@
+/*
+ * SFOGame/Source/humanCollision: 1 file, 001E9980
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_001E9980 */
+#pragma push /* merge_units */
 /* 001E9980 cHumanCollisionRoutine::NextFrame(float, cSystem&, const cArray<cCollisionFace>&, const cCollisionModelList*)
  * (humanCollision.cc), rebuilt from the prototype DWARF/.line data. */
 #pragma cplusplus on
@@ -237,3 +245,6 @@ extern "C" void cHumanCollisionRoutine_NextFrame(cHumanCollisionRoutine* self, f
     if (self->reset)
         self->reset = 0;
 }
+static inline void merge_flush_func_001E9980(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001E9980 */

@@ -1,10 +1,62 @@
+/*
+ * SFOGame/Source/path: 3 files, 00161FA0-00162080
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00161FA0 */
+#pragma push /* merge_units */
+#include "types.h"
+
+typedef struct N_1FA0 { struct N_1FA0* prev; struct N_1FA0* next; int pad8; int padC; int a; int b; int fa; int fb; } N_1FA0;
+typedef struct { char pad[0x64]; int flags; } Obj_1FA0;
+typedef struct { int pad[2]; Obj_1FA0** items; } Reg_1FA0;
+typedef struct { char pad[0x18]; N_1FA0* first; int pad1c; N_1FA0 end; } S_1FA0;
+extern Reg_1FA0* D_004FFBE0;
+void cNodeRequest_SetCompanionNodeLOSResultForRestOfList(S_1FA0* self, int id, unsigned char v)
+{
+    N_1FA0* n = self->first;
+    Obj_1FA0* o = D_004FFBE0->items[id];
+    N_1FA0* e = &self->end;
+    for (; n != e; n = n->next) {
+        if (n->b == id)
+            n->fb = v;
+        if (n->a == id && !(o->flags & 4))
+            n->fa = v;
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00161FA0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00161FA0 */
+
+/* merge_units: begin func_00162010 */
+#pragma push /* merge_units */
+void cNodeRequest_SetNodeLOSResultForRestOfList(S_1FA0* self, int id, unsigned char v)
+{
+    N_1FA0* n = self->first;
+    Obj_1FA0* o = D_004FFBE0->items[id];
+    N_1FA0* e = &self->end;
+    for (; n != e; n = n->next) {
+        if (n->a == id)
+            n->fa = v;
+        if (n->b == id && !(o->flags & 4))
+            n->fb = v;
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00162010(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00162010 */
+
+/* merge_units: begin func_00162080 */
+#pragma push /* merge_units */
 /* 00162080 cPathRequest::Update() (path.cc), rebuilt from the prototype DWARF/.line data.
  * Statics: D_004EA798 cellPoolIndex, D_004EA7B0 cellPool, D_004ED9F0 nodeRequest, D_004EE010 destinationNodeList,
  * D_004ED9D0 losRequestMode. Message temporaries are C++ classes with weak inline destructors (.dtors_drop). */
 #pragma cplusplus on
 #pragma inline_depth(8)
 #pragma enumsalwaysint off
-#include "types.h"
 
 struct cVector;
 /* 128-bit copy: lq/sq have no C spelling in MW (a struct copy is split into words). */
@@ -514,3 +566,6 @@ extern "C" unsigned char cPathRequest_Update(cPathRequest* self)
         D_004EA798 = self->cellPoolIndexRestore;
     return doneFlag;
 }
+static inline void merge_flush_func_00162080(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00162080 */

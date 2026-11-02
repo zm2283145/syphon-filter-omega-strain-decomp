@@ -1,3 +1,11 @@
+/*
+ * SFOGame/Source/npc: 1 file, 00151D30
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00151D30 */
+#pragma push /* merge_units */
 /* 00151D30 cNPC::HandleMessage(const cMessage&) (npc.cc), rebuilt from the prototype DWARF/.line data.
  * Message temporaries are C++ classes with weak inline destructors (kept in .dtors_drop). */
 #pragma cplusplus on
@@ -519,4 +527,6 @@ extern "C" unsigned char cNPC_HandleMessage(cNPC* self, const cMessage& message)
     }
     return res;
 }
-
+static inline void merge_flush_func_00151D30(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00151D30 */

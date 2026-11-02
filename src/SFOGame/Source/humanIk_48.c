@@ -1,3 +1,11 @@
+/*
+ * SFOGame/Source/humanIk: 1 file, 001D40E0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_001D40E0 */
+#pragma push /* merge_units */
 /* nHumanIk::cHumanIkRoutine::CalculateRightWristTargetRot_Local(cQuaternion&, eMode, const cVector&, const cVector&, const cQuaternion&, const cQuaternion&) (humanIk.cc) */
 /* Inline asm is used only for EE/VU0 instructions C cannot express: 128-bit lq/sq quadword copies, VU0 macro-mode
    quaternion ops (lqc2/sqc2/vmul/vopmula/...), cfc2 flag tests, abs.s and the MtxToQuat sequence. No register pinning. */
@@ -410,3 +418,6 @@ extern "C" unsigned char UpperBody_HandRotation(cHumanIkRoutine* self, V& rWrist
     }
     return wasCalculated;
 }
+static inline void merge_flush_func_001D40E0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001D40E0 */

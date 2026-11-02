@@ -80,6 +80,9 @@ The owner approved these idioms; each use must be commented in the source:
   - Retail is in the less-optimised mode.
   - The draft uses a `volatile` iterator member and a volatile data read; a volatile load keeps its source order relative to other volatile loads.
   - Left: one a2/a3/v1 rotation before the `lq`.
+- **R238** `7f134df4`: both of them matched (z2). The three iterator reads use different forms: a named pointer local, a `Get()` accessor
+  with an inline local, and a direct `*it.base()`. The form of each read sets where its temporaries fall in the colouring order.
+  **14,292 / 14,351, 96.35% code**; 59 remain.
 - **New techniques** (x1/x2 notes):
   - **Prototype accessors:** grep the prototype symbol table for small non-inlined accessors (`GetGuardBandScaleX__4XLibCFv`).
     Writing a field read as that inline accessor changes the schedule.

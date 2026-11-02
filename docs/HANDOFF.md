@@ -31,6 +31,25 @@ This is the working state and the routine for whoever continues this project
 - Untouched or nearly untouched large functions: XLib_DrawLensFlares (5,388 B; the prototype is identical to retail at the
   start, so it is a good candidate), XLib_ApplyContext (418 lines), XLib_Init (279), cHuman_Land, ActorPhys_RunResponse.
 
+## Source cleanup 2026-11-02 (lane c1)
+
+- Part-files under src/SFOGame, src/Libs and src/CW_PS2Support went from 2,511 to **2,020**; single-file originals went from 49 to 52 of 269.
+  Commits: `5e907c72` (adjacent parts), `91fddcdd` (merge_units prototype pinning plus the canonical deleting-destructor
+  signature `extern "C" void* name(void* self, short deleteFlag)` in 18 include/ dtor headers), `a67f7b50` (second pass).
+  The report is unchanged (14,277 / 95.48%), and tests/test_merge_conflicts.py was added.
+- **Remaining split reasons:**
+
+  | Reason | Count | Notes |
+  |---|---|---|
+  | Data pieces not adjacent | 444 | retail data order; cannot be merged |
+  | Code bytes differ when merged | 320 | literal pools, alignment |
+  | Declaration conflicts the tool cannot resolve | ~735 | per-pair hand edits |
+  | Other compile errors | ~200 | |
+
+- **Most useful next cleanup:** real shared headers for the std_list/std_vector iterator helpers, which each file declares with its own
+  local struct names, and agreement on the void/int results of old-style `int f();` declarations. Remember that `merge_units.py --all`
+  aborts on an EE-GCC literal-pool group, so loop over modules instead.
+
 ## Session 2026-11-01 afternoon (Claude, cloud workspace): R218-R221
 
 - **R218** `574714b0`: cNPC_UpdateMovement, cPathRequest_Update, cNPC_HandleMessage, cHumanCollisionRoutine_ctor,

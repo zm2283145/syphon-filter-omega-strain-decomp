@@ -3981,5 +3981,6 @@
   "SFOGame/Source/human/func_001A1C80": "cwps2-3.0b38",
   "SFOGame/Source/human/func_00199980": "cwps2-3.0b38",
   "SFOGame/Source/humanCollision/func_001E7F40": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/scriptManager/func_003DDFC0": "cwps2-3.0b38"
+  "Libs/SFOLib/Source/scriptManager/func_003DDFC0": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/manUtils/func_004073C0": "cwps2-3.0b38"
 }

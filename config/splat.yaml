@@ -4198,7 +4198,7 @@ segments:
       - [0x3061B0, c, Libs/SFOLib/Source/manUtils_8]
       - [0x306750, c, Libs/SFOLib/Source/manUtils_9]
       - [0x306DC0, c, Libs/SFOLib/Source/manUtils_10]
-      - [0x3073C0, asm]
+      - [0x3073C0, c, Libs/SFOLib/Source/manUtils/func_004073C0]
       - [0x307830, c, Libs/SFOLib/Source/manUtils_11]
       - [0x307D10, c, Libs/SFOLib/Source/manUtils_12]
       - [0x307DA0, c, Libs/SFOLib/Source/DamageMsg]

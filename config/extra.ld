@@ -7,3 +7,5 @@ func_1E68080 = 0x01E68080; /* overlay function called from Libs/SFOLobby/SFOLobb
 __unexpected = 0x00101250; /* MW exception-specification handler emitted by the compiler */
 __end__catch = 0x00100D20; /* MW catch cleanup emitted by the compiler */
 fptodp = 0x0011BD70; /* MW float->double runtime helper emitted by the compiler; same address as SoftFloat_FloatToDouble */
+dpadd = 0x0011C1A8; /* MW double add runtime helper emitted by the compiler; same address as SoftFloat_DoubleAdd */
+dptofp = 0x0011C928; /* MW double->float runtime helper emitted by the compiler; same address as SoftFloat_DoubleToFloat */

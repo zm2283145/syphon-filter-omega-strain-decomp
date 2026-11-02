@@ -1610,6 +1610,13 @@ file per splat unit), and per prototype `types.txt`, `locals.tsv`, `globals.tsv`
 
 ## Near-miss techniques (newest)
 
+- **Less-optimised compiler mode (2026-11-01, q4):** some retail functions, such as cHuman_Land and cHuman_GrabLedge, were compiled in a
+  mode MW enters when a function contains any `volatile` asm (MW `asm volatile {}` or GCC `__asm__ volatile`; non-volatile asm
+  does not trigger it). Signs of this mode: loops left unoptimised, pointers kept in their own register (`move s3,s2`), addresses
+  recomputed instead of shared, `b; nop` kept as written, and dead blocks keeping their stack slots (which explains unreferenced frame holes).
+  The trigger works from a dead block: `if (0) { asm volatile { nop } }` emits nothing. It is used as a commented barrier, in the same
+  category as the accepted `asm { .set reorder }` barriers. **Owner review pending:** the owner may still reject this idiom.
+
 Automated search (2026-10-31). Both tools run in WSL with `CW38_DIR=/root/cw/mwcps2-3.0b38-030307`, where a check takes about 0.2 s:
 
 - `tools/workflow/mutate.py draft.c --func NAME -c mw38 -j 1 --minutes 90` makes random edits to lines inside the function, such as swapping statements, commuting operators, flipping comparisons, adding or removing `register`, and changing types. It is scored by `check_match`'s count of differing words. It works on any draft, including C++ ones, and writes `<draft>.best.c`, plus `<draft>.match.c` on a full match.

@@ -94,7 +94,16 @@ The owner approved these idioms; each use must be commented in the source:
   - cMemMan_Init_int_uint_uint: 7 lines (z2). Next idea: bisect k3's Init_void draft, which has the right chain shape.
   - cSubtitleFont_Display: 105 lines. Lead: `#pragma opt_propagation off` or `optimization_level 1` reproduces retail's per-pair `addiu` in a micro harness.
   - SphereSweptRay AccountForMovement: 23 words.
-  - GridProcessDataPack: gcc296, not attempted.
+  - GridProcessDataPack: written from scratch to **3 words** at exact size, jump tables MATCH (`docs/lane_notes/a2/drafts/gp_best3.c`).
+    Left: 3 delay slots where retail has `bnez`/`bne` and we get the branch-likely forms. Retail still had a jump-around-jump when reorg ran (gdb trace in a2 NOTES).
+- **Late session (a1-a3, no matches):**
+  - cSubtitleFont_Display: 105 → 45 lines at exact size (`a1/drafts/sf_best45.c`). The fix is `p = (T*)((int)p + 16)` plus `#pragma opt_lifetimes off`;
+    MW folds `p += 16` / `p = p + 16` into store offsets (IRO_PropagateSelfAssignments). Left: the prologue schedule.
+  - SphereSweptRay AccountForMovement: 20 words (`a1/drafts/ss_best20.c`).
+  - cFireObj_ctor_cPopulationR: 21 → 9 words (`a3/drafts/fo_best9.c`), found with a3's choice-point search, `sweep.py`.
+  - cMemMan_Init_int_uint_uint: still 7. Retail's chain appears only when `size` is used again after cMemBin_Allocate (the a2 micro test).
+  - **cMemMan_Init_void / Mem_Init blocker identified:** `D_01FF0000` is the linker symbol `_stack`, `D_0059A980` is `_end`, and
+    `D_0059C980` is `_end + 0x2000`. Symbol entries for `_stack` and `_end` are needed before any draft can pass.
 - **New techniques** (x1/x2 notes):
   - **Prototype accessors:** grep the prototype symbol table for small non-inlined accessors (`GetGuardBandScaleX__4XLibCFv`).
     Writing a field read as that inline accessor changes the schedule.

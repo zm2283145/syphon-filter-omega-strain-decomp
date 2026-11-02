@@ -76,6 +76,10 @@ The owner approved these idioms; each use must be commented in the source:
   One a1/a2 swap is left in the priority loop.
 - **y1 rule, partial address sharing:** put the early uses on a named local and leave the loop on the raw expression.
   `#pragma opt_common_subs off` is a quick test of whether that is the cure.
+- **cSkeleton_ResetBBoxContributors and its clone FrontEnd_SetNodeSpheres_363A80:** 20 → 9 words each, at exact size (`docs/lane_notes/y2/drafts/rb_best9.c`).
+  - Retail is in the less-optimised mode.
+  - The draft uses a `volatile` iterator member and a volatile data read; a volatile load keeps its source order relative to other volatile loads.
+  - Left: one a2/a3/v1 rotation before the `lq`.
 - **New techniques** (x1/x2 notes):
   - **Prototype accessors:** grep the prototype symbol table for small non-inlined accessors (`GetGuardBandScaleX__4XLibCFv`).
     Writing a field read as that inline accessor changes the schedule.

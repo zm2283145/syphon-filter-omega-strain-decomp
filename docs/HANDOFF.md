@@ -83,6 +83,18 @@ The owner approved these idioms; each use must be commented in the source:
 - **R238** `7f134df4`: both of them matched (z2). The three iterator reads use different forms: a named pointer local, a `Get()` accessor
   with an inline local, and a direct `*it.base()`. The form of each read sets where its temporaries fall in the colouring order.
   **14,292 / 14,351, 96.35% code**; 59 remain.
+- **R239** `64c71d4d`: cTexture_UploadBoth and UpperBodyLook_TargetQuat (z3).
+  - UpperBodyLook_TargetQuat is really `nHumanIk::cAimComponent::CalculateTargetRotation_WorldSpace`, prototype 0x1D2CA0.
+    P1 map.tsv missed it; grep the prototype symbol table for the class.
+  - UploadBoth was fixed by a late two-statement shift (`t |= texAddr; c <<= 37; t |= c;`).
+- **R240** `59c8c56a`: cGameSound_PlaySound (y1+z1). A named iteration pointer that starts at the object base keeps the slot offset folded.
+  **14,295 / 14,351, 96.45% code**; 56 remain.
+- **Still open:**
+  - XLib_DisplayLastFrame: 7 lines (z1). It was one source line in the prototype; retail's dw is an unnamed temporary. Values MW if-converts get their registers after named locals.
+  - cMemMan_Init_int_uint_uint: 7 lines (z2). Next idea: bisect k3's Init_void draft, which has the right chain shape.
+  - cSubtitleFont_Display: 105 lines. Lead: `#pragma opt_propagation off` or `optimization_level 1` reproduces retail's per-pair `addiu` in a micro harness.
+  - SphereSweptRay AccountForMovement: 23 words.
+  - GridProcessDataPack: gcc296, not attempted.
 - **New techniques** (x1/x2 notes):
   - **Prototype accessors:** grep the prototype symbol table for small non-inlined accessors (`GetGuardBandScaleX__4XLibCFv`).
     Writing a field read as that inline accessor changes the schedule.

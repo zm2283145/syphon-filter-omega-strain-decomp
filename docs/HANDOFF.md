@@ -62,6 +62,12 @@ The owner approved these idioms; each use must be commented in the source:
   skipped the file because it was staged as `func_<ADDR>.c`. **Staged files must be named `<compiler>_<ADDR>.c` (e.g. `mw38_0037C870.c`).**
 - **R234** `1d1ad5e8`: WeatherEmitter_Update (4,356 B, w1+x2).
 - **Totals:** **14,286 / 14,351, 96.26% code**; 65 functions remain.
+- **R235** `87e39d21`: ActorPhys_SelectEdgeRequest and func_003C0020 (x3). **14,288 / 14,351, 96.29% code**; 63 remain.
+- **Near misses from x3** (`docs/lane_notes/x3/drafts/`):
+  - cGameSound_PlaySound: 12 lab lines (`ps_best12.c`). Retail keeps a field address in a register through an implicit struct copy, and the draft is 16 B short.
+  - func_003FD740: 33 lab lines (`gl_best33.c`), a UTF-8 converter.
+- **FrontEnd_SetNodeSpheres_363A80 is a byte-identical clone of cSkeleton_ResetBBoxContributors:** one fix matches both.
+- **x3 rule:** declare locals where the prototype DWARF declares them. One function-level `plSndFx` took PlaySound from 88 to 32 lines.
 - **New techniques** (x1/x2 notes):
   - **Prototype accessors:** grep the prototype symbol table for small non-inlined accessors (`GetGuardBandScaleX__4XLibCFv`).
     Writing a field read as that inline accessor changes the schedule.

@@ -3292,7 +3292,7 @@ segments:
       - [0x27B5C0, asm]
       - [0x27B770, c, Libs/SFOLib/Source/xlib_8]
       - [0x27B810, c, Libs/SFOLib/Source/xlib_9]
-      - [0x27C870, asm]
+      - [0x27C870, c, Libs/SFOLib/Source/xlib/func_0037C870]
       - [0x27D9A0, c, Libs/SFOLib/Source/xlib_14]
       - [0x27E780, asm]
       - [0x27F670, c, Libs/SFOLib/Source/xlib_6]

@@ -39,6 +39,21 @@ The owner approved these idioms; each use must be commented in the source:
 - explicit `asm { nop }` in empty branches where retail has a real nop (SKL_CompressSKL);
 - string literals padded with `\0` to reproduce retail's 8-byte literal alignment.
 
+## Session 2026-11-02 afternoon (lanes u1-u3)
+
+- **R230** `65b780e2`: cGrenade_CalculateArcPoints (u2, VU0 helper parameter order).
+- **R231** `0221c1bf`: both cHuman_HandleMoveMessage variants (u1, rotated s-register sets).
+- **Totals:** **14,284 / 14,351, 96.02% code**; 67 functions remain.
+- **u3, no match:**
+  - CameraCol_Sweep (0x20D680, 2,136 B) was rebuilt from scratch to 16 lab lines, with exact size, frame and stack slots
+    (`docs/lane_notes/u3/cs_best16.c`). The only difference left is the argument set-up order of the two
+    ColQuery_InitTransformedThunk calls.
+  - WeatherEmitter_Update (0x39A000) is mapped section by section in the u3 NOTES; there is no draft yet.
+- **New rules (u3):**
+  - In the less-optimised mode, moving a VU0 asm into a pointer-taking inline (`Sum(a,b){ V c; SumA(&c,&a,&b); return c; }`)
+    creates its address registers one pass later without moving stack slots.
+  - Free `operator+/-(const V&, const V&)` avoid the two dead `addiu` per site that member operators on by-value temporaries leave.
+
 ## Session 2026-11-02 morning (lanes s1-s3, t1-t3)
 
 - **R227** `d55722e7`: StaticInit_scriptUtils (owner approved; NOLOAD helper copies).

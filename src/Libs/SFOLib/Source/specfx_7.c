@@ -1,5 +1,5 @@
 /*
- * main/specfx: 2 files, 003EC3E0-003EC4C0
+ * Libs/SFOLib/Source/specfx: 5 files, 003EC3E0-003EC690
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -57,6 +57,7 @@ extern "C" void nDynamicSfxList_Clear(void) {
         } while ((int)(var_s0) != (int)(sp3C));
     }
 }
+static inline void merge_flush_func_003EC3E0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003EC3E0 */
 
@@ -106,5 +107,100 @@ extern "C" void nDynamicSfxList_NextFrame(float dt) {
         } while ((int)(var_s0) != (int)(sp5C));
     }
 }
+static inline void merge_flush_func_003EC4C0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003EC4C0 */
+
+/* merge_units: begin func_003EC5E0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+class OC5E0 {
+public:
+    int m0;
+    virtual void v0();
+    virtual void v1();
+    virtual void v2();
+    virtual void v3();
+    virtual void v4();
+};
+struct NC5E0 { int m0; NC5E0* next; OC5E0** data; };
+extern "C" {
+#if 0 /* merge_units */
+void std_list_deleter_voidPtr_begin_void(int* out, void* list);
+#endif /* merge_units */
+
+#if 0 /* merge_units */
+void std_list_tItemPtr_generic_iterator_ctor(NC5E0** out, int* in);
+#endif /* merge_units */
+Word* std_list_tItemPtr_generic_iterator_ctor(Word* dst, Word* src); /* merge_units */
+#define std_list_tItemPtr_generic_iterator_ctor(a0, a1) ((void)std_list_tItemPtr_generic_iterator_ctor((Word *)(a0), (Word *)(a1))) /* merge_units */
+
+#if 0 /* merge_units */
+void std_list_tItemPtr_end(int* out, void* list);
+#endif /* merge_units */
+void std_list_tItemPtr_end(Iter* out, Tree* t); /* merge_units */
+#define std_list_tItemPtr_end(a0, a1) (std_list_tItemPtr_end((Iter *)(a0), (Tree *)(a1))) /* merge_units */
+
+#if 0 /* merge_units */
+void cLListIterator_tItemPtr_ctor(NC5E0** out, int* in);
+#endif /* merge_units */
+Word* cLListIterator_tItemPtr_ctor(Word* dst, Word* src); /* merge_units */
+#define cLListIterator_tItemPtr_ctor(a0, a1) ((void)cLListIterator_tItemPtr_ctor((Word *)(a0), (Word *)(a1))) /* merge_units */
+
+}
+extern "C" void cSfxScheduler_Render(void* self)
+{
+    NC5E0* e;
+    NC5E0* it;
+    int t1;
+    int t2;
+    NC5E0* n;
+    std_list_deleter_voidPtr_begin_void(&t1, self);
+    std_list_tItemPtr_generic_iterator_ctor(&it, &t1);
+    for (n = it; std_list_tItemPtr_end(&t2, self), cLListIterator_tItemPtr_ctor(&e, &t2), n != e; n = n->next)
+        (*n->data)->v4();
+}
+#undef std_list_tItemPtr_generic_iterator_ctor /* merge_units */
+#undef std_list_tItemPtr_end /* merge_units */
+#undef cLListIterator_tItemPtr_ctor /* merge_units */
+static inline void merge_flush_func_003EC5E0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003EC5E0 */
+
+/* merge_units: begin func_003EC690 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Container iterator helpers.
+ */
+
+
+Word* cLListIterator_tItemPtr_ctor(Word* dst, Word* src) {
+    dst->value = src->value;
+    return dst;
+}
+
+void std_list_tItemPtr_end(Iter* out, Tree* t) {
+    out->p = &t->header;
+}
+
+Word* std_list_tItemPtr_generic_iterator_ctor(Word* dst, Word* src) {
+    dst->value = src->value;
+    return dst;
+}
+static inline void merge_flush_func_003EC690(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003EC690 */
+
+/* merge_units: begin func_003EC6C0 */
+#pragma push /* merge_units */
+typedef struct { int busy; int pad4; int pad8; unsigned char done; char padD[3]; float time; } OC6C0;
+extern void cSfxScheduler_UpdateItemList(OC6C0* a, OC6C0* b);
+void cSfxScheduler_NextFrame(OC6C0* s, float dt) {
+    s->time += dt;
+    cSfxScheduler_UpdateItemList(s, s);
+    if (s->busy == 0) s->done = 1;
+}
+static inline void merge_flush_func_003EC6C0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003EC6C0 */

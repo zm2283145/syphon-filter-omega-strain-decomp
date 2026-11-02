@@ -18,11 +18,11 @@ struct VtableObject {
     extern char vtableSym[];                                                  \
     void* baseDtor(void* self, short deleteFlag);                             \
     }                                                                         \
-    extern "C" VtableObject* name(VtableObject* self, short deleteFlag)       \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
-            self->vtable = vtableSym;                                         \
-            baseDtor(self, 0);                                                \
+            ((VtableObject*)self)->vtable = vtableSym;                        \
+            baseDtor(((VtableObject*)self), 0);                               \
             if (deleteFlag > 0)                                               \
                 operator_delete(self);                                        \
         }                                                                     \

@@ -1,22 +1,10 @@
 /*
- * SFOGame/Source/GameGOBJ: 2 files, 002118D0-00211970
+ * SFOGame/Source/GameGOBJ: 8 files, 00214BC0-002151B0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_002118D0 */
-#pragma push /* merge_units */
-#include "types.h"
-#include "message_pack.h"
-
-#define PACK_BODY(e, b) MP_H(b, 8) = MP_I(e, 0x24); MP_I(b, 0xC) = MP_I(e, 0x28); MP_I(b, 0x10) = MP_I(e, 0x30); MP_I(b, 0x14) = MP_I(e, 0x2C); MP_I(e, 0x1C) = 0x40;
-
-DEFINE_MESSAGE_PACK_NOTYPE(cGOBJTriggerEventMsg_Pack, 24, D_004F5470, PACK_BODY)
-static inline void merge_flush_func_002118D0(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_002118D0 */
-
-/* merge_units: begin func_00211970 */
+/* merge_units: begin func_00214BC0 */
 #pragma push /* merge_units */
 /*
  * Matched functions from GameGOBJ.cc (byte-identical with the retail executable).
@@ -24,11 +12,328 @@ static inline void merge_flush_func_002118D0(void) {} /* merge_units */
 
 #include "gobj_types.h"
 
-extern int cElevatorGOBJ_CreateElevatorInfo(cElevatorGOBJ* lift);
+extern unsigned char g_IsMultiplayer;
 
-int cElevatorGOBJ_InitNetwork(cElevatorGOBJ* lift) {
-    return cElevatorGOBJ_CreateElevatorInfo(lift);
+int func_00214BC0(void) {
+    return g_IsMultiplayer;
 }
-static inline void merge_flush_func_00211970(void) {} /* merge_units */
+static inline void merge_flush_func_00214BC0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00211970 */
+/* merge_units: end func_00214BC0 */
+
+/* merge_units: begin func_00214BD0 */
+#pragma push /* merge_units */
+#include "types.h"
+
+/* library prototypes shared by the blocks below (C linkage) */
+#include "SFOLobby_helpers.h"
+int cMemMan_Deallocate();
+int strlen(const char *);
+
+typedef struct { char pad[0xFC]; int n; int* items; char pad2[0x24]; int* f128; } E214;
+extern void* g_LocalPlayer;
+extern void cPlayer_SetMenuReceiver(void*, E214*);
+extern void cPlayer_SetMenuDefault(void*, int);
+extern void cPlayer_SetMenuTitle_2(void*, char*);
+extern void cPlayer_AddMenuChoice_2(void*, int);
+extern void cPlayer_LaunchChooseMenu_2(void*);
+extern char* nGlobalization_GetString_charP(char*);
+#pragma opt_strength_reduction off
+void cElevatorGOBJ_ChooseFloor(E214* e) {
+    void* m = g_LocalPlayer;
+    int i;
+    cPlayer_SetMenuReceiver(m, e);
+    cPlayer_SetMenuDefault(m, *e->f128);
+    cPlayer_SetMenuTitle_2(m, nGlobalization_GetString_charP("ElevChooseFloor"));
+    for (i = 0; i < e->n; i++) cPlayer_AddMenuChoice_2(m, e->items[i]);
+    cPlayer_LaunchChooseMenu_2(m);
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00214BD0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00214BD0 */
+
+/* merge_units: begin func_00214C90 */
+#pragma push /* merge_units */
+typedef struct Obj_00214C90 { char pad[0xC]; int id; } Obj_00214C90;
+typedef struct LiftMsg_00214C90 { void* vtable; char base[0x1C]; unsigned char b20; char pad21[3]; int kind; int floor; int from; int to; char pad34[0xC]; } LiftMsg_00214C90;
+typedef struct Notice_00214C90 { void* vtable; char base[0x20]; int kind; int arg; char pad2C[4]; } Notice_00214C90;
+typedef struct State_00214C90 { int cur; int dir; char pad8[0x18]; int target; } State_00214C90;
+typedef struct Snd_00214C90 { int pad0; void* h; } Snd_00214C90;
+typedef struct Lift_00214C90 {
+    char pad0[0xC]; int id; char pad10[0x10C - 0x10]; int nFloors; int* locked;
+    char pad114[0x128 - 0x114]; State_00214C90* state; char pad12C[0x790 - 0x12C]; Snd_00214C90* snd;
+} Lift_00214C90;
+extern unsigned char D_005721C0;
+extern char g_TriggerMsgKey[];
+extern char D_004DAF10[];
+extern char D_004F5448[];
+extern char D_004DAED0[];
+extern void cMessage_ctor_cMessageNameR(void* m, void* type);
+extern void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
+extern void cMessage_dtor(void* m, int flags);
+#if 0 /* merge_units */
+extern void cElevatorGOBJ_ChooseFloor(Lift_00214C90* l);
+#endif /* merge_units */
+#define cElevatorGOBJ_ChooseFloor(a0) (cElevatorGOBJ_ChooseFloor((E214 *)(a0))) /* merge_units */
+
+
+
+extern void NetRequestObjectPrivateOwnership(void* h);
+extern void cElevatorGOBJ_DisableCallboxes(Lift_00214C90* l);
+extern unsigned char cElevatorGOBJ_OpenDoors(Lift_00214C90* l);
+static inline int IsAuth_00214C90(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
+static inline int ObjId_00214C90(Obj_00214C90* o) { return o ? o->id : 0; }
+void cElevatorGOBJ_SeekFloor(Lift_00214C90* l, int floor, int a2, int a3)
+{
+    if (g_IsMultiplayer && IsAuth_00214C90()) {
+        LiftMsg_00214C90 msg;
+        LiftMsg_00214C90* m = &msg;
+        cMessage_ctor_cMessageNameR(m, g_TriggerMsgKey);
+        msg.floor = floor;
+        msg.vtable = D_004DAF10;
+        msg.kind = 1;
+        m->to = ObjId_00214C90((Obj_00214C90*)l);
+        m->from = ObjId_00214C90(0);
+        msg.b20 = 4;
+        QueueMessage_cMessageR_cSystemP_int(&msg, l, 0);
+        msg.vtable = D_004DAF10;
+        cMessage_dtor(&msg, 0);
+    }
+    if (a2 && floor < 0) {
+        if (g_IsMultiplayer) {
+            if (a3) {
+                cElevatorGOBJ_ChooseFloor(l);
+            } else {
+                Snd_00214C90* s = l->snd;
+                if (s)
+                    NetRequestObjectPrivateOwnership(s->h);
+            }
+        } else {
+            cElevatorGOBJ_ChooseFloor(l);
+        }
+    } else if (floor >= 0) {
+        unsigned char blocked;
+        if (floor >= 0 && floor < l->nFloors)
+            blocked = l->locked[floor] != 0;
+        else
+            blocked = 1;
+        if (!blocked) {
+            State_00214C90* st;
+            l->state->target = floor;
+            st = l->state;
+            if (st->target > st->cur) {
+                Notice_00214C90 n;
+                cMessage_ctor_cMessageNameR(&n, D_004F5448);
+                n.vtable = D_004DAED0;
+                n.kind = 1;
+                n.arg = floor;
+                QueueMessage_cMessageR_cSystemP_int(&n, l, 0);
+                n.vtable = D_004DAED0;
+                cMessage_dtor(&n, 0);
+                l->state->dir = 1;
+                cElevatorGOBJ_DisableCallboxes(l);
+            } else if (st->target < st->cur) {
+                Notice_00214C90 n;
+                cMessage_ctor_cMessageNameR(&n, D_004F5448);
+                n.vtable = D_004DAED0;
+                n.kind = 1;
+                n.arg = floor;
+                QueueMessage_cMessageR_cSystemP_int(&n, l, 0);
+                n.vtable = D_004DAED0;
+                cMessage_dtor(&n, 0);
+                l->state->dir = -1;
+                cElevatorGOBJ_DisableCallboxes(l);
+            } else {
+                st->dir = 0;
+                cElevatorGOBJ_OpenDoors(l);
+            }
+        } else {
+            Notice_00214C90 n;
+            cMessage_ctor_cMessageNameR(&n, D_004F5448);
+            n.vtable = D_004DAED0;
+            n.kind = 4;
+            n.arg = floor;
+            QueueMessage_cMessageR_cSystemP_int(&n, l, 0);
+            n.vtable = D_004DAED0;
+            cMessage_dtor(&n, 0);
+        }
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00214C90(void) {}
+#undef cElevatorGOBJ_ChooseFloor /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00214C90 */
+
+/* merge_units: begin func_00214FA0 */
+#pragma push /* merge_units */
+typedef struct { char pad[0x28]; int state; } ElevState;
+typedef struct { char pad[0x128]; ElevState* st; } ElevGobj;
+extern int cElevatorGOBJ_DoorsAreClosed(ElevGobj* self);
+extern int cElevatorGOBJ_DoorsAreOpen(ElevGobj* self);
+int cElevatorGOBJ_GetState(ElevGobj* self)
+{
+    if (self->st->state == 1)
+        return 1;
+    if (cElevatorGOBJ_DoorsAreClosed(self) || cElevatorGOBJ_DoorsAreOpen(self))
+        return 0;
+    return 2;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00214FA0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00214FA0 */
+
+/* merge_units: begin func_00215010 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "alloc_guard.h"
+
+extern "C" {
+void* cMemMan_Allocate(int, int, char*, int);
+extern char D_004A4550[];
+}
+
+typedef struct NameVec {
+    int unk0;
+    int count;
+    char** data;
+} NameVec;
+
+#if 0 /* merge_units */
+extern "C" char** std_vector_charPtr_opIndex_uint(NameVec* v, int i);
+#endif /* merge_units */
+extern "C" int* std_vector_charPtr_opIndex_uint(PtrVec* v, int i); /* merge_units */
+#define std_vector_charPtr_opIndex_uint(a0, a1) ((char * *)std_vector_charPtr_opIndex_uint((PtrVec *)(a0), (a1))) /* merge_units */
+
+
+typedef struct cElevatorGOBJ_00215010 {
+    char pad[0xF8];
+    NameVec names;
+} cElevatorGOBJ_00215010;
+
+extern "C" void cElevatorGOBJ_SetFloorName(cElevatorGOBJ_00215010* self, int i, char* name) {
+    char* p;
+    char* q;
+    char** slot;
+    int n;
+    char*** pd;
+    if (i >= 0 && i < self->names.count) {
+        pd = &self->names.data;
+        if ((*pd)[i]) {
+            p = *std_vector_charPtr_opIndex_uint(&self->names, i);
+            AllocGuard g;
+            cMemMan_Deallocate(0, p, D_004A4550, 0x697);
+        }
+        slot = &(*pd)[i];
+        n = strlen(name) + 1;
+        {
+            AllocGuard g;
+            q = (char*)cMemMan_Allocate(0, n, D_004A4550, 0x699);
+        }
+        *slot = q;
+        Libc_Strcpy((*pd)[i], name);
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00215010(void) {}
+#undef std_vector_charPtr_opIndex_uint /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00215010 */
+
+/* merge_units: begin func_002151B0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions from GameGOBJ.cc (byte-identical with the retail executable).
+ */
+
+
+int* std_vector_charPtr_opIndex_uint(PtrVec* v, int i) {
+    return v->data + i;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_002151B0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_002151B0 */
+
+/* merge_units: begin func_002151C0 */
+#pragma push /* merge_units */
+/* Compiled as C++ (virtual calls through $t9 only come from real virtual dispatch). */
+#pragma cplusplus on
+
+/* Virtual-call view of Door: only the slots used here are named (vtable offset in comments). */
+struct Door {
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03(); virtual void v04(); virtual void v05();
+    virtual void v06(); virtual void v07(); virtual void v08(); virtual void v09(); virtual void v0A(); virtual void v0B();
+    virtual void v0C(); virtual void v0D(); virtual void v0E(); virtual void v0F(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
+    virtual void Method60(int flag); /* +0x60 */
+};
+
+typedef struct cElevatorGOBJ_002151C0 {
+    char pad[0x64];
+    Door* door; /* +0x64 */
+    char pad68[0x2E0 - 0x68];
+    int floors; /* +0x2E0 */
+} cElevatorGOBJ_002151C0;
+
+/* Elevator notification message built on the stack (0x1D0 bytes); its destructor is inlined. */
+typedef struct ElevatorMsg {
+    void* vtable;           /* +0x000 */
+    char pad004[0x78 - 4];
+    char memberA[0x114 - 0x78]; /* +0x078 */
+    char memberB[0x1D0 - 0x114]; /* +0x114 */
+} ElevatorMsg;
+
+extern char g_Game[];
+extern char D_004DADF0[];
+extern char g_TargetVisMgr[];
+extern "C" void cStopSoundMsg_ctor_cSndFxR_cGOBJP(ElevatorMsg* msg, int* floors, cElevatorGOBJ_002151C0* self);
+#if 0 /* merge_units */
+extern "C" void QueueMessage_cMessageR_cSystemP_int(ElevatorMsg* msg, void* queue, int flag);
+#endif /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((void *)(a0), (a1), (a2))) /* merge_units */
+
+extern "C" void cFileMan_dtor(void* member, int flag);
+#if 0 /* merge_units */
+extern "C" void cMessage_dtor(ElevatorMsg* msg, int flag);
+#endif /* merge_units */
+#define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
+
+extern "C" void cTargetManager_RemoveGobj(void* list, cElevatorGOBJ_002151C0* obj);
+extern "C" void cGOBJ_NetDeactivate(cElevatorGOBJ_002151C0* self);
+
+/* Lift virtual 0x07: posts an elevator message, notifies the door (virtual +0x60), runs the base handler and unregisters. */
+extern "C" void cElevatorGOBJ_NetDeactivate(cElevatorGOBJ_002151C0* self)
+{
+    ElevatorMsg msg;
+    cStopSoundMsg_ctor_cSndFxR_cGOBJP(&msg, &self->floors, self);
+    QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 1);
+    /* ~ElevatorMsg() */
+    msg.vtable = D_004DADF0;
+    cFileMan_dtor(msg.memberB, -1);
+    cFileMan_dtor(msg.memberA, -1);
+    cMessage_dtor(&msg, 0);
+    if (self->door)
+        self->door->Method60(1);
+    cGOBJ_NetDeactivate(self);
+    cTargetManager_RemoveGobj(g_TargetVisMgr, self);
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_002151C0(void) {}
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
+#undef cMessage_dtor /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002151C0 */
+
+/* merge_units: begin func_00215270 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "gobj_v06_update.h"
+
+/* GOBJ virtual 6: notify attached object, update, call slot 47. */
+DEFINE_GOBJ_V06_UPDATE(cElevatorGOBJ_NetActivate)
+static inline void merge_flush_func_00215270(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00215270 */

@@ -1,94 +1,248 @@
 /*
- * SFOGame/Source/gameSound_msg: 3 files, 0020E730-0020E8B0
+ * SFOGame/Source/gameSound_msg: 7 files, 0020F540-0020FAA0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_0020E730 */
+/* merge_units: begin func_0020F540 */
+#pragma push /* merge_units */
+#include "types.h"
+#include "net_register_type.h"
+
+typedef struct { int a; int pad; int b[4]; int c; int d; char e; } Proto_0020F540;
+extern char D_004F53C0[];
+extern void SoundPosRequest_NetReceive(void);
+
+NETREG_BEGIN(SoundPosRequest_NetRegister, Proto_0020F540)
+NETREG_FIELD(a, 4, 1)
+NETREG_FIELD(b, 0x10, 1)
+NETREG_FIELD(c, 4, 1)
+NETREG_FIELD(d, 4, 1)
+NETREG_FIELD(e, 1, 1)
+NETREG_END(D_004F53C0, SoundPosRequest_NetReceive)
+static inline void merge_flush_func_0020F540(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0020F540 */
+
+/* merge_units: begin func_0020F620 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-static inline void GQ(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0(%1)" : "=r"(q) : "r"(s)); *(__int128*)d = q; }
-struct V4 { int x, y, z, w; } __attribute__((aligned(16)));
-struct V4b {
-    __int128 q;
-    V4b& operator=(const V4b& o) { V4b* t = this; GQ(t, &o); return *this; }
+struct Voice_EF50 { char pad[0xC]; int id; };
+struct Handle_EF50 {
+    Voice_EF50* p; int id;
+    inline bool Valid() { return !p || p->id == id; }
+    inline Voice_EF50* Get() { return Valid() ? p : 0; }
 };
-struct I32 { int v; I32& operator=(const I32& o) { v = o.v; return *this; } };
-/* Head's implicit op= is non-trivial (I32), so MW copies name[] with its own 2x-unrolled byte loop. */
-struct Head { I32 m0; signed char name[0x80]; };
-struct Sub : Head {
-    short m84;
-    int m88;
-    int m8C;
-    int m90;
-    unsigned char m94;
-    int m98;
-    Sub& operator=(const Sub& o) {
-        Sub* t = this;
-        t->Head::operator=(o);
-        t->m84 = o.m84;
-        t->m88 = o.m88;
-        t->m8C = o.m8C;
-        t->m90 = o.m90;
-        t->m94 = o.m94;
-        t->m98 = o.m98;
-        return *this;
+struct Ev_EF50 {
+    char hdr[0x30]; int type; int pad34[3]; __int128 name; Handle_EF50 voice;
+    char pad58[0x1B0 - 0x58]; int x180; short x184; unsigned char x186;
+};
+struct Out_EF50 { int pad[2]; int type; int pad0c; __int128 name; int x180; int id; unsigned char x186; };
+extern "C" {
+#if 0 /* merge_units */
+extern int D_004F53C0;
+#endif /* merge_units */
+#define D_004F53C0 (*(int*)&D_004F53C0) /* merge_units */
+
+
+void Event_PackHeader(Ev_EF50* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf);
+}
+extern "C" int SoundPosRequest_Serialize(Ev_EF50* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf) {
+    int r = -1;
+    if (size >= 0x30 && buf) {
+        Out_EF50* o = (Out_EF50*)buf;
+        Event_PackHeader(e, a1, type, a3, a4, size, buf);
+        o->type = e->type;
+        o->name = e->name;
+        o->x180 = e->x180;
+        o->x186 = e->x186;
+        if (e->voice.Get()) o->id = e->voice.Get()->id; else o->id = 0;
+        if (type) {
+            r = 0x30;
+            *type = D_004F53C0;
+        }
     }
-};
-struct Outer {
-    int m0;
-    V4 m10;
-    int m20;
-    int m24;
-    V4b m30;
-    int m40;
-    signed char m44;
-    Sub s48;
-    Sub sE4;
-    int m180;
-    short m184;
-    unsigned char m186;
-};
-#pragma inline_depth(8)
-extern "C" Outer* cSndFx_ctor_cSndFxR(Outer* d, const Outer* s)
-{
-    *d = *s;
-    return d;
+    return r;
 }
-static inline void merge_flush_func_0020E730(void) {} /* merge_units */
+#undef D_004F53C0 /* merge_units */
+static inline void merge_flush_func_0020F620(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_0020E730 */
+/* merge_units: end func_0020F620 */
 
-/* merge_units: begin func_0020E860 */
+/* merge_units: begin func_0020F730 */
 #pragma push /* merge_units */
-/*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
- */
-
-#include "types.h"
-#include "loose01_types.h"
-
-extern void* D_004D97F0;
-extern char D_004F53E8[];
-extern ByteEvent* cMessage_ctor_cMessageNameR(ByteEvent*, char*);
-
-ByteEvent* cPauseMusicMsg_ctor(ByteEvent* self, int value) {
-    cMessage_ctor_cMessageNameR(self, D_004F53E8);
-    self->vtable = &D_004D97F0;
-    self->value = value;
-    return self;
+#define SOUND_EVENT_NO_PROTOS
+#include "sound_event.h"
+typedef struct { char pad[0xC]; int id; } Voice_F190;
+extern char g_PlaySndMsgClass[];
+extern char D_004DAE30[];
+typedef struct { int type; int pad[3]; __int128 name; int x20; int pad24[0x57]; int x180; short x184; unsigned char x186; } Src_F190;
+static inline void Req_Init(SoundRequest* p, int type, __int128 name, Voice_F190* voice, int x180) {
+    int tmp; int* r;
+    p->type = type;
+    *(__int128*)p->name = name;
+    p->voice = voice;
+    if (voice) r = &voice->id; else { tmp = -1; r = &tmp; }
+    p->voiceId = *r;
+    p->x30 = 0; p->x34 = 0; p->x38 = 0;
+    p->x184 = -1;
+    p->x180 = x180;
 }
-static inline void merge_flush_func_0020E860(void) {} /* merge_units */
+static inline void Req_Default(SoundRequest* p) {
+    p->voiceId = -2;
+    p->voice = 0;
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
+    Req_Init(p, -1, -1, 0, 0);
+    p->x186 = 0;
+}
+typedef struct { int pad[2]; int type; int pad0c; __int128 name; int x180; int id; unsigned char x186; } Preset_F060;
+extern Voice_F190* nGobjManager_LookupGOBJ_cObjectIdR(int* id);
+SoundEvent* cPlaySoundMsg_ctor_cSndFxR_cVectorR(SoundEvent* ev, Preset_F060* pr) {
+    SoundRequest* p;
+    Voice_F190* voice;
+    int id;
+    cMessage_ctor_cMessageNameR(ev, g_PlaySndMsgClass);
+    ev->vtable = D_004DAE30;
+    p = &ev->req;
+    p->voiceId = -2;
+    p->voice = 0;
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
+    Req_Init(p, -1, -1, 0, 0);
+    p->x186 = 0;
+    voice = 0;
+    if (pr->id) { id = pr->id; voice = nGobjManager_LookupGOBJ_cObjectIdR(&id); }
+    Req_Init(&ev->req, pr->type, pr->name, voice, pr->x180);
+    ev->req.x186 = pr->x186;
+    return ev;
+}
+static inline void merge_flush_func_0020F730(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_0020E860 */
+/* merge_units: end func_0020F730 */
 
-/* merge_units: begin func_0020E8B0 */
+/* merge_units: begin func_0020F860 */
 #pragma push /* merge_units */
-#include "queue_two_member_msg.h"
+#pragma opt_propagation off
+#pragma cplusplus on
+#pragma opt_foldconstants off
 
-DEFINE_QUEUE_TWO_MEMBER_MSG(cStopSoundMsg_NetStopSoundMsgCallback, 0x1E0, cStopSoundMsg_ctor_netStopSoundMsgR, D_004DADF0)
-static inline void merge_flush_func_0020E8B0(void) {} /* merge_units */
+struct Vec_F2A0 {
+    int v[4];
+    Vec_F2A0(const Vec_F2A0& o) { Vec_F2A0* d = this; const Vec_F2A0* s = &o; __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(s) : "memory"); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(d) : "memory"); }
+    Vec_F2A0& operator=(const Vec_F2A0& o) { Vec_F2A0* d = this; const Vec_F2A0* s = &o; __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(t) : "r"(d), "r"(s) : "memory"); return *this; }
+} __attribute__((aligned(16)));
+typedef struct {
+    int type; int pad[3]; __int128 name; Voice_F190* voice; int voiceId; int pad28[2];
+    Vec_F2A0 pos; char pad40[0x140]; int x180; short x184; unsigned char x186;
+} Src_F2A0;
+extern "C" {
+extern Voice_F190* cSafePtr_cGOBJ_opCast_cGOBJPtr(void* ref);
+}
+static inline void Req_InitPos(SoundRequest* p, int type, __int128 name, Voice_F190* voice, const Vec_F2A0& pos, int x180) {
+    int tmp; int* r;
+    p->type = type;
+    *(__int128*)p->name = name;
+    p->voice = voice;
+    if (voice) r = &voice->id; else { tmp = -1; r = &tmp; }
+    p->voiceId = *r;
+    *(Vec_F2A0*)&p->x30 = pos;
+    p->x184 = -1;
+    p->x180 = x180;
+}
+static inline unsigned char GetX186(Src_F2A0* s) { return s->x186; }
+static inline void SetX186(SoundRequest* p, unsigned char v) { p->x186 = v; }
+extern "C" SoundEventP* cPlaySoundMsg_ctor_cSndFxR_cGOBJP(SoundEventP* ev, Src_F2A0* src, Vec_F2A0* pos) {
+    SoundRequest* p;
+    cMessage_ctor_cMessageNameR(ev, g_PlaySndMsgClass);
+    ev->vtable = D_004DAE30;
+    p = &ev->req;
+    p->voiceId = -2;
+    p->voice = 0;
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
+    Req_Init(p, -1, -1, 0, 0);
+    p->x186 = 0;
+    Req_InitPos(&ev->req, src->type, src->name, 0, *pos, src->x180);
+    SetX186(&ev->req, GetX186(src));
+    return ev;
+}
+static inline void merge_flush_func_0020F860(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_0020E8B0 */
+/* merge_units: end func_0020F860 */
+
+/* merge_units: begin func_0020F990 */
+#pragma push /* merge_units */
+SoundEvent* cPlaySoundMsg_ctor_cSndFxR(SoundEvent* ev, Src_F190* src, Voice_F190* voice) {
+    SoundRequest* p;
+    cMessage_ctor_cMessageNameR(ev, g_PlaySndMsgClass);
+    ev->vtable = D_004DAE30;
+    p = &ev->req;
+    p->voiceId = -2;
+    p->voice = 0;
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
+    Req_Init(p, -1, -1, 0, 0);
+    p->x186 = 0;
+    Req_Init(&ev->req, src->type, src->name, voice, src->x180);
+    ev->req.x186 = src->x186;
+    return ev;
+}
+static inline void merge_flush_func_0020F990(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0020F990 */
+
+/* merge_units: begin func_0020FAA0 */
+#pragma push /* merge_units */
+#pragma opt_propagation off
+#pragma cplusplus on
+#pragma opt_foldconstants off
+
+extern "C" {
+}
+static inline void Req_InitPos_0020FAA0(SoundRequest* p, int type, __int128 name, Voice_F190* voice, Vec_F2A0 pos, int x180) {
+    int tmp; int* r;
+    p->type = type;
+    *(__int128*)p->name = name;
+    p->voice = voice;
+    if (voice) r = &voice->id; else { tmp = -1; r = &tmp; }
+    p->voiceId = *r;
+    *(Vec_F2A0*)&p->x30 = pos;
+    p->x184 = -1;
+    p->x180 = x180;
+}
+static inline bool IEq(int a, int b) { return a == b; }
+static inline bool HValid(Src_F2A0* h) { Voice_F190* t = h->voice; bool ok = true; if (((t != 0) ^ 1) == 0) if (IEq(t->id, h->voiceId) == false) ok = false; return ok; }
+static inline Voice_F190* HGet(Src_F2A0* h) { return HValid(h) ? h->voice : 0; }
+extern "C" SoundEventP* EffectMsg_WrapRequest(SoundEventP* ev, Src_F2A0* src) {
+    SoundRequest* p;
+    cMessage_ctor_cMessageNameR(ev, g_PlaySndMsgClass);
+    ev->vtable = D_004DAE30;
+    p = &ev->req;
+    p->voiceId = -2;
+    p->voice = 0;
+    cFileMan_ctor_void(&p->a);
+    cFileMan_ctor_void(&p->b);
+    Req_Init(p, -1, -1, 0, 0);
+    p->x186 = 0;
+    if (HGet(src))
+        Req_Init(&ev->req, src->type, src->name, cSafePtr_cGOBJ_opCast_cGOBJPtr(&src->voice), src->x180);
+    else
+        Req_InitPos_0020FAA0(&ev->req, src->type, src->name, 0, src->pos, src->x180);
+    ev->req.x186 = src->x186;
+    return ev;
+}
+static inline void merge_flush_func_0020FAA0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0020FAA0 */
+
+/* merge_units: begin func_0020FCA0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "payload_message_clone.h"
+
+extern "C" { char D_004A4100[] = "gameSound_msg.hh"; }
+DEFINE_PAYLOAD_MESSAGE_CLONE(func_0020FCA0, 0x1C0, D_004A4100, 0x57, D_004DAE10, cSndFx_ctor_cSndFxR)
+static inline void merge_flush_func_0020FCA0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0020FCA0 */

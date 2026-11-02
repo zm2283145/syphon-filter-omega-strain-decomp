@@ -11,19 +11,19 @@ extern "C" void operator_delete(void* allocation);
 struct Vt4Object { int head; void* vtable; };
 #define DEFINE_VT4_DTOR(name, vtableSym)                                      \
     extern "C" { extern char vtableSym[]; }                                   \
-    extern "C" Vt4Object* name(Vt4Object* self, short deleteFlag) {           \
+    extern "C" void* name(void* self, short deleteFlag) {                     \
         if (self) {                                                           \
-            self->vtable = vtableSym;                                         \
+            ((Vt4Object*)self)->vtable = vtableSym;                           \
             if (deleteFlag > 0) operator_delete(self);                        \
         }                                                                     \
         return self;                                                          \
     }
 #define DEFINE_VT4_DTOR2(name, vtableSym, baseVtableSym)                      \
     extern "C" { extern char vtableSym[]; extern char baseVtableSym[]; }      \
-    extern "C" Vt4Object* name(Vt4Object* self, short deleteFlag) {           \
+    extern "C" void* name(void* self, short deleteFlag) {                     \
         if (self) {                                                           \
-            self->vtable = vtableSym;                                         \
-            if (self) self->vtable = baseVtableSym;                           \
+            ((Vt4Object*)self)->vtable = vtableSym;                           \
+            if (self) ((Vt4Object*)self)->vtable = baseVtableSym;             \
             if (deleteFlag > 0) operator_delete(self);                        \
         }                                                                     \
         return self;                                                          \

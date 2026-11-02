@@ -1,148 +1,812 @@
 /*
- * Libs/SFOLib/Source/DME: 1 file, 00429D30
+ * Libs/SFOLib/Source/DME: 13 files, 0042A960-0042B1F0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_00429D30 */
+/* merge_units: begin func_0042A960 */
 #pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
 #include "types.h"
-#include "net_local_id.h"
 #include "DME.h"
 
-typedef struct { void* vt; char base[0x18]; int size; char pad20[4]; int value; char rest[0x30 - 0x28]; } NetLevelInfoMsg;
-extern char D_004E1180[]; /* NetLevelInfoMsg vtable */
-extern char D_005839A0[]; /* message type key "NetLevelInfoMsg" */
-extern char D_004BF9B0[]; /* "DME.cc" */
-extern char D_005721E0[];
-extern char D_00572408[];
-extern int D_00494198;
-extern int D_00572428[3];          /* level-info state of clients 1..3 */
-extern int D_00572270[4][20];      /* per-player ping history (ring buffer) */
-extern int g_DmePingHistoryPos[4];
-extern unsigned char D_005723D0;
-extern unsigned char D_005723C8;
-extern unsigned char D_005721D0;
-extern unsigned char D_00572420;
-extern int D_005724E0;
-extern int D_005724D8;
-extern unsigned char D_005724D0;
-extern unsigned char D_005723B8;
-extern unsigned char D_005721D8;
-extern unsigned char D_00572528;
-extern int g_DmeLobby;
-extern unsigned char g_DmeLobbyActive;
-void cMessage_ctor_cMessageNameR(NetLevelInfoMsg* m, void* type);
-void cMessage_dtor(NetLevelInfoMsg* m, int f);
-int NetLevelInfoMsg_Send(NetLevelInfoMsg* m, int a, int* out, int b, int c, int size, char* buf);
-int NetSendMessage(int kind, int net, int dst, int ch, unsigned int len, int n, void* buf);
-void printf(char* fmt, char* file, int line, int err); /* debug printf */
-int NetGetTime(int* out);
-void func_003FBEB0(void);
-void cGenInfoObject_ReleasePrivate(void);
-void cNPCInfoObject_ctor(int* o);
-void cNPCInfoObject_CheckForPendingRelease(int* o);
-void cNPCInfoObject_dtor(int* o, int v);
-int NetUpdate(void);
-void NetGetClientStatus(unsigned int* out, int net, int i);
-void NetGetClientBufferStatus(int net, int i, int* a, int* b, int* c, int* d);
-void NetGetNetUpdateErrors(int* arr);
-int snprintf(char* s, int n, const char* fmt, ...);
-void cNetObj_Update(char* p);
-void SFOLobby_Intel(int v);
+extern char g_DmeConnectRetries[];
+extern char g_DmeConnectMaxRetries[];
+extern int cDME_ConnectToGame(int);
 
-#pragma opt_dead_assignments off
-static inline void NetBusyEnter(void) { if (!D_005723C8) D_005723C8 = 1; }
-static inline void NetBusyLeave(void) { D_005723C8 = 0; }
-/* Called from the DME thread: sends pending NetLevelInfoMsgs, records pings,
-   pumps the network and checks for dropped connections; also updates the lobby. */
-int DME_Update(void)
+/* cDME_ConnectToGame without retries. */
+int Net_StartSessionSingleTry(int join) {
+    *(int*)g_DmeConnectRetries = 0;
+    *(int*)g_DmeConnectMaxRetries = 1;
+    return cDME_ConnectToGame(join);
+}
+static inline void merge_flush_func_0042A960(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0042A960 */
+
+/* merge_units: begin func_0042A980 */
+#pragma push /* merge_units */
+typedef struct NetHostGameCfg {
+    int unk00;
+    void* onConnectResult;
+    int unk08;
+    void* onClientConnect;
+    int unk10;
+    void* onClientDisconnect;
+    int unk18;
+    int port;
+    DmeSessionCfg sess;
+} NetHostGameCfg;
+unsigned int D_00494180[2] = { 0x4, 0x0 }; /* game port */
+extern int D_00494198;
+extern int D_005721A8;
+extern unsigned char D_005721C0;
+extern unsigned char D_005724B0;
+extern void DME_OnConnectResult(void);
+extern void DME_OnClientConnect(void);
+extern void cDME_RemoteClientDisconnectCallback(void);
+extern void cHeadSet_AudioRecordCallback(void);
+extern void cHeadSet_AudioPlayCallback(void);
+extern void NetSetSendAggregationInterval(int a, int b, int c);
+extern int NetSetDefaultHostPeerToPeerParams(NetHostGameCfg* cfg);
+extern int NetHostPeerToPeer(NetHostGameCfg* cfg, DmeGameOut* out);
+static inline void MemClear_h5(void* d0, int n0) { int n = n0; void* dst = d0;
+    asm {
+        .set noreorder
+        blez n, done
+        nop
+        andi $a1, dst, 0xF
+        andi $a0, n, 0xF
+        or $a1, $a1, $a0
+        nop
+        bgtz $a1, bytes
+        srl $a0, n, 4
+        nop
+        blez $a0, bytes
+        nop
+        nop
+    quads:
+        addi $a0, $a0, -1
+        sq $zero, 0(dst)
+        bgtz $a0, quads
+        addiu dst, dst, 0x10
+        b done
+        nop
+    bytes:
+        addi n, n, -1
+        sb $zero, 0(dst)
+        bgtz n, bytes
+        addiu dst, dst, 1
+    done:
+        .set reorder
+    }
+}
+/* Hosts a new game; on success this machine becomes the host (D_005721C0). */
+void Net_CreateGame(void)
 {
-    int obj;
-    int ping; int e4; int e0; int dc;
-    int g1; int g2;
-    int out;
-    int netTime;
-    unsigned int peerState;
-    int connStates[6]; /* [0] = byte size, [1..4] = per-player state */
-    NetLevelInfoMsg m;
-    char buf[0x20];
-    int i;
+    DmeGameOut out;
+    NetHostGameCfg cfg;
+    int err;
+    if (D_00494198 == 0x10) {
+        NetSetSendAggregationInterval(0, 0x5A, 0x5A);
+    } else {
+        NetSetSendAggregationInterval(0, 0x3C, 0x3C);
+    }
+    err = NetSetDefaultHostPeerToPeerParams(&cfg);
+    cfg.onConnectResult = DME_OnConnectResult;
+    cfg.port = (*(int*)D_00494180);
+    cfg.onClientConnect = DME_OnClientConnect;
+    cfg.onClientDisconnect = cDME_RemoteClientDisconnectCallback;
+    MemClear_h5(&cfg.sess, 0x54);
+    cfg.sess.cb34 = cHeadSet_AudioPlayCallback;
+    cfg.sess.unk10 = 1;
+    cfg.sess.unk04 = 1;
+    cfg.sess.cb2C = cHeadSet_AudioRecordCallback;
+    cfg.sess.unk0C = 1;
+    cfg.sess.unk14 = 1;
+    cfg.sess.unk08 = 2;
+    cfg.sess.unk20 = 2;
+    cfg.sess.unk18 = 0x10;
+    cfg.sess.unk24 = 0x10;
+    cfg.sess.unk1C = 0x1F40;
+    cfg.sess.unk28 = 0x1F40;
+    if (err == 0) {
+        if (NetHostPeerToPeer(&cfg, &out) == 0) {
+            D_005721C0 = 1;
+        } else {
+            D_005721A8 = out.handle;
+            D_005724B0 = DME_STATE_DISCONNECTED;
+        }
+    }
+}
+static inline void merge_flush_func_0042A980(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0042A980 */
+
+/* merge_units: begin func_0042AB00 */
+#pragma push /* merge_units */
+typedef struct NetJoinCfg {
+    int unk00;
+    int mode;
+    char addr[0x9C];
+    void* onConnectResult;
+    int unkA8;
+    int unkAC;
+    int unkB0;
+    void* onClientConnect;
+    int unkB8;
+    void* onClientDisconnect;
+    int unkC0;
+    void* onHostDisconnect;
+    int unkC8;
+    DmeSessionCfg sess;
+    int tail[4];
+} NetJoinCfg;
+extern char D_004BF9B8[]; /* "F_TO_CONNECT" */
+extern void cDME_HostChangeCallback(void);
+#if 0 /* merge_units */
+extern int NetSetDefaultConnectParams(NetJoinCfg* cfg);
+#endif /* merge_units */
+int NetSetDefaultConnectParams(void*); /* merge_units */
+#define NetSetDefaultConnectParams(a0) (NetSetDefaultConnectParams((void *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
+extern int NetConnect(NetJoinCfg* cfg, DmeGameOut* out);
+#endif /* merge_units */
+int NetConnect(void*, void*); /* merge_units */
+#define NetConnect(a0, a1) (NetConnect((void *)(a0), (void *)(a1))) /* merge_units */
+
+extern void* memcpy(void* d, const void* s, unsigned int n);
+extern int Gui_Canvas(void);
+extern void GuiWidget_SendMessage(int a, int b, int c, int d, int e);
+static inline void MemClear_n1(void* d0, int n0) { int n = n0; void* dst = d0;
+    asm {
+        .set noreorder
+        blez n, done
+        nop
+        andi $a0, dst, 0xF
+        andi $v1, n, 0xF
+        or $a0, $a0, $v1
+        nop
+        bgtz $a0, bytes
+        srl $v1, n, 4
+        nop
+        blez $v1, bytes
+        nop
+        nop
+    quads:
+        addi $v1, $v1, -1
+        sq $zero, 0(dst)
+        bgtz $v1, quads
+        addiu dst, dst, 0x10
+        b done
+        nop
+    bytes:
+        addi n, n, -1
+        sb $zero, 0(dst)
+        bgtz n, bytes
+        addiu dst, dst, 1
+    done:
+        .set reorder
+    }
+}
+/* Joins the game at `addr` (0x9C-byte address block). Returns nonzero on failure. */
+int Net_ConnectGame(void* addr)
+{
+    DmeGameOut out;
+    NetJoinCfg cfg;
+    int err;
+    if (D_00494198 == 0x10) {
+        NetSetSendAggregationInterval(0, 0x5A, 0x5A);
+    } else {
+        NetSetSendAggregationInterval(0, 0x3C, 0x3C);
+    }
+    NetSetDefaultConnectParams(&cfg);
+    cfg.mode = 4;
+    memcpy(cfg.addr, addr, 0x9C);
+    cfg.onConnectResult = DME_OnConnectResult;
+    cfg.onClientConnect = DME_OnClientConnect;
+    cfg.onClientDisconnect = cDME_RemoteClientDisconnectCallback;
+    cfg.onHostDisconnect = cDME_HostChangeCallback;
+    MemClear_n1(&cfg.sess, 0x54);
+    cfg.sess.cb34 = cHeadSet_AudioPlayCallback;
+    cfg.sess.unk10 = 1;
+    cfg.sess.unk04 = 1;
+    cfg.sess.cb2C = cHeadSet_AudioRecordCallback;
+    cfg.sess.unk0C = 1;
+    cfg.sess.unk14 = 1;
+    cfg.sess.unk08 = 2;
+    cfg.sess.unk20 = 2;
+    cfg.sess.unk18 = 0x10;
+    cfg.sess.unk24 = 0x10;
+    cfg.sess.unk1C = 0x1F40;
+    cfg.sess.unk28 = 0x1F40;
+    err = NetConnect(&cfg, &out);
+    if (err) {
+        D_005721A8 = out.handle;
+        D_005724B0 = DME_STATE_DISCONNECTED;
+        if (Gui_Canvas()) {
+            GuiWidget_SendMessage(Gui_Canvas(), Gui_Canvas(), 0x1E, 0, (int)D_004BF9B8);
+        }
+    }
+    return err;
+}
+#undef NetSetDefaultConnectParams /* merge_units */
+#undef NetConnect /* merge_units */
+static inline void merge_flush_func_0042AB00(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0042AB00 */
+
+/* merge_units: begin func_0042ACD0 */
+#pragma push /* merge_units */
+typedef struct NetJoinByNameCfg {
+    int unk00;
+    int mode;
+    int unk08;
+    int unk0C;
+    char name[0x10];
+    int unk20;
+    char addr[0x80];
+    void* onConnectResult;
+    int unkA8;
+    int unkAC;
+    int unkB0;
+    void* onClientConnect;
+    int unkB8;
+    void* onClientDisconnect;
+    int unkC0;
+    void* onHostDisconnect;
+    int unkC8;
+    DmeSessionCfg sess;
+    int tail[4];
+} NetJoinByNameCfg;
+#if 0 /* merge_units */
+extern int NetSetDefaultConnectParams(NetJoinByNameCfg* cfg);
+#endif /* merge_units */
+#define NetSetDefaultConnectParams(a0) (NetSetDefaultConnectParams((void *)(a0))) /* merge_units */
+
+
+
+#if 0 /* merge_units */
+extern int NetConnect(NetJoinByNameCfg* cfg, DmeGameOut* out);
+#endif /* merge_units */
+#define NetConnect(a0, a1) (NetConnect((void *)(a0), (void *)(a1))) /* merge_units */
+
+
+
+extern char* strncpy(char* d, const char* s, unsigned int n);
+/* same layout as NetworkGameAddress */
+typedef struct DmeGameAddress { char name[0x10]; int value; } DmeGameAddress;
+static inline void MemClear_n1_0042ACD0(void* d0, int n0) { int n = n0; void* dst = d0;
+    asm {
+        .set noreorder
+        blez n, done
+        nop
+        andi $v1, dst, 0xF
+        andi $v0, n, 0xF
+        or $v1, $v1, $v0
+        nop
+        bgtz $v1, bytes
+        srl $v0, n, 4
+        nop
+        blez $v0, bytes
+        nop
+        nop
+    quads:
+        addi $v0, $v0, -1
+        sq $zero, 0(dst)
+        bgtz $v0, quads
+        addiu dst, dst, 0x10
+        b done
+        nop
+    bytes:
+        addi n, n, -1
+        sb $zero, 0(dst)
+        bgtz n, bytes
+        addiu dst, dst, 1
+    done:
+        .set reorder
+    }
+}
+/* Joins the game named by `host` (see cDME_GetServerFromList). Returns nonzero on failure. */
+int Net_ConnectGameByName(DmeGameAddress* host)
+{
+    DmeGameOut out;
+    NetJoinByNameCfg cfg;
+    int err;
+    if (D_00494198 == 0x10) {
+        NetSetSendAggregationInterval(0, 0x5A, 0x5A);
+    } else {
+        NetSetSendAggregationInterval(0, 0x3C, 0x3C);
+    }
+    NetSetDefaultConnectParams(&cfg);
+    cfg.mode = 4;
+    cfg.unk08 = 2;
+    cfg.unk0C = 1;
+    strncpy(cfg.name, host->name, 0x10);
+    cfg.unk20 = host->value;
+    cfg.onConnectResult = DME_OnConnectResult;
+    cfg.onClientConnect = DME_OnClientConnect;
+    cfg.onClientDisconnect = cDME_RemoteClientDisconnectCallback;
+    cfg.onHostDisconnect = cDME_HostChangeCallback;
+    MemClear_n1_0042ACD0(&cfg.sess, 0x54);
+    cfg.sess.cb34 = cHeadSet_AudioPlayCallback;
+    cfg.sess.unk10 = 1;
+    cfg.sess.unk04 = 1;
+    cfg.sess.cb2C = cHeadSet_AudioRecordCallback;
+    cfg.sess.unk0C = 1;
+    cfg.sess.unk14 = 1;
+    cfg.sess.unk08 = 2;
+    cfg.sess.unk20 = 2;
+    cfg.sess.unk18 = 0x10;
+    cfg.sess.unk24 = 0x10;
+    cfg.sess.unk1C = 0x1F40;
+    cfg.sess.unk28 = 0x1F40;
+    err = NetConnect(&cfg, &out);
+    if (err) {
+        D_005721A8 = out.handle;
+        D_005724B0 = DME_STATE_DISCONNECTED;
+        if (Gui_Canvas()) {
+            GuiWidget_SendMessage(Gui_Canvas(), Gui_Canvas(), 0x1E, 0, (int)D_004BF9B8);
+        }
+    }
+    return err;
+}
+#undef NetSetDefaultConnectParams /* merge_units */
+#undef NetConnect /* merge_units */
+static inline void merge_flush_func_0042ACD0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0042ACD0 */
+
+/* merge_units: begin func_0042AEC0 */
+#pragma push /* merge_units */
+#include "loose04_types.h"
+
+#if 0 /* merge_units */
+extern char D_005724B0;
+#endif /* merge_units */
+#define D_005724B0 (*(char*)&D_005724B0) /* merge_units */
+
+
+extern int NetRequestServersOnSubnet(void* callback);
+extern int NetUpdate(void);
+extern int cDME_SvrResponseCallback(int, int);
+
+/* Sets D_005724B0 to 3 and installs cDME_SvrResponseCallback via NetRequestServersOnSubnet; falls back to NetUpdate on failure. */
+int cDME_CreateServerList(void) {
     int ret;
-    for (i = 0; i < 3; i++) {
-        if (D_00572428[i] == DME_LEVELINFO_PENDING) {
-            int v = D_00494198;
-            int r;
-            cMessage_ctor_cMessageNameR(&m, D_005839A0);
-            m.vt = D_004E1180;
-            m.value = v;
-            m.size = 0x40;
-            r = NetLevelInfoMsg_Send(&m, 0, &out, 0, 0, 0x20, buf);
-            if (r > -1) {
-                int e = NetSendMessage((signed char)m.size, D_005721A8, i + 1, 2, out, r, buf);
-                if (e) printf("%s : %d SHIT - %d\n", D_004BF9B0, 0x528, e);
-            }
-            D_00572428[i] = -1;
-            m.vt = D_004E1180;
-            cMessage_dtor(&m, 0);
-        }
-    }
-    { int* p1 = &g1; int* p2 = &g2; } /* two unused frame slots in retail */
-    ret = 0xFFFFFF;
-    if (D_005723D0) {
-        if (!D_005723C8) {
-            NetBusyEnter();
-            NetBusyLeave();
-            if (D_005721D0 && D_00572420) D_005724E0 = 0;
-            D_005724D8 = NetGetTime(&netTime) == 0 ? netTime : -1;
-            if (D_005724D0) func_003FBEB0();
-            if (D_005721D0) {
-                cGenInfoObject_ReleasePrivate();
-                cNPCInfoObject_ctor(&obj);
-                cNPCInfoObject_CheckForPendingRelease(&obj);
-                cNPCInfoObject_dtor(&obj, -1);
-            }
-            ret = NetUpdate();
-            if (D_005721D0) {
-                int j;
-                for (j = 0; j < 4; j++) {
-                    if (j != NetLocalId()) {
-                        NetGetClientStatus(&peerState, D_005721A8, j);
-                        if (peerState > 1) {
-                            NetGetClientBufferStatus(D_005721A8, j, &ping, &e0, &e4, &dc);
-                            D_00572270[j][g_DmePingHistoryPos[j]] = ping;
-                            g_DmePingHistoryPos[j]++;
-                            if (g_DmePingHistoryPos[j] >= 0x14) g_DmePingHistoryPos[j] = 0;
-                        }
-                    }
-                }
-            }
-            if (ret) {
-                int k;
-                connStates[0] = 0x18;
-                NetGetNetUpdateErrors(connStates);
-                for (k = 0; k < 4; k++) {
-                    int v = connStates[k + 1];
-                    if (v) {
-                        if (k != D_005721A8) {
-                            if (v != 2) D_005723B8 = 1;
-                        } else if (v != 0xC) {
-                            D_005721D8 = 1;
-                            snprintf(D_005721E0, 0x10, "GAME_DISCONNECT");
-                        }
-                    }
-                }
-            }
-        }
-        cNetObj_Update(D_00572408);
-    }
-    if (D_00572528 && g_DmeLobby && g_DmeLobbyActive && !D_005723C8) {
-        NetBusyEnter();
-        NetBusyLeave();
-        SFOLobby_Intel(g_DmeLobby);
+
+    D_005724B0 = 3;
+    ret = NetRequestServersOnSubnet(cDME_SvrResponseCallback);
+    if (ret == 0) {
+        ret = NetUpdate();
     }
     return ret;
 }
-static inline void merge_flush_func_00429D30(void) {} /* merge_units */
+#undef D_005724B0 /* merge_units */
+static inline void merge_flush_func_0042AEC0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00429D30 */
+/* merge_units: end func_0042AEC0 */
+
+/* merge_units: begin func_0042AF00 */
+#pragma push /* merge_units */
+#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#define NULL 0
+#pragma mpwc_relax on
+int NetGetClientVersion(char *);                               
+int NetSetDefaultInitializeParams(char *);                               
+int NetInitialize(char *, char *);                        
+int NetRegisterMallocFreeCallbacks(char *, char *);                        
+int NetSetBufferSize(int, int);                            
+extern signed char D_00572418;
+extern signed char D_00572419;
+extern signed char D_0057241A;
+extern signed char D_0057241B;
+#if 0 /* merge_units */
+extern signed char D_005724B0;
+#endif /* merge_units */
+#define D_005724B0 (*(signed char*)&D_005724B0) /* merge_units */
+
+
+
+extern char Sfo_Malloc;
+extern char sfo_free;
+
+void cDME_Init(void) {
+    int sp40[8];
+    int sp20[8];
+    int sp10[4];
+    int temp_v0;
+
+    D_00572418 = 0;
+    D_00572419 = 0;
+    D_0057241A = 0;
+    D_0057241B = 0;
+    temp_v0 = NetRegisterMallocFreeCallbacks(&Sfo_Malloc, &sfo_free);
+    if (temp_v0 == 0) {
+        if (temp_v0 == 0) {
+            NetSetDefaultInitializeParams(sp40);
+            if (NetInitialize(sp40, sp20) == 0) {
+                NetGetClientVersion(sp10);
+                if (NetSetBufferSize(0x6000, 0x6000) == 0) {
+                    D_005724B0 = 1;
+                }
+            } else {
+                D_005724B0 = 2;
+            }
+        } else {
+            D_005724B0 = 2;
+        }
+    }
+}
+#undef D_005724B0 /* merge_units */
+static inline void merge_flush_func_0042AF00(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0042AF00 */
+
+/* merge_units: begin func_0042AFC0 */
+#pragma push /* merge_units */
+#if 0 /* merge_units */
+extern int NetGetClientVersion(char* buffer);
+#endif /* merge_units */
+#define NetGetClientVersion(a0) (NetGetClientVersion((a0))) /* merge_units */
+
+
+
+#if 0 /* merge_units */
+extern int NetSetBufferSize(int first, int second);
+#endif /* merge_units */
+#define NetSetBufferSize(a0, a1) (NetSetBufferSize((a0), (a1))) /* merge_units */
+
+
+
+
+/* Read the library version and update connection state when setup returns zero. */
+void cDME_Init_PostLobby(void)
+{
+    char version[16];
+    NetGetClientVersion(version);
+    if (!NetSetBufferSize(0x6000, 0x6000))
+        D_005724B0 = 1;
+}
+#undef NetGetClientVersion /* merge_units */
+#undef NetSetBufferSize /* merge_units */
+static inline void merge_flush_func_0042AFC0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0042AFC0 */
+
+/* merge_units: begin func_0042B000 */
+#pragma push /* merge_units */
+#if 0 /* merge_units */
+int cDME_ExitGame(void);
+#endif /* merge_units */
+void cDME_ExitGame(); /* merge_units */
+
+#if 0 /* merge_units */
+int NetRegisterMallocFreeCallbacks(void*, void*);
+#endif /* merge_units */
+#define NetRegisterMallocFreeCallbacks(a0, a1) (NetRegisterMallocFreeCallbacks((char *)(a0), (char *)(a1))) /* merge_units */
+
+
+extern int D_00572270[4][20];
+#if 0 /* merge_units */
+extern signed char D_00572418[4];
+#endif /* merge_units */
+#define D_00572418 ((signed char*)&D_00572418) /* merge_units */
+
+
+unsigned char cDME_Init_PreLobby(void) {
+    int i;
+    int j;
+    int r;
+    unsigned char ok;
+    for (i = 0; i < 4; i++) {
+        D_00572418[i] = 0;
+        { int* p = D_00572270[i]; for (j = 0; j < 20; j++) p[j] = 0; }
+    }
+    ok = 0;
+    r = NetRegisterMallocFreeCallbacks(&Sfo_Malloc, &sfo_free);
+    cDME_ExitGame();
+    if (r == 0) ok = 1;
+    return ok;
+}
+#undef NetRegisterMallocFreeCallbacks /* merge_units */
+#undef D_00572418 /* merge_units */
+static inline void merge_flush_func_0042B000(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0042B000 */
+
+/* merge_units: begin func_0042B0C0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "vslot_pad.h"
+struct Vec42B { int a; };
+/* the float member keeps the iterator in memory and makes copies go through an FPR, as in retail */
+union It42B { char** p; float f; bool operator==(const It42B& o) const { return p == o.p; } bool operator!=(const It42B& o) const { return !(*this == o); } It42B& operator++() { p++; return *this; } char* operator*() const { return *p; } };
+class Obj42B { public: VPAD32(a) VPAD16(b) VPAD8(c) VPAD4(d) VPAD1(e) virtual void Notify(int); };
+extern "C" {
+extern unsigned char D_005721D0;
+void* nGobjManager_GetGOBJAndNodeList(void);
+Vec42B* cObjList_cGOBJPtr_GetList(void* arr);
+void cArray_cGOBJPtr_Begin(It42B* out, Vec42B* v);
+void cArray_cGOBJPtr_End(It42B* out, Vec42B* v);
+void cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(It42B* out, It42B* in);
+}
+static inline void GetBegin(It42B* o, Vec42B* v) { It42B tb; cArray_cGOBJPtr_Begin(&tb, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &tb); }
+static inline void GetEnd(It42B* o, Vec42B* v) { It42B te; cArray_cGOBJPtr_End(&te, v); cArray_cGOBJPtr_ConstIterator_ctor_IteratorR(o, &te); }
+
+extern "C" void cDME_SetNetReady(void)
+{
+    void* arr;
+    It42B it;
+    It42B end;
+    D_005721D0 = 1;
+    arr = nGobjManager_GetGOBJAndNodeList();
+    GetEnd(&end, cObjList_cGOBJPtr_GetList(arr));
+    {
+        It42B b;
+        GetBegin(&b, cObjList_cGOBJPtr_GetList(arr));
+        it = b;
+    }
+    for (; it != end; ++it)
+        ((Obj42B*)*it)->Notify(0);
+}
+static inline void merge_flush_func_0042B0C0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0042B0C0 */
+
+/* merge_units: begin func_0042B1A0 */
+#pragma push /* merge_units */
+#pragma mpwc_relax on
+int NetGetLocalTime(int *);                           
+int NetGetTime(int *);                           
+
+int cDME_GetTime(int arg0) {
+    int sp1C;
+    int var_v0;
+
+    if (arg0 != 0) {
+        var_v0 = NetGetLocalTime(&sp1C);
+        asm { .set reorder } /* barrier: keeps the b; nop + aligned else label */
+    } else {
+        var_v0 = NetGetTime(&sp1C);
+    }
+    if (var_v0 == 0) {
+        return sp1C;
+    }
+    return -1;
+}
+static inline void merge_flush_func_0042B1A0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0042B1A0 */
+
+/* merge_units: begin func_0042B1F0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Address lies between DME.cc (ends 0x0042ACD0) and nellymoser_wrapper.c; network session state.
+ */
+
+
+extern int D_00494178;
+#if 0 /* merge_units */
+extern int D_00494180;
+#endif /* merge_units */
+#define D_00494180 (*(int*)&D_00494180) /* merge_units */
+
+extern char D_00497540;
+extern char D_005721B8;
+#if 0 /* merge_units */
+extern char D_005721C0;
+#endif /* merge_units */
+#define D_005721C0 (*(char*)&D_005721C0) /* merge_units */
+
+#if 0 /* merge_units */
+extern char D_005721D0;
+#endif /* merge_units */
+#define D_005721D0 (*(char*)&D_005721D0) /* merge_units */
+
+extern char D_005721D8;
+extern char D_005723B8;
+extern int D_005723F0;
+extern char D_005723F8;
+extern char D_00572400;
+extern char D_00572408;
+extern char D_00572410;
+#if 0 /* merge_units */
+extern char D_00572418;
+#endif /* merge_units */
+#define D_00572418 (*(char*)&D_00572418) /* merge_units */
+
+#if 0 /* merge_units */
+extern char D_00572419;
+#endif /* merge_units */
+#define D_00572419 (*(char*)&D_00572419) /* merge_units */
+
+#if 0 /* merge_units */
+extern char D_0057241A;
+#endif /* merge_units */
+#define D_0057241A (*(char*)&D_0057241A) /* merge_units */
+
+#if 0 /* merge_units */
+extern char D_0057241B;
+#endif /* merge_units */
+#define D_0057241B (*(char*)&D_0057241B) /* merge_units */
+
+extern int D_00572428;
+extern int D_0057242C;
+extern int D_00572430;
+extern char D_00572468;
+extern void cDME_ExitGame(void);
+extern int NetFreeAllObjects(void);
+extern int NetLeave(int);
+extern int NetDisconnect(int);
+extern int cHeadSet_ShutdownAudio(void);
+
+void Net_CleanupGame(void) {
+    D_00497540 = 1;
+    cHeadSet_ShutdownAudio();
+    NetLeave(0);
+    NetDisconnect(0);
+    cDME_ExitGame();
+}
+
+/* Clears the session flags and ids back to their defaults. */
+void cDME_ExitGame(void) {
+    D_005721D8 = 0;
+    D_005723B8 = 0;
+    D_005721A8 = -1;
+    D_00494180 = 4;
+    D_00494178 = -1;
+    D_00494198 = -1;
+    D_005721C0 = 0;
+    D_00572410 = 0;
+    D_005723F0 = 0;
+    D_00572418 = 0;
+    D_00572419 = 0;
+    D_0057241A = 0;
+    D_0057241B = 0;
+    D_00572468 = 0;
+    D_00572428 = 0;
+    D_0057242C = 0;
+    D_00572430 = 0;
+}
+
+int cDME_Restart(void) {
+    int ret;
+
+    D_005721D0 = 0;
+    D_005723F8 = 0;
+    D_00572408 = 1;
+    D_00572400 = 0;
+    D_00497540 = 0;
+    ret = NetFreeAllObjects();
+    D_005721B8 = 1;
+    return ret;
+}
+#undef D_00494180 /* merge_units */
+#undef D_005721C0 /* merge_units */
+#undef D_005721D0 /* merge_units */
+#undef D_00572418 /* merge_units */
+#undef D_00572419 /* merge_units */
+#undef D_0057241A /* merge_units */
+#undef D_0057241B /* merge_units */
+static inline void merge_flush_func_0042B1F0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0042B1F0 */
+
+/* merge_units: begin func_0042B320 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+typedef struct NetworkPeerSamples {
+    unsigned int values[20];
+} NetworkPeerSamples;
+
+extern "C" {
+#if 0 /* merge_units */
+extern NetworkPeerSamples D_00572270[];
+#endif /* merge_units */
+#define D_00572270 ((NetworkPeerSamples*)&D_00572270) /* merge_units */
+
+int cNetObj_GetPlayer(void);
+}
+
+/* Average nonzero peer samples and cap the result with the retail NaN behavior. */
+extern "C" float cDME_GetConnectionStatus(int peer)
+{
+    float sum = 0.0f;
+    int count = 0;
+    if (!cNetObj_GetPlayer())
+        return sum;
+    for (int index = 0; index < 20; ++index) {
+        unsigned int value = D_00572270[peer].values[index];
+        if (value) {
+            ++count;
+            sum += (float)value;
+        }
+    }
+    float result = (sum / (float)count) / 6144.0f;
+    if (!(result <= 1.0f))
+        result = 1.0f;
+    return result;
+}
+#undef D_00572270 /* merge_units */
+static inline void merge_flush_func_0042B320(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0042B320 */
+
+/* merge_units: begin func_0042B420 */
+#pragma push /* merge_units */
+typedef struct NetSessCfg_r8 {
+    int unk00;
+    int unk04;
+    int unk08;
+    int unk0C;
+    int unk10;
+    int unk14;
+    int unk18;
+    int unk1C;
+    int unk20;
+    int unk24;
+    int unk28;
+    void* cb2C;
+    int unk30;
+    void* cb34;
+    int pad[7];
+} NetSessCfg_r8;
+static inline void MemClear_r8(void* d0, int n0) { int n = n0; void* dst = d0;
+    asm {
+        .set noreorder
+        blez n, done
+        nop
+        andi $a2, dst, 0xF
+        andi $a1, n, 0xF
+        or $a2, $a2, $a1
+        nop
+        bgtz $a2, bytes
+        srl $a1, n, 4
+        nop
+        blez $a1, bytes
+        nop
+        nop
+    quads:
+        addi $a1, $a1, -1
+        sq $zero, 0(dst)
+        bgtz $a1, quads
+        addiu dst, dst, 0x10
+        b done
+        nop
+    bytes:
+        addi n, n, -1
+        sb $zero, 0(dst)
+        bgtz n, bytes
+        addiu dst, dst, 1
+    done:
+        .set reorder
+    }
+}
+void func_0042B420(NetSessCfg_r8* sess)
+{
+    MemClear_r8(sess, 0x54);
+    sess->unk10 = 1;
+    sess->unk04 = 1;
+    sess->unk0C = 1;
+    sess->cb34 = cHeadSet_AudioPlayCallback;
+    sess->cb2C = cHeadSet_AudioRecordCallback;
+    sess->unk08 = 2;
+    sess->unk14 = 1;
+    sess->unk20 = 2;
+    sess->unk18 = 0x10;
+    sess->unk24 = 0x10;
+    sess->unk1C = 0x1F40;
+    sess->unk28 = 0x1F40;
+}
+static inline void merge_flush_func_0042B420(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0042B420 */

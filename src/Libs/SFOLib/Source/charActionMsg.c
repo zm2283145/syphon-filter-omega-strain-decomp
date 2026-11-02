@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/charActionMsg: 5 files, 003FEED0-003FEFD0
+ * Libs/SFOLib/Source/charActionMsg: 6 files, 003FEED0-003FF210
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -36,7 +36,11 @@ static inline void merge_flush_func_003FEEE0(void) {} /* merge_units */
 /* merge_units: begin func_003FEFD0 */
 #pragma push /* merge_units */
 extern void std_vector_imp_1_dtor(void* self, short del);
+#if 0 /* merge_units */
 extern void operator_delete(void* p);
+#endif /* merge_units */
+#define operator_delete(a0) (operator_delete((a0))) /* merge_units */
+
 void* cArray_1_dtor(void* self, short del)
 {
     if (self) {
@@ -47,6 +51,7 @@ void* cArray_1_dtor(void* self, short del)
     }
     return self;
 }
+#undef operator_delete /* merge_units */
 static inline void merge_flush_func_003FEFD0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003FEFD0 */
@@ -107,3 +112,35 @@ int cCharActionMsg_NetCharActionReq(int a, int b, int c, PkFF140* p0) {
 static inline void merge_flush_func_003FF140(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003FF140 */
+
+/* merge_units: begin globalization_3FF210 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+extern "C" {
+int NetRegisterMessageStart(...);
+int NetMessageField(...);
+int NetRegisterApplicationMessage(...);
+int cMessage_RegisterFields(...);
+extern int D_0055D488;
+extern char D_0055D490;
+#if 0 /* merge_units */
+void cCharActionMsg_NetCharActionReq();
+#endif /* merge_units */
+
+}
+extern "C" bool cCharActionMsg_InitNet(void) {
+    struct { int a[2]; char b; char c; } sl;
+    bool ok = 0;
+    if (NetRegisterMessageStart() == 0) {
+        bool r = 0;
+        if (cMessage_RegisterFields(sl.a) != 0 && NetMessageField(sl.a, &sl.b, 1, 1) == 0 && NetMessageField(sl.a, &sl.c, 1, 1) == 0) {
+            r = 1;
+            D_0055D488 = 0;
+        }
+        if (r && NetRegisterApplicationMessage(&D_0055D490, cCharActionMsg_NetCharActionReq) == 0) ok = 1;
+    }
+    return ok;
+}
+static inline void merge_flush_globalization_3FF210(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end globalization_3FF210 */

@@ -162,7 +162,8 @@ class Item:
             return "empty", [], False
         static = "static" in vals[:vals.index("{")] if "{" in vals else "static" in vals
         tags = [vals[i + 1] for i in range(len(vals) - 2)
-                if vals[i] in ("struct", "union", "enum") and s[i + 1][0] == "id" and vals[i + 2] == "{"]
+                if vals[i] in ("struct", "union", "enum", "class") and s[i + 1][0] == "id"
+                and (vals[i + 2] == "{" or (vals[i + 2] == ":" and "{" in vals[i + 3:]))]
         enums = []
         for i in range(len(vals) - 1):
             if vals[i] == "enum" and "{" in vals[i:i + 3]:
@@ -184,9 +185,11 @@ class Item:
             return "func", [self.func_name()], static
         if vals[0] == "typedef":
             return "type", tags + enums + self.declarators(), False
-        if vals[0] in ("struct", "union", "enum") and vals[-1] == ";" and "{" in vals:
+        if vals[0] in ("struct", "union", "enum", "class") and vals[-1] == ";" and "{" in vals:
             close = self.match_close(vals.index("{"))
-            if close == len(vals) - 2:
+            # `struct V { ... } __attribute__((aligned(16)));` is a type definition as well
+            if close == len(vals) - 2 or (vals[close + 1:close + 2] == ["__attribute__"]
+                                          and self.match_close(close + 2) == len(vals) - 2):
                 return "type", tags + enums, False
         decl = "=" not in vals and "{" not in vals and ("extern" in vals or self.is_prototype())
         return ("decl" if decl else "var"), tags + enums + self.declarators(), static
@@ -453,6 +456,28 @@ def split_proto(name, vals):
     return ret, out, variadic
 
 
+def obj_form(it):
+    """(name, normalized type tokens) of a single-object declaration or definition
+    (`extern int D[];`, `unsigned int D[2] = {...};`), else None. Array sizes are
+    dropped, so `int D[]` and `int D[2]` agree."""
+    if it.pp or it.kind not in ("decl", "var") or len(it.names) != 1 or it.static:
+        return None
+    vals = [v for _, v in it.s]
+    if "=" in vals:
+        vals = vals[:vals.index("=")]
+    elif vals[-1:] == [";"]:
+        vals = vals[:-1]
+    vals = [v for v in vals if v not in ("extern", '"C"')]
+    name = it.names[0]
+    if vals.count(name) != 1 or "(" in vals or "{" in vals or "," in vals or not vals:
+        return None
+    k = vals.index(name)
+    rest = vals[k + 1:]
+    if rest and not (rest[0] == "[" and rest[-1] == "]" and rest.count("[") == 1):
+        return None
+    return name, tuple(vals[:k + 1] + (["[", "]"] if rest else []))
+
+
 def object_macro(name, vals):
     """`#define D (*(T*)&D)` (or `((T*)&D)` for an array) to use an object that is
     already declared with another type as the block's declaration says."""
@@ -478,6 +503,8 @@ def call_macro(name, mine, theirs):
     a, b = split_proto(name, mine), split_proto(name, theirs)
     if not a or not b or len(a[1]) != len(b[1]) or a[2] or b[2]:
         return None
+    if any(ta != tb and ("&" in ta or "&" in tb) for ta, tb in zip(a[1], b[1])):
+        return None  # a C++ reference parameter: a cast would not convert the argument
     args = [f"a{i}" for i in range(len(a[1]))]
     call = ", ".join(f"({' '.join(tb)})({x})" if ta != tb else f"({x})"
                      for x, ta, tb in zip(args, a[1], b[1]))
@@ -577,6 +604,196 @@ def knr_declarations(chunks):
     return out
 
 
+def c_text(vals):
+    """Tokens joined back into readable C: `void* f(void* p, short d)`."""
+    t = " ".join(vals)
+    t = re.sub(r"\s+([,)\]])", r"\1", t)
+    t = re.sub(r"([(\[])\s+", r"\1", t)
+    t = re.sub(r"\s+([*&])", r"\1", t)
+    t = re.sub(r"(\w)\s+\(", r"\1(", t)
+    return t
+
+
+def proto_sig(name, vals):
+    """(return type, parameter types) of a prototype without parameter names, or None."""
+    sp = split_proto(name, vals) if name in vals else None
+    return None if sp is None else (tuple(sp[0]), tuple(tuple(t) for t in sp[1]), sp[2])
+
+
+def hidden_protos(text, chunks, unit_dir):
+    """{function: (prototype tokens, first chunk index)} for functions whose
+    prototypes appear only after preprocessing (declared by a macro such as
+    DEFINE_VTABLE2_BASE_DTOR, or by a header) and agree with each other.
+    synthesize declares the other blocks' conflicting prototypes of such a
+    function through it. Uses the host C preprocessor on the merged text. Also returns
+    struct_tags of the preprocessed text (headers included). ({}, set()) if
+    that is not available or fails."""
+    cpp = shutil.which("cpp")
+    if not cpp:
+        return {}, set()
+    expanded = ""
+    # headers declare some things for C++ only (#ifdef __cplusplus): look at both views
+    for defs in ([], ["-D__cplusplus=1"]):
+        try:
+            r = subprocess.run([cpp, "-P", "-C", "-nostdinc", "-x", "c", *defs, "-I", str(unit_dir),
+                                "-I", str(ROOT / "include"), "-I", str(ROOT / "src"), "-"],
+                               input=text, capture_output=True, text=True, timeout=60)
+        except (OSError, subprocess.SubprocessError):
+            return {}, set()
+        if r.returncode:
+            return {}, set()
+        expanded += r.stdout
+    labels = {c.label: k for k, c in enumerate(chunks)}
+    raw, rawobj, objs = [], [], {}
+    for c in chunks:
+        items = split_items(c.text)
+        raw.append({p[0] for it in items if it.kind == "decl" and (p := proto(it))})
+        rawobj.append({o[0] for it in items if it.kind == "decl" and (o := obj_form(it))})
+    found, rawfound = {}, {}
+    parts = re.split(r"/\* merge_units: begin (\S+) \*/", expanded)
+    for label, seg in zip(parts[1::2], parts[2::2]):
+        ci = labels.get(label)
+        if ci is None:
+            continue
+        for it in split_items(seg):
+            o = obj_form(it)
+            if o and not (it.kind == "decl" and o[0] in rawobj[ci]):
+                objs.setdefault(o[0], []).append((o[1], ci))
+            p = proto(it)
+            if not p or it.static:
+                continue
+            sg = proto_sig(p[0], p[1])
+            if sg is None:
+                continue
+            if it.kind == "decl" and p[0] in raw[ci]:
+                # the block's own prototype: a candidate if no macro, header or definition fixes one
+                if "(" in p[1] and p[1][p[1].index("(") + 1] != ")":
+                    rawfound.setdefault(p[0], []).append((sg, p[1], ci))
+                continue
+            found.setdefault(p[0], []).append((sg, p[1], ci))
+    out = {}
+    for n, occ in found.items():
+        if len({sg for sg, _, _ in occ}) == 1:
+            out[n] = (occ[0][1], min(ci for _, _, ci in occ))
+    # prototypes the blocks disagree on: the one that accepts the most calls (variadic,
+    # with a result), if it names no type of a block
+    for n, occ in rawfound.items():
+        if n in found or len({sg for sg, _, _ in occ}) < 2:
+            continue
+        ok = [o for o in occ if all(v in KEYWORDS or not re.fullmatch(r"[A-Za-z_]\w*", v)
+                                    for t in [o[0][0]] + list(o[0][1]) for v in t)]
+        if ok:
+            best = max(ok, key=lambda o: (4 * o[0][2] + 2 * (o[0][0] != ("void",)) + bool(o[0][1]), -o[2]))
+            out[n] = (best[1], best[2])
+        elif (vals := common_proto(n, [o[0] for o in occ])):
+            out[n] = (vals, len(chunks))
+    # objects: a header's, macro's or definition's declaration, if they agree
+    for n, occ in objs.items():
+        if n not in out and len({f for f, _ in occ}) == 1:
+            out[n] = (list(occ[0][0]), min(ci for _, ci in occ), "object")
+    return out, struct_tags(expanded)
+
+
+def builtin(t):
+    return all(v in KEYWORDS or not re.fullmatch(r"[A-Za-z_]\w*", v) for v in t)
+
+
+def common_proto(name, sigs):
+    """A prototype every call of sigs (proto_sig values, same parameter count)
+    compiles against: block types in pointers become void*, the result is the
+    first non-void one (void* for a pointer to a block type). None if a
+    parameter or the result is a block type by value or reference."""
+    if any(sg[2] for sg in sigs) or len({len(sg[1]) for sg in sigs}) != 1:
+        return None
+
+    def one(ts, ret=False):
+        ts = list(dict.fromkeys(ts))
+        if ret:
+            ts = [t for t in ts if t != ("void",)] or [("void",)]
+        if any("&" in t for t in ts):
+            return None
+        if len(ts) == 1 and builtin(ts[0]):
+            return list(ts[0])
+        if all("*" in t for t in ts):
+            return ["void", "*"]
+        if all(builtin(t) for t in ts):
+            return list(ts[0])
+        return None
+    ret = one([sg[0] for sg in sigs], True)
+    if ret is None:
+        return None
+    params = []
+    for k in range(len(sigs[0][1])):
+        t = one([sg[1][k] for sg in sigs])
+        if t is None:
+            return None
+        params += ([","] if params else []) + t
+    return ret + [name, "("] + (params or ["void"]) + [")"]
+
+
+def struct_tags(text):
+    """Names of the named structs/classes/unions the text defines at file scope
+    (`struct X {`, `typedef struct X {...} X;`): a C++ block may declare them
+    ahead with `struct X;`."""
+    out = set()
+    for it in split_items(text):
+        if it.kind != "type":
+            continue
+        v = [x for _, x in it.s]
+        if v[:1] == ["typedef"]:
+            v = v[1:]
+        if len(v) > 2 and v[0] in ("struct", "class", "union") and v[2] in ("{", ":"):
+            if it.text.lstrip().startswith("typedef") and it.names[-1:] != [v[1]]:
+                continue
+            out.add((v[0], v[1]))
+    return out
+
+
+def pin_decl(it, p, pin, ci, cpp, in_c, types, done, tags=()):
+    """(replacement text, has call macro) for a block's prototype p of a function
+    that a macro or header declares as pin = (tokens, chunk index), or None."""
+    vals, first = pin
+    a, b = proto_sig(p[0], p[1]), proto_sig(p[0], vals)
+    if a is None or b is None or a == b:
+        return None
+    sp = split_proto(p[0], vals)
+    used = [v for t in [sp[0]] + sp[1] for v in t]
+    unknown = [v for v in dict.fromkeys(used) if re.fullmatch(r"[A-Za-z_]\w*", v) and v not in KEYWORDS
+               and v not in types]
+    fwd = []
+    for v in unknown:
+        tag = next((t for t in tags if t[1] == v), None)
+        if not cpp or tag is None or ci >= first:
+            return None  # a type that is not in scope here
+        fwd.append(f"{tag[0]} {v}; {TAG}\n")
+    if cpp and not in_c and '"C"' not in [v for _, v in it.s]:
+        return None  # C++ linkage: another function
+    text = "".join(fwd)
+    if ci < first and not done:
+        text += ('extern "C" ' if cpp and not in_c else "") + c_text(vals) + f"; {TAG}\n"
+    mac = call_macro(p[0], p[1], vals)
+    if mac:
+        text += f"{mac} {TAG}\n"
+    return text, bool(mac)
+
+
+def pin_object(it, o, pin, ci, cpp, in_c, types, done):
+    """Replacement text for a block's declaration of an object that a header,
+    macro or definition declares as pin = (type tokens, chunk index, "object"):
+    that declaration (once, if no earlier block has it) and an object macro
+    for the block's own type; None if not possible."""
+    vals, first = pin[0], pin[1]
+    mac = object_macro(o[0], [v for _, v in it.s if v != '"C"'])
+    if not mac:
+        return None
+    if any(re.fullmatch(r"[A-Za-z_]\w*", v) and v not in KEYWORDS and v not in types and v != o[0] for v in vals):
+        return None
+    text = ""  # (MW does not mangle object names in C++)
+    if ci < first and not done:
+        text += "extern " + c_text(vals) + f"; {TAG}\n"
+    return text + f"{mac} {TAG}\n"
+
+
 def synthesize(chunks, unit_dir, mw, title, cast=False):
     """Merged source for chunks (in order). Returns the text.
 
@@ -594,6 +811,11 @@ def synthesize(chunks, unit_dir, mw, title, cast=False):
     objdecls = {}    # object -> normalized first declaration
     comments = set()
     kr = knr_declarations(chunks) if cast else {}
+    pinned, tags = {}, set()
+    if cast:
+        base = synthesize(chunks, unit_dir, mw, title)
+        pinned, tags = hidden_protos(base, chunks, unit_dir)
+    pin_done = set()
     for ci, c in enumerate(chunks):
         text = c.text
         # rename conflicting type names and statics (to a fixpoint)
@@ -625,9 +847,14 @@ def synthesize(chunks, unit_dir, mw, title, cast=False):
         text = rename_text(text, mapping)
         items = split_items(text)
         block, undefs = [], []
+        in_c = 0  # inside extern "C" { }
+        # functions this block defines: a call macro would rewrite the definition
+        here = {it.names[0] for it in items if it.kind == "func" and it.names}
         for it in items:
             lead = it.lead
             keep = True
+            if it.kind == "linkage":
+                in_c += 1 if it.text.rstrip().endswith("{") else -1
             if it.pp:
                 m = re.match(r'\s*#\s*include\s*(["<][^">]+[">])', it.text)
                 if m:
@@ -678,11 +905,40 @@ def synthesize(chunks, unit_dir, mw, title, cast=False):
                     block.append(f"{lead}{bol(block, lead)}#if 0 {TAG}\n{it.text.strip()}\n#endif {TAG}\n{ret} {p[0]}(); {TAG}\n")
                     declared.add(p[0])
                     continue
+                elif p and p[0] in here:
+                    pass
+                elif cast and p and len(pinned.get(p[0], ())) == 2 and p[0] not in macros and (ci, p[0]) not in kr \
+                        and (pin := pin_decl(it, p, pinned[p[0]], ci, c.cpp, in_c, types, p[0] in pin_done, tags)):
+                    # a macro or header declares the function with another prototype: declare
+                    # it like that (once) and call it through a call macro
+                    block.append(f"{lead}{bol(block, lead)}#if 0 {TAG}\n{it.text.strip()}\n#endif {TAG}\n{pin[0]}")
+                    if pin[1]:
+                        undefs.append(p[0])
+                    pin_done.add(p[0])
+                    protos[p[0]] = pinned[p[0]][0]
+                    declared.add(p[0])
+                    continue
                 elif cast and p and p[0] in protos and protos[p[0]] != p[1] and p[0] not in macros \
                         and (mac := call_macro(p[0], p[1], protos[p[0]])):
                     n = p[0]
                     block.append(f"{lead}{bol(block, lead)}#if 0 {TAG}\n{it.text.strip()}\n#endif {TAG}\n{mac} {TAG}\n")
                     undefs.append(n)
+                    continue
+                elif cast and p and p[0] in protos and p[0] not in macros \
+                        and proto_sig(p[0], p[1]) != proto_sig(p[0], protos[p[0]]):
+                    # no call macro possible (another parameter count, `int f();`, variadic):
+                    # the calls use the prototype in scope
+                    block.append(f"{lead}{bol(block, lead)}#if 0 {TAG}\n{it.text.strip()}\n#endif {TAG}\n")
+                    continue
+                elif cast and not p and (o := obj_form(it)) and len(pinned.get(o[0], ())) == 3 \
+                        and o[1] != tuple(pinned[o[0]][0]) and o[0] not in macros \
+                        and (pin := pin_object(it, o, pinned[o[0]], ci, c.cpp, in_c, types, o[0] in pin_done)):
+                    # a header, macro or definition declares the object with another type
+                    block.append(f"{lead}{bol(block, lead)}#if 0 {TAG}\n{it.text.strip()}\n#endif {TAG}\n{pin}")
+                    undefs.append(o[0])
+                    pin_done.add(o[0])
+                    objdecls.setdefault(o[0], "pinned")
+                    declared.add(o[0])
                     continue
                 elif cast and not p and len(it.names) == 1 and objdecls.get(it.names[0], nt) != nt \
                         and it.names[0] not in macros and (mac := object_macro(it.names[0], [v for _, v in it.s])):

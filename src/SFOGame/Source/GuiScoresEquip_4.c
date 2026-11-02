@@ -1,5 +1,5 @@
 /*
- * main/GuiScoresEquip: 6 files, 0035CD00-0035D430
+ * SFOGame/Source/GuiScoresEquip: 12 files, 0035CD00-0035DFA0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -50,8 +50,18 @@ extern char D_00492D10[20][20];
 extern Screen* D_00533760;
 extern unsigned char g_IsMultiplayer;
 void GuiWidget_onAdd(Screen* s);
+#if 0 /* merge_units */
 W* GuiWidget_FindChild_charP(void* self, char* name);
+#endif /* merge_units */
+void* GuiWidget_FindChild_charP(void*, char*); /* merge_units */
+#define GuiWidget_FindChild_charP(a0, a1) ((W *)GuiWidget_FindChild_charP((a0), (a1))) /* merge_units */
+
+#if 0 /* merge_units */
 void SE_ManRenderWrapper(void);
+#endif /* merge_units */
+int SE_ManRenderWrapper(void); /* merge_units */
+#define SE_ManRenderWrapper() ((void)SE_ManRenderWrapper()) /* merge_units */
+
 void func_0041C0D0(W* w, int on);
 void GuiTextWidget_SetDisableWrap(W* w, int on);
 int sprintf(char* buf, const char* fmt, ...);
@@ -125,6 +135,9 @@ void GuiScoresEquip_onAdd(Screen* s)
         goto test;
     }
 }
+#undef GuiWidget_FindChild_charP /* merge_units */
+#undef SE_ManRenderWrapper /* merge_units */
+static inline void merge_flush_func_0035CD00(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0035CD00 */
 
@@ -151,6 +164,7 @@ void MakeChildrenVisible(ChildWidget* o, int on)
         }
     }
 }
+static inline void merge_flush_func_0035CFB0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0035CFB0 */
 
@@ -176,6 +190,7 @@ extern char D_004A9870[];
 W35D0A0* GuiWidget_FindChild_charP(void* self, char* name);
 #endif /* merge_units */
 #define GuiWidget_FindChild_charP(a0, a1) ((W35D0A0 *)GuiWidget_FindChild_charP((a0), (a1))) /* merge_units */
+
 
 char* nGlobalization_GetString_charP(char* key);
 void GuiTextWidget_SetText(W35D0A0* w, char* text, int flags);
@@ -209,6 +224,7 @@ void GuiScoresEquip_SetScreen(S35D0A0* o, int mode)
     }
 }
 #undef GuiWidget_FindChild_charP /* merge_units */
+static inline void merge_flush_func_0035D0A0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0035D0A0 */
 
@@ -256,6 +272,7 @@ extern "C" O0035D1F0* GuiScoresEquip_dtor(O0035D1F0* self, short del)
     }
     return self;
 }
+static inline void merge_flush_func_0035D1F0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0035D1F0 */
 
@@ -266,6 +283,7 @@ extern "C" O0035D1F0* GuiScoresEquip_dtor(O0035D1F0* self, short del)
 
 /* Derived destructor: restore vtable, run cGOBJ base destructor, optionally delete. */
 DEFINE_VTABLE_BASE_DTOR(func_0035D3D0, D_004DA470, cGOBJ_dtor)
+static inline void merge_flush_func_0035D3D0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0035D3D0 */
 
@@ -400,9 +418,24 @@ void cArray_FixedSize_cSkaAnimEvent_7_ctor_void(Arr7_D430* a);
 void cArray_cTimedEvent_ctor_void(Y_D430* y);
 void cString16N_3_ctor_cString16NR(void* mr, Str_D430* s);
 void cSkaAnimCheckpoints_ctor_cSkaAnimCheckpointsR(Sel_D430* d, Sel_D430* s);
+#if 0 /* merge_units */
 void func_001BE5A0(Y_D430* y, int f);
+#endif /* merge_units */
+void* func_001BE5A0(void* self, short flags); /* merge_units */
+#define func_001BE5A0(a0, a1) ((void)func_001BE5A0((void *)(a0), (short)(a1))) /* merge_units */
+
+#if 0 /* merge_units */
 void __destroy_array(void* a, void* dtor, int size, int n);
+#endif /* merge_units */
+void __destroy_array(void* array, void* dtor, unsigned int size, unsigned int count); /* merge_units */
+#define __destroy_array(a0, a1, a2, a3) (__destroy_array((a0), (a1), (unsigned int)(a2), (unsigned int)(a3))) /* merge_units */
+
+#if 0 /* merge_units */
 void func_0018A210(void* p, int f);
+#endif /* merge_units */
+void* func_0018A210(void* self, short flags); /* merge_units */
+#define func_0018A210(a0, a1) ((void)func_0018A210((a0), (short)(a1))) /* merge_units */
+
 void cSkaPlaybackGroupId_ctor_int(Word_D430* w, int a);
 void cSkaRequestStream_AnimationPacket_GetAnimationAndPlaybackGroupId(Req_D430* r, int* sel, Word_D430* w, void* m);
 float cSkaAnimationSet_DefaultCrossFadeDuration(void* m);
@@ -662,5 +695,120 @@ extern "C" Self_D430* GuiScoresEquip_ctor(Self_D430* p0)
     self->b22C = 1;
     return self;
 }
+#undef func_001BE5A0 /* merge_units */
+#undef __destroy_array /* merge_units */
+#undef func_0018A210 /* merge_units */
+static inline void merge_flush_func_0035D430(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0035D430 */
+
+/* merge_units: begin func_0035DE90 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "vector_array_member_dtor.h"
+
+/* Destructor: vector and array members, optionally delete. */
+DEFINE_VECTOR_ARRAY_MEMBER_DTOR(func_0035DE90)
+static inline void merge_flush_func_0035DE90(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0035DE90 */
+
+/* merge_units: begin func_0035DF30 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit: GuiScoresEquip.cc. Functions are named by address
+ * until real names are known.
+ */
+
+
+#if 0 /* merge_units */
+extern void* D_00533760;
+#endif /* merge_units */
+#define D_00533760 (*(void **)&D_00533760) /* merge_units */
+
+extern int GuiScoresEquip_ManRender(void* p);
+
+int SE_ManRenderWrapper(void) {
+    return GuiScoresEquip_ManRender(D_00533760);
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0035DF30(void) {}
+#undef D_00533760 /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0035DF30 */
+
+/* merge_units: begin func_0035DF40 */
+#pragma push /* merge_units */
+typedef struct { unsigned char flag : 1; unsigned char rest : 7; } FlagByte;
+typedef struct { FlagByte b[16]; } FlagRow;
+#if 0 /* merge_units */
+extern FlagRow* D_004EE620;
+#endif /* merge_units */
+extern unsigned char* D_004EE620; /* merge_units */
+#define D_004EE620 (*(FlagRow **)&D_004EE620) /* merge_units */
+
+
+/* Clears flag bit 0 of byte [col] in row [row] of the global flag table. */
+void TeamDelEnemy_int_int_2(int row, int col)
+{
+    D_004EE620[row].b[col].flag = 0;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0035DF40(void) {}
+#undef D_004EE620 /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0035DF40 */
+
+/* merge_units: begin func_0035DF70 */
+#pragma push /* merge_units */
+/* Byte of per-slot flags; bit 0 is the "set" flag. */
+typedef struct SlotFlags {
+    unsigned char set : 1;
+} SlotFlags;
+
+#if 0 /* merge_units */
+extern char* D_004EE620; /* table of 16-byte rows of flag bytes */
+#endif /* merge_units */
+#define D_004EE620 (*(char **)&D_004EE620) /* merge_units */
+
+
+
+
+/* Sets flag bit 0 of byte `col` in row `row` of the D_004EE620 table. */
+void TeamSetEnemy_int_int_2(int row, int col) {
+    SlotFlags* flags = (SlotFlags*)(D_004EE620 + row * 16 + col);
+    flags->set = 1;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0035DF70(void) {}
+#undef D_004EE620 /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0035DF70 */
+
+/* merge_units: begin func_0035DFA0 */
+#pragma push /* merge_units */
+#include "grid16_flag_test.h"
+
+DEFINE_GRID16_FLAG_TEST(TeamEnemy_int_int_2, D_004EE620)
+static inline void merge_flush_func_0035DFA0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0035DFA0 */
+
+/* merge_units: begin func_0035E000 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit: GuiScoresEquip.cc. Functions are named by address
+ * until real names are known.
+ */
+
+
+void func_0035E000(void) {
+}
+
+void func_0035E010(void) {
+}
+static inline void merge_flush_func_0035E000(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0035E000 */

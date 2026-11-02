@@ -1,170 +1,236 @@
 /*
- * Libs/SFOLib/Source/ska: 3 files, 003B0120-003B0280
+ * Libs/SFOLib/Source/ska: 6 files, 003B3A10-003B41E0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_003B0120 */
-#pragma push /* merge_units */
-/*
- * Matched functions (byte-identical with the retail executable).
- * Part of ska.cc (skeletal animation).
- */
-
-#include "ska_types.h"
-
-/* True when the stored word equals value. */
-int cSkaTransPlayback_CheckId(Word* w, int value) {
-    return w->value == value;
-}
-
-int cSkaSwitchValue_CurrGoalState(char* self) {
-    return *(int*)(self + 4);
-}
-
-int cSkaSwitchValue_NextGoalState(char* self) {
-    return *(int*)(self + 0);
-}
-
-/* Table entry of owner selected by the index stored at idx +0x20. */
-SkaPair* cSkaSwitch_GetSwitchValue(SkaPairIndex* idx, SkaPairTableOwner* owner) {
-    return &owner->table[idx->index];
-}
-
-int cSkaSwitchItem_WhatToPlay(char* self) {
-    return *(int*)(self + 0);
-}
-
-/* Address of element i in an array of 20-byte elements. */
-char* cArray_cSkaSwitchItem_opIndex(SkaVec* v, int i) {
-    char* data = v->data;
-    return data + i * 20;
-}
-
-/* Second word of table entry i. */
-int cSkaParams_GetSwitchCurrGoalState(SkaPairTableOwner* owner, int i) {
-    return ((SkaPair*)((char*)owner->table + (i << 3)))->unk4;
-}
-static inline void merge_flush_func_003B0120(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_003B0120 */
-
-/* merge_units: begin func_003B01C0 */
+/* merge_units: begin func_003B3A10 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-
 #include "types.h"
-
-/* Find the list entry whose data starts with key. */
-typedef struct { int key; } Data_3B01C0;
-typedef struct Node_3B01C0 { int pad0; struct Node_3B01C0* next; Data_3B01C0* data; } Node_3B01C0;
-typedef struct { Node_3B01C0* p; } It_3B01C0;
-typedef struct { int w[1]; } Raw_3B01C0;
-typedef struct { unsigned char pad[0x6C]; int list; } Obj_3B01C0;
-
-extern "C" {
-void std_list_deleter_voidPtr_begin_void(Raw_3B01C0* out, void* list);
-void std_list_cSkaTransPlaybackPtr_generic_iterator_ctor(It_3B01C0* out, Raw_3B01C0* raw);
-void std_list_cSkaTransPlaybackPtr_end(Raw_3B01C0* out, void* list);
-void cLListIterator_cSkaTransPlaybackPtr_ctor(It_3B01C0* out, Raw_3B01C0* raw);
-}
-
-extern "C" Data_3B01C0* cSkaParams_GetTransPlayback(Obj_3B01C0* o, int key)
-{
-    It_3B01C0 last;
-    It_3B01C0 first;
-    Raw_3B01C0 rawFirst;
-    Raw_3B01C0 rawEnd;
-    Node_3B01C0* n;
-    std_list_deleter_voidPtr_begin_void(&rawFirst, &o->list);
-    std_list_cSkaTransPlaybackPtr_generic_iterator_ctor(&first, &rawFirst);
-    for (n = first.p; (std_list_cSkaTransPlaybackPtr_end(&rawEnd, &o->list), cLListIterator_cSkaTransPlaybackPtr_ctor(&last, &rawEnd), n != last.p); n = n->next) {
-        if (n->data->key == key)
-            return n->data;
+#pragma always_inline on
+struct Qt {
+    float x, y, z, w;
+    Qt() {}
+    Qt(const Qt& o) { void* xx = this; /* dead on purpose: retail keeps this addiu */ __int128 q; __asm__ volatile("lq %0, 0x0(%1); sq %0, 0x0(%2)" : "=r"(q) : "r"(&o), "r"(this) : "memory"); }
+    Qt operator*(const Qt& b) const {
+        Qt c; Qt* d = &c; const Qt* l = this; const Qt* r = &b;
+        __asm__ volatile("lqc2 $vf1, 0x0(%1); lqc2 $vf2, 0x0(%2); vmul.xyzw $vf3, $vf1, $vf2; vopmula.xyz $ACC, $vf1, $vf2; vmaddaw.xyz $ACC, $vf1, $vf2w; vmaddaw.xyz $ACC, $vf2, $vf1w; vopmsub.xyz $vf4, $vf2, $vf1; vsubaz.w $ACC, $vf3, $vf3z; vmsubay.w $ACC, $vf0, $vf3y; vmsubx.w $vf4, $vf0, $vf3x; sqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(l), "r"(r) : "memory");
+        return c;
     }
-    return 0;
+    Qt& operator=(const Qt& o) { void* xx = this; /* dead on purpose: retail keeps this addiu */ __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(this), "r"(&o) : "memory"); return *this; }
+} __attribute__((aligned(16)));
+static inline Qt Ident() { Qt a; __asm__ volatile("sqc2 $vf0, 0x0(%0)" : : "r"(&a) : "memory"); return a; }
+extern "C" char D_004DFC50[];
+extern "C" char D_004DFC30[];
+struct T {
+    void* vt; signed char b4; char pad5[11]; Qt q;
+    int f20, f24; unsigned char f28, f29; char pad2a[2];
+    float f2c, f30, f34, f38, f3c; int f40; unsigned char f44, f45, f46;
+};
+extern "C" T* cSkaAnim_ctor_cSkaAnimR_int_eAxisOfMotion(T* d, T* s, int a2, unsigned char a3);
+T* cSkaAnim_ctor_cSkaAnimR_int_eAxisOfMotion(T* d, T* s, int a2, unsigned char a3)
+{
+    Qt b(Ident());
+    d->vt = D_004DFC50;
+    d->b4 = s->b4;
+    d->q = b * s->q;
+    d->vt = D_004DFC30;
+    d->f20 = s->f20; d->f24 = s->f24; d->f28 = s->f28; d->f29 = s->f29;
+    d->f2c = s->f2c; d->f30 = s->f30; d->f34 = s->f34; d->f38 = s->f38; d->f3c = s->f3c;
+    d->f40 = a2; d->f44 = a3; d->f45 = s->f45; d->f46 = s->f46;
+    return d;
 }
-static inline void merge_flush_func_003B01C0(void) {} /* merge_units */
+static inline void merge_flush_func_003B3A10(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003B01C0 */
+/* merge_units: end func_003B3A10 */
 
-/* merge_units: begin func_003B0280 */
+/* merge_units: begin func_003B3B20 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-#pragma always_inline on
-#pragma inline_depth(8)
-struct Item { void* what; float start; float end; };
-struct Wrap { Item* p; };
-struct It {
-    Wrap m;
-    It(Item* e) { m.p = e; }
-    It(const It& o) { m.p = o.m.p; } It(const Wrap& w) : m(w) {} 
-    Item* operator->() const { return &*m.p; }
-    bool operator==(const It& o) const { return m.p == o.m.p; }
-    bool operator!=(const It& o) const { return !(m.p == o.m.p); }
-    void Inc() { m.p++; }
-};
-struct SwItem { void* what; char pad[16]; };
-struct Switch { char pad[0x2C]; SwItem* items; };
-struct Blend { char vec[4]; int n; Item* first; char padC[4]; float d0, d1; int pid; unsigned char rev; unsigned char sinus; };
-struct TP { Switch* sw; Blend* trans; unsigned char active, isRev; int cur; int nxt; float timer; unsigned char needInterp; float interp; void* w0; void* w1; };
-extern "C" Item** std_vector_deleter_cSkaBlendSequenceItem_data_void_2(const void* v);
-static inline float MinF(float a, float b) { float r = 0.0f; asm { min.s r, a, b } return r; }
-static inline float Clamp01(float x) { float r; float hi; int t; asm { lui t, 0x3F80; mtc1 zero, r; mtc1 t, hi; max.s r, x, r; min.s r, r, hi } return r; }
-// hi is read from v1, loaded by a separate asm at the start of the block
-static inline float Clamp01W(float x) { float r; asm { mtc1 zero, r; mtc1 v1, f4; max.s r, x, r; min.s r, r, f4 } return r; }
-static inline It End(const Blend* b) { return It(*std_vector_deleter_cSkaBlendSequenceItem_data_void_2(b) + b->n); }
+#include "alloc_guard.h"
 
-static inline void* What(TP* s, int st) { return s->sw->items[st].what; }
-extern "C" void cSkaTransPlayback_UpdateWhatToPlay(TP* self, const Blend* trans, float duration)
+#if 0 /* merge_units */
+extern void * const D_004DFC30[];
+#endif /* merge_units */
+#define D_004DFC30 ((void * const*)&D_004DFC30) /* merge_units */
+
+
+struct V {
+    float x, y, z, w;
+    V() {}
+    V(const V& o) { void* xx = this; /* dead on purpose: retail keeps this addiu */ __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(this), "r"(&o) : "memory"); }
+    V& operator=(const V& o) { void* xx = this; /* dead on purpose: retail keeps this addiu */ __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(this), "r"(&o) : "memory"); return *this; }
+} __attribute__((aligned(16)));
+static inline V Unit() { V l0; __asm__ volatile("sqc2 vf0, 0x0(%0)" : : "r"(&l0) : "memory"); return l0; }
+struct F2 { float a, b; F2() {} };
+struct ClipBase {
+    void* vt;
+    signed char b4;
+    V v10;
+    ClipBase() {}
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~ClipBase() { vt = D_004DFC50; }
+    ClipBase& operator=(const ClipBase& o) { b4 = o.b4; v10 = o.v10; return *this; }
+};
+struct SkaClip : ClipBase {
+    int f20;
+    void* clip;
+    unsigned char b28, b29;
+    F2 r2c;
+    float f34, f38, f3c;
+    int f40;
+    signed char b44;
+    unsigned char b45, b46;
+    SkaClip() {}
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~SkaClip() { vt = (void*)D_004DFC30; }
+};
+static inline void Base(SkaClip* s, signed char b, V v) { s->vt = D_004DFC50; s->b4 = b; s->v10 = v; }
+struct Item { void* vt; unsigned char b4; };
+struct NMap { char pad[0x34]; int reg; };
+extern "C" int cSkaAnimationSet_GetNodeId(NMap* m, void* name);
+extern "C" SkaClip** cArray_cSkaNodePtr_opIndex(int* reg, int idx);
+extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_eModifier_cEulerAngleTR_eAxisOfMotion(SkaClip* d, void* c, int a, int b, int e);
+extern "C" SkaClip* cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier_cEulerAngleTR_etc(SkaClip* self, void* name, NMap* m, int a, int b, int e)
 {
-    void* play0; void* play1;
-    float tn = MinF(1.0f, self->timer / duration);
-    int listSize = trans->n;
-    play0 = What(self, self->cur);
-    play1 = What(self, self->nxt);
-    It end = End(trans);
-    It prev = end;
-    It next = listSize > 0 ? It(trans->first) : end;
-    float prevEnd = 0.0f;
-    for (int i = 0; i < listSize + 1; i++) {
-        if (i == listSize) next = It(end.m);
-        bool notEnd = next != end;
-        float nextStart = notEnd ? next->start : 1.0f;
-        if (tn <= nextStart) {
-            if (tn <= prevEnd) {
-                self->w0 = (prev == end) ? play0 : (play0 = prev->what);
-                self->w1 = self->w0;
-                self->interp = 1.0f;
-                self->needInterp = 0;
-                return;
-            } else {
-                self->w0 = (prev == end) ? play0 : (play0 = prev->what);
-                self->w1 = (next == end) ? play1 : (play1 = next->what);
-                if (!trans->sinus) {
-                    self->interp = Clamp01((tn - prevEnd) / (nextStart - prevEnd));
-                } else {
-                    asm { lui v1, 0x3F80 }
-                    float x2;
-                    float x = (tn - prevEnd) / (nextStart - prevEnd);
-                    x2 = x * x;
-                    x *= x2;
-                    float c2 = 2.0f;
-                    float c3 = 3.0f;
-                    c3 *= x2;
-                    c2 *= x;
-                    float v = c3 - c2;
-                    self->interp = Clamp01W(v);
-                }
-                self->needInterp = 1;
-            }
-            return;
-        }
-        prev = next;
-        prevEnd = notEnd ? next->end : 1.0f;
-        next.Inc();
+    SkaClip* c;
+    Base(self, 0, Unit());
+    self->vt = (void*)D_004DFC30;
+    self->clip = 0;
+    self->r2c.a = 0.0f;
+    self->r2c.b = 1.0f;
+    c = *cArray_cSkaNodePtr_opIndex(&m->reg, cSkaAnimationSet_GetNodeId(m, name));
+    if (!((Item*)c)->b4) {
+        SkaClip t;
+        cSkaAnim_ctor_cSkaAnimR_eModifier_cEulerAngleTR_eAxisOfMotion(&t, c, a, b, e);
+        *self = t;
     }
+    return self;
 }
-static inline void merge_flush_func_003B0280(void) {} /* merge_units */
+#undef D_004DFC30 /* merge_units */
+static inline void merge_flush_func_003B3B20(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003B0280 */
+/* merge_units: end func_003B3B20 */
+
+/* merge_units: begin func_003B3CC0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#if 0 /* merge_units */
+extern void * const D_004DFC30[];
+#endif /* merge_units */
+#define D_004DFC30 ((void * const*)&D_004DFC30) /* merge_units */
+
+extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_eModifier(SkaClip* d, void* c, int mode);
+extern "C" SkaClip* cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_eModifier(SkaClip* self, void* name, NMap* m, int mode)
+{
+    SkaClip* c;
+    Base(self, 0, Unit());
+    self->vt = (void*)D_004DFC30;
+    self->clip = 0;
+    self->r2c.a = 0.0f;
+    self->r2c.b = 1.0f;
+    c = *cArray_cSkaNodePtr_opIndex(&m->reg, cSkaAnimationSet_GetNodeId(m, name));
+    if (!((Item*)c)->b4) {
+        SkaClip t;
+        cSkaAnim_ctor_cSkaAnimR_eModifier(&t, c, mode);
+        *self = t;
+    }
+    return self;
+}
+#undef D_004DFC30 /* merge_units */
+static inline void merge_flush_func_003B3CC0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B3CC0 */
+
+/* merge_units: begin func_003B3E40 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#if 0 /* merge_units */
+extern void * const D_004DFC30[];
+#endif /* merge_units */
+#define D_004DFC30 ((void * const*)&D_004DFC30) /* merge_units */
+
+extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_bool_bool_cSkaAnimPlaybackRangeR_etc(SkaClip* d, void* c, int a, int b, float f, int e, int g, int h, signed char s1, signed char s2);
+extern "C" SkaClip* cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc(SkaClip* self, void* name, NMap* m, int a, int b, int e, int g, int h, float f, signed char s1, signed char s2)
+{
+    SkaClip* c;
+    Base(self, 0, Unit());
+    self->vt = (void*)D_004DFC30;
+    self->clip = 0;
+    self->r2c.a = 0.0f;
+    self->r2c.b = 1.0f;
+    c = *cArray_cSkaNodePtr_opIndex(&m->reg, cSkaAnimationSet_GetNodeId(m, name));
+    if (!((Item*)c)->b4) {
+        SkaClip t;
+        cSkaAnim_ctor_cSkaAnimR_bool_bool_cSkaAnimPlaybackRangeR_etc(&t, c, a, b, f, e, g, h, s1, s2);
+        *self = t;
+    }
+    return self;
+}
+#undef D_004DFC30 /* merge_units */
+static inline void merge_flush_func_003B3E40(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B3E40 */
+
+/* merge_units: begin func_003B4010 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#if 0 /* merge_units */
+extern void * const D_004DFC30[];
+#endif /* merge_units */
+#define D_004DFC30 ((void * const*)&D_004DFC30) /* merge_units */
+
+extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_bool_bool_cSkaAnimPlaybackRangeNormalizedR_etc(SkaClip* d, void* c, int a, int b, float f, int e, int g, int h, signed char s1, signed char s2);
+extern "C" SkaClip* cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_2(SkaClip* self, void* name, NMap* m, int a, int b, int e, int g, int h, float f, signed char s1, signed char s2)
+{
+    SkaClip* c;
+    Base(self, 0, Unit());
+    self->vt = (void*)D_004DFC30;
+    self->clip = 0;
+    self->r2c.a = 0.0f;
+    self->r2c.b = 1.0f;
+    c = *cArray_cSkaNodePtr_opIndex(&m->reg, cSkaAnimationSet_GetNodeId(m, name));
+    if (!((Item*)c)->b4) {
+        SkaClip t;
+        cSkaAnim_ctor_cSkaAnimR_bool_bool_cSkaAnimPlaybackRangeNormalizedR_etc(&t, c, a, b, f, e, g, h, s1, s2);
+        *self = t;
+    }
+    return self;
+}
+#undef D_004DFC30 /* merge_units */
+static inline void merge_flush_func_003B4010(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B4010 */
+
+/* merge_units: begin func_003B41E0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#if 0 /* merge_units */
+extern void * const D_004DFC30[];
+#endif /* merge_units */
+#define D_004DFC30 ((void * const*)&D_004DFC30) /* merge_units */
+
+extern "C" SkaClip* cSkaAnim_ctor_cSkaAnimR_bool_bool_float_etc(SkaClip* d, void* c, int a, int b, int e, float f1, int g, float f2, int h, signed char s1);
+extern "C" SkaClip* cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_3(SkaClip* self, void* name, NMap* m, int a, int b, int e, float f1, int g, float f2, int h, signed char s1)
+{
+    SkaClip* c;
+    Base(self, 0, Unit());
+    self->vt = (void*)D_004DFC30;
+    self->clip = 0;
+    self->r2c.a = 0.0f;
+    self->r2c.b = 1.0f;
+    c = *cArray_cSkaNodePtr_opIndex(&m->reg, cSkaAnimationSet_GetNodeId(m, name));
+    if (!((Item*)c)->b4) {
+        SkaClip t;
+        cSkaAnim_ctor_cSkaAnimR_bool_bool_float_etc(&t, c, a, b, e, f1, g, f2, h, s1);
+        *self = t;
+    }
+    return self;
+}
+#undef D_004DFC30 /* merge_units */
+static inline void merge_flush_func_003B41E0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B41E0 */

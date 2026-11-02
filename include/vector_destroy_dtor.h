@@ -24,11 +24,11 @@ struct DestroyVector {
 
 #define DEFINE_VECTOR_DESTROY_DTOR(name, destroyFn)                           \
     extern "C" void destroyFn(DestroyVector* self);                           \
-    extern "C" DestroyVector* name(DestroyVector* self, short deleteFlag)     \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
-            destroyFn(self);                                                  \
-            void* p = self->data;                                             \
+            destroyFn(((DestroyVector*)self));                                \
+            void* p = ((DestroyVector*)self)->data;                           \
             if (p) {                                                          \
                 if (p) {                                                      \
                     AllocGuard guard;                                         \
@@ -47,11 +47,11 @@ struct DestroyVector {
 #define DEFINE_VECTOR_DESTROY_DTOR_FILE(name, destroyFn, fileSym)             \
     extern "C" char fileSym[];                                                \
     extern "C" void destroyFn(DestroyVector* self);                           \
-    extern "C" DestroyVector* name(DestroyVector* self, short deleteFlag)     \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
-            destroyFn(self);                                                  \
-            void* p = self->data;                                             \
+            destroyFn(((DestroyVector*)self));                                \
+            void* p = ((DestroyVector*)self)->data;                           \
             if (p) {                                                          \
                 if (p) {                                                      \
                     AllocGuard guard;                                         \

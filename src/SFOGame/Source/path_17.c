@@ -1,185 +1,229 @@
 /*
- * SFOGame/Source/path: 1 file, 00160220
+ * SFOGame/Source/path: 3 files, 00161930-00161BC0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_00160220 */
+/* merge_units: begin func_00161930 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * PathCursor constructor.
+ */
+
+#include "types.h"
+#include "path_types.h"
+
+PathCursor* cPath_ctor(PathCursor* self, int owner) {
+    self->owner = owner;
+    self->unk20 = 0;
+    self->unk28 = 0;
+    self->unk14 = -1;
+    self->unk10 = -1;
+    return self;
+}
+static inline void merge_flush_func_00161930(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00161930 */
+
+/* merge_units: begin func_00161950 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-#include "types.h"
-#include "vc_copy.h"
-struct V4 { __int128 q; V4() {} };
-struct Mat { V4 r[4]; Mat() {} };
-class Actor {
-public:
-    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-    virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-    virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-    virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-    virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
-    virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
-    virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
-    virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
-    virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
-    virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
-    virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54();
-    virtual void v55(); virtual void v56(); virtual void v57(); virtual void v58();
-    virtual Mat GetMatrix();
-    char pad4[0xC];
-    int f10;
-    unsigned char f14;
-    char pad15[0x43];
-    Actor* owner;
-};
-struct Route { char pad[0x20]; int* nodes; int cap; int count; };
-struct PNode { char pad[0x64]; int flags; char pad68[0x14]; int f7C; };
-struct Path {
-    V4 pos;
-    char pad10[0x30];
-    float dist;
-    char pad44[8];
+/* cNodeRequest_Update: restart the route walk when dirty, then report the chosen node to the owner */
+typedef struct Pt1SnObj { char pad0[0xC]; int serial; char pad10[0x58 - 0x10]; struct Pt1SnObj* owner; } Pt1SnObj;
+typedef struct Pt1SnNode { char pad0[0x10]; int a; int b; } Pt1SnNode;
+typedef struct Pt1SnMsg {
+    void* vt;
+    char pad4[0x20];
+    unsigned char found;
+    char pad25[3];
     int node;
-    int seg;
-    int prev;
-    char pad58[4];
-    int f5C;
-    unsigned char patrol : 1;
-    unsigned char b1 : 2;
-    unsigned char held : 1;
-    unsigned char arrived : 1;
-    unsigned char b5 : 3;
-    char pad61[0xF];
-    Actor* actor;
-    Route* route;
-};
-struct Msg { void* vt; char pad[0x20]; unsigned char kind; char pad25[3]; int id; char pad2c[4]; };
-struct Msg2 { void* vt; char pad[0x28]; int ids[3]; float f38; float f3C; float f40; char pad44[0xC]; };
-extern "C" {
+    int node2;
+} Pt1SnMsg;
+typedef struct Pt1SnSelf {
+    Pt1SnObj* owner;
+    int ownerSerial;
+    char pad8[0xD - 0x8];
+    unsigned char dirty;
+    unsigned char reported;
+    char padF[0x10 - 0xF];
+    char list[0x4];
+    char sentinel[0x4];
+    void* head;
+    void* tail;
+    char nodes[0x4];
+    void* first;
+    void* last;
+    int count;
+    char pad30[0x468 - 0x30];
+    int mask;
+    unsigned char mode;
+    char pad46D[0x474 - 0x46D];
+    unsigned char status;
+    char pad475[3];
+    int target;
+    int target2;
+    unsigned char reverse;
+    unsigned char retry;
+    unsigned char crouched;
+} Pt1SnSelf;
 extern char D_004ED9B8[];
 extern char D_004D9760[];
-extern char D_0051F0C0[];
-extern char D_004DE510[];
-extern unsigned char g_IsMultiplayer;
-PNode* cAIPathData_GetNode(int id);
-void cNode_GetLoc(V4* out, PNode* node);
-void cMessage_ctor_cMessageNameR(void* m, void* type);
-void QueueMessage_cMessageR_cSystemP_int(void* m, Actor* to, int flags);
-void cMessage_dtor(void* m, int flags);
-unsigned char cPathNavigator_StartPathSegment_int(Path* p, int seg);
-void cPathNavigator_SetNodeIndex(Path* p, int node);
-int cAIPathData_GetNextPatrolPathNodeIndex(int seg);
-unsigned char cPathNavigator_NextPathSegment(Path* p);
-void cNetPathMsg_SendPath(Msg2* m, int a, Route* r);
-}
-static inline void Push(Route* r, int v) { r->nodes[r->count] = v; r->count++; }
-static inline void Construct(Msg* m, unsigned char kind, int id) { cMessage_ctor_cMessageNameR(m, D_004ED9B8); m->vt = D_004D9760; m->kind = kind; m->id = id; }
-static inline void Destroy(Msg* loc) { loc->vt = D_004D9760; cMessage_dtor(loc, 0); }
-static inline void Notify(Path* p, unsigned char kind, int id)
-{
-    Msg msg;
-    Msg* m = &msg;
-    Construct(m, kind, id);
-    Actor* a = p->actor; Actor* o = a->owner; Actor* to = a; if (!o) { asm { .set reorder } } else to = o;
-    QueueMessage_cMessageR_cSystemP_int(&msg, to, 0);
-    Destroy(&msg);
-}
-static inline void Notify5(Path* p, unsigned char kind)
-{
-    Msg msg;
-    Msg* m;
-    int i = p->seg;
-    m = &msg;
-    Construct(m, kind, i);
-    Actor* a = p->actor; Actor* o = a->owner; Actor* to = a; if (!o) { asm { .set reorder } } else to = o;
-    QueueMessage_cMessageR_cSystemP_int(&msg, to, 0);
-    Destroy(&msg);
-}
-static inline void GetPos(V4* out, Path* p)
-{
-    Mat m = p->actor->GetMatrix(); V4* dp = out; Mat* pm = &m; V4* s = &pm->r[3]; __int128 x; asm { .set reorder; lq x, 0(s) } VStoreN(dp, x);
-}
-static inline void VSub(V4* r, V4* a, V4* b)
-{
-    __asm__ volatile("lqc2 $vf1, 0x0(%1); lqc2 $vf2, 0x0(%2); vsub.xyzw $vf1, $vf1, $vf2; sqc2 $vf1, 0x0(%0)" : : "r"(r), "r"(a), "r"(b) : "memory");
-}
-static inline float Length(V4* a)
-{
-    int t; float r = 0.0f;
-    __asm__ volatile("lqc2 $vf1, 0x0(%2); vmul.xyz $vf2, $vf1, $vf1; vmulax.w $ACC, $vf0, $vf2x; vmadday.w $ACC, $vf0, $vf2y; vmaddz.w $vf3, $vf0, $vf2z; vsqrt $Q, $vf3w; vwaitq; vaddq.x $vf4, $vf0, $Q; qmfc2.ni %1, $vf4; mtc1 %1, %0" : "+f"(r), "=&r"(t) : "r"(a) : "memory");
-    return r;
-}
-static inline float LengthSq(V4* a)
-{
-    int t; float r = 0.0f;
-    __asm__ volatile("lqc2 $vf1, 0x0(%2); vaddw.x $vf3, $vf0, $vf0w; vmul.xyz $vf2, $vf1, $vf1; vmulax.x $ACC, $vf3, $vf2x; vmadday.x $ACC, $vf3, $vf2y; vmaddz.x $vf4, $vf3, $vf2z; qmfc2.ni %1, $vf4; mtc1 %1, %0" : "+f"(r), "=&r"(t) : "r"(a) : "memory");
-    return r;
-}
-#pragma opt_propagation off
+extern "C" void cMessage_ctor_cMessageNameR(void* msg, void* name);
+extern "C" void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int immediate);
+extern "C" void cMessage_dtor(void* msg, int flags);
+extern "C" void cNodeRequest_AddNodesToEvaluate(Pt1SnSelf* self, int mode);
+extern "C" Pt1SnNode* cPriorityQueue_cNodeIndex_Pop(void* list);
+#if 0 /* merge_units */
+extern "C" void cNodeRequest_SendLOSRequest(Pt1SnSelf* self, int id, int mask);
+#endif /* merge_units */
+struct Route_1BC0; /* merge_units */
+extern "C" void cNodeRequest_SendLOSRequest(Route_1BC0* r, int idx, unsigned int mask); /* merge_units */
+#define cNodeRequest_SendLOSRequest(a0, a1, a2) (cNodeRequest_SendLOSRequest((Route_1BC0 *)(a0), (a1), (unsigned int)(a2))) /* merge_units */
 
-extern "C" void cPathNavigator_Update(Path* self)
+
+static inline Pt1SnObj* Pt1Sn_Owner(Pt1SnSelf* self)
 {
-    V4 pos;
-    V4 d;
-    V4 t;
-    GetPos(&pos, self);
-    if (self->held) return;
-    { V4* s = &self->pos; V4* dd; __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(s)); dd = &d; __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(dd) : "memory"); }
-    VSub(&d, &d, &pos);
-    self->dist = Length(&d);
-    int node = self->node;
-    if (node >= 0) {
-        cNode_GetLoc(&t, cAIPathData_GetNode(node));
-        VSub(&t, &t, &pos);
-        if (!(LengthSq(&t) <= 4.0f)) {
-            self->prev = self->node;
-            self->node = -1;
-        }
-    }
-    if (!self->arrived) return;
-    self->arrived = 0;
-    if (self->patrol) {
-        int next = cAIPathData_GetNextPatrolPathNodeIndex(self->seg);
-        if (next >= 0) {
-            Notify5(self, 5);
-            self->held = !cPathNavigator_StartPathSegment_int(self, next);
-            self->f5C = cAIPathData_GetNode(self->seg)->f7C;
-            if (g_IsMultiplayer && self->actor->f14) {
-                Route* r = self->route;
-                if (r->nodes) {
-                    r->count = 0;
-                    Push(self->route, next);
-                    Push(self->route, self->node);
-                    Push(self->route, self->prev);
-                    {
-                        Msg2 m2;
-                        Msg2* m = &m2;
-                        int i;
-                        cMessage_ctor_cMessageNameR(m, D_0051F0C0);
-                        m->vt = D_004DE510;
-                        m->f38 = -1.0f;
-                        m->f3C = -1.0f;
-                        m->f40 = -1.0f;
-                        for (i = 0; i != 2; i++)
-                            m->ids[i] = -1;
-                        cNetPathMsg_SendPath(&m2, self->actor->f10, self->route);
-                        m2.vt = D_004DE510;
-                        cMessage_dtor(&m2, 0);
-                    }
-                }
-            }
-        } else {
-            PNode* n = cAIPathData_GetNode(self->seg);
-            cPathNavigator_SetNodeIndex(self, self->seg);
-            self->held = 1;
-            Notify(self, 6, self->seg);
-            if (!(n->flags & 0x80))
-                cPathNavigator_SetNodeIndex(self, -1);
-        }
-    } else {
-        self->held = !cPathNavigator_NextPathSegment(self);
-    }
+    Pt1SnObj* t = self->owner;
+    bool isNull = !t;
+    bool ok = true;
+    if (!isNull)
+        if (t->serial != self->ownerSerial)
+            ok = false;
+    t = ok ? t : 0;
+    Pt1SnObj* o=t->owner; return o == 0 ? t : o;
 }
-static inline void merge_flush_func_00160220(void) {} /* merge_units */
+
+extern "C" unsigned char cNodeRequest_Update(Pt1SnSelf* self)
+{
+    unsigned char done = 0;
+    if (self->dirty) {
+        self->dirty = 0;
+        self->head = self->nodes;
+        self->tail = self->sentinel;
+        self->first = self->nodes;
+        self->last = self->sentinel;
+        self->count = 0;
+        if (!self->crouched)
+            cNodeRequest_AddNodesToEvaluate(self, 2);
+        else
+            cNodeRequest_AddNodesToEvaluate(self, 0);
+        self->target = -1;
+        self->target2 = -1;
+        self->status = 0;
+        if (self->count) {
+            if (!self->mode) {
+                Pt1SnNode* n = cPriorityQueue_cNodeIndex_Pop(self->list);
+                self->target = n->a;
+                self->target2 = n->b;
+            } else {
+                cNodeRequest_SendLOSRequest(self, ((Pt1SnNode*)self->head)->a, self->mask);
+            }
+        }
+    }
+    if (self->status == 2)
+        self->status = 0;
+    if (self->retry) {
+        if (!self->count)
+            done = 1;
+    } else if (self->target >= 0) {
+        Pt1SnMsg m;
+        int a;
+        int b;
+        self->reported = 1;
+        b = self->target2;
+        a = self->target;
+        cMessage_ctor_cMessageNameR(&m, D_004ED9B8);
+        m.node = a;
+        m.node2 = b;
+        m.vt = D_004D9760;
+        m.found = 0;
+        QueueMessage_cMessageR_cSystemP_int(&m, Pt1Sn_Owner(self), 1);
+        m.vt = D_004D9760;
+        cMessage_dtor(&m, 0);
+        done = 1;
+    } else if (!self->count) {
+        Pt1SnMsg m;
+        self->reported = 1;
+        cMessage_ctor_cMessageNameR(&m, D_004ED9B8);
+        m.vt = D_004D9760;
+        m.found = 1;
+        m.node = -1;
+        QueueMessage_cMessageR_cSystemP_int(&m, Pt1Sn_Owner(self), 1);
+        m.vt = D_004D9760;
+        cMessage_dtor(&m, 0);
+        done = 1;
+    }
+    return done;
+}
+#undef cNodeRequest_SendLOSRequest /* merge_units */
+static inline void merge_flush_func_00161950(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00160220 */
+/* merge_units: end func_00161950 */
+
+/* merge_units: begin func_00161BC0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#pragma inline_depth(8)
+#include "vslot_pad.h"
+/* cNodeRequest_SendLOSRequest: post a line-of-sight request from the route point to a target node */
+static inline void Q16(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
+struct V { float x, y, z, w; V() {} V(const V& o) { V* d = this; Q16(d, &o); } V& operator=(const V& o) { V* d = this; Q16(d, &o); return *this; } } __attribute__((aligned(16)));
+static inline void VSub(V* r, V* a, V* b) { __asm__ volatile("lqc2 vf1, 0x0(%1); lqc2 vf2, 0x0(%2); vsub.xyzw vf1, vf1, vf2; sqc2 vf1, 0x0(%0)" : : "r"(r), "r"(a), "r"(b) : "memory"); }
+struct Svc { VPAD1(a) virtual void Post(void*); };
+struct Node_1BC0 { char pad[0x64]; unsigned int flags; };
+struct List_1BC0 { char pad[8]; Node_1BC0** items; };
+struct Route_1BC0 { char pad0[0x450]; V pos; char pad460[0x482 - 0x460]; unsigned char crouch; };
+extern "C" {
+extern char D_004D9180[], g_Game[], g_LosRequestMsgClass[], g_LosCheckService[], g_NpcRouteMgr[];
+extern List_1BC0* D_004FFBE0;
+extern unsigned char D_004ED9D0;
+#if 0 /* merge_units */
+void cMessage_ctor_cMessageNameR(void*, void*);
+#endif /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((a0), (a1))) /* merge_units */
+
+#if 0 /* merge_units */
+void cMessage_dtor(void*, int);
+#endif /* merge_units */
+#define cMessage_dtor(a0, a1) (cMessage_dtor((a0), (a1))) /* merge_units */
+
+Svc* cSystemContainer_GetSystem(void*, void*);
+void cNode_GetLoc(V* out, Node_1BC0* n);
+void cNodeRequest_SendLOSRequest(Route_1BC0* r, int idx, unsigned int mask);
+}
+#pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
+struct MsgB {
+    void* vtable; void* type; int pad8[5]; int flags; unsigned char kind; char pad21[3];
+    MsgB() {}
+    MsgB(void* t) { cMessage_ctor_cMessageNameR(this, t); }
+    __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); }
+};
+struct MsgLos : MsgB {
+    void* a24; void* a28; int a2C; V pos; V dir; int a50; int a54; int n; unsigned char b5C;
+    MsgLos(void* s, void* u, const V& p, const V& d) : MsgB(g_LosRequestMsgClass) {
+        vtable = D_004D9180; a24 = s; a28 = u; a2C = 0; V* dp = &pos; Q16(dp, &p); dir = d; a50 = 0; a54 = 0; n = 4; b5C = 2; pos.w = 1.0f; dir.w = 0.0f; }
+    __declspec(weak) __declspec(MSG_DTOR) ~MsgLos() { vtable = D_004D9180; }
+} __attribute__((aligned(16)));
+void cNodeRequest_SendLOSRequest(Route_1BC0* r, int idx, unsigned int mask)
+{
+    V p = r->pos;
+    if (!r->crouch) p.z += 4.5f;
+    else p.z += 2.6f;
+    Svc* svc = cSystemContainer_GetSystem(g_Game, g_LosCheckService);
+    Node_1BC0* n = D_004FFBE0->items[idx];
+    V t;
+    cNode_GetLoc(&t, n);
+    VSub(&t, &t, &r->pos);
+    if (mask & n->flags & 4) t.z -= 3.0f;
+    {
+        MsgLos m(cSystemContainer_GetSystem(g_Game, g_NpcRouteMgr), (char*)r + 8, p, t);
+        svc->Post(&m);
+    }
+    D_004ED9D0 = 1;
+}
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef cMessage_dtor /* merge_units */
+static inline void merge_flush_func_00161BC0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00161BC0 */

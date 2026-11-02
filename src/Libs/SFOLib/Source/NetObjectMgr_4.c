@@ -1,5 +1,5 @@
 /*
- * main/NetObjectMgr: 2 files, 0042DA10-0042DA30
+ * Libs/SFOLib/Source/NetObjectMgr: 3 files, 0042DA10-0042DF00
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -24,6 +24,7 @@ Word* cAssocArray_int_tNetActivateTerrainObjectPtr_Iterator_ctor(Word* dst, Word
 void std_map_int_tNetActivateTerrainObjectPtr_end(Iter* out, Tree* t) {
     out->p = &t->header;
 }
+static inline void merge_flush_func_0042DA10(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0042DA10 */
 
@@ -49,9 +50,19 @@ extern "C" void cNetTransferMsg_Pack();
 extern void * const D_004E0F20[];
 extern char D_004E0E80[];
 void std_tree_pair_int_value_compare_find_intR_3(TransferObjectIterator* result, RbTree* tree, const GobjId* id);
+#if 0 /* merge_units */
 void std_map_int_tNetObjectPtr_end(TransferObjectIterator* result, RbTree* tree);
+#endif /* merge_units */
+void std_map_int_tNetObjectPtr_end(Iter* out, Tree* t); /* merge_units */
+#define std_map_int_tNetObjectPtr_end(a0, a1) (std_map_int_tNetObjectPtr_end((Iter *)(a0), (Tree *)(a1))) /* merge_units */
+
+#if 0 /* merge_units */
 TransferObjectIterator* cAssocArray_int_tNetObjectPtr_Iterator_ctor(TransferObjectIterator* result,
                                     const TransferObjectIterator* source);
+#endif /* merge_units */
+Word* cAssocArray_int_tNetObjectPtr_Iterator_ctor(Word* dst, Word* src); /* merge_units */
+#define cAssocArray_int_tNetObjectPtr_Iterator_ctor(a0, a1) ((TransferObjectIterator *)cAssocArray_int_tNetObjectPtr_Iterator_ctor((Word *)(a0), (Word *)(a1))) /* merge_units */
+
 void cNPCInfoObject_ctor(int* shared);
 void cNPCInfoObject_dtor(int* shared, short flags);
 int cNPCInfoObject_GetOwner_cObjectIdR(int* shared, const GobjId* id);
@@ -183,5 +194,24 @@ extern "C" TransferRequestNotice* cNetTransferMsg_dtor(TransferRequestNotice* no
     return notice;
 }
 void * const D_004E0F20[8] = { (void*)0x0, (void*)0x0, (void*)cNetTransferMsg_dtor, (void*)cNetTransferMsg_Clone, (void*)cNetTransferMsg_Pack, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
+#undef std_map_int_tNetObjectPtr_end /* merge_units */
+#undef cAssocArray_int_tNetObjectPtr_Iterator_ctor /* merge_units */
+static inline void merge_flush_func_0042DA30(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0042DA30 */
+
+/* merge_units: begin func_0042DF00 */
+#pragma push /* merge_units */
+/* Iterator copy-assignment. */
+Word* cAssocArray_int_tNetObjectPtr_Iterator_ctor(Word* dst, Word* src) {
+    dst->value = src->value;
+    return dst;
+}
+
+/* end(): iterator at the tree header. */
+void std_map_int_tNetObjectPtr_end(Iter* out, Tree* t) {
+    out->p = &t->header;
+}
+static inline void merge_flush_func_0042DF00(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0042DF00 */

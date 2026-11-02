@@ -1,5 +1,5 @@
 /*
- * main/ska: 6 files, 003BAC20-003BAFC0
+ * Libs/SFOLib/Source/texture: 7 files, 003BAC20-003BB010
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -74,6 +74,7 @@ extern "C" SkelNode* cBone_ctor_void(SkelNode* d)
     d->v1C0 = QZero();
     return d;
 }
+static inline void merge_flush_func_003BAC20(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003BAC20 */
 
@@ -95,6 +96,7 @@ int cUserFrameEnv_IsVram(BAE50Pair* p) {
     }
     return r;
 }
+static inline void merge_flush_func_003BAE50(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003BAE50 */
 
@@ -110,6 +112,7 @@ extern Table_3BAED0* g_TextureMgr;
 #define g_TextureMgr (*(Table_3BAED0 **)&g_TextureMgr) /* merge_units */
 
 
+
 unsigned int cUserFrameEnv_GetVramZAddr(Ref_3BAED0* r)
 {
     if (r->index != -1)
@@ -117,6 +120,7 @@ unsigned int cUserFrameEnv_GetVramZAddr(Ref_3BAED0* r)
     return 0;
 }
 #undef g_TextureMgr /* merge_units */
+static inline void merge_flush_func_003BAED0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003BAED0 */
 
@@ -131,12 +135,14 @@ extern EntryTable* g_TextureMgr;
 #define g_TextureMgr (*(EntryTable **)&g_TextureMgr) /* merge_units */
 
 
+
 /* Returns bits 5..13 of the 64-bit field at +0x50 of the indexed table entry. */
 unsigned int cUserFrameEnv_GetVramAddr(int* index)
 {
     return (unsigned int)(int)(g_TextureMgr->entries[*index]->bits & 0x3FFF) >> 5;
 }
 #undef g_TextureMgr /* merge_units */
+static inline void merge_flush_func_003BAF20(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003BAF20 */
 
@@ -156,6 +162,7 @@ extern TexRegistry* g_TextureMgr;
 #define g_TextureMgr (*(TexRegistry **)&g_TextureMgr) /* merge_units */
 
 
+
 int cUserFrameEnv_GetHeight(int* handle) {
     return g_TextureMgr->entries[*handle]->info->unk06;
 }
@@ -164,6 +171,7 @@ int cUserFrameEnv_GetWidth(int* handle) {
     return g_TextureMgr->entries[*handle]->info->unk04;
 }
 #undef g_TextureMgr /* merge_units */
+static inline void merge_flush_func_003BAF60(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003BAF60 */
 
@@ -174,10 +182,52 @@ extern void* g_TextureMgr;
 #endif /* merge_units */
 #define g_TextureMgr (*(void **)&g_TextureMgr) /* merge_units */
 
+
+#if 0 /* merge_units */
 extern void cTexMan_UnlockVram(void*, int);
+#endif /* merge_units */
+int cTexMan_UnlockVram(int, int); /* merge_units */
+#define cTexMan_UnlockVram(a0, a1) ((void)cTexMan_UnlockVram((int)(a0), (a1))) /* merge_units */
+
 typedef struct { int a; int b; } Pair_003BAFC0;
 /* Applies the global handler to the first id and, if valid, the second id. */
 void cUserFrameEnv_ReleaseVram(Pair_003BAFC0* p) { cTexMan_UnlockVram(g_TextureMgr, p->a); if (p->b != -1) cTexMan_UnlockVram(g_TextureMgr, p->b); }
 #undef g_TextureMgr /* merge_units */
+#undef cTexMan_UnlockVram /* merge_units */
+static inline void merge_flush_func_003BAFC0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003BAFC0 */
+
+/* merge_units: begin ska_3BB010 */
+#pragma push /* merge_units */
+#if 0 /* merge_units */
+extern char g_TextureMgr[];
+#endif /* merge_units */
+#define g_TextureMgr ((char*)&g_TextureMgr) /* merge_units */
+
+extern int cTexMan_UnlockVram(int, int);
+
+void cUserFrameEnv_Deactivate(int a0, int a1) {
+    int s0, v0, v1;
+    int cond;
+
+    cond = a1 != 0;
+    s0 = a0;
+    if (cond) goto L003BB050;
+    a0 = *(int*)(char*)g_TextureMgr;
+    a1 = *(int*)(char*)s0;
+    v0 = cTexMan_UnlockVram(a0, a1);
+    a1 = *(int*)((char*)s0 + 4);
+    v1 = 0 + -1;
+    cond = a1 == v1;
+    if (cond) goto L003BB050;
+    a0 = *(int*)(char*)g_TextureMgr;
+    v0 = cTexMan_UnlockVram(a0, a1);
+L003BB050:;
+    goto ret;
+ret:;
+}
+#undef g_TextureMgr /* merge_units */
+static inline void merge_flush_ska_3BB010(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end ska_3BB010 */

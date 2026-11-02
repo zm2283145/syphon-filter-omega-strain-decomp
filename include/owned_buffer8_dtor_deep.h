@@ -12,11 +12,11 @@
 
 #define DEFINE_OWNED_BUFFER8_DTOR_MID(name, fileSym)                          \
     extern "C" char fileSym[];                                                \
-    extern "C" OwnedBuffer8* name(OwnedBuffer8* self, short deleteFlag)       \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
             if (self) {                                                       \
-                void* p = self->buffer;                                       \
+                void* p = ((OwnedBuffer8*)self)->buffer;                      \
                 if (p) {                                                      \
                     if (p) {                                                  \
                         AllocGuard guard;                                     \
@@ -32,12 +32,12 @@
 
 #define DEFINE_OWNED_BUFFER8_DTOR_DEEP(name, fileSym)                         \
     extern "C" char fileSym[];                                                \
-    extern "C" OwnedBuffer8* name(OwnedBuffer8* self, short deleteFlag)       \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
             if (self) {                                                       \
                 if (self) {                                                   \
-                    void* p = self->buffer;                                   \
+                    void* p = ((OwnedBuffer8*)self)->buffer;                  \
                     if (p) {                                                  \
                         if (p) {                                              \
                             AllocGuard guard;                                 \

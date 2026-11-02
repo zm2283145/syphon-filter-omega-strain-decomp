@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/nellymoser_wrapper: 6 files, 0042BA00-0042C1E0
+ * Libs/SFOLib/Source/nellymoser_wrapper: 7 files, 0042BA00-0042C960
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -75,15 +75,18 @@ extern long* D_00582628;
 #endif /* merge_units */
 #define D_00582628 (*(long **)&D_00582628) /* merge_units */
 
+
 #if 0 /* merge_units */
 extern long* D_00582638;
 #endif /* merge_units */
 #define D_00582638 (*(long **)&D_00582638) /* merge_units */
 
+
 #if 0 /* merge_units */
 extern long* D_00582648;
 #endif /* merge_units */
 #define D_00582648 (*(long **)&D_00582648) /* merge_units */
+
 
 extern short D_005825DE;
 extern short D_005825FE;
@@ -226,15 +229,18 @@ extern char D_00582630;
 #endif /* merge_units */
 #define D_00582630 (*(char*)&D_00582630) /* merge_units */
 
+
 #if 0 /* merge_units */
 extern char D_00582640;
 #endif /* merge_units */
 #define D_00582640 (*(char*)&D_00582640) /* merge_units */
 
+
 #if 0 /* merge_units */
 extern char D_00582650;
 #endif /* merge_units */
 #define D_00582650 (*(char*)&D_00582650) /* merge_units */
+
 
 
 /* Clears three flags and three counters. */
@@ -414,11 +420,13 @@ extern char* D_005825B8;
 #endif /* merge_units */
 #define D_005825B8 (*(char **)&D_005825B8) /* merge_units */
 
+
 extern unsigned short D_005825BC;
 #if 0 /* merge_units */
 extern char* D_005825D8;
 #endif /* merge_units */
 #define D_005825D8 (*(char **)&D_005825D8) /* merge_units */
+
 
 extern unsigned short D_005825DC;
 extern char D_005825E0;
@@ -430,6 +438,7 @@ extern char* D_005825F8;
 #endif /* merge_units */
 #define D_005825F8 (*(char **)&D_005825F8) /* merge_units */
 
+
 extern unsigned short D_005825FC;
 extern char D_00582600;
 extern unsigned short D_00582602;
@@ -440,6 +449,7 @@ extern char* D_00582618;
 #endif /* merge_units */
 #define D_00582618 (*(char **)&D_00582618) /* merge_units */
 
+
 extern unsigned short D_0058261C;
 extern char D_00582620;
 extern unsigned short D_00582622;
@@ -449,10 +459,12 @@ extern char* D_00582628;
 #endif /* merge_units */
 #define D_00582628 (*(char **)&D_00582628) /* merge_units */
 
+
 #if 0 /* merge_units */
 extern char* D_00582638;
 #endif /* merge_units */
 #define D_00582638 (*(char **)&D_00582638) /* merge_units */
+
 
 #if 0 /* merge_units */
 extern char* D_00582648;
@@ -460,7 +472,12 @@ extern char* D_00582648;
 #define D_00582648 (*(char **)&D_00582648) /* merge_units */
 
 
+
+#if 0 /* merge_units */
 extern void* sfo_calloc();
+#endif /* merge_units */
+void* sfo_calloc(int n, int m); /* merge_units */
+
 extern void* sfo_free();
 void nciSetCallocFunction(void* fn);
 void nciSetFreeFunction(void* fn);
@@ -573,3 +590,22 @@ void cNellyMoser_nmsCreate(void)
 static inline void merge_flush_func_0042C1E0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0042C1E0 */
+
+/* merge_units: begin func_0042C960 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "alloc_guard.h"
+#if 0 /* merge_units */
+extern "C" void* cMemMan_Allocate(int, int, char*, int);
+#endif /* merge_units */
+#define cMemMan_Allocate(a0, a1, a2, a3) (cMemMan_Allocate((a0), (unsigned int)(a1), (a2), (a3))) /* merge_units */
+
+extern "C" void* sfo_calloc(int n, int m) {
+    AllocGuard g;
+    char msg[] = "sfo_malloc: should only be used in rtime lib";
+    return cMemMan_Allocate(2, n * m, msg, 0);
+}
+#undef cMemMan_Allocate /* merge_units */
+static inline void merge_flush_func_0042C960(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0042C960 */

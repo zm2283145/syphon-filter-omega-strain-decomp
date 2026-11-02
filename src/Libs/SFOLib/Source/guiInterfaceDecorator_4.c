@@ -1,365 +1,254 @@
 /*
- * Libs/SFOLib/Source/guiInterfaceDecorator: 6 files, 004172E0-00417790
+ * Libs/SFOLib/Source/guiInterfaceDecorator: 4 files, 00417AE0-00417C40
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_004172E0 */
+/* merge_units: begin func_00417AE0 */
 #pragma push /* merge_units */
-#pragma cplusplus on
-
 #include "types.h"
-#include "base_dtor_chain.h"
+#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#define NULL 0
+#pragma mpwc_relax on
+/*fc*/
+int String_Dtor();                         
+int cInterfaceManager_RemoveInterface();                          
+int GuiDecorator_dtor();                         
+int std_vector_deleter_GuiAnimationTrack_dtor();                         
+int operator_delete();                          
+extern void GuiInterfaceDecorator_onActivate();
+extern void GuiInterfaceDecorator_onDeactivate();
+extern void GuiInterfaceDecorator_onGainFocus();
+extern void GuiInterfaceDecorator_onLoseFocus();
+extern void GuiInterfaceDecorator_onSleep();
+extern void GuiInterfaceDecorator_onWake();
+extern void GuiInterfaceDecorator_Load();
+extern void GuiInterfaceDecorator_onRender();
+extern void GuiInterfaceDecorator_onMessage();
+extern void GuiInterfaceDecorator_onAdvanceTime();
+extern void GuiInterfaceDecorator_onRemove();
+extern void GuiInterfaceDecorator_onAdd();
+extern void GuiDecorator_onInput();
+extern void GuiDecorator_onAction();
+extern void * const D_004E09F0[];
+extern char D_00571DC0;
 
-/* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(GuiAnimationTrack_dtor, String_Dtor)
-static inline void merge_flush_func_004172E0(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_004172E0 */
+char * GuiInterfaceDecorator_dtor(char * arg0, long long arg1) {
+    int temp_a1;
+    char * temp_a0;
+    char * temp_a0_2;
+    char * temp_a0_3;
 
-/* merge_units: begin func_00417340 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-#include "vslot_classes.h"
-
-typedef struct { char pad[4]; VSlots67* ctl; char p1[0x1C]; void* res; } Obj_417340;
-extern "C" void cInterfaceElement_Activate(void*, int);
-extern "C" void cInterfaceElement_Render(void*, int);
-
-extern "C" void GuiInterfaceDecorator_onRender(Obj_417340* o)
-{
-    if (o->res) {
-        cInterfaceElement_Activate(o->res, 1);
-        cInterfaceElement_Render(o->res, 0);
-        cInterfaceElement_Activate(o->res, 0);
+    if (arg0 != NULL) {
+        F_(arg0, 0x0, int) = (int)(&(*(char*)D_004E09F0));
+        temp_a1 = F_(arg0, 0x20, int);
+        if (temp_a1 != -1) {
+            cInterfaceManager_RemoveInterface(&D_00571DC0, temp_a1);
+        }
+        temp_a0 = arg0 + 0x70;
+        if ((temp_a0 != NULL) && (temp_a0 != NULL) && (temp_a0 != NULL)) {
+            std_vector_deleter_GuiAnimationTrack_dtor(temp_a0, 0);
+        }
+        temp_a0_2 = arg0 + 0x14;
+        if (temp_a0_2 != NULL) {
+            String_Dtor(temp_a0_2, 0);
+        }
+        temp_a0_3 = arg0 + 8;
+        if (temp_a0_3 != NULL) {
+            String_Dtor(temp_a0_3, 0);
+        }
+        GuiDecorator_dtor(arg0, 0);
+        if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
+            operator_delete(arg0);
+        }
     }
-    o->ctl->slot10();
+    return arg0;
 }
-static inline void merge_flush_func_00417340(void) {} /* merge_units */
+void * const D_004E09F0[20] = { (void*)0x0, (void*)0x0, (void*)GuiInterfaceDecorator_dtor, (void*)GuiInterfaceDecorator_onAdd, (void*)GuiInterfaceDecorator_onRemove, (void*)GuiInterfaceDecorator_onActivate, (void*)GuiInterfaceDecorator_onDeactivate, (void*)GuiInterfaceDecorator_onWake, (void*)GuiInterfaceDecorator_onSleep, (void*)GuiInterfaceDecorator_onGainFocus, (void*)GuiInterfaceDecorator_onLoseFocus, (void*)GuiDecorator_onInput, (void*)GuiInterfaceDecorator_onRender, (void*)GuiDecorator_onAction, (void*)GuiInterfaceDecorator_onAdvanceTime, (void*)GuiInterfaceDecorator_onMessage, (void*)GuiInterfaceDecorator_Load, (void*)0x0, (void*)0x0, (void*)0x0 };
+static inline void merge_flush_func_00417AE0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00417340 */
+/* merge_units: end func_00417AE0 */
 
-/* merge_units: begin func_004173B0 */
+/* merge_units: begin func_00417BC0 */
+#pragma push /* merge_units */
+typedef struct { char pad[0xC]; unsigned char enabled; char pad2[3]; } SubState;
+typedef struct {
+    void* vtable;
+    int unk4;
+    int a, b, c, d, e, f;   /* 0x08..0x1C */
+    int index;              /* 0x20 */
+    int count;              /* 0x24 */
+    unsigned char busy;     /* 0x28 */
+    char pad29[0x47];
+    SubState sub;           /* 0x70 */
+    int last;               /* 0x80 */
+} Widget;
+#if 0 /* merge_units */
+extern char D_004E09F0[];
+#endif /* merge_units */
+#define D_004E09F0 ((char*)&D_004E09F0) /* merge_units */
+
+
+extern void GuiDecorator_ctor(Widget* w);
+#if 0 /* merge_units */
+extern void std_vector_GuiAnimationTrack_ctor(SubState* s);
+#endif /* merge_units */
+Rel * std_vector_GuiAnimationTrack_ctor(); /* merge_units */
+
+/* Constructor. */
+Widget* GuiInterfaceDecorator_ctor(Widget* w)
+{
+    SubState* sub;
+    GuiDecorator_ctor(w);
+    sub = &w->sub;
+    w->vtable = D_004E09F0;
+    w->a = 0;
+    w->b = 0;
+    w->c = 0;
+    w->d = 0;
+    w->e = 0;
+    w->f = 0;
+    std_vector_GuiAnimationTrack_ctor(sub);
+    sub->enabled = 1;
+    w->count = 0;
+    w->index = -1;
+    w->busy = 0;
+    w->last = 0;
+    return w;
+}
+#undef D_004E09F0 /* merge_units */
+static inline void merge_flush_func_00417BC0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00417BC0 */
+
+/* merge_units: begin func_00417C40 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+
+Rel* std_vector_GuiAnimationTrack_ctor(Rel* r) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
+    return r;
+}
+static inline void merge_flush_func_00417C40(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00417C40 */
+
+/* merge_units: begin func_00417C60 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-#include "vslot_pad.h"
-#include "vc_copy.h"
+#include "tstr_types.h"
 
-typedef struct E_4173B0 { char name[0xC]; unsigned char kind; char pad[3]; int x; int y; } E_4173B0;
-typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4_4173B0;
-struct Inst_4173B0 {
-    VPAD1(p)
-    virtual float Time();
-    float t;
-};
-struct Base_4173B0 {
-    VPAD8(p) VPAD4(q) VPAD1(r)
-    virtual bool Handle(int a1, unsigned short msg, int p1, int p2);
-    char pad4[0x3C - 4];
-    float w;
-    float h;
-    float& W() { return w; }
-    float& H() { return h; }
-};
-struct Self_4173B0 {
-    char pad0[4];
-    Base_4173B0* base;
-    char pad8[0x24 - 8];
-    Inst_4173B0* inst;
-    char pad28[0x30 - 0x28];
-    V4_4173B0 v30;
-    char pad40[0x60 - 0x40];
-    V4_4173B0 v60;
-    char pad70[0x80 - 0x70];
-    E_4173B0* cur;
-};
-
+struct E7C60 { char s[0xC]; signed char c; int a; int b; };
+struct V7C60 { unsigned int cap; unsigned int count; E7C60* data; };
 extern "C" {
-E_4173B0* GuiInterfaceDecorator_FindEvent(Self_4173B0* o, char* name);
-int GuiInterfaceDecorator_StartAnimation(Self_4173B0* o, char* name);
-void cAnimator_NextFrame(Inst_4173B0* i, float t);
-void cAnimator_SetFrame(Inst_4173B0* i, float t);
-void cAnimator_AnimateTo(Inst_4173B0* i, float t);
-void cAnimator_StartAnimation(Inst_4173B0* i, float a, float b, int f);
-void cInterfaceElement_SetView(Inst_4173B0* i, V4_4173B0* v);
-}
-
-/* GCC-style volatile asm quad copies (lq/sq only): MW does not CSE across them, so the
-   dead address local after the first copy and the repeated 2.0f / &base->w loads stay
-   as in retail. GC1L declares its source local first to get retail's register order. */
-static inline void GC1(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
-static inline void GC1L(void* d, const void* s) { const void* ss = s; void* dd = d; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(dd), "r"(ss) : "memory"); }
-static inline float Yv(E_4173B0* e) { return e->y; }
-static inline float Tm(Inst_4173B0* i) { return i->t; }
-extern "C" bool GuiInterfaceDecorator_onMessage(Self_4173B0* self, int a1, unsigned short msg, int p1, int p2)
-{
-    switch (msg - 4) {
-    case 11: {
-        E_4173B0* e = self->cur;
-        Inst_4173B0* inst;
-        bool r;
-        if (e == 0 || (inst = self->inst) == 0 || e->kind != 1 || Yv(e) == Tm(inst)) r = 1; else r = 0;
-        return r;
-
-    }
-    case 2:
-        GuiInterfaceDecorator_StartAnimation(self, (char*)p1);
-        return 0;
-    case 1:
-        if (p1) *(Inst_4173B0**)p1 = self->inst;
-        return 1;
-    case 3:
-        if (p1 == 0 || 0.0f == *(float*)p1) return 1;
-        if (self->inst) cAnimator_NextFrame(self->inst, *(float*)p1);
-        return 0;
-    case 5:
-        if (p1 && self->inst) *(float*)p1 = self->inst->t;
-        return 1;
-    case 4:
-        if (p1 && self->inst) *(float*)p1 = self->inst->Time();
-        return 1;
-    case 0: {
-        E_4173B0* e = GuiInterfaceDecorator_FindEvent(self, (char*)p1);
-        if (e && p2) {
-            *(E_4173B0**)p2 = e;
-            return 1;
-        }
-        return 0;
-    }
-    case 6:
-    case 7:
-    case 8:
-    case 9:
-    case 10: {
-        if (self->inst == 0) break;
-        switch (msg) {
-        case 10:
-            cAnimator_SetFrame(self->inst, p1);
-        case 11:
-            cAnimator_AnimateTo(self->inst, p1);
-            break;
-        case 12:
-            cAnimator_SetFrame(self->inst, p1);
-            cAnimator_AnimateTo(self->inst, p2);
-            break;
-        case 13:
-            if (self->inst->t < p1 || self->inst->t > p2) { Inst_4173B0* volatile* pv = &self->inst; cAnimator_SetFrame(*pv, p1); }
-            cAnimator_StartAnimation(self->inst, p1, p2, 0);
-            break;
-        case 14:
-            if (self->inst->t < p1 || self->inst->t > p2) { Inst_4173B0* volatile* pv = &self->inst; cAnimator_SetFrame(*pv, p1); }
-            cAnimator_StartAnimation(self->inst, p1, p2, 1);
-            break;
-        }
-        self->cur = 0;
-        return 0;
-    }
-    case 14: {
-        V4_4173B0 v;
-        GC1L(&v, &self->v60);
-        void* xx = &self->v60; /* dead on purpose */
-        v.x = (float)p1 + self->base->W() / 2.0f;
-        v.z = (float)p2 - self->base->H() / 2.0f;
-        GC1(&self->v60, &v);
-        if (self->inst) cInterfaceElement_SetView(self->inst, &self->v30);
-        return 1;
-    }
-    }
-    return self->base->Handle(a1, msg, p1, p2);
-}
-static inline void merge_flush_func_004173B0(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_004173B0 */
-
-/* merge_units: begin func_00417790 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-
-struct E_417790 { char name[0xC]; unsigned char kind; char pad[3]; int x; int y; };
-struct I_417790 { int f0; float t; };
-struct W_417790 {
-    VPAD8(p) VPAD4(q)
-    virtual void Update(float dt);
-    char pad[0x10];
-    unsigned short flags;
-};
-struct O_417790 {
-    int f0;
-    W_417790* w;
-    char pad[0x1C];
-    I_417790* inst;
-    char pad28[0x58];
-    E_417790* cur;
-    bool Done();
-};
+extern char D_004BF080[];
+extern char D_004BF0B0[];
+void std_basic_string_char_char_traits_char_ctor_basicstringR(void* d, const void* s);
+E7C60* std_copy_backward_GuiAnimationTrack_copy_backward(E7C60* first, E7C60* last, E7C60* result);
+void std_fill_n_GuiAnimationTrack_int_fill_n(E7C60* p, unsigned int n, const E7C60* v);
+void std_swap_vectordeleterR_vectordeleterR_49(V7C60* a, V7C60* b);
 #if 0 /* merge_units */
-extern "C" void cAnimator_NextFrame(I_417790* i, float dt);
+void std_vector_deleter_GuiAnimationTrack_dtor(V7C60* v, int f);
 #endif /* merge_units */
-#define cAnimator_NextFrame(a0, a1) (cAnimator_NextFrame((Inst_4173B0 *)(a0), (a1))) /* merge_units */
 
-
-inline bool O_417790::Done()
-{
-    if (cur == 0 || inst == 0 || cur->kind != 1 || (float)cur->y == inst->t) return true;
-    return false;
 }
 
-extern "C" void GuiInterfaceDecorator_onAdvanceTime(O_417790* o, float dt)
+static inline void construct(E7C60* p, const E7C60* s)
 {
-    if (o->inst) cAnimator_NextFrame(o->inst, dt);
-    {
-        unsigned short& f = o->w->flags;
-        if ((f & 0x10) && (f & 8)) {
-            if (o->Done()) f &= ~8;
-        }
-    }
-    o->w->Update(dt);
-}
-#undef cAnimator_NextFrame /* merge_units */
-static inline void merge_flush_func_00417790(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_00417790 */
-
-/* merge_units: begin func_00417870 */
-#pragma push /* merge_units */
-/* Compiled as C++ (virtual calls through $t9 only come from real virtual dispatch). */
-#pragma cplusplus on
-
-struct WidgetChild {
-    virtual void v00(); virtual void v01();
-    virtual void Method10(); /* +0x10 */
-};
-
-typedef struct GuiWidget {
-    int unk0;
-    WidgetChild* child; /* +0x04 */
-    char pad08[0x20 - 8];
-    int handle;  /* +0x20 */
-    void* unk24; /* +0x24 */
-} GuiWidget;
-
-extern char D_00571DC0[];
-extern "C" void cInterfaceElement_Destroy(void* p);
-extern "C" void cInterfaceManager_RemoveInterface(void* mgr, int handle);
-
-/* Notifies the child (virtual +0x10); if a handle (+0x20) is held, releases it (cInterfaceElement_Destroy on +0x24, cInterfaceManager_RemoveInterface) and resets it to -1. */
-extern "C" void GuiInterfaceDecorator_onRemove(GuiWidget* self)
-{
-    self->child->Method10();
-    if (self->handle != -1) {
-    if (self->unk24)
-    cInterfaceElement_Destroy(self->unk24);
-    cInterfaceManager_RemoveInterface(D_00571DC0, self->handle);
-    self->handle = -1;
+    if (p) {
+        std_basic_string_char_char_traits_char_ctor_basicstringR(p, s);
+        p->c = s->c;
+        p->a = s->a;
+        p->b = s->b;
     }
 }
-static inline void merge_flush_func_00417870(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_00417870 */
 
-/* merge_units: begin func_004178E0 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-
-struct Str_4178E0 { int w0; int len; char* data; };
-struct PStr_4178E0 {
-    signed char len;
-    char text[0x80];
-};
-static inline void Cat_4178E0(PStr_4178E0* p, const char* s)
+#define T E7C60
+extern "C" void std_vector_imp_GuiAnimationTrack_insert(V7C60* v, T* pos, unsigned int n, const T* value)
 {
-    char* d;
-    const char* t;
-    int n;
-    t = s;
-    n = p->len;
-    d = &p->text[n];
-    if (n < 0x7E) {
-        while ((*d++ = *t++) != 0) {
-            if (++n >= 0x7E) {
-                n++;
-                d[0] = '\n';
-                d[1] = 0;
-                break;
+    if (n == 0)
+        return;
+    if (n > 0x400000 || v->count > 0x400000 - n) {
+        Libc_Fprintf(D_00489738->stream, D_004BF080);
+        Libc_Abort();
+    }
+    if (v->count + n <= v->cap) {
+        T* p; T* q; T* src; T* dst; T* end;
+        end = v->data + v->count;
+        unsigned int after = end - pos;
+        if (after < n) {
+            p = end;
+            for (; after < n; n--) {
+                construct(p, value);
+                p++;
+                v->count++;
             }
-        }
-    }
-    p->len = n;
-}
-struct W_4178E0 {
-    VPAD1(p)
-    virtual void Reset();
-    Str_4178E0 name;
-    char pad10[0xC];
-    int f1C;
-};
-struct O_4178E0 {
-    int f0;
-    W_4178E0* w;
-    Str_4178E0 file;
-    Str_4178E0 text;
-    int id;
-    void* inst;
-    char pad28[8];
-    char f30[4];
-};
-extern "C" {
-char* std_basic_string_char_char_traits_char_c_str(Str_4178E0* s);
-int cString_Length(Str_4178E0* s);
-int cInterfaceManager_AddInterface(void* db, char* name);
-int* cInterfaceManager_GetInterface(void* db, int id);
-void* cInterfaceModel_FindChild(int scene, char* name);
-void* cInterfaceModel_CreateInstance(void* n);
-#if 0 /* merge_units */
-void cInterfaceElement_Activate(void* i, int a);
-#endif /* merge_units */
-#define cInterfaceElement_Activate(a0, a1) (cInterfaceElement_Activate((a0), (a1))) /* merge_units */
-
-#if 0 /* merge_units */
-void cInterfaceElement_SetView(void* i, void* p);
-#endif /* merge_units */
-#define cInterfaceElement_SetView(a0, a1) (cInterfaceElement_SetView((Inst_4173B0 *)(a0), (V4_4173B0 *)(a1))) /* merge_units */
-
-extern char D_004BF070[];
-}
-static inline bool Empty_4178E0(Str_4178E0* s) { return cString_Length(s) == 0; }
-
-extern "C" void GuiInterfaceDecorator_onAdd(O_4178E0* o)
-{
-    int* rec;
-    o->w->Reset();
-    o->id = cInterfaceManager_AddInterface(D_00571DC0, std_basic_string_char_char_traits_char_c_str(&o->file));
-    if (o->id == -1) return;
-    rec = cInterfaceManager_GetInterface(D_00571DC0, o->id);
-    if (rec && *rec) {
-        PStr_4178E0 buf;
-        void* n;
-        const char* s;
-        Empty_4178E0(&o->text) ? (s = std_basic_string_char_char_traits_char_c_str(&o->w->name)) : (s = std_basic_string_char_char_traits_char_c_str(&o->text));
-        {
-            char* d = buf.text;
-            int n = 0;
-            while ((*d++ = *s++) != 0) {
-                if (++n >= 0x7E) {
-                    n++;
-                    d[0] = '\n';
-                    d[1] = 0;
-                    break;
-                }
+            for (q = pos; q < end; q++, p++) {
+                construct(p, q);
+                v->count++;
             }
-            buf.len = n;
+        } else {
+            src = end - n;
+            dst = end;
+            for (; src < end; src++, dst++) {
+                construct(dst, src);
+                v->count++;
+            }
+            if (end - (after - n) <= value && value < end)
+                value += n;
+            std_copy_backward_GuiAnimationTrack_copy_backward(pos, pos + (after - n), end);
         }
-        if (o->w->f1C == 0) Cat_4178E0(&buf, D_004BF070);
-        n = cInterfaceModel_FindChild(*rec, (char*)&buf + 1);
-        if (n) {
-            o->inst = cInterfaceModel_CreateInstance(n);
-            cInterfaceElement_Activate(o->inst, 0);
-            cInterfaceElement_SetView(o->inst, o->f30);
+        std_fill_n_GuiAnimationTrack_int_fill_n(pos, n, value);
+    } else {
+        V7C60 tmp;
+        T* dst;
+        unsigned int newCap;
+        T** tdata;
+        T* src;
+        unsigned int* tcount;
+        T* srcEnd;
+        unsigned int need;
+        tcount = &tmp.count;
+        tdata = &tmp.data;
+        tmp.cap = 0;
+        *tcount = 0;
+        *tdata = 0;
+        need = v->count + n;
+        newCap = v->cap ? v->cap : 1;
+        while (need > newCap) {
+            if (newCap < 0x200000)
+                newCap *= 2;
+            else
+                newCap = 0x400000;
         }
+        *tdata = (T*)TStr_Alloc(newCap * sizeof(T), D_004BF0B0, 0x5C);
+        tmp.cap = newCap;
+        src = v->data;
+        srcEnd = src + v->count;
+        dst = *tdata;
+        for (; src < pos; src++, dst++) {
+            construct(dst, src);
+            (*tcount)++;
+        }
+        for (; n; n--, dst++) {
+            construct(dst, value);
+            (*tcount)++;
+        }
+        for (; src < srcEnd; src++, dst++) {
+            construct(dst, src);
+            (*tcount)++;
+        }
+        std_swap_vectordeleterR_vectordeleterR_49(&tmp, v);
+        std_vector_deleter_GuiAnimationTrack_dtor(&tmp, -1);
     }
 }
-#undef cInterfaceElement_Activate /* merge_units */
-#undef cInterfaceElement_SetView /* merge_units */
-static inline void merge_flush_func_004178E0(void) {} /* merge_units */
+static inline void merge_flush_func_00417C60(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_004178E0 */
+/* merge_units: end func_00417C60 */

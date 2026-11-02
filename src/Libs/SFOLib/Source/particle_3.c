@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/particle: 4 files, 00397A80-00397AB0
+ * Libs/SFOLib/Source/particle: 5 files, 00397A80-00397D50
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -81,7 +81,12 @@ extern int cParticleSystem_GetEffectID(void*, char*);
 extern void cTimerDisable_ctor(int* g);
 extern void cTimerDisable_dtor(int* g, int del);
 extern void cEffectRequest_dtor(E397B20*, int);
+#if 0 /* merge_units */
 extern void cArray_cEffectRequestPtr_dtor(L397B20*, int);
+#endif /* merge_units */
+void* cArray_cEffectRequestPtr_dtor(void* self, short deleteFlag); /* merge_units */
+#define cArray_cEffectRequestPtr_dtor(a0, a1) ((void)cArray_cEffectRequestPtr_dtor((void *)(a0), (short)(a1))) /* merge_units */
+
 extern char D_004BC5D0[];
 extern char D_004BC5E0[];
 extern char D_004BC600[];
@@ -140,5 +145,17 @@ void cParticleSystem_LoadRequestedEffects(S397B20* self, int arg1)
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00397B20(void) {}
+#undef cArray_cEffectRequestPtr_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00397B20 */
+
+/* merge_units: begin func_00397D50 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "base_dtor_chain.h"
+
+/* Deleting destructor that runs the base destructor. */
+DEFINE_BASE_DTOR_CHAIN(cArray_cEffectRequestPtr_dtor, std_vector_imp_cEffectRequestPtr_1_dtor)
+static inline void merge_flush_func_00397D50(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00397D50 */

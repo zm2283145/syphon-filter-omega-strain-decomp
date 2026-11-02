@@ -1,376 +1,969 @@
 /*
- * Libs/SFOLib/Source/scriptManager: 1 file, 003DA110
+ * Libs/SFOLib/Source/scriptManager: 5 files, 003DD760-003DDFC0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_003DA110 */
+/* merge_units: begin func_003DD760 */
 #pragma push /* merge_units */
-/* cScriptInterpreter_SymbolTable_loadScript 003DA110 draft (mw38, C++). cdiff: 1329 '**' lines of ~1992; prelude+early return match modulo frame (0x360 vs 0x390), slti v0 vs at; mid-body register allocation swaps (s0/s1/s2, fp vs stack temp). */
-#pragma cplusplus on
-#pragma inline_depth(12)
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
 #include "types.h"
+
+Word* func_003DD760(Word* dst, Word* src) {
+    dst->value = src->value;
+    return dst;
+}
+
+void func_003DD770(Iter* out, Tree* t) {
+    out->p = &t->header;
+}
+
+int* cArray_intPtr_opIndex_int(PtrVec* v, int i) {
+    return v->data + i;
+}
+static inline void merge_flush_func_003DD760(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003DD760 */
+
+/* merge_units: begin func_003DD790 */
+#pragma push /* merge_units */
+#pragma push
+#pragma cplusplus on
 #include "alloc_guard.h"
-typedef unsigned char u8;
+#pragma pop
+
+/* library prototypes shared by the blocks below (C linkage) */
+#include "SFOLobby_helpers.h"
+int strlen(const char *);
+
+#pragma cplusplus on
+
+struct Var3DD790 {
+    int pad0[2];
+    unsigned char active;
+    int* ptr;
+    int refs;
+    int v14;
+    unsigned char b18;
+    int v1C;
+};
+
+struct Mgr3DD790 {
+    char pad[0x28];
+    int count;
+    int arr[5000];
+};
 
 extern "C" {
+void* cMemMan_Allocate(int, int, char*, int);
+Var3DD790* cScriptInterpreter_findVar(Mgr3DD790*, char*, int);
+#if 0 /* merge_units */
+void cScriptBase_sm_printf(char*, char*);
+#endif /* merge_units */
+void cScriptBase_sm_printf(const char*, ...); /* merge_units */
+
+Var3DD790* VarDef_ctor(void*, char*, int*, int*, int);
+void std_vector_VarDefPtr_push_back(int, Var3DD790**);
 extern char D_004BD4C0[];
-extern char D_004BDC18[];
-extern char D_004BDC28[];
-extern char D_004BDC68[];
-extern int D_004938F0;
-extern int D_004938F8;
-void* cMemMan_Allocate(int heap, int size, char* file, int line);
-void cMemMan_Deallocate(int heap, void* p, char* file, int line);
-char* cScriptBase_myStrdup(char* s);
-void Libc_Strcpy(char* d, void* s);
-int String_CompareNoCase(char* a, char* b);
-void* memcpy(void* d, const void* s, unsigned int n);
-void cFileMan_ctor_void(void* h);
-void cFileMan_Close(void* h);
-void cFileMan_dtor(void* h, int f);
-void cFileIO_dtor(void* p, int f);
-int* cFileMan_Read_void(void* h);
-int cFileMan_GetSize(void* h);
-void std_vector_pod_int_resize(void* v, int n, void* const& fill);
-void** cArray_VarDefPtr_opIndex(void* s, int id);
-void std_vector_SubScriptPtr_push_back(void* v, void* p);
-void** std_vector_SubScriptPtr_opIndex(void* v, int i);
-void** std_vector_intPtr_opIndex(void* v, int i);
-void std_vector_charPtr_push_back_charPR(void* v, void* p);
-struct TypeRec* cScriptBase_getClass(int id);
-int cScriptInterpreter_SymbolTable_remapType(void* s, int t);
-void* SubScript_ctor(void* p, int id, char* name);
-void cScriptInterpreter_SymbolTable_addClass(void* s, char* name, u8 b, char* name2, int n, char** strs, int* ints, int idx);
-void cScriptInterpreter_SymbolTable_addEnum(void* s, char* name, int idx, void* recs, int n);
-void cScriptInterpreter_SymbolTable_addFunc(void* s, void* rec, int idx);
-void cScriptInterpreter_SymbolTable_addVar(void* s, char* name, int a, int* p, int* arr, u8 reload, int idx);
+extern char D_004BD4F0[];
+extern int D_00554F18;
 }
 
-struct Vec { int cap; int count; void** data; int pad; void*& operator[](unsigned int i) { return data[i]; } };
-
-struct TypeRec { int x0; Vec fields; char pad14[0x28]; u8 x3C; };
-
-struct SubScript { char pad[0x60]; int id; char pad64[4]; char* name; };
-
-struct ScriptRec {
-    char* name;      /* 0x00 */
-    int x4;
-    int count;       /* 0x08 */
-    int xC;
-    int pad10;
-    int x14;
-    u8 x18;
-    u8 x19;
-    char pad1A[2];
-    int arr[20];     /* 0x1C */
-    SubScript* sub;  /* 0x6C */
-    void* x70;
-    void* x74;
-    int* x78;
-};
-
-struct Script {
-    Vec v00;
-    Vec v10;
-    Vec v20;
-    Vec v30;
-    Vec v40;
-    Vec v50;
-    Vec v60;
-    Vec v70;
-    char* name;      /* 0x80 */
-    int* x84;
-    int* x88;
-    int version;     /* 0x8C */
-};
-
-static inline void* New_3DA110(int size, char* f, int line) { AllocGuard g; return cMemMan_Allocate(0, size, f, line); }
-static inline void Del_3DA110(void* p, char* f, int line) { if (p) { AllocGuard g; cMemMan_Deallocate(0, p, f, line); } }
-static inline void DelG_3DA110(int* p, char* f, int line) { AllocGuard g; cFileIO_dtor(p, -1); cMemMan_Deallocate(0, p, f, line); }
-static inline void DelU_3DA110(void* p, char* f, int line) { AllocGuard g; cMemMan_Deallocate(0, p, f, line); }
-
-struct ScriptFile {
-    int* file;
-    int size;
-    char hog[0x9C];
-    void* buf;
-    int* cur;
-    int* data;
-    int b0;
-    int len;
-    u8 ok;
-
-    ScriptFile(char* name, int sz) { cFileMan_ctor_void(hog); file = 0; size = sz; Open(name, 0); }
-    void Open(char* name, int mode);
-    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~ScriptFile() {
-        cFileMan_Close(hog);
-        if (file) {
-            DelG_3DA110(file, D_004BDC28, 0x45);
-            file = 0;
-        }
-        size = 0;
-        Del_3DA110(buf, D_004BDC18, 0x4B);
-        cur = 0;
-        buf = 0;
-        data = 0;
-        ok = 0;
-        cFileMan_dtor(hog, -1);
-    }
-    int ReadInt() { int* p = cur; cur = p + 1; return *p; }
-    bool ReadBool() { return ReadInt() != 0; }
-    bool ReadBool2() { int v = ReadInt(); return v != 0; }
-    u8 ReadU8() { return ReadInt() != 0; }
-    char* ReadString() {
-        int n = ReadInt();
-        char* s = n ? (char*)New_3DA110(n, D_004BDC68, 0xF9) : 0;
-        if (s) {
-            Libc_Strcpy(s, cur);
-            cur += (unsigned)(n + 3) >> 2;
-        }
-        return s;
-    }
-};
-
-extern "C" void ScriptFileBuff_open(ScriptFile* s, char* name, int mode);
-inline void ScriptFile::Open(char* name, int mode) { ScriptFileBuff_open(this, name, mode); }
-
-static inline TypeRec* GetType(void* p) { return cScriptBase_getClass((int)p); }
-
-extern "C" u8 cScriptInterpreter_SymbolTable_loadScript(Script* s, int size, char* name)
+extern "C" Var3DD790* cScriptInterpreter_considerVar(Mgr3DD790* m, char* name, int id, int* out, int t0, int t1, int t2)
 {
-    u8 reload = 0;
-    u8 result;
-    int i;
+    Var3DD790* r;
+    Var3DD790* p;
+    bool has;
 
-    if (name) {
-        s->name = cScriptBase_myStrdup(name);
+    r = cScriptInterpreter_findVar(m, name, id);
+    has = out != 0;
+    if (r) {
+        if (r->active && has && !t2)
+            cScriptBase_sm_printf(D_004BD4F0, name);
+        if (!r->active || (t2 && has)) {
+            r->b18 = has && t0 != 0;
+            if (r->active && t2 && has) {
+                r->b18 = 0;
+                *out = *r->ptr;
+            }
+            r->active = has;
+            r->ptr = out;
+            r->v14 = t0;
+        }
     } else {
-        int n;
-        reload = 1;
-        n = s->v10.count;
-        i = 0;
-        if (0 < n) do {
-            char* v = (char*)s->v10[i];
-            if (v && *(Script**)(v + 0x20) == s) {
-                *(u8*)(v + 0x34) = 0;
-                *(Script**)(v + 0x20) = 0;
+        if (has)
+            *out = 0;
+        {
+            AllocGuard g;
+            p = (Var3DD790*)cMemMan_Allocate(0, 0x20, D_004BD4C0, 0xAB3);
+        }
+        if (p) {
+            if ((unsigned int)m->count < 5000) {
+                m->arr[m->count] = id;
+                m->count++;
             }
-        } while (++i < n);
+            p = (Var3DD790*)VarDef_ctor(p, name, (int*)&m->count + m->count, out, 1);
+        }
+        r = p;
+        p->v14 = t0;
+        r->b18 = t0 != 0;
+        std_vector_VarDefPtr_push_back(D_00554F18, &r);
     }
-    {
-        ScriptFile sf(s->name, size);
-        ScriptFile* f = &sf;
-        result = 0;
-        if (sf.ok) {
-            int n, nTypes;
-            u8* flags;
-            int* oldGlobals;
-            int nSubs, nGlobals, nRecs;
-            result = 1;
-            f->data = cFileMan_Read_void(f->hog);
-            f->len = cFileMan_GetSize(f->hog);
-            f->cur = f->data;
-            f->buf = 0;
-            s->version = f->ReadInt();
-            if (s->version > 9) {
-                return 0;
+    if (has)
+        r->v1C = t1;
+    r->refs++;
+    return r;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003DD790(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_003DD790 */
+
+/* merge_units: begin func_003DD9F0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct Al3DD { int x; };
+struct Scr3DD {
+    char* name;
+    char m4[0x10];
+    char m14[0x10];
+    char m24[0x10];
+    int x34;
+    int x38;
+    unsigned char x3C;
+    char pad3d[3];
+    int x40;
+    unsigned char x44;
+    unsigned char x45;
+    char pad46[2];
+    int x48;
+    unsigned char x4C;
+};
+struct Info3DD { char pad0[8]; int x8; char padc[0x38 - 0xC]; int id; unsigned char on; };
+struct Mgr3DD { int pad0; int count; };
+extern "C" {
+extern Mgr3DD* D_00554F28;
+#if 0 /* merge_units */
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+#endif /* merge_units */
+#define cMemMan_Allocate(a0, a1, a2, a3) (cMemMan_Allocate((a0), (a1), (a2), (a3))) /* merge_units */
+
+
+
+char* cScriptBase_myStrdup(char*);
+Al3DD* cArrayCapacity_ctor(Al3DD*, int);
+void cArray_FieldDefPtr_ctor(void*, Al3DD*, int);
+void cArray_MemberFuncPtr_ctor(void*, Al3DD*, int);
+void cArray_int_ctor(void*);
+void std_vector_ClassDefPtr_push_back(Mgr3DD*, Scr3DD**);
+void ClassDef_init(Scr3DD*, int, int, int, int, int);
+Info3DD* cScriptInterpreter_findCls(int, char*);
+}
+static inline int Data3DD(Info3DD* i) { return i->on ? i->x8 : 0; }
+extern "C" Scr3DD* cScriptInterpreter_considerClass(int ctx, char* name, int noInit, char* parent, int a, int b, int c)
+{
+    Scr3DD* s = (Scr3DD*)cScriptInterpreter_findCls(ctx, name);
+    Info3DD* p = parent ? cScriptInterpreter_findCls(ctx, parent) : 0;
+    int id = p ? p->id : -1;
+    int d = (p && p->on) ? p->x8 : 0;
+    if (!s) {
+        Scr3DD* n;
+        {
+            AllocGuard g;
+            n = (Scr3DD*)cMemMan_Allocate(0, 0x50, D_004BD4C0, 0xA84);
+        }
+        if (n) {
+            char* nm = cScriptBase_myStrdup(name);
+            Al3DD t1;
+            cArray_FieldDefPtr_ctor(n->m4, cArrayCapacity_ctor(&t1, 5), 1);
+            Al3DD t2;
+            cArray_MemberFuncPtr_ctor(n->m14, cArrayCapacity_ctor(&t2, 5), 1);
+            cArray_int_ctor(n->m24);
+            n->name = nm;
+            n->x34 = 0;
+            n->x3C = 0;
+            n->x40 = -1;
+            n->x44 = 0;
+            n->x45 = 0;
+            n->x48 = 0;
+            n->x4C = 1;
+        }
+        s = n;
+        if (!noInit)
+            ClassDef_init(s, a, b, c, id, d);
+        s->x38 = D_00554F28->count + 100;
+        std_vector_ClassDefPtr_push_back(D_00554F28, &s);
+    } else if (!noInit) {
+        ClassDef_init(s, a, b, c, id, d);
+    }
+    return s;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003DD9F0(void) {}
+#undef cMemMan_Allocate /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003DD9F0 */
+
+/* merge_units: begin func_003DDC30 */
+#pragma push /* merge_units */
+typedef struct { char pad[0xA8]; int* cursor; } Writer;
+typedef struct { void* key; } KeyRef;
+typedef struct { char* name; KeyRef* ref; int pad8; int count; KeyRef** args; } ScrEntry;
+typedef struct { int x0; int count; void** data; } PtrList;
+extern PtrList* D_00554F30;
+#if 0 /* merge_units */
+extern PtrList* D_00554F28;
+#endif /* merge_units */
+#define D_00554F28 (*(PtrList **)&D_00554F28) /* merge_units */
+
+
+
+#if 0 /* merge_units */
+extern PtrList* D_00554F18;
+#endif /* merge_units */
+#define D_00554F18 (*(PtrList **)&D_00554F18) /* merge_units */
+
+
+
+extern PtrList* D_00554F20;
+extern void ScriptFileBuff_put(Writer* w, int size);
+extern int ScriptFileBuff_charsToInts(Writer* w, int size);
+extern void ScriptFileBuff_expand(Writer* w, int words);
+extern char* cScriptBase_getClassName(void* key);
+extern void EnumDef_exportData(void*, Writer*);
+extern void ClassDef_exportNames(void*, Writer*);
+extern void ClassDef_exportFields(void*, Writer*);
+extern void VarDef_exportData(void*, Writer*);
+static inline void* At(PtrList* l, unsigned int i) { return l->data[i]; }
+static inline void Writer_PutInt(Writer* w, int v)
+{
+    ScriptFileBuff_expand(w, 1);
+    *w->cursor++ = v;
+}
+static inline void Writer_PutString(Writer* w, char* s)
+{
+    int size = strlen(s) + 1;
+    int words;
+    ScriptFileBuff_put(w, size);
+    words = ScriptFileBuff_charsToInts(w, size);
+    ScriptFileBuff_expand(w, words);
+    Libc_Strcpy((char*)w->cursor, s);
+    w->cursor += words;
+}
+void cScriptInterpreter_exportData(void* self, Writer* w)
+{
+    int n;
+    int i;
+    n = D_00554F30->count;
+    Writer_PutInt(w, n);
+    for (i = 0; i < n; i++)
+        EnumDef_exportData(At(D_00554F30, i), w);
+    n = D_00554F28->count;
+    Writer_PutInt(w, n);
+    for (i = 0; i < n; i++)
+        ClassDef_exportNames(At(D_00554F28, i), w);
+    for (i = 0; i < n; i++)
+        ClassDef_exportFields(At(D_00554F28, i), w);
+    n = D_00554F18->count;
+    Writer_PutInt(w, n);
+    for (i = 0; i < n; i++)
+        VarDef_exportData(At(D_00554F18, i), w);
+    n = D_00554F20->count;
+    Writer_PutInt(w, n);
+    for (i = 0; i < n; i++) {
+        ScrEntry* e; int na; int j;
+        e = (ScrEntry*)At(D_00554F20, i);
+        Writer_PutString(w, e->name);
+        na = e->count;
+        Writer_PutString(w, cScriptBase_getClassName(e->ref->key));
+        Writer_PutInt(w, na);
+        for (j = 0; j < na; j++)
+            Writer_PutString(w, cScriptBase_getClassName(e->args[(unsigned int)j]->key));
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003DDC30(void) {}
+#undef D_00554F28 /* merge_units */
+#undef D_00554F18 /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003DDC30 */
+
+/* merge_units: begin func_003DDFC0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+typedef struct ScArray { int cap; int count; void** data; unsigned char canExpand; } ScArray;
+typedef struct ScString { char* str; int refCnt; int depth; } ScString;
+typedef struct ScVars { int pad[2]; int typeId; } ScVars;
+struct ScSystem { virtual void v0(); virtual void v1(); virtual void* GetID(); int validator; void* name; int objId; int netId; unsigned char isLocal; ScVars* vars; void* list; };
+typedef struct ScClassDef { char pad[0x40]; int mParentId; } ScClassDef;
+typedef struct ScVarDef { char* mName; int* mType; unsigned char mDefined; int* mData; } ScVarDef;
+typedef struct ScGroup { ScArray mMembers; } ScGroup;
+typedef struct ScTable {
+    ScArray vars;      /* 0x00 */
+    ScArray funcs;     /* 0x10 */
+    ScArray structs;   /* 0x20 */
+    char pad30[0x30];
+    ScArray strings;   /* 0x60 */
+    char pad70[0x1C];
+    int version;       /* 0x8C */
+} ScTable;
+typedef struct ScFuncDef {
+    char* mName;
+    int* mRetType;
+    ScArray mParamVec;
+    int* mCode;
+    int (*mFuncPtr)(int*, int);
+    ScTable* mContext;
+} ScFuncDef;
+typedef struct ScInterp {
+    char pad0[0x18];
+    ScArray mStrings;           /* 0x18 */
+    char pad28[0x4E4C - 0x28];
+    ScArray mAllocatedGroups;   /* 0x4E4C */
+    void* mMessageHandlers;
+    int mNumClientScripts;
+    int mNumClientTypeInts;
+    int* mInstructionPtr;       /* 0x4E68 */
+    int* mStack;                /* 0x4E6C */
+    int* mStackPtr;             /* 0x4E70 */
+    int* mBasePtr;              /* 0x4E74 */
+    int mStackSize;             /* 0x4E78 */
+    int mDepth;                 /* 0x4E7C */
+    int mCurDebugLine;          /* 0x4E80 */
+    ScFuncDef* mCurFunc;        /* 0x4E84 */
+} ScInterp;
+
+extern "C" {
+void* memset(void*, int, unsigned int);
+char* Libc_Strcat(char*, const char*);
+#if 0 /* merge_units */
+char* Libc_Strcpy(char*, const char*);
+#endif /* merge_units */
+#define Libc_Strcpy(a0, a1) (Libc_Strcpy((void *)(a0), (const void *)(a1))) /* merge_units */
+
+double SoftFloat_FloatToDouble(float);
+int sprintf(char*, const char*, ...);
+ScFuncDef** cArray_FuncDefPtr_opIndex(void*, int);
+ScVarDef** cArray_VarDefPtr_opIndex(void*, int);
+void cArray_cObjectId_ctor(void*);
+char** cArray_charPtr_opIndex(void*, int);
+int** cArray_intPtr_opIndex_int_2(void*, int);
+void cGroup_Add(ScGroup*, int);
+int cGroup_Get(ScGroup*, int);
+#if 0 /* merge_units */
+void* cMemMan_Allocate(int, int, const char*, int);
+#endif /* merge_units */
+#define cMemMan_Allocate(a0, a1, a2, a3) (cMemMan_Allocate((a0), (a1), (char *)(a2), (a3))) /* merge_units */
+
+ScClassDef* cScriptBase_getClass(int);
+void cScriptBase_sm_printf(const char*, ...);
+int cScriptInterpreter_PackPtr(int);
+int cScriptInterpreter_Schedule(ScInterp*, ScFuncDef*, float, int*, int); /* prototype: Schedule(FuncDef*, float time, int* args, int cnt) */
+int cScriptInterpreter_SymbolTable_remapEnum(ScTable*, int);
+int cScriptInterpreter_SymbolTable_remapEnumVal(ScTable*, int, int);
+int cScriptInterpreter_SymbolTable_remapType(ScTable*, int);
+int cScriptInterpreter_allocString(ScInterp*, const char*);
+int cScriptInterpreter_callFunction(ScInterp*, ScFuncDef*, int*, int);
+void cScriptInterpreter_error(ScInterp*, const char*, ...);
+ScString* cScriptInterpreter_findString(ScInterp*, int);
+char* cScriptInterpreter_getEnumValString(ScInterp*, int, int);
+int cScriptInterpreter_getObjPtr(int);
+float cScriptInterpreter_popFloat(ScInterp*);
+int cScriptInterpreter_popInt(ScInterp*);
+void cScriptInterpreter_pushFloat(ScInterp*, float);
+void cScriptInterpreter_pushInt(ScInterp*, int);
+void cScriptInterpreter_removeString(ScInterp*, ScString*);
+int cScriptVars_getExtVar(ScVars*, int);
+char* nGobjManager_GetObjectName(void*, int);
+ScString** std_vector_StringPtr_opIndex(void*, int);
+void std_vector_cGroupPtr_push_back(void*, ScGroup**);
+int cScriptInterpreter_execute(ScInterp* self, ScFuncDef* f);
+}
+
+static inline void MemClear_DFC0(void* dst, int n) {
+    asm {
+        .set noreorder
+        blez n, done
+        nop
+        andi $v1, dst, 0xF
+        andi $v0, n, 0xF
+        or $v1, $v1, $v0
+        nop
+        bgtz $v1, bytes
+        srl $v0, n, 4
+        nop
+        blez $v0, bytes
+        nop
+    quads:
+        addi $v0, $v0, -1
+        sq $zero, 0(dst)
+        bgtz $v0, quads
+        addiu dst, dst, 0x10
+        b done
+        nop
+    bytes:
+        addi n, n, -1
+        sb $zero, 0(dst)
+        bgtz n, bytes
+        addiu dst, dst, 1
+    done:
+        .set reorder
+    }
+}
+
+static inline float ScAbs(float x) { float r; asm { abs.s r, x } return r; }
+static inline int ScFEq(float a, float b) { return ScAbs(a - b) < 0.001f; }
+
+static inline ScString* ScAt(ScInterp* s, int i) { return (ScString*)s->mStrings.data[i]; }
+static inline int ScSD(ScString* s) { return s->depth; } /* string depth accessor (colours depth after the string chain) */
+int cScriptInterpreter_execute(ScInterp* self, ScFuncDef* f)
+{
+    /* Barrier (emits no code): a volatile asm switches MW to its less-optimised mode, which retail used for this
+       function (no strength reduction / CSE, b;nop kept). Pending owner review, same idiom as cHuman_Land. */
+    if (0) { asm volatile { nop } }
+
+    unsigned char done;
+    int retVal;
+    int* saveBP;
+    char tempstr[512];
+
+    done = 0;
+    saveBP = self->mBasePtr;
+    self->mCurFunc = f;
+    self->mCurDebugLine = -1;
+    self->mDepth++;
+    goto test; top: {
+        int* ip = self->mInstructionPtr;
+        int op = *(unsigned short*)ip;
+        int data;
+        float fval1;
+        float fval2;
+        int val1;
+        int val2;
+        int* ptr;
+        int num;
+        self->mInstructionPtr = ip + 1;
+        data = *ip >> 16;
+        switch (op) {
+        case 0x1:
+            self->mBasePtr = self->mStackPtr - 1;
+            { self->mStackPtr = (int*)((char*)self->mStackPtr - data * 4);
+            MemClear_DFC0(self->mStackPtr, data * 4); }
+            break;
+        case 0x2:
+            if (*f->mRetType != 4) {
+                retVal = cScriptInterpreter_popInt(self);
             }
-
-            n = f->ReadInt();
-            Del_3DA110(s->x84, D_004BD4C0, 0xBD8);
-            s->x84 = n ? (int*)New_3DA110(n * 4, D_004BD4C0, 0xBDA) : 0;
-            memcpy(s->x84, f->cur, n * sizeof(int));
-            f->cur += n;
-
-            int n1 = f->ReadInt();
-            std_vector_pod_int_resize(&s->v60, n1, (void*)0);
-            { int i = 0; if (0 < n1) do {
-                char* str = f->ReadString();
-                s->v60[i] = str;
-            } while (++i < n1); }
-
-            n = s->v20.count;
-            i = 0; if (0 < n) do {
-                if (s->v20[i]) {
-                    DelU_3DA110(*std_vector_intPtr_opIndex(&s->v20, i), D_004BD4C0, 0xBED);
+            self->mBasePtr = saveBP;
+            done = 1;
+            self->mStackPtr += data;
+            break;
+        case 0x3E: {
+            float time;
+            int funcNum;
+            int numArgs;
+            int i;
+            int* saveIP;
+            int res;
+            int args[20];
+            time = cScriptInterpreter_popFloat(self);
+            funcNum = cScriptInterpreter_popInt(self);
+            numArgs = cScriptInterpreter_popInt(self);
+            for (i = 0; i < numArgs; i++) {
+                args[i] = cScriptInterpreter_popInt(self);
+            }
+            saveIP = self->mInstructionPtr;
+            res = cScriptInterpreter_Schedule(self, *cArray_FuncDefPtr_opIndex(&f->mContext->funcs, funcNum), time, args, numArgs);
+            if (f->mContext->version >= 7) {
+                cScriptInterpreter_pushInt(self, res);
+            }
+            self->mInstructionPtr = saveIP;
+            break;
+        }
+        case 0x40: {
+            int args[20];
+            int i;
+            ScGroup* g;
+            int numArgs;
+            int cnt;
+            int* saveIP;
+            ScFuncDef* newf;
+            newf = *cArray_FuncDefPtr_opIndex(&f->mContext->funcs, data);
+            g = *(ScGroup**)cScriptInterpreter_popInt(self);
+            numArgs = cScriptInterpreter_popInt(self);
+            for (i = 0; i < numArgs; i++) {
+                args[i + 1] = cScriptInterpreter_popInt(self);
+            }
+            cnt = g->mMembers.count;
+            for (i = 0; i < cnt; i++) {
+                args[0] = cGroup_Get(g, i);
+                saveIP = self->mInstructionPtr;
+                cScriptInterpreter_callFunction(self, newf, args, numArgs + 1);
+                self->mInstructionPtr = saveIP;
+            }
+            break;
+        }
+        case 0x3F: {
+            int numObjs;
+            ScGroup* g;
+            int i;
+            ScGroup* p;
+            numObjs = cScriptInterpreter_popInt(self);
+            { AllocGuard lock; p = (ScGroup*)cMemMan_Allocate(0, 0x10, D_004BD4C0, 0x822); }
+            if (p) {
+                cArray_cObjectId_ctor(p);
+            }
+            g = p;
+            std_vector_cGroupPtr_push_back(&self->mAllocatedGroups, &g);
+            for (i = 0; i < numObjs; i++) {
+                int obj = cScriptInterpreter_popInt(self);
+                if (obj) {
+                    cGroup_Add(g, obj);
                 }
-            } while (++i < n);
-
-            nTypes = f->ReadInt();
-            std_vector_pod_int_resize(&s->v30, nTypes, *(void**)&D_004938F0);
-            std_vector_pod_int_resize(&s->v20, nTypes, (void*)0);
-            flags = nTypes ? (u8*)New_3DA110(nTypes, D_004BD4C0, 0xBF3) : 0;
-            i = 0; if (0 < nTypes) do {
-                char* tname = f->ReadString();
-                u8 b = f->ReadU8();
-                char* tname2;
-                int cnt, j;
-                char** strs;
-                int* ints;
-                flags[i] = b;
-                tname2 = f->ReadString();
-                cnt = f->ReadInt();
-                strs = cnt ? (char**)New_3DA110(cnt * 4, D_004BD4C0, 0xBFE) : 0;
-                ints = cnt ? (int*)New_3DA110(cnt * 4, D_004BD4C0, 0xBFF) : 0;
-                j = 0; if (0 < cnt) do {
-                    strs[j] = f->ReadString();
-                    ints[j] = f->ReadInt();
-                } while (++j < cnt);
-                cScriptInterpreter_SymbolTable_addClass(s, tname, b, tname2, cnt, strs, ints, i);
-                j = 0; if (0 < cnt) do {
-                    DelU_3DA110(strs[j], D_004BD4C0, 0xC0A);
-                } while (++j < cnt);
-                Del_3DA110(strs, D_004BD4C0, 0xC0D);
-                Del_3DA110(ints, D_004BD4C0, 0xC10);
-                Del_3DA110(tname2, D_004BD4C0, 0xC13);
-                DelU_3DA110(tname, D_004BD4C0, 0xC15);
-            } while (++i < nTypes);
-
-            n = f->ReadInt();
-            std_vector_pod_int_resize(&s->v40, n, *(void**)&D_004938F8);
-            i = 0; if (0 < n) do {
-                char* fname = f->ReadString();
-                if (f->ReadInt() == 0) {
-                    int cnt = f->ReadInt();
-                    int j;
-                    int* recs = cnt ? (int*)New_3DA110(cnt * 12, D_004BD4C0, 0xC24) : 0;
-                                        j = 0; if (0 < cnt) do {
-                        char* str = f->ReadString();
-                        recs[j * 3 + 1] = (int)str;
-                        std_vector_charPtr_push_back_charPR(&s->v70, &str);
-                        recs[j * 3] = f->ReadInt();
-                    } while (++j < cnt);
-                    cScriptInterpreter_SymbolTable_addEnum(s, fname, i, recs, cnt);
-                    DelU_3DA110(recs, D_004BD4C0, 0xC2E);
+            }
+            cScriptInterpreter_pushInt(self, (int)g);
+            break;
+        }
+        case 0x12: {
+            ScFuncDef* newf;
+            int* saveIP;
+            ScFuncDef* oldFunc;
+            int* code;
+            newf = *cArray_FuncDefPtr_opIndex(&f->mContext->funcs, data);
+            saveIP = self->mInstructionPtr;
+            oldFunc = self->mCurFunc;
+            code = newf->mCode;
+            if (code) {
+                int r;
+                self->mInstructionPtr = code;
+                r = cScriptInterpreter_execute(self, newf);
+                if (*newf->mRetType != 4) {
+                    cScriptInterpreter_pushInt(self, r);
+                }
+            } else {
+                int args[20];
+                unsigned char null_ptr;
+                int i;
+                num = newf->mParamVec.count;
+                null_ptr = 0;
+                for (i = 0; i < num; i++) {
+                    int paramType;
+                    int v = cScriptInterpreter_popInt(self);
+                    int off = i * 4;
+                    *(int*)((char*)args + off) = v;
+                    paramType = **(int**)((char*)newf->mParamVec.data + off);
+                    if (paramType >= 100 || paramType == 3) {
+                        if (args[i] < 1000) {
+                            cScriptInterpreter_error(self, "null pointer param %d in call to %s", i, newf->mName);
+                            null_ptr = 1;
+                        }
+                    }
+                }
+                if (null_ptr) {
+                    if (*newf->mRetType != 4) {
+                        cScriptInterpreter_pushInt(self, 0);
+                    }
                 } else {
-                    cScriptInterpreter_SymbolTable_addEnum(s, fname, i, 0, 0);
-                }
-                DelU_3DA110(fname, D_004BD4C0, 0xC33);
-            } while (++i < n);
-
-            i = 0; if (0 < nTypes) do {
-                TypeRec* rec = GetType(s->v30[i]);
-                if (!flags[i] && rec->x3C) {
-                    int cnt = rec->fields.count;
-                    int j;
-                    j = 0; if (0 < cnt) do {
-                        int& t = ((int*)rec->fields[j])[2];
-                        t = cScriptInterpreter_SymbolTable_remapType(s, t);
-                    } while (++j < cnt);
-                }
-            } while (++i < nTypes);
-            DelU_3DA110(flags, D_004BD4C0, 0xC46);
-
-            nSubs = f->ReadInt();
-            i = 0; if (0 < nSubs) do {
-                int id = f->ReadInt();
-                char* sname = f->ReadString();
-                SubScript* sub = 0;
-                if (reload) {
-                    int cnt = s->v50.count;
-                    int j;
-                    for (j = 0; !sub && j < cnt; j++) {
-                        if (String_CompareNoCase((*(SubScript**)std_vector_SubScriptPtr_opIndex(&s->v50, j))->name, sname) == 0) {
-                            sub = (SubScript*)s->v50[j];
-                            sub->id = id;
-                            DelU_3DA110(sname, D_004BD4C0, 0xC5B);
-                        }
+                    int (*fptr)(int*, int) = newf->mFuncPtr;
+                    if (fptr) {
+                        retVal = fptr(args, num);
+                    } else {
+                        retVal = 0;
+                        cScriptInterpreter_error(self, "null function pointer: C function %s", newf->mName);
+                    }
+                    if (*newf->mRetType != 4) {
+                        cScriptInterpreter_pushInt(self, retVal);
                     }
                 }
-                if (!sub) {
-                    void* p = New_3DA110(0x6C, D_004BD4C0, 0xC61);
-                    if (p) p = SubScript_ctor(p, id, sname);
-                    sub = (SubScript*)p;
-                    std_vector_SubScriptPtr_push_back(&s->v50, &sub);
+            }
+            self->mInstructionPtr = saveIP;
+            self->mCurFunc = oldFunc;
+            break;
+        }
+        case 0x42: {
+            ScSystem* sys;
+            int id;
+            val1 = *self->mInstructionPtr++;
+            val1 = cScriptInterpreter_SymbolTable_remapType(f->mContext, val1);
+            sys = (ScSystem*)cScriptInterpreter_popInt(self);
+            if (!sys) {
+                cScriptInterpreter_error(self, "can't cast null pointer");
+            } else {
+                ScVars* v = sys->vars;
+                id = v ? v->typeId : -1;
+                while (id > 0 && val1 != id) {
+                    id = cScriptBase_getClass(id)->mParentId;
                 }
-            } while (++i < nSubs);
-
-            n = s->v00.count;
-            i = 0; if (0 < n) do {
-                char* v = (char*)s->v00[i];
-                if (v) (*(int*)(v + 0x10))--;
-            } while (++i < n);
-
-            nGlobals = f->ReadInt();
-            oldGlobals = s->x88;
-            std_vector_pod_int_resize(&s->v00, nGlobals, (void*)0);
-            s->x88 = nGlobals ? (int*)New_3DA110(nGlobals * 4, D_004BD4C0, 0xC71) : 0;
-            i = 0; if (0 < nGlobals) do {
-                char* gname = f->ReadString();
-                int a = f->ReadInt();
-                u8 isNull; isNull = f->ReadU8();
-                int idx = f->ReadInt();
-                int cnt = f->ReadInt();
-                int* arr = 0;
-                if (cnt) {
-                    arr = (int*)New_3DA110(cnt * sizeof(int), D_004BD4C0, 0xC80);
-                    memcpy(arr, f->cur, cnt * sizeof(int));
-                    f->cur += cnt;
+                if (id <= 0) {
+                    sys = 0;
+                    cScriptBase_sm_printf("warning: dynamic cast failed");
                 }
-                cScriptInterpreter_SymbolTable_addVar(s, gname, a, isNull ? 0 : &s->x88[idx], arr, reload, i);
-                DelU_3DA110(gname, D_004BD4C0, 0xC85);
-            } while (++i < nGlobals);
-            Del_3DA110(oldGlobals, D_004BD4C0, 0xC8A);
-
-            { int i = 0; if (0 < nSubs) do {
-                void** p = cArray_VarDefPtr_opIndex(s, ((SubScript*)s->v50[i])->id);
-                **(void***)((char*)*p + 0xC) = s->v50[i];
-            } while (++i < nSubs); }
-
-            n = s->v10.count;
-            i = 0; if (0 < n) do {
-                char* v = (char*)s->v10[i];
-                if (v) (*(int*)(v + 0x38))--;
-            } while (++i < n);
-
-            nRecs = f->ReadInt();
-            std_vector_pod_int_resize(&s->v10, nRecs, (void*)0);
-            i = 0; if (0 < nRecs) do {
-                ScriptRec rec;
-                u8 isNull;
-                int idx, subId, a, b, j;
-                rec.name = f->ReadString();
-                rec.x4 = f->ReadInt();
-                isNull = f->ReadU8();
-                f->ReadInt();
-                rec.x14 = s->version > 1 ? f->ReadInt() : 0;
-                idx = f->ReadInt();
-                subId = f->ReadInt();
-                rec.xC = f->ReadInt();
-                a = f->ReadInt();
-                b = s->version > 1 ? f->ReadInt() : -1;
-                rec.x18 = s->version > 4 ? f->ReadInt() != 0 : false;
-                rec.x19 = s->version >= 9 ? f->ReadInt() != 0 : true;
-                rec.sub = 0;
-                if (subId >= 0) {
-                    for (j = s->v50.count - 1; j >= 0; j--) {
-                        if (subId == ((SubScript*)s->v50[j])->id) {
-                            rec.sub = (SubScript*)s->v50[j];
-                            break;
-                        }
+            }
+            cScriptInterpreter_pushInt(self, (int)sys);
+            break;
+        }
+        case 0x3D:
+        case 0x41:
+            val1 = cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushInt(self, cScriptInterpreter_getObjPtr(val1));
+            break;
+        case 0x3C:
+            cScriptInterpreter_pushInt(self, cScriptInterpreter_PackPtr(cScriptInterpreter_popInt(self)));
+            break;
+        case 0x2F: {
+            int num = *self->mInstructionPtr++;
+            val2 = (*cArray_intPtr_opIndex_int_2(&f->mContext->structs, num))[data];
+            val1 = cScriptInterpreter_popInt(self);
+            if (!val1) {
+                cScriptInterpreter_pushInt(self, 0);
+                cScriptInterpreter_error(self, "null pointer error");
+            } else {
+                cScriptInterpreter_pushInt(self, val1 + val2);
+            }
+            break;
+        }
+        case 0x30: {
+            int structIndex;
+            ScSystem* sys;
+            structIndex = *self->mInstructionPtr++;
+            sys = (ScSystem*)cScriptInterpreter_popInt(self);
+            if (sys) {
+                int* varptr = (int*)cScriptVars_getExtVar(sys->vars, (*cArray_intPtr_opIndex_int_2(&f->mContext->structs, structIndex))[data]);
+                if (!varptr) {
+                    cScriptInterpreter_error(self, "null ext var pointer error");
+                }
+                cScriptInterpreter_pushInt(self, (int)varptr);
+            } else {
+                cScriptInterpreter_error(self, "null pointer error");
+                cScriptInterpreter_pushInt(self, 0);
+            }
+            break;
+        }
+        case 0x4:
+            self->mInstructionPtr += data;
+            break;
+        case 0x3:
+            val1 = cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushInt(self, !val1);
+            break;
+        case 0x23:
+        case 0x24: {
+            val1 = cScriptInterpreter_popInt(self);
+            ptr = (int*)cScriptInterpreter_popInt(self);
+            if (ptr) {
+                *ptr = val1;
+            } else {
+                cScriptInterpreter_error(self, "null pointer error");
+            }
+            break;
+        }
+        case 0x25: {
+            unsigned char nonLocal;
+            val1 = cScriptInterpreter_popInt(self);
+            ptr = (int*)cScriptInterpreter_popInt(self);
+            {
+                bool t = true;
+                int* stk = self->mStack;
+                if (ptr >= stk && ptr <= stk + self->mStackSize) t = false;
+                nonLocal = t;
+            }
+            if (nonLocal) {
+                int s = *ptr;
+                if (s) {
+                    ScString* ss = cScriptInterpreter_findString(self, s);
+                    if (ss && ss->refCnt-- == 0) {
+                        cScriptInterpreter_removeString(self, ss);
                     }
                 }
-                rec.count = f->ReadInt();
-                { int cnt = rec.count;
-                memcpy(rec.arr, f->cur, cnt * sizeof(int));
-                f->cur += cnt; }
-                rec.x70 = 0;
-                rec.x74 = 0;
-                if (a > -1) {
-                    rec.x70 = (char*)s->v00[a] + 0xC;
-                } else if (b > -1) {
-                    rec.x74 = (char*)s->v00[b] + 0xC;
+            }
+            *ptr = val1;
+            if (nonLocal) {
+                ScString* ss = cScriptInterpreter_findString(self, *ptr);
+                if (ss) {
+                    ss->refCnt++;
                 }
-                rec.x78 = isNull ? 0 : &s->x84[idx];
-                if (rec.count < 2 || !rec.x78) rec.x19 = 0;
-                cScriptInterpreter_SymbolTable_addFunc(s, &rec, i);
-                DelU_3DA110(rec.name, D_004BD4C0, 0xCDF);
-            } while (++i < nRecs);
+            }
+            break;
+        }
+        case 0x31:
+            val1 = cScriptInterpreter_popInt(self);
+            sprintf(tempstr, "%d\0\0", val1); /* 5-byte literal: retail aligns it to 8 */
+            cScriptInterpreter_pushInt(self, cScriptInterpreter_allocString(self, tempstr));
+            break;
+        case 0x32:
+            sprintf(tempstr, "%.2f", SoftFloat_FloatToDouble(cScriptInterpreter_popFloat(self)));
+            cScriptInterpreter_pushInt(self, cScriptInterpreter_allocString(self, tempstr));
+            break;
+        case 0x33: {
+            ScSystem* g = (ScSystem*)cScriptInterpreter_popInt(self);
+            if (!g) {
+                Libc_Strcpy(tempstr, "Null Obj ptr");
+            } else {
+                void* id = g->GetID();
+                if (id) {
+                    sprintf(tempstr, nGobjManager_GetObjectName(id, 1));
+                } else {
+                    Libc_Strcpy(tempstr, "Null ID");
+                }
+            }
+            cScriptInterpreter_pushInt(self, cScriptInterpreter_allocString(self, tempstr));
+            break;
+        }
+        case 0x39: {
+            val1 = cScriptInterpreter_popInt(self);
+            val2 = *self->mInstructionPtr++;
+            val2 = cScriptInterpreter_SymbolTable_remapEnum(f->mContext, val2);
+            cScriptInterpreter_pushInt(self, cScriptInterpreter_allocString(self, cScriptInterpreter_getEnumValString(self, val2, val1)));
+            break;
+        }
+        case 0x3A:
+            val1 = cScriptInterpreter_SymbolTable_remapEnumVal(f->mContext, data, *self->mInstructionPtr++);
+            cScriptInterpreter_pushInt(self, val1);
+            break;
+        case 0x34:
+            cScriptInterpreter_pushInt(self, cScriptInterpreter_allocString(self, *cArray_charPtr_opIndex(&f->mContext->strings, data)));
+            break;
+        case 0x43:
+            cScriptInterpreter_pushInt(self, (int)*cArray_charPtr_opIndex(&f->mContext->strings, data));
+            break;
+        case 0x1B: {
+            char* s2 = (char*)cScriptInterpreter_popInt(self);
+            char* s1 = (char*)cScriptInterpreter_popInt(self);
+            if (!s1 || !s2) {
+                tempstr[0] = 0;
+                cScriptInterpreter_error(self, "Null String Detected");
+            } else {
+                Libc_Strcpy(tempstr, s1);
+                Libc_Strcat(tempstr, s2);
+            }
+            cScriptInterpreter_pushInt(self, cScriptInterpreter_allocString(self, tempstr));
+            break;
+        }
+        case 0x2A:
+            cScriptInterpreter_pushInt(self, cScriptInterpreter_allocString(self, *(char**)cScriptInterpreter_popInt(self)));
+            break;
+        case 0x28:
+        case 0x29: {
+            ptr = (int*)cScriptInterpreter_popInt(self);
+            if (ptr) {
+                cScriptInterpreter_pushInt(self, *ptr);
+            } else {
+                cScriptInterpreter_error(self, "null ptr error");
+                cScriptInterpreter_pushInt(self, 0);
+            }
+            break;
+        }
+        case 0x35: {
+            int* ptr = (int*)cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushInt(self, *ptr);
+            (*ptr)++;
+            break;
+        }
+        case 0x36: {
+            float* ptr = (float*)cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushFloat(self, *ptr);
+            *ptr += 1.0f;
+            break;
+        }
+        case 0x37: {
+            int* ptr = (int*)cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushInt(self, *ptr);
+            (*ptr)--;
+            break;
+        }
+        case 0x38: {
+            float* ptr = (float*)cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushFloat(self, *ptr);
+            *ptr -= 1.0f;
+            break;
+        }
+        case 0x5:
+            val1 = cScriptInterpreter_popInt(self);
+            if (!val1) {
+                self->mInstructionPtr += data;
+            }
+            break;
+        case 0x13:
+            cScriptInterpreter_popInt(self);
+            break;
+        case 0x6: {
+            val2 = cScriptInterpreter_popInt(self);
+            val1 = cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushInt(self, val1 == val2);
+            break;
+        }
+        case 0x8: {
+            val2 = cScriptInterpreter_popInt(self);
+            val1 = cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushInt(self, val1 > val2);
+            break;
+        }
+        case 0xA: {
+            val2 = cScriptInterpreter_popInt(self);
+            val1 = cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushInt(self, val1 >= val2);
+            break;
+        }
+        case 0xC: {
+            val2 = cScriptInterpreter_popInt(self);
+            val1 = cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushInt(self, val1 < val2);
+            break;
+        }
+        case 0xE: {
+            val2 = cScriptInterpreter_popInt(self);
+            val1 = cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushInt(self, val1 <= val2);
+            break;
+        }
+        case 0x10: {
+            val2 = cScriptInterpreter_popInt(self);
+            val1 = cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushInt(self, val1 != val2);
+            break;
+        }
+        case 0x7: {
+            fval2 = cScriptInterpreter_popFloat(self);
+            cScriptInterpreter_pushInt(self, ScAbs(cScriptInterpreter_popFloat(self) - fval2) < 0.001f);
+            break;
+        }
+        case 0x9: {
+            fval2 = cScriptInterpreter_popFloat(self);
+            cScriptInterpreter_pushInt(self, cScriptInterpreter_popFloat(self) - 0.001f > fval2);
+            break;
+        }
+        case 0xB: {
+            fval2 = cScriptInterpreter_popFloat(self);
+            cScriptInterpreter_pushInt(self, cScriptInterpreter_popFloat(self) + 0.001f > fval2);
+            break;
+        }
+        case 0xD: {
+            fval2 = cScriptInterpreter_popFloat(self);
+            cScriptInterpreter_pushInt(self, cScriptInterpreter_popFloat(self) + 0.001f < fval2);
+            break;
+        }
+        case 0xF: {
+            fval2 = cScriptInterpreter_popFloat(self);
+            cScriptInterpreter_pushInt(self, cScriptInterpreter_popFloat(self) - 0.001f < fval2);
+            break;
+        }
+        case 0x11: {
+            fval2 = cScriptInterpreter_popFloat(self);
+            cScriptInterpreter_pushInt(self, !ScFEq(cScriptInterpreter_popFloat(self), fval2));
+            break;
+        }
+        case 0x15:
+            cScriptInterpreter_pushInt(self, (int)(self->mBasePtr + data));
+            break;
+        case 0x16:
+            cScriptInterpreter_pushInt(self, (int)(*cArray_VarDefPtr_opIndex(&f->mContext->vars, data))->mData);
+            break;
+        case 0x17:
+        case 0x18:
+            cScriptInterpreter_pushInt(self, *self->mInstructionPtr++);
+            break;
+        case 0x2C: {
+            val1 = cScriptInterpreter_popInt(self);
+            val2 = cScriptInterpreter_popInt(self);
+            { unsigned char t = 0; if (!(val1 == 0 || val2 == 0)) t = 1; cScriptInterpreter_pushInt(self, t); }
+            break;
+        }
+        case 0x2B: {
+            val1 = cScriptInterpreter_popInt(self);
+            val2 = cScriptInterpreter_popInt(self);
+            { unsigned char t = 1; if (val1 == 0 && val2 == 0) t = 0; cScriptInterpreter_pushInt(self, t); }
+            break;
+        }
+        case 0x19: {
+            val2 = cScriptInterpreter_popInt(self);
+            val1 = cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushInt(self, val1 + val2);
+            break;
+        }
+        case 0x1C: {
+            val2 = cScriptInterpreter_popInt(self);
+            val1 = cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushInt(self, val1 - val2);
+            break;
+        }
+        case 0x1E: {
+            val2 = cScriptInterpreter_popInt(self);
+            val1 = cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushInt(self, val1 * val2);
+            break;
+        }
+        case 0x20: {
+            val2 = cScriptInterpreter_popInt(self);
+            val1 = cScriptInterpreter_popInt(self);
+            cScriptInterpreter_pushInt(self, val1 / val2);
+            break;
+        }
+        case 0x26:
+            cScriptInterpreter_pushInt(self, -cScriptInterpreter_popInt(self));
+            break;
+        case 0x1A: {
+            fval2 = cScriptInterpreter_popFloat(self);
+            fval1 = cScriptInterpreter_popFloat(self);
+            cScriptInterpreter_pushFloat(self, fval1 + fval2);
+            break;
+        }
+        case 0x1D: {
+            fval2 = cScriptInterpreter_popFloat(self);
+            fval1 = cScriptInterpreter_popFloat(self);
+            cScriptInterpreter_pushFloat(self, fval1 - fval2);
+            break;
+        }
+        case 0x1F: {
+            fval2 = cScriptInterpreter_popFloat(self);
+            fval1 = cScriptInterpreter_popFloat(self);
+            cScriptInterpreter_pushFloat(self, fval1 * fval2);
+            break;
+        }
+        case 0x21: {
+            fval2 = cScriptInterpreter_popFloat(self);
+            fval1 = cScriptInterpreter_popFloat(self);
+            cScriptInterpreter_pushFloat(self, fval1 / fval2);
+            break;
+        }
+        case 0x27:
+            cScriptInterpreter_pushFloat(self, -cScriptInterpreter_popFloat(self));
+            break;
+        case 0x2E: {
+            fval1 = cScriptInterpreter_popFloat(self);
+            cScriptInterpreter_pushInt(self, (int)fval1);
+            break;
+        }
+        case 0x2D:
+            cScriptInterpreter_pushFloat(self, (float)cScriptInterpreter_popInt(self));
+            break;
+        case 0x3B:
+            self->mCurDebugLine = data;
+            break;
         }
     }
-    return result;
+    test: if (!done) goto top;
+    {
+        int cnt = self->mStrings.count;
+        int i;
+        for (i = 0; i < cnt && self->mStrings.data[i]; i++) {
+            if (self->mDepth == ScSD(ScAt(self, i)) && (*std_vector_StringPtr_opIndex(&self->mStrings, i))->refCnt == 0) {
+                cScriptInterpreter_removeString(self, (ScString*)self->mStrings.data[i]);
+                i--;
+                cnt--;
+            }
+        }
+    }
+    self->mDepth--;
+    return retVal;
 }
-static inline void merge_flush_func_003DA110(void) {} /* merge_units */
+#undef Libc_Strcpy /* merge_units */
+#undef cMemMan_Allocate /* merge_units */
+static inline void merge_flush_func_003DDFC0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003DA110 */
+/* merge_units: end func_003DDFC0 */

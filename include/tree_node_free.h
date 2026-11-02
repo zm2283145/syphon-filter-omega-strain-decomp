@@ -41,12 +41,12 @@ typedef struct TreeFreeOwner {
 
 #define DEFINE_TREE_ROOT_DTOR(name, freeFn)                                   \
     extern "C" void freeFn(void* tree, TreeFreeNode* node);                   \
-    extern "C" TreeFreeOwner* name(TreeFreeOwner* self, short deleteFlag)     \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
             if (self) {                                                       \
-                if (self->root)                                               \
-                    freeFn(self, self->root);                                 \
+                if (((TreeFreeOwner*)self)->root)                             \
+                    freeFn(((TreeFreeOwner*)self), ((TreeFreeOwner*)self)->root); \
             }                                                                 \
             if (deleteFlag > 0)                                               \
                 operator_delete(self);                                        \

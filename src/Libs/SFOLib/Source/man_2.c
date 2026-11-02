@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/man: 2 files, 00384A00-00384A70
+ * Libs/SFOLib/Source/man: 5 files, 00384A00-00385130
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -371,3 +371,106 @@ extern "C" int cMan_GetGunShellLocOrient(Weapon* w, int i, V* pos, V* rot)
 static inline void merge_flush_func_00384A70(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00384A70 */
+
+/* merge_units: begin func_00385130 */
+#pragma push /* merge_units */
+#include "vc_copy.h"
+#include "v4_asm_copy.h"
+
+#pragma cplusplus on
+#pragma inline_depth(8)
+static inline void Q5130(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
+struct V_00385130 {
+    float x, y, z, w;
+    V_00385130() {}
+    V_00385130(const V_00385130& o) { void* xx = this; /* dead on purpose: retail keeps this addiu */ Q5130(this, &o); }
+    V_00385130& operator=(const V_00385130& o) { V_00385130* d = this; __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(&o)); void* xx = this; /* dead */ __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(d) : "memory"); return *this; }
+    void SetUnit() { __asm__ volatile("sqc2 vf0, 0x0(%0)" : : "r"(this) : "memory"); }
+    int IsZero() const {
+        int k, f, r = 0;
+        asm {
+            .set noreorder
+            lqc2 vf1, 0(this)
+            vaddx.xyzw vf1, vf1, vf0x
+            and r, zero, zero
+            ori k, zero, 0xF
+            vnop
+            vnop
+            vnop
+            vnop
+            cfc2.ni f, vi17
+            bne k, f, done
+            nop
+            ori r, zero, 1
+        done:
+            .set reorder
+        }
+        return (unsigned char)r;
+    }
+} __attribute__((aligned(16)));
+struct Muzzle_00385130 { char pad[0x180]; V_00385130 v; };
+struct Weapon_00385130 { char pad[0x2410]; Muzzle_00385130* muzzle; };
+extern "C" V_00385130 cMan_GetGun2ndHandOrient(Weapon_00385130* w)
+{
+    V_00385130 v;
+    if (w->muzzle) {
+        v = w->muzzle->v;
+        if (v.IsZero()) v.SetUnit();
+    } else {
+        v.SetUnit();
+    }
+    return v;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00385130(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00385130 */
+
+/* merge_units: begin func_003851C0 */
+#pragma push /* merge_units */
+typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
+typedef struct { char pad[0x170]; V4 a; char pad2[0x10]; V4 b; } O_3851C0;
+typedef struct { char pad[0x2410]; O_3851C0* o; } S_3851C0;
+static inline void Add3_(V4* a, V4* d, V4* b) {
+    asm {
+        lqc2 vf1, 0x0(a)
+        lqc2 vf2, 0x0(b)
+        vadd.xyzw vf1, vf1, vf2
+        sqc2 vf1, 0x0(d)
+    }
+}
+#pragma push
+#pragma opt_common_subs off
+#pragma opt_propagation off
+V4 cMan_GetGun2ndHand(S_3851C0* s) {
+    V4 r;
+    O_3851C0* o = s->o;
+    if (o) {
+        V4* pc = &r; V4* pd = &r; V4* pa = &r;
+        VCopyF(pc, &o->a);
+        Add3_(pa, pd, &s->o->b);
+        return r;
+    }
+    { V4* z = &r; V4StoreZero(z); }
+    return r;
+}
+#pragma pop
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003851C0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_003851C0 */
+
+/* merge_units: begin func_00385230 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * True when equipment slot 0 is occupied.
+ */
+
+
+int ActorModel_FindAttachedModel(ManEquipOwner* self) {
+    return (unsigned int)self->slots[0] > 0u;
+}
+static inline void merge_flush_func_00385230(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00385230 */

@@ -23,11 +23,11 @@ struct ReleaseVector {
                    int line);                                                 \
     void destroyFn(void* self);                                               \
     }                                                                         \
-    extern "C" ReleaseVector* name(ReleaseVector* self, short deleteFlag)     \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
-            destroyFn(self);                                                  \
-            void* p = self->data;                                             \
+            destroyFn(((ReleaseVector*)self));                                \
+            void* p = ((ReleaseVector*)self)->data;                           \
             if (p) {                                                          \
                 if (p)                                                        \
                     releaseFn(p, 0, 0, fileSym, 0x64);                        \

@@ -1,10 +1,10 @@
 /*
- * Libs/SFOLib/Source/ska: 4 files, 003AE340-003AE5E0
+ * Libs/SFOLib/Source/ska: 5 files, 003B0020-003B0120
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_003AE340 */
+/* merge_units: begin func_003B0020 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -13,127 +13,213 @@
 
 #include "ska_types.h"
 
-/* Address of element i in an array of 32-byte elements. */
-char* std_vector_cSkaPlaybackItem_opIndex(SkaVec* v, int i) {
-    return v->data + (i << 5);
-}
-static inline void merge_flush_func_003AE340(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_003AE340 */
+extern int std_list_deleter_voidPtr_insert(int* result, List* list, void** pos, int value);
 
-/* merge_units: begin func_003AE350 */
+/* Append value at the end of the list (insert before the sentinel at +4). */
+int std_list_cSkaTransPlaybackPtr_push_back(List* list, int value) {
+    struct {
+        void* pos;
+        int result;
+    } loc;
+
+    loc.pos = &list->first;
+    return std_list_deleter_voidPtr_insert(&loc.result, list, &loc.pos, value);
+}
+static inline void merge_flush_func_003B0020(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B0020 */
+
+/* merge_units: begin func_003B0050 */
 #pragma push /* merge_units */
 #pragma cplusplus on
+
 #include "types.h"
+
+/* Find the first list entry matching key; 0 if none. */
+typedef struct { int w[1]; } It_3B0050;
+typedef struct { unsigned char pad[0x6C]; int list; } Obj_3B0050;
+
+extern "C" {
+void cLList_cSkaTransPlaybackPtr_Begin(It_3B0050* out, void* list);
+void cLList_cSkaTransPlaybackPtr_End(It_3B0050* out, void* list);
+bool opNe_cLListIteratorR_cLListIteratorR_8(It_3B0050* a, It_3B0050* b);
+int* cLListIterator_cSkaTransPlaybackPtr_opMul(It_3B0050* it);
+void cLListIterator_cSkaTransPlaybackPtr_opInc(It_3B0050* it);
+#if 0 /* merge_units */
+int cSkaTransPlayback_CheckId(int entry, void* key);
+#endif /* merge_units */
+int cSkaTransPlayback_CheckId(Word* w, int value); /* merge_units */
+#define cSkaTransPlayback_CheckId(a0, a1) (cSkaTransPlayback_CheckId((Word *)(a0), (int)(a1))) /* merge_units */
+
+}
+
+extern "C" int cSkaSwitch_GetTransPlayback(void* key, Obj_3B0050* o)
+{
+    It_3B0050 it;
+    It_3B0050 end;
+    for (cLList_cSkaTransPlaybackPtr_Begin(&it, &o->list); (cLList_cSkaTransPlaybackPtr_End(&end, &o->list), opNe_cLListIteratorR_cLListIteratorR_8(&it, &end)); cLListIterator_cSkaTransPlaybackPtr_opInc(&it)) {
+        if (cSkaTransPlayback_CheckId(*cLListIterator_cSkaTransPlaybackPtr_opMul(&it), key))
+            return *cLListIterator_cSkaTransPlaybackPtr_opMul(&it);
+    }
+    return 0;
+}
+#undef cSkaTransPlayback_CheckId /* merge_units */
+static inline void merge_flush_func_003B0050(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B0050 */
+
+/* merge_units: begin func_003B0120 */
+#pragma push /* merge_units */
+/* True when the stored word equals value. */
+int cSkaTransPlayback_CheckId(Word* w, int value) {
+    return w->value == value;
+}
+
+int cSkaSwitchValue_CurrGoalState(char* self) {
+    return *(int*)(self + 4);
+}
+
+int cSkaSwitchValue_NextGoalState(char* self) {
+    return *(int*)(self + 0);
+}
+
+/* Table entry of owner selected by the index stored at idx +0x20. */
+SkaPair* cSkaSwitch_GetSwitchValue(SkaPairIndex* idx, SkaPairTableOwner* owner) {
+    return &owner->table[idx->index];
+}
+
+int cSkaSwitchItem_WhatToPlay(char* self) {
+    return *(int*)(self + 0);
+}
+
+/* Address of element i in an array of 20-byte elements. */
+char* cArray_cSkaSwitchItem_opIndex(SkaVec* v, int i) {
+    char* data = v->data;
+    return data + i * 20;
+}
+
+/* Second word of table entry i. */
+int cSkaParams_GetSwitchCurrGoalState(SkaPairTableOwner* owner, int i) {
+    return ((SkaPair*)((char*)owner->table + (i << 3)))->unk4;
+}
+static inline void merge_flush_func_003B0120(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B0120 */
+
+/* merge_units: begin func_003B01C0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+/* Find the list entry whose data starts with key. */
+typedef struct { int key; } Data_3B01C0;
+typedef struct Node_3B01C0 { int pad0; struct Node_3B01C0* next; Data_3B01C0* data; } Node_3B01C0;
+typedef struct { Node_3B01C0* p; } It_3B01C0;
+typedef struct { int w[1]; } Raw_3B01C0;
+typedef struct { unsigned char pad[0x6C]; int list; } Obj_3B01C0;
+
+extern "C" {
+void std_list_deleter_voidPtr_begin_void(Raw_3B01C0* out, void* list);
+void std_list_cSkaTransPlaybackPtr_generic_iterator_ctor(It_3B01C0* out, Raw_3B01C0* raw);
+void std_list_cSkaTransPlaybackPtr_end(Raw_3B01C0* out, void* list);
+void cLListIterator_cSkaTransPlaybackPtr_ctor(It_3B01C0* out, Raw_3B01C0* raw);
+}
+
+extern "C" Data_3B01C0* cSkaParams_GetTransPlayback(Obj_3B01C0* o, int key)
+{
+    It_3B01C0 last;
+    It_3B01C0 first;
+    Raw_3B01C0 rawFirst;
+    Raw_3B01C0 rawEnd;
+    Node_3B01C0* n;
+    std_list_deleter_voidPtr_begin_void(&rawFirst, &o->list);
+    std_list_cSkaTransPlaybackPtr_generic_iterator_ctor(&first, &rawFirst);
+    for (n = first.p; (std_list_cSkaTransPlaybackPtr_end(&rawEnd, &o->list), cLListIterator_cSkaTransPlaybackPtr_ctor(&last, &rawEnd), n != last.p); n = n->next) {
+        if (n->data->key == key)
+            return n->data;
+    }
+    return 0;
+}
+static inline void merge_flush_func_003B01C0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003B01C0 */
+
+/* merge_units: begin func_003B0280 */
+#pragma push /* merge_units */
+#pragma cplusplus on
 #pragma always_inline on
 #pragma inline_depth(8)
-/* lq/sq copies and VU0 ops as GCC-style volatile asm; unused xx locals reproduce retail's dead addius */
-struct V {
-    float x, y, z, w;
-    V() {}
-    V(const V& o) { __int128 q; __asm__ volatile("lq %0, 0x0(%1); sq %0, 0x0(%2)" : "=r"(q) : "r"(&o), "r"(this) : "memory"); void* xx = this; }
-    V& operator=(const V& o) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(this), "r"(&o) : "memory"); void* xx = this; return *this; }
-    static V Unit() { V r; V* d = &r; __asm__ volatile("sqc2 $vf0, 0x0(%0)" : : "r"(d) : "memory"); return r; }
-    bool IsIdent() const { bool b = w == 1.0f; return b; }
-    bool NotIdentR() const { return !IsIdent(); }
-    bool NotIdent() const { bool b = !IsIdent(); return b; }
-    V operator*(const V& b) const {
-        V c; const V* r = &b; const V* l = this; V* d = &c;
-        __asm__ volatile("lqc2 $vf1, 0x0(%1); lqc2 $vf2, 0x0(%2); vmul.xyzw $vf3, $vf1, $vf2; vopmula.xyz $ACC, $vf1, $vf2; vmaddaw.xyz $ACC, $vf1, $vf2w; vmaddaw.xyz $ACC, $vf2, $vf1w; vopmsub.xyz $vf4, $vf2, $vf1; vsubaz.w $ACC, $vf3, $vf3z; vmsubay.w $ACC, $vf0, $vf3y; vmsubx.w $vf4, $vf0, $vf3x; sqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(l), "r"(r) : "memory");
-        return c;
-    }
-} __attribute__((aligned(16)));
-
-struct Ctx { char pad0[0x14]; int n; void* items[1]; };
-struct EvNode {
-    virtual void v0();
-    virtual void Eval(float t, const V& q, Ctx* c);
-    void Run(float t, const V& q, Ctx* c) { const void* xx = &q; Eval(t, q, c); }
+struct Item { void* what; float start; float end; };
+struct Wrap { Item* p; };
+struct It {
+    Wrap m;
+    It(Item* e) { m.p = e; }
+    It(const It& o) { m.p = o.m.p; } It(const Wrap& w) : m(w) {} 
+    Item* operator->() const { return &*m.p; }
+    bool operator==(const It& o) const { return m.p == o.m.p; }
+    bool operator!=(const It& o) const { return !(m.p == o.m.p); }
+    void Inc() { m.p++; }
 };
-static inline float MinA(float a, float b) { asm { min.s b, a, b } return b; }
-static inline float MinT(const float& a, const float& b) { float r = 0.0f; __asm__ volatile("min.s %0, %1, %2" : "=f"(r) : "f"(a), "f"(b)); return r; }
-static inline float MinF(float a, float b) { float r = 0.0f; __asm__ volatile("min.s %0, %1, %2" : "=f"(r) : "f"(a), "f"(b)); return r; }
-static inline float MaxF(float a, float b) { float r = 0.0f; __asm__ volatile("max.s %0, %1, %2" : "=f"(r) : "f"(a), "f"(b)); return r; }
-static inline float ClampR(float x, float& lo, float hi) { __asm__ volatile("max.s %0, %1, %0; min.s %0, %0, %2" : "+f"(lo) : "f"(x), "f"(hi)); return lo; }
-static inline float Clamp(float x, float lo, float hi) { __asm__ volatile("max.s %0, %1, %0; min.s %0, %0, %2" : "+f"(lo) : "f"(x), "f"(hi)); return lo; }
+struct SwItem { void* what; char pad[16]; };
+struct Switch { char pad[0x2C]; SwItem* items; };
+struct Blend { char vec[4]; int n; Item* first; char padC[4]; float d0, d1; int pid; unsigned char rev; unsigned char sinus; };
+struct TP { Switch* sw; Blend* trans; unsigned char active, isRev; int cur; int nxt; float timer; unsigned char needInterp; float interp; void* w0; void* w1; };
+extern "C" Item** std_vector_deleter_cSkaBlendSequenceItem_data_void_2(const void* v);
+static inline float MinF(float a, float b) { float r = 0.0f; asm { min.s r, a, b } return r; }
+static inline float Clamp01(float x) { float r; float hi; int t; asm { lui t, 0x3F80; mtc1 zero, r; mtc1 t, hi; max.s r, x, r; min.s r, r, hi } return r; }
+// hi is read from v1, loaded by a separate asm at the start of the block
+static inline float Clamp01W(float x) { float r; asm { mtc1 zero, r; mtc1 v1, f4; max.s r, x, r; min.s r, r, f4 } return r; }
+static inline It End(const Blend* b) { return It(*std_vector_deleter_cSkaBlendSequenceItem_data_void_2(b) + b->n); }
 
-struct Phase {
-    float dur, fade, rate, padC, cur;
-    float Left() const { return MaxF(0.0f, 1.0f - cur); }
-};
-struct Blend { int pad0; EvNode* node; Phase ph; char pad1C[0xC4]; float limit; float time; };
-
-extern "C" void cSkaSystem_Request_Process(Blend* self, bool* outA, float* outRem, bool* done, Ctx* ctx, bool* hold, float t, float dt);
-
-void cSkaSystem_Request_Process(Blend* self, bool* outA, float* outRem, bool* done, Ctx* ctx, bool* hold, float t, float dt)
+static inline void* What(TP* s, int st) { return s->sw->items[st].what; }
+extern "C" void cSkaTransPlayback_UpdateWhatToPlay(TP* self, const Blend* trans, float duration)
 {
-    *done = false;
-    if (!*hold) {
-        float one = 1.0f; float old = self->ph.cur;
-        float v = MinA(one, old + dt * self->ph.rate);
-        *done = old < 1.0f && v >= 1.0f;
-        self->ph.cur = v;
+    void* play0; void* play1;
+    float tn = MinF(1.0f, self->timer / duration);
+    int listSize = trans->n;
+    play0 = What(self, self->cur);
+    play1 = What(self, self->nxt);
+    It end = End(trans);
+    It prev = end;
+    It next = listSize > 0 ? It(trans->first) : end;
+    float prevEnd = 0.0f;
+    for (int i = 0; i < listSize + 1; i++) {
+        if (i == listSize) next = It(end.m);
+        bool notEnd = next != end;
+        float nextStart = notEnd ? next->start : 1.0f;
+        if (tn <= nextStart) {
+            if (tn <= prevEnd) {
+                self->w0 = (prev == end) ? play0 : (play0 = prev->what);
+                self->w1 = self->w0;
+                self->interp = 1.0f;
+                self->needInterp = 0;
+                return;
+            } else {
+                self->w0 = (prev == end) ? play0 : (play0 = prev->what);
+                self->w1 = (next == end) ? play1 : (play1 = next->what);
+                if (!trans->sinus) {
+                    self->interp = Clamp01((tn - prevEnd) / (nextStart - prevEnd));
+                } else {
+                    asm { lui v1, 0x3F80 }
+                    float x2;
+                    float x = (tn - prevEnd) / (nextStart - prevEnd);
+                    x2 = x * x;
+                    x *= x2;
+                    float c2 = 2.0f;
+                    float c3 = 3.0f;
+                    c3 *= x2;
+                    c2 *= x;
+                    float v = c3 - c2;
+                    self->interp = Clamp01W(v);
+                }
+                self->needInterp = 1;
+            }
+            return;
+        }
+        prev = next;
+        prevEnd = notEnd ? next->end : 1.0f;
+        next.Inc();
     }
-    float p = self->ph.cur;
-    float z; float p2 = p * p;
-    float x = 3.0f * p2 - 2.0f * (p * p2); z = 0.0f; float zc = z; float w = t * ClampR(x, z, 1.0f);
-    if (zc != w) {
-        if (ctx->n == 0) { ctx->items[ctx->n] = self; ctx->n++; }
-        self->node->Run(w, V::Unit(), ctx);
-        if (ctx->n) ctx->n--;
-    }
-    *outRem = MaxF(0.0f, t - w);
-    *outA = false;
-    if (!*hold) {
-        Phase* ph = &self->ph;
-        float a; float l = ph->Left(); a = l * ph->dur; if (a < 0.5f * (ph->dur - ph->fade)) *outA = true;
-        ph = &self->ph;
-        float b; float l2 = ph->Left(); b = l2 * ph->dur; if (!(b <= 0.5f * (ph->dur + ph->fade))) *hold = true;
-    }
-    self->time += dt;
-    if (self->limit != -1.0f) self->time = MinT(self->limit, self->time);
 }
-static inline void merge_flush_func_003AE350(void) {} /* merge_units */
+static inline void merge_flush_func_003B0280(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003AE350 */
-
-/* merge_units: begin func_003AE5E0 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-#pragma bool off
-struct C6Ent_3AE5E0 { int key; int pad[3]; char value[0x170]; };
-struct C6Coll_3AE5E0 { int pad0; int count; };
-extern "C" C6Ent_3AE5E0** std_vector_deleter_cSkaAnimAnchorListEntry_data(C6Coll_3AE5E0*);
-extern "C" char D_005429F0[];
-static inline int C6Eq(C6Ent_3AE5E0* a, C6Ent_3AE5E0* b) { return a == b; }
-extern "C" void* RootCollection_FindByKey(C6Coll_3AE5E0* self, int* key) {
-    C6Ent_3AE5E0* it = *std_vector_deleter_cSkaAnimAnchorListEntry_data(self);
-    C6Ent_3AE5E0* end = *std_vector_deleter_cSkaAnimAnchorListEntry_data(self) + self->count;
-    for (; C6Eq(it, end) ^ 1; it++) {
-        if (it->key == *key) return it->value;
-    }
-    return D_005429F0;
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_003AE5E0(void) {}
-#pragma pop /* merge_units */
-/* merge_units: end func_003AE5E0 */
-
-/* merge_units: begin func_003AE690 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-#pragma bool off
-
-extern "C" C6Ent_3AE5E0** func_003AE740(C6Coll_3AE5E0*);
-extern "C" void* cSkaAnimAnchorList_Find(C6Coll_3AE5E0* self, int* key) {
-    C6Ent_3AE5E0* it = *func_003AE740(self);
-    C6Ent_3AE5E0* end = *func_003AE740(self) + self->count;
-    for (; C6Eq(it, end) ^ 1; it++) {
-        if (it->key == *key) return it->value;
-    }
-    return D_005429F0;
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_003AE690(void) {}
-#pragma pop /* merge_units */
-/* merge_units: end func_003AE690 */
+/* merge_units: end func_003B0280 */

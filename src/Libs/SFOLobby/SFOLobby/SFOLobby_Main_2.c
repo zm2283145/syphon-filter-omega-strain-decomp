@@ -1,401 +1,124 @@
 /*
- * main/SFOLobby_Main: 4 files, 00451D70-004524C0
+ * Libs/SFOLobby/SFOLobby/SFOLobby_Main: 2 files, 00453C70-00453E20
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_00451D70 */
+/* merge_units: begin SFOLobby_Main_453C70 */
 #pragma push /* merge_units */
 #include "types.h"
-int Libc_Strcpy(char*, char*);
-int SFOLobby_GetMillisecs(void);
-int MediusGetChannelInfo(void*, void*);
-void* memset(void*, int, int);
-extern int D_00497890;
-extern char D_004C0FA8[];
-extern char D_004C0FB0[];
-extern char SFOLobby_Callback_ChannelInfo;
+#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#define NULL 0
+#define VC_(p) ((int (*)())(p))
+#pragma mpwc_relax on
+int SFOLobby_ParseConfigFile();                   
+int SFOLobbyList_ClearList();                               
+int SFOLobbyList_AllocList();                      
+int SFOLobby_ResetConnectionFlags(char * );                            
+int SFOLobby_Reset(char * , int);                         
+int memcpy(char * , int, int);                           
+int memset(char *, int, int);                                
+extern char * D_00585E60;
+extern signed char D_00585E68;
+extern char D_00585E70;
+extern char D_00585E90;
 
-typedef struct { char c[0x11]; } Ip_451D70;
-typedef void (*CbFn_451D70)(int, int);
-typedef struct {
-    char pad0[0x200];
-    int f200;
-    char pad204[0x24C - 0x204];
-    int f24C;
-    char pad250[0x2409 - 0x250];
-    char f2409;
-    char pad240A[0x2410 - 0x240A];
-    int f2410;
-    char pad2414[4];
-    Ip_451D70 ip;
-    char pad2429[0x2550 - 0x2429];
-    CbFn_451D70 cb;
-    char pad2554[0x2564 - 0x2554];
-    unsigned char err;
-    char pad2565[3];
-    char* errFile;
-    int errLine;
-} Lobby_451D70;
-int SFOLobby_Poll(Lobby_451D70*, int, int, int);
-
-static inline void SetErr_451D70(Lobby_451D70* self, unsigned char code, char* file, int line)
-{
-    if (self->err != 5) {
-        self->err = code;
-        self->errFile = file;
-        self->errLine = line;
+void SFOLobby_Init(char * arg0, int arg1, int arg2, int arg3, char * arg4, char * arg5) {
+    SFOLobbyList_AllocList(arg0 + 0x70, 0x20, 0x20, 0x114);
+    SFOLobbyList_AllocList(arg0 + 0xFC, 0x200, 0, 0x140);
+    SFOLobbyList_AllocList(arg0 + 0x118, 0x400, 0x200, 0x2C);
+    SFOLobbyList_AllocList(arg0 + 0xC4, 0x40, 0x20, 0x50);
+    SFOLobbyList_AllocList(arg0 + 0xE0, 0x40, 0x20, 0x50);
+    SFOLobbyList_AllocList(arg0 + 0x134, 0x40, 0x20, 0x50);
+    SFOLobbyList_AllocList(arg0 + 0x150, 0x40, 0x20, 0x50);
+    SFOLobbyList_ClearList(arg0 + 0x1C);
+    SFOLobbyList_ClearList(arg0 + 0x38);
+    SFOLobbyList_ClearList(arg0 + 0x54);
+    SFOLobby_ResetConnectionFlags(arg0);
+    F_(arg0, 0x240C, int) = 0;
+    F_(arg0, 0x26A8, int) = 0;
+    F_(arg0, 0x1EB0, int) = -1;
+    F_(arg0, 0x2564, signed char) = 0;
+    F_(arg0, 0x2660, int) = 0;
+    SFOLobby_ParseConfigFile(arg0, arg3, arg4, 0);
+    D_00585E60 = arg0;
+    if (arg2 != 0) {
+        memcpy(arg0 + 0x2488, arg2, 0xC4);
     }
-}
-
-int SFOLobby_ChannelInfoRequest(Lobby_451D70* self, int id)
-{
-    struct { char name[0x15]; char ip[0x13]; int f28; } req;
-
-    memset(&req, 0, sizeof(req));
-    Libc_Strcpy(req.name, D_004C0FA8);
-    Libc_Strcpy(req.ip, self->ip.c);
-    req.f28 = id;
-    self->f200 = 0;
-    self->f2410 = SFOLobby_GetMillisecs();
-    self->f24C = MediusGetChannelInfo(&req, &SFOLobby_Callback_ChannelInfo);
-    while (self->f200 == 0) {
-        self->f2409 = 1;
-        if (self->cb)
-            self->cb(0, 0);
-        self->f2409 = 0;
-        if (self->f24C) {
-            SetErr_451D70(self, 0x18, D_004C0FB0, 0x629);
-            return 0;
-        }
-        if (!SFOLobby_Poll(self, self->f2410, D_00497890, 0)) {
-            SetErr_451D70(self, 2, D_004C0FB0, 0x62F);
-            return 0;
-        }
+    F_(arg0, 0x254C, int) = arg1;
+    D_00585E68 = (signed char)(arg5);
+    memset(&D_00585E90, 0, 0xFC);
+    memset(&D_00585E70, 0, 0x18);
+    if (F_(arg0, 0x1EA8, int) != 0) {
+        SFOLobby_Reset(arg0, 1);
     }
-    return 1;
+    F_(arg0, 0x26A4, int) = 1;
 }
+static inline void merge_flush_SFOLobby_Main_453C70(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00451D70 */
+/* merge_units: end SFOLobby_Main_453C70 */
 
-/* merge_units: begin func_00451ED0 */
+/* merge_units: begin SFOLobby_Main_453E20 */
 #pragma push /* merge_units */
-int MediusFindWorldByName(void*, void*);
-extern char SFOLobby_Callback_FindChannel;
-
-typedef struct { char c[0x11]; } Ip_451ED0;
-typedef void (*CbFn_451ED0)(int, int);
+typedef struct { char pad[0x1A]; unsigned char flag; char pad1B; } Slot;
 typedef struct {
-    char pad0[0x1FC];
-    int f1FC;
-    char pad200[0x24C - 0x200];
-    int f24C;
-    char pad250[0x1B3C - 0x250];
-    char f1B3C[0x18];
-    int f1B54;
-    char pad1B58[0x1BC8 - 0x1B58];
-    signed char f1BC8;
-    char pad1BC9[0x2409 - 0x1BC9];
-    char f2409;
-    char pad240A[0x2410 - 0x240A];
-    int f2410;
-    char pad2414[4];
-    Ip_451ED0 ip;
-    char pad2429[0x2550 - 0x2429];
-    CbFn_451ED0 cb;
-    char pad2554[0x2564 - 0x2554];
-    unsigned char err;
-    char pad2565[3];
-    char* errFile;
-    int errLine;
-} Lobby_451ED0;
+    Slot slots[13];
+    char state[0x1EA4 - 0x16C];   /* cleared block starts here */
+    int mode;
+    char pad1EA8[0x23B5 - 0x1EA8];
+    char name[0x20];
+    unsigned char active;
+    char pad23D6[0x2414 - 0x23D6];
+    int unk2414;
+    char pad2418[0x26AC - 0x2418];
+} Game;
 #if 0 /* merge_units */
-int SFOLobby_Poll(Lobby_451ED0*, int, int, int);
+extern Game* D_00585E60;
 #endif /* merge_units */
-#define SFOLobby_Poll(a0, a1, a2, a3) (SFOLobby_Poll((Lobby_451D70 *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define D_00585E60 (*(Game **)&D_00585E60) /* merge_units */
 
+extern void SFOLobbyList_ctor(Slot* slot);
+#if 0 /* merge_units */
+extern void* memset(void* p, int c, int n);
+#endif /* merge_units */
+#define memset(a0, a1, a2) ((void *)memset((char *)(a0), (a1), (a2))) /* merge_units */
 
-static inline void SetErr_451ED0(Lobby_451ED0* self, unsigned char code, char* file, int line)
+#if 0 /* merge_units */
+extern void SFOLobbyList_AllocList(Slot* slot, int a, int b, int c);
+#endif /* merge_units */
+
+extern char* Libc_Strcpy(char* dst, const char* src);
+
+/* Game state constructor: builds the slots, clears the data block and sets defaults. */
+Game* SFOLobby_ctor(Game* self)
 {
-    if (self->err != 5) {
-        self->err = code;
-        self->errFile = file;
-        self->errLine = line;
-    }
+    SFOLobbyList_ctor(&self->slots[0]);
+    SFOLobbyList_ctor(&self->slots[1]);
+    SFOLobbyList_ctor(&self->slots[2]);
+    SFOLobbyList_ctor(&self->slots[3]);
+    SFOLobbyList_ctor(&self->slots[4]);
+    SFOLobbyList_ctor(&self->slots[5]);
+    SFOLobbyList_ctor(&self->slots[6]);
+    SFOLobbyList_ctor(&self->slots[7]);
+    SFOLobbyList_ctor(&self->slots[8]);
+    SFOLobbyList_ctor(&self->slots[9]);
+    SFOLobbyList_ctor(&self->slots[10]);
+    SFOLobbyList_ctor(&self->slots[11]);
+    SFOLobbyList_ctor(&self->slots[12]);
+    D_00585E60 = self;
+    memset(self->state, 0, (char*)(self + 1) - self->state);
+    self->unk2414 = 0;
+    self->mode = 8;
+    self->active = 1;
+    self->slots[1].flag = 1;
+    SFOLobbyList_AllocList(&self->slots[1], 0x40, 0, 0xAC);
+    SFOLobbyList_AllocList(&self->slots[2], 8, 0, 0x214);
+    SFOLobbyList_AllocList(&self->slots[3], 0x10, 0, 9);
+    Libc_Strcpy(self->name, "MediusLobby");
+    return self;
 }
-
-int SFOLobby_FindChannel(Lobby_451ED0* self, char* room)
-{
-    struct { char name[0x15]; Ip_451ED0 ip; char room[0x42]; int f68; } req;
-
-    memset(&req, 0, sizeof(req));
-    memset(self->f1B3C, 0, 0x90);
-    Libc_Strcpy(req.name, D_004C0FA8);
-    Libc_Strcpy(req.ip.c, self->ip.c);
-    Libc_Strcpy(req.room, room);
-    req.f68 = 1;
-    self->f1FC = 0;
-    self->f2410 = SFOLobby_GetMillisecs();
-    self->f24C = MediusFindWorldByName(&req, &SFOLobby_Callback_FindChannel);
-    while (self->f1BC8 != 1) {
-        self->f2409 = 1;
-        if (self->cb)
-            self->cb(0, 0);
-        self->f2409 = 0;
-        if (self->f24C) {
-            SetErr_451ED0(self, 0x18, D_004C0FB0, 0x5FD);
-            return 0;
-        }
-        if (!SFOLobby_Poll(self, self->f2410, D_00497890, 0)) {
-            SetErr_451ED0(self, 2, D_004C0FB0, 0x603);
-            return 0;
-        }
-    }
-    return self->f1B54 != 1;
-}
-#undef SFOLobby_Poll /* merge_units */
+#undef D_00585E60 /* merge_units */
+#undef memset /* merge_units */
+static inline void merge_flush_SFOLobby_Main_453E20(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00451ED0 */
-
-/* merge_units: begin func_00452050 */
-#pragma push /* merge_units */
-int MediusJoinChannel(void*, void*);
-int MediusConnect(void*, void*);
-void* memcpy(void*, const void*, int);
-extern int D_00497728;
-extern int D_00497740;
-extern int D_00497910;
-extern char D_004C0FC8[];
-extern char SFOLobby_Callback_JoinChannel;
-extern char SFOLobby_Callback_MediusConnect[];
-extern char SFOLobby_Callback_RemoteClientConnect[];
-extern char SFOLobby_Callback_RemoteClientDisconnect[];
-
-typedef struct { char c[0x11]; } Ip_452050;
-typedef void (*CbFn_452050)(int, int);
-typedef struct {
-    char pad0[0x180];
-    int f180;
-    int f184;
-    char pad188[0x1C0 - 0x188];
-    int f1C0;
-    char pad1C4[0x24C - 0x1C4];
-    int f24C;
-    char pad250[0x9C8 - 0x250];
-    int f9C8;
-    char f9CC[0x9C];
-    char padA68[0x1EAC - 0xA68];
-    int f1EAC;
-    char pad1EB0[0x2409 - 0x1EB0];
-    char f2409;
-    char pad240A[0x2410 - 0x240A];
-    int f2410;
-    char pad2414[4];
-    Ip_452050 ip;
-    char pad2429[0x2550 - 0x2429];
-    CbFn_452050 cb;
-    char pad2554[0x2564 - 0x2554];
-    unsigned char err;
-    char pad2565[3];
-    char* errFile;
-    int errLine;
-} Lobby_452050;
-#if 0 /* merge_units */
-int SFOLobby_Poll(Lobby_452050*, int, int, int);
-#endif /* merge_units */
-#define SFOLobby_Poll(a0, a1, a2, a3) (SFOLobby_Poll((Lobby_451D70 *)(a0), (a1), (a2), (a3))) /* merge_units */
-
-int SFOLobby_MediusDisconnectMAS(Lobby_452050*);
-int SFOLobby_UpdateClientState(Lobby_452050*, int);
-#if 0 /* merge_units */
-int SFOLobby_ChannelInfoRequest(Lobby_452050*, int);
-#endif /* merge_units */
-#define SFOLobby_ChannelInfoRequest(a0, a1) (SFOLobby_ChannelInfoRequest((Lobby_451D70 *)(a0), (a1))) /* merge_units */
-
-
-static inline void SetErr_452050(Lobby_452050* self, unsigned char code, char* file, int line)
-{
-    if (self->err != 5) {
-        self->err = code;
-        self->errFile = file;
-        self->errLine = line;
-    }
-}
-
-static inline void Pump_452050(Lobby_452050* self)
-{
-    self->f2409 = 1;
-    if (self->cb)
-        self->cb(0, 0);
-    self->f2409 = 0;
-}
-
-int SFOLobby_JoinChannel(Lobby_452050* self, int id, int unused)
-{
-    char tail[8];
-    struct { char p0[0xA0]; int fA0; char pA4[0xF0 - 0xA4]; int fF0; char* fF4; char* fF8; char* fFC; } buf;
-    struct { char name[0x15]; Ip_452050 ip; char p26[2]; int f28; char name2[0x20]; } req;
-    int i;
-    int j;
-
-    i = 0;
-    memset(&buf, 0, sizeof(buf));
-    memset(tail, 0, 8);
-    memset(&req, 0, sizeof(req));
-    Libc_Strcpy(req.name, D_004C0FC8);
-    req.ip = self->ip;
-    req.f28 = id;
-    Libc_Strcpy(req.name2, D_004C0FA8);
-    self->f1C0 = 0;
-    self->f2410 = SFOLobby_GetMillisecs();
-    for (j = 0; j < D_00497910 && self->f1C0 == 0; ) {
-        j++;
-        self->f24C = MediusJoinChannel(&req, &SFOLobby_Callback_JoinChannel);
-        while (self->f1C0 == 0) {
-            Pump_452050(self);
-            if (self->f24C) {
-                SetErr_452050(self, 0x16, D_004C0FB0, 0x57E);
-                return 0;
-            }
-            if (!SFOLobby_Poll(self, self->f2410, D_00497890, 0))
-                break;
-        }
-    }
-    if (self->f1C0 == 0) {
-        SetErr_452050(self, 2, D_004C0FB0, 0x58D);
-        return 0;
-    }
-    if (self->f9C8) {
-        SetErr_452050(self, 0x16, D_004C0FB0, 0x594);
-        return 0;
-    }
-    if (!SFOLobby_MediusDisconnectMAS(self))
-        return 0;
-    memcpy(&buf, self->f9CC, 0x9C);
-    buf.fA0 = 0;
-    buf.fF4 = SFOLobby_Callback_MediusConnect;
-    buf.fF8 = SFOLobby_Callback_RemoteClientConnect;
-    buf.fFC = SFOLobby_Callback_RemoteClientDisconnect;
-    buf.fF0 = D_00497728;
-    for (; i < D_00497740 && self->f180 == -1; ) {
-        Pump_452050(self);
-        i++;
-        self->f24C = MediusConnect(&buf, tail);
-        if (self->f24C) {
-            SetErr_452050(self, 0xC, D_004C0FB0, 0x5B6);
-            continue;
-        }
-        self->f184 = 0;
-        self->f2410 = SFOLobby_GetMillisecs();
-        while (self->f184 == 0) {
-            Pump_452050(self);
-            if (!SFOLobby_Poll(self, self->f2410, D_00497890, 0)) {
-                SetErr_452050(self, 2, D_004C0FB0, 0x5C2);
-                return 0;
-            }
-        }
-    }
-    if (self->f180 == -1) {
-        SetErr_452050(self, 0xC, D_004C0FB0, 0x5CC);
-        return 0;
-    }
-    self->f1EAC = id;
-    if (!SFOLobby_UpdateClientState(self, 1))
-        return 0;
-    if (!SFOLobby_ChannelInfoRequest(self, self->f1EAC))
-        return 0;
-    if (self->err != 5)
-        self->err = 0;
-    return 1;
-}
-#undef SFOLobby_Poll /* merge_units */
-#undef SFOLobby_ChannelInfoRequest /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_00452050 */
-
-/* merge_units: begin func_004524C0 */
-#pragma push /* merge_units */
-int KM_GetSoftwareID(void);
-int MediusCreateChannel(void*, void*);
-extern int D_00497758;
-extern char SFOLobby_Callback_CreateChannel;
-
-typedef struct { char c[0x11]; } Ip_4524C0;
-typedef void (*CbFn_4524C0)(int, int);
-typedef struct {
-    char pad0[0x1F8];
-    int f1F8;
-    char pad1FC[0x24C - 0x1FC];
-    int f24C;
-    char pad250[0x1B34 - 0x250];
-    int f1B34;
-    char pad1B38[0x2409 - 0x1B38];
-    char f2409;
-    char pad240A[0x2410 - 0x240A];
-    int f2410;
-    char pad2414[4];
-    Ip_4524C0 ip;
-    char pad2429[0x2550 - 0x2429];
-    CbFn_4524C0 cb;
-    char pad2554[0x2564 - 0x2554];
-    unsigned char err;
-    char pad2565[3];
-    char* errFile;
-    int errLine;
-} Lobby_4524C0;
-#if 0 /* merge_units */
-int SFOLobby_Poll(Lobby_4524C0*, int, int, int);
-#endif /* merge_units */
-#define SFOLobby_Poll(a0, a1, a2, a3) (SFOLobby_Poll((Lobby_451D70 *)(a0), (a1), (a2), (a3))) /* merge_units */
-
-
-static inline void SetErr_4524C0(Lobby_4524C0* self, unsigned char code, char* file, int line)
-{
-    if (self->err != 5) {
-        self->err = code;
-        self->errFile = file;
-        self->errLine = line;
-    }
-}
-
-int SFOLobby_CreateChannel(Lobby_4524C0* self, char* user, char* pass)
-{
-    char tail[8];
-    char buf[0x100];
-    struct { char name[0x15]; Ip_4524C0 ip; int f68; int f6C; char user[0x40]; char pass[0x24]; } sl;
-
-    memset(buf, 0, 0x100);
-    memset(tail, 0, 8);
-    memset(&sl, 0, 0x94);
-    Libc_Strcpy(sl.name, D_004C0FC8);
-    sl.ip = self->ip;
-    sl.f68 = KM_GetSoftwareID();
-    sl.f6C = D_00497758;
-    Libc_Strcpy(sl.user, user);
-    Libc_Strcpy(sl.pass, pass);
-    self->f1F8 = 0;
-    self->f2410 = SFOLobby_GetMillisecs();
-    self->f24C = MediusCreateChannel(&sl, &SFOLobby_Callback_CreateChannel);
-    while (self->f1F8 == 0) {
-        self->f2409 = 1;
-        if (self->cb)
-            self->cb(0, 0);
-        self->f2409 = 0;
-        if (self->f24C) {
-            SetErr_4524C0(self, 0x17, D_004C0FB0, 0x53F);
-            return 0;
-        }
-        if (!SFOLobby_Poll(self, self->f2410, D_00497890, 0)) {
-            SetErr_4524C0(self, 2, D_004C0FB0, 0x545);
-            return 0;
-        }
-    }
-    if (self->f1B34) {
-        SetErr_4524C0(self, 0x17, D_004C0FB0, 0x54D);
-        return 0;
-    }
-    return 1;
-}
-#undef SFOLobby_Poll /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_004524C0 */
+/* merge_units: end SFOLobby_Main_453E20 */

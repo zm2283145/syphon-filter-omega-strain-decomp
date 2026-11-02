@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/motionManager: 1 file, 0040F3E0
+ * Libs/SFOLib/Source/motionManager: 2 files, 0040F3E0-0040F520
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -28,8 +28,18 @@ struct WNode { char pad[0x10]; WHandle h; };
 struct WIt { WNode* n; WIt() {} };
 extern "C" {
 extern void* g_MotionManager;
+#if 0 /* merge_units */
 void Tree_Begin(WIt* out, void* tree);
+#endif /* merge_units */
+void Tree_Begin(Iter* out, Tree* t); /* merge_units */
+#define Tree_Begin(a0, a1) (Tree_Begin((Iter *)(a0), (Tree *)(a1))) /* merge_units */
+
+#if 0 /* merge_units */
 void Tree_End(WIt* out, void* tree);
+#endif /* merge_units */
+void Tree_End(Iter* out, Tree* t); /* merge_units */
+#define Tree_End(a0, a1) (Tree_End((Iter *)(a0), (Tree *)(a1))) /* merge_units */
+
 void std_red_black_tree_1_increment(WIt* it);
 void World_ClearPending(void* tree);
 }
@@ -66,6 +76,51 @@ extern "C" void cMotionManager_NextFrame(float dt)
         WStep(&it.n->h, dt);
     World_ClearPending(g_MotionManager);
 }
+#undef Tree_Begin /* merge_units */
+#undef Tree_End /* merge_units */
 static inline void merge_flush_func_0040F3E0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0040F3E0 */
+
+/* merge_units: begin func_0040F520 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+#include "loose04_types.h"
+
+#if 0 /* merge_units */
+extern Tree* g_MotionManager;
+#endif /* merge_units */
+#define g_MotionManager (*(Tree **)&g_MotionManager) /* merge_units */
+
+#if 0 /* merge_units */
+extern void World_ClearPending(Tree*);
+#endif /* merge_units */
+#define World_ClearPending(a0) (World_ClearPending((void *)(a0))) /* merge_units */
+
+
+void Tree_End(Iter* out, Tree* t) {
+    out->p = &t->header;
+}
+
+void Tree_Begin(Iter* out, Tree* t) {
+    out->p = t->leftmost;
+}
+
+/* Clears the global tree g_MotionManager if it exists. */
+void cMotionManager_FlushUpdateList(void) {
+    Tree* t = g_MotionManager;
+
+    if (t != 0) {
+        World_ClearPending(t);
+    }
+}
+#undef g_MotionManager /* merge_units */
+#undef World_ClearPending /* merge_units */
+static inline void merge_flush_func_0040F520(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0040F520 */

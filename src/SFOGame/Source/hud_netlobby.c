@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/hud_netlobby: 6 files, 0027A740-0027AA80
+ * SFOGame/Source/hud_netlobby: 7 files, 0027A740-0027AB60
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -14,13 +14,19 @@ extern void cHudNetLobby_NextButton(Menu27A7* s, int dir);
 #endif /* merge_units */
 void cHudNetLobby_NextButton(); /* merge_units */
 
+
 #if 0 /* merge_units */
 extern void cHudNetLobby_ButtonPressed(Menu27A7* s);
 #endif /* merge_units */
 void cHudNetLobby_ButtonPressed(); /* merge_units */
 
 
+
+#if 0 /* merge_units */
 extern void cHudNetLobby_InitCurrentScreen(Menu27A7* s);
+#endif /* merge_units */
+void cHudNetLobby_InitCurrentScreen(); /* merge_units */
+
 void cHudNetLobby_HandleInput(Menu27A7* s, Pad27A7* p) {
     unsigned int bits;
     if (s->busy) return;
@@ -102,15 +108,18 @@ extern void std_list_GameInfoPtr_generic_iterator_ctor(It27A8 *r, It27A8 *s);
 #endif /* merge_units */
 Word * std_list_GameInfoPtr_generic_iterator_ctor(); /* merge_units */
 
+
 #if 0 /* merge_units */
 extern char *std_list_GameInfoPtr_front(void *l);
 #endif /* merge_units */
 char * std_list_GameInfoPtr_front(); /* merge_units */
 
+
 #if 0 /* merge_units */
 extern void cHudNetLobby_InitCurrentScreen(Menu27A8 *s);
 #endif /* merge_units */
-#define cHudNetLobby_InitCurrentScreen(a0) (cHudNetLobby_InitCurrentScreen((Menu27A7 *)(a0))) /* merge_units */
+void cHudNetLobby_InitCurrentScreen(); /* merge_units */
+
 
 
 
@@ -151,7 +160,6 @@ void cHudNetLobby_ButtonPressed(Menu27A8 *s)
         }
     }
 }
-#undef cHudNetLobby_InitCurrentScreen /* merge_units */
 static inline void merge_flush_func_0027A8B0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0027A8B0 */
@@ -197,3 +205,65 @@ void cHudNetLobby_NextButton(Menu27AA* s, int dir) {
 static inline void merge_flush_func_0027AAA0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0027AAA0 */
+
+/* merge_units: begin hud_netlobby_27AB60 */
+#pragma push /* merge_units */
+#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#define NULL 0
+#pragma mpwc_relax on
+/*fc*/
+#if 0 /* merge_units */
+int std_list_deleter_voidPtr_begin_void();
+#endif /* merge_units */
+                       
+#if 0 /* merge_units */
+int std_list_GameInfoPtr_generic_iterator_ctor();
+#endif /* merge_units */
+                      
+int cLListIterator_GameInfoPtr_ctor();                        
+int std_list_GameInfoPtr_end();                       
+int cHudNetLobby_DeactivateControls();                                  
+#if 0 /* merge_units */
+int cHudNetLobby_SetActive();
+#endif /* merge_units */
+                            
+int cInterfaceElement_Activate();                            
+
+void cHudNetLobby_InitCurrentScreen(char * arg0) {
+    int sp3C;
+    char * sp38;
+    int sp34;
+    int sp30;
+    int temp_v0;
+    char * var_s0;
+
+    cHudNetLobby_DeactivateControls();
+    temp_v0 = F_(arg0, 0x3C, int);
+    if (temp_v0 == 0) {
+        F_(arg0, 0x38, int) = 0;
+        cInterfaceElement_Activate(F_(arg0, 0x4, int), 1);
+        cInterfaceElement_Activate(F_(arg0, 0x8, int), 1);
+        cInterfaceElement_Activate(F_(arg0, 0xC, int), 1);
+        cInterfaceElement_Activate(F_(arg0, 0x10, int), 1);
+    } else if (temp_v0 == 1) {
+        F_(arg0, 0x38, int) = 0;
+        cInterfaceElement_Activate(F_(arg0, 0x28, int), 1);
+        std_list_deleter_voidPtr_begin_void(&sp34, arg0 + 0x2C);
+        std_list_GameInfoPtr_generic_iterator_ctor(&sp38, &sp34);
+        var_s0 = sp38;
+        std_list_GameInfoPtr_end(&sp30, arg0 + 0x2C);
+        cLListIterator_GameInfoPtr_ctor(&sp3C, &sp30);
+        if ((int)var_s0 != (int)sp3C) {
+            do {
+                cInterfaceElement_Activate(F_(F_(var_s0, 0x8, int), 0x14, int), 1);
+                var_s0 = (char *)(F_(var_s0, 0x4, int));
+                std_list_GameInfoPtr_end(&sp30, arg0 + 0x2C);
+                cLListIterator_GameInfoPtr_ctor(&sp3C, &sp30);
+            } while ((int)var_s0 != (int)sp3C);
+        }
+    }
+    cHudNetLobby_SetActive(arg0);
+}
+static inline void merge_flush_hud_netlobby_27AB60(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end hud_netlobby_27AB60 */

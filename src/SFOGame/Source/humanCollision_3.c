@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/humanCollision: 4 files, 001E0E50-001E0F80
+ * SFOGame/Source/humanCollision: 5 files, 001E0E50-001E0FE0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -29,7 +29,12 @@ static inline void merge_flush_func_001E0E50(void) {} /* merge_units */
 
 extern int std_vector_pod_int_opAssign(void*, void*);
 extern int std_vector_imp_cEdgeGroup_pop_back(Vec16Array*);
+#if 0 /* merge_units */
 extern int cEdgeGroup_dtor(FlagElem16*, int);
+#endif /* merge_units */
+void* cEdgeGroup_dtor(void* self, short deleteFlag); /* merge_units */
+#define cEdgeGroup_dtor(a0, a1) ((int)cEdgeGroup_dtor((void *)(a0), (short)(a1))) /* merge_units */
+
 
 /* End pointer of an array of 0x60-byte records. */
 Elem60* std_vector_imp_cCollisionEdge_end(Vec60Array* v) {
@@ -78,6 +83,7 @@ FlagElem16* cEdgeGroup_opAssign(FlagElem16* d, FlagElem16* s) {
 FlagElem16* cArray_cEdgeGroup_Back(Vec16Array* v) {
     return (v->data + v->count) + -1;
 }
+#undef cEdgeGroup_dtor /* merge_units */
 static inline void merge_flush_func_001E0EA0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_001E0EA0 */
@@ -114,3 +120,12 @@ Elem60Iter* cArray_cCollisionEdge_ConstIterator_opInc(Elem60Iter* it) {
 static inline void merge_flush_func_001E0F80(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_001E0F80 */
+
+/* merge_units: begin func_001E0FE0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "member0_dtor.h"
+DEFINE_NESTED_MEMBER0_DTOR(cEdgeGroup_dtor, std_vector_cCollisionEdgePtr_dtor)
+static inline void merge_flush_func_001E0FE0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001E0FE0 */

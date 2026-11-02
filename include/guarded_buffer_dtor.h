@@ -34,12 +34,12 @@ typedef struct GuardedBuffer {
 /* inlined clear (count = 0) then free */
 #define DEFINE_GUARDED_BUFFER_CLEAR_DTOR(name, file)                          \
     extern "C" char file[];                                                   \
-    extern "C" GuardedBuffer* name(GuardedBuffer* self, short deleteFlag)     \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
             if (self) {                                                       \
-                self->count = 0;                                              \
-                GUARDED_BUFFER_FREE(self, file)                               \
+                ((GuardedBuffer*)self)->count = 0;                            \
+                GUARDED_BUFFER_FREE(((GuardedBuffer*)self), file)             \
             }                                                                 \
             if (deleteFlag > 0)                                               \
                 operator_delete(self);                                        \
@@ -51,11 +51,11 @@ typedef struct GuardedBuffer {
 #define DEFINE_GUARDED_BUFFER_CALL_DTOR(name, preFn, file)                    \
     extern "C" char file[];                                                   \
     extern "C" void preFn(GuardedBuffer* self);                               \
-    extern "C" GuardedBuffer* name(GuardedBuffer* self, short deleteFlag)     \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
-            preFn(self);                                                      \
-            GUARDED_BUFFER_FREE(self, file)                                   \
+            preFn(((GuardedBuffer*)self));                                    \
+            GUARDED_BUFFER_FREE(((GuardedBuffer*)self), file)                 \
             if (deleteFlag > 0)                                               \
                 operator_delete(self);                                        \
         }                                                                     \

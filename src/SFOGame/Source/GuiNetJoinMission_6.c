@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/GuiNetJoinMission: 1 file, 002A8BE0
+ * SFOGame/Source/GuiNetJoinMission: 2 files, 002A8BE0-002A8C60
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -37,3 +37,58 @@ void GuiNetJoinMission_DisplayGameList(int arg0) {
 static inline void merge_flush_GuiNetJoinMission_2A8BE0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end GuiNetJoinMission_2A8BE0 */
+
+/* merge_units: begin GuiNetJoinMission_2A8C60 */
+#pragma push /* merge_units */
+#pragma mpwc_relax on
+
+int GuiMissionLobbyScreen_GetDisplayMode();
+#if 0 /* merge_units */
+int GuiMissionLobbyScreen_SetDisplayMode(char * , int);
+#endif /* merge_units */
+#define GuiMissionLobbyScreen_SetDisplayMode(a0, a1) (GuiMissionLobbyScreen_SetDisplayMode((int)(a0), (a1))) /* merge_units */
+
+#if 0 /* merge_units */
+extern int D_0048BBD8;
+#endif /* merge_units */
+#define D_0048BBD8 (*(int*)&D_0048BBD8) /* merge_units */
+
+extern int D_0048BBE0;
+
+void GuiNetJoinMission_ToggleListDisplay(char * arg0) {
+    int temp_a0;
+    int temp_a0_2;
+    int temp_v0;
+    int temp_v0_2;
+
+    if ((GuiMissionLobbyScreen_GetDisplayMode() & 0xFF) == 2) {
+        GuiMissionLobbyScreen_SetDisplayMode(arg0, 0);
+        if (cDME_GetLobby() != 0) {
+            SFOLobby_LobbySetDisplay(cDME_GetLobby(), 1);
+        }
+        temp_v0 = nGlobalization_GetString_charP(D_0048BBD8);
+        if (temp_v0 != 0) {
+            temp_a0 = F_(arg0, 0x160, int);
+            if (temp_a0 != 0) {
+                GuiTextWidget_SetText(temp_a0, temp_v0, 0);
+            }
+        }
+    } else {
+        GuiMissionLobbyScreen_SetDisplayMode(arg0, 2);
+        if (cDME_GetLobby() != 0) {
+            SFOLobby_LobbySetDisplay(cDME_GetLobby(), 0);
+        }
+        temp_v0_2 = nGlobalization_GetString_charP(D_0048BBE0);
+        if (temp_v0_2 != 0) {
+            temp_a0_2 = F_(arg0, 0x160, int);
+            if (temp_a0_2 != 0) {
+                GuiTextWidget_SetText(temp_a0_2, temp_v0_2, 0);
+            }
+        }
+    }
+}
+#undef GuiMissionLobbyScreen_SetDisplayMode /* merge_units */
+#undef D_0048BBD8 /* merge_units */
+static inline void merge_flush_GuiNetJoinMission_2A8C60(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end GuiNetJoinMission_2A8C60 */

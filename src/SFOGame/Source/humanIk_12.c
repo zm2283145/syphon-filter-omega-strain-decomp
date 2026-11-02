@@ -1,294 +1,541 @@
 /*
- * SFOGame/Source/humanIk: 1 file, 001CFAE0
+ * SFOGame/Source/humanIk: 2 files, 001D5FA0-001D6120
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_001CFAE0 */
+/* merge_units: begin func_001D5FA0 */
 #pragma push /* merge_units */
+// cBoneIk_LimbPose_CalculateSkelSpaceInfo: like cBoneIk_LimbPose_CalculateSkelSpacePos, but also composes the rotation with the parent quaternion (VU0).
 #pragma cplusplus on
 #include "types.h"
-#include "vslot_pad.h"
+#pragma always_inline on
+#pragma inline_depth(8)
+#pragma opt_propagation off
+
+static inline void Add_(void* d, const void* o) { __asm__ volatile("lqc2 vf1, 0x0(%0); lqc2 vf2, 0x0(%1); vadd.xyz vf1, vf1, vf2; sqc2 vf1, 0x0(%0)" : : "r"(d), "r"(o) : "memory"); }
+static inline void Add2_(void* d, const void* o) { Add_(d, o); }
+struct V {
+    float x, y, z, w;
+    V() {}
+    V(const V& o) { V* d = this; __int128 t; const V* s = &o; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
+    V& operator=(const V& o) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(this), "r"(&o) : "memory"); return *this; }
+    V& Rotate(const V& q) { __asm__ volatile("lqc2 vf1, 0x0(%0); vmove.w vf6, vf1; vmr32.w vf1, vf0; lqc2 vf2, 0x0(%1); vmove.w vf3, vf2; vsub.xyz vf3, vf0, vf2; vmul.xyzw vf4, vf2, vf1; vopmula.xyz ACC, vf2, vf1; vmaddaw.xyz ACC, vf1, vf2w; vopmsub.xyz vf5, vf1, vf2; vsubaz.w ACC, vf4, vf4z; vmsubay.w ACC, vf0, vf4y; vmsubx.w vf5, vf0, vf4x; vopmula.xyz ACC, vf5, vf3; vmaddaw.xyz ACC, vf5, vf3w; vmaddaw.xyz ACC, vf3, vf5w; vopmsub.xyz vf6, vf3, vf5; sqc2 vf6, 0x0(%0)" : : "r"(this), "r"(&q) : "memory"); return *this; }
+    void Add3(const V& o) { __asm__ volatile("lqc2 vf1, 0x0(%0); lqc2 vf2, 0x0(%1); vadd.xyz vf1, vf1, vf2; sqc2 vf1, 0x0(%0)" : : "r"(this), "r"(&o) : "memory"); }
+    V operator*(float k) const;
+    void AddP(V o) { const void* po = &o; Add2_(this, po); float* pw = &w; *pw = o.w; }
+} __attribute__((aligned(16)));
+
+struct Xf {
+    V a;
+    V rot;
+    V pos;
+    V& Pos() { Xf* t = this; return t->pos; }
+    V& A() { Xf* t = this; return t->a; }
+    V& Rot() { Xf* t = this; return t->rot; }
+};
+struct Src { char pad[0x1B0]; V v; V& Get() { return v; } };
+struct Obj {
+    Src* src;
+    char pad4[0xBC];
+    Obj* parent;
+    char padC4[0xC];
+    Xf xf;
+};
+
+static inline V QMul(const V* a, const V* b)
+{
+    V l0;
+    V* q1 = &l0;
+    asm {
+        lqc2 vf1, 0x0(a)
+        lqc2 vf2, 0x0(b)
+        vmul.xyzw vf3, vf1, vf2
+        vopmula.xyz ACC, vf1, vf2
+        vmaddaw.xyz ACC, vf1, vf2w
+        vmaddaw.xyz ACC, vf2, vf1w
+        vopmsub.xyz vf4, vf2, vf1
+        vsubaz.w ACC, vf3, vf3z
+        vmsubay.w ACC, vf0, vf3y
+        vmsubx.w vf4, vf0, vf3x
+        sqc2 vf4, 0x0(q1)
+    }
+    return l0;
+}
+
+static inline V QW(const V* a, const V* b) { return QMul(a, b); }
+static inline V QW2(const V* a, const V* b) { return QW(a, b); }
+// .set noreorder keeps the VU0 block intact (retail ends it with the scheduler nop).
+static inline void ScaleTo(V* d, const V* s, float k) { int r; V* dd = d; asm {
+        .set noreorder
+        lqc2 vf1, 0x0(s)
+        mfc1 r, k
+        qmtc2.ni r, vf2
+        vmulx.xyzw vf1, vf1, vf2x
+        sqc2 vf1, 0x0(dd)
+        .set reorder
+    } }
+inline V V::operator*(float k) const { V t; ScaleTo(&t, this, k); return t; }
+static inline void Apply(const V& prot, const V& ppos, V& p)
+{
+    p.Rotate(prot);
+    float* w = &p.w;
+    float wv = *w;
+    if (wv == 1.0f) {
+        p.Add3(ppos);
+    } else {
+        p.AddP(ppos * wv);
+    }
+}
+
+extern "C" void cBoneIk_LimbPose_CalculateSkelSpaceInfo(Obj* o)
+{
+    o->xf.Rot() = o->xf.A();
+    o->xf.Pos() = o->src->Get();
+    if (o->parent) {
+        Obj* pa = o->parent; V& r = o->xf.Rot(); r = QW2(&pa->xf.Rot(), &r);
+        Apply(o->parent->xf.Rot(), o->parent->xf.Pos(), o->xf.Pos());
+    }
+}
+static inline void merge_flush_func_001D5FA0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001D5FA0 */
+
+/* merge_units: begin func_001D6120 */
+#pragma push /* merge_units */
+#pragma cplusplus on
 #pragma always_inline on
 #pragma inline_depth(8)
 
-static inline void Q16b(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%1); sq %0, 0x0(%2)" : "=r"(q) : "r"(s), "r"(d) : "memory"); }
-static inline void Q16(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
-
-struct V {
+struct V_001D6120 {
     float x, y, z, w;
-    V& operator=(const V& o) { void* xx = (void*)&o; Q16(this, &o); return *this; }
+    V_001D6120() {}
+    V_001D6120(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; }
+    V_001D6120(const V_001D6120& o) { V_001D6120* d = this; __int128 t; const V_001D6120* s = &o; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
+    V_001D6120& operator=(const V_001D6120& o) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(this), "r"(&o) : "memory"); return *this; }
+    V_001D6120& Rotate(const V_001D6120& q) { __asm__ volatile("lqc2 vf1, 0x0(%0); vmove.w vf6, vf1; vmr32.w vf1, vf0; lqc2 vf2, 0x0(%1); vmove.w vf3, vf2; vsub.xyz vf3, vf0, vf2; vmul.xyzw vf4, vf2, vf1; vopmula.xyz ACC, vf2, vf1; vmaddaw.xyz ACC, vf1, vf2w; vopmsub.xyz vf5, vf1, vf2; vsubaz.w ACC, vf4, vf4z; vmsubay.w ACC, vf0, vf4y; vmsubx.w vf5, vf0, vf4x; vopmula.xyz ACC, vf5, vf3; vmaddaw.xyz ACC, vf5, vf3w; vmaddaw.xyz ACC, vf3, vf5w; vopmsub.xyz vf6, vf3, vf5; sqc2 vf6, 0x0(%0)" : : "r"(this), "r"(&q) : "memory"); return *this; }
+    void Add3(const V_001D6120& o) { __asm__ volatile("lqc2 vf1, 0x0(%0); lqc2 vf2, 0x0(%1); vadd.xyz vf1, vf1, vf2; sqc2 vf1, 0x0(%0)" : : "r"(this), "r"(&o) : "memory"); }
+    V_001D6120 operator*(float k) const;
+    V_001D6120 operator+(const V_001D6120& b) const;
+    V_001D6120 Add(const V_001D6120& b) const;
+    float& W() { return w; }
+    V_001D6120& Pt() { w = 1.0f; return *this; }
+    void AddP(V_001D6120 o) { const void* po = &o; Add3(*(const V_001D6120*)po); float* pw = &w; *pw = o.w; }
 } __attribute__((aligned(16)));
-struct Plc { V rot, pos; };
-typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-struct Plc4 { V4 rot, pos; };
-struct Mtx { V4 r0, r1, r2, r3; };
 
-struct Elem { VPAD16(a) VPAD4(b) virtual void Sync(); char pad04[0xC]; Mtx m; unsigned char b50; };
-extern "C" {
-void cQuaternion_opAssign(V4*, V4*);
-void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cQuaternion_cQuaternion_NextFrame(void*, float);
-int func_0017D510(void*);
-void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cQuaternion_cQuaternion_Evaluate(V4*, void*);
-void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_NextFrame(void*, float);
-int cSplinedMotion_cVector_IsTransitionInProgress(void*);
-void cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_Evaluate(V4*, void*);
-void cVector_opAssign(V4*, V4*);
-}
-struct QCtl {
-    VPAD4(a) virtual void Begin(); virtual void End(); virtual void Step(float t, float u);
-    char pad04[0xC];
-    V4 prev;        /* 0x10 */
-    V4 cur;         /* 0x20 */
-    char pad30[0x10];
-    V4 target;      /* 0x40 */
-    char pad50[0x60];
-    char filt[0x20];/* 0xB0 */
-    void Update(float t, float u) {
-        cQuaternion_opAssign(&prev, &cur);
-        Begin();
-        cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cQuaternion_cQuaternion_NextFrame(filt, t);
-        if (func_0017D510(this)) {
-            V4 tmp;
-            cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cQuaternion_cQuaternion_Evaluate(&tmp, filt);
-            cQuaternion_opAssign(&cur, &tmp);
-            End();
-        } else {
-            cQuaternion_opAssign(&cur, &target);
-        }
-        Step(t, u);
+static inline void ScaleTo_001D6120(V_001D6120* d, const V_001D6120* s, float k) { int r; V_001D6120* dd = d; asm {
+        .set noreorder
+        lqc2 vf1, 0x0(s)
+        mfc1 r, k
+        qmtc2.ni r, vf2
+        vmulx.xyzw vf1, vf1, vf2x
+        sqc2 vf1, 0x0(dd)
+        .set reorder
+    } }
+inline V_001D6120 V_001D6120::operator*(float k) const { V_001D6120 t; ScaleTo_001D6120(&t, this, k); return t; }
+
+static inline V_001D6120 QMul(const V_001D6120* a, const V_001D6120* b)
+{
+    V_001D6120 l0;
+    V_001D6120* q1 = &l0;
+    asm {
+        lqc2 vf1, 0x0(a)
+        lqc2 vf2, 0x0(b)
+        vmul.xyzw vf3, vf1, vf2
+        vopmula.xyz ACC, vf1, vf2
+        vmaddaw.xyz ACC, vf1, vf2w
+        vmaddaw.xyz ACC, vf2, vf1w
+        vopmsub.xyz vf4, vf2, vf1
+        vsubaz.w ACC, vf3, vf3z
+        vmsubay.w ACC, vf0, vf3y
+        vmsubx.w vf4, vf0, vf3x
+        sqc2 vf4, 0x0(q1)
     }
-};
-struct PCtl {
-    VPAD4(a) virtual void Begin(); virtual void End(); virtual void Step(float t, float u);
-    char pad04[0xC];
-    V4 prev;        /* 0x10 */
-    V4 cur;         /* 0x20 */
-    char pad30[0x10];
-    V4 target;      /* 0x40 */
-    char pad50[0x60];
-    char filt[0x20];/* 0xB0 */
-    void Update(float t, float u) {
-        cVector_opAssign(&prev, &cur);
-        Begin();
-        cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_NextFrame(filt, t);
-        if (cSplinedMotion_cVector_IsTransitionInProgress(this)) {
-            V4 tmp;
-            cSplineWithScaledDuration_Iterator_cHermiteSplineWithScaledDuration_cVector_cVector_Evaluate(&tmp, filt);
-            cVector_opAssign(&cur, &tmp);
-            End();
-        } else {
-            cVector_opAssign(&cur, &target);
-        }
-        Step(t, u);
-    }
-};
-
-struct S {
-    Plc4 base;          /* 0x00 */
-    signed char idx;    /* 0x20 */
-    char pad21[0xF];
-    QCtl a;             /* 0x30 */
-    PCtl b;             /* 0x100 */
-};
-
-extern "C" {
-Elem* std_vector_cBone_opIndex(void* arr, int index);
-void cQuaternion_ctor_void(V*);
-void cQuaternion_VU0Multiply(V*, V*, V*);
-void cQuaternion_ctor_cQuaternionR(V*, V*);
-void cIkTargetWithSplinedTransition_NextFrame(S* s, void* arr, float t, float u);
+    return l0;
 }
-static inline Elem* GetElem(void* arr, const signed char& i) { return std_vector_cBone_opIndex(arr, i); }static inline Plc4* MtxToPlc(Mtx* m, Plc4* out) {
-    Plc4* o = out;
-    int f;
+static inline V_001D6120 QW_001D6120(const V_001D6120* a, const V_001D6120* b) { return QMul(a, b); }
+
+static inline void Align(V_001D6120* a, const V_001D6120* b)
+{
     int t;
+    const V_001D6120* xb;
+    V_001D6120* xa;
+    xb = b;
+    xa = a;
     asm {
         .set noreorder
-        lqc2 vf1, 0x0(m)
-        lqc2 vf2, 0x10(m)
-        lqc2 vf3, 0x20(m)
-        vmulax.w ACC, vf0, vf1x
-        vmadday.w ACC, vf0, vf2y
-        vmaddz.w vf4, vf0, vf3z
-        lui f, 0x3F00
-        qmtc2.ni f, vf5
+        lqc2 vf1, 0x0(xa)
+        lqc2 vf2, 0x0(xb)
+        vmul.xyzw vf3, vf1, vf2
+        vmulax.xyzw ACC, vf0, vf0x
+        vmsubw.xyzw vf5, vf1, vf0w
+        vmulax.w ACC, vf0, vf3x
+        vmadday.w ACC, vf0, vf3y
+        vmaddaz.w ACC, vf0, vf3z
+        vmaddw.w vf4, vf0, vf3w
         vnop
         vnop
         vnop
         vnop
-        cfc2.ni f, vi17
-        andi f, f, 0x11
-        bnel f, zero, L1
+        vnop
+        cfc2.ni t, vi17
+        andi t, t, 0x10
+        beql t, zero, done
         nop
-        vaddw.w vf4, vf4, vf0w
-        vsuby.z vf6, vf2, vf3y
-        vsubz.x vf7, vf3, vf1z
-        vsubx.y vf8, vf1, vf2x
-        vsqrt Q, vf4w
-        vaddz.x vf9, vf0, vf6z
-        vaddx.y vf9, vf0, vf7x
-        vaddy.z vf9, vf0, vf8y
-        vwaitq
-        vmulq.w vf9, vf0, Q
-        vdiv Q, vf0w, vf9w
-        vmulx.xyzw vf9, vf9, vf5x
-        vwaitq
-        vmulq.xyz vf9, vf9, Q
-        j done
+        sqc2 vf5, 0x0(xa)
         nop
-    L1:
-        vsubay.x ACC, vf1, vf2y
-        vsubaz.y ACC, vf2, vf3z
-        vsubax.z ACC, vf3, vf1x
-        vmadd.xyz vf10, vf0, vf0
-        vnop
-        vnop
-        vnop
-        vnop
-        vnop
-        cfc2.ni f, vi17
-        andi t, f, 0x80
-        bnel t, zero, L3
-        nop
-        andi t, f, 0x20
-        bnel t, zero, L4
-        nop
-    L2:
-        vmulaz.w ACC, vf0, vf10z
-        vmsubay.w ACC, vf0, vf2y
-        vmaddw.w vf4, vf0, vf0w
-        vsubx.y vf6, vf1, vf2x
-        vaddx.z vf7, vf1, vf3x
-        vaddz.y vf8, vf3, vf2z
-        vsqrt Q, vf4w
-        vmuly.w vf9, vf0, vf6y
-        vaddz.x vf9, vf0, vf7z
-        vaddy.y vf9, vf0, vf8y
-        vwaitq
-        vaddq.z vf9, vf0, Q
-        vdiv Q, vf0w, vf9z
-        vmulx.xyzw vf9, vf9, vf5x
-        vwaitq
-        vmulq.xyw vf9, vf9, Q
-        j done
-        nop
-    L3:
-        andi t, f, 0x40
-        bnel t, zero, L2
-        nop
-        vmulay.w ACC, vf0, vf10y
-        vmsubax.w ACC, vf0, vf1x
-        vmaddw.w vf4, vf0, vf0w
-        vaddz.y vf6, vf3, vf2z
-        vsubz.x vf7, vf3, vf1z
-        vaddy.x vf8, vf2, vf1y
-        vsqrt Q, vf4w
-        vaddy.z vf9, vf0, vf6y
-        vmulx.w vf9, vf0, vf7x
-        vaddx.x vf9, vf0, vf8x
-        vwaitq
-        vaddq.y vf9, vf0, Q
-        vdiv Q, vf0w, vf9y
-        vmulx.xyzw vf9, vf9, vf5x
-        vwaitq
-        vmulq.xzw vf9, vf9, Q
-        j done
-        nop
-        nop
-    L4:
-        vmulax.w ACC, vf0, vf10x
-        vmsubaz.w ACC, vf0, vf3z
-        vmaddw.w vf4, vf0, vf0w
-        vaddy.x vf6, vf2, vf1y
-        vaddx.z vf7, vf1, vf3x
-        vsuby.z vf8, vf2, vf3y
-        vsqrt Q, vf4w
-        vaddx.y vf9, vf0, vf6x
-        vaddz.z vf9, vf0, vf7z
-        vmulz.w vf9, vf0, vf8z
-        vwaitq
-        vaddq.x vf9, vf0, Q
-        vdiv Q, vf0w, vf9x
-        vmulx.xyzw vf9, vf9, vf5x
-        vwaitq
-        vmulq.yzw vf9, vf9, Q
     done:
-        sqc2 vf9, 0x0(o)
         .set reorder
     }
-    Q16(&out->pos, &m->r3);
-    return out;
 }
 
-static inline void QRot(V* v, V* q) {
-    asm {
-        lqc2 vf1, 0x0(v)
-        vmove.w vf6, vf1
-        vmr32.w vf1, vf0
-        lqc2 vf2, 0x0(q)
-        vmove.w vf3, vf2
-        vsub.xyz vf3, vf0, vf2
-        vmul.xyzw vf4, vf2, vf1
-        vopmula.xyz ACC, vf2, vf1
-        vmaddaw.xyz ACC, vf1, vf2w
-        vopmsub.xyz vf5, vf1, vf2
-        vsubaz.w ACC, vf4, vf4z
-        vmsubay.w ACC, vf0, vf4y
-        vmsubx.w vf5, vf0, vf4x
-        vopmula.xyz ACC, vf5, vf3
-        vmaddaw.xyz ACC, vf5, vf3w
-        vmaddaw.xyz ACC, vf3, vf5w
-        vopmsub.xyz vf6, vf3, vf5
-        sqc2 vf6, 0x0(v)
-    }
-}
-static inline void VAdd3(V* s, V* d) {
-    asm {
-        lqc2 vf1, 0x0(d)
-        lqc2 vf2, 0x0(s)
-        vadd.xyz vf1, vf1, vf2
-        sqc2 vf1, 0x0(d)
-    }
-}
-
-void cIkTargetWithSplinedTransition_NextFrame(S* s, void* arr, float t, float u)
+static inline V_001D6120 NLerp(const V_001D6120* a, const V_001D6120* b, const float& s0)
 {
-    Plc4* src;
-    if (s->idx != -1) {
-        Plc p;
-        void* d1; __int128 q1; __int128 q2; void* d2; const void* s2; const signed char* ip;
-        d1 = &p.rot; __asm__ volatile("lq %0, 0x0(%1); sq %0, 0x0(%2)" : "=r"(q1) : "r"(&s->base.rot), "r"(d1) : "memory");
-        ip = &s->idx;
-        d2 = &p.pos; s2 = &s->base.pos; __asm__ volatile("lq %0, 0x0(%1); sq %0, 0x0(%2)" : "=r"(q2) : "r"(s2), "r"(d2) : "memory");
-        Elem* e = GetElem(arr, *ip);
-        if (e->b50) {
-            e->Sync();
-        }
-        Plc4 pil;
-        MtxToPlc(&e->m, &pil);
-        Plc* pi = (Plc*)&pil;
-        V r;
-        V q;
-        cQuaternion_ctor_void(&q);
-        cQuaternion_VU0Multiply(&q, &pi->rot, &p.rot);
-        cQuaternion_ctor_cQuaternionR(&r, &q);
-        p.rot = r;
-        QRot(&p.pos, &pi->rot);
-        V* pp = (V*)&pil.pos;
-        VAdd3(pp, &p.pos);
-        src = (Plc4*)&p;
-    } else {
-        src = &s->base;
+    V_001D6120 l0;
+    int r;
+    V_001D6120* q1 = &l0; const V_001D6120* bb = a; const V_001D6120* cc = b;
+    float s = s0;
+    float d0 = s + 1.0f;
+    __asm__ volatile("lqc2 vf1, 0x0(%1)\n lqc2 vf2, 0x0(%2)\n qmtc2.ni %0, vf3\n vaddax.xyzw ACC, vf1, vf0x\n vmaddax.xyzw ACC, vf2, vf3x\n vmsubx.xyzw vf4, vf1, vf3x\n vmul.xyzw vf5, vf4, vf4\n vmulax.w ACC, vf0, vf5x\n vmadday.w ACC, vf0, vf5y\n vmaddaz.w ACC, vf0, vf5z\n vmaddw.w vf6, vf0, vf5w\n vrsqrt Q, vf0w, vf6w\n vwaitq\n vmulq.xyzw vf7, vf4, Q\n sqc2 vf7, 0x0(%3)" : : "r"(s), "r"(bb), "r"(cc), "r"(&l0) : "memory");
+#if 0
+    asm {
+        lqc2 vf1, 0x0(bb)
+        lqc2 vf2, 0x0(cc)
+        mfc1 r, s
+        qmtc2.ni r, vf3
+        vaddax.xyzw ACC, vf1, vf0x
+        vmaddax.xyzw ACC, vf2, vf3x
+        vmsubx.xyzw vf4, vf1, vf3x
+        vmul.xyzw vf5, vf4, vf4
+        vmulax.w ACC, vf0, vf5x
+        vmadday.w ACC, vf0, vf5y
+        vmaddaz.w ACC, vf0, vf5z
+        vmaddw.w vf6, vf0, vf5w
+        vrsqrt Q, vf0w, vf6w
+        vwaitq
+        vmulq.xyzw vf7, vf4, Q
+        sqc2 vf7, 0x0(q1)
     }
-    {
-    const void* t2; void* e1; __int128 r1; void* e2; __int128 r2;
-    e1 = &s->a.target; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(r1) : "r"(e1), "r"(&src->rot) : "memory");
-    t2 = &src->pos; e2 = &s->b.target; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(r2) : "r"(e2), "r"(t2) : "memory");
-    }
-    s->a.Update(t, u);
-    s->b.Update(t, u);
+#endif
+    return l0;
 }
-static inline void merge_flush_func_001CFAE0(void) {} /* merge_units */
+static inline V_001D6120 Lerp(const V_001D6120* a, const V_001D6120* b, float s0)
+{
+    V_001D6120 l0;
+    float s;
+    s = s0;
+    V_001D6120* q1 = &l0; const V_001D6120* bb = a; const V_001D6120* cc = b;
+    int r;
+    asm {
+        lqc2 vf1, 0x0(bb)
+        lqc2 vf2, 0x0(cc)
+        mfc1 r, s
+        qmtc2.ni r, vf3
+        vaddax.xyzw ACC, vf1, vf0x
+        vmaddax.xyzw ACC, vf2, vf3x
+        vmsubx.xyzw vf4, vf1, vf3x
+        sqc2 vf4, 0x0(q1)
+    }
+    return l0;
+}
+inline V_001D6120 V_001D6120::operator+(const V_001D6120& b) const
+{
+    const V_001D6120& a = *this;
+    V_001D6120 l0;
+    V_001D6120* q1 = &l0;
+    const V_001D6120* pa = &a;
+    const V_001D6120* pb = &b;
+    asm {
+        lqc2 vf1, 0x0(pa)
+        lqc2 vf2, 0x0(pb)
+        vadd.xyzw vf1, vf1, vf2
+        sqc2 vf1, 0x0(q1)
+    }
+    return l0;
+}
+static inline V_001D6120 AddS(const V_001D6120& a, const V_001D6120& b)
+{
+    V_001D6120 l0;
+    V_001D6120* q1;
+    const V_001D6120* pa = &a;
+    const V_001D6120* pb = &b;
+    q1 = &l0;
+    asm {
+        lqc2 vf1, 0x0(pa)
+        lqc2 vf2, 0x0(pb)
+        vadd.xyzw vf1, vf1, vf2
+        sqc2 vf1, 0x0(q1)
+    }
+    return l0;
+}
+static inline void AddTo(V_001D6120* q1, const V_001D6120* pa, const V_001D6120* pb) { asm { lqc2 vf1, 0x0(pa); lqc2 vf2, 0x0(pb); vadd.xyzw vf1, vf1, vf2; sqc2 vf1, 0x0(q1) } }
+inline V_001D6120 V_001D6120::Add(const V_001D6120& b) const { V_001D6120 l0; AddTo(&l0, this, &b); return l0; }
+static inline const V_001D6120& PtC(const V_001D6120& v) { V_001D6120* pv = (V_001D6120*)&v; pv->w = 1.0f; return *pv; }
+static inline V_001D6120 Point(const V_001D6120& v) { V_001D6120 r = v; r.w = 1.0f; return r; }
+
+struct Clip { int pad0; int frames; int pad8; int padC; int loop; };
+struct Track {
+    Clip* clip;
+    void* keys;
+    float rate;
+    float time;
+    unsigned int idx;
+    float blend;
+    float* k18;
+    float* k1C;
+    bool Active() const { return clip != 0; }
+};
+struct Sample {
+    char pad[0x10];
+    V_001D6120 pos;
+    char pad20[0x10];
+    V_001D6120 rot;
+    char pad40[0x10];
+    Sample();
+    Sample(const Sample& o);
+};
+
+extern "C" {
+void cSkaAnimDataSample_ctor_void(Sample* s);
+unsigned char* cSkaAnimDataSample_IsEndOfData(Sample* s);
+unsigned int cSkeletonData_GetBoneCount(void* keys);
+void* cSkeletonData_GetBoneData(void* keys, unsigned int i);
+void* cPointer_cSkaAnimData_opArrow(Track* t);
+int cSkaAnimData_BoneHasTranslation(void* c, unsigned int i);
+int cSkaAnimData_BoneHasRotation(void* c, unsigned int i);
+int cSkaAnimData_RootHasDeltaTranslation(void* c);
+int cSkaAnimData_RootHasDeltaRotation(void* c);
+void cVector_ctor_float_float_float_float(V_001D6120* d, float x, float y, float z, float w);
+void* cSkaAnimDataSample_DeltaTranslation(Sample* s);
+void* cSkaAnimDataSample_Translation(Sample* s);
+void* cSkaAnimDataSample_DeltaRotation(Sample* s);
+void* cSkaAnimDataSample_Rotation(Sample* s);
+V_001D6120 LerpXYZ(const V_001D6120& a, const V_001D6120& b, float t);
+void cVector_opAssign(void* d, const V_001D6120& s);
+void* cAxisAngle_ctor_eCoordinateAxis_float(void* d, unsigned char axis, float yaw);
+void* cQuaternion_ctor_cAxisAngleR(void* d, void* a);
+void* cQuaternion_opAssign(void* d, const void* s);
+void cQuaternion_ctor_floatP(V_001D6120* d, float* k);
+V_001D6120 LerpAndNormalize(const V_001D6120& a, const V_001D6120& b, float t);
+void cSkaAnimDataSample_ctor_cSkaAnimDataSampleR(Sample* d, const Sample* s);
+void cSkaAnimDataIterator_GotoAnimFrame(Track* t, float time);
+}
+inline Sample::Sample() { cSkaAnimDataSample_ctor_void(this); }
+inline Sample::Sample(const Sample& o) { cSkaAnimDataSample_ctor_cSkaAnimDataSampleR(this, &o); }
+
+struct Off { char pad[8]; float x, y, z; };
+struct Elem { char pad[0xC0]; Off* off; char padC4[0x1D0 - 0xC4]; };
+struct It {
+    Elem* p;
+    It() {}
+    It(const It& o) : p(o.p) {}
+    bool operator==(const It& o) const { Elem* b = o.p; return p == b; }
+    bool operator!=(const It& o) const { return !(*this == o); }
+};
+struct KList {
+    int pad0;
+    int count;
+    It Begin();
+    It End();
+};
+extern "C" Elem** std_vector_deleter_cBone_data_void_2(KList* l);
+inline It KList::Begin() { It r; r.p = *std_vector_deleter_cBone_data_void_2(this); return r; }
+inline It KList::End() { It r; r.p = *std_vector_deleter_cBone_data_void_2(this) + count; return r; }
+struct Owner { char pad[0x18]; KList KList; };
+
+struct Slot {
+    char pad[0x20];
+    V_001D6120 ref;
+    char pad30[0x10];
+    V_001D6120 a;
+    V_001D6120 rot;
+    V_001D6120 pos;
+    unsigned char on;
+    char pad71[0x4F];
+    Slot* parent;
+    Slot*& Parent() { return parent; }
+    char padC4[0x3C];
+};
+extern "C" Slot UpperBodyNodeTable[];
+
+struct Sec {
+    int pad0;
+    Owner* owner;
+    char pad8[0xD8];
+    Track ta;
+    char pad100[0x10];
+    Track tb;
+    char pad130[0x310 - 0x130];
+    unsigned char k310;
+    unsigned char k311;
+    signed char k312;
+    signed char k313;
+    char pad314[4];
+    float w318;
+    float w31C;
+    float w320;
+};
+
+static inline void Key(void* k, unsigned int i) { cSkeletonData_GetBoneData(k, i); }
+static inline Sample StepI(Track* t)
+{
+    Sample s;
+    *cSkaAnimDataSample_IsEndOfData(&s) = 1;
+    if (t->idx < cSkeletonData_GetBoneCount(t->keys)) {
+        Key(t->keys, t->idx);
+        if (cSkaAnimData_BoneHasTranslation(cPointer_cSkaAnimData_opArrow(t), t->idx)) {
+            if (t->idx == 0 && cSkaAnimData_RootHasDeltaTranslation(cPointer_cSkaAnimData_opArrow(t))) {
+                V_001D6120 a, b, c, d;
+                cVector_ctor_float_float_float_float(&a, t->k18[0], t->k18[1], 0.0f, 0.0f);
+                cVector_ctor_float_float_float_float(&b, 0.0f, 0.0f, t->k18[2], 0.0f);
+                cVector_ctor_float_float_float_float(&c, t->k1C[0], t->k1C[1], 0.0f, 0.0f);
+                cVector_ctor_float_float_float_float(&d, 0.0f, 0.0f, t->k1C[2], 0.0f);
+                cVector_opAssign(cSkaAnimDataSample_DeltaTranslation(&s), LerpXYZ(a, c, t->blend));
+                cVector_opAssign(cSkaAnimDataSample_Translation(&s), LerpXYZ(b, d, t->blend));
+            } else {
+                V_001D6120 a, b;
+                cVector_ctor_float_float_float_float(&a, t->k18[0], t->k18[1], t->k18[2], 0.0f);
+                cVector_ctor_float_float_float_float(&b, t->k1C[0], t->k1C[1], t->k1C[2], 0.0f);
+                cVector_opAssign(cSkaAnimDataSample_Translation(&s), LerpXYZ(a, b, t->blend));
+            }
+            t->k18 += 4;
+            t->k1C += 4;
+        }
+        if (cSkaAnimData_BoneHasRotation(cPointer_cSkaAnimData_opArrow(t), t->idx)) {
+            if (t->idx == 0 && cSkaAnimData_RootHasDeltaRotation(cPointer_cSkaAnimData_opArrow(t))) {
+                float k = t->blend;
+                float yaw = (1.0f - k) * t->k18[0] + k * t->k1C[0];
+                cQuaternion_opAssign(cSkaAnimDataSample_DeltaRotation(&s), cQuaternion_ctor_cAxisAngleR(&V_001D6120(), cAxisAngle_ctor_eCoordinateAxis_float(&V_001D6120(), 2, yaw)));
+                t->k18 += 4;
+                t->k1C += 4;
+            }
+            V_001D6120 a, b;
+            cQuaternion_ctor_floatP(&a, t->k18);
+            cQuaternion_ctor_floatP(&b, t->k1C);
+            cQuaternion_opAssign(cSkaAnimDataSample_Rotation(&s), &LerpAndNormalize(a, b, t->blend));
+            t->k18 += 4;
+            t->k1C += 4;
+        }
+        t->idx++;
+        *cSkaAnimDataSample_IsEndOfData(&s) = 0;
+    }
+    return s;
+}
+
+static inline Sample StepJ(Track* t) { return StepI(t); }
+static inline Sample StepK(Track* t) { return StepJ(t); }
+static inline Sample Step(Track* t) { return StepK(t); }
+static inline float Remaining(Track* t)
+{
+    Clip* c = t->clip;
+    if (c->loop)
+        return 3.4028235e38f;
+    return ((float)c->frames - t->time) / t->rate;
+}
+static inline bool Ending(Sec* self, Track* t) { return Remaining(t) < self->w320; }
+static inline void Advance(Track* t, float dt) { float d = dt * t->rate;
+    cSkaAnimDataIterator_GotoAnimFrame(t, t->time + d); }
+static inline bool Crossed(bool now, bool was) { bool r = now && !was; return r; }
+
+static inline V_001D6120 QC1(Slot* p, V_001D6120* b, const V_001D6120& q) { const V_001D6120* a = &p->rot; *b = q; return QMul(a, b); }
+extern "C" void cHumanIkRoutine_CalculateBaseIkPose(Sec* self, const V_001D6120* root, float dt)
+{
+    Track* a = &self->ta;
+    Track* b = &self->tb;
+    if (a->clip || b->clip) {
+        bool both = self->w318 > 0.0f && a->Active() && b->Active();
+        Track* cur = a->Active() ? a : b;
+        KList* l = &self->owner->KList;
+        It first = l->Begin();
+        It end = l->End();
+        It it = first;
+        Slot* slot = UpperBodyNodeTable;
+        int i = 0;
+        for (; it != end; slot++, i++, it.p++) {
+            V_001D6120 q;
+            V_001D6120 p;
+            if (both) {
+                Sample sa = Step(a);
+                Sample sb = Step(b);
+                if (slot->on) {
+                    const V_001D6120* ra = &sa.rot;
+                    V_001D6120 qa = *ra;
+                    V_001D6120 qb = sb.rot;
+                    Align(&qa, &slot->ref);
+                    Align(&qb, &slot->ref);
+                    q = NLerp(&qa, &qb, self->w31C);
+                    Off* o = it.p->off;
+                    p = PtC(Lerp(&sa.pos, &sb.pos, self->w31C).Add(V_001D6120(o->x, o->y, o->z, 0.0f)));
+                }
+            } else {
+                Sample sc = Step(cur);
+                if (slot->on) {
+                    V_001D6120* qd = &q;
+                    *qd = sc.rot;
+                    Elem* e = it.p;
+                    Off* o = e->off;
+                    p = PtC(AddS(sc.pos, V_001D6120(o->x, o->y, o->z, 0.0f)));
+                }
+            }
+            if (slot->on) {
+                if (it != first) {
+                    Slot* pa = slot->Parent();
+                    V_001D6120* sa_ = &slot->a;
+                    *sa_ = q;
+                    V_001D6120* pr = &slot->rot;
+                    *pr = QC1(pa, pr, q);
+                    V_001D6120* pp = &slot->pos;
+                    *pp = p;
+                    V_001D6120* prot;
+                    V_001D6120* ppos = &pa->pos;
+                    prot = &pa->rot;
+                    pp->Rotate(*prot);
+                    float wv = pp->W();
+                    if (wv == 1.0f)
+                        pp->Add3(*ppos);
+                    else
+                        pp->AddP(*ppos * wv);
+                } else {
+                    V_001D6120* sa_ = &slot->a;
+                    *sa_ = q;
+                    V_001D6120* pr = &slot->rot;
+                    *pr = q;
+                    *pr = QW_001D6120(root, pr);
+                    V_001D6120* pp = &slot->pos;
+                    *pp = p;
+                    pp->Rotate(*root);
+                }
+            }
+        }
+        if (both) {
+            bool was = Ending(self, a);
+            Advance(a, dt);
+            if (Crossed(Ending(self, a), was)) {
+                if (((unsigned char)self->k310 == 0x15 && (unsigned char)self->k311 != 0x16) || ((unsigned char)self->k310 == 0x16 && (unsigned char)self->k311 != 0x15))
+                    self->k312 = self->k313;
+            }
+            was = Ending(self, b);
+            Advance(b, dt);
+            if (Crossed(Ending(self, b), was)) {
+                if ((unsigned char)self->k311 == 0x15 || (unsigned char)self->k311 == 0x16)
+                    self->k312 = self->k313;
+            }
+        } else {
+            bool act = a->Active();
+            signed char k;
+            if (act)
+                k = self->k310;
+            else
+                k = self->k311;
+            bool was = Ending(self, cur);
+            Advance(cur, dt);
+            if (Crossed(Ending(self, cur), was)) {
+                if ((unsigned char)k == 0x15 || (unsigned char)k == 0x16)
+                    self->k312 = self->k313;
+            }
+        }
+    }
+}
+static inline void merge_flush_func_001D6120(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001CFAE0 */
+/* merge_units: end func_001D6120 */

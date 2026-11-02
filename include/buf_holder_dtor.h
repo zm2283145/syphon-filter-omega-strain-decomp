@@ -24,12 +24,12 @@ typedef struct BufHolder {
 } BufHolder;
 
 #define DEFINE_BUF_HOLDER_DTOR(name)                                          \
-    extern "C" BufHolder* name(BufHolder* self, short deleteFlag)             \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
             if (self) {                                                       \
                 if (self) {                                                   \
-                    void* p = self->buffer;                                   \
+                    void* p = ((BufHolder*)self)->buffer;                     \
                     if (p) {                                                  \
                         if (p) {                                              \
                             AllocGuard guard;                                 \
@@ -48,11 +48,11 @@ typedef struct BufHolder {
  * Variant with one fewer inlined null test on self (34 clones).
  */
 #define DEFINE_BUF_HOLDER_DTOR_SHALLOW(name)                                  \
-    extern "C" BufHolder* name(BufHolder* self, short deleteFlag)             \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
             if (self) {                                                       \
-                void* p = self->buffer;                                       \
+                void* p = ((BufHolder*)self)->buffer;                         \
                 if (p) {                                                      \
                     if (p) {                                                  \
                         AllocGuard guard;                                     \

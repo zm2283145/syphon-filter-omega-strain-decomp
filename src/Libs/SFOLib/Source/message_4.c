@@ -1,47 +1,111 @@
 /*
- * main/message: 9 files, 003C9B50-003C9FE0
+ * Libs/SFOLib/Source/message: 4 files, 003CA0E0-003CA2B0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_003C9B50 */
+/* merge_units: begin message_3CA0E0 */
 #pragma push /* merge_units */
+#pragma cplusplus on
+
 #include "types.h"
-#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-#define NULL 0
-#define VC_(p) ((int (*)())(p))
-#pragma mpwc_relax on
-int func_003C9B20(int *, int);                        
-int func_003C9B30(char *);                             
-char * func_003C9B40();                           
-extern char D_005435C0;
-extern char D_005435C4;
+#ifndef LIB_003CA0E0
+#define LIB_003CA0E0
 
-int MsgQueue_CountPending(int *arg0) {
-    int sp4C;
-    int var_s1;
-    char * temp_v0;
-    char * var_s0;
+/*
+ * Doubly-linked list insert of one int value before *pos (identical
+ * template clones, one per translation unit): allocate a 12-byte node
+ * under the allocator guard, hold it in a node holder while the value is
+ * copied, link it in, bump the count. C++ only (#pragma cplusplus on).
+ */
+#include "alloc_guard.h"
 
-    var_s1 = 0;
-    var_s0 = (char *)(F_(func_003C9B40(&D_005435C4), 0x4, int));
-    func_003C9B20(&sp4C, func_003C9B30(&D_005435C0));
-    if ((int)(var_s0) != (int)(sp4C)) {
-        do {
-            temp_v0 = (char *)(F_(var_s0, 0xC, int));
-            if ((temp_v0 != NULL) && (*(int *)F_(temp_v0, 0x4, int) == *arg0)) {
-                var_s1 += 1;
-            }
-            var_s0 = (char *)(F_(var_s0, 0x4, int));
-            func_003C9B20(&sp4C, func_003C9B30(&D_005435C0));
-        } while ((int)(var_s0) != (int)(sp4C));
-    }
-    return var_s1;
+extern "C" {
+extern char D_004BD198[];
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 }
-#pragma pop /* merge_units */
-/* merge_units: end func_003C9B50 */
 
-/* merge_units: begin func_003C9C10 */
+struct I8_003CA0E0Val { int w0; int w1; int w2; };
+struct ListI8_003CA0E0Node {
+    ListI8_003CA0E0Node* prev;
+    ListI8_003CA0E0Node* next;
+    I8_003CA0E0Val value;
+};
+
+struct ListI8_003CA0E0 {
+    int count;
+    int alloc;
+};
+
+struct ListI8_003CA0E0Flag {
+    char c;
+    ListI8_003CA0E0Flag() { c = 0; }
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~ListI8_003CA0E0Flag() {}
+};
+
+struct ListI8_003CA0E0Holder;
+#if 0 /* merge_units */
+extern "C" void details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_9(ListI8_003CA0E0Holder* holder);
+#endif /* merge_units */
+extern "C" void* details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_9(char* self); /* merge_units */
+#define details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_9(a0) ((void)details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_9((char *)(a0))) /* merge_units */
+
+
+struct ListI8_003CA0E0Holder {
+    int* alloc;
+    ListI8_003CA0E0Node* node;
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~ListI8_003CA0E0Holder()
+    {
+        if (node) {
+            details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_9(this);
+            ListI8_003CA0E0Node* p = node;
+            if (p) {
+                AllocGuard guard;
+                cMemMan_Deallocate(0, p, D_004BD198, 0x64);
+            }
+        }
+    }
+};
+
+#define DEFINE_LIST_INSERT_BEFORE8(name)                                       \
+    extern "C" int name(ListI8_003CA0E0Node** result, ListI8_003CA0E0* list,                  \
+                        ListI8_003CA0E0Node** pos, const I8_003CA0E0Val* value)                  \
+    {                                                                         \
+        ListI8_003CA0E0Node* n;                                                       \
+        int* alloc = &list->alloc;                                            \
+        ListI8_003CA0E0Flag flag;                                                  \
+        {                                                                     \
+            AllocGuard guard;                                                 \
+            n = (ListI8_003CA0E0Node*)cMemMan_Allocate(0, 20, "allocator.hh", 0x5C);            \
+        }                                                                     \
+        ListI8_003CA0E0Holder h;                                                     \
+        h.alloc = alloc;                                                      \
+        h.node = n;                                                           \
+        I8_003CA0E0Val* v = &h.node->value;                                              \
+        if (v)                                                                \
+            *v = *value;                                                      \
+        ListI8_003CA0E0Node* p;                                                       \
+        ListI8_003CA0E0Node* m = h.node;                                              \
+        h.node = 0;                                                           \
+        p = *pos;                                                             \
+        p->prev->next = m;                                                    \
+        m->prev = p->prev;                                                    \
+        p->prev = m;                                                          \
+        m->next = p;                                                          \
+        list->count++;                                                        \
+        *result = m;                                                          \
+        return 0;                                                             \
+    }
+
+#endif /* LIB_003CA0E0 */
+DEFINE_LIST_INSERT_BEFORE8(std_list_deleter_tQueuedMessage_insert)
+#undef details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_9 /* merge_units */
+static inline void merge_flush_message_3CA0E0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end message_3CA0E0 */
+
+/* merge_units: begin func_003CA2B0 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -49,184 +113,67 @@ int MsgQueue_CountPending(int *arg0) {
  * until real names are known.
  */
 
-#include "loose04_types.h"
 
-#if 0 /* merge_units */
-extern int D_005435C0;
-#endif /* merge_units */
-#define D_005435C0 (*(int*)&D_005435C0) /* merge_units */
-
-
-int func_003C9C10(void) {
-    return D_005435C0;
+void* details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_9(char* self) {
+    return self + 4;
 }
 
-int cMessage_Name(Word* self) {
-    return self[1].value;
+Map* std_tree_pair_int_value_compare_cAllocator_pair_ctor_valuecompareR_cAllocatorR(Map* m, unsigned char* cmp) {
+    m->count = 0;
+    m->head = 0;
+    m->cmp = *cmp;
+    m->hp = &m->head;
+    return m;
 }
-#undef D_005435C0 /* merge_units */
+
+List* std_list_deleter_tQueuedMessage_ctor(List* l) {
+    l->count = 0;
+    l->first = l->last = &l->first;
+    return l;
+}
+static inline void merge_flush_func_003CA2B0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003C9C10 */
+/* merge_units: end func_003CA2B0 */
 
-/* merge_units: begin func_003C9C30 */
+/* merge_units: begin func_003CA300 */
 #pragma push /* merge_units */
-extern int NetMessageField(void* hdr, void* dst, int size, int count);
-unsigned char cMessage_RegisterFields(char* s) {
-    unsigned char ok = 0;
-    if (NetMessageField(s, s, 4, 1) != 0) goto out;
-    if (NetMessageField(s, s + 4, 4, 1) != 0) goto out;
-    ok = 1;
-out:
-    return ok;
-}
-#pragma pop /* merge_units */
-/* merge_units: end func_003C9C30 */
-
-/* merge_units: begin func_003C9CA0 */
-#pragma push /* merge_units */
-typedef struct HdrBitsEP { unsigned int type : 2; unsigned int time : 30; } HdrBitsEP;
-typedef union HdrEP { HdrBitsEP b; unsigned int raw; } HdrEP;
-typedef struct PacketEP { unsigned int hdr; int data; } PacketEP;
-typedef struct EventEP { char pad[0x18]; int type; } EventEP;
-extern unsigned int cDME_GetTime(int a);
-int Event_PackHeader(EventEP* e, int data, int a2, int a3, int a4, unsigned int size, void* buf)
+extern void std_list_deleter_tQueuedMessage_dtor(void* self, short del);
+extern void operator_delete(void* p);
+void* std_list_tQueuedMessage_dtor(void* self, short del)
 {
-    HdrEP h;
-    if (size >= 8 && buf) {
-        PacketEP* out = (PacketEP*)buf;
-        if (e->type < 4) {
-            h.b.type = e->type;
-        } else {
-            h.b.type = 3;
-        }
-        h.b.time = cDME_GetTime(0);
-        out->hdr = h.raw;
-        out->data = data;
+    if (self) {
+        if (self)
+            std_list_deleter_tQueuedMessage_dtor(self, 0);
+        if (del > 0)
+            operator_delete(self);
     }
-    return -1;
-}
-#pragma pop /* merge_units */
-/* merge_units: end func_003C9CA0 */
-
-/* merge_units: begin func_003C9D60 */
-#pragma push /* merge_units */
-extern void operator_delete(void*);
-extern int D_004DFD80;
-typedef struct { void* vt; } cMessageD4;
-cMessageD4* cMessage_dtor(cMessageD4* p, short flag)
-{
-    if (p) {
-        p->vt = &D_004DFD80;
-        if (flag > 0) operator_delete(p);
-    }
-    return p;
-}
-#pragma pop /* merge_units */
-/* merge_units: end func_003C9D60 */
-
-/* merge_units: begin func_003C9DB0 */
-#pragma push /* merge_units */
-typedef struct { unsigned int kind : 2; unsigned int time : 30; } MsgStamp;
-typedef struct { MsgStamp stamp; int target; } MsgInfo;
-typedef struct {
-    void* vtable;
-    int sender;
-    char pad8[4];
-    unsigned int time;
-    char pad10[4];
-    int target;
-    unsigned int kind;
-    int unk1C;
-    unsigned char type;
-} cMessage;
-
-#if 0 /* merge_units */
-extern char D_004DFD80[];
-#endif /* merge_units */
-#define D_004DFD80 ((char*)&D_004DFD80) /* merge_units */
-
-extern void cDME_AddToAvgLatency(unsigned int dt);
-
-/* cMessage constructor (type 5). */
-cMessage* cMessage_ctor_cMessageNameR_messagebaseR(cMessage* self, int sender, MsgInfo* info)
-{
-    MsgStamp stamp;
-    self->vtable = D_004DFD80;
-    self->sender = sender;
-    self->target = info->target;
-    self->unk1C = 0;
-    self->type = 5;
-    *(int*)&stamp = *(int*)&info->stamp;
-    self->time = stamp.time;
-    self->kind = stamp.kind;
-    cDME_AddToAvgLatency(cDME_GetTime(0) - self->time);
     return self;
 }
-#undef D_004DFD80 /* merge_units */
+static inline void merge_flush_func_003CA300(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003C9DB0 */
+/* merge_units: end func_003CA300 */
 
-/* merge_units: begin func_003C9E30 */
+/* merge_units: begin func_003CA360 */
 #pragma push /* merge_units */
-#if 0 /* merge_units */
-extern char D_004DFD80[];
-#endif /* merge_units */
-#define D_004DFD80 ((char*)&D_004DFD80) /* merge_units */
-
-extern char g_IsMultiplayer[];
-extern char D_005721D0[];
-#if 0 /* merge_units */
-extern int cDME_GetTime(int);
-#endif /* merge_units */
-#define cDME_GetTime(a0) ((int)cDME_GetTime((a0))) /* merge_units */
-
-
-int cMessage_ctor_cMessageNameR(int a0, int a1) {
-    int s0, v0, v1;
-    int cond;
-
-    v1 = (int)D_004DFD80;
-    v0 = 0 + 5;
-    *(int*)(char*)a0 = v1;
-    *(int*)((char*)a0 + 4) = a1;
-    *(int*)((char*)a0 + 24) = 0;
-    *(int*)((char*)a0 + 28) = 0;
-    *(char*)((char*)a0 + 32) = v0;
-    v0 = *(unsigned char*)(char*)g_IsMultiplayer;
-    cond = v0 == 0;
-    s0 = a0;
-    if (cond) goto L003C9E88;
-    v0 = *(unsigned char*)(char*)D_005721D0;
-    cond = v0 == 0;
-    a0 = 0;
-    if (cond) goto L003C9E88;
-    v0 = cDME_GetTime(a0);
-    *(int*)((char*)s0 + 12) = v0;
-L003C9E88:;
-    v0 = s0;
-    goto ret;
-ret:
-    return v0;
+extern void std_list_deleter_tQueuedMessage_begin(int* out, void* self);
+extern void std_list_deleter_tQueuedMessage_end(int* out, void* self);
+extern void std_list_deleter_tQueuedMessage_erase(int* out, void* self, int* first, int* last);
+void* std_list_imp_tQueuedMessage_dtor(void* self, short del)
+{
+    if (self) {
+        if (self) {
+            int r;
+            int first;
+            int last;
+            std_list_deleter_tQueuedMessage_begin(&first, self);
+            std_list_deleter_tQueuedMessage_end(&last, self);
+            std_list_deleter_tQueuedMessage_erase(&r, self, &first, &last);
+        }
+        if (del > 0)
+            operator_delete(self);
+    }
+    return self;
 }
-#undef D_004DFD80 /* merge_units */
-#undef cDME_GetTime /* merge_units */
+static inline void merge_flush_func_003CA360(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003C9E30 */
-
-/* merge_units: begin func_003C9EA0 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-#include "object_list_erase_file.h"
-
-extern "C" { char D_004BD198[] = "allocator.hh"; }
-DEFINE_OBJECT_LIST_ERASE_RANGE_FILE(std_list_deleter_tQueuedMessage_erase, D_004BD198)
-#pragma pop /* merge_units */
-/* merge_units: end func_003C9EA0 */
-
-/* merge_units: begin func_003C9FE0 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-
-DEFINE_OBJECT_LIST_ERASE_ONE_FILE(List_Erase_3C9FE0, D_004BD198)
-#pragma pop /* merge_units */
-/* merge_units: end func_003C9FE0 */
+/* merge_units: end func_003CA360 */

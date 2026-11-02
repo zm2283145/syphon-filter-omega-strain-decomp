@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/MemCard: 7 files, 0040DB10-0040E320
+ * Libs/SFOLib/Source/MemCard: 9 files, 0040DB10-0040E370
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -13,7 +13,12 @@
 
 typedef struct { char pad0[0x540]; int mode; char pad1[0x59E - 0x544]; unsigned char ok; unsigned char pad2; unsigned char done; } PDB10;
 typedef struct { PDB10* p; unsigned char busy; char pad[3]; void (*cb)(void); unsigned char state; } CDB10;
+#if 0 /* merge_units */
 extern int MemCard_MemCardMain(PDB10* p);
+#endif /* merge_units */
+int MemCard_MemCardMain(int a0); /* merge_units */
+#define MemCard_MemCardMain(a0) (MemCard_MemCardMain((int)(a0))) /* merge_units */
+
 /* Runs the session state machine until it settles; returns its result flag. */
 int cMemCard_Format(CDB10* c) {
     PDB10* p = c->p;
@@ -31,6 +36,7 @@ int cMemCard_Format(CDB10* c) {
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0040DB10(void) {}
+#undef MemCard_MemCardMain /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0040DB10 */
 
@@ -39,7 +45,12 @@ static inline void merge_flush_func_0040DB10(void) {}
 typedef struct { char pad0[0x14]; int value; char pad1[0x4]; char item[0x1C]; } EDBB0;
 typedef struct { EDBB0 e[(0x560) / 0x38]; char pad[0x560 - (0x560 / 0x38) * 0x38]; int count; } PDBB0;
 typedef struct { PDBB0* p; } ODBB0;
+#if 0 /* merge_units */
 extern int WildcardCompare(void* key, void* item);
+#endif /* merge_units */
+int WildcardCompare(char* pat, char* str); /* merge_units */
+#define WildcardCompare(a0, a1) (WildcardCompare((char *)(a0), (char *)(a1))) /* merge_units */
+
 static inline int dbb0find(PDBB0* p, void* key) {
     int i;
     for (i = 0; i < p->count; i++) {
@@ -57,6 +68,7 @@ int cMemCard_GetFileSize(ODBB0* o, void* key) {
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0040DBB0(void) {}
+#undef WildcardCompare /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0040DBB0 */
 
@@ -68,7 +80,8 @@ typedef struct { PDC80* p; unsigned char busy; char pad[3]; void (*cb)(void); un
 #if 0 /* merge_units */
 extern int MemCard_MemCardMain(PDC80* p);
 #endif /* merge_units */
-#define MemCard_MemCardMain(a0) (MemCard_MemCardMain((PDB10 *)(a0))) /* merge_units */
+#define MemCard_MemCardMain(a0) (MemCard_MemCardMain((int)(a0))) /* merge_units */
+
 
 
 static inline int dc80find(PDC80* p, void* key) {
@@ -112,7 +125,8 @@ typedef struct { PDDC0* p; unsigned char busy; char pad[3]; void (*cb)(void); un
 #if 0 /* merge_units */
 extern int MemCard_MemCardMain(PDDC0* p);
 #endif /* merge_units */
-#define MemCard_MemCardMain(a0) (MemCard_MemCardMain((PDB10 *)(a0))) /* merge_units */
+#define MemCard_MemCardMain(a0) (MemCard_MemCardMain((int)(a0))) /* merge_units */
+
 
 
 static inline int dDC0find(PDDC0* p, void* key) {
@@ -155,7 +169,8 @@ typedef struct { PDF00* p; unsigned char busy; char pad[3]; void (*cb)(void); un
 #if 0 /* merge_units */
 extern int MemCard_MemCardMain(PDF00* p);
 #endif /* merge_units */
-#define MemCard_MemCardMain(a0) (MemCard_MemCardMain((PDB10 *)(a0))) /* merge_units */
+#define MemCard_MemCardMain(a0) (MemCard_MemCardMain((int)(a0))) /* merge_units */
+
 
 
 static inline int df00find(PDF00* p, void* key) {
@@ -203,7 +218,8 @@ typedef struct { P090* p; unsigned char busy; char pad[3]; void (*cb)(void); uns
 #if 0 /* merge_units */
 extern int MemCard_MemCardMain(P090* p);
 #endif /* merge_units */
-#define MemCard_MemCardMain(a0) (MemCard_MemCardMain((PDB10 *)(a0))) /* merge_units */
+#define MemCard_MemCardMain(a0) (MemCard_MemCardMain((int)(a0))) /* merge_units */
+
 
 
 static inline int e090find(P090* p, void* key) {
@@ -278,10 +294,7 @@ static inline void merge_flush_func_0040E090(void) {} /* merge_units */
 
 #include "MemCard_types.h"
 
-#if 0 /* merge_units */
 extern int MemCard_MemCardMain(int a0);
-#endif /* merge_units */
-#define MemCard_MemCardMain(a0) (MemCard_MemCardMain((PDB10 *)(a0))) /* merge_units */
 
 
 /* Refresh the "present" flag from MemCard_MemCardMain; clear unk0C when absent. */
@@ -291,7 +304,90 @@ void cMemCard_NextFrame(MemCardState* state) {
         state->unk0C = 0;
     }
 }
-#undef MemCard_MemCardMain /* merge_units */
 static inline void merge_flush_func_0040E320(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0040E320 */
+
+/* merge_units: begin func_0040E370 */
+#pragma push /* merge_units */
+#pragma push
+#pragma cplusplus on
+#include "alloc_guard.h"
+#pragma pop
+
+/* library prototypes shared by the blocks below (C linkage) */
+int strlen(const char *);
+
+int Libc_Tolower(int c);
+int WildcardCompare(char* pat, char* str)
+{
+    char* p;
+    char* q;
+    p = pat;
+    q = str;
+    while (*p != 0 && *q != 0 && *p != '*') {
+        if (*p != '?') {
+            if (Libc_Tolower(*p) != Libc_Tolower(*q))
+                return 0;
+        }
+        p++;
+        q++;
+    }
+    p = pat + strlen(pat) - 1;
+    q = str + strlen(str) - 1;
+    while (p >= pat && q >= str && *p != '*') {
+        if (*p != '?') {
+            if (Libc_Tolower(*p) != Libc_Tolower(*q))
+                return 0;
+        }
+        p--;
+        q--;
+    }
+    return 1;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0040E370(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_0040E370 */
+
+/* merge_units: begin func_0040E4C0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct Card40E4C0 { char pad[0x5A0]; unsigned char done; };
+struct Ctx40E4C0 { Card40E4C0* card; bool busy; char pad[3]; void (*cb)(void); unsigned char cancel; };
+extern "C" {
+extern char D_004BED38[];
+void* cMemMan_Allocate(int pool, int size, char* file, int line);
+Card40E4C0* MemCard_ctor(void* p);
+#if 0 /* merge_units */
+int MemCard_MemCardMain(Card40E4C0* c);
+#endif /* merge_units */
+#define MemCard_MemCardMain(a0) (MemCard_MemCardMain((int)(a0))) /* merge_units */
+
+void cMemCard_Init(Ctx40E4C0* c);
+}
+static inline void* new40E4C0(void) {
+    AllocGuard guard;
+    return cMemMan_Allocate(0, 0x5C0, D_004BED38, 0x2F9);
+}
+void cMemCard_Init(Ctx40E4C0* c)
+{
+    Card40E4C0* m = (Card40E4C0*)new40E4C0();
+    if (m)
+        m = MemCard_ctor(m);
+    c->card = m;
+    bool idle;
+    do {
+        c->busy = MemCard_MemCardMain(c->card) != 0;
+        if (!c->busy)
+            c->cancel = 0;
+        if (c->cb)
+            c->cb();
+        idle = !c->busy;
+    } while (!idle || !c->card->done);
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0040E4C0(void) {}
+#undef MemCard_MemCardMain /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0040E4C0 */

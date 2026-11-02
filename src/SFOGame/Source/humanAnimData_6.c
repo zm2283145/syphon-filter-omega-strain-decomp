@@ -1,77 +1,58 @@
 /*
- * SFOGame/Source/humanAnimData: 12 files, 001F23C0-001F2800
+ * SFOGame/Source/humanAnimData: 6 files, 001F2A00-001F2BE0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_001F23C0 */
+/* merge_units: begin func_001F2A00 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
-#include "member0_dtor.h"
-DEFINE_MEMBER0_DTOR(cSkaTransBLEND_dtor, cArray_cSkaBlendSequenceItem_dtor)
-static inline void merge_flush_func_001F23C0(void) {} /* merge_units */
+#include "vtable_chain_dtor.h"
+extern "C" void cSkaNode_PlaybackGroupId();
+extern void * const D_004DFC50[];
+extern "C" VtableChainObject* cSkaNode_dtor(VtableChainObject* self,
+                                   short deleteFlag)
+{
+    if (self) {
+        self->vtable = ((char*)D_004DFC50);
+        if (deleteFlag > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+void * const D_004DFC50[8] = { (void*)0x0, (void*)0x0, (void*)cSkaNode_dtor, (void*)0x0, (void*)cSkaNode_PlaybackGroupId, (void*)0x0, (void*)0x0, (void*)0x0 };
+static inline void merge_flush_func_001F2A00(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001F23C0 */
+/* merge_units: end func_001F2A00 */
 
-/* merge_units: begin func_001F2420 */
+/* merge_units: begin func_001F2A50 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-DEFINE_MEMBER0_DTOR(cArray_cSkaBlendSequenceItem_dtor, std_vector_cSkaBlendSequenceItem_dtor)
-static inline void merge_flush_func_001F2420(void) {} /* merge_units */
+#include "member0_dtor.h"
+DEFINE_MEMBER0_DTOR(cArray_cSkaSwitchItem_dtor, std_vector_cSkaSwitchItem_dtor)
+static inline void merge_flush_func_001F2A50(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001F2420 */
+/* merge_units: end func_001F2A50 */
 
-/* merge_units: begin func_001F2480 */
+/* merge_units: begin func_001F2AB0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "direct_base_dtor.h"
-DEFINE_DIRECT_BASE_DTOR(std_vector_cSkaBlendSequenceItem_dtor, std_vector_imp_cSkaBlendSequenceItem_dtor)
-static inline void merge_flush_func_001F2480(void) {} /* merge_units */
+DEFINE_DIRECT_BASE_DTOR(std_vector_cSkaSwitchItem_dtor, std_vector_imp_cSkaSwitchItem_dtor)
+static inline void merge_flush_func_001F2AB0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001F2480 */
+/* merge_units: end func_001F2AB0 */
 
-/* merge_units: begin func_001F24E0 */
+/* merge_units: begin func_001F2B10 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-DEFINE_DIRECT_BASE_DTOR(std_vector_imp_cSkaBlendSequenceItem_dtor, std_vector_deleter_cSkaBlendSequenceItem_dtor)
-static inline void merge_flush_func_001F24E0(void) {} /* merge_units */
+DEFINE_DIRECT_BASE_DTOR(std_vector_imp_cSkaSwitchItem_dtor, std_vector_deleter_cSkaSwitchItem_dtor)
+static inline void merge_flush_func_001F2B10(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001F24E0 */
+/* merge_units: end func_001F2B10 */
 
-/* merge_units: begin func_001F2540 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-#pragma optimization_level 1
-DEFINE_DIRECT_BASE_DTOR(cSkaInitListOfPointers_cSkaSwitchItem_dtor, cLList_cSkaSwitchItemPtr_dtor)
-#pragma optimization_level reset
-static inline void merge_flush_func_001F2540(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F2540 */
-
-/* merge_units: begin func_001F25B0 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-#pragma optimization_level 1
-DEFINE_DIRECT_BASE_DTOR(cLList_cSkaSwitchItemPtr_dtor, std_list_cSkaSwitchItemPtr_dtor)
-#pragma optimization_level reset
-static inline void merge_flush_func_001F25B0(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F25B0 */
-
-/* merge_units: begin func_001F2620 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-
-/* Deleting destructor that runs the base destructor (built at -O1). */
-#pragma optimization_level 1
-DEFINE_DIRECT_BASE_DTOR(std_list_cSkaSwitchItemPtr_dtor, func_00135C90)
-#pragma optimization_level reset
-static inline void merge_flush_func_001F2620(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F2620 */
-
-/* merge_units: begin func_001F2690 */
+/* merge_units: begin func_001F2B70 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -81,68 +62,36 @@ static inline void merge_flush_func_001F2620(void) {} /* merge_units */
 
 #include "loose01_types.h"
 
-extern int details_compressed_pair_imp_cAllocator_node_node_base_1_second_void(void*);
+extern void* D_004DFBB0;
+extern MotionNode* cSkaNode_ctor_eType_cQuaternionR(MotionNode*, int, int);
+#if 0 /* merge_units */
+extern void cSkaInitListOfPointers_cSkaSwitchItem_CopyPointerContentsToArray(int, ObjVec*);
+#endif /* merge_units */
+void cSkaInitListOfPointers_cSkaSwitchItem_CopyPointerContentsToArray(void* src, void* dst); /* merge_units */
+#define cSkaInitListOfPointers_cSkaSwitchItem_CopyPointerContentsToArray(a0, a1) (cSkaInitListOfPointers_cSkaSwitchItem_CopyPointerContentsToArray((void *)(a0), (void *)(a1))) /* merge_units */
 
-int std_list_deleter_voidPtr_tail(char* self) {
-    return details_compressed_pair_imp_cAllocator_node_node_base_1_second_void(self + 4);
-}
+extern ObjVec* cArray_cSkaSwitchItem_ctor_void(ObjVec*);
 
-Word* std_list_deleter_voidPtr_generic_iterator_ctor_nodeP(Word* self, int value) {
-    self->value = value;
+/* Constructor of the type-3 motion node (same layout as MotionSlider up to 0x34). */
+MotionSlider* cSkaSwitch_ctor(MotionSlider* self, int a1, int a2, int a3) {
+    cSkaNode_ctor_eType_cQuaternionR(&self->base, 3, a3);
+    self->base.vtable = &D_004DFBB0;
+    self->unk20 = a1;
+    cArray_cSkaSwitchItem_ctor_void(&self->children);
+    cSkaInitListOfPointers_cSkaSwitchItem_CopyPointerContentsToArray(a2, &self->children);
     return self;
 }
-static inline void merge_flush_func_001F2690(void) {} /* merge_units */
+#undef cSkaInitListOfPointers_cSkaSwitchItem_CopyPointerContentsToArray /* merge_units */
+static inline void merge_flush_func_001F2B70(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001F2690 */
+/* merge_units: end func_001F2B70 */
 
-/* merge_units: begin func_001F26B0 */
+/* merge_units: begin func_001F2BE0 */
 #pragma push /* merge_units */
-#pragma cplusplus on
-#pragma optimization_level 1
-DEFINE_DIRECT_BASE_DTOR(cSkaInitListOfPointers_cSkaTransBLEND_dtor, cLList_cSkaTransBLENDPtr_dtor)
-#pragma optimization_level reset
-static inline void merge_flush_func_001F26B0(void) {} /* merge_units */
+#include "ptr_copy_loop.h"
+#pragma opt_rotateloops off
+DEFINE_PTR_COPY_LOOP(cSkaInitListOfPointers_cSkaSwitchItem_CopyPointerContentsToArray, cLList_cSkaSwitchItemPtr_Size, cArray_cSkaSwitchItem_ReserveActual, cArray_cSkaSwitchItem_Clear, cLList_cSkaSwitchItemPtr_Begin, cLList_cSkaSwitchItemPtr_End, cConstLListIterator_cSkaSwitchItemPtr_opMul, cArray_cSkaSwitchItem_PushBackActual, cConstLListIterator_cSkaSwitchItemPtr_opInc, opNe_cConstLListIteratorR_cConstLListIteratorR_2)
+#pragma opt_rotateloops reset
+static inline void merge_flush_func_001F2BE0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001F26B0 */
-
-/* merge_units: begin func_001F2720 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-#pragma optimization_level 1
-DEFINE_DIRECT_BASE_DTOR(cLList_cSkaTransBLENDPtr_dtor, std_list_cSkaTransBLENDPtr_dtor)
-#pragma optimization_level reset
-static inline void merge_flush_func_001F2720(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F2720 */
-
-/* merge_units: begin func_001F2790 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-
-/* Deleting destructor that runs the base destructor (built at -O1). */
-#pragma optimization_level 1
-DEFINE_DIRECT_BASE_DTOR(std_list_cSkaTransBLENDPtr_dtor, func_00135C90)
-#pragma optimization_level reset
-static inline void merge_flush_func_001F2790(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F2790 */
-
-/* merge_units: begin func_001F2800 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-extern "C" void operator_delete(void* allocation);
-extern "C" void cArray_cSkaTransBLEND_dtor(void* m, int flags);
-extern "C" void cPointer_cSkaNode_dtor(void* m, int flags);
-extern "C" void* cSkaSwitchItem_dtor(void* self, short deleteFlag)
-{
-    if (self) {
-        cArray_cSkaTransBLEND_dtor((char*)self + 4, -1);
-        cPointer_cSkaNode_dtor(self, -1);
-        if (deleteFlag > 0)
-            operator_delete(self);
-    }
-    return self;
-}
-static inline void merge_flush_func_001F2800(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F2800 */
+/* merge_units: end func_001F2BE0 */

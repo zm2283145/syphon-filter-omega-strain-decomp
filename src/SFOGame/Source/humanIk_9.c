@@ -1,10 +1,171 @@
 /*
- * SFOGame/Source/humanIk: 3 files, 001CF090-001CF1F0
+ * SFOGame/Source/humanIk: 5 files, 001D0CF0-001D0DF0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_001CF090 */
+/* merge_units: begin func_001D0CF0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "types.h"
+typedef struct V4 { float x, y, z, w; } __attribute__((aligned(16))) V4;
+struct Src { char pad[0xD0]; V4 q[2]; };
+struct Bone { char pad[0x1A0]; V4 rot; };
+struct Slot {
+    Bone* bone;
+    char pad4[0xC];
+    char f10[0xB0];
+    Src* src;
+    char padC4[0xC];
+    V4 fD0;
+    char padE0[0x20];
+};
+extern "C" {
+extern Slot UpperBodyNodeTable[];
+#if 0 /* merge_units */
+void nIk_OneBoneDirectionalIK(V4* out, V4* q, int one, void* inner);
+#endif /* merge_units */
+struct Limit; /* merge_units */
+void nIk_OneBoneDirectionalIK(V4* out, V4* q, int flag, Limit* lim); /* merge_units */
+#define nIk_OneBoneDirectionalIK(a0, a1, a2, a3) (nIk_OneBoneDirectionalIK((a0), (a1), (a2), (Limit *)(a3))) /* merge_units */
+
+}
+static inline void Cp(void* d0, const void* s) { void* d = d0; __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(s)); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(d) : "memory"); }
+static inline void CpB(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(s)); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(d) : "memory"); }
+static inline void CpC(void* d, const void* s) { const void* p = s; __asm__ volatile("lq %0, 0x0(%0)" : "+r"(p)); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(p), "r"(d) : "memory"); }
+static inline void CpD(void* d0, const void* s) { void* d = d0; const void* p = s; __asm__ volatile("lq %0, 0x0(%0)" : "+r"(p)); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(p), "r"(d) : "memory"); }
+static inline void CpE(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=&r"(t) : "r"(s)); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(d) : "memory"); }
+static inline void CpF(void* d0, const void* s) { void* d = d0; __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=&r"(t) : "r"(s)); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(d) : "memory"); }
+static inline void Conj(V4* p) { __asm__ volatile("lqc2 vf1, 0x0(%0)\n vsub.xyz vf1, vf0, vf1\n sqc2 vf1, 0x0(%0)" : : "r"(p) : "memory"); }
+static inline void QMul(V4* o, const V4* b, const V4* c) {
+    __asm__ volatile("lqc2 vf1, 0x0(%1)\n lqc2 vf2, 0x0(%2)\n vmul.xyzw vf3, vf1, vf2\n vopmula.xyz ACC, vf1, vf2\n vmaddaw.xyz ACC, vf1, vf2w\n vmaddaw.xyz ACC, vf2, vf1w\n vopmsub.xyz vf4, vf2, vf1\n vsubaz.w ACC, vf3, vf3z\n vmsubay.w ACC, vf0, vf3y\n vmsubx.w vf4, vf0, vf3x\n sqc2 vf4, 0x0(%0)" : : "r"(o), "r"(b), "r"(c) : "memory");
+}
+extern "C" void cHumanIkRoutine_OrientFoot_AfterPositionLeg(void* self, const V4* q, int idx, int flag)
+{
+    Slot* s = &UpperBodyNodeTable[idx];
+    Src* src = s->src;
+    if (flag) {
+        V4 a, d, r2, c, r;
+        Cp(&a, q);
+        { V4* b = src->q; Cp(&c, &b[1]); }
+        { V4* pc = &c; Conj(pc); Cp(&d, pc); }
+        QMul(&r, &d, &a);
+        { void* d2 = &a; const void* s2 = &r2; void* d1 = &r2; const void* s1 = &r; CpC(d1, s1); CpE(d2, s2); }
+        nIk_OneBoneDirectionalIK(&s->fD0, &a, 1, s->f10);
+    } else {
+        Cp(&s->fD0, &s->bone->rot);
+    }
+}
+#undef nIk_OneBoneDirectionalIK /* merge_units */
+static inline void merge_flush_func_001D0CF0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001D0CF0 */
+
+/* merge_units: begin func_001D0DF0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+struct Limit { V4 scale; V4 post; V4 pre; };
+extern "C" {
+int cQuaternion_IsZeroXYZ(V4* v);
+void cQuaternion_opAssign(V4* d, V4* s);
+float cQuaternion_X_void_2(V4* v);
+float cQuaternion_Y_void_2(V4* v);
+float cQuaternion_Z_void_2(V4* v);
+float cQuaternion_W_void_2(V4* v);
+float* cQuaternion_W_void(V4* v);
+float* cQuaternion_X_void(V4* v);
+float* cQuaternion_Y_void(V4* v);
+float* cQuaternion_Z_void(V4* v);
+V4* cVector_ctor_float_float_float_float(V4* v, float x, float y, float z, float w);
+V4* cVector_Normalize_floatR(V4* v, float* len);
+V4* cVector_ctor_cVectorR(V4* d, const V4* s);
+float SQUARE(float x);
+float CLAMP_LOW(float a, float b);
+float SQRT(float x);
+float cVector_X_void(V4* v);
+float cVector_Y_void(V4* v);
+float cVector_Z_void(V4* v);
+}
+// 128-bit lq/sq quadword copy idiom
+
+// VU0 macro-mode quaternion ops (COP2), not expressible in C
+static inline void QMul_001D0DF0(V4* o, const V4* b, const V4* c) {
+    __asm__ volatile("lqc2 vf1, 0x0(%0)\n lqc2 vf2, 0x0(%1)\n vmul.xyzw vf3, vf1, vf2\n vopmula.xyz ACC, vf1, vf2\n vmaddaw.xyz ACC, vf1, vf2w\n vmaddaw.xyz ACC, vf2, vf1w\n vopmsub.xyz vf4, vf2, vf1\n vsubaz.w ACC, vf3, vf3z\n vmsubay.w ACC, vf0, vf3y\n vmsubx.w vf4, vf0, vf3x\n sqc2 vf4, 0x0(%2)" : : "r"(b), "r"(c), "r"(o) : "memory");
+}
+// VU0 macro-mode vector op (COP2), not expressible in C
+static inline void Neg(V4* d, const V4* s) {
+    asm {
+        lqc2 vf1, 0(s)
+        vmulax.xyzw ACC, vf0, vf0x
+        vmsubw.xyzw vf1, vf1, vf0w
+        sqc2 vf1, 0(d)
+    }
+}
+// VU0 macro-mode vector op (COP2), not expressible in C
+static inline float WDot(const V4* a, const V4* b) { int t; float r = 0.0f; __asm__ volatile("lqc2 vf1, 0x0(%2)\n lqc2 vf2, 0x0(%3)\n vmul.xyz vf3, vf1, vf1\n vmul.xyz vf4, vf3, vf2\n vmulax.w ACC, vf0, vf4x\n vmadday.w ACC, vf0, vf4y\n vmaddz.w vf5, vf0, vf4z\n vdiv Q, vf0w, vf5w\n vwaitq\n vaddq.x vf6, vf0, Q\n qmfc2.ni %1, vf6\n mtc1 %1, %0" : "+f"(r), "=&r"(t) : "r"(a), "r"(b) : "memory"); return r; }
+
+extern "C" void nIk_OneBoneDirectionalIK(V4* out, V4* q, int flag, Limit* lim)
+{
+    float len;
+    V4 a, r2, t80, r, t60, axis, t40;
+    V4* pb = &lim->pre;
+    Cp(&a, q);
+    V4* pa = &a;
+    QMul_001D0DF0(&r, pb, pa);
+    { void* d2 = pa; const void* s2 = &r2; void* d1 = &r2; const void* s1 = &r; CpC(d1, s1); CpE(d2, s2); }
+    if (flag && a.w < 0.0f) {
+        Neg(&a, &a);
+    }
+    if (cQuaternion_IsZeroXYZ(&a)) {
+        cQuaternion_opAssign(out, &a);
+    } else {
+        float x = cQuaternion_X_void_2(&a);
+        float y = cQuaternion_Y_void_2(&a);
+        float z = cQuaternion_Z_void_2(&a);
+        cVector_ctor_cVectorR(&axis, cVector_Normalize_floatR(cVector_ctor_float_float_float_float(&t40, x, y, z, 0.0f), &len));
+        float k = WDot(&axis, &lim->scale);
+        if (SQUARE(len) > k || cQuaternion_W_void_2(&a) < 0.0f) {
+            *cQuaternion_W_void(out) = SQRT(CLAMP_LOW(1.0f - k, 0.0f));
+            float s = SQRT(k);
+            *cQuaternion_X_void(out) = s * cVector_X_void(&axis);
+            *cQuaternion_Y_void(out) = s * cVector_Y_void(&axis);
+            *cQuaternion_Z_void(out) = s * cVector_Z_void(&axis);
+        } else {
+            cQuaternion_opAssign(out, &a);
+        }
+    }
+    QMul_001D0DF0(&t60, &lim->post, out);
+    { void* d2 = out; const void* s2 = &t80; void* d1 = &t80; const void* s1 = &t60; CpC(d1, s1); CpE(d2, s2); }
+}
+static inline void merge_flush_func_001D0DF0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001D0DF0 */
+
+/* merge_units: begin func_001D1080 */
+#pragma push /* merge_units */
+float SQRT(float x)
+{
+    float r;
+    asm { sqrt.s r, x }
+    return r;
+}
+static inline void merge_flush_func_001D1080(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001D1080 */
+
+/* merge_units: begin func_001D10A0 */
+#pragma push /* merge_units */
+float CLAMP_LOW(float a, float b) {
+    float r;
+    asm { max.s r, b, a }
+    return r;
+}
+static inline void merge_flush_func_001D10A0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001D10A0 */
+
+/* merge_units: begin func_001D10B0 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -12,118 +173,10 @@
  * until real names are known.
  */
 
-#include "types.h"
-#include "loose00_types.h"
 
-int* std_vector_imp_cXformNodePtr_1_end(PtrVec* v) {
-    return v->data + v->count;
+float SQUARE(float f12) {
+    return (f12 * f12);
 }
-
-void std_vector_cXformNodePtr_pointer2iterator(Iter* out, void* self, Iter* src) {
-    out->p = src->p;
-}
-
-int* std_vector_imp_cXformNodePtr_1_begin(PtrVec* v) {
-    return v->data;
-}
-
-int cArray_cXformNodePtr_ConstIterator_opMul(Word* w) {
-    return w->value;
-}
-
-void cArray_cXformNodePtr_End(Iter* out, PtrVec* v) {
-    out->p = v->data + v->count;
-}
-
-void cArray_cXformNodePtr_Begin(Iter* out, PtrVec* v) {
-    out->p = v->data;
-}
-
-/* End iterator of an array of 0x1D0-byte records. */
-void std_vector_cBone_end(Elem1D0Iter* out, Vec1D0Array* v) {
-    int count;
-    Elem1D0* data;
-
-    count = v->count;
-    data = v->data;
-    out->p = data + count;
-}
-
-Word* cArray_cBone_Iterator_ctor(Word* dst, Word* src) {
-    dst->value = src->value;
-    return dst;
-}
-
-void std_vector_cBone_begin(Iter* out, PtrVec* v) {
-    out->p = v->data;
-}
-static inline void merge_flush_func_001CF090(void) {} /* merge_units */
+static inline void merge_flush_func_001D10B0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001CF090 */
-
-/* merge_units: begin func_001CF160 */
-#pragma push /* merge_units */
-#include "v4_asm_copy.h"
-typedef struct { __int128 q; } V_F160;
-typedef struct { int p; } It_F160;
-typedef struct { char pad[0x50]; unsigned char a50; char pad51[0x3F]; V_F160 v90; char padA0[4]; int lA4[3]; } S_F160;
-#if 0 /* merge_units */
-extern void cArray_cXformNodePtr_Begin(It_F160* it, void* c);
-#endif /* merge_units */
-#define cArray_cXformNodePtr_Begin(a0, a1) (cArray_cXformNodePtr_Begin((Iter *)(a0), (PtrVec *)(a1))) /* merge_units */
-
-#if 0 /* merge_units */
-extern void cArray_cXformNodePtr_End(It_F160* it, void* c);
-#endif /* merge_units */
-#define cArray_cXformNodePtr_End(a0, a1) (cArray_cXformNodePtr_End((Iter *)(a0), (PtrVec *)(a1))) /* merge_units */
-
-extern int cArray_cXformNodePtr_ConstIterator_opNe(It_F160* a, It_F160* b);
-#if 0 /* merge_units */
-extern void** cArray_cXformNodePtr_ConstIterator_opMul(It_F160* it);
-#endif /* merge_units */
-#define cArray_cXformNodePtr_ConstIterator_opMul(a0) ((void * *)cArray_cXformNodePtr_ConstIterator_opMul((Word *)(a0))) /* merge_units */
-
-extern void cXformNode_SetNeedsUpdate(void* p);
-extern void cArray_cXformNodePtr_ConstIterator_opInc(It_F160* it);
-#pragma opt_rotateloops off
-void cXformNode_SetTranslation_ParentRelative(S_F160* o, V_F160* src)
-{
-    It_F160 b;
-    It_F160 e;
-    V4Copy(&o->v90, src);
-    if (!o->a50) {
-        It_F160* pe;
-        o->a50 = 1;
-        cArray_cXformNodePtr_Begin(&b, o->lA4);
-        cArray_cXformNodePtr_End(&e, o->lA4);
-        pe = &e;
-        while (cArray_cXformNodePtr_ConstIterator_opNe(&b, pe)) {
-            cXformNode_SetNeedsUpdate(*cArray_cXformNodePtr_ConstIterator_opMul(&b));
-            cArray_cXformNodePtr_ConstIterator_opInc(&b);
-        }
-    }
-}
-#pragma opt_rotateloops reset
-#pragma peephole reset
-#undef cArray_cXformNodePtr_Begin /* merge_units */
-#undef cArray_cXformNodePtr_End /* merge_units */
-#undef cArray_cXformNodePtr_ConstIterator_opMul /* merge_units */
-static inline void merge_flush_func_001CF160(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001CF160 */
-
-/* merge_units: begin func_001CF1F0 */
-#pragma push /* merge_units */
-typedef struct { char pad[0x60]; float m[12]; } Src1CF;
-extern void cMatrix_ctor_float_float_float_float_etc(Mtx44* m, float m00, float m01, float m02, float m03, float m10, float m11, float m12, float m13,
-                      float m20, float m21, float m22, float m23, float m30, float m31, float m32, float m33);
-
-/* Builds a 4x4 matrix from the 3x4 block at +0x60 of src, with (0, 0, 0, 1) as the last column. */
-void cXformNode_GetRotationMatrix_ParentRelative(Mtx44* out, Src1CF* s)
-{
-    cMatrix_ctor_float_float_float_float_etc(out, s->m[0], s->m[1], s->m[2], s->m[3], s->m[4], s->m[5], s->m[6], s->m[7],
-              s->m[8], s->m[9], s->m[10], s->m[11], 0.0f, 0.0f, 0.0f, 1.0f);
-}
-static inline void merge_flush_func_001CF1F0(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001CF1F0 */
+/* merge_units: end func_001D10B0 */

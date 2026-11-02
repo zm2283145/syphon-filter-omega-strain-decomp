@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/gameFrontEnd: 2 files, 002C9420-002C9510
+ * SFOGame/Source/gameFrontEnd: 8 files, 002C9420-002C9A40
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -59,9 +59,19 @@ extern char D_004DE200[];
 extern int g_WeaponDatabase;
 extern char g_Video[];
 void cInterfaceManager_Refresh(void* p);
+#if 0 /* merge_units */
 W_002C9510* GetMachine(void);
+#endif /* merge_units */
+char* GetMachine(void); /* merge_units */
+#define GetMachine() ((W_002C9510 *)GetMachine()) /* merge_units */
+
 void cUSBKeybd_SetKeyMode(void* p);
+#if 0 /* merge_units */
 G_002C9510* cDME_GetLobby(void);
+#endif /* merge_units */
+unsigned char* cDME_GetLobby(void); /* merge_units */
+#define cDME_GetLobby() ((G_002C9510 *)cDME_GetLobby()) /* merge_units */
+
 void cDME_StartUpdateThread(void);
 int Gui_Canvas(void);
 void GuiWidget_SendMessage(int a, int b, int c, int d, int e);
@@ -69,7 +79,12 @@ char* strncpy(char* d, const char* s, int n);
 void* cSystemContainer_GetSystem(void* a, void* b);
 void cMessage_ctor_cMessageNameR(void* m, void* type);
 void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
+#if 0 /* merge_units */
 void cMessage_dtor(void* m, int flags);
+#endif /* merge_units */
+void* cMessage_dtor(void* self, short deleteFlag); /* merge_units */
+#define cMessage_dtor(a0, a1) ((void)cMessage_dtor((a0), (short)(a1))) /* merge_units */
+
 void cGameFrontEnd_PlayMusic(Self_002C9510* self, int v);
 void cDME_StopUpdateThread(void);
 void cMachine_InitFonts(W_002C9510* w);
@@ -149,6 +164,195 @@ void cGameFrontEnd_Restore(Self_002C9510* self)
         XLib_NextFrame(g_Video);
     }
 }
+#undef GetMachine /* merge_units */
+#undef cDME_GetLobby /* merge_units */
+#undef cMessage_dtor /* merge_units */
 static inline void merge_flush_func_002C9510(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002C9510 */
+
+/* merge_units: begin func_002C97A0 */
+#pragma push /* merge_units */
+#pragma push
+#pragma cplusplus on
+#include "vtable_base_dtor.h"
+#pragma pop
+
+#pragma cplusplus on
+
+DEFINE_VTABLE_BASE_DTOR(cLoadMsg_dtor, D_004DE200, cMessage_dtor)
+static inline void merge_flush_func_002C97A0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002C97A0 */
+
+/* merge_units: begin func_002C9800 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+DEFINE_VTABLE_BASE_DTOR(cInitMsg_dtor, D_004DE220, cMessage_dtor)
+static inline void merge_flush_func_002C9800(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002C9800 */
+
+/* merge_units: begin func_002C9860 */
+#pragma push /* merge_units */
+extern void* cSystemContainer_GetSystem(void* a, void* b);
+extern void cWeaponDB_CloseWeaponsHog(int);
+extern char* GetMachine(void);
+extern void cGameSound_Unload(void*);
+extern void cGameFrontEnd_CloseCharacter(void*, int);
+extern void cGameFrontEnd_CloseZeusHog(void*);
+extern void cUSBKeybd_SetAsciiMode(void*);
+extern unsigned char* cDME_GetLobby(void);
+#if 0 /* merge_units */
+extern char* strncpy(char*, const char*, int);
+#endif /* merge_units */
+#define strncpy(a0, a1, a2) (strncpy((a0), (a1), (a2))) /* merge_units */
+
+extern char D_004ACF48[];
+
+typedef struct {
+    char pad0[0x28];
+    unsigned char f28;
+    char pad29[0xE];
+    unsigned char f37;
+    unsigned char f38;
+} Obj9860;
+
+typedef struct {
+    signed char len;
+    char text[0x80];
+} PStr;
+
+static inline void Copy(PStr* buf, const char* s)
+{
+    char* d;
+    const char* p;
+    int n;
+    n = 0;
+    d = buf->text;
+    p = s;
+    while ((*d++ = *p++) != 0) {
+        if (++n >= 0x7E) {
+            n++;
+            d[0] = '\n';
+            d[1] = 0;
+            break;
+        }
+    }
+    buf->len = n;
+}
+
+void cGameFrontEnd_Suspend(Obj9860* self, unsigned char mode)
+{
+    if (self->f37 == 0) {
+        { char* q = GetMachine(); q[0x278] = 1; }
+        cUSBKeybd_SetAsciiMode(D_0055A700);
+        switch (mode) {
+        case 0: {
+            void* svc;
+            D_0051EF68 = 0;
+            svc = cSystemContainer_GetSystem(g_Game, D_004F2CC0);
+            if (svc) {
+                PStr save;
+                unsigned char* g;
+                Copy(&save, g_LevelDirName);
+                strncpy(g_LevelDirName, D_004ACF48, 0x80);
+                cGameSound_Unload(svc);
+                strncpy(g_LevelDirName, save.text, 0x80);
+                g = cDME_GetLobby();
+                if (g && g[0x2409] == 0) {
+                    D_0051EF68 = 1;
+                    g[0x2409] = 1;
+                }
+            }
+            break;
+        }
+        case 1:
+            break;
+        }
+
+        cGameFrontEnd_CloseZeusHog(self);
+        cWeaponDB_CloseWeaponsHog(g_WeaponDatabase);
+        cGameFrontEnd_CloseCharacter(self, 1);
+        self->f37 = 1;
+        self->f28 = 0;
+        self->f38 = mode;
+    }
+}
+#undef strncpy /* merge_units */
+static inline void merge_flush_func_002C9860(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002C9860 */
+
+/* merge_units: begin func_002C99F0 */
+#pragma push /* merge_units */
+typedef struct FlagMsg {
+    void* vtbl;
+    char pad04[0x1C];
+    unsigned char flag;  /* 0x20 */
+    char pad21[0xF];
+} FlagMsg;
+extern char D_004D97F0[];
+extern void cPauseMusicMsg_ctor(FlagMsg* msg);
+#if 0 /* merge_units */
+extern void QueueMessage_cMessageR_cSystemP_int(FlagMsg* msg, void* target, int flags);
+#endif /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((void *)(a0), (a1), (a2))) /* merge_units */
+
+#if 0 /* merge_units */
+extern void cMessage_dtor(FlagMsg* msg, int flags);
+#endif /* merge_units */
+#define cMessage_dtor(a0, a1) ((void)cMessage_dtor((void *)(a0), (short)(a1))) /* merge_units */
+
+
+/* Broadcasts a flagged message. */
+void cGameFrontEnd_PauseMusic(void) {
+    FlagMsg msg;
+    cPauseMusicMsg_ctor(&msg);
+    msg.flag = 1;
+    QueueMessage_cMessageR_cSystemP_int(&msg, g_Game, 1);
+    msg.vtbl = D_004D97F0;
+    cMessage_dtor(&msg, 0);
+}
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
+#undef cMessage_dtor /* merge_units */
+static inline void merge_flush_func_002C99F0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002C99F0 */
+
+/* merge_units: begin func_002C9A40 */
+#pragma push /* merge_units */
+#pragma push
+#pragma cplusplus on
+#pragma pop
+
+#pragma cplusplus on
+
+/* Message destructor: restore vtable, run cMessage base, optionally delete. */
+DEFINE_VTABLE_BASE_DTOR(func_002C9A40, D_004D97F0, cMessage_dtor)
+static inline void merge_flush_func_002C9A40(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002C9A40 */
+
+/* merge_units: begin func_002C9AA0 */
+#pragma push /* merge_units */
+#if 0 /* merge_units */
+extern void* cSystemContainer_GetSystem(char* a, char* b);
+#endif /* merge_units */
+#define cSystemContainer_GetSystem(a0, a1) (cSystemContainer_GetSystem((void *)(a0), (void *)(a1))) /* merge_units */
+
+extern void SoundMgr_StopMusic(void* p);
+typedef struct { char pad[0x30C]; int handle; } Obj9AA0;
+void FrontEnd_StopMusic(Obj9AA0* o)
+{
+    void* s = cSystemContainer_GetSystem(g_Game, D_004F2CC0);
+    if (s)
+        SoundMgr_StopMusic(s);
+    o->handle = -1;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_002C9AA0(void) {}
+#undef cSystemContainer_GetSystem /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002C9AA0 */

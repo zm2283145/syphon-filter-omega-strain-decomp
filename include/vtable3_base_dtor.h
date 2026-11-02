@@ -20,15 +20,15 @@ struct Vtable3Object {
     extern char vt2[];                                                        \
     void* baseDtor(void* self, short deleteFlag);                             \
     }                                                                         \
-    extern "C" Vtable3Object* name(Vtable3Object* self, short deleteFlag)     \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
-            self->vtable = vt0;                                               \
+            ((Vtable3Object*)self)->vtable = vt0;                             \
             if (self) {                                                       \
-                self->vtable = vt1;                                           \
+                ((Vtable3Object*)self)->vtable = vt1;                         \
                 if (self) {                                                   \
-                    self->vtable = vt2;                                       \
-                    baseDtor(self, 0);                                        \
+                    ((Vtable3Object*)self)->vtable = vt2;                     \
+                    baseDtor(((Vtable3Object*)self), 0);                      \
                 }                                                             \
             }                                                                 \
             if (deleteFlag > 0)                                               \

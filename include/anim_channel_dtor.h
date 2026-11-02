@@ -20,12 +20,12 @@ struct AnimChannelObj {
 };
 
 #define DEFINE_ANIM_CHANNEL_DTOR(name)                                        \
-    extern "C" AnimChannelObj* name(AnimChannelObj* self, short deleteFlag)   \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
-            self->vtable = D_004DA840;                                        \
+            ((AnimChannelObj*)self)->vtable = D_004DA840;                     \
             if (self)                                                         \
-                self->vtable = D_004DA380;                                    \
+                ((AnimChannelObj*)self)->vtable = D_004DA380;                 \
             if (deleteFlag > 0)                                               \
                 operator_delete(self);                                        \
         }                                                                     \
@@ -33,13 +33,13 @@ struct AnimChannelObj {
     }
 
 #define DEFINE_ANIM_CHANNEL_DTOR_DEEP(name)                                   \
-    extern "C" AnimChannelObj* name(AnimChannelObj* self, short deleteFlag)   \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
             if (self) {                                                       \
-                self->vtable = D_004DA840;                                    \
+                ((AnimChannelObj*)self)->vtable = D_004DA840;                 \
                 if (self)                                                     \
-                    self->vtable = D_004DA380;                                \
+                    ((AnimChannelObj*)self)->vtable = D_004DA380;             \
             }                                                                 \
             if (deleteFlag > 0)                                               \
                 operator_delete(self);                                        \

@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/vu1model: 8 files, 00376250-00377270
+ * Libs/SFOLib/Source/vu1model: 10 files, 00376250-00377780
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -343,6 +343,7 @@ extern int D_0053924C;
 
 
 
+
 }
 
 typedef struct FxEnt {
@@ -642,6 +643,7 @@ extern TMU g_TextureMgr;
 #endif /* merge_units */
 #define g_TextureMgr (*(TMU*)&g_TextureMgr) /* merge_units */
 
+
 extern unsigned int D_00538080[];
 
 #define FIX(f, T) ((f) = (T)((int)self->memHead + (int)(f)))
@@ -704,3 +706,160 @@ extern "C" void cVU1Model_PatchMeshes(cVU1Model* self)
 static inline void merge_flush_func_00377270(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00377270 */
+
+/* merge_units: begin func_00377570 */
+#pragma push /* merge_units */
+#pragma mpwc_relax on
+#if 0 /* merge_units */
+int Alloc_Lock();
+#endif /* merge_units */
+
+#if 0 /* merge_units */
+int EnableIntc();
+#endif /* merge_units */
+
+int cFileMan_EncodeFilename_charP_cFileManR();
+int cFileMan_EncodeFilename_charP_cFileIOP_bool();
+int cFileMan_dtor();
+int cFileMan_ctor_void();
+short cTexMan_AddTextureFromFile_cFileManR(int, void*);
+int sprintf();
+int strlen(const char*);
+extern char D_004BC180;
+extern char D_004BC190;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
+#if 0 /* merge_units */
+extern int g_TextureMgr;
+#endif /* merge_units */
+#define g_TextureMgr (*(int*)&g_TextureMgr) /* merge_units */
+
+
+typedef struct {
+    int pad0;
+    int flags;
+    char p8[0x14 - 0x8];
+    int count;
+    char p18[0x70 - 0x18];
+    char names[1];
+} MdlDesc;
+
+typedef struct {
+    int pad0;
+    MdlDesc* desc;
+    short* ids;
+    char pC[0x24 - 0xC];
+    int flags;
+} Mdl;
+
+void cVU1Model_LoadTextures(Mdl* self, int arg1) {
+    char buf[0x50];
+    int name[0x28];
+    int size;
+    short* ids;
+    char* s;
+    int i;
+
+    size = self->desc->count * 2;
+    if (g_ProfileLockEnabled != 0) {
+        Alloc_Lock(9);
+    }
+    g_ProfileLockDepth += 1;
+    ids = cMemMan_Allocate(0, size, &D_004BC170, 0x131);
+    if (g_ProfileLockEnabled != 0) {
+        EnableIntc(9);
+    }
+    g_ProfileLockDepth -= 1;
+    self->ids = ids;
+    s = self->desc->names;
+    for (i = 0; i < self->desc->count; i++) {
+        cFileMan_ctor_void(name);
+        sprintf(buf, &D_004BC180, s);
+        cFileMan_EncodeFilename_charP_cFileManR(name, buf, arg1);
+        self->ids[i] = cTexMan_AddTextureFromFile_cFileManR(g_TextureMgr, name);
+        if (self->ids[i] == -1) {
+            cFileMan_EncodeFilename_charP_cFileIOP_bool(name, &D_004BC190, 0, 0);
+            self->ids[i] = cTexMan_AddTextureFromFile_cFileManR(g_TextureMgr, name);
+        }
+        s += strlen(s) + 1;
+        cFileMan_dtor(name, -1);
+    }
+    if (self->desc->flags & 1) {
+        self->flags |= 0x400000;
+    } else if (self->desc->flags & 2) {
+        self->flags |= 0x800000;
+    } else {
+        self->flags |= 0x200000;
+    }
+}
+#undef g_TextureMgr /* merge_units */
+static inline void merge_flush_func_00377570(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00377570 */
+
+/* merge_units: begin func_00377780 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct L377780 { void* light; int x4; };
+struct H377780 { char pad[0x10]; int x10; int nIds; int x18; int nLights; char pad20[0x38]; L377780* lights; };
+struct M377780 { int loaded; H377780* h; short* ids; };
+extern "C" {
+#if 0 /* merge_units */
+extern char D_004BC170[];
+#endif /* merge_units */
+#define D_004BC170 ((char*)&D_004BC170) /* merge_units */
+
+extern char g_LightMgr[];
+#if 0 /* merge_units */
+extern void* g_TextureMgr;
+#endif /* merge_units */
+#define g_TextureMgr (*(void **)&g_TextureMgr) /* merge_units */
+
+void cLightMan_RemoveSceneLightRef(void* mgr, void* light, void* owner);
+void cTexMan_RemoveTexture(void* mgr, int id, int f);
+#if 0 /* merge_units */
+void func_00376930(M377780* m);
+#endif /* merge_units */
+#define func_00376930(a0) (func_00376930((S376930 *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
+void cMemMan_Deallocate(int pool, void* p, char* file, int line);
+#endif /* merge_units */
+
+}
+static inline void Rel377780(void* p, int line)
+{
+    AllocGuard g;
+    cMemMan_Deallocate(0, p, D_004BC170, line);
+}
+extern "C" void cVU1Model_Unload(M377780* m)
+{
+    int i;
+    if (!m->loaded)
+        return;
+    if (!m->h->x18 || !m->h->x10) {
+        m->loaded = 0;
+        m->h = 0;
+        return;
+    }
+    for (i = 0; i < m->h->nLights; i++)
+        cLightMan_RemoveSceneLightRef(g_LightMgr, m->h->lights[i].light, m);
+    {
+        int j;
+        for (j = 0; j < m->h->nIds; j++)
+            cTexMan_RemoveTexture(g_TextureMgr, m->ids[j], 1);
+    }
+    if (m->ids) {
+        Rel377780(m->ids, 0x122);
+        m->ids = 0;
+    }
+    func_00376930(m);
+    m->loaded = 0;
+    m->h = 0;
+}
+#undef D_004BC170 /* merge_units */
+#undef g_TextureMgr /* merge_units */
+#undef func_00376930 /* merge_units */
+static inline void merge_flush_func_00377780(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00377780 */

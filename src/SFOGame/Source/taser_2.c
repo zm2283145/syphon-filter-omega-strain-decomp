@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/taser: 1 file, 00262A20
+ * SFOGame/Source/taser: 3 files, 00262A20-00262D60
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -96,9 +96,24 @@ struct Held_2A20 {
     void* inst;
 };
 extern "C" {
+#if 0 /* merge_units */
 Head_2A20* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_6(Head_2A20* h);
+#endif /* merge_units */
+void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_6(void* self); /* merge_units */
+#define details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_6(a0) ((Head_2A20 *)details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_6((void *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
 Node_2A20* std_list_deleter_TaserPulse_tail(int* l);
+#endif /* merge_units */
+void* std_list_deleter_TaserPulse_tail(char* self); /* merge_units */
+#define std_list_deleter_TaserPulse_tail(a0) ((Node_2A20 *)std_list_deleter_TaserPulse_tail((char *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
 void std_list_deleter_TaserPulse_generic_iterator_ctor(Iter_2A20* it, Node_2A20* n);
+#endif /* merge_units */
+Word* std_list_deleter_TaserPulse_generic_iterator_ctor(Word* self, int value); /* merge_units */
+#define std_list_deleter_TaserPulse_generic_iterator_ctor(a0, a1) ((void)std_list_deleter_TaserPulse_generic_iterator_ctor((Word *)(a0), (int)(a1))) /* merge_units */
+
 void cParticle_Render(void* inst, int key, Mtx_2A20* m);
 void XLib_DrawLines(void* s);
 void cAirTaser_Render(Held_2A20* self);
@@ -170,6 +185,52 @@ extern "C" void cAirTaser_Render(Held_2A20* self)
         cParticle_Render(self->inst, 2, &m);
     }
 }
+#undef details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_6 /* merge_units */
+#undef std_list_deleter_TaserPulse_tail /* merge_units */
+#undef std_list_deleter_TaserPulse_generic_iterator_ctor /* merge_units */
 static inline void merge_flush_func_00262A20(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00262A20 */
+
+/* merge_units: begin func_00262D60 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+#include "loose01_types.h"
+
+Word* std_list_deleter_TaserPulse_generic_iterator_ctor(Word* self, int value) {
+    self->value = value;
+    return self;
+}
+
+void* std_list_deleter_TaserPulse_tail(char* self) {
+    return self + 4;
+}
+
+void* details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_6(void* self) {
+    return self;
+}
+static inline void merge_flush_func_00262D60(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00262D60 */
+
+/* merge_units: begin taser_262D90 */
+#pragma push /* merge_units */
+typedef struct { char pad[8]; unsigned char state; } Obj262D;
+extern void cAirTaser_UpdateShot(Obj262D* s);
+extern void cAirTaser_UpdateShock(Obj262D* s);
+extern void cAirTaser_UpdateRetract(Obj262D* s);
+void cAirTaser_NextFrame(Obj262D* s) {
+    switch (s->state) {
+    case 1: cAirTaser_UpdateShot(s); break;
+    case 2: cAirTaser_UpdateShock(s); break;
+    case 3: cAirTaser_UpdateRetract(s); break;
+    }
+}
+static inline void merge_flush_taser_262D90(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end taser_262D90 */

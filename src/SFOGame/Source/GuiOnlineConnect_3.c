@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/GuiOnlineConnect: 1 file, 0029CBB0
+ * SFOGame/Source/GuiOnlineConnect: 2 files, 0029CBB0-0029D020
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -30,8 +30,18 @@ char* nGlobalization_GetString_charP(char* key);
 void GuiTextWidget_SetText(void* w, char* s, int a);
 void* Gui_Canvas(void);
 void GuiCanvas_SetFocus(void* mgr, int a);
+#if 0 /* merge_units */
 int GuiLobbyScreen_GetLobbyString(S_0029CBB0* self, int a, int b, int c, int d, int e);
+#endif /* merge_units */
+int GuiLobbyScreen_GetLobbyString(void*, int, int, int, int, int); /* merge_units */
+#define GuiLobbyScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) (GuiLobbyScreen_GetLobbyString((void *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+
+#if 0 /* merge_units */
 int cGameFrontEnd_PushMessageBox(void* ui, int a, char* b, int c, S_0029CBB0* d, int e);
+#endif /* merge_units */
+int cGameFrontEnd_PushMessageBox(void*, int, char*, int, int, int); /* merge_units */
+#define cGameFrontEnd_PushMessageBox(a0, a1, a2, a3, a4, a5) (cGameFrontEnd_PushMessageBox((a0), (a1), (a2), (a3), (int)(a4), (a5))) /* merge_units */
+
 void GuiMLTextWidget_Clear(void* w);
 void GuiMLTextWidget_AddText(void* w, char* s);
 Ent_0029CBB0* SFOLobbyList_GetSlot(NameList_0029CBB0* l, int i);
@@ -157,6 +167,53 @@ extern "C" void GuiOnlineConnect_ShowGroup(S_0029CBB0* self, unsigned char sel)
     }
     self->f118 = sel;
 }
+#undef GuiLobbyScreen_GetLobbyString /* merge_units */
+#undef cGameFrontEnd_PushMessageBox /* merge_units */
 static inline void merge_flush_GuiOnlineConnect_29CBB0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end GuiOnlineConnect_29CBB0 */
+
+/* merge_units: begin GuiOnlineConnect_29D020 */
+#pragma push /* merge_units */
+typedef struct Self { char pad[0x120]; int handle; } Self;
+#if 0 /* merge_units */
+extern void* D_004FFC04;
+#endif /* merge_units */
+#define D_004FFC04 (*(void **)&D_004FFC04) /* merge_units */
+
+extern void* cDME_GetLobby(Self*);
+extern void GuiOnlineConnect_Back(Self*, int);
+#if 0 /* merge_units */
+extern int GuiLobbyScreen_GetLobbyString(Self*, int, int, int, int, int);
+#endif /* merge_units */
+#define GuiLobbyScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) (GuiLobbyScreen_GetLobbyString((void *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+
+extern int cGameFrontEnd_PushMessageBox(void*, int, char*, int, int, int);
+extern void cGameFrontEnd_PopMessageBox(void*, int);
+extern void cGameFrontEnd_LobbyStartAccountScreen(void*);
+extern void SFOLobby_GetAnnouncements(void*);
+extern int SFOLobby_GetUsagePolicy(void*);
+extern void SFOLobby_GetPrivacyPolicy(void*);
+int GuiOnlineConnect_RetrieveServerNotices(Self* self)
+{
+    void* r = cDME_GetLobby(self);
+    void* g;
+    int h;
+    if (r == 0) {
+        GuiOnlineConnect_Back(self, 1);
+        return 0;
+    }
+    g = D_004FFC04;
+    h = cGameFrontEnd_PushMessageBox(g, 0, D_004AABF0, GuiLobbyScreen_GetLobbyString(self, 0xD, 0, 0, 0, 0), 0, 0);
+    if (self->handle != -1) cGameFrontEnd_PopMessageBox(D_004FFC04, self->handle);
+    cGameFrontEnd_LobbyStartAccountScreen(D_004FFC04);
+    SFOLobby_GetAnnouncements(r);
+    if (SFOLobby_GetUsagePolicy(r)) SFOLobby_GetPrivacyPolicy(r);
+    cGameFrontEnd_PopMessageBox(D_004FFC04, h);
+    return 1;
+}
+#undef D_004FFC04 /* merge_units */
+#undef GuiLobbyScreen_GetLobbyString /* merge_units */
+static inline void merge_flush_GuiOnlineConnect_29D020(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end GuiOnlineConnect_29D020 */

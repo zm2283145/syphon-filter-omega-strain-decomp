@@ -1,104 +1,79 @@
 /*
- * SFOGame/Source/human: 3 files, 00185060-00185140
+ * SFOGame/Source/human: 2 files, 00186670-001866E0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_00185060 */
+/* merge_units: begin func_00186670 */
 #pragma push /* merge_units */
+#pragma cplusplus on
+
 #include "types.h"
+#include "vtable2_base_dtor.h"
 
-/*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
- */
-
-
-extern char g_HumanActorClassKey[];
-
-int cGOBJ_CheckSubclassID(char* self, int* key) {
-    return *(int*)(self + 76) == *key;
-}
-
-void* cHuman_SubclassId(void) {
-    return g_HumanActorClassKey;
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00185060(void) {}
+/* Two-level destructor: restore vtables, run base destructor, optionally delete. */
+DEFINE_VTABLE2_BASE_DTOR(func_00186670, D_004E0180, D_004E0840, cMessage_dtor)
+static inline void merge_flush_func_00186670(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00185060 */
+/* merge_units: end func_00186670 */
 
-/* merge_units: begin func_00185090 */
+/* merge_units: begin func_001866E0 */
 #pragma push /* merge_units */
-extern unsigned char* D_005061D0; /* network read cursor */
+#pragma cplusplus on
+#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#define NULL 0
+#define VC_(p) ((int (*)())(p))
+#pragma mpwc_relax on
 
-static inline short read16(void)
-{
-    unsigned char lo = *D_005061D0++;
-    unsigned char hi = *D_005061D0++;
-    return lo + (hi << 8);
-}
 
-/* Reads a little-endian 32-bit float from the network read cursor. */
-void cNetMsg_GetFloat_floatR(float* out)
-{
-    int bits[1];
-    unsigned short lo = read16();
-    bits[0] = lo + ((unsigned short)read16() << 16);
-    *out = *(float*)bits;
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00185090(void) {}
-#pragma pop /* merge_units */
-/* merge_units: end func_00185090 */
-
-/* merge_units: begin func_00185140 */
-#pragma push /* merge_units */
-typedef struct { void* vtable; char base[0x18]; int size; unsigned char kind; char pad[3]; unsigned char value; unsigned char extra; char pad2[0xA]; } Msg_5140;
-typedef struct { char pad[0x4C]; int classKey; char pad50[0x346B - 0x50]; unsigned char value; } Hum_5140;
-int cMessage_ctor_cMessageNameR(Msg_5140*, void*);
-int QueueMessage_cMessageR_cSystemP_int(Msg_5140*, void*, int);
-Hum_5140* cGOBJ_SOBJ_convert(int);
-int cMessage_dtor(Msg_5140*, int);
+struct VC001866E0 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(...); };
+extern "C" {
+int cMessage_ctor_cMessageNameR(...);                       
+int QueueMessage_cMessageR_cSystemP_int(...);                      
 #if 0 /* merge_units */
-extern int g_HumanActorClassKey;
+int cMessage_dtor(...);
 #endif /* merge_units */
-#define g_HumanActorClassKey (*(int*)&g_HumanActorClassKey) /* merge_units */
+                           
+extern "C" void cMessage_getSOBJClassId();
+extern "C" void cCharActionMsg_Scalar_dtor();
+extern "C" void cCharActionMsg_Scalar_Pack();
+extern "C" void cCharActionMsg_Scalar_Clone();
+void * const D_004E01C0[8] = { (void*)0x0, (void*)0x0, (void*)cCharActionMsg_Scalar_dtor, (void*)cCharActionMsg_Scalar_Clone, (void*)cCharActionMsg_Scalar_Pack, (void*)cMessage_getSOBJClassId, (void*)0x0, (void*)0x0 };
+#if 0 /* merge_units */
+extern char D_004E0840;
+#endif /* merge_units */
+#define D_004E0840 (*(char*)&D_004E0840) /* merge_units */
 
-extern char D_004DA9D0[];
-extern char D_004DCF10[];
-extern char D_004EEE98[];
+extern char g_ActorActionMsgClass;
 extern unsigned char g_IsMultiplayer;
-static inline void Set_5140(Hum_5140* self, unsigned char value, int silent) {
-    Msg_5140 msg;
-    self->value = value;
-    if (g_IsMultiplayer && !silent) {
-        cMessage_ctor_cMessageNameR(&msg, D_004EEE98);
-        msg.vtable = D_004DA9D0;
-        msg.extra = 1;
-        msg.kind = 4;
-        msg.size = 0x40;
-        msg.value = value;
-        QueueMessage_cMessageR_cSystemP_int(&msg, self, 0);
-        msg.vtable = D_004DCF10;
-        cMessage_dtor(&msg, 0);
+/* Warning: Gap in callee-saved word stack region.
+ * Saved: [0x0, 0x10, 0x14, 0x18, 0x1c, 0x20, 0x24, 0x28, 0x2c, 0x30, 0x34], gap at: 0x8. */
+}
+extern "C" void cHuman_SetDeaf(char * arg0, int arg1, float farg0) {
+    struct { char * f40[7]; int f5C; signed char f60[4]; int f64; signed char f68[4]; float f6C; } sl;
+    void **temp_a0;
+
+    F_(arg0, 0x33AC, float) = farg0;
+    if (F_(arg0, 0x14, unsigned char) != 0) {
+        temp_a0 = (void **)(F_(arg0, 0x58, int));
+        if (temp_a0 != NULL) {
+            ((VC001866E0 *)(temp_a0))->v19();
+        }
+    }
+    if ((g_IsMultiplayer != 0) && (arg1 == 0)) {
+        cMessage_ctor_cMessageNameR(sl.f40, &g_ActorActionMsgClass);
+        sl.f64 = 0x46;
+        sl.f68[0] = 3;
+        sl.f40[0] = &(*(char*)D_004E01C0);
+        sl.f60[0] = 4;
+        sl.f5C = 0x40;
+        sl.f6C = farg0;
+        QueueMessage_cMessageR_cSystemP_int(sl.f40, arg0, 0);
+        sl.f40[0] = &D_004E0840;
+        cMessage_dtor(sl.f40, 0);
     }
 }
-#pragma push
-#pragma opt_propagation off
-int Script_SetNotGasable(int* args)
-{
-    Hum_5140* s;
-unsigned char v;
-Hum_5140* g;
-    v = args[1] != 0;
-    g = cGOBJ_SOBJ_convert(args[0]);
-    if (g && g->classKey == g_HumanActorClassKey) { s = g; Set_5140(s, v, 0); }
-    return 0;
-}
-#pragma pop
-#undef g_HumanActorClassKey /* merge_units */
-static inline void merge_flush_func_00185140(void) {} /* merge_units */
+#undef D_004E0840 /* merge_units */
+static inline void merge_flush_func_001866E0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00185140 */
+/* merge_units: end func_001866E0 */

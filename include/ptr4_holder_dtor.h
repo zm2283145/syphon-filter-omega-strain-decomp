@@ -22,10 +22,10 @@ struct Ptr4Holder {
 
 #define DEFINE_PTR4_HOLDER_DTOR(name, fileSym)                                \
     extern "C" char fileSym[];                                                \
-    extern "C" Ptr4Holder* name(Ptr4Holder* self, short deleteFlag)           \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
-            void* p = self->allocation;                                       \
+            void* p = ((Ptr4Holder*)self)->allocation;                        \
             if (p) {                                                          \
                 if (p) {                                                      \
                     AllocGuard guard;                                         \

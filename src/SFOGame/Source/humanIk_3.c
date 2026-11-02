@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/humanIk: 6 files, 001CAB30-001CB160
+ * SFOGame/Source/humanIk: 7 files, 001CAB30-001CE980
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -346,6 +346,7 @@ void* cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(void* layers, in
 #endif /* merge_units */
 #define cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex(a0, a1) ((void *)cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex((Elem1C0 *)(a0), (a1))) /* merge_units */
 
+
 void cIkTargetWithSplinedTransition_NextFrame(void* layer, void* s3, float dt, float inv);
 int cIkTargetWithSplinedTransition_HasTransitionEnded(void* layer);
 Q_L* cQuaternion_ctor_cQuaternionR(Q_L* d, const Q_L* s);
@@ -425,7 +426,13 @@ void cDrawAndHolsterWeapon_ActionManager_StartTransitionIfNecessary(void* a, voi
 int cHandIkTargetList_HasTransitionJustEndedForBothHands(void* a);
 float cHandIkTargetList_GetTransitionTimeLeftForBothHands(void* a);
 void cDrawAndHolsterWeapon_ActionManager_SwitchStage(void* a, int n);
+#if 0 /* merge_units */
 void cDrawAndHolsterWeapon_ActionManager_TriggerCallback(void* a);
+#endif /* merge_units */
+struct S_E980; /* merge_units */
+void cDrawAndHolsterWeapon_ActionManager_TriggerCallback(S_E980* s); /* merge_units */
+#define cDrawAndHolsterWeapon_ActionManager_TriggerCallback(a0) (cDrawAndHolsterWeapon_ActionManager_TriggerCallback((S_E980 *)(a0))) /* merge_units */
+
 extern float D_0049F718;
 extern Tab_L SecondaryStateTable[];
 static inline Tab_L* Tab_P(unsigned char k) { return &SecondaryStateTable[k]; }
@@ -1762,6 +1769,32 @@ extern "C" void cHumanIkRoutine_NextFrame(Sec_L* self, float dt)
         if (done != 0) self->f312 = (eMode_L)self->f313;
     }}
 #undef cArray_FixedSize_cIkTargetWithSplinedTransition_2_opIndex /* merge_units */
+#undef cDrawAndHolsterWeapon_ActionManager_TriggerCallback /* merge_units */
 static inline void merge_flush_func_001CB160(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_001CB160 */
+
+/* merge_units: begin func_001CE980 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct Obj_E980 { virtual void Set(int on, signed char st); };
+struct S_E980 { unsigned char mode; bool active; unsigned char state; unsigned char prev; int pad4; Obj_E980* obj; };
+/* switch the attached object on (state 6) or restore its previous state */
+extern "C" void cDrawAndHolsterWeapon_ActionManager_TriggerCallback(S_E980* s)
+{
+    if (s->obj) {
+        if (s->state != 6) {
+            s->obj->Set(1, 6);
+            s->state = 6;
+            { unsigned char m = (s->prev != 6) ? 2 : 0; s->mode = m; s->active = m != 0; }
+        } else {
+            s->obj->Set(0, (signed char)s->prev);
+            s->prev = 6;
+            s->mode = 0;
+            s->active = 0;
+        }
+    }
+}
+static inline void merge_flush_func_001CE980(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001CE980 */

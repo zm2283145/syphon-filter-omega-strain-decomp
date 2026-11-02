@@ -22,10 +22,10 @@ struct OwnedBuffer8 {
 
 #define DEFINE_OWNED_BUFFER8_DTOR(name, fileSym)                              \
     extern "C" char fileSym[];                                                \
-    extern "C" OwnedBuffer8* name(OwnedBuffer8* self, short deleteFlag)       \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
-            void* p = self->buffer;                                           \
+            void* p = ((OwnedBuffer8*)self)->buffer;                          \
             if (p) {                                                          \
                 if (p) {                                                      \
                     AllocGuard guard;                                         \

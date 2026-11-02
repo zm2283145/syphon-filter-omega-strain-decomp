@@ -1,299 +1,636 @@
 /*
- * main/NIEvent: range (5 files, 00238990-00239370)
+ * SFOGame/Source/NIEvent: 9 files, 0023B450-0023BDC0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* headers shared by the blocks below */
-#include "types.h"
-#pragma push
-#pragma cplusplus on
-#include "alloc_guard.h"
-#pragma pop
-
-/* library prototypes shared by the blocks below (C linkage) */
-#include "SFOLobby_helpers.h"
-int cMemMan_Deallocate();
-int strlen(const char *);
-
-/* merge_units: begin func_00238990 */
+/* merge_units: begin func_0023B450 */
 #pragma push /* merge_units */
-#pragma cplusplus on
-#pragma opt_strength_reduction off
-class A1_Item {
-public:
-    virtual void Fire(int arg);
-    float t;
-};
-struct A1_Obj { int a0; unsigned char active; float time; int pad; int count; A1_Item** items; };
-extern "C" bool cNIEventFXTrack_Update(A1_Obj* o, float dt) {
-    bool ret = false;
-    float t = o->time + dt;
-    int i;
-    if (o->active) {
-        for (i = 0; i < o->count; i++) {
-            A1_Item* it = o->items[i];
-            if (it->t <= t && !(it->t <= o->time)) {
-                it->Fire(o->a0);
-                ret = true;
-            }
-        }
-        o->time = t;
+#include "types.h"
+#include "vslot_pad.h"
+
+typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
+V4* cMatrix_Rotate(V4* a, V4* b) {
+    asm {
+        lqc2 vf4, 0x0(b)
+        lqc2 vf5, 0x10(b)
+        lqc2 vf6, 0x20(b)
+        lqc2 vf8, 0x0(a)
+        lqc2 vf9, 0x10(a)
+        lqc2 vf10, 0x20(a)
+        lqc2 vf11, 0x30(a)
+        vmulax.xyz ACC, vf4, vf8x
+        vmadday.xyz ACC, vf5, vf8y
+        vmaddz.xyz vf8, vf6, vf8z
+        vmulax.xyz ACC, vf4, vf9x
+        vmadday.xyz ACC, vf5, vf9y
+        vmaddz.xyz vf9, vf6, vf9z
+        vmulax.xyz ACC, vf4, vf10x
+        vmadday.xyz ACC, vf5, vf10y
+        vmaddz.xyz vf10, vf6, vf10z
+        vmulax.xyz ACC, vf4, vf11x
+        vmadday.xyz ACC, vf5, vf11y
+        vmaddz.xyz vf11, vf6, vf11z
+        sqc2 vf8, 0x0(a)
+        sqc2 vf9, 0x10(a)
+        sqc2 vf10, 0x20(a)
+        sqc2 vf11, 0x30(a)
     }
-    return ret;
+    return a;
 }
 /* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00238990(void) {}
+static inline void merge_flush_func_0023B450(void) {}
 #pragma pop /* merge_units */
-/* merge_units: end func_00238990 */
+/* merge_units: end func_0023B450 */
 
-/* merge_units: begin func_00238A50 */
+/* merge_units: begin func_0023B4C0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-typedef struct Pop_00238A50 { int version; int size; unsigned int base; char* cur; } Pop_00238A50;
-typedef struct Vec_00238A50 { int a; int b; void** data; } Vec_00238A50;
-typedef struct Trk_00238A50 { int owner; unsigned char f4; char pad5[3]; unsigned int f8; Vec_00238A50 vec; } Trk_00238A50;
-typedef struct Cue_00238A50 { void* vt; float f4; int type; float fC; float f10; float f14; float f18; } Cue_00238A50;
+struct V4_23B4C0 { float x, y, z, w;
+    void Set(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; }
+} __attribute__((aligned(16)));
+struct M4_23B4C0 { V4_23B4C0 r[4];
+    M4_23B4C0() {}
+};
+static inline float Rad_23B4C0(float d) { return d * 0.017453292f; }
+static inline __int128 LoadQ_23B4C0(const V4_23B4C0* s) { __int128 t; asm { .set noreorder; lq t, 0x0(s); .set reorder } return t; }
+static inline void StoreAll_23B4C0(M4_23B4C0* d, const M4_23B4C0* s, __int128 t, V4_23B4C0* pd) { __int128 qa; __int128 qb; asm { .set noreorder; sq t, 0x0(pd); lq qa, 0x0(s); .set reorder; lq qb, 0x10(s); sq qa, 0x0(d); lq qa, 0x20(s); sq qb, 0x10(d); lq qb, 0x30(s); sq qa, 0x20(d); sq qb, 0x30(d) } }
+struct K64_23B4C0 { float t; char pad[0x3C]; };
+struct K8_23B4C0 { float t; int v; };
+struct K16_23B4C0 { float t; char pad[0xC]; };
+struct Rot_23B4C0 { float val; int cap; int n; K16_23B4C0* data; int pad10; int state; float t; unsigned char flag; char pad1D[3]; };
 extern "C" {
-void* cMemMan_Allocate(int heap, int size, char* file, int line);
-void std_vector_pod_int_resize(Vec_00238A50* v, int n, void** fill);
-void* cStopSndFXKey_ctor(void* p, Pop_00238A50* r, int owner);
-void* cSoundFXKey_ctor(void* p, Pop_00238A50* r, int owner);
-extern char D_004DC028[];
-extern char D_004DC038[];
+#if 0 /* merge_units */
+float cVector_X_void(V4_23B4C0* v);
+#endif /* merge_units */
+float cVector_X_void(void*); /* merge_units */
+#define cVector_X_void(a0) (cVector_X_void((void *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
+float cVector_Y_void(V4_23B4C0* v);
+#endif /* merge_units */
+float cVector_Y_void(void*); /* merge_units */
+#define cVector_Y_void(a0) (cVector_Y_void((void *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
+float cVector_Z_void(V4_23B4C0* v);
+#endif /* merge_units */
+float cVector_Z_void(void*); /* merge_units */
+#define cVector_Z_void(a0) (cVector_Z_void((void *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
+void cMatrix_SetWithAxisAngle(M4_23B4C0* m, float x, float y, float z, float a);
+#endif /* merge_units */
+void cMatrix_SetWithAxisAngle(void*, float, float, float, float); /* merge_units */
+#define cMatrix_SetWithAxisAngle(a0, a1, a2, a3, a4) (cMatrix_SetWithAxisAngle((void *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+
+#if 0 /* merge_units */
+void cMatrix_ctor_void(M4_23B4C0* m);
+#endif /* merge_units */
+void cMatrix_ctor_void(void*); /* merge_units */
+#define cMatrix_ctor_void(a0) (cMatrix_ctor_void((void *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
+void cMatrix_Rotate(M4_23B4C0* a, M4_23B4C0* b);
+#endif /* merge_units */
+#define cMatrix_Rotate(a0, a1) ((void)cMatrix_Rotate((V4 *)(a0), (V4 *)(a1))) /* merge_units */
+
+
+
+bool cNIEventFloatTrack_Update(Rot_23B4C0* p, float dt);
 }
-static inline float ReadF_00238A50(Pop_00238A50* r)
-{
-    float v = *(float*)r->cur;
-    r->cur += 4;
-    return v;
-}
-static inline void* Alloc_00238A50(int size, int line)
-{
-    AllocGuard g;
-    return cMemMan_Allocate(0, size, "NIEvent.cc", line);
+static inline void MakeRot_23B4C0(M4_23B4C0* m, const V4_23B4C0& a, float ang) { cMatrix_SetWithAxisAngle(m, a.x, a.y, a.z, ang); }
+class Elem_23B4C0 {
+public:
+    VPAD32(a) VPAD32(b) VPAD4(c) VPAD4(d)
+    virtual void Reset();
+};
+class Self_23B4C0 {
+public:
+    VPAD32(a) VPAD32(b) VPAD4(c) VPAD2(d)
+    virtual void Apply();
+    VPAD2(e)
+    virtual bool Step(float dt);
+    virtual bool Step2(float dt);
+    char pad4[0x60 - 0x4];
+    int mode;
+    char pad64[0x9C - 0x64];
+    int acap; int an; Elem_23B4C0** adata;
+    char padA8[0xB0 - 0xA8];
+    int n1; K64_23B4C0* d1;
+    char padB8[0xC0 - 0xB8];
+    float t1;
+    char padC4[0xC8 - 0xC4];
+    int n2; K8_23B4C0* d2;
+    char padD0[0xD8 - 0xD0];
+    float t2;
+    char padDC[0xE0 - 0xDC];
+    V4_23B4C0 pos;
+    M4_23B4C0 mtx;
+    unsigned char b130;
+    char pad131[0x144 - 0x131];
+    Rot_23B4C0 rx;
+    Rot_23B4C0 ry;
+    Rot_23B4C0 rz;
+};
+static inline void Finish_23B4C0(Rot_23B4C0* r) {
+    r->flag = 1;
+    if (r->state == -1)
+        cNIEventFloatTrack_Update(r, r->data[(unsigned)(r->n - 1)].t - r->t);
 }
 #pragma push
 #pragma opt_strength_reduction off
-extern "C" void cNIEventFXTrack_Init(Trk_00238A50* self, int owner, Pop_00238A50* r)
+#pragma opt_rotateloops off
+extern "C" void cNIEventOBJ_SetEndState(Self_23B4C0* self)
 {
-    int n = (int)ReadF_00238A50(r);
-    void* fill1 = 0;
-    void* fill0 = 0;
     int i;
-    std_vector_pod_int_resize(&self->vec, 0, &fill0);
-    std_vector_pod_int_resize(&self->vec, n, &fill1);
-    for (i = 0; i < n; i++) {
-        int type;
-        Cue_00238A50* c = 0;
-        type = (int)ReadF_00238A50(r);
-        switch (type) {
+    self->b130 = 1;
+    self->Step(self->d1[(unsigned)(self->n1 - 1)].t - self->t1);
+    self->Step2(self->d2[(unsigned)(self->n2 - 1)].t - self->t2);
+    Finish_23B4C0(&self->rx);
+    Finish_23B4C0(&self->ry);
+    Finish_23B4C0(&self->rz);
+    if (self->mode != 3) {
+        M4_23B4C0 m0;
+        V4_23B4C0 ax1;
+        V4_23B4C0 ax2;
+        V4_23B4C0 ax3;
+        M4_23B4C0 m1;
+        M4_23B4C0 m2;
+        float ang;
+        ang = Rad_23B4C0(self->rx.val);
+        ax1.Set(1.0f, 0.0f, 0.0f, 0.0f);
+        cMatrix_SetWithAxisAngle(&m0, cVector_X_void(&ax1), cVector_Y_void(&ax1), cVector_Z_void(&ax1), ang);
+        ang = Rad_23B4C0(self->ry.val);
+        ax2.Set(0.0f, 1.0f, 0.0f, 0.0f);
+        cMatrix_ctor_void(&m1);
+        MakeRot_23B4C0(&m1, ax2, ang);
+        cMatrix_Rotate(&m0, &m1);
+        ang = Rad_23B4C0(self->rz.val);
+        ax3.Set(0.0f, 0.0f, 1.0f, 0.0f);
+        cMatrix_ctor_void(&m2);
+        MakeRot_23B4C0(&m2, ax3, ang);
+        cMatrix_Rotate(&m0, &m2);
+        StoreAll_23B4C0(&self->mtx, &m0, LoadQ_23B4C0(&self->pos), &m0.r[3]);
+    }
+    self->Apply();
+    for (i = 0; i < self->an; i++)
+        self->adata[i]->Reset();
+}
+#pragma pop
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0023B4C0(void) {}
+#undef cVector_X_void /* merge_units */
+#undef cVector_Y_void /* merge_units */
+#undef cVector_Z_void /* merge_units */
+#undef cMatrix_SetWithAxisAngle /* merge_units */
+#undef cMatrix_ctor_void /* merge_units */
+#undef cMatrix_Rotate /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0023B4C0 */
+
+/* merge_units: begin func_0023B7D0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#pragma opt_strength_reduction off
+#pragma opt_rotateloops off
+#pragma opt_loop_invariants off
+/* cNIEventOBJ_HandleMessage (message handler): for play messages, start (kind 0:
+ * finish flags on the rotation/switch tracks, forward to the children),
+ * stop (kind 1: forward) or reset (kind 2: rewind the tracks, rebuild the
+ * node matrix from the first position key and the start rotations like
+ * cNIEventOBJ_SetEndState (NIEvent_23B450.c), reset the attached object, forward and
+ * return 1); everything else goes to cNIEventBase_HandleMessage. Message layout
+ * as in cNIEventBase_Stop (cNIEventBase_Stop.c). */
+struct V4_B7D0 { float x, y, z, w;
+    void Set(float a, float b, float c, float d) { void* xx = this; x = a; y = b; z = c; w = d; }
+} __attribute__((aligned(16)));
+struct M4_B7D0 { V4_B7D0 r[4];
+    M4_B7D0() {}
+};
+static inline float Rad_B7D0(float d) { return d * 0.017453292f; }
+static inline __int128 LoadQ_B7D0(const V4_B7D0* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(s)); return t; }
+struct K64_B7D0 { float t; char pad4[0xC]; V4_B7D0 pos; char pad20[0x20]; };
+struct Key_B7D0 { float t; float v; char pad8[8]; };
+struct Rot_B7D0 { float val; int cap; int n; Key_B7D0* data; int pad10; int state; int t; unsigned char flag; char pad1D[3]; };
+extern "C" { extern int D_004F7C28; extern char D_004DC2F0[]; }
+struct Msg_B7D0;
+extern "C" { 
+#if 0 /* merge_units */
+void cMessage_ctor_cMessageNameR(Msg_B7D0* m, void* name);
+#endif /* merge_units */
+void cMessage_ctor_cMessageNameR(void*, void*); /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
+#if 0 /* merge_units */
+void cMessage_dtor(Msg_B7D0* m, int flags);
+#endif /* merge_units */
+void* cMessage_dtor(void* self, short deleteFlag); /* merge_units */
+#define cMessage_dtor(a0, a1) ((void)cMessage_dtor((void *)(a0), (short)(a1))) /* merge_units */
+}
+struct Msg_B7D0 { void* vtable; char pad04[0x1C]; unsigned char b20; char pad21[3]; int kind; char pad28[8];
+};
+class Obj_B7D0 {
+public:
+    VPAD16(a) VPAD4(b) VPAD1(c)
+    virtual void Enable(int on);
+    virtual void Show(int on);
+    char pad4[0x6C - 4];
+    int f6C;
+};
+class Self_B7D0 {
+public:
+    VPAD32(a) VPAD32(b) VPAD4(c) VPAD4(d) VPAD2(e) VPAD1(f)
+    virtual void Rewind(float t);
+    char pad4[0x60 - 0x4];
+    int mode;
+    char pad64[0xA0 - 0x64];
+    int an; void** adata;
+    char padA8[0xB4 - 0xA8];
+    K64_B7D0* d1;
+    char padB8[0xC0 - 0xB8];
+    int t1;
+    char padC4[0xD8 - 0xC4];
+    int t2;
+    char padDC[0xE0 - 0xDC];
+    V4_B7D0 pos;
+    M4_B7D0 mtx;
+    unsigned char b130;
+    char pad131[0x140 - 0x131];
+    Obj_B7D0* obj;
+    Rot_B7D0 rx;
+    Rot_B7D0 ry;
+    Rot_B7D0 rz;
+    char pad1A4[4];
+    unsigned char b1A8;
+    char pad1A9[3];
+    int i1AC;
+};
+extern "C" {
+int* cMessage_Name(void* ev);
+void QueueMessage_cMessageR_cSystemP_int(Msg_B7D0* m, void* target, int a);
+#if 0 /* merge_units */
+float cVector_X_void(V4_B7D0* v);
+#endif /* merge_units */
+#define cVector_X_void(a0) (cVector_X_void((void *)(a0))) /* merge_units */
+
+
+#if 0 /* merge_units */
+float cVector_Y_void(V4_B7D0* v);
+#endif /* merge_units */
+#define cVector_Y_void(a0) (cVector_Y_void((void *)(a0))) /* merge_units */
+
+
+#if 0 /* merge_units */
+float cVector_Z_void(V4_B7D0* v);
+#endif /* merge_units */
+#define cVector_Z_void(a0) (cVector_Z_void((void *)(a0))) /* merge_units */
+
+
+#if 0 /* merge_units */
+void cMatrix_SetWithAxisAngle(M4_B7D0* m, float x, float y, float z, float a);
+#endif /* merge_units */
+#define cMatrix_SetWithAxisAngle(a0, a1, a2, a3, a4) (cMatrix_SetWithAxisAngle((void *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+
+
+#if 0 /* merge_units */
+void cMatrix_ctor_void(M4_B7D0* m);
+#endif /* merge_units */
+#define cMatrix_ctor_void(a0) (cMatrix_ctor_void((void *)(a0))) /* merge_units */
+
+
+#if 0 /* merge_units */
+void cMatrix_Rotate(M4_B7D0* a, M4_B7D0* b);
+#endif /* merge_units */
+#define cMatrix_Rotate(a0, a1) ((void)cMatrix_Rotate((V4 *)(a0), (V4 *)(a1))) /* merge_units */
+
+
+int cNIEventBase_HandleMessage(Self_B7D0* self, Msg_B7D0* ev);
+int cNIEventOBJ_HandleMessage(Self_B7D0* self, Msg_B7D0* ev);
+}
+static inline void VCopy_B7D0(V4_B7D0* d, const V4_B7D0* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
+static inline void Cp_B7D0(void* d, const void* s) { __int128 t; asm volatile { .set reorder; lq t, 0(s); sq t, 0(d) } }
+static inline void MakeRot_B7D0(M4_B7D0* m, const V4_B7D0& a, float ang) { cMatrix_SetWithAxisAngle(m, a.x, a.y, a.z, ang); }
+static inline void Rewind_B7D0(Rot_B7D0* r) {
+    r->t = 0;
+    if (r->n > 0)
+        r->val = r->data[0].v;
+}
+
+static inline void BuildRot_B7D0(Self_B7D0* o, M4_B7D0* pm)
+{
+    V4_B7D0 ax1;
+    V4_B7D0 ax2;
+    V4_B7D0 ax3;
+    M4_B7D0 m1;
+    M4_B7D0 m2;
+    float ang; float bng; float cng;
+    ang = Rad_B7D0(o->rx.val);
+    ax1.Set(1.0f, 0.0f, 0.0f, 0.0f);
+    cMatrix_SetWithAxisAngle(pm, cVector_X_void(&ax1), cVector_Y_void(&ax1), cVector_Z_void(&ax1), ang);
+    bng = Rad_B7D0(o->ry.val);
+    ax2.Set(0.0f, 1.0f, 0.0f, 0.0f);
+    cMatrix_ctor_void(&m1);
+    MakeRot_B7D0(&m1, ax2, bng);
+    cMatrix_Rotate(pm, &m1);
+    cng = Rad_B7D0(o->rz.val);
+    ax3.Set(0.0f, 0.0f, 1.0f, 0.0f);
+    cMatrix_ctor_void(&m2);
+    MakeRot_B7D0(&m2, ax3, cng);
+    cMatrix_Rotate(pm, &m2);
+}
+
+// 4x128-bit lq/sq matrix copy, interleaved as in retail (no C equivalent for the quadword pairing)
+static inline void CopyM_B7D0(M4_B7D0* d, const M4_B7D0* s) { __int128 qa; __int128 qb; asm { lq qa, 0x0(s); lq qb, 0x10(s); sq qa, 0x0(d); lq qa, 0x20(s); sq qb, 0x10(d); lq qb, 0x30(s); sq qa, 0x20(d); sq qb, 0x30(d) } }
+extern "C" int cNIEventOBJ_HandleMessage(Self_B7D0* self, Msg_B7D0* ev)
+{
+    Msg_B7D0* e = ev;
+    int i;
+    Msg_B7D0* p;
+    Msg_B7D0* q;
+    int j;
+    Self_B7D0* o = self;
+    int t;
+    t = *cMessage_Name(e);
+    if (t == D_004F7C28) {
+        switch (e->kind) {
         case 0:
-            {
-            Cue_00238A50* p = (Cue_00238A50*)Alloc_00238A50(0xC, 0x6C3);
-            if (p) {
-                p->vt = D_004DC038;
-                p->type = type;
-                p->f4 = ReadF_00238A50(r);
-            }
-            c = p;
+            o->rx.flag = 1;
+            o->ry.flag = 1;
+            o->rz.flag = 1;
+            o->b1A8 = 1;
+            for (i = 0; i < o->an; i++) {
+                Msg_B7D0 m;
+                p = &m;
+                cMessage_ctor_cMessageNameR(p, &D_004F7C28);
+                p->vtable = D_004DC2F0;
+                p->kind = 0;
+                m.b20 = 1;
+                QueueMessage_cMessageR_cSystemP_int(p, o->adata[i], 0);
+                m.vtable = D_004DC2F0;
+                cMessage_dtor(p, 0);
             }
             break;
         case 1:
-            {
-            Cue_00238A50* p = (Cue_00238A50*)Alloc_00238A50(0x1C, 0x6C7);
-            if (p) {
-                p->vt = D_004DC038;
-                p->type = 1;
-                p->f4 = ReadF_00238A50(r);
-                p->vt = D_004DC028;
-                p->f14 = *(float*)r->cur; r->cur += 4;
-                p->f18 = *(float*)r->cur; r->cur += 4;
-                p->fC = *(float*)r->cur; r->cur += 4;
-                p->f10 = *(float*)r->cur; r->cur += 4;
-            }
-            c = p;
+            for (i = 0; i < o->an; i++) {
+                Msg_B7D0 m;
+                p = &m;
+                cMessage_ctor_cMessageNameR(p, &D_004F7C28);
+                p->vtable = D_004DC2F0;
+                p->kind = 1;
+                m.b20 = 1;
+                QueueMessage_cMessageR_cSystemP_int(p, o->adata[i], 0);
+                m.vtable = D_004DC2F0;
+                cMessage_dtor(p, 0);
             }
             break;
-        case 2:
-            {
-            Cue_00238A50* p = (Cue_00238A50*)Alloc_00238A50(0x1A0, 0x6CB);
-            if (p)
-                p = (Cue_00238A50*)cSoundFXKey_ctor(p, r, owner);
-            c = p;
+        case 2: {
+            M4_B7D0 m0;
+            Rewind_B7D0(&o->rx);
+            Rewind_B7D0(&o->ry);
+            Rewind_B7D0(&o->rz);
+            o->i1AC = 0x80000000;
+            o->b1A8 = 0;
+            o->t1 = 0;
+            o->t2 = 0;
+            Cp_B7D0(&o->pos, &o->d1[0].pos);
+            BuildRot_B7D0(o, &m0);
+            { V4_B7D0* pd = &m0.r[3]; __int128 t = LoadQ_B7D0(&o->pos); *(__int128*)pd = t; CopyM_B7D0(&o->mtx, &m0); }
+            if (o->mode == 2 && o->obj) {
+                o->obj->f6C = 0;
+                o->obj->Show(1);
+                o->obj->Enable(1);
             }
-            break;
-        case 3:
-            {
-            Cue_00238A50* p = (Cue_00238A50*)Alloc_00238A50(0xC, 0x6CF);
-            if (p) {
-                p->vt = D_004DC038;
-                p->type = type;
-                p->f4 = ReadF_00238A50(r);
+            o->Rewind(0.0f);
+            o->b130 = 0;
+            for (j = 0; j < o->an; j++) {
+                Msg_B7D0 m;
+                q = &m;
+                cMessage_ctor_cMessageNameR(q, &D_004F7C28);
+                q->vtable = D_004DC2F0;
+                q->kind = 2;
+                m.b20 = 1;
+                QueueMessage_cMessageR_cSystemP_int(q, o->adata[j], 0);
+                m.vtable = D_004DC2F0;
+                cMessage_dtor(q, 0);
             }
-            c = p;
-            }
-            break;
-        case 4:
-            {
-            Cue_00238A50* p = (Cue_00238A50*)Alloc_00238A50(0x1A0, 0x6D3);
-            if (p)
-                p = (Cue_00238A50*)cStopSndFXKey_ctor(p, r, owner);
-            c = p;
-            }
-            break;
+            return 1;
         }
-        if (c)
-            self->vec.data[i] = c;
+        }
     }
-    self->owner = owner;
-    self->f8 = 0x80000000;
-    self->f4 = 0;
+    return cNIEventBase_HandleMessage(o, e);
+}
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef cMessage_dtor /* merge_units */
+#undef cVector_X_void /* merge_units */
+#undef cVector_Y_void /* merge_units */
+#undef cVector_Z_void /* merge_units */
+#undef cMatrix_SetWithAxisAngle /* merge_units */
+#undef cMatrix_ctor_void /* merge_units */
+#undef cMatrix_Rotate /* merge_units */
+static inline void merge_flush_func_0023B7D0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0023B7D0 */
+
+/* merge_units: begin func_0023BC60 */
+#pragma push /* merge_units */
+#pragma push
+#pragma cplusplus on
+#include "vtable_base_dtor.h"
+#pragma pop
+
+#pragma cplusplus on
+
+DEFINE_VTABLE_BASE_DTOR(cNIShuttle_dtor, D_004DC2F0, cMessage_dtor)
+static inline void merge_flush_func_0023BC60(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0023BC60 */
+
+/* merge_units: begin func_0023BCC0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+class Item0023BCC0 {
+public:
+    VPAD8(a) VPAD1(b)
+    virtual void reset(int how);
+};
+struct Ev0023BCC0 {
+    char pad00[0x2C];
+    char b2C;
+    char pad2D[0xA0 - 0x2D];
+    int count;
+    Item0023BCC0** items;
+};
+#pragma opt_strength_reduction off
+extern "C" void cNIEventOBJ_NetDisable(Ev0023BCC0* self)
+{
+    int i;
+    self->b2C = 0;
+    for (i = 0; i < self->count; i++)
+        self->items[i]->reset(-1);
+}
+#pragma opt_strength_reduction reset
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0023BCC0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_0023BCC0 */
+
+/* merge_units: begin func_0023BD40 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#pragma opt_strength_reduction off
+#pragma exceptions off
+class G7V { public: virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void fn(int x); };
+struct G7Ev { char pad[0x2C]; unsigned char b2C; char pad2[0xA0 - 0x2D]; int count; G7V** arr; };
+extern "C" void cNIEventOBJ_NetEnable(G7Ev* e)
+{
+    int i;
+    e->b2C = 1;
+    for (i = 0; i < e->count; i++) {
+        e->arr[i]->fn(-1);
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0023BD40(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_0023BD40 */
+
+/* merge_units: begin func_0023BDC0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct Msg_23BDC0 { void* vtable; char pad04[0x18]; int size; int pad20; int target; char pad28[0x8]; };
+struct Obj_23BDC0 {
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+    virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+    virtual void v8(); virtual void Toggle(int x);
+    char pad[0xC];
+    int id;
+};
+extern "C" {
+extern unsigned char g_IsMultiplayer;
+#if 0 /* merge_units */
+void cMessage_ctor_cMessageNameR(Msg_23BDC0* msg, void* type);
+#endif /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
+
+#if 0 /* merge_units */
+void cMessage_dtor(Msg_23BDC0* msg, int flags);
+#endif /* merge_units */
+#define cMessage_dtor(a0, a1) ((void)cMessage_dtor((void *)(a0), (short)(a1))) /* merge_units */
+
+extern char g_cDisableMsgClass[];
+extern char D_004E0860[];
+void cDisableMsg_SendDisabled(Msg_23BDC0* msg, int id, int x);
+}
+extern "C" void cNIEventOBJ_Disable(Obj_23BDC0* self)
+{
+    self->Toggle(-1);
+    if (g_IsMultiplayer) {
+        Msg_23BDC0 msg;
+        cMessage_ctor_cMessageNameR(&msg, g_cDisableMsgClass);
+        msg.vtable = D_004E0860;
+        msg.target = -1;
+        msg.size = 0x40;
+        cDisableMsg_SendDisabled(&msg, self->id, -1);
+        msg.vtable = D_004E0860;
+        cMessage_dtor(&msg, 0);
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0023BDC0(void) {}
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef cMessage_dtor /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0023BDC0 */
+
+/* merge_units: begin func_0023BE50 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct Msg_23BE50 { void* vtable; char pad04[0x18]; int size; int pad20; int target; char pad28[0x8]; };
+struct Obj_23BE50 {
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
+    virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();
+    virtual void Toggle(int x);
+    char pad[0xC];
+    int id;
+};
+extern "C" {
+#if 0 /* merge_units */
+void cMessage_ctor_cMessageNameR(Msg_23BE50* msg, void* type);
+#endif /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
+
+
+#if 0 /* merge_units */
+void cMessage_dtor(Msg_23BE50* msg, int flags);
+#endif /* merge_units */
+#define cMessage_dtor(a0, a1) ((void)cMessage_dtor((void *)(a0), (short)(a1))) /* merge_units */
+
+
+extern char g_cEnableMsgClass[];
+extern char D_004E0880[];
+void cEnableMsg_SendEnabled(Msg_23BE50* msg, int id);
+}
+extern "C" void cNIEventOBJ_Enable(Obj_23BE50* self)
+{
+    self->Toggle(-1);
+    if (g_IsMultiplayer) {
+        Msg_23BE50 msg;
+        cMessage_ctor_cMessageNameR(&msg, g_cEnableMsgClass);
+        msg.vtable = D_004E0880;
+        msg.target = -1;
+        msg.size = 0x40;
+        cEnableMsg_SendEnabled(&msg, self->id);
+        msg.vtable = D_004E0880;
+        cMessage_dtor(&msg, 0);
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0023BE50(void) {}
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef cMessage_dtor /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0023BE50 */
+
+/* merge_units: begin func_0023BEE0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct Child_23BEE0 { char pad[0x4C]; int kind; };
+class Target_23BEE0 {
+public:
+    VPAD16(a) VPAD4(b) VPAD1(c) VPAD1(d)
+    virtual void slot22(int arg);
+};
+struct Node_23BEE0 {
+    void* vtable;
+    char pad04[0x98];
+    PtrVec children;
+    char padA8[0x140 - 0xA8];
+    Target_23BEE0* target;
+};
+extern "C" {
+extern int D_004F7C60;
+int* std_vector_cNIEventBasePtr_opIndex(PtrVec* v, int i);
+void cNIEventOBJ_DeactivateChildren(Node_23BEE0* self, int arg);
+void cGOBJ_Deactivate(Node_23BEE0* self, int arg);
+}
+#pragma push
+#pragma opt_strength_reduction off
+extern "C" void cNIEventOBJ_DeactivateChildren(Node_23BEE0* self, int arg)
+{
+    int i;
+    if (self->target)
+        self->target->slot22(arg);
+    for (i = 0; i < self->children.count; i++) {
+        Child_23BEE0* c = (Child_23BEE0*)*std_vector_cNIEventBasePtr_opIndex(&self->children, i);
+        if (c->kind == D_004F7C60)
+            cNIEventOBJ_DeactivateChildren((Node_23BEE0*)self->children.data[i], arg);
+        else
+            ((Target_23BEE0*)self->children.data[i])->slot22(arg);
+    }
+    cGOBJ_Deactivate(self, arg);
 }
 #pragma pop
 /* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00238A50(void) {}
+static inline void merge_flush_func_0023BEE0(void) {}
 #pragma pop /* merge_units */
-/* merge_units: end func_00238A50 */
-
-/* merge_units: begin func_00238F20 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-extern "C" {
-extern char D_004A6FA8[];
-extern void** D_004F7C70;
-extern int D_004F7C78;
-}
-extern "C" void cNIEventFXTrack_FreeStringTable(void)
-{
-    int i;
-    for (i = 0; i < D_004F7C78; i++) {
-        void* p = D_004F7C70[i];
-        AllocGuard g;
-        cMemMan_Deallocate(0, p, D_004A6FA8, 0x69C);
-    }
-    void** q = D_004F7C70;
-    if (q) {
-        {
-            AllocGuard g;
-            cMemMan_Deallocate(0, q, D_004A6FA8, 0x6A0);
-        }
-        D_004F7C70 = 0;
-    }
-    D_004F7C78 = 0;
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00238F20(void) {}
-#pragma pop /* merge_units */
-/* merge_units: end func_00238F20 */
-
-/* merge_units: begin func_002390A0 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-struct PopReader_2390A0 { int version; int size; unsigned int base; char* cur; };
-extern "C" {
-#if 0 /* merge_units */
-extern char** D_004F7C70;
-#endif /* merge_units */
-#define D_004F7C70 (*(char * **)&D_004F7C70) /* merge_units */
-
-extern int D_004F7C80;
-extern int D_0048AE28;
-#if 0 /* merge_units */
-void* cMemMan_Allocate(int pool, int size, char* file, int line);
-#endif /* merge_units */
-#define cMemMan_Allocate(a0, a1, a2, a3) (cMemMan_Allocate((a0), (a1), (a2), (a3))) /* merge_units */
-
-int cPopulation_SeekBlock(PopReader_2390A0* r, int tag);
-}
-extern "C" void cNIEventFXTrack_LoadStringTable(PopReader_2390A0* r)
-{
-    int mis;
-    D_004F7C80 = 0;
-    D_0048AE28 = -1;
-    mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
-    if (mis)
-        r->cur += 4 - mis;
-    if ((unsigned char)cPopulation_SeekBlock(r, 0x3A53494E)) {
-        D_004F7C78 = *(int*)r->cur;
-        r->cur += 4;
-        if (D_004F7C78) {
-            int i;
-            {
-                char** p;
-                {
-                    int sz = D_004F7C78 * 4;
-                    AllocGuard g;
-                    p = (char**)cMemMan_Allocate(0, sz, D_004A6FA8, 0x680);
-                }
-                D_004F7C70 = p;
-            }
-            for (i = 0; i < D_004F7C78; i++) {
-                char* p;
-                char* s = r->cur;
-                while (*r->cur++)
-                    ;
-                mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
-                if (mis)
-                    r->cur += 4 - mis;
-                {
-                    int len = strlen(s) + 1;
-                    AllocGuard g;
-                    p = (char*)cMemMan_Allocate(0, len, D_004A6FA8, 0x686);
-                }
-                D_004F7C70[i] = p;
-                Libc_Strcpy(D_004F7C70[i], s);
-                if (r->version >= 0x43) {
-                    int v = *(int*)r->cur;
-                    r->cur += 4;
-                    if (D_0048AE28 == -1)
-                        D_0048AE28 = v;
-                    if (D_0048AE28 == v)
-                        D_004F7C80++;
-                }
-            }
-        }
-    }
-}
-#undef D_004F7C70 /* merge_units */
-#undef cMemMan_Allocate /* merge_units */
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_002390A0(void) {}
-#pragma pop /* merge_units */
-/* merge_units: end func_002390A0 */
-
-/* merge_units: begin func_00239370 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-struct Elem_239370 { void* vt; };
-struct Vec_239370 { int cap; };
-struct Obj_239370 { char pad[0xC]; Vec_239370 vec; int count; };
-extern "C" {
-Elem_239370** std_vector_cFXKeyPtr_opIndex(Vec_239370* v, int i);
-void std_vector_cFXKeyPtr_dtor(Vec_239370* v, int f);
-void operator_delete(void* p);
-}
-extern "C" Obj_239370* cNIEventFXTrack_dtor(Obj_239370* o, short flag)
-{
-    if (o) {
-        int i;
-        for (i = 0; i < o->count; i++) {
-            Elem_239370* e = *std_vector_cFXKeyPtr_opIndex(&o->vec, i);
-            AllocGuard g;
-            if (e)
-                e->vt = D_004DC038;
-            cMemMan_Deallocate(0, e, D_004A6FA8, 0x667);
-        }
-        o->count = 0;
-        Vec_239370* v = &o->vec;
-        if (v)
-            std_vector_cFXKeyPtr_dtor(v, -1);
-        if (flag > 0)
-            operator_delete(o);
-    }
-    return o;
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00239370(void) {}
-#pragma pop /* merge_units */
-/* merge_units: end func_00239370 */
+/* merge_units: end func_0023BEE0 */

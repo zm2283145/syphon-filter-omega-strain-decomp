@@ -9,15 +9,15 @@
 #include "obj_list_dtor.h"
 
 #define DEFINE_OBJ_LIST_DTOR_SHALLOW(name)                                    \
-    extern "C" ObjList* name(ObjList* self, short deleteFlag)                 \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
             ObjListNode* result;                                              \
             ObjListNode* first;                                               \
             ObjListNode* last;                                                \
-            last = (ObjListNode*)&self->sentinelPrev;                         \
-            first = self->first;                                              \
-            std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&result, self, &first, &last);              \
+            last = (ObjListNode*)&((ObjList*)self)->sentinelPrev;             \
+            first = ((ObjList*)self)->first;                                  \
+            std_list_deleter_voidPtr_erase_listdeleter_listdeleter(&result, ((ObjList*)self), &first, &last);  \
             if (deleteFlag > 0)                                               \
                 operator_delete(self);                                        \
         }                                                                     \

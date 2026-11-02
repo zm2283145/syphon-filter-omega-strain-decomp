@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/xlib: 5 files, 0037A370-0037B000
+ * Libs/SFOLib/Source/xlib: 6 files, 0037A370-0037B0C0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -132,11 +132,17 @@ typedef struct Slot37A750 { char p0[0x110]; } Slot37A750;
 
 extern void cTexMan_TermTextureStream(int);
 extern void cDmaMan_NextFrame(void*);
+#if 0 /* merge_units */
 extern void XLib_DeferDeleteDmaData(GsCtx37A750*, int);
+#endif /* merge_units */
+void XLib_DeferDeleteDmaData(char* arg0, int arg1); /* merge_units */
+#define XLib_DeferDeleteDmaData(a0, a1) (XLib_DeferDeleteDmaData((char *)(a0), (a1))) /* merge_units */
+
 #if 0 /* merge_units */
 extern void XLib_NextPrimFrame(GsCtx37A750*);
 #endif /* merge_units */
 void XLib_NextPrimFrame(); /* merge_units */
+
 
 extern void cTexMan_StartFrame(int);
 extern int g_TimerAccum;
@@ -184,6 +190,7 @@ void XLib_NextFrameSlave(GsCtx37A750* c)
     *(volatile int*)0x10000810 = 0x82;
     g_TimerAccum = 0;
 }
+#undef XLib_DeferDeleteDmaData /* merge_units */
 static inline void merge_flush_func_0037A750(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0037A750 */
@@ -239,27 +246,32 @@ extern void XLib_NextFrameSlave(GsCtx37A9F0*);
 #endif /* merge_units */
 #define XLib_NextFrameSlave(a0) (XLib_NextFrameSlave((GsCtx37A750 *)(a0))) /* merge_units */
 
+
 extern void cUserFrameEnv_ReleaseVram(Rt37A9F0*);
 #if 0 /* merge_units */
 extern void XLib_ClearActiveBuffer(GsCtx37A9F0*, int, int, int*, int, int);
 #endif /* merge_units */
-#define XLib_ClearActiveBuffer(a0, a1, a2, a3, a4, a5) ((void)XLib_ClearActiveBuffer((R370 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define XLib_ClearActiveBuffer(a0, a1, a2, a3, a4, a5) (XLib_ClearActiveBuffer((R370 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+
 
 extern void XLib_DisplayLastFrame(GsCtx37A9F0*);
 #if 0 /* merge_units */
 extern void XLib_DeferDeleteDmaData(GsCtx37A9F0*, int);
 #endif /* merge_units */
-#define XLib_DeferDeleteDmaData(a0, a1) (XLib_DeferDeleteDmaData((GsCtx37A750 *)(a0), (a1))) /* merge_units */
+#define XLib_DeferDeleteDmaData(a0, a1) (XLib_DeferDeleteDmaData((char *)(a0), (a1))) /* merge_units */
+
 
 #if 0 /* merge_units */
 extern void XLib_NextPrimFrame(GsCtx37A9F0*);
 #endif /* merge_units */
 void XLib_NextPrimFrame(); /* merge_units */
 
+
 #if 0 /* merge_units */
 extern void XLib_ClearScreen_void(GsCtx37A9F0*);
 #endif /* merge_units */
 #define XLib_ClearScreen_void(a0) (XLib_ClearScreen_void((R5C0 *)(a0))) /* merge_units */
+
 
 extern void cAnimTexMan_NextFrame(void*, float);
 
@@ -398,3 +410,65 @@ void XLib_NextPrimFrame(R37B000* r)
 static inline void merge_flush_func_0037B000(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0037B000 */
+
+/* merge_units: begin func_0037B0C0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "alloc_guard.h"
+#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#define NULL 0
+#pragma mpwc_relax on
+
+
+extern "C" {
+/*fc*/
+int cMemMan_Deallocate(...);                       
+int std_list_deleter_tDataDelRec_generic_iterator_ctor(...);                        
+int std_list_deleter_tDataDelRec_tail(...);                          
+char * details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_9(...);                        
+int std_list_deleter_tDataDelRec_erase_listdeleter(...);              
+extern unsigned char g_ProfileLockEnabled;
+}
+#pragma inline_depth(10)
+static inline int ite0(char *l) { int r; std_list_deleter_tDataDelRec_generic_iterator_ctor(&r, std_list_deleter_tDataDelRec_tail(l)); return r; }
+static inline void er0(char *l, char *n) { int sp84; char *sp80; sp80 = n; std_list_deleter_tDataDelRec_erase_listdeleter(&sp84, l, &sp80); }
+static inline void er1(char *l, char *n) { er0(l, n); }
+static inline int ite1(char *l) { return ite0(l); }
+extern "C" void XLib_DeferDeleteDmaData(char * arg0, int arg1) {
+    int temp_s3;
+    char * var_s2;
+    char * temp_s1;
+    int temp_s0;
+    int temp_s0_2;
+
+    if (F_(arg0, 0x1108, int) != 0) {
+        var_s2 = (char *)(F_(details_compressed_pair_imp_cAllocator_node_node_base_1_second_void_9(arg0 + 0x110C), 0x4, int));
+        while (ite0(arg0 + 0x1108) != (int)var_s2) {
+                F_(var_s2, 0x10, int) = (int) (F_(var_s2, 0x10, int) - 1);
+                if ((F_(var_s2, 0x10, int) == 0) || (arg1 != 0)) {
+temp_s1 = var_s2;
+var_s2 = (char *)(F_(var_s2, 0x4, int));
+temp_s0 = F_(temp_s1, 0xC, int);
+                    if (temp_s0 == -1) {
+                        temp_s0_2 = F_(temp_s1, 0x8, int);
+                        {
+                            AllocGuard g;
+                        cMemMan_Deallocate(0, temp_s0_2, "xlib.cc", 0x812);
+                        }
+                    } else {
+                        temp_s3 = F_(temp_s1, 0x8, int);
+                        {
+                            AllocGuard g;
+                        cMemMan_Deallocate(temp_s0, temp_s3, "xlib.cc", 0x814);
+                        }
+                    }
+                    er0(arg0 + 0x1108, temp_s1);
+                } else {
+                    var_s2 = (char *)(F_(var_s2, 0x4, int));
+                }
+        }
+    }
+}
+static inline void merge_flush_func_0037B0C0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0037B0C0 */

@@ -111,7 +111,7 @@ How each block is put together:
 - **Anonymous typedefs.** MW rejects an identical anonymous
   `typedef struct {..} T;` written twice (`identifier 'T' redeclared`), so
   repeats are dropped as well.
-- **Conflicting names.** A type or `static` name that clashes with an
+- **Conflicting names.** A type (also `struct V {...} __attribute__((aligned(16)))`, `class C`, `struct D : B`) or `static` name that clashes with an
   earlier, different definition is renamed `<name>_<ADDR>` inside the block.
 - **Macros.** A macro that was defined differently before is `#undef`'d first.
 - **Conflicting function prototypes** (the same extern function declared with
@@ -132,6 +132,28 @@ How each block is put together:
 - **Conflicting object declarations** (`extern char D_X;` against
   `char D_X[]`): the same approach with `#define D_X (*(T*)&D_X)` or
   `((T*)&D_X)`.
+- **Pinned prototypes** (`hidden_protos`). The merged text is run through the
+  host C preprocessor (`cpp`, once without and once with `__cplusplus`), so
+  the tool also sees prototypes that a macro declares
+  (`DEFINE_VTABLE2_BASE_DTOR` declares `void* baseDtor(void*, short)`), that a
+  header declares (also inside `#ifdef __cplusplus`), and every definition. If
+  those agree, that prototype is *pinned*: a block's own different prototype
+  is disabled with `#if 0`, the pinned one is declared in its place when no
+  earlier block has it (`/* merge_units */`), and calls go through a call
+  macro. A C++ block may declare a later definition's struct types ahead with
+  `struct X; /* merge_units */`. Objects work the same way (the header's,
+  macro's or definition's type is declared, the block's view is an object
+  macro). When only the blocks disagree, the prototype that accepts the most
+  calls (variadic, with a result) is pinned if it names only built-in types,
+  else a common one (pointers to block types become `void*`).
+- **No call macro possible** (another number of parameters, `int f();`): the
+  block's prototype is disabled and its calls use the one in scope. No call
+  macro is made for a function the block itself defines, or across C++
+  reference parameters.
+- **Deleting destructors.** The destructor macros in `include/` all use
+  `extern "C" void* name(void* self, short deleteFlag)` (the typed object is
+  reached as `((T*)self)`), the same prototype the chain macros declare for
+  base destructors, so blocks that define and call them agree.
 - **Flush.** Each Metrowerks block ends with an empty `static inline`
   function, so MW generates the block's deferred code under the block's own
   pragmas (C or C++ mode) before the `pop`.

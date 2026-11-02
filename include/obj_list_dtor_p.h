@@ -29,38 +29,38 @@
 
 #define DEFINE_OBJ_LIST_DTOR_P(name, eraseFn, deleteFn)                       \
     OBJ_LIST_DTOR_P_DECL(eraseFn, deleteFn)                                   \
-    extern "C" ObjList* name(ObjList* self, short deleteFlag)                 \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
             if (self) {                                                       \
                 if (self) OBJ_LIST_DTOR_P_ERASE(eraseFn)                      \
             }                                                                 \
             if (deleteFlag > 0)                                               \
-                deleteFn(self);                                               \
+                deleteFn(((ObjList*)self));                                   \
         }                                                                     \
         return self;                                                          \
     }
 
 #define DEFINE_OBJ_LIST_DTOR_MID_P(name, eraseFn, deleteFn)                   \
     OBJ_LIST_DTOR_P_DECL(eraseFn, deleteFn)                                   \
-    extern "C" ObjList* name(ObjList* self, short deleteFlag)                 \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
             if (self) OBJ_LIST_DTOR_P_ERASE(eraseFn)                          \
             if (deleteFlag > 0)                                               \
-                deleteFn(self);                                               \
+                deleteFn(((ObjList*)self));                                   \
         }                                                                     \
         return self;                                                          \
     }
 
 #define DEFINE_OBJ_LIST_DTOR_SHALLOW_P(name, eraseFn, deleteFn)               \
     OBJ_LIST_DTOR_P_DECL(eraseFn, deleteFn)                                   \
-    extern "C" ObjList* name(ObjList* self, short deleteFlag)                 \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
             OBJ_LIST_DTOR_P_ERASE(eraseFn)                                    \
             if (deleteFlag > 0)                                               \
-                deleteFn(self);                                               \
+                deleteFn(((ObjList*)self));                                   \
         }                                                                     \
         return self;                                                          \
     }

@@ -1,152 +1,315 @@
 /*
- * main/scriptUtils: 6 files, 002679F0-00267A90
+ * SFOGame/Source/scriptUtils: 8 files, 00267C20-00267EE0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_002679F0 */
+/* merge_units: begin func_00267C20 */
 #pragma push /* merge_units */
+#pragma cplusplus on
 #include "types.h"
-#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-#define NULL 0
-#pragma mpwc_relax on
-int cMessage_ctor_cMessageNameR(char **, char *);                       
-int Global_SetPersonalTimer(float, int, int);           
-int nGlobalization_GetString_int(int);                           
-int cNetMsg_GetFloat_floatR(float *);                             
-int cNetMsg_GetInt(int *);                            
-int cMessage_dtor(char **, int);                           
-extern char D_004DCB90;
-extern char D_004DCF10;
-extern char D_004F8580;
-
-void cNetLocalTimerMsg_NetReceive(int arg0) {
-    struct { char * f40[9]; float f64; int f68[2]; } sl;
-
-    cMessage_ctor_cMessageNameR(sl.f40, &D_004F8580);
-    sl.f40[0] = &D_004DCB90;
-    cNetMsg_GetFloat_floatR(&sl.f64);
-    cNetMsg_GetInt(sl.f68);
-    Global_SetPersonalTimer(sl.f64, arg0, nGlobalization_GetString_int(sl.f68[0]));
-    sl.f40[0] = &D_004DCF10;
-    cMessage_dtor(sl.f40, 0);
+#include "vc_copy.h"
+struct V4 {
+    __int128 q;
+    V4() {}
+};
+class GObj {
+public:
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+    virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+    virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+    virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+    virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+    virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+    virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+    virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+    virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44();
+    virtual void v45(); virtual void v46(); virtual void v47(); virtual void v48(); virtual void v49();
+    virtual void v50(); virtual void v51(); virtual void v52(); virtual void v53(); virtual void v54();
+    virtual V4 GetPos();
+};
+struct Holder {
+    char pad[0x30];
+    GObj* obj;
+};
+#pragma opt_propagation off
+#pragma opt_common_subs off
+extern "C" float nScriptUtils_Distance_cNPCP_cNPCP(Holder* h, Holder* o) {
+    GObj* g = h->obj; V4 a = g->GetPos();
+    V4 b = o->obj->GetPos();
+    V4 d;
+    V4 r;
+    float ret;
+    {
+        V4* pr = &r; V4* pa = &a; V4* pb = &b;
+        asm { lqc2 vf1, 0(pa); lqc2 vf2, 0(pb); vsub.xyzw vf1, vf1, vf2; sqc2 vf1, 0(pr) }
+    }
+    {
+V4* dd; V4* ss; int t; __int128 x; V4* pv;
+ss = &r; pv = &d; asm { mtc1 $zero, ret } dd = &d; x = *(__int128*)ss; *(__int128*)dd = x;
+        asm {
+            lqc2 vf1, 0(pv)
+            vmul.xyz vf2, vf1, vf1
+            vmulax.w ACC, vf0, vf2x
+            vmadday.w ACC, vf0, vf2y
+            vmaddz.w vf3, vf0, vf2z
+            vsqrt Q, vf3w
+            vwaitq
+            vaddq.x vf4, vf0, Q
+            qmfc2.ni t, vf4
+            mtc1 t, ret
+        }
+    }
+    return ret;
 }
+static inline void merge_flush_func_00267C20(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_002679F0 */
+/* merge_units: end func_00267C20 */
 
-/* merge_units: begin func_00267A90 */
+/* merge_units: begin func_00267CD0 */
 #pragma push /* merge_units */
-typedef union { int i; float f; void* p; } ScriptArg;
+#pragma cplusplus on
 
-extern void* cNPC_SOBJ_convert(void* p);
-extern float nScriptUtils_Distance_cNPCP_cNPCP(void* a, void* b);
-
-/* Script native: returns the distance between two resolved objects, as raw float bits. */
-int Script_Distance_5(ScriptArg* args)
-{
-    ScriptArg result[1];
-    void* a = cNPC_SOBJ_convert(args[0].p);
-    void* b = cNPC_SOBJ_convert(args[1].p);
-    result[0].f = nScriptUtils_Distance_cNPCP_cNPCP(a, b);
-    return result[0].i;
+#pragma opt_propagation off
+#pragma opt_common_subs off
+extern "C" float nScriptUtils_Distance_cNPCP_cGOBJP(Holder* h, GObj* o) {
+    GObj* g = h->obj; V4 a = g->GetPos();
+    V4 b = o->GetPos();
+    V4 d;
+    V4 r;
+    float ret;
+    {
+        V4* pr = &r; V4* pa = &a; V4* pb = &b;
+        asm { lqc2 vf1, 0(pa); lqc2 vf2, 0(pb); vsub.xyzw vf1, vf1, vf2; sqc2 vf1, 0(pr) }
+    }
+    {
+V4* dd; V4* ss; int t; __int128 x; V4* pv;
+ss = &r; pv = &d; asm { mtc1 $zero, ret } dd = &d; x = *(__int128*)ss; *(__int128*)dd = x;
+        asm {
+            lqc2 vf1, 0(pv)
+            vmul.xyz vf2, vf1, vf1
+            vmulax.w ACC, vf0, vf2x
+            vmadday.w ACC, vf0, vf2y
+            vmaddz.w vf3, vf0, vf2z
+            vsqrt Q, vf3w
+            vwaitq
+            vaddq.x vf4, vf0, Q
+            qmfc2.ni t, vf4
+            mtc1 t, ret
+        }
+    }
+    return ret;
 }
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00267A90(void) {}
+static inline void merge_flush_func_00267CD0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00267A90 */
+/* merge_units: end func_00267CD0 */
 
-/* merge_units: begin func_00267AE0 */
+/* merge_units: begin func_00267D80 */
 #pragma push /* merge_units */
-typedef union ScriptArg_00267AE0 { int i; float f; void* p; } ScriptArg_00267AE0;
+#pragma cplusplus on
+
+#pragma opt_propagation off
+#pragma opt_common_subs off
+extern "C" float nScriptUtils_Distance_cPlayerP_cNPCP(Holder* h, Holder* o) {
+    GObj* g = h->obj; V4 a = g->GetPos();
+    V4 b = o->obj->GetPos();
+    V4 d;
+    V4 r;
+    float ret;
+    {
+        V4* pr = &r; V4* pa = &a; V4* pb = &b;
+        asm { lqc2 vf1, 0(pa); lqc2 vf2, 0(pb); vsub.xyzw vf1, vf1, vf2; sqc2 vf1, 0(pr) }
+    }
+    {
+V4* dd; V4* ss; int t; __int128 x; V4* pv;
+ss = &r; pv = &d; asm { mtc1 $zero, ret } dd = &d; x = *(__int128*)ss; *(__int128*)dd = x;
+        asm {
+            lqc2 vf1, 0(pv)
+            vmul.xyz vf2, vf1, vf1
+            vmulax.w ACC, vf0, vf2x
+            vmadday.w ACC, vf0, vf2y
+            vmaddz.w vf3, vf0, vf2z
+            vsqrt Q, vf3w
+            vwaitq
+            vaddq.x vf4, vf0, Q
+            qmfc2.ni t, vf4
+            mtc1 t, ret
+        }
+    }
+    return ret;
+}
+static inline void merge_flush_func_00267D80(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00267D80 */
+
+/* merge_units: begin func_00267E30 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#pragma opt_propagation off
+#pragma opt_common_subs off
+extern "C" float nScriptUtils_Distance_cPlayerP_cGOBJP(Holder* h, GObj* o) {
+    GObj* g = h->obj; V4 a = g->GetPos();
+    V4 b = o->GetPos();
+    V4 d;
+    V4 r;
+    float ret;
+    {
+        V4* pr = &r; V4* pa = &a; V4* pb = &b;
+        asm { lqc2 vf1, 0(pa); lqc2 vf2, 0(pb); vsub.xyzw vf1, vf1, vf2; sqc2 vf1, 0(pr) }
+    }
+    {
+V4* dd; V4* ss; int t; __int128 x; V4* pv;
+ss = &r; pv = &d; asm { mtc1 $zero, ret } dd = &d; x = *(__int128*)ss; *(__int128*)dd = x;
+        asm {
+            lqc2 vf1, 0(pv)
+            vmul.xyz vf2, vf1, vf1
+            vmulax.w ACC, vf0, vf2x
+            vmadday.w ACC, vf0, vf2y
+            vmaddz.w vf3, vf0, vf2z
+            vsqrt Q, vf3w
+            vwaitq
+            vaddq.x vf4, vf0, Q
+            qmfc2.ni t, vf4
+            mtc1 t, ret
+        }
+    }
+    return ret;
+}
+static inline void merge_flush_func_00267E30(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00267E30 */
+
+/* merge_units: begin func_00267EE0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#pragma opt_propagation off
+#pragma opt_common_subs off
+extern "C" float nScriptUtils_Distance_cGOBJP_cGOBJP(GObj* g, GObj* o) {
+    V4 a = g->GetPos();
+    V4 b = o->GetPos();
+    V4 d;
+    V4 r;
+    float ret;
+    {
+        V4* pr = &r; V4* pa = &a; V4* pb = &b;
+        asm { lqc2 vf1, 0(pa); lqc2 vf2, 0(pb); vsub.xyzw vf1, vf1, vf2; sqc2 vf1, 0(pr) }
+    }
+    {
+V4* dd; V4* ss; int t; __int128 x; V4* pv;
+ss = &r; pv = &d; asm { mtc1 $zero, ret } dd = &d; x = *(__int128*)ss; *(__int128*)dd = x;
+        asm {
+            lqc2 vf1, 0(pv)
+            vmul.xyz vf2, vf1, vf1
+            vmulax.w ACC, vf0, vf2x
+            vmadday.w ACC, vf0, vf2y
+            vmaddz.w vf3, vf0, vf2z
+            vsqrt Q, vf3w
+            vwaitq
+            vaddq.x vf4, vf0, Q
+            qmfc2.ni t, vf4
+            mtc1 t, ret
+        }
+    }
+    return ret;
+}
+static inline void merge_flush_func_00267EE0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00267EE0 */
+
+/* merge_units: begin func_00267F90 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+#include "scriptUtils_types.h"
+
+extern char* g_Hud;
+extern void* cGOBJ_SOBJ_convert(void* obj);
+extern int nScriptUtils_ClearCallout_cGOBJP(char* obj);
+extern int nScriptUtils_ClearCallout_cNPCP(CalloutOwner* obj);
 #if 0 /* merge_units */
-extern void* cNPC_SOBJ_convert(void*);
+extern CalloutOwner* cNPC_SOBJ_convert(void* obj);
 #endif /* merge_units */
-#define cNPC_SOBJ_convert(a0) (cNPC_SOBJ_convert((a0))) /* merge_units */
+void* cNPC_SOBJ_convert(void* p); /* merge_units */
+#define cNPC_SOBJ_convert(a0) ((CalloutOwner *)cNPC_SOBJ_convert((a0))) /* merge_units */
 
+extern int cHud_ClearCallout(char* a0, char* key, int a2, int a3, int a4);
 
-extern void* cGOBJ_SOBJ_convert(void*);
-extern float nScriptUtils_Distance_cNPCP_cGOBJP(void*, void*);
-/* Script native: distance between two script objects. */
-int Script_Distance_4(ScriptArg_00267AE0* args)
-{
-    volatile float result;
-    void* a = cNPC_SOBJ_convert(args[0].p);
-    result = nScriptUtils_Distance_cNPCP_cGOBJP(a, cGOBJ_SOBJ_convert(args[1].p));
-    return *(int*)&result;
+int Script_ClearCallout_2(ScriptArg* args) {
+    nScriptUtils_ClearCallout_cNPCP(cNPC_SOBJ_convert(args[0].p));
+    return 0;
 }
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00267AE0(void) {}
+
+int nScriptUtils_ClearCallout_cNPCP(CalloutOwner* obj) {
+    return cHud_ClearCallout(g_Hud, obj->callout + 12, 0, 0, 1);
+}
+
+int Script_ClearCallout(ScriptArg* args) {
+    nScriptUtils_ClearCallout_cGOBJP(cGOBJ_SOBJ_convert(args[0].p));
+    return 0;
+}
+
+int nScriptUtils_ClearCallout_cGOBJP(char* obj) {
+    return cHud_ClearCallout(g_Hud, obj + 12, 0, 0, 1);
+}
 #undef cNPC_SOBJ_convert /* merge_units */
+static inline void merge_flush_func_00267F90(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00267AE0 */
+/* merge_units: end func_00267F90 */
 
-/* merge_units: begin func_00267B30 */
+/* merge_units: begin func_00268030 */
 #pragma push /* merge_units */
-typedef union ScriptArg_00267B30 { int i; float f; void* p; } ScriptArg_00267B30;
-extern void* cPlayer_SOBJ_convert(void* object);
-extern float nScriptUtils_Distance_cPlayerP_cNPCP(void* a, void* b);
+typedef union { int i; void* p; } ScriptArg_00268030;
+extern void* cNPC_SOBJ_convert(void* p);
 
-/* Script native: distance between the objects of args[0] and args[1], returned as float bits. */
-int Script_Distance_3(ScriptArg_00267B30* args)
+extern void nScriptUtils_SetCalloutLabel_cNPCP_charP_int_bool(void* obj, int label, int value, int flag);int Script_SetCalloutLabel_4(ScriptArg_00268030* args)
 {
-    void* a = cPlayer_SOBJ_convert(args[0].p);
-    void* b = cNPC_SOBJ_convert(args[1].p);
-    float result = nScriptUtils_Distance_cPlayerP_cNPCP(a, b);
-    return *(int*)&result;
+int labelArg[1]; int valueArg[1]; int flag; int value;
+    void* obj;
+    flag = args[3].i != 0;
+    valueArg[0] = args[2].i;
+    labelArg[0] = args[1].i;
+    value = *(int*)valueArg;
+    obj = cNPC_SOBJ_convert(args[0].p);
+    nScriptUtils_SetCalloutLabel_cNPCP_charP_int_bool(obj, *(int*)labelArg, value, flag);
+    return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00267B30(void) {}
+static inline void merge_flush_func_00268030(void) {}
 #pragma pop /* merge_units */
-/* merge_units: end func_00267B30 */
+/* merge_units: end func_00268030 */
 
-/* merge_units: begin func_00267B80 */
+/* merge_units: begin func_00268090 */
 #pragma push /* merge_units */
-typedef union ScriptArg_00267B80 { int i; float f; void* p; } ScriptArg_00267B80;
 #if 0 /* merge_units */
-extern void* cGOBJ_SOBJ_convert(void* object);
+extern void nScriptUtils_SetCalloutLabel_cNPCP_charP_int_bool(void* obj, int label, int text, int flag);
 #endif /* merge_units */
-#define cGOBJ_SOBJ_convert(a0) (cGOBJ_SOBJ_convert((a0))) /* merge_units */
+#define nScriptUtils_SetCalloutLabel_cNPCP_charP_int_bool(a0, a1, a2, a3) (nScriptUtils_SetCalloutLabel_cNPCP_charP_int_bool((a0), (a1), (a2), (a3))) /* merge_units */
 
 
-extern float nScriptUtils_Distance_cPlayerP_cGOBJP(void* a, void* b);
 
-/* Script native: distance between the two objects, returned as float bits. */
-int Script_Distance_2(ScriptArg_00267B80* args)
+
+/* Script native: sets the label of a callout on the resolved object. */
+int Script_SetCalloutLabel_3(ScriptArg* args)
 {
-    void* a = cPlayer_SOBJ_convert(args[0].p);
-    float d[1];
-    d[0] = nScriptUtils_Distance_cPlayerP_cGOBJP(a, cGOBJ_SOBJ_convert(args[1].p));
-    return *(int*)d;
+    int labelArg[1];
+    int textArg[1];
+    int text;
+    void* obj;
+    textArg[0] = args[2].i;
+    labelArg[0] = args[1].i;
+    text = *(int*)textArg;
+    obj = cNPC_SOBJ_convert(args[0].p);
+    nScriptUtils_SetCalloutLabel_cNPCP_charP_int_bool(obj, *(int*)labelArg, text, 0);
+    return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00267B80(void) {}
-#undef cGOBJ_SOBJ_convert /* merge_units */
+static inline void merge_flush_func_00268090(void) {}
+#undef nScriptUtils_SetCalloutLabel_cNPCP_charP_int_bool /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00267B80 */
-
-/* merge_units: begin func_00267BD0 */
-#pragma push /* merge_units */
-typedef struct ScriptArgs2 {
-    int a;
-    int b;
-} ScriptArgs2;
-
-#if 0 /* merge_units */
-extern int cGOBJ_SOBJ_convert(int handle);
-#endif /* merge_units */
-#define cGOBJ_SOBJ_convert(a0) ((int)cGOBJ_SOBJ_convert((void *)(a0))) /* merge_units */
-
-
-extern float nScriptUtils_Distance_cGOBJP_cGOBJP(int a, int b);
-
-/* Script native: Distance(a, b) - returns the float distance as its raw bits. */
-int Script_Distance(ScriptArgs2* args) {
-    int a = cGOBJ_SOBJ_convert(args->a);
-    volatile float dist = nScriptUtils_Distance_cGOBJP_cGOBJP(a, cGOBJ_SOBJ_convert(args->b));
-    return *(int*)&dist;
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00267BD0(void) {}
-#undef cGOBJ_SOBJ_convert /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_00267BD0 */
+/* merge_units: end func_00268090 */

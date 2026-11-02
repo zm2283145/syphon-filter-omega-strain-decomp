@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/GuiAgentModify: 2 files, 0033FA00-0033FA80
+ * SFOGame/Source/GuiAgentModify: 9 files, 0033FA00-00340700
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -60,6 +60,7 @@ extern char g_AgentPartCache[];
 #endif /* merge_units */
 #define g_AgentPartCache ((char*)&g_AgentPartCache) /* merge_units */
 
+
 extern char g_Game[];
 extern void* D_004FFC04;
 extern char D_00585E90[];
@@ -74,6 +75,7 @@ void SKL_RemoveBlanks(Blk_0033FA80* b);
 void Monster_RestoreLockedPartsTex(char* c);
 #endif /* merge_units */
 #define Monster_RestoreLockedPartsTex(a0) (Monster_RestoreLockedPartsTex((void *)(a0))) /* merge_units */
+
 
 void* cGameSystem_GetAgentData(void* a, int b);
 void cAgentData_SetSkl(void* ag, Blk_0033FA80* b);
@@ -90,19 +92,33 @@ void* GuiManager_OpenGui(void* a, char* b, char* c);
 #endif /* merge_units */
 #define GuiManager_OpenGui(a0, a1, a2) (GuiManager_OpenGui((a0), (void *)(a1), (void *)(a2))) /* merge_units */
 
+
 void* Gui_Canvas(void);
 #if 0 /* merge_units */
 void GuiCanvas_Transition(void* a, void* b, void* c);
 #endif /* merge_units */
 #define GuiCanvas_Transition(a0, a1, a2) (GuiCanvas_Transition((a0), (int)(a1), (a2))) /* merge_units */
 
+
 void GuiWidget_SendMessage(void* a, void* b, int kind, int v, int f);
 void GuiCanvas_SetFocus(void* ui, void* w);
 void GuiAgentModify_MakeChildrenFocusable(Self_0033FA80* self, void* g);
 void GuiAgentModify_MakeChildrenNotFocusable(Self_0033FA80* self, void* g);
+#if 0 /* merge_units */
 void GuiAgentModify_TattooPatchesLockout(Self_0033FA80* self);
+#endif /* merge_units */
+struct Self; /* merge_units */
+void GuiAgentModify_TattooPatchesLockout(Self* self); /* merge_units */
+#define GuiAgentModify_TattooPatchesLockout(a0) (GuiAgentModify_TattooPatchesLockout((Self *)(a0))) /* merge_units */
+
 void GuiAgentModify_UserInterface(Self_0033FA80* self, int a, int b);
+#if 0 /* merge_units */
 void GuiAgentModify_SetBigPatch(Self_0033FA80* self);
+#endif /* merge_units */
+struct Self_0320; /* merge_units */
+void GuiAgentModify_SetBigPatch(Self_0320* self); /* merge_units */
+#define GuiAgentModify_SetBigPatch(a0) (GuiAgentModify_SetBigPatch((Self_0320 *)(a0))) /* merge_units */
+
 int GuiAgentModify_onInput(Self_0033FA80* self, Ev_0033FA80* ev);
 }
 
@@ -234,6 +250,317 @@ extern "C" int GuiAgentModify_onInput(Self_0033FA80* self, Ev_0033FA80* ev)
 #undef Monster_RestoreLockedPartsTex /* merge_units */
 #undef GuiManager_OpenGui /* merge_units */
 #undef GuiCanvas_Transition /* merge_units */
+#undef GuiAgentModify_TattooPatchesLockout /* merge_units */
+#undef GuiAgentModify_SetBigPatch /* merge_units */
 static inline void merge_flush_func_0033FA80(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0033FA80 */
+
+/* merge_units: begin func_00340320 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct W_0320 { char pad[0x14]; unsigned short flags; };
+struct Npc_0320 { char pad[0xF0]; char names[1][0x20]; };
+struct Ent_0320 { char* str; char pad[0x10]; };
+struct Rel_0320 { int a0; int count; Ent_0320* data; unsigned char own; char pad[3]; };
+struct Opts_0320 { char pad[0x25C]; int x25C; };
+struct Self_0320 {
+    char pad0[0x80];
+    W_0320* f80;
+    W_0320* f84;
+    char pad88[4];
+    Npc_0320* f8C;
+    char pad90[0xF0 - 0x90];
+    int fF0;
+    char padF4[0x10D - 0xF4];
+    signed char b10D;
+};
+extern "C" {
+extern char D_004B9F20[];
+extern char D_004B9F28[];
+extern char D_004B9F30[];
+extern char D_004B9F38[];
+extern char D_004B9F40[];
+#if 0 /* merge_units */
+extern Opts_0320* D_004FFC04;
+#endif /* merge_units */
+#define D_004FFC04 (*(Opts_0320 **)&D_004FFC04) /* merge_units */
+
+void GuiBitmapWidget_ClearBitmap(W_0320* w);
+void GuiBitmapWidget_SetBitmap(W_0320* w, char* name, int x);
+void GuiTextWidget_SetText(W_0320* w, char* s, int x);
+char* Libc_Strcpy(char* d, const char* s);
+int Libc_Strncmp(const char* a, const char* b, int n);
+char* Libc_Strcat(char* d, const char* s);
+void cAgentData_GetAchievements(void* ag, unsigned char k, Rel_0320* r);
+void cAgentData_GetRatings(void* ag, Rel_0320* r);
+void func_00296FA0(Rel_0320* r);
+#if 0 /* merge_units */
+void func_00299360(Rel_0320* r, int f);
+#endif /* merge_units */
+void* func_00299360(void* self, short deleteFlag); /* merge_units */
+#define func_00299360(a0, a1) ((void)func_00299360((void *)(a0), (short)(a1))) /* merge_units */
+
+int nGlobalization_GetStringIndex(char* k);
+char* nGlobalization_GetString_int(int id);
+void GuiAgentModify_SetBigPatch(Self_0320* self);
+}
+
+extern "C" void GuiAgentModify_SetBigPatch(Self_0320* self)
+{
+    char buf[0x20];
+    char name[0x20];
+    int a;
+    int b;
+    int c;
+    if (self->fF0) {
+        if (self->f80) {
+            GuiBitmapWidget_ClearBitmap(self->f80);
+            self->f80->flags &= ~2;
+        }
+        if (self->f84) {
+            GuiTextWidget_SetText(self->f84, D_004B9F20, 0);
+            self->f84->flags &= ~2;
+        }
+    } else {
+        if (self->f80)
+            GuiBitmapWidget_ClearBitmap(self->f80);
+        a = -1;
+        b = a;
+        c = a;
+        Libc_Strcpy(buf, ((char(*)[0x20])((char*)self->f8C + 0xF0))[self->b10D]);
+        if (!Libc_Strncmp(&buf[6], D_004B9F28, 3) && buf[10] != 'B') {
+            a = buf[10] - '0';
+            buf[0] = buf[10];
+            buf[1] = '_';
+            b = buf[11] - '0';
+            buf[2] = buf[11];
+            buf[3] = '_';
+            buf[4] = buf[12];
+            if (buf[13] >= '0' && buf[13] <= '9') {
+                c = (buf[12] - '0') * 10;
+                c += buf[13] - '1';
+                buf[5] = buf[13];
+                buf[6] = 's';
+                buf[7] = 0;
+            } else {
+                c = buf[12] - '1';
+                buf[5] = 's';
+                buf[6] = 0;
+            }            Libc_Strcpy(name, buf);
+            Libc_Strcat(name, D_004B9F30);
+            if (self->f80)
+                GuiBitmapWidget_SetBitmap(self->f80, name, D_004FFC04->x25C);
+        } else {
+            Libc_Strcpy(name, buf);
+            Libc_Strcat(name, D_004B9F30);
+            if (self->f80)
+                GuiBitmapWidget_SetBitmap(self->f80, name, 0);
+        }
+        if (self->f80)
+            self->f80->flags |= 2;
+        if (self->f84) {
+            if (a != -1) {
+                Rel_0320 r;
+                char* txt;
+                func_00296FA0(&r);
+                r.own = 1;
+                txt = 0;
+                if (b == 2 || b == 4 || (b == 3 && c >= 25)) {
+                    if (b == 3) {
+                        b = 0;
+                        c -= 25;
+                    } else if (b == 4) {
+                        b = 1;
+                    }
+                    cAgentData_GetAchievements(cGameSystem_GetAgentData(g_Game, -1), b, &r);
+                    if (c < r.count)
+                        txt = r.data[c].str;
+                } else if (b == 3) {
+                    cAgentData_GetRatings(cGameSystem_GetAgentData(g_Game, -1), &r);
+                    if (c < r.count)
+                        txt = r.data[c].str;
+                } else if (b == 6) {
+                    txt = nGlobalization_GetString_int(c + nGlobalization_GetStringIndex(D_004B9F38));
+                }
+                if (txt)
+                    GuiTextWidget_SetText(self->f84, txt, 0);
+                else
+                    GuiTextWidget_SetText(self->f84, D_004B9F40, 0);
+                self->f84->flags |= 2;
+                func_00299360(&r, 0);
+            } else {
+                GuiTextWidget_SetText(self->f84, D_004B9F20, 0);
+                self->f84->flags &= ~2;
+            }
+        }
+    }
+}
+#undef D_004FFC04 /* merge_units */
+#undef func_00299360 /* merge_units */
+static inline void merge_flush_func_00340320(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00340320 */
+
+/* merge_units: begin func_00340700 */
+#pragma push /* merge_units */
+#pragma push
+#pragma cplusplus on
+#include "member_dtor_chain.h"
+#pragma pop
+#pragma push
+#pragma cplusplus on
+#include "base_dtor_chain.h"
+#pragma pop
+
+#pragma cplusplus on
+
+/* Deleting destructor that runs the member destructor. */
+DEFINE_MEMBER_DTOR_CHAIN(func_00340700, func_00299360)
+static inline void merge_flush_func_00340700(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00340700 */
+
+/* merge_units: begin func_00340770 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+/* Deleting destructor that runs the base destructor. */
+DEFINE_BASE_DTOR_CHAIN(func_00340770, func_00299360)
+static inline void merge_flush_func_00340770(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00340770 */
+
+/* merge_units: begin func_003407D0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit: GuiAgentModify.cc. Functions are named by address
+ * until real names are known.
+ */
+
+
+Rel* func_003407D0(Rel* r) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
+    return r;
+}
+static inline void merge_flush_func_003407D0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003407D0 */
+
+/* merge_units: begin func_003407F0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "direct_base_dtor.h"
+
+/* Deleting destructor that runs the base destructor. */
+DEFINE_DIRECT_BASE_DTOR(func_003407F0, func_00299360)
+static inline void merge_flush_func_003407F0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003407F0 */
+
+/* merge_units: begin func_00340850 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+class Vis {
+public:
+    VPAD2(a) virtual void v2(); virtual void Show(); virtual void Hide();
+};
+struct Wid { char pad[0x44]; Vis* vis; };
+typedef struct { __int128 q; char pad[0x10]; } Ent;
+typedef struct { char pad[0xE0]; Ent e[1]; } Tbl;
+struct Self {
+    char pad0[0x8C];
+    Tbl* tbl;
+    char pad90[0x114 - 0x90];
+    int idx[6];
+    Wid* w[6];
+    char pad144[0x14C - 0x144];
+    Wid* grp[2];
+};
+extern "C" {
+#if 0 /* merge_units */
+extern __int128 g_AgentPartCache;
+#endif /* merge_units */
+#define g_AgentPartCache (*(__int128*)&g_AgentPartCache) /* merge_units */
+
+extern __int128 D_0055DE00;
+void GuiAgentModify_TattooPatchesLockout(Self* self);
+}
+
+static inline long KEq(__int128 b, __int128 a, __int128 m)
+{
+    __int128 t, r;
+    asm {
+        pand t, m, b
+        pand r, m, a
+        pceqw r, r, t
+        ppach r, r, r
+    }
+    return r;
+}
+
+static inline long Match(Self* self, int k)
+{
+    return KEq(g_AgentPartCache, self->tbl->e[self->idx[k]].q, D_0055DE00);
+}
+
+void GuiAgentModify_TattooPatchesLockout(Self* self)
+{
+    int n = 0;
+    if (Match(self, 0) == -1) self->w[0]->vis->Hide(); else { self->w[0]->vis->Show(); n++; }
+    if (Match(self, 1) == -1) self->w[1]->vis->Hide(); else { self->w[1]->vis->Show(); n++; }
+    if (Match(self, 2) == -1) self->w[2]->vis->Hide(); else { self->w[2]->vis->Show(); n++; }
+    if (n) self->grp[0]->vis->Show(); else self->grp[0]->vis->Hide();
+    n = 0;
+    if (Match(self, 3) == -1) self->w[3]->vis->Hide(); else { self->w[3]->vis->Show(); n++; }
+    if (Match(self, 4) == -1) self->w[4]->vis->Hide(); else { self->w[4]->vis->Show(); n++; }
+    if (Match(self, 5) == -1) self->w[5]->vis->Hide(); else { self->w[5]->vis->Show(); n++; }
+    if (n) self->grp[1]->vis->Show(); else self->grp[1]->vis->Hide();
+}
+#undef g_AgentPartCache /* merge_units */
+static inline void merge_flush_func_00340850(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00340850 */
+
+/* merge_units: begin func_00340C00 */
+#pragma push /* merge_units */
+#if 0 /* merge_units */
+extern char g_AgentPartCache[];
+#endif /* merge_units */
+#define g_AgentPartCache ((char*)&g_AgentPartCache) /* merge_units */
+
+#if 0 /* merge_units */
+extern void Monster_RestoreLockedPartsTex(void* a);
+#endif /* merge_units */
+#define Monster_RestoreLockedPartsTex(a0) (Monster_RestoreLockedPartsTex((a0))) /* merge_units */
+
+#if 0 /* merge_units */
+extern int GuiManager_OpenGui(void* a, const char* b, const char* c);
+#endif /* merge_units */
+#define GuiManager_OpenGui(a0, a1, a2) ((int)GuiManager_OpenGui((a0), (void *)(a1), (void *)(a2))) /* merge_units */
+
+#if 0 /* merge_units */
+extern void GuiCanvas_Transition(void* a, int b, int c);
+#endif /* merge_units */
+#define GuiCanvas_Transition(a0, a1, a2) (GuiCanvas_Transition((a0), (a1), (void *)(a2))) /* merge_units */
+
+/* Look up an entry and register it with `arg`. */
+void GuiAgentModify_NextScreen(int arg)
+{
+    int entry;
+    Monster_RestoreLockedPartsTex(g_AgentPartCache);
+    cMotionManager_FlushUpdateList();
+    entry = GuiManager_OpenGui(Gui_Manager(), D_004B9ED0, D_004B9EE8);
+    GuiCanvas_Transition(Gui_Canvas(), arg, entry);
+}
+#undef g_AgentPartCache /* merge_units */
+#undef Monster_RestoreLockedPartsTex /* merge_units */
+#undef GuiManager_OpenGui /* merge_units */
+#undef GuiCanvas_Transition /* merge_units */
+static inline void merge_flush_func_00340C00(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00340C00 */

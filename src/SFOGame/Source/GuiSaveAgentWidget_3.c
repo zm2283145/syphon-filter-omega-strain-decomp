@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/GuiSaveAgentWidget: 1 file, 00441780
+ * SFOGame/Source/GuiSaveAgentWidget: 2 files, 00441780-00441960
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -34,7 +34,12 @@ int cAgentData_GetNumSavedBytes(int);
 int cMemCard_GetClustersNeeded(Net_441780*, int);
 int cMemCard_FileExists(Net_441780*, char*);
 int SaveAgentWidget_FindSlotFile(int, char*, char*);
+#if 0 /* merge_units */
 void GuiSaveAgentWidget_HandleEvent(Obj_441780*);
+#endif /* merge_units */
+void GuiSaveAgentWidget_HandleEvent(void*); /* merge_units */
+#define GuiSaveAgentWidget_HandleEvent(a0) (GuiSaveAgentWidget_HandleEvent((void *)(a0))) /* merge_units */
+
 int sprintf(char*, const char*, ...);
 char* strncpy(char*, const char*, int);
 char* strstr(const char*, const char*);
@@ -86,6 +91,48 @@ extern "C" int SaveAgentWidget_SpaceCheck(Obj_441780* self)
     }
     return 1;
 }
+#undef GuiSaveAgentWidget_HandleEvent /* merge_units */
 static inline void merge_flush_GuiSaveAgentWidget_441780(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end GuiSaveAgentWidget_441780 */
+
+/* merge_units: begin GuiSaveAgentWidget_441960 */
+#pragma push /* merge_units */
+typedef struct { char pad[0x59D]; unsigned char b59d; unsigned char b59e; } G441;
+typedef struct { char pad[0x48]; int f48; } O441;
+#if 0 /* merge_units */
+extern G441* g_MemCard;
+#endif /* merge_units */
+#define g_MemCard (*(G441 **)&g_MemCard) /* merge_units */
+
+extern char D_004C0448[];
+extern char* nGlobalization_GetString_charP(char*);
+#if 0 /* merge_units */
+extern void GuiSaveAgentWidget_HandleEvent(O441*);
+#endif /* merge_units */
+#define GuiSaveAgentWidget_HandleEvent(a0) (GuiSaveAgentWidget_HandleEvent((void *)(a0))) /* merge_units */
+
+extern void SaveAgentWidget_Prepare(O441*);
+#if 0 /* merge_units */
+extern int cGameFrontEnd_PushMessageBox(int, int, char*, char*, O441*, int);
+#endif /* merge_units */
+#define cGameFrontEnd_PushMessageBox(a0, a1, a2, a3, a4, a5) (cGameFrontEnd_PushMessageBox((a0), (a1), (a2), (a3), (void *)(a4), (a5))) /* merge_units */
+
+void GuiSaveAgentWidget_StartChecks(O441* o) {
+    G441* g = g_MemCard;
+    if (!g->b59d) {
+        GuiSaveAgentWidget_HandleEvent(o);
+    } else if (!g->b59e) {
+        int m = D_004FFC04;
+        char* t = nGlobalization_GetString_charP(D_004C0448);
+        o->f48 = cGameFrontEnd_PushMessageBox(m, 5, t, nGlobalization_GetString_charP("MC_ASKFORMAT"), o, 0);
+    } else {
+        SaveAgentWidget_Prepare(o);
+    }
+}
+#undef g_MemCard /* merge_units */
+#undef GuiSaveAgentWidget_HandleEvent /* merge_units */
+#undef cGameFrontEnd_PushMessageBox /* merge_units */
+static inline void merge_flush_GuiSaveAgentWidget_441960(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end GuiSaveAgentWidget_441960 */

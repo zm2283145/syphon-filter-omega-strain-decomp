@@ -1,10 +1,10 @@
 /*
- * SFOGame/Source/NIEvent: 3 files, 0023A550-0023A5A0
+ * SFOGame/Source/NIEvent: 6 files, 0023EE90-0023F350
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_0023A550 */
+/* merge_units: begin func_0023EE90 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -14,291 +14,159 @@
 
 #include "types.h"
 
-int* std_vector_cNIEventBasePtr_opIndex(PtrVec* v, int i) {
-    return v->data + i;
+int cNIEventBase_GetVUM(void) {
+    return 0;
 }
-static inline void merge_flush_func_0023A550(void) {} /* merge_units */
+static inline void merge_flush_func_0023EE90(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_0023A550 */
+/* merge_units: end func_0023EE90 */
 
-/* merge_units: begin func_0023A560 */
+/* merge_units: begin func_0023EEA0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-#include "nievent_v10.h"
-
-/* Event virtual 10: call slot 66 while inactive. */
-DEFINE_NIEVENT_V10(cNIEventOBJ_NextFrame)
-static inline void merge_flush_func_0023A560(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_0023A560 */
-
-/* merge_units: begin func_0023A5A0 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-#include "vslot_pad.h"
-#pragma inline_depth(8)
-
-/*
- * cNIEventOBJ::ProcessNextFrame (NIEvent.cc), transcribed from the prototype
- * (ProcessNextFrame__11cNIEventOBJFf) + retail-only cHuman::BulletBlood call.
- * DRAFT: the prototype's line-segment/box test is a hand-written VU0 asm
- * routine with internal branches (prototype 0x2469dc..0x246f88); here it is a
- * plain C stand-in, so the middle of the function does not match.
- */
-
-struct V {
-    float x, y, z, w;
-    V() {}
-    V& operator=(const V& o) { const V* s = &o; V* d = this; __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); return *this; }
-    V(const V& o) { const V* s = &o; V* d = this; __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
-} __attribute__((aligned(16)));
-
-struct M { float m[4][4]; } __attribute__((aligned(16)));
-
-struct cLineSegment {
-    V endPoints[2];
-    cLineSegment() {}
+struct Node_0023EEA0;
+struct Vec { int cap; int n; Node_0023EEA0** p; };
+class Node_0023EEA0 {
+public:
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03(); virtual void v04(); virtual void v05();
+    virtual void v06(); virtual void v07(); virtual void v08(); virtual void v09(); virtual void v0A(); virtual void v0B();
+    virtual void v0C(); virtual void v0D(); virtual void v0E(); virtual void v0F(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+    virtual void v18(); virtual void v19(); virtual void v1A(); virtual void v1B(); virtual void v1C(); virtual void v1D();
+    virtual void v1E(); virtual void v1F(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+    virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+    virtual void v2A(); virtual void v2B(); virtual void v2C(); virtual void v2D(); virtual void v2E(); virtual void v2F();
+    virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
+    virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v3A(); virtual void v3B();
+    virtual void v3C(); virtual void v3D(); virtual void v3E(); virtual void v3F(); virtual void v40(); virtual void v41();
+    virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45();
+    virtual void v46();
+    virtual Node_0023EEA0* Find();
+    char pad04[0x90];
+    Node_0023EEA0* parent;
+    int pad98;
+    Vec kids;
 };
-
-struct cBox { V min; V max; };
-
-struct XNode {
-    VPAD16(a) VPAD4(b) virtual void Update();
-    char pad04[0xC];
-    M mat;                  /* +0x10 */
-    unsigned char dirty;    /* +0x50 */
-};
-
-struct cHuman {
-    VPAD16(a) VPAD16(b) virtual cBox* GetBox();   /* +0x88 */
-    char pad04[0x4C];
-    XNode* xform;           /* +0x50 */
-};
-
-struct cCtrl {
-    VPAD16(a) VPAD2(b) VPAD1(e) virtual int IsActive();      /* +0x54 */
-    VPAD8(c) VPAD4(d) virtual unsigned char State(); /* +0x88 */
-    char pad04[0x2C];
-    cHuman* human;          /* +0x30 */
-};
-
-struct cPlayerObj {
-    char pad00[0x58];
-    cCtrl* ctrl;            /* +0x58 */
-};
-
-struct cEvBase {
-    VPAD32(a) VPAD32(b) VPAD2(c) virtual void Step(float t);  /* +0x110 */
-    char pad04[0x48];
-    void* kind;             /* +0x4C */
-};
-
-struct cEvVec { int pad; int count; cEvBase** data; };
-
-struct cObjX {
-    VPAD16(a) virtual void Activate();  /* +0x48 */
-};
-
-struct cNIEventOBJ {
-    VPAD32(a) VPAD32(b) VPAD8(c) VPAD2(d) VPAD1(e) virtual void Advance(float t);  /* +0x134 */
-    char pad04[0x28];
-    unsigned char mEnabled;       /* +0x2C */
-    unsigned char mActiveFlag;    /* +0x2D */
-    unsigned char mStreamingFlag; /* +0x2E */
-    char pad2F[0x31];
-    int type;                     /* +0x60 */
-    char pad64[0x38];
-    cEvVec events;                /* +0x9C */
-    char padA8[0x34];
-    unsigned char bDC;            /* +0xDC */
-    char padDD[0x53];
-    unsigned char playing;        /* +0x130 */
-    char pad131[3];
-    float speed;                  /* +0x134 */
-    char pad138[8];
-    cObjX* mObject;               /* +0x140 */
-};
-
-struct Msg {
-    void* vtable;
-    void* type;
-    char pad08[0x18];
-    unsigned char kind;           /* +0x20 */
-    char pad21[3];
-    void* who;                    /* +0x24 */
-};
-
-struct HitInfo { char pad[0x4C]; float range; };
-
 extern "C" {
-extern char D_004F7C30[];
-extern char D_004DBEB0[];
-extern char D_00506210[];
-extern char D_004DCF10[];
-extern char D_004DCF30[];
-extern unsigned char g_IsMultiplayer;
-extern unsigned char D_005721C0;
-extern void* D_004F7C60;
-extern void* D_004F7C98;
-extern float D_0048AE20;
-void cMessage_ctor_cMessageNameR(void* m, void* name);
-void QueueMessage_cMessageR_cSystemP_int(void* m, void* to, int f);
-void cMessage_dtor(void* m, int f);
-void cGOBJ_NextFrame(void* g, float t);
-int cNIEventOBJ_GetBeamExtents(cNIEventOBJ* self, V* a, V* b);
-cPlayerObj* cNetObj_GetPlayer(int i);
-void cMatrix_Copy_InvertRotTrans(M* out, M* in);
-int cHuman_BulletBlood(cHuman* h, V* pos, V* dir, int a, HitInfo* hit);
-#if 0 /* merge_units */
-cEvBase** std_vector_cNIEventBasePtr_opIndex(cEvVec* v, int i);
-#endif /* merge_units */
-#define std_vector_cNIEventBasePtr_opIndex(a0, a1) ((cEvBase * *)std_vector_cNIEventBasePtr_opIndex((PtrVec *)(a0), (a1))) /* merge_units */
-
+int std_vector_cNIEventBasePtr_size(Vec*);
+int cArray_cNIEventBasePtr_Size(Vec*);
+Node_0023EEA0** cArray_cNIEventBasePtr_opIndex(Vec*, int);
+Node_0023EEA0** std_vector_imp_cNIEventBasePtr_1_opIndex(Vec*, int);
+Node_0023EEA0* cNIEventBase_GetFirstVUM(Node_0023EEA0*);
+Node_0023EEA0* cNIEventBase_GetVUMInTree(Node_0023EEA0*);
 }
-
-static inline bool Enabled(cNIEventOBJ* o) { bool a = false; if (o->mActiveFlag && o->mEnabled) a = true; return a; }
-static inline bool Streaming(cNIEventOBJ* o) { bool b = o->mStreamingFlag; return b; }
-static inline bool NotStreaming(cNIEventOBJ* o) { return Streaming(o) ^ 1; }
-static inline bool IsActive(cNIEventOBJ* o) { bool r = false; if (Enabled(o) && NotStreaming(o)) r = true; return r; }
-
-struct cDoneMsg : Msg {
-    cDoneMsg(void* w) { Msg* m = this; cMessage_ctor_cMessageNameR(m, D_004F7C30); m->vtable = D_004DBEB0; m->who = w; }
-    void Done() { vtable = D_004DBEB0; cMessage_dtor(this, 0); }
-};
-struct cHitMsg : Msg {
-    cHitMsg(void* w) { Msg* m = this; cMessage_ctor_cMessageNameR(m, D_00506210); m->vtable = D_004DCF10; m->vtable = D_004DCF30; m->who = w; }
-    void Done() { vtable = D_004DCF10; cMessage_dtor(this, 0); }
-};
-static inline void Queue(const Msg& m, void* to) { QueueMessage_cMessageR_cSystemP_int((void*)&m, to, 0); }
-static inline unsigned char HitKind() { unsigned char x; if (g_IsMultiplayer) x = D_005721C0; else x = 1; return x ? 1 : 2; }
-
-static inline void Apply(V* o, M* m, V* v) { __asm__ volatile("lqc2 $vf8, 0x0(%2); lqc2 $vf4, 0x0(%1); lqc2 $vf5, 0x10(%1); lqc2 $vf6, 0x20(%1); lqc2 $vf7, 0x30(%1); vmulax.xyzw $ACC, $vf4, $vf8x; vmadday.xyzw $ACC, $vf5, $vf8y; vmaddaz.xyzw $ACC, $vf6, $vf8z; vmaddw.xyzw $vf12, $vf7, $vf8w; sqc2 $vf12, 0x0(%0)" : : "r"(o), "r"(m), "r"(v) : "memory"); }
-static inline void SubV(V* d, const V* a, const V* b) { __asm__ volatile("lqc2 $vf1, 0x0(%1); lqc2 $vf2, 0x0(%2); vsub.xyzw $vf1, $vf1, $vf2; sqc2 $vf1, 0x0(%0)" : : "r"(d), "r"(a), "r"(b) : "memory"); }
-static inline V Sub(const V& a, const V& b) { V r; SubV(&r, &a, &b); return r; }
-
-static inline bool Intersects(const cLineSegment& l, const cBox& box)
+static inline Node_0023EEA0* G(Node_0023EEA0* x)
 {
-    unsigned int d;
-    unsigned int e;
-    unsigned int f;
-    unsigned int a;
-    unsigned int b;
-    unsigned int c;
-    int hit;
-    bool res;
-    unsigned int c0;
-    unsigned int c1;
-    unsigned int t;
-    int done;
-    unsigned int diff;
-    unsigned int sign;
-    __asm__ volatile(".set noreorder; daddu %1, $0, $0; daddu %2, $0, $0; lqc2 $vf3, 0x0(%3); lqc2 $vf4, 0x0(%4); lqc2 $vf1, 0x0(%5); addi %0, $0, 0x1; .set reorder" : "=r"(done), "=r"(c0), "=r"(c1) : "r"(&l.endPoints[0]), "r"(&l.endPoints[1]), "r"(&box.min));
-    __asm__ volatile(".set noreorder; vsub.xyz $vf6, $vf3, $vf1; vnop; vnop; vnop; vnop; vnop; cfc2.ni %0, $vi17; andi %0, %0, 0xE0; vsub.xyz $vf8, $vf4, $vf1; vnop; vnop; vnop; vnop; vnop; cfc2.ni %1, $vi17; andi %1, %1, 0xE0; and %2, %0, %1; bnel %2, $0, 1f; addi %3, $0, 0x0; lqc2 $vf2, 0x0(%5); vsub.xyz $vf7, $vf2, $vf3; vnop; vnop; vnop; vnop; vnop; cfc2.ni %2, $vi17; srl %0, %0, 4; andi %2, %2, 0xE0; or %0, %0, %2; vsub.xyz $vf9, $vf2, $vf4; vnop; vnop; vnop; vnop; vnop; cfc2.ni %2, $vi17; srl %1, %1, 4; andi %2, %2, 0xE0; addi %3, $0, 0x0; or %1, %1, %2; and %2, %0, %1; bnel %2, $0, 1f; nop; or %2, %0, %1; beql %2, $0, 1f; addi %3, $0, 0x1; addi %4, $0, 0x0; 1: andi %4, %4, 0xFF; .set reorder" : "=r"(c0), "=r"(c1), "=r"(t), "=r"(res), "=r"(done) : "r"(&box.max), "4"(done), "0"(c0), "1"(c1));
-    if (done) return res;
-    diff = c0 ^ c1;
-    __asm__ volatile(".set noreorder; vsub.xyzw $vf5, $vf4, $vf3; vnop; vnop; vnop; vnop; vnop; cfc2.ni %0, $vi17; vsub.xyz $vf6, $vf0, $vf6; .set reorder" : "=r"(sign));
-    if (!(done = sign & 8) && (done = diff & 0x88)) {
-        __asm__ volatile("vdiv $Q, $vf0w, $vf5x; vmulx.xyzw $vf8, $vf5, $vf6x; vmulx.xyzw $vf9, $vf5, $vf7x");
-        if (done = diff & 8) {
-        __asm__ volatile(".set noreorder; vmulaw.xyzw $ACC, $vf3, $vf0w; vwaitq; vmaddq.xyzw $vf8, $vf8, $Q; qmfc2.ni %0, $vf1; qmfc2.ni %1, $vf2; addi %3, $0, 0x0; qmfc2.ni %2, $vf8; prot3w %0, %0; prot3w %2, %2; prot3w %1, %1; mtc1 %2, $f0; mtc1 %0, $f1; c.le.s $f1, $f0; mtc1 %1, $f1; bc1fl 1f; nop; c.le.s $f0, $f1; nop; bc1fl 1f; nop; prot3w %0, %0; prot3w %2, %2; mtc1 %0, $f1; prot3w %1, %1; mtc1 %2, $f0; c.le.s $f1, $f0; mtc1 %1, $f1; bc1fl 1f; nop; c.le.s $f0, $f1; nop; bc1fl 1f; nop; addi %3, $0, 0x1; nop; 1: andi %3, %3, 0xFF; .set reorder" : "=r"(c0), "=r"(c1), "=r"(t), "=r"(done));
-        if (done) return true;
-        }
-        if (done = diff & 0x80) {
-        __asm__ volatile(".set noreorder; vmulaw.xyzw $ACC, $vf3, $vf0w; vwaitq; vmaddq.xyzw $vf9, $vf9, $Q; qmfc2.ni %0, $vf1; qmfc2.ni %1, $vf2; addi %3, $0, 0x0; qmfc2.ni %2, $vf9; prot3w %0, %0; prot3w %2, %2; prot3w %1, %1; mtc1 %2, $f0; mtc1 %0, $f1; c.le.s $f1, $f0; mtc1 %1, $f1; bc1fl 1f; nop; c.le.s $f0, $f1; nop; bc1fl 1f; nop; prot3w %0, %0; prot3w %2, %2; mtc1 %0, $f1; prot3w %1, %1; mtc1 %2, $f0; c.le.s $f1, $f0; mtc1 %1, $f1; bc1fl 1f; nop; c.le.s $f0, $f1; nop; bc1fl 1f; nop; addi %3, $0, 0x1; nop; 1: andi %3, %3, 0xFF; .set reorder" : "=r"(c0), "=r"(c1), "=r"(t), "=r"(done));
-        if (done) return true;
-        }
+    if (x->Find()) return x->Find();
+    for (int k = 0; k < cArray_cNIEventBasePtr_Size(&x->kids); k++) {
+        if (!!cNIEventBase_GetFirstVUM(*cArray_cNIEventBasePtr_opIndex(&x->kids, k)))
+            return cNIEventBase_GetFirstVUM(*cArray_cNIEventBasePtr_opIndex(&x->kids, k));
     }
-    if (!(done = sign & 4) && (done = diff & 0x44)) {
-        __asm__ volatile("vdiv $Q, $vf0w, $vf5y; vmuly.xyzw $vf8, $vf5, $vf6y; vmuly.xyzw $vf9, $vf5, $vf7y");
-        if (done = diff & 4) {
-        __asm__ volatile(".set noreorder; vmulaw.xyzw $ACC, $vf3, $vf0w; vwaitq; vmaddq.xyzw $vf8, $vf8, $Q; qmfc2.ni %0, $vf1; qmfc2.ni %1, $vf2; addi %3, $0, 0x0; qmfc2.ni %2, $vf8; prot3w %0, %0; prot3w %2, %2; prot3w %1, %1; prot3w %0, %0; prot3w %2, %2; prot3w %1, %1; mtc1 %2, $f0; mtc1 %0, $f1; c.le.s $f1, $f0; mtc1 %1, $f1; bc1fl 1f; nop; c.le.s $f0, $f1; nop; bc1fl 1f; nop; prot3w %0, %0; prot3w %2, %2; mtc1 %0, $f1; prot3w %1, %1; mtc1 %2, $f0; c.le.s $f1, $f0; mtc1 %1, $f1; bc1fl 1f; nop; c.le.s $f0, $f1; nop; bc1fl 1f; nop; addi %3, $0, 0x1; nop; 1: andi %3, %3, 0xFF; .set reorder" : "=r"(c0), "=r"(c1), "=r"(t), "=r"(done));
-        if (done) return true;
-        }
-        if (done = diff & 0x40) {
-        __asm__ volatile(".set noreorder; vmulaw.xyzw $ACC, $vf3, $vf0w; vwaitq; vmaddq.xyzw $vf9, $vf9, $Q; qmfc2.ni %0, $vf1; qmfc2.ni %1, $vf2; addi %3, $0, 0x0; qmfc2.ni %2, $vf9; prot3w %0, %0; prot3w %2, %2; prot3w %1, %1; prot3w %0, %0; prot3w %2, %2; prot3w %1, %1; mtc1 %2, $f0; mtc1 %0, $f1; c.le.s $f1, $f0; mtc1 %1, $f1; bc1fl 1f; nop; c.le.s $f0, $f1; nop; bc1fl 1f; nop; prot3w %0, %0; prot3w %2, %2; mtc1 %0, $f1; prot3w %1, %1; mtc1 %2, $f0; c.le.s $f1, $f0; mtc1 %1, $f1; bc1fl 1f; nop; c.le.s $f0, $f1; nop; bc1fl 1f; nop; addi %3, $0, 0x1;  1: andi %3, %3, 0xFF; .set reorder" : "=r"(c0), "=r"(c1), "=r"(t), "=r"(done));
-        if (done) return true;
-        }
-    }
-    if (!(sign & 2) && (diff & 0x22)) {
-        __asm__ volatile("vdiv $Q, $vf0w, $vf5z; vmulz.xyzw $vf8, $vf5, $vf6z; vmulz.xyzw $vf9, $vf5, $vf7z");
-        if (diff & 2) {
-        __asm__ volatile(".set noreorder; vmulaw.xyzw $ACC, $vf3, $vf0w; vwaitq; vmaddq.xyzw $vf8, $vf8, $Q; qmfc2.ni %0, $vf1; qmfc2.ni %1, $vf2; addi %3, $0, 0x0; qmfc2.ni %2, $vf8; mtc1 %0, $f1; mtc1 %2, $f0; c.le.s $f1, $f0; mtc1 %1, $f1; bc1fl 1f; nop; c.le.s $f0, $f1; nop; bc1fl 1f; nop; prot3w %0, %0; prot3w %2, %2; mtc1 %0, $f1; prot3w %1, %1; mtc1 %2, $f0; c.le.s $f1, $f0; mtc1 %1, $f1; bc1fl 1f; nop; c.le.s $f0, $f1; nop; bc1fl 1f; nop; addi %3, $0, 0x1; nop; 1: andi %3, %3, 0xFF; .set reorder" : "=r"(a), "=r"(b), "=r"(c), "=r"(hit));
-        if (hit) return true;
-        }
-        if (diff & 0x20) {
-        __asm__ volatile(".set noreorder; vmulaw.xyzw $ACC, $vf3, $vf0w; vwaitq; vmaddq.xyzw $vf9, $vf9, $Q; qmfc2.ni %0, $vf1; qmfc2.ni %1, $vf2; addi %3, $0, 0x0; qmfc2.ni %2, $vf9; mtc1 %0, $f1; mtc1 %2, $f0; c.le.s $f1, $f0; mtc1 %1, $f1; bc1fl 1f; nop; c.le.s $f0, $f1; nop; bc1fl 1f; nop; prot3w %0, %0; prot3w %2, %2; mtc1 %0, $f1; prot3w %1, %1; mtc1 %2, $f0; c.le.s $f1, $f0; mtc1 %1, $f1; bc1fl 1f; nop; c.le.s $f0, $f1; nop; bc1fl 1f; nop; addi %3, $0, 0x1;  1: andi %3, %3, 0xFF; .set reorder" : "=r"(d), "=r"(e), "=r"(f), "=r"(hit));
-        if (hit) return true;
-        }
-    }
-    return false;
+    return 0;
 }
-static inline void Play(cNIEventOBJ* self, float timeStep)
+static inline Node_0023EEA0* H(Node_0023EEA0* o)
 {
-    unsigned char was = self->playing;
-    float a = timeStep * self->speed;
-    self->Advance(was ? a : 0.0f);
-    if (was && !self->playing) {
-        cDoneMsg msg(0);
-        Queue(msg, self);
-        msg.Done();
+    if (o->Find()) return o->Find();
+    for (int j = 0; j < std_vector_cNIEventBasePtr_size(&o->kids); j++) {
+        if (G(*std_vector_imp_cNIEventBasePtr_1_opIndex(&o->kids, j)))
+            return G(*std_vector_imp_cNIEventBasePtr_1_opIndex(&o->kids, j));
     }
+    return 0;
 }
-
-extern "C" void cNIEventOBJ_ProcessNextFrame(cNIEventOBJ* self, float timeStep)
+#pragma push
+#pragma inline_depth(8)
+#pragma opt_strength_reduction off
+extern "C" Node_0023EEA0* cNIEventBase_GetFirstVUM(Node_0023EEA0* x)
 {
-    if (self->bDC && self->mObject)
-        self->mObject->Activate();
-
-    if (self->playing || (self->type == 3 && self->bDC && IsActive(self))) {
-        Play(self, timeStep);
+    if (x->Find()) return x->Find();
+    for (int i = 0; i < x->kids.n; i++) {
+        if (H(x->kids.p[i]))
+            return H(x->kids.p[i]);
     }
-
-    cGOBJ_NextFrame(self, timeStep);
-
-    if (IsActive(self) && self->type == 6) {
-        V point1;
-        V point2;
-        if (cNIEventOBJ_GetBeamExtents(self, &point1, &point2)) {
-            cLineSegment line;
-            line.endPoints[0] = point1;
-            line.endPoints[1] = point2;
-            for (int i = 0; i < 4; i++) {
-                cPlayerObj* player = cNetObj_GetPlayer(i);
-                if (!player || !player->ctrl || !player->ctrl->IsActive() || player->ctrl->State() == 4)
-                    continue;
-                cHuman* human = player->ctrl->human;
-                XNode* n = human->xform;
-                if (n->dirty) n->Update();
-                M invmat;
-                cMatrix_Copy_InvertRotTrans(&invmat, &n->mat);
-                cBox* box = human->GetBox();
-                cLineSegment invLine;
-                invLine.endPoints[0] = line.endPoints[0];
-                invLine.endPoints[1] = line.endPoints[1];
-                Apply(&invLine.endPoints[0], &invmat, &invLine.endPoints[0]);
-                Apply(&invLine.endPoints[1], &invmat, &invLine.endPoints[1]);
-                if (Intersects(invLine, *box)) {
-                    V dir = Sub(point2, point1);
-                    HitInfo hit;
-                    hit.range = D_0048AE20;
-                    if (cHuman_BulletBlood(human, &point1, &dir, 0, &hit)) {
-                        cHitMsg msg(human); msg.kind = HitKind(); Queue(msg, self); msg.Done();
-
-                    }
-                }
-            }
-        }
-    }
-
-    for (int i = 0; i < self->events.count; i++) {
-        void* g; void* h;
-        if ((*std_vector_cNIEventBasePtr_opIndex(&self->events, i))->kind == (h = D_004F7C60))
-            self->events.data[i]->Step(timeStep);
-        else if ((*std_vector_cNIEventBasePtr_opIndex(&self->events, i))->kind == (g = D_004F7C98))
-            self->events.data[i]->Step(timeStep);
-    }
+    return 0;
 }
-#undef std_vector_cNIEventBasePtr_opIndex /* merge_units */
-static inline void merge_flush_func_0023A5A0(void) {} /* merge_units */
+#pragma pop
+static inline void merge_flush_func_0023EEA0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_0023A5A0 */
+/* merge_units: end func_0023EEA0 */
+
+/* merge_units: begin func_0023F350 */
+#pragma push /* merge_units */
+typedef struct { char pad[0xC]; unsigned char enabled; } Part;
+typedef struct {
+    void* vtable;
+    char pad[0x98];
+    Part a;
+    char padA[0xAC - 0x9C - sizeof(Part)];
+    Part b;
+    char padB[0xC4 - 0xAC - sizeof(Part)];
+    Part c;
+    char padC[0x134 - 0xC4 - sizeof(Part)];
+    float scale;
+} Obj;
+extern char D_004DC190[];
+extern void cGOBJ_ctor(Obj* self, int* id, int a2, int a3);
+extern void std_vector_cNIEventBasePtr_ctor(Part* p);
+extern void std_vector_VectorKey_ctor(Part* p);
+extern void std_vector_VisKey_ctor(Part* p);
+
+/* Constructor: base GOBJ init, then three enabled parts and unit scale. */
+Obj* cNIEventBase_ctor(Obj* self, int a2, int a3)
+{
+    Part* pa;
+    Part* pb;
+    Part* pc;
+    int id = -1;
+    cGOBJ_ctor(self, &id, a2, a3);
+    self->vtable = D_004DC190;
+    pa = &self->a;
+    std_vector_cNIEventBasePtr_ctor(pa);
+    pa->enabled = 1;
+    pb = &self->b;
+    std_vector_VectorKey_ctor(pb);
+    pb->enabled = 1;
+    pc = &self->c;
+    std_vector_VisKey_ctor(pc);
+    pc->enabled = 1;
+    self->scale = 1.0f;
+    return self;
+}
+static inline void merge_flush_func_0023F350(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0023F350 */
+
+/* merge_units: begin func_0023F3F0 */
+#pragma push /* merge_units */
+#pragma push
+#pragma cplusplus on
+#include "member_dtor_chain.h"
+#pragma pop
+#pragma push
+#pragma cplusplus on
+#include "base_dtor_chain.h"
+#pragma pop
+
+#pragma cplusplus on
+
+DEFINE_MEMBER_DTOR_CHAIN(cArray_VisKey_dtor, std_vector_deleter_VisKey_dtor)
+static inline void merge_flush_func_0023F3F0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0023F3F0 */
+
+/* merge_units: begin func_0023F460 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+DEFINE_MEMBER_DTOR_CHAIN(cArray_VectorKey_dtor, std_vector_deleter_VectorKey_dtor)
+static inline void merge_flush_func_0023F460(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0023F460 */
+
+/* merge_units: begin func_0023F4D0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+DEFINE_BASE_DTOR_CHAIN(cArray_cNIEventBasePtr_dtor, std_vector_imp_cNIEventBasePtr_1_dtor)
+static inline void merge_flush_func_0023F4D0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0023F4D0 */

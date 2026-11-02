@@ -1,93 +1,182 @@
 /*
- * Libs/SFOLib/Source/shadows: 2 files, 003D40D0-003D4300
+ * Libs/SFOLib/Source/shadows: 6 files, 003D57A0-003D5AA0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_003D40D0 */
+/* merge_units: begin func_003D57A0 */
 #pragma push /* merge_units */
-#pragma cplusplus on
-#include "types.h"
-#pragma always_inline on
-#pragma inline_depth(8)
-/* lq/sq quad copies and VU0 math as GCC-style volatile asm; the unused xx locals keep retail's dead addius.
-   V2 gives the XformPt copy its own pointer-local order (dst before src) without disturbing the other V copies. */
-struct V {
-    float x, y, z, w;
-    V() {}
-    V(const V& o) { void* xx = this; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(this), "r"(&o) : "memory"); }
-    V& operator=(const V& o) { void* xx = this; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(this), "r"(&o) : "memory"); return *this; }
-} __attribute__((aligned(16)));
-struct M { V r[4]; };
-struct Box { V mn; V mx; V Sum() const; };
-struct Mdl { int x0; char* x4; };
-class XV {
-public:
-    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
-    virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
-    virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
-    virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
-    virtual void Refresh();
-};
-struct Xf { void* vt; char pad4[0xC]; M world; unsigned char dirty; };
-struct Obj { char pad0[0x38]; int x38; char pad3C[0x14]; Xf* x50; char pad54[0x14]; Mdl* x68; };
-struct Ent { Obj* obj; char pad4[0x6C]; V c; };
-struct Shadow { char pad0[0x4D0]; Ent ent[0x200]; char pad104D0[8]; int count; };
-extern "C" int g_DrawMode;
-static inline void Add(V* r, const V* a, const V* b);
-static inline void Add(V* r, const V* a, const V* b) { __asm__ volatile("lqc2 vf1, 0x0(%1); lqc2 vf2, 0x0(%2); vadd.xyzw vf1, vf1, vf2; sqc2 vf1, 0x0(%0)" : : "r"(r), "r"(a), "r"(b) : "memory"); }
-inline V Box::Sum() const { V c; Add(&c, &mn, &mx); return c; }
-static inline V Scale(V v, float k) { __int128 z = 0; /* dead paddub */ V r; int t; __asm__ volatile(".set noreorder; lqc2 vf1, 0x0(%1); mfc1 %0, %3; qmtc2.ni %0, vf2; vmulx.xyzw vf1, vf1, vf2x; sqc2 vf1, 0x0(%2); .set reorder" : "=&r"(t) : "r"(&v), "r"(&r), "f"(k) : "memory"); return r; }
-static inline void MulM(V* v, M* m) { __asm__ volatile("lqc2 vf8, 0x0(%0); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; sqc2 vf12, 0x0(%0)" : : "r"(v), "r"(m) : "memory"); }
-struct V2 : V { V2(const V& o) { void* xx = this; V* d = this; const V* s = &o; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(d), "r"(s) : "memory"); } } __attribute__((aligned(16)));
-static inline V XformPt2(const V& v, M* mm) { const V* sv = &v; V2 p(*sv); V* pp = &p; MulM(pp, mm); return *pp; }
-static inline V XformPt(const V& v, M* m) { M* mm = m; return XformPt2(v, mm); }
-static inline int HasModel(Obj* o) { return o->x68->x0 ? 1 : 0; }
-extern "C" int cShadowMan_AddReceiver(Shadow* sh, Obj* o, int force)
-{
-    int idx = -1;
-    if ((g_DrawMode & 0x60) || force) {
-        if (sh->count < 0x200 && o->x38 != 0x80 && HasModel(o)) {
-            if (force) {
-                int i;
-                for (i = 0; i < sh->count; i++) {
-                    if (sh->ent[i].obj == o) return i;
-                }
-            }
-            {
-                Ent* e;
-                Xf* x;
-                idx = sh->count;
-                sh->count = idx + 1;
-                e = &sh->ent[idx];
-                e->obj = o;
-                Box* b = (Box*)(o->x68->x4 + 0x30);
-                e->c = Scale(b->Sum(), 0.5f);
-                x = o->x50;
-                if (x) {
-                    if (x->dirty) ((XV*)x)->Refresh();
-                    e->c = XformPt(e->c, &x->world);
-                }
-            }
-        }
-    }
-    return idx;
-}
-static inline void merge_flush_func_003D40D0(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_003D40D0 */
+#pragma push
 
-/* merge_units: begin func_003D4300 */
-#pragma push /* merge_units */
-typedef struct { int f; char p[0x7C]; } C1E_3D43;
-typedef struct { char pad[0x534]; C1E_3D43 e[511]; char pad2[0x24]; int count; } C1S_3D43;
-void cShadowMan_ClearReceivers(C1S_3D43* s)
+#include "types.h"
+
+typedef struct { int head; int value; } ListHead;
+extern void std_list_deleter_int_erase_listdeleter_listdeleter(int* out, void* list, int* value, ListHead** head);
+extern void std_list_deleter_int_insert(int* out, void* list, ListHead** pos, int* value);
+
+typedef struct { int a, b, c; char pad[0x130 - 0xC]; } SMElemA;
+typedef struct { int a; char pad[0x60]; int b; char pad2[0x80 - 0x68]; } SMElemB;
+
+typedef struct ShadowMgr {
+    int f0, f4, f8, fC;
+    SMElemA ea[4];
+    SMElemB eb[0x200];
+    int c0, c4, c8, pad;
+    int d0, d4, d8, dC;
+    char pad2[0x11744 - 0x104F0];
+    float scale;
+    char pad3[0x1175C - 0x11748];
+    int list;
+    ListHead head;
+} ShadowMgr;
+
+void cShadowMan_Init(ShadowMgr* self)
 {
     int i;
-    for (i = 0; i < s->count; i++)
-        s->e[i].f = 0;
-    s->count = 0;
+    int result;
+    int value;
+    ListHead* headp;
+    int j;
+    ListHead* head;
+
+    self->f0 = 6;
+    self->f4 = 4;
+    self->f8 = 0x20;
+    self->fC = 0x50;
+    for (j = 0; j < 4; j++) {
+        self->ea[j].a = 0;
+        self->ea[j].b = 0;
+        self->ea[j].c = 0;
+    }
+    for (j = 0; j < 0x200; j++) {
+        self->eb[j].a = 0;
+        self->eb[j].b = 0;
+    }
+    self->c0 = 0;
+    self->c4 = 0;
+    self->c8 = 0;
+    self->d0 = 0;
+    self->d4 = 0;
+    self->d8 = 0;
+    self->dC = 0;
+    head = &self->head;
+    headp = head;
+    value = head->value;
+    std_list_deleter_int_erase_listdeleter_listdeleter(&result, &self->list, &value, &headp);
+    i = 0;
+    goto tramp;
+body:
+    {
+        int r2;
+        ListHead* pos = head;
+        std_list_deleter_int_insert(&r2, &self->list, &pos, &i);
+    }
+    i++;
+test:
+    if (i < 5) goto body;
+    self->scale = 0.33f;
+    return;
+tramp:
+    asm { nop }
+    goto test;
 }
-static inline void merge_flush_func_003D4300(void) {} /* merge_units */
+#pragma pop
+static inline void merge_flush_func_003D57A0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003D4300 */
+/* merge_units: end func_003D57A0 */
+
+/* merge_units: begin func_003D5970 */
+#pragma push /* merge_units */
+extern void std_list_int_dtor(void* self, short del);
+#if 0 /* merge_units */
+extern void cShadowMan_tShadow_dtor(void);
+#endif /* merge_units */
+void* cShadowMan_tShadow_dtor(void* self, short deleteFlag); /* merge_units */
+
+#if 0 /* merge_units */
+extern void cShadowMan_tReceiver_dtor(void);
+#endif /* merge_units */
+void* cShadowMan_tReceiver_dtor(void* self, short deleteFlag); /* merge_units */
+
+#if 0 /* merge_units */
+extern void cShadowMan_tCaster_dtor(void);
+#endif /* merge_units */
+void* cShadowMan_tCaster_dtor(void* self, short deleteFlag); /* merge_units */
+
+extern void __destroy_array(void* arr, void* dtor, int size, int n);
+extern void operator_delete(void* p);
+void* cShadowMan_dtor(void* self, short del)
+{
+    if (self) {
+        void* m = (char*)self + 0x1175C;
+        if (m)
+            std_list_int_dtor(m, 0);
+        __destroy_array((char*)self + 0x10540, (void*)cShadowMan_tShadow_dtor, 0xC0, 0x18);
+        __destroy_array((char*)self + 0x4D0, (void*)cShadowMan_tReceiver_dtor, 0x80, 0x200);
+        __destroy_array((char*)self + 0x10, (void*)cShadowMan_tCaster_dtor, 0x130, 4);
+        if (del > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+static inline void merge_flush_func_003D5970(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003D5970 */
+
+/* merge_units: begin scriptBase_3D5A30 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+extern "C" { 
+#if 0 /* merge_units */
+void __destroy_array(void* p, void* dtor, int size, int n);
+#endif /* merge_units */
+#define __destroy_array(a0, a1, a2, a3) (__destroy_array((a0), (a1), (a2), (a3))) /* merge_units */
+#if 0 /* merge_units */
+void cShadowMan_tSource_dtor(void);
+#endif /* merge_units */
+void* cShadowMan_tSource_dtor(void* self, short deleteFlag); /* merge_units */
+void operator_delete(void* p); }
+extern "C" void* cShadowMan_tCaster_dtor(void* self, short deleteFlag)
+{
+    if (self) {
+        __destroy_array((char*)self + 0x10, (void*)cShadowMan_tSource_dtor, 0x30, 6);
+        if (deleteFlag > 0) operator_delete(self);
+    }
+    return self;
+}
+#undef __destroy_array /* merge_units */
+static inline void merge_flush_scriptBase_3D5A30(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end scriptBase_3D5A30 */
+
+/* merge_units: begin func_003D5AA0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#include "trivial_dtor.h"
+
+/* Deleting destructor with nothing to destroy. */
+DEFINE_TRIVIAL_DTOR(cShadowMan_tSource_dtor)
+static inline void merge_flush_func_003D5AA0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003D5AA0 */
+
+/* merge_units: begin func_003D5AF0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+/* Deleting destructor with nothing to destroy. */
+DEFINE_TRIVIAL_DTOR(cShadowMan_tReceiver_dtor)
+static inline void merge_flush_func_003D5AF0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003D5AF0 */
+
+/* merge_units: begin func_003D5B40 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+/* Deleting destructor with nothing to destroy. */
+DEFINE_TRIVIAL_DTOR(cShadowMan_tShadow_dtor)
+static inline void merge_flush_func_003D5B40(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003D5B40 */

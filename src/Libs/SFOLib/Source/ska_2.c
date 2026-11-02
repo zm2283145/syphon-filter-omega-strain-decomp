@@ -1,75 +1,432 @@
 /*
- * Libs/SFOLib/Source/ska: 3 files, 003AACC0-003AAEE0
+ * Libs/SFOLib/Source/ska: 8 files, 003ABA60-003ABB10
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_003AACC0 */
-#pragma push /* merge_units */
-/*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
- */
-
-#include "types.h"
-
-void std_swap_vectordeleterR_vectordeleterR_38(PtrVec* a, PtrVec* b) {
-    if (a != b) {
-        int t;
-        int* p;
-        t = a->unk0;
-        a->unk0 = b->unk0;
-        b->unk0 = t;
-        p = a->data;
-        a->data = b->data;
-        b->data = p;
-        t = a->count;
-        a->count = b->count;
-        b->count = t;
-    }
-}
-static inline void merge_flush_func_003AACC0(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_003AACC0 */
-
-/* merge_units: begin func_003AAD00 */
-#pragma push /* merge_units */
-typedef struct Vec3AD { float x; float y; float z; } Vec3AD;
-typedef struct { int capacity; int count; Vec3AD *data; } Vec3ADVector;
-Vec3AD *std_vector_imp_cBoneScale_erase(Vec3ADVector *v, Vec3AD *first, Vec3AD *last)
-{
-    Vec3AD *end;
-    Vec3AD *s;
-    Vec3AD *d;
-    if (first == last)
-        return first;
-    end = v->data + v->count;
-    if (end - last != 0) {
-        d = first;
-        s = last;
-        while (s < end) {
-            d->x = s->x;
-            d->y = s->y;
-            d->z = s->z;
-            s++;
-            d++;
-        }
-    }
-    v->count -= last - first;
-    return first;
-}
-static inline void merge_flush_func_003AAD00(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_003AAD00 */
-
-/* merge_units: begin func_003AAEE0 */
+/* merge_units: begin func_003ABA60 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-#include "vector_insert_fill_t.h"
-struct E_003AAEE0 { float x, y, z; };
-extern "C" { char D_004BCD30[] = "allocator.hh"; }
-DEFINE_VECTOR_INSERT_FILL_T(std_vector_imp_cBoneScale_insert, E_003AAEE0, 0x800000, 0x400000, D_004BCD10, D_004BCD30, 0x5C, std_swap_vectordeleterR_vectordeleterR_39, std_vector_deleter_cBone_dtor)
-static inline void merge_flush_func_003AAEE0(void) {} /* merge_units */
+
+#include "types.h"
+#include "vtable_base_dtor.h"
+
+/* Message destructor: restore vtable, run cMessage base, optionally delete. */
+DEFINE_VTABLE_BASE_DTOR(cSkaAnimEventMessage_dtor, D_004DFBD0, cMessage_dtor)
+static inline void merge_flush_func_003ABA60(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003AAEE0 */
+/* merge_units: end func_003ABA60 */
+
+/* merge_units: begin func_003ABAC0 */
+#pragma push /* merge_units */
+typedef struct { char data[0xF8]; } DequeItem;
+typedef struct { unsigned int mapSize; int unk4; unsigned int start; DequeItem** map; unsigned int first; unsigned int count; } Deque;
+
+/* Returns a pointer to the last element of a block-based deque (8 items per block). */
+DequeItem* std_deque_deleter_common_cSkaSystem_Request_back_void(Deque* self)
+{
+    unsigned int index = self->first + self->count - 1;
+    return &self->map[(self->start + (index >> 3)) % self->mapSize][index & 7];
+}
+static inline void merge_flush_func_003ABAC0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003ABAC0 */
+
+/* merge_units: begin func_003ABB10 */
+#pragma push /* merge_units */
+typedef struct AcPair { int token; int target; } AcPair;
+typedef struct AcHost { unsigned char active; char p1[3]; AcPair pairs[6]; } AcHost;
+void cSkaAnimCheckpoints_TriggerCheckpointEvent(AcHost* h, int idx, unsigned char clear); /* gsynth: defined below */typedef struct { char pad[0x28]; unsigned char kind; char pad29[3]; void* target; unsigned char sent; char pad31[3]; float value; } D6AnimMsg;
+void cSkaAnimEndedMessage_Trigger(D6AnimMsg* m, unsigned char kind, float value); /* gsynth: defined below */
+/* cSkaRequestStream_SignalInterruptionOfCurrentlyPlayingItems: walks the active motion deque, resetting both message slots and the notify slot of
+ * every 0xF8-byte record (cSkaRequestStream_ClearCurrentlyPlayingItems without the final deque clear). Same iterator idiom
+ * as src/main/ska/cSkaRequestStream_ClearCurrentlyPlayingItems.c. */
+#pragma cplusplus on
+#include "alloc_guard.h" /* ALLOC_GUARD_DTOR: discard the out-of-line copy of the empty dtor */
+struct Ring { int** cur; int** begin; int** x8; int** end; };
+struct DqIt {
+    Ring ring; char* elem; char* bend;
+    DqIt() {}
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~DqIt() {}
+    DqIt& operator=(const DqIt& o) {
+        ring.cur = o.ring.cur; ring.begin = o.ring.begin; ring.x8 = o.ring.x8; ring.end = o.ring.end;
+        elem = o.elem; bend = o.bend;
+        return *this;
+    }
+    bool Ne(char* p) const { return !(elem == p); }
+    DqIt& operator++() {
+        if ((elem += 0xF8) == bend) {
+            if (++ring.cur == ring.end) ring.cur = ring.begin;
+            elem = (char*)*ring.cur;
+            bend = elem + 0x7C0;
+        }
+        return *this;
+    }
+};
+struct BlockArray { int cap; int size; int start; int** data; int first; int count; };
+struct MGraph { char pad[0x18]; BlockArray arr; };
+extern "C" {
+void std_deque_deleter_common_cSkaSystem_Request_make_iterator(DqIt* out, BlockArray* a, int n);
+#if 0 /* merge_units */
+void cSkaAnimEndedMessage_Trigger(void* m, unsigned char kind, float value);
+#endif /* merge_units */
+void cSkaAnimEndedMessage_Trigger(D6AnimMsg* m, unsigned char kind, float value); /* merge_units */
+#define cSkaAnimEndedMessage_Trigger(a0, a1, a2) (cSkaAnimEndedMessage_Trigger((D6AnimMsg *)(a0), (a1), (a2))) /* merge_units */
+
+
+#if 0 /* merge_units */
+void cSkaAnimCheckpoints_TriggerCheckpointEvent(void* h, int idx, unsigned char clear);
+#endif /* merge_units */
+void cSkaAnimCheckpoints_TriggerCheckpointEvent(AcHost* h, int idx, unsigned char clear); /* merge_units */
+#define cSkaAnimCheckpoints_TriggerCheckpointEvent(a0, a1, a2) (cSkaAnimCheckpoints_TriggerCheckpointEvent((AcHost *)(a0), (a1), (a2))) /* merge_units */
+
+
+void std_deque_deleter_cSkaSystem_Request_clear(BlockArray* a);
+}
+extern "C" void cSkaRequestStream_SignalInterruptionOfCurrentlyPlayingItems(MGraph* g)
+{
+    DqIt it;
+    DqIt b;
+    char* p;
+    char* e;
+    std_deque_deleter_common_cSkaSystem_Request_make_iterator(&b, &g->arr, 0);
+    it = b;
+    {
+        DqIt r;
+        std_deque_deleter_common_cSkaSystem_Request_make_iterator(&r, &g->arr, g->arr.count);
+        e = r.elem;
+    }
+    while (it.Ne(e)) {
+        p = it.elem;
+        cSkaAnimEndedMessage_Trigger(p + 0x24, 5, 0.0f);
+        cSkaAnimEndedMessage_Trigger(p + 0x5C, 5, 0.0f);
+        cSkaAnimCheckpoints_TriggerCheckpointEvent(p + 0x94, 6, 0);
+        ++it;
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003ABB10(void) {}
+#undef cSkaAnimEndedMessage_Trigger /* merge_units */
+#undef cSkaAnimCheckpoints_TriggerCheckpointEvent /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003ABB10 */
+
+/* merge_units: begin func_003ABC80 */
+#pragma push /* merge_units */
+typedef struct AcMsg { void* vt; char p4[0x20]; int token; char p28[8]; } AcMsg;
+extern char D_00542B68[];
+extern char D_004DFBD0[];
+extern void cMessage_ctor_cMessageNameR(void*, void*);
+extern void QueueMessage_cMessageR_cSystemP_int(void*, int, int);
+#if 0 /* merge_units */
+extern void cMessage_dtor(void*, int);
+#endif /* merge_units */
+#define cMessage_dtor(a0, a1) ((void)cMessage_dtor((a0), (short)(a1))) /* merge_units */
+
+static inline int AcPair_Valid(AcPair* p) { return p->target != 0 && ~p->token != 0; }
+#pragma opt_common_subs off
+void cSkaAnimCheckpoints_TriggerCheckpointEvent(AcHost* h, int idx, unsigned char clear)
+{
+    AcPair* p;
+    if (h->active) {
+        p = &((AcPair*)((char*)h + 4))[(signed char)idx];
+        if (AcPair_Valid(p)) {
+            AcMsg msg;
+            int tok = p->token;
+            cMessage_ctor_cMessageNameR(&msg, D_00542B68);
+            msg.token = tok;
+            msg.vt = D_004DFBD0;
+            QueueMessage_cMessageR_cSystemP_int(&msg, p->target, 1);
+            msg.vt = D_004DFBD0;
+            cMessage_dtor(&msg, 0);
+            if ((signed char)idx >= 5) h->active = 0;
+            if (clear) { p->token = -1; p->target = 0; }
+        }
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003ABC80(void) {}
+#undef cMessage_dtor /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003ABC80 */
+
+/* merge_units: begin func_003ABD80 */
+#pragma push /* merge_units */
+#if 0 /* merge_units */
+extern void QueueMessage_cMessageR_cSystemP_int(void* msg, void* target, int flags);
+#endif /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((a0), (int)(a1), (a2))) /* merge_units */
+
+
+
+void cSkaAnimEndedMessage_Trigger(D6AnimMsg* m, unsigned char kind, float value)
+{
+    if (m->target && !m->sent) {
+        m->kind = kind;
+        m->value = value;
+        QueueMessage_cMessageR_cSystemP_int(m, m->target, 1);
+    }
+    if (kind == 4 || kind == 5) {
+        m->sent = 1;
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003ABD80(void) {}
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003ABD80 */
+
+/* merge_units: begin func_003ABE00 */
+#pragma push /* merge_units */
+/* cSkaRequestStream_ClearCurrentlyPlayingItems: walks the active motion deque, resetting both message slots and the notify slot of
+ * every 0xF8-byte record, then clears the deque. Hand-matched (fam1).
+ * The empty destructor keeps the iterator in memory (fields reached through s-register addresses, as in retail);
+ * the field-wise operator= gives the word-by-word iterator copy. */
+#pragma cplusplus on
+
+extern "C" {
+#if 0 /* merge_units */
+void cSkaAnimEndedMessage_Trigger(void* m, unsigned char kind, float value);
+#endif /* merge_units */
+#define cSkaAnimEndedMessage_Trigger(a0, a1, a2) (cSkaAnimEndedMessage_Trigger((D6AnimMsg *)(a0), (a1), (a2))) /* merge_units */
+
+
+#if 0 /* merge_units */
+void cSkaAnimCheckpoints_TriggerCheckpointEvent(void* h, int idx, unsigned char clear);
+#endif /* merge_units */
+#define cSkaAnimCheckpoints_TriggerCheckpointEvent(a0, a1, a2) (cSkaAnimCheckpoints_TriggerCheckpointEvent((AcHost *)(a0), (a1), (a2))) /* merge_units */
+
+
+}
+extern "C" void cSkaRequestStream_ClearCurrentlyPlayingItems(MGraph* g)
+{
+    DqIt it;
+    DqIt b;
+    char* p;
+    char* e;
+    std_deque_deleter_common_cSkaSystem_Request_make_iterator(&b, &g->arr, 0);
+    it = b;
+    {
+        DqIt r;
+        std_deque_deleter_common_cSkaSystem_Request_make_iterator(&r, &g->arr, g->arr.count);
+        e = r.elem;
+    }
+    while (it.Ne(e)) {
+        p = it.elem;
+        cSkaAnimEndedMessage_Trigger(p + 0x24, 5, 0.0f);
+        cSkaAnimEndedMessage_Trigger(p + 0x5C, 5, 0.0f);
+        cSkaAnimCheckpoints_TriggerCheckpointEvent(p + 0x94, 6, 0);
+        ++it;
+    }
+    std_deque_deleter_cSkaSystem_Request_clear(&g->arr);
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003ABE00(void) {}
+#undef cSkaAnimEndedMessage_Trigger /* merge_units */
+#undef cSkaAnimCheckpoints_TriggerCheckpointEvent /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003ABE00 */
+
+/* merge_units: begin func_003ABF80 */
+#pragma push /* merge_units */
+/* cSkaRequestStream_ClearQueue: cSkaRequestStream_ClearCurrentlyPlayingItems (src/main/ska/cSkaRequestStream_ClearCurrentlyPlayingItems.c) for a graph whose active deque
+ * sits at +0x30: resets both message slots and the notify slot of every 0xF8-byte record, then clears the deque. */
+#pragma cplusplus on
+
+struct MGraph_003ABF80 { char pad[0x30]; BlockArray arr; };
+extern "C" {
+#if 0 /* merge_units */
+void cSkaAnimEndedMessage_Trigger(void* m, unsigned char kind, float value);
+#endif /* merge_units */
+#define cSkaAnimEndedMessage_Trigger(a0, a1, a2) (cSkaAnimEndedMessage_Trigger((D6AnimMsg *)(a0), (a1), (a2))) /* merge_units */
+
+
+#if 0 /* merge_units */
+void cSkaAnimCheckpoints_TriggerCheckpointEvent(void* h, int idx, unsigned char clear);
+#endif /* merge_units */
+#define cSkaAnimCheckpoints_TriggerCheckpointEvent(a0, a1, a2) (cSkaAnimCheckpoints_TriggerCheckpointEvent((AcHost *)(a0), (a1), (a2))) /* merge_units */
+
+
+}
+extern "C" void cSkaRequestStream_ClearQueue(MGraph_003ABF80* g)
+{
+    DqIt it;
+    DqIt b;
+    char* p;
+    char* e;
+    std_deque_deleter_common_cSkaSystem_Request_make_iterator(&b, &g->arr, 0);
+    it = b;
+    {
+        DqIt r;
+        std_deque_deleter_common_cSkaSystem_Request_make_iterator(&r, &g->arr, g->arr.count);
+        e = r.elem;
+    }
+    while (it.Ne(e)) {
+        p = it.elem;
+        cSkaAnimEndedMessage_Trigger(p + 0x24, 5, 0.0f);
+        cSkaAnimEndedMessage_Trigger(p + 0x5C, 5, 0.0f);
+        cSkaAnimCheckpoints_TriggerCheckpointEvent(p + 0x94, 6, 0);
+        ++it;
+    }
+    std_deque_deleter_cSkaSystem_Request_clear(&g->arr);
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003ABF80(void) {}
+#undef cSkaAnimEndedMessage_Trigger /* merge_units */
+#undef cSkaAnimCheckpoints_TriggerCheckpointEvent /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003ABF80 */
+
+/* merge_units: begin func_003AC100 */
+#pragma push /* merge_units */
+typedef struct { void* vtable; char pad[0x20]; int value; } UtMsg;
+typedef struct { int id; int target; } UtLink;
+typedef struct { unsigned char active; UtLink links[6]; } UtNotify;
+typedef struct { char pad[0x28]; unsigned char kind; char pad29[3]; int target; unsigned char sent; char pad31[3]; float value; } UtAnimMsg;
+typedef struct {
+    unsigned char active; unsigned char done; char pad2[0x16]; float weight; char pad1C[8];
+    UtAnimMsg msg; char pad5C[0x38]; UtNotify notify;
+} UtSlot;
+typedef struct { int cap; int size; int start; int data; int first; int count; } UtArr;
+typedef struct { int a; int b; } UtRange;
+typedef struct { char pad0[5]; unsigned char hold; char pad6[2]; UtRange range; char pad10[8]; UtArr arr; UtArr queue; } UtCtl;
+typedef struct { char pad[8]; UtRange range; } UtReq;
+#if 0 /* merge_units */
+extern void* const D_004DFBD0[8];
+#endif /* merge_units */
+#define D_004DFBD0 ((void * const*)&D_004DFBD0) /* merge_units */
+
+
+#if 0 /* merge_units */
+extern void cMessage_ctor_cMessageNameR(UtMsg* m, void* type);
+#endif /* merge_units */
+#define cMessage_ctor_cMessageNameR(a0, a1) (cMessage_ctor_cMessageNameR((void *)(a0), (a1))) /* merge_units */
+
+
+#if 0 /* merge_units */
+extern void QueueMessage_cMessageR_cSystemP_int(void* m, int target, int immediate);
+#endif /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int(a0, a1, a2) (QueueMessage_cMessageR_cSystemP_int((a0), (a1), (a2))) /* merge_units */
+
+
+#if 0 /* merge_units */
+extern void cMessage_dtor(UtMsg* m, int flags);
+#endif /* merge_units */
+#define cMessage_dtor(a0, a1) ((void)cMessage_dtor((void *)(a0), (short)(a1))) /* merge_units */
+
+
+extern UtSlot* std_deque_cSkaSystem_Request_opIndex(UtArr* a, int index);
+#if 0 /* merge_units */
+extern UtSlot* std_deque_deleter_common_cSkaSystem_Request_back_void(UtArr* a);
+#endif /* merge_units */
+#define std_deque_deleter_common_cSkaSystem_Request_back_void(a0) ((UtSlot *)std_deque_deleter_common_cSkaSystem_Request_back_void((Deque *)(a0))) /* merge_units */
+
+extern UtReq* std_deque_deleter_common_cSkaSystem_Request_front(UtArr* a);
+extern int IsReadyForNextAnim(UtSlot* s, UtRange* r);
+extern void cSkaRequestStream_StartPlayingItem(float w, UtCtl* c, UtReq* r, int stop);
+extern void std_deque_deleter_cSkaSystem_Request_pop_front(UtArr* a);
+
+static inline void UtMsgSend(UtAnimMsg* m, unsigned char kind, float value)
+{
+    if (m->target && !m->sent) {
+        m->kind = kind;
+        m->value = value;
+        QueueMessage_cMessageR_cSystemP_int(m, m->target, 1);
+    }
+    if (kind == 4 || kind == 5) {
+        m->sent = 1;
+    }
+}
+static inline int UtLinkValid(UtLink* p) { return p->target != 0 && ~p->id != 0; }
+static inline void UtNotifySend(UtNotify* h, int idx, unsigned char clear)
+{
+    UtLink* p;
+    if (h->active) {
+        p = &h->links[(signed char)idx];
+        if (UtLinkValid(p)) {
+            UtMsg msg;
+            int tok = p->id;
+            cMessage_ctor_cMessageNameR(&msg, D_00542B68);
+            msg.vtable = (void*)D_004DFBD0;
+            msg.value = tok;
+            QueueMessage_cMessageR_cSystemP_int(&msg, p->target, 1);
+            msg.vtable = (void*)D_004DFBD0;
+            cMessage_dtor(&msg, 0);
+            if ((signed char)idx >= 5) h->active = 0;
+            if (clear) { p->id = -1; p->target = 0; }
+        }
+    }
+}
+
+void cSkaRequestStream_ReorderLists(UtCtl* c, float t)
+{
+    UtSlot* e;
+    int found;
+    int j;
+    int tok;
+    UtSlot* ns;
+    UtLink* p;
+    int i;
+    int n;
+    UtReq* r;
+    UtSlot* s;
+    n = c->arr.count;
+    if (n > 1) {
+        found = -1;
+        for (i = n - 1; i > 0; i--) {
+            if (std_deque_cSkaSystem_Request_opIndex(&c->arr, i)->weight == 1.0f) {
+                found = i;
+                break;
+            }
+        }
+        if (found != -1) {
+            for (j = 0; j < found; j++) {
+                if (j == 0 && n == 2 && std_deque_cSkaSystem_Request_opIndex(&c->arr, 1)->weight == 1.0f) {
+                    s = std_deque_cSkaSystem_Request_opIndex(&c->arr, j);
+                    UtMsgSend(&s->msg, 4, t);
+                    ns = std_deque_cSkaSystem_Request_opIndex(&c->arr, j);
+                    if (ns->notify.active) {
+                        p = &ns->notify.links[5];
+                        if (UtLinkValid(p)) {
+                            UtMsg msg;
+                            tok = p->id;
+                            cMessage_ctor_cMessageNameR(&msg, D_00542B68);
+                            msg.vtable = (void*)D_004DFBD0;
+                            msg.value = tok;
+                            QueueMessage_cMessageR_cSystemP_int(&msg, p->target, 1);
+                            msg.vtable = (void*)D_004DFBD0;
+                            cMessage_dtor(&msg, 0);
+                            ns->notify.active = 0;
+                        }
+                    }
+                }
+            }
+            for (i = 0; i < found; i++) {
+                std_deque_deleter_cSkaSystem_Request_pop_front(&c->arr);
+            }
+        }
+    } else if (c->queue.count > 0) {
+
+        e = std_deque_deleter_common_cSkaSystem_Request_back_void(&c->arr);
+        r = std_deque_deleter_common_cSkaSystem_Request_front(&c->queue);
+        if (IsReadyForNextAnim(e, &r->range)) {
+            e->done = 1;
+            cSkaRequestStream_StartPlayingItem(0.0f, c, r, 0);
+            std_deque_deleter_cSkaSystem_Request_pop_front(&c->queue);
+        }
+    } else if (c->hold) {
+        e = std_deque_deleter_common_cSkaSystem_Request_back_void(&c->arr);
+        if (IsReadyForNextAnim(e, &c->range)) {
+            UtNotifySend(&e->notify, 2, 1);
+        }
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003AC100(void) {}
+#undef D_004DFBD0 /* merge_units */
+#undef cMessage_ctor_cMessageNameR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int /* merge_units */
+#undef cMessage_dtor /* merge_units */
+#undef std_deque_deleter_common_cSkaSystem_Request_back_void /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003AC100 */

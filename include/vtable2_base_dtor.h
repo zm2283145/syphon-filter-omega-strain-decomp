@@ -24,13 +24,13 @@ struct Vtable2Object {
     extern char baseVtableSym[];                                              \
     void* baseDtor(void* self, short deleteFlag);                             \
     }                                                                         \
-    extern "C" Vtable2Object* name(Vtable2Object* self, short deleteFlag)     \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
-            self->vtable = vtableSym;                                         \
+            ((Vtable2Object*)self)->vtable = vtableSym;                       \
             if (self) {                                                       \
-                self->vtable = baseVtableSym;                                 \
-                baseDtor(self, 0);                                            \
+                ((Vtable2Object*)self)->vtable = baseVtableSym;               \
+                baseDtor(((Vtable2Object*)self), 0);                          \
             }                                                                 \
             if (deleteFlag > 0)                                               \
                 operator_delete(self);                                        \
@@ -46,11 +46,11 @@ struct Vtable2Object {
     void* memberDtor(void* self, short deleteFlag);                           \
     void* baseDtor(void* self, short deleteFlag);                             \
     }                                                                         \
-    extern "C" Vtable2Object* name(Vtable2Object* self, short deleteFlag)     \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
-            self->vtable = vtableSym;                                         \
-            char* member = (char*)self + (memberOffset);                      \
+            ((Vtable2Object*)self)->vtable = vtableSym;                       \
+            char* member = (char*)((Vtable2Object*)self) + (memberOffset);    \
             if (member) {                                                     \
                 if (member) {                                                 \
                     if (member)                                               \
@@ -58,8 +58,8 @@ struct Vtable2Object {
                 }                                                             \
             }                                                                 \
             if (self) {                                                       \
-                self->vtable = baseVtableSym;                                 \
-                baseDtor(self, 0);                                            \
+                ((Vtable2Object*)self)->vtable = baseVtableSym;               \
+                baseDtor(((Vtable2Object*)self), 0);                          \
             }                                                                 \
             if (deleteFlag > 0)                                               \
                 operator_delete(self);                                        \

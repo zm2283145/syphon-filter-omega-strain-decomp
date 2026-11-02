@@ -1,158 +1,148 @@
 /*
- * Libs/SFOLib/Source/bone: 5 files, 003BA0C0-003BA210
+ * Libs/SFOLib/Source/bone: 5 files, 003BA840-003BAA80
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_003BA0C0 */
-#pragma push /* merge_units */
-typedef struct Deq { unsigned int cap; unsigned int size; unsigned int start; int* data; } Deq;
-
-extern void Libc_Fprintf(int, const char*);
-extern void Libc_Abort(void);
-extern char* D_00489738;
-extern unsigned int D_004BCEE8[2];
-extern signed char D_00542C90;
-
-static inline unsigned int MaxSize(void) {
-    int size[1];
-    int ref;
-    if (D_00542C90 == 0) {
-        ref = (int)size;
-        size[0] = 0x1800000;
-        ref = *(int*)ref;
-        D_00542C90 = 1;
-        (*(int*)D_004BCEE8) = ref - 1;
-    }
-    return (*(int*)D_004BCEE8);
-}
-
-unsigned int _cdeque_deleter_common_int_suggest_new_cap(Deq* self, unsigned int n)
-{
-    unsigned int m = MaxSize();
-    unsigned int c;
-    if (m < n) {
-        Libc_Fprintf(*(int*)(D_00489738 + 0xC), "cdeque max_size error");
-        Libc_Abort();
-    }
-    c = self->cap ? self->cap - 1 : 1;
-    while (n > c) {
-        if (c < m / 2) c *= 2; else c = m;
-    }
-    return c;
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_003BA0C0(void) {}
-#pragma pop /* merge_units */
-/* merge_units: end func_003BA0C0 */
-
-/* merge_units: begin func_003BA1B0 */
+/* merge_units: begin func_003BA840 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-/* 4x4 matrix constructor filling every row with one vector: the explicit do/while walk is the empty V ctor loop over the rows,
-   the goto loop reproduces retail's jump-to-test copy loop; lq/sq quad copy as asm. */
-struct V {
-    float x, y, z, w;
-    V() {}
-} __attribute__((aligned(16)));
-static inline void QCopy(V* pd, const V* ps) { __int128 q; asm volatile { lq q, 0(ps); sq q, 0(pd) } }
-struct M {
-    V r[4];
+#include "types.h"
+#include "vslot_pad.h"
+/* lq/sq quad copies written as GCC-style volatile asm; the unused xx reproduces retail's dead addiu */
+struct V { float x, y, z, w; V& operator=(const V& o) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(t) : "r"(this), "r"(&o) : "memory"); void* xx = this; return *this; } } __attribute__((aligned(16)));
+struct M { __int128 q[4];
+    M& operator=(const M& o) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(this), "r"(&o) : "memory"); void* xx = this; return *this; }
 };
-#pragma push
-#pragma opt_unroll_loops off
-extern "C" M* cArray_FixedSize_cVector_4_ctor_cVectorR(M* d, const V* s)
+struct MN { __int128 q[4];
+    MN& operator=(const MN& o) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(this), "r"(&o) : "memory"); return *this; }
+};
+struct SkelNode {
+    VPAD8(a) virtual int Get(); VPAD2(b) virtual void Set(int);
+    char pad04[0xBC];
+    int fC0;
+    MN mD0;
+    M m110;
+    struct S150 { unsigned char b150, b151; float f154; V v160; float f170; } s150;
+    V v180, v190, v1A0, v1B0, v1C0;
+};
+extern "C" SkelNode* cBone_opAssign(SkelNode* d, SkelNode* s);
+SkelNode* cBone_opAssign(SkelNode* d, SkelNode* s)
 {
-    V* p = d->r;
-    V* e = d->r + 4;
-    do { p++; } while (p != e);
-    {
-        int i = 0;
-        goto test;
-    loop:
-        QCopy(&d->r[(unsigned)i], s);
-        i++;
-    test:
-        if (i <= 3) goto loop;
-    }
+    d->fC0 = s->fC0;
+    d->mD0 = s->mD0;
+    d->m110 = s->m110;
+    d->s150 = s->s150;
+    d->v180 = s->v180;
+    d->v190 = s->v190;
+    d->v1A0 = s->v1A0;
+    d->v1B0 = s->v1B0;
+    d->v1C0 = s->v1C0;
+    d->Set(s->Get());
     return d;
 }
-#pragma pop
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_003BA1B0(void) {}
+static inline void merge_flush_func_003BA840(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003BA1B0 */
+/* merge_units: end func_003BA840 */
 
-/* merge_units: begin func_003BA210 */
+/* merge_units: begin func_003BA9A0 */
 #pragma push /* merge_units */
-#include "types.h"
-#include "ska_types.h"
-
-SkaRelFlag* cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor_void(SkaRelFlag* self); /* gsynth: defined below */
-typedef struct TmpB0 {
-    char b[0xB0];
-} TmpB0;
-
-typedef struct ObjB0 {
-    char pad[0xB0];
-    int unkB0;
-    char sub[4];
-} ObjB0;
-
-extern void cSkaAnimAnchor_TreeNodeData_ctor_void(TmpB0*);
-extern void cSkaAnimAnchor_TreeNodeData_ctor_cSkaAnimAnchorTreeNodeDataR(ObjB0*, TmpB0*);
+#pragma cplusplus on
+struct Obj3BA9A0 { VPAD16(a) VPAD1(b) virtual void Clear(int f); virtual void s18(); virtual void Remove(void* e, int f);
+    char pad[0xA0]; char mA4[0xC]; };
+extern "C" {
+extern char D_004DF640[];
 #if 0 /* merge_units */
-extern void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor_void(void*);
+int cArray_cXformNodePtr_Empty(void* l);
 #endif /* merge_units */
-#define cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor_void(a0) ((void)cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor_void((SkaRelFlag *)(a0))) /* merge_units */
+int cArray_cXformNodePtr_Empty(int* self); /* merge_units */
+#define cArray_cXformNodePtr_Empty(a0) (cArray_cXformNodePtr_Empty((int *)(a0))) /* merge_units */
 
+#if 0 /* merge_units */
+void** cArray_cXformNodePtr_Back(void* l);
+#endif /* merge_units */
+int* cArray_cXformNodePtr_Back(PtrVec* v); /* merge_units */
+#define cArray_cXformNodePtr_Back(a0) ((void * *)cArray_cXformNodePtr_Back((PtrVec *)(a0))) /* merge_units */
 
-
-/* Constructor: initializes from a default temporary and sets up the sub-object at +0xB4. */
-ObjB0* cSkaAnimAnchor_TreeNode_ctor_void(ObjB0* o) {
-    TmpB0 tmp;
-    cSkaAnimAnchor_TreeNodeData_ctor_void(&tmp);
-    cSkaAnimAnchor_TreeNodeData_ctor_cSkaAnimAnchorTreeNodeDataR(o, &tmp);
-    o->unkB0 = 0;
-    cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor_void(o->sub);
-    return o;
+void cArray_cXformNodePtr_dtor(void* p, int f);
+void cXform_dtor(void* p, int f);
+void operator_delete(void* p);
 }
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_003BA210(void) {}
-#undef cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor_void /* merge_units */
+static inline bool Empty3BA9A0(void* l) { return cArray_cXformNodePtr_Empty(l); }
+static inline void Base3BA9A0(Obj3BA9A0* self)
+{
+    if (self) {
+        *(void**)self = D_004DF640;
+        self->Clear(1);
+        while (!Empty3BA9A0(self->mA4)) self->Remove(*cArray_cXformNodePtr_Back(self->mA4), 1);
+        cArray_cXformNodePtr_dtor(self->mA4, -1);
+        cXform_dtor(self, 0);
+    }
+}
+extern "C" Obj3BA9A0* cBone_dtor(Obj3BA9A0* self, short del)
+{
+    if (self) {
+        Base3BA9A0(self);
+        if (del > 0) operator_delete(self);
+    }
+    return self;
+}
+#undef cArray_cXformNodePtr_Empty /* merge_units */
+#undef cArray_cXformNodePtr_Back /* merge_units */
+static inline void merge_flush_func_003BA9A0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003BA210 */
+/* merge_units: end func_003BA9A0 */
 
-/* merge_units: begin func_003BA260 */
+/* merge_units: begin func_003BAA80 */
+#pragma push /* merge_units */
+/* Returns whether the word at +4 is zero. */
+int cArray_cXformNodePtr_Empty(int* self)
+{
+    return self[1] == 0;
+}
+static inline void merge_flush_func_003BAA80(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003BAA80 */
+
+/* merge_units: begin func_003BAA90 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
- * Part of ska.cc (skeletal animation).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
  */
 
+#include "loose03_types.h"
 
-extern Rel* std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_ctor(Rel* r);
-
-/* Construct: zero the three words and set the flag byte. */
-SkaRelFlag* cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_ctor_void(SkaRelFlag* self) {
-    std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_ctor(&self->rel);
-    self->flag = 1;
-    return self;
+/* back(): address of the last element. */
+int* cArray_cXformNodePtr_Back(PtrVec* v) {
+    return v->data + v->count - 1;
 }
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_003BA260(void) {}
+static inline void merge_flush_func_003BAA90(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003BA260 */
+/* merge_units: end func_003BAA90 */
 
-/* merge_units: begin func_003BA290 */
+/* merge_units: begin func_003BAAB0 */
 #pragma push /* merge_units */
-Rel* std_vector_imp_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_1_ctor(Rel* r) {
-    r->a = 0;
-    r->b = 0;
-    r->c = 0;
-    return r;
+#pragma cplusplus on
+
+extern "C" void cXformNode_ctor_void(SkelNode* x);
+extern "C" SkelNode* cBone_ctor_cBoneR(SkelNode* d, SkelNode* s);
+SkelNode* cBone_ctor_cBoneR(SkelNode* d, SkelNode* s)
+{
+    cXformNode_ctor_void(d);
+    d->fC0 = s->fC0;
+    d->mD0 = s->mD0;
+    d->m110 = s->m110;
+    d->s150 = s->s150;
+    d->v180 = s->v180;
+    d->v190 = s->v190;
+    d->v1A0 = s->v1A0;
+    d->v1B0 = s->v1B0;
+    d->v1C0 = s->v1C0;
+    d->Set(s->Get());
+    return d;
 }
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_003BA290(void) {}
+static inline void merge_flush_func_003BAAB0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003BA290 */
+/* merge_units: end func_003BAAB0 */

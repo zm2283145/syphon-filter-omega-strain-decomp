@@ -1,15 +1,40 @@
 /*
- * Libs/SFOLobby/SFOLobby/SFO_MGCL: 2 files, 004446E0-004449C0
+ * Libs/SFOLobby/SFOLobby/SFO_MGCL: 3 files, 004446A0-004446E0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
+
+/* merge_units: begin func_004446A0 */
+#pragma push /* merge_units */
+#include "SFOLobby_Callback_types.h"
+
+extern int D_0058423C;
+unsigned int D_004976D8[2] = { 0xFFFFFFFF, 0x0 };
+
+/* Publish the callback's value on success, or mark the operation as failed. */
+void Callback_MGCLCreateGameOnMeRequest(int unused0, int unused1, int unused2, LobbyStatusResult* result)
+{
+    if (!result->status) {
+        (*(int*)D_004976D8) = result->value;
+        D_0058423C = 1;
+    } else {
+        D_0058423C = -1;
+    }
+}
+static inline void merge_flush_func_004446A0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_004446A0 */
 
 /* merge_units: begin func_004446E0 */
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { char name[0x14]; int ver; char data[0xFC]; char pad[0x118 - 0x114]; } Msg46A9;
 typedef struct { char pad[0x26A0]; unsigned char dirty; } Mgr6E0;
+#if 0 /* merge_units */
 extern int D_004976D8;
+#endif /* merge_units */
+#define D_004976D8 (*(int*)&D_004976D8) /* merge_units */
+
 extern char D_005723B8;
 extern char D_00584220[];
 extern unsigned char D_00584231;
@@ -110,6 +135,7 @@ int SFOMGCL_Update(int update)
     }
     return ret;
 }
+#undef D_004976D8 /* merge_units */
 static inline void merge_flush_func_004446E0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_004446E0 */
@@ -147,6 +173,7 @@ void Libc_Strcpy(char*, const char*);
 #endif /* merge_units */
 #define Libc_Strcpy(a0, a1) (Libc_Strcpy((a0), (char *)(a1))) /* merge_units */
 
+
 void MGCLSetDefaultConnectParams(Conn9C0*);
 int atoi(char*);
 void MGCLSetAuthConnectParams(Conn9C0*, int, int, int, void*);
@@ -160,6 +187,7 @@ int MGCLDisconnect(void);
 int SFOMGCL_Update(int);
 #endif /* merge_units */
 #define SFOMGCL_Update(a0) (SFOMGCL_Update((a0))) /* merge_units */
+
 
 void SFOLobby_GuiCallback(char*, int, int);
 void func_00444DD0(void);
@@ -176,6 +204,7 @@ extern int D_00584528;
 extern char* D_00585E60;
 #endif /* merge_units */
 #define D_00585E60 (*(char **)&D_00585E60) /* merge_units */
+
 
 extern char D_004C0B38[];
 int SFOMGCL_Connect_MAS(int a, char* b);

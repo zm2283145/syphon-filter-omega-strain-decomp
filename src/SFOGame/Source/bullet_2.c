@@ -1,5 +1,5 @@
 /*
- * main/bullet: 4 files, 002756E0-00276460
+ * SFOGame/Source/bullet: 6 files, 002756E0-00277E20
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -25,6 +25,7 @@ void cBullet_RemoveBlastSibling(BulletOwner* owner, int value) {
     std_vector_pod_int_resize(&owner->list, last + 1, &fill);
 }
 #pragma opt_strength_reduction reset
+static inline void merge_flush_func_002756E0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002756E0 */
 
@@ -52,6 +53,7 @@ void cBullet_AddBlastSibling(BulletOwner* owner, int value) {
 int std_vector_cBulletPtr_push_back(PtrVec* v, int* value) {
     return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
+static inline void merge_flush_func_00275750(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00275750 */
 
@@ -176,10 +178,20 @@ void cParticle_Render(int h, int k, void* p);
 void cTexMan_SetActive(void* m, int idx);
 void XLib_NewStrip(void* s);
 void XLib_NextBatchVert(void* s);
+#if 0 /* merge_units */
 void cVector_opAssign(V4* d, const V4* s);
+#endif /* merge_units */
+void cVector_opAssign(void* d, const void* s); /* merge_units */
+#define cVector_opAssign(a0, a1) (cVector_opAssign((void *)(a0), (const void *)(a1))) /* merge_units */
+
 void tIRGBA_opAssign_tRGBAR(V4* d, const V4* s);
 float tVifFloatToInt_short_4_Bias(void);
+#if 0 /* merge_units */
 V4* cVector_ctor_float_float_float_float(V4* o, float x, float y, float z, float w);
+#endif /* merge_units */
+void* cVector_ctor_float_float_float_float(void*, float, float, float, float); /* merge_units */
+#define cVector_ctor_float_float_float_float(a0, a1, a2, a3, a4) ((V4 *)cVector_ctor_float_float_float_float((void *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+
 void XLib_DrawStrip(void* s);
 }
 #define D_00539220 (D_00539210.f20)
@@ -286,6 +298,9 @@ extern "C" void cBullet_Render(Bullet_002757A0* b)
         g_DrawMode = saved;
     }
 }
+#undef cVector_opAssign /* merge_units */
+#undef cVector_ctor_float_float_float_float /* merge_units */
+static inline void merge_flush_func_002757A0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002757A0 */
 
@@ -473,14 +488,20 @@ void cMessage_dtor(void* msg, int flags);
 #if 0 /* merge_units */
 V* cVector_ctor_float_float_float_float(V* v, float x, float y, float z, float w);
 #endif /* merge_units */
-#define cVector_ctor_float_float_float_float(a0, a1, a2, a3, a4) ((V *)cVector_ctor_float_float_float_float((V4 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define cVector_ctor_float_float_float_float(a0, a1, a2, a3, a4) ((V *)cVector_ctor_float_float_float_float((void *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+
 
 float cVector_Z_void(V* v);
 float Math_Fabs(float f);
 void cVector_GetNormalized_void(V* out, V* in);
 void cVector_Cross(V* out, V* a, V* b);
 V* cVector_Normalize_void(V* v);
+#if 0 /* merge_units */
 void cVector_ctor_cVectorR(V* d, V* s);
+#endif /* merge_units */
+void cVector_ctor_cVectorR(void* d, const void* s); /* merge_units */
+#define cVector_ctor_cVectorR(a0, a1) (cVector_ctor_cVectorR((void *)(a0), (const void *)(a1))) /* merge_units */
+
 void cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(M* m, V* a, V* b, V* c, V* t);
 void SfxParticleEffect_int_cMatrixR(int id, void* m);
 void SfxParticleEffect_eEffectName_cMatrixR(int id, void* m);
@@ -499,6 +520,7 @@ void cAreaEffect_ctor(void* self, Obj* o, V pos, Type* t, int f);
 void cBullet_RemoveBlastSibling(Bullet* b, Bullet* self);
 #endif /* merge_units */
 #define cBullet_RemoveBlastSibling(a0, a1) (cBullet_RemoveBlastSibling((BulletOwner *)(a0), (int)(a1))) /* merge_units */
+
 
 }
 
@@ -751,6 +773,280 @@ extern "C" void cBullet_Move(Bullet* s, float dt)
     }
 }
 #undef cVector_ctor_float_float_float_float /* merge_units */
+#undef cVector_ctor_cVectorR /* merge_units */
 #undef cBullet_RemoveBlastSibling /* merge_units */
+static inline void merge_flush_func_00276460(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00276460 */
+
+/* merge_units: begin func_00277AA0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#pragma inline_depth(8)
+/* cBullet_InitBullet: fills a pooled bullet from a fire request (frame,
+ * owner/target handles, hit triangle copy, type), creates its tracer when the
+ * type has one, and builds the two streak side vectors from the bullet's
+ * forward axis. Request layout as in cBulletManager_AddBullet (cBulletManager_AddBullet.c). */
+struct V_00277AA0 {
+    float x, y, z, w;
+    V_00277AA0() {}
+    V_00277AA0(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; }
+    V_00277AA0(const V_00277AA0& o) { const V_00277AA0* s = &o; V_00277AA0* d = this; __int128 t; __asm__ volatile("lq %0, 0x0(%1); sq %0, 0x0(%2)" : "=&r"(t) : "r"(s), "r"(d) : "memory"); }
+    V_00277AA0& operator=(const V_00277AA0& o) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(this), "r"(&o) : "memory"); return *this; }
+} __attribute__((aligned(16)));
+struct VP { float x, y, z, w; } __attribute__((aligned(16)));
+struct Mtx { VP r[4]; Mtx& operator=(const Mtx& o) { void* d = this; __int128 qa; __int128 qb; const void* s = &o; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); return *this; } };
+struct Sub40 { char b[0x10]; };
+struct Sub60 { char b[0x10]; };
+struct Tracked { char pad[0xC]; int serial; };
+struct TrCopy {
+    VP v[4];
+    Sub40 s40;
+    unsigned char b50, b51, b52; char p53[0xD];
+    Sub60 s60;
+};
+struct Type_00277AA0 { char pad[0xF8]; int fxF8; char padFC[0x134 - 0xFC]; int tracer; };
+struct Req {
+    Mtx m;
+    float f40;
+    Tracked* f44;
+    Tracked* f48;
+    Tracked* f4C;
+    TrCopy tr;
+    VP hit;
+    int fD0;
+    unsigned char fD4, fD5, fD6;
+    float fD8;
+    Type_00277AA0* fDC;
+    int fE0;
+    float fE4;
+};
+struct H_00277AA0 { Tracked* p; int serial; };
+struct Bullet_00277AA0 {
+    float age;
+    float speed;
+    float range;
+    int id;
+    int fx;
+    char pad14[0xC];
+    Mtx m;
+    H_00277AA0 h60;
+    H_00277AA0 h68;
+    H_00277AA0 h70;
+    char pad78[4];
+    int count;
+    char pad80[0x10];
+    TrCopy tr;
+    V_00277AA0 hit;
+    void* emitter;
+    unsigned char b114, b115, active, b117, b118, b119;
+    char pad11A[2];
+    int tex;
+    V_00277AA0 side0;
+    V_00277AA0 side1;
+    int uv;
+    float len;
+    Type_00277AA0* type;
+};
+extern "C" {
+extern int D_00504038;
+void* cParticle_ctor(void* p, int id, Mtx* m, float scale);
+void cVector_opAssign(void* d, const void* s);
+void cCollisionModel_FaceProperties_opAssign(void* d, const void* s);
+void cCollisionModel_FaceLocator_opAssign(void* d, const void* s);
+void cBullet_InitBullet(Bullet_00277AA0* b, Req* r);
+}
+static inline const int& IdOf(Tracked* p) { if (p) return p->serial; int m = -1; return m; }
+static inline void SetH(H_00277AA0* h, Tracked* p) { h->p = p; h->serial = IdOf(p); }
+static inline void Crs(V_00277AA0* d, const V_00277AA0* l, const V_00277AA0* r) { __asm__ volatile("lqc2 vf1, 0x0(%1); lqc2 vf2, 0x0(%2); vopmula.xyz ACC, vf1, vf2; vopmsub.xyz vf3, vf2, vf1; vsubw.w vf3, vf0, vf0w; sqc2 vf3, 0x0(%0)" : : "r"(d), "r"(l), "r"(r) : "memory"); }
+static inline V_00277AA0 Cross(const V_00277AA0& a, const V_00277AA0& b) { V_00277AA0 r; Crs(&r, &a, &b); return r; }
+static inline void* NewTracer(int line)
+{
+    void* p;
+    {
+        AllocGuard g;
+        p = cMemMan_Allocate(0, 0x70, D_004A91A0, line);
+    }
+    return p;
+}
+
+void cBullet_InitBullet(Bullet_00277AA0* b, Req* r)
+{
+    b->m = r->m;
+    b->speed = r->f40;
+    SetH(&b->h60, r->f48);
+    SetH(&b->h68, r->f44);
+    b->b114 = r->fD4;
+    b->b118 = r->fD5;
+    b->id = r->fD0;
+    b->active = 1;
+    b->b115 = 1;
+    SetH(&b->h70, r->f4C);
+    cVector_opAssign(&b->tr.v[0], &r->tr.v[0]);
+    cVector_opAssign(&b->tr.v[1], &r->tr.v[1]);
+    cVector_opAssign(&b->tr.v[2], &r->tr.v[2]);
+    cVector_opAssign(&b->tr.v[3], &r->tr.v[3]);
+    b->tr.b50 = r->tr.b50;
+    cCollisionModel_FaceProperties_opAssign(&b->tr.s40, &r->tr.s40);
+    cCollisionModel_FaceLocator_opAssign(&b->tr.s60, &r->tr.s60);
+    b->tr.b51 = r->tr.b51;
+    b->tr.b52 = r->tr.b52;
+    b->hit = *(V_00277AA0*)&r->hit;
+    b->b117 = r->fD6;
+    b->type = r->fDC;
+    b->range = r->fD8;
+    b->age = 0.0f;
+    b->fx = b->type->fxF8;
+    b->b119 = 1;
+    b->count = 0;
+    if (b->type->tracer > -1) {
+        void* p = NewTracer(0xE0);
+        if (p) p = cParticle_ctor(p, b->type->tracer, &b->m, r->fE4);
+        b->emitter = p;
+    } else {
+        b->emitter = 0;
+    }
+    b->tex = *nSfxLoader_GetHandle(26);
+    {
+        V_00277AA0 fwd = *(V_00277AA0*)&b->m.r[1];
+        b->side0 = Cross(fwd, V_00277AA0(0.0f, 0.0f, 1.0f, 0.0f));
+        b->side1 = Cross(fwd, b->side0);
+    }
+    b->uv = D_00504038;
+    b->len = 8.0f;
+    D_00504038 += 4;
+    if (D_00504038 == 16)
+        D_00504038 = 0;
+}
+static inline void merge_flush_func_00277AA0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00277AA0 */
+
+/* merge_units: begin func_00277E20 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#pragma inline_depth(8)
+struct V_00277E20;
+
+extern "C" {
+extern char g_LosCheckService[];
+extern char D_00504030[];
+int cLosManager_cCollisionModelList_Game_PerformImmediateRayIntersectionTest(void* mgr, V_00277E20* a, struct LosHit* b, V_00277E20* c, V_00277E20 d, int e1, void* e2, int g, unsigned char h, unsigned char i, void* j, unsigned char k);
+void cMatrix_ctor_cMatrixR(void* d, const void* s);
+void cCollisionFace_ctor_cCollisionFaceR(void* d, const void* s);
+void cVector_ctor_cVectorR(void* d, const void* s);
+#if 0 /* merge_units */
+void cVector_opAssign(V_00277E20* d, const V_00277E20* s);
+#endif /* merge_units */
+#define cVector_opAssign(a0, a1) (cVector_opAssign((void *)(a0), (const void *)(a1))) /* merge_units */
+
+#if 0 /* merge_units */
+void cBullet_InitBullet(struct Bullet_00277E20* b, struct Req_00277E20* r);
+#endif /* merge_units */
+#define cBullet_InitBullet(a0, a1) (cBullet_InitBullet((Bullet_00277AA0 *)(a0), (Req *)(a1))) /* merge_units */
+
+struct Bullet_00277E20* cBulletManager_AddBullet(struct Req_00277E20* req);
+}
+// VU0 macro-mode vector op (COP2), not expressible in C
+static inline void ScaleV(V_00277E20* rp, const V_00277E20* tp, float k) { __int128 t = 0; __asm__ volatile(".set noreorder; lqc2 $vf1, 0x0(%1); mfc1 %0, %3; qmtc2.ni %0, $vf2; vmulx.xyzw $vf1, $vf1, $vf2x; sqc2 $vf1, 0x0(%2); .set reorder" : "+r"(t) : "r"(tp), "r"(rp), "f"(k) : "memory"); }
+static inline void AddV(V_00277E20* d, V_00277E20* a, V_00277E20* b);
+static inline void SubV(V_00277E20* d, const V_00277E20* a, const V_00277E20* b) { __asm__ volatile("lqc2 $vf1, 0x0(%2); lqc2 $vf2, 0x0(%0); vsub.xyzw $vf1, $vf1, $vf2; sqc2 $vf1, 0x0(%1)" : : "r"(b), "r"(d), "r"(a) : "memory"); }
+struct V_00277E20 {
+    float x, y, z, w;
+    V_00277E20() {}
+    // 128-bit lq/sq quadword copy idiom
+    V_00277E20(const V_00277E20& o) { const __int128* s = (const __int128*)&o; __int128* d = (__int128*)this; __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(s)); *d = t; }
+    // 128-bit lq/sq quadword copy idiom
+    V_00277E20& operator=(const V_00277E20& o) { __int128* d = (__int128*)this; const __int128* s = (const __int128*)&o; __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(s)); *d = t; return *this; }
+    // VU0 macro-mode vector op (COP2), not expressible in C
+    V_00277E20 operator-(const V_00277E20& o) const { V_00277E20 r; SubV(&r, this, &o); return r; }
+    V_00277E20 operator*(float k) const { V_00277E20 r; ScaleV(&r, this, k); return r; }
+    V_00277E20& operator+=(V_00277E20 o) { AddV(this, this, &o); return *this; }
+} __attribute__((aligned(16)));
+// VU0 macro-mode vector op (COP2), not expressible in C
+static inline void AddV(V_00277E20* d, V_00277E20* a, V_00277E20* b) { __asm__ volatile("lqc2 $vf1, 0x0(%1); lqc2 $vf2, 0x0(%2); vadd.xyzw $vf1, $vf1, $vf2; sqc2 $vf1, 0x0(%0)" : : "r"(d), "r"(a), "r"(b) : "memory"); }
+static inline void AddV2(V_00277E20* d, V_00277E20* a, V_00277E20* b) { AddV(d, a, b); }
+
+// VU0 macro-mode vector op (COP2), not expressible in C
+static inline float Len0(V_00277E20* a) { int rv0; float ret = 0.0f; asm { lqc2 vf1, 0x0(a); vmul.xyz vf2, vf1, vf1; vmulax.w ACC, vf0, vf2x; vmadday.w ACC, vf0, vf2y; vmaddz.w vf3, vf0, vf2z; vsqrt Q, vf3w; vwaitq; vaddq.x vf4, vf0, Q; qmfc2.ni rv0, vf4; mtc1 rv0, ret } return ret; }
+static inline float Len(V_00277E20 a) { return Len0(&a); }
+struct LosHit {
+    VP arr[3];
+    V_00277E20 normal;
+    unsigned char b40; char p41; unsigned char b42; char p43[0xD];
+    unsigned char b50; unsigned char b51; unsigned char b52; char p53[0xD];
+    int x60;
+    int* x64;
+    char pad68[0x8];
+    LosHit() { LosHit* q = this; VP* i = q->arr; do { i++; } while (i != q->arr + 3); q->b40 = 0; q->b42 = 0; q->x60 = 0; q->x64 = 0; }
+};
+struct Mtx_00277E20 { VP r[4]; Mtx_00277E20() {} Mtx_00277E20(const Mtx_00277E20& o) { cMatrix_ctor_cMatrixR(this, &o); } };
+struct HV { float x, y, z, w; HV() {} HV(const HV& o) { cVector_ctor_cVectorR(this, &o); } HV& operator=(const V_00277E20& o) { *(V_00277E20*)this = o; return *this; } } __attribute__((aligned(16)));
+struct TrCopy_00277E20 {
+    VP v[4];
+    Sub40 s40;
+    unsigned char b50, b51, b52; char p53[0xD];
+    Sub60 s60;
+    TrCopy_00277E20() {}
+    TrCopy_00277E20(const TrCopy_00277E20& o) { cCollisionFace_ctor_cCollisionFaceR(this, &o); }
+};
+struct Req_00277E20 {
+    Mtx_00277E20 m;
+    float f40;
+    int f44;
+    int f48;
+    int f4C;
+    TrCopy_00277E20 tr;
+    HV hit;
+    int fD0;
+    unsigned char fD4, fD5, fD6;
+    float fD8;
+    int fDC;
+    int fE0;
+    float fE4;
+    Req_00277E20() {}
+};
+static inline void CopyReq(Req_00277E20* d, const Req_00277E20* s) { cMatrix_ctor_cMatrixR(&d->m, &s->m); d->f40 = s->f40; d->f44 = s->f44; d->f48 = s->f48; d->f4C = s->f4C; cCollisionFace_ctor_cCollisionFaceR(&d->tr, &s->tr); cVector_ctor_cVectorR(&d->hit, &s->hit); d->fD0 = s->fD0; d->fD4 = s->fD4; d->fD5 = s->fD5; d->fD6 = s->fD6; d->fD8 = s->fD8; d->fDC = s->fDC; d->fE0 = s->fE0; d->fE4 = s->fE4; }
+struct BulletReq : Req_00277E20 {};
+struct Bullet_00277E20 { char pad[0x115]; unsigned char active; char pad116[0x150 - 0x116]; };
+extern "C" Bullet_00277E20 D_004FFE60[];
+
+
+Bullet_00277E20* cBulletManager_AddBullet(Req_00277E20* req)
+{
+    void* svc = cSystemContainer_GetSystem(g_Game, g_LosCheckService);
+    V_00277E20 hit;
+    LosHit res;
+    V_00277E20 start = *(V_00277E20*)&req->m.r[3];
+    start += (*(V_00277E20*)&req->m.r[1]) * D_0048B348;
+    unsigned char ok = (unsigned char)cLosManager_cCollisionModelList_Game_PerformImmediateRayIntersectionTest(svc, &hit, &res, &start, (*(V_00277E20*)&req->m.r[1]) * req->fD8, req->f44, 0, 0, 0x10, 0x80, D_00504030, 1);
+    Req_00277E20 r; Req_00277E20* d = &r; const Req_00277E20* s = req; cMatrix_ctor_cMatrixR(&d->m, &s->m); d->f40 = s->f40; d->f44 = s->f44; d->f48 = s->f48; d->f4C = s->f4C; cCollisionFace_ctor_cCollisionFaceR(&d->tr, &s->tr); cVector_ctor_cVectorR(&d->hit, &s->hit); d->fD0 = s->fD0; d->fD4 = s->fD4; d->fD5 = s->fD5; d->fD6 = s->fD6; d->fD8 = s->fD8; d->fDC = s->fDC; d->fE0 = s->fE0; d->fE4 = s->fE4;
+    if (ok) {
+        V_00277E20 h = hit;
+        r.fD8 = Len(h - *(V_00277E20*)&req->m.r[3]);
+        r.f4C = *res.x64;
+        cVector_opAssign((V_00277E20*)&r.tr.v[0], (V_00277E20*)&res.arr[0]);
+        cVector_opAssign((V_00277E20*)&r.tr.v[1], (V_00277E20*)&res.arr[1]);
+        cVector_opAssign((V_00277E20*)&r.tr.v[2], (V_00277E20*)&res.arr[2]);
+        cVector_opAssign((V_00277E20*)&r.tr.v[3], &res.normal);
+        r.tr.b50 = res.b50;
+        cCollisionModel_FaceProperties_opAssign(&r.tr.s40, &res.b40);
+        cCollisionModel_FaceLocator_opAssign(&r.tr.s60, &res.x60);
+        r.tr.b51 = res.b51;
+        r.tr.b52 = res.b52;
+        r.hit = h;
+    }
+    Bullet_00277E20* b = 0;
+    for (int i = 0; !b && i < 50; i++) {
+        if (!D_004FFE60[i].active) {
+            b = &D_004FFE60[i];
+            cBullet_InitBullet(b, &r);
+        }
+    }
+    return b;
+}
+#undef cVector_opAssign /* merge_units */
+#undef cBullet_InitBullet /* merge_units */
+static inline void merge_flush_func_00277E20(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00277E20 */

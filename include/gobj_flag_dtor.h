@@ -41,11 +41,11 @@ static inline void GobjFlag_Release(GobjFlagObj* self)
 
 #define DEFINE_GOBJ_FLAG_DTOR(name, baseVtableSym)                            \
     extern "C" char baseVtableSym[];                                          \
-    extern "C" GobjFlagObj* name(GobjFlagObj* self, short deleteFlag)         \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
-            self->vtable = baseVtableSym;       \
-            GobjFlag_Release(self);                                           \
+            ((GobjFlagObj*)self)->vtable = baseVtableSym; \
+            GobjFlag_Release(((GobjFlagObj*)self));                           \
             if (deleteFlag > 0)                                               \
                 operator_delete(self);                                        \
         }                                                                     \
@@ -55,13 +55,13 @@ static inline void GobjFlag_Release(GobjFlagObj* self)
 #define DEFINE_GOBJ_FLAG_DTOR2(name, vtableSym, baseVtableSym)                \
     extern "C" char vtableSym[];                                              \
     extern "C" char baseVtableSym[];                                          \
-    extern "C" GobjFlagObj* name(GobjFlagObj* self, short deleteFlag)         \
+    extern "C" void* name(void* self, short deleteFlag)                       \
     {                                                                         \
         if (self) {                                                           \
-            self->vtable = vtableSym;           \
+            ((GobjFlagObj*)self)->vtable = vtableSym; \
             if (self) {                                                       \
-                self->vtable = baseVtableSym;   \
-                GobjFlag_Release(self);                                       \
+                ((GobjFlagObj*)self)->vtable = baseVtableSym; \
+                GobjFlag_Release(((GobjFlagObj*)self));                       \
             }                                                                 \
             if (deleteFlag > 0)                                               \
                 operator_delete(self);                                        \

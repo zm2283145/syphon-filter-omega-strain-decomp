@@ -1,132 +1,98 @@
 /*
- * Libs/SFOLib/Source/man: 3 files, 00385370-003855D0
+ * Libs/SFOLib/Source/man: 4 files, 0038D720-0038DD40
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_00385370 */
+/* merge_units: begin func_0038D720 */
 #pragma push /* merge_units */
+/* 0038D720 gunList::GunCalcBBox() - SFOLib man.cc */
+#pragma cplusplus on
 #include "types.h"
-#include "v4_asm_copy.h"
-#include "vc_copy.h"
-#include "vu0_ops.h"
+typedef unsigned int u_long128 __attribute__((mode(TI)));
 
-typedef struct { float x, y, z, w; } V4_385420;
-typedef struct { V4_385420 r[4]; } Mtx_385420;
-typedef struct { V4_385420 trans; float m[3][4]; char pad[0x10]; } Attach_385420;
-typedef struct {
-    char pad0[0x14];
-    unsigned char flag14;
-    char pad15[3];
-    char nodes[0x10];
-    void* xform;
-} Skel_385420;
-typedef struct {
-    char pad0[0x2450];
-    unsigned char node[0x10];
-    Attach_385420 attach[0x10];
-    char pad[0x2C04 - 0x2460 - 0x10 * 0x50];
-    Skel_385420* skel;
-} Actor_385420;
-void cMan_GetGunMatrix_WithoutFlippingAxes(Actor_385420* a, Mtx_385420* out, int i); /* gsynth: defined below */
-#pragma cplusplus on
-#pragma inline_depth(8)
-static inline void Q5370(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
-struct V {
+struct cVector {
     float x, y, z, w;
-    V() {}
-    V(const V& o) { void* xx = this; /* dead on purpose: retail keeps this addiu */ Q5370(this, &o); }
-} __attribute__((aligned(16)));
-struct M {
-    V r[4];
-    void Rotate(V* v) const { __asm__ volatile("lqc2 vf8, 0x0(%0); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); vmulax.xyz ACC, vf4, vf8x; vmadday.xyz ACC, vf5, vf8y; vmaddz.xyz vf8, vf6, vf8z; sqc2 vf8, 0x0(%0)" : : "r"(v), "r"(this) : "memory"); }
-    V Rotated(V v) const { V* p = &v; Rotate(p); return *p; }
-    void Translate(V v) { __asm__ volatile("lqc2 vf1, 0x30(%0); lqc2 vf2, 0x0(%1); vadd.xyz vf1, vf1, vf2; sqc2 vf1, 0x30(%0)" : : "r"(this), "r"(&v) : "memory"); }
+    cVector& operator=(const cVector& v)
+    {
+        void* xx = this;
+        u_long128 t;
+        __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=&r"(t) : "r"(this), "r"(&v) : "memory");
+        return *this;
+    }
 };
-struct Muzzle { char pad[0x130]; V off; };
-struct Weapon { char pad[0x2410]; Muzzle* muzzle[4]; };
-#if 0 /* merge_units */
-extern "C" void cMan_GetGunMatrix_WithoutFlippingAxes(Weapon* a, M* out, int i);
-#endif /* merge_units */
-#define cMan_GetGunMatrix_WithoutFlippingAxes(a0, a1, a2) (cMan_GetGunMatrix_WithoutFlippingAxes((Actor_385420 *)(a0), (Mtx_385420 *)(a1), (a2))) /* merge_units */
 
-
-extern "C" void cMan_GetGunBarrelMatrix_WithoutFlippingAxes(Weapon* w, M* m, int i)
-{
-    cMan_GetGunMatrix_WithoutFlippingAxes(w, m, i);
-    if (w->muzzle[i]) {
-        m->Translate(m->Rotated(w->muzzle[i]->off));
+struct cMatrix {
+    cVector m[4];
+    void Unit()
+    {
+        char* xx = (char*)this;
+        int t;
+        cMatrix* p = this;
+        asm {
+            sqc2 vf0, 0x30(p)
+            qmfc2.ni t, vf0
+            pcpyud t, t, zero
+            sq t, 0x10(p)
+            pexcw t, t
+            sq t, 0x20(p)
+            pcpyud t, t, zero
+            sq t, 0(p)
+        }
     }
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00385370(void) {}
-#undef cMan_GetGunMatrix_WithoutFlippingAxes /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_00385370 */
+    void SetTrans(const cVector& v) { m[3] = v; }
 
-/* merge_units: begin func_00385420 */
-#pragma push /* merge_units */
-extern void* cArray_cBone_opIndex_int(void*, int);
-extern void* cBone_Xform(void*);
-extern Mtx_385420* cXform_GetMatrix(void*);
-extern void cMatrix_GetTransformed(Mtx_385420*, Mtx_385420*, Mtx_385420*);
-extern void cMatrix_ctor_cMatrixR(Mtx_385420*, Mtx_385420*);
+};
 
-/* Indexing through an unsized-array view emits idx*0x50 + base (retail addu order). */
-#define ATT(a, i) (*(Attach_385420(*)[])(a)->attach)[i]
+typedef struct { unsigned char qwc; unsigned char vertCount; } manRefs;
 
-void cMan_GetGunMatrix_WithoutFlippingAxes(Actor_385420* a, Mtx_385420* out, int i)
-{
-    Mtx_385420 node;
-    Mtx_385420 m;
-    Skel_385420* s = a->skel;
-    int n = a->node[i];
-    Attach_385420* at;
-    Mtx_385420* pm;
-    V4_385420* d;
-    V4_385420* src;
-    Mtx_385420* pn;
+typedef struct {
+    u_long128* part;
+    unsigned short qwc;
+    unsigned char type;
+    unsigned char patchCount;
+    manRefs* Refs;
+    unsigned int* blends;
+} Parts;
 
-    if (s->flag14) {
-        Mtx_385420* t = cXform_GetMatrix(cBone_Xform(cArray_cBone_opIndex_int(s->nodes, n)));
-        cMatrix_GetTransformed(&node, t, cXform_GetMatrix(s->xform));
-    } else {
-        cMatrix_ctor_cMatrixR(&node, cXform_GetMatrix(s->xform));
+typedef struct {
+    cVector pos;
+    cVector offset;
+} gunBones;
+
+typedef struct {
+    cVector min;
+    cVector max;
+    void Extend(const cVector& v)
+    {
+        cVector* mn = &min;
+        cVector* mx = &max;
+        const cVector* p = &v;
+        asm {
+            lqc2 vf1, 0(mn)
+            lqc2 vf2, 0(mx)
+            lqc2 vf3, 0(p)
+            vmini.xyz vf1, vf1, vf3
+            vmax.xyz vf2, vf2, vf3
+            sqc2 vf1, 0(mn)
+            sqc2 vf2, 0(mx)
+        }
     }
-    d = &m.r[3];
-    pm = &m;
-    src = &ATT(a, i).trans;
-    m.r[0].x = ATT(a, i).m[0][0];
-    m.r[0].y = ATT(a, i).m[0][1];
-    m.r[0].z = ATT(a, i).m[0][2];
-    m.r[1].x = ATT(a, i).m[1][0];
-    m.r[1].y = ATT(a, i).m[1][1];
-    m.r[1].z = ATT(a, i).m[1][2];
-    m.r[2].x = ATT(a, i).m[2][0];
-    m.r[2].y = ATT(a, i).m[2][1];
-    m.r[2].z = ATT(a, i).m[2][2];
-    m.r[0].w = ATT(a, i).m[0][3];
-    m.r[1].w = ATT(a, i).m[1][3];
-    m.r[2].w = ATT(a, i).m[2][3];
-    { __int128 q = V4Load(src); pn = &node; V4Store(d, q); }
-    VU0_MulMtx44(out, pn, pm);
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00385420(void) {}
-#pragma pop /* merge_units */
-/* merge_units: end func_00385420 */
+} cBox;
 
-/* merge_units: begin func_003855D0 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-typedef unsigned long long U64;
-struct cMatrix { float m[4][4]; } __attribute__((aligned(16)));
-struct cMatrixNxM { float m[4][3]; } __attribute__((aligned(16)));
-struct Parts { __int128* part; unsigned short qwc; char pad[10]; };
-struct gunList {
-    char pad0[0x2C0];
+typedef struct {
+    char gunName[32];
+    char gunAttribsTable[0x100];
+    gunBones gunBulletOffset;
+    gunBones gunBonesOffsets[12];
     Parts gunParts[2][8];
-    char pad3C0[0x40C - 0x3C0];
+    short gunTexID[8];
+    short gunTexID2[8];
+    cBox gunBBox;
+    char* gunHog;
+    u_long128* casingModelPart;
+    unsigned short casingModelqwc;
+    short gunWDBIndex;
     unsigned char gunPartCount;
     unsigned char gunHoldType;
     unsigned char gunHoldTypeHand2;
@@ -136,144 +102,325 @@ struct gunList {
     signed char gunLightPart;
     signed char gunStockPartOn;
     signed char gunStockPartOff;
-    unsigned char gunGlow;
-    signed char gunTransparency;
-    signed char gunLoading;
-    unsigned char gunMalloc;
-    unsigned char gunIsBullet;
-    int gunRefCount;
-};
-struct manRenderSPAD {
-    char header[0xA50];
-    U64 manTex0[32];
-    U64 gunTex0[8][8];
-    cMatrix gunBoneData[8][11];
-    cMatrixNxM gunLightData[8];
-    U64 shellTex0;
-};
-struct cMan {
-    char pad0[0x2410];
-    gunList* manGuns[10];
-    char gunInvis[10];
-    char gunOnOffFlag[10];
-    char pad244C[0x2D90 - 0x244C];
-    unsigned char triggerPulled;
-    unsigned char triggerPulled2;
-};
+} gunList;
 
-static inline void QMove(void* dd, void* ss, int nn) { int n = nn; __int128 q; void* s = ss; void* d = dd;
-    __asm__ volatile(".set noreorder; 1: lq %0, 0(%2); addiu %1, %1, 0x10; addi %3, %3, -1; addiu %2, %2, 0x10; bgtz %3, 1b; sq %0, -0x10(%1); .set reorder" : "=&r"(q), "+r"(d), "+r"(s), "+r"(n) : : "memory");
+extern "C" {
+extern int D_00542D40;
+extern int D_00542D48;
+extern unsigned int D_004937C0[];
+extern unsigned int D_004937D0[];
 }
 
-extern "C" U64* cMan_ManDMAGuns(cMan* self, U64* dmaVif, int lod, int shadow, int transparency)
+static inline void VecAdd(cVector* d, const cVector* a, const cVector* b)
 {
-    manRenderSPAD* SPAD = (manRenderSPAD*)0x70000000;
-    U64 backclip = 0;
-    int j;
-    gunList* aGun;
-    U64 vifCode3;
-    int k;
-    int gunGlow;
-    int lightPart;
-    int holsterPart;
-    int stockPart;
-    int flarePart;
-    unsigned int i;
+    asm {
+        lqc2 vf1, 0(a)
+        lqc2 vf2, 0(b)
+        vadd.xyzw vf1, vf1, vf2
+        sqc2 vf1, 0(d)
+    }
+}
 
-    if (transparency != 128) backclip = 32;
-    for (j = 0; j < 8; j++) {
-        aGun = self->manGuns[j];
-        if (aGun == 0) continue;
-        if (self->gunInvis[j]) continue;
-        if (aGun->gunLoading) continue;
-        vifCode3 = 0x6C4D008500000000ULL | 0x15000000;
-        *dmaVif++ = 0x1000004D;
-        *dmaVif++ = vifCode3;
-        for (k = 0; k < 11; k++) {
-            QMove(dmaVif, &SPAD->gunBoneData[j][k], 4);
-            QMove(dmaVif + 8, &SPAD->gunLightData[j], 3);
-            dmaVif += 14;
+static inline void WaitVif0(void)
+{
+    int a, b, c;
+    while (*(volatile int*)0x10008000 & 0x100) {
+        a = 7;
+        b = 7;
+        asm { div c, a, b }
+    }
+    for (c = *(volatile int*)0x10003800; c & 7; c = *(volatile int*)0x10003800) {
+        __asm__ volatile("vnop");
+        __asm__ volatile("sync");
+    }
+    __asm__ volatile("vnop");
+    __asm__ volatile("sync");
+}
+
+/* VU1 output gather; a separate inline gives n/src/dst their own regs */
+static inline void CopyVerts(u_long128* dst, u_long128* src, int n)
+{
+    while (n) {
+        *dst = *src;
+        n--;
+        src += 2;
+        dst++;
+    }
+}
+
+extern "C" void gunList_GunCalcBBox(gunList* self)
+{
+    int bone;
+    u_long128* bonesSrc;
+    cMatrix* bonesMat;
+    cVector offset;
+    u_long128* boneDest;
+    cVector* results;
+    cVector* results1;
+    manRefs* refData;
+    unsigned int patchCount;
+    unsigned int j;
+    int qwc;
+    int vertCount;
+    int nextVertCount;
+    u_long128* part;
+    unsigned int i;
+    unsigned int k;
+
+    bonesMat = (cMatrix*)0x70000000;
+    {
+        int idx = D_00542D40;
+        if (idx != D_00542D48) {
+            unsigned int end = D_004937D0[idx];
+            unsigned int start = D_004937C0[idx];
+            *(volatile int*)0x10008020 = (end - start) >> 4;
+            *(volatile int*)0x10008010 = start;
+            *(volatile int*)0x10008000 = 0x101;
+            __asm__ volatile("sync");
+            D_00542D48 = idx;
         }
-        gunGlow = aGun->gunGlow;
-        lightPart = aGun->gunLightPart;
-        if (self->gunOnOffFlag[j]) lightPart = -1;
-        holsterPart = aGun->gunHolsterPart;
-        if (j == 3 || j == 4) holsterPart = -1;
-        stockPart = aGun->gunStockPartOn;
-        if (j == 0) stockPart = aGun->gunStockPartOff;
-        if (j == 6 && self->gunOnOffFlag[j]) stockPart = aGun->gunStockPartOff;
-        flarePart = aGun->gunFlarePart;
-        for (i = 0; i < aGun->gunPartCount; i++) {
-            if (aGun->gunParts[lod][i].part == 0) continue;
-            if (i == holsterPart) continue;
-            if (i == lightPart) continue;
-            if (i == stockPart) continue;
-            if (i != flarePart) {
-                dmaVif[0] = 0x10000001;
-                dmaVif[1] = 0x6C01806800000000ULL | 0x01000404;
-                dmaVif[2] = SPAD->gunTex0[j][i];
-                dmaVif[3] = backclip;
-                dmaVif[4] = (long long)(int)(aGun->gunParts[lod][i].qwc + 0x30000000) + ((U64)(unsigned int)aGun->gunParts[lod][i].part << 32);
-                dmaVif[5] = 0;
-                dmaVif += 6;
-            } else if (!shadow) {
-                if (gunGlow || (j == 0 && self->triggerPulled && self->triggerPulled < 3)) {
-                    dmaVif[0] = 0x10000001;
-                    dmaVif[1] = 0x6C01806800000000ULL | 0x01000404;
-                    dmaVif[2] = SPAD->gunTex0[j][i];
-                    dmaVif[3] = 0xBFC00000ULL;
-                    dmaVif[4] = (long long)(int)(aGun->gunParts[lod][i].qwc + 0x30000000) + ((U64)(unsigned int)aGun->gunParts[lod][i].part << 32);
-                    dmaVif[5] = 0;
-                    dmaVif += 6;
-                }
-                if (gunGlow || (j == 1 && self->triggerPulled2 && self->triggerPulled2 < 3)) {
-                    dmaVif[0] = 0x10000001;
-                    dmaVif[1] = 0x6C01806800000000ULL | 0x01000404;
-                    dmaVif[2] = SPAD->gunTex0[j][i];
-                    dmaVif[3] = 0xBFC00000ULL;
-                    dmaVif[4] = (long long)(int)(aGun->gunParts[lod][i].qwc + 0x30000000) + ((U64)(unsigned int)aGun->gunParts[lod][i].part << 32);
-                    dmaVif[5] = 0;
-                    dmaVif += 6;
+    }
+    offset = self->gunBonesOffsets[0].offset;
+    offset.w = 1.0f;
+    bonesMat->Unit();
+    bonesMat->SetTrans(offset);
+    for (bone = 0; bone < 11; bone++) {
+        offset = self->gunBonesOffsets[bone].offset;
+        VecAdd(&offset, &offset, &self->gunBonesOffsets[((int*)self->gunBonesOffsets)[bone * 8 + 7]].offset);
+        offset.w = 1.0f;
+        bonesMat[bone].Unit();
+        bonesMat[bone].SetTrans(offset);
+    }
+    WaitVif0();
+    bonesSrc = (u_long128*)bonesMat;
+    boneDest = (u_long128*)0x11004AC0;
+    for (bone = 0; bone < 11; bone++) {
+        boneDest[0] = bonesSrc[0];
+        boneDest[1] = bonesSrc[1];
+        boneDest[2] = bonesSrc[2];
+        boneDest[3] = bonesSrc[3];
+        bonesSrc += 4;
+        boneDest += 4;
+    }
+    results = (cVector*)0x70000540;
+    for (j = 0; j < self->gunPartCount; j++) {
+        refData = self->gunParts[1][j].Refs;
+        patchCount = self->gunParts[1][j].patchCount;
+        part = self->gunParts[1][j].part;
+        refData++;
+        if (j == self->gunHolsterPart || j == self->gunFlarePart || j == self->gunLightPart ||
+            j == self->gunStockPartOff)
+            continue;
+        if (part) {
+            for (i = 0; i < patchCount; i++) {
+                qwc = refData->qwc;
+                vertCount = refData->vertCount;
+                *(volatile int*)0x10008020 = qwc;
+                *(volatile int*)0x10008010 = (int)part;
+                *(volatile int*)0x10008000 = 0x101;
+                __asm__ volatile("sync");
+                part += qwc;
+                refData++;
+                WaitVif0();
+                CopyVerts((u_long128*)results, (u_long128*)0x11004050, vertCount);
+                for (k = 0; k < vertCount; k++) {
+                    self->gunBBox.Extend(results[k]);
                 }
             }
         }
     }
-    if (self->manGuns[0] && self->manGuns[0]->gunHolsterPart != -1) {
-        U64 vifCode3 = 0x6C07008500000000ULL | 0x15000000;
-        int holsterPart;
-        *dmaVif++ = 0x10000007;
-        *dmaVif++ = vifCode3;
-        QMove(dmaVif, &SPAD->gunBoneData[3][0], 4);
-        QMove(dmaVif + 8, &SPAD->gunLightData[3], 3);
-        dmaVif += 14;
-        holsterPart = self->manGuns[0]->gunHolsterPart;
-        dmaVif[0] = 0x10000001;
-        dmaVif[1] = 0x6C01806800000000ULL | 0x01000404;
-        dmaVif[2] = SPAD->gunTex0[0][holsterPart];
-        dmaVif[3] = backclip;
-        dmaVif[4] = (long long)(int)(self->manGuns[0]->gunParts[lod][holsterPart].qwc + 0x30000000) + ((U64)(unsigned int)self->manGuns[0]->gunParts[lod][holsterPart].part << 32);
-        dmaVif[5] = 0;
-        dmaVif += 6;
-    }
-    if (self->manGuns[1] && self->manGuns[1]->gunHolsterPart != -1) {
-        U64 vifCode3 = 0x6C07008500000000ULL | 0x15000000;
-        int holsterPart;
-        *dmaVif++ = 0x10000007;
-        *dmaVif++ = vifCode3;
-        QMove(dmaVif, &SPAD->gunBoneData[4][0], 4);
-        QMove(dmaVif + 8, &SPAD->gunLightData[4], 3);
-        dmaVif += 14;
-        holsterPart = self->manGuns[1]->gunHolsterPart;
-        dmaVif[0] = 0x10000001;
-        dmaVif[1] = 0x6C01806800000000ULL | 0x01000404;
-        dmaVif[2] = SPAD->gunTex0[1][holsterPart];
-        dmaVif[3] = backclip;
-        dmaVif[4] = (long long)(int)(self->manGuns[1]->gunParts[lod][holsterPart].qwc + 0x30000000) + ((U64)(unsigned int)self->manGuns[1]->gunParts[lod][holsterPart].part << 32);
-        dmaVif[5] = 0;
-        dmaVif += 6;
-    }
-    return dmaVif;
 }
-static inline void merge_flush_func_003855D0(void) {} /* merge_units */
+static inline void merge_flush_func_0038D720(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003855D0 */
+/* merge_units: end func_0038D720 */
+
+/* merge_units: begin func_0038DB30 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+struct manAttribs {
+    __int128 a;
+    __int128 b;
+};
+
+struct SKL {
+    __int128 hdr[4];
+    manAttribs manAttribsTable[32];
+};
+
+struct cMan {
+    char pad0[0x20];
+    char SKLName[0x20];
+    SKL skl;
+    char pad480[0x22C0 - 0x480];
+    short tex[0x20];
+    short tex2[0x60];
+    unsigned short count;
+    char pad23C2[0x2BD0 - 0x23C2];
+    int faceCamo;
+    char pad2BD4[0x2C0D - 0x2BD4];
+    char race;
+};
+
+extern "C" {
+extern char g_AgentPartCache[];
+extern char D_005711B0[];
+extern char D_004BC398[];
+extern char D_004BC3A0[];
+void strCpyPad(char* dst, int n, char* src);
+#if 0 /* merge_units */
+char* Libc_Strcpy(char* dst, const char* src);
+#endif /* merge_units */
+char* Libc_Strcpy(void* dst, const void* src); /* merge_units */
+#define Libc_Strcpy(a0, a1) (Libc_Strcpy((void *)(a0), (const void *)(a1))) /* merge_units */
+
+int String_CompareNoCase(const char* a, const char* b);
+char SKL_FindRace(SKL* skl);
+int SKL_CountAttribs(SKL* skl);
+void SKL_AddAccessorySKL(SKL* skl, int identity, int count, char* name);
+void SKL_RemoveBlanks(SKL* skl);
+int SKL_LoadSKLParts(SKL* skl, int hard, char* name);
+void Monster_FindAddTexture(char* cache, __int128 name, char* tex, short* a, short* b);
+void cMan_SortParts(cMan* self);
+void cMan_BuildMan(cMan* self, int flag);
+}
+
+/* skl = *sklData quad copy loop (hand-written addi); GCC-style operands also put mwcc in the
+   no-global-CSE/no-loop-opt mode retail shows (loop tests and bodies reload separately) */
+static inline void QMove(void* dd, void* ss, int nn) { int n = nn; __int128 q; void* s = ss; void* d = dd;
+    __asm__ volatile(".set noreorder; nop; 1: lq %0, 0(%2); addiu %1, %1, 0x10; addi %3, %3, -1; addiu %2, %2, 0x10; bgtz %3, 1b; sq %0, -0x10(%1); .set reorder" : "=&r"(q), "+r"(d), "+r"(s), "+r"(n) : : "memory");
+}
+
+extern "C" void cMan_Load(cMan* self, char* name, SKL* sklData, int identity)
+{
+    int count;
+    int texParts;
+    if (sklData) QMove(&self->skl, sklData, sizeof(SKL) / 16);
+    if (name) strCpyPad(self->SKLName, 31, name);
+    else Libc_Strcpy(self->SKLName, D_004BC398);
+    for (char* p = self->SKLName; *p; p++) {
+        char c = *p; if (c >= 'a' && c <= 'z') *p = c - 32;
+    }
+    self->race = SKL_FindRace(&self->skl);
+    if (identity >= 0) {
+        self->count = SKL_CountAttribs(&self->skl);
+        if (String_CompareNoCase(name, D_004BC3A0)) {
+            SKL_AddAccessorySKL(&self->skl, identity, self->count, self->SKLName);
+        } else {
+            count = self->count;
+            self->skl.manAttribsTable[0] = self->skl.manAttribsTable[count];
+            count++; self->skl.manAttribsTable[1] = self->skl.manAttribsTable[count];
+            self->count = 0;
+        }
+    } else {
+        SKL_RemoveBlanks(&self->skl);
+    }
+    cMan_SortParts(self);
+    for (texParts = 0; self->skl.manAttribsTable[texParts].b; texParts++) {
+        Monster_FindAddTexture(g_AgentPartCache, self->skl.manAttribsTable[texParts].b, D_005711B0, &self->tex[texParts], &self->tex2[texParts]);
+    }
+    self->tex[texParts] = 0;
+    self->count = SKL_LoadSKLParts(&self->skl, 1, self->SKLName);
+    if (self->count < texParts) self->faceCamo = 1;
+    cMan_BuildMan(self, 1);
+}
+#undef Libc_Strcpy /* merge_units */
+static inline void merge_flush_func_0038DB30(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0038DB30 */
+
+/* merge_units: begin func_0038DD40 */
+#pragma push /* merge_units */
+/* library prototypes shared by the blocks below (C linkage) */
+#include "SFOLobby_helpers.h"
+
+#if 0 /* merge_units */
+extern void Monster_FindAddTexture(void* cache, __int128 name, int arg, short* slot, short* out);
+#endif /* merge_units */
+#define Monster_FindAddTexture(a0, a1, a2, a3, a4) (Monster_FindAddTexture((char *)(a0), (a1), (char *)(a2), (a3), (a4))) /* merge_units */
+
+char D_00493410[16] = "_THER_BLA_----0";
+char D_00493420[16] = "_THER_COO_----0";
+char D_00493430[16] = "_THER_WAR_----0";
+char D_00493440[16] = "_THER_HOT_----0";
+char D_00493450[16] = "_THER_FLA_----0";
+extern short D_0053B360;
+extern short D_0053B362;
+extern short D_0053B364;
+extern short D_0053B366;
+extern short D_0053B368;
+#pragma opt_propagation off
+void cMan_LoadIRTextures(int arg)
+{
+    short tmp;
+    __int128* p;
+    p = (__int128*)D_00493410;
+    Monster_FindAddTexture(g_AgentPartCache, *p, arg, &D_0053B360, &tmp);
+    p = (__int128*)D_00493420;
+    Monster_FindAddTexture(g_AgentPartCache, *p, arg, &D_0053B362, &tmp);
+    p = (__int128*)D_00493430;
+    Monster_FindAddTexture(g_AgentPartCache, *p, arg, &D_0053B364, &tmp);
+    Monster_FindAddTexture(g_AgentPartCache, *(__int128*)D_00493440, arg, &D_0053B366, &tmp);
+    Monster_FindAddTexture(g_AgentPartCache, *(__int128*)D_00493450, arg, &D_0053B368, &tmp);
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0038DD40(void) {}
+#undef Monster_FindAddTexture /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0038DD40 */
+
+/* merge_units: begin func_0038DE20 */
+#pragma push /* merge_units */
+extern char D_004BC3B0[];
+extern unsigned int D_005712F0[];
+extern __int128* D_005712F8[];
+static inline int ks0038DE20eq(__int128 a, __int128 b) {
+    __int128 t;
+    long long r;
+    asm {
+        pceqw t, a, b
+        ppach r, t, t
+    }
+    return r == -1;
+}
+static inline __int128 ks0038DE20and(__int128 a, __int128 b) {
+    __int128 r;
+    asm { pand r, a, b }
+    return r;
+}
+static inline __int128 ks0038DE20from(__int128 v) {
+    __int128 r;
+    asm { pcpyld r, zero, v }
+    return r;
+}
+static inline int ks0038DE20meq(__int128 m, __int128 a, __int128 b) {
+    __int128 t;
+    long long r;
+    asm {
+        pand t, m, a
+        pand b, m, b
+        pceqw t, t, b
+        ppach r, t, t
+    }
+    return r == -1;
+}
+int cMan_CountFaceShapes(int idx)
+{
+    __int128 mask = ks0038DE20from(0xFFFFFFFFFFFFLL);
+    __int128 key;
+    __int128* e;
+    unsigned int i;
+    int n;
+    Libc_Strcpy(&key, D_004BC3B0);
+    e = D_005712F8[idx];
+    n = 0;
+    for (i = 0; i < D_005712F0[idx]; i++) {
+        if (ks0038DE20meq(mask, key, e[i]))
+            n++;
+    }
+    return n;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0038DE20(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_0038DE20 */

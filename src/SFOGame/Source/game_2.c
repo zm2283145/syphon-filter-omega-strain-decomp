@@ -1,14 +1,13 @@
 /*
- * main/game: range (2 files, 0012EE30-0012EEE0)
+ * SFOGame/Source/game: 4 files, 0012EE30-0012F000
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* headers shared by the blocks below */
-#include "types.h"
-
 /* merge_units: begin func_0012EE30 */
 #pragma push /* merge_units */
+#include "types.h"
+
 char* cGameSystem_GetAgentData(int, int);
 int NetGetMyClientIndex(int*, int);
 extern int D_00494178;
@@ -57,7 +56,12 @@ extern char D_004D91A0[];
 extern char D_004DCF10[];
 extern void cMessage_ctor_cMessageNameR(Msg_12EEE0* m, void* type);
 extern void cNetObj_SendMessage_int_cMessageR_int_int(int a, Msg_12EEE0* m, int b, int c);
+#if 0 /* merge_units */
 extern void cMessage_dtor(Msg_12EEE0* m, int f);
+#endif /* merge_units */
+void* cMessage_dtor(void* self, short deleteFlag); /* merge_units */
+#define cMessage_dtor(a0, a1) ((void)cMessage_dtor((void *)(a0), (short)(a1))) /* merge_units */
+
 
 void cGameSystem_SendAgentData(int arg0, unsigned char arg1, unsigned char arg2)
 {
@@ -92,5 +96,34 @@ void cGameSystem_SendAgentData(int arg0, unsigned char arg1, unsigned char arg2)
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0012EEE0(void) {}
+#undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0012EEE0 */
+
+/* merge_units: begin func_0012F000 */
+#pragma push /* merge_units */
+#pragma push
+#pragma cplusplus on
+#include "vtable2_base_dtor.h"
+#pragma pop
+#pragma push
+#pragma cplusplus on
+#include "vtable_base_dtor.h"
+#pragma pop
+
+#pragma cplusplus on
+
+/* Two-level destructor: restore vtables, run base destructor, optionally delete. */
+DEFINE_VTABLE2_BASE_DTOR(cNetAgentUpdateMsg_dtor, D_004D91A0, D_004DCF10, cMessage_dtor)
+static inline void merge_flush_func_0012F000(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0012F000 */
+
+/* merge_units: begin func_0012F070 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+DEFINE_VTABLE_BASE_DTOR(cNetMsg_dtor, D_004DCF10, cMessage_dtor)
+static inline void merge_flush_func_0012F070(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0012F070 */

@@ -1,270 +1,171 @@
 /*
- * SFOGame/Source/ai: 2 files, 0016B4F0-0016B580
+ * SFOGame/Source/ai: 3 files, 0016C9D0-0016CE10
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_0016B4F0 */
+/* merge_units: begin func_0016C9D0 */
 #pragma push /* merge_units */
-/*
- * Matched functions (byte-identical with the retail executable).
- * Action-message constructor with sender identity and two float parameters.
- */
-
+/* cAITarget_AddAwareness: find or create the awareness record for an
+ * object, apply the cause-specific delay/salience, refresh its handle and
+ * last seen position, and announce new human pickups once. */
+#pragma cplusplus on
+#pragma inline_depth(8)
 #include "types.h"
-#include "ai_types.h"
+/* lq/sq: 128-bit quadword moves have no C equivalent (asm). */
+static inline void Q16(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
+struct V { float x, y, z, w; V() {} V(const V& o) { V* d = this; const V* s = &o; Q16(d, s); } V& operator=(const V& o) { V* d = this; Q16(d, &o); return *this; } } __attribute__((aligned(16)));
+struct M { V r[4]; V& T() { return r[3]; } };
+struct AObj {
+    void** vt; char p04[8]; int id; char p10[0x1C];
+    unsigned char enabled, activated, removed; char p2F[0x1D];
+    int team; char p50[0x3468 - 0x50]; unsigned char human;
+};
+struct ObjV;
+struct ARec {
+    void* obj; int id; int id2; char p0C[4]; V lastPos; unsigned char cause; char p21[3];
+    float age, since7, visibility, threat, salience; unsigned char inView, lineClear, seenFlag, sent, f3C;
+};
+struct RNode { int p0; RNode* next; ARec* value; };
+struct Perc { char p0[0x30]; char recs[0xC]; void* component; };
+extern "C" {
+void Alloc_Lock(int);
+void EnableIntc(int);
+void* cMemMan_Allocate(int, int, void*, int);
+void cMessage_ctor_cMessageNameR(void*, void*);
+void QueueMessage_cMessageR_cSystemP_int(void*, void*, int);
+#if 0 /* merge_units */
+void cMessage_dtor(void*, int);
+#endif /* merge_units */
+void* cMessage_dtor(void* self, short deleteFlag); /* merge_units */
+#define cMessage_dtor(a0, a1) ((void)cMessage_dtor((a0), (short)(a1))) /* merge_units */
 
-extern char D_004D92A0[];
-extern char D_004D92C0[];
-extern char D_004EE5C8[];
-extern int cMessage_ctor_cMessageNameR(cActionMsg*, int);
-
-cActionMsg* cAISoundSystemGOBJMessage_ctor_cObjectIdR_eCauseForAwareness_float_float(cActionMsg* msg, int* sender, int action, float amplitude, float f2C) {
-    cMessage_ctor_cMessageNameR(msg, (int)D_004EE5C8);
-    msg->base.vtable = D_004D92A0;
-    msg->event = 0;
-    msg->action = action;
-    msg->amplitude = amplitude;
-    msg->unk2C = f2C;
-    msg->base.vtable = D_004D92C0;
-    msg->sender = *sender;
-    return msg;
+void cAITarget_cAwareList_Find(RNode** out, void* map, AObj* key);
+void std_list_cTargetAwarenessPtr_end_void(void*, void*);
+void cLListIterator_cTargetAwarenessPtr_ctor(void*, void*);
+void std_list_cTargetAwarenessPtr_push_front(void* list, ARec* const* v);
+extern char D_0049C650[];
+extern int g_HumanActorClassKey;
+extern char D_004DCD70[], D_004DCBD0[];
+extern char g_AIPickupableAwarenessMsgKey[];
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 }
-static inline void merge_flush_func_0016B4F0(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_0016B4F0 */
+#include "vslot_pad.h"
+struct ObjVt { VPAD32(a) VPAD8(b) VPAD4(c) VPAD2(d) virtual V Pos(int); VPAD4(e) virtual int D4(); VPAD4(f) virtual M Mtx(); VPAD2(g) VPAD1(h) virtual int Type(void*); VPAD2(i) VPAD1(j) virtual unsigned char Life(); };
+#pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
+struct MsgB { void* vt;
+    MsgB(void* k) { cMessage_ctor_cMessageNameR(this, k); }
+    __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); } };
+struct MsgPick : MsgB { char p04[0x1C]; unsigned char kind; char p21[3]; AObj* obj;
+    MsgPick(AObj* o) : MsgB(g_AIPickupableAwarenessMsgKey) { vt = D_004DCD70; obj = o; kind = 2; vt = D_004DCBD0; }
+    void Send(void* to) { QueueMessage_cMessageR_cSystemP_int(this, to, 0); }
+    __declspec(weak) __declspec(MSG_DTOR) ~MsgPick() { vt = D_004DCD70; } };
+static inline bool Active(AObj* p) { return p->activated && p->enabled && !p->removed; }
+static inline bool Human(AObj* o) { bool r = false; bool a = Active(o); if (a && o->human) r = true; return r; }
+static inline int Key0() { int* p = &g_HumanActorClassKey; return *p; }
+static inline const int& IdOf(AObj* p) { if (p) return p->id; int m = -1; return m; }
+static inline ARec* NewRec() {
+    void* m;
+    if (g_ProfileLockEnabled) Alloc_Lock(9);
+    g_ProfileLockDepth++;
+    m = cMemMan_Allocate(0, 0x40, D_0049C650, 0x33E);
+    if (g_ProfileLockEnabled) EnableIntc(9);
+    g_ProfileLockDepth--;
+    if (m) { ARec* r = (ARec*)m; r->id = -2; r->obj = 0; r->id2 = -1; }
+    return (ARec*)m;
+}
+static inline void SetId2(ARec* r, AObj* o) { r->id2 = o->id; }
+/* The end-iterator helpers nest three deep so its temp lands below the IdOf temp, as in retail. */
+/* Retail reserves an unused slot above the IdOf temp; a dead address-taken local reproduces it. */
+static inline void Set(ARec* r, AObj* o) { int u; int* pu = &u; r->obj = o; r->id = IdOf(o); }
+static inline void En2(void* recs, RNode** e) { void* s; std_list_cTargetAwarenessPtr_end_void(&s, recs); cLListIterator_cTargetAwarenessPtr_ctor(e, &s); }
+static inline void En1(void* recs, RNode** e) { En2(recs, e); }
+static inline void En0(void* recs, RNode** e) { En1(recs, e); }
 
-/* merge_units: begin func_0016B580 */
+extern "C" void cAITarget_AddAwareness(Perc* self, AObj* who, unsigned char cause, float amt)
+{
+    RNode* it;
+    ARec* rec;
+    RNode* end;
+    bool human;
+    cAITarget_cAwareList_Find(&it, self->recs, who);
+    human = false;
+    if (((ObjVt*)who)->Life() == 3) {
+        if (who->team == Key0()) human = Human(who);
+        if (!human) return;
+    }
+    En0(self->recs, &end);
+    if (it != end) {
+        rec = it->value;
+        if (rec->lineClear) rec->seenFlag = 1;
+        if (rec->age < 0.0f) return;
+    } else {
+        rec = NewRec();
+        rec->inView = 0;
+        rec->lineClear = 0;
+        rec->seenFlag = 0;
+        rec->visibility = 0.0f;
+        rec->threat = 0.0f;
+        rec->salience = 0.0f;
+        rec->sent = 0;
+        rec->f3C = 0;
+        std_list_cTargetAwarenessPtr_push_front(self->recs, &rec);
+    }
+    rec->age = 0.0f;
+    if (cause == 6) {
+        rec->inView = 1;
+        rec->lineClear = 1;
+        rec->seenFlag = 1;
+    } else if (cause == 4) {
+        rec->salience = 0.2f;
+        if (!rec->lineClear || !rec->inView) {
+            if (!(amt <= 25.0f)) rec->age = -amt / 500.0f;
+        }
+    } else if (cause == 8) {
+        rec->salience = 1.0f;
+    } else if (cause == 7) {
+        rec->salience = 5.0f;
+        rec->age = -1.0f;
+    }
+    Set(rec, who);
+    SetId2(rec, who);
+    rec->lastPos = ((ObjVt*)who)->Mtx().T();
+    rec->cause = cause;
+    if (human && !rec->sent) {
+        MsgPick(who).Send(self->component);
+        rec->sent = 1;
+    }
+}
+#undef cMessage_dtor /* merge_units */
+static inline void merge_flush_func_0016C9D0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0016C9D0 */
+
+/* merge_units: begin func_0016CE10 */
+#pragma push /* merge_units */
+#pragma push
+#pragma cplusplus on
+#include "vtable2_base_dtor.h"
+#pragma pop
+#pragma push
+#pragma cplusplus on
+#include "vtable_base_dtor.h"
+#pragma pop
+
+#pragma cplusplus on
+
+/* Two-level destructor: restore vtables, run base destructor, optionally delete. */
+DEFINE_VTABLE2_BASE_DTOR(cAIPickupableAwarenessMsg_dtor, D_004DCBD0, D_004DCD70, cMessage_dtor)
+static inline void merge_flush_func_0016CE10(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0016CE10 */
+
+/* merge_units: begin func_0016CE80 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-#include "sfo_ai_types.h"
-#include "hotbox_types.h"
-#include "vslot_pad.h"
-typedef SfGameObject Actor;
-union ThinkIter { HotboxListNode* p; };
-struct ThinkFlags { unsigned char a:7; unsigned char tested:1; };
-struct ObjectV { VPAD32(a) VPAD16(b) VPAD8(c) VPAD4(d) virtual bool Type(void*); VPAD2(e) VPAD1(f) virtual int Life(); };
-struct ControllerV { VPAD16(a) VPAD2(b) VPAD1(c) virtual int IsPlayer(); VPAD4(d) VPAD2(e) virtual int Enemy(Actor*); };
-extern "C" {
-Actor* cSafePtr_cGOBJ_opCast_cGOBJPtr(SfWeakHandle*);
-void cAITarget_cAwareList_Find(void*,void*,Actor*);
-Actor* cAITarget_GetNextNpcToTest(SfAiPerception*,Actor*);
-void cAITarget_SetTarget(SfAiPerception*,Actor*,int);
-void cAITarget_UpdateAwareness(SfAiPerception*,float);
-void cAITarget_UpdateLOS(SfAiPerception*,Actor*);
-void __register_global_object(void*,void*,void*);
-void std_list_cTargetAwarenessPtr_end_void(void*,void*);
-void cLListIterator_cTargetAwarenessPtr_ctor(void*,void*);
-void std_list_cTargetAwarenessPtr_begin(void*,void*);
-void cPlane_dtor(void*,int);
-extern signed char D_004EE590;
-extern char D_004EE598[],D_004EE5B0[];
-}
-#pragma push
-#pragma bool off
-static inline int Active(Actor* p) { return p->activated && p->enabled && !p->removed; }
 
-
-#pragma pop
-static inline bool Dead(int life) { bool yes=true; if ((unsigned)(life-2)>1U) yes=false; return yes; }
-static inline bool Player(ControllerV* p) { bool yes=false; if(p) if(p->IsPlayer()) yes=true; return yes; }
-static inline bool Player2(ControllerV* p) { if(p) if(p->IsPlayer()) return true; return false; }
-static inline Actor* WGet(bool isNull, Actor* o, int id){ if (!isNull) if (o->id != id) return 0; return o; }
-static inline Actor* WGet2(bool isNull, Actor* o, int id){ if (!isNull) if (o->id != id) o = 0; return o; }
-extern "C" void cAITarget_Update(SfAiPerception* arg0, float dt) {
-    ThinkIter spBC;
-    ThinkIter spB8;
-    ThinkIter spB4;
-    ThinkIter spB0;
-    ThinkIter spAC;
-    int spA8;
-    void* spA4;
-    void* spA0;
-    void* sp9C;
-    int *var_v0_2;
-    bool var_a3;
-    bool var_a3_2;
-    Actor* temp_a1;
-    bool var_a0_2;
-    bool var_a0_3;
-    bool var_a1;
-    bool var_a1_2;
-    bool temp_a1_2;
-    bool temp_a2;
-    int var_v0;
-    int var_v1;
-    bool var_v1_2;
-    ControllerV* temp_a0_2;
-    ControllerV* temp_a0_3;
-    ControllerV* temp_a0_4;
-    Actor* temp_v0;
-    Actor* temp_v0_2;
-    Actor* temp_a0;
-    Actor* temp_a0_5;
-    bool var_a0;
-    Actor* temp_a1_3;
-    Actor* temp_v0_3;
-    Actor* var_a1_3;
-    Actor* var_a2;
-    Actor* var_v1_3;
-    Actor* var_v1_4;
-    float var_f21;
-    float var_f20;
-    bool var_s6;
-    Actor* var_s4;
-    SfAwarenessRecord* temp_s3;
-    bool var_s2;
-    Actor* temp_s1;
-    Actor* temp_s1_2;
-    bool var_s0;
-
-
-    var_a1 = 1;
-    var_s6 = 0;
-    temp_a0 = (Actor*)arg0->target.object;
-    bool null_temp_a0 = !temp_a0;
-    if (!null_temp_a0 && (temp_a0->id != arg0->target.id)) {
-        var_a1 = 0;
-    }
-    if ((var_a1 ? temp_a0 : 0) != 0) {
-        temp_v0 = cSafePtr_cGOBJ_opCast_cGOBJPtr(&arg0->target);
-        var_v1 = Active(temp_v0);
-        if ((var_v1 != 0) && (temp_v0_2 = cSafePtr_cGOBJ_opCast_cGOBJPtr(&arg0->target), ((((ObjectV*)temp_v0_2)->Life() & 0xFF) != 3))) {
-            temp_a1 = (Actor*)arg0->target.object;
-            var_a0 = 1;
-            bool null_temp_a1 = !temp_a1;
-    if (!null_temp_a1 && (temp_a1->id != arg0->target.id)) {
-                var_a0 = 0;
-            }
-            if (((ControllerV*)arg0->component)->Enemy(var_a0 ? temp_a1 : 0) == 0) {
-                goto block_14;
-            }
-        } else {
-block_14:
-            cAITarget_SetTarget(arg0, 0, 0x14);
-        }
-    }
-    cAITarget_UpdateAwareness(arg0,dt);
-    var_f21 = 0.0f;
-    var_s4 = 0;
-    std_list_cTargetAwarenessPtr_begin(&spA4, &arg0->records);
-    cLListIterator_cTargetAwarenessPtr_ctor(&spB4, &spA4);
-    spBC = spB4;
-    std_list_cTargetAwarenessPtr_end_void(&spA0, &arg0->records);
-    cLListIterator_cTargetAwarenessPtr_ctor(&spB0, &spA0);
-    if (spBC.p != spB0.p) {
-        do {
-            temp_s3 = (SfAwarenessRecord*)spBC.p->value;
-            temp_s1 = (Actor*)temp_s3->object;
-            var_a0_2 = 1;
-            bool null_temp_s1 = !temp_s1;
-    if (!null_temp_s1 && (temp_s1->id != temp_s3->id)) {
-                var_a0_2 = 0;
-            }
-            temp_s1_2 = var_a0_2 ? temp_s1 : 0;
-            if (temp_s1_2 != 0) {
-                var_v0 = Active(temp_s1_2);
-                if (var_v0 != 0) {
-                    var_v1_2 = Dead(((ObjectV*)temp_s1_2)->Life() & 0xFF);
-                    if (!var_v1_2) {
-                        temp_a0_3 = (ControllerV*)arg0->component;
-                        if (temp_a0_3->Enemy(temp_s1_2) != 0) {
-                            temp_a0_4 = (ControllerV*)temp_s1_2->controller;
-                            var_f20 = 0.0f;
-                            var_s2 = 1;
-                            var_s0 = 0;
-                            if (temp_a0_4 == 0) goto skipP;
-                            if (temp_a0_4->IsPlayer() == 0) goto skipP;
-                            var_s0 = 1;
-                            skipP:
-                            if (var_s0) {
-                                if (D_004EE590 == 0) {
-                                    __register_global_object(D_004EE5B0, (void*)&cPlane_dtor, D_004EE598);
-                                    D_004EE590 = 1;
-                                }
-                                var_s2 = ((ObjectV*)temp_s1_2)->Type(D_004EE5B0);
-                            }
-                            if (var_s2) {
-                                if (temp_s3->age < 10.0f) {
-                                    var_f20 = temp_s3->salience + (temp_s3->threat + temp_s3->visibility);
-                                }
-                                temp_a0_5 = (Actor*)arg0->target.object;
-                                var_a1_2 = 1;
-                                bool null_temp_a0_5 = !temp_a0_5;
-    if (!null_temp_a0_5 && (temp_a0_5->id != arg0->target.id)) {
-                                    var_a1_2 = 0;
-                                }
-                                if (temp_s1_2 == (var_a1_2 ? temp_a0_5 : 0)) {
-                                    var_f20 *= 1.1f;
-                                }
-                                if (!(var_f20 <= var_f21)) {
-                                    var_f21 = var_f20;
-                                    var_s4 = temp_s1_2;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            spBC.p = spBC.p->next;
-            std_list_cTargetAwarenessPtr_end_void(&spA0, &arg0->records);
-            cLListIterator_cTargetAwarenessPtr_ctor(&spB0, &spA0);
-        } while (spBC.p != spB0.p);
-    }
-    if (!(var_f21 <= 0.0f)) {
-        cAITarget_SetTarget(arg0, var_s4, 0x14);
-    } else {
-        var_a2 = (Actor*)arg0->target.object;
-        temp_a1_2 = !var_a2;
-        var_a3 = 1;
-        if ((temp_a1_2 == 0) && (var_a2->id != arg0->target.id)) {
-            var_a3 = 0;
-        }
-        var_v1_3 = var_a3 ? var_a2 : 0;
-        if (var_v1_3 != 0) {
-            cAITarget_cAwareList_Find(&spB8, &arg0->records, (temp_a1_2 || var_a2->id == arg0->target.id) ? var_a2 : 0);
-            std_list_cTargetAwarenessPtr_end_void(&sp9C, &arg0->records);
-            cLListIterator_cTargetAwarenessPtr_ctor(&spAC, &sp9C);
-            if (spB8.p == spAC.p) {
-                cAITarget_SetTarget(arg0, 0, 0x14);
-            }
-        }
-    }
-    var_a1_3 = (Actor*)arg0->target.object;
-    temp_a2 = !var_a1_3;
-    var_a3_2 = 1;
-    if ((temp_a2 == 0) && (var_a1_3->id != arg0->target.id)) {
-        var_a3_2 = 0;
-    }
-    var_v1_4 = var_a3_2 ? var_a1_3 : 0;
-    if ((var_v1_4 != 0) && (((ThinkFlags*)&arg0->flags)->tested == 0)) {
-        Actor* vt = (temp_a2 || var_a1_3->id == arg0->target.id) ? var_a1_3 : 0;
-        var_s6 = 1;
-        cAITarget_UpdateLOS(arg0, vt);
-        ((ThinkFlags*)&arg0->flags)->tested = 1;
-    }
-    if (!var_s6) {
-        temp_a1_3 = (Actor*)arg0->nextCandidate.object;
-        var_a0_3 = 1;
-        bool null_temp_a1_3 = !temp_a1_3;
-    if (!null_temp_a1_3 && (temp_a1_3->id != arg0->nextCandidate.id)) {
-            var_a0_3 = 0;
-        }
-        temp_v0_3 = cAITarget_GetNextNpcToTest(arg0, var_a0_3 ? temp_a1_3 : 0);
-        if (temp_v0_3 != 0) {
-            arg0->nextCandidate.object = temp_v0_3;
-            if (temp_v0_3 != 0) {
-                var_v0_2 = &temp_v0_3->id;
-            } else {
-                spA8 = -1;
-                var_v0_2 = &spA8;
-            }
-            arg0->nextCandidate.id = (int) *var_v0_2;
-            cAITarget_UpdateLOS(arg0, temp_v0_3);
-        }
-        ((ThinkFlags*)&arg0->flags)->tested = 0;
-    }
-}
-static inline void merge_flush_func_0016B580(void) {} /* merge_units */
+DEFINE_VTABLE_BASE_DTOR(cAIGOBJMsg_dtor, D_004DCD70, cMessage_dtor)
+static inline void merge_flush_func_0016CE80(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_0016B580 */
+/* merge_units: end func_0016CE80 */

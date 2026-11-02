@@ -1,58 +1,34 @@
 /*
- * SFOGame/Source/humanAnimData: 5 files, 001F2A00-001F2B70
+ * SFOGame/Source/humanAnimData: 9 files, 001F3100-001F3340
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_001F2A00 */
+/* merge_units: begin func_001F3100 */
 #pragma push /* merge_units */
-#pragma cplusplus on
 #include "types.h"
-#include "vtable_chain_dtor.h"
-extern "C" void cSkaNode_PlaybackGroupId();
-extern void * const D_004DFC50[];
-extern "C" VtableChainObject* cSkaNode_dtor(VtableChainObject* self,
-                                   short deleteFlag)
+
+typedef struct { int unk0; int unk4; int unk8; } Obj;
+#if 0 /* merge_units */
+extern void compressed_pair_cAllocator_cSkaSwitchItem_int_ctor_uint(Obj* self, int a);
+#endif /* merge_units */
+Word * compressed_pair_cAllocator_cSkaSwitchItem_int_ctor_uint(); /* merge_units */
+
+
+
+/* Constructor: base init then clears +4/+8. */
+Obj* std_vector_deleter_cSkaSwitchItem_ctor_void(Obj* self)
 {
-    if (self) {
-        self->vtable = ((char*)D_004DFC50);
-        if (deleteFlag > 0)
-            operator_delete(self);
-    }
+    compressed_pair_cAllocator_cSkaSwitchItem_int_ctor_uint(self, 0);
+    self->unk4 = 0;
+    self->unk8 = 0;
     return self;
 }
-void * const D_004DFC50[8] = { (void*)0x0, (void*)0x0, (void*)cSkaNode_dtor, (void*)0x0, (void*)cSkaNode_PlaybackGroupId, (void*)0x0, (void*)0x0, (void*)0x0 };
-static inline void merge_flush_func_001F2A00(void) {} /* merge_units */
+static inline void merge_flush_func_001F3100(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001F2A00 */
+/* merge_units: end func_001F3100 */
 
-/* merge_units: begin func_001F2A50 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-#include "member0_dtor.h"
-DEFINE_MEMBER0_DTOR(cArray_cSkaSwitchItem_dtor, std_vector_cSkaSwitchItem_dtor)
-static inline void merge_flush_func_001F2A50(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F2A50 */
-
-/* merge_units: begin func_001F2AB0 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-#include "direct_base_dtor.h"
-DEFINE_DIRECT_BASE_DTOR(std_vector_cSkaSwitchItem_dtor, std_vector_imp_cSkaSwitchItem_dtor)
-static inline void merge_flush_func_001F2AB0(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F2AB0 */
-
-/* merge_units: begin func_001F2B10 */
-#pragma push /* merge_units */
-#pragma cplusplus on
-DEFINE_DIRECT_BASE_DTOR(std_vector_imp_cSkaSwitchItem_dtor, std_vector_deleter_cSkaSwitchItem_dtor)
-static inline void merge_flush_func_001F2B10(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F2B10 */
-
-/* merge_units: begin func_001F2B70 */
+/* merge_units: begin func_001F3140 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -62,20 +38,157 @@ static inline void merge_flush_func_001F2B10(void) {} /* merge_units */
 
 #include "loose01_types.h"
 
-extern void* D_004DFBB0;
-extern MotionNode* cSkaNode_ctor_eType_cQuaternionR(MotionNode*, int, int);
-extern void cSkaInitListOfPointers_cSkaSwitchItem_CopyPointerContentsToArray(int, ObjVec*);
-extern ObjVec* cArray_cSkaSwitchItem_ctor_void(ObjVec*);
+extern Word* details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_ctor_uint(Word*, int);
+#if 0 /* merge_units */
+extern Word* cAllocator_cSkaSwitchItem_ctor_void(Word*);
+#endif /* merge_units */
+void * cAllocator_cSkaSwitchItem_ctor_void(); /* merge_units */
 
-/* Constructor of the type-3 motion node (same layout as MotionSlider up to 0x34). */
-MotionSlider* cSkaSwitch_ctor(MotionSlider* self, int a1, int a2, int a3) {
-    cSkaNode_ctor_eType_cQuaternionR(&self->base, 3, a3);
-    self->base.vtable = &D_004DFBB0;
-    self->unk20 = a1;
-    cArray_cSkaSwitchItem_ctor_void(&self->children);
-    cSkaInitListOfPointers_cSkaSwitchItem_CopyPointerContentsToArray(a2, &self->children);
+
+
+Word* compressed_pair_cAllocator_cSkaSwitchItem_int_ctor_uint(Word* self, int value) {
+    details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_ctor_uint(self, value);
     return self;
 }
-static inline void merge_flush_func_001F2B70(void) {} /* merge_units */
+
+Word* details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_ctor_uint(Word* self, int value) {
+    cAllocator_cSkaSwitchItem_ctor_void(self);
+    self->value = value;
+    return self;
+}
+static inline void merge_flush_func_001F3140(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001F2B70 */
+/* merge_units: end func_001F3140 */
+
+/* merge_units: begin func_001F31B0 */
+#pragma push /* merge_units */
+extern void* D_004DFC50;
+extern int cQuaternion_ctor_cQuaternionR(int*, int);
+
+void* cAllocator_cSkaSwitchItem_ctor_void(void* self) {
+    return self;
+}
+
+MotionNode* cSkaNode_ctor_eType_cQuaternionR(MotionNode* self, int type, int name) {
+    self->vtable = &D_004DFC50;
+    self->type = type;
+    cQuaternion_ctor_cQuaternionR(&self->name, name);
+    return self;
+}
+static inline void merge_flush_func_001F31B0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001F31B0 */
+
+/* merge_units: begin func_001F3200 */
+#pragma push /* merge_units */
+#pragma optimization_level 1
+
+#if 0 /* merge_units */
+extern void cLList_cSkaSwitchItemPtr_PushBackActual(void*, int*);
+#endif /* merge_units */
+void cLList_cSkaSwitchItemPtr_PushBackActual(); /* merge_units */
+
+
+
+
+/* Calls cLList_cSkaSwitchItemPtr_PushBackActual(self, &value) and returns self. */
+void* cSkaInitListOfPointers_cSkaSwitchItem_opShl(void* self, int value) {
+    cLList_cSkaSwitchItemPtr_PushBackActual(self, &value);
+    return self;
+}
+static inline void merge_flush_func_001F3200(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001F3200 */
+
+/* merge_units: begin func_001F3240 */
+#pragma push /* merge_units */
+#if 0 /* merge_units */
+extern void std_list_cSkaSwitchItemPtr_push_back(void* self);
+#endif /* merge_units */
+void std_list_cSkaSwitchItemPtr_push_back(); /* merge_units */
+
+
+
+
+#pragma optimization_level 1
+/* Forwards to std_list_cSkaSwitchItemPtr_push_back (unit built at -O1: no tail call). */
+void cLList_cSkaSwitchItemPtr_PushBackActual(void* self)
+{
+    std_list_cSkaSwitchItemPtr_push_back(self);
+}
+#pragma optimization_level reset
+static inline void merge_flush_func_001F3240(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001F3240 */
+
+/* merge_units: begin func_001F3260 */
+#pragma push /* merge_units */
+#if 0 /* merge_units */
+extern void std_list_imp_voidPtr_push_back(void);
+#endif /* merge_units */
+void std_list_imp_voidPtr_push_back(); /* merge_units */
+
+
+
+
+/* Calls std_list_imp_voidPtr_push_back. */
+#pragma optimization_level 1
+void std_list_cSkaSwitchItemPtr_push_back(void)
+{
+    std_list_imp_voidPtr_push_back();
+}
+#pragma optimization_level reset
+static inline void merge_flush_func_001F3260(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001F3260 */
+
+/* merge_units: begin func_001F3280 */
+#pragma push /* merge_units */
+typedef struct { void* node; } It1F3280;
+extern void std_list_deleter_voidPtr_end_void(It1F3280* out, void* list);
+extern void std_list_deleter_voidPtr_insert(It1F3280* out, void* list, It1F3280* pos, void* value);
+#pragma optimization_level 1
+void std_list_imp_voidPtr_push_back(void* list, void* value)
+{
+    It1F3280 r;
+    It1F3280 pos;
+    std_list_deleter_voidPtr_end_void(&pos, list);
+    std_list_deleter_voidPtr_insert(&r, list, &pos, value);
+}
+#pragma optimization_level reset
+static inline void merge_flush_func_001F3280(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001F3280 */
+
+/* merge_units: begin func_001F32E0 */
+#pragma push /* merge_units */
+extern int cSkaAnimationSet_GetNode_cString16NR(int, int);
+extern int cPointer_cSkaNode_ctor_cSkaNodeP(Unk1F32E0*, int);
+#if 0 /* merge_units */
+extern void cSkaInitListOfPointers_cSkaTransBLEND_CopyPointerContentsToArray(int, ObjVec*);
+#endif /* merge_units */
+void cSkaInitListOfPointers_cSkaTransBLEND_CopyPointerContentsToArray(void* src, void* dst); /* merge_units */
+#define cSkaInitListOfPointers_cSkaTransBLEND_CopyPointerContentsToArray(a0, a1) (cSkaInitListOfPointers_cSkaTransBLEND_CopyPointerContentsToArray((void *)(a0), (void *)(a1))) /* merge_units */
+
+extern ObjVec* cArray_cSkaTransBLEND_ctor_void(ObjVec*);
+
+Unk1F32E0* cSkaSwitchItem_ctor_cString16NR_cSkaAnimationSetR_cSkaInitListOfPointersR(Unk1F32E0* self, int a1, int a2, int a3) {
+    cPointer_cSkaNode_ctor_cSkaNodeP(self, cSkaAnimationSet_GetNode_cString16NR(a2, a1));
+    cArray_cSkaTransBLEND_ctor_void(&self->list);
+    cSkaInitListOfPointers_cSkaTransBLEND_CopyPointerContentsToArray(a3, &self->list);
+    return self;
+}
+#undef cSkaInitListOfPointers_cSkaTransBLEND_CopyPointerContentsToArray /* merge_units */
+static inline void merge_flush_func_001F32E0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001F32E0 */
+
+/* merge_units: begin func_001F3340 */
+#pragma push /* merge_units */
+#include "ptr_copy_loop.h"
+#pragma opt_rotateloops off
+DEFINE_PTR_COPY_LOOP(cSkaInitListOfPointers_cSkaTransBLEND_CopyPointerContentsToArray, cLList_cSkaTransBLENDPtr_Size, cArray_cSkaTransBLEND_ReserveActual, cArray_cSkaTransBLEND_Clear, cLList_cSkaTransBLENDPtr_Begin, cLList_cSkaTransBLENDPtr_End, cConstLListIterator_cSkaTransBLENDPtr_opMul, cArray_cSkaTransBLEND_PushBackActual, cConstLListIterator_cSkaTransBLENDPtr_opInc, opNe_cConstLListIteratorR_cConstLListIteratorR_3)
+#pragma opt_rotateloops reset
+static inline void merge_flush_func_001F3340(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001F3340 */

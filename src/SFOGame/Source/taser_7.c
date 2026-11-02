@@ -1,10 +1,10 @@
 /*
- * SFOGame/Source/taser: 3 files, 00264360-00264370
+ * SFOGame/Source/taser: 5 files, 002666D0-00266B70
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_00264360 */
+/* merge_units: begin func_002666D0 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -13,151 +13,148 @@
  */
 
 #include "types.h"
-#include "taser_types.h"
+#include "loose01_types.h"
 
-/* &v->data[i] */
-TaserEntry* std_vector_TaserPoint_opIndex(TaserVec* v, int i) {
-    return &v->data[i];
+extern int std_vector_pod_int_insert(PtrVec*, int*, int, int*);
+
+/* push_back */
+int std_vector_cAirTaserPtr_push_back(PtrVec* v, int* value) {
+    return std_vector_pod_int_insert(v, v->data + v->count, 1, value);
 }
-static inline void merge_flush_func_00264360(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_00264360 */
 
-/* merge_units: begin func_00264370 */
+Rel* std_vector_TaserPoint_ctor(Rel* r) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
+    return r;
+}
+
+void std_vector_deleter_TaserPoint_clear(PtrVec* v) {
+    v->count = 0;
+}
+static inline void merge_flush_func_002666D0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002666D0 */
+
+/* merge_units: begin func_00266720 */
 #pragma push /* merge_units */
-typedef struct E264370 {
-    char p0[0x10]; float f10; char p14[4]; float f18; char p1c[4];
-    float f20; char p24[4]; float f28; char p2c[4]; float f30; float f34; char p38[8];
-} E264370;
-typedef struct { char p[0x14]; int n; E264370* d; } V264370;
-extern float D_0048B110;
-extern float D_0048B128;
-extern float D_0048B138;
-extern float D_0048B178;
-extern float D_0048B1B8;
-static inline float Abs264370(float x) { float r; asm { abs.s r, x } return r; }
-static inline float Sign264370(float x) { return x > 0.0f ? 1.0f : -1.0f; }
-static inline E264370* Get264370(V264370* v, int i) { return &v->d[i]; }
-static inline float Calc264370(float k, float* p, float x, int flag)
-{
-    float d = k * -x;
-    float sp = Sign264370(*p);
-    float sd = Sign264370(d);
-    if (sd != sp) d *= 2.0f;
-    if (flag && Abs264370(d) < D_0048B128) d *= D_0048B138;
-    return d;
-}
-#pragma opt_strength_reduction off
-void cAirTaser_AddTension(V264370* v, float dt, int flag)
-{
-    int i;
-    float k = D_0048B110 * dt;
-    int n = v->n;
-    for (i = 1; i < n - 1; i++) {
-        E264370* e = Get264370(v, i);
-        float* p = &e->f20;
-        float d = Calc264370(k, p, e->f10, flag);
-        {
-            float a = Abs264370(d * D_0048B178);
-            float lo = D_0048B1B8;
-            float hi = 1.0f;
-            asm {
-                max.s a, a, lo
-                min.s a, a, hi
-            }
-            Get264370(v, i)->f30 = Get264370(v, i)->f34 = a;
-        }
-        *p += d;
-        e = Get264370(v, i);
-        p = &e->f28;
-        d = Calc264370(k, p, e->f18, flag);
-        *p += d;
-    }
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00264370(void) {}
-#pragma pop /* merge_units */
-/* merge_units: end func_00264370 */
+#pragma cplusplus on
+#define D_0049AE80 D_004A8280
+#include "object_list_erase_range.h"
+extern "C" { char D_004A8280[] = "allocator.hh"; }
 
-/* merge_units: begin func_00264530 */
+DEFINE_OBJECT_LIST_ERASE_RANGE(std_list_deleter_TaserPulse_erase_listdeleter_listdeleter)
+static inline void merge_flush_func_00266720(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00266720 */
+
+/* merge_units: begin func_00266860 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "object_list_erase_file.h"
+
+DEFINE_OBJECT_LIST_ERASE_ONE_FILE(std_list_deleter_TaserPulse_erase_listdeleter, D_004A8280)
+static inline void merge_flush_func_00266860(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00266860 */
+
+/* merge_units: begin func_00266960 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #pragma always_inline on
-#pragma inline_depth(8)
+#include "alloc_guard.h"
 
-/* lq/sq quad copies and VU0 vector ops as GCC-style volatile asm; the unused xx keeps retail's dead addiu.
-   axis/up are declared before the scoped d so the stack slots match (up at 0x80, d at 0x70). */
-static inline void Q16(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
-
-struct V {
-    float x, y, z, w;
-    V() {}
-    void Set(float a, float b, float c, float d) { void* xx = this; x = a; y = b; z = c; w = d; }
-    V(const V& o) { Q16(this, &o); }
-    V& operator=(const V& o) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(this), "r"(&o) : "memory"); return *this; }
-} __attribute__((aligned(16)));
-static inline void VSub(V* c, const V* a, const V* b) { __asm__ volatile("lqc2 vf1, 0x0(%1); lqc2 vf2, 0x0(%2); vsub.xyzw vf1, vf1, vf2; sqc2 vf1, 0x0(%0)" : : "r"(c), "r"(a), "r"(b) : "memory"); }
-struct M {
-    V r[3]; V t;
-    void Apply(V* v) const { __asm__ volatile("lqc2 vf8, 0x0(%0); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; sqc2 vf12, 0x0(%0)" : : "r"(v), "r"(this) : "memory"); }
-};
-struct Pt { V pos; V src; char pad[0x20]; };
-struct Path {
-    char pad[0x14];
-    int n;
-    Pt* p;
-    char pad1C[0x60 - 0x1C];
-    M m;
-    Pt*& P() { return p; }
-};
 extern "C" {
-V* cVector_ctor_float_float_float_float(V* v, float x, float y, float z, float w);
-void cVector_GetNormalized_void(V* out, V* v);
-void cVector_Cross(V* out, V* a, V* b);
-V* cVector_Normalize_void(V* v);
-V* cVector_ctor_cVectorR(V* d, V* s);
-int cVector_IsZeroXYZ(V* v);
-void cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(M* m, V* a, V* b, V* c, V* t);
-void cMatrix_MakeLookAtMatrix_cVectorR(M* m, V* axis);
-void cMatrix_SetUnit(M* m);
+extern char D_004A8270[];
+extern char D_004A8280[];
+void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
 }
-extern "C" void cAirTaser_PointsToWorld(Path* s, V* org)
+inline void* operator new(unsigned int, void* p) { return p; }
+struct M_66960 {
+    float m[4][4];
+    M_66960(const M_66960& o) { void* xx = this; __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(this), "r"(&o) : "memory"); }
+} __attribute__((aligned(16)));
+struct Val_66960 { int a; float b; M_66960 m; };
+struct Node_66960 { Node_66960* prev; Node_66960* next; Val_66960 value; };
+struct List_66960 { int count; int alloc; };
+struct Flag_66960 {
+    char c;
+    Flag_66960() { c = 0; }
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Flag_66960() {}
+};
+struct E_66960 {};
+struct Ptr_66960 : E_66960 { Node_66960* p; Ptr_66960(const E_66960& e, Node_66960* n) : E_66960(e), p(n) {} };
+struct Holder_66960;
+#if 0 /* merge_units */
+extern "C" void details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6(Holder_66960* h);
+#endif /* merge_units */
+extern "C" void* details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6(char* self); /* merge_units */
+#define details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6(a0) ((void)details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6((char *)(a0))) /* merge_units */
+
+struct Holder_66960 {
+    int* alloc;
+    Node_66960* node;
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Holder_66960()
+    {
+        if (node) {
+            details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6(this);
+            Node_66960* p = node;
+            if (p) {
+                AllocGuard guard;
+                cMemMan_Deallocate(0, p, D_004A8280, 0x64);
+            }
+        }
+    }
+};
+
+static inline Node_66960* NewNode() { AllocGuard guard; return (Node_66960*)cMemMan_Allocate(0, 0x60, D_004A8270, 0x5C); }
+#pragma push
+#pragma opt_propagation off
+extern "C" int std_list_deleter_TaserPulse_insert(Node_66960** result, List_66960* list, Node_66960** pos, const Val_66960* value)
 {
-    s->p[0].pos = *org;
-    V axis;
-    V up;
+    Node_66960* n;
+    int* alloc = &list->alloc;
+    Flag_66960 flag;
+    E_66960 f1 = *(E_66960*)&flag;
+    n = NewNode();
     {
-        V d;
-        VSub(&d, &(&s->P()[s->n])[-1].pos, &s->P()[0].pos);
-        axis = d;
+    Holder_66960 h;
+    Ptr_66960 t(f1, n);
+    h.node = t.p;
+    h.alloc = alloc;
+    Val_66960* v = &h.node->value;
+    new (v) Val_66960(*value);
+    Node_66960* m = h.node;
+    Node_66960* p;
+    h.node = 0;
+    p = *pos;
+    p->prev->next = m;
+    m->prev = p->prev;
+    p->prev = m;
+    m->next = p;
+    list->count++;
+    *result = m;
     }
-    up.Set(0.0f, 0.0f, 1.0f, 1.0f);
-    {
-        V c;
-    cVector_Cross(&c, &axis, &up);
-    if (!cVector_IsZeroXYZ(&c)) {
-        V f;
-        V r;
-        V u;
-        V w;
-        cVector_GetNormalized_void(&f, &axis);
-        cVector_ctor_cVectorR(&r, cVector_Normalize_void(&c));
-        cVector_Cross(&u, &r, &f);
-        cMatrix_Set_cVectorR_cVectorR_cVectorR_cVectorR(&s->m, &r, &f, &u, cVector_ctor_float_float_float_float(&w, 0.0f, 0.0f, 0.0f, 1.0f));
-    } else if (!cVector_IsZeroXYZ(&axis)) {
-        cMatrix_MakeLookAtMatrix_cVectorR(&s->m, &axis);
-    } else {
-        cMatrix_SetUnit(&s->m);
-    }
-    }
-    V* t = &s->m.t; *t = s->P()[0].pos;
-    int n = s->n;
-    for (int i = 0; i < n; i++) {
-        s->P()[i].pos = s->P()[i].src;
-        s->m.Apply(&s->P()[i].pos);
-    }
+    return 0;
 }
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00264530(void) {}
+#pragma pop
+#undef details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6 /* merge_units */
+static inline void merge_flush_func_00266960(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00264530 */
+/* merge_units: end func_00266960 */
+
+/* merge_units: begin func_00266B70 */
+#pragma push /* merge_units */
+void* details_compressed_pair_imp_cAllocator_node_compressed_pair_number_second_void_6(char* self) {
+    return self + 4;
+}
+
+List* std_list_deleter_TaserPulse_ctor(List* l) {
+    l->count = 0;
+    l->first = l->last = &l->first;
+    return l;
+}
+static inline void merge_flush_func_00266B70(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00266B70 */

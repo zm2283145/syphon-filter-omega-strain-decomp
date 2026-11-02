@@ -1,18 +1,194 @@
 /*
- * SFOGame/Source/human: 1 file, 00186670
+ * SFOGame/Source/human: 5 files, 00190FF0-001912A0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_00186670 */
+/* merge_units: begin func_00190FF0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-#include "types.h"
-#include "vtable2_base_dtor.h"
+#include "trivial_dtor.h"
 
-/* Two-level destructor: restore vtables, run base destructor, optionally delete. */
-DEFINE_VTABLE2_BASE_DTOR(func_00186670, D_004E0180, D_004E0840, cMessage_dtor)
-static inline void merge_flush_func_00186670(void) {} /* merge_units */
+/* Deleting destructor with nothing to destroy. */
+DEFINE_TRIVIAL_DTOR(cSkaAnimCheckpoints_cTimedEvent_dtor)
+static inline void merge_flush_func_00190FF0(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00186670 */
+/* merge_units: end func_00190FF0 */
+
+/* merge_units: begin func_00191040 */
+#pragma push /* merge_units */
+#include "types.h"
+typedef struct { float x; float y; unsigned char c; } A_191040;
+typedef struct { int p; int q; } B_191040;
+typedef struct { A_191040 a; B_191040 b; } P_191040;
+P_191040* func_00191040(P_191040* d, A_191040* a, B_191040* b)
+{
+    A_191040 t;
+    t = *a;
+    d->a.x = t.x;
+    d->a.y = t.y;
+    d->a.c = t.c;
+    d->b.p = b->p;
+    d->b.q = b->q;
+    return d;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00191040(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00191040 */
+
+/* merge_units: begin func_001910A0 */
+#pragma push /* merge_units */
+typedef struct RootObj RootObj;
+#if 0 /* merge_units */
+extern void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(RootObj* r);
+#endif /* merge_units */
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(void*); /* merge_units */
+#define cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(a0) (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void((void *)(a0))) /* merge_units */
+
+extern void cSkaAnimAnchor_TreeNode_UpdateTransform(RootObj* r);
+extern char* cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(RootObj* r);
+char* cSkaAnimAnchor_GetTransform(RootObj* r) {
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(r)) {
+        cSkaAnimAnchor_TreeNode_UpdateTransform(r);
+        return cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r);
+    }
+    return cTreeNode_cSkaAnimAnchor_TreeNodeData_Data_void(r) + 0x50;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_001910A0(void) {}
+#undef cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001910A0 */
+
+/* merge_units: begin func_00191100 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
+typedef struct { V4 rot; V4 pos; } Plc;
+typedef struct { int w[1]; } It;
+static inline void QRot(V4* v, V4* q) {
+    asm {
+        lqc2 vf1, 0x0(v)
+        vmove.w vf6, vf1
+        vmr32.w vf1, vf0
+        lqc2 vf2, 0x0(q)
+        vmove.w vf3, vf2
+        vsub.xyz vf3, vf0, vf2
+        vmul.xyzw vf4, vf2, vf1
+        vopmula.xyz ACC, vf2, vf1
+        vmaddaw.xyz ACC, vf1, vf2w
+        vopmsub.xyz vf5, vf1, vf2
+        vsubaz.w ACC, vf4, vf4z
+        vmsubay.w ACC, vf0, vf4y
+        vmsubx.w vf5, vf0, vf4x
+        vopmula.xyz ACC, vf5, vf3
+        vmaddaw.xyz ACC, vf5, vf3w
+        vmaddaw.xyz ACC, vf3, vf5w
+        vopmsub.xyz vf6, vf3, vf5
+        sqc2 vf6, 0x0(v)
+    }
+}
+static inline void VAdd3(V4* s, V4* d) {
+    asm {
+        lqc2 vf1, 0x0(d)
+        lqc2 vf2, 0x0(s)
+        vadd.xyz vf1, vf1, vf2
+        sqc2 vf1, 0x0(d)
+    }
+}
+static inline void QC(void* d, const void* s) { __int128 t; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(t) : "r"(d), "r"(s) : "memory"); }
+struct Nd { char pad[0x50]; Plc p; char pad70[0x30]; unsigned char bA0; char padA1[0xF]; int bB0; };
+extern "C" {
+#if 0 /* merge_units */
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(Nd* n);
+#endif /* merge_units */
+#define cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(a0) (cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void((void *)(a0))) /* merge_units */
+
+
+Plc* cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(void* r);
+void cQuatVec_opAssign(Plc* d, Plc* s);
+void cQuatVec_InvertAssumingUnitQuat(Plc* p);
+void cQuaternion_ctor_void(V4* q);
+void cQuaternion_VU0Multiply(V4* a, V4* b, V4* c);
+void cQuaternion_ctor_cQuaternionR(V4* d, V4* s);
+int cTreeNode_cSkaAnimAnchor_TreeNodeData_HasChildren(Nd* n);
+void* cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(Nd* n);
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Begin(It* out, void* vec);
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_End(It* out, void* vec);
+#if 0 /* merge_units */
+bool cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opNe(It* a, It* b);
+#endif /* merge_units */
+int cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opNe(Iter* a, Iter* b); /* merge_units */
+#define cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opNe(a0, a1) ((bool)cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opNe((Iter *)(a0), (Iter *)(a1))) /* merge_units */
+
+Nd** cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opMul(It* it);
+void cSkaAnimAnchor_TreeNode_TellNeedToUpdate(Nd* n);
+#if 0 /* merge_units */
+void cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc(It* it);
+#endif /* merge_units */
+Iter* cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc(Iter* it); /* merge_units */
+#define cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc(a0) ((void)cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc((Iter *)(a0))) /* merge_units */
+
+}
+static inline void Cp(Plc* d, Plc* s) { QC(&d->rot, &s->rot); QC(&d->pos, &s->pos); }
+extern "C" void cSkaAnimAnchor_TreeNode_SetTransform_WorldSpace(Nd* self, Plc* src)
+{
+    { Plc* d = &self->p; QC(&d->rot, &src->rot); QC(&d->pos, &src->pos); }
+    if (self->bB0) {
+        Plc inv;
+        V4 r;
+        V4 m;
+        Plc* p;
+        Plc* ip;
+        cQuatVec_opAssign(&inv, cSkaAnimAnchor_TreeNode_GetTransform_WorldSpace(cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void(self)));
+        cQuatVec_InvertAssumingUnitQuat(&inv);
+        ip = &inv;
+        p = &self->p;
+        cQuaternion_ctor_void(&m);
+        cQuaternion_VU0Multiply(&m, &ip->rot, &p->rot);
+        cQuaternion_ctor_cQuaternionR(&r, &m);
+        { void* xx = &r; /* dead on purpose: retail keeps this addiu */ }
+        QC(&p->rot, &r);
+        V4* v = &p->pos;
+        QRot(v, &ip->rot);
+        VAdd3(&ip->pos, &p->pos);
+    }
+    self->bA0 = 1;
+    if (cTreeNode_cSkaAnimAnchor_TreeNodeData_HasChildren(self)) {
+        It it, end;
+        cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Begin(&it, cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(self));
+        cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_End(&end, cTreeNode_cSkaAnimAnchor_TreeNodeData_Children(self));
+        for (; cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opNe(&it, &end); cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc(&it))
+            cSkaAnimAnchor_TreeNode_TellNeedToUpdate(*cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opMul(&it));
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00191100(void) {}
+#undef cTreeNode_cSkaAnimAnchor_TreeNodeData_Parent_void /* merge_units */
+#undef cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opNe /* merge_units */
+#undef cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00191100 */
+
+/* merge_units: begin func_001912A0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+
+int cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opNe(Iter* a, Iter* b) {
+    return !(a->p == b->p);
+}
+
+Iter* cArray_cTreeNode_cSkaAnimAnchor_TreeNodeDataPtr_Iterator_opInc(Iter* it) {
+    it->p++;
+    return it;
+}
+static inline void merge_flush_func_001912A0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001912A0 */

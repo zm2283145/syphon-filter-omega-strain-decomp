@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/manUtils: 6 files, 00404060-00404D90
+ * Libs/SFOLib/Source/manUtils: 8 files, 00404060-00404FD0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -53,13 +53,33 @@ extern __int128* D_005712F8[2];
 extern __int128* D_005714F0[2][2];
 extern unsigned char D_00571500[2][2];
 extern unsigned char D_00571510[2][2][24];
+#if 0 /* merge_units */
 int cHogFile_GetBlockSize(Npc_S* npc, int i);
+#endif /* merge_units */
+int cHogFile_GetBlockSize(void*, int); /* merge_units */
+#define cHogFile_GetBlockSize(a0, a1) (cHogFile_GetBlockSize((void *)(a0), (a1))) /* merge_units */
+
+#if 0 /* merge_units */
 char* cHogFile_GetBlockName(Npc_S* npc, int i);
+#endif /* merge_units */
+char* cHogFile_GetBlockName(void*, int); /* merge_units */
+#define cHogFile_GetBlockName(a0, a1) (cHogFile_GetBlockName((void *)(a0), (a1))) /* merge_units */
+
+#if 0 /* merge_units */
 __int128* cHogFile_GetBlock_int(Npc_S* npc, int i);
+#endif /* merge_units */
+void* cHogFile_GetBlock_int(void*, int); /* merge_units */
+#define cHogFile_GetBlock_int(a0, a1) ((__int128 *)cHogFile_GetBlock_int((void *)(a0), (a1))) /* merge_units */
+
 void strCpyPad(char* dst, int n, char* src);
 char* strrchr(char* s, int c);
 unsigned int Monster_AddMonsterPart(Cache_S* c, __int128 key, int k);
+#if 0 /* merge_units */
 void Parts_SetManData(Rec_S* r, void* pkt, int a, long long slot, long long k, long long z);
+#endif /* merge_units */
+void Parts_SetManData(void*, void*, int, long long, long long, long long); /* merge_units */
+#define Parts_SetManData(a0, a1, a2, a3, a4, a5) (Parts_SetManData((void *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+
 
 typedef union { __int128 q; char s[16]; } KU;
 
@@ -199,6 +219,10 @@ void Monster_LoadFaceHog(Cache_S* c, Npc_S* npc)
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00404060(void) {}
+#undef cHogFile_GetBlockSize /* merge_units */
+#undef cHogFile_GetBlockName /* merge_units */
+#undef cHogFile_GetBlock_int /* merge_units */
+#undef Parts_SetManData /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00404060 */
 
@@ -292,8 +316,18 @@ extern Key_4750 D_00493AE0;
 extern char D_004BE850[];
 int sprintf(char* d, const char* f, ...);
 void cFileMan_EncodeFilename_charP_cHogFileR_bool(Hog_4750* h, char* name, int a, int b);
+#if 0 /* merge_units */
 int cFileMan_Open(Hog_4750* h);
+#endif /* merge_units */
+int cFileMan_Open(void*); /* merge_units */
+#define cFileMan_Open(a0) (cFileMan_Open((void *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
 int cFileMan_GetSize(Hog_4750* h);
+#endif /* merge_units */
+int cFileMan_GetSize(void*); /* merge_units */
+#define cFileMan_GetSize(a0) (cFileMan_GetSize((void *)(a0))) /* merge_units */
+
 int GetFileStreamMan(void);
 void cFileStreamMan_StreamRequest(int q, Hog_4750* h, void* cb, Rec_4750* r, int a, int b, int c);
 void Parts_PartStreamReturn(void);
@@ -421,6 +455,8 @@ void Monster_LoadAPart(Cache_4750* c, __int128 key, Hog_4750* hog)
     /* dead copy of the "_MAKE_BLA_NONE" key into a local; retail keeps the store */
     if (!queued) *(Key_4750*)t = D_00493AE0;
 }
+#undef cFileMan_Open /* merge_units */
+#undef cFileMan_GetSize /* merge_units */
 static inline void merge_flush_func_00404750(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00404750 */
@@ -462,19 +498,22 @@ extern char D_004BE858[];
 #if 0 /* merge_units */
 int cHogFile_GetBlockSize(Npc_404AA0* npc, int i);
 #endif /* merge_units */
-#define cHogFile_GetBlockSize(a0, a1) (cHogFile_GetBlockSize((Npc_S *)(a0), (a1))) /* merge_units */
+#define cHogFile_GetBlockSize(a0, a1) (cHogFile_GetBlockSize((void *)(a0), (a1))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
 char* cHogFile_GetBlockName(Npc_404AA0* npc, int i);
 #endif /* merge_units */
-#define cHogFile_GetBlockName(a0, a1) (cHogFile_GetBlockName((Npc_S *)(a0), (a1))) /* merge_units */
+#define cHogFile_GetBlockName(a0, a1) (cHogFile_GetBlockName((void *)(a0), (a1))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
 void* cHogFile_GetBlock_int(Npc_404AA0* npc, int i);
 #endif /* merge_units */
-#define cHogFile_GetBlock_int(a0, a1) ((void *)cHogFile_GetBlock_int((Npc_S *)(a0), (a1))) /* merge_units */
+#define cHogFile_GetBlock_int(a0, a1) (cHogFile_GetBlock_int((void *)(a0), (a1))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
@@ -483,16 +522,19 @@ int strcmp(char* a, char* b);
 #define strcmp(a0, a1) (strcmp((const void *)(a0), (const void *)(a1))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 unsigned int Monster_AddMonsterPart(Cache_404AA0* c, __int128 key, int k);
 #endif /* merge_units */
 #define Monster_AddMonsterPart(a0, a1, a2) (Monster_AddMonsterPart((Cache_S *)(a0), (a1), (a2))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void Parts_SetManData(Rec_404AA0* r, void* pkt, int a, long long slot, long long k, long long z);
 #endif /* merge_units */
-#define Parts_SetManData(a0, a1, a2, a3, a4, a5) (Parts_SetManData((Rec_S *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define Parts_SetManData(a0, a1, a2, a3, a4, a5) (Parts_SetManData((void *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+
 
 
 
@@ -613,17 +655,43 @@ struct Cache {
 
 extern "C" {
 extern __int128 D_005716E0;
+#if 0 /* merge_units */
 void cFileMan_ctor_void(Res* r);
+#endif /* merge_units */
+void cFileMan_ctor_void(void*); /* merge_units */
+#define cFileMan_ctor_void(a0) (cFileMan_ctor_void((void *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
 void Libc_Strcpy(char* d, const char* s);
+#endif /* merge_units */
+char* Libc_Strcpy(void* dst, const void* src); /* merge_units */
+#define Libc_Strcpy(a0, a1) ((void)Libc_Strcpy((void *)(a0), (const void *)(a1))) /* merge_units */
+
 void Libc_Strcat(char* d, const char* s);
+#if 0 /* merge_units */
 void cFileMan_EncodeFilename_charP_cFileIOP_bool(Res* r, char* name, int a, int b);
+#endif /* merge_units */
+void cFileMan_EncodeFilename_charP_cFileIOP_bool(void*, void*, int, int); /* merge_units */
+#define cFileMan_EncodeFilename_charP_cFileIOP_bool(a0, a1, a2, a3) (cFileMan_EncodeFilename_charP_cFileIOP_bool((void *)(a0), (void *)(a1), (a2), (a3))) /* merge_units */
+
 #if 0 /* merge_units */
 void* GetFileStreamMan(void);
 #endif /* merge_units */
 #define GetFileStreamMan() ((void *)GetFileStreamMan()) /* merge_units */
 
+
+#if 0 /* merge_units */
 void cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(void* l, Res* r, int f);
+#endif /* merge_units */
+void cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(void*, void*, int); /* merge_units */
+#define cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(a0, a1, a2) (cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode((a0), (void *)(a1), (a2))) /* merge_units */
+
+#if 0 /* merge_units */
 void cFileMan_dtor(Res* r, int flags);
+#endif /* merge_units */
+void cFileMan_dtor(void* f, int del); /* merge_units */
+#define cFileMan_dtor(a0, a1) (cFileMan_dtor((void *)(a0), (a1))) /* merge_units */
+
 void Monster_FreePart(Cache* c, unsigned int i);
 }
 
@@ -694,7 +762,341 @@ void Monster_FreePart(Cache* c, unsigned int i)
         cFileMan_dtor(&r, -1);
     }
 }
+#undef cFileMan_ctor_void /* merge_units */
+#undef Libc_Strcpy /* merge_units */
+#undef cFileMan_EncodeFilename_charP_cFileIOP_bool /* merge_units */
 #undef GetFileStreamMan /* merge_units */
+#undef cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode /* merge_units */
+#undef cFileMan_dtor /* merge_units */
 static inline void merge_flush_func_00404D90(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00404D90 */
+
+/* merge_units: begin func_00404FD0 */
+#pragma push /* merge_units */
+#include "canonical_key_copy.h"
+
+/* library prototypes shared by the blocks below (C linkage) */
+#include "SFOLobby_helpers.h"
+
+#if 0 /* merge_units */
+int sprintf(void *, const void *, ...);
+#endif /* merge_units */
+
+
+#pragma cplusplus on
+#pragma opt_propagation off
+#pragma opt_strength_reduction off
+#pragma opt_unroll_loops off
+#pragma opt_rotateloops off
+#pragma opt_loop_invariants off
+#pragma opt_common_subs off
+typedef struct { int f0; int f4; int h; int fC; } MC_Lod;
+typedef struct { short a; short b; } MC_Tex;
+typedef struct { __int128 x[11]; } MC_File;
+typedef struct {
+    char pad0[0xC0];
+    unsigned int meshCount;
+    int meshC4;
+    unsigned int meshLoaded;
+    unsigned int texCount;
+    int texD0;
+    void* bufD4;
+    void* bufD8;
+    char padDC[0xE4 - 0xDC];
+    int hasE8;
+    void* bufE8;
+    char padEC[0x1410 - 0xEC];
+    MC_Tex tex[0x600];
+    char names[0x300][16];
+    MC_Lod lods[0x300][2];
+    char pad1[0x13410 - 0xBC10];
+    MC_File sub0;
+} MC_State;
+extern "C" {
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
+void Alloc_Lock(int id);
+void EnableIntc(int id);
+extern int g_TextureMgr;
+#if 0 /* merge_units */
+extern int D_00571300;
+#endif /* merge_units */
+#define D_00571300 (*(int*)&D_00571300) /* merge_units */
+
+#if 0 /* merge_units */
+void Libc_Strcat(char* d, char* s);
+#endif /* merge_units */
+#define Libc_Strcat(a0, a1) (Libc_Strcat((a0), (const char *)(a1))) /* merge_units */
+
+#if 0 /* merge_units */
+void cFileMan_ctor_void(MC_File* f);
+#endif /* merge_units */
+#define cFileMan_ctor_void(a0) (cFileMan_ctor_void((void *)(a0))) /* merge_units */
+
+void cFileMan_dtor(void* f, int del);
+#if 0 /* merge_units */
+void cFileMan_EncodeFilename_charP_cFileIOP_bool(MC_File* f, char* name, int a, int b);
+#endif /* merge_units */
+#define cFileMan_EncodeFilename_charP_cFileIOP_bool(a0, a1, a2, a3) (cFileMan_EncodeFilename_charP_cFileIOP_bool((void *)(a0), (void *)(a1), (a2), (a3))) /* merge_units */
+
+#if 0 /* merge_units */
+void* GetFileStreamMan(void);
+#endif /* merge_units */
+#define GetFileStreamMan() ((void *)GetFileStreamMan()) /* merge_units */
+
+#if 0 /* merge_units */
+void cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(void* m, MC_File* f, int a);
+#endif /* merge_units */
+#define cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(a0, a1, a2) (cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode((a0), (void *)(a1), (a2))) /* merge_units */
+
+void cTexMan_RemoveTexture(int lib, int h, int keep);
+void operator_delete(void* p);
+MC_State* Monster_dtor(MC_State* s, short del);
+}
+/* Mesh/texture cache destructor: releases cached LOD meshes and textures, frees buffers. */
+MC_State* Monster_dtor(MC_State* s, short del)
+{
+    MC_File fm;
+    char name[32];
+    unsigned int i;
+    int j;
+    void* p;
+    if (s) {
+        cFileMan_ctor_void(&fm);
+        for (i = s->meshLoaded; i < s->meshCount; i++) {
+            Libc_Strcpy(name, s->names[i]);
+            Libc_Strcat(name, D_004BE830);
+            for (j = 1; j > 0; j--) {
+                MC_Lod* l = (MC_Lod*)((char*)s->lods + i * 32 + j * 16);
+                int h = l->h;
+                if (h != l[-1].h && h != 0) {
+                    name[14] = j + '0';
+                    cFileMan_EncodeFilename_charP_cFileIOP_bool(&fm, name, 0, 0);
+                    cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(GetFileStreamMan(), &fm, 1);
+                }
+            }
+            if (s->lods[i][0].h) {
+                name[14] = '0';
+                cFileMan_EncodeFilename_charP_cFileIOP_bool(&fm, name, 0, 0);
+                cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode(GetFileStreamMan(), &fm, 1);
+            }
+        }
+        ckc_qzero(s->names, 0x300);
+        ckc_qzero(s->lods, 0x600);
+        s->meshCount = 0;
+        s->meshC4 = 0;
+        s->meshLoaded = 0;
+        for (i = 0; i < s->texCount; i++) {
+            {
+                MC_Tex* t = (MC_Tex*)((char*)s->tex + i * 4);
+                int b = t->b;
+                if (b != t->a)
+                    cTexMan_RemoveTexture(g_TextureMgr, b, 0);
+            }
+            {
+                /* loading the library first orders lui before the index add */
+                int lib = g_TextureMgr;
+                cTexMan_RemoveTexture(lib, s->tex[i].a, 0);
+            }
+        }
+        s->texCount = 0;
+        s->texD0 = 0;
+        p = s->bufD4;
+        if (p) {
+            if (g_ProfileLockEnabled) Alloc_Lock(9);
+            g_ProfileLockDepth++;
+            cMemMan_Deallocate(0, p, D_004BE7F0, 0x52C);
+            if (g_ProfileLockEnabled) EnableIntc(9);
+            g_ProfileLockDepth--;
+            p = s->bufD8;
+            if (g_ProfileLockEnabled) Alloc_Lock(9);
+            g_ProfileLockDepth++;
+            cMemMan_Deallocate(0, p, D_004BE7F0, 0x52D);
+            if (g_ProfileLockEnabled) EnableIntc(9);
+            g_ProfileLockDepth--;
+            s->bufD4 = 0;
+            s->bufD8 = 0;
+        }
+        if (s->hasE8) {
+            p = s->bufE8;
+            if (g_ProfileLockEnabled) Alloc_Lock(9);
+            g_ProfileLockDepth++;
+            cMemMan_Deallocate(0, p, D_004BE7F0, 0x532);
+            if (g_ProfileLockEnabled) EnableIntc(9);
+            g_ProfileLockDepth--;
+        }
+        s->bufE8 = 0;
+        s->hasE8 = 0;
+        D_00571300 = 1;
+        cFileMan_dtor(&fm, -1);
+        cFileMan_dtor((char*)s + 0x134AC, -1);
+        cFileMan_dtor((char*)s + 0x13410, -1);
+        if (del > 0)
+            operator_delete(s);
+    }
+    return s;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00404FD0(void) {}
+#undef D_00571300 /* merge_units */
+#undef Libc_Strcat /* merge_units */
+#undef cFileMan_ctor_void /* merge_units */
+#undef cFileMan_EncodeFilename_charP_cFileIOP_bool /* merge_units */
+#undef GetFileStreamMan /* merge_units */
+#undef cFileStreamMan_StreamRequestFlush_cFileManR_eStreamMode /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00404FD0 */
+
+/* merge_units: begin func_004053B0 */
+#pragma push /* merge_units */
+/* 0x004053B0 Monster_MonsterInit (mw38). Quad copies use lq/sq GCC asm; operator= decl order
+   reproduces the dead duplicate addiu pair. Empty asm barrier (no code) keeps axis on the stack. */
+#pragma cplusplus on
+#pragma always_inline on
+#pragma inline_depth(8)
+struct V { float x, y, z, w; };
+struct M;
+extern "C" void cMatrix_ctor_void(M*);
+extern "C" void cMatrix_SetWithAxisAngle(M*, float, float, float, float);
+struct M {
+    union { float m[4][4]; __int128 q[4]; };
+    M() {}
+    M& operator=(const M& o) { void* xx = (void*)&o; xx = this; __int128 t0; __int128 t1; M* d = this; const M* s = &o; asm volatile("lq %0,0(%2)\n\tlq %1,16(%2)\n\tsq %0,0(%3)\n\tlq %0,32(%2)\n\tsq %1,16(%3)\n\tlq %1,48(%2)\n\tsq %0,32(%3)\n\tsq %1,48(%3)" : "=&r"(t0), "=&r"(t1) : "r"(s), "r"(d) : "memory"); return *this; }
+} __attribute__((aligned(16)));
+struct File {
+    int x0;
+    char name[0x9C];
+};
+extern "C" {
+#if 0 /* merge_units */
+void cFileMan_ctor_void(File* f);
+#endif /* merge_units */
+#define cFileMan_ctor_void(a0) (cFileMan_ctor_void((void *)(a0))) /* merge_units */
+
+
+#if 0 /* merge_units */
+void cFileMan_EncodeFilename_charP_cFileIOP_bool(File* f, const char* path, int a, int b);
+#endif /* merge_units */
+#define cFileMan_EncodeFilename_charP_cFileIOP_bool(a0, a1, a2, a3) (cFileMan_EncodeFilename_charP_cFileIOP_bool((void *)(a0), (void *)(a1), (a2), (a3))) /* merge_units */
+
+
+#if 0 /* merge_units */
+int cFileMan_Open(File* f);
+#endif /* merge_units */
+#define cFileMan_Open(a0) (cFileMan_Open((void *)(a0))) /* merge_units */
+
+void cFileMan_Close(File* f);
+#if 0 /* merge_units */
+void cFileMan_dtor(File* f, int flags);
+#endif /* merge_units */
+#define cFileMan_dtor(a0, a1) (cFileMan_dtor((void *)(a0), (a1))) /* merge_units */
+
+
+}
+struct Man {
+    char pad0[0x160];
+    M m160;
+    char pad1A0[0x40];
+    float m1E0[3][4];
+};
+extern "C" {
+void Monster_ReadSortTable(Man*, const char*);
+void Monster_LoadLights(Man*, const char*, void*, M*);
+void cMatrix_Rotate(M*, M*);
+M* cMatrix_ctor_cMatrixR(M* d, const M* s);
+M* cMatrix_Transpose(M* m);
+#if 0 /* merge_units */
+int cFileMan_GetSize(File*);
+#endif /* merge_units */
+#define cFileMan_GetSize(a0) (cFileMan_GetSize((void *)(a0))) /* merge_units */
+
+char* cFileMan_Read_void(File*);
+void SKL_ConvertSKL(void*, char*, int);
+extern const char D_004BE860[];
+extern const char D_004BE880[];
+extern const char D_004BE8A0[];
+extern const char D_004BE8C0[];
+extern const char D_004BE8E0[];
+extern const char D_004BE770[];
+extern char D_00493A60;
+extern char D_0055D510[];
+extern char D_0055D950[];
+}
+static inline void RotMul(M* a, const V& ax, float ang) { M rot; cMatrix_ctor_void(&rot); cMatrix_SetWithAxisAngle(&rot, ax.x, ax.y, ax.z, ang); cMatrix_Rotate(a, &rot); }
+static inline M* TransCopy(M* d, const M* s) { M tmp; return cMatrix_ctor_cMatrixR(d, cMatrix_Transpose(cMatrix_ctor_cMatrixR(&tmp, s))); }
+#pragma push
+#pragma opt_rotateloops off
+#pragma opt_strength_reduction off
+#pragma opt_unroll_loops off
+extern "C" void Monster_MonsterInit(Man* self)
+{
+    M a;
+    V axis;
+    M b;
+    int i, j;
+    Monster_ReadSortTable(self, D_004BE860);
+    Monster_LoadLights(self, D_004BE880, (char*)self + 0x120, &a);
+    axis.x = 0.0f;
+    axis.y = 0.0f;
+    axis.z = 1.0f;
+    axis.w = 0.0f;
+    asm volatile("" : : "r"(&axis) : "memory"); /* barrier: no code */
+    RotMul(&a, axis, 3.1415927f);
+    {
+        M* d = &self->m160;
+        __int128 t0, t1;
+        M* s = &a;
+        asm volatile("lq %0,0(%2)\n\tlq %1,16(%2)\n\tsq %0,0(%3)\n\tlq %0,32(%2)\n\tsq %1,16(%3)\n\tlq %1,48(%2)\n\tsq %0,32(%3)\n\tsq %1,48(%3)" : "=&r"(t0), "=&r"(t1) : "r"(s), "r"(d) : "memory");
+    }
+    Monster_LoadLights(self, D_004BE8A0, (char*)self + 0x1A0, &a);
+    TransCopy(&b, &a);
+    a = b;
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 4; j++) {
+            self->m1E0[i][j] = a.m[i][j];
+        }
+    }
+    D_00493A60 = 0;
+    {
+        File f;
+        cFileMan_ctor_void(&f);
+        cFileMan_EncodeFilename_charP_cFileIOP_bool(&f, D_004BE8C0, 0, 0);
+        if ((unsigned char)cFileMan_Open(&f)) {
+            char buf[0x80];
+            sprintf(buf, D_004BE770, f.name);
+            cFileMan_dtor(&f, -1);
+            goto next1;
+        }
+        int size = cFileMan_GetSize(&f);
+        SKL_ConvertSKL(D_0055D510, cFileMan_Read_void(&f), size);
+        cFileMan_Close(&f);
+        cFileMan_dtor(&f, -1);
+    }
+next1:;
+    {
+        File f;
+        cFileMan_ctor_void(&f);
+        cFileMan_EncodeFilename_charP_cFileIOP_bool(&f, D_004BE8E0, 0, 0);
+        if ((unsigned char)cFileMan_Open(&f)) {
+            char buf[0x80];
+            sprintf(buf, D_004BE770, f.name);
+            cFileMan_dtor(&f, -1);
+            return;
+        }
+        int size = cFileMan_GetSize(&f);
+        SKL_ConvertSKL(D_0055D950, cFileMan_Read_void(&f), size);
+        cFileMan_Close(&f);
+        cFileMan_dtor(&f, -1);
+    }
+}
+#pragma pop
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_004053B0(void) {}
+#undef cFileMan_ctor_void /* merge_units */
+#undef cFileMan_EncodeFilename_charP_cFileIOP_bool /* merge_units */
+#undef cFileMan_Open /* merge_units */
+#undef cFileMan_dtor /* merge_units */
+#undef cFileMan_GetSize /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_004053B0 */

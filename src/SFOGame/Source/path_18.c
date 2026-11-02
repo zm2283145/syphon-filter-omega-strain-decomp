@@ -1,15 +1,87 @@
 /*
- * SFOGame/Source/path: 1 file, 001606C0
+ * SFOGame/Source/path: 3 files, 00163FA0-00163FD0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_001606C0 */
+/* merge_units: begin func_00163FA0 */
+#pragma push /* merge_units */
+#include "types.h"
+#include "iter_return_copy.h"
+
+/* Return the begin iterator. */
+DEFINE_ITER_BEGIN(std_list_cPathSystemRequestPtr_begin_void_2)
+static inline void merge_flush_func_00163FA0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00163FA0 */
+
+/* merge_units: begin func_00163FD0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-#include "vtable_base_dtor.h"
+struct CxHpActor {char pad[0xC];int serial;};
+struct CxHpReq { CxHpActor* actor;int serial;char pad8[6];unsigned char reported;};
+struct CxHpLink {CxHpLink* next;CxHpLink* prev;CxHpReq* req;};
+struct CxHpList {int count;void* unused;CxHpLink* head;};
+struct CxHpManager {char pad[0x20];CxHpList queue;};
+struct CxHpIt { CxHpLink* link;};
+#if 0 /* merge_units */
+extern "C" void std_list_cPathSystemRequestPtr_begin_void_2(CxHpIt*,CxHpList*);
+#endif /* merge_units */
+#define std_list_cPathSystemRequestPtr_begin_void_2(a0, a1) (std_list_cPathSystemRequestPtr_begin_void_2((IterRet *)(a0), (IterContainer *)(a1))) /* merge_units */
 
-DEFINE_VTABLE_BASE_DTOR(cNetPathMsg_dtor, D_004DE510, cMessage_dtor)
-static inline void merge_flush_func_001606C0(void) {} /* merge_units */
+extern "C" void cConstLListIterator_cPathSystemRequestPtr_ctor(CxHpIt*,CxHpIt*);
+static inline CxHpActor* CxHp_Get(CxHpReq* req){bool isNull;bool ok;CxHpActor* actor;actor=req->actor;isNull=!actor;ok=true;if(!isNull)if(actor->serial!=req->serial)ok=false;return ok ? actor:0;}
+static inline void CxHp_Conv(CxHpIt* out,CxHpList* l){CxHpIt it;std_list_cPathSystemRequestPtr_begin_void_2(&it,l);cConstLListIterator_cPathSystemRequestPtr_ctor(out,&it);}
+static inline int PendingCopy(CxHpIt other){return (unsigned char)!other.link->req->reported;}
+static inline int Pending0(CxHpList*l){CxHpIt temp;temp.link=l->head;return PendingCopy(temp);}
+/* Nested iterator conversion preserves separate temporary lifetimes. */
+static inline void Conv0(CxHpIt*out,CxHpList*l){CxHp_Conv(out,l);}
+static inline void Conv1(CxHpIt*out,CxHpList*l){Conv0(out,l);}
+extern "C" int cPathSystem_IsRequestBeingProcessed(CxHpManager* self,CxHpActor* actor){
+    int result=0;
+    if(self->queue.count>0){
+        int* serial=&actor->serial;
+        CxHpIt converted;
+        Conv1(&converted,&self->queue);
+        int id=CxHp_Get(converted.link->req)->serial;
+        if(id==*serial){
+            result=Pending0(&self->queue);
+        }
+    }
+    return result;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00163FD0(void) {}
+#undef std_list_cPathSystemRequestPtr_begin_void_2 /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001606C0 */
+/* merge_units: end func_00163FD0 */
+
+/* merge_units: begin func_001640B0 */
+#pragma push /* merge_units */
+typedef struct { char pad[0xC]; int serial; } Tgt_40B0;
+typedef struct { Tgt_40B0* t; int serial; int x8; char c; unsigned char d; unsigned char e; } S_40B0;
+S_40B0* cPathSystemRequest_ctor(S_40B0* self, Tgt_40B0* t, char c)
+{
+    int none;
+    int* p;
+    self->serial = -2;
+    self->t = 0;
+    self->d = 1;
+    self->e = 0;
+    self->c = c;
+    self->t = t;
+    if (t)
+        p = &t->serial;
+    else {
+        none = -1;
+        p = &none;
+    }
+    self->serial = *p;
+    if (t)
+        self->x8 = t->serial;
+    return self;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_001640B0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_001640B0 */

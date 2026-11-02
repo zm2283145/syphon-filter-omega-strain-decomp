@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/character: 19 files, 003E46E0-003E4830
+ * Libs/SFOLib/Source/character: 22 files, 003E46E0-003E51E0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -250,7 +250,19 @@ void cMessage_ctor_cMessageNameR_messagebaseR(Msg*, void*, Packet*);
 #define cMessage_ctor_cMessageNameR_messagebaseR(a0, a1, a2) ((void)cMessage_ctor_cMessageNameR_messagebaseR((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 
 
-void** cNetObj_GetNetSystem(int); void QueueMessage_cMessageR_cSystemP_int_int(Msg*, void*, int, int); void cMessage_dtor(Msg*, int); }
+
+void** cNetObj_GetNetSystem(int); 
+#if 0 /* merge_units */
+void QueueMessage_cMessageR_cSystemP_int_int(Msg*, void*, int, int);
+#endif /* merge_units */
+void QueueMessage_cMessageR_cSystemP_int_int(void*, void*, int, int); /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+#if 0 /* merge_units */
+void cMessage_dtor(Msg*, int);
+#endif /* merge_units */
+void cMessage_dtor(void*, int); /* merge_units */
+#define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
+}
 static inline V4_003E49B0* V4_Set(V4_003E49B0* v, float x, float y, float z, float w) { v->x = x; v->y = y; v->z = z; v->w = w; return v; }
 /* GCC-style volatile lq/sq quad copy (c57da idiom): keeps the unfolded address registers */
 static inline void V4_Copy(V4_003E49B0* d, V4_003E49B0* s) { __int128 q; __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
@@ -277,6 +289,8 @@ extern "C" int cCharActionMsg_MotionParams_NetCharActionMotionParamsReq(int a, i
     return 0x28;
 }
 #undef cMessage_ctor_cMessageNameR_messagebaseR /* merge_units */
+#undef QueueMessage_cMessageR_cSystemP_int_int /* merge_units */
+#undef cMessage_dtor /* merge_units */
 static inline void merge_flush_func_003E49B0(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E49B0 */
@@ -293,16 +307,19 @@ void cMessage_ctor_cMessageNameR_messagebaseR(Msg_003E4AF0*,void*,Packet_003E4AF
 #define cMessage_ctor_cMessageNameR_messagebaseR(a0, a1, a2) ((void)cMessage_ctor_cMessageNameR_messagebaseR((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void QueueMessage_cMessageR_cSystemP_int_int(Msg_003E4AF0*,void*,int,int);
 #endif /* merge_units */
-#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
 void cMessage_dtor(Msg_003E4AF0*,int);
 #endif /* merge_units */
-#define cMessage_dtor(a0, a1) (cMessage_dtor((Msg *)(a0), (a1))) /* merge_units */
+#define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
+
 
 
 
@@ -333,16 +350,19 @@ void cMessage_ctor_cMessageNameR_messagebaseR(Msg_003E4BE0*,void*,Packet_003E4BE
 #define cMessage_ctor_cMessageNameR_messagebaseR(a0, a1, a2) ((void)cMessage_ctor_cMessageNameR_messagebaseR((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void QueueMessage_cMessageR_cSystemP_int_int(Msg_003E4BE0*,void*,int,int);
 #endif /* merge_units */
-#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
 void cMessage_dtor(Msg_003E4BE0*,int);
 #endif /* merge_units */
-#define cMessage_dtor(a0, a1) (cMessage_dtor((Msg *)(a0), (a1))) /* merge_units */
+#define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
+
 
 
 
@@ -373,16 +393,19 @@ void cMessage_ctor_cMessageNameR_messagebaseR(Msg_003E4CC0*,void*,Packet_003E4CC
 #define cMessage_ctor_cMessageNameR_messagebaseR(a0, a1, a2) ((void)cMessage_ctor_cMessageNameR_messagebaseR((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void QueueMessage_cMessageR_cSystemP_int_int(Msg_003E4CC0*,void*,int,int);
 #endif /* merge_units */
-#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
 void cMessage_dtor(Msg_003E4CC0*,int);
 #endif /* merge_units */
-#define cMessage_dtor(a0, a1) (cMessage_dtor((Msg *)(a0), (a1))) /* merge_units */
+#define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
+
 
 
 
@@ -414,16 +437,19 @@ void cMessage_ctor_cMessageNameR_messagebaseR(Msg_003E4DA0*,void*,Packet_003E4DA
 #define cMessage_ctor_cMessageNameR_messagebaseR(a0, a1, a2) ((void)cMessage_ctor_cMessageNameR_messagebaseR((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void QueueMessage_cMessageR_cSystemP_int_int(Msg_003E4DA0*,void*,int,int);
 #endif /* merge_units */
-#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
 void cMessage_dtor(Msg_003E4DA0*,int);
 #endif /* merge_units */
-#define cMessage_dtor(a0, a1) (cMessage_dtor((Msg *)(a0), (a1))) /* merge_units */
+#define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
+
 
 
 
@@ -456,16 +482,19 @@ void cMessage_ctor_cMessageNameR_messagebaseR(Msg_003E4E90*,void*,Packet_003E4E9
 #define cMessage_ctor_cMessageNameR_messagebaseR(a0, a1, a2) ((void)cMessage_ctor_cMessageNameR_messagebaseR((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void QueueMessage_cMessageR_cSystemP_int_int(Msg_003E4E90*,void*,int,int);
 #endif /* merge_units */
-#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
 void cMessage_dtor(Msg_003E4E90*,int);
 #endif /* merge_units */
-#define cMessage_dtor(a0, a1) (cMessage_dtor((Msg *)(a0), (a1))) /* merge_units */
+#define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
+
 
 
 
@@ -496,16 +525,19 @@ void cMessage_ctor_cMessageNameR_messagebaseR(Msg_003E4F70*,void*,Packet_003E4F7
 #define cMessage_ctor_cMessageNameR_messagebaseR(a0, a1, a2) ((void)cMessage_ctor_cMessageNameR_messagebaseR((void *)(a0), (a1), (void *)(a2))) /* merge_units */
 
 
+
 #if 0 /* merge_units */
 void QueueMessage_cMessageR_cSystemP_int_int(Msg_003E4F70*,void*,int,int);
 #endif /* merge_units */
-#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((Msg *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define QueueMessage_cMessageR_cSystemP_int_int(a0, a1, a2, a3) (QueueMessage_cMessageR_cSystemP_int_int((void *)(a0), (a1), (a2), (a3))) /* merge_units */
+
 
 
 #if 0 /* merge_units */
 void cMessage_dtor(Msg_003E4F70*,int);
 #endif /* merge_units */
-#define cMessage_dtor(a0, a1) (cMessage_dtor((Msg *)(a0), (a1))) /* merge_units */
+#define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
+
 
 
 
@@ -570,3 +602,79 @@ unsigned char cCharActionMsg_DestinationParams_InitNet(void* reg)
 static inline void merge_flush_func_003E5120(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003E5120 */
+
+/* merge_units: begin func_003E51E0 */
+#pragma push /* merge_units */
+#if 0 /* merge_units */
+extern int NetRegisterApplicationMessage(void* type, void* factory);
+#endif /* merge_units */
+#define NetRegisterApplicationMessage(a0, a1) (NetRegisterApplicationMessage((a0), (a1))) /* merge_units */
+
+extern int D_0055A208;
+#if 0 /* merge_units */
+extern void cCharActionMsg_MotionParams_NetCharActionMotionParamsReq(void);
+#endif /* merge_units */
+
+unsigned char cCharActionMsg_MotionParams_InitNet(void* reg)
+{
+    struct { long long file; int pad; char a[16]; int b; int c; char d; } L;
+    unsigned char ok = 0;
+    if (NetRegisterMessageStart(reg) == 0 && cCharActionMsg_RegisterFields() != 0
+        && NetMessageField(&L.file, L.a, 0x10, 1) == 0
+        && NetMessageField(&L.file, &L.b, 4, 1) == 0
+        && NetMessageField(&L.file, &L.c, 4, 1) == 0
+        && NetMessageField(&L.file, &L.d, 1, 1) == 0
+        && NetRegisterApplicationMessage(&D_0055A208, cCharActionMsg_MotionParams_NetCharActionMotionParamsReq) == 0)
+        ok = 1;
+    return ok;
+}
+#undef NetRegisterApplicationMessage /* merge_units */
+static inline void merge_flush_func_003E51E0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003E51E0 */
+
+/* merge_units: begin func_003E52A0 */
+#pragma push /* merge_units */
+extern int D_0055A200;
+#if 0 /* merge_units */
+extern void cCharActionMsg_ObjectId_Int_Scalar_Bool_NetCharActionNetObjectIdIntScalarBoolReq(void);
+#endif /* merge_units */
+
+unsigned char cCharActionMsg_ObjectId_Int_Scalar_Bool_InitNet(void* reg)
+{
+    struct { long long file; char padC[4]; int fC; int f10; int f14; char f18; } L;
+    unsigned char ok = 0;
+    if (NetRegisterMessageStart(reg) == 0 && cCharActionMsg_RegisterFields() != 0
+        && NetMessageField(&L.file, &L.fC, 4, 1) == 0
+        && NetMessageField(&L.file, &L.f10, 4, 1) == 0
+        && NetMessageField(&L.file, &L.f14, 4, 1) == 0
+        && NetMessageField(&L.file, &L.f18, 1, 1) == 0
+        && NetRegisterApplicationMessage(&D_0055A200, cCharActionMsg_ObjectId_Int_Scalar_Bool_NetCharActionNetObjectIdIntScalarBoolReq) == 0)
+        ok = 1;
+    return ok;
+}
+static inline void merge_flush_func_003E52A0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003E52A0 */
+
+/* merge_units: begin func_003E5360 */
+#pragma push /* merge_units */
+extern int D_0055A1F8;
+#if 0 /* merge_units */
+extern void cCharActionMsg_ObjectId_Int_NetCharActionNetObjectIdIntReq(void);
+#endif /* merge_units */
+
+unsigned char cCharActionMsg_ObjectId_Int_InitNet(void* reg)
+{
+    struct { long long file; char padC[4]; int fC; int f10; } L;
+    unsigned char ok = 0;
+    if (NetRegisterMessageStart(reg) == 0 && cCharActionMsg_RegisterFields() != 0
+        && NetMessageField(&L.file, &L.fC, 4, 1) == 0
+        && NetMessageField(&L.file, &L.f10, 4, 1) == 0
+        && NetRegisterApplicationMessage(&D_0055A1F8, cCharActionMsg_ObjectId_Int_NetCharActionNetObjectIdIntReq) == 0)
+        ok = 1;
+    return ok;
+}
+static inline void merge_flush_func_003E5360(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003E5360 */

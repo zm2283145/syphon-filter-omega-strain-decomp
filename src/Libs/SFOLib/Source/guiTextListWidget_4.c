@@ -1,5 +1,5 @@
 /*
- * Libs/SFOLib/Source/guiTextListWidget: 9 files, 00421290-004213E0
+ * Libs/SFOLib/Source/guiTextListWidget: 14 files, 00421290-00421F10
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -18,7 +18,12 @@ void std_basic_string_char_char_traits_char_assign_basicstringR(void* destinatio
 void String_Dtor(void* string, int flags);
 void std_vector_imp_Item_insert(TextListEntryVec* entries, TextListEntry* position,
                    int count, const TextListEntry* value);
+#if 0 /* merge_units */
 void GuiArrayWidget_SetSelected(TextRenderWidget* self, int first, int second);
+#endif /* merge_units */
+void GuiArrayWidget_SetSelected(void*, int, int); /* merge_units */
+#define GuiArrayWidget_SetSelected(a0, a1, a2) (GuiArrayWidget_SetSelected((void *)(a0), (a1), (a2))) /* merge_units */
+
 void operator_delete(void* allocation);
 }
 
@@ -59,6 +64,7 @@ extern "C" TextListEntry* GuiTextListWidget_Item_dtor(TextListEntry* self, short
     }
     return self;
 }
+#undef GuiArrayWidget_SetSelected /* merge_units */
 static inline void merge_flush_func_00421290(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00421290 */
@@ -82,7 +88,8 @@ struct Widget {
 #if 0 /* merge_units */
 extern "C" void GuiArrayWidget_SetSelected(Widget* self, int a, int b);
 #endif /* merge_units */
-#define GuiArrayWidget_SetSelected(a0, a1, a2) (GuiArrayWidget_SetSelected((TextRenderWidget *)(a0), (a1), (a2))) /* merge_units */
+#define GuiArrayWidget_SetSelected(a0, a1, a2) (GuiArrayWidget_SetSelected((void *)(a0), (a1), (a2))) /* merge_units */
+
 
 
 /* Calls virtual +0x5C(1, +0x94) then GuiArrayWidget_SetSelected(self, 0, 0). */
@@ -155,6 +162,7 @@ typedef struct { char p[0x94]; int count; E421540* items; } O421540;
 extern char* std_basic_string_char_char_traits_char_c_str(E421540* e);
 #endif /* merge_units */
 #define std_basic_string_char_char_traits_char_c_str(a0) (std_basic_string_char_char_traits_char_c_str((const void *)(a0))) /* merge_units */
+
 
 
 
@@ -263,7 +271,12 @@ void* cMemMan_Allocate(int pool, unsigned int size, char* file, int line);
 TextRenderChild* cTextArea_ctor(TextRenderChild* self, int x, int y,
                              int width, int height, void* resource,
                              TextRenderStyle* style);
+#if 0 /* merge_units */
 void std_vector_deleter_Item_dtor(TextListEntryVec* entries, int flags);
+#endif /* merge_units */
+void* std_vector_deleter_Item_dtor(void* self, short deleteFlag); /* merge_units */
+#define std_vector_deleter_Item_dtor(a0, a1) ((void)std_vector_deleter_Item_dtor((void *)(a0), (short)(a1))) /* merge_units */
+
 void cArray_int_dtor(void* state, int flags);
 void GuiWidget_dtor(TextRenderWidget* self, int flags);
 void std_vector_imp_int_1_dtor(TextListEntryVec* entries, int flags);
@@ -430,5 +443,261 @@ extern "C" TextListEntryVec* func_00421B00(TextListEntryVec* self, short deleteF
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00421690(void) {}
+#undef std_vector_deleter_Item_dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00421690 */
+
+/* merge_units: begin func_00421BF0 */
+#pragma push /* merge_units */
+/* Compiled as C++ (virtual calls through $t9 only come from real virtual dispatch). */
+#pragma cplusplus on
+
+/* Virtual-call view of WidgetV: only the slots used here are named (vtable offset in comments). */
+struct WidgetV {
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03(); virtual void v04(); virtual void v05();
+    virtual void v06(); virtual void v07(); virtual void v08(); virtual void v09(); virtual void v0A(); virtual void v0B();
+    virtual void v0C(); virtual void v0D(); virtual void v0E(); virtual void v0F(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14();
+    virtual void Method5C(int a, int b); /* +0x5C */
+};
+
+typedef struct Anim { char pad[0xC]; unsigned char enabled; /* +0xC */ } Anim;
+
+typedef struct Widget_00421BF0 {
+    void* vtable;           /* +0x00 */
+    char pad04[0x14 - 4];
+    unsigned short flags;   /* +0x14 */
+    char pad16[0x58 - 0x16];
+    unsigned char mode;     /* +0x58 */
+    char pad59[0x90 - 0x59];
+    Anim anim;              /* +0x90 */
+    char pad9D[0xA0 - 0x9D];
+    int unkA0;              /* +0xA0 */
+    unsigned char flagA4;   /* +0xA4 */
+    char padA5[3];
+    int unkA8;              /* +0xA8 */
+    int padAC;
+    float scale[4];         /* +0xB0 */
+    float offset[4];        /* +0xC0 */
+    float tint[4];          /* +0xD0 */
+    float color[4];         /* +0xE0 */
+    unsigned char flagF0;   /* +0xF0 */
+    unsigned char flagF1;   /* +0xF1 */
+} Widget_00421BF0;
+extern "C" void GuiArrayWidget_ctor(Widget_00421BF0* self);
+#if 0 /* merge_units */
+extern "C" void std_vector_Item_ctor(Anim* anim);
+#endif /* merge_units */
+extern "C" Rel* std_vector_Item_ctor(Rel* r); /* merge_units */
+#define std_vector_Item_ctor(a0) ((void)std_vector_Item_ctor((Rel *)(a0))) /* merge_units */
+
+
+/* Constructor: base init, vtable D_004E0C80, animation sub-object, default mode 2 and colour/scale defaults. */
+extern "C" Widget_00421BF0* GuiTextListWidget_ctor(Widget_00421BF0* self)
+{
+    Anim* anim;
+    GuiArrayWidget_ctor(self);
+    self->vtable = D_004E0C80;
+    anim = &self->anim;
+    std_vector_Item_ctor(anim);
+    anim->enabled = 1;
+    self->flags |= 0x80;
+    self->mode = 2;
+    ((WidgetV*)self)->Method5C(1, 0);
+    self->unkA0 = 0;
+    self->unkA8 = 0;
+    self->flagF1 = 0;
+    self->flagA4 = 0;
+    self->scale[0] = 1.0f;
+    self->scale[1] = 1.0f;
+    self->scale[2] = 1.0f;
+    self->scale[3] = 1.0f;
+    self->offset[0] = 0.0f;
+    self->offset[1] = 1.0f;
+    self->offset[2] = 0.0f;
+    self->offset[3] = 1.0f;
+    self->tint[0] = 0.6f;
+    self->tint[1] = 0.6f;
+    self->tint[2] = 0.6f;
+    self->tint[3] = 1.0f;
+    self->color[0] = 1.0f;
+    self->color[1] = 1.0f;
+    self->color[2] = 1.0f;
+    self->color[3] = 1.0f;
+    self->flagF0 = 0;
+    return self;
+}
+#undef std_vector_Item_ctor /* merge_units */
+static inline void merge_flush_func_00421BF0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00421BF0 */
+
+/* merge_units: begin func_00421CD0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+/* Preserve allocator-guard inlining through the nested vector cleanup. */
+#pragma inline_depth(8)
+
+extern "C" {
+#if 0 /* merge_units */
+void std_vector_deleter_Item_dtor(TextListEntryVec* entries, int flags);
+#endif /* merge_units */
+#define std_vector_deleter_Item_dtor(a0, a1) ((void)std_vector_deleter_Item_dtor((void *)(a0), (short)(a1))) /* merge_units */
+
+void func_0013A040(void* state, int flags);
+#if 0 /* merge_units */
+void cMemMan_Deallocate(int pool, void* allocation, char* file, int line);
+#endif /* merge_units */
+
+}
+
+static inline void destroy_storage(TextListEntryVec* entries)
+{
+    if (entries)
+        std_vector_deleter_Item_dtor(entries, 0);
+}
+
+static inline void destroy_vector(TextListEntryVec* entries)
+{
+    if (entries)
+        destroy_storage(entries);
+}
+
+/* Destroy both vector layers before optional object deletion. */
+extern "C" TextListEntryVec* cArray_Item_dtor(TextListEntryVec* self, short deleteFlag)
+{
+    if (self) {
+        destroy_vector(self);
+        if (deleteFlag > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+
+/* Destroy vector storage before optional object deletion. */
+extern "C" TextListEntryVec* std_vector_Item_dtor(TextListEntryVec* self, short deleteFlag)
+{
+    if (self) {
+        destroy_storage(self);
+        if (deleteFlag > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+
+static inline void destroy_state(void* state)
+{
+    if (state)
+        func_0013A040(state, -1);
+}
+
+/* Restore the base vtable and destroy layout state before the widget base. */
+extern "C" TextRenderWidget* GuiArrayWidget_dtor_421DA0(TextRenderWidget* self, short deleteFlag)
+{
+    if (self) {
+        self->vtable = D_004E0D20;
+        destroy_state(self->baseState);
+        GuiWidget_dtor(self, 0);
+        if (deleteFlag > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+
+static inline void free_buffer(TextListEntry* data)
+{
+    if (data) {
+        AllocGuard guard;
+        cMemMan_Deallocate(0, data, D_0049AF00, 0x64);
+    }
+}
+
+static inline void release_buffer(TextListEntryVec* entries)
+{
+    if (entries) {
+        TextListEntry* data = entries->data;
+        if (data)
+            free_buffer(data);
+    }
+}
+
+static inline void release_base(TextListEntryVec* entries)
+{
+    if (entries)
+        release_buffer(entries);
+}
+
+/* Release the entry buffer through both base layers before optional deletion. */
+extern "C" TextListEntryVec* func_00421E20(TextListEntryVec* self, short deleteFlag)
+{
+    if (self) {
+        release_base(self);
+        if (deleteFlag > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+#undef std_vector_deleter_Item_dtor /* merge_units */
+static inline void merge_flush_func_00421CD0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00421CD0 */
+
+/* merge_units: begin func_00421F10 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit: guiTextListWidget.cc. Functions are named by address
+ * until real names are known.
+ */
+
+
+Rel* std_vector_Item_ctor(Rel* r) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
+    return r;
+}
+static inline void merge_flush_func_00421F10(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00421F10 */
+
+/* merge_units: begin func_00421F30 */
+#pragma push /* merge_units */
+#pragma push
+#pragma cplusplus on
+#include "direct_base_dtor.h"
+#pragma pop
+
+#pragma cplusplus on
+
+/* Deleting destructor that runs the base destructor. */
+DEFINE_DIRECT_BASE_DTOR(std_vector_imp_Item_dtor, std_vector_deleter_Item_dtor)
+static inline void merge_flush_func_00421F30(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00421F30 */
+
+/* merge_units: begin func_00421F90 */
+#pragma push /* merge_units */
+typedef struct { char pad[0x14]; } G4_E14;
+typedef struct { int x; int size; G4_E14* data; } G4_Vec;
+#if 0 /* merge_units */
+extern void String_Dtor(G4_E14* e, int f);
+#endif /* merge_units */
+#define String_Dtor(a0, a1) (String_Dtor((void *)(a0), (a1))) /* merge_units */
+
+static inline void destroy_(G4_E14* p) { if (p) String_Dtor(p, 0); }
+void std_vector_deleter_Item_clear(G4_Vec* v)
+{
+    G4_E14* b = v->data;
+    G4_E14* e = b + v->size;
+    while (b < e) {
+        G4_E14* p = --e;
+        if (p) destroy_(p);
+    }
+    v->size = 0;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00421F90(void) {}
+#undef String_Dtor /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00421F90 */

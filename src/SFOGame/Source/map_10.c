@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/map: 2 files, 0026E930-0026E970
+ * SFOGame/Source/map: 3 files, 0026E930-0026EBD0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -51,7 +51,12 @@ struct Vec { int unk0; int count; Obj** data; };
 
 extern "C" {
 extern Batch D_00542DC0;
+#if 0 /* merge_units */
 Item** std_vector_cVUM_GOBJPtr_opIndex_uint_2(Vec* v, int i);
+#endif /* merge_units */
+int* std_vector_cVUM_GOBJPtr_opIndex_uint_2(PtrVec* v, int i); /* merge_units */
+#define std_vector_cVUM_GOBJPtr_opIndex_uint_2(a0, a1) ((Item * *)std_vector_cVUM_GOBJPtr_opIndex_uint_2((PtrVec *)(a0), (a1))) /* merge_units */
+
 void cBBoxMan_StartVisibilityTest(Batch* b);
 void cBBoxMan_EndVisibilityTest(Batch* b);
 }
@@ -111,6 +116,16 @@ extern "C" void ProcessVisibility(Vec* v) {
         goto post;
     }
 }
+#undef std_vector_cVUM_GOBJPtr_opIndex_uint_2 /* merge_units */
 static inline void merge_flush_func_0026E970(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0026E970 */
+
+/* merge_units: begin func_0026EBD0 */
+#pragma push /* merge_units */
+int* std_vector_cVUM_GOBJPtr_opIndex_uint_2(PtrVec* v, int i) {
+    return v->data + i;
+}
+static inline void merge_flush_func_0026EBD0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0026EBD0 */

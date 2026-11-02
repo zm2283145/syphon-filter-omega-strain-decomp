@@ -1,33 +1,55 @@
 /*
- * SFOGame/Source/humanAnimData: 8 files, 001F3100-001F31B0
+ * SFOGame/Source/humanAnimData: 8 files, 00200550-00201A90
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_001F3100 */
+/* merge_units: begin func_00200550 */
 #pragma push /* merge_units */
 #include "types.h"
-
-typedef struct { int unk0; int unk4; int unk8; } Obj;
-#if 0 /* merge_units */
-extern void compressed_pair_cAllocator_cSkaSwitchItem_int_ctor_uint(Obj* self, int a);
-#endif /* merge_units */
-Word * compressed_pair_cAllocator_cSkaSwitchItem_int_ctor_uint(); /* merge_units */
-
-
-/* Constructor: base init then clears +4/+8. */
-Obj* std_vector_deleter_cSkaSwitchItem_ctor_void(Obj* self)
+extern void cPointer_cSkaNode_dtor(void* p, int n);
+extern void operator_delete(void* p);
+void* cSkaAnimationBlend_dtor(void* p, short flag)
 {
-    compressed_pair_cAllocator_cSkaSwitchItem_int_ctor_uint(self, 0);
-    self->unk4 = 0;
-    self->unk8 = 0;
-    return self;
+    if (p) {
+        cPointer_cSkaNode_dtor(p, -1);
+        if (flag > 0) {
+            operator_delete(p);
+        }
+    }
+    return p;
 }
-static inline void merge_flush_func_001F3100(void) {} /* merge_units */
+static inline void merge_flush_func_00200550(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001F3100 */
+/* merge_units: end func_00200550 */
 
-/* merge_units: begin func_001F3140 */
+/* merge_units: begin func_002005B0 */
+#pragma push /* merge_units */
+extern void MEMCLEAR16(char*, int);
+#pragma optimization_level 1
+char* cString16N_2_ctor_charP(char* dst, char* src)
+{
+    if (src != 0) {
+        unsigned char done = 0;
+        int i;
+        for (i = 0; i < 31; i++) {
+            if (src[i] == 0) {
+                done = 1;
+            }
+            dst[i] = done ? 0 : src[i];
+        }
+        dst[i] = 0;
+    } else {
+        MEMCLEAR16(dst, 2);
+    }
+    return dst;
+}
+#pragma optimization_level reset
+static inline void merge_flush_func_002005B0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002005B0 */
+
+/* merge_units: begin func_00200660 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -37,137 +59,493 @@ static inline void merge_flush_func_001F3100(void) {} /* merge_units */
 
 #include "loose01_types.h"
 
-extern Word* details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_ctor_uint(Word*, int);
-#if 0 /* merge_units */
-extern Word* cAllocator_cSkaSwitchItem_ctor_void(Word*);
-#endif /* merge_units */
-void * cAllocator_cSkaSwitchItem_ctor_void(); /* merge_units */
-
-
-Word* compressed_pair_cAllocator_cSkaSwitchItem_int_ctor_uint(Word* self, int value) {
-    details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_ctor_uint(self, value);
-    return self;
-}
-
-Word* details_compressed_pair_imp_cAllocator_cSkaSwitchItem_int_1_ctor_uint(Word* self, int value) {
-    cAllocator_cSkaSwitchItem_ctor_void(self);
-    self->value = value;
-    return self;
-}
-static inline void merge_flush_func_001F3140(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F3140 */
-
-/* merge_units: begin func_001F31B0 */
-#pragma push /* merge_units */
-extern void* D_004DFC50;
-extern int cQuaternion_ctor_cQuaternionR(int*, int);
-
-void* cAllocator_cSkaSwitchItem_ctor_void(void* self) {
-    return self;
-}
-
-MotionNode* cSkaNode_ctor_eType_cQuaternionR(MotionNode* self, int type, int name) {
-    self->vtable = &D_004DFC50;
-    self->type = type;
-    cQuaternion_ctor_cQuaternionR(&self->name, name);
-    return self;
-}
-static inline void merge_flush_func_001F31B0(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F31B0 */
-
-/* merge_units: begin func_001F3200 */
-#pragma push /* merge_units */
-#pragma optimization_level 1
-
-#if 0 /* merge_units */
-extern void cLList_cSkaSwitchItemPtr_PushBackActual(void*, int*);
-#endif /* merge_units */
-void cLList_cSkaSwitchItemPtr_PushBackActual(); /* merge_units */
-
-
-
-/* Calls cLList_cSkaSwitchItemPtr_PushBackActual(self, &value) and returns self. */
-void* cSkaInitListOfPointers_cSkaSwitchItem_opShl(void* self, int value) {
-    cLList_cSkaSwitchItemPtr_PushBackActual(self, &value);
-    return self;
-}
-static inline void merge_flush_func_001F3200(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F3200 */
-
-/* merge_units: begin func_001F3240 */
-#pragma push /* merge_units */
-#if 0 /* merge_units */
-extern void std_list_cSkaSwitchItemPtr_push_back(void* self);
-#endif /* merge_units */
-void std_list_cSkaSwitchItemPtr_push_back(); /* merge_units */
-
-
-
-#pragma optimization_level 1
-/* Forwards to std_list_cSkaSwitchItemPtr_push_back (unit built at -O1: no tail call). */
-void cLList_cSkaSwitchItemPtr_PushBackActual(void* self)
-{
-    std_list_cSkaSwitchItemPtr_push_back(self);
-}
-#pragma optimization_level reset
-static inline void merge_flush_func_001F3240(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F3240 */
-
-/* merge_units: begin func_001F3260 */
-#pragma push /* merge_units */
-#if 0 /* merge_units */
-extern void std_list_imp_voidPtr_push_back(void);
-#endif /* merge_units */
-void std_list_imp_voidPtr_push_back(); /* merge_units */
-
-
-
-/* Calls std_list_imp_voidPtr_push_back. */
-#pragma optimization_level 1
-void std_list_cSkaSwitchItemPtr_push_back(void)
-{
-    std_list_imp_voidPtr_push_back();
-}
-#pragma optimization_level reset
-static inline void merge_flush_func_001F3260(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F3260 */
-
-/* merge_units: begin func_001F3280 */
-#pragma push /* merge_units */
-typedef struct { void* node; } It1F3280;
-extern void std_list_deleter_voidPtr_end_void(It1F3280* out, void* list);
-extern void std_list_deleter_voidPtr_insert(It1F3280* out, void* list, It1F3280* pos, void* value);
-#pragma optimization_level 1
-void std_list_imp_voidPtr_push_back(void* list, void* value)
-{
-    It1F3280 r;
-    It1F3280 pos;
-    std_list_deleter_voidPtr_end_void(&pos, list);
-    std_list_deleter_voidPtr_insert(&r, list, &pos, value);
-}
-#pragma optimization_level reset
-static inline void merge_flush_func_001F3280(void) {} /* merge_units */
-#pragma pop /* merge_units */
-/* merge_units: end func_001F3280 */
-
-/* merge_units: begin func_001F32E0 */
-#pragma push /* merge_units */
+extern int cSkaPlaybackGroupId_ctor_cSkaPlaybackGroupIdR(int*, int);
 extern int cSkaAnimationSet_GetNode_cString16NR(int, int);
-extern int cPointer_cSkaNode_ctor_cSkaNodeP(Unk1F32E0*, int);
-extern void cSkaInitListOfPointers_cSkaTransBLEND_CopyPointerContentsToArray(int, ObjVec*);
-extern ObjVec* cArray_cSkaTransBLEND_ctor_void(ObjVec*);
+extern int cPointer_cSkaNode_ctor_cSkaNodeP(MotionSelNode*, int);
 
-Unk1F32E0* cSkaSwitchItem_ctor_cString16NR_cSkaAnimationSetR_cSkaInitListOfPointersR(Unk1F32E0* self, int a1, int a2, int a3) {
+MotionSelNode* cSkaAnimationBlend_ctor(MotionSelNode* self, int a1, int a2, int a3) {
     cPointer_cSkaNode_ctor_cSkaNodeP(self, cSkaAnimationSet_GetNode_cString16NR(a2, a1));
-    cArray_cSkaTransBLEND_ctor_void(&self->list);
-    cSkaInitListOfPointers_cSkaTransBLEND_CopyPointerContentsToArray(a3, &self->list);
+    cSkaPlaybackGroupId_ctor_cSkaPlaybackGroupIdR(&self->pair, a3);
     return self;
 }
-static inline void merge_flush_func_001F32E0(void) {} /* merge_units */
+static inline void merge_flush_func_00200660(void) {} /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_001F32E0 */
+/* merge_units: end func_00200660 */
+
+/* merge_units: begin func_002006B0 */
+#pragma push /* merge_units */
+typedef struct { char d[0x4]; } B4;
+typedef struct { char d[0x8]; } B8;
+typedef struct { char d[0xC]; } BC;
+typedef struct { char d[0x10]; } B10;
+typedef struct { char d[0x30]; } B30;
+typedef struct { char d[0x40]; } B40;
+typedef struct { char d[0x50]; } B50;
+typedef struct { B8 m1060; B10 m1068; B8 m1078; } S1060;
+typedef struct { B8 m1020; B10 m1028; B8 m1038; } S1020;
+typedef struct { B8 mFE0; B10 mFE8; B10 mFF8; B8 m1008; } SFE0;
+typedef struct { B8 mFB0; B10 mFB8; B8 mFC8; } SFB0;
+typedef struct { B8 mF70; B10 mF78; B8 mF88; } SF70;
+typedef struct { B8 mF30; B10 mF38; B8 mF48; } SF30;
+typedef struct { B8 mEF0; B10 mEF8; B8 mF08; } SEF0;
+typedef struct { B8 mEB0; B10 mEB8; B8 mEC8; } SEB0;
+typedef struct { B8 mE70; B10 mE78; B8 mE88; } SE70;
+extern char D_004A1030[];
+extern char D_004A1170[];
+extern char D_004A1490[];
+extern char D_004A2C00[];
+extern char D_004A2C50[];
+extern void* cString16N_3_ctor_charP(void*, void*);
+extern float Deg2Rad(float);
+extern void* cEulerAngle_T_1_2_ctor_float_float_float(void*, float, float, float);
+extern void cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_3(void*, void*, void*, int, int, void*, int, int, int, float, float);
+extern void cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(void*, void*, void*, void*);
+extern void cSkaAnim_dtor(void*, int);
+extern void cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(void*);
+extern void cSkaBlendSequenceExtents_ctor_float_float(void*, float, float);
+extern void cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(void*, void*, void*, void*);
+extern void* cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(void*, void*);
+#if 0 /* merge_units */
+extern void cQuaternion_GetIdentity(void*);
+#endif /* merge_units */
+int cQuaternion_GetIdentity(char*); /* merge_units */
+#define cQuaternion_GetIdentity(a0) ((void)cQuaternion_GetIdentity((char *)(a0))) /* merge_units */
+
+extern void cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(void*, int, void*, int, int, void*);
+#if 0 /* merge_units */
+extern void cSkaSlider_dtor(void*, int);
+#endif /* merge_units */
+int cSkaSlider_dtor(char*, int); /* merge_units */
+#define cSkaSlider_dtor(a0, a1) ((void)cSkaSlider_dtor((char *)(a0), (a1))) /* merge_units */
+
+extern void cSkaBlendSequenceItem_dtor(void*, int);
+extern void cSkaBlendSequenceExtents_dtor(void*, int);
+extern void cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(void*, int);
+extern void* cQuaternion_ctor_cEulerAngleTR(void*, void*);
+#if 0 /* merge_units */
+extern void cSkaSlider_ctor_cString16NR_cSkaAnimationSetR_cQuaternionR(void*, void*, void*, void*);
+#endif /* merge_units */
+char * * cSkaSlider_ctor_cString16NR_cSkaAnimationSetR_cQuaternionR(); /* merge_units */
+
+/* Builds and registers one block of motion-graph nodes. */
+#pragma optimization_level 1
+void BuildAnimationBlend_HeavyWeaponMovement(void* p0)
+{
+    B4 v10CC;
+    B4 v10C8;
+    B4 v10C4;
+    B4 v10C0;
+    B4 v10BC;
+    B4 v10B8;
+    B4 v10B4;
+    B4 v10B0;
+    B4 v10AC;
+    B4 v10A8;
+    B4 v10A4;
+    B4 v10A0;
+    B4 v109C;
+    B4 v1098;
+    B4 v1094;
+    B4 v1090;
+    B4 v108C;
+    BC v1080;
+    S1060 s1060;
+    B10 v1050;
+    B10 v1040;
+    S1020 s1020;
+    B10 v1010;
+    SFE0 sFE0;
+    B10 vFD0;
+    SFB0 sFB0;
+    B10 vFA0;
+    B10 vF90;
+    SF70 sF70;
+    B10 vF60;
+    B10 vF50;
+    SF30 sF30;
+    B10 vF20;
+    B10 vF10;
+    SEF0 sEF0;
+    B10 vEE0;
+    B10 vED0;
+    SEB0 sEB0;
+    B10 vEA0;
+    B10 vE90;
+    SE70 sE70;
+    B10 vE60;
+    B30 vE30;
+    B30 vE00;
+    B10 vDF0;
+    B50 vDA0;
+    B30 vD70;
+    B30 vD40;
+    B10 vD30;
+    B50 vCE0;
+    B30 vCB0;
+    B30 vC80;
+    B10 vC70;
+    B50 vC20;
+    B30 vBF0;
+    B30 vBC0;
+    B10 vBB0;
+    B50 vB60;
+    B30 vB30;
+    B30 vB00;
+    B10 vAF0;
+    B50 vAA0;
+    B30 vA70;
+    B30 vA40;
+    B10 vA30;
+    B50 v9E0;
+    B30 v9B0;
+    B30 v980;
+    B10 v970;
+    B50 v920;
+    B30 v8F0;
+    B30 v8C0;
+    B10 v8B0;
+    B50 v860;
+    B30 v830;
+    B30 v800;
+    B30 v7D0;
+    B10 v7C0;
+    B40 v780;
+    B30 v750;
+    B30 v720;
+    B30 v6F0;
+    B30 v6C0;
+    B10 v6B0;
+    B40 v670;
+    B30 v640;
+    B30 v610;
+    B30 v5E0;
+    B30 v5B0;
+    B10 v5A0;
+    B40 v560;
+    B30 v530;
+    B30 v500;
+    B30 v4D0;
+    B10 v4C0;
+    B40 v480;
+    B30 v450;
+    B30 v420;
+    B30 v3F0;
+    B10 v3E0;
+    B40 v3A0;
+    B30 v370;
+    B30 v340;
+    B30 v310;
+    B10 v300;
+    B40 v2C0;
+    B30 v290;
+    B30 v260;
+    B30 v230;
+    B10 v220;
+    B40 v1E0;
+    B30 v1B0;
+    B30 v180;
+    B10 v170;
+    B10 v160;
+    B40 v120;
+    B30 vF0;
+    B30 vC0;
+    B30 v90;
+    B10 v80;
+    B40 v40;
+    void* t1;
+    void* t2;
+    void* t3;
+    void* t4;
+    void* t5;
+    void* t6;
+    void* t7;
+    void* t8;
+    void* t9;
+    void* t10;
+    void* t11;
+    void* t12;
+    void* t13;
+    void* t14;
+    void* t15;
+    void* t16;
+    void* t17;
+    void* t18;
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_3(&vDA0, cString16N_3_ctor_charP(&vE00, D_004A1490), p0, 1, 0, cEulerAngle_T_1_2_ctor_float_float_float(&vDF0, 0.0f, 0.0f, Deg2Rad(-9e+01f)), 0, 2, 0, 0.0f, 0.8f);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10CC, p0, cString16N_3_ctor_charP(&vE30, "animHeavyWeaponWalk_Back"), &vDA0);
+    cSkaAnim_dtor(&vDA0, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_3(&vCE0, cString16N_3_ctor_charP(&vD40, D_004A1490), p0, 0, 0, cEulerAngle_T_1_2_ctor_float_float_float(&vD30, 0.0f, 0.0f, Deg2Rad(-9e+01f)), 0, 2, 0, 0.0f, 0.8f);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10C8, p0, cString16N_3_ctor_charP(&vD70, "animHeavyWeaponWalk_Forw"), &vCE0);
+    cSkaAnim_dtor(&vCE0, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_3(&vC20, cString16N_3_ctor_charP(&vC80, "sidestep_slow"), p0, 1, 1, cEulerAngle_T_1_2_ctor_float_float_float(&vC70, 0.0f, 0.0f, Deg2Rad(-9e+01f)), 0, 0, 0, 0.8f, 0.8f);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10C4, p0, cString16N_3_ctor_charP(&vCB0, "animHeavyWeaponWalk_Back_RghtHemisphere"), &vC20);
+    cSkaAnim_dtor(&vC20, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_3(&vB60, cString16N_3_ctor_charP(&vBC0, "sidestep_slow"), p0, 0, 1, cEulerAngle_T_1_2_ctor_float_float_float(&vBB0, 0.0f, 0.0f, Deg2Rad(-9e+01f)), 0, 0, 0, 0.8f, 0.8f);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10C0, p0, cString16N_3_ctor_charP(&vBF0, "animHeavyWeaponWalk_Forw_LeftHemisphere"), &vB60);
+    cSkaAnim_dtor(&vB60, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_3(&vAA0, cString16N_3_ctor_charP(&vB00, D_004A1030), p0, 0, 0, cEulerAngle_T_1_2_ctor_float_float_float(&vAF0, 0.0f, 0.0f, Deg2Rad(-9e+01f)), 0, 1, 0, 0.0f, 0.8f);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10BC, p0, cString16N_3_ctor_charP(&vB30, "animHeavyWeaponWalk_Left"), &vAA0);
+    cSkaAnim_dtor(&vAA0, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_3(&v9E0, cString16N_3_ctor_charP(&vA40, D_004A1170), p0, 0, 0, cEulerAngle_T_1_2_ctor_float_float_float(&vA30, 0.0f, 0.0f, Deg2Rad(-9e+01f)), 0, 1, 0, 0.0f, 0.8f);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10B8, p0, cString16N_3_ctor_charP(&vA70, "animHeavyWeaponWalk_Rght"), &v9E0);
+    cSkaAnim_dtor(&v9E0, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_3(&v920, cString16N_3_ctor_charP(&v980, "sidestep_slow"), p0, 1, 1, cEulerAngle_T_1_2_ctor_float_float_float(&v970, 0.0f, 0.0f, Deg2Rad(-45.0f)), 0, 0, 0, 0.8f, 0.8f);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10B4, p0, cString16N_3_ctor_charP(&v9B0, "animHeavyWeaponWalk_DiagonalBackRght"), &v920);
+    cSkaAnim_dtor(&v920, -1);
+    cSkaAnim_ctor_cString16NR_cSkaAnimationSetR_bool_bool_etc_3(&v860, cString16N_3_ctor_charP(&v8C0, "sidestep_slow"), p0, 1, 0, cEulerAngle_T_1_2_ctor_float_float_float(&v8B0, 0.0f, 0.0f, Deg2Rad(-45.0f)), 0, 0, 0, 0.2f, 0.8f);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10B0, p0, cString16N_3_ctor_charP(&v8F0, "animHeavyWeaponWalk_DiagonalForwLeft"), &v860);
+    cSkaAnim_dtor(&v860, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(&v1080);
+    cSkaBlendSequenceExtents_ctor_float_float(&s1060.m1078, 0.0f, 0.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&s1060.m1068, cString16N_3_ctor_charP(&v800, "animHeavyWeaponWalk_Back"), p0, &s1060.m1078);
+    cSkaBlendSequenceExtents_ctor_float_float(&s1060.m1060, 1.0f, 1.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&v1050, cString16N_3_ctor_charP(&v7D0, "animHeavyWeaponWalk_Left"), p0, &s1060.m1060);
+    t1 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(&v1080, &s1060.m1068);
+    t2 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t1, &v1050);
+    cQuaternion_GetIdentity(&v7C0);
+    cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(&v780, 3, t2, 0, 0, &v7C0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10AC, p0, cString16N_3_ctor_charP(&v830, "sliderHeavyWeaponWalk_BackLeft"), &v780);
+    cSkaSlider_dtor(&v780, -1);
+    cSkaBlendSequenceItem_dtor(&v1050, -1);
+    cSkaBlendSequenceExtents_dtor(&s1060.m1060, -1);
+    cSkaBlendSequenceItem_dtor(&s1060.m1068, -1);
+    cSkaBlendSequenceExtents_dtor(&s1060.m1078, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(&v1080, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(&v1040);
+    cSkaBlendSequenceExtents_ctor_float_float(&s1020.m1038, 0.0f, 0.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&s1020.m1028, cString16N_3_ctor_charP(&v720, "animHeavyWeaponWalk_Back"), p0, &s1020.m1038);
+    cSkaBlendSequenceExtents_ctor_float_float(&s1020.m1020, 0.5f, 0.5f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&v1010, cString16N_3_ctor_charP(&v6F0, "animHeavyWeaponWalk_DiagonalBackRght"), p0, &s1020.m1020);
+    cSkaBlendSequenceExtents_ctor_float_float(&sFE0.m1008, 1.0f, 1.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&sFE0.mFF8, cString16N_3_ctor_charP(&v6C0, "animHeavyWeaponWalk_Rght"), p0, &sFE0.m1008);
+    t3 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(&v1040, &s1020.m1028);
+    t4 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t3, &v1010);
+    t5 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t4, &sFE0.mFF8);
+    cQuaternion_GetIdentity(&v6B0);
+    cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(&v670, 3, t5, 0, 0, &v6B0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10A8, p0, cString16N_3_ctor_charP(&v750, "sliderHeavyWeaponWalk_BackRght"), &v670);
+    cSkaSlider_dtor(&v670, -1);
+    cSkaBlendSequenceItem_dtor(&sFE0.mFF8, -1);
+    cSkaBlendSequenceExtents_dtor(&sFE0.m1008, -1);
+    cSkaBlendSequenceItem_dtor(&v1010, -1);
+    cSkaBlendSequenceExtents_dtor(&s1020.m1020, -1);
+    cSkaBlendSequenceItem_dtor(&s1020.m1028, -1);
+    cSkaBlendSequenceExtents_dtor(&s1020.m1038, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(&v1040, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(&sFE0.mFE8);
+    cSkaBlendSequenceExtents_ctor_float_float(&sFE0.mFE0, 0.0f, 0.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&vFD0, cString16N_3_ctor_charP(&v610, "animHeavyWeaponWalk_Forw"), p0, &sFE0.mFE0);
+    cSkaBlendSequenceExtents_ctor_float_float(&sFB0.mFC8, 0.5f, 0.5f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&sFB0.mFB8, cString16N_3_ctor_charP(&v5E0, "animHeavyWeaponWalk_DiagonalForwLeft"), p0, &sFB0.mFC8);
+    cSkaBlendSequenceExtents_ctor_float_float(&sFB0.mFB0, 1.0f, 1.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&vFA0, cString16N_3_ctor_charP(&v5B0, "animHeavyWeaponWalk_Left"), p0, &sFB0.mFB0);
+    t6 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(&sFE0.mFE8, &vFD0);
+    t7 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t6, &sFB0.mFB8);
+    t8 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t7, &vFA0);
+    cQuaternion_GetIdentity(&v5A0);
+    cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(&v560, 3, t8, 0, 0, &v5A0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10A4, p0, cString16N_3_ctor_charP(&v640, "sliderHeavyWeaponWalk_ForwLeft"), &v560);
+    cSkaSlider_dtor(&v560, -1);
+    cSkaBlendSequenceItem_dtor(&vFA0, -1);
+    cSkaBlendSequenceExtents_dtor(&sFB0.mFB0, -1);
+    cSkaBlendSequenceItem_dtor(&sFB0.mFB8, -1);
+    cSkaBlendSequenceExtents_dtor(&sFB0.mFC8, -1);
+    cSkaBlendSequenceItem_dtor(&vFD0, -1);
+    cSkaBlendSequenceExtents_dtor(&sFE0.mFE0, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(&sFE0.mFE8, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(&vF90);
+    cSkaBlendSequenceExtents_ctor_float_float(&sF70.mF88, 0.0f, 0.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&sF70.mF78, cString16N_3_ctor_charP(&v500, "animHeavyWeaponWalk_Forw"), p0, &sF70.mF88);
+    cSkaBlendSequenceExtents_ctor_float_float(&sF70.mF70, 1.0f, 1.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&vF60, cString16N_3_ctor_charP(&v4D0, "animHeavyWeaponWalk_Rght"), p0, &sF70.mF70);
+    t9 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(&vF90, &sF70.mF78);
+    t10 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t9, &vF60);
+    cQuaternion_GetIdentity(&v4C0);
+    cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(&v480, 3, t10, 0, 0, &v4C0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v10A0, p0, cString16N_3_ctor_charP(&v530, "sliderHeavyWeaponWalk_ForwRght"), &v480);
+    cSkaSlider_dtor(&v480, -1);
+    cSkaBlendSequenceItem_dtor(&vF60, -1);
+    cSkaBlendSequenceExtents_dtor(&sF70.mF70, -1);
+    cSkaBlendSequenceItem_dtor(&sF70.mF78, -1);
+    cSkaBlendSequenceExtents_dtor(&sF70.mF88, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(&vF90, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(&vF50);
+    cSkaBlendSequenceExtents_ctor_float_float(&sF30.mF48, 0.0f, 0.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&sF30.mF38, cString16N_3_ctor_charP(&v420, "sliderHeavyWeaponWalk_BackLeft"), p0, &sF30.mF48);
+    cSkaBlendSequenceExtents_ctor_float_float(&sF30.mF30, 1.0f, 1.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&vF20, cString16N_3_ctor_charP(&v3F0, "sliderHeavyWeaponWalk_BackRght"), p0, &sF30.mF30);
+    t11 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(&vF50, &sF30.mF38);
+    t12 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t11, &vF20);
+    cQuaternion_GetIdentity(&v3E0);
+    cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(&v3A0, 6, t12, 0, 0, &v3E0);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v109C, p0, cString16N_3_ctor_charP(&v450, "sliderHeavyWeaponWalk_Back"), &v3A0);
+    cSkaSlider_dtor(&v3A0, -1);
+    cSkaBlendSequenceItem_dtor(&vF20, -1);
+    cSkaBlendSequenceExtents_dtor(&sF30.mF30, -1);
+    cSkaBlendSequenceItem_dtor(&sF30.mF38, -1);
+    cSkaBlendSequenceExtents_dtor(&sF30.mF48, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(&vF50, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(&vF10);
+    cSkaBlendSequenceExtents_ctor_float_float(&sEF0.mF08, 0.0f, 0.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&sEF0.mEF8, cString16N_3_ctor_charP(&v340, "sliderHeavyWeaponWalk_ForwLeft"), p0, &sEF0.mF08);
+    cSkaBlendSequenceExtents_ctor_float_float(&sEF0.mEF0, 1.0f, 1.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&vEE0, cString16N_3_ctor_charP(&v310, "sliderHeavyWeaponWalk_ForwRght"), p0, &sEF0.mEF0);
+    t13 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(&vF10, &sEF0.mEF8);
+    t14 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t13, &vEE0);
+    cQuaternion_GetIdentity(&v300);
+    cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(&v2C0, 6, t14, 0, 0, &v300);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v1098, p0, cString16N_3_ctor_charP(&v370, "sliderHeavyWeaponWalk_Forw"), &v2C0);
+    cSkaSlider_dtor(&v2C0, -1);
+    cSkaBlendSequenceItem_dtor(&vEE0, -1);
+    cSkaBlendSequenceExtents_dtor(&sEF0.mEF0, -1);
+    cSkaBlendSequenceItem_dtor(&sEF0.mEF8, -1);
+    cSkaBlendSequenceExtents_dtor(&sEF0.mF08, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(&vF10, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(&vED0);
+    cSkaBlendSequenceExtents_ctor_float_float(&sEB0.mEC8, 0.0f, 0.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&sEB0.mEB8, cString16N_3_ctor_charP(&v260, "sliderHeavyWeaponWalk_Back"), p0, &sEB0.mEC8);
+    cSkaBlendSequenceExtents_ctor_float_float(&sEB0.mEB0, 1.0f, 1.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&vEA0, cString16N_3_ctor_charP(&v230, "sliderHeavyWeaponWalk_Forw"), p0, &sEB0.mEB0);
+    t15 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(&vED0, &sEB0.mEB8);
+    t16 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t15, &vEA0);
+    cQuaternion_GetIdentity(&v220);
+    cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(&v1E0, 5, t16, 0, 0, &v220);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v1094, p0, cString16N_3_ctor_charP(&v290, "sliderHeavyWeaponMovement"), &v1E0);
+    cSkaSlider_dtor(&v1E0, -1);
+    cSkaBlendSequenceItem_dtor(&vEA0, -1);
+    cSkaBlendSequenceExtents_dtor(&sEB0.mEB0, -1);
+    cSkaBlendSequenceItem_dtor(&sEB0.mEB8, -1);
+    cSkaBlendSequenceExtents_dtor(&sEB0.mEC8, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(&vED0, -1);
+    cSkaSlider_ctor_cString16NR_cSkaAnimationSetR_cQuaternionR(&v120, cString16N_3_ctor_charP(&v180, D_004A2C00), p0, cQuaternion_ctor_cEulerAngleTR(&v170, cEulerAngle_T_1_2_ctor_float_float_float(&v160, 0.0f, 0.0f, Deg2Rad(-9e+01f))));
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v1090, p0, cString16N_3_ctor_charP(&v1B0, "sliderHeavyWeaponStationary"), &v120);
+    cSkaSlider_dtor(&v120, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_ctor(&vE90);
+    cSkaBlendSequenceExtents_ctor_float_float(&sE70.mE88, 0.0f, 0.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&sE70.mE78, cString16N_3_ctor_charP(&vC0, "sliderHeavyWeaponStationary"), p0, &sE70.mE88);
+    cSkaBlendSequenceExtents_ctor_float_float(&sE70.mE70, 1.0f, 1.0f);
+    cSkaBlendSequenceItem_ctor_cString16NR_cSkaAnimationSetR_cSkaBlendSequenceExtentsR(&vE60, cString16N_3_ctor_charP(&v90, "sliderHeavyWeaponMovement"), p0, &sE70.mE70);
+    t17 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(&vE90, &sE70.mE78);
+    t18 = cSkaInitListOfPointers_cSkaBlendSequenceItem_opShl(t17, &vE60);
+    cQuaternion_GetIdentity(&v80);
+    cSkaSlider_ctor_int_cSkaInitListOfPointersR_bool_bool_etc(&v40, 4, t18, 0, 0, &v80);
+    cSkaAnimationSet_CreateNode_cString16NR_cSkaNodeR(&v108C, p0, cString16N_3_ctor_charP(&vF0, D_004A2C50), &v40);
+    cSkaSlider_dtor(&v40, -1);
+    cSkaBlendSequenceItem_dtor(&vE60, -1);
+    cSkaBlendSequenceExtents_dtor(&sE70.mE70, -1);
+    cSkaBlendSequenceItem_dtor(&sE70.mE78, -1);
+    cSkaBlendSequenceExtents_dtor(&sE70.mE88, -1);
+    cSkaInitListOfPointers_cSkaBlendSequenceItem_dtor(&vE90, -1);
+}
+#pragma optimization_level reset
+#undef cQuaternion_GetIdentity /* merge_units */
+#undef cSkaSlider_dtor /* merge_units */
+static inline void merge_flush_func_002006B0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002006B0 */
+
+/* merge_units: begin func_002019D0 */
+#pragma push /* merge_units */
+#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#define NULL 0
+#pragma mpwc_relax on
+int cSkaNode_ctor_eType_cQuaternionR(char **, int, char *);                
+int cSkaSlider_ctor_cSkaSliderR_cQuaternionR(char *, int, int);                   
+int cSkaSlider_dtor(char *, int);                        
+int cSkaAnimationSet_GetNode_cString16NR(int, int);                            
+int cQuaternion_GetIdentity(char *);                            
+int cSkaNode_CheckType(int, int);                          
+int cArray_cSkaBlendSequenceItem_ctor_void(char **);                              
+#if 0 /* merge_units */
+int cSkaSlider_opAssign(char **, char *);
+#endif /* merge_units */
+MotionSlider * cSkaSlider_opAssign(); /* merge_units */
+                         
+extern char D_004DFBF0;
+
+char **cSkaSlider_ctor_cString16NR_cSkaAnimationSetR_cQuaternionR(char **arg0, int arg1, int arg2, int arg3) {
+    int sp60[16];
+    int sp50[4];
+    int temp_v0;
+
+    cQuaternion_GetIdentity(sp50);
+    cSkaNode_ctor_eType_cQuaternionR(arg0, 2, sp50);
+    *arg0 = &D_004DFBF0;
+    cArray_cSkaBlendSequenceItem_ctor_void((char *)arg0 + 0x24);
+    temp_v0 = cSkaAnimationSet_GetNode_cString16NR(arg2, arg1);
+    if (cSkaNode_CheckType(temp_v0, 2) != 0) {
+        cSkaSlider_ctor_cSkaSliderR_cQuaternionR(sp60, temp_v0, arg3);
+        cSkaSlider_opAssign(arg0, sp60);
+        cSkaSlider_dtor(sp60, -1);
+    }
+    return arg0;
+}
+static inline void merge_flush_func_002019D0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002019D0 */
+
+/* merge_units: begin func_00201A90 */
+#pragma push /* merge_units */
+extern ObjVec* cArray_cSkaBlendSequenceItem_opAssign(ObjVec*, ObjVec*);
+#if 0 /* merge_units */
+extern int std_vector_cSkaBlendSequenceItem_opAssign(ObjVec*);
+#endif /* merge_units */
+int std_vector_cSkaBlendSequenceItem_opAssign(); /* merge_units */
+
+
+
+extern MotionNode* cSkaNode_opAssign(MotionNode*, MotionNode*);
+
+/* Copy of a MotionSlider-layout node (vtable left to the caller). */
+MotionSlider* cSkaSlider_opAssign(MotionSlider* dst, MotionSlider* src) {
+    cSkaNode_opAssign(&dst->base, &src->base);
+    dst->unk20 = src->unk20;
+    cArray_cSkaBlendSequenceItem_opAssign(&dst->children, &src->children);
+    dst->unk34 = src->unk34;
+    dst->unk35 = src->unk35;
+    return dst;
+}
+
+ObjVec* cArray_cSkaBlendSequenceItem_opAssign(ObjVec* dst, ObjVec* src) {
+    std_vector_cSkaBlendSequenceItem_opAssign(dst);
+    dst->owned = src->owned;
+    return dst;
+}
+static inline void merge_flush_func_00201A90(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00201A90 */
+
+/* merge_units: begin func_00201B30 */
+#pragma push /* merge_units */
+#if 0 /* merge_units */
+extern int std_vector_imp_cSkaBlendSequenceItem_opAssign(int, int);
+#endif /* merge_units */
+void * std_vector_imp_cSkaBlendSequenceItem_opAssign(); /* merge_units */
+
+
+
+int std_vector_cSkaBlendSequenceItem_opAssign(int a0, int a1) {
+    std_vector_imp_cSkaBlendSequenceItem_opAssign(a0, a1);
+    return a0;
+}
+static inline void merge_flush_func_00201B30(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00201B30 */
+
+/* merge_units: begin func_00201B60 */
+#pragma push /* merge_units */
+typedef struct { char c; } Tag_201B60;
+extern int std_vector_imp_cSkaBlendSequenceItem_begin_void(void* o);
+extern int std_vector_imp_cSkaBlendSequenceItem_end_void_2(void* o);
+extern void std_vector_imp_cSkaBlendSequenceItem_do_assign(void* self, int first, int last, Tag_201B60 t);
+void* std_vector_imp_cSkaBlendSequenceItem_opAssign(void* self, void* o)
+{
+    if (self != o) {
+        Tag_201B60 t;
+        int first = std_vector_imp_cSkaBlendSequenceItem_begin_void(o);
+        std_vector_imp_cSkaBlendSequenceItem_do_assign(self, first, std_vector_imp_cSkaBlendSequenceItem_end_void_2(o), t);
+    }
+    return self;
+}
+static inline void merge_flush_func_00201B60(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00201B60 */

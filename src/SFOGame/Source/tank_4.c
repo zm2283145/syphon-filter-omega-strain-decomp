@@ -1,84 +1,511 @@
 /*
- * main/tank: range (2 files, 00282DC0-00282E10)
+ * SFOGame/Source/tank: 10 files, 00287420-00287AB0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* headers shared by the blocks below */
-#include "types.h"
-#include "vslot_pad.h"
-
-/* merge_units: begin func_00282DC0 */
+/* merge_units: begin func_00287420 */
 #pragma push /* merge_units */
-typedef struct { char pad[0x68]; int weapon; int weaponId; } Ang2DC0;
-typedef struct { char pad[0x6C]; Ang2DC0* angles; } Tank2DC0;
-typedef union { int i; Tank2DC0* p; } Arg2DC0;
-extern int g_WeaponDatabase;
-extern int cWeaponDB_GetEntry(int db, int id);
-int Script_cTank_SetWeapon(Arg2DC0* args) {
-    volatile int id = args[1].i;
-    Ang2DC0* a = args[0].p->angles;
-    int i = id;
-    if (a) {
-        int db = g_WeaponDatabase;
-        a->weaponId = i;
-        a->weapon = cWeaponDB_GetEntry(db, i);
-    }
-    return 0;
-}
-/* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00282DC0(void) {}
-#pragma pop /* merge_units */
-/* merge_units: end func_00282DC0 */
+#include "types.h"
+#pragma push
+#pragma cplusplus on
+#include "message_two_member_dtor.h"
+#pragma pop
 
-/* merge_units: begin func_00282E10 */
+#pragma cplusplus on
+
+/* Message destructor: payload members, then cMessage base. */
+DEFINE_MESSAGE_TWO_MEMBER_DTOR(func_00287420, D_004DADF0)
+static inline void merge_flush_func_00287420(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00287420 */
+
+/* merge_units: begin func_002874B0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-struct Gun282E10 { VPAD32(a) VPAD16(b) VPAD16(c) VPAD2(d) VPAD1(e) virtual void Fire(); virtual void Arm(int on); };
-struct Sub282E10 { Gun282E10* gun; };
-struct Tank282E10 { char p[0x60]; Gun282E10* turret; char p64[8]; Sub282E10* sub; };
-struct Msg282E10 { void* vtable; char base[0x18]; int f1C; unsigned char b20; char p21[3]; unsigned char b24; char p25[3]; int f28; float f2C; };
-extern "C" {
-extern unsigned char g_IsMultiplayer;
-extern unsigned char D_005721C0;
-extern char D_00506260[];
-extern char D_004DCF50[];
-extern char D_004DCF10[];
-void cNIEventBase_SetSpeed(Gun282E10*, float);
-void cMessage_ctor_cMessageNameR(void* m, void* type);
-void QueueMessage_cMessageR_cSystemP_int(void* m, void* target, int immediate);
-void cMessage_dtor(void* m, int flags);
-}
-static inline int IsAuth282E10(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
-union Arg282E10 { int i; float f; void* p; };
-extern "C" int Script_cTank_Move(Arg282E10* args) {
-    float v;
-Gun282E10* t;
-Tank282E10* self;
-int tmp;
-    tmp = args[1].i;
-    v = *(float*)&tmp;
-    self = (Tank282E10*)args[0].p;
-    t = self->turret;
-    cNIEventBase_SetSpeed(t, v);
-    t->Fire();
-    if (self->sub) self->sub->gun->Arm(1);
-    if (g_IsMultiplayer && IsAuth282E10()) {
-        Msg282E10 m;
-        cMessage_ctor_cMessageNameR(&m, D_00506260);
-        m.vtable = D_004DCF50;
-        m.f28 = 0;
-        m.b24 = 1;
-        m.f2C = v;
-        m.b20 = 4;
-        m.f1C = 0x40;
-        QueueMessage_cMessageR_cSystemP_int(&m, self, 0);
-        m.vtable = D_004DCF10;
-        cMessage_dtor(&m, 0);
+
+/* Message destructor: payload members, then cMessage base. */
+DEFINE_MESSAGE_TWO_MEMBER_DTOR(func_002874B0, D_004DAE30)
+static inline void merge_flush_func_002874B0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_002874B0 */
+
+/* merge_units: begin func_00287540 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+typedef struct cTurret {
+    void* mTurret;
+    void* mGun;
+    void* mRecoil;
+    void* mTip;
+    float mFireTimer;
+    int mShotCounter;
+    float mMinPitch;
+    float mMaxPitch;
+    float mMinRot;
+    float mMaxRot;
+    float mTurretMaxVel;
+    float mTurretMaxAcc;
+} cTurret;
+
+extern float D_0048B380;
+extern float D_0048B398;
+extern float D_0048B3A0;
+extern float D_0048B3A8;
+
+/* max.s/min.s: C has no expression that emits these. */
+static inline float Clamp(float v, float lo, float hi)
+{
+    float r;
+    asm {
+        max.s r, v, lo
+        min.s r, r, hi
     }
-    return 0;
+    return r;
+}
+
+
+/* abs.s: C has no expression that emits it. */
+static inline float Fabs(float x) { float r; asm { abs.s r, x } return r; }
+
+static inline float Sign(float x)
+{
+    if (x > 0.0f)
+        return 1.0f;
+    return -1.0f;
+}
+
+static inline int ISign(float x) { if (x > 0.0f) return 1; return -1; }
+static inline float Sq(float x) { return x * x; }
+static inline float SignSq(float x) { return Sign(x) * (x * x); }
+static inline float SSq(float x) { float sq = x * x; if (x > 0.0f) return 1.0f * sq; return -1.0f * sq; }
+
+static inline float NormalizeAngle(float a)
+{
+    if (a < -3.1415927f)
+        a += 6.2831855f;
+    else if (!(a <= 3.1415927f))
+        a -= 6.2831855f;
+    return a;
+}
+
+extern "C" void cTurret_Achieve(cTurret* self, float desRot, float* curVel, float* curAng, float timeStep, float minAng, float maxAng)
+{
+    float diffRot;
+    float desVel;
+    float diffVel;
+    float maxAccel;
+
+    diffRot = NormalizeAngle(desRot - *curAng);
+    desVel = diffRot * D_0048B3A8;
+    desVel -= *curVel * D_0048B398;
+    desVel = D_0048B3A0 * (Sign(desVel) * Sq(desVel));
+    diffVel = desVel - *curVel;
+    maxAccel = self->mTurretMaxAcc;
+    if (Fabs(desVel) < Fabs(*curVel))
+        maxAccel *= D_0048B380;
+
+    {
+    float dv = Clamp(diffVel, -maxAccel, maxAccel);
+    dv *= timeStep;
+    *curVel += dv;
+    }
+    {
+    /* Reference (not a copy) colors maxVel f1 / result f0 like retail. */
+    const float& maxVel = self->mTurretMaxVel;
+    *curVel = Clamp(*curVel, -maxVel, maxVel);
+    }
+    *curAng += *curVel * timeStep;
+    if (minAng != maxAng) {
+        if (*curAng < minAng)
+            *curAng = minAng;
+        else if (!(*curAng <= maxAng))
+            *curAng = maxAng;
+    }
+    *curAng = NormalizeAngle(*curAng);
+}
+static inline void merge_flush_func_00287540(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00287540 */
+
+/* merge_units: begin func_00287710 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "vslot_pad.h"
+
+struct V4 { union { __int128 q; struct { float x, y, z, w; } f; }; V4() {} };
+typedef union { __int128 q; struct { float x, y, z, w; } f; } GV4;
+struct Mtx { GV4 r[3]; GV4 t; };
+struct Node_00287710 { VPAD16(a) VPAD4(b) virtual void Refresh(); int pad4[3]; Mtx m; unsigned char dirty; };
+struct Ctl { VPAD16(a) VPAD2(b) VPAD1(c) virtual int Active(); };
+struct Tgt {
+    VPAD32(a) VPAD8(b) VPAD4(c) VPAD2(d)
+    virtual V4 GetPos(int a); /* 0xC0 */
+    char p4[0x2C - 4];
+    bool x2C; bool x2D; bool x2E; char p2F;
+    char p30[0x58 - 0x30];
+    Ctl* x58;
+    bool Alive() { bool r = 0; if (x2D && x2C) r = 1; return r; }
+    bool Live() { return !x2E; }
+    bool Targetable() { bool r = 0; if (Alive() && Live()) r = 1; return r; }
+};
+struct Owner { char p[0x50]; Node_00287710* node; };
+struct Self { Owner* owner; char p4[0x18 - 4]; float lo; float hi; };
+struct It {
+    Tgt** p;
+    bool operator==(const It& o) const { Tgt** b = o.p; return p == b; }
+    bool operator!=(const It& o) const { return !(*this == o); }
+};
+
+extern "C" {
+extern char* g_ActorList;
+void* cObjList_cHumanPtr_GetList(char* self);
+void cArray_cHumanPtr_Begin(It* out, void* v);
+void cArray_cHumanPtr_End(It* out, void* v);
+void GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP(Mtx* m, V4* v, V4* out);
+}
+
+static inline void Q4(void* d0, const void* s0) { void* d = d0; __int128 qa, qb; const void* s = s0; __asm__ volatile("lq %0, 0x0(%2); lq %1, 0x10(%2); sq %0, 0x0(%3); lq %0, 0x20(%2); sq %1, 0x10(%3); lq %1, 0x30(%2); sq %0, 0x20(%3); sq %1, 0x30(%3)" : "=&r"(qa), "=&r"(qb) : "r"(s), "r"(d) : "memory"); }
+static inline float Abs(float x) { float r = 0.0f; asm { abs.s r, x } return r; }
+
+extern "C" Tgt* cTurret_GetClosestEnemy(Self* self) {
+    It it;
+    It end;
+    Mtx m;
+    V4 hd;
+    Node_00287710* n = self->owner->node;
+    if (n->dirty) n->Refresh();
+    { Mtx* src = &n->m; Mtx* dst = &m; Q4(dst, src); }
+    char* reg = g_ActorList;
+    cArray_cHumanPtr_Begin(&it, cObjList_cHumanPtr_GetList(reg));
+    cArray_cHumanPtr_End(&end, cObjList_cHumanPtr_GetList(reg));
+    float best = 1000.0f;
+    Tgt* found = 0;
+    for (; it != end; it.p++) {
+        Tgt* t = *it.p;
+        if (t->Targetable()) {
+            bool ok = 0;
+            if (t->x58 && t->x58->Active()) ok = 1;
+            if (ok) {
+                V4 pos = t->GetPos(-1);
+                GetTargetAngle_cMatrixR_cVectorR_cEulerAngleTP(&m, &pos, &hd);
+                
+                if (0.3f + hd.f.x > self->lo && hd.f.x - 0.3f < self->hi) {
+                    float d = Abs(hd.f.z);
+                    if (d < best) {
+                        best = d;
+                        found = t;
+                    }
+                }
+            }
+        }
+    }
+    return found;
+}
+static inline void merge_flush_func_00287710(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00287710 */
+
+/* merge_units: begin func_00287910 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+
+void func_00287910(Iter* out, PtrVec* v) {
+    out->p = v->data + v->count;
+}
+
+void func_00287930(Iter* out, PtrVec* v) {
+    out->p = v->data;
+}
+
+void* func_00287940(char* self) {
+    return self + 4;
+}
+static inline void merge_flush_func_00287910(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00287910 */
+
+/* merge_units: begin func_00287950 */
+#pragma push /* merge_units */
+#pragma opt_propagation off
+typedef struct Handle {
+    int ptr;
+    int id;
+} Handle;
+
+typedef struct Turret {
+    int a0;
+    int a4;
+    int a8;
+    int aC;
+    int x10;
+    int x14;
+    float f18;
+    float f1C;
+    float f20;
+    float f24;
+    float f28;
+    float f2C;
+    int x30;
+    int x34;
+    int x38;
+    int x3C;
+    int x40;
+    int x44;
+    int x48;
+    int pad4C;
+    float f50;
+    unsigned char b54;
+    unsigned char b55;
+    char pad56[2];
+    int x58;
+    Handle h;
+    int pad64;
+    int x68;
+} Turret;
+
+Turret* cTurret_ctor(Turret* t, int a, int b, int c, int d, int e)
+{
+    int tmp;
+    int* pt;
+    t->h.id = -2;
+    t->h.ptr = 0;
+    t->a0 = a;
+    t->a4 = b;
+    t->a8 = c;
+    t->aC = d ? d : b;
+    t->h.ptr = 0;
+    tmp = -1;
+    pt = &tmp;
+    t->h.id = *pt;
+    t->x68 = 0;
+    t->x30 = 0;
+    t->x34 = 0;
+    t->x38 = 0;
+    t->x3C = 0;
+    t->x10 = 0;
+    t->x14 = 0;
+    t->f50 = 0.1f;
+    t->f18 = -0.06f;
+    t->f1C = 0.03f;
+    t->f20 = -2.0f;
+    t->f24 = -2.0f;
+    t->f28 = 10.0f;
+    t->f2C = 0.5f;
+    t->x58 = e;
+    t->x48 = 0;
+    t->x44 = 0;
+    t->x40 = 0;
+    t->b55 = 0;
+    t->b54 = 0;
+    return t;
 }
 /* merge_units: generate this block's code under its own pragmas */
-static inline void merge_flush_func_00282E10(void) {}
+static inline void merge_flush_func_00287950(void) {}
 #pragma pop /* merge_units */
-/* merge_units: end func_00282E10 */
+/* merge_units: end func_00287950 */
+
+/* merge_units: begin func_00287A20 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct TgtA20 { char pad[0x14]; float x; float y; };
+struct EntA20 { TgtA20* p; float x; float y; };
+struct OwnA20 { char pad[0x144]; float t; };
+struct SelfA20 { void* obj; OwnA20* own; EntA20 e[2]; int n; float last; unsigned char on; };
+extern float D_0048B3D0;
+#if 0 /* merge_units */
+extern "C" unsigned char cTread_ctor(SelfA20*);
+#endif /* merge_units */
+struct SelfAB0; /* merge_units */
+extern "C" unsigned char cTread_ctor(SelfAB0* s); /* merge_units */
+#define cTread_ctor(a0) (cTread_ctor((SelfAB0 *)(a0))) /* merge_units */
+
+extern "C" void cTread_NextFrame(SelfA20* s)
+{
+    int i;
+    if (cTread_ctor(s)) {
+        float d;
+        float t;
+        t = s->own->t;
+        d = t - s->last;
+        s->last = t;
+        d = d * D_0048B3D0;
+        for (i = 0; i < s->n; i++) {
+            TgtA20* p = s->e[i].p;
+            float a = d * s->e[i].x;
+            float b = d * s->e[i].y;
+            p->x = a;
+            p->y = b;
+        }
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00287A20(void) {}
+#undef cTread_ctor /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00287A20 */
+
+/* merge_units: begin func_00287AB0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct S376FF0;
+struct ModelAB0 { char pad[0x68]; int* list; };
+class ObjAB0 {
+public:
+    virtual void v0();
+    virtual void v1();
+    virtual void v2();
+    virtual void v3();
+    virtual void v4();
+    virtual void v5();
+    virtual void v6();
+    virtual void v7();
+    virtual void v8();
+    virtual void v9();
+    virtual void v10();
+    virtual void v11();
+    virtual void v12();
+    virtual void v13();
+    virtual void v14();
+    virtual void v15();
+    virtual void v16();
+    virtual void v17();
+    virtual void v18();
+    virtual void v19();
+    virtual void v20();
+    virtual void v21();
+    virtual void v22();
+    virtual void v23();
+    virtual void v24();
+    virtual void v25();
+    virtual void v26();
+    virtual void v27();
+    virtual void v28();
+    virtual void v29();
+    virtual void v30();
+    virtual void v31();
+    virtual void v32();
+    virtual void v33();
+    virtual void v34();
+    virtual void v35();
+    virtual void v36();
+    virtual void v37();
+    virtual void v38();
+    virtual void v39();
+    virtual void v40();
+    virtual void v41();
+    virtual void v42();
+    virtual void v43();
+    virtual void v44();
+    virtual void v45();
+    virtual void v46();
+    virtual void v47();
+    virtual void v48();
+    virtual void v49();
+    virtual void v50();
+    virtual void v51();
+    virtual void v52();
+    virtual void v53();
+    virtual void v54();
+    virtual void v55();
+    virtual void v56();
+    virtual void v57();
+    virtual void v58();
+    virtual void v59();
+    virtual void v60();
+    virtual void v61();
+    virtual void v62();
+    virtual void v63();
+    virtual void v64();
+    virtual void v65();
+    virtual void v66();
+    virtual void v67();
+    virtual void v68();
+    virtual void v69();
+    virtual void v70();
+    virtual ModelAB0* GetModel();
+};
+struct TgtAB0 { char pad[0x14]; float x; float y; };
+struct EntAB0 { TgtAB0* p; float x; float y; };
+struct SelfAB0 { ObjAB0* obj; void* own; EntAB0 e[2]; int n; float last; unsigned char on; };
+extern "C" int cVU1Model_GetAnimTextures(int* o, void** out, int max);
+static inline float SignAB0(float v) {
+    if (v < -0.1f) return -1.0f;
+    else if (v > 0.1f) return 1.0f;
+    else return 0.0f;
+}
+extern "C" unsigned char cTread_ctor(SelfAB0* s)
+{
+    int* list = s->obj->GetModel()->list;
+    int has = *list != 0;
+    if (has) {
+        if (!s->on) {
+            void* buf[2];
+            int i;
+            s->n = cVU1Model_GetAnimTextures(list, buf, 2);
+            s->on = 1;
+            for (i = 0; i < s->n; i++) {
+                EntAB0* e;
+                float x, y;
+                e = &s->e[i];
+                e->p = (TgtAB0*)buf[i];
+                x = e->p->x;
+                y = e->p->y;
+                e->x = SignAB0(-x);
+                e->y = SignAB0(y);
+            }
+        }
+    } else {
+        s->on = 0;
+    }
+    return s->on;
+}
+static inline void merge_flush_func_00287AB0(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00287AB0 */
+
+/* merge_units: begin func_00287C10 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * cTank script class: script natives, type registration and turret helpers.
+ */
+
+#include "tank_types.h"
+
+extern int D_00506250;
+
+TankLink* func_00287C10(TankLink* self, int unk00, char* source) {
+    self->source = source;
+    self->unk00 = unk00;
+    self->unk24 = *(float*)(self->source + 0x144);
+    self->unk28 = 0;
+    return self;
+}
+
+/* Message type id for cNetCreateTankMsg. */
+int cNetCreateTankMsg_GetMsgId(void) {
+    return D_00506250;
+}
+static inline void merge_flush_func_00287C10(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00287C10 */
+
+/* merge_units: begin func_00287C40 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "net_msg_clone.h"
+
+/* Clone a network message. */
+extern "C" { char D_004A9548[] = "tank.hh"; }
+DEFINE_NET_MSG_CLONE(cNetCreateTankMsg_Clone, 0x2C, D_004A9548, 0xA7, cNetCreateTankMsg_vtable,
+                     NMC_W(0x24); NMC_W(0x28))
+static inline void merge_flush_func_00287C40(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00287C40 */

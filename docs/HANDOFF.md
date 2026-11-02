@@ -54,6 +54,31 @@ The owner approved these idioms; each use must be commented in the source:
     creates its address registers one pass later without moving stack slots.
   - Free `operator+/-(const V&, const V&)` avoid the two dead `addiu` per site that member operators on by-value temporaries leave.
 
+## Session 2026-11-02 late (lanes w1-w3, no matches)
+
+- **XLib_ApplyContext: 521 → 36 lab lines** at exact size (`docs/lane_notes/w2/drafts/ac_best36.c`).
+  - The 16 UNPACK one-quadword copies are written as a commented MW `asm volatile { .set noreorder; lw/sw...; .set reorder }` block.
+    No C form gives retail's two-register copy with the source pointer kept in its own register, and this shape appears only in this function.
+  - **Owner decision needed before staging:** accept this asm block if the function reaches MATCH.
+  - Left: an a0/a1 swap at the first AddUnpack, and the order of the uv-scale float block.
+- **WeatherEmitter_Update:** first full draft, 154 lab lines (151 masked), with exact size, frame and every stack slot (`w1/drafts/wu_best.c`).
+  - About 40 lines are saved-FP clamp colouring; retail writes `max.s f1,f22,f0; mov.s f22,f1`.
+  - About 45 lines are vector-copy address order, which needs a different copy helper at each site.
+- **ActorPhys_RunResponse:** 116 → 111 masked (`w3/drafts/ar_best111.c`), 2 instructions short.
+- **cHuman_HandleJumpInit:** still 2. The prototype puts the whole message copy on one source line.
+  A volatile `lq`/`sq` copy reproduces the block shape but is a full scheduling barrier: 56–62 lines.
+- **XLib_Init:** still 52. In the prototype the fog setup is one line, an inline call.
+- **New techniques:**
+  - **w1, one-byte enum returns:** `#pragma enumsalwaysint off` gives retail's `andi; beqz; sb` and packs the spill.
+  - **w1, inline helpers:** helpers taking `const V&` that copy inside put the copy in the inline slot region.
+  - **w1, runtime float divisor:** a local float keeps retail's runtime add, which a literal would fold away.
+  - **w1, identity-matrix ctor:** written as volatile asm.
+  - **w2, scheduling:** `.set noreorder` inside a CW `asm volatile {}` stops MW from interleaving C code into the asm.
+  - **w2, wrapper depth:** wrapping an inline one level deeper changes caller-saved register assignment.
+  - **w2, greedy helper search:** the per-call-site greedy search over generated helper forms runs at about 0.1 s per variant.
+  - **w3, delay-slot pointers:** assign the pointer inside the condition (`(o = base + off)`) to get retail's delay-slot address reuse.
+  - **w3, nop before goto:** `asm { nop }` before a `goto` gives "inner ifs target the `b`; nop".
+
 ## Session 2026-11-02 evening (lanes v1-v3, no matches)
 
 - **cHuman_HandleJumpInit: 16 → 2 lab lines** (`docs/lane_notes/v3/drafts/hj_best2.c`), with the same 1,152 instructions as retail.

@@ -51,7 +51,8 @@ This is the working state and the routine for whoever continues this project
   pragmas became unnecessary. It keeps k7's `{ asm { nop } }` empty branches, which emit retail's nops: owner review.
 - **Totals:** 14,277 / 14,351, **95.48% code**; 74 functions remain.
 - **r3 near misses:** cHuman_HandleDeath `r3/drafts/hd_best6.c` is 6 lab lines off (one s-register rotation in InstNR_L).
-  cHuman_NextFrame `r3/drafts/nf_best18.c` is 18 off (three colouring clusters); its lab range is 0x1B1710–0x1B2670.
+  cHuman_NextFrame is now `r4/drafts/nf_best8.c`, 8 lab lines off; its lab range is 0x1B1710–0x1B2670. Two clusters remain: Dying r in a0 vs retail's a2, and the loop
+  IsHuman `move a0,v0`; retail avoids a0 in both. HandleDeath is unchanged at 6 after about 200 variants (r4 NOTES: probably one extra interfering value).
 - **Mode findings (r1/r2 notes):** a draft with `#pragma opt_*` lines and no volatile asm is worth testing with the trigger. Several
   `asm { .set reorder }` barriers together can switch a function into the mode. All other remaining asm-heavy drafts already compile in
   the mode, and retail is too, so their diffs are colouring and scheduling problems inside the mode. `build/agents/R2/mode_sweep.py` (copied

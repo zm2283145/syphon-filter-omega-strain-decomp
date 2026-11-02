@@ -1553,7 +1553,7 @@ segments:
       - [0x15A1C0, c, SFOGame/Source/grenade_3]
       - [0x15AD80, c, SFOGame/Source/grenade_4]
       - [0x15C9D0, c, SFOGame/Source/grenade_7]
-      - [0x15CDC0, asm]
+      - [0x15CDC0, c, SFOGame/Source/grenade/func_0025CDC0]
       - [0x15D3D0, c, SFOGame/Source/grenade_9]
       - [0x15D430, c, SFOGame/Source/grenade_10]
       - [0x15D470, c, SFOGame/Source/grenade_5]

@@ -4,7 +4,7 @@ Template choice points: {{a|b|c}} (each independent). Optional named groups {{#n
 share the same index for all points with the same name. Enumerates all combos (or N random),
 scores with P4L lab.py, prints best. Writes best to TEMPLATE.best.c"""
 import sys, re, itertools, random, subprocess, os, tempfile
-ROOT = "/home/claude/syphon-filter-omega-strain-decomp"
+ROOT = str(__import__("pathlib").Path(__file__).resolve().parents[4])  # repo root
 LAB = [ROOT + "/.venv/bin/python", ROOT + "/build/agents/P4L/tools/lab.py"]
 tpl_path, func, lo, hi = sys.argv[1:5]
 args = sys.argv[5:]

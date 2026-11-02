@@ -68,6 +68,14 @@ The owner approved these idioms; each use must be commented in the source:
   - func_003FD740: 33 lab lines (`gl_best33.c`), a UTF-8 converter.
 - **FrontEnd_SetNodeSpheres_363A80 is a byte-identical clone of cSkeleton_ResetBBoxContributors:** one fix matches both.
 - **x3 rule:** declare locals where the prototype DWARF declares them. One function-level `plSndFx` took PlaySound from 88 to 32 lines.
+- **R236** `066341f6`: cMan_GetGunBarrelMatrix (y3). The float locals are declared in one order and assigned in another:
+  the declaration order sets which registers they get, and the assignment order sets which loads are hoisted.
+- **R237** `2efacf74`: func_003FD740 (y1). **14,290 / 14,351, 96.32% code**; 61 remain.
+- **cGameSound_PlaySound:** 7 lab lines at exact size (`docs/lane_notes/y1/drafts/ps_best7.c`).
+  Reading a field through a free inline `GH(const T&)` shares the implicit copy's field address.
+  One a1/a2 swap is left in the priority loop.
+- **y1 rule, partial address sharing:** put the early uses on a named local and leave the loop on the raw expression.
+  `#pragma opt_common_subs off` is a quick test of whether that is the cure.
 - **New techniques** (x1/x2 notes):
   - **Prototype accessors:** grep the prototype symbol table for small non-inlined accessors (`GetGuardBandScaleX__4XLibCFv`).
     Writing a field read as that inline accessor changes the schedule.

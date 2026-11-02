@@ -3515,5 +3515,6 @@
   "SFOGame/Source/grenade/func_0025CDC0": "cwps2-3.0b38",
   "main/func_001BB1D0": "cwps2-3.0b38",
   "main/func_001BC4B0": "cwps2-3.0b38",
-  "Libs/SFOLib/Source/xlib/func_0037C870": "cwps2-3.0b38"
+  "Libs/SFOLib/Source/xlib/func_0037C870": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/particle/func_0039A000": "cwps2-3.0b38"
 }

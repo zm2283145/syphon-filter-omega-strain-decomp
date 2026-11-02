@@ -40,7 +40,12 @@ This is the working state and the routine for whoever continues this project
 - **R220** `34dac4a5`: cHumanCollisionRoutine_NextFrame, cFlashlight_Update, GuiEquipmentModify_DrawGun.
 - **R221** `6ecfb54d`: cHumanCollisionRoutine_UpdateClimbingEdge (4,816 B), cPickupMenu_AcceptChoices.
 - **R222** `95e23a31`: CalculateLeftWristTargetRot_Local and UpperBody_HandRotation, both fixed by a dedicated case-24 premultiply chain (see p8l NOTES).
-- **Totals:** 14,268 / 14,351, 94.85% code; 83 functions remain. No lanes are running.
+- **R223** `5fe0d822`: GuiEquipmentSetup_ctor (q3, built from the matched GuiScoresEquip_ctor sibling), Global_Shatter and
+  cHuman_Fall (q2: per-site copy depth; `const cMsg&` temporaries plus a named playback-group pointer in the AddRequest wrapper).
+- **Totals:** 14,271 / 14,351, **95.10% code**; 80 functions remain.
+- Session 2026-11-01 evening lanes q1-q3: notes in `docs/lane_notes/q1..q3/`. HandleJumpInit is now at 16 lines (`q2/drafts/hj_best16.c`, only the
+  case-21 msg->vec copy left). cMachine_NextFrame is at 10 (`q2/drafts/mn_best10.c`). GrabLedge has a first draft (`q2/drafts/gl3.c`). Both HandleMoveMessage
+  variants share one residual s4/s2 swap (`q1/drafts/hm1_best.c`). Lead: the Fall recipe should fix cHuman_Land's first AddRequest.
 - `merge_units.py` names free operator functions by operator and parameters (`bbe380b0`, test
   `tests/test_merge_operator_names.py`); NIEvent and interface_model now merge.
 - **Closest open targets.** Drafts are in `docs/lane_notes/<lane>/drafts/`.
@@ -48,13 +53,11 @@ This is the working state and the routine for whoever continues this project
   | Function | Diff | Draft | Notes |
   |---|---|---|---|
   | DetectForAndHandleCollisionWithOtherHumans | 2 words | p6l df_best.c | |
-  | cHuman_HandleJumpInit | 22 lines | p8l hj_best.c | exact size, all 79 stack slots right; case-21 copy order and X3/X4 argument order |
+  | cHuman_HandleJumpInit | 16 lines | q2 hj_best16.c | only the case-21 msg->vec copy block left |
   | cMachine_NextFrame | 10 | p3l n19_d.c | |
   | XLib_DrawLensFlares | 8 lines | p1l lf_best8.c | root cause in p7l NOTES: single-def uv sunk to its use |
   | cMan_ManDMA | 11 | p1l md_best11.c | hoisted store position |
   | cGrenade_CalculateArcPoints | 11 | p5l | |
-  | Global_Shatter | 5 | n2 | |
-  | cHuman_Fall | 5 | n2 | |
 
 - **Method notes:** the MW38 inline-pass model (p4l NOTES), prototype line numbers via P6L's pl.sh, and
   micro test harnesses at about 1 s per variant have been the most productive tools.

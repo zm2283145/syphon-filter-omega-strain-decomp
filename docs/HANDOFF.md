@@ -47,7 +47,11 @@ This is the working state and the routine for whoever continues this project
   DetectForAndHandleCollisionWithOtherHumans, cScriptInterpreter_execute (trigger plus the real Schedule signature from DWARF;
   `"%d\0\0"` literal padding as in playerControls_12). Also added linker aliases `dpadd`/`dptofp` in config/extra.ld (MW double helpers),
   which unblocks cHuman_NextFrame.
-- **Totals:** 14,276 / 14,351, **95.45% code**; 75 functions remain.
+- **R226** `0f8a1c0a`: SKL_CompressSKL. The trigger sweep over drafts that have `#pragma opt_*` but no volatile asm took it from 14 to 0; its
+  pragmas became unnecessary. It keeps k7's `{ asm { nop } }` empty branches, which emit retail's nops: owner review.
+- **Totals:** 14,277 / 14,351, **95.48% code**; 74 functions remain.
+- **r3 near misses:** cHuman_HandleDeath `r3/drafts/hd_best6.c` is 6 lab lines off (one s-register rotation in InstNR_L).
+  cHuman_NextFrame `r3/drafts/nf_best18.c` is 18 off (three colouring clusters); its lab range is 0x1B1710–0x1B2670.
 - **Mode findings (r1/r2 notes):** a draft with `#pragma opt_*` lines and no volatile asm is worth testing with the trigger. Several
   `asm { .set reorder }` barriers together can switch a function into the mode. All other remaining asm-heavy drafts already compile in
   the mode, and retail is too, so their diffs are colouring and scheduling problems inside the mode. `build/agents/R2/mode_sweep.py` (copied

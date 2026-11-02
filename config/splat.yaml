@@ -3505,7 +3505,7 @@ segments:
       - [0x2C6440, c, Libs/SFOLib/Source/vu0man]
       - [0x2C64C0, c, Libs/SFOLib/Source/vu0man_2]
       - [0x2C66B0, c, Libs/SFOLib/Source/vu0man/func_003C66B0]
-      - [0x2C6FC0, asm]
+      - [0x2C6FC0, c, Libs/SFOLib/Source/vu0man/func_003C6FC0]
       - [0x2C7880, c, Libs/SFOLib/Source/vu0man_3]
       - [0x2C8690, c, Libs/SFOLib/Source/bboxman]
       - [0x2C8AD0, c, Libs/SFOLib/Source/message]

@@ -1661,7 +1661,7 @@ file per splat unit), and per prototype `types.txt`, `locals.tsv`, `globals.tsv`
   The trigger works from a dead block: `if (0) { asm volatile { nop } }` emits nothing. It is used as a commented barrier, in the same
   category as the accepted `asm { .set reorder }` barriers. **Owner review pending:** the owner may still reject this idiom.
   The same family, also pending review: dead `if (0) { ... }` blocks of locals that reproduce unreferenced frame holes in this
-  mode (cHuman_Land; cCollisionProbe_SphereSweptRay_Reset_2 in R228, a placeholder block of a matrix and vector temporaries).
+  mode (cHuman_Land; cCollisionProbe_SphereSweptRay_Reset_2 in R228 and ColQuery_InitSweep in R229, placeholder blocks of matrix/vector temporaries).
 
 Automated search (2026-10-31). Both tools run in WSL with `CW38_DIR=/root/cw/mwcps2-3.0b38-030307`, where a check takes about 0.2 s:
 

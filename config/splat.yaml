@@ -1055,7 +1055,7 @@ segments:
       - [0x0C7180, c, SFOGame/Source/gameSound_9]
       - [0x0C7340, c, SFOGame/Source/gameSound_2]
       - [0x0C7550, c, SFOGame/Source/gameSound_3]
-      - [0x0C8770, asm]
+      - [0x0C8770, c, SFOGame/Source/gameSound/func_001C8770]
       - [0x0C8E10, c, SFOGame/Source/gameSound_16]
       - [0x0C9430, c, SFOGame/Source/gameSound_17]
       - [0x0C96D0, c, SFOGame/Source/gameSound_18]

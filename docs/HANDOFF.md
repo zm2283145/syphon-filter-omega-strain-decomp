@@ -1681,6 +1681,12 @@ file per splat unit), and per prototype `types.txt`, `locals.tsv`, `globals.tsv`
 
 ## Near-miss techniques (newest)
 
+- **Rotated s-register sets (u1, 2026-11-02):** when a whole set of saved registers comes out rotated, look for the one inline call
+  that receives the variable (or a sibling of it) together with a temporary. Toggle each use site separately in a 2^n grid
+  (about 0.1 s per variant) to find it. This fixed both HandleMoveMessage variants; the cure was passing the context pointer, not the actor.
+- **Helper parameter order (u2):** an "extra early vreg that emits no code" can simply be a VU0 helper's parameter order. Inline
+  arguments are evaluated right to left, so put the destination last (cGrenade_CalculateArcPoints: `MulT(const V* src, V* dst, float)`).
+
 - **Less-optimised compiler mode (2026-11-01, q4):** some retail functions, such as cHuman_Land and cHuman_GrabLedge, were compiled in a
   mode MW enters when a function contains any `volatile` asm (MW `asm volatile {}` or GCC `__asm__ volatile`; non-volatile asm
   does not trigger it). Signs of this mode: loops left unoptimised, pointers kept in their own register (`move s3,s2`), addresses

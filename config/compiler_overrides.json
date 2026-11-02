@@ -3522,5 +3522,7 @@
   "Libs/SFOLib/Source/man/func_00385240": "cwps2-3.0b38",
   "Libs/SFOLib/Source/globalization/func_003FD740": "cwps2-3.0b38",
   "SFOGame/Source/GuiAgentCreate/func_00290610": "cwps2-3.0b38",
-  "SFOGame/Source/GuiAgentInfo/func_00363A80": "cwps2-3.0b38"
+  "SFOGame/Source/GuiAgentInfo/func_00363A80": "cwps2-3.0b38",
+  "SFOGame/Source/humanIk/func_001DD1C0": "cwps2-3.0b38",
+  "Libs/SFOLib/Source/texture/func_003BB360": "cwps2-3.0b38"
 }

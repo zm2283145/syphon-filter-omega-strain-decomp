@@ -13,6 +13,10 @@ Nothing staged (no full match).
 - Not acceptable as is: the trigger emits an instruction retail does not have. Zero-emission asms (empty MW/GCC
   asm, `.set reorder`, labels, empty asm with outputs, dead `if (0)` blocks) do not trigger the block-local mode.
 
+- Follow-up (coordinator): count is equal (1152) with the nop present; MW never fills a delay slot with a
+  volatile asm nop (two nops when it is first), `.set noreorder` wrapping loses the trigger, and moving the t3 base
+  after the asm or the nop into other inlines/paths does not help. No match; details in NOTES.md "HJ follow-up".
+
 ## CameraCol_Sweep 0x20D680 (2136 B): still 16 lab lines (build/agents/V3/cs_best16.c = U3 cs20)
 - Re-ran all 792 prototype interleavings on the current best (floor 16) and a new 2^11 per-argument
   "assignment expression" grid scored per call window; tried local pointer/float copies at three positions,

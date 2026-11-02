@@ -54,6 +54,26 @@ The owner approved these idioms; each use must be commented in the source:
     creates its address registers one pass later without moving stack slots.
   - Free `operator+/-(const V&, const V&)` avoid the two dead `addiu` per site that member operators on by-value temporaries leave.
 
+## Session 2026-11-02 evening (lanes v1-v3, no matches)
+
+- **cHuman_HandleJumpInit: 16 → 2 lab lines** (`docs/lane_notes/v3/drafts/hj_best2.c`), with the same 1,152 instructions as retail.
+  The draft has an `asm volatile { nop }` trigger as the first statement of `MsgCopy_L`, then `__int128*` member pointers, then a plain `*pd = *ps;`.
+  The only difference left is the delay slot: retail has `beqz s2; nop; lui v0; addiu t3`, ours has `beqz s2; addiu t3; nop; lui v0`.
+  No position of a nop trigger can produce retail's order (v3 "HJ follow-up"), so retail's trigger must be a real instruction.
+- **cHuman_HandleDeath:** still 6. The rotation comes from how many values interfere with `an`, and from the actor's liveness.
+  It reproduces in a micro harness built from TailA_L alone (v1).
+- **cHuman_NextFrame:** still 8 (v1).
+- **CameraCol_Sweep:** still 16 (v3). Retail generates one of the 0.05f float arguments late; no C form found does that.
+- **XLib_DrawLensFlares:** still 8 (v2), a v0/t2 swap in the cover sprite.
+- **cMan_ManDMA:** still 9 (v2). Retail's preheader hoist position is not reachable from any dominating definition.
+- **New techniques:**
+  - **Instruction-emitting volatile asm:** a volatile asm that emits an instruction, even `asm volatile { nop }`, puts its basic block into the
+    unoptimised pattern (no quad-offset folding, no base/a0 merge). Volatile asm that emits nothing does not.
+  - **Delay slots:** MW fills a branch delay slot only from the first instruction scheduled after the branch.
+  - **Hoist probe:** compile with `#pragma schedule off` and unique 64-bit marker constants to see the loop-preheader hoist order.
+    This checks whether a target position is reachable at all (v2 `ir.sh`).
+  - **Message temporaries:** writing `cSkaAnimEndedMessage` objects as C++ temporaries gives retail's constructor and destructor order and stack slots (v1).
+
 ## Session 2026-11-02 morning (lanes s1-s3, t1-t3)
 
 - **R227** `d55722e7`: StaticInit_scriptUtils (owner approved; NOLOAD helper copies).

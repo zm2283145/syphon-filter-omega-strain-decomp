@@ -41,3 +41,21 @@ thunk argument, whole-function and per-call-window scores).
 - Observation for a successor: with `float k = 0.05f` as f13 (loc_lit) call 2's f12/f16 land exactly where retail
   has them, i.e. retail looks like f13's constant is generated late (after the e loads) while f14/f15 are hoisted.
   No C form found that makes one literal float argument non-hoisted.
+
+### HJ follow-up (coordinator questions, 2026-11-02 evening)
+- (1) hj_best2.c has 1152 instructions = retail: the asm nop takes the place of retail's empty-slot nop, so the residue is
+  only the order (ours `beqz; addiu t3; nop(asm); lui v0`, retail `beqz; nop; lui v0; addiu t3`). check_match: 3 words.
+- Filler rule (observed): MW fills the beqz slot only from the FIRST scheduled instruction of the fall-through, when
+  that register is dead at the target: addiu t3 (pc) is taken; lui v0 is not (retail; pos2 variant); a volatile asm nop
+  is never taken (it inserts its own nop -> two nops, +1 instruction, 5 lab lines: h_*/hp_*/hd_*/fi_* in sh17.py).
+- (2) t3 base after the asm: pointer assigned after the nop at the if head, nop in a separate inline called first,
+  MW vs GCC `__asm__ volatile("nop")`, with/without "memory": all give the two-nop form (5 lines; 10 with the reorder
+  barrier). Passing `&copy` straight to MsgCopy_L loses the t3 base (sp-relative stores, 16 lines). Nop in IsActive_L's
+  return path or between the condition and `if (ok)`: 22-30 (trigger is not in the block).
+- (3) `.set noreorder` wrapping (`asm { .set noreorder } asm volatile { nop } asm { .set reorder }`, one MW block with
+  the directives, GCC `".set noreorder; nop; .set reorder"`): the block-local trigger is lost (31 lines with the
+  reorder barrier, 1170-byte unfilled mode without it).
+- Trigger later in the block (pos2: after the first vt store) keeps retail's unfilled slot and `lui v0; addiu t3`
+  start, but the asm nop then is a real extra instruction (1154).
+- Conclusion: with an asm nop as the trigger no position matches; retail's trigger must be an instruction retail
+  really has. In this block only the vec lq/sq qualifies, and as a volatile asm it blocks the arg hoisting (56-65).

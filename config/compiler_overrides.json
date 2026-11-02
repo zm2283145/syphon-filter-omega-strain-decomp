@@ -3973,5 +3973,8 @@
   "SFOGame/Source/humanCollision/func_001DFB80": "cwps2-3.0b38",
   "SFOGame/Source/pickup_menu/func_00251920": "cwps2-3.0b38",
   "SFOGame/Source/humanIk/func_001D2F90": "cwps2-3.0b38",
-  "SFOGame/Source/humanIk/func_001D40E0": "cwps2-3.0b38"
+  "SFOGame/Source/humanIk/func_001D40E0": "cwps2-3.0b38",
+  "SFOGame/Source/human/func_001A1590": "cwps2-3.0b38",
+  "SFOGame/Source/SpecFxDefs/func_00230DE0": "cwps2-3.0b38",
+  "SFOGame/Source/GuiEquipmentSetup/func_002A47E0": "cwps2-3.0b38"
 }

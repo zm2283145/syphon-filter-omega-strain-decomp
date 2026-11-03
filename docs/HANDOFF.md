@@ -5,6 +5,23 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Current near-miss research and environment (2026-11-03)
+
+- Three agents active: human/IK AimComponent clean-source reconstruction;
+  gameplay InterfaceModel native MSL iterator comparison; graphics ManRender
+  original modifier/second-output context. Parent alone integrates/fullyverifies.
+- WSL stopped between rounds (HCS_E_TERMINATED). Parent healthcheck auto-started
+  sfos3 normally and independently rechecked human_46: allthreefunctions MATCH,
+  undefined/data/literals empty. No forcedshutdown/restart or sourcechanges.
+  Released holds; limit eachlane toone compilerprocess.
+- ManRender actual cBoneRenderMatrices112B modifier now uses confirmed bone@1020
+  andlights@1060,local2Screen separate@1090. Correct native mapping preserves
+  exacttwo-word near miss; no scalartranscription/alias added.
+- InterfaceModel exactextent191word native MSL context withall3ownedhelper bodies
+  MATCH is preserved; extra const-base wrapping addswrongtemp. No new Cmatch.
+- Parent re-audited exhausted SoftwareID allocator notes; no repeated pointerpin/
+  profile sweeps. Knownverified source remains90db928c,96.60%,52remaining.
+
 ## START HERE: verified padding inventory correction (2026-11-03)
 
 - **14,299/14,351 functions;96.60%code;52remaining.** Full retail SHA256

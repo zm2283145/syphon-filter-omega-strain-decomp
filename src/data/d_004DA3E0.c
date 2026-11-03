@@ -76,6 +76,7 @@ extern void cHuman_Deactivate();
 extern void cHuman_Die();
 extern void cHuman_GetActivationPoint();
 extern void cHuman_GetBBox();
+extern void cHuman_GetCameraCollisionReferencePoint();
 extern void cHuman_GetFloorPlane();
 extern void cHuman_GetFloorPoly();
 extern void cHuman_GetHealthState();
@@ -217,8 +218,8 @@ void *D_004DA690[70] = {
     &cHuman_SetRotation_ResetPhysics, &cHuman_SetTranslation_ResetPhysics, &cGOBJ_GetTargetPriority, &cHuman_GetLosPosition,
     &cHuman_GetTargetPosition, &cHuman_GetTargetPriority, &cHuman_GetMovementState, &cHuman_GetSubTargetAimAdjust,
     &cHuman_GetNumSubTargets, &cHuman_IsAimed, &cGOBJ_GetMatrix, &cGOBJ_v35,
-    &cHuman_GetActivationPoint, &cSKM_GOBJ_GetCenterOfMass, &cHuman_GetTransform_ForTeleporting, (void *)0x1b0f30,
-    &cHuman_GetTransform_ForCameraTracking, &cHuman_GetTransform_ForFloorTravel, &cHuman_GetFloorPlane, &cHuman_InitNetwork,
+    &cHuman_GetActivationPoint, &cSKM_GOBJ_GetCenterOfMass, &cHuman_GetTransform_ForTeleporting, &cHuman_GetTransform_ForCameraTracking,
+    &cHuman_GetCameraCollisionReferencePoint, &cHuman_GetTransform_ForFloorTravel, &cHuman_GetFloorPlane, &cHuman_InitNetwork,
     &cHuman_ReceiveDamage, &cHuman_CheckBullet, &cHuman_GetHealthState, &cHuman_Die,
     &cHuman_GetFloorPoly, 0,
 };

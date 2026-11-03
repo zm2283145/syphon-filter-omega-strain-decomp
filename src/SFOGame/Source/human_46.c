@@ -1,5 +1,5 @@
 /*
- * SFOGame/Source/human: 2 files, 001B0A00-001B0A50
+ * SFOGame/Source/human: 3 files, 001B0A00-001B0F20
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -185,3 +185,74 @@ void NpcAi_GroundActor(Act* self, int snap, int above, float z)
 static inline void merge_flush_func_001B0A50(void) {} /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_001B0A50 */
+
+/* merge_units: begin func_001B0F20 */
+#pragma push /* merge_units */
+#pragma exceptions off
+#pragma tailcall on
+#pragma cplusplus on
+/* human.cc: Jan001A8E80 and retail001B0F20, cVector cHuman::GetCameraCollisionReferencePoint() const.
+ * Returns virtual GetActivationPoint(), vtable slot0xE0. Disable exceptions to preserve the original tail call.
+ * Class declarations retain native aggregate-return and virtual-dispatch ABI; unused slots are opaque. */
+struct cVector { float x,y,z,w; cVector(const cVector&); };
+class HumanCameraView { public:
+virtual void slot0() const;
+virtual void slot1() const;
+virtual void slot2() const;
+virtual void slot3() const;
+virtual void slot4() const;
+virtual void slot5() const;
+virtual void slot6() const;
+virtual void slot7() const;
+virtual void slot8() const;
+virtual void slot9() const;
+virtual void slot10() const;
+virtual void slot11() const;
+virtual void slot12() const;
+virtual void slot13() const;
+virtual void slot14() const;
+virtual void slot15() const;
+virtual void slot16() const;
+virtual void slot17() const;
+virtual void slot18() const;
+virtual void slot19() const;
+virtual void slot20() const;
+virtual void slot21() const;
+virtual void slot22() const;
+virtual void slot23() const;
+virtual void slot24() const;
+virtual void slot25() const;
+virtual void slot26() const;
+virtual void slot27() const;
+virtual void slot28() const;
+virtual void slot29() const;
+virtual void slot30() const;
+virtual void slot31() const;
+virtual void slot32() const;
+virtual void slot33() const;
+virtual void slot34() const;
+virtual void slot35() const;
+virtual void slot36() const;
+virtual void slot37() const;
+virtual void slot38() const;
+virtual void slot39() const;
+virtual void slot40() const;
+virtual void slot41() const;
+virtual void slot42() const;
+virtual void slot43() const;
+virtual void slot44() const;
+virtual void slot45() const;
+virtual void slot46() const;
+virtual void slot47() const;
+virtual void slot48() const;
+virtual void slot49() const;
+virtual void slot50() const;
+virtual void slot51() const;
+virtual void slot52() const;
+virtual void slot53() const;
+virtual cVector GetActivationPoint() const;
+};
+extern "C" cVector cHuman_GetCameraCollisionReferencePoint(const HumanCameraView *self) { return self->GetActivationPoint(); }
+static inline void merge_flush_func_001B0F20(void) {} /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_001B0F20 */

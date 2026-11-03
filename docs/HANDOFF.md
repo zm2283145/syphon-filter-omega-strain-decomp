@@ -5,7 +5,34 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## START HERE: verified Human NextFrame match (2026-11-02, Codex)
+## START HERE: verified camera-reference boundary match (2026-11-03, Codex)
+
+- **14,299/14,352 functions;96.60%code;53remaining.** Entire retail SHA256
+  9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6 verified,
+  all comparison targets rebuilt, regression checks passed and WSL_ROUND_OK
+  completed synchronization. Count+1matched/+1total; remaining53 unchanged.
+- New ordinary C++ **cHuman_GetCameraCollisionReferencePoint001B0F20,16bytes**.
+  January prototype GetCameraCollisionReferencePoint__6cHumanCFv001A8E80 is
+  raw-byte-identical; CU/locals confirmhuman.cc,cVectorreturn,constreceiver.
+  October has no corresponding named symbol; do not claim two-prototype proof.
+- Old symbol incorrectly named the combined1952B region GetTransform_ForCameraTracking.
+  Corrected true largerbody start001B0F30,size1936; it remains unmatched/eightword
+  near miss. Existing reference/table names updated consistently; fullhash verifies
+  targets. Native virtualGetActivationPoint+E0/aggregate return and exceptions-off
+  reproduce16B tailcall with no assembly or new compilerprofile.
+- Folded into originalhuman.cc part **src/SFOGame/Source/human_46.c**, replacing
+  oldhuman_108. Parent post-regeneration standard checker confirms allthreefunctions
+  MATCH,zero undefined/data/literal findings, after boundary correction/merge.
+- Evidence build/pending/resume_net_1102/mw38_001B0F20.c,camera_reference_evidence.md,
+  private parent_camera_ref_1103/{prototype_proof.json,check_boundary.py}.
+  Windows integrator initially saw stale1952B asm extent; parent manuallyintegrated
+  the proven16B split and used normal merger/fullworkflow. No checker weakened.
+- Resume three persistent matching lanes afterhold: human/IK including actual
+  camera-tracking body(resume_net), gameplay/collision/LedgeValidator(resume_fire),
+  graphicsManRender2word/LensFlares8word(resume_font). Parent alone integrates and
+  fullverifies; preserve all failed-source-context research, no duplicate targets.
+
+## Previous verified Human NextFrame match (2026-11-02, Codex)
 
 - **14,298/14,351 functions;96.60%code;53remaining.** Full retail SHA-256
   9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6 passed;

@@ -2304,7 +2304,6 @@
   "SFOGame/Source/human_98": "cwps2-3.0b38",
   "SFOGame/Source/human_99": "cwps2-3.0b38",
   "SFOGame/Source/human_105": "cwps2-3.0b38",
-  "SFOGame/Source/human_108": "cwps2-3.0b38",
   "SFOGame/Source/human_110": "cwps2-3.0b38",
   "SFOGame/Source/human_111": "cwps2-3.0b38",
   "SFOGame/Source/human_112": "cwps2-3.0b38",
@@ -3525,5 +3524,6 @@
   "SFOGame/Source/humanIk/func_001DD1C0": "cwps2-3.0b38",
   "Libs/SFOLib/Source/texture/func_003BB360": "cwps2-3.0b38",
   "SFOGame/Source/gameSound/func_001C8770": "cwps2-3.0b38",
-  "SFOGame/Source/human_39": "cwps2-3.0b38"
+  "SFOGame/Source/human_39": "cwps2-3.0b38",
+  "SFOGame/Source/human_46": "cwps2-3.0b38"
 }

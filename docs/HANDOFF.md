@@ -5,6 +5,51 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Verified original strcmp assembly ownership and continued matching (2026-11-03)
+
+- Verified source coverage is **14,302/14,351 functions, 96.66% code,
+  49 remaining** (precise96.66021). This batch adds NO new C reconstruction:
+  one324B routine is now retained as proven original handwritten assembly.
+  Last ordinary C acceptance remains AimHead,4a32a7d6.
+- New primary evidence closes the earlier inconclusive strcmp origin audit:
+  installed SCE SDK gcc/ee/lib/libc.a and soft-float/libc.a both contain
+  strcmp.o whose STT_FILE identifies newlib/libc/machine/r5900/strcmp.S.
+  Both complete324B bodies independently MATCH retail00129218 through the
+  fresh WSL checker, no relocations/undefined/data/literals. Text SHA256:
+  0d7de6655503cb4da5fb662fd3458aa2316f3b3c15bd4e5a692a1e54e5104d71.
+  The installed SDK runtime archives were outside the older .tools search.
+  Original objects remain private and are never linked or committed.
+- Applied existing owner policy to unit029218; src/asm/129218.s retains
+  the original assembly plus its four trailing padding bytes. Full wsl_round.sh
+  rebuilt all report targets, passed170 tests, synchronized, and printed final
+  WSL_ROUND_OK. Independent full retail SHA256 remains
+  9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6.
+  Primary/private proof: build/agents/parent_sdk_string_1103/NOTES.md.
+- Actual cQuatVec::Invert220B independently MATCHes; Actor's remaining
+  invented result-owner uses are replaced by live receiver temporaries.
+  Unused owner definitions removed with whole-caller byte equivalence.
+  Parent independently reproduces12008B versus12016,796 NON-SIZE comparator
+  findings plus SIZE, all333 ordered static targets exact, empty ancillary.
+  This is substantial defined-source progress, NOT a match; old unsafe658
+  must remain separate. Preferred actor_native_receivers_clean.c; parent
+  proof build/agents/parent_actor_receiver_1103. Aggregate audit establishes
+  listed arrays are receiver MEMBERS, not stack arrays; no local regrouping.
+- Tracking actual cSkaAnimAnchor170B embeds its TreeNodeD0B then weightD0;
+  actual GetWeight8B independently MATCHes. Restoring owner/subobject views
+  preserves clean8/exact1936B. Full quaternion/vector type separation remains
+  an evidence-based source question, not permission for an arithmetic grid.
+  Gameplay evidence: resume_fire_1102/ongoing/tracking_owner/NOTES.md.
+- AgentData actual achievement vector uses non-POD0/deleter ownership while
+  requirement enum uses POD1. Native achievement-array ctor48B MATCHes, but
+  the complete fixture still fails unowned implicit destructor boundaries;
+  no dependent caller trial. New original non-POD typed-delete5arg boundary
+  supports a separate primitive-first probe; no cleanup suppression/aliases.
+  See resume_font_1102/ongoing/agentdata/nonpod_owner/NOTES.md.
+- Compiler holds covered the entire source/report synchronization. Next work:
+  human/IK native operations on the legal796 Actor checkpoint, graphics
+  typed-delete/deleter primitive composition, and gameplay distinct native
+  quaternion/vector owner propagation. Continue NEW matching research.
+
 ## Further defined Actor/source ownership work (2026-11-03)
 
 - Verified source stays **4a32a7d6, 14,301/14,351, 96.65% code, 50 remaining**.

@@ -30,6 +30,7 @@
 0x0168C0  # kernel patch syscall stubs
 0x016918  # kernel patch syscall stub
 0x016A00  # SetT2: eret, cop0
+0x029218  # strcmp: exact SDK libc.a strcmp.o, original newlib/libc/machine/r5900/strcmp.S
 0x1F1C38  # bignum routines (IsSmaller, lint*, MODIP, MULT, XMOD, Shift*): lq/sq saves of temporaries, plzcw
 0x2020A8  # ScrambleSeed: mfc0 Count, $at total, addi
 0x217780  # DotProd: mula.s/madda.s accumulator chain

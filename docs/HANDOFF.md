@@ -53,12 +53,17 @@ This is the working state and the routine for whoever continues this project
   or original indirect dispatch. Prepared gameplay machine_quit_review; no
   repeated quit-box/viewport/depth grid.
 - Actor original raw lexical trees contain one full-method block,102/104locals;
-  no nested range supports a scope restoration. Proven FaceIndex uint8B and
-  scalar index declarations preserve legal796 findings/12008B/333 correct calls.
+  no nested range supports a scope restoration. FaceIndex's8B unsigned-int
+  getter and scalar index declarations preserve legal796 findings/12008B/333 correct calls.
   New nested-flags GetPropertiesIndex proof fails12B versus16B and remains
   failed; canonical existing body/API audit is separate from claiming that
   new CPP primitive. Original DisplayLastFrame macro evidence remains missing;
   independent review confirms GS_DISPLAY1 at12000080, not DISPLAY2.
+- Released gameplay Quit byte-return ABI trial preserves native Machine10,
+  all3 destructor matches and24B jump-data match; no new C acceptance. Human
+  caller-only complete index ABI repair also ties796/all333 targets after fresh
+  existing canonical helper groups ALL MATCH (183AF0 and humanCollision_9).
+  This does not promote the failed new12B CPP getter or move any helper owner.
 
 ## Verified rejection of two older undefined C matches (2026-11-03)
 

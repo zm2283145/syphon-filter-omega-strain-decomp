@@ -5,6 +5,63 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Public network owners and further native primitive rounds (2026-11-03)
+
+- Live source/report baseline remains **14,300/14,351,96.62%,51 remaining**
+  (precise96.616066); prior checkpoint ee5d63c7. No new ordinary C function,
+  tracked source/tool change or redundant full build in these private rounds.
+- NetIInitialize's old flat local-address structure is real NetAddressList48B:
+  TWO24B records containing enum type, IP[16], int port. Both original symbols
+  MyAddressInfo and independently traced caller member addresses confirm the
+  owner. Restoring nested array ownership removes backward pointer subtraction
+  from an interior char symbol and still ties1008B/eight findings.
+  Full actual28B input/24B output, int UdpBindPort (formerly ushort), enum error,
+  typed RSA128B and callback/data pointers also tie8. Public default-input
+  initializer independently MATCH96B before composition. One fixed native-store
+  order control in this new header context worsens to14; no permutation grid.
+  Proofs and exact caveats: parent_netinit_1103/NOTES.md. Retain void seed-call
+  shipping declaration; changing it to the callee definition's int already failed.
+- Jump independent original copy graphs now MATCH: base84B and CharAction112B.
+  Explicit out-of-line base fixture FAILS derived80B; restoring the language's
+  original implicit-copy INLINE property makes112B MATCH. Current natural36
+  caller ALREADY has this graph, so no manual-copy/depth caller trial followed.
+  Positive/negative fixtures remain separate in human ongoing/jump_natural_dtor.
+- Ledge actual property owner/GetMaskedBits20B gate MATCH before one caller
+  composition:215 findings versus retained213, exact3716B,32 direct targets
+  correct in order, ancillary empty. Named/right references and seven native
+  Ray temporary lifetimes reviewed without an escaping temporary reference.
+- Actual Ledge array callback __defctor220B supplies real default initialization;
+  the unused empty default constructor scaffold is NOT an executed lifetime bug.
+  One semantic default-wrapper reconstruction preserves its7 actual calls,
+  owned0001 start/borrowedZero direction and all initialization/guard effects,
+  but emits216B/39 findings+SIZE. Primitive FAIL; no static-array/BSS/caller
+  probe or variants. January224B/October184B are explicit version differences.
+  Evidence: gameplay ongoing/ledge/default_semantic and native_properties.
+- Lens real native matrix/vector member VALUE operation independently MATCH76B
+  before one ordinary-conversion caller reconstruction, which ties5348B/1076
+  word differences+SIZE. Historical scalar-assembly8 remains research-only.
+  A single unsigned-shift repair preserves retail SLL32/sign extension versus
+  DSLL64 and UV zero extension;10007 boundary/random bit checks PASS. Caller
+  instead5716B/1176+SIZE, ancillary empty. Keep separate; signed add/sub, FTOI
+  and pointer/buffer preconditions remain, so no blanket safety/staging claim.
+- Paired Vision and HandleDeath line/inline audits expose no finer original
+  expression/helper ownership for the residual clusters. No speculative
+  source-expression or repeated conversion/context grid was compiled from them.
+- PlayerInput's E8 virtual returns real cMatrix VALUE from const
+  GetTransform_ForTeleporting, distinct from the already-fixed F4 lifetime.
+  Paired target identity uses JanuaryE8/OctoberE0, not an assumed fixed slot.
+  Fresh canonical156B getter and40B matrix-copy gates MATCH before one owner
+  propagation: same17792B/439 findings,306 ordered direct targets exact,
+  48B jump data MATCH, ancillary empty. Prefer human PLAYER_RESEARCH.md's
+  player_native_e8_matrix_return.c for this repair; other legality caveats remain.
+- Transient WSL termination recovered through normal reopen and fresh known
+  human_46 ALL3 MATCH/empty ancillary before explicit compiler-hold release.
+  No forced shutdown, shared VM changes, or match credit from recovery.
+- No compiler processes remain active. Further work needs a new source premise,
+  such as the original compiler-generated Ray default-wrapper composition or
+  other remaining SDK/toolchain provenance; do not repeat the closed network
+  store permutations, scalar-conversion grids or Player E8/F4 contract probes.
+
 ## Native caller/result gates and actual MULTIDEF semantics (2026-11-03)
 
 - Fresh WSL progress remains **14,300/14,351,96.62%,51 remaining**

@@ -9,6 +9,14 @@ This is the working state and the routine for whoever continues this project
 
 - Verified source state stays **14,300/14,351, 96.62% code, 51 remaining**.
   No full new C routine, accepted source change or full build is claimed.
+- **LensFlares8 is also research-only.** A full inherited-helper audit found
+  ordinary scalar cvt/mfc transcription in F2I; no original asm-origin proof
+  establishes it as permitted handwriting. One plain C-cast control changes
+  code size substantially and broadly differs, clean symbols/data/literals;
+  no conversion grid followed. This is separate from the already documented
+  ManRender uninitialized-row blocker. Lens partial vector fields are only read
+  where initialized, and matrix paths write full results. Current safe source
+  and precise findings: resume_font_1102/ongoing/lensflares/NOTES.md.
 - Human independently verified actual PlaybackGroupId(int) native constructor
   and packet resolver's caller-owned node/group output references, eliminating
   an old opaque int/Y view at that call. Both faithful trials tie HandleDeath8,

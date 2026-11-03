@@ -5,6 +5,31 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Independent helper verification and allocator review (2026-11-03)
+
+- Verified source totals remain **14,300/14,351, 96.62% code, 51 remaining**.
+  No new completed C function, source integration or full build is claimed.
+- Parent independently verified graphics' clean native special-member fixture:
+  requirement-array default ctor336D90, achievement copy ctor337AB0 and dtor336A30
+  all MATCH their existing routines. Another emitted array dtor remains58vs60;
+  the unit is not ready. Source/proof snapshot: build/agents/parent_agentdata_1103.
+  Graphics continues actual MSL inheritance/destructor/implicit-member evidence,
+  preserving both-prototype call-target proof rather than forcing inline flags.
+- Parent's full allocator-history review found a real remaining ABI-view gap:
+  cMemBin::Allocate returns void*, while old drafts used a char* C shim. Exact
+  native member/const-file contract restoration preserves the clean4 strict-word
+  Init(int,uint,uint) baseline at628B. Actual matched timer-guard side effects
+  equal existing AllocGuard, so no guard-renaming/context probe was justified.
+  Evidence/closed premises: build/agents/parent_mem_int_1103/NOTES.md.
+- Human AimComponent's safe actual-owner family remains incomplete. Corrected
+  metrics count differing word offsets separately from the size finding: old
+  native-copy743+size; actual owner490+size; typed JointInfo515+size. Real transform
+  getter independently MATCHes its existing8B routine. A conjugate helper failed
+  its own primitive comparison, so no unsupported caller trial followed.
+- Gameplay preserves Sphere12 and now audits true CheckBullet interfaces, enum
+  return/local types and native vector ownership. New trials remain private;
+  no old matrix-copy, operand, tag or helper-depth grids are reopened.
+
 ## Native API research continuation (2026-11-03)
 
 - Verified totals remain **14,300/14,351, 96.62% code, 51 remaining**.

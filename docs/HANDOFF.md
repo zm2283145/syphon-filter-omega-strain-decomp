@@ -5,6 +5,85 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Native caller/result gates and actual MULTIDEF semantics (2026-11-03)
+
+- Fresh WSL progress remains **14,300/14,351,96.62%,51 remaining**
+  (precise96.616066), based on the last synchronized full retail verification.
+  No new completed C function or source integration in this research batch.
+  Last new ordinary C acceptance is still AimHead4a32a7d6. Private proof units
+  below are already-owned helpers, never extra matches.
+- GCD's real LOS destructor96B and complete native24B table independently
+  MATCH. Replacing explicit weak/drop cleanup with the full native cMessage
+  interface/natural derived destructor preserves604B/20 findings; destructor
+  MATCH and ancillary checks empty. Original constructor formal declaration
+  was not recovered, so no by-value/reference guessing. Private parent proof:
+  parent_gcd_message_1103/NOTES.md and natural_los_caller.c.
+- Both-prototype result/member ownership supports real ResultA0/Face70 hex
+  extents and named Properties/Locator constructors. Independent inline-member
+  Result24B and Face24B MATCH; Properties/Locator16B each also MATCH separately.
+  Natural typed-result caller instead gives596B/137 non-size findings+SIZE,
+  with native LOS destructor MATCH and empty ancillary. Native public ctor
+  refinement ties that failure. Do not repeat constructor/depth/order grids.
+  A combined out-of-class ctor diagnostic FAILS Face/Result and is explicitly
+  not a passed whole graph. Retail body604B versus next-start span608B remains
+  distinguished. No uninitialized status/handle/padding values are invented.
+- Gameplay independently proves the GCD weapon chain is pointers throughout:
+  Human.mWeapon, const GetWeaponEntry result, bullet.wpnEntry. Fresh canonical
+  weapon_17 ALL10 MATCH before one caller-only repair, which ties604B/20 and
+  all10 direct targets plus sole indirect call at exact offsets. Opaque
+  14D450/14D460 old cLightSrc labels are unsupported; retain physical names.
+- Machine Quit byte-return and real shared g_Game.frontend pointer ownership
+  both tie the repaired10 findings/5572B, with3 native dtors and24B jump data
+  MATCH. Both prototypes plus accepted retail game_10 establish pointer field
+  ownership and retail+B4; no older layout was imported. Preferred gameplay
+  machine_quit_review/machine_shared_game_owner.c remains an unmatched draft.
+- Actor's actual QuatVec Copy_Invert VALUE284B and nontrivial copy constructor
+  32B independently MATCH. TWO real value-return calls feeding native matrix
+  constructor tie821 non-size findings+SIZE/12008B, all333 targets exact;
+  retained796 checkpoint stays stronger. No RVO/copy/depth follow-up grid.
+  Tracking's actual IsOnMovingElevator returns cGOBJ*, not int: both prototypes
+  and fresh canonical gobj_5 ALL17+8B data MATCH; pointer-only caller fix ties8
+  at1936B. No supported new weighted-add source premise emerged.
+- Native SpecFx destructor76B plus entire12B table now strict MATCH with EOF
+  RTTI-off policy and empty ancillary (parent_specfx_1103). This closes the
+  old primitive data failure; triple-MFC1/packing grids remain closed.
+  Vision's actual cScreenTile/cSyncBar const Render declarations and native
+  member owners independently proven in both prototypes still tie632B/28;
+  no new helper body, conversion grid or undefined/data/literal failure.
+- CheckBullet's actual in-place cVector::Transform reference API independently
+  MATCH48B before one caller restoration. Caller81 findings at exact1636B
+  versus retained78; native sound-message destructor136B MATCH. All15 direct
+  targets and5 indirect call instructions match in order, not all offsets;
+  undefined/data/literals empty. Preserve both checkpoints in gameplay
+  ongoing/check_bullets_native/native_inplace_transform; no copy/operand grid.
+- Jump's true CharAction96B and Vector112B destructors each independently
+  MATCH with their ENTIRE separated24B native tables. Complete four-slot base
+  header, mutable name-reference, const Clone and actual derived Pack methods
+  permit natural automatic cleanup without weak/drop scaffolding. One caller
+  reconstruction ties4608B/36 findings; both emitted dtors MATCH, ancillary
+  empty. Noncontiguous helper bodies remain visible and prevent automatic
+  ownership/integration claims. Prefer human ongoing/jump_natural_dtor/caller.c
+  over historical weak36; no axis-angle/copy/depth grid follows.
+- Actual CW38 linker binary proves symbol binding13 means MULTIDEF and14
+  OVERLOAD; explicit weak is2. A pure synthetic ODR-identical inline pair
+  coalesces to the FIRST input in either order. A nodeadstrip control retains
+  ordinary unused globals but still selects only one MULTIDEF body. Separate
+  identical GLOBAL1/MULTIDEF13 pairs FAIL duplicate-definition in BOTH orders;
+  GLOBAL does not simply override MULTIDEF. Commands/assertions/maps private
+  in graphics ongoing/machine_messages. No production dedup, binding rewrite,
+  helper stripping/moving, original object-order claim or profile change.
+- Original Jan/Oct exception indices are empty, while the diagnostic's native
+  EXCEPTION directive produces a12B index. This proves linked-index policy,
+  not absence of compiler cleanup tables or a recovered build flag. Current
+  noncontiguous native-helper integration blocker remains explicit.
+- These bounded rounds are complete; compiler processes are idle. Next work
+  requires new primary inline/source evidence: Jump copy/Queue context,
+  Vision color-conversion expression, Tracking weighted-add composition,
+  or GCD original result/member constructor context. Current native contracts
+  alone do not resolve register allocation. Keep legal Actor796/typed821,
+  Tracking8, Jump36, CheckBullet78/typed81 and GCD20/typed137 separate.
+  All drafts private; no redundant full build for unchanged source/tooling.
+
 ## Verified native C++ vtable tooling and repaired Machine near miss (2026-11-03)
 
 - Coverage remains **14,300/14,351,96.62%,51 remaining** after the source

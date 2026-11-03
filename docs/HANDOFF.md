@@ -5,6 +5,30 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Sphere native-chain improvement and independent review (2026-11-03)
+
+- Verified totals remain **14,300/14,351, 96.62% code, 51 remaining**; parent
+  re-read current WSL report measures. No additional function is counted.
+- Gameplay reconstructed actual Transform/GetTransformed member chains and
+  independently reproduced three already-matched native helpers exactly.
+  Actual world-space start and inverse-transform ownership then improve the
+  remaining Sphere routine from20 to19 strict words at exact1304B. Parent
+  independently checked a cleaned frozen copy: same19, clean call targets,
+  undefined symbols, data and literals, with valid temporary lifetimes.
+  Source/proofs: build/agents/resume_fire_1102/ready19; independent snapshot:
+  build/agents/parent_sphere_1103. This is a near miss, not an integration batch.
+- Human HandleDeath's real56-byte event extent, native event ctor/dtor lifetime
+  and actual float field9C all tie8, exact7240B, clean with48B rodata MATCH.
+  Exact eight-site alignment across both prototypes proves the stream-receiver
+  scheduling gap already existed before retail; new retail field/call arguments
+  must not be replaced blindly with the January signature. Private human notes
+  retain both prototype address ranges and concrete retail changes.
+- Parent tested the actual C++ allocator/new-expression convention in Generator:
+  it removes the extra placement guard but worsens to33, clean. Old9 stays frozen.
+  Graphics' proposed tRGBA16-alignment is only inferred from member gaps, not a
+  proven type attribute; Vision layout and parent Init product trials do not
+  improve their scores. No flags/packing grids, accepted source edits or full build.
+
 ## Generator native-contract review and current lanes (2026-11-03)
 
 - Verified baseline remains **14,300/14,351, 96.62% code, 51 remaining**.

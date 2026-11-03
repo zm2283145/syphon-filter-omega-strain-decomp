@@ -33,7 +33,7 @@ This is the working state and the routine for whoever continues this project
   worsens820 offsets+size. No copy/depth grids; safe checkpoints preserved.
 - Gameplay independently MATCHes actual Cross52B, VU0Cross28B, VU0Negate20B
   and scalar-left multiplication44B. Ledge native Cross caller215 and full
-  reference-arithmetic caller797+size fail; natural Box Center still fails
+  reference-arithmetic caller796 offsets+1size fail; natural Box Center still fails
   its primitive gate, so no CheckBullet caller trial. These helpers were already
   owned; no new function count. Fire native arithmetic ties9. Generator native
   message ownership gives23 plus a genuine vtable-data blocker; no suppression.

@@ -30,6 +30,11 @@ This is the working state and the routine for whoever continues this project
   Historical28 and InterfaceModel39 labels are not safe fresh strict candidates.
   Separate private lanes continue original-source reconstruction; no old pin,
   invented helper alias, unsupported scalar assembly or incomplete unit is counted.
+- A later private baseline invocation hit HCS_E_TERMINATED before running.
+  Parent held all lanes; normal read-only invocation reopened sfos3 with no active
+  compiler/build processes. Fresh human_46.c check reproduced all three MATCHes
+  with clean symbols/data/literals before explicit compiler release. Drafts were
+  preserved; no shutdown/restart control or configuration/source change was used.
 
 ## Sphere12, nested-array decoder fix and ManRender safety (2026-11-03)
 

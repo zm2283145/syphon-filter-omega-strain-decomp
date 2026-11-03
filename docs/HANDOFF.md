@@ -5,6 +5,61 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Verified native C++ vtable tooling and repaired Machine near miss (2026-11-03)
+
+- Coverage remains **14,300/14,351,96.62%,51 remaining** after the source
+  validity correction below. No new completed C function in this tooling batch.
+- check_match/data_obj/tail_obj now support initialized CodeWarrior .vtables
+  as read-only data, including every header word, method relocation, alignment
+  and section-order constraint. Unknown lookalike sections remain rejected;
+  RTTI/strings are never stripped or rebound to zero. New regressions test
+  vptr+8 header checks, wrong RTTI/method pointers, preserved R_MIPS_32,
+  native table/literal object order and final linker section renaming.
+- All179 tests pass in WSL (Windows179 also completes,5 platform skips).
+  Full wsl_round.sh rebuilt all comparison targets and synchronized through
+  final WSL_ROUND_OK. Independent retail SHA stays
+  9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6.
+  Parent additionally round-trips actual native NextFrame message object through
+  data_obj: prepared CODE96B and DATA24B both MATCH, with correct tail placement.
+  Private proof: parent_nextframe_data_1103/backend.json. Read-only independent
+  agent review found no blocker in checker/linker parity or acceptance checks.
+- Primary RTTI policy evidence: January439/October436 native vtables include
+  only TWO nonzero RTTI headers, MSL exception/bad_exception; the other437/434
+  include zero game-table headers. This supports a game TU-level RTTI-off
+  policy, not a claim to have recovered the original project option record.
+  CW38 help documents defaultON and -RTTI off; installed compiler manualp172
+  documents pragma RTTI and __option(RTTI). One supported off control removes
+  genuinely mismatching allocated RTTI graphs and produces exact original data.
+- Supported source encoding is RTTI off THROUGH EOF with __option assertions.
+  It emits an object byte-identical to the approved CLI-off control. A scoped
+  push/off/pop control emits the SAME object as defaultON and correctly FAILS
+  strict data comparison. Do not repeat this failed scope or a flag/profile grid;
+  merge push/pop can likewise invalidate late metadata, so retain whole-unit
+  verification. No global compiler profile was changed.
+- Real PauseMusic ctor76B/dtor96B+table24B, NextFrame dtor96B+table24B and
+  StartLevel dtor96B+table24B all independently MATCH with empty ancillary.
+  Parent independently reproduces Pause and NextFrame proofs. All are already
+  owned helpers, not extra matches. Evidence: graphics ongoing/machine_messages.
+- Machine replaces fake weak/drop messages with real native classes, sizes,
+  constructors and automatic cleanup. Actual unsignedchar cMachine::NextFrame
+  owner trial stays exact5572B/10 findings, three native dtors MATCH and24B
+  jump data MATCH, no undefined/literals. Noncontiguous already-owned helper
+  emissions remain visible and block automatic integration; no helper relocation,
+  discard or fake ownership alias. Preferred machine_native_owner.c.
+- Next supported independent Machine trial is real Quit unsignedchar return
+  in its declaration and both existing pointer-call views. Both prototype DIEs
+  and48B retail callee prove the byte result; a function-pointer-typed static
+  declaration DIE at the FUNCTION ENTRY does not prove a stored pointer variable
+  or original indirect dispatch. Prepared gameplay machine_quit_review; no
+  repeated quit-box/viewport/depth grid.
+- Actor original raw lexical trees contain one full-method block,102/104locals;
+  no nested range supports a scope restoration. Proven FaceIndex uint8B and
+  scalar index declarations preserve legal796 findings/12008B/333 correct calls.
+  New nested-flags GetPropertiesIndex proof fails12B versus16B and remains
+  failed; canonical existing body/API audit is separate from claiming that
+  new CPP primitive. Original DisplayLastFrame macro evidence remains missing;
+  independent review confirms GS_DISPLAY1 at12000080, not DISPLAY2.
+
 ## Verified rejection of two older undefined C matches (2026-11-03)
 
 - Corrected verified source coverage is **14,300/14,351 functions,96.62%

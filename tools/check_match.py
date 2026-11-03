@@ -284,7 +284,7 @@ def compare(obj, rom, names, starts, ends=None):
     return results, undef
 
 
-DATA_KINDS = (".data", ".rodata", ".sdata")  # tools/data_obj.py
+DATA_KINDS = (".data", ".rodata", ".sdata", ".vtables")  # tools/data_obj.py, tools/tail_obj.py
 SHF_ALLOC, SHF_EXECINSTR = 2, 4
 # not data: assembler bookkeeping, and the C++ exception index the link discards for all units
 NOT_DATA = (".reginfo", ".MIPS.", ".pdr", ".mdebug", ".gnu", ".note", ".exceptix", ".exception")
@@ -352,7 +352,7 @@ def data_pieces(e, rom, names):
     each object's literals and tables together, see tools/data_obj.py). Its
     address comes from the %hi/%lo pairs in the code that load it. Returns
     [] or [{"section", "start", "size", "result"}]; "section" is the block's
-    subsegment type (.rodata if the unit has any .rodata, else .data)."""
+    subsegment type (.rodata if the unit has .rodata or .vtables, else .data)."""
     symtab = e.get_section_by_name(".symtab")
     secs = list(e.iter_sections())
     out = []
@@ -371,7 +371,9 @@ def data_pieces(e, rom, names):
     members = [i for i, sec in enumerate(secs) if sec.name in DATA_KINDS and sec["sh_size"]]
     if not members:
         return out
-    kind = next(k for k in (".rodata", ".data", ".sdata") if any(secs[i].name == k for i in members))
+    # CodeWarrior emits native virtual tables as initialized read-only data.
+    kind = (".rodata" if any(secs[i].name in (".rodata", ".vtables") for i in members)
+            else next(k for k in (".data", ".sdata") if any(secs[i].name == k for i in members)))
     text_base = text_bases(e, names)
     # %hi/%lo pairs in code that point into a data section give its address
     seen = {}

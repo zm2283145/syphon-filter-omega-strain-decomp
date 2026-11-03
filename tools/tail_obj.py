@@ -4,7 +4,7 @@
 usage: tail_obj.py OBJCOPY IN OUT TEXT DATA
 
 TEXT and DATA are addresses (or `-`). The object's .text sections are renamed
-.tail.<TEXT> and its .data/.rodata/.sdata sections .tail.<DATA> (8 hex
+.tail.<TEXT> and its .data/.rodata/.sdata/.vtables sections .tail.<DATA> (8 hex
 digits). The linker script collects everything named .tail.* with
 SORT_BY_NAME after the code, so these sections land in address order
 whatever the object's position on the command line (configure.py,
@@ -16,7 +16,7 @@ import subprocess
 import sys
 
 TEXT_KINDS = (".text",)
-DATA_KINDS = (".data", ".rodata", ".sdata")
+DATA_KINDS = (".data", ".rodata", ".sdata", ".vtables")
 
 
 def tail_name(addr):

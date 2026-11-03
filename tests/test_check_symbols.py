@@ -60,7 +60,7 @@ class CompilerProfileTests(unittest.TestCase):
 class DiscardedDataTests(unittest.TestCase):
     def test_only_known_discard_section_is_ignored(self):
         from unittest.mock import MagicMock
-        for section_name in (".dtors_drop", ".custom_data", ".dtors_drop_extra"):
+        for section_name in (".dtors_drop", ".custom_data", ".dtors_drop_extra", ".vtables_extra"):
             section = MagicMock()
             section.name = section_name
             fields = {"sh_type": "SHT_PROGBITS", "sh_flags": 2, "sh_size": 4}

@@ -233,6 +233,87 @@ class DataObjectTests(unittest.TestCase):
         self.assertTrue({".tail.004C3700", ".tail.004A7D30"} <= names)
         self.assertFalse({".text", ".data", ".rodata"} & names)
 
+    VTABLE_SRC = """
+        .set noreorder
+        .text
+        .globl func_00100000
+        .type func_00100000, @function
+    func_00100000:
+        lui $a0, %hi(vtable + 8)
+        addiu $a0, $a0, %lo(vtable + 8)
+        jr $ra
+        nop
+        .size func_00100000, . - func_00100000
+        .section .vtables, "a"
+        .balign 16
+        .globl vtable
+        .type vtable, @object
+    vtable:
+        .word 0, 0, func_00100000 + 8
+        .size vtable, . - vtable
+    """
+
+    def vtable_rom(self):
+        rom = bytearray(0x100)
+        # The object stores vtable+8 in its vptr, but both header words must be checked.
+        struct.pack_into("<4I", rom, 0, 0x3C040010, 0x24840068, 0x03E00008, 0)
+        struct.pack_into("<3I", rom, 0x60, 0, 0, 0x100008)
+        return rom
+
+    def test_native_vtable_headers_and_method_targets_are_checked(self):
+        from elftools.elf.elffile import ELFFile
+        obj = self.assemble(self.VTABLE_SRC)
+        with obj.open("rb") as fh:
+            self.assertEqual(check_match.data_pieces(ELFFile(fh), self.vtable_rom(), {}),
+                             [{"section": ".rodata", "start": 0x100060, "size": 12, "result": "MATCH"}])
+        for offset, value in ((0, 1), (8, 0x10000C)):
+            with self.subTest(offset=offset):
+                rom = self.vtable_rom()
+                struct.pack_into("<I", rom, 0x60 + offset, value)
+                with obj.open("rb") as fh:
+                    self.assertEqual(check_match.data_pieces(ELFFile(fh), rom, {})[0]["result"],
+                                     f"DIFF at {offset:#x}")
+
+    def test_native_vtable_is_linked_as_rodata_with_relocations(self):
+        from elftools.elf.elffile import ELFFile
+        from elftools.elf.relocation import RelocationSection
+        obj = self.assemble(self.VTABLE_SRC)
+        base, link = self.dir / "vtable.base.o", self.dir / "vtable.link.o"
+        subprocess.check_call([sys.executable, str(configure.ROOT / "tools" / "data_obj.py"),
+                               tool("ld"), tool("objcopy"), str(obj), str(base), str(link), "0x100060"])
+        with base.open("rb") as fh:
+            elf = ELFFile(fh)
+            self.assertIsNone(elf.get_section_by_name(".vtables"))
+            self.assertEqual(elf.get_section_by_name(".rodata")["sh_size"], 12)
+            self.assertEqual(check_match.data_pieces(elf, self.vtable_rom(), {})[0]["result"], "MATCH")
+            relocs = [rel for sec in elf.iter_sections() if isinstance(sec, RelocationSection)
+                      and sec.name == ".rel.rodata" for rel in sec.iter_relocations()]
+            self.assertEqual([(r["r_offset"], r["r_info_type"]) for r in relocs], [(8, 2)])
+        names = [s[2] for s in data_obj.sections(link.read_bytes())]
+        self.assertIn(".tail.00100060", names)
+        self.assertNotIn(".vtables", names)
+
+    def test_native_vtable_and_literals_keep_object_order(self):
+        from elftools.elf.elffile import ELFFile
+        obj = self.assemble(self.VTABLE_SRC + "\n.section .rodata\n.word 123\n")
+        rom = self.vtable_rom()
+        struct.pack_into("<I", rom, 0x6C, 123)
+        with obj.open("rb") as fh:
+            elf = ELFFile(fh)
+            ordered = [sec.name for sec in elf.iter_sections() if sec["sh_size"] and
+                       sec.name in data_obj.DATA_KINDS]
+            self.assertEqual(ordered, [".vtables", ".rodata"])
+            self.assertEqual(check_match.data_pieces(elf, rom, {})[0]["result"], "MATCH")
+        base, link = self.dir / "mixed.base.o", self.dir / "mixed.link.o"
+        subprocess.check_call([sys.executable, str(configure.ROOT / "tools" / "data_obj.py"),
+                               tool("ld"), tool("objcopy"), str(obj), str(base), str(link), "0x100060"])
+        with base.open("rb") as fh:
+            elf = ELFFile(fh)
+            self.assertEqual(elf.get_section_by_name(".rodata")["sh_size"], 16)
+            self.assertEqual(check_match.data_pieces(elf, rom, {})[0]["result"], "MATCH")
+        # GNU as also creates an empty .data section; only the two owned pieces carry bytes.
+        self.assertEqual([s[2] for s in data_obj.sections(link.read_bytes()) if s[5]].count(".tail.00100060"), 2)
+
 
 if __name__ == "__main__":
     unittest.main()

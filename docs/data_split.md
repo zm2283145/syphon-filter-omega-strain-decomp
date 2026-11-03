@@ -25,6 +25,7 @@ What the compilers emit:
 | string literal | `.data`, one section per literal (`.rodata` with `#pragma readonly_strings on`) | `.rodata` |
 | switch jump table | `.rodata`, `R_MIPS_32` words against the function | `.rodata` |
 | `static const` table | `.rodata` | `.rodata` |
+| native C++ virtual table | `.vtables`, checked and linked as read-only data | — |
 | initialised global / static | `.data`, one section per object | `.data` |
 | float literal, `const float` scalar | `lui`/`ori`+`mtc1`, no data | `lui`/`ori`+`mtc1` |
 
@@ -49,8 +50,11 @@ the unit, at the retail address of the block:
 ```
 
 * The block holds all of the unit's data sections in object order. Its type is
-  `.rodata` if the unit has any `.rodata` (jump tables, const tables), else
+  `.rodata` if the unit has any `.rodata` or `.vtables` (jump tables, const tables, virtual tables), else
   `.data` (`.sdata` for gp-relative data only).
+  Virtual-table header words and relocated method addresses are checked like
+  every other byte. Compiler-generated RTTI, strings and other data stay part
+  of the block; supporting `.vtables` does not discard mismatching metadata.
 * Its size is the laid-out size of the block rounded up to 4 bytes. Trailing
   padding up to the next item stays in the asm data after it, which remains an
   ordinary (unnamed, so splat names it by its ROM offset) `data` subsegment.

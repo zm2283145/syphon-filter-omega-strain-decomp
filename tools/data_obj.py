@@ -16,7 +16,7 @@ object order and with their own alignment (tools/tail_obj.py, configure.py).
 
 BASE.o is the objdiff base: `ld -r` merges all data sections, in object order,
 into one section named like the block's subsegment type (.rodata if the unit
-has any .rodata, else .data), laid out as if it started at START (so inner
+has any .rodata or native CodeWarrior .vtables, else .data), laid out as if it started at START (so inner
 16-byte alignments fall where they do in the retail block) and padded to a
 multiple of 4 bytes, the way the block is cut out of the retail data. With
 TARGET.o (the unit's objdiff target), retail data labels that have no symbol in
@@ -37,7 +37,7 @@ import sys
 
 import tail_obj
 
-DATA_KINDS = (".data", ".rodata", ".sdata")
+DATA_KINDS = (".data", ".rodata", ".sdata", ".vtables")
 NOBITS = 8
 SHT_REL = 9
 R_MIPS_32 = 2
@@ -209,7 +209,9 @@ def link_block(ld, base, obj, kind, start, pad):
 
 def block_kind(names):
     """Section name of a unit's merged data block (= its subsegment type)."""
-    for k in (".rodata", ".data", ".sdata"):
+    if ".rodata" in names or ".vtables" in names:
+        return ".rodata"
+    for k in (".data", ".sdata"):
         if k in names:
             return k
 

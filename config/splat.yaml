@@ -6979,7 +6979,6 @@ segments:
       - [0x3D8B40, c, main/sinit/func_004D8B40]
       - [0x3D8C10, c, main/sinit/func_004D8C10]
       - [0x3D8C60, c, main/sinit/func_004D8C60]
-      - [0x3D8D08, asm, sinit_4D8D08]
       - [0x3D8D10, .rodata, CW_PS2Support/Runtime/Sources/CPP_Support/mwUtils_PS2]
       - [0x3D9040, .rodata, main/func_001007A0]
       - [0x3D9050, .data, data/d_004D9050]

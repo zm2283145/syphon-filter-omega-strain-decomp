@@ -5,7 +5,26 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## START HERE: verified camera-reference boundary match (2026-11-03, Codex)
+## START HERE: verified padding inventory correction (2026-11-03)
+
+- **14,299/14,351 functions;96.60%code;52remaining.** Full retail SHA256
+  9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6 unchanged,
+  comparisontargets refreshed, regressions passed, final WSL_ROUND_OK synchronized.
+  No new C match: removed one phantom four-byte function from total/unmatched.
+- Old sinit_4D8D08 was eight zero alignment bytes after StaticInit_RegisterActivateBodyToss
+  returns at4D8D00/delay4D8D04 and before rodata4D8D10. No named symbol, absolute
+  pointer words or directJALtargets reference4D8D08 anywhere in retail scan.
+  Removed fakeasm subsegment; preceding original C unit now covers alignment.
+  Every retailbyte retained. Private proof final_code_padding_1103/retail_scan.json.
+- Removed stale ignored WSL asm/sinit_4D8D08.s after archivingprivateproof; do not
+  trust old Windows generatedasm function starts. Fullreport has no phantomname.
+  Authoritative private remaining_verified_1103.json updated to52actualreport entries.
+- Persistent lanes held forverification thenresume: human/IK HandleDeath actual
+  requeststream context(resume_net); InterfaceModel true MSL iterator comparison
+  (resume_fire); ManRender secondmatrixoutput scheduler context(resume_font).
+  Prior experiments preserved, no repeatedgrids or unproven helper aliases.
+
+## Previous verified camera-reference boundary match (2026-11-03, Codex)
 
 - **14,299/14,352 functions;96.60%code;53remaining.** Entire retail SHA256
   9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6 verified,

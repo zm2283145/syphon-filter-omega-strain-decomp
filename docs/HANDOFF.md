@@ -5,6 +5,35 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Further native ownership gates after17f9fe11 (2026-11-03)
+
+- Verified coverage stays **14,302/14,351,96.66%,49 remaining**. No new
+  completed C function or source integration; no redundant full build.
+- Parent independently MATCHes actual achievement __vector_deleter128B using
+  natural installed-MSL clear/deallocate and the real typed-delete5arg boundary.
+  Complete non-POD composition additionally MATCHes CArray ctor48B and actual
+  CArray dtor104B. The latter's statement-empty body still performs all real
+  member cleanup, unlike historical fake RA2 suppression. Two unknown implicit
+  vector/imp destructor identities remain, so whole-unit gate FAILS and no
+  caller trial follows. Proof: parent_nonpod_deleter_1103 and graphics
+  ongoing/agentdata/nonpod_owner. Header-version search finds no new source:
+  installed R3.01 MSL7 matches3.03 byte-for-byte; cw38/cw50 have no headers.
+- Tracking distinct native quaternion/vector types and actual getter return
+  types preserve exact1936B/8 findings. Quaternion copy/assignment16B gates
+  independently MATCH; whole code and ordered relocations are byte-identical
+  to the restored anchor-owner checkpoint. No arithmetic/copy/flag grid.
+- Actor actual Copy_Invert VALUE284B independently MATCHes. PLc now owns real
+  aligned quaternion/vector32B rather than raw char storage; caller remains
+  clean796 NON-SIZE findings+SIZE/12008B/all333 ordered targets correct.
+  Preferred typed source: actor_typed_placement_result.c. Actual GetNormalized
+  VALUE96B probe fails76B; both original Actor call sites prove retained
+  copy/Normalize/copy composition, so no caller probe. Native matrix ctor probe
+  likewise fails256B versus232B (next-start span240); no dependent MXc trial.
+- Continuing separate lanes: native matrix owner/source review in human/IK,
+  Subtitle font asset/init definedness in graphics, actual activation/network
+  member-return contracts for the1040B Fire population constructor in gameplay.
+  No speculative aliases, hidden destructor findings or unsafe old checkpoints.
+
 ## Verified original strcmp assembly ownership and continued matching (2026-11-03)
 
 - Verified source coverage is **14,302/14,351 functions, 96.66% code,

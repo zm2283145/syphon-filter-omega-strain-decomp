@@ -5,6 +5,29 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Generator native-contract review and current lanes (2026-11-03)
+
+- Verified baseline remains **14,300/14,351, 96.62% code, 51 remaining**.
+  No new complete C match, accepted source/configuration change or full build.
+- Parent independently restored actual Generator NetSpawn native owner and
+  const message-reference contract. Fresh strict comparison ties the existing9
+  words, with clean calls/data/literals. A real typed cHuman placement-constructor
+  reconstruction worsens to32 and introduces a second null guard; it is research
+  only. Both prototype raw enum DIEs confirm the one-byte character enum and
+  values0..5. Source, limited symbol proofs and failed trials are preserved in
+  build/agents/parent_generator_1103/NOTES.md; no old copy/coloring grids repeated.
+- Parent's isolated actual quaternion-constructor volatile VU block also ties
+  ManRender2; original scope/helper scheduling remains unresolved. Graphics
+  source history records this premise so it is not repeated.
+- Human lane's ordinary quaternion value-copy/accepted SetMul AimHead probes
+  both give15 at exact1280B, clean; preferred9 remains frozen. Camera's real
+  u_long128 scratch correction ties8 at1936B. January's AddRequest has fewer
+  terminal float arguments than retail, so its old native signature must not be
+  asserted for the retail call. Private notes preserve the evidence.
+- Three lanes continue nonoverlapping human/IK, graphics and gameplay/collision
+  research. Current gameplay native Pack source remains207 words plus size,
+  with defined packing and filtered proven aliases; no near miss is counted.
+
 ## Ordinary conversion audit and current research (2026-11-03)
 
 - Verified baseline unchanged: **14,300/14,351, 96.62% code, 51 remaining**.

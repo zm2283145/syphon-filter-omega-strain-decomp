@@ -5,6 +5,38 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Native source and near-miss audit (2026-11-03, continued)
+
+- Baseline remains **14,300/14,351, 96.62% code, 51 remaining**. No new
+  completed C match, source/configuration change or full build in this round.
+- Parent tested genuine preceding man.cc source context: unchanged matched
+  GetGunBarrelMatrix plus the preferred ManRender candidate in one compilation.
+  Fresh standard checker gives GunBarrel MATCH, Render only2644/2648, clean
+  undefined/data/literals. Native cMan::ManRender(cSkeleton&,unsigned,int,int,int)
+  with its exact prototype mangled name also preserves the two-word near miss.
+  No fabricated context helper or speculative alias. All proof/private source:
+  build/agents/parent_man_tu_1103/NOTES.md. Do not repeat these premises.
+- Graphics typed ManDMAHeader header/matrix/whole-modifier references and native
+  outer ownership also tie2. Global matrix-assignment rewrites shrink unrelated
+  address arithmetic while retaining every LQ/SQ; they do not remove the copy.
+  ManDMA's actual ManParts ownership and signed-long locals preserve its fresh
+  **90 strict positional words**, not the historical9/11 aligned lab metric.
+- Human CalculateResultPose now has plain-pointer MSL/vector layers and actual
+  mode types without its invented volatile union. Four candidates have identical
+  full code bytes and relocations; still127words, not a new match. Proof:
+  resume_net_1102/ongoing/result_pose_equivalence.json.
+- **PositionLeg historical8-word draft is not stageable**: used QMulRef helpers
+  return references to dead locals, and NormalizedR/RotR return references to
+  by-value parameters. These are lifetime errors, not valid source tricks.
+  Human lane is rebuilding legal caller-owned/value-return paths. Keep old scores
+  explicitly historical until a legal replacement is independently checked.
+- Quaternion velocity actual GetConjugate temporary/Conjugate reference-return
+  reconstruction worsens to120/122strict against the old17-word candidate;
+  no helper/parameter grids repeated. PlayerInput native owner and anonymous
+  helper identities preserve22 and remain private source-fidelity checkpoints.
+- Continue three nonoverlapping matching lanes. Parent alone accepts/merges
+  complete matches and runs full verification before any new function count.
+
 ## Matching research after 5dc59ba6 (2026-11-03)
 
 - Verified baseline remains **14,300/14,351, 96.62% code, 51 remaining**.

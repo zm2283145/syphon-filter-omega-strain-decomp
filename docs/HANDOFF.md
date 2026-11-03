@@ -5,6 +5,52 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Further native-call composition and scalar-contract reviews (2026-11-03)
+
+- Fresh WSL report remains **14,300/14,351,96.62%,51 remaining** following
+  87721384. Existing rebuilt retail SHA-256 was independently rechecked as
+  9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6.
+  No new completed C function or source/config/tool integration in this round.
+- Original SDK eekernel.h declares DisableIntc/EnableIntc int(int), unlike
+  synthetic AllocGuard's void declarations. P1 confirms Alloc_Lock is actual
+  DisableIntc; raw named/address import searches supply no additional DWARF
+  declarations. Both actual timer constructor/destructor independently MATCH
+  with int calls, then one gated Mem Init628B trial STILL has four strict
+  words A8/AC/B0/B8, ancillary empty. No shared-header change or return grid.
+  Exact proof and setup failures: parent_guard_contract_1103/NOTES.md.
+- InterfaceModel's preferred192 draft had lost three actual native model
+  calls during composition, retaining older wrapper calls. Canonical provider
+  sources freshly MATCH all12 bodies BEFORE one dependent trial. Restoring
+  FilterChildren/ActuallyDraw(const receiver)/SetFrame on the complete safe
+  native-iterator/view graph still192, all3 iterator helpers MATCH, ancillary
+  empty. Corrected combined-call claim and source: graphics ongoing/interface_model.
+- AimNext's actual quaternion source still used surrogate LerpAndNormalize.
+  Both raw prototypes prove actual VALUE result/refResult/u_long128 locals.
+  Native96B primitive MATCH precedes one faithful Lerp-only composition:
+  still820 non-size findings plus SIZE,3336B versus3120B, ancillary empty.
+  No unsupported Dot scratch-width inference or new count. Human ongoing
+  aimcomponent_lerp_api_proof and aimcomponent_native_lerp_api preserve results.
+- ResultPose's distinct original pose owners inherit the same active cPose
+  fields; current differing extra fields are unused here. Both original local
+  lists explicitly use eAnimSource* iterators. No new lifetime/initialization
+  failure or original GetRot declaration/body found; no owner-only trial.
+  Current127/1216B and missing-evidence requirements: RESULT_POSE_REVIEW.md.
+- DestinationPack's40B wire packet and short/ushort rotation/speed are proved
+  by JANUARY. October is genuinely older80B with float rotation/speed and extra
+  acceleration/velocity. Earlier blanket paired-layout claims were too broad.
+  Current defined unsigned packing agrees with January/retail; no shift grid
+  or unsafe signed-left-shift restoration. Gameplay ongoing/pack_scalar_audit.
+- GCD's omitted unused this DIE cannot prove staticness: a known instance
+  virtual also omits it. Do not alias1AE360 to the separately proven13ACC0
+  getter or remove its receiver from that inference. GetZero also has a real
+  version delta: October VALUE, January REFERENCE. Display MMIO audit confirms
+  final12000080 store is DISPLAY1, while DISPLAY2 is120000A0; naming correction
+  only, no new bitfield/packing trial.
+- The human explicitly requested syncing the current repository to GitHub.
+  Preserve private build/prototype artifacts and nine root user drafts; this
+  request authorizes the current sync, not automatic future publication.
+  Parent alone handles Git commits/push. Matching work remains incomplete.
+
 ## Further aggregate ABI and native lifecycle rounds (2026-11-03)
 
 - Live verified baseline remains **14,300/14,351,96.62%,51 remaining** at

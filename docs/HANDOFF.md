@@ -23,6 +23,12 @@ This is the working state and the routine for whoever continues this project
   DestinationParams Pack(t1), actual16byte SphereSweptRay face-property reference,
   and CameraCol_Sweep two-call argument setup context(u3). No duplicate targets.
   All drafts private; parent alone integrates verified batches.
+- Fresh WSL candidate checks: Sphere properties/reference correction ties20strict;
+  CameraCol_Sweep baseline17strict at2136B (historical16lablines). Pack native
+  Destroy/Clone dispatch fixes six actual words to t9 despite unchanged shifted
+  strictcount; cleaned filename reference removes old DATAfailure. No match claimed.
+  Net private scratch preserves source/objectdiff proof; next rounds must use
+  refreshed WSL metadata, not the older Windows generated asm.
 
 ## Resume 2026-11-02 evening (Codex, latest GitHub state)
 

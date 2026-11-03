@@ -5,6 +5,33 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Matching research after 5dc59ba6 (2026-11-03)
+
+- Verified baseline remains **14,300/14,351, 96.62% code, 51 remaining**.
+  No new C match or source/configuration change in this research round.
+- Parent independently examined LedgeValidator after reading p2l/p6l/l5 and the
+  gameplay lane's existing native-Ray history. Actual cVector member operators,
+  native nested Validate method with true cArray<cCollisionFace> identity and
+  reference return, and exceptions-off all tie the native 181-word candidate.
+  Plain vector return copies worsen to 213; older v17 remains 111. No speculative
+  aliases or scalar instruction transcription. Drafts, strict JSON and complete
+  rejected premises: build/agents/parent_ledge_1103/NOTES.md. Do not repeat them.
+- Gameplay preserves parent-reviewed PlayerInput22. Real anonymous-namespace
+  LimitManualAimVector C++ linkage emits the exact prototype symbol; private
+  actual-name checks tie22. Stable source remains current_best22; native source
+  context in resume_fire_1102/ongoing/player_input/native_aim/playerControls.cc.
+  Continue the remaining aim-copy argument block with new source evidence.
+- Human/IK reconstructs actual MSL iterator/array layers for CalculateResultPose.
+  A plain-pointer class with the real const-wrap-reference constructor reproduces
+  the 127-word baseline byte-for-byte, removing an unnecessary volatile union.
+  No match claimed; ongoing history records the exact native layer premises.
+- Graphics preserves native XLib::DrawLensFlares plus actual tIRGBA construction
+  at eight differing words. Constructor identity is independently proven by
+  24-byte January/retail equality; aliases remain private. ManDMA now receives
+  an original ManParts aggregate-ownership audit against accepted manUtils_2.c;
+  do not invent an accessor for its direct faceBlends array. Three separate
+  matching agents remain active; parent alone integrates and fully verifies.
+
 ## START HERE: verified report correction and active matching (2026-11-03, 03:52 EST)
 
 - Verified report: **14,300/14,351 functions, 96.62% code, 51 remaining**.

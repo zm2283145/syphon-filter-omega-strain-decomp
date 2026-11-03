@@ -44,9 +44,19 @@ This is the working state and the routine for whoever continues this project
   no alias fix is justified. Byte-view kerning removes array-bound fiction but
   does not prove all terminal-read bytes initialized. Vision's native light
   hierarchy and exact unseeded length-squared helper still tie28/exact632B.
+- Follow-up original helper proofs also MATCH: JumpInit's axis-angle120B and
+  quaternion132B constructors, and CalculateResultPose's sign88B/interpolation96B
+  helpers. Their callers remain incomplete: Jump native input36, native axis
+  reconstruction678 offsets+1size; result-pose127/exact1216B. HandleDeath genuine
+  preceding ctor context ties8; resolver568B independently MATCHes but fails
+  under caller-specific pragmas in a combined diagnostic, so no combined match.
+- Corrected paired light evidence: January/retail use signed-byte type at1E in
+  a64B light; October uses word at18 in an80B light. Never transplant the older
+  width/offset. Length-squared40B is raw-identical across all three executables.
 - Useful new sources/proofs and closed premises are in each resume_*_1102
-  ongoing/NOTES.md. Gameplay next owns JumpInit; human/IK continues a distinct
-  evidence-gated near-miss review; graphics continues native primitive review.
+  ongoing/NOTES.md. Current distinct lanes: gameplay independently reviews
+  CameraCol_Sweep13; human/IK reviews Tracking8; graphics reviews actual
+  InterfaceModel ownership, retaining its historical/fresh score distinction.
 
 ## Verified new AimHead C match (2026-11-03)
 

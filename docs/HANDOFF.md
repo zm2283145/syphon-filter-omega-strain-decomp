@@ -5,22 +5,40 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
-## Current near-miss research and environment (2026-11-03)
+## START HERE: verified report correction and active matching (2026-11-03, 03:52 EST)
 
-- Three agents active: human/IK AimComponent clean-source reconstruction;
-  gameplay InterfaceModel native MSL iterator comparison; graphics ManRender
-  original modifier/second-output context. Parent alone integrates/fullyverifies.
-- WSL stopped between rounds (HCS_E_TERMINATED). Parent healthcheck auto-started
-  sfos3 normally and independently rechecked human_46: allthreefunctions MATCH,
-  undefined/data/literals empty. No forcedshutdown/restart or sourcechanges.
-  Released holds; limit eachlane toone compilerprocess.
-- ManRender actual cBoneRenderMatrices112B modifier now uses confirmed bone@1020
-  andlights@1060,local2Screen separate@1090. Correct native mapping preserves
-  exacttwo-word near miss; no scalartranscription/alias added.
-- InterfaceModel exactextent191word native MSL context withall3ownedhelper bodies
-  MATCH is preserved; extra const-base wrapping addswrongtemp. No new Cmatch.
-- Parent re-audited exhausted SoftwareID allocator notes; no repeated pointerpin/
-  profile sweeps. Knownverified source remains90db928c,96.60%,52remaining.
+- Verified report: **14,300/14,351 functions, 96.62% code, 51 remaining**.
+  This round adds **no new C match**. InitTLB32MB was already strict MATCH;
+  its target comparison incorrectly treated numeric TLB page constants as a
+  relocation to synthetic D_E0002000. Applied the existing ignore:true convention
+  to exactly that constant. No C or retail bytes changed.
+- Full retail SHA-256
+  9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6 passed,
+  all report target objects rebuilt, 149 regression tests passed, and final
+  WSL_ROUND_OK synchronized at 03:52. Only lib/func_00115C10 changes in the report:
+  500 bytes, 99.92% to 100%. A fresh post-sync standard checker is also MATCH,
+  with empty undefined/data/literal findings. Private before/after disassembly
+  evidence: build/agents/parent_machine_1103/; no binaries added to Git.
+- Reused three existing agents after checking live state. Current lanes:
+  resume_net native Human HandleJump cleanup context (36 strict words);
+  resume_fire PlayerInput defined-output/cVector accessor source (29 strict words);
+  resume_font graphics ManRender (2 words) and corrected GS display routine
+  (13 words, 52-byte data MATCH). All remain private near misses, not accepted C.
+  Agents held for full verification and resumed only after final synchronization.
+- Parent independently revisited Machine NextFrame after reading complete
+  n4/p3l/q2/r2/u2 histories. Actual implicit unsigned64-to-float conversion,
+  prototype unsigned-long time and unsigned-char return tie the 10-word baseline.
+  Earlier machine.cc soft-double context and native EditViewport/SetWindow chain
+  both worsen to 13. Do not repeat these source premises or add blind context
+  stubs. Exact size, jump table MATCH, no undefined/literal findings throughout.
+  Drafts/results: build/agents/parent_machine_1103/NOTES.md.
+- Human lane found a separate prototype extraction issue: enum element decoding
+  assumes four-byte values even for one-byte enum DIEs. Private decoder proposal
+  and synthetic tests are being reviewed; no tracked tooling fix accepted yet.
+  Width alone does not establish signedness; preserve that distinction.
+- Original source layout, root user scratch and private prototypes preserved.
+  No push. Continue ordinary C/C++ matching; metadata corrections do not replace
+  matching work or count as newly reconstructed routines.
 
 ## START HERE: verified padding inventory correction (2026-11-03)
 

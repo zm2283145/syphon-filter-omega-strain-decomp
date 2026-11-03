@@ -3749,6 +3749,8 @@ ignored_low_constants = 0x00000000; // ignore:true size:0x100000
 ignored_const_FFFFFF = 0x00FFFFFF; // ignore:true
 ignored_uncached_ram = 0x20000000; // ignore:true size:0x2000000
 ignored_scratchpad = 0x70000000; // ignore:true size:0x4000
+// InitTLB32MB increments an unmapped-page address by 0x2000; this is not data.
+ignored_tlb_page_increment = 0xE0002000; // ignore:true
 fflush = 0x001234E0; // type:func
 __sinit = 0x00123940; // type:func
 __sfvwrite = 0x001247E0; // type:func

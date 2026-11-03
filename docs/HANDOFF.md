@@ -5,6 +5,32 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Legal PositionLeg checkpoint (2026-11-03)
+
+- Verified totals unchanged: **14,300/14,351, 96.62% code, 51 remaining**.
+  No new completed C routine or counted source/configuration changes.
+- Rebuilt PositionLeg's unsafe historical helper paths using caller-owned
+  quaternion results and vector temporary member chains whose value copies
+  finish before the full expression ends. Legal source first reached26strict
+  words at exact1,528B; actual GetConjugate expression then improved it to23.
+  Parent independently standard-checked both: empty undefined/data/literals,
+  correct calls and exact extent. No dangling references, const-cast mutators
+  or ordinary scalar assembly added. Historical8-word source remains unstageable.
+- Stable legal source: resume_net_1102/ongoing/position_leg_legal_conjugate_expression.c;
+  independent copies/legal audit in build/agents/parent_position_1103/NOTES.md.
+  Native nHumanIk::cHumanIkRoutine::PositionLeg with exact prototype identity
+  also ties23, so do not repeat the outer ownership/linkage premise.
+- Human lane continues legal quaternion product copy context against accepted
+  humanIk_8.c. Gameplay retains standard22 PlayerInput and audits true virtual
+  MoveMsg constructor ownership. Duplicate native vtable data remains unsupported
+  in its diagnostic draft; no blanket discard or speculative alias accepted.
+- Graphics retains ManRender2 after native owner/header references, exact
+  declaration identity/order, direct first-copy and native second-multiply checks.
+  One raw-DIE lexical block covers the whole function; named-variable order is
+  evidence, not proof of original braces. Private history records rejected probes.
+  Graphics now audits XLib_Init with fresh strict metrics and real aggregate/API
+  evidence. Three lanes remain separate; parent alone integrates full matches.
+
 ## Native source and near-miss audit (2026-11-03, continued)
 
 - Baseline remains **14,300/14,351, 96.62% code, 51 remaining**. No new

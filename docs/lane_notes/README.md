@@ -21,7 +21,7 @@ Check a draft with `tools/check_match.py <draft> -c mw38` (k1's `mc_vO.c` uses `
 | 385240 | cMan_GetGunBarrelMatrix | k3 | `t_g5.c` | 7 | see k3 NOTES |
 | 37B5C0 | XLib_DisplayLastFrame | k3 | `b_37B5C0.c` | 7 | see k3 NOTES |
 | 1B0F20 | cHuman_GetTransform_ForCameraTracking (body at 1B0F30) | k8 | `gt_best8.c` | 8 | needs a config split at 1B0F30 |
-| 1D1140 | cHumanIkRoutine_PositionLeg | k4 | `k1.c` | 8 | see k4 NOTES |
+| 1D1140 | cHumanIkRoutine_PositionLeg | k4 | `k1.c` | historical 8 | Not stageable: dangling references; see current HANDOFF |
 | 2DF290 | NetIInitialize | k2 | (NOTES, `dfr.py` variants) | 8 | see k2 NOTES |
 | 21E0C0 | cGenerator_NetSpawn | k2 | `gen35.cpp` | 9 | see k2 NOTES |
 | 1D0780 | cHumanIkRoutine_AimHeadIndependently | k4 | `h18.c` | 9 | see k4 NOTES |
@@ -40,6 +40,14 @@ Check a draft with `tools/check_match.py <draft> -c mw38` (k1's `mc_vO.c` uses `
 | 22A8C0 | GetCollisionDist | k7 | `gcd_best28.c` | 28 | see k7 NOTES |
 | 336700 | cAgentData_ctor | k7 | `ad_best28.c` | 28 | see k7 NOTES |
 | 22BA30 | CheckBulletCollisions | k7 | `bc2.c` | 29 | see k7 NOTES |
+
+PositionLeg update (2026-11-03): the historical eight-word draft returns references
+from dead locals/value parameters. The current legal reconstruction has 23 strict
+word differences at the exact 1,528-byte extent, independently checked with clean
+call/data/literal findings. Its caller-owned temporaries remain alive through the
+value copies. Private snapshots: `build/agents/parent_position_1103/legal23.c` and
+`build/agents/resume_net_1102/ongoing/position_leg_legal_conjugate_expression.c`.
+It is still a near miss and is not counted as a matched function.
 
 ## Big functions rebuilt from prototype DWARF (in progress)
 

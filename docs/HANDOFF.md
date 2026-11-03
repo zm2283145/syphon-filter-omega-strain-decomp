@@ -5,6 +5,40 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Further defined Actor/source ownership work (2026-11-03)
+
+- Verified source stays **4a32a7d6, 14,301/14,351, 96.65% code, 50 remaining**.
+  No newly completed routine, source integration or redundant full build.
+- Actor replaces seven invented matrix-result owner uses with proven native
+  receiver operations and live caller temporaries. Actual forward quaternion
+  transformation also MATCHes its212B primitive. Latest repaired caller12032B
+  versus12016B has2016 non-size comparator findings plus SIZE, improved from
+  2415/12160B. Parent independently reproduces this and confirms all333 ordered
+  static call targets exactly; strict same-offset failures remain unmasked.
+  See parent_actor_1103 and human lane ACTOR_RESEARCH.md; not a full match.
+- Parent's inverse180B helper fingerprint only occurs inline in original
+  cGameCamera::UpdateMotion, with no standalone inverse method declaration.
+  No native alias is justified. Existing canonical helper is directly proven
+  to mutate/return its receiver; semantic caller-temporary reconstruction can
+  use that fact without asserting an unknown original method. Primary evidence:
+  build/agents/parent_inverse_identity_1103/NOTES.md.
+- PlayerInput's actual vector and matrix return views now both use valid
+  const-reference lifetime extension with existing opaque byte-copy semantics.
+  Code/data remain byte-identical to independently reviewed439. Native sound
+  destructor graph discrepancy is resolved (real136B dtor MATCH), but composed
+  caller grows8B and fails jump-data placement; no suppression or depth grid.
+  Preserve439 and all failed diagnostics as distinct research checkpoints.
+- ManRender's one defined3-column shell diagnostic regresses and is closed;
+  truebody0x2984 versus checker span0x2990 includes12padding. D_537DD0 is actual
+  full64B cLightMan::paraDirMatRot, but alternate branches prevent bypassing
+  modifier ownership. All unsafe4th-column bridges remain explicitly flagged.
+- Graphics independently MATCHes original tRGBA(const tRGB&,float)36B, but no
+  caller evidence warrants its use in Init. Native setter identities/frame hole
+  and historical scalar-transcription blockers remain; no color/flag grid.
+- Separate active lanes continue Actor temporary ownership, PlayerInput/collision
+  contracts, and original graphics color/setup provenance. Full private results
+  and concrete failed premises remain in each lane's ongoing notes.
+
 ## Defined source reconstruction checkpoints (2026-11-03)
 
 - Verified source remains **4a32a7d6, 14,301/14,351 functions, 96.65% code,

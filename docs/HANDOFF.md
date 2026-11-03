@@ -5,6 +5,21 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Active three-agent matching lanes (2026-11-02, continued)
+
+- User explicitly renewed three matching/near-miss agents. Current reservations:
+  resume_net: AimHeadIndependently001D0780 actual parameter ABI (nineword baseline);
+  resume_fire: CheckBulletCollisions0022BA30 currentcallee restoration/real source;
+  resume_font: CameraCol_Sweep0020D680 nativeReset member evaluation context.
+- Camera native realtype member call improves17to13strict in private target map,
+  exact2136B,clean data/literals. Parent independently confirmed prototype mangled
+  signature; it maps main Reset3C66B0 while retail wrapper3BF750 adds two floats.
+  No blind alias accepted. Agent tests an inline native wrapper around existing
+  canonical C helper to preserve context without invented linker alias.
+- Generator contract correction tiesnineword baseline; evidence privategenerator
+  notes. GetCollisionDist true named message helper ties20word baseline.
+  No new accepted C function; verified local report remains96.49%,55remaining.
+
 ## Verified local baseline refresh (2026-11-02, Codex)
 
 - Refreshed latest R240 source/config/tools in WSLsfos3, regenerated assembly,

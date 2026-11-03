@@ -31,6 +31,10 @@ say ninja
 if ! grep -q "^OK: build/SCUS_972.64 matches retail SCUS_972.64 (SHA-256 $SHA)" /tmp/ninja.log; then
   say "BUILD DOES NOT MATCH"; grep -E "FAILED|error|MISMATCH|undefined" /tmp/ninja.log | head -15; exit 1; fi
 echo "$H" > ~/.inc_hash; say "OK line printed"
+# The default link does not build hasm comparison targets. Refresh all report
+# targets, including existing objects whose generated assembly changed on a split.
+mapfile -t REPORT_TARGETS < <($PY -c "import json; print(*(u['target_path'] for u in json.load(open('objdiff.json'))['units'] if u.get('target_path')), sep=chr(10))")
+.venv/bin/ninja "${REPORT_TARGETS[@]}" > /tmp/report_targets.log 2>&1 || { say "report targets failed"; tail -15 /tmp/report_targets.log; exit 1; }
 .venv/bin/ninja report > /tmp/report.log 2>&1 || { say "report failed"; exit 1; }
 $PY tools/publish_report.py | tail -1
 $PY -m unittest discover -s tests -p 'test_*.py' -q > /tmp/tests.log 2>&1 || { say "tests failed"; tail -20 /tmp/tests.log; exit 1; }

@@ -85,6 +85,7 @@ segments:
       - [0x002A28, c, lib/libgraph/libgraph_102A28]
       - [0x002A90, c, lib/libgraph/func_00102A90]
       - [0x002B30, asm]
+      - [0x002B40, asm]
       - [0x002EB8, c, lib/libgraph/libgraph_102EB8]
       - [0x003228, c, lib/libgraph/libgraph_103228]
       - [0x0037A8, c, lib/libgraph/libgraph_1037A8]

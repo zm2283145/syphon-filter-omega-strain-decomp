@@ -5,6 +5,26 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Verified syscall boundary and report-target fix (2026-11-02)
+
+- Full retail SHA256 unchanged, regressions pass, final WSL_ROUND_OK synchronized.
+  **14,297/14,351 functions,96.49%code,54remaining.** No new C match claimed.
+- Preserved handwritten _GetGsDxDyOffset00102B30 as16-byte assembly source in
+  src/asm/102B30.s under existing owner policy. Jan00102B30/Oct00102B70 both
+  raw-byte-identical16B. Addedsubsegment002B40 for following compiled routine;
+  sceGsSetDefDispEnv remains unmatched. No scalar compiledcode was transcribed.
+- Fixed tools/workflow/wsl_round.sh to rebuild ALL objdiff comparison targets
+  before report, including existing hasm objects after boundary changes. First
+  run's retailhash was correct but reportusedold900B/2function target; rejected
+  that count. Final target hasONLY _GetGsDxDyOffset16B; report total stays14351.
+  Proof build/agents/syscall_split_1102/verified.json. Full workflow regression
+  verifies source target sizing/count and usual unit suite after toolchange.
+- All three agents held for builds and will resume prepared source tests:
+  PositionLeg actual128bit scratch (net), CheckBullet matrixcopy context (fire),
+  ManRender actualmatrix/quaternion andfirst-load context (font,2wordbaseline).
+  Persistent lanes requested: continue successive evidence-based matching rounds,
+  preserve private notes, no repeated exhaustedgrids or independent fullbuilds.
+
 ## Active three-agent matching lanes (2026-11-02, continued)
 
 - User explicitly renewed three matching/near-miss agents. Current reservations:
@@ -2249,8 +2269,7 @@ prototype that callers use inconsistently is declared K&R in a shared header (fo
   copies splat's disassembly without the `nonmatching` markers), and `configure.py` links the
   copy and reports the unit as `hasm/<VRAM>`. List a unit only when every function in it is
   hand-written (syscall stubs, privileged code, `addi`/`sub`/`plzcw`, documented routines).
-  Still asm because the unit is mixed or unproven: `_GetGsDxDyOffset` (shares 0x102B30 with
-  C), longReverse/SHAtoByte (island unit with SHSTransform), NellyLog2/NellyInvLog2,
+  Still asm because the unit is mixed or unproven: longReverse/SHAtoByte (island unit with SHSTransform), NellyLog2/NellyInvLog2,
   CalcCostFunc, rFft_vu4.
 - `0x2B69A0` (_sceMcFatInit) was resolved in R162 by reusing the existing root-directory
   literal with a fixed-size memcpy. No rodata split was needed; the held draft is historical.

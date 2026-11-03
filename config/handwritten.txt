@@ -8,6 +8,7 @@
 0x000000  # crt0: _start (padduw register clears, syscalls, ei)
 0x000220  # 8-byte syscall stub
 0x0023B0  # setjmp/longjmp-style context save/restore (paddub $v0,$sp, sub $sp)
+0x002B30  # _GetGsDxDyOffset: syscall 0x80; compiled sceGsSetDefDispEnv begins at 0x002B40
 0x0056C8  # _rix_*/_ri0_* MMI image reconstruction kernels (addi), clamp/pack helpers
 0x00CD40  # kernel syscall stubs (RFU000_FullReset .. _InitTLB)
 0x00D9B0  # _sceSDC: cache instructions, mtc0

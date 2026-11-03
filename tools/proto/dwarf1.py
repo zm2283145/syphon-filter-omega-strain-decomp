@@ -181,6 +181,38 @@ class Dwarf1:
         return el, dims
 
 
+def enum_values(die, *, signed=True):
+    """Decode MW DWARF1 enumerators using the enum's storage width.
+
+    The containing parser targets little-endian PS2 DWARF1.  Element values
+    use AT_byte_size, followed by NUL-terminated Latin-1 names.  DWARF1 has
+    no signedness attribute here: signed=True retains the former signed
+    four-byte interpretation; callers can request the unsigned bit pattern.
+    A missing byte size retains the legacy four-byte default.
+    """
+    data = die.get('element_list') or b''
+    if not data:
+        return []  # Includes enum forward declarations.
+    width = die.get('byte_size', 4)
+    if width not in (1, 2, 4, 8):
+        raise ValueError('unsupported enum byte_size %r at DIE %#x' % (width, die.off))
+    result = []
+    pos = 0
+    while pos < len(data):
+        if len(data) - pos < width:
+            raise ValueError('truncated enum value at DIE %#x, element offset %#x' % (die.off, pos))
+        value = int.from_bytes(data[pos:pos + width], 'little', signed=signed)
+        pos += width
+        end = data.find(b'\0', pos)
+        if end < 0:
+            raise ValueError('unterminated enum name at DIE %#x, element offset %#x' % (die.off, pos))
+        if end == pos:
+            raise ValueError('empty enum name at DIE %#x, element offset %#x' % (die.off, pos))
+        result.append((data[pos:end].decode('latin-1'), value))
+        pos = end + 1
+    return result
+
+
 GPR = ['zero', 'at', 'v0', 'v1', 'a0', 'a1', 'a2', 'a3', 't0', 't1', 't2', 't3', 't4', 't5', 't6', 't7',
        's0', 's1', 's2', 's3', 's4', 's5', 's6', 's7', 't8', 't9', 'k0', 'k1', 'gp', 'sp', 'fp', 'ra']
 

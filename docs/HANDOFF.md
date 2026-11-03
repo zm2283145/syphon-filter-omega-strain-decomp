@@ -21,7 +21,7 @@ This is the working state and the routine for whoever continues this project
   evidence: build/agents/parent_machine_1103/; no binaries added to Git.
 - Reused three existing agents after checking live state. Current lanes:
   resume_net native Human HandleJump cleanup context (36 strict words);
-  resume_fire PlayerInput defined-output/cVector accessor source (29 strict words);
+  resume_fire PlayerInput defined-output/cVector accessor source (22 strict words);
   resume_font graphics ManRender (2 words) and corrected GS display routine
   (13 words, 52-byte data MATCH). All remain private near misses, not accepted C.
   Agents held for full verification and resumed only after final synchronization.
@@ -32,10 +32,32 @@ This is the working state and the routine for whoever continues this project
   both worsen to 13. Do not repeat these source premises or add blind context
   stubs. Exact size, jump table MATCH, no undefined/literal findings throughout.
   Drafts/results: build/agents/parent_machine_1103/NOTES.md.
-- Human lane found a separate prototype extraction issue: enum element decoding
-  assumes four-byte values even for one-byte enum DIEs. Private decoder proposal
-  and synthetic tests are being reviewed; no tracked tooling fix accepted yet.
-  Width alone does not establish signedness; preserve that distinction.
+- Accepted prototype enum extraction repair after independent parent review:
+  tools/proto/dwarf1.py decodes each enum using its recorded 1/2/4/8-byte width;
+  extract_proto.py previously always consumed four bytes, corrupting names and
+  values for narrow enums. Narrow high-bit values now show raw positives with
+  the signed alternative explicitly annotated; four-byte legacy rendering stays
+  unchanged. Storage width does not prove signedness. Malformed payloads fail
+  with context instead of producing garbled output.
+- Ten synthetic tests include the production extraction path and malformed
+  records; the extraction fixture fails under the old parser. Parent independently
+  decoded all 8,072 populated enum DIEs / 69,440 entries from both private
+  prototypes with zero errors and matching signed/raw bit patterns. Full tooling
+  regression suite now passes 159 tests. No prototype bytes in tests or Git;
+  shared P1 caches/dossiers were not overwritten. Regenerate into a separate
+  private output when using corrected enum information. This is tooling work,
+  with no C match or further report/count change.
+- PlayerInput improved again from 29 to **22 strict differing words**: actual X/Y
+  component accessors plus ordinary direct XYZ assignment reproduce the complete
+  case-5 sum block. Parent independently rechecked the stable defined-output
+  candidate: exact 17,792-byte extent, jump-table .rodata4A7800/48B MATCH, empty
+  undefined/literal findings, no aliases. Still a near miss. Saved source/JSON:
+  build/agents/resume_fire_1102/ongoing/player_input/current_best22.*;
+  independent snapshot build/agents/parent_player_input_1103/review22.c.
+- WSL stopped again after the full verified round. All lanes held; normal parent
+  health invocation auto-started sfos3 and human_46's three functions all MATCH
+  with clean undefined/data/literals. No forced VM lifecycle or settings changes.
+  Lanes resumed one compiler each. Preserve drafts and coordinate if it recurs.
 - Original source layout, root user scratch and private prototypes preserved.
   No push. Continue ordinary C/C++ matching; metadata corrections do not replace
   matching work or count as newly reconstructed routines.

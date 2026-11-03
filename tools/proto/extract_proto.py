@@ -20,6 +20,13 @@ def is_header(path):
     return not re.search(r'\.(cc|cpp|c|s|asm)$', path or '', re.I)
 
 
+def enum_value_text(value, width):
+    """Keep legacy signed32 text, but expose narrow signedness ambiguity."""
+    if width in (1, 2) and value >= 1 << (8 * width - 1):
+        return '%d /* signed %d */' % (value, value - (1 << (8 * width)))
+    return str(value)
+
+
 def main(which):
     path = PROTOS[which]
     out = os.path.join(P1, which)
@@ -229,15 +236,12 @@ def main(which):
                 key = (name, t.get('byte_size'), tuple(mem))
                 seen.setdefault(key, (t.tname, cu.get('name')))
             elif t.tag == 0x04:
-                el = t.get('element_list') or b''
-                vals = []
-                p = 0
-                while p + 4 <= len(el):
-                    v = struct.unpack_from('<i', el, p)[0]; p += 4
-                    q = el.find(b'\0', p)
-                    vals.append((el[p:q].decode('latin-1'), v)); p = q + 1
+                width = t.get('byte_size', 4)
+                # Narrow storage is ambiguous: retain raw positives and annotate below.
+                # Four-byte enums retain the extractor's previous signed32 rendering.
+                vals = dwarf1.enum_values(t, signed=width not in (1, 2))
                 vals.reverse()
-                enums.setdefault((t.get('name') or '<anon enum>', tuple(vals)), cu.get('name'))
+                enums.setdefault((t.get('name') or '<anon enum>', width, tuple(vals)), cu.get('name'))
             elif t.tag == 0x16:
                 typedefs.setdefault((t.get('name'), dw.type_of(t)), cu.get('name'))
             stack.extend(c for c in t.children if c.tag in (0x02, 0x13, 0x17, 0x04, 0x16))
@@ -252,8 +256,8 @@ def main(which):
                     fo.write('    +0x%03X %-28s %s%s%s\n' % (off if off is not None else -1, ty, mn, bits,
                                                            '' if sz is None else '  // %d' % sz))
         fo.write('\n\n// ---- enums ----\n')
-        for (name, vals), src in sorted(enums.items()):
-            fo.write('enum %s { %s }  (%s)\n' % (name, ', '.join('%s=%d' % v for v in vals), src))
+        for (name, width, vals), src in sorted(enums.items()):
+            fo.write('enum %s { %s }  (%s)\n' % (name, ', '.join('%s=%s' % (n, enum_value_text(v, width)) for n, v in vals), src))
         fo.write('\n// ---- typedefs ----\n')
         for (name, ty), src in sorted(typedefs.items(), key=lambda x: (str(x[0][0]), x[0][1])):
             fo.write('typedef %s %s;  (%s)\n' % (ty, name, src))

@@ -5,6 +5,31 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Native playback contracts and bounded source-context research (2026-11-03)
+
+- Verified source state stays **14,300/14,351, 96.62% code, 51 remaining**.
+  No full new C routine, accepted source change or full build is claimed.
+- Human independently verified actual PlaybackGroupId(int) native constructor
+  and packet resolver's caller-owned node/group output references, eliminating
+  an old opaque int/Y view at that call. Both faithful trials tie HandleDeath8,
+  exact7240B, clean including48B rodata MATCH. Matched resolver assigns outputs
+  on every branch, so no uninitialized output assumption is introduced. Full
+  evidence: resume_net_1102/ongoing/death_native_playback_contract_audit.json.
+- Parent tested genuine immediately preceding mem.cc ReleaseBin source with
+  native allocator Init candidate. ReleaseBin stays MATCH; Init changes size
+  and retains the four strict differences, so no context/consolidation gain.
+  No synthetic seed or follow-up flag grid. Parent Mem research notes preserve
+  this closed premise and distinguish628B body from640B next-start window.
+- Graphics' genuine installed-MSL clear/implicit-member reconstruction remains
+  incomplete; no missing destructor boundary is forced via attributes. Native
+  const DisplayLastFrame contract ties7. Subtitle signed-character and142glyph
+  prototype facts differ from the retail180glyph/LBU body and are not imported.
+- Parent's bounded strcmp origin audit did not locate an exact primary source
+  or source-file-marked archive object. Secondary assertions and MMI shape alone
+  are not sufficient to alter handwriting policy; no inventory change or match
+  count followed. Details: build/agents/parent_strcmp_1103/NOTES.md. Ordinary
+  matching research continues across separate human, graphics and collision lanes.
+
 ## Independent helper verification and allocator review (2026-11-03)
 
 - Verified source totals remain **14,300/14,351, 96.62% code, 51 remaining**.

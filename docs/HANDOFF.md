@@ -5,6 +5,43 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Verified new AimHead C match (2026-11-03)
+
+- Verified totals are **14,301/14,351 functions, 96.65% code, 50 remaining**
+  (precise code percentage 96.65136). The full WSL workflow rebuilt all objdiff
+  targets, passed all 170 tests, synchronized back and printed WSL_ROUND_OK.
+  Independently re-read retail rebuild SHA-256:
+  9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6.
+- NEW ordinary C++ match: cHumanIkRoutine_AimHeadIndependently, 001D0780,
+  all 1,280 bytes. Replacing synthetic product subtypes with the prototypes'
+  real cQuaternion operator* (named result, static VU0Multiply reference API,
+  value return) resolves the old nine-word near miss. Both native primitives
+  independently MATCH their existing 48/72-byte retail routines; those helpers
+  were already owned and do not add function counts.
+- Parent independently verified the original and cleaned caller, both helper
+  bodies, calls, data, literals and undefined symbols. GetConjugate's sole
+  external native alias in extra.ld is grounded in all 48 identical bytes at
+  January 1C56E0, October 1C3060 and retail 1CF5B0. Result temporaries own their
+  storage, rot is read only on initialized paths, and the third pose lane is
+  only copied as 16 bytes, never used in quaternion arithmetic.
+- Consolidated the accepted section with its neighbors into humanIk_11.c;
+  another existing compatible humanIk group merged into humanIk_15.c. Other
+  declaration/data conflicts remain explicit; no speculative helper relocation.
+  Frozen agent proof: build/pending/resume_net_1102/aimhead_001D0780.
+  Independent parent evidence: build/agents/parent_aimhead_1103.
+- Compiler holds were released only after final synchronization. Human/IK now
+  tests this proven native product API on legal PositionLeg; gameplay tests
+  true member vector arithmetic in Fire; graphics audits Subtitle's actual
+  storage/kerning contract. All remain separate private matching lanes.
+- Parent independently revisited DestinationParams Pack's actual multiple
+  inheritance, proved in both prototypes (second base at 0x30; January size60,
+  October size80 hex). Correcting inherited signed-negative left-shift packing
+  to unsigned bits gives 1316 bytes versus retail1460 and 208 word offsets plus
+  a size finding, clean. Real second-base reconstruction emits identical code.
+  This closes that concrete source premise; no conversion grid followed.
+  Sources/proofs: build/agents/parent_pack_1103. Old 1324-byte draft remains
+  research-only; no Pack match or additional count is claimed.
+
 ## EE width evidence and PlayerInput lifetime/object repairs (2026-11-03)
 
 - Verified source totals remain **14,300/14,351, 96.62% code, 51 remaining**.

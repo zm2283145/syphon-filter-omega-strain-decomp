@@ -2356,7 +2356,6 @@
   "SFOGame/Source/humanIk_38": "cwps2-3.0b38",
   "SFOGame/Source/humanIk_39": "cwps2-3.0b38",
   "SFOGame/Source/humanIk_40": "cwps2-3.0b38",
-  "SFOGame/Source/humanIk_42": "cwps2-3.0b38",
   "SFOGame/Source/humanIk_43": "cwps2-3.0b38",
   "SFOGame/Source/humanIk_44": "cwps2-3.0b38",
   "SFOGame/Source/humanIk_45": "cwps2-3.0b38",
@@ -3521,9 +3520,10 @@
   "Libs/SFOLib/Source/globalization/func_003FD740": "cwps2-3.0b38",
   "SFOGame/Source/GuiAgentCreate/func_00290610": "cwps2-3.0b38",
   "SFOGame/Source/GuiAgentInfo/func_00363A80": "cwps2-3.0b38",
-  "SFOGame/Source/humanIk/func_001DD1C0": "cwps2-3.0b38",
   "Libs/SFOLib/Source/texture/func_003BB360": "cwps2-3.0b38",
   "SFOGame/Source/gameSound/func_001C8770": "cwps2-3.0b38",
   "SFOGame/Source/human_39": "cwps2-3.0b38",
-  "SFOGame/Source/human_46": "cwps2-3.0b38"
+  "SFOGame/Source/human_46": "cwps2-3.0b38",
+  "SFOGame/Source/humanIk_11": "cwps2-3.0b38",
+  "SFOGame/Source/humanIk_15": "cwps2-3.0b38"
 }

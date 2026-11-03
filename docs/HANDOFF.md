@@ -5,6 +5,39 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Defined source reconstruction checkpoints (2026-11-03)
+
+- Verified source remains **4a32a7d6, 14,301/14,351 functions, 96.65% code,
+  50 remaining**; fresh WSL report re-read. No new full match or full build.
+- PlayerInput repaired547 improves to439 offsets at exact17,792B through the
+  actual nontrivial cMatrix return class and a lifetime-extended const reference.
+  Parent independently reproduces439 with zero aliases and48B jump data MATCH.
+  TgtPos lifetime,1C0 sound extent and memory contracts remain repaired. This
+  is still an incomplete research checkpoint; old22 must not be promoted.
+  Evidence: resume_fire_1102/ongoing/player_input/legality_audit and
+  build/agents/parent_player_input_1103/NOTES.md.
+- Actor's actual SetY/Normalize primitives MATCH independently; replacing two
+  invented placement owners with real full-expression temporaries preserves all
+  333 ordered call targets. Best repaired result2395 offsets+size versus2415;
+  another shorter faithful branch2402+size is also saved, not counted.
+- PositionLeg arc fingerprint matches7 inline sites per prototype, no standalone
+  original helper/return API. Explicit actual delay-nop source clarification
+  produces IDENTICAL whole-caller bytes/relocations at1528B/23 differences.
+  Standalone helper emission differs from inline context; no caller safety
+  downgrade or invented identity follows. See human lane ongoing notes/proofs.
+- Parent restores actual Grid3 player/peer-pointer/callee-return contracts and
+  complete8B header object: all three variants emit identical2660B code, same
+  three differences,156B switch data MATCH. Native memory-header union/true
+  setters likewise preserve MemInit4. No old CFG/storage/address/flag grids.
+  Exact evidence: parent_grid_1103 and parent_mem_union_1103/NOTES.md.
+- Prototype ELFs contain no extra ECOFF debug section. Installed libmc2 fat.o
+  has procedure-level metadata but no parameter/local/member/typedef symbols;
+  its2348/1420B format/create functions differ from retail2392/1480B. No stale
+  SDK type/body transplantation or compiler-version grid was justified.
+- Three private lanes continue substantial source reconstruction: human/IK
+  Actor ownership; graphics actual NxM/light operation semantics (all unsafe
+  bridges stay flagged); gameplay PlayerInput return/lifetime contracts.
+
 ## Native API and SDK provenance research after AimHead (2026-11-03)
 
 - Verified source baseline remains **4a32a7d6: 14,301/14,351 functions,

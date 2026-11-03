@@ -5,6 +5,38 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Current verified state and next matching lanes (2026-11-03)
+
+- **14,300/14,351 functions; 96.62% code; 51 remaining.** Last full verification
+  is dd0242ff: unchanged retail SHA-256, every report target rebuilt, regressions
+  and final WSL_ROUND_OK synchronized. Subsequent commits only repair prototype
+  tooling or preserve research; no additional matched functions are claimed.
+- Enum extraction is **already fixed in 5dc59ba6**, with 159 regression tests
+  passing. Existing shared P1 enum exports are stale because they were deliberately
+  not overwritten. Use current dwarf1.enum_values with the recorded width or
+  regenerate privately; do not repeat the old four-byte-parser repair.
+- Human/IK keeps legal PositionLeg23, independently checked by parent. Old8 is
+  unsafe and must not be staged. Owning-product, typed scratch and native static
+  Scale helper trials tie23 or worsen; private notes preserve all failures.
+  Current human lane reviews actual camera-tracking/helper lifetimes.
+- Parent additionally proved unnamed getter1D2870 is cJointInfo::Limits_InJointSpace:
+  January1C8930 and October1C61A0 both match its8bytes, and matching PositionLeg
+  callsites+4F8/+510 invoke those exact symbols in both prototypes. Real native
+  JointInfo method calls still tie23; no aliases/renames added to configuration.
+  Evidence: build/agents/parent_position_1103/jointinfo_getters_proof.json.
+- Gameplay keeps PlayerInput22. True virtual MoveMsg destructor independently
+  matches its existing177890 implementation; duplicate emitted vtable remains
+  diagnostic, with no unsupported data discard. A real enum specialization must
+  instantiate while enumsalwaysint is off; later pragma state can otherwise widen
+  its store. Current gameplay lane audits original FireObj/base construction.
+- Graphics keeps ManRender2 and XLib_Init58 **strict** words. Native Init/SetUnit
+  contracts tie58. Two real color temporary objects remain a source hypothesis;
+  an unintended out-of-line constructor prevents that probe from isolating it.
+  Avoid retesting old packing or inlining/profile grids without new evidence.
+- No new C match or accepted source/configuration change in this round. Three
+  separate private matching lanes continue; parent alone integrates and fully
+  verifies complete candidates. Root user drafts preserved; no push.
+
 ## Legal PositionLeg checkpoint (2026-11-03)
 
 - Verified totals unchanged: **14,300/14,351, 96.62% code, 51 remaining**.

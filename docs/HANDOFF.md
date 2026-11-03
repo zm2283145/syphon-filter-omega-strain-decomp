@@ -5,6 +5,33 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Ordinary conversion audit and current research (2026-11-03)
+
+- Verified baseline unchanged: **14,300/14,351, 96.62% code, 51 remaining**.
+  No new complete C match, source/configuration change or full build this round.
+- Parent resolved an old misleading conversion claim: plain MW38 C casts,
+  owner-mode C casts and explicit `cvt.w.s`/`mfc1` assembly emit identical16B.
+  Retail XLib_Init and January nSFO_Macros::FTOI use the same conversion opcode.
+  Manual scalar conversion helpers do not become permitted primitives merely
+  because of disassembler spelling. The historical floats note below is corrected.
+- XLib_Init's58-word research source uses manual F2I/F2B converters and still has
+  an unexplained32B hole. Do not promote it without a valid C reconstruction or
+  reviewed original assembly-origin evidence. One parent pure-C converter trial
+  widens to3680B vs3816B and remains private; no claimed score gain or source match.
+  Parent's caller-inline-depth8 control still has two real unwanted constructor
+  calls, so further flag/profile sweeps are not justified. Exact evidence and
+  sizes: build/agents/parent_xlib_init_1103/NOTES.md.
+- Gameplay native Fire constructor now restores genuine base hierarchy,
+  cSafePtr member/default construction and CreateXform call identity. Still9strict
+  words at1040B with clean findings. PlayerInput22 stays frozen. Human camera
+  rooted-reference getters tie8; native AimHead GetConjugate ties9. PositionLeg
+  owning-result and typed/native Scale trials tie23 or worsen, with no lifetime
+  escapes. All are near misses, not completed matches.
+- Graphics now reviews actual SubtitleFont base/const Display and native matrix
+  aggregate-return contract. Parent keeps all provenance/tests/private drafts;
+  no push, no prototype/raw/binary artifacts staged. Continue original-source
+  matching across the three private lanes; parent alone integrates full matches.
+
 ## Current verified state and next matching lanes (2026-11-03)
 
 - **14,300/14,351 functions; 96.62% code; 51 remaining.** Last full verification
@@ -2328,8 +2355,11 @@ From the R150–R151 dossier lanes (2026-10-28):
   `+off` base unfolded. `(T*)((char*)base + n*sizeof(T))` with a fresh loop variable stops
   strength reduction.
 - **mw38 floats:** float registers are assigned in declaration order but loaded in
-  assignment order (declare `ax, ay, az`, assign z, y, x). `cvt.w.s` needs inline asm
-  (a C cast gives a different conversion; objdump spells it `trunc.w.s`). A float passed
+  assignment order (declare `ax, ay, az`, assign z, y, x). The historical claim
+  that `cvt.w.s` requires asm because C emits another conversion was disproved:
+  fresh MW38 C casts and explicit asm emit the same funct0x24 conversion/mfc1.
+  Objdump's `trunc.w.s` spelling is not a semantic distinction. Prefer C for
+  ordinary conversion; do not add scalar asm merely to control allocation. A float passed
   to varargs gets `SoftFloat_FloatToDouble` automatically; double compares can call
   `SoftFloat_FloatToDouble` / `SoftFloat_DoubleGreaterEqual` explicitly.
 - **mw38 misc:** a `bool` local gives `daddiu` where `int` gives `addiu`; copies of the

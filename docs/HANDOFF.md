@@ -5,6 +5,49 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Native API and SDK provenance research after AimHead (2026-11-03)
+
+- Verified source baseline remains **4a32a7d6: 14,301/14,351 functions,
+  96.65% code, 50 remaining**. No new source integration or full build in
+  this research batch; all three private matching lanes continue.
+- Parent found the installed SDK libgraph.a graph003.o. Fresh comparison
+  independently MATCHes its existing checkModelVersion160B, syscall16B,
+  sceGsSetDefDispEnv884B and complete68B rodata. This is exact original-object
+  evidence, NOT a C reconstruction or count. Bundled graphdev.c lacks the
+  archive/retail calibration and 0x50 branches and cannot be substituted.
+- One actual native GS bitfield-header/u_long-store reconstruction ties the
+  existing clean13-word display miss. One genuine same-CU control with the
+  archive-proven local helper definitions also ties13; helpers/data MATCH.
+  No synthetic context seed or OR/packing/flag grid. Private exact evidence:
+  build/agents/parent_gs_1103/NOTES.md. Never integrate its SDK object artifact.
+- **Historical McFatCreateFile1 is research-only, not stageable C.** Its n
+  local is read before assignment. Fresh WSL retail confirms saved s1 is read
+  in subtraction2B91C4 before definition2B9208; old s3 comment is stale. No
+  initializer or extra input ABI has been established or invented. Keep the
+  routine assembled, without handwriting reclassification. Audit/evidence:
+  build/agents/parent_fatcreate_1103/NOTES.md.
+- Human primitive-first API propagation preserves legal PositionLeg23;
+  QuaternionVelocity's real owned conjugate/product chain is20 versus saved17.
+  AimComponent C128 product fails its72B primitive gate, so no caller trial
+  followed; actual quaternion-only ctor/assignment/product all MATCH but caller
+  worsens820 offsets+size. No copy/depth grids; safe checkpoints preserved.
+- Gameplay independently MATCHes actual Cross52B, VU0Cross28B, VU0Negate20B
+  and scalar-left multiplication44B. Ledge native Cross caller215 and full
+  reference-arithmetic caller797+size fail; natural Box Center still fails
+  its primitive gate, so no CheckBullet caller trial. These helpers were already
+  owned; no new function count. Fire native arithmetic ties9. Generator native
+  message ownership gives23 plus a genuine vtable-data blocker; no suppression.
+- Subtitle's native full-size/tail-virtual owner has an independently MATCHed
+  existing constructor. Precise caller result:1712B,34 distinct differing word
+  offsets plus one displaced LO diagnostic at an already-differing offset,
+  35 total findings. Retail and draft both name the correct g_TextureMgr539248;
+  no alias fix is justified. Byte-view kerning removes array-bound fiction but
+  does not prove all terminal-read bytes initialized. Vision's native light
+  hierarchy and exact unseeded length-squared helper still tie28/exact632B.
+- Useful new sources/proofs and closed premises are in each resume_*_1102
+  ongoing/NOTES.md. Gameplay next owns JumpInit; human/IK continues a distinct
+  evidence-gated near-miss review; graphics continues native primitive review.
+
 ## Verified new AimHead C match (2026-11-03)
 
 - Verified totals are **14,301/14,351 functions, 96.65% code, 50 remaining**

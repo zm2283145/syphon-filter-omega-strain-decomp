@@ -5,6 +5,25 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Verified local baseline refresh (2026-11-02, Codex)
+
+- Refreshed latest R240 source/config/tools in WSLsfos3, regenerated assembly,
+  rebuilt all C because headerhash changed, and completed full retail SHA-256
+  9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6,
+  regression checks and final synchronization (WSL_ROUND_OK).
+- Actual local report **14,296/14,351,96.49%code,99.79%data,55remaining**.
+  This reconciles an already-owned unit, not a new C match: lib/func_0010ED58
+  (_printf) now compiles locally with the available old GCC profile, adding its
+  existing1524code/292databytes to the priorcloud report. No source/config changes.
+- Windows generated asm/inventory was stale; future acceptance uses refreshed
+  WSLtools/asm. Private live_inventory.json currently flags207policy hasm functions
+  as complete-without-C and lists54candidates, so do not treat its count as full
+  report coverage. Use actual report55 and explicit config ownership audit.
+- Resumed concrete rounds after synchronization: nativevirtual dispatch in newer
+  DestinationParams Pack(t1), actual16byte SphereSweptRay face-property reference,
+  and CameraCol_Sweep two-call argument setup context(u3). No duplicate targets.
+  All drafts private; parent alone integrates verified batches.
+
 ## Resume 2026-11-02 evening (Codex, latest GitHub state)
 
 - Fetched and fast-forwarded Windows checkout to84354782 (R240 and a1-a3 notes).

@@ -174,7 +174,16 @@ class Dwarf1:
                 elif form == 3:
                     n = struct.unpack_from('<H', b, p)[0]; p += 2
                     fake.attrs[name] = b[p:p + n]; p += n
-                el = self.type_of(fake, depth + 1)
+                nested = self.by_off.get(fake.get('user_def_type'))
+                if (nested is not None and nested.tag == 0x01
+                        and not nested.get('name') and depth <= 6):
+                    # An array element can itself be an anonymous array DIE.
+                    # Keep outer bounds first instead of appending them to an
+                    # already rendered inner type (float[4][3] for float[3][4]).
+                    el, inner_dims = self.array_info(nested, depth + 1)
+                    dims.extend(inner_dims)
+                else:
+                    el = self.type_of(fake, depth + 1)
                 break
             else:
                 break

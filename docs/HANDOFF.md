@@ -5,6 +5,41 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Sphere12, nested-array decoder fix and ManRender safety (2026-11-03)
+
+- Verified source totals remain **14,300/14,351, 96.62% code, 51 remaining**.
+  No new full C routine or source/configuration integration is counted.
+- Gameplay's actual cVector member arithmetic/static VU helper contracts improve
+  Sphere19 to12 strict words at exact1304B. Parent independently reproduced12
+  with clean calls, undefined symbols, data and literals. Four additional native
+  arithmetic helper bodies independently MATCH their already-counted routines.
+  Frozen source/proofs: build/agents/resume_fire_1102/ready12; parent copy:
+  build/agents/parent_sphere_1103/ready12. Remaining post-loop differences are
+  four temporary-slot offsets; eight other words concern transform setup.
+- **ManRender2 is research-only and must not be promoted.** Its To44/To44b
+  bridges fill only three rows, copy four and feed the uninitialized fourth row
+  into Mul44 arithmetic. Discarding output row4 does not remove the dependency;
+  zero coefficients do not make undefined reads safe. One initialized affine-row
+  diagnostic changes to29F4 vs2990, with clean findings; this proves code depends
+  on the omission, not original conversion semantics. Exact audit/proof paths:
+  build/agents/resume_font_1102/ongoing/manrender/NXM_SAFETY_AUDIT.md and
+  build/agents/parent_man_tu_1103/NOTES.md. No accepted source was changed.
+- The audit also exposed a tooling error: nested anonymous-array dimensions were
+  printed inside-out. Corrected tools/proto/dwarf1.py with10 synthetic regressions;
+  all169 WSL tests pass, plus20 focused Windows tests. Privately rendered every
+  array in both prototypes (21,017 January;19,290 October). All13 NxM declarations
+  per prototype are correctly float[3][4], and bodyParts is Parts[2][32]. Thus the
+  candidate's NxM dimensions were right; the uninitialized row is a separate flaw.
+  Existing shared P1 exports were NOT overwritten: regenerate privately or use
+  the current raw decoder before trusting old multidimensional type strings.
+- Human/math GetCollisionDist native message hierarchy/lifetimes, unsigned-char
+  HandleMessage(const cMessage&) and actual GetLength const-member contracts
+  all tie fresh20 strict at exact604B, clean. Graphics' actual native tRGBA ctor
+  and assignment independently MATCH their existing routines; packed-color ctor
+  has no emitted standalone symbol in either prototype, so no alias was invented.
+  Remaining research stays separate and private; no full build was required for
+  this decoder-only change or unchanged near misses.
+
 ## Sphere native-chain improvement and independent review (2026-11-03)
 
 - Verified totals remain **14,300/14,351, 96.62% code, 51 remaining**; parent

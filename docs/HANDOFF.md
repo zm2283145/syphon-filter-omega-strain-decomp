@@ -5,6 +5,32 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Native API research continuation (2026-11-03)
+
+- Verified totals remain **14,300/14,351, 96.62% code, 51 remaining**.
+  No new complete C function, accepted source change or full build this round.
+- Parent restored native cMachine::NextFrame and actual cGameFrontEnd member
+  PushMessageBox API (returns int, not the old void shim). Both fresh probes
+  preserve10 strict words at5572B,24B jump table MATCH and clean findings. Raw
+  viewport return-type audit rules out an invented extra-reference premise.
+  Full evidence/failures: build/agents/parent_machine_1103/NOTES.md.
+- GetCollisionDist remains20 strict after actual member subtraction and scalar
+  product contracts. Native VU0Scale and operator*(float) independently reproduce
+  their already-counted functions exactly; no helper count increment. Corrected
+  array decoder also confirms the human compound arrays/strides, exposing no new
+  dimensional bug in Jump/Aim targets. Private owner audit preserves that finding.
+- Sphere12 stays frozen. Embedded FaceLocator/model ownership corrections tie12;
+  actual copy-ctor reference/unsigned128 body matches its standalone primitive
+  but fails the caller; bounded native syntax alternatives also fail. No further
+  copy/tag/operand/depth grid is justified. The old wrapper SetSpherePath/SetDir/
+  CalcBBox signatures are absent from both prototypes, so do not assert them as
+  proven native API merely because the scaffold names them.
+- Graphics independently reproduces actual requirement-array constructor and
+  destructor helpers, while AgentData still has size/data/lifetime-model issues.
+  Historical28 and InterfaceModel39 labels are not safe fresh strict candidates.
+  Separate private lanes continue original-source reconstruction; no old pin,
+  invented helper alias, unsupported scalar assembly or incomplete unit is counted.
+
 ## Sphere12, nested-array decoder fix and ManRender safety (2026-11-03)
 
 - Verified source totals remain **14,300/14,351, 96.62% code, 51 remaining**.

@@ -5,6 +5,33 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Camera canonical-ABI improvement and Actor lifetime audit (2026-11-03)
+
+- Verified source totals remain **14,300/14,351, 96.62% code, 51 remaining**.
+  No new complete C function, source integration or full build is claimed.
+- Parent improved CameraCol_Sweep17 to13 strict words using its KNOWN canonical
+  free wrapper, with NO new aliases. Full pointer/uchar wrapper implementation
+  forwards every GPR argument and5float inputs plus2zero floats; it independently
+  MATCHes existing16B3BF750. Parent and graphics independently verify caller13,
+  exact2136B, clean symbols/data/literals and valid full-expression matrix borrow.
+  Original API spelling is unknown; no old native Reset-name alias was revived.
+  Frozen source/proof/audit: build/agents/parent_camera_1103/ready13/README.md.
+- Further actual Quaternion field/constructor contract correction ties13 clean.
+  January owner has mCameraRot@20; October lacks that field, so its shifted older
+  layout was not imported. Native-member or canonical C++ reference wrapper
+  definition controls emit32B rather than16B and remain rejected. Final pointer
+  caller view is consistent with the proven complete pointer-form C wrapper.
+- ActorPhys baseline is unstageable: seven helpers return dead local storage,
+  another forwards the escape, and it contains an inherited scalar asm nop.
+  Caller-owned result repair preserves all333 call targets but broadly differs;
+  replacing the nop with genuine existing handled-path CFG also preserves that
+  repaired result. This is source legality work, not a matching improvement.
+  Raw compound arrays have no reversal issue. See resume_net ongoing/ACTOR_RESEARCH.md.
+- Lens metrics are now exact: manual source5388B/8 word offsets (research-only);
+  legal C source5348B/1076 word offsets+1size finding. The checker next-start
+  span5392B includes4padding. Actual native scale API composition ties that legal
+  result. No conversion/packing/profile grid or code count followed.
+
 ## Native playback contracts and bounded source-context research (2026-11-03)
 
 - Verified source state stays **14,300/14,351, 96.62% code, 51 remaining**.

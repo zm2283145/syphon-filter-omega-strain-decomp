@@ -5,6 +5,49 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Further aggregate ABI and native lifecycle rounds (2026-11-03)
+
+- Live verified baseline remains **14,300/14,351,96.62%,51 remaining** at
+  f6f8e5e1; no new completed C function or source/config/tool integration.
+- Actor's canonical40B func1E53F0 independently MATCHes. A compatible POD
+  VALUE-return caller view replaces the old explicit-out declaration while
+  PRESERVING actual pre-call vector copies/addresses. It reaches exact12016B
+  but1281 comparator findings,333 ordered targets exact, ancillary empty;
+  retained796/12008B remains closer. This is a canonical-C-view diagnostic,
+  NOT proof of the unrecovered original VALUE-versus-constructor signature.
+  No native alias, return/copy/depth grid or whole-source safety claim.
+  Human ACTOR_RESEARCH.md preserves exact caller/live-in evidence and caveats.
+- Generator's real cMoveMsg_Template<0> natural destructor96B AND complete24B
+  table now independently MATCH under strict native-table/EOF RTTI policy.
+  Full four-slot base/reference/byte-enum header composition ties1364B/23,
+  with33 direct targets+one indirect instruction correct in order; native
+  destructor/table MATCH, ancillary empty. No weak/drop suppression. Old9 and
+  stronger native23 remain separate research; noncontiguous helper ownership
+  still prevents automatic integration. Gameplay ongoing/generator_natural_message.
+- ManDMA's former90 source transcribes ordinary DIV/MFLO delay instructions.
+  One ordinary C division baseline instead3232B versus3472, broad differences
+  including SIZE, ancillary empty. Both original one/two/result locals are
+  plain int with NO volatile modifier; do not invent qualifier/dead-code grids.
+  Matrix/member owner operations were already represented; no new API probe.
+- Function-pointer type DISPLAY omits original formal children. Both raw
+  prototypes DO contain them: January1206/1340 function types, October1089/1208.
+  System-message and client-disconnect callbacks each have one real typed
+  data-pointer argument; printed void(*)() is not proof of zero arguments.
+  Use child tag5/tag18 for future contract audits. No extractor change or export
+  regeneration. Parent callback/import audit notes preserve full evidence.
+- R194 had already tried RemoteDisconnect's real24B event/enum/typed callback
+  and IP-owner graph (12 versus4 findings); no duplicate caller trial. Fresh
+  51-entry inventory plus49 mapped entries per prototype yields no additional
+  absolute-address global import declarations for the remaining functions.
+- Graphics completed the actual PS2 compiler/header intrinsic review. PS2
+  manualp121 says its inline assembler has no intrinsic functions; general
+  optimization intrinsic options do not supply a documented scalar FPR-result
+  conversion API. Available SDK FTOI0/FTOI4 are outlined VU VECTOR routines,
+  not matching scalar COP1 operations. No callable scalar intrinsic supported
+  by the inspected documentation/headers was found; no foreign PPC/string-only
+  compiler trial or handwritten-policy exception. Catalog/cited-page evidence:
+  graphics ongoing/conversion_intrinsics. No compiler/profile changes.
+
 ## Generated Ray wrapper and SDK provenance review (2026-11-03)
 
 - Verified source remains **14,300/14,351,96.62%,51 remaining**, following

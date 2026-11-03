@@ -5,6 +5,52 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Generated Ray wrapper and SDK provenance review (2026-11-03)
+
+- Verified source remains **14,300/14,351,96.62%,51 remaining**, following
+  4c2a998a. No new ordinary C match, source/tool change, policy reclassification
+  or redundant full build in this round. Three separate matching lanes reviewed
+  fresh premises; all compiler processes are now idle.
+- Ray's generated-wrapper mechanism is positively reproduced: real CW38 emits
+  exact __defctor native identity from the known2-reference constructor with
+  semantically reconstructed0001/Zero defaults and a diagnostic array trigger.
+  Both debug sections omit default_value attributes FORMAT-WIDE, so absence
+  does not disprove defaults. No invented public noarg ctor is asserted.
+- Generated wrapper FAILS276B versus220B:69 findings+SIZE, ZERO helper calls
+  versus7 actual calls. VF0-start construction/copy count agrees, but default
+  evaluation order differs. Unowned initializer80B, array dtor48B, BSS12+784,
+  .ctor4 and undefined destroy-array remain explicit; nothing stripped/aliased.
+  Actual parameterized ctor184B independently has ZERO calls/all helpers inline.
+  Thus uniform external declarations cannot fix both graphs. No declaration,
+  inline-depth/default-expression grid or Validate caller followed. Proof:
+  gameplay ongoing/ledge/generated_defctor_{audit,diagnostic}.
+- DMA original helper belongs to actual fastdma.hh, callers to dmaman.cc.
+  Keep header/helper ownership separate from current xdrawprim organization;
+  do not move it speculatively. Both byte enums and unsigned-long8B return
+  proved, but historical144/128/160B matches transcribe ordinary scalar shifts.
+  No handwritten provenance found, no such C acceptance, no new compiler grid.
+  October's248B InsertChain is genuinely older/different. Graphics dmaman notes
+  preserve exact primary ownership and negative installed-header search.
+- PlayerInput virtual64 GetBulletDir has paired native identity and canonical
+  312B body initializes ALL64 output bytes on both branches, returns1. This
+  closes a possible uninitialized-output concern without another declaration
+  tie. PositionLeg/QuaternionVelocity closed native operation families were
+  not re-probed; retained Player439/Leg23/Velocity17 remain separate research.
+- Newly inspected installed libmc2.a/fat.o .mdebug proves source fat.c/GCC C,
+  but has no parameter/member/local types. Its Format2348B/CreateFile1420B
+  differ from retail2392/1480; never link/copy object code into the project.
+  [PS2SDK IOP reference](https://github.com/ps2dev/ps2sdk/blob/master/iop/memorycard/mcman/src/mcman-internal.h)
+  is a different384B layout/algorithm; retail388B
+  and signed divisions reject blind unsigned-field import. No candidate probe.
+- Actual SCE eekernel.h supports void scePrintf despite the current int-return
+  implementation. Format explicitly sets fourth root-writer argument1, despite
+  its three-argument implementation view. Preserve actual caller contracts.
+  More seriously, ReadClock can return0 without writing output, while Format
+  consumes uninitialized rtc bytes without a result check. No invariant proving
+  exclusion of that failure path was found; no initializer/check/precondition
+  invented. This function was ALREADY unmatched assembly, not a new source
+  rejection/count change. Parent proof: parent_mcfat_1103/NOTES.md.
+
 ## Public network owners and further native primitive rounds (2026-11-03)
 
 - Live source/report baseline remains **14,300/14,351,96.62%,51 remaining**

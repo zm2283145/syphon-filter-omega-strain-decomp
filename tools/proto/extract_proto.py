@@ -12,7 +12,9 @@ import dwarf1
 from demangle import demangle
 from elftools.elf.elffile import ELFFile
 
-FUNDSIZE = {1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2, 7: 4, 8: 4, 9: 4, 0xa: 4, 0xb: 4, 0xc: 4, 0xd: 4,
+# Metrowerks EE uses 64-bit long with 32-bit int and pointers. Both prototype
+# symbol tables give the unsigned-long totalFrameTicks object an eight-byte size.
+FUNDSIZE = {1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2, 7: 4, 8: 4, 9: 4, 0xa: 8, 0xb: 8, 0xc: 8, 0xd: 4,
             0xe: 4, 0xf: 8, 0x10: 8, 0x15: 1}
 
 

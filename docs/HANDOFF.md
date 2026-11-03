@@ -5,6 +5,38 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## EE width evidence and PlayerInput lifetime/object repairs (2026-11-03)
+
+- Verified source totals remain **14,300/14,351, 96.62% code, 51 remaining**.
+  Last full verified source baseline remains dd0242ff; no new C count/full build.
+- Corrected extract_proto.FUNDSIZE: Metrowerks EE long/signedlong/unsignedlong
+  are8B, while int/pointers remain4. Parent independently confirmed DWARF
+  unsignedlong0xC and ELF8B totalFrameTicks object in BOTH prototypes; fresh MW
+  width probe agrees. Prior4B comments were misleading, not original offsets.
+  Added synthetic end-to-end extractor coverage; all170 WSL tests and21 focused
+  Windows tests pass. Actual January re-extraction succeeded privately.
+- Fresh corrected January types/locals/enum text is available READ-ONLY at
+  build/agents/parent_fundsizes_1103/extracted/early. Shared P1 was not overwritten;
+  the fresh directory does not contain complete mapping TSVs. It includes prior
+  enum/array-order fixes and correct8B field comments. Private width proof and
+  regression evidence: build/agents/parent_fundsizes_1103/NOTES.md.
+- **Old PlayerInput22 is not promotable.** Audit found TgtPos borrowing a
+  value-returned vector past the semicolon, H2a borrowing a returned matrix past
+  its semicolon, and live SendFx using80hex bytes for a1C0hex sound message.
+  First vector fix plus explicit copy-memory annotations ties22; fixing matrix
+  lifetime gives135, and fixing message extent gives547 strict words. Latest
+  repaired checkpoint is exact0x4580=17,792B, clean with48B jump rodata MATCH;
+  audit continues. Sources/proofs:
+  build/agents/resume_fire_1102/ongoing/player_input/legality_audit/NOTES.md.
+- Preliminary long32-overflow and blanket FP-assembly concerns were retracted:
+  long is8B; project policy permits abs.s/max.s/min.s primitives. Deliberate
+  old MMI scheduling pads require documented review, not a new blanket ban.
+  Fire constructor unsigned ID-bit composition repair preserves clean9/exact1040B.
+- Camera canonical-pointer13 is independently verified and frozen, with no
+  added aliases. Its complete16B canonical wrapper proof is unchanged. Graphics
+  Monster native Include/reference-return and actual matrix ownership probes
+  preserve22/exact728B with32B data MATCH. None adds a completed function count.
+
 ## Camera canonical-ABI improvement and Actor lifetime audit (2026-11-03)
 
 - Verified source totals remain **14,300/14,351, 96.62% code, 51 remaining**.

@@ -5,6 +5,32 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## START HERE: verified Human NextFrame match (2026-11-02, Codex)
+
+- **14,298/14,351 functions;96.60%code;53remaining.** Full retail SHA-256
+  9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6 passed;
+  all reportcomparison targets rebuilt, regression checks passed, final source/
+  config/report synchronization completed WSL_ROUND_OK before commit.
+- New ordinary C++ match **cHuman_NextFrame001B1710,3936bytes,mw38**. Allseven
+  remaining instruction differences resolved by original human.cc soft-double TU
+  context, using the already accepted weak .dtors_drop convention. Context helper
+  contributes no retailcode. Actual const unsignedchar IsPlayer vtable signature
+  retained. No new scalarasm or compilerprofile changes.
+- Independent parent freshWSL checker MATCH,zero undefined/data/literal findings.
+  Folded newmatch with preceding original human.cc part byte-identically into
+  **src/SFOGame/Source/human_39.c**,three functionblocks. Oldhuman_109 removed.
+  Adjacenthuman_110 declaration conflict remains, so no forced widermerge.
+- Evidence build/pending/resume_net_1102/mw38_001B1710.c,readyNOTES,private
+  ongoing/NOTES.md. Parent private parent_nextframe_merge.py scopes standard
+  merger to justthree adjacent units; no unrelatedsourceparts regrouped.
+- Sourcecontext evidence: earlier HandleBlast00186830 uses doublecomparisons;
+  NextFrame emits implicitsoftdouble helpers. Read-only audit found no suchcalls
+  in HandleDeath/PlayerInput, so do not blindly spreadcontextstubs there.
+- Three persistent lanes resume afterbuildhold: human/IK remaining contextaudit
+  (resume_net), gameplay CheckBullet/AgentData copy/ownership work(resume_fire),
+  graphics LensFlares accessorcontext and ManRender2word near miss(resume_font).
+  Preserveprivatebestdrafts and failedpremises; parentalone integrates/fullbuilds.
+
 ## Verified syscall boundary and report-target fix (2026-11-02)
 
 - Full retail SHA256 unchanged, regressions pass, final WSL_ROUND_OK synchronized.

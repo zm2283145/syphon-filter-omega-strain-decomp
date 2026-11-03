@@ -5,6 +5,58 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Verified rejection of two older undefined C matches (2026-11-03)
+
+- Corrected verified source coverage is **14,300/14,351 functions,96.62%
+  code,51 remaining** (precise96.616066). Two older counted C routines relied
+  on uninitialized values and have been returned to ordinary UNMATCHED assembly.
+  This removes1616B of invalid source credit; the retail executable is unchanged.
+  This is a quality correction, not two new assembly matches or an inventory
+  change. Last new ordinary C acceptance remains AimHead4a32a7d6.
+- _initSeq0010C030/680B still contained K1's deliberately uninitialized q and
+  h=(h+q)-q compiler scheduling trick. Fresh gcc29 reproduced its old MATCH,
+  but that cannot establish defined C. Removed the C source/override and kept
+  original section ownership in ordinary asm. Single defined-source control
+  without the invented variable has102 non-size findings; no dummy initializer,
+  flags, pinning or scheduling grid. Installed SDK ext.o is older788B, not an
+  exact source substitute. Preserve parent_initseq_1103 and R192/R193 legal drafts.
+- SKL_UpgradePatches00405A60/936B reads reOpen without initialization on the
+  nonzero archive-mode path. Gameplay independently confirms both retail and
+  January's incoming-s7 read, actual file-manager ownership and MODE_STREAM2.
+  Loader/restart/caller review supplies no invariant excluding that path;
+  complete dynamic reachability remains unproved. Do not invent a zero
+  initializer or incoming-register ABI. Preserve original compiled assembly,
+  without a handwriting classification. Evidence: parent_skl_1103 and
+  resume_fire_1102/ongoing/skl_audit/NOTES.md.
+- All FOUR valid neighboring functions stay C. Independently MATCHed first
+  run SKL_LoadSKLParts and combined tail SKL_HideLockedTex/UpgradeBigPatch/
+  UpgradeSmallPatch, with empty ancillary findings. Existing unmerge failed
+  conflicting C/C++ helper prototypes; a minimal manual split retains original
+  manUtils layout and consolidates the three-function tail in one C file.
+- Full wsl_round.sh rebuilt all comparison targets, passed170 tests, fully
+  synchronized and printed WSL_ROUND_OK. Independently checked full retail SHA:
+  9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6.
+  No private source/archive/executable artifacts committed. A transient WSL
+  termination recovered through normal reopen plus known human_46 three-MATCH
+  health check; no forced shared-VM lifecycle action. Config corrections also
+  remove the obsolete C compiler override; subsegment parser disallows inline
+  comments. All compiler holds cover final synchronization.
+- Human lane resolved matrix primitive failure: missing native vector assignment
+  caused24B of scalar-copy code. Actual assignment16B and corrected native
+  cMatrix(QuatVec)232B both MATCH. Typed matrix-owner Actor caller remains
+  incomplete821 findings+SIZE/12008B versus preferred typedPL796; all333
+  ordered call targets correct. No old constructor-context/copy/depth grids.
+- Graphics' bounded retail asset audit found exactly3 fonts in6950 named
+  archive indices, zero parse errors (depth cap8). All177glyph/kerning-disabled;
+  the Subtitle terminal-kerning read is skipped for these actual disc fonts.
+  This proves that input domain only, not generic font initialization. Terminal
+  '!'+NUL offsetBC0 is glyph178 first byte, correcting older179 shorthand.
+- Next matching lanes: actual native matrix/body ownership beyond Actor796/821;
+  real Machine NextFrameMsg/PauseMusic/StartLevel message lifetimes (old names,
+  padded extents and weak destructor scaffolding are inaccurate); fresh gameplay
+  contract research beyond Fire9 native terrain/network return-contract tie.
+  Preserve all prepared drafts, compile each primitive before dependent callers.
+
 ## Further native ownership gates after17f9fe11 (2026-11-03)
 
 - Verified coverage stays **14,302/14,351,96.66%,49 remaining**. No new

@@ -5,6 +5,26 @@ This is the working state and the routine for whoever continues this project
 [PROGRESS.md](../PROGRESS.md) for the evidence and history, and
 [MATCHING_TECHNIQUES.md](MATCHING_TECHNIQUES.md) before matching any function.
 
+## Resume 2026-11-02 evening (Codex, latest GitHub state)
+
+- Fetched and fast-forwarded Windows checkout to84354782 (R240 and a1-a3 notes).
+  Latest recorded verified baseline **14,295/14,351,96.45% code,56 remaining**.
+  No newly matched function counted in this restart. Existing root scratch kept.
+- Resumed three isolated matching lanes: GridProcessDataPack (3 strictwords),
+  Fire constructor (9 strictwords; independent real scalarleft ABI trials tie),
+  and SubtitleFont (35 strictwords in current checker,45 historical lablines).
+  Font remains exact1712B with clean symbols/data. Fresh notes in private
+  build/agents/resume_{net,fire,font}_1102. Fire now independently reviews
+  Init_int's post-call size lifetime, with a2's full failure history available.
+- Parent validated both prototype ELF linker symbols for Init_void; new faithful
+  draft uses _stack/_end+2000. Known-symbol private comparison clears undefined
+  symbols but does not match yet; tracked metadata deliberately unchanged.
+  Evidence build/agents/resume_parent_1102/{NOTES.md,verified_linker_names.json}.
+- Local shell default is unavailable; explicitly select Windows PowerShell at
+  C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe for commands.
+  No full build needed yet because no source/config candidate has been accepted.
+  Parent must still run full retail hash/regressions before any future count/commit.
+
 ## Session 2026-11-01 (Claude, cloud workspace)
 
 - **R216** `e64bfa37`: 6 matches from prototype-guided lanes. They include cGameCamera_UpdateMotion
